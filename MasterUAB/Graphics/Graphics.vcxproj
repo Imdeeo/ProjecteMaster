@@ -11,7 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ContextManagerD3D.cpp" />
     <ClCompile Include="dummy.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ContextManagerD3D.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{31F7443F-B43C-4D38-931C-FAC7C771EF91}</ProjectGuid>
