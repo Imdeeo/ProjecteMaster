@@ -1,11 +1,15 @@
 #include <Windows.h>
-#include "ContextManagerD3D.h"
+#include "ContextManager.h"
+
+#include "Application.h"
+#include "DebugRender.h"
 
 //#include <d3d11.h>
 //#include <d3dx11.h>
 
 
 #pragma comment(lib,"Graphics_d.lib")
+#pragma comment(lib,"Winmm.lib")
 
 
 #define APPLICATION_NAME		"VIDEOGAMETEST"
@@ -15,6 +19,17 @@
 
 HRESULT CreateConcept(UINT Width, UINT Height, HWND OutputWindowInstance);
 
+
+
+
+float GetElapsedTime(DWORD &m_PreviousTime)
+{
+	float m_ElapsedTime;
+	DWORD l_CurrentTime = timeGetTime();
+	m_ElapsedTime = (float)(l_CurrentTime - m_PreviousTime)*0.001f;
+	m_PreviousTime = l_CurrentTime;
+	return m_ElapsedTime;
+}
 
 //-----------------------------------------------------------------------------
 // Name: MsgProc()
@@ -72,19 +87,30 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 	
 	//CContextManagerD3D *cmd3d = new CContextManagerD3D();
-	CContextManagerD3D::GetInstance()->InitDevice(hWnd,M_HEIGHT_APPLICATION,M_WIDTH_APPLICATION);
-	CContextManagerD3D::GetInstance()->CreateRenderTargetView();
-	//CreateConcept(M_HEIGHT_APPLICATION,M_WIDTH_APPLICATION,hWnd);
+	CContextManager *l_ContextManager = new CContextManager();
+	//l_ContextManager->InitDevice(hWnd,M_HEIGHT_APPLICATION,M_WIDTH_APPLICATION);
+	l_ContextManager->CreateContext(hWnd,M_HEIGHT_APPLICATION,M_WIDTH_APPLICATION);
+	l_ContextManager->CreateBackBuffer(hWnd,M_HEIGHT_APPLICATION,M_WIDTH_APPLICATION);
+	l_ContextManager->InitStates();
+
+	CDebugRender *l_DebugRender = new CDebugRender(l_ContextManager->GetDevice());
+	CApplication *l_Application = new CApplication(l_DebugRender,l_ContextManager); 
+
+	
 
   // Añadir aquí el Init de la applicacioón
 
   ShowWindow( hWnd, SW_SHOWDEFAULT );
+
 
   UpdateWindow( hWnd );
   MSG msg;
   ZeroMemory( &msg, sizeof(msg) );
 
   // Añadir en el while la condición de salida del programa de la aplicación
+
+  DWORD m_PreviousTime = timeGetTime();
+  
 
   while( msg.message != WM_QUIT )
   {
@@ -96,7 +122,10 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
     else
     {
        // Main loop: Añadir aquí el Update y Render de la aplicación principal
-		CContextManagerD3D::GetInstance()->Draw();
+		//CContextManagerD3D::GetInstance()->Draw();
+
+		l_Application->Update(GetElapsedTime(m_PreviousTime));
+		l_Application->Render();
     }
   }
   UnregisterClass( APPLICATION_NAME, wc.hInstance );
@@ -105,3 +134,5 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
   return 0;
 }
+
+

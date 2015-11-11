@@ -11,7 +11,7 @@
 /// Construcción sin inicialización de parámetros  
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>::Matrix44 ()
+inline Matrix44<T>::Matrix44()
 {
 }
 
@@ -20,12 +20,12 @@ inline Matrix44<T>::Matrix44 ()
 /// Constructor de copia
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>::Matrix44 (const Matrix44<T>& otra) :
-    m00(otra.m00), m10(otra.m10), m20(otra.m20), m30(otra.m30),
-    m01(otra.m01), m11(otra.m11), m21(otra.m21), m31(otra.m31),
-    m02(otra.m02), m12(otra.m12), m22(otra.m22), m32(otra.m32),
-    m03(otra.m03), m13(otra.m13), m23(otra.m23), m33(otra.m33)
-{ 
+inline Matrix44<T>::Matrix44(const Matrix44<T>& otra) :
+m00(otra.m00), m10(otra.m10), m20(otra.m20), m30(otra.m30),
+m01(otra.m01), m11(otra.m11), m21(otra.m21), m31(otra.m31),
+m02(otra.m02), m12(otra.m12), m22(otra.m22), m32(otra.m32),
+m03(otra.m03), m13(otra.m13), m23(otra.m23), m33(otra.m33)
+{
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,14 +33,14 @@ inline Matrix44<T>::Matrix44 (const Matrix44<T>& otra) :
 /// Inserción de todos los datos de la matriz
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>::Matrix44 (const T _m00, const T _m01, const T _m02, const T _m03,
-                              const T _m10, const T _m11, const T _m12, const T _m13,
-                              const T _m20, const T _m21, const T _m22, const T _m23,
-                              const T _m30, const T _m31, const T _m32, const T _m33)  :
-  m00(_m00), m10(_m10), m20(_m20), m30(_m30),
-  m01(_m01), m11(_m11), m21(_m21), m31(_m31),
-  m02(_m02), m12(_m12), m22(_m22), m32(_m32),
-  m03(_m03), m13(_m13), m23(_m23), m33(_m33)
+inline Matrix44<T>::Matrix44(const T _m00, const T _m01, const T _m02, const T _m03,
+	const T _m10, const T _m11, const T _m12, const T _m13,
+	const T _m20, const T _m21, const T _m22, const T _m23,
+	const T _m30, const T _m31, const T _m32, const T _m33) :
+	m00(_m00), m10(_m10), m20(_m20), m30(_m30),
+	m01(_m01), m11(_m11), m21(_m21), m31(_m31),
+	m02(_m02), m12(_m12), m22(_m22), m32(_m32),
+	m03(_m03), m13(_m13), m23(_m23), m33(_m33)
 {
 }
 
@@ -51,11 +51,11 @@ inline Matrix44<T>::Matrix44 (const T _m00, const T _m01, const T _m02, const T 
 /// La última fila será [0 0 0 1]
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>::Matrix44 (const Matrix33<T>& otra) :
-  m00(otra.m00),  m10(otra.m10),  m20(otra.m20),  m30(Zero<T>()),
-  m01(otra.m01),  m11(otra.m11),  m21(otra.m21),  m31(Zero<T>()),
-  m02(otra.m02),  m12(otra.m12),  m22(otra.m22),  m32(Zero<T>()),
-  m03(Zero<T>()), m13(Zero<T>()), m23(Zero<T>()), m33(One<T>())
+inline Matrix44<T>::Matrix44(const Matrix33<T>& otra) :
+m00(otra.m00), m10(otra.m10), m20(otra.m20), m30(Zero<T>()),
+m01(otra.m01), m11(otra.m11), m21(otra.m21), m31(Zero<T>()),
+m02(otra.m02), m12(otra.m12), m22(otra.m22), m32(Zero<T>()),
+m03(Zero<T>()), m13(Zero<T>()), m23(Zero<T>()), m33(One<T>())
 {
 }
 
@@ -65,11 +65,11 @@ inline Matrix44<T>::Matrix44 (const Matrix33<T>& otra) :
 /// La última fila será [0 0 0 1]
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>::Matrix44 (const Matrix34<T>& otra) :
-  m00(otra.m00), m10(otra.m10), m20(otra.m20), m30(Zero<T>()),
-  m01(otra.m01), m11(otra.m11), m21(otra.m21), m31(Zero<T>()),
-  m02(otra.m02), m12(otra.m12), m22(otra.m22), m32(Zero<T>()),
-  m03(otra.m03), m13(otra.m13), m23(otra.m23), m33(One<T>())
+inline Matrix44<T>::Matrix44(const Matrix34<T>& otra) :
+m00(otra.m00), m10(otra.m10), m20(otra.m20), m30(Zero<T>()),
+m01(otra.m01), m11(otra.m11), m21(otra.m21), m31(Zero<T>()),
+m02(otra.m02), m12(otra.m12), m22(otra.m22), m32(Zero<T>()),
+m03(otra.m03), m13(otra.m13), m23(otra.m23), m33(One<T>())
 {
 }
 
@@ -84,12 +84,12 @@ inline Matrix44<T>::Matrix44 (const Matrix34<T>& otra) :
 /// \endverbatim
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>::Matrix44 (const Vector3<T>& ejeX,
-                              const Vector3<T>& ejeY,
-                              const Vector3<T>& ejeZ,
-                              const Vector3<T>& pos)
+inline Matrix44<T>::Matrix44(const Vector3<T>& ejeX,
+	const Vector3<T>& ejeY,
+	const Vector3<T>& ejeZ,
+	const Vector3<T>& pos)
 {
-  SetFromBasis(ejeX, ejeY, ejeZ, pos);
+	SetFromBasis(ejeX, ejeY, ejeZ, pos);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,9 +97,9 @@ inline Matrix44<T>::Matrix44 (const Vector3<T>& ejeX,
 /// (Ver comentario en SetFromAnglesYXZ)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>::Matrix44 (const T angleY, const T angleX, const T angleZ)
+inline Matrix44<T>::Matrix44(const T angleY, const T angleX, const T angleZ)
 {
-  SetFromAnglesYXZ(angleY, angleX, angleZ);
+	SetFromAnglesYXZ(angleY, angleX, angleZ);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,8 +107,8 @@ inline Matrix44<T>::Matrix44 (const T angleY, const T angleX, const T angleZ)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
 inline bool Matrix44<T>::operator == (const Matrix44<T>& otra) const
-{   
-  return (0 == memcmp(this, &otra, sizeof(Matrix44<T>)));
+{
+	return (0 == memcmp(this, &otra, sizeof(Matrix44<T>)));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,46 +116,46 @@ inline bool Matrix44<T>::operator == (const Matrix44<T>& otra) const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
 inline bool Matrix44<T>::operator != (const Matrix44<T>& otra) const
-{   
-  return (0 != memcmp(this, &otra, sizeof(Matrix44<T>)));
+{
+	return (0 != memcmp(this, &otra, sizeof(Matrix44<T>)));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Función de igualdad aproximada con epsilon genérico
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline bool Matrix44<T>::IsEqualEpsilon (const Matrix44<T>& otra, const T Epsilon) const
+inline bool Matrix44<T>::IsEqualEpsilon(const Matrix44<T>& otra, const T Epsilon) const
 {
-  bool bIgual = true;
-  for(int i=0; i<16; i++)
-  {
-    if(!mathUtils::EqualEpsilon(((T*)this)[i], ((T*)&otra)[i], Epsilon))
-    {
-      bIgual = false;
-      break;
-    }
-  }
+	bool bIgual = true;
+	for (int i = 0; i<16; i++)
+	{
+		if (!mathUtils::EqualEpsilon(((T*)this)[i], ((T*)&otra)[i], Epsilon))
+		{
+			bIgual = false;
+			break;
+		}
+	}
 
-  return bIgual;
+	return bIgual;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Función de desigualdad aproximada con epsilon genérico
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline bool Matrix44<T>::IsNotEqualEpsilon (const Matrix44<T>& otra, const T Epsilon) const
+inline bool Matrix44<T>::IsNotEqualEpsilon(const Matrix44<T>& otra, const T Epsilon) const
 {
-  bool bDistinto = false;
-  for(int i=0; i<16; i++)
-  {
-    if(!mathUtils::EqualEpsilon(((T*)this)[i], ((T*)&otra)[i], Epsilon))
-    {
-      bDistinto = true;
-      break;
-    }
-  }
+	bool bDistinto = false;
+	for (int i = 0; i<16; i++)
+	{
+		if (!mathUtils::EqualEpsilon(((T*)this)[i], ((T*)&otra)[i], Epsilon))
+		{
+			bDistinto = true;
+			break;
+		}
+	}
 
-  return bDistinto;
+	return bDistinto;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,9 +164,9 @@ inline bool Matrix44<T>::IsNotEqualEpsilon (const Matrix44<T>& otra, const T Eps
 /// [ver notas en el operador '^', producto por vector]
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline void Matrix44<T>::TransformVector (Vector3<T>& vector) const
+inline void Matrix44<T>::TransformVector(Vector3<T>& vector) const
 {
-  vector = (*this) ^ vector; 
+	vector = (*this) ^ vector;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,9 +175,9 @@ inline void Matrix44<T>::TransformVector (Vector3<T>& vector) const
 /// [ver notas en el operador '*', producto por vector]
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline void Matrix44<T>::TransformPoint (Vector3<T>& vector) const
+inline void Matrix44<T>::TransformPoint(Vector3<T>& vector) const
 {
-  vector = (*this) * vector; 
+	vector = (*this) * vector;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,9 +186,9 @@ inline void Matrix44<T>::TransformPoint (Vector3<T>& vector) const
 /// [ver notas en el operador '^', producto por vector]
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Vector3<T> Matrix44<T>::GetTransformVector (const Vector3<T>& vector) const
+inline Vector3<T> Matrix44<T>::GetTransformVector(const Vector3<T>& vector) const
 {
-  return (*this) ^ vector;
+	return (*this) ^ vector;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,9 +197,9 @@ inline Vector3<T> Matrix44<T>::GetTransformVector (const Vector3<T>& vector) con
 /// [ver notas en el operador '*', producto por vector]
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Vector3<T> Matrix44<T>::GetTransformPoint (const Vector3<T>& vector) const
+inline Vector3<T> Matrix44<T>::GetTransformPoint(const Vector3<T>& vector) const
 {
-  return (*this) * vector;
+	return (*this) * vector;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,12 +208,12 @@ inline Vector3<T> Matrix44<T>::GetTransformPoint (const Vector3<T>& vector) cons
 /// [ver notas en el operador '^', producto por vector]
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-void Matrix44<T>::TransformArrayVectors (int iElements, Vector3<T>* pVecOUT, Vector3<T>* pVecIN) const
+void Matrix44<T>::TransformArrayVectors(int iElements, Vector3<T>* pVecOUT, Vector3<T>* pVecIN) const
 {
-  for(int i=0; i<iElements; i++)
-  {
-    pVecOUT[i] = (*this) ^ (pVecIN[i]);
-  }
+	for (int i = 0; i<iElements; i++)
+	{
+		pVecOUT[i] = (*this) ^ (pVecIN[i]);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,12 +222,12 @@ void Matrix44<T>::TransformArrayVectors (int iElements, Vector3<T>* pVecOUT, Vec
 /// [ver notas en el operador '*', producto por vector]
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-void Matrix44<T>::TransformArrayPoints (int iElements, Vector3<T>* pVecOUT, Vector3<T>* pVecIN) const
+void Matrix44<T>::TransformArrayPoints(int iElements, Vector3<T>* pVecOUT, Vector3<T>* pVecIN) const
 {
-  for(int i=0; i<iElements; i++)
-  {
-    pVecOUT[i] = (*this) * (pVecIN[i]);
-  }
+	for (int i = 0; i<iElements; i++)
+	{
+		pVecOUT[i] = (*this) * (pVecIN[i]);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -245,9 +245,9 @@ void Matrix44<T>::TransformArrayPoints (int iElements, Vector3<T>* pVecOUT, Vect
 template<typename T>
 inline Vector3<T> Matrix44<T>::operator * (const Vector3<T>& vector) const
 {
-  return Vector3<T>(vector.x * m00 + vector.y * m01 + vector.z * m02 + m03,
-                    vector.x * m10 + vector.y * m11 + vector.z * m12 + m13,
-                    vector.x * m20 + vector.y * m21 + vector.z * m22 + m23);
+	return Vector3<T>(vector.x * m00 + vector.y * m01 + vector.z * m02 + m03,
+		vector.x * m10 + vector.y * m11 + vector.z * m12 + m13,
+		vector.x * m20 + vector.y * m21 + vector.z * m22 + m23);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -263,9 +263,9 @@ inline Vector3<T> Matrix44<T>::operator * (const Vector3<T>& vector) const
 template<typename T>
 inline Vector3<T> Matrix44<T>::operator ^ (const Vector3<T>& vector) const
 {
-  return Vector3<T>(vector.x * m00 + vector.y * m01 + vector.z * m02,
-                    vector.x * m10 + vector.y * m11 + vector.z * m12,
-                    vector.x * m20 + vector.y * m21 + vector.z * m22);
+	return Vector3<T>(vector.x * m00 + vector.y * m01 + vector.z * m02,
+		vector.x * m10 + vector.y * m11 + vector.z * m12,
+		vector.x * m20 + vector.y * m21 + vector.z * m22);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,10 +281,19 @@ inline Vector3<T> Matrix44<T>::operator ^ (const Vector3<T>& vector) const
 template<typename T>
 Vector4<T> Matrix44<T>::operator * (const Vector4<T>& vector) const
 {
-  return Vector4<T>(vector.x * m00 + vector.y * m01 + vector.z * m02 + vector.w * m03,
-                    vector.x * m10 + vector.y * m11 + vector.z * m12 + vector.w * m13,
-                    vector.x * m20 + vector.y * m21 + vector.z * m22 + vector.w * m23,
-                    vector.x * m30 + vector.y * m31 + vector.z * m32 + vector.w * m33);
+	return Vector4<T>(vector.x * m00 + vector.y * m01 + vector.z * m02 + vector.w * m03,
+		vector.x * m10 + vector.y * m11 + vector.z * m12 + vector.w * m13,
+		vector.x * m20 + vector.y * m21 + vector.z * m22 + vector.w * m23,
+		vector.x * m30 + vector.y * m31 + vector.z * m32 + vector.w * m33);
+}
+
+template<typename T>
+inline Vector4<T> Vector4<T>::operator * (const Matrix44<T>& otro) const
+{
+	return Vector4<T>(x * otro.m00 + y * otro.m10 + z * otro.m20 + w * otro.m30,
+		x * otro.m01 + y * otro.m11 + z * otro.m21 + w * otro.m31,
+		x * otro.m02 + y * otro.m12 + z * otro.m22 + w * otro.m32,
+		x * otro.m03 + y * otro.m13 + z * otro.m23 + w * otro.m33);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -294,11 +303,11 @@ Vector4<T> Matrix44<T>::operator * (const Vector4<T>& vector) const
 template<typename T>
 inline Matrix44<T>& Matrix44<T>::ResetTranslation()
 {
-  m03 = Zero<T>();
-  m13 = Zero<T>();
-  m23 = Zero<T>();
+	m03 = Zero<T>();
+	m13 = Zero<T>();
+	m23 = Zero<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -307,17 +316,17 @@ inline Matrix44<T>& Matrix44<T>::ResetTranslation()
 /// se mantienen invariables.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::ResetRotation ()
+inline Matrix44<T>& Matrix44<T>::ResetRotation()
 {
-  T escale_x = GetVectorBasisLength(0);
-  T escale_y = GetVectorBasisLength(1);
-  T escale_z = GetVectorBasisLength(2);
+	T escale_x = GetVectorBasisLength(0);
+	T escale_y = GetVectorBasisLength(1);
+	T escale_z = GetVectorBasisLength(2);
 
-  m00 = escale_x;   m01 = Zero<T>();  m02 = Zero<T>();
-  m10 = Zero<T>();  m11 = escale_y;   m12 = Zero<T>();
-  m20 = Zero<T>();  m21 = Zero<T>();  m22 = escale_z;
+	m00 = escale_x;   m01 = Zero<T>();  m02 = Zero<T>();
+	m10 = Zero<T>();  m11 = escale_y;   m12 = Zero<T>();
+	m20 = Zero<T>();  m21 = Zero<T>();  m22 = escale_z;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -326,7 +335,7 @@ inline Matrix44<T>& Matrix44<T>::ResetRotation ()
 /// Equivale a normalizar la matriz 3x3 que representa a la rotación
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::ResetScale ()
+inline Matrix44<T>& Matrix44<T>::ResetScale()
 {
 	T escale_x = 1.0f / GetVectorBasisLength(0);
 	T escale_y = 1.0f / GetVectorBasisLength(1);
@@ -336,7 +345,7 @@ inline Matrix44<T>& Matrix44<T>::ResetScale ()
 	m10 *= escale_x;  m11 *= escale_y;  m12 *= escale_z;
 	m20 *= escale_x;  m21 *= escale_y;  m22 *= escale_z;
 
-  return (*this);
+	return (*this);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -344,41 +353,41 @@ inline Matrix44<T>& Matrix44<T>::ResetScale ()
 /// transforma en la matriz identidad
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::ResetRotationScale ()
+inline Matrix44<T>& Matrix44<T>::ResetRotationScale()
 {
-  m00 = One<T>();   m01 = Zero<T>();  m02 = Zero<T>();
-  m10 = Zero<T>();  m11 = One<T>();   m12 = Zero<T>();
-  m20 = Zero<T>();  m21 = Zero<T>();  m22 = One<T>();
+	m00 = One<T>();   m01 = Zero<T>();  m02 = Zero<T>();
+	m10 = Zero<T>();  m11 = One<T>();   m12 = Zero<T>();
+	m20 = Zero<T>();  m21 = Zero<T>();  m22 = One<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Cambia los datos de la matriz por los de una matriz identidad
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetIdentity ()
+inline Matrix44<T>& Matrix44<T>::SetIdentity()
 {
-  m00 = One<T>();   m01 = Zero<T>();  m02 = Zero<T>();  m03 = Zero<T>();
-  m10 = Zero<T>();  m11 = One<T>();   m12 = Zero<T>();  m13 = Zero<T>();
-  m20 = Zero<T>();  m21 = Zero<T>();  m22 = One<T>();   m23 = Zero<T>();
-  m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
+	m00 = One<T>();   m01 = Zero<T>();  m02 = Zero<T>();  m03 = Zero<T>();
+	m10 = Zero<T>();  m11 = One<T>();   m12 = Zero<T>();  m13 = Zero<T>();
+	m20 = Zero<T>();  m21 = Zero<T>();  m22 = One<T>();   m23 = Zero<T>();
+	m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Pone a cero todos los datos de la matriz
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetZero ()
+inline Matrix44<T>& Matrix44<T>::SetZero()
 {
-  m00 = Zero<T>();  m01 = Zero<T>();  m02 = Zero<T>();  m03 = Zero<T>();
-  m10 = Zero<T>();  m11 = Zero<T>();  m12 = Zero<T>();  m13 = Zero<T>();
-  m20 = Zero<T>();  m21 = Zero<T>();  m22 = Zero<T>();  m23 = Zero<T>();
-  m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = Zero<T>();
+	m00 = Zero<T>();  m01 = Zero<T>();  m02 = Zero<T>();  m03 = Zero<T>();
+	m10 = Zero<T>();  m11 = Zero<T>();  m12 = Zero<T>();  m13 = Zero<T>();
+	m20 = Zero<T>();  m21 = Zero<T>();  m22 = Zero<T>();  m23 = Zero<T>();
+	m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = Zero<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -394,23 +403,23 @@ inline Matrix44<T>& Matrix44<T>::SetZero ()
 /// \endverbatim
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetFromBasis (const Vector3<T>& ejeX,
-                                               const Vector3<T>& ejeY,
-                                               const Vector3<T>& ejeZ,
-                                               const Vector3<T>& pos)
+inline Matrix44<T>& Matrix44<T>::SetFromBasis(const Vector3<T>& ejeX,
+	const Vector3<T>& ejeY,
+	const Vector3<T>& ejeZ,
+	const Vector3<T>& pos)
 {
-  m00 = ejeX.x;     m01 = ejeY.x;     m02 = ejeZ.x;     m03 = pos.x;
-  m10 = ejeX.y;     m11 = ejeY.y;     m12 = ejeZ.y;     m13 = pos.y;
-  m20 = ejeX.z;     m21 = ejeY.z;     m22 = ejeZ.z;     m23 = pos.z;
-  m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
+	m00 = ejeX.x;     m01 = ejeY.x;     m02 = ejeZ.x;     m03 = pos.x;
+	m10 = ejeX.y;     m11 = ejeY.y;     m12 = ejeZ.y;     m13 = pos.y;
+	m20 = ejeX.z;     m21 = ejeY.z;     m22 = ejeZ.z;     m23 = pos.z;
+	m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
 
-  return (*this);
+	return (*this);
 }
 
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetFromBasis (const Vector3<T>& ejeX,
-																							 const Vector3<T>& ejeY,
-																							 const Vector3<T>& ejeZ)
+inline Matrix44<T>& Matrix44<T>::SetFromBasis(const Vector3<T>& ejeX,
+	const Vector3<T>& ejeY,
+	const Vector3<T>& ejeZ)
 {
 	m00 = ejeX.x;     m01 = ejeY.x;     m02 = ejeZ.x;
 	m10 = ejeX.y;     m11 = ejeY.y;     m12 = ejeZ.y;
@@ -426,18 +435,18 @@ inline Matrix44<T>& Matrix44<T>::SetFromBasis (const Vector3<T>& ejeX,
 /// (Ver comentario en Matrix33::SetFromAngleX)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetFromAngleX (const T angleX)
+inline Matrix44<T>& Matrix44<T>::SetFromAngleX(const T angleX)
 {
-  T sina;
-  T cosa;
-  mathUtils::SinCos(angleX, sina, cosa);
+	T sina;
+	T cosa;
+	mathUtils::SinCos(angleX, sina, cosa);
 
-  m00 = One<T>();   m01 = Zero<T>();  m02 = Zero<T>();  m03 = Zero<T>();
-  m10 = Zero<T>();  m11 = cosa;       m12 = -sina;      m13 = Zero<T>();
-  m20 = Zero<T>();  m21 = sina;       m22 = cosa;       m23 = Zero<T>();
-  m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
+	m00 = One<T>();   m01 = Zero<T>();  m02 = Zero<T>();  m03 = Zero<T>();
+	m10 = Zero<T>();  m11 = cosa;       m12 = -sina;      m13 = Zero<T>();
+	m20 = Zero<T>();  m21 = sina;       m22 = cosa;       m23 = Zero<T>();
+	m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -447,18 +456,18 @@ inline Matrix44<T>& Matrix44<T>::SetFromAngleX (const T angleX)
 /// (Ver comentario en Matrix33::SetFromAngleY)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetFromAngleY (const T angleY)
+inline Matrix44<T>& Matrix44<T>::SetFromAngleY(const T angleY)
 {
-  T sina;
-  T cosa;
-  mathUtils::SinCos(angleY, sina, cosa);
+	T sina;
+	T cosa;
+	mathUtils::SinCos(angleY, sina, cosa);
 
-  m00 = cosa;       m01 = Zero<T>();  m02 = sina;       m03 = Zero<T>();
-  m10 = Zero<T>();  m11 = One<T>();   m12 = Zero<T>();  m13 = Zero<T>();
-  m20 = -sina;      m21 = Zero<T>();  m22 = cosa;       m23 = Zero<T>();
-  m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
+	m00 = cosa;       m01 = Zero<T>();  m02 = sina;       m03 = Zero<T>();
+	m10 = Zero<T>();  m11 = One<T>();   m12 = Zero<T>();  m13 = Zero<T>();
+	m20 = -sina;      m21 = Zero<T>();  m22 = cosa;       m23 = Zero<T>();
+	m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -468,18 +477,18 @@ inline Matrix44<T>& Matrix44<T>::SetFromAngleY (const T angleY)
 /// (Ver comentario en Matrix33::SetFromAngleZ)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetFromAngleZ (const T angleZ)
+inline Matrix44<T>& Matrix44<T>::SetFromAngleZ(const T angleZ)
 {
-  T sina;
-  T cosa;
-  mathUtils::SinCos(angleZ, sina, cosa);
+	T sina;
+	T cosa;
+	mathUtils::SinCos(angleZ, sina, cosa);
 
-  m00 = cosa;       m01 = -sina;      m02 = Zero<T>();  m03 = Zero<T>();
-  m10 = sina;       m11 = cosa;       m12 = Zero<T>();  m13 = Zero<T>();
-  m20 = Zero<T>();  m21 = Zero<T>();  m22 = One<T>();   m23 = Zero<T>();
-  m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
+	m00 = cosa;       m01 = -sina;      m02 = Zero<T>();  m03 = Zero<T>();
+	m10 = sina;       m11 = cosa;       m12 = Zero<T>();  m13 = Zero<T>();
+	m20 = Zero<T>();  m21 = Zero<T>();  m22 = One<T>();   m23 = Zero<T>();
+	m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -490,18 +499,18 @@ inline Matrix44<T>& Matrix44<T>::SetFromAngleZ (const T angleZ)
 /// (Ver comentario en Matrix33::SetFromAnglesXZ)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetFromAnglesXZ (const T angleX, const T angleZ)
+inline Matrix44<T>& Matrix44<T>::SetFromAnglesXZ(const T angleX, const T angleZ)
 {
-  T sinx, cosx, sinz, cosz;
-  mathUtils::SinCos(angleX, sinx, cosx);
-  mathUtils::SinCos(angleZ, sinz, cosz);
+	T sinx, cosx, sinz, cosz;
+	mathUtils::SinCos(angleX, sinx, cosx);
+	mathUtils::SinCos(angleZ, sinz, cosz);
 
-  m00 = cosz;       m01 = -sinz * cosx;  m02 = sinz * sinx;   m03 = Zero<T>();
-  m10 = sinz;       m11 = cosz * cosx;   m12 = -cosz * sinx;  m13 = Zero<T>();
-  m20 = Zero<T>();  m21 = sinx;          m22 = cosx;          m23 = Zero<T>();
-  m30 = Zero<T>();  m31 = Zero<T>();     m32 = Zero<T>();     m33 = One<T>();
+	m00 = cosz;       m01 = -sinz * cosx;  m02 = sinz * sinx;   m03 = Zero<T>();
+	m10 = sinz;       m11 = cosz * cosx;   m12 = -cosz * sinx;  m13 = Zero<T>();
+	m20 = Zero<T>();  m21 = sinx;          m22 = cosx;          m23 = Zero<T>();
+	m30 = Zero<T>();  m31 = Zero<T>();     m32 = Zero<T>();     m33 = One<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -513,19 +522,19 @@ inline Matrix44<T>& Matrix44<T>::SetFromAnglesXZ (const T angleX, const T angleZ
 /// (Ver comentario en Matrix33::SetFromAnglesYXZ)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetFromAnglesYXZ (const T angleY, const T angleX, const T angleZ)
+inline Matrix44<T>& Matrix44<T>::SetFromAnglesYXZ(const T angleY, const T angleX, const T angleZ)
 {
-  T sx, cx, sy, cy, sz, cz;
-  mathUtils::SinCos(angleX, sx, cx);
-  mathUtils::SinCos(angleY, sy, cy);
-  mathUtils::SinCos(angleZ, sz, cz);
+	T sx, cx, sy, cy, sz, cz;
+	mathUtils::SinCos(angleX, sx, cx);
+	mathUtils::SinCos(angleY, sy, cy);
+	mathUtils::SinCos(angleZ, sz, cz);
 
-  m00 = cz*cy - sz*sx*sy;  m01 = -sz*cx;     m02 = cz*sy + sz*sx*cy;  m03 = Zero<T>();
-  m10 = sz*cy + cz*sx*sy;  m11 = cz*cx;      m12 = sz*sy - cz*sx*cy;  m13 = Zero<T>();
-  m20 = -cx*sy;            m21 = sx;         m22 = cx*cy;             m23 = Zero<T>();
-  m30 = Zero<T>();         m31 = Zero<T>();  m32 = Zero<T>();         m33 = One<T>();
+	m00 = cz*cy - sz*sx*sy;  m01 = -sz*cx;     m02 = cz*sy + sz*sx*cy;  m03 = Zero<T>();
+	m10 = sz*cy + cz*sx*sy;  m11 = cz*cx;      m12 = sz*sy - cz*sx*cy;  m13 = Zero<T>();
+	m20 = -cx*sy;            m21 = sx;         m22 = cx*cy;             m23 = Zero<T>();
+	m30 = Zero<T>();         m31 = Zero<T>();  m32 = Zero<T>();         m33 = One<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -533,14 +542,14 @@ inline Matrix44<T>& Matrix44<T>::SetFromAnglesYXZ (const T angleY, const T angle
 /// a partir de 3 magnitudes.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetFromPos (const T posX, const T posY, const T posZ)
+inline Matrix44<T>& Matrix44<T>::SetFromPos(const T posX, const T posY, const T posZ)
 {
-  m00 = One<T>();    m01 = Zero<T>();   m02 = Zero<T>();   m03 = posX;
-  m10 = Zero<T>();   m11 = One<T>();    m12 = Zero<T>();   m13 = posY;
-  m20 = Zero<T>();   m21 = Zero<T>();   m22 = One<T>();    m23 = posZ;
-  m30 = Zero<T>();   m31 = Zero<T>();   m32 = Zero<T>();   m33 = One<T>();
+	m00 = One<T>();    m01 = Zero<T>();   m02 = Zero<T>();   m03 = posX;
+	m10 = Zero<T>();   m11 = One<T>();    m12 = Zero<T>();   m13 = posY;
+	m20 = Zero<T>();   m21 = Zero<T>();   m22 = One<T>();    m23 = posZ;
+	m30 = Zero<T>();   m31 = Zero<T>();   m32 = Zero<T>();   m33 = One<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -548,14 +557,14 @@ inline Matrix44<T>& Matrix44<T>::SetFromPos (const T posX, const T posY, const T
 /// a partir de un vector 3D.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetFromPos (const Vector3<T>& pos)
+inline Matrix44<T>& Matrix44<T>::SetFromPos(const Vector3<T>& pos)
 {
-  m00 = One<T>();    m01 = Zero<T>();   m02 = Zero<T>();   m03 = pos.x;
-  m10 = Zero<T>();   m11 = One<T>();    m12 = Zero<T>();   m13 = pos.y;
-  m20 = Zero<T>();   m21 = Zero<T>();   m22 = One<T>();    m23 = pos.z;
-  m30 = Zero<T>();   m31 = Zero<T>();   m32 = Zero<T>();   m33 = One<T>();
+	m00 = One<T>();    m01 = Zero<T>();   m02 = Zero<T>();   m03 = pos.x;
+	m10 = Zero<T>();   m11 = One<T>();    m12 = Zero<T>();   m13 = pos.y;
+	m20 = Zero<T>();   m21 = Zero<T>();   m22 = One<T>();    m23 = pos.z;
+	m30 = Zero<T>();   m31 = Zero<T>();   m32 = Zero<T>();   m33 = One<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -569,14 +578,14 @@ inline Matrix44<T>& Matrix44<T>::SetFromPos (const Vector3<T>& pos)
 /// \endverbatim
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetFromScale (const T escala_x, const T escala_y, const T escala_z)
+inline Matrix44<T>& Matrix44<T>::SetFromScale(const T escala_x, const T escala_y, const T escala_z)
 {
-  m00 = escala_x;    m01 = Zero<T>();   m02 = Zero<T>();   m03 = Zero<T>();
-  m10 = Zero<T>();   m11 = escala_y;    m12 = Zero<T>();   m13 = Zero<T>();
-  m20 = Zero<T>();   m21 = Zero<T>();   m22 = escala_z;    m23 = Zero<T>();
-  m30 = Zero<T>();   m31 = Zero<T>();   m32 = Zero<T>();   m33 = One<T>();
+	m00 = escala_x;    m01 = Zero<T>();   m02 = Zero<T>();   m03 = Zero<T>();
+	m10 = Zero<T>();   m11 = escala_y;    m12 = Zero<T>();   m13 = Zero<T>();
+	m20 = Zero<T>();   m21 = Zero<T>();   m22 = escala_z;    m23 = Zero<T>();
+	m30 = Zero<T>();   m31 = Zero<T>();   m32 = Zero<T>();   m33 = One<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -587,49 +596,55 @@ inline Matrix44<T>& Matrix44<T>::SetFromScale (const T escala_x, const T escala_
 /// @Note1 El vector vUp debe estar normalizado.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetFromLookAt (const Vector3<T>& vPos, const Vector3<T>& vTarget, const Vector3<T>& vUp)
+inline Matrix44<T>& Matrix44<T>::SetFromLookAt(const Vector3<T>& vPos, const Vector3<T>& vTarget, const Vector3<T>& vUp)
 {
-  Vector3<T> vLookAt_eje_Z = (vTarget - vPos).Normalize();
+	Vector3<T> vLookAt_eje_Z = (vPos - vTarget).Normalize();
 
 #ifdef CHECK_MATH_SINGULARITY_LOOK_AT
-  //--------------------------------------------------------------------<<<
-  // Se comprueba cuando el vector 'look_at' tiene la misma dirección que el vector 'up'.
-  // En este caso el producto vectorial falla al intentar calcular el vector 'right' ya que da (0,0,0).
-  // La solución es desviar un poco el vector 'up' al detectar la condición.
-  if(vUP.IsNotEqualEpsilon(v3fY))
-  {
-    if(vLookAt_eje_Z.IsEqualEpsilon(vUp, (T)0.0001))
-    {
-      vUP.y -= (T)0.1;
-    }
-    else
-    if(vLookAt_eje_Z.IsEqualEpsilon(-vUp, (T)0.0001))
-    {
-      vUP.y += (T)0.1;
-    }
-  }
-  else
-  {
-    if(vLookAt_eje_Z.IsEqualEpsilon(vUp, (T)0.0001))
-    {
-      vUP.z += (T)0.1;
-    }
-    else
-    if(vLookAt_eje_Z.IsEqualEpsilon(-vUp, (T)0.0001))
-    {
-      vUP.z -= (T)0.1;
-    }
-  }
-  //-------------------------------------------------------------------->>>
+	//--------------------------------------------------------------------<<<
+	// Se comprueba cuando el vector 'look_at' tiene la misma dirección que el vector 'up'.
+	// En este caso el producto vectorial falla al intentar calcular el vector 'right' ya que da (0,0,0).
+	// La solución es desviar un poco el vector 'up' al detectar la condición.
+	if (vUP.IsNotEqualEpsilon(v3fY))
+	{
+		if (vLookAt_eje_Z.IsEqualEpsilon(vUp, (T)0.0001))
+		{
+			vUP.y -= (T)0.1;
+		}
+		else
+			if (vLookAt_eje_Z.IsEqualEpsilon(-vUp, (T)0.0001))
+			{
+				vUP.y += (T)0.1;
+			}
+	}
+	else
+	{
+		if (vLookAt_eje_Z.IsEqualEpsilon(vUp, (T)0.0001))
+		{
+			vUP.z += (T)0.1;
+		}
+		else
+			if (vLookAt_eje_Z.IsEqualEpsilon(-vUp, (T)0.0001))
+			{
+				vUP.z -= (T)0.1;
+			}
+	}
+	//-------------------------------------------------------------------->>>
 #endif
 
-  Vector3<T> vRight_eje_X = vUp ^ vLookAt_eje_Z;
-  vRight_eje_X.Normalize();
-  Vector3<T> vUP_eje_Y = vLookAt_eje_Z ^ vRight_eje_X;
+	Vector3<T> vRight_eje_X = vUp ^ vLookAt_eje_Z;
+	vRight_eje_X.Normalize();
+	Vector3<T> vUP_eje_Y = vLookAt_eje_Z ^ vRight_eje_X;
 
-  SetFromBasis(vRight_eje_X, vUP_eje_Y, vLookAt_eje_Z, vPos);
+	Vector3<T> translation(-(vPos * vRight_eje_X), -(vPos * vUP_eje_Y), -(vPos * vLookAt_eje_Z));
 
-  return (*this);
+	//SetFromBasis(vRight_eje_X, vUP_eje_Y, vLookAt_eje_Z, translation);
+	m00 = vRight_eje_X.x;     m10 = vRight_eje_X.y;	m20 = vRight_eje_X.z;	m30 = translation.x;
+	m01 = vUP_eje_Y.x;		m11 = vUP_eje_Y.y;		m21 = vUP_eje_Y.z;		m31 = translation.y;
+	m02 = vLookAt_eje_Z.x;    m12 = vLookAt_eje_Z.y;	m22 = vLookAt_eje_Z.z;	m32 = translation.z;
+	m03 = Zero<T>();			m13 = Zero<T>();		m23 = Zero<T>();		m33 = One<T>();
+
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -641,10 +656,30 @@ inline Matrix44<T>& Matrix44<T>::SetFromLookAt (const Vector3<T>& vPos, const Ve
 ///        del sistema de referencia adoptado.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetFromLookAt (const Vector3<T>& vPos, const Vector3<T>& vTarget)
+inline Matrix44<T>& Matrix44<T>::SetFromLookAt(const Vector3<T>& vPos, const Vector3<T>& vTarget)
 {
-  return SetFromLookAt(vPos, vTarget, v3fY);
+	return SetFromLookAt(vPos, vTarget, v3fY);
 }
+
+template<typename T>
+inline Matrix44<T>& Matrix44<T>::SetFromPerspective(float fovy, float aspect, float zn, float zf)
+{
+	//float yScale = 1.0f / tan(fovy * 0.5f);
+	//float inradians = fovy * (float)(DOUBLE_PI_VALUE / 180.0);
+	float yScale = 1.0f / tan(fovy * 0.5f);
+	float xScale = yScale / aspect;
+
+	m00 = xScale;
+	m11 = yScale;
+	m22 = zf / (zn - zf);
+	m32 = zn*zf / (zn - zf);
+	m23 = -1;
+	m33 = 0;
+
+	return (*this);
+}
+
+
 /*
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Establece la matriz a partir de un cuaternión para la parte de rotación y un vector para la parte de posición
@@ -652,30 +687,30 @@ inline Matrix44<T>& Matrix44<T>::SetFromLookAt (const Vector3<T>& vPos, const Ve
 template<typename T>
 inline Matrix44<T>& Matrix44<T>::SetFromQuatPos (const Quatn<T>& quat, const Vector3<T>& vPos)
 {
-  T x = quat.x;
-  T y = quat.y;
-  T z = quat.z;
-  T w = quat.w;
+T x = quat.x;
+T y = quat.y;
+T z = quat.z;
+T w = quat.w;
 
-  T xx  =  x + x;
-  T yy  =  y + y;
-  T zz  =  z + z;
-  T wx  =  w * xx;
-  T wy  =  w * yy;
-  T wz  =  w * zz;
-  T xxx = xx * x;
-  T yyx = yy * x;
-  T zzx = zz * x;
-  T yyy = yy * y;
-  T zzy = zz * y;
-  T zzz = zz * z;
+T xx  =  x + x;
+T yy  =  y + y;
+T zz  =  z + z;
+T wx  =  w * xx;
+T wy  =  w * yy;
+T wz  =  w * zz;
+T xxx = xx * x;
+T yyx = yy * x;
+T zzx = zz * x;
+T yyy = yy * y;
+T zzy = zz * y;
+T zzz = zz * z;
 
-  m00 = One<T>() - (yyy + zzz);  m01 = yyx - wz;                m02 = zzx + wy;               m03 = vPos.x;
-  m10 = yyx + wz;                m11 = One<T>() - (xxx + zzz);  m12 = zzy - wx;               m13 = vPos.y;
-  m20 = zzx - wy;                m21 = zzy + wx;                m22 = One<T>() - (xxx + yyy); m23 = vPos.z;
-  m30 = Zero<T>();               m31 = Zero<T>();               m32 = Zero<T>();              m33 = One<T>();
+m00 = One<T>() - (yyy + zzz);  m01 = yyx - wz;                m02 = zzx + wy;               m03 = vPos.x;
+m10 = yyx + wz;                m11 = One<T>() - (xxx + zzz);  m12 = zzy - wx;               m13 = vPos.y;
+m20 = zzx - wy;                m21 = zzy + wx;                m22 = One<T>() - (xxx + yyy); m23 = vPos.z;
+m30 = Zero<T>();               m31 = Zero<T>();               m32 = Zero<T>();              m33 = One<T>();
 
-  return (*this);
+return (*this);
 }
 */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -683,9 +718,9 @@ inline Matrix44<T>& Matrix44<T>::SetFromQuatPos (const Quatn<T>& quat, const Vec
 /// dejando la traslación y el escalado invariables
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetRotByAngleX (const T angleX)
+inline Matrix44<T>& Matrix44<T>::SetRotByAngleX(const T angleX)
 {
-  ResetRotation();
+	ResetRotation();
 
 	Vector2<T> v;
 
@@ -710,7 +745,7 @@ inline Matrix44<T>& Matrix44<T>::SetRotByAngleX (const T angleX)
 	m12 = v.x;
 	m22 = v.y;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -718,10 +753,10 @@ inline Matrix44<T>& Matrix44<T>::SetRotByAngleX (const T angleX)
 /// dejando la traslación y el escalado invariables
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetRotByAngleY (const T angleY)
+inline Matrix44<T>& Matrix44<T>::SetRotByAngleY(const T angleY)
 {
-  ResetRotation();
-  
+	ResetRotation();
+
 	Vector2<T> v;
 
 	// eje X
@@ -745,7 +780,7 @@ inline Matrix44<T>& Matrix44<T>::SetRotByAngleY (const T angleY)
 	m22 = v.x;
 	m02 = v.y;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -753,10 +788,10 @@ inline Matrix44<T>& Matrix44<T>::SetRotByAngleY (const T angleY)
 /// dejando la traslación y el escalado invariables
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetRotByAngleZ (const T angleZ)
+inline Matrix44<T>& Matrix44<T>::SetRotByAngleZ(const T angleZ)
 {
-  ResetRotation();
-  
+	ResetRotation();
+
 	Vector2<T> v;
 
 	// eje X
@@ -780,7 +815,7 @@ inline Matrix44<T>& Matrix44<T>::SetRotByAngleZ (const T angleZ)
 	m02 = v.x;
 	m12 = v.y;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -788,10 +823,10 @@ inline Matrix44<T>& Matrix44<T>::SetRotByAngleZ (const T angleZ)
 /// dejando la traslación y el escalado invariables
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetRotByAnglesXZ (const T angleX, const T angleZ)
+inline Matrix44<T>& Matrix44<T>::SetRotByAnglesXZ(const T angleX, const T angleZ)
 {
-  ResetRotation();
-  
+	ResetRotation();
+
 	Vector2<T> v;
 
 	////////////
@@ -844,7 +879,7 @@ inline Matrix44<T>& Matrix44<T>::SetRotByAnglesXZ (const T angleX, const T angle
 	m02 = v.x;
 	m12 = v.y;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -852,10 +887,10 @@ inline Matrix44<T>& Matrix44<T>::SetRotByAnglesXZ (const T angleX, const T angle
 /// dejando la traslación y el escalado invariables
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetRotByAnglesYXZ (const T angleY, const T angleX, const T angleZ)
+inline Matrix44<T>& Matrix44<T>::SetRotByAnglesYXZ(const T angleY, const T angleX, const T angleZ)
 {
-  ResetRotation();
-  
+	ResetRotation();
+
 	Vector2<T> v;
 
 	////////////
@@ -933,7 +968,7 @@ inline Matrix44<T>& Matrix44<T>::SetRotByAnglesYXZ (const T angleY, const T angl
 	m02 = v.x;
 	m12 = v.y;
 
-  return (*this);
+	return (*this);
 }
 /*
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -942,13 +977,13 @@ inline Matrix44<T>& Matrix44<T>::SetRotByAnglesYXZ (const T angleY, const T angl
 template<typename T>
 inline Matrix44<T>& Matrix44<T>::SetRotByQuat (const Quatn<T>& quat)
 {
-  Vector3<T> vSavePos   = GetPos();
-  Vector3<T> vSaveScale = GetScale();
+Vector3<T> vSavePos   = GetPos();
+Vector3<T> vSaveScale = GetScale();
 
-  SetFromQuatPos(quat, vSavePos);
-  SetScale(vSaveScale);
+SetFromQuatPos(quat, vSavePos);
+SetScale(vSaveScale);
 
-  return (*this);
+return (*this);
 }
 */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -956,26 +991,26 @@ inline Matrix44<T>& Matrix44<T>::SetRotByQuat (const Quatn<T>& quat)
 /// considerando a la matriz como una transformación afín
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetPos (const T posX, const T posY, const T posZ)
+inline Matrix44<T>& Matrix44<T>::SetPos(const T posX, const T posY, const T posZ)
 {
-  m03 = posX;
-  m13 = posY;
-  m23 = posZ;
+	m03 = posX;
+	m13 = posY;
+	m23 = posZ;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Versión con un vector 3D como parámetro
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetPos (const Vector3<T>& pos)
+inline Matrix44<T>& Matrix44<T>::SetPos(const Vector3<T>& pos)
 {
-  m03 = pos.x;
-  m13 = pos.y;
-  m23 = pos.z;
+	m03 = pos.x;
+	m13 = pos.y;
+	m23 = pos.z;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -993,7 +1028,7 @@ inline Matrix44<T>& Matrix44<T>::SetPos (const Vector3<T>& pos)
 /// \endverbatim
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetScale (const Matrix33<T>& mat_escala)
+inline Matrix44<T>& Matrix44<T>::SetScale(const Matrix33<T>& mat_escala)
 {
 	T scale_x = mat_escala.m00 / GetVectorBasisLength(0);
 	T scale_y = mat_escala.m11 / GetVectorBasisLength(1);
@@ -1003,7 +1038,7 @@ inline Matrix44<T>& Matrix44<T>::SetScale (const Matrix33<T>& mat_escala)
 	m10 *= scale_x;  m11 *= scale_y;  m12 = *= scale_z;
 	m20 *= scale_x;  m21 *= scale_y;  m22 = *= scale_z;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1022,7 +1057,7 @@ inline Matrix44<T>& Matrix44<T>::SetScale (const Matrix33<T>& mat_escala)
 /// \endverbatim
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetScale (const Matrix44<T>& mat_escala)
+inline Matrix44<T>& Matrix44<T>::SetScale(const Matrix44<T>& mat_escala)
 {
 	T scale_x = mat_escala.m00 / GetVectorBasisLength(0);
 	T scale_y = mat_escala.m11 / GetVectorBasisLength(1);
@@ -1032,7 +1067,7 @@ inline Matrix44<T>& Matrix44<T>::SetScale (const Matrix44<T>& mat_escala)
 	m10 *= scale_x;  m11 *= scale_y;  m12 = *= scale_z;
 	m20 *= scale_x;  m21 *= scale_y;  m22 = *= scale_z;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1046,7 +1081,7 @@ inline Matrix44<T>& Matrix44<T>::SetScale (const Matrix44<T>& mat_escala)
 /// en los tres ejes X, Y, Z.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetScale (const Vector3<T>& vect_escala)
+inline Matrix44<T>& Matrix44<T>::SetScale(const Vector3<T>& vect_escala)
 {
 	T scale_x = vect_escala.x / GetVectorBasisLength(0);
 	T scale_y = vect_escala.y / GetVectorBasisLength(1);
@@ -1056,7 +1091,7 @@ inline Matrix44<T>& Matrix44<T>::SetScale (const Vector3<T>& vect_escala)
 	m10 *= scale_x;  m11 *= scale_y;  m12 *= scale_z;
 	m20 *= scale_x;  m21 *= scale_y;  m22 *= scale_z;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1069,7 +1104,7 @@ inline Matrix44<T>& Matrix44<T>::SetScale (const Vector3<T>& vect_escala)
 ///   - Establecer el nuevo escalado. Multiplicando cada vector base por su escalado correspondiente.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetScale (const T escala_x, const T escala_y, const T escala_z)
+inline Matrix44<T>& Matrix44<T>::SetScale(const T escala_x, const T escala_y, const T escala_z)
 {
 	T scale_x = escala_x / GetVectorBasisLength(0);
 	T scale_y = escala_y / GetVectorBasisLength(1);
@@ -1079,33 +1114,33 @@ inline Matrix44<T>& Matrix44<T>::SetScale (const T escala_x, const T escala_y, c
 	m10 *= scale_x;  m11 *= scale_y;  m12 *= scale_z;
 	m20 *= scale_x;  m21 *= scale_y;  m22 *= scale_z;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Establece la submatriz 3x3 de la matriz actual
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetSubMatrix33 (const Matrix33<T>& mat_sub)
+inline Matrix44<T>& Matrix44<T>::SetSubMatrix33(const Matrix33<T>& mat_sub)
 {
-  m00 = mat_sub.m00;   m01 = mat_sub.m01;   m02 = mat_sub.m02;
-  m10 = mat_sub.m10;   m11 = mat_sub.m11;   m12 = mat_sub.m12;
-  m20 = mat_sub.m20;   m21 = mat_sub.m21;   m22 = mat_sub.m22;
+	m00 = mat_sub.m00;   m01 = mat_sub.m01;   m02 = mat_sub.m02;
+	m10 = mat_sub.m10;   m11 = mat_sub.m11;   m12 = mat_sub.m12;
+	m20 = mat_sub.m20;   m21 = mat_sub.m21;   m22 = mat_sub.m22;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Establece la submatriz 3x4 de la matriz actual
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetSubMatrix34 (const Matrix34<T>& mat_sub)
+inline Matrix44<T>& Matrix44<T>::SetSubMatrix34(const Matrix34<T>& mat_sub)
 {
-  m00 = mat_sub.m00;   m01 = mat_sub.m01;   m02 = mat_sub.m02;   m03 = mat_sub.m03;
-  m10 = mat_sub.m10;   m11 = mat_sub.m11;   m12 = mat_sub.m12;   m13 = mat_sub.m13;
-  m20 = mat_sub.m20;   m21 = mat_sub.m21;   m22 = mat_sub.m22;   m23 = mat_sub.m23;
+	m00 = mat_sub.m00;   m01 = mat_sub.m01;   m02 = mat_sub.m02;   m03 = mat_sub.m03;
+	m10 = mat_sub.m10;   m11 = mat_sub.m11;   m12 = mat_sub.m12;   m13 = mat_sub.m13;
+	m20 = mat_sub.m20;   m21 = mat_sub.m21;   m22 = mat_sub.m22;   m23 = mat_sub.m23;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1114,12 +1149,12 @@ inline Matrix44<T>& Matrix44<T>::SetSubMatrix34 (const Matrix34<T>& mat_sub)
 /// sistema de referencia padre
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Vector3<T> Matrix44<T>::GetVectorBasis (int i) const
+inline Vector3<T> Matrix44<T>::GetVectorBasis(int i) const
 {
 #ifdef ROW_MAJOR_MATRICES 
-	return Vector3<T>( ((T*)this)[i],
-										 ((T*)this)[4  + i],
-										 ((T*)this)[8  + i]);
+	return Vector3<T>(((T*)this)[i],
+		((T*)this)[4 + i],
+		((T*)this)[8 + i]);
 #else
 	return *(Vector3<T>*)((Vector4<T>*)this + i);
 #endif
@@ -1129,12 +1164,12 @@ inline Vector3<T> Matrix44<T>::GetVectorBasis (int i) const
 /// Devuelve el módulo del vector formado por los 3  elementos de una columna
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline T Matrix44<T>::GetVectorBasisLength (int i) const
+inline T Matrix44<T>::GetVectorBasisLength(int i) const
 {
 #ifdef ROW_MAJOR_MATRICES
 	return Vector3<T>(((T*)this)[i],
-										((T*)this)[4 + i],
-										((T*)this)[8 + i] ).Length();
+		((T*)this)[4 + i],
+		((T*)this)[8 + i]).Length();
 #else
 	return (*(Vector3<T>*)((Vector4<T>*)this + i)).Length();
 #endif
@@ -1147,9 +1182,9 @@ inline T Matrix44<T>::GetVectorBasisLength (int i) const
 /// sistema de referencia padre
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Vector3<T> Matrix44<T>::GetPosBasis () const
+inline Vector3<T> Matrix44<T>::GetPosBasis() const
 {
-  return GetVectorBasis(3);
+	return GetVectorBasis(3);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1158,15 +1193,15 @@ inline Vector3<T> Matrix44<T>::GetPosBasis () const
 /// sistema de referencia padre
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline void Matrix44<T>::GetBasis (Vector3<T>& vBasisX,
-                                   Vector3<T>& vBasisY,
-                                   Vector3<T>& vBasisZ,
-                                   Vector3<T>& Pos) const
+inline void Matrix44<T>::GetBasis(Vector3<T>& vBasisX,
+	Vector3<T>& vBasisY,
+	Vector3<T>& vBasisZ,
+	Vector3<T>& Pos) const
 {
-  vBasisX = GetVectorBasis(0);
-  vBasisY = GetVectorBasis(1);
-  vBasisZ = GetVectorBasis(2);
-  Pos     = GetVectorBasis(3);
+	vBasisX = GetVectorBasis(0);
+	vBasisY = GetVectorBasis(1);
+	vBasisZ = GetVectorBasis(2);
+	Pos = GetVectorBasis(3);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1174,11 +1209,11 @@ inline void Matrix44<T>::GetBasis (Vector3<T>& vBasisX,
 /// rotación + escalado, cuando la matriz es una transformación
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix33<T> Matrix44<T>::GetSubMatrix33 () const
+inline Matrix33<T> Matrix44<T>::GetSubMatrix33() const
 {
-   return Matrix33<T>(m00, m01, m02,
-                      m10, m11, m12,
-                      m20, m21, m22);
+	return Matrix33<T>(m00, m01, m02,
+		m10, m11, m12,
+		m20, m21, m22);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1186,11 +1221,11 @@ inline Matrix33<T> Matrix44<T>::GetSubMatrix33 () const
 /// de la matriz actual
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline void Matrix44<T>::GetSubMatrix33 (Matrix33<T>& subMat) const
+inline void Matrix44<T>::GetSubMatrix33(Matrix33<T>& subMat) const
 {
-  subMat.m00 = m00;  subMat.m01 = m01;  subMat.m02 = m02;
-  subMat.m10 = m10;  subMat.m11 = m11;  subMat.m12 = m12;
-  subMat.m20 = m20;  subMat.m21 = m21;  subMat.m22 = m22;
+	subMat.m00 = m00;  subMat.m01 = m01;  subMat.m02 = m02;
+	subMat.m10 = m10;  subMat.m11 = m11;  subMat.m12 = m12;
+	subMat.m20 = m20;  subMat.m21 = m21;  subMat.m22 = m22;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1198,11 +1233,11 @@ inline void Matrix44<T>::GetSubMatrix33 (Matrix33<T>& subMat) const
 /// la transformación afín completa: traslación + rotación + escalado
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix34<T> Matrix44<T>::GetSubMatrix34 () const
+inline Matrix34<T> Matrix44<T>::GetSubMatrix34() const
 {
-  return Matrix34<T>(m00, m01, m02, m03,
-                     m10, m11, m12, m13,
-                     m20, m21, m22, m23);
+	return Matrix34<T>(m00, m01, m02, m03,
+		m10, m11, m12, m13,
+		m20, m21, m22, m23);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1211,11 +1246,11 @@ inline Matrix34<T> Matrix44<T>::GetSubMatrix34 () const
 /// completa: traslación + rotación + escalado
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline void Matrix44<T>::GetSubMatrix34 (Matrix34<T>& subMat) const
+inline void Matrix44<T>::GetSubMatrix34(Matrix34<T>& subMat) const
 {
-  subMat.m00 = m00;  subMat.m01 = m01;  subMat.m02 = m02;  subMat.m03 = m03;
-  subMat.m10 = m10;  subMat.m11 = m11;  subMat.m12 = m12;  subMat.m13 = m13;
-  subMat.m20 = m20;  subMat.m21 = m21;  subMat.m22 = m22;  subMat.m23 = m23;
+	subMat.m00 = m00;  subMat.m01 = m01;  subMat.m02 = m02;  subMat.m03 = m03;
+	subMat.m10 = m10;  subMat.m11 = m11;  subMat.m12 = m12;  subMat.m13 = m13;
+	subMat.m20 = m20;  subMat.m21 = m21;  subMat.m22 = m22;  subMat.m23 = m23;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1224,11 +1259,11 @@ inline void Matrix44<T>::GetSubMatrix34 (Matrix34<T>& subMat) const
 /// (Versión que anula el escalado)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix33<T> Matrix44<T>::Get33RotationNormalized () const
+inline Matrix33<T> Matrix44<T>::Get33RotationNormalized() const
 {
-  return Matrix33<T>(GetVectorBasis(0).GetNormalized(),
-                     GetVectorBasis(1).GetNormalized(),
-                     GetVectorBasis(2).GetNormalized());
+	return Matrix33<T>(GetVectorBasis(0).GetNormalized(),
+		GetVectorBasis(1).GetNormalized(),
+		GetVectorBasis(2).GetNormalized());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1237,11 +1272,11 @@ inline Matrix33<T> Matrix44<T>::Get33RotationNormalized () const
 /// (Versión que contiene el escalado)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix33<T> Matrix44<T>::Get33RotationScaled () const
+inline Matrix33<T> Matrix44<T>::Get33RotationScaled() const
 {
-  return Matrix33<T>(m00, m01, m02,
-                     m10, m11, m12,
-                     m20, m21, m22);
+	return Matrix33<T>(m00, m01, m02,
+		m10, m11, m12,
+		m20, m21, m22);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1251,9 +1286,9 @@ inline Matrix33<T> Matrix44<T>::Get33RotationScaled () const
 template<typename T>
 inline Matrix33<T> Matrix44<T>::Get33Scale() const
 {
-  return Matrix33<T>(GetVectorBasis(0).Length(),            Zero<T>()      ,          Zero<T>(),
-                            Zero<T>()          , GetVectorBasis(1).Length(),          Zero<T>(),
-                            Zero<T>()          ,            Zero<T>()      , GetVectorBasis(2).Length());
+	return Matrix33<T>(GetVectorBasis(0).Length(), Zero<T>(), Zero<T>(),
+		Zero<T>(), GetVectorBasis(1).Length(), Zero<T>(),
+		Zero<T>(), Zero<T>(), GetVectorBasis(2).Length());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1262,9 +1297,9 @@ inline Matrix33<T> Matrix44<T>::Get33Scale() const
 /// (Versión que devuelve un vector de traslación)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Vector3<T> Matrix44<T>::GetTranslationVector () const
+inline Vector3<T> Matrix44<T>::GetTranslationVector() const
 {
-  return Vector3<T>(m03, m13, m23);
+	return Vector3<T>(m03, m13, m23);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1272,12 +1307,12 @@ inline Vector3<T> Matrix44<T>::GetTranslationVector () const
 /// una transformación de traslación + rotación + escalado
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T> Matrix44<T>::Get44RotationScaled () const
+inline Matrix44<T> Matrix44<T>::Get44RotationScaled() const
 {
-  return Matrix44<T>(  m00,       m01,       m02,     Zero<T>(),
-                       m10,       m11,       m12,     Zero<T>(),
-                       m20,       m21,       m22,     Zero<T>(),
-                     Zero<T>(), Zero<T>(), Zero<T>(), One<T>());
+	return Matrix44<T>(m00, m01, m02, Zero<T>(),
+		m10, m11, m12, Zero<T>(),
+		m20, m21, m22, Zero<T>(),
+		Zero<T>(), Zero<T>(), Zero<T>(), One<T>());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1286,12 +1321,12 @@ inline Matrix44<T> Matrix44<T>::Get44RotationScaled () const
 /// (Versión que elimina el escalado)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T> Matrix44<T>::Get44RotationNormalized () const
+inline Matrix44<T> Matrix44<T>::Get44RotationNormalized() const
 {
-  return Matrix44<T>(GetVectorBasis(0).GetNormalized(),
-                     GetVectorBasis(1).GetNormalized(),
-                     GetVectorBasis(2).GetNormalized(),
-                     Vector3<T>(Zero<T>(), Zero<T>(), Zero<T>()));
+	return Matrix44<T>(GetVectorBasis(0).GetNormalized(),
+		GetVectorBasis(1).GetNormalized(),
+		GetVectorBasis(2).GetNormalized(),
+		Vector3<T>(Zero<T>(), Zero<T>(), Zero<T>()));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1300,12 +1335,12 @@ inline Matrix44<T> Matrix44<T>::Get44RotationNormalized () const
 /// como una matriz 4x4
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T> Matrix44<T>::Get44Translation () const
+inline Matrix44<T> Matrix44<T>::Get44Translation() const
 {
-  return Matrix44<T>(One<T>(),  Zero<T>(), Zero<T>(), m03,
-                     Zero<T>(), One<T>(),  Zero<T>(), m13,
-                     Zero<T>(), Zero<T>(), One<T>(),  m23,
-                     Zero<T>(), Zero<T>(), Zero<T>(), One<T>());
+	return Matrix44<T>(One<T>(), Zero<T>(), Zero<T>(), m03,
+		Zero<T>(), One<T>(), Zero<T>(), m13,
+		Zero<T>(), Zero<T>(), One<T>(), m23,
+		Zero<T>(), Zero<T>(), Zero<T>(), One<T>());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1314,12 +1349,12 @@ inline Matrix44<T> Matrix44<T>::Get44Translation () const
 /// como una matriz 4x4
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T> Matrix44<T>::Get44Scale () const
+inline Matrix44<T> Matrix44<T>::Get44Scale() const
 {
-  return Matrix44<T>(GetVectorBasis(0).Length(),            Zero<T>()      ,          Zero<T>()        ,  Zero<T>(),
-                            Zero<T>()          , GetVectorBasis(1).Length(),          Zero<T>()        ,  Zero<T>(),
-                            Zero<T>()          ,            Zero<T>()      , GetVectorBasis(2).Length(),  Zero<T>(),
-                            Zero<T>()          ,            Zero<T>()      ,          Zero<T>()        ,  One<T>());
+	return Matrix44<T>(GetVectorBasis(0).Length(), Zero<T>(), Zero<T>(), Zero<T>(),
+		Zero<T>(), GetVectorBasis(1).Length(), Zero<T>(), Zero<T>(),
+		Zero<T>(), Zero<T>(), GetVectorBasis(2).Length(), Zero<T>(),
+		Zero<T>(), Zero<T>(), Zero<T>(), One<T>());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1327,9 +1362,9 @@ inline Matrix44<T> Matrix44<T>::Get44Scale () const
 /// de traslación + rotación + escalado, como un vector3
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Vector3<T> Matrix44<T>::GetPos () const
+inline Vector3<T> Matrix44<T>::GetPos() const
 {
-  return Vector3<T>(m03, m13, m23);
+	return Vector3<T>(m03, m13, m23);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1337,11 +1372,11 @@ inline Vector3<T> Matrix44<T>::GetPos () const
 /// de referencia que define.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Vector3<T> Matrix44<T>::GetScale () const
+inline Vector3<T> Matrix44<T>::GetScale() const
 {
-  return Vector3<T>(GetVectorBasis(0).Length(),
-                    GetVectorBasis(1).Length(),
-                    GetVectorBasis(2).Length());
+	return Vector3<T>(GetVectorBasis(0).Length(),
+		GetVectorBasis(1).Length(),
+		GetVectorBasis(2).Length());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1349,9 +1384,9 @@ inline Vector3<T> Matrix44<T>::GetScale () const
 /// del sistema de referencia que define.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline T Matrix44<T>::GetScaleX () const
+inline T Matrix44<T>::GetScaleX() const
 {
-  return GetVectorBasis(0).Length();
+	return GetVectorBasis(0).Length();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1359,9 +1394,9 @@ inline T Matrix44<T>::GetScaleX () const
 /// del sistema de referencia que define.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline T Matrix44<T>::GetScaleY () const
+inline T Matrix44<T>::GetScaleY() const
 {
-  return GetVectorBasis(1).Length();
+	return GetVectorBasis(1).Length();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1369,20 +1404,20 @@ inline T Matrix44<T>::GetScaleY () const
 /// del sistema de referencia que define.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline T Matrix44<T>::GetScaleZ () const
+inline T Matrix44<T>::GetScaleZ() const
 {
-  return GetVectorBasis(2).Length();
+	return GetVectorBasis(2).Length();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Obtención de ángulos de euler (Ver comentario en Matrix33::GetAnglesYXZ)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-void Matrix44<T>::GetAnglesYXZ (T& angleY, T& angleX, T& angleZ) const
+void Matrix44<T>::GetAnglesYXZ(T& angleY, T& angleX, T& angleZ) const
 {
-  angleY = mathUtils::ATan2(-m20, m22);
-  angleX = mathUtils::ASin(m21);
-  angleZ = mathUtils::ATan2(-m01, m11);
+	angleY = mathUtils::ATan2(-m20, m22);
+	angleX = mathUtils::ASin(m21);
+	angleZ = mathUtils::ATan2(-m01, m11);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1390,9 +1425,9 @@ void Matrix44<T>::GetAnglesYXZ (T& angleY, T& angleX, T& angleZ) const
 /// (Ver comentario en Matrix33::GetAnglesYXZ)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-T Matrix44<T>::GetAngleX () const
+T Matrix44<T>::GetAngleX() const
 {
-  return mathUtils::ASin(m21);
+	return mathUtils::ASin(m21);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1400,9 +1435,9 @@ T Matrix44<T>::GetAngleX () const
 /// (Ver comentario en Matrix33::GetAnglesYXZ)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-T Matrix44<T>::GetAngleY () const
+T Matrix44<T>::GetAngleY() const
 {
-  return mathUtils::ATan2(-m20, m22);
+	return mathUtils::ATan2(-m20, m22);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1410,9 +1445,9 @@ T Matrix44<T>::GetAngleY () const
 /// (Ver comentario en Matrix33::GetAnglesYXZ)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-T Matrix44<T>::GetAngleZ () const
+T Matrix44<T>::GetAngleZ() const
 {
-  return mathUtils::ATan2(-m01, m11);
+	return mathUtils::ATan2(-m01, m11);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1420,9 +1455,9 @@ T Matrix44<T>::GetAngleZ () const
 /// y orden de concatenación explicado en 'Matrix33::SetPitchRollYaw'
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline T Matrix44<T>::GetRoll () const
+inline T Matrix44<T>::GetRoll() const
 {
-  return mathUtils::ATan2(m20, m00);
+	return mathUtils::ATan2(m20, m00);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1430,9 +1465,9 @@ inline T Matrix44<T>::GetRoll () const
 /// y orden de concatenación expresado en 'Matrix33::SetPitchRollYaw'
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline T Matrix44<T>::GetPitch () const
+inline T Matrix44<T>::GetPitch() const
 {
-  return mathUtils::ATan2(-m12, m11);
+	return mathUtils::ATan2(-m12, m11);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1440,9 +1475,9 @@ inline T Matrix44<T>::GetPitch () const
 /// y orden de concatenación expresado en 'SetPitchRollYaw'
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline T Matrix44<T>::GetYaw () const
+inline T Matrix44<T>::GetYaw() const
 {
-  return mathUtils::ASin(-m10);
+	return mathUtils::ASin(-m10);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1450,11 +1485,11 @@ inline T Matrix44<T>::GetYaw () const
 /// en 'Matrix33::SetPitchRollYaw'.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Vector3<T> Matrix44<T>::GetPitchRollYaw () const
+inline Vector3<T> Matrix44<T>::GetPitchRollYaw() const
 {
-  return Vector3<T>(mathUtils::ATan2(-m12, m11),
-                    mathUtils::ATan2(m20, m00),
-                    mathUtils::ASin(-m10));
+	return Vector3<T>(mathUtils::ATan2(-m12, m11),
+		mathUtils::ATan2(m20, m00),
+		mathUtils::ASin(-m10));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1462,19 +1497,19 @@ inline Vector3<T> Matrix44<T>::GetPitchRollYaw () const
 /// 'PitchRollYaw' explicado en 'Matrix33::SetPitchRollYaw'. Esta función pone a cero la parte de posición.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::SetFromPitchRollYaw (const Vector3<T>& v3PitchRollYaw)
+Matrix44<T>& Matrix44<T>::SetFromPitchRollYaw(const Vector3<T>& v3PitchRollYaw)
 {
-  T sx, cx, sy, cy, sz, cz;
-  mathUtils::SinCos(v3PitchRollYaw.x, sx, cx);
-  mathUtils::SinCos(v3PitchRollYaw.y, sy, cy);
-  mathUtils::SinCos(v3PitchRollYaw.z, sz, cz);
+	T sx, cx, sy, cy, sz, cz;
+	mathUtils::SinCos(v3PitchRollYaw.x, sx, cx);
+	mathUtils::SinCos(v3PitchRollYaw.y, sy, cy);
+	mathUtils::SinCos(v3PitchRollYaw.z, sz, cz);
 
-  m00 = cy*cz;     m01 = cy*sz*cx - sy*sx;  m02 = -cy*sz*sx - sy*cx;  m03 = Zero<T>(); 
-  m10 = -sz;       m11 = cz*cx;             m12 = -cz*sx;             m13 = Zero<T>();
-  m20 = sy*cz;     m21 = sy*sz*cx + cy*sx;  m22 = -sy*sz*sx + cy*cx;  m23 = Zero<T>();
-  m30 = Zero<T>(); m31 = Zero<T>();         m32 = Zero<T>();          m33 = One<T>();
+	m00 = cy*cz;     m01 = cy*sz*cx - sy*sx;  m02 = -cy*sz*sx - sy*cx;  m03 = Zero<T>();
+	m10 = -sz;       m11 = cz*cx;             m12 = -cz*sx;             m13 = Zero<T>();
+	m20 = sy*cz;     m21 = sy*sz*cx + cy*sx;  m22 = -sy*sz*sx + cy*cx;  m23 = Zero<T>();
+	m30 = Zero<T>(); m31 = Zero<T>();         m32 = Zero<T>();          m33 = One<T>();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1482,33 +1517,33 @@ Matrix44<T>& Matrix44<T>::SetFromPitchRollYaw (const Vector3<T>& v3PitchRollYaw)
 /// en 'Matrix33::SetPitchRollYaw'. Esta función modifica solo la parte rotación.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Matrix44<T>& Matrix44<T>::SetPitchRollYaw (const Vector3<T>& v3PitchRollYaw)
+inline Matrix44<T>& Matrix44<T>::SetPitchRollYaw(const Vector3<T>& v3PitchRollYaw)
 {
-  T sx, cx, sy, cy, sz, cz;
-  mathUtils::SinCos(v3PitchRollYaw.x, sx, cx);
-  mathUtils::SinCos(v3PitchRollYaw.y, sy, cy);
-  mathUtils::SinCos(v3PitchRollYaw.z, sz, cz);
+	T sx, cx, sy, cy, sz, cz;
+	mathUtils::SinCos(v3PitchRollYaw.x, sx, cx);
+	mathUtils::SinCos(v3PitchRollYaw.y, sy, cy);
+	mathUtils::SinCos(v3PitchRollYaw.z, sz, cz);
 
-  m00 = cy*cz;     m01 = cy*sz*cx - sy*sx;  m02 = -cy*sz*sx - sy*cx;
-  m10 = -sz;       m11 = cz*cx;             m12 = -cz*sx;
-  m20 = sy*cz;     m21 = sy*sz*cx + cy*sx;  m22 = -sy*sz*sx + cy*cx;
-  
-  return (*this);
+	m00 = cy*cz;     m01 = cy*sz*cx - sy*sx;  m02 = -cy*sz*sx - sy*cx;
+	m10 = -sz;       m11 = cz*cx;             m12 = -cz*sx;
+	m20 = sy*cz;     m21 = sy*sz*cx + cy*sx;  m22 = -sy*sz*sx + cy*cx;
+
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Acceso a filas como vectores 4D
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Vector4<T> Matrix44<T>::GetRow (int i) const
+inline Vector4<T> Matrix44<T>::GetRow(int i) const
 {
 #ifdef ROW_MAJOR_MATRICES
 	return *((Vector4<T>*)this + i);
 #else
-	return Vector4<T>( ((T*)this)[i],
-		((T*)this)[4  + i],
-		((T*)this)[8  + i],
-		((T*)this)[12 + i] );
+	return Vector4<T>(((T*)this)[i],
+		((T*)this)[4 + i],
+		((T*)this)[8 + i],
+		((T*)this)[12 + i]);
 #endif
 }
 
@@ -1516,13 +1551,13 @@ inline Vector4<T> Matrix44<T>::GetRow (int i) const
 /// Acceso a columnas como vectores 4D
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline Vector4<T> Matrix44<T>::GetColum (int i) const
+inline Vector4<T> Matrix44<T>::GetColum(int i) const
 {
 #ifdef ROW_MAJOR_MATRICES
-	return Vector4<T>( ((T*)this)[i],
-		((T*)this)[4  + i],
-		((T*)this)[8  + i],
-		((T*)this)[12 + i] );
+	return Vector4<T>(((T*)this)[i],
+		((T*)this)[4 + i],
+		((T*)this)[8 + i],
+		((T*)this)[12 + i]);
 #else
 	return *((Vector4<T>*)this + i);
 #endif
@@ -1535,10 +1570,10 @@ inline Vector4<T> Matrix44<T>::GetColum (int i) const
 template<typename T>
 Matrix44<T> Matrix44<T>::operator + (const Matrix44<T>& otra) const
 {
-  return (Matrix44<T>(m00 + otra.m00, m01 + otra.m01, m02 + otra.m02, m03 + otra.m03,  
-                      m10 + otra.m10, m11 + otra.m11, m12 + otra.m12, m13 + otra.m13,
-                      m20 + otra.m20, m21 + otra.m21, m22 + otra.m22, m23 + otra.m23,
-                      m30 + otra.m30, m31 + otra.m31, m32 + otra.m32, m33 + otra.m33));
+	return (Matrix44<T>(m00 + otra.m00, m01 + otra.m01, m02 + otra.m02, m03 + otra.m03,
+		m10 + otra.m10, m11 + otra.m11, m12 + otra.m12, m13 + otra.m13,
+		m20 + otra.m20, m21 + otra.m21, m22 + otra.m22, m23 + otra.m23,
+		m30 + otra.m30, m31 + otra.m31, m32 + otra.m32, m33 + otra.m33));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1547,10 +1582,10 @@ Matrix44<T> Matrix44<T>::operator + (const Matrix44<T>& otra) const
 template<typename T>
 Matrix44<T> Matrix44<T>::operator - (const Matrix44<T> &otra) const
 {
-  return (Matrix44<T>(m00 - otra.m00, m01 - otra.m01, m02 - otra.m02, m03 - otra.m03,  
-                      m10 - otra.m10, m11 - otra.m11, m12 - otra.m12, m13 - otra.m13,
-                      m20 - otra.m20, m21 - otra.m21, m22 - otra.m22, m23 - otra.m23,
-                      m30 - otra.m30, m31 - otra.m31, m32 - otra.m32, m33 - otra.m33));
+	return (Matrix44<T>(m00 - otra.m00, m01 - otra.m01, m02 - otra.m02, m03 - otra.m03,
+		m10 - otra.m10, m11 - otra.m11, m12 - otra.m12, m13 - otra.m13,
+		m20 - otra.m20, m21 - otra.m21, m22 - otra.m22, m23 - otra.m23,
+		m30 - otra.m30, m31 - otra.m31, m32 - otra.m32, m33 - otra.m33));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1559,25 +1594,25 @@ Matrix44<T> Matrix44<T>::operator - (const Matrix44<T> &otra) const
 template<typename T>
 Matrix44<T> Matrix44<T>::operator * (const Matrix44<T>& otra) const
 {
-  return (Matrix44<T>(m00 * otra.m00 + m01 * otra.m10 + m02 * otra.m20 + m03 * otra.m30,
-                      m00 * otra.m01 + m01 * otra.m11 + m02 * otra.m21 + m03 * otra.m31,
-                      m00 * otra.m02 + m01 * otra.m12 + m02 * otra.m22 + m03 * otra.m32,
-                      m00 * otra.m03 + m01 * otra.m13 + m02 * otra.m23 + m03 * otra.m33,
+	return (Matrix44<T>(m00 * otra.m00 + m01 * otra.m10 + m02 * otra.m20 + m03 * otra.m30,
+		m00 * otra.m01 + m01 * otra.m11 + m02 * otra.m21 + m03 * otra.m31,
+		m00 * otra.m02 + m01 * otra.m12 + m02 * otra.m22 + m03 * otra.m32,
+		m00 * otra.m03 + m01 * otra.m13 + m02 * otra.m23 + m03 * otra.m33,
 
-                      m10 * otra.m00 + m11 * otra.m10 + m12 * otra.m20 + m13 * otra.m30,
-                      m10 * otra.m01 + m11 * otra.m11 + m12 * otra.m21 + m13 * otra.m31,
-                      m10 * otra.m02 + m11 * otra.m12 + m12 * otra.m22 + m13 * otra.m32,
-                      m10 * otra.m03 + m11 * otra.m13 + m12 * otra.m23 + m13 * otra.m33,
+		m10 * otra.m00 + m11 * otra.m10 + m12 * otra.m20 + m13 * otra.m30,
+		m10 * otra.m01 + m11 * otra.m11 + m12 * otra.m21 + m13 * otra.m31,
+		m10 * otra.m02 + m11 * otra.m12 + m12 * otra.m22 + m13 * otra.m32,
+		m10 * otra.m03 + m11 * otra.m13 + m12 * otra.m23 + m13 * otra.m33,
 
-                      m20 * otra.m00 + m21 * otra.m10 + m22 * otra.m20 + m23 * otra.m30,
-                      m20 * otra.m01 + m21 * otra.m11 + m22 * otra.m21 + m23 * otra.m31,
-                      m20 * otra.m02 + m21 * otra.m12 + m22 * otra.m22 + m23 * otra.m32,
-                      m20 * otra.m03 + m21 * otra.m13 + m22 * otra.m23 + m23 * otra.m33,
+		m20 * otra.m00 + m21 * otra.m10 + m22 * otra.m20 + m23 * otra.m30,
+		m20 * otra.m01 + m21 * otra.m11 + m22 * otra.m21 + m23 * otra.m31,
+		m20 * otra.m02 + m21 * otra.m12 + m22 * otra.m22 + m23 * otra.m32,
+		m20 * otra.m03 + m21 * otra.m13 + m22 * otra.m23 + m23 * otra.m33,
 
-                      m30 * otra.m00 + m31 * otra.m10 + m32 * otra.m20 + m33 * otra.m30,
-                      m30 * otra.m01 + m31 * otra.m11 + m32 * otra.m21 + m33 * otra.m31,          
-                      m30 * otra.m02 + m31 * otra.m12 + m32 * otra.m22 + m33 * otra.m32, 
-                      m30 * otra.m03 + m31 * otra.m13 + m32 * otra.m23 + m33 * otra.m33));
+		m30 * otra.m00 + m31 * otra.m10 + m32 * otra.m20 + m33 * otra.m30,
+		m30 * otra.m01 + m31 * otra.m11 + m32 * otra.m21 + m33 * otra.m31,
+		m30 * otra.m02 + m31 * otra.m12 + m32 * otra.m22 + m33 * otra.m32,
+		m30 * otra.m03 + m31 * otra.m13 + m32 * otra.m23 + m33 * otra.m33));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1586,10 +1621,10 @@ Matrix44<T> Matrix44<T>::operator * (const Matrix44<T>& otra) const
 template<typename T>
 Matrix44<T> Matrix44<T>::operator * (const T escalar) const
 {
-  return (Matrix44<T>(m00 * escalar, m01 * escalar, m02 * escalar, m03 * escalar,
-                      m10 * escalar, m11 * escalar, m12 * escalar, m13 * escalar,
-                      m20 * escalar, m21 * escalar, m22 * escalar, m23 * escalar,
-                      m30 * escalar, m31 * escalar, m32 * escalar, m33 * escalar));
+	return (Matrix44<T>(m00 * escalar, m01 * escalar, m02 * escalar, m03 * escalar,
+		m10 * escalar, m11 * escalar, m12 * escalar, m13 * escalar,
+		m20 * escalar, m21 * escalar, m22 * escalar, m23 * escalar,
+		m30 * escalar, m31 * escalar, m32 * escalar, m33 * escalar));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1598,10 +1633,10 @@ Matrix44<T> Matrix44<T>::operator * (const T escalar) const
 template<typename T>
 Matrix44<T> operator * (const T escalar, const Matrix44<T>& mat)
 {
-  return (Matrix44<T>(mat.m00 * escalar, mat.m01 * escalar, mat.m02 * escalar, mat.m03 * escalar,  
-                      mat.m10 * escalar, mat.m11 * escalar, mat.m12 * escalar, mat.m13 * escalar,  
-                      mat.m20 * escalar, mat.m21 * escalar, mat.m22 * escalar, mat.m23 * escalar,  
-                      mat.m30 * escalar, mat.m31 * escalar, mat.m32 * escalar, mat.m33 * escalar));
+	return (Matrix44<T>(mat.m00 * escalar, mat.m01 * escalar, mat.m02 * escalar, mat.m03 * escalar,
+		mat.m10 * escalar, mat.m11 * escalar, mat.m12 * escalar, mat.m13 * escalar,
+		mat.m20 * escalar, mat.m21 * escalar, mat.m22 * escalar, mat.m23 * escalar,
+		mat.m30 * escalar, mat.m31 * escalar, mat.m32 * escalar, mat.m33 * escalar));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1610,28 +1645,28 @@ Matrix44<T> operator * (const T escalar, const Matrix44<T>& mat)
 template<typename T>
 Matrix44<T> Matrix44<T>::operator / (const T escalar) const
 {
-  T inv_escalar = One<T>();
+	T inv_escalar = One<T>();
 
 #ifdef CHECK_MATH_SINGULARITY
-  //--------------------------------------------------------------<<<
-  // Con chequeo de división por cero
-  ASSERTMSG(escalar != Zero<T>(), "División por cero en cociente matriz4x4-escalar");
-  if(escalar != Zero<T>())
-  {
-    inv_escalar /= escalar;
-  }
-  //-------------------------------------------------------------->>>
+	//--------------------------------------------------------------<<<
+	// Con chequeo de división por cero
+	ASSERTMSG(escalar != Zero<T>(), "División por cero en cociente matriz4x4-escalar");
+	if (escalar != Zero<T>())
+	{
+		inv_escalar /= escalar;
+	}
+	//-------------------------------------------------------------->>>
 #else
-  //--------------------------------------------------------------<<<
-  // Sin chequeo
-  inv_escalar /= escalar;
-  //-------------------------------------------------------------->>>
+	//--------------------------------------------------------------<<<
+	// Sin chequeo
+	inv_escalar /= escalar;
+	//-------------------------------------------------------------->>>
 #endif
 
-  return (Matrix44<T>(m00 * inv_escalar, m01 * inv_escalar, m02 * inv_escalar, m03 * inv_escalar,
-                      m10 * inv_escalar, m11 * inv_escalar, m12 * inv_escalar, m13 * inv_escalar,  
-                      m20 * inv_escalar, m21 * inv_escalar, m22 * inv_escalar, m23 * inv_escalar, 
-                      m30 * inv_escalar, m31 * inv_escalar, m32 * inv_escalar, m33 * inv_escalar));
+	return (Matrix44<T>(m00 * inv_escalar, m01 * inv_escalar, m02 * inv_escalar, m03 * inv_escalar,
+		m10 * inv_escalar, m11 * inv_escalar, m12 * inv_escalar, m13 * inv_escalar,
+		m20 * inv_escalar, m21 * inv_escalar, m22 * inv_escalar, m23 * inv_escalar,
+		m30 * inv_escalar, m31 * inv_escalar, m32 * inv_escalar, m33 * inv_escalar));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1640,12 +1675,12 @@ Matrix44<T> Matrix44<T>::operator / (const T escalar) const
 template<typename T>
 Matrix44<T>& Matrix44<T>::operator += (const Matrix44<T> &otra)
 {
-  m00 += otra.m00; m01 += otra.m01; m02 += otra.m02;  m03 += otra.m03;  
-  m10 += otra.m10; m11 += otra.m11; m12 += otra.m12;  m13 += otra.m13;
-  m20 += otra.m20; m21 += otra.m21; m22 += otra.m22;  m23 += otra.m23;
-  m30 += otra.m30; m31 += otra.m31; m32 += otra.m32;  m33 += otra.m33;
-  
-  return (*this);
+	m00 += otra.m00; m01 += otra.m01; m02 += otra.m02;  m03 += otra.m03;
+	m10 += otra.m10; m11 += otra.m11; m12 += otra.m12;  m13 += otra.m13;
+	m20 += otra.m20; m21 += otra.m21; m22 += otra.m22;  m23 += otra.m23;
+	m30 += otra.m30; m31 += otra.m31; m32 += otra.m32;  m33 += otra.m33;
+
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1654,12 +1689,12 @@ Matrix44<T>& Matrix44<T>::operator += (const Matrix44<T> &otra)
 template<typename T>
 Matrix44<T>& Matrix44<T>::operator -= (const Matrix44<T>& otra)
 {
-  m00 -= otra.m00; m01 -= otra.m01; m02 -= otra.m02;  m03 -= otra.m03;  
-  m10 -= otra.m10; m11 -= otra.m11; m12 -= otra.m12;  m13 -= otra.m13;
-  m20 -= otra.m20; m21 -= otra.m21; m22 -= otra.m22;  m23 -= otra.m23;
-  m30 -= otra.m30; m31 -= otra.m31; m32 -= otra.m32;  m33 -= otra.m33;
-  
-  return (*this);
+	m00 -= otra.m00; m01 -= otra.m01; m02 -= otra.m02;  m03 -= otra.m03;
+	m10 -= otra.m10; m11 -= otra.m11; m12 -= otra.m12;  m13 -= otra.m13;
+	m20 -= otra.m20; m21 -= otra.m21; m22 -= otra.m22;  m23 -= otra.m23;
+	m30 -= otra.m30; m31 -= otra.m31; m32 -= otra.m32;  m33 -= otra.m33;
+
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1668,7 +1703,7 @@ Matrix44<T>& Matrix44<T>::operator -= (const Matrix44<T>& otra)
 template<typename T>
 Matrix44<T>& Matrix44<T>::operator *= (const Matrix44<T>& otra)
 {
-  return (*this) = (*this) * otra;
+	return (*this) = (*this) * otra;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1677,12 +1712,12 @@ Matrix44<T>& Matrix44<T>::operator *= (const Matrix44<T>& otra)
 template<typename T>
 Matrix44<T>& Matrix44<T>::operator *= (const T escalar)
 {
-  m00 *= escalar; m01 *= escalar; m02 *= escalar; m03 *= escalar; 
-  m10 *= escalar; m11 *= escalar; m12 *= escalar; m13 *= escalar; 
-  m20 *= escalar; m21 *= escalar; m22 *= escalar; m23 *= escalar;
-  m30 *= escalar; m31 *= escalar; m32 *= escalar; m33 *= escalar;
+	m00 *= escalar; m01 *= escalar; m02 *= escalar; m03 *= escalar;
+	m10 *= escalar; m11 *= escalar; m12 *= escalar; m13 *= escalar;
+	m20 *= escalar; m21 *= escalar; m22 *= escalar; m23 *= escalar;
+	m30 *= escalar; m31 *= escalar; m32 *= escalar; m33 *= escalar;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1691,30 +1726,30 @@ Matrix44<T>& Matrix44<T>::operator *= (const T escalar)
 template<typename T>
 Matrix44<T>& Matrix44<T>::operator /= (const T escalar)
 {
-  T inv_escalar = One<T>();
+	T inv_escalar = One<T>();
 
 #ifdef CHECK_MATH_SINGULARITY
-  //--------------------------------------------------------------<<<
-  // Con chequeo de división por cero
-  ASSERTMSG(escalar != Zero<T>(), "División por cero en cociente matriz-escalar");
-  if(escalar != Zero<T>())
-  {
-    inv_escalar /= escalar;
-  }
-  //-------------------------------------------------------------->>>
+	//--------------------------------------------------------------<<<
+	// Con chequeo de división por cero
+	ASSERTMSG(escalar != Zero<T>(), "División por cero en cociente matriz-escalar");
+	if (escalar != Zero<T>())
+	{
+		inv_escalar /= escalar;
+	}
+	//-------------------------------------------------------------->>>
 #else
-  //--------------------------------------------------------------<<<
-  // Sin chequeo
-  inv_escalar /= escalar;
-  //-------------------------------------------------------------->>>
+	//--------------------------------------------------------------<<<
+	// Sin chequeo
+	inv_escalar /= escalar;
+	//-------------------------------------------------------------->>>
 #endif
 
-  m00 *= inv_escalar;  m01 *= inv_escalar;  m02 *= inv_escalar;  m03 *= inv_escalar;
-  m10 *= inv_escalar;  m11 *= inv_escalar;  m12 *= inv_escalar;  m13 *= inv_escalar;
-  m20 *= inv_escalar;  m21 *= inv_escalar;  m22 *= inv_escalar;  m23 *= inv_escalar;
-  m30 *= inv_escalar;  m31 *= inv_escalar;  m32 *= inv_escalar;  m33 *= inv_escalar;
+	m00 *= inv_escalar;  m01 *= inv_escalar;  m02 *= inv_escalar;  m03 *= inv_escalar;
+	m10 *= inv_escalar;  m11 *= inv_escalar;  m12 *= inv_escalar;  m13 *= inv_escalar;
+	m20 *= inv_escalar;  m21 *= inv_escalar;  m22 *= inv_escalar;  m23 *= inv_escalar;
+	m30 *= inv_escalar;  m31 *= inv_escalar;  m32 *= inv_escalar;  m33 *= inv_escalar;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1729,12 +1764,12 @@ Matrix44<T>& Matrix44<T>::operator /= (const T escalar)
 /// \endverbatim
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline T Matrix44<T>::Determinant () const
+inline T Matrix44<T>::Determinant() const
 {
-  return m00 * Matrix33<T>(m11, m12, m13, m21, m22, m23, m31, m32, m33).Determinant() -
-         m01 * Matrix33<T>(m10, m12, m13, m20, m22, m23, m30, m32, m33).Determinant() +
-         m02 * Matrix33<T>(m10, m11, m13, m20, m21, m23, m30, m31, m33).Determinant() -
-         m03 * Matrix33<T>(m10, m11, m12, m20, m21, m22, m30, m31, m32).Determinant();
+	return m00 * Matrix33<T>(m11, m12, m13, m21, m22, m23, m31, m32, m33).Determinant() -
+		m01 * Matrix33<T>(m10, m12, m13, m20, m22, m23, m30, m32, m33).Determinant() +
+		m02 * Matrix33<T>(m10, m11, m13, m20, m21, m23, m30, m31, m33).Determinant() -
+		m03 * Matrix33<T>(m10, m11, m12, m20, m21, m22, m30, m31, m32).Determinant();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1747,59 +1782,59 @@ inline T Matrix44<T>::Determinant () const
 /// \endverbatim
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::Invert ()
+Matrix44<T>& Matrix44<T>::Invert()
 {
-  return ((*this) = GetInverted());
+	return ((*this) = GetInverted());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Versión que devuelve una copia
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T> Matrix44<T>::GetInverted () const
+Matrix44<T> Matrix44<T>::GetInverted() const
 {
-  T determinante = Determinant();
-  T inv_det = One<T>();
+	T determinante = Determinant();
+	T inv_det = One<T>();
 
 #ifdef CHECK_MATH_SINGULARITY
-  //-----------------------------------------------------------------------<<<
-  // Con chequeo de división por cero
-  ASSERTMSG(determinante != Zero<T>(), "Determinante nulo en cálculo de matriz inversa");
-  if(determinante != Zero<T>())
-  {
-    inv_det /= determinante;
-  }
-  //----------------------------------------------------------------------->>>
+	//-----------------------------------------------------------------------<<<
+	// Con chequeo de división por cero
+	ASSERTMSG(determinante != Zero<T>(), "Determinante nulo en cálculo de matriz inversa");
+	if (determinante != Zero<T>())
+	{
+		inv_det /= determinante;
+	}
+	//----------------------------------------------------------------------->>>
 #else
-  //-----------------------------------------------------------------------<<<  
-  // Sin chequeo
-  inv_det /= determinante;
-  //----------------------------------------------------------------------->>>
+	//-----------------------------------------------------------------------<<<  
+	// Sin chequeo
+	inv_det /= determinante;
+	//----------------------------------------------------------------------->>>
 #endif
 
-  Matrix44<T> auxMat;
+	Matrix44<T> auxMat;
 
-  auxMat.m00 = Matrix33<T>(m11, m12, m13, m21, m22, m23, m31, m32, m33).Determinant() * inv_det;
-  auxMat.m01 =-Matrix33<T>(m01, m02, m03, m21, m22, m23, m31, m32, m33).Determinant() * inv_det;
-  auxMat.m02 = Matrix33<T>(m01, m02, m03, m11, m12, m13, m31, m32, m33).Determinant() * inv_det;
-  auxMat.m03 =-Matrix33<T>(m01, m02, m03, m11, m12, m13, m21, m22, m23).Determinant() * inv_det;
+	auxMat.m00 = Matrix33<T>(m11, m12, m13, m21, m22, m23, m31, m32, m33).Determinant() * inv_det;
+	auxMat.m01 = -Matrix33<T>(m01, m02, m03, m21, m22, m23, m31, m32, m33).Determinant() * inv_det;
+	auxMat.m02 = Matrix33<T>(m01, m02, m03, m11, m12, m13, m31, m32, m33).Determinant() * inv_det;
+	auxMat.m03 = -Matrix33<T>(m01, m02, m03, m11, m12, m13, m21, m22, m23).Determinant() * inv_det;
 
-  auxMat.m10 =-Matrix33<T>(m10, m12, m13, m20, m22, m23, m30, m32, m33).Determinant() * inv_det;
-  auxMat.m11 = Matrix33<T>(m00, m02, m03, m20, m22, m23, m30, m32, m33).Determinant() * inv_det;
-  auxMat.m12 =-Matrix33<T>(m00, m02, m03, m10, m12, m13, m30, m32, m33).Determinant() * inv_det;
-  auxMat.m13 = Matrix33<T>(m00, m02, m03, m10, m12, m13, m20, m22, m23).Determinant() * inv_det;
+	auxMat.m10 = -Matrix33<T>(m10, m12, m13, m20, m22, m23, m30, m32, m33).Determinant() * inv_det;
+	auxMat.m11 = Matrix33<T>(m00, m02, m03, m20, m22, m23, m30, m32, m33).Determinant() * inv_det;
+	auxMat.m12 = -Matrix33<T>(m00, m02, m03, m10, m12, m13, m30, m32, m33).Determinant() * inv_det;
+	auxMat.m13 = Matrix33<T>(m00, m02, m03, m10, m12, m13, m20, m22, m23).Determinant() * inv_det;
 
-  auxMat.m20 = Matrix33<T>(m10, m11, m13, m20, m21, m23, m30, m31, m33).Determinant() * inv_det;
-  auxMat.m21 =-Matrix33<T>(m00, m01, m03, m20, m21, m23, m30, m31, m33).Determinant() * inv_det;
-  auxMat.m22 = Matrix33<T>(m00, m01, m03, m10, m11, m13, m30, m31, m33).Determinant() * inv_det;
-  auxMat.m23 =-Matrix33<T>(m00, m01, m03, m10, m11, m13, m20, m21, m23).Determinant() * inv_det;
+	auxMat.m20 = Matrix33<T>(m10, m11, m13, m20, m21, m23, m30, m31, m33).Determinant() * inv_det;
+	auxMat.m21 = -Matrix33<T>(m00, m01, m03, m20, m21, m23, m30, m31, m33).Determinant() * inv_det;
+	auxMat.m22 = Matrix33<T>(m00, m01, m03, m10, m11, m13, m30, m31, m33).Determinant() * inv_det;
+	auxMat.m23 = -Matrix33<T>(m00, m01, m03, m10, m11, m13, m20, m21, m23).Determinant() * inv_det;
 
-  auxMat.m30 =-Matrix33<T>(m10, m11, m12, m20, m21, m22, m30, m31, m32).Determinant() * inv_det;
-  auxMat.m31 = Matrix33<T>(m00, m01, m02, m20, m21, m22, m30, m31, m32).Determinant() * inv_det;
-  auxMat.m32 =-Matrix33<T>(m00, m01, m02, m10, m11, m12, m30, m31, m32).Determinant() * inv_det;
-  auxMat.m33 = Matrix33<T>(m00, m01, m02, m10, m11, m12, m20, m21, m22).Determinant() * inv_det;
+	auxMat.m30 = -Matrix33<T>(m10, m11, m12, m20, m21, m22, m30, m31, m32).Determinant() * inv_det;
+	auxMat.m31 = Matrix33<T>(m00, m01, m02, m20, m21, m22, m30, m31, m32).Determinant() * inv_det;
+	auxMat.m32 = -Matrix33<T>(m00, m01, m02, m10, m11, m12, m30, m31, m32).Determinant() * inv_det;
+	auxMat.m33 = Matrix33<T>(m00, m01, m02, m10, m11, m12, m20, m21, m22).Determinant() * inv_det;
 
-  return auxMat;
+	return auxMat;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1816,78 +1851,78 @@ Matrix44<T> Matrix44<T>::GetInverted () const
 /// Donde la matriz de rotación respresenta a una base 'ortonormal' en el espacio 3D
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::InvertTRS ()
+Matrix44<T>& Matrix44<T>::InvertTRS()
 {
-  return ((*this) = GetInvertedTRS());
+	return ((*this) = GetInvertedTRS());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Versión que devuelve una copia
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T> Matrix44<T>::GetInvertedTRS ()const
+Matrix44<T> Matrix44<T>::GetInvertedTRS()const
 {
-  T div_x = One<T>();
-  T div_y = One<T>();
-  T div_z = One<T>();
+	T div_x = One<T>();
+	T div_y = One<T>();
+	T div_z = One<T>();
 
-  T esc_x = GetScaleX();
-  T esc_y = GetScaleY();
-  T esc_z = GetScaleZ();
+	T esc_x = GetScaleX();
+	T esc_y = GetScaleY();
+	T esc_z = GetScaleZ();
 
 #ifdef CHECK_MATH_SINGULARITY
-  //-------------------------------------------------------------<<<
-  // Con chequeo de división por cero
-  ASSERTMSG(esc_x != Zero<T>() &&
-            esc_y != Zero<T>() &&
-            esc_z != Zero<T>(),
-            "División por cero en cálculo de matriz inversa TRS");
-  if(esc_x != Zero<T>())
-  {
-    div_x /= (esc_x * esc_x);
-  }
-  if(esc_y != Zero<T>())
-  {
-    div_y /= (esc_y * esc_y);
-  }
-  if(esc_z != Zero<T>())
-  {
-    div_z /= (esc_z * esc_z);
-  }
-  //------------------------------------------------------------->>>
+	//-------------------------------------------------------------<<<
+	// Con chequeo de división por cero
+	ASSERTMSG(esc_x != Zero<T>() &&
+		esc_y != Zero<T>() &&
+		esc_z != Zero<T>(),
+		"División por cero en cálculo de matriz inversa TRS");
+	if (esc_x != Zero<T>())
+	{
+		div_x /= (esc_x * esc_x);
+	}
+	if (esc_y != Zero<T>())
+	{
+		div_y /= (esc_y * esc_y);
+	}
+	if (esc_z != Zero<T>())
+	{
+		div_z /= (esc_z * esc_z);
+	}
+	//------------------------------------------------------------->>>
 #else
-  //-------------------------------------------------------------<<<
-  // Sin chequeo
-  div_x /= (esc_x * esc_x);
-  div_y /= (esc_y * esc_y);
-  div_z /= (esc_z * esc_z);
-  //------------------------------------------------------------->>>
+	//-------------------------------------------------------------<<<
+	// Sin chequeo
+	div_x /= (esc_x * esc_x);
+	div_y /= (esc_y * esc_y);
+	div_z /= (esc_z * esc_z);
+	//------------------------------------------------------------->>>
 #endif 
 
-  Matrix44<T> auxMat;
+	Matrix44<T> auxMat;
 
-  auxMat.m00 = m00 / div_x;
-  auxMat.m01 = m10 / div_x;
-  auxMat.m02 = m20 / div_x;
+	auxMat.m00 = m00 / div_x;
+	auxMat.m01 = m10 / div_x;
+	auxMat.m02 = m20 / div_x;
 
-  auxMat.m10 = m01 / div_y;
-  auxMat.m11 = m11 / div_y;
-  auxMat.m12 = m21 / div_y;
+	auxMat.m10 = m01 / div_y;
+	auxMat.m11 = m11 / div_y;
+	auxMat.m12 = m21 / div_y;
 
-  auxMat.m20 = m02 / div_z;
-  auxMat.m21 = m12 / div_z;
-  auxMat.m22 = m22 / div_z;
+	auxMat.m20 = m02 / div_z;
+	auxMat.m21 = m12 / div_z;
+	auxMat.m22 = m22 / div_z;
 
-  auxMat.m03 = -m03*auxMat.m00 - m13*auxMat.m01 - m23*auxMat.m02;
-  auxMat.m13 = -m03*auxMat.m10 - m13*auxMat.m11 - m23*auxMat.m12;
-  auxMat.m23 = -m03*auxMat.m20 - m13*auxMat.m21 - m23*auxMat.m22;
+	auxMat.m03 = -m03*auxMat.m00 - m13*auxMat.m01 - m23*auxMat.m02;
+	auxMat.m13 = -m03*auxMat.m10 - m13*auxMat.m11 - m23*auxMat.m12;
+	auxMat.m23 = -m03*auxMat.m20 - m13*auxMat.m21 - m23*auxMat.m22;
 
-  auxMat.m30 = Zero<T>();
-  auxMat.m31 = Zero<T>();
-  auxMat.m32 = Zero<T>();
-  auxMat.m33 = One<T>();
-  
-  return auxMat;
+	auxMat.m30 = Zero<T>();
+	auxMat.m31 = Zero<T>();
+	auxMat.m32 = Zero<T>();
+	auxMat.m33 = One<T>();
+
+	return auxMat;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1905,70 +1940,70 @@ Matrix44<T> Matrix44<T>::GetInvertedTRS ()const
 /// (Versión que modifica la matriz)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::InvertTR ()
+Matrix44<T>& Matrix44<T>::InvertTR()
 {
-  return ((*this) = GetInvertedTR());
+	return ((*this) = GetInvertedTR());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Versión const que devuelve una copia
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T> Matrix44<T>::GetInvertedTR () const
+Matrix44<T> Matrix44<T>::GetInvertedTR() const
 {
-  Matrix44<T> auxMat;
+	Matrix44<T> auxMat;
 
-  auxMat.m00 = m00;
-  auxMat.m01 = m10;
-  auxMat.m02 = m20;
+	auxMat.m00 = m00;
+	auxMat.m01 = m10;
+	auxMat.m02 = m20;
 
-  auxMat.m10 = m01;
-  auxMat.m11 = m11;
-  auxMat.m12 = m21;
+	auxMat.m10 = m01;
+	auxMat.m11 = m11;
+	auxMat.m12 = m21;
 
-  auxMat.m20 = m02;
-  auxMat.m21 = m12;
-  auxMat.m22 = m22;
+	auxMat.m20 = m02;
+	auxMat.m21 = m12;
+	auxMat.m22 = m22;
 
-  auxMat.m03 = -m03*auxMat.m00 - m13*auxMat.m01 - m23*auxMat.m02;
-  auxMat.m13 = -m03*auxMat.m10 - m13*auxMat.m11 - m23*auxMat.m12;
-  auxMat.m23 = -m03*auxMat.m20 - m13*auxMat.m21 - m23*auxMat.m22;
+	auxMat.m03 = -m03*auxMat.m00 - m13*auxMat.m01 - m23*auxMat.m02;
+	auxMat.m13 = -m03*auxMat.m10 - m13*auxMat.m11 - m23*auxMat.m12;
+	auxMat.m23 = -m03*auxMat.m20 - m13*auxMat.m21 - m23*auxMat.m22;
 
-  auxMat.m30 = Zero<T>();
-  auxMat.m31 = Zero<T>();
-  auxMat.m32 = Zero<T>();
-  auxMat.m33 = One<T>();
-  
-  return auxMat;
+	auxMat.m30 = Zero<T>();
+	auxMat.m31 = Zero<T>();
+	auxMat.m32 = Zero<T>();
+	auxMat.m33 = One<T>();
+
+	return auxMat;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Trasposición de la matriz (cambio de filas por columnas)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::Transpose ()
+Matrix44<T>& Matrix44<T>::Transpose()
 {
-  T valor;
-  valor = m01;  m01 = m10;  m10 = valor;
-  valor = m02;  m02 = m20;  m20 = valor;
-  valor = m03;  m03 = m30;  m30 = valor;
-  valor = m12;  m12 = m21;  m21 = valor;
-  valor = m13;  m13 = m31;  m31 = valor;
-  valor = m23;  m23 = m32;  m32 = valor;
+	T valor;
+	valor = m01;  m01 = m10;  m10 = valor;
+	valor = m02;  m02 = m20;  m20 = valor;
+	valor = m03;  m03 = m30;  m30 = valor;
+	valor = m12;  m12 = m21;  m21 = valor;
+	valor = m13;  m13 = m31;  m31 = valor;
+	valor = m23;  m23 = m32;  m32 = valor;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Devuelve una matriz traspuesta de la actual
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T> Matrix44<T>::GetTransposed () const
+Matrix44<T> Matrix44<T>::GetTransposed() const
 {
-  return Matrix44<T>(m00, m10, m20, m30,
-                     m01, m11, m21, m31,
-                     m02, m12, m22, m32,
-                     m03, m13, m23, m33);
+	return Matrix44<T>(m00, m10, m20, m30,
+		m01, m11, m21, m31,
+		m02, m12, m22, m32,
+		m03, m13, m23, m33);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1976,17 +2011,17 @@ Matrix44<T> Matrix44<T>::GetTransposed () const
 /// del sistema de referencia del padre
 /// (versión const que devuelve una matriz copia)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-template<typename T> 
-Matrix44<T> Matrix44<T>::GetRotedByAngleX (const T angleX) const
+template<typename T>
+Matrix44<T> Matrix44<T>::GetRotedByAngleX(const T angleX) const
 {
-  return Matrix44<T>(*this).RotByAngleX(angleX);
+	return Matrix44<T>(*this).RotByAngleX(angleX);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Versión no const que modifica la matriz
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-template<typename T> 
-Matrix44<T>& Matrix44<T>::RotByAngleX (const T angleX)
+template<typename T>
+Matrix44<T>& Matrix44<T>::RotByAngleX(const T angleX)
 {
 	Vector2<T> v;
 
@@ -2011,7 +2046,7 @@ Matrix44<T>& Matrix44<T>::RotByAngleX (const T angleX)
 	m12 = v.x;
 	m22 = v.y;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2019,17 +2054,17 @@ Matrix44<T>& Matrix44<T>::RotByAngleX (const T angleX)
 /// del sistema de referencia del padre
 /// (versión const que devuelve una matriz copia)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-template<typename T> 
-Matrix44<T> Matrix44<T>::GetRotedByAngleY (const T angleY) const
+template<typename T>
+Matrix44<T> Matrix44<T>::GetRotedByAngleY(const T angleY) const
 {
-  return Matrix44<T>(*this).RotByAngleY(angleY);
+	return Matrix44<T>(*this).RotByAngleY(angleY);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Versión no const que modifica la matriz
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::RotByAngleY (const T angleY)
+Matrix44<T>& Matrix44<T>::RotByAngleY(const T angleY)
 {
 	Vector2<T> v;
 
@@ -2054,7 +2089,7 @@ Matrix44<T>& Matrix44<T>::RotByAngleY (const T angleY)
 	m22 = v.x;
 	m02 = v.y;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2062,17 +2097,17 @@ Matrix44<T>& Matrix44<T>::RotByAngleY (const T angleY)
 /// del sistema de referencia del padre
 /// (versión const que devuelve una matriz copia)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-template<typename T> 
-Matrix44<T> Matrix44<T>::GetRotedByAngleZ (const T angleZ) const
+template<typename T>
+Matrix44<T> Matrix44<T>::GetRotedByAngleZ(const T angleZ) const
 {
-  return Matrix44<T>(*this).RotByAngleY(angleZ);
+	return Matrix44<T>(*this).RotByAngleY(angleZ);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Versión no const que modifica la matriz
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::RotByAngleZ (const T angleZ)
+Matrix44<T>& Matrix44<T>::RotByAngleZ(const T angleZ)
 {
 	Vector2<T> v;
 
@@ -2096,8 +2131,8 @@ Matrix44<T>& Matrix44<T>::RotByAngleZ (const T angleZ)
 	v.Rotate(angleZ);
 	m02 = v.x;
 	m12 = v.y;
-  
-  return (*this);
+
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2105,17 +2140,17 @@ Matrix44<T>& Matrix44<T>::RotByAngleZ (const T angleZ)
 /// luego de 'AngleZ' radianes alrededor del eje Z, del sistema de referencia del padre
 /// (versión const que devuelve una matriz copia)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-template<typename T> 
-Matrix44<T> Matrix44<T>::GetRotedByAnglesXZ  (const T angleX, const T angleZ) const
+template<typename T>
+Matrix44<T> Matrix44<T>::GetRotedByAnglesXZ(const T angleX, const T angleZ) const
 {
-  return Matrix44<T>(*this).RotByAnglesXZ(angleX, angleZ);
+	return Matrix44<T>(*this).RotByAnglesXZ(angleX, angleZ);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Versión no const que modifica la matriz
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::RotByAnglesXZ (const T angleX, const T angleZ)
+Matrix44<T>& Matrix44<T>::RotByAnglesXZ(const T angleX, const T angleZ)
 {
 	Vector2<T> v;
 
@@ -2169,7 +2204,7 @@ Matrix44<T>& Matrix44<T>::RotByAnglesXZ (const T angleX, const T angleZ)
 	m02 = v.x;
 	m12 = v.y;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2178,17 +2213,17 @@ Matrix44<T>& Matrix44<T>::RotByAnglesXZ (const T angleX, const T angleZ)
 /// alrededor del eje Z, del sistema de referencia del padre
 /// (versión const que devuelve una matriz copia)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-template<typename T> 
-Matrix44<T> Matrix44<T>::GetRotedByAnglesYXZ (const T angleY, const T angleX, const T angleZ) const
+template<typename T>
+Matrix44<T> Matrix44<T>::GetRotedByAnglesYXZ(const T angleY, const T angleX, const T angleZ) const
 {
-  return Matrix44<T>(*this).RotByAnglesYXZ(angleY, angleX, angleZ);
+	return Matrix44<T>(*this).RotByAnglesYXZ(angleY, angleX, angleZ);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Versión no const que modifica la matriz
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::RotByAnglesYXZ (const T angleY, const T angleX, const T angleZ)
+Matrix44<T>& Matrix44<T>::RotByAnglesYXZ(const T angleY, const T angleX, const T angleZ)
 {
 	Vector2<T> v;
 
@@ -2267,7 +2302,7 @@ Matrix44<T>& Matrix44<T>::RotByAnglesYXZ (const T angleY, const T angleX, const 
 	m02 = v.x;
 	m12 = v.y;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2276,20 +2311,20 @@ Matrix44<T>& Matrix44<T>::RotByAnglesYXZ (const T angleY, const T angleX, const 
 /// (versión const que devuelve una copia)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 template<typename T>
-Matrix44<T> Matrix44<T>::GetTranslated (const Vector3<T>& pos) const
+Matrix44<T> Matrix44<T>::GetTranslated(const Vector3<T>& pos) const
 {
-  return Matrix44<T>(*this).Translate(pos);
+	return Matrix44<T>(*this).Translate(pos);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Versión no const que modifica la matriz
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::Translate (const Vector3<T>& pos)
+Matrix44<T>& Matrix44<T>::Translate(const Vector3<T>& pos)
 {
 	SetPos(pos);
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2297,22 +2332,22 @@ Matrix44<T>& Matrix44<T>::Translate (const Vector3<T>& pos)
 /// (versión const que devuelve una copia)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T> Matrix44<T>::GetScaled (const T escala_x, const T escala_y, const T escala_z) const
+Matrix44<T> Matrix44<T>::GetScaled(const T escala_x, const T escala_y, const T escala_z) const
 {
-  return Matrix44<T>(*this).Scale(escala_x, escala_y, escala_z);  
+	return Matrix44<T>(*this).Scale(escala_x, escala_y, escala_z);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Versión no const que modifica la matriz
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::Scale (const T escala_x, const T escala_y, const T escala_z)
+Matrix44<T>& Matrix44<T>::Scale(const T escala_x, const T escala_y, const T escala_z)
 {
-  m00 *= escala_x; m10 *= escala_x; m20 *= escala_x;
+	m00 *= escala_x; m10 *= escala_x; m20 *= escala_x;
 	m01 *= escala_y; m11 *= escala_y; m21 *= escala_y;
 	m02 *= escala_z; m12 *= escala_z; m22 *= escala_z;
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2324,17 +2359,17 @@ Matrix44<T>& Matrix44<T>::Scale (const T escala_x, const T escala_y, const T esc
 ///  - Se normaliza para obtener una base ortonormal.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::AlignYX (const Vector3<T>& vY, const Vector3<T>& vX)
+Matrix44<T>& Matrix44<T>::AlignYX(const Vector3<T>& vY, const Vector3<T>& vX)
 {
 	Vector3<T> y = vY;
 	Vector3<T> z = vX ^ vY;
 	Vector3<T> x = vY ^ z;
 
-	SetFromBasis(x, y , z);
+	SetFromBasis(x, y, z);
 
 	ResetScale();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2346,17 +2381,17 @@ Matrix44<T>& Matrix44<T>::AlignYX (const Vector3<T>& vY, const Vector3<T>& vX)
 ///  - Se normaliza para obtener una base ortonormal.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::AlignYZ (const Vector3<T>& vY, const Vector3<T>& vZ)
+Matrix44<T>& Matrix44<T>::AlignYZ(const Vector3<T>& vY, const Vector3<T>& vZ)
 {
 	Vector3<T> y = vY;
 	Vector3<T> x = vY ^ vZ;
 	Vector3<T> z = x ^ vY;
 
-	SetFromBasis(x, y , z);
+	SetFromBasis(x, y, z);
 
 	ResetScale();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2368,17 +2403,17 @@ Matrix44<T>& Matrix44<T>::AlignYZ (const Vector3<T>& vY, const Vector3<T>& vZ)
 ///  - Se normaliza para obtener una base ortonormal.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Matrix44<T>& Matrix44<T>::AlignXZ (const Vector3<T>& vX, const Vector3<T>& vZ)
+Matrix44<T>& Matrix44<T>::AlignXZ(const Vector3<T>& vX, const Vector3<T>& vZ)
 {
 	Vector3<T> x = vX;
 	Vector3<T> y = vZ ^ vX;
 	Vector3<T> z = vX ^ y;
 
-	SetFromBasis(x, y , z);
+	SetFromBasis(x, y, z);
 
 	ResetScale();
 
-  return (*this);
+	return (*this);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2388,11 +2423,11 @@ Matrix44<T>& Matrix44<T>::AlignXZ (const Vector3<T>& vX, const Vector3<T>& vZ)
 /// (Utiliza un epsilon como margen de tolerancia)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-bool Matrix44<T>::IsOrthogonalEpsilon  () const
+bool Matrix44<T>::IsOrthogonalEpsilon() const
 {
-  return(mathUtils::ZeroEpsilon<T>(GetVectorBasis(0) * GetVectorBasis(1)) &&
-         mathUtils::ZeroEpsilon<T>(GetVectorBasis(0) * GetVectorBasis(2)) &&
-         mathUtils::ZeroEpsilon<T>(GetVectorBasis(1) * GetVectorBasis(2)));
+	return(mathUtils::ZeroEpsilon<T>(GetVectorBasis(0) * GetVectorBasis(1)) &&
+		mathUtils::ZeroEpsilon<T>(GetVectorBasis(0) * GetVectorBasis(2)) &&
+		mathUtils::ZeroEpsilon<T>(GetVectorBasis(1) * GetVectorBasis(2)));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2403,10 +2438,30 @@ bool Matrix44<T>::IsOrthogonalEpsilon  () const
 /// (Utiliza un epsilon como margen de tolerancia)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-bool Matrix44<T>::IsOrthonormalEpsilon () const
+bool Matrix44<T>::IsOrthonormalEpsilon() const
 {
-  return(IsOrthogonalEpsilon() &&
-         mathUtils::EqualEpsilon<T>(GetVectorBasis(0).SquaredLength(), One<T>()) && 
-         mathUtils::EqualEpsilon<T>(GetVectorBasis(1).SquaredLength(), One<T>()) && 
-         mathUtils::EqualEpsilon<T>(GetVectorBasis(2).SquaredLength(), One<T>()));
+	return(IsOrthogonalEpsilon() &&
+		mathUtils::EqualEpsilon<T>(GetVectorBasis(0).SquaredLength(), One<T>()) &&
+		mathUtils::EqualEpsilon<T>(GetVectorBasis(1).SquaredLength(), One<T>()) &&
+		mathUtils::EqualEpsilon<T>(GetVectorBasis(2).SquaredLength(), One<T>()));
 }
+
+/*
+template<typename T>
+inline Matrix44<T>::Matrix44(const D3DXMATRIX &otra)
+: m00(otra._11), m10(otra._12), m20(otra._13), m30(otra._14)
+, m01(otra._21), m11(otra._22), m21(otra._23), m31(otra._24)
+, m02(otra._31), m12(otra._32), m22(otra._33), m32(otra._34)
+, m03(otra._41), m13(otra._42), m23(otra._43), m33(otra._44)
+{
+}
+
+template<typename T>
+D3DXMATRIX Matrix44<T>::GetD3DXMatrix() const
+{
+return D3DXMATRIX(	m00, m10, m20, m30
+, m01, m11, m21, m31
+, m02, m12, m22, m32
+, m03, m13, m23, m33);
+}
+*/

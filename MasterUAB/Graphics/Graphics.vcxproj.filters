@@ -1,19 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="dummy.cpp" />
-    <ClCompile Include="ContextManagerD3D.cpp">
-      <Filter>ContextManagerD3D</Filter>
+    <ClCompile Include="ContextManager.cpp">
+      <Filter>ContextManager</Filter>
     </ClCompile>
+    <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="DebugRender.cpp" />
+    <ClCompile Include="Frustum.cpp" />
+    <ClCompile Include="SphericalCameraController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="ContextManagerD3D">
-      <UniqueIdentifier>{fea00f39-e3ec-4e8d-a75d-602f5660521f}</UniqueIdentifier>
+    <Filter Include="ContextManager">
+      <UniqueIdentifier>{49dc92e7-f305-4eb8-8258-14aa45916baa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ContextManagerD3D.h">
-      <Filter>ContextManagerD3D</Filter>
+    <ClInclude Include="ContextManager.h">
+      <Filter>ContextManager</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraController.h" />
+    <ClInclude Include="DebugRender.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="Frustum.h" />
+    <ClInclude Include="RenderableVertexs.h" />
+    <ClInclude Include="SphericalCameraController.h" />
+    <ClInclude Include="VertexTypes.h" />
   </ItemGroup>
 </Project>

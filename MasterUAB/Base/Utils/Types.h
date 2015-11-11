@@ -1,6 +1,8 @@
 #ifndef _TYPES_H_
 #define _TYPES_H_
 
+#include <stdint.h>
+
 typedef signed char         int8;   // integer de 8 bits
 typedef short               int16;  // integer de 16 bits
 typedef int                 int32;  // integer de 32 bits

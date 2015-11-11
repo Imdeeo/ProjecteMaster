@@ -55,7 +55,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Graphics\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Graphics\;$(SolutionDir)Base\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -86,10 +86,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="videogame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="motor3d.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Base\Base.vcxproj">
+      <Project>{69430b34-6c84-44a0-896c-24e980d9b718}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.vcxproj">
+      <Project>{77b0c728-54bb-429b-925a-3f8cb72784f9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphics\Graphics.vcxproj">
+      <Project>{31f7443f-b43c-4d38-931c-fac7c771ef91}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GUI\GUI.vcxproj">
+      <Project>{143d2636-2e2a-469a-97f5-878efc7a2a26}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Network\Network.vcxproj">
+      <Project>{a0bd2c2b-5c98-4a93-ad7d-987e20e45abc}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\PhysX\PhysX.vcxproj">
+      <Project>{f2c44bbf-5192-4d26-9498-7236f01a3480}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Sound\Sound.vcxproj">
+      <Project>{4b6544f4-2fdb-40b7-9bf0-7cd6ece063a0}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
