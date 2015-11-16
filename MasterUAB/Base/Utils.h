@@ -1,6 +1,8 @@
 #ifndef _UTILS_H
 #define _UTILS_H
 
+#include <stdint.h>
+
 #define UAB_BUILD_GET_SET(Type, Variable) \
 private: \
 	Type			m_##Variable##; \

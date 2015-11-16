@@ -213,6 +213,8 @@ public:
 	inline Matrix44<T>& SetFromLookAt(const Vector3<T>& vPos, const Vector3<T>& vTarget, const Vector3<T>& vUp);
 	inline Matrix44<T>& SetFromLookAt(const Vector3<T>& vPos, const Vector3<T>& vTarget);
 	inline Matrix44<T>& SetFromPerspective(float fovy, float aspect, float zn, float zf);
+
+	inline Matrix44<T>& SetFromPosAndAnglesYXZ(const Vector3<T>& pos, const T angleY, const T angleX, const T angleZ);
 	//inline Matrix44<T>& SetFromQuatPos   (const Quatn<T>& quat, const Vector3<T>& vPos);
 
 

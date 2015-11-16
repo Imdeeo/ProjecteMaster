@@ -23,17 +23,11 @@ public:
 	float GetYaw() const {return m_Yaw;}
 	void SetPitch(float Pitch) {m_Pitch=Pitch;}
 	float GetPitch() const {return m_Pitch;}
-#ifdef KG_D3D11
-	XMFLOAT3 GetUp() const;
-	XMFLOAT3 GetRight() const;
-	const XMFLOAT3 & GetPosition() const {return m_Position;}
-	void SetPosition(const XMFLOAT3 &Position) {m_Position=Position;}
-#else
 	Vect3f GetRight() const;
 	Vect3f GetUp() const;
 	const Vect3f & GetPosition() const { return m_Position; }
 	void SetPosition(const Vect3f &Position) { m_Position = Position; }
-#endif
+
 	virtual void Update(float ElapsedTime)
 	{
 	}

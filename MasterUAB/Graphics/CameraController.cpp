@@ -7,6 +7,7 @@
 CCameraController::CCameraController()
 : m_Yaw(0.0f)
 , m_Pitch(0.0f)
+, m_Position(0,0,0)
 {
 }
 CCameraController::~CCameraController()

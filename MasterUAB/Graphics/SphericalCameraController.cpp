@@ -23,8 +23,6 @@ void CSphericalCameraController::SetCamera(CCamera *Camera) const
 {
 	Vect3f l_Direction = GetDirection();
 
-	Camera->SetFOV(DEG2RAD(50.0f));
-	Camera->SetAspectRatio(16.0f/9.0f);
 	Camera->SetLookAt(m_Position);
 
 	Camera->SetPosition(m_Position-l_Direction);

@@ -408,10 +408,10 @@ inline Matrix44<T>& Matrix44<T>::SetFromBasis(const Vector3<T>& ejeX,
 	const Vector3<T>& ejeZ,
 	const Vector3<T>& pos)
 {
-	m00 = ejeX.x;     m01 = ejeY.x;     m02 = ejeZ.x;     m03 = pos.x;
-	m10 = ejeX.y;     m11 = ejeY.y;     m12 = ejeZ.y;     m13 = pos.y;
-	m20 = ejeX.z;     m21 = ejeY.z;     m22 = ejeZ.z;     m23 = pos.z;
-	m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
+	m00 = ejeX.x;     m10 = ejeY.x;     m20 = ejeZ.x;     m30 = pos.x;
+	m01 = ejeX.y;     m11 = ejeY.y;     m21 = ejeZ.y;     m31 = pos.y;
+	m02 = ejeX.z;     m12 = ejeY.z;     m22 = ejeZ.z;     m32 = pos.z;
+	m03 = Zero<T>();  m13 = Zero<T>();  m23 = Zero<T>();  m33 = One<T>();
 
 	return (*this);
 }
@@ -421,9 +421,9 @@ inline Matrix44<T>& Matrix44<T>::SetFromBasis(const Vector3<T>& ejeX,
 	const Vector3<T>& ejeY,
 	const Vector3<T>& ejeZ)
 {
-	m00 = ejeX.x;     m01 = ejeY.x;     m02 = ejeZ.x;
-	m10 = ejeX.y;     m11 = ejeY.y;     m12 = ejeZ.y;
-	m20 = ejeX.z;     m21 = ejeY.z;     m22 = ejeZ.z;
+	m00 = ejeX.x;     m10 = ejeY.x;     m20 = ejeZ.x;
+	m01 = ejeX.y;     m11 = ejeY.y;     m21 = ejeZ.y;
+	m02 = ejeX.z;     m12 = ejeY.z;     m22 = ejeZ.z;
 
 	return (*this);
 }
@@ -442,8 +442,8 @@ inline Matrix44<T>& Matrix44<T>::SetFromAngleX(const T angleX)
 	mathUtils::SinCos(angleX, sina, cosa);
 
 	m00 = One<T>();   m01 = Zero<T>();  m02 = Zero<T>();  m03 = Zero<T>();
-	m10 = Zero<T>();  m11 = cosa;       m12 = -sina;      m13 = Zero<T>();
-	m20 = Zero<T>();  m21 = sina;       m22 = cosa;       m23 = Zero<T>();
+	m10 = Zero<T>();  m11 = cosa;       m12 = sina;      m13 = Zero<T>();
+	m20 = Zero<T>();  m21 = -sina;       m22 = cosa;       m23 = Zero<T>();
 	m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
 
 	return (*this);
@@ -462,9 +462,9 @@ inline Matrix44<T>& Matrix44<T>::SetFromAngleY(const T angleY)
 	T cosa;
 	mathUtils::SinCos(angleY, sina, cosa);
 
-	m00 = cosa;       m01 = Zero<T>();  m02 = sina;       m03 = Zero<T>();
+	m00 = cosa;       m01 = Zero<T>();  m02 = -sina;      m03 = Zero<T>();
 	m10 = Zero<T>();  m11 = One<T>();   m12 = Zero<T>();  m13 = Zero<T>();
-	m20 = -sina;      m21 = Zero<T>();  m22 = cosa;       m23 = Zero<T>();
+	m20 = sina;       m21 = Zero<T>();  m22 = cosa;       m23 = Zero<T>();
 	m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
 
 	return (*this);
@@ -483,8 +483,8 @@ inline Matrix44<T>& Matrix44<T>::SetFromAngleZ(const T angleZ)
 	T cosa;
 	mathUtils::SinCos(angleZ, sina, cosa);
 
-	m00 = cosa;       m01 = -sina;      m02 = Zero<T>();  m03 = Zero<T>();
-	m10 = sina;       m11 = cosa;       m12 = Zero<T>();  m13 = Zero<T>();
+	m00 = cosa;       m01 = sina;      m02 = Zero<T>();  m03 = Zero<T>();
+	m10 = -sina;      m11 = cosa;       m12 = Zero<T>();  m13 = Zero<T>();
 	m20 = Zero<T>();  m21 = Zero<T>();  m22 = One<T>();   m23 = Zero<T>();
 	m30 = Zero<T>();  m31 = Zero<T>();  m32 = Zero<T>();  m33 = One<T>();
 
@@ -505,8 +505,8 @@ inline Matrix44<T>& Matrix44<T>::SetFromAnglesXZ(const T angleX, const T angleZ)
 	mathUtils::SinCos(angleX, sinx, cosx);
 	mathUtils::SinCos(angleZ, sinz, cosz);
 
-	m00 = cosz;       m01 = -sinz * cosx;  m02 = sinz * sinx;   m03 = Zero<T>();
-	m10 = sinz;       m11 = cosz * cosx;   m12 = -cosz * sinx;  m13 = Zero<T>();
+	m00 = cosz;       m01 = sinz * cosx;   m02 = -sinz * sinx;  m03 = Zero<T>();
+	m10 = sinz;       m11 = -cosz * cosx;  m12 = cosz * sinx;   m13 = Zero<T>();
 	m20 = Zero<T>();  m21 = sinx;          m22 = cosx;          m23 = Zero<T>();
 	m30 = Zero<T>();  m31 = Zero<T>();     m32 = Zero<T>();     m33 = One<T>();
 
@@ -529,10 +529,35 @@ inline Matrix44<T>& Matrix44<T>::SetFromAnglesYXZ(const T angleY, const T angleX
 	mathUtils::SinCos(angleY, sy, cy);
 	mathUtils::SinCos(angleZ, sz, cz);
 
+	/*
 	m00 = cz*cy - sz*sx*sy;  m01 = -sz*cx;     m02 = cz*sy + sz*sx*cy;  m03 = Zero<T>();
 	m10 = sz*cy + cz*sx*sy;  m11 = cz*cx;      m12 = sz*sy - cz*sx*cy;  m13 = Zero<T>();
 	m20 = -cx*sy;            m21 = sx;         m22 = cx*cy;             m23 = Zero<T>();
+	*/
+	m00 = cz*cy + sz*sx*sy;  m01 = sz*cx;      m02 = sz*sx*cy - cz*sy;  m03 = Zero<T>();
+	m10 = cz*sx*sy - sz*cy;  m11 = cz*cx;      m12 = sz*sy + cz*sx*cy;  m13 = Zero<T>();
+	m20 = cx*sy;             m21 = -sx;        m22 = cx*cy;             m23 = Zero<T>();
 	m30 = Zero<T>();         m31 = Zero<T>();  m32 = Zero<T>();         m33 = One<T>();
+
+	return (*this);
+}
+
+template<typename T>
+inline Matrix44<T>& Matrix44<T>::SetFromPosAndAnglesYXZ(const Vector3<T>& pos, const T angleY, const T angleX, const T angleZ)
+{
+	T sx, cx, sy, cy, sz, cz;
+	mathUtils::SinCos(angleX, sx, cx);
+	mathUtils::SinCos(angleY, sy, cy);
+	mathUtils::SinCos(angleZ, sz, cz);
+/*
+	m00 = cz*cy - sz*sx*sy;  m01 = -sz*cx;     m02 = cz*sy + sz*sx*cy;  m03 = Zero<T>();
+	m10 = sz*cy + cz*sx*sy;  m11 = cz*cx;      m12 = sz*sy - cz*sx*cy;  m13 = Zero<T>();
+	m20 = -cx*sy;            m21 = sx;         m22 = cx*cy;             m23 = Zero<T>();
+	*/
+	m00 = cz*cy + sz*sx*sy;  m01 = sz*cx;      m02 = sz*sx*cy - cz*sy;  m03 = Zero<T>();
+	m10 = cz*sx*sy - sz*cy;  m11 = cz*cx;      m12 = sz*sy + cz*sx*cy;  m13 = Zero<T>();
+	m20 = cx*sy;             m21 = -sx;        m22 = cx*cy;             m23 = Zero<T>();
+	m30 = pos.x;             m31 = pos.y;      m32 = pos.z;             m33 = One<T>();
 
 	return (*this);
 }
@@ -544,10 +569,10 @@ inline Matrix44<T>& Matrix44<T>::SetFromAnglesYXZ(const T angleY, const T angleX
 template<typename T>
 inline Matrix44<T>& Matrix44<T>::SetFromPos(const T posX, const T posY, const T posZ)
 {
-	m00 = One<T>();    m01 = Zero<T>();   m02 = Zero<T>();   m03 = posX;
-	m10 = Zero<T>();   m11 = One<T>();    m12 = Zero<T>();   m13 = posY;
-	m20 = Zero<T>();   m21 = Zero<T>();   m22 = One<T>();    m23 = posZ;
-	m30 = Zero<T>();   m31 = Zero<T>();   m32 = Zero<T>();   m33 = One<T>();
+	m00 = One<T>();    m01 = Zero<T>();   m02 = Zero<T>();   m03 = Zero<T>();
+	m10 = Zero<T>();   m11 = One<T>();    m12 = Zero<T>();   m13 = Zero<T>();
+	m20 = Zero<T>();   m21 = Zero<T>();   m22 = One<T>();    m23 = Zero<T>();
+	m30 = posX;        m31 = posY;        m32 = posZ;        m33 = One<T>();
 
 	return (*this);
 }
@@ -559,10 +584,10 @@ inline Matrix44<T>& Matrix44<T>::SetFromPos(const T posX, const T posY, const T 
 template<typename T>
 inline Matrix44<T>& Matrix44<T>::SetFromPos(const Vector3<T>& pos)
 {
-	m00 = One<T>();    m01 = Zero<T>();   m02 = Zero<T>();   m03 = pos.x;
-	m10 = Zero<T>();   m11 = One<T>();    m12 = Zero<T>();   m13 = pos.y;
-	m20 = Zero<T>();   m21 = Zero<T>();   m22 = One<T>();    m23 = pos.z;
-	m30 = Zero<T>();   m31 = Zero<T>();   m32 = Zero<T>();   m33 = One<T>();
+	m00 = One<T>();    m01 = Zero<T>();   m02 = Zero<T>();   m03 = Zero<T>();
+	m10 = Zero<T>();   m11 = One<T>();    m12 = Zero<T>();   m13 = Zero<T>();
+	m20 = Zero<T>();   m21 = Zero<T>();   m22 = One<T>();    m23 = Zero<T>();
+	m30 = pos.x;       m31 = pos.y;       m32 = pos.z;       m33 = One<T>();
 
 	return (*this);
 }
@@ -993,9 +1018,9 @@ return (*this);
 template<typename T>
 inline Matrix44<T>& Matrix44<T>::SetPos(const T posX, const T posY, const T posZ)
 {
-	m03 = posX;
-	m13 = posY;
-	m23 = posZ;
+	m30 = posX;
+	m31 = posY;
+	m32 = posZ;
 
 	return (*this);
 }
@@ -1006,9 +1031,9 @@ inline Matrix44<T>& Matrix44<T>::SetPos(const T posX, const T posY, const T posZ
 template<typename T>
 inline Matrix44<T>& Matrix44<T>::SetPos(const Vector3<T>& pos)
 {
-	m03 = pos.x;
-	m13 = pos.y;
-	m23 = pos.z;
+	m30 = pos.x;
+	m31 = pos.y;
+	m32 = pos.z;
 
 	return (*this);
 }

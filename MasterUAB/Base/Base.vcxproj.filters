@@ -32,6 +32,7 @@
     <ClInclude Include="Utils\Types.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="HelperTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

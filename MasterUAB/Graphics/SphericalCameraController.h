@@ -18,11 +18,11 @@ public:
 	void SetCamera(CCamera *Camera) const;
 	Vect3f GetDirection() const;
 
-	void Update(float ElapsedTime, Vect3f movement)
+	void Update(Vect3f movement)
 	{
-		AddYaw(movement.x*ElapsedTime*30.0f);
-		AddPitch(movement.y*ElapsedTime*30.0f);
-		AddZoom(-movement.z*2.0f*ElapsedTime);
+		AddYaw(movement.x*30.0f);
+		AddPitch(movement.y*30.0f);
+		AddZoom(-movement.z*2.0f);
 	}
 };
 
