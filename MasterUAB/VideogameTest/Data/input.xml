@@ -1,0 +1,17 @@
+<input>
+	<action name="MOVE_FWD" type="KEYBOARD" mode="WHILE_PRESSED" key="W" triggers_axis="true" axis="MOVE_FWD" axis_value="1"/>
+	<action name="MOVE_BACK" type="KEYBOARD" mode="WHILE_PRESSED" key="S" triggers_axis="true" axis="MOVE_FWD" axis_value="-1"/>
+	<action name="STRAFE_LEFT" type="KEYBOARD" mode="WHILE_PRESSED" key="A" triggers_axis="true" axis="STRAFE" axis_value="-1"/>
+	<action name="STRAFE_RIGHT" type="KEYBOARD" mode="WHILE_PRESSED" key="D" triggers_axis="true" axis="STRAFE" axis_value="1"/>
+	
+	<action name="RELOAD" type="KEYBOARD" mode="ON_PRESS" key="R"/>
+	
+	<action name="MOVE_CAMERA" type="MOUSE" mode="WHILE_PRESSED" mouse_button="RIGHT"/>
+	
+	<axis name="X_AXIS" type="MOUSE" mouse_axis="X" mouse_scale="0.05"/>
+	<axis name="Y_AXIS" type="MOUSE" mouse_axis="Y" mouse_scale="0.05"/>
+	<axis name="ZOOM" type="MOUSE" mouse_axis="WHEEL" mouse_scale="0.05"/>
+	
+	<axis name="X_AXIS" type="GAMEPAD" gamepad_axis="LEFT_X" gamepad_number="0"/>
+	<axis name="Y_AXIS" type="GAMEPAD" gamepad_axis="LEFT_Y" gamepad_number="0"/>
+</input>

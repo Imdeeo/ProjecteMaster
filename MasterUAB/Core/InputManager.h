@@ -19,8 +19,12 @@ public:
 
 	static CInputManager* GetInputManager();
 	static void SetCurrentInputManager(CInputManager* _InputManager);
-
+	
+	virtual void reload();
+	
 protected:
+
+
 	CInputManager() :m_Cursor(0, 0), m_CursorD(0, 0), m_Focus(true) {}
 
 	std::unordered_set<std::string> m_ActiveActions;

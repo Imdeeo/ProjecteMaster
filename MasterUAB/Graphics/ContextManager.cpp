@@ -379,7 +379,51 @@ void CContextManager::InitDepthStencilStates()
 		l_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 		l_desc.DepthFunc = D3D11_COMPARISON_LESS;
 
+		// Stencil test parameters
+		l_desc.StencilEnable = true;
+		l_desc.StencilReadMask = 0xFF;
+		l_desc.StencilWriteMask = 0xFF;
+
+		// Stencil operations if pixel is front-facing
+		l_desc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+		l_desc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
+		l_desc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+		l_desc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+		// Stencil operations if pixel is back-facing
+		l_desc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+		l_desc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
+		l_desc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+		l_desc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
 		HRESULT l_HR = m_D3DDevice->CreateDepthStencilState(&l_desc, &m_DepthStencilStates[DSS_TEST_NO_WRITE]);
+		assert(l_HR == S_OK);
+	}
+
+	{
+		D3D11_DEPTH_STENCIL_DESC l_desc = {};
+		l_desc.DepthEnable = true;
+		l_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+		l_desc.DepthFunc = D3D11_COMPARISON_LESS;
+
+		// Stencil test parameters
+		l_desc.StencilEnable = true;
+		l_desc.StencilReadMask = 0xFF;
+		l_desc.StencilWriteMask = 0xFF;
+
+		// Stencil operations if pixel is front-facing
+		l_desc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+		l_desc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
+		l_desc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+		l_desc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+		// Stencil operations if pixel is back-facing
+		l_desc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+		l_desc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
+		l_desc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+		l_desc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+		HRESULT l_HR = m_D3DDevice->CreateDepthStencilState(&l_desc, &m_DepthStencilStates[DSS_TEST_WRITE]);
 		assert(l_HR == S_OK);
 	}
 

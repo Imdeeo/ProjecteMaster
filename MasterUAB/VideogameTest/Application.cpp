@@ -75,7 +75,10 @@ void CApplication::SwitchCamera()
 
 void CApplication::Update(float _ElapsedTime)
 {	
-
+	if(CInputManager::GetInputManager()->IsActionActive("RELOAD"))
+	{
+		CInputManager::GetInputManager()->reload();
+	}
 	switch (m_CurrentCamera)
 	{
 	case 0:
@@ -135,21 +138,21 @@ void CApplication::Render()
 	m_ContextManager->SetDebugSize(5);
 	m_ContextManager->SetBaseColor(CColor(1, 1, 1, 1));
 
-	m_ContextManager->Draw(m_DebugRender->GetSimpleCube(), CContextManager::RS_SOLID_BACK_CULL, CContextManager::DSS_TEST_NO_WRITE, CContextManager::BLEND_CLASSIC);
+	m_ContextManager->Draw(m_DebugRender->GetSimpleCube(), CContextManager::RS_SOLID_BACK_CULL, CContextManager::DSS_TEST_WRITE, CContextManager::BLEND_CLASSIC);
 
 	world.SetIdentity();
 	m_ContextManager->SetWorldMatrix(world);
-	m_ContextManager->Draw(m_DebugRender->GetAxis(), CContextManager::RS_SOLID_BACK_CULL, CContextManager::DSS_TEST_NO_WRITE, CContextManager::BLEND_CLASSIC);
+	m_ContextManager->Draw(m_DebugRender->GetAxis(), CContextManager::RS_SOLID_BACK_CULL, CContextManager::DSS_TEST_WRITE, CContextManager::BLEND_CLASSIC);
 
 	world.SetIdentity();
 	world.SetFromPos(10, 0, 0);
 	m_ContextManager->SetWorldMatrix(world);
-	m_ContextManager->Draw(m_DebugRender->GetClassicBlendTriangle(), CContextManager::RS_SOLID_NO_CULL, CContextManager::DSS_TEST_NO_WRITE, CContextManager::BLEND_CLASSIC);
+	m_ContextManager->Draw(m_DebugRender->GetClassicBlendTriangle(), CContextManager::RS_SOLID_NO_CULL, CContextManager::DSS_TEST_WRITE, CContextManager::BLEND_CLASSIC);
 
 	world.SetIdentity();
 	world.SetFromPos(0, 0, -10);
 	m_ContextManager->SetWorldMatrix(world);
-	m_ContextManager->Draw(m_DebugRender->GetPremultBlendTriangle(), CContextManager::RS_SOLID_NO_CULL, CContextManager::DSS_TEST_NO_WRITE, CContextManager::BLEND_PREMULT);
+	m_ContextManager->Draw(m_DebugRender->GetPremultBlendTriangle(), CContextManager::RS_SOLID_NO_CULL, CContextManager::DSS_TEST_WRITE, CContextManager::BLEND_PREMULT);
 
 
 	CDebugHelper::GetDebugHelper()->Render();

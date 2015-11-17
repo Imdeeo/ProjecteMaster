@@ -30,3 +30,6 @@ void CInputManager::SetCurrentInputManager(CInputManager* _InputManager)
 		s_CurrentInputManager = &s_DummyInputManager;
 	}
 }
+
+void CInputManager::reload()
+{}

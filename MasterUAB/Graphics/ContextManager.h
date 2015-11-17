@@ -27,6 +27,7 @@ public:
 		DSS_DEPTH_ON,
 		DSS_OFF,
 		DSS_TEST_NO_WRITE,
+		DSS_TEST_WRITE,
 		// TODO: Crear un modo que haga el depth test, pero no escriba su posición
 
 		DSS_COUNT

@@ -27,6 +27,7 @@ CInputManagerImplementation::CInputManagerImplementation(HWND hWnd)
 	, m_PreviousButtonMiddle(false)
 	, m_PreviousButtonRight(false)
 	, m_MouseSpeed(1)
+	,m_FileName("")
 
 {
 	m_Alt = false;
@@ -93,105 +94,12 @@ CInputManagerImplementation::~CInputManagerImplementation()
 
 void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 {
+	m_FileName = path;
+
 	m_Actions.clear();
-
-	//*
-	{
-		Action action = { "STRAFE_LEFT", KEYBOARD, Action::WHILE_PRESSED };
-		action.keyboard.key = 'A';
-		action.keyboard.needsAlt = false;
-		action.keyboard.needsCtrl = false;
-
-		action.triggersAxis = true;
-		action.axisName = "STRAFE";
-		action.axisValue = -1;
-
-		m_Actions.push_back(action);
-	}
-	{
-		Action action = { "STRAFE_RIGHT", KEYBOARD, Action::WHILE_PRESSED };
-		action.keyboard.key = 'D';
-		action.keyboard.needsAlt = false;
-		action.keyboard.needsCtrl = false;
-
-		action.triggersAxis = true;
-		action.axisName = "STRAFE";
-		action.axisValue = 1;
-
-		m_Actions.push_back(action);
-	}
-	{
-		Action action = { "MOVE_FWD", KEYBOARD, Action::WHILE_PRESSED };
-		action.keyboard.key = 'W';
-		action.keyboard.needsAlt = false;
-		action.keyboard.needsCtrl = false;
-
-		action.triggersAxis = true;
-		action.axisName = "MOVE_FWD";
-		action.axisValue = 1;
-
-		m_Actions.push_back(action);
-	}
-	{
-		Action action = { "MOVE_BACK", KEYBOARD, Action::WHILE_PRESSED };
-		action.keyboard.key = 'S';
-		action.keyboard.needsAlt = false;
-		action.keyboard.needsCtrl = false;
-
-		action.triggersAxis = true;
-		action.axisName = "MOVE_FWD";
-		action.axisValue = -1;
-
-		m_Actions.push_back(action);
-	}
-
-	{
-		Action action = { "MOVE_CAMERA", MOUSE, Action::WHILE_PRESSED };
-		action.mouse.button = Action::RIGHT;
-
-		m_Actions.push_back(action);
-	}
+	m_Axis.clear();
 
 
-	{
-		Axis axis = { "X_AXIS", MOUSE };
-		axis.mouse.axis = MouseAxis::X;
-		axis.mouse.scale = 0.05f;
-
-		m_Axis.push_back(axis);
-	}
-	{
-		Axis axis = { "Y_AXIS", MOUSE };
-		axis.mouse.axis = MouseAxis::Y;
-		axis.mouse.scale = 0.01f;
-
-		m_Axis.push_back(axis);
-	}
-	{
-		Axis axis = { "ZOOM", MOUSE };
-		axis.mouse.axis = MouseAxis::WHEEL;
-		axis.mouse.scale = 0.05f;
-
-		m_Axis.push_back(axis);
-	}
-
-
-	{
-		Axis axis = { "X_AXIS", GAMEPAD };
-		axis.gamepad.axis = GamepadAxis::LEFT_X;
-		axis.gamepad.gamepadNumber = 0;
-
-		m_Axis.push_back(axis);
-	}
-	{
-		Axis axis = { "Y_AXIS", GAMEPAD };
-		axis.gamepad.axis = GamepadAxis::LEFT_Y;
-		axis.gamepad.gamepadNumber = 0;
-
-		m_Axis.push_back(axis);
-	}
-
-	/*/
 	CXMLTreeNode l_XML;
 	if (l_XML.LoadFile(path.c_str()))
 	{
@@ -224,7 +132,9 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 						action.keyboard.needsAlt = l_Action.GetBoolProperty("needs_alt", false, false);
 						action.keyboard.needsCtrl = l_Action.GetBoolProperty("needs_ctrl", false, false);
 						break;
-
+					case MOUSE:
+						action.mouse.button = ParseMouseButton(l_Action.GetPszProperty("mouse_button", "LEFT"));
+						break;
 						// TODO: Mouse y Gamepad
 
 						// Pista: para parsear botones del gamepad, usad las constantes:
@@ -252,13 +162,33 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 				}
 				else if (l_Element.GetName() == std::string("axis"))
 				{
+
+					CXMLTreeNode &l_Axis = l_Element;
+
+					Axis axis = {};
+					axis.name = l_Axis.GetPszProperty("name");
+					std::string type = l_Axis.GetPszProperty("type", "MOUSE");
+					axis.inputType = ParseInputType(type);
+
+					switch (axis.inputType)
+					{
+					case GAMEPAD:
+						axis.gamepad.axis = ParseGamepadAxis(l_Axis.GetPszProperty("gamepad_axis", "X"));
+						axis.gamepad.gamepadNumber = l_Axis.GetFloatProperty("gamepad_number", 0, false);
+						break;
+					case MOUSE:
+						axis.mouse.axis = ParseMouseAxis(l_Axis.GetPszProperty("mouse_axis", "X"));
+						axis.mouse.scale = l_Axis.GetFloatProperty("mouse_scale", 1, false);
+						break;
+					}
+
+					m_Axis.push_back(axis);
 					// TODO: parse axis
 				}
 
 			}
 		}
 	}
-	//*/
 
 	EndFrame();
 }
@@ -306,6 +236,80 @@ CInputManagerImplementation::InputType CInputManagerImplementation::ParseInputTy
 		return (InputType) - 1;
 	}
 }
+
+CInputManagerImplementation::Action::MouseButton CInputManagerImplementation::ParseMouseButton(const std::string& mouseButton)
+{
+	if (mouseButton == "CENTER")
+	{
+		return Action::MouseButton::CENTER;
+	}
+	if (mouseButton == "RIGHT")
+	{
+		return Action::MouseButton::RIGHT;
+	}
+	if (mouseButton == "LEFT")
+	{
+		return Action::MouseButton::LEFT;
+	}
+	
+	else
+	{
+		return (Action::MouseButton) - 1;
+	}
+}
+
+CInputManagerImplementation::MouseAxis CInputManagerImplementation::ParseMouseAxis(const std::string& mouseButton)
+{
+	if (mouseButton == "X")
+	{
+		return MouseAxis::X;
+	}
+	if (mouseButton == "Y")
+	{
+		return MouseAxis::Y;
+	}
+	if (mouseButton == "WHEEL")
+	{
+		return MouseAxis::WHEEL;
+	}
+	
+	else
+	{
+		return (MouseAxis) - 1;
+	}
+}
+CInputManagerImplementation::GamepadAxis CInputManagerImplementation::ParseGamepadAxis(const std::string& mouseButton)
+{
+	if (mouseButton == "LEFT_TRIGGER")
+	{
+		return GamepadAxis::LEFT_TRIGGER;
+	}
+	if (mouseButton == "LEFT_X")
+	{
+		return GamepadAxis::LEFT_X;
+	}
+	if (mouseButton == "LEFT_Y")
+	{
+		return GamepadAxis::LEFT_Y;
+	}
+	if (mouseButton == "RIGHT_TRIGGER")
+	{
+		return GamepadAxis::RIGHT_TRIGGER;
+	}
+	if (mouseButton == "RIGHT_X")
+	{
+		return GamepadAxis::RIGHT_X;
+	}
+	if (mouseButton == "RIGHT_Y")
+	{
+		return GamepadAxis::RIGHT_Y;
+	}
+	else
+	{
+		return (GamepadAxis) - 1;
+	}
+}
+
 
 void CInputManagerImplementation::BeginFrame()
 {
@@ -437,10 +441,16 @@ void CInputManagerImplementation::BeginFrame()
 				break;
 
 			case Action::ON_RELEASE:
-				// TODO: añadir acciones de release
+				if (otherNeeds && !current && previous)
+				{
+					isActionActive = true;
+				}
 				break;
 			case Action::WHILE_RELEASED:
-				// TODO: añadir acciones de botón no pulsado
+				if (otherNeeds && !current && !previous)
+				{
+					isActionActive = true;
+				}
 				break;
 
 			default:
@@ -575,4 +585,9 @@ bool CInputManagerImplementation::KeyEventReceived(unsigned int wParam, unsigned
 	m_KeysCurrent[wParam] = IsDown;
 
 	return false;
+}
+
+void CInputManagerImplementation::reload()
+{
+	LoadCommandsFromFile(m_FileName);
 }

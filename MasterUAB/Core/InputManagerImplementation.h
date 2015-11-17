@@ -25,7 +25,10 @@ public:
 	void UpdateCursor(int x, int y) { m_Cursor.x = x; m_Cursor.y = y; }
 	void UpdateCursorMovement(int x, int y) { m_CursorD.x += x; m_CursorD.y += y; }
 
+	void reload();
 private:
+
+	std::string m_FileName;
 
 	enum InputType {
 		KEYBOARD,
@@ -109,6 +112,10 @@ private:
 
 	Action::Mode ParseMode(const std::string& mode);
 	InputType ParseInputType(const std::string& inputType);
+	Action::MouseButton ParseMouseButton(const std::string& mouseButton);
+
+	MouseAxis ParseMouseAxis(const std::string& mouseButton);
+	GamepadAxis ParseGamepadAxis(const std::string& mouseButton);
 
 	bool m_KeysCurrent[256], m_KeysPrevious[256];
 	bool m_Alt, m_Ctrl;
