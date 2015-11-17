@@ -39,6 +39,8 @@ public:
 		BLEND_CLASSIC,
 		BLEND_PREMULT,
 		
+		// NOTA: Si se añaden más estados aquí, modificar CMaterial::HasBlending
+
 		BLEND_COUNT
 	};
 
@@ -58,7 +60,7 @@ public:
 
 	void BeginRender(CColor backgroundColor = CColor(.2f, .1f, .4f));
 	void EndRender();
-	void Draw(CRenderableVertexs* _VerticesToRender, ERasterizedState _RS = RS_SOLID_FRONT_CULL, EDepthStencilStates _DSS = DSS_DEPTH_ON, EBlendStates _BS = BLEND_SOLID);
+	void Draw(const CRenderableVertexs* _VerticesToRender, ERasterizedState _RS = RS_SOLID_FRONT_CULL, EDepthStencilStates _DSS = DSS_DEPTH_ON, EBlendStates _BS = BLEND_SOLID);
 
 	ID3D11Device* GetDevice() const { return m_D3DDevice; }
 	ID3D11DeviceContext* GetDeviceContext() const { return m_DeviceContext; }

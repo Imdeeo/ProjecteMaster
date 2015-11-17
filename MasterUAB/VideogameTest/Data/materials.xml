@@ -1,0 +1,17 @@
+<materials>
+	<material 
+			name="solid material" 
+			rasterizer_state="SOLID"
+			depth_stencil_state="DEPTH_ON"
+			blend_state="SOLID"/>
+	<material 
+			name="classic blend" 
+			rasterizer_state="SOLID"
+			depth_stencil_state="DEPTH_ON"
+			blend_state="CLASSIC"/>
+	<material 
+			name="premult blend" 
+			rasterizer_state="SOLID"
+			depth_stencil_state="DEPTH_ON"
+			blend_state="PREMULT"/>
+</materials>

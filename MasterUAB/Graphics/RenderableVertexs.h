@@ -30,7 +30,7 @@ public:
 		CHECKED_DELETE(m_IndexBuffer);
 	}
 
-	void SetBuffers(ID3D11DeviceContext *Device)
+	void SetBuffers(ID3D11DeviceContext *Device) const
 	{
 		UINT offset = 0;
 		Device->IASetVertexBuffers(0, 1, &m_VertexBuffer, &m_Stride, &offset);
@@ -42,7 +42,7 @@ public:
 		}
 	}
 
-	void Draw(ID3D11DeviceContext *Device, unsigned int IndexCount = -1, unsigned int StartIndexLocation = 0, unsigned int BaseVertexLocation = 0)
+	void Draw(ID3D11DeviceContext *Device, unsigned int IndexCount = -1, unsigned int StartIndexLocation = 0, unsigned int BaseVertexLocation = 0) const
 	{
 		if (m_IndexBuffer == nullptr)
 			Device->Draw(m_VertexsCount, 0);

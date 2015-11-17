@@ -40,7 +40,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)\bin\Intermediate\$(ProjectName)$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)\bin\Intermediate\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
     <LibraryPath>$(DXSDK_DIR)\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -62,8 +62,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName)_d.pdb</ProgramDatabaseFile>
-      <AdditionalDependencies>Graphics_d.lib;Core_d.lib;Base_d.lib;AntTweakBarDebug.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\;D:\MasterRepo\MasterUAB\3rdParty\libxml2-2.7.2.win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Graphics_d.lib;Core_d.lib;Base_d.lib;AntTweakBarDebug.lib;iconv.lib;libxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\lib;$(SolutionDir)3rdParty\iconv-1.9.2.win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

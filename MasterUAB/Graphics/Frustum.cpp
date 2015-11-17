@@ -2,71 +2,140 @@
 
 void CFrustum::Update(const Mat44f &ViewProjection)
 {
- 	m_Frustum[0][0]=ViewProjection.m03-ViewProjection.m00;
-	m_Frustum[0][1]=ViewProjection.m13-ViewProjection.m10;
-	m_Frustum[0][2]=ViewProjection.m23-ViewProjection.m20;
-	m_Frustum[0][3]=ViewProjection.m33-ViewProjection.m30;
+	m_Frustum[0][0] = ViewProjection.m30 - ViewProjection.m00;
+	m_Frustum[0][1] = ViewProjection.m31 - ViewProjection.m01;
+	m_Frustum[0][2] = ViewProjection.m32 - ViewProjection.m02;
+	m_Frustum[0][3] = ViewProjection.m33 - ViewProjection.m03;
 
-	float t=1.0f/sqrtf((m_Frustum[0][0]*m_Frustum[0][0])+(m_Frustum[0][1]*m_Frustum[0][1])+(m_Frustum[0][2]*m_Frustum[0][2]));
-	m_Frustum[0][0]*=t;
-	m_Frustum[0][1]*=t;
-	m_Frustum[0][2]*=t;
-	m_Frustum[0][3]*=t;
+	float t = 1.0f / sqrtf((m_Frustum[0][0] * m_Frustum[0][0]) + (m_Frustum[0][1] * m_Frustum[0][1]) + (m_Frustum[0][2] * m_Frustum[0][2]));
+	m_Frustum[0][0] *= t;
+	m_Frustum[0][1] *= t;
+	m_Frustum[0][2] *= t;
+	m_Frustum[0][3] *= t;
 
-	m_Frustum[1][0]=ViewProjection.m03+ViewProjection.m00;
-	m_Frustum[1][1]=ViewProjection.m13+ViewProjection.m10;
-	m_Frustum[1][2]=ViewProjection.m23+ViewProjection.m20;
-	m_Frustum[1][3]=ViewProjection.m33+ViewProjection.m30;
+	m_Frustum[1][0] = ViewProjection.m30 + ViewProjection.m00;
+	m_Frustum[1][1] = ViewProjection.m31 + ViewProjection.m01;
+	m_Frustum[1][2] = ViewProjection.m32 + ViewProjection.m02;
+	m_Frustum[1][3] = ViewProjection.m33 + ViewProjection.m03;
 
-	t=1.0f/sqrtf((m_Frustum[1][0]*m_Frustum[1][0])+(m_Frustum[1][1]*m_Frustum[1][1])+(m_Frustum[1][2]*m_Frustum[1][2]));
-	m_Frustum[1][0]*=t;
-	m_Frustum[1][1]*=t;
-	m_Frustum[1][2]*=t;
-	m_Frustum[1][3]*=t;
+	t = 1.0f / sqrtf((m_Frustum[1][0] * m_Frustum[1][0]) + (m_Frustum[1][1] * m_Frustum[1][1]) + (m_Frustum[1][2] * m_Frustum[1][2]));
+	m_Frustum[1][0] *= t;
+	m_Frustum[1][1] *= t;
+	m_Frustum[1][2] *= t;
+	m_Frustum[1][3] *= t;
 
-	m_Frustum[2][0]=ViewProjection.m03+ViewProjection.m01;
-	m_Frustum[2][1]=ViewProjection.m13+ViewProjection.m11;
-	m_Frustum[2][2]=ViewProjection.m23+ViewProjection.m21;
-	m_Frustum[2][3]=ViewProjection.m33+ViewProjection.m31;
+	m_Frustum[2][0] = ViewProjection.m30 + ViewProjection.m10;
+	m_Frustum[2][1] = ViewProjection.m31 + ViewProjection.m11;
+	m_Frustum[2][2] = ViewProjection.m32 + ViewProjection.m12;
+	m_Frustum[2][3] = ViewProjection.m33 + ViewProjection.m13;
 
-	t=1.0f/sqrtf((m_Frustum[2][0]*m_Frustum[2][0])+(m_Frustum[2][1]*m_Frustum[2][1])+(m_Frustum[2][2]*m_Frustum[2][2]));
-	m_Frustum[2][0]*=t;
-	m_Frustum[2][1]*=t;
-	m_Frustum[2][2]*=t;
-	m_Frustum[2][3]*=t;
+	t = 1.0f / sqrtf((m_Frustum[2][0] * m_Frustum[2][0]) + (m_Frustum[2][1] * m_Frustum[2][1]) + (m_Frustum[2][2] * m_Frustum[2][2]));
+	m_Frustum[2][0] *= t;
+	m_Frustum[2][1] *= t;
+	m_Frustum[2][2] *= t;
+	m_Frustum[2][3] *= t;
 
-	m_Frustum[3][0]=ViewProjection.m03 - ViewProjection.m01;
-	m_Frustum[3][1]=ViewProjection.m13 - ViewProjection.m11;
-	m_Frustum[3][2]=ViewProjection.m23 - ViewProjection.m21;
-	m_Frustum[3][3]=ViewProjection.m33 - ViewProjection.m31;
+	m_Frustum[3][0] = ViewProjection.m30 - ViewProjection.m10;
+	m_Frustum[3][1] = ViewProjection.m31 - ViewProjection.m11;
+	m_Frustum[3][2] = ViewProjection.m32 - ViewProjection.m12;
+	m_Frustum[3][3] = ViewProjection.m33 - ViewProjection.m13;
 
-	t=1.0f/sqrtf((m_Frustum[3][0]*m_Frustum[3][0])+(m_Frustum[3][1]*m_Frustum[3][1])+(m_Frustum[3][2]*m_Frustum[3][2]));
-	m_Frustum[3][0]*=t;
-	m_Frustum[3][1]*=t;
-	m_Frustum[3][2]*=t;
-	m_Frustum[3][3]*=t;
+	t = 1.0f / sqrtf((m_Frustum[3][0] * m_Frustum[3][0]) + (m_Frustum[3][1] * m_Frustum[3][1]) + (m_Frustum[3][2] * m_Frustum[3][2]));
+	m_Frustum[3][0] *= t;
+	m_Frustum[3][1] *= t;
+	m_Frustum[3][2] *= t;
+	m_Frustum[3][3] *= t;
 
-	m_Frustum[4][0]=ViewProjection.m03 - ViewProjection.m02;
-	m_Frustum[4][1]=ViewProjection.m13 - ViewProjection.m12;
-	m_Frustum[4][2]=ViewProjection.m23 - ViewProjection.m22;
-	m_Frustum[4][3]=ViewProjection.m33 - ViewProjection.m32;
+	m_Frustum[4][0] = ViewProjection.m30 - ViewProjection.m20;
+	m_Frustum[4][1] = ViewProjection.m31 - ViewProjection.m21;
+	m_Frustum[4][2] = ViewProjection.m32 - ViewProjection.m22;
+	m_Frustum[4][3] = ViewProjection.m33 - ViewProjection.m23;
 
-	t=1.0f/sqrtf((m_Frustum[4][0]*m_Frustum[4][0])+(m_Frustum[4][1]*m_Frustum[4][1])+(m_Frustum[4][2]*m_Frustum[4][2]));
-	m_Frustum[4][0]*=t;
-	m_Frustum[4][1]*=t;
-	m_Frustum[4][2]*=t;
-	m_Frustum[4][3]*=t;
+	t = 1.0f / sqrtf((m_Frustum[4][0] * m_Frustum[4][0]) + (m_Frustum[4][1] * m_Frustum[4][1]) + (m_Frustum[4][2] * m_Frustum[4][2]));
+	m_Frustum[4][0] *= t;
+	m_Frustum[4][1] *= t;
+	m_Frustum[4][2] *= t;
+	m_Frustum[4][3] *= t;
 
-	m_Frustum[5][0]=ViewProjection.m03+ViewProjection.m02;
-	m_Frustum[5][1]=ViewProjection.m13+ViewProjection.m12;
-	m_Frustum[5][2]=ViewProjection.m23+ViewProjection.m22;
-	m_Frustum[5][3]=ViewProjection.m33+ViewProjection.m32;
+	m_Frustum[5][0] = ViewProjection.m30 + ViewProjection.m20;
+	m_Frustum[5][1] = ViewProjection.m31 + ViewProjection.m21;
+	m_Frustum[5][2] = ViewProjection.m32 + ViewProjection.m22;
+	m_Frustum[5][3] = ViewProjection.m33 + ViewProjection.m23;
 
-	t=1.0f/sqrtf((m_Frustum[5][0]*m_Frustum[5][0])+(m_Frustum[5][1]*m_Frustum[5][1])+(m_Frustum[5][2]*m_Frustum[5][2]));
-	m_Frustum[5][0]*=t;
-	m_Frustum[5][1]*=t;
-	m_Frustum[5][2]*=t;
-	m_Frustum[5][3]*=t;
+	t = 1.0f / sqrtf((m_Frustum[5][0] * m_Frustum[5][0]) + (m_Frustum[5][1] * m_Frustum[5][1]) + (m_Frustum[5][2] * m_Frustum[5][2]));
+	m_Frustum[5][0] *= t;
+	m_Frustum[5][1] *= t;
+	m_Frustum[5][2] *= t;
+	m_Frustum[5][3] *= t;
+
+
+	/*
+	m_Frustum[0][0] = ViewProjection.m03 - ViewProjection.m00;
+	m_Frustum[0][1] = ViewProjection.m13 - ViewProjection.m10;
+	m_Frustum[0][2] = ViewProjection.m23 - ViewProjection.m20;
+	m_Frustum[0][3] = ViewProjection.m33 - ViewProjection.m30;
+
+	float t = 1.0f / sqrtf((m_Frustum[0][0] * m_Frustum[0][0]) + (m_Frustum[0][1] * m_Frustum[0][1]) + (m_Frustum[0][2] * m_Frustum[0][2]));
+	m_Frustum[0][0] *= t;
+	m_Frustum[0][1] *= t;
+	m_Frustum[0][2] *= t;
+	m_Frustum[0][3] *= t;
+
+	m_Frustum[1][0] = ViewProjection.m03 + ViewProjection.m00;
+	m_Frustum[1][1] = ViewProjection.m13 + ViewProjection.m10;
+	m_Frustum[1][2] = ViewProjection.m23 + ViewProjection.m20;
+	m_Frustum[1][3] = ViewProjection.m33 + ViewProjection.m30;
+
+	t = 1.0f / sqrtf((m_Frustum[1][0] * m_Frustum[1][0]) + (m_Frustum[1][1] * m_Frustum[1][1]) + (m_Frustum[1][2] * m_Frustum[1][2]));
+	m_Frustum[1][0] *= t;
+	m_Frustum[1][1] *= t;
+	m_Frustum[1][2] *= t;
+	m_Frustum[1][3] *= t;
+
+	m_Frustum[2][0] = ViewProjection.m03 + ViewProjection.m01;
+	m_Frustum[2][1] = ViewProjection.m13 + ViewProjection.m11;
+	m_Frustum[2][2] = ViewProjection.m23 + ViewProjection.m21;
+	m_Frustum[2][3] = ViewProjection.m33 + ViewProjection.m31;
+
+	t = 1.0f / sqrtf((m_Frustum[2][0] * m_Frustum[2][0]) + (m_Frustum[2][1] * m_Frustum[2][1]) + (m_Frustum[2][2] * m_Frustum[2][2]));
+	m_Frustum[2][0] *= t;
+	m_Frustum[2][1] *= t;
+	m_Frustum[2][2] *= t;
+	m_Frustum[2][3] *= t;
+
+	m_Frustum[3][0] = ViewProjection.m03 - ViewProjection.m01;
+	m_Frustum[3][1] = ViewProjection.m13 - ViewProjection.m11;
+	m_Frustum[3][2] = ViewProjection.m23 - ViewProjection.m21;
+	m_Frustum[3][3] = ViewProjection.m33 - ViewProjection.m31;
+
+	t = 1.0f / sqrtf((m_Frustum[3][0] * m_Frustum[3][0]) + (m_Frustum[3][1] * m_Frustum[3][1]) + (m_Frustum[3][2] * m_Frustum[3][2]));
+	m_Frustum[3][0] *= t;
+	m_Frustum[3][1] *= t;
+	m_Frustum[3][2] *= t;
+	m_Frustum[3][3] *= t;
+
+	m_Frustum[4][0] = ViewProjection.m03 - ViewProjection.m02;
+	m_Frustum[4][1] = ViewProjection.m13 - ViewProjection.m12;
+	m_Frustum[4][2] = ViewProjection.m23 - ViewProjection.m22;
+	m_Frustum[4][3] = ViewProjection.m33 - ViewProjection.m32;
+
+	t = 1.0f / sqrtf((m_Frustum[4][0] * m_Frustum[4][0]) + (m_Frustum[4][1] * m_Frustum[4][1]) + (m_Frustum[4][2] * m_Frustum[4][2]));
+	m_Frustum[4][0] *= t;
+	m_Frustum[4][1] *= t;
+	m_Frustum[4][2] *= t;
+	m_Frustum[4][3] *= t;
+
+	m_Frustum[5][0] = ViewProjection.m03 + ViewProjection.m02;
+	m_Frustum[5][1] = ViewProjection.m13 + ViewProjection.m12;
+	m_Frustum[5][2] = ViewProjection.m23 + ViewProjection.m22;
+	m_Frustum[5][3] = ViewProjection.m33 + ViewProjection.m32;
+
+	t = 1.0f / sqrtf((m_Frustum[5][0] * m_Frustum[5][0]) + (m_Frustum[5][1] * m_Frustum[5][1]) + (m_Frustum[5][2] * m_Frustum[5][2]));
+	m_Frustum[5][0] *= t;
+	m_Frustum[5][1] *= t;
+	m_Frustum[5][2] *= t;
+	m_Frustum[5][3] *= t;
+	*/
 }
 
 bool CFrustum::SphereVisible(const Vect3f &Center, float Radius) const

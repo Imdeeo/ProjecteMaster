@@ -129,6 +129,8 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 		CApplication application(&debugRender, &s_Context);
 
+		application.Init();
+
 		UpdateWindow(hWnd);
 		MSG msg;
 		ZeroMemory(&msg, sizeof(msg));
