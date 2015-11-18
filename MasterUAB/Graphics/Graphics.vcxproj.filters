@@ -12,10 +12,16 @@
     <ClCompile Include="MaterialManager.cpp" />
     <ClCompile Include="RenderableObject.cpp" />
     <ClCompile Include="RenderManager.cpp" />
+    <ClCompile Include="..\Base\Texture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
       <UniqueIdentifier>{49dc92e7-f305-4eb8-8258-14aa45916baa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{8ec2d701-2663-4d3d-a80c-61e7a0f90548}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -35,5 +41,8 @@
     <ClInclude Include="MaterialManager.h" />
     <ClInclude Include="RenderableObject.h" />
     <ClInclude Include="RenderManager.h" />
+    <ClInclude Include="..\Base\Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

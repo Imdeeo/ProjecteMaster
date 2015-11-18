@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Base\Texture.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="ContextManager.cpp" />
     <ClCompile Include="DebugRender.cpp" />
@@ -22,6 +23,7 @@
     <ClCompile Include="SphericalCameraController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Base\Texture.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="ContextManager.h" />
@@ -47,7 +49,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>

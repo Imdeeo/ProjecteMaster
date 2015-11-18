@@ -33,6 +33,15 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="HelperTypes.h" />
+    <ClInclude Include="Named.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplatedVectorMapManager.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplatedMapManager.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -54,6 +63,12 @@
     </ClCompile>
     <ClCompile Include="XML\XMLTreeNode.cpp">
       <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="Named.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="dummy.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
