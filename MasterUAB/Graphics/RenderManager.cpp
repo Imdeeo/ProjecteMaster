@@ -14,7 +14,7 @@ bool CRenderManager::AddRenderableObjectToRenderList(const CRenderableObject* _R
 {
 	// Alguien se atrebe a arreglar el frustum?
 
-	//if (m_CullFrustum.SphereVisible(_RenderableObject->GetTransform().Position, _RenderableObject->GetBoundingRadius()))
+	if (m_CullFrustum.BoxVisible(_RenderableObject->GetBoundingMax()+_RenderableObject->GetTransform().Position, _RenderableObject->GetBoundingMin()+_RenderableObject->GetTransform().Position))
 	{
 		if (m_CurrentRenderlistLength == m_RenderableObjects.size())
 		{
@@ -27,10 +27,10 @@ bool CRenderManager::AddRenderableObjectToRenderList(const CRenderableObject* _R
 		++m_CurrentRenderlistLength;
 		return true;
 	}
-	//else
-	//{
-	//	return false;
-	//}
+	else
+	{
+		return false;
+	}
 }
 	struct BlendedSubmesh
 	{

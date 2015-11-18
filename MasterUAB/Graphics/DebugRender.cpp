@@ -146,7 +146,7 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 		//m_SimpleCube = new CLinesListRenderableIndexed16Vertexs<MV_POSITION_COLOR_VERTEX>(_Device, l_SimpleCubeVtxs, 8, l_SimpleCubeIdxs, 24);
 		m_SimpleCube = new CTriangleListRenderableIndexed16Vertexs<MV_POSITION_COLOR_VERTEX>(_Device, l_SimpleCubeVtxs, 8, l_SimpleCubeIdxs, 36);
 		m_SimpleCubeBSRadi = 1.224745f;
-		m_SimpleCubeBBMin = Vect3f(-.5f, 0.f, -.5f);
+		m_SimpleCubeBBMin = Vect3f(-0.5f, 0.f, -0.5f);
 		m_SimpleCubeBBMax = Vect3f(.5f, 1.f, .5f);
 	}
 }

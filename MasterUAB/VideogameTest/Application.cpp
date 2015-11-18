@@ -80,6 +80,11 @@ void CApplication::Update(float _ElapsedTime)
 		m_MaterialManager.ClearMaterials();
 		m_MaterialManager.AddMaterials("Data\\materials.xml");
 	}
+	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_BOTH"))
+	{
+		m_CurrentCamera++;
+		m_CurrentCamera = m_CurrentCamera % 2;
+	}
 	switch (m_CurrentCamera)
 	{
 	case 0:
@@ -169,6 +174,7 @@ void CApplication::Init()
 	m_Triangle1.AddSubmesh(m_DebugRender->GetClassicBlendTriangle(),"classic blend",m_DebugRender->GetClassicBlendTriangleBSRadi(),m_DebugRender->GetClassicBlendTriangleBBMin(),m_DebugRender->GetClassicBlendTriangleBBMax());
 	m_Triangle2.AddSubmesh(m_DebugRender->GetClassicBlendTriangle(),"premult blend",m_DebugRender->GetClassicBlendTriangleBSRadi(),m_DebugRender->GetClassicBlendTriangleBBMin(),m_DebugRender->GetClassicBlendTriangleBBMax());
 
+	m_Cube.SetPosition(Vect3f(0,0,0));
 	m_Triangle1.SetPosition(Vect3f(10,0,0));
 	m_Triangle2.SetPosition(Vect3f(0,0,-10));
 }
