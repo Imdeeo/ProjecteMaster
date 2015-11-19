@@ -9,11 +9,12 @@
 	<action name="CHANGE_CAMERA_CONTROL" type="KEYBOARD" mode="ON_PRESS" key="C"/>
 	<action name="CHANGE_CAMERA_VISION" type="KEYBOARD" mode="ON_PRESS" key="V"/>
 	<action name="CHANGE_CAMERA_BOTH" type="KEYBOARD" mode="ON_PRESS" key="B"/>
+	<action name="RENDER_CAMERA" type="KEYBOARD" mode="ON_PRESS" key="X"/>
 	
 	<action name="MOVE_CAMERA" type="MOUSE" mode="WHILE_PRESSED" mouse_button="RIGHT"/>
 	
 	<axis name="X_AXIS" type="MOUSE" mouse_axis="X" mouse_scale="0.05"/>
-	<!--<axis name="Y_AXIS" type="MOUSE" mouse_axis="Y" mouse_scale="0.05"/>-->
+	<axis name="Y_AXIS" type="MOUSE" mouse_axis="Y" mouse_scale="0.05"/>
 	<axis name="ZOOM" type="MOUSE" mouse_axis="WHEEL" mouse_scale="0.05"/>
 	
 	<axis name="X_AXIS" type="GAMEPAD" gamepad_axis="LEFT_X" gamepad_number="0"/>

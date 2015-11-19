@@ -17,7 +17,9 @@ CApplication::CApplication(CDebugRender *_DebugRender, CContextManager *_Context
 	: m_DebugRender(_DebugRender)
 	, m_ContextManager(_ContextManager)
 	, m_BackgroundColor(.2f, .1f, .4f)
-	, m_CurrentCamera(0)
+	, m_CurrentCamera_control(0)
+	, m_CurrentCamera_vision(0)
+	,m_RenderCameraCube(false)
 {
 	CDebugHelper::GetDebugHelper()->Log("CApplication::CApplication");
 
@@ -65,11 +67,9 @@ CApplication::~CApplication()
 
 void CApplication::SwitchCamera()
 {
-	++m_CurrentCamera;
-	if (m_CurrentCamera > 1)
-	{
-		m_CurrentCamera = 0;
-	}
+	m_CurrentCamera_vision++;
+	m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
+	m_CurrentCamera_control = m_CurrentCamera_vision;
 }
 
 void CApplication::Update(float _ElapsedTime)
@@ -82,10 +82,27 @@ void CApplication::Update(float _ElapsedTime)
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_BOTH"))
 	{
-		m_CurrentCamera++;
-		m_CurrentCamera = m_CurrentCamera % 2;
+
+		SwitchCamera();
 	}
-	switch (m_CurrentCamera)
+	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_VISION"))
+	{
+
+		m_CurrentCamera_vision++;
+		m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
+	}
+	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_CONTROL"))
+	{
+
+		m_CurrentCamera_control++;
+		m_CurrentCamera_control = m_CurrentCamera_control % 2;
+	}
+	if(CInputManager::GetInputManager()->IsActionActive("RENDER_CAMERA"))
+	{
+		m_RenderCameraCube = !m_RenderCameraCube;
+	}
+
+	switch (m_CurrentCamera_control)
 	{
 	case 0:
 		if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
@@ -126,7 +143,7 @@ void CApplication::Update(float _ElapsedTime)
 		camera.SetMatrixs();
 		m_RenderManager.SetDebugCamera(camera);
 
-		m_RenderManager.SetUseDebugCamera(m_CurrentCamera == 0);
+		m_RenderManager.SetUseDebugCamera(m_CurrentCamera_vision == 0);
 	}
 
 }
@@ -149,6 +166,16 @@ void CApplication::Render()
 	m_ContextManager->SetWorldMatrix(world);
 	m_ContextManager->Draw(m_DebugRender->GetAxis());
 
+	if(m_RenderCameraCube)
+	{
+		world.SetIdentity();
+		world.SetFromPitchRollYaw(Vect3f(m_FPSCamera.GetPitch(),0.f,m_FPSCamera.GetYaw()));
+		world.SetFromPos(m_FPSCamera.GetPosition()+Vect3f(0,-2.f,0));
+		m_ContextManager->SetWorldMatrix(world);
+		m_ContextManager->Draw(m_DebugRender->GetSimpleCube(), CContextManager::RS_WIREFRAME, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_CLASSIC);
+	}
+
+	
 	/*world.SetIdentity();
 	world.SetFromPos(10, 0, 0);
 	m_ContextManager->SetWorldMatrix(world);
