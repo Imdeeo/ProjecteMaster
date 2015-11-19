@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Base\Texture.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="ContextManager.cpp" />
     <ClCompile Include="DebugRender.cpp" />
@@ -21,9 +20,10 @@
     <ClCompile Include="RenderableObject.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="SphericalCameraController.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Base\Texture.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="ContextManager.h" />
@@ -37,6 +37,8 @@
     <ClInclude Include="RenderableVertexs.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="SphericalCameraController.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="VertexTypes.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
