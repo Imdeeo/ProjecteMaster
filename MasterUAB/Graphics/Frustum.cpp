@@ -62,10 +62,10 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	//m_Frustum[4][2] *= t;
 	//m_Frustum[4][3] *= t;
 
-	//m_Frustum[5][0] = ViewProjection.m20;
-	//m_Frustum[5][1] = ViewProjection.m21;
-	//m_Frustum[5][2] = ViewProjection.m22;
-	//m_Frustum[5][3] = ViewProjection.m23;
+	//m_Frustum[5][0] = ViewProjection.m30 +  ViewProjection.m20;
+	//m_Frustum[5][1] = ViewProjection.m31 +  ViewProjection.m21;
+	//m_Frustum[5][2] = ViewProjection.m32 +  ViewProjection.m22;
+	//m_Frustum[5][3] = ViewProjection.m33 +  ViewProjection.m23;
 
 	//t = 1.0f / sqrtf((m_Frustum[5][0] * m_Frustum[5][0]) + (m_Frustum[5][1] * m_Frustum[5][1]) + (m_Frustum[5][2] * m_Frustum[5][2]));
 	//m_Frustum[5][0] *= t;
@@ -74,6 +74,7 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	//m_Frustum[5][3] *= t;
 
 
+	//left plane frustum
 	m_Frustum[0][0] = ViewProjection.m03 - ViewProjection.m00;
 	m_Frustum[0][1] = ViewProjection.m13 - ViewProjection.m10;
 	m_Frustum[0][2] = ViewProjection.m23 - ViewProjection.m20;
@@ -84,7 +85,8 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	m_Frustum[0][1] *= t;
 	m_Frustum[0][2] *= t;
 	m_Frustum[0][3] *= t;
-
+	
+	//right plane frustum
 	m_Frustum[1][0] = ViewProjection.m03 + ViewProjection.m00;
 	m_Frustum[1][1] = ViewProjection.m13 + ViewProjection.m10;
 	m_Frustum[1][2] = ViewProjection.m23 + ViewProjection.m20;
@@ -96,6 +98,7 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	m_Frustum[1][2] *= t;
 	m_Frustum[1][3] *= t;
 
+	//bottom plane frustum
 	m_Frustum[2][0] = ViewProjection.m03 + ViewProjection.m01;
 	m_Frustum[2][1] = ViewProjection.m13 + ViewProjection.m11;
 	m_Frustum[2][2] = ViewProjection.m23 + ViewProjection.m21;
@@ -107,6 +110,7 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	m_Frustum[2][2] *= t;
 	m_Frustum[2][3] *= t;
 
+	//top plane frustum
 	m_Frustum[3][0] = ViewProjection.m03 - ViewProjection.m01;
 	m_Frustum[3][1] = ViewProjection.m13 - ViewProjection.m11;
 	m_Frustum[3][2] = ViewProjection.m23 - ViewProjection.m21;
@@ -118,6 +122,7 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	m_Frustum[3][2] *= t;
 	m_Frustum[3][3] *= t;
 
+	//far plane frustum
 	m_Frustum[4][0] = ViewProjection.m03 - ViewProjection.m02;
 	m_Frustum[4][1] = ViewProjection.m13 - ViewProjection.m12;
 	m_Frustum[4][2] = ViewProjection.m23 - ViewProjection.m22;
@@ -129,10 +134,11 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	m_Frustum[4][2] *= t;
 	m_Frustum[4][3] *= t;
 
-	m_Frustum[5][0] = ViewProjection.m02;
-	m_Frustum[5][1] = ViewProjection.m12;
-	m_Frustum[5][2] = ViewProjection.m22;
-	m_Frustum[5][3] = ViewProjection.m32;
+	//near plane frustum
+	m_Frustum[5][0] = ViewProjection.m03 + ViewProjection.m02;
+	m_Frustum[5][1] = ViewProjection.m13 + ViewProjection.m12;
+	m_Frustum[5][2] = ViewProjection.m23 + ViewProjection.m22;
+	m_Frustum[5][3] = ViewProjection.m33 + ViewProjection.m32;
 
 	t = 1.0f / sqrtf((m_Frustum[5][0] * m_Frustum[5][0]) + (m_Frustum[5][1] * m_Frustum[5][1]) + (m_Frustum[5][2] * m_Frustum[5][2]));
 	m_Frustum[5][0] *= t;
@@ -145,7 +151,7 @@ bool CFrustum::SphereVisible(const Vect3f &Center, float Radius) const
 {
 	for(int i=0; i<6; ++i)	
 	{
-		if(((m_Frustum[i][0]*Center.x)+(m_Frustum[i][1]*Center.y)+(m_Frustum[i][2]*Center.z)+(m_Frustum[i][3]))<=-Radius)
+		if(((m_Frustum[i][0]*Center.x)+(m_Frustum[i][1]*Center.y)+(m_Frustum[i][2]*Center.z)+(m_Frustum[i][3]))<-Radius)
 			return false;
 	}
 	return true;

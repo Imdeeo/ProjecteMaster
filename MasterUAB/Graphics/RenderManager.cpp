@@ -3,10 +3,17 @@
 #include "ContextManager.h"
 #include "MaterialManager.h"
 
+#define SCREEN_DEPTH 20.f
 void CRenderManager::SetCurrentCamera(const CCamera& _CurrentCamera)
 {
 	m_CurrentCamera = _CurrentCamera;
-	Mat44f viewProj = m_CurrentCamera.GetView() * m_CurrentCamera.GetProjection();
+	Mat44f Proj = m_CurrentCamera.GetProjection();
+	// Calculate the minimum Z distance in the frustum.
+	float zMinimum = -Proj.m32 / Proj.m22;
+	float r = SCREEN_DEPTH / (SCREEN_DEPTH - zMinimum);
+	Proj.m22 = r;
+	Proj.m32 = -r * zMinimum;
+	Mat44f viewProj = m_CurrentCamera.GetView() * Proj;
 	m_CullFrustum.Update(viewProj);
 }
 
@@ -14,6 +21,7 @@ bool CRenderManager::AddRenderableObjectToRenderList(const CRenderableObject* _R
 {
 	// Alguien se atrebe a arreglar el frustum?
 
+	//if (m_CullFrustum.SphereVisible(_RenderableObject->GetTransform().Position, _RenderableObject->GetBoundingRadius()))
 	if (m_CullFrustum.BoxVisible(_RenderableObject->GetBoundingMax()+_RenderableObject->GetTransform().Position, _RenderableObject->GetBoundingMin()+_RenderableObject->GetTransform().Position))
 	{
 		if (m_CurrentRenderlistLength == m_RenderableObjects.size())
@@ -22,7 +30,7 @@ bool CRenderManager::AddRenderableObjectToRenderList(const CRenderableObject* _R
 		}
 		else
 		{
-			m_RenderableObjects[m_CurrentRenderlistLength];
+			m_RenderableObjects[m_CurrentRenderlistLength]=_RenderableObject;
 		}
 		++m_CurrentRenderlistLength;
 		return true;
