@@ -12,7 +12,10 @@
     <ClCompile Include="MaterialManager.cpp" />
     <ClCompile Include="RenderableObject.cpp" />
     <ClCompile Include="RenderManager.cpp" />
-    <ClCompile Include="..\Base\Texture.cpp">
+    <ClCompile Include="Texture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,7 +44,10 @@
     <ClInclude Include="MaterialManager.h" />
     <ClInclude Include="RenderableObject.h" />
     <ClInclude Include="RenderManager.h" />
-    <ClInclude Include="..\Base\Texture.h">
+    <ClInclude Include="Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
       <Filter>Texture</Filter>
     </ClInclude>
   </ItemGroup>
