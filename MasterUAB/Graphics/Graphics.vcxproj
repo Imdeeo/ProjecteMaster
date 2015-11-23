@@ -14,6 +14,7 @@
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="ContextManager.cpp" />
     <ClCompile Include="DebugRender.cpp" />
+    <ClCompile Include="Dummy.cpp" />
     <ClCompile Include="FPSCameraController.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="MaterialManager.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="RenderableVertexs.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="SphericalCameraController.h" />
+    <ClInclude Include="TemplatedRenderableVertexs.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="VertexTypes.h" />
