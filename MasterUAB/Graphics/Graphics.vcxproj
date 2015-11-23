@@ -38,6 +38,7 @@
     <ClInclude Include="RenderableVertexs.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="SphericalCameraController.h" />
+    <ClInclude Include="TemplatedRenderableIndexedVertexs.h" />
     <ClInclude Include="TemplatedRenderableVertexs.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />

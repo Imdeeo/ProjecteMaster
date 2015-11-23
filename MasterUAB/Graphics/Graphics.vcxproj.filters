@@ -61,5 +61,8 @@
     <ClInclude Include="TemplatedRenderableVertexs.h">
       <Filter>Texture</Filter>
     </ClInclude>
+    <ClInclude Include="TemplatedRenderableIndexedVertexs.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
