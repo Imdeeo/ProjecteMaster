@@ -17,6 +17,10 @@ public: \
 	void Set##Variable##(const Type &Variable) {m_##Variable##=Variable;} \
 	const Type & Get##Variable##() const {return m_##Variable##;}
 
+#define UAB_GET_PROPERTY(Type, Variable) \
+public: \
+	Type Get##Variable##() const {return m_##Variable##;}
+
 #define CHECKED_RELEASE(x) if(x) {x->Release(); x = 0;}
 #define CHECKED_DELETE(x) if(x) {delete x; x = 0;}
 #define CHECKED_DELETE_ARRAY(x) if(x) {delete[] x; x = 0;}

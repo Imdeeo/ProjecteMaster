@@ -2,6 +2,8 @@
 #define MATERIAL_H
 #include "Named.h"
 #include <vector>
+#include "Utils.h"
+#include "EffectTechnique.h"
 
 class CTexture;
 class CEffectTechnique;

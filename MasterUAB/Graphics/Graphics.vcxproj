@@ -16,6 +16,9 @@
     <ClCompile Include="ContextManager.cpp" />
     <ClCompile Include="DebugRender.cpp" />
     <ClCompile Include="Dummy.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="EffectShader.cpp" />
+    <ClCompile Include="EffectTechnique.cpp" />
     <ClCompile Include="FPSCameraController.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -32,7 +35,10 @@
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="ContextManager.h" />
     <ClInclude Include="DebugRender.h" />
-    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="EffectParameters.h" />
+    <ClInclude Include="EffectShader.h" />
+    <ClInclude Include="EffectTechnique.h" />
     <ClInclude Include="FPSCameraController.h" />
     <ClInclude Include="Frustum.h" />
     <ClInclude Include="MaterialManager.h" />
@@ -40,12 +46,22 @@
     <ClInclude Include="RenderableObject.h" />
     <ClInclude Include="RenderableVertexs.h" />
     <ClInclude Include="RenderManager.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SphericalCameraController.h" />
     <ClInclude Include="TemplatedRenderableIndexedVertexs.h" />
     <ClInclude Include="TemplatedRenderableVertexs.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="VertexTypes.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Graphics.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Globals.fxh" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="UAB_POSITION_NORMAL_TEXTURE_VERTEXShader.fx" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{31F7443F-B43C-4D38-931C-FAC7C771EF91}</ProjectGuid>
