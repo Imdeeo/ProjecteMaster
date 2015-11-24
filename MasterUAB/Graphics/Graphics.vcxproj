@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="C3DElement.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="ContextManager.cpp" />
     <ClCompile Include="DebugRender.cpp" />
     <ClCompile Include="Dummy.cpp" />
     <ClCompile Include="FPSCameraController.cpp" />
     <ClCompile Include="Frustum.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialManager.cpp" />
     <ClCompile Include="RenderableObject.cpp" />
     <ClCompile Include="RenderManager.cpp" />
@@ -25,6 +27,7 @@
     <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C3DElement.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="ContextManager.h" />
@@ -32,8 +35,8 @@
     <ClInclude Include="Effect.h" />
     <ClInclude Include="FPSCameraController.h" />
     <ClInclude Include="Frustum.h" />
-    <ClInclude Include="Material.h" />
     <ClInclude Include="MaterialManager.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="RenderableObject.h" />
     <ClInclude Include="RenderableVertexs.h" />
     <ClInclude Include="RenderManager.h" />
