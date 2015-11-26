@@ -48,10 +48,12 @@
     <ClCompile Include="RenderableObject.cpp">
       <Filter>RenderableObjects</Filter>
     </ClCompile>
-    <ClCompile Include="StaticMesh.cpp">
-      <Filter>RenderableObjects</Filter>
+    <ClCompile Include="StaticMeshManager.cpp">
+      <Filter>StaticMesh</Filter>
     </ClCompile>
-    <ClCompile Include="StaticMeshManager.cpp" />
+    <ClCompile Include="StaticMesh.cpp">
+      <Filter>StaticMesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -74,6 +76,9 @@
     </Filter>
     <Filter Include="RenderableObjects">
       <UniqueIdentifier>{f98aa82c-805b-49ed-a2bd-de372a59bfc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StaticMesh">
+      <UniqueIdentifier>{3be6c0a7-cfa8-4b68-a643-c291d3311b4f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,10 +143,12 @@
     <ClInclude Include="RenderableVertexs.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
-    <ClInclude Include="StaticMesh.h">
-      <Filter>RenderableObjects</Filter>
+    <ClInclude Include="StaticMeshManager.h">
+      <Filter>StaticMesh</Filter>
     </ClInclude>
-    <ClInclude Include="StaticMeshManager.h" />
+    <ClInclude Include="StaticMesh.h">
+      <Filter>StaticMesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Graphics.rc" />
