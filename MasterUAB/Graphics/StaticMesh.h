@@ -13,7 +13,7 @@ protected:
 	unsigned int m_NumVertexs, m_NumFaces;
 public:
 	CStaticMesh();
-	~CStaticMesh();
+	virtual ~CStaticMesh();
 	bool Load (const std::string &FileName);
 	bool Reload ();
 	void Render (CRenderManager *RM) const;
