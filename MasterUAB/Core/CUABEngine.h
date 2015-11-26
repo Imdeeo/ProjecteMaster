@@ -6,7 +6,7 @@
 #include "TextureManager.h"
 #include "RenderManager.h"
 
-class MiPutoEngine
+class CUABEngine
 {
 	//UAB_BUILD_GET_SET(CStaticMeshManager *, StaticMeshManager)
 	//UAB_BUILD_GET_SET(CRenderableObjectManager *, RenderableObjectManager)
@@ -15,14 +15,14 @@ class MiPutoEngine
 	UAB_BUILD_GET_SET(CTextureManager *, TextureManager)
 	UAB_BUILD_GET_SET(CRenderManager *, RenderManager)
 
-	static MiPutoEngine * m_Instance;
+	static CUABEngine * m_Instance;
 	
-	MiPutoEngine(void);
+	CUABEngine(void);
 	
 public:
 
-	static MiPutoEngine * GetInstance();
-	virtual ~MiPutoEngine(void);
+	static CUABEngine * GetInstance();
+	virtual ~CUABEngine(void);
 
 	void Init();
 };

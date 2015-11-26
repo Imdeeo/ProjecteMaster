@@ -15,14 +15,14 @@
     <ClCompile Include="DebugHelperImplementation.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InputManagerImplementation.cpp" />
-    <ClCompile Include="MiPutoEngine.cpp" />
+    <ClCompile Include="CUABEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugHelper.h" />
     <ClInclude Include="DebugHelperImplementation.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="InputManagerImplementation.h" />
-    <ClInclude Include="MiPutoEngine.h" />
+    <ClInclude Include="CUABEngine.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{77B0C728-54BB-429B-925A-3F8CB72784F9}</ProjectGuid>

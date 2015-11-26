@@ -1,27 +1,27 @@
-#include "MiPutoEngine.h"
+#include "CUABEngine.h"
 
 
-MiPutoEngine::MiPutoEngine(void)
+CUABEngine::CUABEngine(void)
 {
 }
 
 
-MiPutoEngine::~MiPutoEngine(void)
+CUABEngine::~CUABEngine(void)
 {
 }
 
-MiPutoEngine* MiPutoEngine::m_Instance = nullptr;
+CUABEngine* CUABEngine::m_Instance = nullptr;
 
-MiPutoEngine* MiPutoEngine::GetInstance()
+CUABEngine* CUABEngine::GetInstance()
 {
 	if(m_Instance == nullptr)
 	{
-		m_Instance = new  MiPutoEngine();
+		m_Instance = new  CUABEngine();
 	}
 	return m_Instance;
 }
 
-void MiPutoEngine::Init()
+void CUABEngine::Init()
 {
 	m_EffectManager = new CEffectManager();
 	m_MaterialManager = new CMaterialManager();
