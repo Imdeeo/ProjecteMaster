@@ -16,6 +16,7 @@ protected:
 	Mat44f m_TransformMatrix, m_RotationMatrix, m_TranslationMatrix,
 	m_ScaleMatrix;
 	Vect3f m_Scale;
+	bool m_Visible;
 public:
 	C3DElement();
 	C3DElement(const Vect3f &Position);
@@ -79,6 +80,16 @@ public:
 	{
 		return m_TransformMatrix;
 	}
+	float GetVisible() const
+	{
+		return m_Visible;
+	}
+
+	virtual void SetVisible(bool newVisible) 
+	{
+		m_Visible = newVisible;
+	}
+
 };
 
 #endif //C3D_ELEMENT_H
