@@ -24,6 +24,7 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialManager.cpp" />
     <ClCompile Include="RenderableObject.cpp" />
+    <ClCompile Include="RenderableObjectManager.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="SphericalCameraController.cpp" />
     <ClCompile Include="StaticMesh.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="MaterialManager.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="RenderableObject.h" />
+    <ClInclude Include="RenderableObjectManager.h" />
     <ClInclude Include="RenderableVertexs.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="resource.h" />

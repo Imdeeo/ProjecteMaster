@@ -17,3 +17,8 @@ void CRenderableObject::AddSubmesh(const CRenderableVertexs* _Vertices, const st
 
 	m_Submeshes.push_back(l_Submesh);
 }
+
+
+CRenderableObject::CRenderableObject() : CNamed(""){}
+CRenderableObject::~CRenderableObject() {}
+void CRenderableObject::Update(float ElapsedTime) {}

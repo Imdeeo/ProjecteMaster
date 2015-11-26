@@ -6,12 +6,21 @@
 
 #include "RenderableVertexs.h"
 #include "Material.h"
+#include "C3DElement.h"
 
 
-class CRenderableObject
+class CRenderableObject : public C3DElement, public CNamed
 {
 public:
 
+	CRenderableObject();
+	virtual ~CRenderableObject() {}
+	virtual void Update(float ElapsedTime) {}
+	virtual void Render(CRenderManager *RM) = 0;
+
+
+
+	// COSAS DE ISAAC!!!!
 	struct SSubmesh
 	{
 		const CRenderableVertexs* vertices;
@@ -34,6 +43,9 @@ public:
 	float GetBoundingRadius() const { return m_BoundingRadius; }
 	Vect3f GetBoundingMin() const { return m_BoundingBoxMin; }
 	Vect3f GetBoundingMax() const { return m_BoundingBoxMax; }
+
+
+
 
 private:
 
