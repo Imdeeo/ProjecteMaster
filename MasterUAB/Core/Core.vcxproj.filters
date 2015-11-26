@@ -5,7 +5,7 @@
     <ClCompile Include="DebugHelperImplementation.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InputManagerImplementation.cpp" />
-    <ClCompile Include="CUABEngine.cpp">
+    <ClCompile Include="UABEngine.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -14,7 +14,7 @@
     <ClInclude Include="DebugHelperImplementation.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="InputManagerImplementation.h" />
-    <ClInclude Include="CUABEngine.h">
+    <ClInclude Include="UABEngine.h">
       <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>

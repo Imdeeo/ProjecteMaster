@@ -7,7 +7,7 @@
 #include "Math\Vector4.h"
 #include "Math\Color.h"
 
-//#include "CKGRenderManager.h"
+#include "RenderManager.h"
 
 #include <d3d11.h>
 
@@ -25,7 +25,7 @@ struct TCOLORED_VERTEX
 {
 	Vect3f x, y, z;
 	CColor color;
-	static bool CreateInputLayout(CKGRenderManager *RenderManager, ID3DBlob *VSBlob,ID3D11InputLayout **VertexLayout)
+	static bool CreateInputLayout(CRenderManager *RenderManager, ID3DBlob *VSBlob,ID3D11InputLayout **VertexLayout)
 	{
 		D3D11_INPUT_ELEMENT_DESC l_Layout[] =
 		{
