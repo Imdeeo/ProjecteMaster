@@ -54,6 +54,9 @@
     <ClCompile Include="StaticMesh.cpp">
       <Filter>StaticMesh</Filter>
     </ClCompile>
+    <ClCompile Include="RenderableObjectManager.cpp">
+      <Filter>RenderableObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="StaticMesh.h">
       <Filter>StaticMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderableObjectManager.h">
+      <Filter>RenderableObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
