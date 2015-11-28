@@ -12,16 +12,37 @@ CStaticMesh::~CStaticMesh(void)
 bool CStaticMesh::Load(const std::string &FileName)
 {
 	m_Name = FileName;
+
+
+
 	return true;
 }
 
 bool CStaticMesh::Reload()
 {
-	Load(m_Name);
-	return true;
+	if(m_Name!="")
+	{
+		Destroy();
+		Load(m_Name);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void CStaticMesh::Render(CRenderManager *RM) const
 {
-	
+
+}
+
+bool CStaticMesh::Destroy()
+{
+	m_NumVertexs = 0;
+	m_NumFaces = 0;
+	CHECKED_RELEASE(m_RVs);
+	m_RVs.clear();
+	CHECKED_RELEASE(m_Materials);
+	m_Materials.clear();
 }

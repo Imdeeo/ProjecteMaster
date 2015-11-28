@@ -17,6 +17,8 @@ public:
 	bool Load (const std::string &FileName);
 	bool Reload ();
 	void Render (CRenderManager *RM) const;
+private:
+	bool Destroy ();
 };
 
 #endif //STATIC_MESH_H
