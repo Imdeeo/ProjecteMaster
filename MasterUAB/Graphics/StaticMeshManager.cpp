@@ -43,6 +43,10 @@ bool CStaticMeshManager::Load(const std::string &FileName)
 
 bool CStaticMeshManager::Reload()
 {
-	this->Reload();
+	typedef TMapResource::iterator it_type;
+	for(it_type iterator = m_Resources.begin();iterator != m_Resources.end();iterator++)
+	{
+		iterator->second->Reload();
+	}
 	return false;
 }
