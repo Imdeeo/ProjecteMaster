@@ -5,7 +5,6 @@
       <Filter>ContextManager</Filter>
     </ClCompile>
     <ClCompile Include="DebugRender.cpp" />
-    <ClCompile Include="RenderableObject.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Texture.cpp">
       <Filter>Texture</Filter>
@@ -46,6 +45,18 @@
     <ClCompile Include="FPSCameraController.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
+    <ClCompile Include="RenderableObject.cpp">
+      <Filter>RenderableObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMeshManager.cpp">
+      <Filter>StaticMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMesh.cpp">
+      <Filter>StaticMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderableObjectManager.cpp">
+      <Filter>RenderableObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -53,9 +64,6 @@
     </Filter>
     <Filter Include="Texture">
       <UniqueIdentifier>{8ec2d701-2663-4d3d-a80c-61e7a0f90548}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RenderableVertex">
-      <UniqueIdentifier>{2365a3f2-6721-4cc0-84d5-855ea9bae357}</UniqueIdentifier>
     </Filter>
     <Filter Include="3DElement">
       <UniqueIdentifier>{761a5bbe-16ee-4a69-a9fa-812593dd2d14}</UniqueIdentifier>
@@ -69,6 +77,12 @@
     <Filter Include="Camera">
       <UniqueIdentifier>{60e3e005-63ad-4677-aad9-b589e93e504f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RenderableObjects">
+      <UniqueIdentifier>{f98aa82c-805b-49ed-a2bd-de372a59bfc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StaticMesh">
+      <UniqueIdentifier>{3be6c0a7-cfa8-4b68-a643-c291d3311b4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContextManager.h">
@@ -76,16 +90,12 @@
     </ClInclude>
     <ClInclude Include="DebugRender.h" />
     <ClInclude Include="VertexTypes.h" />
-    <ClInclude Include="RenderableObject.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Texture.h">
       <Filter>Texture</Filter>
     </ClInclude>
     <ClInclude Include="TextureManager.h">
       <Filter>Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderableVertexs.h">
-      <Filter>RenderableVertex</Filter>
     </ClInclude>
     <ClInclude Include="TemplatedRenderableVertexs.h">
       <Filter>Texture</Filter>
@@ -129,6 +139,21 @@
     </ClInclude>
     <ClInclude Include="FPSCameraController.h">
       <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderableObject.h">
+      <Filter>RenderableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderableVertexs.h">
+      <Filter>RenderableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMeshManager.h">
+      <Filter>StaticMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMesh.h">
+      <Filter>StaticMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderableObjectManager.h">
+      <Filter>RenderableObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
