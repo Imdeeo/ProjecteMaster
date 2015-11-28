@@ -6,10 +6,8 @@ CNamed::CNamed(const CXMLTreeNode &TreeNode)
 {
 }
 
-CNamed::CNamed(const std::string &Name):
-m_Name(Name)
+CNamed::CNamed(const std::string &Name):m_Name(Name)
 {
-
 }
 
 void CNamed::SetName(const std::string &Name)
