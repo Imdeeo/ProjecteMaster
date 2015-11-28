@@ -46,4 +46,7 @@ public:
 		}
 		m_Resources.clear();
 	}
+	T* CTemplatedMapManager::operator[](std::string b){
+		return m_Resources[b];
+	}
 };
