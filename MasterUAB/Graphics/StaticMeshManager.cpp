@@ -30,10 +30,10 @@ bool CStaticMeshManager::Load(const std::string &FileName)
 					l_MeshName = l_Element.GetPszProperty("name");
 					l_MeshFileName = l_Element.GetPszProperty("filename");
 
-					//create static mesh object
-					//call static mesh object load with l_MeshFileName
+					CStaticMesh *l_StaticMesh = new CStaticMesh;
+					l_StaticMesh->Load(l_MeshFileName);
 
-					AddResource(l_MeshName, /*static mesh object*/);
+					AddResource(l_MeshName, l_StaticMesh);
 				}
 			}
 		}
