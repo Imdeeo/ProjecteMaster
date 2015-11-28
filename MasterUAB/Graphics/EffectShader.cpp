@@ -1,6 +1,7 @@
 #include "EffectShader.h"
 #include "RenderManager.h"
 #include "EffectParameters.h"
+#include "UABEngine.h"
 
 
 CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed("")
@@ -87,7 +88,7 @@ bool CEffectPixelShader::Load()
 	m_ShaderModel.c_str(), &l_PSBlob);
 	if(!l_Loaded)
 		return false;
-	CRenderManager &l_RenderManager=UABEngine.GetRenderManager();
+	CRenderManager &l_RenderManager=CUABEngine::GetInstance()->GetInstance().GetRenderManager();
 	ID3D11Device *l_Device=l_RenderManager.GetDevice();
 	HRESULT l_HR=l_Device->CreatePixelShader(l_PSBlob->GetBufferPointer(),
 	l_PSBlob->GetBufferSize(), NULL, &m_PixelShader);

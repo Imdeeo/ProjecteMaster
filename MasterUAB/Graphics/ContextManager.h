@@ -2,7 +2,7 @@
 
 #include <d3d11.h>
 
-#include "Effect.h"
+#include "Effects.h"
 #include "Camera.h"
 
 class CRenderableVertexs;
