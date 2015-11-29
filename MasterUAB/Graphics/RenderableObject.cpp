@@ -1,10 +1,13 @@
 #include "RenderableObject.h"
 
+CRenderableObject::CRenderableObject() : CNamed(""){}
+CRenderableObject::~CRenderableObject() {}
 
+/*
 void CRenderableObject::AddSubmesh(const CRenderableVertexs* _Vertices, const std::string& _Material, float _BoundingRadius, const Vect3f& _BoundingBoxMin, const Vect3f& _BoundingBoxMax)
 {
 	SSubmesh l_Submesh = { _Vertices, _Material };
-	
+
 	if (GetNumSubmeshes() == 0 || m_BoundingRadius < _BoundingRadius) m_BoundingRadius = _BoundingRadius;
 
 	if (GetNumSubmeshes() == 0 || m_BoundingBoxMin.x > _BoundingBoxMin.x) m_BoundingBoxMin.x = _BoundingBoxMin.x;
@@ -16,9 +19,4 @@ void CRenderableObject::AddSubmesh(const CRenderableVertexs* _Vertices, const st
 	if (GetNumSubmeshes() == 0 || m_BoundingBoxMax.z < _BoundingBoxMax.z) m_BoundingBoxMax.z = _BoundingBoxMax.z;
 
 	m_Submeshes.push_back(l_Submesh);
-}
-
-
-CRenderableObject::CRenderableObject() : CNamed(""){}
-CRenderableObject::~CRenderableObject() {}
-void CRenderableObject::Update(float ElapsedTime) {}
+}*/

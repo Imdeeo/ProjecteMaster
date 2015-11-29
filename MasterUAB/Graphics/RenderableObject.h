@@ -12,16 +12,13 @@
 class CRenderableObject : public C3DElement, public CNamed
 {
 public:
-
 	CRenderableObject();
 	virtual ~CRenderableObject() {}
 	virtual void Update(float ElapsedTime) {}
 	virtual void Render(CRenderManager *RM) = 0;
 
-
-
 	// COSAS DE ISAAC!!!!
-	struct SSubmesh
+	/*struct SSubmesh
 	{
 		const CRenderableVertexs* vertices;
 		std::string material;
@@ -44,15 +41,10 @@ public:
 	Vect3f GetBoundingMin() const { return m_BoundingBoxMin; }
 	Vect3f GetBoundingMax() const { return m_BoundingBoxMax; }
 
-
-
-
 private:
-
 	std::vector<SSubmesh> m_Submeshes;
 	SPositionOrientation m_Transform;
-
 	float m_BoundingRadius;
-	Vect3f m_BoundingBoxMin, m_BoundingBoxMax;
+	Vect3f m_BoundingBoxMin, m_BoundingBoxMax;*/
 };
 
