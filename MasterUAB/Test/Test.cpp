@@ -13,4 +13,3 @@ int _tmain(int argc, _TCHAR* argv[])
 	l_EnemyManager.Render();
 	return 0;
 }
-

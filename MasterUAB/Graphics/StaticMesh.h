@@ -2,15 +2,18 @@
 #define STATIC_MESH_H
 
 #include "Named.h"
+#include <vector>
 
 class CRenderManager;
 
 class CStaticMesh :	public CNamed
 {
 protected:
-	std::vector<CRenderableVertexs*> m_RVs;
+	std::vector<CRenderableVertexs *> m_RVs;
 	std::vector<CMaterial *> m_Materials;
-	unsigned int m_NumVertexs, m_NumFaces;
+	unsigned short m_NumFaces;
+	long m_NumVertexs;
+	long m_NumIndexs;
 public:
 	CStaticMesh();
 	virtual ~CStaticMesh();
