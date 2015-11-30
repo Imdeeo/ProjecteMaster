@@ -4,6 +4,9 @@
 #include "Named.h"
 #include "Utils.h"
 
+class CEffectVertexShader;
+class CEffectPixelShader;
+
 class CEffectTechnique: public CNamed
 {
 private:
@@ -14,9 +17,9 @@ private:
 public:
 	CEffectTechnique(CXMLTreeNode &TreeNode);
 	virtual ~CEffectTechnique();
-	UAB_GET_PROPERTY(CEffectVertexShader, VertexShader);
-	UAB_GET_PROPERTY(CEffectPixelShader, PixelShader);
+	UAB_GET_PROPERTY(CEffectVertexShader*, VertexShader);
+	UAB_GET_PROPERTY(CEffectPixelShader*, PixelShader);
 	void Refresh();
-}
+};
 
 #endif //EFFECT_TECHNIQUE_H

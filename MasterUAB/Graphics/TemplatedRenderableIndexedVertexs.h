@@ -27,7 +27,7 @@ public:
 		D3D11_SUBRESOURCE_DATA InitData;
 		ZeroMemory(&InitData, sizeof(InitData));
 		InitData.pSysMem=Vtxs;
-		ID3D11Device *l_Device=UABEngine.GetRenderManager().GetDevice();
+		ID3D11Device *l_Device=UABEngine.GetRenderManager()->GetDevice();
 		HRESULT hr=l_Device->CreateBuffer(&l_VertexBufferDesc, &InitData,&m_VertexBuffer);
 		if(FAILED(hr))
 			return;
@@ -58,7 +58,8 @@ public:
 		ID3D11Buffer *l_ConstantBufferVS=l_EffectVertexShader->GetConstantBuffer();
 		if(l_EffectPixelShader==NULL || l_EffectVertexShader==NULL || l_ConstantBufferVS==NULL)
 			return false;
-		ID3D11DeviceContext *l_DeviceContext=RenderManager->GetDeviceContext();
+		ID3D11DeviceContext *l_DeviceContext;
+		RenderManager->GetDevice()->GetImmediateContext(&l_DeviceContext);
 		UINT stride=sizeof(T);
 		UINT offset=0;
 		l_DeviceContext->IASetIndexBuffer(m_IndexBuffer, m_IndexType, 0);

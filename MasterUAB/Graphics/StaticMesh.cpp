@@ -1,6 +1,12 @@
 #include "StaticMesh.h"
 #include "RenderManager.h"
 #include "UABEngine.h"
+#include "RenderableVertexs.h"
+#include "VertexTypes.h"
+#include "TemplatedRenderableIndexedVertexs.h"
+#include "Utils.h"
+
+
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -30,13 +36,14 @@ bool CStaticMesh::Load(const std::string &FileName)
 		char l_BufferChar;
 		short l_BufferShort;
 		unsigned short l_BufferUnsignedShort;
+		unsigned int l_BufferUnsignedInt;
 		long l_BufferLong;
 		float l_BufferFloat;
 		std::string l_BufferString;
 
 		short l_MatLength;
-		unsigned short l_VertexSize;
-		unsigned short l_IndexSize;
+		unsigned short l_VertexType;
+		unsigned short l_IndexType;
 		long l_NumMaterials;
 
 		l_file.seekg(0);
@@ -67,44 +74,94 @@ bool CStaticMesh::Load(const std::string &FileName)
 			}
 			for(int i=0; i<l_NumMaterials; i++)
 			{
-				//Diria que aqui va el vertex type, no el vertex size...
 				l_file.read((char *) &l_BufferUnsignedShort, sizeof(unsigned short));
-				l_VertexSize = l_BufferUnsignedShort;
-				std::cout << "Vertex Size: l_BufferUnsignedShort = " << std::dec << l_VertexSize << std::endl;
+				l_VertexType = l_BufferUnsignedShort;
+				std::cout << "Vertex Size: l_BufferUnsignedShort = " << std::dec << l_VertexType << std::endl;
 
 				l_file.read((char *) &l_BufferLong, sizeof(long));
-				m_NumVertexs = l_BufferLong;
+				int l_NumVertexs = l_BufferLong;
 				std::cout << "Number of vertexs: l_BufferLong = " << std::dec << m_NumVertexs << std::endl;
 
-				for(int i=0; i<m_NumVertexs; i++)
-				{
-					std::cout << "Vertex number " << i << std::endl;
-					int l_VertexRead = 0;
-					//while(l_VertexRead < l_VertexSize ){
-					
-					for(int j=0; j<8; j++){
-						//std::cout << "Reading pos " << l_VertexRead << std::endl;
-						//std::cout << "Current Seekg: " << l_CurrentSeekG << std::endl;
-						l_file.read((char *) &l_BufferFloat, sizeof(float));
-						std::cout << "Vertex Property: l_BufferFloat = " << std::dec << l_BufferFloat << std::endl;
-						//l_VertexRead += sizeof(float);
-					}
-				}
+				int l_NumBytes = 0;
+
+				if(l_VertexType==MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX::GetVertexType())
+					l_NumBytes = sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX)*l_NumVertexs;
+				else if(l_VertexType==MV_POSITION_NORMAL_TEXTURE_VERTEX::GetVertexType())
+					l_NumBytes = sizeof(MV_POSITION_NORMAL_TEXTURE_VERTEX)*l_NumVertexs;
+				else if(l_VertexType==MV_POSITION4_COLOR_TEXTURE_VERTEX::GetVertexType())
+					l_NumBytes = sizeof(MV_POSITION4_COLOR_TEXTURE_VERTEX)*l_NumVertexs;
+				else if(l_VertexType==MV_POSITION_COLOR_VERTEX::GetVertexType())
+					l_NumBytes = sizeof(MV_POSITION_COLOR_VERTEX)*l_NumVertexs;
+				else if(l_VertexType==MV_POSITION_TEXTURE_VERTEX::GetVertexType())
+					l_NumBytes = sizeof(MV_POSITION_TEXTURE_VERTEX)*l_NumVertexs;
+				else if(l_VertexType==MV_POSITION_COLOR_TEXTURE_VERTEX::GetVertexType())
+					l_NumBytes = sizeof(MV_POSITION_COLOR_TEXTURE_VERTEX)*l_NumVertexs;
+
+				void* l_Data = NULL;
+				l_Data = malloc(l_NumBytes);
+
+				l_file.read((char *) l_Data, l_NumBytes);
 
 				l_file.read((char *) &l_BufferUnsignedShort, sizeof(unsigned short));
-				l_IndexSize = l_BufferUnsignedShort;
-				std::cout << "Index Size: l_BufferUnsignedShort = " << std::dec << l_VertexSize << std::endl;
+				l_IndexType = l_BufferUnsignedShort;
+				std::cout << "Index Size: l_BufferUnsignedShort = " << std::dec << l_IndexType << std::endl;
 
 				l_file.read((char *) &l_BufferLong, sizeof(long));
-				m_NumIndexs = l_BufferLong;
-				std::cout << "Number of indexs: l_BufferLong = " << std::dec << l_NumVertexs << std::endl;
+				int l_NumIndexs = l_BufferLong;
+				std::cout << "Number of indexs: l_BufferLong = " << std::dec << l_NumIndexs << std::endl;
 
-				for(int i=0; i<m_NumIndexs; i++)
+				void* l_IndexData = NULL;
+				l_IndexData = malloc(l_IndexType*l_NumIndexs);
+
+				l_file.read((char *) l_IndexData, l_NumBytes);
+
+				CRenderableVertexs* l_RV;
+
+				if(l_VertexType==MV_POSITION_NORMAL_TEXTURE_VERTEX::GetVertexType())
 				{
-					std::cout << "Index number " << i << std::endl;
-					l_file.read((char *) &l_BufferShort, sizeof(short));
-					std::cout << "Index Property: l_BufferShort = " << std::dec << l_BufferShort << std::endl;
+					if(l_IndexType==16)
+						l_RV=new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_NORMAL_TEXTURE_VERTEX>(l_Data, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_NORMAL_TEXTURE_VERTEX>(l_Data, l_NumVertexs, l_IndexData, l_NumIndexs);
 				}
+				else if(l_VertexType==MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX::GetVertexType())
+				{
+					if(l_IndexType==16)
+						l_RV=new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX>(l_Data, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX>(l_Data, l_NumVertexs, l_IndexData, l_NumIndexs);
+				}
+				else if(l_VertexType==MV_POSITION4_COLOR_TEXTURE_VERTEX::GetVertexType())
+				{
+					if(l_IndexType==16)
+						l_RV=new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(l_Data, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(l_Data, l_NumVertexs, l_IndexData, l_NumIndexs);
+				}
+				else if(l_VertexType==MV_POSITION_COLOR_VERTEX::GetVertexType())
+				{
+					if(l_IndexType==16)
+						l_RV=new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_COLOR_VERTEX>(l_Data, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_COLOR_VERTEX>(l_Data, l_NumVertexs, l_IndexData, l_NumIndexs);
+				}
+				else if(l_VertexType==MV_POSITION_TEXTURE_VERTEX::GetVertexType())
+				{
+					if(l_IndexType==16)
+						l_RV=new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_TEXTURE_VERTEX>(l_Data, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_TEXTURE_VERTEX>(l_Data, l_NumVertexs, l_IndexData, l_NumIndexs);
+				}
+
+				else if(l_VertexType==MV_POSITION_COLOR_TEXTURE_VERTEX::GetVertexType())
+				{
+					if(l_IndexType==16)
+						l_RV=new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_COLOR_TEXTURE_VERTEX>(l_Data, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_COLOR_TEXTURE_VERTEX>(l_Data, l_NumVertexs, l_IndexData, l_NumIndexs);
+				}
+
+				m_RVs.push_back(l_RV);
 			}
 			l_file.read((char *) &l_BufferUnsignedShort, sizeof(short));
 			std::cout << "Footer: l_BufferUnsignedShort = " << std::hex << l_BufferShort << std::endl;
@@ -141,15 +198,28 @@ bool CStaticMesh::Reload()
 
 void CStaticMesh::Render(CRenderManager *RM) const
 {
-
+	for(int i = 0 ;i<m_RVs.size();i++)
+	{
+		CEffectTechnique* l_ET = m_Materials[i]->GetEffectTechnique();
+		m_RVs[i]->RenderIndexed(RM,l_ET,0);
+	}
 }
 
 bool CStaticMesh::Destroy()
 {
 	m_NumVertexs = 0;
 	m_NumFaces = 0;
-	CHECKED_RELEASE(m_RVs);
+	for(int i = 0 ;i<m_RVs.size();i++)
+	{
+		CHECKED_DELETE(m_RVs[i]);
+	}
+	
 	m_RVs.clear();
-	CHECKED_RELEASE(m_Materials);
+	for(int i = 0 ;i<m_Materials.size();i++)
+	{
+		CHECKED_DELETE(m_Materials[i]);
+	}
 	m_Materials.clear();
+
+	return true;
 }

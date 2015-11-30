@@ -100,12 +100,6 @@
     <ClInclude Include="TextureManager.h">
       <Filter>Texture</Filter>
     </ClInclude>
-    <ClInclude Include="TemplatedRenderableVertexs.h">
-      <Filter>Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="TemplatedRenderableIndexedVertexs.h">
-      <Filter>Texture</Filter>
-    </ClInclude>
     <ClInclude Include="C3DElement.h">
       <Filter>3DElement</Filter>
     </ClInclude>
@@ -160,6 +154,15 @@
     </ClInclude>
     <ClInclude Include="InstanceMesh.h">
       <Filter>RenderableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplatedRenderableVertexs.h">
+      <Filter>RenderableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplatedRenderableIndexedVertexs.h">
+      <Filter>RenderableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Effects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

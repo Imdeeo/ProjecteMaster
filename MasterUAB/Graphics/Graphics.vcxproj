@@ -39,6 +39,7 @@
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="ContextManager.h" />
     <ClInclude Include="DebugRender.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EffectParameters.h" />
     <ClInclude Include="EffectShader.h" />

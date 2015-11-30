@@ -27,4 +27,4 @@ public: \
 
 #define DEG2RAD(x) (x * (float)(3.14159265358979323846 / 180.0))
 
-#endif
+#endif //_UTILS_H

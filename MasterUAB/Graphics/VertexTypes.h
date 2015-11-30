@@ -10,6 +10,7 @@
 #include "RenderManager.h"
 
 #include <d3d11.h>
+#include <D3DCommon.h>
 
 
 #define MV_VERTEX_TYPE_POSITION				0x01
@@ -122,7 +123,14 @@ struct StructName \
 	IFDEF_CREATE_MV_##HasUV##_UV_VERTEX; \
 	IFDEF_CREATE_MV_##HasUV2##_UV2_VERTEX; \
 \
-	static bool CreateInputLayout(CRenderManager *RenderManager, ID3DBlob *VSBlob,ID3D11InputLayout **VertexLayout)\
+	\
+\
+	static unsigned int GetVertexType() \
+		{ \
+		return IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition##_POSITION |	IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition4##_POSITION4 | IFDEF_CREATE_GET_VERTEX_TYPE_##HasNormal##_NORMAL | IFDEF_CREATE_GET_VERTEX_TYPE_##HasWeightIndices##_WEIGHT_INDICES | IFDEF_CREATE_GET_VERTEX_TYPE_##HasColor##_COLOR | IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV##_UV | IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV2##_UV2; \
+		} \
+};
+/*static bool CreateInputLayout(CRenderManager *RenderManager, ID3DBlob *VSBlob,ID3D11InputLayout **VertexLayout)\
 	{\
 		D3D11_INPUT_ELEMENT_DESC l_Layout[] =\
 		{\
@@ -138,14 +146,7 @@ struct StructName \
 		HRESULT l_HR=RenderManager->GetDevice()->CreateInputLayout(l_Layout,\
 		l_NumElements, VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), VertexLayout);\
 		return !FAILED(l_HR);\
-	}\
-\
-	static unsigned int GetVertexType() \
-		{ \
-		return IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition##_POSITION |	IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition4##_POSITION4 | IFDEF_CREATE_GET_VERTEX_TYPE_##HasNormal##_NORMAL | IFDEF_CREATE_GET_VERTEX_TYPE_##HasWeightIndices##_WEIGHT_INDICES | IFDEF_CREATE_GET_VERTEX_TYPE_##HasColor##_COLOR | IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV##_UV | IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV2##_UV2; \
-		} \
-};
-
+	}\*/
 
 CREATE_MVD3D11_VERTEX(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX, 1, 0, 1, 1, 0, 1, 0);
 CREATE_MVD3D11_VERTEX(MV_POSITION_NORMAL_TEXTURE_VERTEX, 1, 0, 1, 0, 0, 1, 0);

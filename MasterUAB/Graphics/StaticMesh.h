@@ -4,6 +4,9 @@
 #include "Named.h"
 #include <vector>
 
+class CRenderableVertexs;
+class CMaterial;
+
 class CRenderManager;
 
 class CStaticMesh :	public CNamed

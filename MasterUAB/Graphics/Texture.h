@@ -1,7 +1,9 @@
+#ifndef TEXTURE_H
+#define TEXTURE_H
+
 #include "Named.h"
 #include <d3d11.h>
 
-#pragma once
 class CTexture : CNamed
 {
 private:
@@ -17,3 +19,4 @@ public:
 	bool Reload();
 };
 
+#endif //TEXTURE_H
