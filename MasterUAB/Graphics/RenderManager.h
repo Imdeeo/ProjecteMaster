@@ -6,8 +6,8 @@
 #include "Frustum.h"
 #include "RenderableObject.h"
 #include "Utils.h"
+#include "ContextManager.h"
 
-class CContextManager;
 class CMaterialManager;
 
 class CRenderManager
@@ -23,7 +23,7 @@ public:
 
 	void SetUseDebugCamera(bool _use) { m_UseDebugCamera = _use; }
 
-	bool AddRenderableObjectToRenderList(const CRenderableObject* _RenderableObject);
+	//bool AddRenderableObjectToRenderList(CRenderableObject* _RenderableObject);
 
 	void Render(CContextManager* _Context, CMaterialManager* _MaterialManager);
 
@@ -39,7 +39,7 @@ private:
 
 	UAB_BUILD_GET_SET(CContextManager*,ContextManager);
 
-	ID3D11Device GetDevice const()
+	ID3D11Device* GetDevice ()
 	{
 		return m_ContextManager->GetDevice();
 	}

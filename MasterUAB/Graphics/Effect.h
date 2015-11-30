@@ -47,17 +47,17 @@ protected:
 };
 
 
-
-class CEffectParameters
-{
-public:
-	Mat44f				m_World;
-	Mat44f				m_View;
-	Mat44f				m_Projection;
-	CColor				m_BaseColor;
-	Vect4f				m_CameraRightVector;
-	Vect4f				m_CameraUpVector;
-	float				m_DebugRenderScale;
-
-	uint8_t				offset[9];
-};
+//
+//class CEffectParameters
+//{
+//public:
+//	Mat44f				m_World;
+//	Mat44f				m_View;
+//	Mat44f				m_Projection;
+//	CColor				m_BaseColor;
+//	Vect4f				m_CameraRightVector;
+//	Vect4f				m_CameraUpVector;
+//	float				m_DebugRenderScale;
+//
+//	uint8_t				offset[9];
+//};

@@ -17,36 +17,36 @@ void CRenderManager::SetCurrentCamera(const CCamera& _CurrentCamera)
 	m_CullFrustum.Update(viewProj);
 }
 
-bool CRenderManager::AddRenderableObjectToRenderList(const CRenderableObject* _RenderableObject)
+//bool CRenderManager::AddRenderableObjectToRenderList(const CRenderableObject* _RenderableObject)
+//{
+//	// Alguien se atrebe a arreglar el frustum?
+//
+//	//if (m_CullFrustum.SphereVisible(_RenderableObject->GetTransform().Position, _RenderableObject->GetBoundingRadius()))
+//	if (m_CullFrustum.BoxVisible(_RenderableObject->GetBoundingMax()+_RenderableObject->GetTransform().Position, _RenderableObject->GetBoundingMin()+_RenderableObject->GetTransform().Position))
+//	{
+//		if (m_CurrentRenderlistLength == m_RenderableObjects.size())
+//		{
+//			m_RenderableObjects.push_back(_RenderableObject);
+//		}
+//		else
+//		{
+//			m_RenderableObjects[m_CurrentRenderlistLength]=_RenderableObject;
+//		}
+//		++m_CurrentRenderlistLength;
+//		return true;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//}
+struct BlendedSubmesh
 {
-	// Alguien se atrebe a arreglar el frustum?
-
-	//if (m_CullFrustum.SphereVisible(_RenderableObject->GetTransform().Position, _RenderableObject->GetBoundingRadius()))
-	if (m_CullFrustum.BoxVisible(_RenderableObject->GetBoundingMax()+_RenderableObject->GetTransform().Position, _RenderableObject->GetBoundingMin()+_RenderableObject->GetTransform().Position))
-	{
-		if (m_CurrentRenderlistLength == m_RenderableObjects.size())
-		{
-			m_RenderableObjects.push_back(_RenderableObject);
-		}
-		else
-		{
-			m_RenderableObjects[m_CurrentRenderlistLength]=_RenderableObject;
-		}
-		++m_CurrentRenderlistLength;
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-	struct BlendedSubmesh
-	{
-	    const CRenderableVertexs* vertices;
-	    Mat44f world;
-	    const CMaterial* material;
-	    Vect3f position;
-	};
+	const CRenderableVertexs* vertices;
+	Mat44f world;
+	const CMaterial* material;
+	Vect3f position;
+};
 
 void CRenderManager::Render(CContextManager* _Context, CMaterialManager* _MaterialManager)
 {

@@ -1,3 +1,6 @@
+#ifndef TEMPLATED_MAP_MANAGER_H
+#define TEMPLATED_MAP_MANAGER_H
+
 #include <stdio.h>
 #include <string>
 #include <map>
@@ -46,7 +49,10 @@ public:
 		}
 		m_Resources.clear();
 	}
-	T* CTemplatedMapManager::operator[](std::string b){
+	T* CTemplatedMapManager::operator[](std::string b)
+	{
 		return m_Resources[b];
 	}
 };
+
+#endif //TEMPLATED_MAP_MANAGER_H
