@@ -1,4 +1,5 @@
 #include "RenderableObjectManager.h"
+#include "InstanceMesh.h"
 
 CRenderableObjectsManager::CRenderableObjectsManager() {}
 CRenderableObjectsManager::~CRenderableObjectsManager(){}
@@ -20,7 +21,12 @@ void CRenderableObjectsManager::Render(CRenderManager *RM)
 
 CRenderableObject * CRenderableObjectsManager::AddMeshInstance(const std::string &CoreMeshName, const std::string &InstanceName, const Vect3f &Position)
 {
-	
+	CInstanceMesh instanceMesh(InstanceName,CoreMeshName);
+	instanceMesh.SetPosition(Position);
+	if (AddResource(InstanceName, &instanceMesh))
+		return &instanceMesh;
+	else
+		return nullptr;
 }
 
 CRenderableObject * CRenderableObjectsManager::AddAnimatedInstanceModel(const std::string &CoreModelName, const std::string &InstanceModelName, const Vect3f &Position)
@@ -30,7 +36,7 @@ CRenderableObject * CRenderableObjectsManager::AddAnimatedInstanceModel(const st
 
 bool CRenderableObjectsManager::AddResource(const std::string &Name, CRenderableObject *RenderableObject)
 {
-	AddResource(Name, RenderableObject);
+	return CTemplatedVectorMapManager::AddResource(Name, RenderableObject);
 }
 
 void CRenderableObjectsManager::Load(const std::string &FileName)
