@@ -1,8 +1,12 @@
 #include "StaticMesh.h"
 #include "RenderManager.h"
+#include "UABEngine.h"
 #include <iostream>
 #include <fstream>
 #include <cstring>
+
+#define HEADER 65109
+#define FOOTER 22014
 
 CStaticMesh::CStaticMesh(void):CNamed("")
 {
@@ -37,10 +41,10 @@ bool CStaticMesh::Load(const std::string &FileName)
 
 		l_file.seekg(0);
 
-		l_file.read((char *) &l_BufferShort, sizeof(short));
-		std::cout << "Header: l_BufferShort = " << std::hex << l_BufferShort << std::endl;
+		l_file.read((char *) &l_BufferUnsignedShort, sizeof(short));
+		std::cout << "Header: l_BufferUnsignedShort = " << std::hex << l_BufferShort << std::endl;
 
-		if(l_BufferShort == -427)
+		if(l_BufferUnsignedShort == HEADER)
 		{
 
 			l_file.read((char *) &l_BufferLong, sizeof(long));
@@ -59,49 +63,53 @@ bool CStaticMesh::Load(const std::string &FileName)
 					l_BufferString.append(&l_BufferChar, sizeof(l_BufferChar));
 				}
 				std::cout << "Material name: l_BufferString = " << l_BufferString << std::endl;
+				m_Materials.push_back(UABEngine.GetMaterialManager()->GetResource(l_BufferString));
 			}
-
-			l_file.read((char *) &l_BufferUnsignedShort, sizeof(unsigned short));
-			l_VertexSize = l_BufferUnsignedShort;
-			std::cout << "Vertex Size: l_BufferUnsignedShort = " << std::dec << l_VertexSize << std::endl;
-
-			l_file.read((char *) &l_BufferLong, sizeof(long));
-			m_NumVertexs = l_BufferLong;
-			std::cout << "Number of vertexs: l_BufferLong = " << std::dec << m_NumVertexs << std::endl;
-
-			for(int i=0; i<m_NumVertexs; i++)
+			for(int i=0; i<l_NumMaterials; i++)
 			{
-				std::cout << "Vertex number " << i << std::endl;
-				int l_VertexRead = 0;
-				//while(l_VertexRead < l_VertexSize ){
-				for(int j=0; j<8; j++){
-					//std::cout << "Reading pos " << l_VertexRead << std::endl;
-					//std::cout << "Current Seekg: " << l_CurrentSeekG << std::endl;
-					l_file.read((char *) &l_BufferFloat, sizeof(float));
-					std::cout << "Vertex Property: l_BufferFloat = " << std::dec << l_BufferFloat << std::endl;
-					//l_VertexRead += sizeof(float);
+				//Diria que aqui va el vertex type, no el vertex size...
+				l_file.read((char *) &l_BufferUnsignedShort, sizeof(unsigned short));
+				l_VertexSize = l_BufferUnsignedShort;
+				std::cout << "Vertex Size: l_BufferUnsignedShort = " << std::dec << l_VertexSize << std::endl;
+
+				l_file.read((char *) &l_BufferLong, sizeof(long));
+				m_NumVertexs = l_BufferLong;
+				std::cout << "Number of vertexs: l_BufferLong = " << std::dec << m_NumVertexs << std::endl;
+
+				for(int i=0; i<m_NumVertexs; i++)
+				{
+					std::cout << "Vertex number " << i << std::endl;
+					int l_VertexRead = 0;
+					//while(l_VertexRead < l_VertexSize ){
+					
+					for(int j=0; j<8; j++){
+						//std::cout << "Reading pos " << l_VertexRead << std::endl;
+						//std::cout << "Current Seekg: " << l_CurrentSeekG << std::endl;
+						l_file.read((char *) &l_BufferFloat, sizeof(float));
+						std::cout << "Vertex Property: l_BufferFloat = " << std::dec << l_BufferFloat << std::endl;
+						//l_VertexRead += sizeof(float);
+					}
+				}
+
+				l_file.read((char *) &l_BufferUnsignedShort, sizeof(unsigned short));
+				l_IndexSize = l_BufferUnsignedShort;
+				std::cout << "Index Size: l_BufferUnsignedShort = " << std::dec << l_VertexSize << std::endl;
+
+				l_file.read((char *) &l_BufferLong, sizeof(long));
+				m_NumIndexs = l_BufferLong;
+				std::cout << "Number of indexs: l_BufferLong = " << std::dec << l_NumVertexs << std::endl;
+
+				for(int i=0; i<m_NumIndexs; i++)
+				{
+					std::cout << "Index number " << i << std::endl;
+					l_file.read((char *) &l_BufferShort, sizeof(short));
+					std::cout << "Index Property: l_BufferShort = " << std::dec << l_BufferShort << std::endl;
 				}
 			}
+			l_file.read((char *) &l_BufferUnsignedShort, sizeof(short));
+			std::cout << "Footer: l_BufferUnsignedShort = " << std::hex << l_BufferShort << std::endl;
 
-			l_file.read((char *) &l_BufferUnsignedShort, sizeof(unsigned short));
-			l_IndexSize = l_BufferUnsignedShort;
-			std::cout << "Index Size: l_BufferUnsignedShort = " << std::dec << l_VertexSize << std::endl;
-
-			l_file.read((char *) &l_BufferLong, sizeof(long));
-			m_NumIndexs = l_BufferLong;
-			std::cout << "Number of indexs: l_BufferLong = " << std::dec << l_NumVertexs << std::endl;
-
-			for(int i=0; i<m_NumIndexs; i++)
-			{
-				std::cout << "Index number " << i << std::endl;
-				l_file.read((char *) &l_BufferShort, sizeof(short));
-				std::cout << "Index Property: l_BufferShort = " << std::dec << l_BufferShort << std::endl;
-			}
-
-			l_file.read((char *) &l_BufferShort, sizeof(short));
-			std::cout << "Footer: l_BufferShort = " << std::hex << l_BufferShort << std::endl;
-
-			if(l_BufferShort == 22014)
+			if(l_BufferUnsignedShort == FOOTER)
 			{
 				return true;
 			}

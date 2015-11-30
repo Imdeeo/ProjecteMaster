@@ -27,4 +27,6 @@ public:
 	void Init();
 };
 
+#define UABEngine (*(CUABEngine::GetInstance()))
+
 #endif //MI_PUTO_ENGINE_H

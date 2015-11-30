@@ -21,31 +21,7 @@
 #define MV_VERTEX_TYPE_TEXTURE2				0x40
 #define MV_VERTEX_TYPE_POSITION4			0x80
 
-struct TCOLORED_VERTEX
-{
-	Vect3f x, y, z;
-	CColor color;
-	static bool CreateInputLayout(CRenderManager *RenderManager, ID3DBlob *VSBlob,ID3D11InputLayout **VertexLayout)
-	{
-		D3D11_INPUT_ELEMENT_DESC l_Layout[] =
-		{
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,
-			D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12,
-			D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		};
-		UINT l_NumElements=ARRAYSIZE(l_Layout);
-		HRESULT l_HR=RenderManager->GetDevice()->CreateInputLayout(l_Layout,
-		l_NumElements, VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), VertexLayout);
-		return !FAILED(l_HR);
-	}
-		//IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition##_POSITION_CREATE_LAYOUT \
-	}
-	static unsigned int GetVertexType()
-	{
-		return MV_VERTEX_TYPE_POSITION | MV_VERTEX_TYPE_COLOR;
-	}
-};
+
 
 #define CREATE_INPUT_LAYOUT(LayoutVariable, IdLayoutVariable, OffsetBytesVariable, NumBytes) \
 	LayoutVariable[IdLayoutVariable].AlignedByteOffset=OffsetBytesVariable; \
@@ -146,11 +122,30 @@ struct StructName \
 	IFDEF_CREATE_MV_##HasUV##_UV_VERTEX; \
 	IFDEF_CREATE_MV_##HasUV2##_UV2_VERTEX; \
 \
+	static bool CreateInputLayout(CRenderManager *RenderManager, ID3DBlob *VSBlob,ID3D11InputLayout **VertexLayout)\
+	{\
+		D3D11_INPUT_ELEMENT_DESC l_Layout[] =\
+		{\
+			IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition##_POSITION_CREATE_LAYOUT\
+			IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition4##_POSITION4_CREATE_LAYOUT\
+			IFDEF_CREATE_GET_VERTEX_TYPE_##HasWeightIndices##_WEIGHT_INDICES_CREATE_LAYOUT\
+			IFDEF_CREATE_GET_VERTEX_TYPE_##HasNormal##_NORMAL_CREATE_LAYOUT\
+			IFDEF_CREATE_GET_VERTEX_TYPE_##HasColor##_COLOR_CREATE_LAYOUT\
+			IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV##_UV_CREATE_LAYOUT\
+			IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV2##_UV2_CREATE_LAYOUT\
+		};\
+		UINT l_NumElements=ARRAYSIZE(l_Layout);\
+		HRESULT l_HR=RenderManager->GetDevice()->CreateInputLayout(l_Layout,\
+		l_NumElements, VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), VertexLayout);\
+		return !FAILED(l_HR);\
+	}\
+\
 	static unsigned int GetVertexType() \
 		{ \
 		return IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition##_POSITION |	IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition4##_POSITION4 | IFDEF_CREATE_GET_VERTEX_TYPE_##HasNormal##_NORMAL | IFDEF_CREATE_GET_VERTEX_TYPE_##HasWeightIndices##_WEIGHT_INDICES | IFDEF_CREATE_GET_VERTEX_TYPE_##HasColor##_COLOR | IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV##_UV | IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV2##_UV2; \
 		} \
 };
+
 
 CREATE_MVD3D11_VERTEX(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX, 1, 0, 1, 1, 0, 1, 0);
 CREATE_MVD3D11_VERTEX(MV_POSITION_NORMAL_TEXTURE_VERTEX, 1, 0, 1, 0, 0, 1, 0);
