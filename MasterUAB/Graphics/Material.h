@@ -4,6 +4,7 @@
 #include <vector>
 #include "Utils.h"
 #include "EffectTechnique.h"
+#include "Texture.h"
 
 class CTexture;
 class CEffectTechnique;
@@ -18,7 +19,7 @@ public:
 	CMaterial(const CXMLTreeNode &TreeNode);
 	virtual ~CMaterial();
 	virtual void Apply();
-	UAB_GET_PROPERTY(CEffectTechnique, EffectTechnique);
+	UAB_GET_PROPERTY(CEffectTechnique*, EffectTechnique);
 };
 
 #endif //MATERIAL_H
