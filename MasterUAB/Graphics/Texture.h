@@ -1,9 +1,8 @@
-#pragma once
-
 #include "Named.h"
 #include <d3d11.h>
 
-class CTexture : public CNamed
+#pragma once
+class CTexture : CNamed
 {
 private:
 	ID3D11ShaderResourceView *m_Texture;

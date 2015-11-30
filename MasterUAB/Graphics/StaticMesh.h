@@ -6,10 +6,6 @@
 
 class CRenderManager;
 
-class CRenderableVertexs;
-
-class CMaterial;
-
 class CStaticMesh :	public CNamed
 {
 protected:
