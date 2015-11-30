@@ -1,5 +1,4 @@
 #include "RenderManager.h"
-
 #include "ContextManager.h"
 #include "MaterialManager.h"
 
