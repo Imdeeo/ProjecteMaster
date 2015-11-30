@@ -5,6 +5,8 @@
 #include <vector>
 #include "Utils.h"
 
+#include <assert.h>
+
 #include "Texture.h"
 #include "EffectTechnique.h"
 
@@ -16,8 +18,9 @@ private:
 	void Destroy();
 public:
 	CMaterial(const CXMLTreeNode &TreeNode);
-	virtual ~CMaterial();
-	virtual void Apply();
+	virtual ~CMaterial(){}
+	virtual void Apply()
+	{assert(!"Can't call this method");}
 	UAB_GET_PROPERTY(CEffectTechnique*, EffectTechnique);
 };
 
