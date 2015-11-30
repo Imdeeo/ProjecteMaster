@@ -57,6 +57,9 @@
     <ClCompile Include="RenderableObjectManager.cpp">
       <Filter>RenderableObjects</Filter>
     </ClCompile>
+    <ClCompile Include="InstanceMesh.cpp">
+      <Filter>RenderableObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -153,6 +156,9 @@
       <Filter>StaticMesh</Filter>
     </ClInclude>
     <ClInclude Include="RenderableObjectManager.h">
+      <Filter>RenderableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="InstanceMesh.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
   </ItemGroup>
