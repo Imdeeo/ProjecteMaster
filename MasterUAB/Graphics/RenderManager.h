@@ -25,7 +25,7 @@ public:
 
 	//bool AddRenderableObjectToRenderList(CRenderableObject* _RenderableObject);
 
-	void Render(CContextManager* _Context, CMaterialManager* _MaterialManager);
+	void Render();
 
 private:
 

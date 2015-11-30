@@ -7,6 +7,7 @@
 #include "DebugRender.h"
 #include "InputManager.h"
 #include "DebugHelper.h"
+#include "UABEngine.h"
 
 static void __stdcall SwitchCameraCallback(void* _app)
 {
@@ -15,13 +16,14 @@ static void __stdcall SwitchCameraCallback(void* _app)
 
 CApplication::CApplication(CDebugRender *_DebugRender, CContextManager *_ContextManager)
 	: m_DebugRender(_DebugRender)
-	, m_ContextManager(_ContextManager)
 	, m_BackgroundColor(.2f, .1f, .4f)
 	, m_CurrentCamera_control(0)
 	, m_CurrentCamera_vision(0)
 	,m_RenderCameraCube(false)
 {
 	CDebugHelper::GetDebugHelper()->Log("CApplication::CApplication");
+
+	UABEngine.GetRenderManager()->SetContextManager(_ContextManager);
 
 	CDebugHelper::SDebugBar bar;
 	bar.name = "CApplication";
@@ -35,7 +37,7 @@ CApplication::CApplication(CDebugRender *_DebugRender, CContextManager *_Context
 
 		bar.variables.push_back(var);
 	}
-	{
+	/*{
 		CDebugHelper::SDebugVariable var = {};
 		var.name = "cube";
 		var.type = CDebugHelper::POSITION_ORIENTATION;
@@ -43,7 +45,7 @@ CApplication::CApplication(CDebugRender *_DebugRender, CContextManager *_Context
 		var.pPositionOrientation = m_Cube.GetPtrTransform();
 
 		bar.variables.push_back(var);
-	}
+	}*/
 	{
 		CDebugHelper::SDebugVariable var = {};
 		var.name = "switch camera";
@@ -77,8 +79,8 @@ void CApplication::Update(float _ElapsedTime)
 	if(CInputManager::GetInputManager()->IsActionActive("RELOAD"))
 	{
 		CInputManager::GetInputManager()->reload();
-		m_MaterialManager.ClearMaterials();
-		m_MaterialManager.AddMaterials("Data\\materials.xml");
+		
+		UABEngine.GetMaterialManager()->Reload();
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_BOTH"))
 	{
@@ -129,79 +131,63 @@ void CApplication::Update(float _ElapsedTime)
 		CCamera camera;
 		m_FPSCamera.SetCamera(&camera);
 		camera.SetFOV(1.047f);
-		camera.SetAspectRatio(m_ContextManager->GetAspectRatio());
+		camera.SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
 		camera.SetZNear(0.1f);
 		camera.SetZFar(100.f);
 		camera.SetMatrixs();
-		m_RenderManager.SetCurrentCamera(camera);
+		UABEngine.GetRenderManager()->SetCurrentCamera(camera);
 
 		m_SphericalCamera.SetCamera(&camera);
 		camera.SetFOV(1.047f);
-		camera.SetAspectRatio(m_ContextManager->GetAspectRatio());
+		camera.SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
 		camera.SetZNear(0.1f);
 		camera.SetZFar(100.f);
 		camera.SetMatrixs();
-		m_RenderManager.SetDebugCamera(camera);
+		UABEngine.GetRenderManager()->SetDebugCamera(camera);
 
-		m_RenderManager.SetUseDebugCamera(m_CurrentCamera_vision == 0);
+		UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 	}
 
 }
 
 void CApplication::Render()
 {
-	m_ContextManager->BeginRender(m_BackgroundColor);
-
-	// añadir todos los objetos que se quiere pintar
-	m_RenderManager.AddRenderableObjectToRenderList(&m_Cube);
-	m_RenderManager.AddRenderableObjectToRenderList(&m_Triangle1);
-	m_RenderManager.AddRenderableObjectToRenderList(&m_Triangle2);
-
-	m_RenderManager.Render(m_ContextManager, &m_MaterialManager);
+	UABEngine.GetRenderManager()->Render();
 
 
-	Mat44f world;
+	//Mat44f world;
 
-	world.SetIdentity();
-	m_ContextManager->SetWorldMatrix(world);
-	m_ContextManager->Draw(m_DebugRender->GetAxis());
+	//world.SetIdentity();
+	//m_ContextManager->SetWorldMatrix(world);
+	//m_ContextManager->Draw(m_DebugRender->GetAxis());
 
-	if(m_RenderCameraCube)
-	{
-		world.SetIdentity();
-		world.SetFromPitchRollYaw(Vect3f(m_FPSCamera.GetPitch(),0.f,m_FPSCamera.GetYaw()));
-		world.SetFromPos(m_FPSCamera.GetPosition()+Vect3f(0,-2.f,0));
-		m_ContextManager->SetWorldMatrix(world);
-		m_ContextManager->Draw(m_DebugRender->GetSimpleCube(), CContextManager::RS_WIREFRAME, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_CLASSIC);
-	}
+	//if(m_RenderCameraCube)
+	//{
+	//	world.SetIdentity();
+	//	world.SetFromPitchRollYaw(Vect3f(m_FPSCamera.GetPitch(),0.f,m_FPSCamera.GetYaw()));
+	//	world.SetFromPos(m_FPSCamera.GetPosition()+Vect3f(0,-2.f,0));
+	//	m_ContextManager->SetWorldMatrix(world);
+	//	m_ContextManager->Draw(m_DebugRender->GetSimpleCube(), CContextManager::RS_WIREFRAME, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_CLASSIC);
+	//}
 
-	
-	/*world.SetIdentity();
-	world.SetFromPos(10, 0, 0);
-	m_ContextManager->SetWorldMatrix(world);
-	m_ContextManager->Draw(m_DebugRender->GetClassicBlendTriangle(), CContextManager::RS_SOLID_NO_CULL, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_CLASSIC);
+	//
+	///*world.SetIdentity();
+	//world.SetFromPos(10, 0, 0);
+	//m_ContextManager->SetWorldMatrix(world);
+	//m_ContextManager->Draw(m_DebugRender->GetClassicBlendTriangle(), CContextManager::RS_SOLID_NO_CULL, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_CLASSIC);
 
-	world.SetIdentity();
-	world.SetFromPos(0, 0, -10);
-	m_ContextManager->SetWorldMatrix(world);
-	m_ContextManager->Draw(m_DebugRender->GetPremultBlendTriangle(), CContextManager::RS_SOLID_NO_CULL, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_PREMULT);
-	*/
+	//world.SetIdentity();
+	//world.SetFromPos(0, 0, -10);
+	//m_ContextManager->SetWorldMatrix(world);
+	//m_ContextManager->Draw(m_DebugRender->GetPremultBlendTriangle(), CContextManager::RS_SOLID_NO_CULL, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_PREMULT);
+	//*/
 
-	CDebugHelper::GetDebugHelper()->Render();
-
-	m_ContextManager->EndRender();
+	//CDebugHelper::GetDebugHelper()->Render();
 }
 
 
 void CApplication::Init()
 {
-	m_MaterialManager.AddMaterials("Data\\materials.xml");
-
-	m_Cube.AddSubmesh(m_DebugRender->GetSimpleCube(), "solid material", m_DebugRender->GetSimpleCubeBSRadi(), m_DebugRender->GetSimpleCubeBBMin(), m_DebugRender->GetSimpleCubeBBMax());
-	m_Triangle1.AddSubmesh(m_DebugRender->GetClassicBlendTriangle(),"classic blend",m_DebugRender->GetClassicBlendTriangleBSRadi(),m_DebugRender->GetClassicBlendTriangleBBMin(),m_DebugRender->GetClassicBlendTriangleBBMax());
-	m_Triangle2.AddSubmesh(m_DebugRender->GetClassicBlendTriangle(),"premult blend",m_DebugRender->GetClassicBlendTriangleBSRadi(),m_DebugRender->GetClassicBlendTriangleBBMin(),m_DebugRender->GetClassicBlendTriangleBBMax());
-
-	m_Cube.SetPosition(Vect3f(0,0,0));
-	m_Triangle1.SetPosition(Vect3f(10,0,0));
-	m_Triangle2.SetPosition(Vect3f(0,0,-10));
+	UABEngine.GetMaterialManager()->Load("Data\\materials.xml");
+	UABEngine.GetEffectManager()->Load("Data\\effects.xml");
 }

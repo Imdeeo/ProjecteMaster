@@ -33,14 +33,8 @@ private:
 	bool m_RenderCameraCube;
 
 	CDebugRender *m_DebugRender;
-	CContextManager *m_ContextManager;
 
 	CColor m_BackgroundColor;
-	CRenderableObject m_Cube;
-	CRenderableObject m_Triangle1;
-	CRenderableObject m_Triangle2;
 
-	CMaterialManager m_MaterialManager;
-	CRenderManager m_RenderManager;
 };
 

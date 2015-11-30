@@ -49,15 +49,17 @@ struct BlendedSubmesh
 	Vect3f position;
 };
 
-void CRenderManager::Render(CContextManager* _Context, CMaterialManager* _MaterialManager)
+void CRenderManager::Render()
 {
+	m_ContextManager->BeginRender();
+
 	if (m_UseDebugCamera)
 	{
-		_Context->SetCamera(m_DebugCamera);
+		m_ContextManager->SetCamera(m_DebugCamera);
 	}
 	else
 	{
-		_Context->SetCamera(m_CurrentCamera);
+		m_ContextManager->SetCamera(m_CurrentCamera);
 	}
 
 	// TODO crear un vector para objetos transparentes
@@ -125,4 +127,6 @@ void CRenderManager::Render(CContextManager* _Context, CMaterialManager* _Materi
 	//}
 
 	m_CurrentRenderlistLength = 0;
+
+	m_ContextManager->EndRender();
 }
