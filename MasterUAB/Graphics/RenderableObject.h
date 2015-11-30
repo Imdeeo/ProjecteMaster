@@ -1,21 +1,23 @@
-#pragma once
+#ifndef RENDERABLE_OBJECT_H
+#define RENDERABLE_OBJECT_H
 
 #include <vector>
 
-#include "HelperTypes.h"
-
-#include "RenderableVertexs.h"
-#include "Material.h"
+#include "Named.h"
 #include "C3DElement.h"
 
+class CRenderManager;
 
 class CRenderableObject : public C3DElement, public CNamed
 {
 public:
-	CRenderableObject();
+	CRenderableObject():CNamed(""){};
 	virtual ~CRenderableObject() {}
 	virtual void Update(float ElapsedTime) {}
 	virtual void Render(CRenderManager *RM) = 0;
+};
+
+#endif //RENDERABLE_OBJECT_H
 
 	// COSAS DE ISAAC!!!!
 	/*struct SSubmesh
@@ -46,5 +48,3 @@ private:
 	SPositionOrientation m_Transform;
 	float m_BoundingRadius;
 	Vect3f m_BoundingBoxMin, m_BoundingBoxMax;*/
-};
-

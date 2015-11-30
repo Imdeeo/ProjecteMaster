@@ -3,6 +3,8 @@
 
 #include "RenderableObject.h"
 
+class CStaticMesh;
+
 class CInstanceMesh :	public CRenderableObject
 {
 private:

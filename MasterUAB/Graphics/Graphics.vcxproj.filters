@@ -5,7 +5,6 @@
       <Filter>ContextManager</Filter>
     </ClCompile>
     <ClCompile Include="DebugRender.cpp" />
-    <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Texture.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
@@ -45,9 +44,6 @@
     <ClCompile Include="FPSCameraController.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="RenderableObject.cpp">
-      <Filter>RenderableObjects</Filter>
-    </ClCompile>
     <ClCompile Include="StaticMeshManager.cpp">
       <Filter>StaticMesh</Filter>
     </ClCompile>
@@ -58,7 +54,10 @@
       <Filter>RenderableObjects</Filter>
     </ClCompile>
     <ClCompile Include="InstanceMesh.cpp">
-      <Filter>RenderableObjects</Filter>
+      <Filter>StaticMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderManager.cpp">
+      <Filter>RenderManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,14 +85,15 @@
     <Filter Include="StaticMesh">
       <UniqueIdentifier>{3be6c0a7-cfa8-4b68-a643-c291d3311b4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RenderManager">
+      <UniqueIdentifier>{8b4cfb7f-482d-4a4e-90b9-db98ea0b92ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContextManager.h">
       <Filter>ContextManager</Filter>
     </ClInclude>
     <ClInclude Include="DebugRender.h" />
-    <ClInclude Include="VertexTypes.h" />
-    <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Texture.h">
       <Filter>Texture</Filter>
     </ClInclude>
@@ -152,17 +152,23 @@
     <ClInclude Include="RenderableObjectManager.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
-    <ClInclude Include="InstanceMesh.h">
+    <ClInclude Include="VertexTypes.h">
       <Filter>RenderableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="InstanceMesh.h">
+      <Filter>StaticMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderManager.h">
+      <Filter>RenderManager</Filter>
     </ClInclude>
     <ClInclude Include="TemplatedRenderableVertexs.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
     <ClInclude Include="TemplatedRenderableIndexedVertexs.h">
       <Filter>RenderableObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect.h">
-      <Filter>Effects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

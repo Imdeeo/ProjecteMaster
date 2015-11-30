@@ -4,7 +4,7 @@
 #include <d3d11.h>
 #include "Camera.h"
 #include "Frustum.h"
-#include "RenderableObject.h"
+#include "RenderableObjectManager.h"
 #include "Utils.h"
 #include "ContextManager.h"
 
@@ -35,13 +35,19 @@ private:
 	bool m_UseDebugCamera;
 
 	size_t m_CurrentRenderlistLength;
-	std::vector<const CRenderableObject*> m_RenderableObjects;
+	
+	CRenderableObjectsManager m_RenderableObjectManager;
 
 	UAB_BUILD_GET_SET(CContextManager*,ContextManager);
 
 	ID3D11Device* GetDevice ()
 	{
 		return m_ContextManager->GetDevice();
+	}
+
+	ID3D11DeviceContext* GetDeviceContext ()
+	{
+		return m_ContextManager->GetDeviceContext();
 	}
 
 };

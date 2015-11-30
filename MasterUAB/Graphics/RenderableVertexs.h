@@ -1,10 +1,10 @@
 #ifndef RENDERABLE_VERTEX_H
 #define RENDERABLE_VERTEX_H
 
-#include "RenderManager.h"
 #include <assert.h>
 
 class CEffectTechnique;
+class CRenderManager;
 
 class CRenderableVertexs
 {

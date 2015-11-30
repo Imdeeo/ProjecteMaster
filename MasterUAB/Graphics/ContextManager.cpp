@@ -470,10 +470,10 @@ void CContextManager::Draw(const CRenderableVertexs* _VerticesToRender, ERasteri
 
 	s_DebugEffect->UpdateParameters(m_DeviceContext, &m_Parameters);
 	s_DebugEffect->SetActive(m_DeviceContext);
-
+/*
 	_VerticesToRender->SetBuffers(m_DeviceContext);
 
-	_VerticesToRender->Draw(m_DeviceContext);
+	_VerticesToRender->Draw(m_DeviceContext);*/
 }
 
 void CContextManager::BeginRender(CColor backgroundColor)

@@ -1,4 +1,8 @@
+#ifndef TEMPLATED_RENDERABLE_VERTEX_H
+#define TEMPLATED_RENDERABLE_VERTEX_H
+
 #include <d3d11.h>
+#include "UABEngine.h"
 #include "RenderableVertexs.h"
 
 template<class T>
@@ -24,8 +28,7 @@ public:
 		D3D11_SUBRESOURCE_DATA InitData;
 		ZeroMemory( &InitData, sizeof(InitData) );
 		InitData.pSysMem = Vtxs;
-		ID3D11Device *l_Device=UABEngine.GetRenderManager().GetDevice();
-		ID3D11Device *l_Device;
+		ID3D11Device *l_Device=UABEngine.GetRenderManager()->GetDevice();
 		HRESULT l_HR=l_Device->CreateBuffer(&l_BufferDescription, &InitData,
 		&m_VertexBuffer);
 		if(FAILED(l_HR))
@@ -69,3 +72,9 @@ ClassName(void *Vtxs, unsigned int VtxsCount, unsigned int PrimitiveCount) \
 { \
 } \
 };
+
+CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABLinesListRenderableVertexs,D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABTrianglesListRenderableVertexs,D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABTrianglesStripRenderableVertexs,D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+#endif TEMPLATED_RENDERABLE_VERTEX_H
