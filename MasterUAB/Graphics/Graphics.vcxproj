@@ -21,6 +21,7 @@
     <ClCompile Include="EffectTechnique.cpp" />
     <ClCompile Include="FPSCameraController.cpp" />
     <ClCompile Include="Frustum.cpp" />
+    <ClCompile Include="InstanceMesh.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialManager.cpp" />
     <ClCompile Include="RenderableObject.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="EffectTechnique.h" />
     <ClInclude Include="FPSCameraController.h" />
     <ClInclude Include="Frustum.h" />
+    <ClInclude Include="InstanceMesh.h" />
     <ClInclude Include="MaterialManager.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="RenderableObject.h" />
