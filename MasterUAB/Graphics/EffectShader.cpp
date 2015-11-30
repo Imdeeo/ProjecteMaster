@@ -2,7 +2,16 @@
 #include "RenderManager.h"
 #include "EffectParameters.h"
 #include "UABEngine.h"
+#include "VertexTypes.h"
 
+#include <string>
+
+#define USE_D3D
+#ifdef USE_D3DX
+#include <D3DX11async.h>
+#else
+#include <d3dcompiler.h>
+#endif
 
 CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed("")
 {
@@ -23,8 +32,15 @@ bool CEffectShader::LoadShader(const std::string &Filename, const std::string
 		dwShaderFlags |= D3DCOMPILE_DEBUG;
 	#endif
 	ID3DBlob* pErrorBlob;
+	
+#ifdef USE_D3DX
 	hr=D3DX11CompileFromFile(Filename.c_str(), NULL, NULL, EntryPoint.c_str(),
 	ShaderModel.c_str(), dwShaderFlags, 0, NULL, BlobOut, &pErrorBlob, NULL );
+#else
+	hr=D3DCompileFromFile(std::wstring(Filename.begin(), Filename.end()).c_str(),NULL,NULL,EntryPoint.c_str(),
+		ShaderModel.c_str(),dwShaderFlags,0,NULL,&pErrorBlob);
+#endif
+	
 	if( FAILED(hr) )
 	{
 		if( pErrorBlob != NULL )
@@ -40,8 +56,8 @@ bool CEffectShader::LoadShader(const std::string &Filename, const std::string
 
 bool CEffectShader::CreateConstantBuffer()
 {
-	CRenderManager &l_RenderManager=UABEngine.GetRenderManager();
-	ID3D11Device *l_Device=l_RenderManager.GetDevice();
+	CRenderManager* l_RenderManager=UABEngine.GetRenderManager();
+	ID3D11Device *l_Device=l_RenderManager->GetDevice();
 	D3D11_BUFFER_DESC l_BufferDescription;
 	ZeroMemory(&l_BufferDescription, sizeof(l_BufferDescription));
 	l_BufferDescription.Usage=D3D11_USAGE_DEFAULT;
@@ -60,8 +76,8 @@ bool CEffectVertexShader::Load()
 	&l_VSBlob);
 	if(!l_Loaded)
 		return false;
-	CRenderManager &l_RenderManager=UABEngine.GetRenderManager();
-	ID3D11Device *l_Device=l_RenderManager.GetDevice();
+	CRenderManager* l_RenderManager=UABEngine.GetRenderManager();
+	ID3D11Device *l_Device=l_RenderManager->GetDevice();
 	HRESULT l_HR=l_Device->CreateVertexShader(l_VSBlob->GetBufferPointer(),
 	l_VSBlob->GetBufferSize(), NULL, &m_VertexShader);
 	if( FAILED(l_HR) )
@@ -70,11 +86,12 @@ bool CEffectVertexShader::Load()
 		return false;
 	}
 	if(m_VertexType=="MV_POSITION_NORMAL_TEXTURE_VERTEX")
-		l_Loaded=MV_POSITION_NORMAL_TEXTURE_VERTEX::CreateInputLayout(&l_RenderManager, l_VSBlob, &m_VertexLayout);
+		l_Loaded=MV_POSITION_NORMAL_TEXTURE_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else if(m_VertexType=="MV_POSITION_COLOR_VERTEX")
-		l_Loaded=MV_POSITION_COLOR_VERTEX::CreateInputLayout(&l_RenderManager,l_VSBlob, &m_VertexLayout);
+		l_Loaded=MV_POSITION_COLOR_VERTEX::CreateInputLayout(l_RenderManager,l_VSBlob, &m_VertexLayout);
 	else
-		Info("Vertex type '%s' not recognized on CEffectVertexShader::Load",m_VertexType.c_str());
+		printf("Vertex type '%s' not recognized on CEffectVertexShader::Load",m_VertexType.c_str());
+		//Info("Vertex type '%s' not recognized on CEffectVertexShader::Load",m_VertexType.c_str());
 	l_VSBlob->Release();
 	if(!l_Loaded)
 		return false;
@@ -88,8 +105,8 @@ bool CEffectPixelShader::Load()
 	m_ShaderModel.c_str(), &l_PSBlob);
 	if(!l_Loaded)
 		return false;
-	CRenderManager &l_RenderManager=CUABEngine::GetInstance()->GetInstance().GetRenderManager();
-	ID3D11Device *l_Device=l_RenderManager.GetDevice();
+	CRenderManager* l_RenderManager=UABEngine.GetRenderManager();
+	ID3D11Device *l_Device=l_RenderManager->GetDevice();
 	HRESULT l_HR=l_Device->CreatePixelShader(l_PSBlob->GetBufferPointer(),
 	l_PSBlob->GetBufferSize(), NULL, &m_PixelShader);
 	l_PSBlob->Release();

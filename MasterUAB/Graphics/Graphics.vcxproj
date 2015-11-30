@@ -24,7 +24,6 @@
     <ClCompile Include="InstanceMesh.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialManager.cpp" />
-    <ClCompile Include="RenderableObject.cpp" />
     <ClCompile Include="RenderableObjectManager.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="SphericalCameraController.cpp" />
