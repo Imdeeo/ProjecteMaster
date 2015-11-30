@@ -13,7 +13,7 @@ class CRenderableObjectsManager : public CTemplatedVectorMapManager<CRenderableO
 		void Render(CRenderManager *RM);
 		CRenderableObject * AddMeshInstance(const std::string &CoreMeshName, const std::string &InstanceName, const Vect3f &Position);
 		CRenderableObject * AddAnimatedInstanceModel(const std::string &CoreModelName,const std::string &InstanceModelName, const Vect3f &Position);
-		void AddResource(const std::string &Name, CRenderableObject *RenderableObject);
+		bool AddResource(const std::string &Name, CRenderableObject *RenderableObject);
 		//void CleanUp();
 		void Load(const std::string &FileName);
 		//CRenderableObject * GetInstance(const std::string &Name) const;
