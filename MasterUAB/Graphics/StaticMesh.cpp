@@ -48,22 +48,19 @@ bool CStaticMesh::Load(const std::string &FileName)
 
 		l_File.seekg(0);
 
+		// Read Header
 		l_File.read((char *) &l_BufferUnsignedShort, sizeof(short));
-		std::cout << "Header: l_BufferUnsignedShort = " << std::hex << l_BufferUnsignedShort << std::endl;
-
 
 		if(l_BufferUnsignedShort == HEADER)
 		{
-
+			// Read Number of Materials
 			l_File.read((char *) &l_BufferLong, sizeof(long));
-
-			std::cout << "Number of Materials: l_BufferLong = " << std::dec << l_BufferLong << std::endl;
 			l_NumMaterials = l_BufferLong;
 
 			for(int i=0; i<l_NumMaterials; i++)
 			{
+				// Read Material Name Length
 				l_File.read((char *) &l_BufferShort, sizeof(short));
-				std::cout << "Material length: l_BufferShort = " << std::dec << l_BufferShort << std::endl;
 				l_MatLength = l_BufferShort+1;
 
 				for(int i=0; i<l_MatLength; i++)
@@ -71,18 +68,18 @@ bool CStaticMesh::Load(const std::string &FileName)
 					l_File.read(&l_BufferChar, sizeof(l_BufferChar));
 					l_BufferString.append(&l_BufferChar, sizeof(l_BufferChar));
 				}
-				std::cout << "Material name: l_BufferString = " << l_BufferString << std::endl;
 				m_Materials.push_back(UABEngine.GetMaterialManager()->GetResource(l_BufferString));
 			}
+
 			for(int i=0; i<l_NumMaterials; i++)
 			{
+				// Read Vertex Type
 				l_File.read((char *) &l_BufferUnsignedShort, sizeof(unsigned short));
 				l_VertexType = l_BufferUnsignedShort;
-				std::cout << "Vertex Size: l_BufferUnsignedShort = " << std::dec << l_VertexType << std::endl;
 
+				// Read Number of Vertexs
 				l_File.read((char *) &l_BufferLong, sizeof(long));
 				int l_NumVertexs = l_BufferLong;
-				std::cout << "Number of vertexs: l_BufferLong = " << std::dec << m_NumVertexs << std::endl;
 
 				int l_NumBytes = 0;
 
@@ -102,14 +99,15 @@ bool CStaticMesh::Load(const std::string &FileName)
 				void *l_VertexData = NULL;
 				l_VertexData = malloc(l_NumBytes);
 
+				// Read Vertex Data
 				l_File.read((char *) l_VertexData, l_NumBytes);
-				std::cout << "Read: " << m_NumVertexs << " vertexes of " << l_NumBytes << " bytes each." << std::endl;
 
+				// Read Index Type
 				l_File.read((char *) &l_BufferUnsignedShort, sizeof(unsigned short));
 				l_IndexType = l_BufferUnsignedShort;
-				std::cout << "Index Size: l_BufferUnsignedShort = " << std::dec << l_IndexType << std::endl;
 
 				long l_NumIndexs = 0;
+				// Read Number of Indexs
 				l_File.read((char *) &l_BufferLong, sizeof(unsigned long));
 				l_NumIndexs = l_BufferLong;
 				if(l_IndexType==16)
@@ -124,8 +122,8 @@ bool CStaticMesh::Load(const std::string &FileName)
 				void *l_IndexData = NULL;
 				l_IndexData = malloc(l_IndexType*l_NumIndexs);
 
+				// Read Index Data
 				l_File.read((char *) l_IndexData, l_NumBytes);
-				std::cout << "Read: " << l_NumIndexs << " indexes of " << l_NumBytes << " bytes each." << std::endl;
 
 				CRenderableVertexs *l_RV = NULL;
 
@@ -179,8 +177,8 @@ bool CStaticMesh::Load(const std::string &FileName)
 				m_RVs.push_back(l_RV);
 			}
 
+			// Read Footer
 			l_File.read((char *) &l_BufferUnsignedShort, sizeof(short));
-			std::cout << "Footer: l_BufferUnsignedShort = " << std::hex << l_BufferShort << std::endl;
 
 			if(l_BufferUnsignedShort == FOOTER)
 			{
