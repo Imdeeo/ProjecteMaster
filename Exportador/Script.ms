@@ -1,4 +1,4 @@
-global isDebug = true
+global isDebug = false
 
 fn get_LocalFileName =
 (
@@ -7,11 +7,23 @@ fn get_LocalFileName =
 
 fn get_FileName =
 (
-	return "C:\\Game\\" + (get_LocalFileName())
+	return "E:\\Game\\" + (get_LocalFileName())
+)
+
+fn get_Cores =
+(
+	return $*
+)
+
+fn get_Instances =
+(
+	return $*
 )
 
 fn createStaticMesh dir filename Objs=
-(
+(	
+	dirExist dir
+	
 	file=createfile (dir+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<static_meshes>\n" to:file
@@ -44,7 +56,9 @@ fn GetRoll transform =
 )
 
 fn createInstanceMesh dir filename Objs=
-(
+(	
+	dirExist dir
+	
 	file=createfile (dir+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<renderable_objects>\n" to:file
@@ -272,8 +286,10 @@ fn writeMeshFromObject arx Obj =
 	writeFooter arx
 )
 
-fn createMeshFromObjects Dir Objs =
+fn createMeshFromObjects dir Objs =
 (
+	dirExist (Dir+"Meshes")
+	
 	for i=1 to Objs.count do
 	(
 		file=fopen (dir+"Meshes\\"+Objs[i].name+".mesh") "wb"
@@ -282,8 +298,10 @@ fn createMeshFromObjects Dir Objs =
 	)
 )
 
-fn createMaterials dir filename Objs=
+fn createMaterials dir filename Objs copyTexture =
 (
+	dirExist dir
+	
 	file=createfile (dir+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<materials>\n" to:file
@@ -292,6 +310,7 @@ fn createMaterials dir filename Objs=
 	(
 		mat = #()
 		n_materials = 1
+		
 		if(classof(Objs[i].material)==Multimaterial)then
 		(
 			mat = Objs[i].material
@@ -301,6 +320,7 @@ fn createMaterials dir filename Objs=
 		(			
 			append mat Objs[i].material
 		)	
+		
 		for j=1 to n_materials do
 			(
 				if materialsDictionary.Item[mat[j].name]==undefined then
@@ -311,10 +331,19 @@ fn createMaterials dir filename Objs=
 					(
 						if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
 						(
-							nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)
+							nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
 							
-								pathfile = ((get_FileName())  + "Textures\\" + nomTextura)
-								format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
+							pathfile = (dir + "Textures\\" + nomTextura)
+							format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
+							
+							if copyTexture == true then
+							(								
+								if (doesFileExist (dir + "Textures")) == false then
+								(									
+									dirExist (dir+"Textures")
+								)
+								copyFile mat[j].diffuseMap.bitmap.filename pathfile
+							)
 						)
 					)
 					format "\t</material>\n" to:file 
@@ -325,6 +354,14 @@ fn createMaterials dir filename Objs=
 	close file
 )
 
+fn dirExist dir =
+(
+	if (doesFileExist dir) == false then
+	(
+		makeDir dir all:true
+	)
+)
+
 fn createFiles Dir Objs =
 (
 	createInstanceMesh Dir "renderable_objects.xml" Objs
@@ -333,4 +370,4 @@ fn createFiles Dir Objs =
 	createMeshFromObjects Dir Objs
 )
 
-createFiles (get_FileName()) $*
+--createFiles (get_FileName()) $*

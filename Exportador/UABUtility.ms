@@ -3,8 +3,8 @@ utility UABUtility "UABUtility" width:168 height:360
 	checkbox chk1 "Checkbox" pos:[127,6] width:0 height:0
 	button SetPathButton "Set Path" pos:[8,8] width:152 height:40
 	label PathLabel "Label" pos:[8,56] width:152 height:64
-	checkbox ExportMeshBox "Export Mesh" pos:[8,120] width:152 height:16
-	checkbox ExportTexturesBox "Export Textures" pos:[8,136] width:152 height:16
+	checkbox ExportMeshCheck "Export Mesh" pos:[8,120] width:152 height:16
+	checkbox ExportTexturesCheck "Export Textures" pos:[8,136] width:152 height:16
 	groupBox grp1 "Export" pos:[8,176] width:152 height:176
 	button ExportLightsButton "Lights" pos:[16,192] width:64 height:32
 	button ExportMeshButton "Mesh" pos:[88,192] width:64 height:32
@@ -19,8 +19,7 @@ utility UABUtility "UABUtility" width:168 height:360
 		PathLabel.text="C:\\UABEngine\\Data"
 		
 		local levels=#("","level 1","level 2", "level 3","level 4", "main menu", "select player")
-		LevelList.items=levels
-		
+		LevelList.items=levels		
 	)
 	
 	on SetPathButton pressed do
@@ -30,6 +29,27 @@ utility UABUtility "UABUtility" width:168 height:360
 		(
 			PathLabel.text=l_Path
 		)
+	)
+	
+	on ExportMaterialsButton pressed do
+	(
+		if LevelList.items[LevelList.selection] == "" then
+		(			
+			messageBox "You must select a level" title:"ERROR"
+		)
+		else
+		(
+			local dir = PathLabel.text + "\\" + LevelList.items[LevelList.selection] + "\\"
+			
+			if (createMaterials  dir "materials.xml" (get_Cores()) ExportTexturesCheck.checked) == OK then
+			(
+				messageBox "Materials file create succesfully" title:"INFORMATION"
+			) 
+			else
+			(
+				messageBox "Materials file create error" title:"ERROR"
+			)
+		)		
 	)
 )
 
