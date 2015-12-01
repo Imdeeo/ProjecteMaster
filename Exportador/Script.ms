@@ -278,11 +278,8 @@ fn procesFaces arx Obj =
 fn writeMeshFromObject arx Obj =
 (
 	writeHeader arx
-	local n_materials = getMaterials arx Obj
-	for i=1 to n_materials do
-	(
-		procesFaces arx Obj
-	)
+	getMaterials arx Obj
+	procesFaces arx Obj
 	writeFooter arx
 )
 
