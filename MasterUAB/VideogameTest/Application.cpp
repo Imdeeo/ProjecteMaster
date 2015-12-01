@@ -153,7 +153,7 @@ void CApplication::Render()
 {
 	UABEngine.GetRenderManager()->Render();
 
-
+	
 	//Mat44f world;
 
 	//world.SetIdentity();
