@@ -21,8 +21,6 @@
 #include "Effect.h"
 #include "Camera.h"
 
-#include "UABEngine.h"
-
 #pragma comment(lib, "Graphics_d.lib")
 #pragma comment(lib, "Winmm.lib")
 
@@ -120,10 +118,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 	s_Context.CreateBackBuffer(hWnd, 800, 600);
 	s_Context.InitStates();
 	{
-		UABEngine.Init();
-		UABEngine.GetRenderManager()->SetContextManager(&s_Context);
-
-		CDebugRender debugRender(s_Context.GetDevice());
+		//CDebugRender debugRender(s_Context.GetDevice());
 
 		CInputManagerImplementation inputManager(hWnd);
 		CInputManager::SetCurrentInputManager(&inputManager);
@@ -133,7 +128,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 		CDebugHelperImplementation debugHelper(s_Context.GetDevice());
 		CDebugHelper::SetCurrentDebugHelper(&debugHelper);
 
-		CApplication application(&debugRender, &s_Context);
+		CApplication application(&s_Context);
 
 		application.Init();
 

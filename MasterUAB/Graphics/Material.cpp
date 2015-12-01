@@ -12,7 +12,7 @@ CMaterial::CMaterial(const CXMLTreeNode &TreeNode):CNamed("")
 		CXMLTreeNode texture = TreeNode(i);
 		if (texture.GetName() == std::string("texture"))
 		{
-			m_Textures.push_back(CUABEngine::GetInstance()->GetTextureManager()->GetTexture(TreeNode.GetPszProperty("filename")));
+			m_Textures.push_back(CUABEngine::GetInstance()->GetTextureManager()->GetTexture(texture.GetPszProperty("filename")));
 		}
 	}
 }

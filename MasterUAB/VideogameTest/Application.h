@@ -12,7 +12,7 @@ class CContextManager;
 class CApplication
 {
 public:
-	CApplication(CDebugRender *_DebugRender, CContextManager *_ContextManager);
+	CApplication(CContextManager *_ContextManager);
 	~CApplication();
 
 	void SwitchCamera();
@@ -32,7 +32,7 @@ private:
 
 	bool m_RenderCameraCube;
 
-	CDebugRender *m_DebugRender;
+	//CDebugRender *m_DebugRender;
 
 	CColor m_BackgroundColor;
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<renderable_objects>
+	<renderable_object name="Box001" core_name="Box001" position="0.0 0.0 0.0" yaw="0.0" pitch="0.0" roll="0.0" visible="true"/>
+	<renderable_object name="Box002" core_name="Box002" position="-3.88479 0.0 0.0" yaw="0.0" pitch="0.0" roll="0.0" visible="true"/>
+	<renderable_object name="Box003" core_name="Box003" position="-7.76958 0.0 0.0" yaw="0.0" pitch="0.0" roll="0.0" visible="true"/>
+	<renderable_object name="Box004" core_name="Box004" position="-11.6544 0.0 0.0" yaw="0.0" pitch="0.0" roll="0.0" visible="true"/>
+	<renderable_object name="Box005" core_name="Box005" position="0.0 0.0 3.4845" yaw="0.0" pitch="0.0" roll="0.0" visible="true"/>
+	<renderable_object name="Box006" core_name="Box006" position="0.0 0.0 6.96901" yaw="0.0" pitch="0.0" roll="0.0" visible="false"/>
+	<renderable_object name="Box007" core_name="Box007" position="-4.03877 0.0 3.4845" yaw="0.0" pitch="25.5089" roll="28.9718" visible="true"/>
+</renderable_objects>

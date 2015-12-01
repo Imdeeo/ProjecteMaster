@@ -3,6 +3,12 @@
 
 CUABEngine::CUABEngine(void)
 {
+	m_EffectManager = new CEffectManager();
+	m_MaterialManager = new CMaterialManager();
+	m_TextureManager = new CTextureManager();
+	m_RenderManager = new CRenderManager();
+	m_StaticMeshManager = new CStaticMeshManager();
+	m_RenderableObjectsManager = new CRenderableObjectsManager();
 }
 
 
@@ -23,11 +29,8 @@ CUABEngine* CUABEngine::GetInstance()
 
 void CUABEngine::Init()
 {
-	m_EffectManager = new CEffectManager();
-	m_MaterialManager = new CMaterialManager();
-	m_TextureManager = new CTextureManager();
-	m_RenderManager = new CRenderManager();
-
-//	m_EffectManager->Load("effects.xml");
-//	m_MaterialManager->Load("materials.xml");
+	m_EffectManager->Load("Data\\Level\\effects.xml");
+	m_MaterialManager->Load("Data\\Level\\materials.xml");
+	m_StaticMeshManager->Load("Data\\Level\\static_meshes.xml");
+	m_RenderableObjectsManager->Load("Data\\Level\\renderable_objects.xml");
 }
