@@ -48,22 +48,15 @@ bool CStaticMesh::Load(const std::string &FileName)
 
 		l_File.seekg(0);
 
-<<<<<<< HEAD
-		l_file.read((char *) &l_BufferUnsignedShort, sizeof(short));
-		std::cout << "Header: l_BufferUnsignedShort = " << std::hex << l_BufferUnsignedShort << std::endl;
-=======
 		l_File.read((char *) &l_BufferUnsignedShort, sizeof(short));
-		std::cout << "Header: l_BufferUnsignedShort = " << std::hex << l_BufferShort << std::endl;
->>>>>>> eb173dd4838489aa6d30cee64df054cf0c9ccd4a
+		std::cout << "Header: l_BufferUnsignedShort = " << std::hex << l_BufferUnsignedShort << std::endl;
+
 
 		if(l_BufferUnsignedShort == HEADER)
 		{
 
-<<<<<<< HEAD
-			l_file.read((char *) &l_BufferLong, sizeof(unsigned int));
-=======
 			l_File.read((char *) &l_BufferLong, sizeof(long));
->>>>>>> eb173dd4838489aa6d30cee64df054cf0c9ccd4a
+
 			std::cout << "Number of Materials: l_BufferLong = " << std::dec << l_BufferLong << std::endl;
 			l_NumMaterials = l_BufferLong;
 
@@ -116,32 +109,20 @@ bool CStaticMesh::Load(const std::string &FileName)
 				l_IndexType = l_BufferUnsignedShort;
 				std::cout << "Index Size: l_BufferUnsignedShort = " << std::dec << l_IndexType << std::endl;
 
-				int l_NumIndexs = 0;
-
-<<<<<<< HEAD
-				void* l_IndexData = NULL;
-				l_NumBytes = sizeof(unsigned short)*l_NumIndexs;
-
-				l_IndexData = malloc(l_NumBytes);
-=======
+				long l_NumIndexs = 0;
+				l_File.read((char *) &l_BufferLong, sizeof(unsigned long));
+				l_NumIndexs = l_BufferLong;
 				if(l_IndexType==16)
 				{
-					unsigned short l_NumIndexsFile;
-					l_File.read((char *) &l_NumIndexsFile, sizeof(unsigned short));
-					l_NumBytes=sizeof(unsigned short)*l_NumIndexsFile;
-					l_NumIndexs=(unsigned int)l_NumIndexsFile;
+					l_NumBytes=sizeof(unsigned short)*l_NumIndexs;
 				}
 				else if(l_IndexType==32)
 				{
-					unsigned int l_NumIndexsFile;
-					l_File.read((char *) &l_NumIndexsFile, sizeof(unsigned int));
-					l_NumBytes=sizeof(unsigned int)*l_NumIndexsFile;
-					l_NumIndexs=l_NumIndexsFile;
+					l_NumBytes=sizeof(unsigned int)*l_NumIndexs;
 				}
 
 				void *l_IndexData = NULL;
 				l_IndexData = malloc(l_IndexType*l_NumIndexs);
->>>>>>> eb173dd4838489aa6d30cee64df054cf0c9ccd4a
 
 				l_File.read((char *) l_IndexData, l_NumBytes);
 				std::cout << "Read: " << l_NumIndexs << " indexes of " << l_NumBytes << " bytes each." << std::endl;
