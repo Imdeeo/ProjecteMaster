@@ -20,7 +20,7 @@ utility UABUtility "UABUtility" width:168 height:360
 	(
 		PathLabel.text="C:\\UABEngine\\Data"
 		
-		local levels=#("","level 1","level 2", "level 3","level 4", "main menu", "select player")
+		local levels=#("","level_1","level_2", "level_3","level_4", "main_menu", "select_player")
 		LevelList.items=levels		
 	)
 	
