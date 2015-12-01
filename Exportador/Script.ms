@@ -314,7 +314,7 @@ fn createMaterials dir filename Objs copyTexture =
 		if(classof(Objs[i].material)==Multimaterial)then
 		(
 			mat = Objs[i].material
-			n = Objs[i].material.numsubs
+			n_materials = Objs[i].material.numsubs
 		)
 		else
 		(			
@@ -322,33 +322,33 @@ fn createMaterials dir filename Objs copyTexture =
 		)	
 		
 		for j=1 to n_materials do
+		(
+			if materialsDictionary.Item[mat[j].name]==undefined then
 			(
-				if materialsDictionary.Item[mat[j].name]==undefined then
+				format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" mat[j].name to:file
+				materialsDictionary.Add mat[j].name "defined"
+				if mat[j].diffuseMap != undefined then  
 				(
-					format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" mat[j].name to:file
-					materialsDictionary.Add mat[j].name "defined"
-					if mat[j].diffuseMap != undefined then  
+					if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
 					(
-						if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
-						(
-							nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
-							
-							pathfile = (dir + "Textures\\" + nomTextura)
-							format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
-							
-							if copyTexture == true then
-							(								
-								if (doesFileExist (dir + "Textures")) == false then
-								(									
-									dirExist (dir+"Textures")
-								)
-								copyFile mat[j].diffuseMap.bitmap.filename pathfile
+						nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
+						
+						pathfile = (dir + "Textures\\" + nomTextura)
+						format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
+						
+						if copyTexture == true then
+						(								
+							if (doesFileExist (dir + "Textures")) == false then
+							(									
+								dirExist (dir+"Textures")
 							)
+							copyFile mat[j].diffuseMap.bitmap.filename pathfile
 						)
 					)
-					format "\t</material>\n" to:file 
 				)
+				format "\t</material>\n" to:file 
 			)
+		)
 	)		
 	format "</materials>\n" to:file		
 	close file
