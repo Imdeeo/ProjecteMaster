@@ -288,11 +288,11 @@ fn writeMeshFromObject arx Obj =
 
 fn createMeshFromObjects dir Objs =
 (
-	dirExist (Dir+"Meshes")
+	dirExist dir
 	
 	for i=1 to Objs.count do
 	(
-		file=fopen (dir+"Meshes\\"+Objs[i].name+".mesh") "wb"
+		file=fopen (dir+Objs[i].name+".mesh") "wb"
 		writeMeshFromObject file (Objs[i])
 		FClose file
 	)
@@ -357,9 +357,7 @@ fn createMaterials dir filename Objs copyTexture =
 fn dirExist dir =
 (
 	if (doesFileExist dir) == false then
-	(
 		makeDir dir all:true
-	)
 )
 
 fn createFiles Dir Objs =
