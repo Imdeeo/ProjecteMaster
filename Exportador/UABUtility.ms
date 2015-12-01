@@ -1,3 +1,5 @@
+fileIn "Script.ms"
+
 utility UABUtility "UABUtility" width:168 height:360
 (
 	checkbox chk1 "Checkbox" pos:[127,6] width:0 height:0
