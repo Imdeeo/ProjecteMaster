@@ -14,8 +14,7 @@ protected:
 	std::string m_ShaderModel;
 	std::string m_EntryPoint;
 	virtual void Destroy();
-	bool LoadShader(const std::string &Filename, const std::string &EntryPoint,
-	const std::string &ShaderModel, ID3DBlob **BlobOut);
+	bool LoadShader(const std::string &Filename, const std::string &EntryPoint,	const std::string &ShaderModel, ID3DBlob **BlobOut);
 	bool CreateConstantBuffer();
 public:
 	CEffectShader(const CXMLTreeNode &TreeNode);
