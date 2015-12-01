@@ -15,7 +15,7 @@ void CEffectManager::Reload()
 {
 	Load(m_Filename);
 }
-void CEffectManager::Load(const std::string &Filename)
+bool CEffectManager::Load(const std::string &Filename)
 {
 	m_Filename = Filename;
 	std::string l_EffectName;
