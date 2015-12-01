@@ -18,9 +18,9 @@ public:
 	}
 	virtual T * GetResource(const std::string &Name)
 	{
-		if(m_Resources.find(Name)!=m_Resources.end())
+		if(m_Resources.find(Name)==m_Resources.end())
 		{
-			printf("CMapManager error: El recurs %s ja existeix al MapManager\n",Name.c_str());
+			printf("CMapManager error: El recurs %s no existeix al MapManager\n",Name.c_str());
 			return nullptr;
 		}
 		return m_Resources[Name];
@@ -32,7 +32,7 @@ public:
 			printf("CMapManager error: El recurs %s ja existeix al MapManager\n",Name.c_str());
 			return false;
 		}
-		if( Resource != nullptr )
+		if( Resource == nullptr )
 		{
 			printf("CMapManager error: Recurs NULL\n");
 			return false;
