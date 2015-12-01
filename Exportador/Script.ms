@@ -2,12 +2,12 @@ global isDebug = false
 
 fn get_LocalFileName =
 (
-	return "Data\\Level\\"
+	return "Game\\Data\\"
 )
 
 fn get_FileName =
 (
-	return "E:\\Game\\" + (get_LocalFileName())
+	return "E:\\" + (get_LocalFileName())
 )
 
 fn get_Cores =
@@ -29,7 +29,7 @@ fn createStaticMesh dir filename Objs=
 	format "<static_meshes>\n" to:file
 	for i=1 to Objs.count do
 	(
-		format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" Objs[i].name ((get_LocalFileName())+"Meshes\\"+Objs[i].name+".mesh") to:file
+		format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" Objs[i].name (dir+"Meshes\\"+Objs[i].name+".mesh") to:file
 	)
 	format "</static_meshes>\n" to:file
 	close file
