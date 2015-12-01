@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<static_meshes>
+	<static_mesh name="Box001" filename="C:\UABEngine\Data\level_1\Meshes\Box001.mesh"/>
+	<static_mesh name="Box002" filename="C:\UABEngine\Data\level_1\Meshes\Box002.mesh"/>
+	<static_mesh name="Box003" filename="C:\UABEngine\Data\level_1\Meshes\Box003.mesh"/>
+	<static_mesh name="Box004" filename="C:\UABEngine\Data\level_1\Meshes\Box004.mesh"/>
+	<static_mesh name="Box005" filename="C:\UABEngine\Data\level_1\Meshes\Box005.mesh"/>
+	<static_mesh name="Box006" filename="C:\UABEngine\Data\level_1\Meshes\Box006.mesh"/>
+	<static_mesh name="Box007" filename="C:\UABEngine\Data\level_1\Meshes\Box007.mesh"/>
+</static_meshes>
