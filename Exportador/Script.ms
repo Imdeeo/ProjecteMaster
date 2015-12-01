@@ -1,8 +1,13 @@
 global isDebug = true
 
+fn get_LocalFileName =
+(
+	return "Data\\Level\\"
+)
+
 fn get_FileName =
 (
-	return "D:\\Game\\Data\\Level\\"
+	return "C:\\Game\\" + (get_LocalFileName())
 )
 
 fn createStaticMesh dir filename Objs=
@@ -12,7 +17,7 @@ fn createStaticMesh dir filename Objs=
 	format "<static_meshes>\n" to:file
 	for i=1 to Objs.count do
 	(
-		format "\t<static_mesh name=\"%\" filename=\"%\">\n" Objs[i].name ("data\\static_meshes\\"+Objs[i].name+".mesh") to:file
+		format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" Objs[i].name ((get_LocalFileName())+"Meshes\\"+Objs[i].name+".mesh") to:file
 	)
 	format "</static_meshes>\n" to:file
 	close file
@@ -47,7 +52,7 @@ fn createInstanceMesh dir filename Objs=
 	(
 		Obj = Objs[i]
 		pos = TranslationToRH Obj.transform.translation
-		format "\t<renderable_object name=\"%\" core_name=\"%\" position=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" visible=\"%\">\n" Obj.name Obj.name pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) true to:file
+		format "\t<renderable_object name=\"%\" core_name=\"%\" position=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" visible=\"%\"/>\n" Obj.name Obj.name pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) true to:file
 	)
 	format "</renderable_objects>\n" to:file
 	close file
@@ -156,9 +161,9 @@ fn writeMesh arx vertexs indexs =
 			if isDebug then
 			format "\n"
 		)
-		writeShort arx 2 #unsigned
+		writeShort arx 16 #unsigned
 		if isDebug then
-		format "Size of index: 2\n"
+		format "Size of index: 16\n"
 		writeLong arx indexs[i].count
 		if isDebug then
 		format "Number of indexes: %\n" indexs[i].count
@@ -285,52 +290,47 @@ fn createMaterials dir filename Objs=
 	materialsDictionary = dotNetObject "System.Collections.Hashtable"
 	for i=1 to Objs.count do
 	(
-		
+		mat = #()
+		n_materials = 1
 		if(classof(Objs[i].material)==Multimaterial)then
 		(
-			for j=1 to Objs[i].material.numsubs do
-			(
-				if Objs[i].material[j].diffuseMap != undefined then  
-				(
-					if (classof Objs[i].material[j].diffuseMap == Bitmaptexture) and (Objs[i].material[j].diffuseMap.bitmap != undefined) then
-					(
-						nomTextura = filenameFromPath (Objs[i].material[j].diffuseMap.bitmap.filename)
-						if materialsDictionary.Item[nomTextura]==undefined then
-						(
-							format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" Objs[i].material[j].name to:file
-							materialsDictionary.Add nomTextura "defined"
-							pathfile = ((get_FileName())  + "\\Textures" + nomTextura)
-							format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
-							format "\t</material>\n" to:file 
-						)		
-					)					
-				)
-			)
+			mat = Objs[i].material
+			n = Objs[i].material.numsubs
 		)
 		else
 		(			
-			if Objs[i].material.diffuseMap != undefined then  
-			(
-				 if (classof Objs[i].material.diffuseMap == Bitmaptexture) and (Objs[i].material.diffuseMap.bitmap != undefined) then
-				(
-					nomTextura = filenameFromPath (Objs[i].material.diffuseMap.bitmap.filename)
-					if materialsDictionary.Item[nomTextura]==undefined then
-					(
-						format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" Objs[i].material.name to:file
-						materialsDictionary.Add nomTextura "defined"
-						pathfile = ((get_FileName())  + "\\Textures" + nomTextura)
-						format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
-						format "\t</material>\n" to:file 
-					)		
-				)					
-			)			
+			append mat Objs[i].material
 		)	
+		for j=1 to n_materials do
+			(
+				if materialsDictionary.Item[mat[j].name]==undefined then
+				(
+					format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" mat[j].name to:file
+					materialsDictionary.Add mat[j].name "defined"
+					if mat[j].diffuseMap != undefined then  
+					(
+						if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
+						(
+							nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)
+							
+								pathfile = ((get_FileName())  + "Textures\\" + nomTextura)
+								format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
+						)
+					)
+					format "\t</material>\n" to:file 
+				)
+			)
 	)		
 	format "</materials>\n" to:file		
 	close file
 )
 
-createInstanceMesh (get_FileName()) "renderable_objects.xml" $*
-createStaticMesh (get_FileName()) "static_meshes.xml" $*
-createMaterials (get_FileName()) "materials.xml" $*
-createMeshFromObjects (get_FileName()) $*
+fn createFiles Dir Objs =
+(
+	createInstanceMesh Dir "renderable_objects.xml" Objs
+	createStaticMesh Dir "static_meshes.xml" Objs
+	createMaterials Dir "materials.xml" Objs
+	createMeshFromObjects Dir Objs
+)
+
+createFiles (get_FileName()) $*
