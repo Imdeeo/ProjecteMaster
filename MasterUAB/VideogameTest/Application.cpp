@@ -14,9 +14,8 @@ static void __stdcall SwitchCameraCallback(void* _app)
 	((CApplication*)_app)->SwitchCamera();
 }
 
-CApplication::CApplication(CDebugRender *_DebugRender, CContextManager *_ContextManager)
-	: m_DebugRender(_DebugRender)
-	, m_BackgroundColor(.2f, .1f, .4f)
+CApplication::CApplication( CContextManager *_ContextManager)
+	: m_BackgroundColor(.2f, .1f, .4f)
 	, m_CurrentCamera_control(0)
 	, m_CurrentCamera_vision(0)
 	,m_RenderCameraCube(false)
@@ -188,6 +187,5 @@ void CApplication::Render()
 
 void CApplication::Init()
 {
-	UABEngine.GetMaterialManager()->Load("Data\\materials.xml");
-	UABEngine.GetEffectManager()->Load("Data\\effects.xml");
+	UABEngine.Init();
 }

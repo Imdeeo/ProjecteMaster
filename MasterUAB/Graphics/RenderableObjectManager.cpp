@@ -19,10 +19,15 @@ void CRenderableObjectsManager::Render(CRenderManager *RM)
 	}
 }
 
-CRenderableObject * CRenderableObjectsManager::AddMeshInstance(const std::string &CoreMeshName, const std::string &InstanceName, const Vect3f &Position)
+CRenderableObject * CRenderableObjectsManager::AddMeshInstance(const std::string &CoreMeshName, const std::string &InstanceName, const Vect3f &Position,const float _Yaw, const float _Pitch, const float _Roll,const float _Scale, const bool _Visible)
 {
 	CInstanceMesh instanceMesh(InstanceName,CoreMeshName);
 	instanceMesh.SetPosition(Position);
+	instanceMesh.SetYaw(_Yaw);
+	instanceMesh.SetPitch(_Pitch);
+	instanceMesh.SetRoll(_Roll);
+	instanceMesh.SetScale(_Scale);
+	instanceMesh.SetVisible(_Visible);
 	if (AddResource(InstanceName, &instanceMesh))
 		return &instanceMesh;
 	else
@@ -34,12 +39,7 @@ CRenderableObject * CRenderableObjectsManager::AddAnimatedInstanceModel(const st
 	return nullptr;
 }
 
-bool CRenderableObjectsManager::AddResource(const std::string &Name, CRenderableObject *RenderableObject)
-{
-	return CTemplatedVectorMapManager::AddResource(Name, RenderableObject);
-}
-
-void CRenderableObjectsManager::Load(const std::string &FileName)
+bool CRenderableObjectsManager::Load(const std::string &FileName)
 {
 	Destroy();
 
@@ -54,11 +54,23 @@ void CRenderableObjectsManager::Load(const std::string &FileName)
 				CXMLTreeNode l_Element = l_Input(i);
 				if (l_Element.GetName() == std::string("renderable_object"))
 				{
-					AddMeshInstance(l_Element.GetPszProperty("core_name"), l_Element.GetPszProperty("name"), l_Element.GetVect3fProperty("pos", Vect3f(0.0f, 0.0f, 0.0f), true));
+					AddMeshInstance(l_Element.GetPszProperty("core_name"),
+						l_Element.GetPszProperty("name"),
+						l_Element.GetVect3fProperty("position", Vect3f(0.0f, 0.0f, 0.0f), true),
+						l_Element.GetFloatProperty("yaw",0.f,true),
+						l_Element.GetFloatProperty("pitch",0.f,true),
+						l_Element.GetFloatProperty("roll",0.f,true),
+						l_Element.GetFloatProperty("scale",1.f,true),
+						l_Element.GetBoolProperty("visible",false,true));
 				}
 			}
 		}
 	}
+	else
+	{
+		return false;
+	}
+	return true;
 }
 
 //void CRenderableObjectsManager::CleanUp(); ---no hacer

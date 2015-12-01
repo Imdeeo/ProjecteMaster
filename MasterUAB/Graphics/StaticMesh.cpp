@@ -49,12 +49,12 @@ bool CStaticMesh::Load(const std::string &FileName)
 		l_file.seekg(0);
 
 		l_file.read((char *) &l_BufferUnsignedShort, sizeof(short));
-		std::cout << "Header: l_BufferUnsignedShort = " << std::hex << l_BufferShort << std::endl;
+		std::cout << "Header: l_BufferUnsignedShort = " << std::hex << l_BufferUnsignedShort << std::endl;
 
 		if(l_BufferUnsignedShort == HEADER)
 		{
 
-			l_file.read((char *) &l_BufferLong, sizeof(long));
+			l_file.read((char *) &l_BufferLong, sizeof(unsigned int));
 			std::cout << "Number of Materials: l_BufferLong = " << std::dec << l_BufferLong << std::endl;
 			l_NumMaterials = l_BufferLong;
 
@@ -111,7 +111,9 @@ bool CStaticMesh::Load(const std::string &FileName)
 				std::cout << "Number of indexs: l_BufferLong = " << std::dec << l_NumIndexs << std::endl;
 
 				void* l_IndexData = NULL;
-				l_IndexData = malloc(l_IndexType*l_NumIndexs);
+				l_NumBytes = sizeof(unsigned short)*l_NumIndexs;
+
+				l_IndexData = malloc(l_NumBytes);
 
 				l_file.read((char *) l_IndexData, l_NumBytes);
 

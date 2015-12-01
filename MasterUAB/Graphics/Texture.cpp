@@ -1,5 +1,6 @@
 #include "Texture.h"
 #include "ContextManager.h"
+#include "UABEngine.h"
 
 
 CTexture::CTexture(): CNamed("")
@@ -15,7 +16,7 @@ CTexture::~CTexture(void)
 
 bool CTexture::LoadFile()
 {
-	ID3D11Device *l_Device/*=UABEngine.GetRenderManager().GetDevice()*/;
+	ID3D11Device *l_Device=UABEngine.GetRenderManager()->GetDevice();
 	HRESULT l_HR=/*D3DX11CreateShaderResourceViewFromFile(l_Device,m_Name.c_str(), NULL, NULL, &m_Texture, NULL )*/0;
 	D3D11_SAMPLER_DESC l_SampDesc;
 	ZeroMemory(&l_SampDesc, sizeof(l_SampDesc));

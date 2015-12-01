@@ -16,7 +16,7 @@ public:
 		CMapResourceValue(T *Value, size_t Id) : m_Value(Value), m_Id(Id){}
 	};
 	typedef std::vector<T *> TVectorResources;
-	typedef std::map<std::string, CMapResourceValue> TMapResources;
+	typedef std::map<std::string, CMapResourceValue*> TMapResources;
 
 protected:
 	TVectorResources m_ResourcesVector;
@@ -38,9 +38,9 @@ public:
 		m_ResourcesVector.erase(m_ResourcesVector.begin()+index);
 		for(TMapResources::iterator l_iterator = m_ResourcesMap.begin();l_iterator != m_ResourcesMap.end();l_iterator++)
 		{
-			if(l_iterator->second.m_Id>index)
+			if(l_iterator->second->m_Id>index)
 			{
-				l_iterator->second.m_Id--;
+				l_iterator->second->m_Id--;
 			}
 		}
 		return true;
@@ -53,7 +53,7 @@ public:
 
 	virtual T * GetResource(const std::string &Name)
 	{
-		return m_ResourcesMap[Name].m_Value;
+		return m_ResourcesMap[Name]->m_Value;
 	}
 
 	virtual bool AddResource(const std::string &Name, T *Resource)
@@ -62,8 +62,7 @@ public:
 		{
 			return false;
 		}
-		CMapResourceValue l_ResourceValue(Resource,m_ResourcesVector.size());
-		m_ResourcesMap[Name] = l_ResourceValue;
+		m_ResourcesMap[Name] = new CMapResourceValue (Resource,m_ResourcesVector.size());
 		m_ResourcesVector.push_back(Resource);
 		return true;
 	}

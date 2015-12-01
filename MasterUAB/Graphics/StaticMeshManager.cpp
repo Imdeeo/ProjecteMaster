@@ -17,7 +17,7 @@ bool CStaticMeshManager::Load(const std::string &FileName)
 	std::string l_MeshFileName;
 
 	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(m_Filename.c_str()))
+	if (l_XML.LoadFile(FileName.c_str()))
 	{
 		CXMLTreeNode l_Input = l_XML["static_meshes"];
 		if (l_Input.Exists())
@@ -37,6 +37,10 @@ bool CStaticMeshManager::Load(const std::string &FileName)
 				}
 			}
 		}
+	}
+	else
+	{
+		return false;
 	}
 	return true;
 }
