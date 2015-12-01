@@ -1,5 +1,7 @@
 #include "UABEngine.h"
+#include <string>
 
+#define LEVEL "1"
 
 CUABEngine::CUABEngine(void)
 {
@@ -29,8 +31,8 @@ CUABEngine* CUABEngine::GetInstance()
 
 void CUABEngine::Init()
 {
-	m_EffectManager->Load("Data\\Level\\effects.xml");
-	m_MaterialManager->Load("Data\\Level\\materials.xml");
-	m_StaticMeshManager->Load("Data\\Level\\static_meshes.xml");
-	m_RenderableObjectsManager->Load("Data\\Level\\renderable_objects.xml");
+	m_EffectManager->Load("Data\\level_1\\effects.xml");
+	m_MaterialManager->Load("Data\\level_1\\materials.xml");
+	m_StaticMeshManager->Load("Data\\level_1\\static_meshes.xml");
+	m_RenderableObjectsManager->Load("Data\\level_1\\renderable_objects.xml");
 }
