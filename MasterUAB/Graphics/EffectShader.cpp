@@ -70,6 +70,15 @@ bool CEffectShader::CreateConstantBuffer()
 	return true;
 }
 
+CEffectVertexShader::CEffectVertexShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode)
+{
+	m_Name = TreeNode.GetPszProperty("name");
+	m_Filename = TreeNode.GetPszProperty("file");
+	m_ShaderModel = TreeNode.GetPszProperty("shader_model");
+	m_EntryPoint = TreeNode.GetPszProperty("entry_point");
+	m_VertexType = TreeNode.GetPszProperty("vertex_type");
+}
+
 bool CEffectVertexShader::Load()
 {
 	ID3DBlob *l_VSBlob=NULL;
@@ -99,6 +108,14 @@ bool CEffectVertexShader::Load()
 	return CreateConstantBuffer();
 }
 
+CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode)
+{
+	m_Name = TreeNode.GetPszProperty("name");
+	m_Filename = TreeNode.GetPszProperty("file");
+	m_ShaderModel = TreeNode.GetPszProperty("shader_model");
+	m_EntryPoint = TreeNode.GetPszProperty("entry_point");
+}
+
 bool CEffectPixelShader::Load()
 {
 	ID3DBlob *l_PSBlob=NULL;
@@ -113,3 +130,4 @@ bool CEffectPixelShader::Load()
 	l_PSBlob->Release();
 	return CreateConstantBuffer();
 }
+

@@ -20,7 +20,7 @@ public:
 	virtual ~CEffectManager();
 	static CEffectParameters m_Parameters;
 	void Reload();
-	void Load(const std::string &Filename);
+	bool Load(const std::string &Filename);
 	CEffectVertexShader * GetVertexShader(const std::string &VertexShader);
 	CEffectPixelShader * GetPixelShader(const std::string &PixelShader);
 };
