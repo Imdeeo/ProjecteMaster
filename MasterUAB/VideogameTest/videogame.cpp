@@ -236,10 +236,8 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 				float m_ElapsedTime = (float)(l_CurrentTime - m_PreviousTime)*0.001f;
 				m_PreviousTime = l_CurrentTime;
 
-
 				application.Update(m_ElapsedTime);
 				application.Render();
-
 
 				inputManager.EndFrame();
 			}

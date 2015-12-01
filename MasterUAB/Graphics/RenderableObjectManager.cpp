@@ -21,15 +21,15 @@ void CRenderableObjectsManager::Render(CRenderManager *RM)
 
 CRenderableObject * CRenderableObjectsManager::AddMeshInstance(const std::string &CoreMeshName, const std::string &InstanceName, const Vect3f &Position,const float _Yaw, const float _Pitch, const float _Roll,const float _Scale, const bool _Visible)
 {
-	CInstanceMesh instanceMesh(InstanceName,CoreMeshName);
-	instanceMesh.SetPosition(Position);
-	instanceMesh.SetYaw(_Yaw);
-	instanceMesh.SetPitch(_Pitch);
-	instanceMesh.SetRoll(_Roll);
-	instanceMesh.SetScale(_Scale);
-	instanceMesh.SetVisible(_Visible);
-	if (AddResource(InstanceName, &instanceMesh))
-		return &instanceMesh;
+	CInstanceMesh* instanceMesh = new CInstanceMesh(InstanceName,CoreMeshName);
+	instanceMesh->SetPosition(Position);
+	instanceMesh->SetYaw(_Yaw);
+	instanceMesh->SetPitch(_Pitch);
+	instanceMesh->SetRoll(_Roll);
+	instanceMesh->SetScale(_Scale);
+	instanceMesh->SetVisible(_Visible);
+	if (AddResource(InstanceName, instanceMesh))
+		return instanceMesh;
 	else
 		return nullptr;
 }
