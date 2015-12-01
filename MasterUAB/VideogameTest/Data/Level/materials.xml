@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<materials>
-	<material name="01 - Default" effect_technique="diffuse_technique">
-		<texture filename="C:\UABEngine\Data\level 1\Textures\bark.dds"/>
-	</material>
-</materials>
