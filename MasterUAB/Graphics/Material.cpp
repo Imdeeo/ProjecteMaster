@@ -6,6 +6,7 @@ CMaterial::CMaterial(const CXMLTreeNode &TreeNode):CNamed("")
 {
 	SetName(TreeNode.GetPszProperty("name"));
 	std::string effectTechnique = TreeNode.GetPszProperty("effect_technique");
+	m_EffectTechnique = UABEngine.GetEffectManager()->GetResource(effectTechnique);
 	CXMLTreeNode material = TreeNode;
 	for (int i = 0; i < material.GetNumChildren(); ++i)
 	{

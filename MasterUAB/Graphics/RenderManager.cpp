@@ -4,6 +4,8 @@
 #include "MaterialManager.h"
 #include "RenderableObject.h"
 
+#include "UABEngine.h"
+
 #define SCREEN_DEPTH 20.f
 void CRenderManager::SetCurrentCamera(const CCamera& _CurrentCamera)
 {
@@ -65,7 +67,7 @@ void CRenderManager::Render()
 	// TODO crear un vector para objetos transparentes
 	std::vector<BlendedSubmesh> l_SubmeshesWithBlend;
 
-	m_RenderableObjectManager.Render(this);
+	UABEngine.GetRenderableObjectsManager()->Render(this);
 
 	//for (size_t i = 0; i < m_CurrentRenderlistLength; ++i)
 	//{
