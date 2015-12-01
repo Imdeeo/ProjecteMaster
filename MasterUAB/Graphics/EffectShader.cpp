@@ -6,11 +6,12 @@
 
 #include <string>
 
-#define USE_D3D
+#include <D3Dcompiler.h>
+
+#define USE_D3DX
 #ifdef USE_D3DX
 #include <D3DX11async.h>
-#else
-#include <D3Dcompiler.h>
+
 #endif
 
 CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed("")
