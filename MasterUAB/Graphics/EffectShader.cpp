@@ -10,11 +10,12 @@
 #ifdef USE_D3DX
 #include <D3DX11async.h>
 #else
-#include <d3dcompiler.h>
+#include <D3Dcompiler.h>
 #endif
 
 CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed("")
 {
+
 }
 
 
@@ -37,8 +38,7 @@ bool CEffectShader::LoadShader(const std::string &Filename, const std::string
 	hr=D3DX11CompileFromFile(Filename.c_str(), NULL, NULL, EntryPoint.c_str(),
 	ShaderModel.c_str(), dwShaderFlags, 0, NULL, BlobOut, &pErrorBlob, NULL );
 #else
-	hr=D3DCompileFromFile(std::wstring(Filename.begin(), Filename.end()).c_str(),NULL,NULL,EntryPoint.c_str(),
-		ShaderModel.c_str(),dwShaderFlags,0,NULL,&pErrorBlob);
+	hr=D3DCompileFromFile(std::wstring(Filename.begin(), Filename.end()).c_str(),NULL,NULL,EntryPoint.c_str(), ShaderModel.c_str(),dwShaderFlags,0,NULL,&pErrorBlob);
 #endif
 	
 	if( FAILED(hr) )
