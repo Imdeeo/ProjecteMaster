@@ -203,8 +203,7 @@ bool CStaticMesh::Reload()
 	if(m_Name!="")
 	{
 		Destroy();
-		Load(m_Name);
-		return true;
+		return Load(m_Name);
 	}
 	else
 	{

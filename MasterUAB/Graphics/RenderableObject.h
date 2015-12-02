@@ -6,12 +6,14 @@
 #include "Named.h"
 #include "C3DElement.h"
 
+class CXMLTreeNode;
 class CRenderManager;
 
 class CRenderableObject : public C3DElement, public CNamed
 {
 public:
 	CRenderableObject():CNamed(""){};
+	CRenderableObject(const CXMLTreeNode &TreeNode):C3DElement(TreeNode),CNamed(""){};
 	virtual ~CRenderableObject() {}
 	virtual void Update(float ElapsedTime) {}
 	virtual void Render(CRenderManager *RM) = 0;
