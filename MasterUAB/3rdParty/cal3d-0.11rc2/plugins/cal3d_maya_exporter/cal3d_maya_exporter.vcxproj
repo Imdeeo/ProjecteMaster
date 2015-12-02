@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Template|Win32">
+      <Configuration>Template</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <SccProjectName />
+    <SccLocalPath />
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <Optimization>MaxSpeed</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <AdditionalIncludeDirectories>.;../src;../src/win32;../../src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_BOOL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Release\cal3d_maya_exporter.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>.\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Release\cal3d_maya_exporter.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0c09</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release\cal3d_maya_exporter.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <LinkDLL>true</LinkDLL>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>Release\cal3dExport.mll</OutputFile>
+      <ImportLibrary>.\Release\cal3dExport.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\..\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions> /export:initializePlugin  /export:uninitializePlugin </AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>.;../src;../src/win32;../../src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_BOOL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Debug\cal3d_maya_exporter.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ObjectFileName>.\Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Debug\cal3d_maya_exporter.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0c09</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug\cal3d_maya_exporter.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <LinkDLL>true</LinkDLL>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>Debug\cal3dExport.mll</OutputFile>
+      <ImportLibrary>.\Debug\cal3dExport.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\..\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions> /export:initializePlugin  /export:uninitializePlugin </AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\src\res\cal3d.bmp" />
+    <CustomBuild Include="..\src\res\cal3d_bar.bmp" />
+    <CustomBuild Include="..\src\res\type_bone.ico" />
+    <CustomBuild Include="..\src\res\type_dummy.ico" />
+    <CustomBuild Include="..\src\res\type_other.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\win32\AnimationExportSheet.cpp" />
+    <ClCompile Include="..\src\win32\AnimationTimePage.cpp" />
+    <ClCompile Include="..\src\win32\BoneAssignmentPage.cpp" />
+    <ClCompile Include="..\src\win32\LevelOfDetailPage.cpp" />
+    <ClCompile Include="..\src\win32\MaterialExportSheet.cpp" />
+    <ClCompile Include="..\src\win32\MaterialMapDialog.cpp" />
+    <ClCompile Include="..\src\win32\MaterialMapsPage.cpp" />
+    <ClCompile Include="..\src\win32\MaterialSelectionPage.cpp" />
+    <ClCompile Include="..\src\win32\MeshExportSheet.cpp" />
+    <ClCompile Include="..\src\win32\SkeletonExportSheet.cpp" />
+    <ClCompile Include="..\src\win32\SkeletonFilePage.cpp" />
+    <ClCompile Include="..\src\win32\SkeletonHierarchyPage.cpp" />
+    <ClCompile Include="..\src\win32\SpringSystemPage.cpp" />
+    <ClCompile Include="..\src\BaseInterface.cpp" />
+    <ClCompile Include="..\src\BaseMaterial.cpp" />
+    <ClCompile Include="..\src\BaseMesh.cpp" />
+    <ClCompile Include="..\src\BaseNode.cpp" />
+    <ClCompile Include="..\src\BoneCandidate.cpp" />
+    <ClCompile Include="..\src\Exporter.cpp" />
+    <ClCompile Include="..\src\Lodder.cpp" />
+    <ClCompile Include="..\src\MaterialCandidate.cpp" />
+    <ClCompile Include="..\src\MaterialLibraryCandidate.cpp" />
+    <ClCompile Include="..\src\MeshCandidate.cpp" />
+    <ClCompile Include="..\src\Quadric.cpp" />
+    <ClCompile Include="..\src\SkeletonCandidate.cpp" />
+    <ClCompile Include="StdAfx.cpp" />
+    <ClCompile Include="..\src\SubmeshCandidate.cpp" />
+    <ClCompile Include="..\src\VertexCandidate.cpp" />
+    <ClCompile Include="cal3d_maya_exporter.cpp" />
+    <ClCompile Include="MayaInterface.cpp" />
+    <ClCompile Include="MayaMaterial.cpp" />
+    <ClCompile Include="MayaMesh.cpp" />
+    <ClCompile Include="MayaNode.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\win32\MaterialMapDialog.h" />
+    <ClInclude Include="..\src\BaseInterface.h" />
+    <ClInclude Include="..\src\BaseMaterial.h" />
+    <ClInclude Include="..\src\BaseMesh.h" />
+    <ClInclude Include="..\src\BaseNode.h" />
+    <ClInclude Include="..\src\BoneCandidate.h" />
+    <ClInclude Include="..\src\Exporter.h" />
+    <ClInclude Include="..\src\Lodder.h" />
+    <ClInclude Include="..\src\MaterialCandidate.h" />
+    <ClInclude Include="..\src\MaterialLibraryCandidate.h" />
+    <ClInclude Include="..\src\MeshCandidate.h" />
+    <ClInclude Include="..\src\Quadric.h" />
+    <ClInclude Include="..\src\SkeletonCandidate.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="..\src\SubmeshCandidate.h" />
+    <ClInclude Include="..\src\VertexCandidate.h" />
+    <ClInclude Include="cal3d_maya_exporter.h" />
+    <ClInclude Include="MayaInterface.h" />
+    <ClInclude Include="MayaMaterial.h" />
+    <ClInclude Include="MayaMesh.h" />
+    <ClInclude Include="MayaNode.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cal3d_maya_exporter.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
