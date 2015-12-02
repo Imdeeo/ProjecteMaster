@@ -92,7 +92,7 @@ utility UABUtility "UABUtility" width:168 height:360
         (
 			local dir = PathLabel.text + "\\" + LevelList.items[LevelList.selection] + "\\"
 			exportMaterials dir ExportTexturesCheck.checked
-			exportStaticMesh dir ExportMeshCheck.checked
+			exportStaticMesh dir LevelList.items[LevelList.selection] ExportMeshCheck.checked
 			exportRenderableObject dir
 		)
 	)
@@ -103,9 +103,9 @@ fn exportMaterials dir textureCheck =
 	createMaterials  dir "materials.xml" (get_Cores()) textureCheck
 )
 
-fn exportStaticMesh dir meshCheck =
+fn exportStaticMesh dir level meshCheck =
 (
-	createStaticMesh dir "static_meshes.xml" (get_Instances())
+	createStaticMesh dir level "static_meshes.xml" (get_Instances())
 	
 	if meshCheck == true then 
 	(				
