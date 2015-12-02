@@ -2,7 +2,6 @@
 #include "ContextManager.h"
 #include "UABEngine.h"
 
-
 CTexture::CTexture(): CNamed("")
 {
 	m_Texture = nullptr;
@@ -43,7 +42,7 @@ bool CTexture::Load(const std::string &Filename)
 }
 void CTexture::Activate(unsigned int StageId)
 {
-	ID3D11DeviceContext *l_DeviceContext/*=UABEngine.GetInstance().GetRenderManager().GetDeviceContext()*/;
+	ID3D11DeviceContext *l_DeviceContext=UABEngine.GetRenderManager()->GetDeviceContext();
 	l_DeviceContext->PSSetSamplers(StageId, 1, &m_SamplerState);
 	l_DeviceContext->PSSetShaderResources(StageId, 1, &m_Texture);
 }

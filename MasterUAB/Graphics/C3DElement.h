@@ -76,10 +76,7 @@ public:
 		return m_Scale;
 	}
 	virtual void Render(CKGRenderManager *RenderManager);
-	const Mat44f & GetTransform()
-	{
-		return m_TransformMatrix;
-	}
+	const Mat44f & GetTransform();
 	float GetVisible() const
 	{
 		return m_Visible;
