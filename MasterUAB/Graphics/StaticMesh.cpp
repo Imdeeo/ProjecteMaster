@@ -62,13 +62,14 @@ bool CStaticMesh::Load(const std::string &FileName)
 				// Read Material Name Length
 				l_BufferString = "";
 				l_File.read((char *) &l_BufferShort, sizeof(short));
-				l_MatLength = l_BufferShort+1;
+				l_MatLength = l_BufferShort;
 
 				for(int i=0; i<l_MatLength; i++)
 				{
 					l_File.read(&l_BufferChar, sizeof(l_BufferChar));
 					l_BufferString.append(&l_BufferChar, sizeof(l_BufferChar));
 				}
+				l_File.read(&l_BufferChar, sizeof(l_BufferChar));
  				m_Materials.push_back(UABEngine.GetMaterialManager()->GetResource(l_BufferString));
 			}
 
@@ -216,7 +217,7 @@ void CStaticMesh::Render(CRenderManager *RM) const
 	for(int i = 0 ;i<m_RVs.size();i++)
 	{
 		CEffectTechnique* l_ET = m_Materials[i]->GetEffectTechnique();
-		m_RVs[i]->RenderIndexed(RM,l_ET,0);
+		m_RVs[i]->RenderIndexed(RM,l_ET,&(UABEngine.GetEffectManager()->m_Parameters));
 	}
 }
 
