@@ -4,6 +4,8 @@
 #include "TemplatedVectorMapManager.h"
 #include "RenderableObject.h"
 
+class CXMLTreeNode;
+
 class CRenderableObjectsManager : public CTemplatedVectorMapManager<CRenderableObject>
 {
 	public:
@@ -11,6 +13,7 @@ class CRenderableObjectsManager : public CTemplatedVectorMapManager<CRenderableO
 		virtual ~CRenderableObjectsManager();
 		void Update(float ElapsedTime);
 		void Render(CRenderManager *RM);
+		CRenderableObject * AddMeshInstance(CXMLTreeNode &TreeNode);
 		CRenderableObject * AddMeshInstance(const std::string &CoreMeshName,
 			const std::string &InstanceName, const Vect3f &Position, const float _Yaw = 0.f,
 			const float _Pitch = 0.f, const float _Roll = 0.f,const float _Scale = 1.f,
