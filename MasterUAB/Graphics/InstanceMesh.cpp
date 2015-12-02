@@ -21,14 +21,14 @@ void CInstanceMesh::Render(CRenderManager *RM)
 {
 	if(GetVisible())
 	{
-		/*Mat44f world;
+		Mat44f world;
 
 		world.SetIdentity();
 		world.SetIdentity();
 		world.SetFromPitchRollYaw(Vect3f(GetPitch(),GetRoll(),GetYaw()));
 		world.SetFromPos(GetPosition());
 		world.SetScale(GetScale());
-		RM->GetContextManager()->SetWorldMatrix(world);*/
+		RM->GetContextManager()->SetWorldMatrix(world);
 		m_StaticMesh->Render(RM);
 	}
 }
