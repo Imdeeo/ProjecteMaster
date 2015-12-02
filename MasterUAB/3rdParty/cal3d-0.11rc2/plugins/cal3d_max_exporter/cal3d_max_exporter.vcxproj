@@ -1,0 +1,510 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug Max 5|Win32">
+      <Configuration>Debug Max 5</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug Max 6|Win32">
+      <Configuration>Debug Max 6</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release Max 6|Win32">
+      <Configuration>Release Max 6</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Template|Win32">
+      <Configuration>Template</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <SccProjectName />
+    <SccLocalPath />
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Max 6|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Max 5|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Max 6|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Max 6|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Max 5|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Max 6|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Max 6|Win32'">
+    <OutDir>.\cal3d_max_exporter___Win32_Release_Max_6\</OutDir>
+    <IntDir>.\cal3d_max_exporter___Win32_Release_Max_6\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Max 5|Win32'">
+    <OutDir>.\cal3d_max_exporter___Win32_Debug_Max_5\</OutDir>
+    <IntDir>.\cal3d_max_exporter___Win32_Debug_Max_5\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Max 6|Win32'">
+    <OutDir>.\cal3d_max_exporter___Win32_Debug_Max_6\</OutDir>
+    <IntDir>.\cal3d_max_exporter___Win32_Debug_Max_6\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Max 6|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <Optimization>MaxSpeed</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <AdditionalIncludeDirectories>.;..\src;..\src\win32;..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_WINDLL;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\cal3d_max_exporter___Win32_Release_Max_6\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\cal3d_max_exporter___Win32_Release_Max_6\cal3d_max_exporter.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\cal3d_max_exporter___Win32_Release_Max_6\</ObjectFileName>
+      <ProgramDataBaseFileName>.\cal3d_max_exporter___Win32_Release_Max_6\</ProgramDataBaseFileName>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>copy ..\..\bin\Release\cal3d_max_exporter_DL3D.dle c:\3dsmax6\plugins</Command>
+    </PostBuildEvent>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\cal3d_max_exporter___Win32_Release_Max_6\cal3d_max_exporter.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0807</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\cal3d_max_exporter___Win32_Release_Max_6\cal3d_max_exporter.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <LinkDLL>true</LinkDLL>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>..\..\bin\Release\cal3d_max_exporter_DL3D.dle</OutputFile>
+      <ImportLibrary>.\cal3d_max_exporter___Win32_Release_Max_6\cal3d_max_exporter_DL3D.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\..\cal3d\Release;C:\3dsmax6\Maxsdk\lib;..\..\bin\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;paramblk2.lib;cal3D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>.\cal3d_max_exporter.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Max 5|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>.;..\src;..\src\win32;..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_WINDLL;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\cal3d_max_exporter___Win32_Debug_Max_5\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\cal3d_max_exporter___Win32_Debug_Max_5\cal3d_max_exporter.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\cal3d_max_exporter___Win32_Debug_Max_5\</ObjectFileName>
+      <ProgramDataBaseFileName>.\cal3d_max_exporter___Win32_Debug_Max_5\</ProgramDataBaseFileName>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>copy ..\..\bin\Debug\cal3d_max_exporter_DL3D.dle c:\3dsmax5\plugins</Command>
+    </PostBuildEvent>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\cal3d_max_exporter___Win32_Debug_Max_5\cal3d_max_exporter.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0807</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\cal3d_max_exporter___Win32_Debug_Max_5\cal3d_max_exporter.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <LinkDLL>true</LinkDLL>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>..\..\bin\Debug\cal3d_max_exporter_DL3D.dle</OutputFile>
+      <ImportLibrary>.\cal3d_max_exporter___Win32_Debug_Max_5\cal3d_max_exporter_DL3D.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\..\cal3d\Debug;C:\3dsmax5\Maxsdk\lib;..\..\bin\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;paramblk2.lib;cal3D_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>.\cal3d_max_exporter.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Max 6|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>.;..\src;..\src\win32;..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_WINDLL;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\cal3d_max_exporter___Win32_Debug_Max_6\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\cal3d_max_exporter___Win32_Debug_Max_6\cal3d_max_exporter.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\cal3d_max_exporter___Win32_Debug_Max_6\</ObjectFileName>
+      <ProgramDataBaseFileName>.\cal3d_max_exporter___Win32_Debug_Max_6\</ProgramDataBaseFileName>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>copy ..\..\bin\Debug\cal3d_max_exporter_DL3D.dle c:\3dsmax6\plugins</Command>
+    </PostBuildEvent>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\cal3d_max_exporter___Win32_Debug_Max_6\cal3d_max_exporter.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0807</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\cal3d_max_exporter___Win32_Debug_Max_6\cal3d_max_exporter.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <LinkDLL>true</LinkDLL>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>..\..\bin\Debug\cal3d_max_exporter_DL3D.dle</OutputFile>
+      <ImportLibrary>.\cal3d_max_exporter___Win32_Debug_Max_6\cal3d_max_exporter_DL3D.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\..\cal3d\Debug;C:\3dsmax6\Maxsdk\lib;..\..\bin\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;paramblk2.lib;cal3D_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>.\cal3d_max_exporter.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <Optimization>MaxSpeed</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <AdditionalIncludeDirectories>.;..\src;..\src\win32;..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_WINDLL;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Release\cal3d_max_exporter.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Release\cal3d_max_exporter.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0807</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release\cal3d_max_exporter.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <LinkDLL>true</LinkDLL>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>..\..\bin\Release\cal3d_max_exporter.dle</OutputFile>
+      <ImportLibrary>.\Release\cal3d_max_exporter.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\..\cal3d\Release;C:\Programme\3dsmax4\Maxsdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;paramblk2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>.\cal3d_max_exporter.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>.;..\src;..\src\win32;..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_WINDLL;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Debug\cal3d_max_exporter.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ObjectFileName>.\Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Debug\cal3d_max_exporter.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0807</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug\cal3d_max_exporter.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <LinkDLL>true</LinkDLL>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>..\..\bin\Debug\cal3d_max_exporter.dle</OutputFile>
+      <ImportLibrary>.\Debug\cal3d_max_exporter.lib</ImportLibrary>
+      <AdditionalLibraryDirectories>..\..\cal3d\Debug;C:\Programme\3dsmax4\Maxsdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;paramblk2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>.\cal3d_max_exporter.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\win32\AnimationExportSheet.cpp" />
+    <ClCompile Include="..\src\win32\AnimationTimePage.cpp" />
+    <ClCompile Include="..\src\BaseInterface.cpp" />
+    <ClCompile Include="..\src\BaseMaterial.cpp" />
+    <ClCompile Include="..\src\BaseMesh.cpp" />
+    <ClCompile Include="..\src\BaseNode.cpp" />
+    <ClCompile Include="..\src\win32\BoneAssignmentPage.cpp" />
+    <ClCompile Include="..\src\BoneCandidate.cpp" />
+    <ClCompile Include="cal3d_max_exporter.cpp" />
+    <ClCompile Include="..\src\Exporter.cpp" />
+    <ClCompile Include="..\src\win32\LevelOfDetailPage.cpp" />
+    <ClCompile Include="..\src\Lodder.cpp" />
+    <ClCompile Include="..\src\MaterialCandidate.cpp" />
+    <ClCompile Include="..\src\win32\MaterialExportSheet.cpp" />
+    <ClCompile Include="..\src\MaterialLibraryCandidate.cpp" />
+    <ClCompile Include="..\src\win32\MaterialMapDialog.cpp" />
+    <ClCompile Include="..\src\win32\MaterialMapsPage.cpp" />
+    <ClCompile Include="..\src\win32\MaterialSelectionPage.cpp" />
+    <ClCompile Include="max2ogl.cpp" />
+    <ClCompile Include="MaxAnimationExport.cpp" />
+    <ClCompile Include="MaxAnimationExportDesc.cpp" />
+    <ClCompile Include="MaxAnimationExportMaxscriptCall.cpp" />
+    <ClCompile Include="MaxInterface.cpp" />
+    <ClCompile Include="MaxMaterial.cpp" />
+    <ClCompile Include="MaxMaterialExport.cpp" />
+    <ClCompile Include="MaxMaterialExportDesc.cpp" />
+    <ClCompile Include="MaxMaterialExportMaxscriptCall.cpp" />
+    <ClCompile Include="MaxMesh.cpp" />
+    <ClCompile Include="MaxMeshExport.cpp" />
+    <ClCompile Include="MaxMeshExportDesc.cpp" />
+    <ClCompile Include="MaxMeshExportMaxscriptCall.cpp" />
+    <ClCompile Include="MaxNode.cpp" />
+    <ClCompile Include="MaxNullView.cpp" />
+    <ClCompile Include="MaxSkeletonExport.cpp" />
+    <ClCompile Include="MaxSkeletonExportDesc.cpp" />
+    <ClCompile Include="MaxSkeletonExportMaxscriptCall.cpp" />
+    <ClCompile Include="..\src\MeshCandidate.cpp" />
+    <ClCompile Include="..\src\win32\MeshExportSheet.cpp" />
+    <ClCompile Include="..\src\Quadric.cpp" />
+    <ClCompile Include="..\src\SkeletonCandidate.cpp" />
+    <ClCompile Include="..\src\win32\SkeletonExportSheet.cpp" />
+    <ClCompile Include="..\src\win32\SkeletonFilePage.cpp" />
+    <ClCompile Include="..\src\win32\SkeletonHierarchyPage.cpp" />
+    <ClCompile Include="..\src\win32\SpringSystemPage.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release Max 6|Win32'">..\..\cal3d_max_exporter;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Max 5|Win32'">..\..\cal3d_max_exporter;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug Max 6|Win32'">..\..\cal3d_max_exporter;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\cal3d_max_exporter;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\cal3d_max_exporter;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release Max 6|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release Max 6|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug Max 5|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug Max 5|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug Max 6|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug Max 6|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="..\src\SubmeshCandidate.cpp" />
+    <ClCompile Include="..\src\VertexCandidate.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="cal3d_max_exporter.def" />
+    <CustomBuild Include="res\cal3d.bmp" />
+    <CustomBuild Include="..\src\res\cal3d.bmp" />
+    <CustomBuild Include="res\cal3d_bar.bmp" />
+    <CustomBuild Include="..\src\res\cal3d_bar.bmp" />
+    <CustomBuild Include="res\cal3d_max_exporter.rc2">
+      <FileType>RC</FileType>
+    </CustomBuild>
+    <CustomBuild Include="res\type_bone.ico" />
+    <CustomBuild Include="..\src\res\type_bone.ico" />
+    <CustomBuild Include="res\type_dummy.ico" />
+    <CustomBuild Include="..\src\res\type_dummy.ico" />
+    <CustomBuild Include="res\type_other.ico" />
+    <CustomBuild Include="..\src\res\type_other.ico" />
+    <CustomBuild Include="AUTHORS">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="ChangeLog">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="COPYING">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="INSTALL">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="README">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="TODO">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cal3d_max_exporter.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\win32\AnimationExportSheet.h" />
+    <ClInclude Include="..\src\win32\AnimationTimePage.h" />
+    <ClInclude Include="..\src\BaseInterface.h" />
+    <ClInclude Include="..\src\BaseMaterial.h" />
+    <ClInclude Include="..\src\BaseMesh.h" />
+    <ClInclude Include="..\src\BaseNode.h" />
+    <ClInclude Include="..\src\win32\BoneAssignmentPage.h" />
+    <ClInclude Include="..\src\BoneCandidate.h" />
+    <ClInclude Include="cal3d_max_exporter.h" />
+    <ClInclude Include="..\src\Exporter.h" />
+    <ClInclude Include="..\src\win32\LevelOfDetailPage.h" />
+    <ClInclude Include="..\src\Lodder.h" />
+    <ClInclude Include="..\src\MaterialCandidate.h" />
+    <ClInclude Include="..\src\win32\MaterialExportSheet.h" />
+    <ClInclude Include="..\src\MaterialLibraryCandidate.h" />
+    <ClInclude Include="..\src\win32\MaterialMapDialog.h" />
+    <ClInclude Include="..\src\win32\MaterialMapsPage.h" />
+    <ClInclude Include="..\src\win32\MaterialSelectionPage.h" />
+    <ClInclude Include="max2ogl.h" />
+    <ClInclude Include="MaxAnimationExport.h" />
+    <ClInclude Include="MaxAnimationExportDesc.h" />
+    <ClInclude Include="MaxInterface.h" />
+    <ClInclude Include="MaxMaterial.h" />
+    <ClInclude Include="MaxMaterialExport.h" />
+    <ClInclude Include="MaxMaterialExportDesc.h" />
+    <ClInclude Include="MaxMesh.h" />
+    <ClInclude Include="MaxMeshExport.h" />
+    <ClInclude Include="MaxMeshExportDesc.h" />
+    <ClInclude Include="MaxNode.h" />
+    <ClInclude Include="MaxNullView.h" />
+    <ClInclude Include="MaxSkeletonExport.h" />
+    <ClInclude Include="MaxSkeletonExportDesc.h" />
+    <ClInclude Include="..\src\MeshCandidate.h" />
+    <ClInclude Include="..\src\win32\MeshExportSheet.h" />
+    <ClInclude Include="..\src\Quadric.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="..\src\SkeletonCandidate.h" />
+    <ClInclude Include="..\src\win32\SkeletonExportSheet.h" />
+    <ClInclude Include="..\src\win32\SkeletonFilePage.h" />
+    <ClInclude Include="..\src\win32\SkeletonHierarchyPage.h" />
+    <ClInclude Include="..\src\win32\SpringSystemPage.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="..\src\SubmeshCandidate.h" />
+    <ClInclude Include="..\src\VertexCandidate.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
