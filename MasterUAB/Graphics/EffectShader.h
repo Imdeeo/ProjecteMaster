@@ -32,7 +32,10 @@ protected:
 	void Destroy();
 public:
 	CEffectVertexShader(const CXMLTreeNode &TreeNode);
-	virtual ~CEffectVertexShader();
+	virtual ~CEffectVertexShader()
+	{
+		Destroy();
+	}
 	bool Load();
 	UAB_GET_PROPERTY(ID3D11VertexShader*, VertexShader);
 	UAB_GET_PROPERTY(ID3D11InputLayout*, VertexLayout);
@@ -46,7 +49,10 @@ protected:
 	void Destroy();
 public:
 	CEffectPixelShader(const CXMLTreeNode &TreeNode);
-	virtual ~CEffectPixelShader();
+	virtual ~CEffectPixelShader()
+	{
+		Destroy();
+	}
 	bool Load();
 	UAB_GET_PROPERTY(ID3D11PixelShader*, PixelShader);
 	UAB_GET_PROPERTY(ID3D11Buffer*, ConstantBuffer);

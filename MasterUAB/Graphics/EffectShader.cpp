@@ -4,6 +4,8 @@
 #include "UABEngine.h"
 #include "VertexTypes.h"
 
+#include <assert.h>
+
 #include <string>
 
 #include <D3Dcompiler.h>
@@ -70,6 +72,16 @@ bool CEffectShader::CreateConstantBuffer()
 	return true;
 }
 
+void CEffectShader::Destroy()
+{
+	assert(!"this method must not be called");
+}
+bool CEffectShader::Reload()
+{
+	assert(!"this method must not be called");
+	return false;
+}
+
 CEffectVertexShader::CEffectVertexShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode)
 {
 	m_Name = TreeNode.GetPszProperty("name");
@@ -108,6 +120,13 @@ bool CEffectVertexShader::Load()
 	return CreateConstantBuffer();
 }
 
+void CEffectVertexShader::Destroy()
+{
+	delete m_VertexLayout;
+	delete m_VertexShader;
+	delete m_ConstantBuffer;
+}
+
 CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode)
 {
 	m_Name = TreeNode.GetPszProperty("name");
@@ -131,3 +150,8 @@ bool CEffectPixelShader::Load()
 	return CreateConstantBuffer();
 }
 
+void CEffectPixelShader::Destroy()
+{
+	delete m_PixelShader;
+	delete m_ConstantBuffer;
+}
