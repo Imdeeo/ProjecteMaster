@@ -20,7 +20,7 @@ fn get_Instances =
 	return $*
 )
 
-fn createStaticMesh dir filename Objs=
+fn createStaticMesh dir level filename Objs=
 (	
 	dirExist dir
 	
@@ -29,7 +29,7 @@ fn createStaticMesh dir filename Objs=
 	format "<static_meshes>\n" to:file
 	for i=1 to Objs.count do
 	(
-		format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" Objs[i].name (dir+"Meshes\\"+Objs[i].name+".mesh") to:file
+		format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" Objs[i].name ("Data\\" + level + "\\Meshes\\"+Objs[i].name+".mesh") to:file
 	)
 	format "</static_meshes>\n" to:file
 	close file
