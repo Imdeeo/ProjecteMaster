@@ -17,3 +17,9 @@ CMaterial::CMaterial(const CXMLTreeNode &TreeNode):CNamed("")
 		}
 	}
 }
+
+void CMaterial::Apply()
+{
+	for(size_t i=0;i<m_Textures.size();++i)
+		m_Textures[i]->Activate(i);
+}

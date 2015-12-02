@@ -41,3 +41,18 @@ void C3DElement::Render(CKGRenderManager *RenderManager)
 {
 	assert(!"This method mustn't be called");
 }
+
+const Mat44f & C3DElement::GetTransform()
+{
+	m_ScaleMatrix.SetIdentity();
+	m_ScaleMatrix.Scale(m_Scale.x, m_Scale.y, m_Scale.z);
+	
+	m_RotationMatrix.SetIdentity();
+
+	m_TranslationMatrix.SetIdentity();
+	m_TranslationMatrix.SetPos(m_Position.x, m_Position.y, m_Position.z);
+
+	m_TransformMatrix=/*m_ScaleMatrix*m_RotationMatrix**/m_TranslationMatrix;
+	
+	return m_TransformMatrix;
+}

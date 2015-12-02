@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<materials>
-	<material name="01 - Default" effect_technique="diffuse_technique">
-		<texture filename="C:\UABEngine\Data\level_1\Textures\bark.dds"/>
-	</material>
-	<material name="02 - Default" effect_technique="diffuse_technique">
-		<texture filename="C:\UABEngine\Data\level_1\Textures\seafloor.dds"/>
-	</material>
-</materials>
