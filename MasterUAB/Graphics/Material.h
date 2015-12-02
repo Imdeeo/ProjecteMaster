@@ -19,8 +19,7 @@ private:
 public:
 	CMaterial(const CXMLTreeNode &TreeNode);
 	virtual ~CMaterial(){}
-	virtual void Apply()
-	{assert(!"Can't call this method");}
+	virtual void Apply();
 	UAB_GET_PROPERTY(CEffectTechnique*, EffectTechnique);
 };
 

@@ -5,6 +5,7 @@
 #include "Effect.h"
 #include "Camera.h"
 #include "EffectParameters.h"
+#include "EffectManager.h"
 
 class CRenderableVertexs;
 
@@ -69,7 +70,7 @@ public:
 	void SetBaseColor(const CColor& _Color) { m_Parameters.m_BaseColor = _Color; }
 	void SetWorldMatrix(const Mat44f& _Model) { m_Parameters.m_World = _Model; }
 	void SetCamera(const Mat44f& _View, const Mat44f& _Projection) { m_Parameters.m_View = _View; m_Parameters.m_Projection = _Projection; }
-	void SetCamera(const CCamera& _Camera) { m_Parameters.m_View = _Camera.GetView(); m_Parameters.m_Projection = _Camera.GetProjection(); }
+	void SetCamera(const CCamera& _Camera) { CEffectManager::m_Parameters.m_View = _Camera.GetView(); CEffectManager::m_Parameters.m_Projection = _Camera.GetProjection(); }
 	void SetDebugSize(float _Size) { m_Parameters.m_DebugRenderScale = _Size; }
 
 private:
