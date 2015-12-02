@@ -2,10 +2,10 @@
 #include "ContextManager.h"
 #include "UABEngine.h"
 
-CTexture::CTexture(): CNamed("")
+CTexture::CTexture(): CNamed(""),
+	m_Texture(nullptr),
+	m_SamplerState(nullptr)
 {
-	m_Texture = nullptr;
-	m_SamplerState = nullptr;
 }
 
 

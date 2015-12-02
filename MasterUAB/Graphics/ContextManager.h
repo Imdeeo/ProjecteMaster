@@ -67,11 +67,11 @@ public:
 	ID3D11Device* GetDevice() const { return m_D3DDevice; }
 	ID3D11DeviceContext* GetDeviceContext() const { return m_DeviceContext; }
 
-	void SetBaseColor(const CColor& _Color) { m_Parameters.m_BaseColor = _Color; }
-	void SetWorldMatrix(const Mat44f& _Model) { m_Parameters.m_World = _Model; }
-	void SetCamera(const Mat44f& _View, const Mat44f& _Projection) { m_Parameters.m_View = _View; m_Parameters.m_Projection = _Projection; }
+	void SetBaseColor(const CColor& _Color) { CEffectManager::m_Parameters.m_BaseColor = _Color; }
+	void SetWorldMatrix(const Mat44f& _Model) { CEffectManager::m_Parameters.m_World = _Model; }
+	void SetCamera(const Mat44f& _View, const Mat44f& _Projection) { CEffectManager::m_Parameters.m_View = _View; CEffectManager::m_Parameters.m_Projection = _Projection; }
 	void SetCamera(const CCamera& _Camera) { CEffectManager::m_Parameters.m_View = _Camera.GetView(); CEffectManager::m_Parameters.m_Projection = _Camera.GetProjection(); }
-	void SetDebugSize(float _Size) { m_Parameters.m_DebugRenderScale = _Size; }
+	void SetDebugSize(float _Size) { CEffectManager::m_Parameters.m_DebugRenderScale = _Size; }
 
 private:
 
@@ -86,8 +86,6 @@ private:
 	ID3D11RenderTargetView*	m_RenderTargetView;
 	ID3D11Texture2D*		m_DepthStencil;
 	ID3D11DepthStencilView*	m_DepthStencilView;
-
-	CEffectParameters m_Parameters;
 
 	int m_Width, m_Height;
 

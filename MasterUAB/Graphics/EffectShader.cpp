@@ -16,9 +16,13 @@
 
 #endif
 
-CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed("")
+CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed(""),
+	m_ConstantBuffer(nullptr)
 {
-
+	m_Name = TreeNode.GetPszProperty("name");
+	m_Filename = TreeNode.GetPszProperty("file");
+	m_ShaderModel = TreeNode.GetPszProperty("shader_model");
+	m_EntryPoint = TreeNode.GetPszProperty("entry_point");
 }
 
 
@@ -82,12 +86,10 @@ bool CEffectShader::Reload()
 	return false;
 }
 
-CEffectVertexShader::CEffectVertexShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode)
+CEffectVertexShader::CEffectVertexShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode),
+	m_VertexShader(nullptr),
+	m_VertexLayout(nullptr)
 {
-	m_Name = TreeNode.GetPszProperty("name");
-	m_Filename = TreeNode.GetPszProperty("file");
-	m_ShaderModel = TreeNode.GetPszProperty("shader_model");
-	m_EntryPoint = TreeNode.GetPszProperty("entry_point");
 	m_VertexType = TreeNode.GetPszProperty("vertex_type");
 }
 
@@ -127,12 +129,9 @@ void CEffectVertexShader::Destroy()
 	delete m_ConstantBuffer;
 }
 
-CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode)
+CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode),
+	m_PixelShader(nullptr)
 {
-	m_Name = TreeNode.GetPszProperty("name");
-	m_Filename = TreeNode.GetPszProperty("file");
-	m_ShaderModel = TreeNode.GetPszProperty("shader_model");
-	m_EntryPoint = TreeNode.GetPszProperty("entry_point");
 }
 
 bool CEffectPixelShader::Load()
