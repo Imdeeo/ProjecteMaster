@@ -79,7 +79,12 @@ void CApplication::Update(float _ElapsedTime)
 	{
 		CInputManager::GetInputManager()->reload();
 		
+		UABEngine.GetTextureManager()->Reload();
+
+		UABEngine.GetEffectManager()->Reload();
 		UABEngine.GetMaterialManager()->Reload();
+		UABEngine.GetStaticMeshManager()->Reload();
+		//UABEngine.GetRenderableObjectsManager()->
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_BOTH"))
 	{

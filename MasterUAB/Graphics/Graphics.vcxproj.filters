@@ -174,14 +174,4 @@
   <ItemGroup>
     <ResourceCompile Include="Graphics.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="UAB_POSITION_NORMAL_TEXTURE_VERTEXShader.fx">
-      <Filter>Effects</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Globals.fxh">
-      <Filter>Effects</Filter>
-    </None>
-  </ItemGroup>
 </Project>

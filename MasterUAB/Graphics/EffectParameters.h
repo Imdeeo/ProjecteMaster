@@ -8,6 +8,7 @@
 class CEffectParameters
 {
 public:
+	CEffectParameters(){}
 	Mat44f m_World;
 	Mat44f m_View;
 	Mat44f m_Projection;
