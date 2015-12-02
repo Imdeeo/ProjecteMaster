@@ -3,7 +3,7 @@
 
 #include "Math\Matrix44.h"
 
-#define MAXBONES 39
+#define MAXBONES 29
 
 class CEffectParameters
 {
