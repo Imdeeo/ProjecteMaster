@@ -1,4 +1,4 @@
-#ifndef ANIMATEDMODELCORE_H
+/*#ifndef ANIMATEDMODELCORE_H
 #define ANIMATEDMODELCORE_H
 
 class CAnimatedModelCore
@@ -6,4 +6,4 @@ class CAnimatedModelCore
 
 };
 
-#endif
+#endif*/
