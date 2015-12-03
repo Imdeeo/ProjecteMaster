@@ -1,8 +1,5 @@
-#pragma once
-
-#ifndef INC_FRUSTUM_H_
-#define INC_FRUSTUM_H_
-
+#ifndef FRUSTUM_H
+#define FRUSTUM_H
 
 #include "Math\Matrix44.h"
 #include "Math\Vector3.h"

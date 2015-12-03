@@ -1,4 +1,5 @@
-#pragma once
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
 #include "Camera\SphericalCameraController.h"
 #include "Camera\FPSCameraController.h"
@@ -38,3 +39,4 @@ private:
 
 };
 
+#endif

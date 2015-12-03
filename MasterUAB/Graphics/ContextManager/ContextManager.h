@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CONTEXTMANAGER_H
+#define CONTEXTMANAGER_H
 
 #include <d3d11.h>
 
@@ -99,3 +100,4 @@ public:
 	ID3D11BlendState* GetBlendState(EBlendStates _BlendState){return m_BlendStates[_BlendState];}
 };
 
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DEBUGHELPER_H
+#define DEBUGHELPER_H
 
 #include <string>
 #include <vector>
@@ -82,4 +83,4 @@ protected:
 	CDebugHelper() {};
 };
 
-
+#endif

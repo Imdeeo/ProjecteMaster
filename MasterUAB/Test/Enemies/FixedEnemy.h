@@ -1,7 +1,5 @@
-#ifndef _FIXED_ENEMY
-#define _FIXED_ENEMY
-
-#pragma once
+#ifndef FIXED_ENEMY_H
+#define FIXED_ENEMY_H
 
 #include "Enemies/Enemy.h"
 
