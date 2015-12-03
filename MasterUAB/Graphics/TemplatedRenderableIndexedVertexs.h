@@ -1,3 +1,10 @@
+#ifndef TEMPLATED_RENDERABLE_INDEXED_VERTEX_H
+#define TEMPLATED_RENDERABLE_INDEXED_VERTEX_H
+
+#include <d3d11.h>
+#include "UABEngine.h"
+#include "RenderableVertexs.h"
+
 template<class T>
 class CTemplatedRenderableIndexedVertexs : public CRenderableVertexs
 {
@@ -67,6 +74,14 @@ public:
 		l_DeviceContext->IASetPrimitiveTopology(m_PrimitiveTopology);
 		l_DeviceContext->IASetInputLayout(l_EffectVertexShader->GetVertexLayout());
 		l_DeviceContext->VSSetShader(l_EffectVertexShader->GetVertexShader(), NULL, 0);
+
+		/*OJUCUIDAO*/
+		CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
+		l_DeviceContext->RSSetState(l_ContextManager->GetRasterizerState(CContextManager::RS_SOLID_BACK_CULL));
+		l_DeviceContext->OMSetDepthStencilState(l_ContextManager->GetDepthStencilState(CContextManager::DSS_DEPTH_ON), 0);
+		Vect4f v(1, 1, 1, 1);
+		l_DeviceContext->OMSetBlendState(l_ContextManager->GetBlendState(CContextManager::BLEND_CLASSIC), &v.x, 0xffffffff);
+
 		l_DeviceContext->UpdateSubresource(l_ConstantBufferVS, 0, NULL, Parameters, 0, 0 );
 		l_DeviceContext->VSSetConstantBuffers(0, 1, &l_ConstantBufferVS);
 		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
@@ -95,3 +110,5 @@ CRENDERABLE_INDEXED_VERTEX_CLASS_TYPE_CREATOR(CUABTriangleListRenderableIndexed1
 CRENDERABLE_INDEXED_VERTEX_CLASS_TYPE_CREATOR(CUABTriangleListRenderableIndexed32Vertexs, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, DXGI_FORMAT_R32_UINT);
 CRENDERABLE_INDEXED_VERTEX_CLASS_TYPE_CREATOR(CUABTriangleStripRenderableIndexed16Vertexs, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, DXGI_FORMAT_R16_UINT);
 CRENDERABLE_INDEXED_VERTEX_CLASS_TYPE_CREATOR(CUABTriangleStripRenderableIndexed32Vertexs, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, DXGI_FORMAT_R32_UINT);
+
+#endif //TEMPLATED_RENDERABLE_INDEXED_VERTEX_H
