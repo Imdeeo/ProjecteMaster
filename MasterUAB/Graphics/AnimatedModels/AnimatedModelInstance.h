@@ -1,4 +1,4 @@
-#ifndef ANIMATEDMODELINSTANCE_H
+/*#ifndef ANIMATEDMODELINSTANCE_H
 #define ANIMATEDMODELINSTANCE_H
 
 class CAnimatedModelInstance
@@ -6,4 +6,4 @@ class CAnimatedModelInstance
 
 };
 
-#endif
+#endif*/
