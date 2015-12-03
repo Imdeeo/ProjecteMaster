@@ -42,5 +42,6 @@ bool CAnimatedModelsManager::Load(const std::string &FileName)
 
 bool CAnimatedModelsManager::Reload()
 {
+	//hacer rama local
 	return true;
 }
