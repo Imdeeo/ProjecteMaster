@@ -48,11 +48,12 @@ const Mat44f & C3DElement::GetTransform()
 	m_ScaleMatrix.Scale(m_Scale.x, m_Scale.y, m_Scale.z);
 	
 	m_RotationMatrix.SetIdentity();
+	m_RotationMatrix.SetPitchRollYaw(Vect3f(m_Pitch,m_Roll,m_Yaw));
 
 	m_TranslationMatrix.SetIdentity();
 	m_TranslationMatrix.SetPos(m_Position.x, m_Position.y, m_Position.z);
 
-	m_TransformMatrix=/*m_ScaleMatrix*m_RotationMatrix**/m_TranslationMatrix;
+	m_TransformMatrix=m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
 	
 	return m_TransformMatrix;
 }
