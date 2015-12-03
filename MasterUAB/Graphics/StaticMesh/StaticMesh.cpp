@@ -237,10 +237,7 @@ bool CStaticMesh::Destroy()
 	}
 	
 	m_RVs.clear();
-	for(int i = 0 ;i<m_Materials.size();i++)
-	{
-		CHECKED_DELETE(m_Materials[i]);
-	}
+
 	m_Materials.clear();
 
 	return true;

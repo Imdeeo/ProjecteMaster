@@ -1,17 +1,23 @@
-#ifndef ANIMATEDMODELSMANAGER_H
-#define ANIMATEDMODELSMANAGER_H
+#ifndef ANIMATED_MODELS_MANAGER_H
+#define ANIMATED_MODELS_MANAGER_H
 
-#include <string>
 
-class CAnimatedModelsManager
+#include "TemplatedMapManager.h"
+#include "AnimatedCoreModel.h"
+
+#include <string.h>
+
+class CMaterial;
+
+class CAnimatedModelsManager: public CTemplatedMapManager<CAnimatedCoreModel>
 {
 private:
 	std::string m_Filename;
 public:
-	CAnimatedModelsManager(void);
-	virtual ~CAnimatedModelsManager(void);
-	bool Load(const std::string &FileName);
+	CAnimatedModelManager();
+	virtual ~CAnimatedModelManager();
+	bool Load(const std::string &Filename);
 	bool Reload();
 };
 
-#endif //ANIMATEDMODELSMANAGER_H
+#endif //ANIMATED_MODELS_MANAGER_H
