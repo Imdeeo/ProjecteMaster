@@ -6,7 +6,6 @@
 #include "TemplatedRenderableIndexedVertexs.h"
 #include "Utils.h"
 
-
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -14,12 +13,19 @@
 #define HEADER 65109
 #define FOOTER 22014
 
-CStaticMesh::CStaticMesh(void):CNamed("")
+CStaticMesh::CStaticMesh(void):CNamed(""),
+	m_BoundingSphereRadius(0.f)
 {
+	m_BoundingBoxMax = new Vect3f();
+	m_BoundingBoxMin = new Vect3f();
+	m_BoundingSphereCenter = new Vect3f();
 }
 
 CStaticMesh::~CStaticMesh(void)
 {
+	delete m_BoundingBoxMax;
+	delete m_BoundingBoxMin;
+	delete m_BoundingSphereCenter;
 }
 
 bool CStaticMesh::Load(const std::string &FileName)
