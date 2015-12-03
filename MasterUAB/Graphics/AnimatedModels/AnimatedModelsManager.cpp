@@ -10,14 +10,16 @@ CAnimatedModelsManager::~CAnimatedModelsManager(void)
 {
 }
 
-bool CAnimatedModelsManager::Load(const std::string &FileName)
+
+bool CAnimatedModelsManager::Load(const std::string &Filename)
 {
-	m_Filename = FileName;
+	m_Filename = Filename;
+
 	std::string l_AnimatedModelName;
 	std::string l_AnimatedModelPath;
 
 	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(FileName.c_str()))
+	if (l_XML.LoadFile(Filename.c_str()))
 	{
 		CXMLTreeNode l_Input = l_XML["animated_models"];
 		if (l_Input.Exists())
@@ -42,6 +44,6 @@ bool CAnimatedModelsManager::Load(const std::string &FileName)
 
 bool CAnimatedModelsManager::Reload()
 {
-	//hacer rama local
-	return true;
+	Destroy();
+	return Load(m_Filename);
 }

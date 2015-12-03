@@ -2,7 +2,7 @@
 #define H_RENDERABLEOBJECTMANAGER_H
 
 #include "TemplatedVectorMapManager.h"
-#include "RenderableObjects\RenderableObject.h"
+#include "RenderableObject.h"
 
 class CXMLTreeNode;
 
