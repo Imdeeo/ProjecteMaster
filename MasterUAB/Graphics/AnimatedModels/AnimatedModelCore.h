@@ -3,10 +3,6 @@
 
 class CAnimatedModelCore
 {
-public:
-	
-
-private:
 
 };
 
