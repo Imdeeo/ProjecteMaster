@@ -1,6 +1,17 @@
 #ifndef DEBUGRENDER_H
 #define DEBUGRENDER_H
 
+/*class CAnimatedModelCore
+{
+public:
+	
+
+private:
+
+};
+
+#endif*/
+
 #include <d3d11.h>
 
 #include "RenderableObjects\RenderableVertexs.h"
