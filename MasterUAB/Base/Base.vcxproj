@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3DElement\C3DElement.h" />
     <ClInclude Include="HelperTypes.h" />
     <ClInclude Include="TemplatedMapManager.h" />
     <ClInclude Include="Math\MathTypes.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="XML\XMLTreeNode.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3DElement\C3DElement.cpp" />
     <ClCompile Include="dummy.cpp" />
     <ClCompile Include="Math\MathConstants.cpp" />
     <ClCompile Include="Named.cpp" />

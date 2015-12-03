@@ -1,9 +1,9 @@
 #include "DebugRender.h"
 
-#include "VertexTypes.h"
-#include "TemplatedRenderableVertexs.h"
-#include "TemplatedRenderableIndexedVertexs.h"
-#include "Effect.h"
+#include "RenderableObjects\VertexTypes.h"
+#include "RenderableObjects\TemplatedRenderableVertexs.h"
+#include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
+#include "Effects\Effect.h"
 
 CDebugRender::CDebugRender(ID3D11Device* _Device)
 {
