@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INPUTMANAGERIMPLEMENTATION_H
+#define INPUTMANAGERIMPLEMENTATION_H
 
 #include <dinput.h>
 
@@ -140,3 +141,4 @@ private:
 	bool								m_ButtonMiddle, m_PreviousButtonMiddle;
 };
 
+#endif

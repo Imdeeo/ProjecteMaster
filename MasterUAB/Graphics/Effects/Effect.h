@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EFFECT_H
+#define EFFECT_H
 
 #include <d3d11.h>
 
@@ -61,3 +62,5 @@ protected:
 //
 //	uint8_t				offset[9];
 //};
+
+#endif

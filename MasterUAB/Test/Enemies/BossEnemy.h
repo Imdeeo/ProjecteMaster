@@ -1,7 +1,5 @@
-#ifndef _BOSS_ENEMY
-#define _BOSS_ENEMY
-
-#pragma once
+#ifndef BOSS_ENEMY_H
+#define BOSS_ENEMY_H
 
 #include "Enemies/Enemy.h"
 

@@ -56,6 +56,15 @@
     <ClCompile Include="Texture\TextureManager.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
+    <ClCompile Include="AnimatedModels\AnimatedModelCore.cpp">
+      <Filter>AnimatedModels</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedModels\AnimatedModelInstance.cpp">
+      <Filter>AnimatedModels</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedModels\AnimatedModelsManager.cpp">
+      <Filter>AnimatedModels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -81,6 +90,9 @@
     </Filter>
     <Filter Include="RenderManager">
       <UniqueIdentifier>{8b4cfb7f-482d-4a4e-90b9-db98ea0b92ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AnimatedModels">
+      <UniqueIdentifier>{34e9c379-c0d2-4f4b-bc07-6cca2bd7db0a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +172,15 @@
     </ClInclude>
     <ClInclude Include="Texture\TextureManager.h">
       <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedModels\AnimatedModelCore.h">
+      <Filter>AnimatedModels</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedModels\AnimatedModelInstance.h">
+      <Filter>AnimatedModels</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedModels\AnimatedModelsManager.h">
+      <Filter>AnimatedModels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

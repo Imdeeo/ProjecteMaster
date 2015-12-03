@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INPUTMANAGER_H
+#define INPUTMANAGER_H
 
 #include <string>
 #include <unordered_set>
@@ -36,3 +37,4 @@ protected:
 
 };
 
+#endif

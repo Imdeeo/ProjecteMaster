@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DEBUGHELPERIMPLEMENTATION_H
+#define DEBUGHELPERIMPLEMENTATION_H
 
 #include <Windows.h>
 
@@ -29,3 +30,4 @@ public:
 	TwType m_PosRotType;
 };
 
+#endif

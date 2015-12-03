@@ -1,7 +1,5 @@
-#ifndef _ENEMY_MANAGER
-#define _ENEMY_MANAGER
-
-#pragma once
+#ifndef ENEMY_MANAGER_H
+#define ENEMY_MANAGER_H
 
 #include "XML\XMLTreeNode.h"
 

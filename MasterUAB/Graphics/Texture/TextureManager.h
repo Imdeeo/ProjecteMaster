@@ -1,7 +1,9 @@
+#ifndef TEXTUREMANAGER_H
+#define TEXTUREMANAGER_H
+
 #include "Texture\Texture.h"
 #include "TemplatedMapManager.h"
 
-#pragma once
 class CTextureManager :	public CTemplatedMapManager<CTexture>
 {
 public:
@@ -12,3 +14,4 @@ public:
 	void Reload();
 };
 
+#endif

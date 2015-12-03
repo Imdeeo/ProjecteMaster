@@ -1,7 +1,5 @@
-#ifndef _PATROL_ENEMY
-#define _PATROL_ENEMY
-
-#pragma once
+#ifndef PATROL_ENEMY_H
+#define PATROL_ENEMY_H
 
 #include "Enemy.h"
 #include <string>
