@@ -1,63 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="ContextManager.cpp">
+    <ClCompile Include="DebugRender.cpp" />
+    <ClCompile Include="Camera\CameraController.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\FPSCameraController.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\Frustum.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\SphericalCameraController.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="ContextManager\ContextManager.cpp">
       <Filter>ContextManager</Filter>
     </ClCompile>
-    <ClCompile Include="DebugRender.cpp" />
-    <ClCompile Include="Texture.cpp">
-      <Filter>Texture</Filter>
+    <ClCompile Include="Effects\EffectManager.cpp">
+      <Filter>Effects</Filter>
     </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>Texture</Filter>
+    <ClCompile Include="Effects\EffectShader.cpp">
+      <Filter>Effects</Filter>
     </ClCompile>
-    <ClCompile Include="Dummy.cpp">
-      <Filter>Texture</Filter>
+    <ClCompile Include="Effects\EffectTechnique.cpp">
+      <Filter>Effects</Filter>
     </ClCompile>
-    <ClCompile Include="C3DElement.cpp">
-      <Filter>3DElement</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
+    <ClCompile Include="Materials\Material.cpp">
       <Filter>Materials</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialManager.cpp">
+    <ClCompile Include="Materials\MaterialManager.cpp">
       <Filter>Materials</Filter>
     </ClCompile>
-    <ClCompile Include="EffectManager.cpp">
-      <Filter>Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="EffectTechnique.cpp">
-      <Filter>Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="EffectShader.cpp">
-      <Filter>Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraController.cpp">
-      <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Frustum.cpp">
-      <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="SphericalCameraController.cpp">
-      <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="FPSCameraController.cpp">
-      <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticMeshManager.cpp">
-      <Filter>StaticMesh</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticMesh.cpp">
-      <Filter>StaticMesh</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderableObjectManager.cpp">
+    <ClCompile Include="RenderableObjects\RenderableObjectManager.cpp">
       <Filter>RenderableObjects</Filter>
     </ClCompile>
-    <ClCompile Include="InstanceMesh.cpp">
+    <ClCompile Include="RenderManager\RenderManager.cpp">
+      <Filter>RenderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMesh\InstanceMesh.cpp">
       <Filter>StaticMesh</Filter>
     </ClCompile>
-    <ClCompile Include="RenderManager.cpp">
-      <Filter>RenderManager</Filter>
+    <ClCompile Include="StaticMesh\StaticMesh.cpp">
+      <Filter>StaticMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMesh\StaticMeshManager.cpp">
+      <Filter>StaticMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\Dummy.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\Texture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\TextureManager.cpp">
+      <Filter>Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -66,9 +63,6 @@
     </Filter>
     <Filter Include="Texture">
       <UniqueIdentifier>{8ec2d701-2663-4d3d-a80c-61e7a0f90548}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DElement">
-      <UniqueIdentifier>{761a5bbe-16ee-4a69-a9fa-812593dd2d14}</UniqueIdentifier>
     </Filter>
     <Filter Include="Materials">
       <UniqueIdentifier>{13c97827-a09e-410b-afb0-9a2ccdc7640f}</UniqueIdentifier>
@@ -90,85 +84,82 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ContextManager.h">
+    <ClInclude Include="DebugRender.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Camera\Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\CameraController.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\FPSCameraController.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\Frustum.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\SphericalCameraController.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="ContextManager\ContextManager.h">
       <Filter>ContextManager</Filter>
     </ClInclude>
-    <ClInclude Include="DebugRender.h" />
-    <ClInclude Include="Texture.h">
-      <Filter>Texture</Filter>
+    <ClInclude Include="Effects\Effect.h">
+      <Filter>Effects</Filter>
     </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Texture</Filter>
+    <ClInclude Include="Effects\EffectManager.h">
+      <Filter>Effects</Filter>
     </ClInclude>
-    <ClInclude Include="C3DElement.h">
-      <Filter>3DElement</Filter>
+    <ClInclude Include="Effects\EffectParameters.h">
+      <Filter>Effects</Filter>
     </ClInclude>
-    <ClInclude Include="Material.h">
+    <ClInclude Include="Effects\EffectShader.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Effects\EffectTechnique.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Materials\Material.h">
       <Filter>Materials</Filter>
     </ClInclude>
-    <ClInclude Include="MaterialManager.h">
+    <ClInclude Include="Materials\MaterialManager.h">
       <Filter>Materials</Filter>
     </ClInclude>
-    <ClInclude Include="EffectParameters.h">
-      <Filter>Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="EffectManager.h">
-      <Filter>Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="EffectTechnique.h">
-      <Filter>Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="EffectShader.h">
-      <Filter>Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraController.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Frustum.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="SphericalCameraController.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="FPSCameraController.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderableObject.h">
+    <ClInclude Include="RenderableObjects\RenderableObject.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
-    <ClInclude Include="RenderableVertexs.h">
+    <ClInclude Include="RenderableObjects\RenderableObjectManager.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
-    <ClInclude Include="StaticMeshManager.h">
-      <Filter>StaticMesh</Filter>
-    </ClInclude>
-    <ClInclude Include="StaticMesh.h">
-      <Filter>StaticMesh</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderableObjectManager.h">
+    <ClInclude Include="RenderableObjects\RenderableVertexs.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
-    <ClInclude Include="VertexTypes.h">
+    <ClInclude Include="RenderableObjects\TemplatedRenderableIndexedVertexs.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
-    <ClInclude Include="InstanceMesh.h">
-      <Filter>StaticMesh</Filter>
+    <ClInclude Include="RenderableObjects\TemplatedRenderableVertexs.h">
+      <Filter>RenderableObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Effect.h">
-      <Filter>Effects</Filter>
+    <ClInclude Include="RenderableObjects\VertexTypes.h">
+      <Filter>RenderableObjects</Filter>
     </ClInclude>
-    <ClInclude Include="RenderManager.h">
+    <ClInclude Include="RenderManager\RenderManager.h">
       <Filter>RenderManager</Filter>
     </ClInclude>
-    <ClInclude Include="TemplatedRenderableVertexs.h">
-      <Filter>RenderableObjects</Filter>
+    <ClInclude Include="StaticMesh\InstanceMesh.h">
+      <Filter>StaticMesh</Filter>
     </ClInclude>
-    <ClInclude Include="TemplatedRenderableIndexedVertexs.h">
-      <Filter>RenderableObjects</Filter>
+    <ClInclude Include="StaticMesh\StaticMesh.h">
+      <Filter>StaticMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMesh\StaticMeshManager.h">
+      <Filter>StaticMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\TextureManager.h">
+      <Filter>Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
