@@ -222,6 +222,8 @@ fn procesFaces arx Obj =
 		l_ObjectConverted=true
 	)
 	
+	l_Obj.transform *= inverse(l_Obj.transform)
+	
 	local nFaces = getNumFaces l_Obj
 	local vertexs = #()
 	local indexs = #()
