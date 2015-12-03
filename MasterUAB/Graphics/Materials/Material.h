@@ -7,7 +7,7 @@
 
 #include <assert.h>
 
-#include "Texture.h"
+#include "Texture\Texture.h"
 #include "Effects\EffectTechnique.h"
 
 class CMaterial : public CNamed

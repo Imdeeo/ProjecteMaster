@@ -42,6 +42,9 @@
     <ClInclude Include="TemplatedMapManager.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="3DElement\C3DElement.h">
+      <Filter>3DElement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -52,6 +55,9 @@
     </Filter>
     <Filter Include="XML">
       <UniqueIdentifier>{e4414cad-f914-4ef9-9be1-346b4f23de6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DElement">
+      <UniqueIdentifier>{63b1d6f3-4af0-4cb0-8f58-c8d6c6672dee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +75,9 @@
     </ClCompile>
     <ClCompile Include="dummy.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="3DElement\C3DElement.cpp">
+      <Filter>3DElement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
