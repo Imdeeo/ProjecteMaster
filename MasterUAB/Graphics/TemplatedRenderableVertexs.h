@@ -52,6 +52,14 @@ public:
 		l_DeviceContext->IASetInputLayout(l_EffectVertexShader->GetVertexLayout());
 		l_DeviceContext->VSSetShader(l_EffectVertexShader->GetVertexShader(), NULL, 0);
 		ID3D11Buffer *l_ConstantBufferVS=l_EffectVertexShader->GetConstantBuffer();
+
+		/*OJUCUIDAO*/
+		CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
+		l_DeviceContext->RSSetState(l_ContextManager->GetRasterizerState(CContextManager::RS_SOLID_BACK_CULL));
+		l_DeviceContext->OMSetDepthStencilState(l_ContextManager->GetDepthStencilState(CContextManager::DSS_DEPTH_ON), 0);
+		Vect4f v(1, 1, 1, 1);
+		l_DeviceContext->OMSetBlendState(l_ContextManager->GetBlendState(CContextManager::BLEND_CLASSIC), &v.x, 0xffffffff);
+
 		l_DeviceContext->UpdateSubresource(l_ConstantBufferVS, 0, NULL,	Parameters, 0, 0 );
 		l_DeviceContext->VSSetConstantBuffers( 0, 1, &l_ConstantBufferVS);
 		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);

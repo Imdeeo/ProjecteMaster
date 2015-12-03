@@ -29,7 +29,12 @@ void CInstanceMesh::Render(CRenderManager *RM)
 {
 	if(GetVisible())
 	{
-		RM->GetContextManager()->SetWorldMatrix(GetTransform());
+		/*OJUCUIDAO*/ //Exportem els vertex dels objectes en un espai real, per tant si els transformem amb pos rot i scale es lia
+					  //Exportamos los vertices de los objetos en espacio real, asi que al aplicarles la transformada con pos rot y scale, se lia parda
+		//RM->GetContextManager()->SetWorldMatrix(GetTransform());
+		Mat44f world;
+		world.SetIdentity();
+		RM->GetContextManager()->SetWorldMatrix(world);
 		m_StaticMesh->Render(RM);
 	}
 }

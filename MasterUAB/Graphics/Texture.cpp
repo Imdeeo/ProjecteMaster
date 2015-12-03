@@ -2,6 +2,8 @@
 #include "ContextManager.h"
 #include "UABEngine.h"
 
+#include <D3DX11tex.h>
+
 CTexture::CTexture(): CNamed(""),
 	m_Texture(nullptr),
 	m_SamplerState(nullptr)
@@ -16,7 +18,7 @@ CTexture::~CTexture(void)
 bool CTexture::LoadFile()
 {
 	ID3D11Device *l_Device=UABEngine.GetRenderManager()->GetDevice();
-	HRESULT l_HR=/*D3DX11CreateShaderResourceViewFromFile(l_Device,m_Name.c_str(), NULL, NULL, &m_Texture, NULL )*/0;
+	HRESULT l_HR=D3DX11CreateShaderResourceViewFromFile(l_Device,m_Name.c_str(), NULL, NULL, &m_Texture, NULL );
 	D3D11_SAMPLER_DESC l_SampDesc;
 	ZeroMemory(&l_SampDesc, sizeof(l_SampDesc));
 	l_SampDesc.Filter=D3D11_FILTER_MIN_MAG_MIP_LINEAR;

@@ -92,5 +92,10 @@ private:
 	ID3D11RasterizerState*	m_RasterizerSates[RS_COUNT];
 	ID3D11DepthStencilState * m_DepthStencilStates[DSS_COUNT];
 	ID3D11BlendState* m_BlendStates[BLEND_COUNT];
+
+public:
+	ID3D11RasterizerState*	GetRasterizerState(ERasterizedState _RasterizedState){return m_RasterizerSates[_RasterizedState];}
+	ID3D11DepthStencilState * GetDepthStencilState(EDepthStencilStates _DepthStencilState){return m_DepthStencilStates[_DepthStencilState];}
+	ID3D11BlendState* GetBlendState(EBlendStates _BlendState){return m_BlendStates[_BlendState];}
 };
 
