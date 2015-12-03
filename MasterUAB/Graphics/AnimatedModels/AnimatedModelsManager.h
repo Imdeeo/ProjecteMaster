@@ -9,7 +9,7 @@ private:
 	std::string m_Filename;
 public:
 	CAnimatedModelsManager(void);
-	virtual ~CAnimatedModelsManager~(void);
+	virtual ~CAnimatedModelsManager(void);
 	bool Load(const std::string &FileName);
 	bool Reload();
 };

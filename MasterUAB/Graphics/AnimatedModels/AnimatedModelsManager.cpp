@@ -42,5 +42,5 @@ bool CAnimatedModelsManager::Load(const std::string &FileName)
 
 bool CAnimatedModelsManager::Reload()
 {
-	
+	return true;
 }
