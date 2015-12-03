@@ -13,7 +13,7 @@
 
 #include "Application.h"
 
-#include "InputManagerImplementation.h"
+#include "InputManager\InputManagerImplementation.h"
 #include "DebugHelperImplementation.h"
 
 #include "ContextManager\ContextManager.h"
