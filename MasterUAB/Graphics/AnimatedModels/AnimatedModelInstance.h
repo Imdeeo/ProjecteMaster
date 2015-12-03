@@ -3,10 +3,6 @@
 
 class CAnimatedModelInstance
 {
-public:
-	
-
-private:
 
 };
 
