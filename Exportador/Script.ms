@@ -7,7 +7,12 @@ fn get_LocalFileName =
 
 fn get_FileName =
 (
-	return "E:\\" + (get_LocalFileName())
+	return "F:\\" + (get_LocalFileName())
+)
+
+fn get_Level =
+(
+	return "level_1\\"
 )
 
 fn get_Cores =
@@ -23,8 +28,9 @@ fn get_Instances =
 fn createStaticMesh dir level filename Objs=
 (	
 	dirExist dir
+	dirExist (dir+level)
 	
-	file=createfile (dir+filename)
+	file=createfile (dir+level+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<static_meshes>\n" to:file
 	for i=1 to Objs.count do
@@ -55,11 +61,12 @@ fn GetRoll transform =
 	return (transform as eulerangles).x
 )
 
-fn createInstanceMesh dir filename Objs=
+fn createInstanceMesh dir level filename Objs=
 (	
 	dirExist dir
+	dirExist (dir+level)
 	
-	file=createfile (dir+filename)
+	file=createfile (dir+level+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<renderable_objects>\n" to:file
 	for i=1 to Objs.count do
@@ -283,23 +290,26 @@ fn writeMeshFromObject arx Obj =
 	writeFooter arx
 )
 
-fn createMeshFromObjects dir Objs =
+fn createMeshFromObjects dir level Objs =
 (
 	dirExist dir
+	dirExist (dir+level)
+	dirExist (dir+level+"\\Meshes")
 	
 	for i=1 to Objs.count do
 	(
-		file=fopen (dir+Objs[i].name+".mesh") "wb"
+		file=fopen (dir+level+"\\Meshes\\"+Objs[i].name+".mesh") "wb"
 		writeMeshFromObject file (Objs[i])
 		FClose file
 	)
 )
 
-fn createMaterials dir filename Objs copyTexture =
+fn createMaterials dir level filename Objs copyTexture =
 (
 	dirExist dir
+	dirExist (dir+level)
 	
-	file=createfile (dir+filename)
+	file=createfile (dir+level+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<materials>\n" to:file
 	materialsDictionary = dotNetObject "System.Collections.Hashtable"
@@ -330,15 +340,12 @@ fn createMaterials dir filename Objs copyTexture =
 					(
 						nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
 						
-						pathfile = (dir + "Textures\\" + nomTextura)
+						pathfile = (dir+level+"\\Textures\\" + nomTextura)
 						format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
 						
 						if copyTexture == true then
 						(								
-							if (doesFileExist (dir + "Textures")) == false then
-							(									
-								dirExist (dir+"Textures")
-							)
+							dirExist (dir+level+"\\Textures")
 							copyFile mat[j].diffuseMap.bitmap.filename pathfile
 						)
 					)
@@ -357,12 +364,12 @@ fn dirExist dir =
 		makeDir dir all:true
 )
 
-fn createFiles Dir Objs =
+fn createFiles Dir Level Objs =
 (
-	createInstanceMesh Dir "renderable_objects.xml" Objs
-	createStaticMesh Dir "static_meshes.xml" Objs
-	createMaterials Dir "materials.xml" Objs
-	createMeshFromObjects Dir Objs
+	createInstanceMesh Dir Level "renderable_objects.xml" Objs
+	createStaticMesh Dir Level "static_meshes.xml" Objs
+	createMaterials Dir Level "materials.xml" Objs true
+	createMeshFromObjects Dir Level Objs
 )
 
---createFiles (get_FileName()) $*
+createFiles (get_FileName()) (get_Level()) $*
