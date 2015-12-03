@@ -5,7 +5,7 @@
 
 #include "ContextManager\ContextManager.h"
 #include "DebugRender.h"
-#include "InputManager.h"
+#include "InputManager\InputManager.h"
 #include "DebugHelper.h"
 #include "Engine\UABEngine.h"
 

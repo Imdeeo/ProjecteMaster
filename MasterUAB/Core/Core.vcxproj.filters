@@ -3,24 +3,35 @@
   <ItemGroup>
     <ClCompile Include="DebugHelper.cpp" />
     <ClCompile Include="DebugHelperImplementation.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="InputManagerImplementation.cpp" />
     <ClCompile Include="Engine\UABEngine.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager\InputManager.cpp">
+      <Filter>InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager\InputManagerImplementation.cpp">
+      <Filter>InputManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugHelper.h" />
     <ClInclude Include="DebugHelperImplementation.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="InputManagerImplementation.h" />
     <ClInclude Include="Engine\UABEngine.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager\InputManager.h">
+      <Filter>InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager\InputManagerImplementation.h">
+      <Filter>InputManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
       <UniqueIdentifier>{edf2ed55-ae70-4aa7-a367-c27cd882dd51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InputManager">
+      <UniqueIdentifier>{00dc7af4-a031-4dd6-b9f9-ac3db48f7001}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
