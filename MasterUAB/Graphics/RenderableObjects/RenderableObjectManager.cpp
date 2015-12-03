@@ -1,4 +1,4 @@
-#include "RenderableObjects\RenderableObjectManager.h"
+#include "RenderableObjectManager.h"
 #include "StaticMesh\InstanceMesh.h"
 
 CRenderableObjectsManager::CRenderableObjectsManager() {}
