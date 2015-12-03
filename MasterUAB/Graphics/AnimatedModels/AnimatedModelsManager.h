@@ -1,13 +1,17 @@
 #ifndef ANIMATEDMODELSMANAGER_H
 #define ANIMATEDMODELSMANAGER_H
 
+#include <string>
+
 class CAnimatedModelsManager
 {
-public:
-	
-
 private:
-
+	std::string m_Filename;
+public:
+	CAnimatedModelsManager(void);
+	virtual ~CAnimatedModelsManager~(void);
+	bool Load(const std::string &FileName);
+	bool Reload();
 };
 
-#endif
+#endif //ANIMATEDMODELSMANAGER_H
