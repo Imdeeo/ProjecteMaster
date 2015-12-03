@@ -14,15 +14,15 @@
     <ClCompile Include="DebugHelper.cpp" />
     <ClCompile Include="DebugHelperImplementation.cpp" />
     <ClCompile Include="Engine\UABEngine.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="InputManagerImplementation.cpp" />
+    <ClCompile Include="InputManager\InputManager.cpp" />
+    <ClCompile Include="InputManager\InputManagerImplementation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugHelper.h" />
     <ClInclude Include="DebugHelperImplementation.h" />
     <ClInclude Include="Engine\UABEngine.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="InputManagerImplementation.h" />
+    <ClInclude Include="InputManager\InputManager.h" />
+    <ClInclude Include="InputManager\InputManagerImplementation.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{77B0C728-54BB-429B-925A-3F8CB72784F9}</ProjectGuid>
