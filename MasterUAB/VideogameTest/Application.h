@@ -1,10 +1,10 @@
 #pragma once
 
-#include "SphericalCameraController.h"
-#include "FPSCameraController.h"
+#include "Camera\SphericalCameraController.h"
+#include "Camera\FPSCameraController.h"
 #include "HelperTypes.h"
-#include "RenderManager.h"
-#include "MaterialManager.h"
+#include "RenderManager\RenderManager.h"
+#include "Materials\MaterialManager.h"
 
 class CDebugRender;
 class CContextManager;

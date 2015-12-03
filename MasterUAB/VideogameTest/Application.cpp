@@ -3,11 +3,11 @@
 #include "Math\Matrix44.h"
 #include "Math\Vector4.h"
 
-#include "ContextManager.h"
+#include "ContextManager\ContextManager.h"
 #include "DebugRender.h"
 #include "InputManager.h"
 #include "DebugHelper.h"
-#include "UABEngine.h"
+#include "Engine\UABEngine.h"
 
 static void __stdcall SwitchCameraCallback(void* _app)
 {

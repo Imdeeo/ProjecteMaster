@@ -16,10 +16,10 @@
 #include "InputManagerImplementation.h"
 #include "DebugHelperImplementation.h"
 
-#include "ContextManager.h"
+#include "ContextManager\ContextManager.h"
 #include "DebugRender.h"
-#include "Effect.h"
-#include "Camera.h"
+#include "Effects\Effect.h"
+#include "Camera\Camera.h"
 
 #pragma comment(lib, "Graphics_d.lib")
 #pragma comment(lib, "Winmm.lib")
