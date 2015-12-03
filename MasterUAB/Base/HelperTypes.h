@@ -1,4 +1,5 @@
-#pragma once
+#ifndef HELPERTYPES_H
+#define HELPERTYPES_H
 
 #include "Math\Color.h"
 #include "Math\Vector3.h"
@@ -16,3 +17,4 @@ struct SPositionOrientation
 	{}
 };
 
+#endif

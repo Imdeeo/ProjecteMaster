@@ -1,7 +1,5 @@
-#ifndef _ENEMY
-#define _ENEMY
-
-#pragma once
+#ifndef ENEMY_H
+#define ENEMY_H
 
 #include "XML\XMLTreeNode.h"
 

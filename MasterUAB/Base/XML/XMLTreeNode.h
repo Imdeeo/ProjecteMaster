@@ -6,10 +6,8 @@
 // This class manages xml files both for read and write.
 // It internally uses the libxml tool.
 //----------------------------------------------------------------------------------
-#pragma once
-
-#ifndef _XML_TREE_NODE_H_
-#define _XML_TREE_NODE_H_
+#ifndef XMLTREENODE_H
+#define XMLTREENODE_H
 
 // Includes
 #include "libxml/parser.h"

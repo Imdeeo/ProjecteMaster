@@ -11,6 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedModels\AnimatedModelCore.cpp" />
+    <ClCompile Include="AnimatedModels\AnimatedModelInstance.cpp" />
+    <ClCompile Include="AnimatedModels\AnimatedModelsManager.cpp" />
     <ClCompile Include="Camera\CameraController.cpp" />
     <ClCompile Include="Camera\FPSCameraController.cpp" />
     <ClCompile Include="Camera\Frustum.cpp" />
@@ -32,6 +35,9 @@
     <ClCompile Include="Texture\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedModels\AnimatedModelCore.h" />
+    <ClInclude Include="AnimatedModels\AnimatedModelInstance.h" />
+    <ClInclude Include="AnimatedModels\AnimatedModelsManager.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\CameraController.h" />
     <ClInclude Include="Camera\FPSCameraController.h" />

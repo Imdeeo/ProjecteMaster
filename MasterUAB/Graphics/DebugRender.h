@@ -1,4 +1,16 @@
-#pragma once
+#ifndef DEBUGRENDER_H
+#define DEBUGRENDER_H
+
+class CAnimatedModelCore
+{
+public:
+	
+
+private:
+
+};
+
+#endif
 
 #include <d3d11.h>
 
@@ -72,3 +84,4 @@ private:
 	Vect3f m_LongAxisBBMax;
 };
 
+#endif
