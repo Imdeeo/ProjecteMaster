@@ -1,5 +1,6 @@
 Obj = undefined
-callbacks.addScript #selectionSetChanged "UABSetProperties.swapMode()" id:#swapMode persistent:false
+callbacks.removeScripts #selectionSetChanged id:#swapMode
+callbacks.addScript #selectionSetChanged "UABSetProperties.swapMode $" id:#swapMode persistent:false
 	
 rollout UABSetProperties "UABSetProperties" width:280 height:370
 (
@@ -23,56 +24,13 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			dropdownList LogicGenerateList "" pos:[120,272] width:136 height:21 items:#("stairs")
 		button GetButton "Get" pos:[24,320] width:112 height:32
 		button SetButton "Set" pos:[144,320] width:112 height:32
-	GroupBox grp2 "Lights" pos:[8,8] width:265 height:88
-		label LightLabel "Nothing selected" pos:[24,32] width:232 height:24
-		checkbox LightExportBox "Export" pos:[24,64] width:88 height:16
-		button GetLightButton "GetLight" pos:[24,104] width:112 height:32
-		button SetLightButton "SetLight" pos:[144,104] width:112 height:32
-	GroupBox grp3 "Unsupported" pos:[8,8] width:265 height:61
-		label UnsupportedLabel "Current selection is not supported." pos:[24,32] width:232 height:24
-	
-	fn swapMode =
-	(
-		case SuperClassOf Obj of
-		(
-			light: loadLightMode Obj
-			GeometryClass:  loadGeometryMode Obj
-			default: unsupportedSelection Obj
-		)
-	)
-	
-	fn loadLightMode Obj =
-	(
-		/*toggleLightsGroup true
-		toggleGeometryGroup false
-		toggleUnsupportedGroup false*/
-		LightLabel.text = Obj.name
-		UABSetProperties.height = 150
-	)
-	
-	fn loadGeometryMode Obj =
-	(
-		if (classof Obj == "Targetobject") then
-		(
-			unsupportedSelection Obj
-		)
-		else
-		(
-			/*toggleLightsGroup false
-			toggleGeometryGroup true
-			toggleUnsupportedGroup false*/
-			GeometryLabel.text = Obj.name
-			UABSetProperties.height = 370
-		)
-	)
-	
-	fn unsupportedSelection Obj =
-	(
-		/*toggleLightsGroup false
-		toggleGeometryGroup false
-		toggleUnsupportedGroup true*/
-		UABSetProperties.height = 80
-	)
+	GroupBox grp2 "Lights" pos:[8,8] width:265 height:88 visible:false
+		label LightLabel "Nothing selected" pos:[24,32] width:232 height:24 visible:false
+		checkbox LightExportBox "Export" pos:[24,64] width:88 height:16 visible:false
+		button GetLightButton "Get" pos:[24,104] width:112 height:32 visible:false
+		button SetLightButton "Set" pos:[144,104] width:112 height:32 visible:false
+	GroupBox grp3 "Unsupported" pos:[8,8] width:265 height:61 visible:false
+		label UnsupportedLabel "Current selection is not supported." pos:[24,32] width:232 height:24 visible:false
 	
 	fn toggleGeometryGroup bool =
 	(
@@ -127,6 +85,51 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		PhysicsGenerateList.enabled = bool
 		PhysicsLayerBox.enabled =  bool
 		PhysicsLayerList.enabled =  bool
+	)
+	
+	fn loadLightMode Obj =
+	(
+		toggleLightsGroup true
+		toggleGeometryGroup false
+		toggleUnsupportedGroup false
+		LightLabel.text = Obj.name
+		UABSetProperties.height = 150
+	)
+	
+	fn loadGeometryMode Obj =
+	(
+		if (classof Obj == "Targetobject") then
+		(
+			unsupportedSelection Obj
+		)
+		else
+		(
+			toggleLightsGroup false
+			toggleGeometryGroup true
+			toggleUnsupportedGroup false
+			GeometryLabel.text = Obj.name
+			UABSetProperties.height = 370
+		)
+	)
+	
+	fn loadUnsupportedSelection Obj =
+	(
+		toggleLightsGroup false
+		toggleGeometryGroup false
+		toggleUnsupportedGroup true
+		UABSetProperties.height = 80
+	)
+	
+	
+	fn swapMode Obj =
+	(
+		print (SuperClassOf Obj)
+		case SuperClassOf Obj of
+		(
+			light: loadLightMode Obj
+			GeometryClass:  loadGeometryMode Obj
+			default: loadUnsupportedSelection Obj
+		)
 	)
 	
 	fn initUserProps Obj =
@@ -363,8 +366,6 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			)
 		)
 	)
-	
-	on UABSetProperties open do(swapMode)
 )
 createDialog UABSetProperties
 
