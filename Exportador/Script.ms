@@ -25,6 +25,12 @@ fn get_Instances =
 	return $*
 )
 
+fn dirExist dir =
+(
+	if (doesFileExist dir) == false then
+		makeDir dir all:true
+)
+
 fn createStaticMesh dir level filename Objs=
 (	
 	dirExist dir
@@ -360,10 +366,41 @@ fn createMaterials dir level filename Objs copyTexture =
 	close file
 )
 
-fn dirExist dir =
+fn createLights dir level filename Objs =
 (
-	if (doesFileExist dir) == false then
-		makeDir dir all:true
+	dirExist dir
+	dirExist (dir+level)
+	
+	local lightPos
+	local lightDir
+	local lightColor
+
+	file=createfile (dir+level+filename)
+	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
+	format "<lights>\n" to:file
+	
+	for i=1 to Objs.count do
+	(
+		lightPos = Objs[i].pos.x as string+" "+Objs[i].pos.y as string+" "+Objs[i].pos.z as string
+		lightColor = (Objs[i].color.r/255*100) as string+" "+(Objs[i].color.g/255*100) as string+" "+(Objs[i].color.b/255*100) as string
+		
+		if (ClassOf Objs[i] == Omnilight) then
+		(
+		format "\t<light name=\"%\" type=\"omni\" pos=\"%\" color=\"%\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\">\n" Objs[i].name lightPos lightColor Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier to:file
+		) 
+		else if (ClassOf Objs[i] == Directionallight or ClassOf Objs[i] == TargetDirectionallight) then
+		(
+			lightDir = Objs[i].dir.x as string+" "+Objs[i].dir.y as string+" "+Objs[i].dir.z as string
+			format "\t<light name=\"%\" type=\"directional\" pos=\"%\" dir=\"%\" color=\"%\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\">\n" Objs[i].name lightPos lightDir lightColor Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier to:file
+		) 
+		else if (ClassOf Objs[i] == freeSpot or ClassOf Objs[i] == targetSpot) then
+		(
+			lightDir = Objs[i].dir.x as string+" "+Objs[i].dir.y as string+" "+Objs[i].dir.z as string
+			format "\t<light name=\"%\" type=\"spot\" pos=\"%\" dir=\"%\" color=\"%\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\">\n" Objs[i].name lightPos lightDir lightColor Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier to:file
+		)
+	)
+	format "</lights>\n" to:file		
+	close file
 )
 
 fn createFiles Dir Level Objs =
@@ -372,6 +409,7 @@ fn createFiles Dir Level Objs =
 	createStaticMesh Dir Level "static_meshes.xml" Objs
 	createMaterials Dir Level "materials.xml" Objs true
 	createMeshFromObjects Dir Level Objs
+	createLights Dir Level "lights.xml" Objs
 )
 
-createFiles (get_FileName()) (get_Level()) $*
+--createFiles (get_FileName()) (get_Level()) $*
