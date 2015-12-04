@@ -1,25 +1,117 @@
 Obj = undefined
-
-rollout UABSetProperties "UABSetProperties" width:264 height:344
+callbacks.addScript #selectionSetChanged "UABSetProperties.swapMode()" id:#swapMode persistent:false
+	
+rollout UABSetProperties "UABSetProperties" width:280 height:370
 (
-	GroupBox RenderGroup "Render" pos:[8,8] width:248 height:120
-	GroupBox PhysicsGroup "Physics" pos:[8,136] width:248 height:80
-	GroupBox LogicGroup "Logic" pos:[8,232] width:248 height:48
-	checkbox RenderExportBox "Export" pos:[16,24] width:88 height:16
-	checkbox RenderVisibleBox "Visible" pos:[16,48] width:88 height:16 enabled: false
-	checkbox RenderLayerBox "Layer" pos:[16,72] width:88 height:16 enabled: false
-	label AnimModelLabel "Anim. Model" pos:[16,104] width:88 height:16
-	dropdownList RenderExportList "" pos:[112,24] width:136 height:21 items:#("instance_mesh", "animated_instance_mesh") enabled: false
-	dropdownList RenderLayerList "" pos:[112,64] width:136 height:21 items:#("solid", "alpha_objects", "alpha_blend_objects", "particles") enabled: false
-	checkbox PhysicsGenerateBox "Generate" pos:[16,152] width:88 height:16
-	checkbox PhysicsLayerBox "Layer" pos:[16,184] width:88 height:16 enabled: false
-	dropdownList PhysicsGenerateList "" pos:[112,152] width:136 height:21 items:#("triangle_mesh", "convex_shape", "box_shape", "sphere_shape", "plane_shape", "capsule_shape") enabled: false
-	dropdownList PhysicsLayerList "" pos:[112,184] width:136 height:21 items:#("logic") enabled: false
-	checkbox LogicGenerateBox "Generate" pos:[16,248] width:88 height:16
-	dropdownList LogicGenerateList "" pos:[112,248] width:136 height:21 items:#("stairs")
-	button GetButton "Get" pos:[16,296] width:112 height:32
-	button SetButton "Set" pos:[136,296] width:112 height:32
-	edittext AnimModelText "" pos:[112,96] width:136 height:24 text:"undefined" enabled: false
+	GroupBox grp1 "Geometry" pos:[8,8] width:265 height:304
+		label GeometryLabel "Nothing selected" pos:[24,32] width:232 height:24
+		GroupBox RenderGroup "Render" pos:[16,56] width:248 height:120
+			checkbox RenderExportBox "Export" pos:[24,72] width:88 height:16
+			dropdownList RenderExportList "" pos:[120,72] width:136 height:21 enabled:false items:#("instance_mesh", "animated_instance_mesh")
+			checkbox RenderVisibleBox "Visible" pos:[24,96] width:88 height:16 enabled:false
+			checkbox RenderLayerBox "Layer" pos:[24,120] width:88 height:16 enabled:false
+			dropdownList RenderLayerList "" pos:[120,112] width:136 height:21 enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles")
+			label AnimModelLabel "Anim. Model" pos:[24,152] width:88 height:16
+			edittext AnimModelText "undefined" pos:[120,144] width:136 height:24 enabled:false
+		GroupBox PhysicsGroup "Physics" pos:[16,176] width:248 height:80
+			checkbox PhysicsGenerateBox "Generate" pos:[24,200] width:88 height:16
+			dropdownList PhysicsGenerateList "" pos:[120,200] width:136 height:21 enabled:false items:#("triangle_mesh", "convex_shape", "box_shape", "sphere_shape", "plane_shape", "capsule_shape")
+			checkbox PhysicsLayerBox "Layer" pos:[24,232] width:88 height:16 enabled:false
+			dropdownList PhysicsLayerList "" pos:[120,232] width:136 height:21 enabled:false items:#("logic")
+		GroupBox LogicGroup "Logic" pos:[16,256] width:248 height:48
+			checkbox LogicGenerateBox "Generate" pos:[24,272] width:88 height:16
+			dropdownList LogicGenerateList "" pos:[120,272] width:136 height:21 items:#("stairs")
+		button GetButton "Get" pos:[24,320] width:112 height:32
+		button SetButton "Set" pos:[144,320] width:112 height:32
+	GroupBox grp2 "Lights" pos:[8,8] width:265 height:88
+		label LightLabel "Nothing selected" pos:[24,32] width:232 height:24
+		checkbox LightExportBox "Export" pos:[24,64] width:88 height:16
+		button GetLightButton "GetLight" pos:[24,104] width:112 height:32
+		button SetLightButton "SetLight" pos:[144,104] width:112 height:32
+	GroupBox grp3 "Unsupported" pos:[8,8] width:265 height:61
+		label UnsupportedLabel "Current selection is not supported." pos:[24,32] width:232 height:24
+	
+	fn swapMode =
+	(
+		case SuperClassOf Obj of
+		(
+			light: loadLightMode Obj
+			GeometryClass:  loadGeometryMode Obj
+			default: unsupportedSelection Obj
+		)
+	)
+	
+	fn loadLightMode Obj =
+	(
+		/*toggleLightsGroup true
+		toggleGeometryGroup false
+		toggleUnsupportedGroup false*/
+		LightLabel.text = Obj.name
+		UABSetProperties.height = 150
+	)
+	
+	fn loadGeometryMode Obj =
+	(
+		if (classof Obj == "Targetobject") then
+		(
+			unsupportedSelection Obj
+		)
+		else
+		(
+			/*toggleLightsGroup false
+			toggleGeometryGroup true
+			toggleUnsupportedGroup false*/
+			GeometryLabel.text = Obj.name
+			UABSetProperties.height = 370
+		)
+	)
+	
+	fn unsupportedSelection Obj =
+	(
+		/*toggleLightsGroup false
+		toggleGeometryGroup false
+		toggleUnsupportedGroup true*/
+		UABSetProperties.height = 80
+	)
+	
+	fn toggleGeometryGroup bool =
+	(
+		grp1.visible = bool
+		GeometryLabel.visible = bool
+		RenderGroup.visible = bool
+		RenderExportBox.visible = bool
+		RenderExportList.visible = bool
+		RenderVisibleBox.visible = bool
+		RenderLayerBox.visible = bool
+		RenderLayerList.visible = bool
+		AnimModelLabel.visible = bool
+		AnimModelText.visible = bool
+		PhysicsGroup.visible = bool
+		PhysicsGenerateBox.visible = bool
+		PhysicsGenerateList.visible = bool
+		PhysicsLayerBox.visible = bool
+		PhysicsLayerList.visible = bool
+		LogicGroup.visible = bool
+		LogicGenerateBox.visible = bool
+		LogicGenerateList.visible = bool
+		GetButton.visible = bool
+		SetButton.visible = bool
+	)
+	
+	fn toggleLightsGroup bool =
+	(
+		grp2.visible = bool
+		LightLabel.visible = bool
+		LightExportBox.visible = bool
+		GetLightButton.visible = bool
+		SetLightButton.visible = bool
+	)
+	
+	fn toggleUnsupportedGroup bool =
+	(
+		grp3.visible = bool
+		UnsupportedLabel.visible = bool
+	)
 	
 	fn toggleRender bool =
 	(
@@ -131,7 +223,7 @@ rollout UABSetProperties "UABSetProperties" width:264 height:344
 			case RenderExportList.items[RenderExportList.selection] of
 			(
 				"instance_mesh": setUserProp Obj "render_export_type" "instance_mesh"
-				"animated_instance_mesh": setUserProp $ "render_export_type" "animated_instance_mesh"
+				"animated_instance_mesh": setUserProp Obj "render_export_type" "animated_instance_mesh"
 			)	
 		
 		) else (
@@ -272,5 +364,13 @@ rollout UABSetProperties "UABSetProperties" width:264 height:344
 		)
 	)
 	
+	on UABSetProperties open do(swapMode)
 )
 createDialog UABSetProperties
+
+
+
+
+
+
+
