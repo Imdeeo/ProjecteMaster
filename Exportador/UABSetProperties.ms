@@ -162,7 +162,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			setUserProp Obj "logic_generate" false
 			setUserProp Obj "logic_generate_type" "stairs"
 		) else (
-			setUserProp Obj "exportlight" false
+			setUserProp Obj "light_export" false
 		)
 	)
 	
@@ -236,11 +236,11 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 					"stairs": LogicGenerateList.selection = 1
 				)
 		) else (
-			if getUserProp Obj "exportlight" == undefined then
+			if getUserProp Obj "light_export" == undefined then
 			(
 				initUserProps Obj
 			)
-			LightExportBox.checked = getUserProp Obj "exportlight"
+			LightExportBox.checked = getUserProp Obj "light_export"
 		)
 	)
 	
@@ -339,7 +339,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		) else (
 			if LightExportBox.checked then
 			(
-				setUserProp Obj "exportlight" true
+				setUserProp Obj "light_export" true
 			)
 		)
 	)
@@ -376,6 +376,18 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		)
 	)
 	
+	on GetLightButton pressed do
+	(
+		if $ == undefined then
+			(
+				messageBox "Selecciona una luz de la escena" title:"ERROR"
+			) else (
+		
+		Obj = $
+		GetProperties Obj
+		)
+	)
+	
 	on SetButton pressed do
 	(
 		if $ == undefined then
@@ -391,6 +403,32 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			) else (
 				
 				if queryBox "Hacer Set a un objeto diferente al del Get?" title:"ATENCIÓN!" beep:true then
+				(
+					Obj = $
+					setProperties Obj
+				) else (
+					Obj = $
+					GetProperties Obj
+				)
+			)
+		)
+	)
+	
+	on SetLightButton pressed do
+	(
+		if $ == undefined then
+		(
+			messageBox "Selecciona una luz de la escena" title:"ERROR"
+			
+		) else (
+		
+			if Obj == $ then
+			(
+				setProperties Obj
+				
+			) else (
+				
+				if queryBox "Hacer Set a una luz diferente al del Get?" title:"ATENCIÓN!" beep:true then
 				(
 					Obj = $
 					setProperties Obj
