@@ -15,10 +15,110 @@ utility UABUtility "UABUtility" width:168 height:360
 	button ExportStaticMeshButton "Static Mesh Manager" pos:[16,272] width:136 height:32
 	button ExportSceneButton "Scene" pos:[16,312] width:136 height:32
 	dropDownList LevelList "" pos:[8,152] width:152 height:21
+	
+	fn get_Dir =
+	(
+		local dir = ""+PathLabel.text+"\\" 
+		dirExist dir
+		print dir
+		dir += LevelList.items[LevelList.selection] + "\\"
+		dirExist dir
+		print dir
+		return dir
+	)
+	
+	fn checkUserProp usrProp =
+	(
+		local usrDefined = #()
+		for i = 1 to $*.count do
+		(
+			if (getUserProp $*[i] usrProp) == true then
+			(
+				append usrDefined $*[i]
+			)
+		)
+		return usrDefined
+	)
+	
+	fn exportLights dir =
+	(
+		local lightsToExport = checkUserProp "light_export"
+		createLights dir "lights.xml" lightsToExport
+	)
+
+	fn exportCameras dir =
+	(
+		local camerasToExport = checkUserProp "camera_export"
+
+	)
+
+	fn exportMesh dir Obj =
+	(
+		local Objs = #()
+		
+		if ClassOf Obj != ObjectSet then
+		(
+			if (SuperClassOf  Obj) == GeometryClass then
+			(
+				append Objs Obj
+				createMeshFromObjects dir Objs
+			)
+			else
+			(
+				messageBox "You must select a geometry!" title:"ERROR"
+			)
+		)
+		else
+		(
+			local nonGeometry = false
+			for i=1 to Obj.count do
+			(
+				if SuperClassOf Obj[i]  == GeometryClass then
+				(
+					append Objs Obj[i]
+				)
+				else
+				(
+					nonGeometry = true
+				)
+			)
+			if nonGeometry == false then
+			(
+				createMeshFromObjects dir Objs
+			)
+			else
+			(
+				messageBox "You have selected one or more non-geometry objects!" title:"ERROR"
+			)
+		)
+	)
+
+	fn exportMaterials dir textureCheck =
+	(
+		local materialsToExport checkUserProp "render_export"
+		createMaterials  dir "materials.xml" materialsToExport ExportTexturesCheck
+	)
+
+	fn exportStaticMesh dir meshCheck =
+	(
+		local meshToExport = checkUserProp "render_export"
+		createStaticMesh dir (LevelList.items[LevelList.selection]) "static_meshes.xml" meshToExport
+		
+		if ExportMeshCheck == true then 
+		(				
+			createMeshFromObjects dir meshToExport
+		)
+	)
+
+	fn exportRenderableObject dir =
+	(
+		local renderableObjectsToExport checkUserProp "render_export"
+		createInstanceMesh dir "renderable_objects.xml" renderableObjectsToExport
+	)
 
 	on UABUtility open do
 	(
-		PathLabel.text="C:\\UABEngine\\Data"
+		PathLabel.text="F:\\Game\\Data"
 		
 		local levels=#("","level_1","level_2", "level_3","level_4", "main_menu", "select_player")
 		LevelList.items=levels		
@@ -33,37 +133,23 @@ utility UABUtility "UABUtility" width:168 height:360
 		)
 	)
 	
-	on ExportMaterialsButton pressed do
+	on ExportLightsButton pressed do
 	(
 		if LevelList.items[LevelList.selection] == "" then
-		(			
-			messageBox "You must select a level" title:"ERROR"
-		)
-		else
+        (
+            messageBox "You must select a level!" title:"ERROR"
+        )
+		else 
 		(
-			local dir = PathLabel.text + "\\" + LevelList.items[LevelList.selection] + "\\"
-			exportMaterials dir ExportTexturesCheck.checked
+			exportLights (get_Dir())
 		)
 	)
 	
-	on ExportStaticMeshButton pressed do
-    (
-        if LevelList.items[LevelList.selection] == "" then
-        (
-            messageBox "You must select a level" title:"ERROR"
-        )
-        else
-        (
-			local dir = PathLabel.text + "\\" + LevelList.items[LevelList.selection] + "\\"
-            exportStaticMesh dir ExportMeshCheck.checked
-        )
-    )
-    
-    on ExportMeshButton pressed do
+	on ExportMeshButton pressed do
     (        
         if LevelList.items[LevelList.selection] == "" then
         (
-            messageBox "You must select a level" title:"ERROR"
+            messageBox "You must select a level!" title:"ERROR"
         )
         else
         (
@@ -73,12 +159,44 @@ utility UABUtility "UABUtility" width:168 height:360
             )
             else
             (
-                local l_directoriMesh = PathLabel.text + "\\" + LevelList.items[LevelList.selection] + "\\Meshes\\"
-				dirExist l_directoriMesh
-                file=fopen (l_directoriMesh+$.name+".mesh") "wb"				
-                writeMeshFromObject file ($)
-                FClose file
+                exportMesh (get_Dir()) $
             )
+        )
+    )
+	
+	on ExportCameraButton presed do
+	(
+		if LevelList.items[LevelList.selection] == "" then
+        (
+            messageBox "You must select a level!" title:"ERROR"
+        )
+		else 
+		(
+			exportCameras (get_Dir())
+		)
+	)
+	
+	on ExportMaterialsButton pressed do
+	(
+		if LevelList.items[LevelList.selection] == "" then
+		(			
+			messageBox "You must select a level" title:"ERROR"
+		)
+		else
+		(
+			exportMaterials (get_Dir()) (ExportTexturesCheck.checked)
+		)
+	)
+	
+	on ExportStaticMeshButton pressed do
+    (
+        if LevelList.items[LevelList.selection] == "" then
+        (
+            messageBox "You must select a level!" title:"ERROR"
+        )
+        else
+        (
+            exportStaticMesh (get_Dir()) (ExportMeshCheck.checked)
         )
     )
 	
@@ -86,37 +204,17 @@ utility UABUtility "UABUtility" width:168 height:360
 	(
 		 if LevelList.items[LevelList.selection] == "" then
         (
-            messageBox "You must select a level" title:"ERROR"
+            messageBox "You must select a level!" title:"ERROR"
         )
         else
         (
-			local dir = PathLabel.text + "\\" + LevelList.items[LevelList.selection] + "\\"
-			exportMaterials dir ExportTexturesCheck.checked
-			exportStaticMesh dir LevelList.items[LevelList.selection] ExportMeshCheck.checked
+			local dir = get_Dir()
+			exportLights dir
+			exportMaterials dir (ExportTexturesCheck.checked)
+			exportStaticMesh dir (ExportMeshCheck.checked)
 			exportRenderableObject dir
 		)
 	)
-)
-
-fn exportMaterials dir textureCheck =
-(
-	createMaterials  dir "materials.xml" (get_Cores()) textureCheck
-)
-
-fn exportStaticMesh dir level meshCheck =
-(
-	createStaticMesh dir level "static_meshes.xml" (get_Instances())
-	
-	if meshCheck == true then 
-	(				
-		local l_directoriMeshes = dir + "Meshes\\"
-		createMeshFromObjects l_directoriMeshes (get_Instances())
-	)
-)
-
-fn exportRenderableObject dir =
-(
-	createInstanceMesh dir "renderable_objects.xml" (get_Instances())
 )
 
 --Level -> Carpeta data con los niveles
