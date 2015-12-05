@@ -10,11 +10,6 @@ fn get_FileName =
 	return "F:\\" + (get_LocalFileName())
 )
 
-fn get_Level =
-(
-	return "level_1\\"
-)
-
 fn get_Cores =
 (
 	return $*
@@ -29,22 +24,6 @@ fn dirExist dir =
 (
 	if (doesFileExist dir) == false then
 		makeDir dir all:true
-)
-
-fn createStaticMesh dir level filename Objs=
-(	
-	dirExist dir
-	dirExist (dir+level)
-	
-	file=createfile (dir+level+filename)
-	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
-	format "<static_meshes>\n" to:file
-	for i=1 to Objs.count do
-	(
-		format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" Objs[i].name ("Data\\" + level + "\\Meshes\\"+Objs[i].name+".mesh") to:file
-	)
-	format "</static_meshes>\n" to:file
-	close file
 )
 
 fn TranslationToRH translation =
@@ -67,19 +46,35 @@ fn GetRoll transform =
 	return (transform as eulerangles).x
 )
 
-fn createInstanceMesh dir level filename Objs=
+fn createStaticMesh dir level filename Objs=
 (	
-	dirExist dir
-	dirExist (dir+level)
-	
-	file=createfile (dir+level+filename)
+	file=createfile (dir+filename)
+	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
+	format "<static_meshes>\n" to:file
+	if Objs != undefined then
+	(
+		for i=1 to Objs.count do
+		(
+			format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" Objs[i].name ("Data\\" + level + "\\Meshes\\"+Objs[i].name+".mesh") to:file
+		)
+	)
+	format "</static_meshes>\n" to:file
+	close file
+)
+
+fn createInstanceMesh dir filename Objs=
+(	
+	file=createfile (dir+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<renderable_objects>\n" to:file
-	for i=1 to Objs.count do
+	if Objs != undefined then
 	(
-		Obj = Objs[i]
-		pos = TranslationToRH Obj.transform.translation
-		format "\t<renderable_object name=\"%\" core_name=\"%\" position=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" visible=\"%\"/>\n" Obj.name Obj.name pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) true to:file
+		for i=1 to Objs.count do
+		(
+			Obj = Objs[i]
+			pos = TranslationToRH Obj.transform.translation
+			format "\t<renderable_object name=\"%\" core_name=\"%\" position=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" visible=\"%\"/>\n" Obj.name Obj.name pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) true to:file
+		)
 	)
 	format "</renderable_objects>\n" to:file
 	close file
@@ -298,84 +293,89 @@ fn writeMeshFromObject arx Obj =
 	writeFooter arx
 )
 
-fn createMeshFromObjects dir level Objs =
+fn createMeshFromObjects dir Objs =
 (
-	dirExist dir
-	dirExist (dir+level)
-	dirExist (dir+level+"\\Meshes")
+	dirExist (dir+"\\Meshes")
 	
 	for i=1 to Objs.count do
 	(
-		file=fopen (dir+level+"\\Meshes\\"+Objs[i].name+".mesh") "wb"
+		file=fopen (dir+"\\Meshes\\"+Objs[i].name+".mesh") "wb"
 		writeMeshFromObject file (Objs[i])
 		FClose file
 	)
 )
 
-fn createMaterials dir level filename Objs copyTexture =
-(
-	dirExist dir
-	dirExist (dir+level)
-	
-	file=createfile (dir+level+filename)
+fn createMaterials dir filename Objs copyTexture =
+(	
+	print "1"
+	file=createfile (dir+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<materials>\n" to:file
-	materialsDictionary = dotNetObject "System.Collections.Hashtable"
-	for i=1 to Objs.count do
+	if Objs != undefined then
 	(
-		mat = #()
-		n_materials = 1
-		
-		if(classof(Objs[i].material)==Multimaterial)then
+		print "2"
+		materialsDictionary = dotNetObject "System.Collections.Hashtable"
+		for i=1 to Objs.count do
 		(
-			mat = Objs[i].material
-			n_materials = Objs[i].material.numsubs
-		)
-		else
-		(			
-			append mat Objs[i].material
-		)	
-		
-		for j=1 to n_materials do
-		(
-			if materialsDictionary.Item[mat[j].name]==undefined then
+			print "3: "+i
+			mat = #()
+			n_materials = 1
+			
+			if(classof(Objs[i].material)==Multimaterial)then
 			(
-				format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" mat[j].name to:file
-				materialsDictionary.Add mat[j].name "defined"
-				if mat[j].diffuseMap != undefined then  
+				print "4: "+i
+				mat = Objs[i].material
+				n_materials = Objs[i].material.numsubs
+			)
+			else
+			(
+				print "5: "+i
+				append mat Objs[i].material
+			)	
+			
+			for j=1 to n_materials do
+			(
+				print "6: "+i+" "+j
+				if materialsDictionary.Item[mat[j].name]==undefined then
 				(
-					if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
+					print "7: "+i+" "+j
+					format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" mat[j].name to:file
+					materialsDictionary.Add mat[j].name "defined"
+					if mat[j].diffuseMap != undefined then  
 					(
-						nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
-						
-						pathfile = (dir+level+"\\Textures\\" + nomTextura)
-						format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
-						
-						if copyTexture == true then
-						(								
-							dirExist (dir+level+"\\Textures")
-							copyFile mat[j].diffuseMap.bitmap.filename pathfile
+						print "8: "+i+" "+j
+						if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
+						(
+							print "9: "+i+" "+j
+							nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
+							
+							pathfile = (dir+"Textures\\" + nomTextura)
+							format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
+							
+							if copyTexture == true then
+							(
+								print "10: "+i+" "+j
+								dirExist (dir+"Textures")
+								copyFile mat[j].diffuseMap.bitmap.filename pathfile
+							)
 						)
 					)
+					format "\t</material>\n" to:file 
 				)
-				format "\t</material>\n" to:file 
 			)
 		)
-	)		
+	)
 	format "</materials>\n" to:file		
 	close file
 )
 
-fn createLights dir level filename Objs =
+fn createLights dir filename Objs =
 (
-	dirExist dir
-	dirExist (dir+level)
-	
 	local lightPos
 	local lightDir
 	local lightColor
 
-	file=createfile (dir+level+filename)
+	file=createfile (dir+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<lights>\n" to:file
 	
@@ -403,13 +403,13 @@ fn createLights dir level filename Objs =
 	close file
 )
 
-fn createFiles Dir Level Objs =
+fn createFiles Dir Objs =
 (
-	createInstanceMesh Dir Level "renderable_objects.xml" Objs
-	createStaticMesh Dir Level "static_meshes.xml" Objs
-	createMaterials Dir Level "materials.xml" Objs true
-	createMeshFromObjects Dir Level Objs
-	createLights Dir Level "lights.xml" Objs
+	createInstanceMesh Dir "renderable_objects.xml" Objs
+	createStaticMesh Dir "static_meshes.xml" Objs
+	createMaterials Dir "materials.xml" Objs true
+	createMeshFromObjects Dir Objs
+	createLights Dir "lights.xml" Objs
 )
 
---createFiles (get_FileName()) (get_Level()) $*
+--createFiles get_Dir() $*
