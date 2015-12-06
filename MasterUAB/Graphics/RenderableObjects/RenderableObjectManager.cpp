@@ -84,6 +84,10 @@ bool CRenderableObjectsManager::Load(const std::string &FileName)
 						l_Element.GetBoolProperty("visible",false,true));*/
 					AddMeshInstance(l_Element);
 				}
+				if (l_Element.GetName() == std::string("animated_renderable_object"))
+				{
+					AddAnimatedInstanceModel(l_Element);
+				}
 			}
 		}
 	}
