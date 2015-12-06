@@ -215,7 +215,7 @@ public:
 	inline Matrix44<T>& SetFromPerspective(float fovy, float aspect, float zn, float zf);
 
 	inline Matrix44<T>& SetFromPosAndAnglesYXZ(const Vector3<T>& pos, const T angleY, const T angleX, const T angleZ);
-	//inline Matrix44<T>& SetFromQuatPos   (const Quatn<T>& quat, const Vector3<T>& vPos);
+	inline Matrix44<T>& SetFromQuatPos   (const Quatn<T>& quat, const Vector3<T>& vPos);
 
 
 	// Modificación de una de las partes de la matriz dejando invariable las otras
@@ -224,7 +224,7 @@ public:
 	inline Matrix44<T>& SetRotByAngleZ(const T angleZ);
 	inline Matrix44<T>& SetRotByAnglesXZ(const T angleX, const T angleZ);
 	inline Matrix44<T>& SetRotByAnglesYXZ(const T angleY, const T angleX, const T angleZ);
-	//inline Matrix44<T>& SetRotByQuat      (const Quatn<T>& quat);
+	inline Matrix44<T>& SetRotByQuat      (const Quatn<T>& quat);
 
 	inline Matrix44<T>& SetPos(const Vector3<T>& pos);
 	inline Matrix44<T>& SetPos(const T posX, const T posY, const T posZ);
