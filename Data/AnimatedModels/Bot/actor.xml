@@ -1,0 +1,18 @@
+<actor name="bot" radius_bs="2.0" pos_bs="0.0 1.0 0.0">
+	<skeleton filename="bot.csf"/>
+	<mesh filename="bot.CMF"/>
+	<material name="bot_material_1" effect_technique="animated_diffuse_technique">
+		<texture filename="data/models/textures/rocketl.jpg"/>
+	</material>
+	<material name="bot_material_2" effect_technique="animated_diffuse_technique">
+		<texture filename="data/models/textures/ranger.jpg"/>
+	</material>
+	<material name="bot_material_3" effect_technique="animated_diffuse_technique">
+		<texture filename="data/models/textures/ranger_h.jpg"/>
+	</material>
+	<animation name="idle" filename="idle.CAF"/>
+	<animation name="run" filename="run.CAF"/>
+	<animation name="hit" filename="hit.CAF"/>
+	<animation name="die" filename="die.CAF"/>
+	<animation name="shoot" filename="shoot.CAF"/>
+</actor>
