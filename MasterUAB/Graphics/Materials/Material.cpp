@@ -2,9 +2,8 @@
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 
-CMaterial::CMaterial(const CXMLTreeNode &TreeNode):CNamed("")
+CMaterial::CMaterial(const CXMLTreeNode &TreeNode):CNamed(TreeNode)
 {
-	SetName(TreeNode.GetPszProperty("name"));
 	std::string effectTechnique = TreeNode.GetPszProperty("effect_technique");
 	m_EffectTechnique = UABEngine.GetEffectManager()->GetResource(effectTechnique);
 	CXMLTreeNode material = TreeNode;
