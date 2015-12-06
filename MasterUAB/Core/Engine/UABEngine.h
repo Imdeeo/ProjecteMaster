@@ -7,15 +7,17 @@
 #include "RenderManager\RenderManager.h"
 #include "StaticMesh\StaticMeshManager.h"
 #include "RenderableObjects\RenderableObjectManager.h"
+#include "AnimatedModels\AnimatedModelsManager.h"
 
 class CUABEngine
 {
-	UAB_BUILD_GET_SET(CStaticMeshManager *, StaticMeshManager);
-	UAB_BUILD_GET_SET(CRenderableObjectsManager *, RenderableObjectsManager);
+	UAB_BUILD_GET_SET(CStaticMeshManager *, StaticMeshManager)
+	UAB_BUILD_GET_SET(CRenderableObjectsManager *, RenderableObjectsManager)
 	UAB_BUILD_GET_SET(CMaterialManager *, MaterialManager)
 	UAB_BUILD_GET_SET(CEffectManager *, EffectManager)
 	UAB_BUILD_GET_SET(CTextureManager *, TextureManager)
 	UAB_BUILD_GET_SET(CRenderManager *, RenderManager)
+	UAB_BUILD_GET_SET(CAnimatedModelsManager *, AnimatedModelsManager)
 
 	static CUABEngine * m_Instance;
 	
