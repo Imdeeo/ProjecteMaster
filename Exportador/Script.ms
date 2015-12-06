@@ -10,14 +10,30 @@ fn get_FileName =
 	return "F:\\" + (get_LocalFileName())
 )
 
-fn get_Cores =
+fn get_Cores Objs =
 (
-	return $*
-)
-
-fn get_Instances =
-(
-	return $*
+	local cores = #()
+	local areInstances
+	append cores Objs[1]
+	setUserProp Objs[1] "core_name" Objs[1].name
+	for i = 2 to Objs.count do
+	(
+		areInstances = false
+		for j = 1 to cores.count do
+		(
+			if ((AreNodesInstances Objs[i] cores[j]) == true) then
+			(
+				areInstances = true
+				setUserProp Objs[i] "core_name" cores[j].name
+			)
+		)
+		if areInstances == false then
+		(
+			append cores Objs[i]
+			setUserProp Objs[i] "core_name" Objs[i].name
+		)
+	)
+	return cores
 )
 
 fn dirExist dir =
@@ -71,9 +87,9 @@ fn createInstanceMesh dir filename Objs=
 	(
 		for i=1 to Objs.count do
 		(
-			Obj = Objs[i]
+			print (getUserProp Obj "core_name")
 			pos = TranslationToRH Obj.transform.translation
-			format "\t<renderable_object name=\"%\" core_name=\"%\" position=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" visible=\"%\"/>\n" Obj.name Obj.name pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) true to:file
+			format "\t<renderable_object name=\"%\" core_name=\"%\" position=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" visible=\"%\"/>\n" Obj.name (getUserProp Obj "core_name") pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) true to:file
 		)
 	)
 	format "</renderable_objects>\n" to:file
@@ -296,7 +312,6 @@ fn writeMeshFromObject arx Obj =
 fn createMeshFromObjects dir Objs =
 (
 	dirExist (dir+"\\Meshes")
-	
 	for i=1 to Objs.count do
 	(
 		file=fopen (dir+"\\Meshes\\"+Objs[i].name+".mesh") "wb"
@@ -307,54 +322,43 @@ fn createMeshFromObjects dir Objs =
 
 fn createMaterials dir filename Objs copyTexture =
 (	
-	print "1"
 	file=createfile (dir+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<materials>\n" to:file
 	if Objs != undefined then
 	(
-		print "2"
 		materialsDictionary = dotNetObject "System.Collections.Hashtable"
 		for i=1 to Objs.count do
 		(
-			print "3: "+i
 			mat = #()
 			n_materials = 1
 			
 			if(classof(Objs[i].material)==Multimaterial)then
 			(
-				print "4: "+i
 				mat = Objs[i].material
 				n_materials = Objs[i].material.numsubs
 			)
 			else
 			(
-				print "5: "+i
 				append mat Objs[i].material
-			)	
+			)
 			
 			for j=1 to n_materials do
 			(
-				print "6: "+i+" "+j
 				if materialsDictionary.Item[mat[j].name]==undefined then
 				(
-					print "7: "+i+" "+j
 					format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" mat[j].name to:file
 					materialsDictionary.Add mat[j].name "defined"
 					if mat[j].diffuseMap != undefined then  
 					(
-						print "8: "+i+" "+j
 						if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
 						(
-							print "9: "+i+" "+j
 							nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
 							
 							pathfile = (dir+"Textures\\" + nomTextura)
 							format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
-							
 							if copyTexture == true then
 							(
-								print "10: "+i+" "+j
 								dirExist (dir+"Textures")
 								copyFile mat[j].diffuseMap.bitmap.filename pathfile
 							)
