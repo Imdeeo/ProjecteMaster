@@ -21,7 +21,7 @@ public:
 	CAnimatedInstanceModel(CXMLTreeNode &TreeNode);
 	virtual ~CAnimatedInstanceModel();
 	void Initialize(CAnimatedCoreModel *AnimatedCoreModel);
-	void Render(CRenderManager &RenderManager);
+	void Render(CRenderManager *RenderManager);
 	void Update(float ElapsedTime);
 	void Destroy();
 	void ExecuteAction(int Id, float DelayIn, float DelayOut, float	WeightTarget=1.0f, bool AutoLock=true);
