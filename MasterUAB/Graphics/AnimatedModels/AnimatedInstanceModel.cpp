@@ -10,14 +10,17 @@
 #include "RenderableObjects\VertexTypes.h"
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
 
+#include <list>
+
 
 CAnimatedInstanceModel::CAnimatedInstanceModel(CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
 {
 	CXMLTreeNode l_Element = TreeNode;
 	SetName(l_Element.GetPszProperty("name"));
-	m_AnimatedCoreModel = UABEngine.GetAnimatedModelsManager()->GetResource(l_Element.GetPszProperty("animated_core_name"));
+	Initialize(UABEngine.GetAnimatedModelsManager()->GetResource(l_Element.GetPszProperty("core_model_name")));
+	/*m_AnimatedCoreModel = UABEngine.GetAnimatedModelsManager()->GetResource(l_Element.GetPszProperty("core_model_name"));
 	m_CalModel = new CalModel(m_AnimatedCoreModel->GetCalCoreModel());
-	m_CalHardwareModel = new CalHardwareModel(m_AnimatedCoreModel->GetCalCoreModel());
+	m_CalHardwareModel = new CalHardwareModel(m_AnimatedCoreModel->GetCalCoreModel());*/
 	m_RenderableVertexs = nullptr;
 }
 CAnimatedInstanceModel::~CAnimatedInstanceModel()
@@ -79,7 +82,7 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 	m_CalModel = new CalModel(m_AnimatedCoreModel->GetCalCoreModel());
 	m_CalHardwareModel = new CalHardwareModel(m_AnimatedCoreModel->GetCalCoreModel());
 }
-void CAnimatedInstanceModel::Render(CRenderManager &RenderManager)
+void CAnimatedInstanceModel::Render(CRenderManager *RenderManager)
 {
 	Mat44f l_Transform=GetTransform();
 	CEffectManager::m_Parameters.m_World=GetTransform();
@@ -97,31 +100,39 @@ void CAnimatedInstanceModel::Render(CRenderManager &RenderManager)
 			l_Transformations[l_BoneId].SetPos((const Vect3f&)(translationBoneSpace.x));
 		}
 		memcpy(&CEffectManager::m_Parameters.m_Bones, l_Transformations,MAXBONES*sizeof(float)*4*4);
-		m_RenderableVertexs->RenderIndexed(&RenderManager,m_Materials[l_HardwareMeshId]->GetEffectTechnique(),
+		m_RenderableVertexs->RenderIndexed(RenderManager,m_Materials[l_HardwareMeshId]->GetEffectTechnique(),
 			&CEffectManager::m_Parameters,m_CalHardwareModel->getFaceCount()*3, m_CalHardwareModel->getStartIndex(),
 			m_CalHardwareModel->getBaseVertexIndex());
 	}
 }
 void CAnimatedInstanceModel::Update(float ElapsedTime)
 {
+	m_CalModel->update(ElapsedTime);
 }
 void CAnimatedInstanceModel::Destroy()
 {
+	delete m_CalModel;
+	delete m_CalHardwareModel;
+	m_Materials.clear();
+	delete m_RenderableVertexs;
 }
 void CAnimatedInstanceModel::ExecuteAction(int Id, float DelayIn, float DelayOut, float WeightTarget, bool AutoLock)
 {
+	m_CalModel->getMixer()->executeAction(Id,DelayIn,DelayOut,WeightTarget,AutoLock);
 }
 void CAnimatedInstanceModel::BlendCycle(int Id, float Weight, float DelayIn)
 {
+	m_CalModel->getMixer()->blendCycle(Id, Weight, DelayIn);
 }
 void CAnimatedInstanceModel::ClearCycle(int Id, float DelayOut)
 {
+	m_CalModel->getMixer()->clearCycle(Id, DelayOut);
 }
 bool CAnimatedInstanceModel::IsCycleAnimationActive(int Id) const
 {
-	return true;
+	return m_CalModel->getMixer()->getAnimationVector()[Id]->getState() == CalAnimation::STATE_IN;
 }
 bool CAnimatedInstanceModel::IsActionAnimationActive(int Id) const
 {
-	return true;
+	return m_CalModel->getMixer()->getAnimationVector()[Id]->getState() == CalAnimation::STATE_IN;
 }
