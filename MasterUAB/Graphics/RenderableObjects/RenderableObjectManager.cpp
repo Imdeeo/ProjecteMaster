@@ -1,5 +1,6 @@
 #include "RenderableObjectManager.h"
 #include "StaticMesh\InstanceMesh.h"
+#include "AnimatedModels\AnimatedInstanceModel.h"
 
 CRenderableObjectsManager::CRenderableObjectsManager() {}
 CRenderableObjectsManager::~CRenderableObjectsManager(){}
@@ -43,8 +44,18 @@ CRenderableObject * CRenderableObjectsManager::AddMeshInstance(const std::string
 		return nullptr;
 }
 
+CRenderableObject * CRenderableObjectsManager::AddAnimatedInstanceModel(CXMLTreeNode &TreeNode)
+{
+	CAnimatedInstanceModel* l_AnimatedInstanceModel = new CAnimatedInstanceModel(TreeNode);
+	if (AddResource(l_AnimatedInstanceModel->GetName(), l_AnimatedInstanceModel))
+		return l_AnimatedInstanceModel;
+	else
+		return nullptr;
+}
+
 CRenderableObject * CRenderableObjectsManager::AddAnimatedInstanceModel(const std::string &CoreModelName, const std::string &InstanceModelName, const Vect3f &Position)
 {
+	assert(!"this methon must not be called");
 	return nullptr;
 }
 
