@@ -45,6 +45,9 @@
     <ClInclude Include="3DElement\C3DElement.h">
       <Filter>3DElement</Filter>
     </ClInclude>
+    <ClInclude Include="Math\Quatn.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
