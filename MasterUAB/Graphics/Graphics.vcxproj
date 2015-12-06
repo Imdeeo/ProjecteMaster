@@ -127,7 +127,7 @@
       <AdditionalDependencies>D3DX11.lib;cal3d_d.lib;Base_d.lib;Core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(DXSDK_DIR)\lib\x86;$(SolutionDir)bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)\lib\x86;$(SolutionDir)bin\lib;$(SolutionDir)\3rdParty\cal3d-0.11rc2\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <FxCompile>
       <ShaderType>Effect</ShaderType>
