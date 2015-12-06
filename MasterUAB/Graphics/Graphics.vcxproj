@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedModels\AnimatedCoreModel.cpp" />
-    <ClCompile Include="AnimatedModels\AnimatedModelInstance.cpp" />
+    <ClCompile Include="AnimatedModels\AnimatedInstanceModel.cpp" />
     <ClCompile Include="AnimatedModels\AnimatedModelsManager.cpp" />
     <ClCompile Include="Camera\CameraController.cpp" />
     <ClCompile Include="Camera\FPSCameraController.cpp" />
@@ -36,7 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedModels\AnimatedCoreModel.h" />
-    <ClInclude Include="AnimatedModels\AnimatedModelInstance.h" />
+    <ClInclude Include="AnimatedModels\AnimatedInstanceModel.h" />
     <ClInclude Include="AnimatedModels\AnimatedModelsManager.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\CameraController.h" />
