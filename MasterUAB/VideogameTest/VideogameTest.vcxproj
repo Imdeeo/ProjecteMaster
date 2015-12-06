@@ -66,7 +66,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName)_d.pdb</ProgramDatabaseFile>
       <AdditionalDependencies>D3DX11.lib;Graphics_d.lib;Core_d.lib;Base_d.lib;AntTweakBarDebug.lib;iconv.lib;libxml2.lib;cal3d_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(DXSDK_DIR)\lib\x86;$(SolutionDir)bin\lib\;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\lib;$(SolutionDir)3rdParty\iconv-1.9.2.win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)\lib\x86;$(SolutionDir)bin\lib\;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\lib;$(SolutionDir)3rdParty\iconv-1.9.2.win32\lib;$(SolutionDir)\3rdParty\cal3d-0.11rc2\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
