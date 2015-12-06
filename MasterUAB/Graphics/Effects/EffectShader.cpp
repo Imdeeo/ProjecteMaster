@@ -16,10 +16,9 @@
 
 #endif
 
-CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed(""),
+CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed(TreeNode),
 	m_ConstantBuffer(nullptr)
 {
-	m_Name = TreeNode.GetPszProperty("name");
 	m_Filename = TreeNode.GetPszProperty("file");
 	m_ShaderModel = TreeNode.GetPszProperty("shader_model");
 	m_EntryPoint = TreeNode.GetPszProperty("entry_point");
