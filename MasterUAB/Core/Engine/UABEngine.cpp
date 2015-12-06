@@ -11,6 +11,7 @@ CUABEngine::CUABEngine(void)
 	m_RenderManager = new CRenderManager();
 	m_StaticMeshManager = new CStaticMeshManager();
 	m_RenderableObjectsManager = new CRenderableObjectsManager();
+	m_AnimatedModelsManager = new CAnimatedModelsManager();
 }
 
 
