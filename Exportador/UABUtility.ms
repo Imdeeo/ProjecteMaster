@@ -20,10 +20,8 @@ utility UABUtility "UABUtility" width:168 height:360
 	(
 		local dir = ""+PathLabel.text+"\\" 
 		dirExist dir
-		print dir
 		dir += LevelList.items[LevelList.selection] + "\\"
 		dirExist dir
-		print dir
 		return dir
 	)
 	
@@ -95,24 +93,25 @@ utility UABUtility "UABUtility" width:168 height:360
 
 	fn exportMaterials dir textureCheck =
 	(
-		local materialsToExport checkUserProp "render_export"
-		createMaterials  dir "materials.xml" materialsToExport ExportTexturesCheck
+		local materialsToExport = checkUserProp "render_export"
+		createMaterials  dir "materials.xml" materialsToExport textureCheck
 	)
 
 	fn exportStaticMesh dir meshCheck =
 	(
 		local meshToExport = checkUserProp "render_export"
-		createStaticMesh dir (LevelList.items[LevelList.selection]) "static_meshes.xml" meshToExport
+		local coresToExport = get_Cores meshToExport
+		createStaticMesh dir (LevelList.items[LevelList.selection]) "static_meshes.xml" coresToExport
 		
-		if ExportMeshCheck == true then 
-		(				
+		if meshCheck == true then 
+		(
 			createMeshFromObjects dir meshToExport
 		)
 	)
 
 	fn exportRenderableObject dir =
 	(
-		local renderableObjectsToExport checkUserProp "render_export"
+		local renderableObjectsToExport = checkUserProp "render_export"
 		createInstanceMesh dir "renderable_objects.xml" renderableObjectsToExport
 	)
 
