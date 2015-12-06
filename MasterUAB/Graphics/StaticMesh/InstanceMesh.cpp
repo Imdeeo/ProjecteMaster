@@ -9,7 +9,6 @@
 CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
 {
 	CXMLTreeNode l_Element = TreeNode;
-	SetName(l_Element.GetPszProperty("name"));
 	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(l_Element.GetPszProperty("core_name"));
 }
 
