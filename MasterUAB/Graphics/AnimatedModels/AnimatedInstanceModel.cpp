@@ -10,9 +10,6 @@
 #include "RenderableObjects\VertexTypes.h"
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
 
-#include <list>
-
-
 CAnimatedInstanceModel::CAnimatedInstanceModel(CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
 {
 	CXMLTreeNode l_Element = TreeNode;
