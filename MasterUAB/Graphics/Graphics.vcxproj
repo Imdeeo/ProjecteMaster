@@ -23,6 +23,11 @@
     <ClCompile Include="Effects\EffectManager.cpp" />
     <ClCompile Include="Effects\EffectShader.cpp" />
     <ClCompile Include="Effects\EffectTechnique.cpp" />
+    <ClCompile Include="Lights\DirectionalLight.cpp" />
+    <ClCompile Include="Lights\Light.cpp" />
+    <ClCompile Include="Lights\LightManager.cpp" />
+    <ClCompile Include="Lights\OmniLight.cpp" />
+    <ClCompile Include="Lights\SpotLight.cpp" />
     <ClCompile Include="Materials\Material.cpp" />
     <ClCompile Include="Materials\MaterialManager.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectManager.cpp" />
@@ -50,6 +55,11 @@
     <ClInclude Include="Effects\EffectParameters.h" />
     <ClInclude Include="Effects\EffectShader.h" />
     <ClInclude Include="Effects\EffectTechnique.h" />
+    <ClInclude Include="Lights\DirectionalLight.h" />
+    <ClInclude Include="Lights\Light.h" />
+    <ClInclude Include="Lights\LightManager.h" />
+    <ClInclude Include="Lights\OmniLight.h" />
+    <ClInclude Include="Lights\SpotLight.h" />
     <ClInclude Include="Materials\Material.h" />
     <ClInclude Include="Materials\MaterialManager.h" />
     <ClInclude Include="RenderableObjects\RenderableObject.h" />
