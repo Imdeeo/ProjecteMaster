@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <animated_models>
-	<animated_model name="bot" path="Data/AnimatedModels/Bot/">
+	<animated_model name="bot" path="Data/AnimatedModels/Bot/"/>
 </animated_models>

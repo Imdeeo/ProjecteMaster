@@ -42,16 +42,17 @@ bool CAnimatedCoreModel::Load(const std::string &Path)
 				}
 				if (l_Element.GetName() == std::string("skeleton"))
 				{
-					result = result & LoadSkeleton(l_SkeletonFilename.append(l_Input.GetPszProperty("filename")));
+					result = result & LoadSkeleton(l_SkeletonFilename.append(l_Element.GetPszProperty("filename")));
 				}
 				if (l_Element.GetName() == std::string("mesh"))
 				{
-					result = result & LoadMesh(l_MeshFilename.append(l_Input.GetPszProperty("filename")));
+					result = result & LoadMesh(l_MeshFilename.append(l_Element.GetPszProperty("filename")));
 				}
 				if (l_Element.GetName() == std::string("animation"))
 				{
-					result = result & LoadAnimation(l_Input.GetPszProperty("name"),
-						l_AnimationFilename.append(l_Input.GetPszProperty("filename")));
+					l_AnimationFilename = Path;
+					result = result & LoadAnimation(l_Element.GetPszProperty("name"),
+						l_AnimationFilename.append(l_Element.GetPszProperty("filename")));
 				}
 			}
 		}
@@ -68,6 +69,7 @@ bool CAnimatedCoreModel::LoadMesh(const std::string &Filename)
 		CalError::printLastError();
 		return false;
     }
+	return true;
 }
 
 bool CAnimatedCoreModel::LoadSkeleton(const std::string &Filename)
@@ -82,11 +84,11 @@ bool CAnimatedCoreModel::LoadSkeleton(const std::string &Filename)
 
 bool CAnimatedCoreModel::LoadAnimation(const std::string &Name, const std::string &Filename)
 {
-	
 	m_AnimationsIds[Name] = m_CalCoreModel->loadCoreAnimation(Filename);
     if(m_AnimationsIds[Name] == -1)
     {
 		CalError::printLastError();
 		return false;
     }
+	return true;
 }

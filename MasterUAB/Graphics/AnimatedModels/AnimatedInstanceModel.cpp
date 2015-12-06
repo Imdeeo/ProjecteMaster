@@ -13,8 +13,7 @@
 CAnimatedInstanceModel::CAnimatedInstanceModel(CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
 {
 	CXMLTreeNode l_Element = TreeNode;
-	SetName(l_Element.GetPszProperty("name"));
-	Initialize(UABEngine.GetAnimatedModelsManager()->GetResource(l_Element.GetPszProperty("core_model_name")));
+	Initialize(UABEngine.GetAnimatedModelsManager()->GetResource(l_Element.GetPszProperty("core_name")));
 	/*m_AnimatedCoreModel = UABEngine.GetAnimatedModelsManager()->GetResource(l_Element.GetPszProperty("core_model_name"));
 	m_CalModel = new CalModel(m_AnimatedCoreModel->GetCalCoreModel());
 	m_CalHardwareModel = new CalHardwareModel(m_AnimatedCoreModel->GetCalCoreModel());*/
