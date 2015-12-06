@@ -1,7 +1,6 @@
 #ifndef ANIMATED_MODELS_MANAGER_H
 #define ANIMATED_MODELS_MANAGER_H
 
-
 #include "TemplatedMapManager.h"
 #include "AnimatedCoreModel.h"
 
@@ -14,8 +13,8 @@ class CAnimatedModelsManager: public CTemplatedMapManager<CAnimatedCoreModel>
 private:
 	std::string m_Filename;
 public:
-	CAnimatedModelManager();
-	virtual ~CAnimatedModelManager();
+	CAnimatedModelsManager();
+	virtual ~CAnimatedModelsManager();
 	bool Load(const std::string &Filename);
 	bool Reload();
 };

@@ -31,6 +31,9 @@ bool CAnimatedModelsManager::Load(const std::string &Filename)
 				{
 					l_AnimatedModelName = l_Element.GetPszProperty("name");
 					l_AnimatedModelPath = l_Element.GetPszProperty("path");
+					CAnimatedCoreModel* l_AnimatedCoreModel = new CAnimatedCoreModel();
+					l_AnimatedCoreModel->Load(l_AnimatedModelPath);
+					AddResource(l_AnimatedModelName,l_AnimatedCoreModel);
 				}
 			}
 		}
