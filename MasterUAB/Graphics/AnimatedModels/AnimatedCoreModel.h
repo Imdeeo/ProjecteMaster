@@ -5,7 +5,7 @@
 #include "Utils.h"
 #include "Named.h"
 
-#include <cal3d/cal3d.h>
+#include <cal3d\cal3d.h>
 
 #include <string>
 #include <vector>
