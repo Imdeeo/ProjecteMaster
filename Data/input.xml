@@ -11,6 +11,10 @@
 	<action name="CHANGE_CAMERA_BOTH" type="KEYBOARD" mode="ON_PRESS" key="B"/>
 	<action name="RENDER_CAMERA" type="KEYBOARD" mode="ON_PRESS" key="X"/>
 	
+	<action name="MONSTER_RUN" type="KEYBOARD" mode="ON_PRESS" key="1"/>
+	<action name="MONSTER_IDLE" type="KEYBOARD" mode="ON_PRESS" key="2"/>
+	<action name="MONSTER_HIT" type="KEYBOARD" mode="ON_PRESS" key="3CCCCCCC"/>
+	
 	<action name="MOVE_CAMERA" type="MOUSE" mode="WHILE_PRESSED" mouse_button="RIGHT"/>
 	
 	<axis name="X_AXIS" type="MOUSE" mouse_axis="X" mouse_scale="0.05"/>
