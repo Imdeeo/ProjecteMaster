@@ -6,7 +6,7 @@ CDirectionalLight::CDirectionalLight() : CLight() {}
 
 CDirectionalLight::CDirectionalLight(CXMLTreeNode &TreeNode) : CLight(TreeNode)
 {
-	SetDirection(TreeNode.GetFloatProperty("dir"));
+	m_Direction = TreeNode.GetFloatProperty("dir");
 }
 
 void CDirectionalLight::Render(CRenderManager *RenderManager)
