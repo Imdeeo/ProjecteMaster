@@ -6,6 +6,6 @@ CSpotLight::CSpotLight(){}
 
 CSpotLight::CSpotLight(CXMLTreeNode &TreeNode) : CLight(TreeNode)
 {
-	SetAngle(TreeNode.GetFloatProperty("angle"));
-	SetFallOff(TreeNode.GetFloatProperty("fall_off"));
+	m_Angle = TreeNode.GetFloatProperty("angle");
+	m_FallOff = TreeNode.GetFloatProperty("fall_off");
 }
