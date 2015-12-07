@@ -16,6 +16,8 @@ CLight::CLight(CXMLTreeNode &TreeNode) : CNamed("")
 	SetIntensity(TreeNode.GetFloatProperty("intensity"));
 }
 
+CLight::~CLight(){}
+
 void CLight::Render(CRenderManager *RenderManager)
 {
 	RenderManager->Render();
