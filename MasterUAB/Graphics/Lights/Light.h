@@ -15,9 +15,11 @@ class CLight : public CNamed
 public:
 	enum TLightType
 	{
-		OMNI = 0,
-		DIRECTIONAL,
-		SPOT
+		LIGHT_TYPE_OMNI = 0,
+		LIGHT_TYPE_DIRECTIONAL,
+		LIGHT_TYPE_SPOT,
+
+		LIGHT_TYPE_NULL = -1
 	};
 
 	CLight(CXMLTreeNode &TreeNode);
