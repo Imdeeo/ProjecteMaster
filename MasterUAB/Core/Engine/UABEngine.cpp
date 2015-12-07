@@ -10,8 +10,9 @@ CUABEngine::CUABEngine(void)
 	m_TextureManager = new CTextureManager();
 	m_RenderManager = new CRenderManager();
 	m_StaticMeshManager = new CStaticMeshManager();
-	m_RenderableObjectsManager = new CRenderableObjectsManager();
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
+	m_RenderableObjectsManager = new CRenderableObjectsManager();
+	
 }
 
 
