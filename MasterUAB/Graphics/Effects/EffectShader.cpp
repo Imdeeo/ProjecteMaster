@@ -95,8 +95,7 @@ CEffectVertexShader::CEffectVertexShader(const CXMLTreeNode &TreeNode):CEffectSh
 bool CEffectVertexShader::Load()
 {
 	ID3DBlob *l_VSBlob=NULL;
-	bool l_Loaded=LoadShader(m_Filename, m_EntryPoint, m_ShaderModel,
-	&l_VSBlob);
+	bool l_Loaded=LoadShader(m_Filename, m_EntryPoint, m_ShaderModel, &l_VSBlob);
 	if(!l_Loaded)
 		return false;
 	CRenderManager* l_RenderManager=UABEngine.GetRenderManager();
@@ -112,6 +111,8 @@ bool CEffectVertexShader::Load()
 		l_Loaded=MV_POSITION_NORMAL_TEXTURE_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else if(m_VertexType=="MV_POSITION_COLOR_VERTEX")
 		l_Loaded=MV_POSITION_COLOR_VERTEX::CreateInputLayout(l_RenderManager,l_VSBlob, &m_VertexLayout);
+	else if (m_VertexType == "KG_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX")
+		l_Loaded = MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else
 		printf("Vertex type '%s' not recognized on CEffectVertexShader::Load",m_VertexType.c_str());
 		//Info("Vertex type '%s' not recognized on CEffectVertexShader::Load",m_VertexType.c_str());
