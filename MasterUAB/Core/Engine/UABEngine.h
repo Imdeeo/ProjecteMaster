@@ -6,6 +6,7 @@
 #include "Texture\TextureManager.h"
 #include "RenderManager\RenderManager.h"
 #include "StaticMesh\StaticMeshManager.h"
+#include "Lights\LightManager.h"
 #include "RenderableObjects\RenderableObjectManager.h"
 #include "AnimatedModels\AnimatedModelsManager.h"
 
@@ -16,6 +17,7 @@ class CUABEngine
 	UAB_BUILD_GET_SET(CMaterialManager *, MaterialManager)
 	UAB_BUILD_GET_SET(CEffectManager *, EffectManager)
 	UAB_BUILD_GET_SET(CTextureManager *, TextureManager)
+	UAB_BUILD_GET_SET(CLightManager *, LightManager)
 	UAB_BUILD_GET_SET(CRenderManager *, RenderManager)
 	UAB_BUILD_GET_SET(CAnimatedModelsManager *, AnimatedModelsManager)
 
