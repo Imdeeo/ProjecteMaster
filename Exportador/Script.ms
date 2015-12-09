@@ -62,6 +62,93 @@ fn GetRoll transform =
 	return (transform as eulerangles).x
 )
 
+fn circumcenter p1 p2 p3 =
+(
+    BC = distance p2 p3
+    CA = distance p3 p1
+    AB = distance p1 p2
+
+    baryCoords = [ (BC^2 * (CA^2 + AB^2 - BC^2)), (CA^2 * (AB^2 + BC^2 - CA^2)), (AB^2 * (BC^2 + CA^2 - AB^2)) ]
+    triArea = baryCoords.x + baryCoords.y + baryCoords.z
+    baryCoords /= triArea
+
+    baryCoords.x * p1 + baryCoords.y * p2 + baryCoords.z * p3
+)
+
+fn getBoundingSphere Obj =
+(
+	struct vtxPair (vtxA, vtxB, dist)
+	local vertexs = #()
+	local vtxA
+	local vtxB
+	local vtxC
+
+	for i = 1 to getNumVerts Obj do
+	(
+		append vertexs (getVert obj i)
+	)
+
+	local farVtxs = vtxPair dist:0
+	for i = 1 to vertexs.count do
+	(
+		vtxA = vertexs[i]
+	   
+		for j = 1 to vertexs.count do
+		(
+			vtxB = vertexs[j]
+		   
+			if (distance vtxA vtxB) > farVtxs.dist do
+			(
+				farVtxs.vtxA = vtxA
+				farVtxs.vtxB = vtxB
+				farVtxs.dist = (distance vtxA vtxB)
+			)
+		)
+	)
+
+	center = ((farVtxs.vtxA + farVtxs.vtxB) / 2)
+	radius = ((distance farVtxs.vtxA farVtxs.vtxB) / 2)
+
+	local vtxsOut = #()
+	for i = 1 to vertexs.count do
+	(
+		if ((distance vertexs[i] center) > radius) do append vtxsOut vertexs[i]
+	)
+
+	if vtxsOut.count != 0 then(
+		for i = 1 to vtxsOut.count do
+		(
+			vtxA = vtxsOut[i]
+			
+			for j = 1 to vertexs.count do
+			(
+				vtxB = vertexs[j]
+			   
+				if ((distance vtxB vtxA) > (radius * sqrt 2)) do
+				(
+					for k = 1 to vertexs.count do
+					(
+						vtxC = vertexs[k]
+					   
+						if ((distance vtxC vtxA) > (radius * sqrt 2)) and ((distance vtxC vtxB) > (radius * sqrt 2)) do
+						(
+							c = (circumcenter vtxA vtxB vtxC)
+							r = (distance c vtxA)
+							if r > radius do
+							(
+								radius = r
+								center = c
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+	
+	return #(center, radius)
+)
+
 fn createStaticMesh dir level filename Objs=
 (	
 	file=createfile (dir+filename)
@@ -87,6 +174,7 @@ fn createInstanceMesh dir filename Objs=
 	(
 		for i=1 to Objs.count do
 		(
+			Obj = Objs[i]
 			print (getUserProp Obj "core_name")
 			pos = TranslationToRH Obj.transform.translation
 			format "\t<renderable_object name=\"%\" core_name=\"%\" position=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" visible=\"%\"/>\n" Obj.name (getUserProp Obj "core_name") pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) true to:file
@@ -172,7 +260,7 @@ fn getIndex vertexVect vertex IdMaterial =
 	return index
 )
 
-fn writeMesh arx vertexs indexs =
+fn writeMesh arx vertexs indexs BBMin BBMax BSPhere=
 (
 	if isDebug then
 	format "Number of materials: %\n" vertexs.count
@@ -199,6 +287,16 @@ fn writeMesh arx vertexs indexs =
 			if isDebug then
 			format "\n"
 		)
+		writeFloat arx BBMin.x
+		writeFloat arx BBMin.y
+		writeFloat arx BBMin.z
+		writeFloat arx BBMax.x
+		writeFloat arx BBMax.y
+		writeFloat arx BBMax.z
+		writeFloat arx BSphere[1].x
+		writeFloat arx BSphere[1].y
+		writeFloat arx BSphere[1].z
+		writeFloat arx BSphere[2]
 		writeShort arx 16 #unsigned
 		if isDebug then
 		format "Size of index: 16\n"
@@ -293,7 +391,15 @@ fn procesFaces arx Obj =
 		append indexs[l_IdMaterial] id2
 		append indexs[l_IdMaterial] id3
 	)
-	writeMesh arx vertexs indexs
+	
+	local ffd=ffdbox()
+	addModifier l_Obj ffd
+	BBMin=getModContextBBoxMin l_Obj ffd
+	BBMax=getModContextBBoxMax l_Obj ffd
+	
+	BSphere = getBoundingSphere l_Obj
+	
+	writeMesh arx vertexs indexs BBMin BBMax BSphere
 	
 	if l_ObjectConverted==true then
 	(
