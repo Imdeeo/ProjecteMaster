@@ -104,11 +104,22 @@ bool CStaticMesh::Load(const std::string &FileName)
 				else if(l_VertexType==MV_POSITION_COLOR_TEXTURE_VERTEX::GetVertexType())
 					l_NumBytes = sizeof(MV_POSITION_COLOR_TEXTURE_VERTEX)*l_NumVertexs;
 
+				// Read Vertex Data
 				void *l_VertexData = NULL;
 				l_VertexData = malloc(l_NumBytes);
-
-				// Read Vertex Data
 				l_File.read((char *) l_VertexData, l_NumBytes);
+
+				// Read Bounding Box
+				l_NumBytes = sizeof(float)*6;
+				void *l_BoundingBox = NULL;
+				l_BoundingBox = malloc(l_NumBytes);
+				l_File.read((char *) l_BoundingBox, l_NumBytes);
+
+				// Read Bounding Sphere
+				l_NumBytes = sizeof(float)*4;
+				void *l_BoundingSphere = NULL;
+				l_BoundingSphere = malloc(l_NumBytes);
+				l_File.read((char *) l_BoundingSphere, l_NumBytes);
 
 				// Read Index Type
 				l_File.read((char *) &l_BufferUnsignedShort, sizeof(unsigned short));
