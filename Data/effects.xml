@@ -6,4 +6,12 @@
 	<pixel_shader name="debug_render_ps" file="./Data/Effects/DebugRender.fx" shader_model="ps_4_0" entry_point="PS"/>
 	<effect_technique name="diffuse_technique" vertex_shader="diffuse_vs" pixel_shader="diffuse_ps"/>
 	<effect_technique name="debug_render_technique" vertex_shader="debug_render_vs"	pixel_shader="debug_render_ps"/>
+	<vertex_shader name="animated_model_render_vs" file="./Data/Effects/KG_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX_Shader.fx" shader_model="vs_4_0" entry_point="VS" vertex_type="KG_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX"/>
+	<pixel_shader name="animated_model_render_ps" file="./Data/Effects/KG_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX_Shader.fx" shader_model="ps_4_0" entry_point="PS"/>
+	<effect_technique name="animated_diffuse_technique" vertex_shader="animated_model_render_vs" pixel_shader="animated_model_render_ps"/>
 </effects>
+
+
+
+
+

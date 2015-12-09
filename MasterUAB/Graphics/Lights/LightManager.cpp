@@ -25,20 +25,19 @@ bool CLightManager::Load(const std::string &FileName){
 				CXMLTreeNode l_Element = l_Input(i);
 				if (l_Element.GetName() == std::string("light"))
 				{
-					if (l_Element.GetPszProperty("type") == "omni")
+					CLight::TLightType type = CLight::GetLightTypeByName(l_Element.GetPszProperty("type"));
+					switch(type)
 					{
+					case CLight::LIGHT_TYPE_OMNI:
 						AddResource(l_Element.GetPszProperty("name"), new COmniLight(l_Element));
-					}
-					else if (l_Element.GetPszProperty("type") == "directional")
-					{
+						break;
+					case CLight::LIGHT_TYPE_DIRECTIONAL:
 						AddResource(l_Element.GetPszProperty("name"), new CDirectionalLight(l_Element));
-					}
-					else if (l_Element.GetPszProperty("type") == "spot")
-					{
+						break;
+					case CLight::LIGHT_TYPE_SPOT:
 						AddResource(l_Element.GetPszProperty("name"), new CSpotLight(l_Element));
-					}
-					else
-					{
+						break;
+					default:
 						return false;
 					}
 				}
