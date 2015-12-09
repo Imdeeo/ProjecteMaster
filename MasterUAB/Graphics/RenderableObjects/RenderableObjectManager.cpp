@@ -63,6 +63,8 @@ bool CRenderableObjectsManager::Load(const std::string &FileName)
 {
 	Destroy();
 
+	m_Filename = FileName;
+
 	CXMLTreeNode l_XML;
 	if (l_XML.LoadFile(FileName.c_str()))
 	{
@@ -98,6 +100,10 @@ bool CRenderableObjectsManager::Load(const std::string &FileName)
 	return true;
 }
 
+bool CRenderableObjectsManager::Reload()
+{
+	return Load(m_Filename);
+}
 //void CRenderableObjectsManager::CleanUp(); ---no hacer
 
 //CRenderableObject * CRenderableObjectsManager::GetInstance(const std::string &Name) const; ---no hacer

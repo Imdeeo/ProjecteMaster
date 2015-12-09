@@ -6,6 +6,7 @@
 #include "ContextManager\ContextManager.h"
 #include "DebugRender.h"
 #include "InputManager\InputManager.h"
+#include "AnimatedModels\AnimatedInstanceModel.h"
 #include "DebugHelper.h"
 #include "Engine\UABEngine.h"
 
@@ -84,7 +85,8 @@ void CApplication::Update(float _ElapsedTime)
 		UABEngine.GetEffectManager()->Reload();
 		UABEngine.GetMaterialManager()->Reload();
 		UABEngine.GetStaticMeshManager()->Reload();
-		//UABEngine.GetRenderableObjectsManager()->
+		UABEngine.GetAnimatedModelsManager()->Reload();
+		UABEngine.GetRenderableObjectsManager()->Reload();
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_BOTH"))
 	{
@@ -108,6 +110,22 @@ void CApplication::Update(float _ElapsedTime)
 		m_RenderCameraCube = !m_RenderCameraCube;
 	}
 
+	if(CInputManager::GetInputManager()->IsActionActive("MONSTER_RUN"))
+	{
+		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(0,1,0.1);
+		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ClearCycle(0,0.1);
+	}
+	if(CInputManager::GetInputManager()->IsActionActive("MONSTER_IDLE"))
+	{
+		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(1,1,0.1);
+		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ClearCycle(0,0.1);
+	}
+	if(CInputManager::GetInputManager()->IsActionActive("MONSTER_HIT"))
+	{
+		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ClearCycle(0,0.1);
+		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ClearCycle(1,0.1);
+		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ExecuteAction(2,0.1,0.1);
+	}
 	switch (m_CurrentCamera_control)
 	{
 	case 0:
