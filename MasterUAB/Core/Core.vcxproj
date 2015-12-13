@@ -16,6 +16,7 @@
     <ClCompile Include="Engine\UABEngine.cpp" />
     <ClCompile Include="InputManager\InputManager.cpp" />
     <ClCompile Include="InputManager\InputManagerImplementation.cpp" />
+    <ClCompile Include="ScriptManager\ScriptManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugHelper.h" />
@@ -23,6 +24,7 @@
     <ClInclude Include="Engine\UABEngine.h" />
     <ClInclude Include="InputManager\InputManager.h" />
     <ClInclude Include="InputManager\InputManagerImplementation.h" />
+    <ClInclude Include="ScriptManager\ScriptManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{77B0C728-54BB-429B-925A-3F8CB72784F9}</ProjectGuid>
@@ -69,7 +71,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\cal3d-0.11rc2\src;$(SolutionDir)Base\;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)3rdParty\AntTweakBar\include;$(SolutionDir)Core;$(SolutionDir)Graphics;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\cal3d-0.11rc2\src;$(SolutionDir)Base\;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)3rdParty\AntTweakBar\include;$(SolutionDir)Core;$(SolutionDir)Graphics;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
