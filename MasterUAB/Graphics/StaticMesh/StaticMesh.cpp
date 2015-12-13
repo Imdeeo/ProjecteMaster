@@ -81,6 +81,7 @@ bool CStaticMesh::Load(const std::string &FileName)
 
 			for(int i=0; i<l_NumMaterials; i++)
 			{
+				int l_NumBytes = 0;
 				// Read Vertex Type
 				l_File.read((char *) &l_BufferUnsignedShort, sizeof(unsigned short));
 				l_VertexType = l_BufferUnsignedShort;
@@ -88,8 +89,6 @@ bool CStaticMesh::Load(const std::string &FileName)
 				// Read Number of Vertexs
 				l_File.read((char *) &l_BufferLong, sizeof(long));
 				int l_NumVertexs = l_BufferLong;
-
-				int l_NumBytes = 0;
 
 				if(l_VertexType==MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX::GetVertexType())
 					l_NumBytes = sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX)*l_NumVertexs;
@@ -108,18 +107,6 @@ bool CStaticMesh::Load(const std::string &FileName)
 				void *l_VertexData = NULL;
 				l_VertexData = malloc(l_NumBytes);
 				l_File.read((char *) l_VertexData, l_NumBytes);
-
-				// Read Bounding Box
-				l_NumBytes = sizeof(float)*6;
-				void *l_BoundingBox = NULL;
-				l_BoundingBox = malloc(l_NumBytes);
-				l_File.read((char *) l_BoundingBox, l_NumBytes);
-
-				// Read Bounding Sphere
-				l_NumBytes = sizeof(float)*4;
-				void *l_BoundingSphere = NULL;
-				l_BoundingSphere = malloc(l_NumBytes);
-				l_File.read((char *) l_BoundingSphere, l_NumBytes);
 
 				// Read Index Type
 				l_File.read((char *) &l_BufferUnsignedShort, sizeof(unsigned short));
@@ -195,6 +182,20 @@ bool CStaticMesh::Load(const std::string &FileName)
 
 				m_RVs.push_back(l_RV);
 			}
+
+			int l_NumBytes = 0;
+
+			// Read Bounding Box
+			l_NumBytes = sizeof(float)*6;
+			void *l_BoundingBox = NULL;
+			l_BoundingBox = malloc(l_NumBytes);
+			l_File.read((char *) l_BoundingBox, l_NumBytes);
+
+			// Read Bounding Sphere
+			l_NumBytes = sizeof(float)*4;
+			void *l_BoundingSphere = NULL;
+			l_BoundingSphere = malloc(l_NumBytes);
+			l_File.read((char *) l_BoundingSphere, l_NumBytes);
 
 			// Read Footer
 			l_File.read((char *) &l_BufferUnsignedShort, sizeof(short));
