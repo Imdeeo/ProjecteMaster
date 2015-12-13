@@ -12,6 +12,9 @@
     <ClCompile Include="InputManager\InputManagerImplementation.cpp">
       <Filter>InputManager</Filter>
     </ClCompile>
+    <ClCompile Include="ScriptManager\ScriptManager.cpp">
+      <Filter>ScriptManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugHelper.h" />
@@ -25,6 +28,9 @@
     <ClInclude Include="InputManager\InputManagerImplementation.h">
       <Filter>InputManager</Filter>
     </ClInclude>
+    <ClInclude Include="ScriptManager\ScriptManager.h">
+      <Filter>ScriptManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -32,6 +38,9 @@
     </Filter>
     <Filter Include="InputManager">
       <UniqueIdentifier>{00dc7af4-a031-4dd6-b9f9-ac3db48f7001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScriptManager">
+      <UniqueIdentifier>{176bee89-660d-4925-8990-3ea2554dfce9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
