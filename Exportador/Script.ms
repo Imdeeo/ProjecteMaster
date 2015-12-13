@@ -260,7 +260,7 @@ fn getIndex vertexVect vertex IdMaterial =
 	return index
 )
 
-fn writeMesh arx vertexs indexs BBMin BBMax BSPhere=
+fn writeMesh arx vertexs indexs BBMin BBMax BSphere=
 (
 	if isDebug then
 	format "Number of materials: %\n" vertexs.count
@@ -287,16 +287,6 @@ fn writeMesh arx vertexs indexs BBMin BBMax BSPhere=
 			if isDebug then
 			format "\n"
 		)
-		writeFloat arx BBMin.x
-		writeFloat arx BBMin.y
-		writeFloat arx BBMin.z
-		writeFloat arx BBMax.x
-		writeFloat arx BBMax.y
-		writeFloat arx BBMax.z
-		writeFloat arx BSphere[1].x
-		writeFloat arx BSphere[1].y
-		writeFloat arx BSphere[1].z
-		writeFloat arx BSphere[2]
 		writeShort arx 16 #unsigned
 		if isDebug then
 		format "Size of index: 16\n"
@@ -310,6 +300,16 @@ fn writeMesh arx vertexs indexs BBMin BBMax BSPhere=
 			format "Index %: %\n" j indexs[i][j]
 		)
 	)
+	writeFloat arx BBMin.x
+	writeFloat arx BBMin.y
+	writeFloat arx BBMin.z
+	writeFloat arx BBMax.x
+	writeFloat arx BBMax.y
+	writeFloat arx BBMax.z
+	writeFloat arx BSphere[1].x
+	writeFloat arx BSphere[1].y
+	writeFloat arx BSphere[1].z
+	writeFloat arx BSphere[2]
 )
 
 fn createVertex pos norm textcoord =
