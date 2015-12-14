@@ -19,7 +19,6 @@ CLight::~CLight(){}
 
 void CLight::Render(CRenderManager *RenderManager)
 {
-	RenderManager->Render();
 }
 
 CLight::TLightType CLight::GetLightTypeByName(const std::string &StrLightType)
