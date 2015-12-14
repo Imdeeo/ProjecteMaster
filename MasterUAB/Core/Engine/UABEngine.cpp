@@ -13,7 +13,7 @@ CUABEngine::CUABEngine(void)
 	m_LightManager = new CLightManager();
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
 	m_RenderableObjectsManager = new CRenderableObjectsManager();
-	
+	m_ScriptManager = new CScriptManager();
 }
 
 
