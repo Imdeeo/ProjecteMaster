@@ -12,4 +12,4 @@ public:
 	UAB_BUILD_GET_SET(float, FallOff);
 };
 
-#endif //LIGHT_H
+#endif //SPOT_LIGHT_H
