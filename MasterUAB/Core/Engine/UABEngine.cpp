@@ -13,7 +13,7 @@ CUABEngine::CUABEngine(void)
 	m_LightManager = new CLightManager();
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
 	m_RenderableObjectsManager = new CRenderableObjectsManager();
-	
+	m_ScriptManager = new CScriptManager();
 }
 
 
@@ -40,4 +40,6 @@ void CUABEngine::Init()
 	m_LightManager->Load("Data\\level_1\\lights.xml");
 	m_AnimatedModelsManager->Load("Data\\level_1\\animated_models.xml");
 	m_RenderableObjectsManager->Load("Data\\level_1\\renderable_objects.xml");
+	m_ScriptManager->Initialize();
+	m_ScriptManager->RegisterLUAFunctions();
 }

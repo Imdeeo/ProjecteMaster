@@ -1,5 +1,5 @@
-#ifndef MI_PUTO_ENGINE_H
-#define MI_PUTO_ENGINE_H
+#ifndef UABENGINE_H
+#define UABENGINE_H
 
 #include "Effects\EffectManager.h"
 #include "Materials\MaterialManager.h"
@@ -9,6 +9,7 @@
 #include "Lights\LightManager.h"
 #include "RenderableObjects\RenderableObjectManager.h"
 #include "AnimatedModels\AnimatedModelsManager.h"
+#include "ScriptManager\ScriptManager.h"
 
 class CUABEngine
 {
@@ -20,6 +21,7 @@ class CUABEngine
 	UAB_BUILD_GET_SET(CLightManager *, LightManager)
 	UAB_BUILD_GET_SET(CRenderManager *, RenderManager)
 	UAB_BUILD_GET_SET(CAnimatedModelsManager *, AnimatedModelsManager)
+	UAB_BUILD_GET_SET(CScriptManager *, ScriptManager)
 
 	static CUABEngine * m_Instance;
 	
@@ -35,4 +37,4 @@ public:
 
 #define UABEngine (*(CUABEngine::GetInstance()))
 
-#endif //MI_PUTO_ENGINE_H
+#endif //UABENGINE_H
