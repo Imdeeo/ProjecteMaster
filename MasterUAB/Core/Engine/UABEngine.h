@@ -1,5 +1,5 @@
-#ifndef MI_PUTO_ENGINE_H
-#define MI_PUTO_ENGINE_H
+#ifndef UABENGINE_H
+#define UABENGINE_H
 
 #include "Effects\EffectManager.h"
 #include "Materials\MaterialManager.h"
@@ -37,4 +37,4 @@ public:
 
 #define UABEngine (*(CUABEngine::GetInstance()))
 
-#endif //MI_PUTO_ENGINE_H
+#endif //UABENGINE_H
