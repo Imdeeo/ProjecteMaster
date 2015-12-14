@@ -9,6 +9,7 @@
 #include "Lights\LightManager.h"
 #include "RenderableObjects\RenderableObjectManager.h"
 #include "AnimatedModels\AnimatedModelsManager.h"
+#include "ScriptManager\ScriptManager.h"
 
 class CUABEngine
 {
@@ -20,6 +21,7 @@ class CUABEngine
 	UAB_BUILD_GET_SET(CLightManager *, LightManager)
 	UAB_BUILD_GET_SET(CRenderManager *, RenderManager)
 	UAB_BUILD_GET_SET(CAnimatedModelsManager *, AnimatedModelsManager)
+	UAB_BUILD_GET_SET(CScriptManager *, ScriptManager)
 
 	static CUABEngine * m_Instance;
 	
