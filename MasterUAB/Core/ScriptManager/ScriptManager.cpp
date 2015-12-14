@@ -9,8 +9,7 @@ using namespace luabind;
 
 CScriptManager g_ScriptManager;
 
-//#define LUA_STATE CEngine::GetSingleton().GetScriptManager()->GetLuaState()
-#define LUA_STATE g_ScriptManager.GetLuaState()
+#define LUA_STATE CUABEngine::GetInstance().GetScriptManager()->GetLuaState()
 #define REGISTER_LUA_FUNCTION(FunctionName,AddrFunction) {luabind::module(LUA_STATE) [ luabind::def(FunctionName,AddrFunction) ];}
 
 CScriptManager::CScriptManager()
