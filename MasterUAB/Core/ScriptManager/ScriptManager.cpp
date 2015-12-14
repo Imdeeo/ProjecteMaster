@@ -5,6 +5,8 @@
 #include <luabind/class.hpp>
 #include <luabind/operator.hpp>
 
+#include "AnimatedModels\AnimatedCoreModel.h"
+
 using namespace luabind;
 
 CScriptManager g_ScriptManager;
@@ -89,23 +91,25 @@ void CScriptManager::RunFile(const std::string &FileName) const
 
 void CScriptManager::RegisterLUAFunctions()
 {
+	//lua_register(m_LS, "set_speed_player", SetSpeedPlayer);
 	/*lua_register(m_LS, "set_speed_player", SetSpeedPlayer);
 	lua_register(m_LS, "get_speed_player", GetSpeedPlayer);*/
 	//REGISTER_LUA_FUNCTION("set_speed_player", SetSpeedPlayer);
 	//REGISTER_LUA_FUNCTION("get_speed_player", GetSpeedPlayer);
 
-	/*module(LUA_STATE) [
-		class_<CEnemy>("CEnemy")
+	module(m_LS) [
+		class_<CAnimatedCoreModel>("CAnimatedCoreModel")
 			.def(constructor<>())
-			.def("set_speed", &CEnemy::SetSpeed)
-			.def("get_speed", &CEnemy::GetSpeed)
-	];*/
+			.def("get_name", &CAnimatedCoreModel::GetName)
+			.def("set_name", &CAnimatedCoreModel::SetName)
+			.def("get_calCoreModel", &CAnimatedCoreModel::GetCalCoreModel)
+	];
 	
 	//RunFile("./data/scripting/init.lua");
 
 	//RunCode("Init()");
 	//RunCode("local value=3;set_speed_player(value); value=get_speed_player()+2; set_speed_player(value)");
-	//RunCode("local enemy=CEnemy(); enemy:set_speed(25); local speed=enemy:get_speed()");
+	RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");
 }
 
 /*void OnEnterEvent(CEvent *Event)
