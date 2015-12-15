@@ -1,4 +1,5 @@
 global isDebug = false
+global UABVtxsNormals=#() 
 
 fn get_LocalFileName =
 (
@@ -60,6 +61,73 @@ fn GetPitch transform =
 fn GetRoll transform =
 (
 	return (transform as eulerangles).x
+)
+
+fn UABClearNormalsArray = 
+(
+	while UABVtxsNormals.count>0 do 
+	(
+		deleteItem UABVtxsNormals 1
+	)
+)
+
+fn IsSmoothingGroupEnabled IdGroup Value = 
+(
+	local ValueMask=2^(IdGroup-1) 
+	return (bit.and Value ValueMask)==ValueMask 
+)
+
+fn UABGetVertexNormal obj IdVertex SmoothValue FaceNormal = 
+( 
+	local HasNormal=false 
+	local Normal=point3 0 0 0 
+	for b=1 to 32 do 
+	( 
+		if((IsSmoothingGroupEnabled b SmoothValue)==true) then 
+		( 
+			Normal=Normal+UABVtxsNormals[IdVertex][b] 
+			HasNormal=true 
+		) 
+	) 
+	if HasNormal==false then 
+	( 
+		Normal=FaceNormal 
+	) 
+	return Normal 
+)
+
+fn UABCalcVertexsNormals obj = 
+( 
+	UABClearNormalsArray() 
+	local NumVtxs=getNumVerts obj 
+	for b=1 to NumVtxs do 
+	( 
+		UABVtxsNormals[b]=#() 
+		for t=1 to 32 do 
+		( 
+			UABVtxsNormals[b][t]=point3 0 0 0  
+		) 
+	) 
+	local NumFaces=getNumFaces obj 
+	local InvTransform=inverse obj.transform 
+	for IdFace=1 to NumFaces do 
+	( 
+		local IdxsFace=getFace obj IdFace 
+		local Vtx1=(getVert obj IdxsFace.x)*InvTransform 
+		local Vtx2=(getVert obj IdxsFace.y)*InvTransform 
+		local Vtx3=(getVert obj IdxsFace.z)*InvTransform 
+		local FaceNormal=getFaceNormal obj IdFace 
+		local SmoothValue=getFaceSmoothGroup obj IdFace 
+		for b=1 to 32 do 
+		( 
+			if((IsSmoothingGroupEnabled b SmoothValue)==true) then
+			(                                                    
+				UABVtxsNormals[IdxsFace.x][b]=UABVtxsNormals[IdxsFace.x][b] + FaceNormal 
+				UABVtxsNormals[IdxsFace.y][b]=UABVtxsNormals[IdxsFace.y][b] + FaceNormal 
+				UABVtxsNormals[IdxsFace.z][b]=UABVtxsNormals[IdxsFace.z][b] + FaceNormal 
+			) 
+		) 
+	) 
 )
 
 fn circumcenter p1 p2 p3 =
@@ -356,12 +424,17 @@ fn procesFaces arx Obj =
 	for i=1 to nFaces do
 	(
 		local IdxsFace=getFace l_Obj i
+		local FaceNormal=getFaceNormal obj i --El índice de la cara
+		local SmoothValue=getFaceSmoothGroup obj i --El índice de la cara
 		local Vt1=getVert l_Obj IdxsFace.x
 		local Vt2=getVert l_Obj IdxsFace.y
 		local Vt3=getVert l_Obj IdxsFace.z
-		local Nm1=getNormal l_Obj IdxsFace.x
+		local Nm1=normalize(UABGetVertexNormal obj IdxsFace.x SmoothValue FaceNormal)
+		local Nm2=normalize(UABGetVertexNormal obj IdxsFace.y SmoothValue FaceNormal)
+		local Nm3=normalize(UABGetVertexNormal obj IdxsFace.z SmoothValue FaceNormal)
+		/*local Nm1=getNormal l_Obj IdxsFace.x
 		local Nm2=getNormal l_Obj IdxsFace.y
-		local Nm3=getNormal l_Obj IdxsFace.z
+		local Nm3=getNormal l_Obj IdxsFace.z*/
 		local IdxsMap=meshop.getMapFace l_Obj 1 i
 		local TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
 		local TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
