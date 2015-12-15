@@ -15,6 +15,8 @@
 #include "Camera\Frustum.h"
 #include "Camera\SphericalCameraController.h"
 
+#include "XML\XMLTreeNode.h"
+
 using namespace luabind;
 
 CScriptManager g_ScriptManager;
@@ -116,7 +118,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 	module(m_LS) [
 		class_<CAnimatedInstanceModel>("CAnimatedInstanceModel")
-			.def(constructor<>())
+			.def(constructor<CXMLTreeNode&>())
 			.def("get_name", &CAnimatedInstanceModel::GetName)
 			.def("set_name", &CAnimatedInstanceModel::SetName)
 			.def("initialize",&CAnimatedInstanceModel::Initialize)
