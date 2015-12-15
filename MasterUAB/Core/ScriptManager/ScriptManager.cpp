@@ -6,6 +6,8 @@
 #include <luabind/operator.hpp>
 
 #include "AnimatedModels\AnimatedCoreModel.h"
+#include "AnimatedModels\AnimatedInstanceModel.h"
+#include "AnimatedModels\AnimatedModelsManager.h"
 
 using namespace luabind;
 
@@ -103,13 +105,37 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_name", &CAnimatedCoreModel::GetName)
 			.def("set_name", &CAnimatedCoreModel::SetName)
 			.def("get_calCoreModel", &CAnimatedCoreModel::GetCalCoreModel)
+			.def("load",&CAnimatedCoreModel::Load)
+	];
+	module(m_LS) [
+		class_<CAnimatedInstanceModel>("CAnimatedInstanceModel")
+			.def(constructor<>())
+			.def("get_name", &CAnimatedInstanceModel::GetName)
+			.def("set_name", &CAnimatedInstanceModel::SetName)
+			.def("initialize",&CAnimatedInstanceModel::Initialize)
+			.def("render",&CAnimatedInstanceModel::Render)
+			.def("update",&CAnimatedInstanceModel::Update)
+			.def("destroy",&CAnimatedInstanceModel::Destroy)
+			.def("execute_action",&CAnimatedInstanceModel::ExecuteAction)
+			.def("blend_cycle", &CAnimatedInstanceModel::BlendCycle)
+			.def("clera_cycle",&CAnimatedInstanceModel::ClearCycle)
+			.def("is_cycle_animation_active",&CAnimatedInstanceModel::IsCycleAnimationActive)
+			.def("is_action_animation_active",&CAnimatedInstanceModel::IsActionAnimationActive)
+	];
+
+	module(m_LS) [
+		class_<CAnimatedModelsManager>("CAnimatedModelsManager")
+			.def(constructor<>())
+			.def("load",&CAnimatedModelsManager::Load)
+			.def("reload", &CAnimatedModelsManager::Reload)
+			.def("get_resource", &CAnimatedModelsManager::GetResource)
 	];
 	
 	//RunFile("./data/scripting/init.lua");
 
 	//RunCode("Init()");
 	//RunCode("local value=3;set_speed_player(value); value=get_speed_player()+2; set_speed_player(value)");
-	RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");
+	//RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");
 }
 
 /*void OnEnterEvent(CEvent *Event)
