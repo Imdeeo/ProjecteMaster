@@ -9,6 +9,12 @@
 #include "AnimatedModels\AnimatedInstanceModel.h"
 #include "AnimatedModels\AnimatedModelsManager.h"
 
+#include "Camera\Camera.h"
+#include "Camera\CameraController.h"
+#include "Camera\FPSCameraController.h"
+#include "Camera\Frustum.h"
+#include "Camera\SphericalCameraController.h"
+
 using namespace luabind;
 
 CScriptManager g_ScriptManager;
@@ -99,6 +105,7 @@ void CScriptManager::RegisterLUAFunctions()
 	//REGISTER_LUA_FUNCTION("set_speed_player", SetSpeedPlayer);
 	//REGISTER_LUA_FUNCTION("get_speed_player", GetSpeedPlayer);
 
+	// AnimatedModels----------------------------------------------------------------------------------
 	module(m_LS) [
 		class_<CAnimatedCoreModel>("CAnimatedCoreModel")
 			.def(constructor<>())
@@ -131,6 +138,75 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_resource", &CAnimatedModelsManager::GetResource)
 	];
 	
+
+	// Camera----------------------------------------------------------------------------------------
+	module(m_LS) [
+		class_<CCamera>("CCamera")
+			.def(constructor<>())
+			.def("get_aspect_ratio",&CCamera::GetAspectRatio)
+			.def("set_aspect_ratio",&CCamera::SetAspectRatio)
+			.def("get_fov", &CCamera::GetFOV)
+			.def("set_fov", &CCamera::SetFOV)
+			.def("get_look_at", &CCamera::GetLookAt)
+			.def("set_look_at", &CCamera::SetLookAt)
+			.def("get_position", &CCamera::GetPosition)
+			.def("set_position", &CCamera::SetPosition)
+			.def("get_projection", &CCamera::GetProjection)
+			.def("get_up", &CCamera::GetUp)
+			.def("set_up", &CCamera::SetUp)
+			.def("get_view", &CCamera::GetView)
+			.def("get_z_far", &CCamera::GetZFar)
+			.def("set_z_far", &CCamera::SetZFar)
+			.def("get_z_near", &CCamera::GetZNear)
+			.def("set_z_near", &CCamera::GetZNear)
+			.def("set_matrixs", &CCamera::SetMatrixs)
+	];
+
+	module(m_LS) [
+		class_<CFPSCameraController>("CFPSCameraController")
+			.def(constructor<>())
+			.def("add_pitch",&CFPSCameraController::AddPitch)
+			.def("add_yaw", &CFPSCameraController::AddYaw)
+			.def("get_direction", &CFPSCameraController::GetDirection)
+			.def("get_pitch", &CFPSCameraController::GetPitch)
+			.def("set_pitch", &CFPSCameraController::SetPitch)
+			.def("get_right", &CFPSCameraController::GetRight)
+			.def("get_up", &CFPSCameraController::GetUp)
+			.def("get_yaw", &CFPSCameraController::GetYaw)
+			.def("set_yaw", &CFPSCameraController::SetYaw)
+			.def("move", &CFPSCameraController::Move)
+			.def("set_camera", &CFPSCameraController::SetCamera)
+			.def("set_position", &CFPSCameraController::SetPosition)
+			.def("update", &CFPSCameraController::Update)
+	];
+
+	module(m_LS) [
+		class_<CFrustum>("CFrustum")
+			.def(constructor<>())
+			.def("box_visible",&CFrustum::BoxVisible)
+			.def("sphere_visible", &CFrustum::SphereVisible)
+			.def("update", &CFrustum::Update)
+	];
+
+	module(m_LS) [
+		class_<CSphericalCameraController>("CSphericalCameraController")
+			.def(constructor<>())
+			.def("add_pitch",&CSphericalCameraController::AddPitch)
+			.def("add_yaw", &CSphericalCameraController::AddYaw)
+			.def("add_zoom", &CSphericalCameraController::AddZoom)
+			.def("get_direction", &CSphericalCameraController::GetDirection)
+			.def("set_camera", &CSphericalCameraController::SetCamera)
+			.def("get_pitch", &CSphericalCameraController::GetPitch)
+			.def("set_pitch", &CSphericalCameraController::SetPitch)
+			.def("get_right", &CSphericalCameraController::GetRight)
+			.def("get_up", &CSphericalCameraController::GetUp)
+			.def("get_yaw", &CSphericalCameraController::GetYaw)
+			.def("set_yaw", &CSphericalCameraController::SetYaw)
+			.def("set_position", &CSphericalCameraController::SetPosition)
+			.def("set_zoom", &CSphericalCameraController::SetZoom)
+			.def("update", &CSphericalCameraController::Update)
+	];
+
 	//RunFile("./data/scripting/init.lua");
 
 	//RunCode("Init()");
@@ -143,3 +219,4 @@ void CScriptManager::RegisterLUAFunctions()
 	RunCode("on_enter_player_on_event_"+Event->GetName()+"()");
 	RunCode("on_enter_player_on_event_event_1()");
 }*/
+
