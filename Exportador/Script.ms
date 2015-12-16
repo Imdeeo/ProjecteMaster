@@ -424,14 +424,15 @@ fn procesFaces arx Obj =
 	for i=1 to nFaces do
 	(
 		local IdxsFace=getFace l_Obj i
-		local FaceNormal=getFaceNormal obj i --El índice de la cara
-		local SmoothValue=getFaceSmoothGroup obj i --El índice de la cara
+		UABCalcVertexsNormals l_Obj
+		local FaceNormal=getFaceNormal l_Obj i
+		local SmoothValue=getFaceSmoothGroup l_Obj i
 		local Vt1=getVert l_Obj IdxsFace.x
 		local Vt2=getVert l_Obj IdxsFace.y
 		local Vt3=getVert l_Obj IdxsFace.z
-		local Nm1=normalize(UABGetVertexNormal obj IdxsFace.x SmoothValue FaceNormal)
-		local Nm2=normalize(UABGetVertexNormal obj IdxsFace.y SmoothValue FaceNormal)
-		local Nm3=normalize(UABGetVertexNormal obj IdxsFace.z SmoothValue FaceNormal)
+		local Nm1=normalize(UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal)
+		local Nm2=normalize(UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal)
+		local Nm3=normalize(UABGetVertexNormal l_Obj IdxsFace.z SmoothValue FaceNormal)
 		/*local Nm1=getNormal l_Obj IdxsFace.x
 		local Nm2=getNormal l_Obj IdxsFace.y
 		local Nm3=getNormal l_Obj IdxsFace.z*/
