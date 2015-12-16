@@ -170,6 +170,8 @@ void CApplication::Update(float _ElapsedTime)
 		UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 	}
 
+	UABEngine.GetRenderableObjectsManager()->Update(_ElapsedTime);
+
 }
 
 void CApplication::Render()
