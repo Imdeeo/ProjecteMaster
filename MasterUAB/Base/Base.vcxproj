@@ -41,6 +41,7 @@
     <ClCompile Include="XML\XMLTreeNode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Math\MathUtils.inl" />
     <None Include="Math\Matrix33.inl" />
     <None Include="Math\Matrix34.inl" />
