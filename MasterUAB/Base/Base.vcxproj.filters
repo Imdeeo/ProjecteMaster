@@ -105,5 +105,6 @@
     <None Include="Math\Vector4.inl">
       <Filter>Math</Filter>
     </None>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

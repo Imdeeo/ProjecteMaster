@@ -38,5 +38,6 @@ float4 PS( PS_INPUT IN) : SV_Target
 	float4 l_Albedo=DiffuseTexture.Sample(LinearSampler, IN.UV);
 	float3 Nn=normalize(IN.WorldNormal);
 	float l_DiffuseContrib=max(dot(Nn, -g_LightDirection), 0);
+	return l_Albedo;
 	return float4(l_Albedo.xyz*g_AmbientLight+l_DiffuseContrib*l_Albedo.xyz, l_Albedo.a);
 }

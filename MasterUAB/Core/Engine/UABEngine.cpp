@@ -38,7 +38,7 @@ void CUABEngine::Init()
 	m_MaterialManager->Load("Data\\level_1\\materials.xml");
 	m_StaticMeshManager->Load("Data\\level_1\\static_meshes.xml");
 	m_LightManager->Load("Data\\level_1\\lights.xml");
-	m_AnimatedModelsManager->Load("Data\\level_1\\animated_models.xml");
+	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
 	m_RenderableObjectsManager->Load("Data\\level_1\\renderable_objects.xml");
 	m_ScriptManager->Initialize();
 }
