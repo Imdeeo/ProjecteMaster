@@ -3,8 +3,8 @@
 
 CAnimatedModelsManager::CAnimatedModelsManager(void)
 {
+	CalLoader::setLoadingMode(LOADER_ROTATE_X_AXIS /*| LOADER_INVERT_V_COORD*/);
 }
-
 
 CAnimatedModelsManager::~CAnimatedModelsManager(void)
 {
