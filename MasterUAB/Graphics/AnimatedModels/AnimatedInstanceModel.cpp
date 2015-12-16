@@ -16,6 +16,8 @@ CAnimatedInstanceModel::CAnimatedInstanceModel(CXMLTreeNode &TreeNode):CRenderab
 	/*m_AnimatedCoreModel = UABEngine.GetAnimatedModelsManager()->GetResource(l_Element.GetPszProperty("core_model_name"));
 	m_CalModel = new CalModel(m_AnimatedCoreModel->GetCalCoreModel());
 	m_CalHardwareModel = new CalHardwareModel(m_AnimatedCoreModel->GetCalCoreModel());*/
+	BlendCycle(0, 1.0f, 0.0f);
+	Update(0.0f);
 }
 CAnimatedInstanceModel::~CAnimatedInstanceModel()
 {
@@ -75,8 +77,7 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 	m_AnimatedCoreModel = AnimatedCoreModel;
 	m_CalModel = new CalModel(m_AnimatedCoreModel->GetCalCoreModel());
 	m_CalHardwareModel = new CalHardwareModel(m_AnimatedCoreModel->GetCalCoreModel());
-	LoadVertexBuffer();
-	LoadMaterials();
+	
 	// attach all meshes to the model
 	int meshId;
 	for (meshId = 0; meshId < AnimatedCoreModel->GetCalCoreModel()->getCoreMeshCount(); meshId++)
@@ -84,11 +85,14 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 		m_CalModel->attachMesh(meshId);
 	}
 
+	LoadVertexBuffer();
+	LoadMaterials();
+
 	// set the material set of the whole model
-	m_CalModel->setMaterialSet(0);
+	//m_CalModel->setMaterialSet(0);
 
 	// set initial animation state
-	int l_currentAnimationId = 1;
+	/*int l_currentAnimationId = 1;
 	float m_leftAnimationTime = AnimatedCoreModel->GetCalCoreModel()->getCoreAnimation(l_currentAnimationId)->getDuration() - 0;
 	if (AnimatedCoreModel->GetCalCoreModel()->getCoreAnimationCount() > 1)
 	{
@@ -97,7 +101,7 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 	else
 	{
 		m_CalModel->getMixer()->blendCycle(l_currentAnimationId, 1.0f, 0.0f);
-	}
+	}*/
 
 }
 void CAnimatedInstanceModel::Render(CRenderManager *RenderManager)
