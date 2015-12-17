@@ -135,6 +135,17 @@ struct StructName \
 			IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV##_UV_CREATE_LAYOUT\
 			IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV2##_UV2_CREATE_LAYOUT\
 		};\
+		unsigned int l_OffsetBytes=0; \
+		unsigned int l_IdLayout=0; \
+		\
+		IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition##_POSITION_CREATE_LAYOUT_DETAIL(l_Layout, l_IdLayout, l_OffsetBytes); \
+		IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition4##_POSITION4_CREATE_LAYOUT_DETAIL(l_Layout, l_IdLayout, l_OffsetBytes); \
+		IFDEF_CREATE_GET_VERTEX_TYPE_##HasWeightIndices##_WEIGHT_INDICES_CREATE_LAYOUT_DETAIL(l_Layout, l_IdLayout, l_OffsetBytes); \
+		IFDEF_CREATE_GET_VERTEX_TYPE_##HasNormal##_NORMAL_CREATE_LAYOUT_DETAIL(l_Layout, l_IdLayout, l_OffsetBytes); \
+		IFDEF_CREATE_GET_VERTEX_TYPE_##HasColor##_COLOR_CREATE_LAYOUT_DETAIL(l_Layout, l_IdLayout, l_OffsetBytes); \
+		IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV##_UV_CREATE_LAYOUT_DETAIL(l_Layout, l_IdLayout, l_OffsetBytes); \
+		IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV2##_UV2_CREATE_LAYOUT_DETAIL(l_Layout, l_IdLayout, l_OffsetBytes); \
+		\
 		UINT l_NumElements=ARRAYSIZE(l_Layout);\
 		HRESULT l_HR=RenderManager->GetDevice()->CreateInputLayout(l_Layout,\
 		l_NumElements, VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), VertexLayout);\
