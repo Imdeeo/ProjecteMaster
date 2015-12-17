@@ -7,6 +7,7 @@
 
 class CAnimatedInstanceModel : public CRenderableObject
 {
+	UAB_BUILD_GET_SET(int,ActualAnimation)
 private:
 	CalModel *m_CalModel;
 	CAnimatedCoreModel *m_AnimatedCoreModel;

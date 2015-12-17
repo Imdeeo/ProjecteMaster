@@ -16,15 +16,11 @@ CAnimatedInstanceModel::CAnimatedInstanceModel(CXMLTreeNode &TreeNode):CRenderab
 	/*m_AnimatedCoreModel = UABEngine.GetAnimatedModelsManager()->GetResource(l_Element.GetPszProperty("core_model_name"));
 	m_CalModel = new CalModel(m_AnimatedCoreModel->GetCalCoreModel());
 	m_CalHardwareModel = new CalHardwareModel(m_AnimatedCoreModel->GetCalCoreModel());*/
-	BlendCycle(0, 1.0f, 0.0f);
-	Update(0.0f);
 }
 CAnimatedInstanceModel::~CAnimatedInstanceModel()
 {
 	Destroy();
 }
-
-
 bool CAnimatedInstanceModel::LoadVertexBuffer()
 {
 	m_NumVertices=0;
@@ -88,22 +84,10 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 	LoadVertexBuffer();
 	LoadMaterials();
 
-	// set the material set of the whole model
-	//m_CalModel->setMaterialSet(0);
-
-	// set initial animation state
-	/*int l_currentAnimationId = 1;
-	float m_leftAnimationTime = AnimatedCoreModel->GetCalCoreModel()->getCoreAnimation(l_currentAnimationId)->getDuration() - 0;
-	if (AnimatedCoreModel->GetCalCoreModel()->getCoreAnimationCount() > 1)
-	{
-		m_CalModel->getMixer()->executeAction(l_currentAnimationId, 0.0f, 0);
-	}
-	else
-	{
-		m_CalModel->getMixer()->blendCycle(l_currentAnimationId, 1.0f, 0.0f);
-	}*/
-
+	BlendCycle(1, 1.0f, 0.0f);
+	Update(0.0f);
 }
+
 void CAnimatedInstanceModel::Render(CRenderManager *RenderManager)
 {
 	Mat44f l_Transform=GetTransform();
@@ -140,10 +124,13 @@ void CAnimatedInstanceModel::Destroy()
 }
 void CAnimatedInstanceModel::ExecuteAction(int Id, float DelayIn, float DelayOut, float WeightTarget, bool AutoLock)
 {
+	m_ActualAnimation = Id;
 	m_CalModel->getMixer()->executeAction(Id,DelayIn,DelayOut,WeightTarget,AutoLock);
+	
 }
 void CAnimatedInstanceModel::BlendCycle(int Id, float Weight, float DelayIn)
 {
+	m_ActualAnimation = Id;
 	m_CalModel->getMixer()->blendCycle(Id, Weight, DelayIn);
 }
 void CAnimatedInstanceModel::ClearCycle(int Id, float DelayOut)
