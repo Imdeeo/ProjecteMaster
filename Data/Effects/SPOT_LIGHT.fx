@@ -45,10 +45,7 @@ sampler2D S0Sampler = sampler_state {
 float4x4 View : View;
 float4x4 World : World;
 float4x4 Projection : Projection;
-float l_DiffuseContrib;
-float l_Angle = cos(10);
-float l_Falloff = cos(20);
-float l_Attenuation;
+const float PI = 3.14159265f;
 
 struct TVertexVS
 {
@@ -62,7 +59,7 @@ struct TVertexPS
 	float4 Pos : POSITION;
 	float3 Normal : NORMAL;
 	float2 UV : TEXCOORD0;
-	float3 Lightpos : TEXCOORD1;
+	float3 Pixelpos : TEXCOORD1;
 };
 
 TVertexPS mainVS(TVertexVS IN)
@@ -70,7 +67,7 @@ TVertexPS mainVS(TVertexVS IN)
 	TVertexPS l_Out = (TVertexPS)0;
 	
 	l_Out.Pos = mul(float4(IN.Pos.xyz, 1.0), World);
-	l_Out.Lightpos = l_Out.Pos.xyz;
+	l_Out.Pixelpos = l_Out.Pos.xyz;
 	l_Out.Pos = mul(l_Out.Pos, View);
 	l_Out.Pos = mul(l_Out.Pos, Projection);
 	l_Out.Normal = normalize(mul(IN.Normal, (float3x3)World));
@@ -81,16 +78,18 @@ TVertexPS mainVS(TVertexVS IN)
 
 float4 mainPS(TVertexPS IN) : COLOR
 {
-	l_DiffuseContrib = dot(normalize(Lamp0Position - IN.Lightpos), normalize(-Lamp0Direction));
-	//l_Attenuation = saturate((l_DiffuseContrib-l_Angle)/(l_Falloff-l_Angle));
-	//l_DiffuseContrib = lerp(l_Angle, l_Falloff, l_DiffuseContrib);
-	/*if(l_DiffuseContrib < cos(120))
-	{
-		l_DiffuseContrib = 0;
-	}*/
+	float l_Angle = cos(PI/12);
+	float l_Falloff = cos(PI/6);
+	float l_DiffuseContrib;
+	float l_SpotAttenuation;
+	float l_DirectionContrib;
+	l_DiffuseContrib = dot(IN.Normal, normalize(Lamp0Position - IN.Pixelpos));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
-	//return float4(l_Attenuation, l_Attenuation, l_Attenuation, 1.0);
-	return l_DiffuseContrib*tex2D(S0Sampler,IN.UV)*(float4(Lamp0Color, 1.0));
+	l_DirectionContrib = dot(normalize(Lamp0Position - IN.Pixelpos), normalize(-Lamp0Direction));
+	l_DirectionContrib = max(0, l_DirectionContrib);
+	l_SpotAttenuation = 1-saturate((l_DirectionContrib-l_Angle)/(l_Falloff-l_Angle));
+	l_SpotAttenuation = max(0, l_SpotAttenuation);
+	return l_SpotAttenuation*l_DiffuseContrib*tex2D(S0Sampler,IN.UV)*(float4(Lamp0Color, 1.0));
 }
 
 technique technique0
