@@ -86,6 +86,7 @@ public:
 		l_DeviceContext->VSSetConstantBuffers(0, 1, &l_ConstantBufferVS);
 		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
 		ID3D11Buffer *l_ConstantBufferPS=l_EffectPixelShader->GetConstantBuffer();
+		l_DeviceContext->UpdateSubresource(l_ConstantBufferPS, 0, NULL, Parameters, 0, 0 );
 		l_DeviceContext->PSSetConstantBuffers(0, 1, &l_ConstantBufferPS);
 		l_DeviceContext->DrawIndexed(IndexCount==-1 ? m_IndexsCount :IndexCount, StartIndexLocation, BaseVertexLocation);
 		return true;
