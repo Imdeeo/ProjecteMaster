@@ -110,20 +110,25 @@ void CApplication::Update(float _ElapsedTime)
 		m_RenderCameraCube = !m_RenderCameraCube;
 	}
 
+	if(CInputManager::GetInputManager()->IsActionActive("MONSTER_IDLE22"))
+	{
+		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+			ClearCycle(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+			GetActualAnimation(),0.1);
+		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(0,1,0.1);
+	}
 	if(CInputManager::GetInputManager()->IsActionActive("MONSTER_RUN"))
 	{
-		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(0,1,0.1);
-		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ClearCycle(0,0.1);
-	}
-	if(CInputManager::GetInputManager()->IsActionActive("MONSTER_IDLE"))
-	{
+		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+			ClearCycle(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+			GetActualAnimation(),0.1);
 		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(1,1,0.1);
-		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ClearCycle(0,0.1);
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("MONSTER_HIT"))
 	{
-		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ClearCycle(0,0.1);
-		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ClearCycle(1,0.1);
+		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+			ClearCycle(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+			GetActualAnimation(),0.1);
 		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ExecuteAction(2,0.1,0.1);
 	}
 	switch (m_CurrentCamera_control)
