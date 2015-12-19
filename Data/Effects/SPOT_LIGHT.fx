@@ -78,18 +78,33 @@ TVertexPS mainVS(TVertexVS IN)
 
 float4 mainPS(TVertexPS IN) : COLOR
 {
-	float l_Angle = cos(PI/12);
-	float l_Falloff = cos(PI/6);
+	// Light properties
+	float l_Angle = PI / 3; // The total angle just like in 3ds Max, not deviation from the centre.
+	float l_Falloff = l_Angle + PI / 12;
+	float l_StartAttDist = 2;
+	float l_EndAttDist = 5;
+	
+	// Factors in the final multiplication.
 	float l_DiffuseContrib;
+	float l_DistanceAttenuation;
 	float l_SpotAttenuation;
-	float l_DirectionContrib;
-	l_DiffuseContrib = dot(IN.Normal, normalize(Lamp0Position - IN.Pixelpos));
+	
+	// Intermediate values
+	float3 l_RayDirection = normalize(IN.Pixelpos - Lamp0Position);
+	float l_Distance = distance(IN.Pixelpos, Lamp0Position);
+	float l_DirectionContrib = dot(l_RayDirection, normalize(Lamp0Direction));
+	
+	// Diffusion
+	l_DiffuseContrib = dot(IN.Normal, -l_RayDirection);
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
-	l_DirectionContrib = dot(normalize(Lamp0Position - IN.Pixelpos), normalize(-Lamp0Direction));
-	l_DirectionContrib = max(0, l_DirectionContrib);
-	l_SpotAttenuation = 1-saturate((l_DirectionContrib-l_Angle)/(l_Falloff-l_Angle));
-	l_SpotAttenuation = max(0, l_SpotAttenuation);
-	return l_SpotAttenuation*l_DiffuseContrib*tex2D(S0Sampler,IN.UV)*(float4(Lamp0Color, 1.0));
+	
+	// Distance attenuation (linear)
+	l_DistanceAttenuation = 1 - saturate((l_Distance - l_StartAttDist) / (l_EndAttDist - l_StartAttDist));
+
+	// Angle attenuation (linear)
+	l_SpotAttenuation = 1 - saturate((acos(l_DirectionContrib) - l_Angle/2) / (l_Falloff/2 - l_Angle/2));
+	
+	return l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*tex2D(S0Sampler,IN.UV)*(float4(Lamp0Color, 1.0));
 }
 
 technique technique0
