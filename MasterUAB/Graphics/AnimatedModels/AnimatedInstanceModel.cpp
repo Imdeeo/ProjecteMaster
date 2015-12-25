@@ -75,11 +75,11 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 	m_CalHardwareModel = new CalHardwareModel(m_AnimatedCoreModel->GetCalCoreModel());
 	
 	// attach all meshes to the model
-	int meshId;
-	for (meshId = 0; meshId < AnimatedCoreModel->GetCalCoreModel()->getCoreMeshCount(); meshId++)
-	{
-		m_CalModel->attachMesh(meshId);
-	}
+	//int meshId;
+	//for (meshId = 0; meshId < AnimatedCoreModel->GetCalCoreModel()->getCoreMeshCount(); meshId++)
+	//{
+	//	m_CalModel->attachMesh(meshId);
+	//}
 
 	LoadVertexBuffer();
 	LoadMaterials();

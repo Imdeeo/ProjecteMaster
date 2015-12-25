@@ -1,8 +1,6 @@
 #ifndef RENDER_MANAGER_H
 #define RENDER_MANAGER_H
 
-#include <d3d11.h>
-#include "Camera\Camera.h"
 #include "Camera\Frustum.h"
 #include "RenderableObjects\RenderableObjectManager.h"
 #include "Utils.h"

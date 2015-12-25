@@ -1,6 +1,5 @@
 #include "RenderManager\RenderManager.h"
 
-#include "ContextManager\ContextManager.h"
 #include "Materials\MaterialManager.h"
 #include "RenderableObjects\RenderableObject.h"
 
