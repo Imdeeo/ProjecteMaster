@@ -2,7 +2,6 @@
 
 #include "RenderableObjects\VertexTypes.h"
 #include "RenderableObjects\RenderableVertexs.h"
-#include "Effects\Effect.h"
 
 #include "Math\Matrix44.h"
 

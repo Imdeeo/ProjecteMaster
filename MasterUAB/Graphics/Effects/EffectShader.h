@@ -1,9 +1,11 @@
 #ifndef EFFECT_SHADER_H
 #define EFFECT_SHADER_H
 #include "Named.h"
-#include <d3d11.h>
-#include <d3dcommon.h>
 #include "Utils.h"
+
+
+#include <d3dcommon.h>
+#include <d3d11.h>
 
 class CEffectShader : public CNamed
 {
