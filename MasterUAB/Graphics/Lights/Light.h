@@ -5,10 +5,7 @@
 #include "Utils.h"
 #include "Math\Color.h"
 
-#include <string>
-
 class CRenderManager;
-class CXMLTreeNode;
 
 class CLight : public CNamed
 {
