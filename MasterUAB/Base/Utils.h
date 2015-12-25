@@ -21,6 +21,14 @@ public: \
 public: \
 	Type Get##Variable##() const {return m_##Variable##;}
 
+
+#define UAB_GET_PROPERTY_H(Class, Type, Variable) \
+	public:\
+	Type Class##::Get##Variable##() const;
+
+#define UAB_GET_PROPERTY_CPP(Class, Type, Variable) \
+	Type Class##::Get##Variable##() const {return m_##Variable##;}
+
 #define CHECKED_RELEASE(x) if(x) {x->Release(); x = 0;}
 #define CHECKED_DELETE(x) if(x) {delete x; x = 0;}
 #define CHECKED_DELETE_ARRAY(x) if(x) {delete[] x; x = 0;}

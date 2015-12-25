@@ -13,15 +13,26 @@
 
 class CUABEngine
 {
-	UAB_BUILD_GET_SET(CStaticMeshManager *, StaticMeshManager)
-	UAB_BUILD_GET_SET(CRenderableObjectsManager *, RenderableObjectsManager)
-	UAB_BUILD_GET_SET(CMaterialManager *, MaterialManager)
-	UAB_BUILD_GET_SET(CEffectManager *, EffectManager)
-	UAB_BUILD_GET_SET(CTextureManager *, TextureManager)
-	UAB_BUILD_GET_SET(CLightManager *, LightManager)
-	UAB_BUILD_GET_SET(CRenderManager *, RenderManager)
-	UAB_BUILD_GET_SET(CAnimatedModelsManager *, AnimatedModelsManager)
-	UAB_BUILD_GET_SET(CScriptManager *, ScriptManager)
+
+	CStaticMeshManager * m_StaticMeshManager;
+	CRenderableObjectsManager * m_RenderableObjectsManager;
+	CMaterialManager * m_MaterialManager;
+	CEffectManager * m_EffectManager;
+	CTextureManager * m_TextureManager;
+	CLightManager * m_LightManager;
+	CRenderManager * m_RenderManager;
+	CAnimatedModelsManager * m_AnimatedModelsManager;
+	CScriptManager * m_ScriptManager;
+	
+	UAB_GET_PROPERTY(CStaticMeshManager *, StaticMeshManager)
+	UAB_GET_PROPERTY(CRenderableObjectsManager *, RenderableObjectsManager)
+	UAB_GET_PROPERTY(CMaterialManager *, MaterialManager)
+	UAB_GET_PROPERTY(CEffectManager *, EffectManager)
+	UAB_GET_PROPERTY(CTextureManager *, TextureManager)
+	UAB_GET_PROPERTY(CLightManager *, LightManager)
+	UAB_GET_PROPERTY(CRenderManager *, RenderManager)
+	UAB_GET_PROPERTY(CAnimatedModelsManager *, AnimatedModelsManager)
+	UAB_GET_PROPERTY(CScriptManager *, ScriptManager)
 
 	static CUABEngine * m_Instance;
 	
