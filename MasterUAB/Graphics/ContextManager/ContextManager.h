@@ -1,8 +1,6 @@
 #ifndef CONTEXTMANAGER_H
 #define CONTEXTMANAGER_H
 
-#include <d3d11.h>
-
 #include "Effects\Effect.h"
 #include "Camera\Camera.h"
 #include "Effects\EffectParameters.h"
