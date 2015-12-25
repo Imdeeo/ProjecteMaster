@@ -4,8 +4,8 @@
 #include "TemplatedVectorMapManager.h"
 
 #include <string>
+#include "Lights\Light.h"
 
-class CLight;
 class CRenderManager;
 
 class CLightManager : public CTemplatedVectorMapManager<CLight>
