@@ -57,7 +57,7 @@ void CDebugHelperImplementation::Render()
 bool CDebugHelperImplementation::Update(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	// TODO: mandarle eventos al AntTweakBar
-	return TwEventWin(hWnd, msg, wParam, lParam);
+	return TwEventWin(hWnd, msg, wParam, lParam)!=0;
 }
 
 void CDebugHelperImplementation::RegisterBar(const SDebugBar& bar)
@@ -74,7 +74,7 @@ void CDebugHelperImplementation::RegisterBar(const SDebugBar& bar)
 
 	TwBar* twBar = TwNewBar(bar.name.c_str());
 
-	for (int i = 0; i < bar.variables.size(); ++i)
+	for (size_t i = 0; i < bar.variables.size(); ++i)
 	{
 		if (bar.variables[i].type == BUTTON)
 		{
