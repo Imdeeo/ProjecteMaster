@@ -37,6 +37,7 @@ public:
 		CMapResouceValue l_ResourceValue = m_ResourcesMap[Name];
 		size_t index = l_ResourceValue.m_Id;
 		delete m_ResourcesVector[index];
+		delete m_ResourcesMap[Name];
 		m_ResourcesMap.erase(Name);
 		m_ResourcesVector.erase(m_ResourcesVector.begin()+index);
 		for(TMapResources::iterator l_iterator = m_ResourcesMap.begin();l_iterator != m_ResourcesMap.end();l_iterator++)
@@ -75,6 +76,10 @@ public:
 		for(size_t i = 0; i<m_ResourcesVector.size();i++)
 		{
 			delete m_ResourcesVector[i];
+		}
+		for(TMapResources::iterator l_iterator = m_ResourcesMap.begin();l_iterator != m_ResourcesMap.end();l_iterator++)
+		{
+			delete l_iterator->second;
 		}
 		m_ResourcesMap.clear();
 		m_ResourcesVector.clear();
