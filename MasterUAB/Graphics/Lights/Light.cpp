@@ -1,7 +1,7 @@
 #include "Light.h"
 
 #include "XML\XMLTreeNode.h"
-#include "RenderManager\RenderManager.h"
+//#include "RenderManager\RenderManager.h"
 
 CLight::CLight() : CNamed(""){}
 
