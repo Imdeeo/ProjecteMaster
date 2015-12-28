@@ -64,6 +64,7 @@ CApplication::CApplication( CContextManager *_ContextManager)
 CApplication::~CApplication()
 {
 	CDebugHelper::GetDebugHelper()->Log("CApplication::~CApplication");
+	UABEngine.Destroy();
 }
 
 
