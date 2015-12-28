@@ -29,6 +29,11 @@ CScriptManager::CScriptManager()
 {
 }
 
+CScriptManager::~CScriptManager()
+{
+	Destroy();
+}
+
 //Código de la función Alert que se llamará al generarse algún error de LUA
 int Alert(lua_State * State)
 {
@@ -74,7 +79,10 @@ void CScriptManager::Initialize()
 //Para desinicializar el motor de LUA
 void CScriptManager::Destroy()
 {
-	lua_close(m_LS);
+	if(m_LS)
+	{
+		lua_close(m_LS);
+	}
 }
 
 //Para ejecutar un fragmento de código LUA
