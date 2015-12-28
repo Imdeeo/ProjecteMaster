@@ -124,9 +124,9 @@ bool CEffectVertexShader::Load()
 
 void CEffectVertexShader::Destroy()
 {
-	delete m_VertexLayout;
-	delete m_VertexShader;
-	delete m_ConstantBuffer;
+	//delete m_VertexLayout;
+	//delete m_VertexShader;
+	//delete m_ConstantBuffer;
 }
 
 CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode),
@@ -151,6 +151,6 @@ bool CEffectPixelShader::Load()
 
 void CEffectPixelShader::Destroy()
 {
-	delete m_PixelShader;
-	delete m_ConstantBuffer;
+	//CHECKED_DELETE(m_PixelShader);
+	//CHECKED_DELETE(m_ConstantBuffer);
 }

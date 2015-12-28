@@ -8,6 +8,7 @@ CStaticMeshManager::CStaticMeshManager(void)
 
 CStaticMeshManager::~CStaticMeshManager(void)
 {
+	Destroy();
 }
 
 bool CStaticMeshManager::Load(const std::string &FileName)

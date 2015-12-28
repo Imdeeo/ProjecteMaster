@@ -8,6 +8,7 @@ CTextureManager::CTextureManager(void)
 
 CTextureManager::~CTextureManager(void)
 {
+	Destroy();
 }
 
 CTexture * CTextureManager::GetTexture(const std::string &Filename)
@@ -17,6 +18,7 @@ CTexture * CTextureManager::GetTexture(const std::string &Filename)
 	{
 		l_texture = new CTexture();
 		l_texture->Load(Filename);
+		AddResource(Filename,l_texture);
 	}
 	return l_texture;
 }
