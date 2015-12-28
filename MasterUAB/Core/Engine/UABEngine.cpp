@@ -19,6 +19,15 @@ CUABEngine::CUABEngine(void)
 
 CUABEngine::~CUABEngine(void)
 {
+	CHECKED_DELETE(m_EffectManager);
+	CHECKED_DELETE(m_MaterialManager);
+	CHECKED_DELETE(m_TextureManager);
+	CHECKED_DELETE(m_RenderManager);
+	CHECKED_DELETE(m_StaticMeshManager);
+	CHECKED_DELETE(m_LightManager);
+	CHECKED_DELETE(m_AnimatedModelsManager);
+	CHECKED_DELETE(m_RenderableObjectsManager);
+	CHECKED_DELETE(m_ScriptManager);
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -41,4 +50,9 @@ void CUABEngine::Init()
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
 	m_RenderableObjectsManager->Load("Data\\level_1\\renderable_objects.xml");
 	m_ScriptManager->Initialize();
+}
+
+void CUABEngine::Destroy()
+{
+	CHECKED_DELETE(m_Instance);
 }
