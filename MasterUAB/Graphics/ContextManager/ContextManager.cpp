@@ -297,6 +297,8 @@ void CContextManager::InitStates()
 	CDebugCEffect *l_DebugEffect = new CDebugCEffect();
 	l_DebugEffect->Load(m_D3DDevice);
 	s_DebugEffect = l_DebugEffect;
+	
+	CHECKED_DELETE(l_DebugEffect);
 
 	InitRasterizerStates();
 	InitDepthStencilStates();

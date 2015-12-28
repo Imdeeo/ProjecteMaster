@@ -4,12 +4,39 @@
 
 #include "XML\XMLTreeNode.h"
 
+#include <cal3d/coretrack.h>
+
 CAnimatedCoreModel::CAnimatedCoreModel():CNamed("")
 {
 	m_CalCoreModel = nullptr;
 }
 CAnimatedCoreModel::~CAnimatedCoreModel()
 {
+	Destroy();
+}
+
+void CAnimatedCoreModel::Destroy()
+{
+	if ( m_CalCoreModel )
+    {
+        // TODO: report CoreTrack memory leak problem to cal3d maintainers
+        for ( int i = 0; i < m_CalCoreModel->getCoreAnimationCount(); i++ )
+        {
+            CalCoreAnimation* a = m_CalCoreModel->getCoreAnimation( i );
+            std::list<CalCoreTrack *>& ct = a->getListCoreTrack();
+			for ( std::list<CalCoreTrack *>::iterator t = ct.begin(), tEnd = ct.end(); t != tEnd; ++t )
+            {
+                (*t)->destroy();
+                delete (*t);
+            }
+            ct.clear();
+        }
+
+        // cleanup of non-auto released resources
+		CHECKED_DELETE(m_CalCoreModel)
+    }
+	m_Materials.clear();
+	m_AnimationsIds.clear();
 }
 
 bool CAnimatedCoreModel::Load(const std::string &Path)

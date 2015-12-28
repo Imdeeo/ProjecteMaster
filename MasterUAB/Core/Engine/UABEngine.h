@@ -43,6 +43,7 @@ public:
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
 
+	void Destroy();
 	void Init();
 };
 
