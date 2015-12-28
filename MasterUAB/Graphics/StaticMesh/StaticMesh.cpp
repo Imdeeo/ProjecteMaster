@@ -26,6 +26,7 @@ CStaticMesh::~CStaticMesh(void)
 	delete m_BoundingBoxMax;
 	delete m_BoundingBoxMin;
 	delete m_BoundingSphereCenter;
+	Destroy();
 }
 
 bool CStaticMesh::Load(const std::string &FileName)
@@ -191,11 +192,27 @@ bool CStaticMesh::Load(const std::string &FileName)
 			l_BoundingBox = malloc(l_NumBytes);
 			l_File.read((char *) l_BoundingBox, l_NumBytes);
 
+			m_BoundingBoxMin->x = ((float*)l_BoundingBox)[0];
+			m_BoundingBoxMin->y = ((float*)l_BoundingBox)[1];
+			m_BoundingBoxMin->z = ((float*)l_BoundingBox)[2];
+			m_BoundingBoxMax->x = ((float*)l_BoundingBox)[3];
+			m_BoundingBoxMax->y = ((float*)l_BoundingBox)[4];
+			m_BoundingBoxMax->z = ((float*)l_BoundingBox)[5];
+
+			free(l_BoundingBox);
+
 			// Read Bounding Sphere
 			l_NumBytes = sizeof(float)*4;
 			void *l_BoundingSphere = NULL;
 			l_BoundingSphere = malloc(l_NumBytes);
 			l_File.read((char *) l_BoundingSphere, l_NumBytes);
+
+			m_BoundingSphereCenter->x = ((float*)l_BoundingSphere)[0];
+			m_BoundingSphereCenter->y = ((float*)l_BoundingSphere)[1];
+			m_BoundingSphereCenter->z = ((float*)l_BoundingSphere)[2];
+			m_BoundingSphereRadius = ((float*)l_BoundingSphere)[3];
+			
+			free(l_BoundingSphere);
 
 			// Read Footer
 			l_File.read((char *) &l_BufferUnsignedShort, sizeof(short));

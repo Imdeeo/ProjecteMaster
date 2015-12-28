@@ -17,6 +17,7 @@ private:
 	lua_State *m_LS;
 public:
 	CScriptManager();
+	virtual ~CScriptManager();
 	void Initialize();
 	void Destroy();
 	void RunCode(const std::string &Code) const;
