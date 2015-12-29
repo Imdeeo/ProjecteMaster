@@ -80,6 +80,15 @@
     <ClCompile Include="Lights\SpotLight.cpp">
       <Filter>Lights</Filter>
     </ClCompile>
+    <ClCompile Include="Camera\CameraInfo.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\CameraKey.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\CameraKeyController.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -214,6 +223,15 @@
     </ClInclude>
     <ClInclude Include="Lights\SpotLight.h">
       <Filter>Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\CameraInfo.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\CameraKey.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\CameraKeyController.h">
+      <Filter>Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
