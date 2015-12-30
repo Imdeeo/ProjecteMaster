@@ -31,6 +31,12 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		button SetLightButton "Set" pos:[144,104] width:112 height:32 visible:false
 	GroupBox grp3 "Inactive" pos:[8,8] width:265 height:61 visible:false
 		label UnsupportedLabel "Current selection is not supported." pos:[24,32] width:232 height:24 visible:false
+	GroupBox grp4 "Cameras" pos:[8,8] width:265 height:88 visible:false
+		label CameraLabel "Nothing selected" pos:[24,32] width:232 height:24 visible:false
+		checkbox CameraExportBox "Export" pos:[24,64] width:88 height:16 visible:false
+		dropdownList CameraExportList "" pos:[120,62] width:136 height:21 enabled:false items:#("static", "cycle", "reverse")
+		button GetCameraButton "Get" pos:[24,104] width:112 height:32 visible:false
+		button SetCameraButton "Set" pos:[144,104] width:112 height:32 visible:false
 	
 	fn toggleGeometryGroup bool =
 	(
@@ -65,6 +71,16 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		SetLightButton.visible = bool
 	)
 	
+	fn toggleCamerasGroup bool =
+	(
+		grp4.visible = bool
+		CameraLabel.visible = bool
+		CameraExportBox.visible = bool
+		CameraExportList.visible = bool
+		GetCameraButton.visible = bool
+		SetCameraButton.visible = bool
+	)
+	
 	fn toggleUnsupportedGroup bool =
 	(
 		grp3.visible = bool
@@ -87,11 +103,17 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		PhysicsLayerList.enabled =  bool
 	)
 	
+	fn toggleCameras bool =
+	(
+		CameraExportList.enabled = bool
+	)
+	
 	fn loadUnsupportedSelection Obj =
 	(
 		toggleLightsGroup false
 		toggleGeometryGroup false
 		toggleUnsupportedGroup true
+		toggleCamerasGroup false
 		UABSetProperties.height = 80
 		if (Obj == undefined) then
 		(
@@ -112,6 +134,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			toggleLightsGroup true
 			toggleGeometryGroup false
 			toggleUnsupportedGroup false
+			toggleCamerasGroup false
 			LightLabel.text = Obj.name+" ("+(ClassOf Obj) as string+")"
 			UABSetProperties.height = 150
 		) else (
@@ -126,6 +149,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			toggleLightsGroup false
 			toggleGeometryGroup true
 			toggleUnsupportedGroup false
+			toggleCamerasGroup false
 			GeometryLabel.text = Obj.name+" ("+(ClassOf Obj) as string+")"
 			UABSetProperties.height = 370
 		)
@@ -134,11 +158,22 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			loadUnsupportedSelection Obj
 		)
 	)
+	
+	fn loadCameraMode Obj =
+	(
+		toggleLightsGroup false
+		toggleGeometryGroup false
+		toggleUnsupportedGroup false
+		toggleCamerasGroup true
+		CameraLabel.text = Obj.name+" ("+(ClassOf Obj) as string+")"
+		UABSetProperties.height = 150
+	)
 		
 	fn swapMode Obj =
 	(
 		case SuperClassOf Obj of
 		(
+			camera: loadCameraMode Obj
 			light: loadLightMode Obj
 			GeometryClass:  loadGeometryMode Obj
 			default: loadUnsupportedSelection Obj
@@ -161,19 +196,25 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			setUserProp Obj "physics_layer" "logic"
 			setUserProp Obj "logic_generate" false
 			setUserProp Obj "logic_generate_type" "stairs"
-		) else (
+		) else if(SuperClassOf Obj == light) then
+		(
 			setUserProp Obj "light_export" false
+		) else if(SuperClassOf Obj == camera) then
+		(
+			setUserProp Obj "camera_export" false
+			setUserProp Obj "camera_export_type" "static"
 		)
 	)
 	
 	fn GetProperties Obj =
 	(
+		if (getUserProp Obj "render_export" == undefined) or (getUserProp Obj "light_export" == undefined) or (getUserProp Obj "camera_export" == undefined) then
+		(
+			initUserProps Obj
+		)
+			
 		if(SuperClassOf Obj == GeometryClass) then
 		(
-			if getUserProp Obj "render_export" == undefined then
-			(
-				initUserProps Obj
-			)
 			RenderExportBox.checked = getUserProp Obj "render_export"
 			if RenderExportBox.checked == true then
 			(
@@ -235,12 +276,18 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 				(
 					"stairs": LogicGenerateList.selection = 1
 				)
-		) else (
-			if getUserProp Obj "light_export" == undefined then
-			(
-				initUserProps Obj
-			)
+		) else if(SuperClassOf Obj == light) then
+		(
 			LightExportBox.checked = getUserProp Obj "light_export"
+		) else if(SuperClassOf Obj == camera) then
+		(
+			CameraExportBox.checked = getUserProp Obj "camera_export"
+			case getUserProp Obj "camera_export_type" of
+				(
+					"static": CameraExportList.selection = 1
+					"cycle": CameraExportList.selection = 2
+					"reverse": CameraExportList.selection = 3
+				)
 		)
 	)
 	
@@ -336,10 +383,23 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			) else (
 				setUserProp Obj "logic_generate" false
 			)
-		) else (
+		) else if(SuperClassOf Obj == light) then
+		(
 			if LightExportBox.checked then
 			(
 				setUserProp Obj "light_export" true
+			)
+		) else if(SuperClassOf Obj == camera) then
+		(
+			if CameraExportBox.checked then
+			(
+				setUserProp Obj "camera_export" true
+				case CameraExportList.items[CameraExportList.selection] of
+				(
+					"static": setUserProp Obj "camera_export_type" "static"
+					"cycle": setUserProp Obj "camera_export_type" "cycle"
+					"reverse": setUserProp Obj "camera_export_type" "reverse"
+				)
 			)
 		)
 	)
@@ -354,37 +414,56 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		toggleRender true
 	)
 	
-	on PhysicsGeneratebox changed false do
+	on PhysicsGenerateBox changed false do
 	(
 		togglePhysics false
 	)
 	
-	on PhysicsGeneratebox changed true do
+	on PhysicsGenerateBox changed true do
 	(
 		togglePhysics true
+	)
+	
+	on CameraExportBox changed false do
+	(
+		toggleCameras false
+	)
+	
+	on CameraExportBox changed  true do
+	(
+		toggleCameras  true
 	)
 	
 	on GetButton pressed do
 	(
 		if $ == undefined then
-			(
-				messageBox "Selecciona un objeto de la escena" title:"ERROR"
-			) else (
-		
-		Obj = $
-		GetProperties Obj
+		(
+			messageBox "Selecciona un objeto de la escena" title:"ERROR"
+		) else (
+			Obj = $
+			GetProperties Obj
 		)
 	)
 	
 	on GetLightButton pressed do
 	(
 		if $ == undefined then
-			(
-				messageBox "Selecciona una luz de la escena" title:"ERROR"
-			) else (
-		
-		Obj = $
-		GetProperties Obj
+		(
+			messageBox "Selecciona una luz de la escena" title:"ERROR"
+		) else (
+			Obj = $
+			GetProperties Obj
+		)
+	)
+	
+	on GetCameraButton pressed do
+	(
+		if $ == undefined then
+		(
+			messageBox "Selecciona una cámara de la escena" title:"ERROR"
+		) else (
+			Obj = $
+			GetProperties Obj
 		)
 	)
 	
@@ -429,6 +508,32 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			) else (
 				
 				if queryBox "Hacer Set a una luz diferente al del Get?" title:"ATENCIÓN!" beep:true then
+				(
+					Obj = $
+					setProperties Obj
+				) else (
+					Obj = $
+					GetProperties Obj
+				)
+			)
+		)
+	)
+	
+	on SetCameraButton pressed do
+	(
+		if $ == undefined then
+		(
+			messageBox "Selecciona una cámara de la escena" title:"ERROR"
+			
+		) else (
+		
+			if Obj == $ then
+			(
+				setProperties Obj
+				
+			) else (
+				
+				if queryBox "Hacer Set a una cámara diferente al del Get?" title:"ATENCIÓN!" beep:true then
 				(
 					Obj = $
 					setProperties Obj
