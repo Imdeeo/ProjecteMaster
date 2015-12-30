@@ -587,6 +587,31 @@ fn createLights dir filename Objs =
 	close file
 )
 
+fn createCameras dir Objs =
+(
+	local cameraDir
+	local cameraPos
+	
+	file=createfile (dir+"cameras.xml")
+	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
+	format "<cameras>\n" to:file
+	for i=1 to Objs.count do
+	(
+		cameraDir = "cameras\\"+Objs[i].name+".xml"
+		cameraPos = Objs[i].pos.x as string+" "+Objs[i].pos.y as string+" "+Objs[i].pos.z as string
+		format "\t<camera name=\"%\" type=\"%\" pos=\"%\" dir=\"%\">\n" Objs[i].name (getUserProp Objs[i] "camera_export_type") cameraPos cameraDir to:file
+		
+		cameraFile=createfile (dir+cameraDir)
+		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
+		format "<camera_key_controller name=\"%\">\n" Objs[i].name to:cameraFile
+		format "\t<key time=\"%\" pos=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" to:cameraFile
+		format "</camera_key_controller>\n" to:cameraFile		
+		close cameraFile
+	)
+	format "</cameras>\n" to:file		
+	close file
+)
+
 fn createFiles Dir Objs =
 (
 	createInstanceMesh Dir "renderable_objects.xml" Objs
@@ -594,6 +619,7 @@ fn createFiles Dir Objs =
 	createMaterials Dir "materials.xml" Objs true
 	createMeshFromObjects Dir Objs
 	createLights Dir "lights.xml" Objs
+	createCameras Dir Objs
 )
 
 --createFiles get_Dir() $*
