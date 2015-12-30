@@ -47,7 +47,7 @@ utility UABUtility "UABUtility" width:168 height:360
 	fn exportCameras dir =
 	(
 		local camerasToExport = checkUserProp "camera_export"
-
+		createCameras dir camerasToExport
 	)
 
 	fn exportMesh dir Obj =
@@ -163,7 +163,7 @@ utility UABUtility "UABUtility" width:168 height:360
         )
     )
 	
-	on ExportCameraButton presed do
+	on ExportCameraButton pressed do
 	(
 		if LevelList.items[LevelList.selection] == "" then
         (
@@ -209,6 +209,7 @@ utility UABUtility "UABUtility" width:168 height:360
         (
 			local dir = get_Dir()
 			exportLights dir
+			exportCameras dir
 			exportMaterials dir (ExportTexturesCheck.checked)
 			exportStaticMesh dir (ExportMeshCheck.checked)
 			exportRenderableObject dir
