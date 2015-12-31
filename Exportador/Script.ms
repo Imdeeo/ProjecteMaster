@@ -589,30 +589,44 @@ fn createLights dir filename Objs =
 
 fn createCameras dir Objs =
 (
-	local cameraDir
+	local cameraFileDir
 	local cameraPos
+	local cameraDir
 	
 	file=createfile (dir+"cameras.xml")
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<cameras>\n" to:file
 	for i=1 to Objs.count do
 	(
-		cameraDir = "cameras\\"+Objs[i].name+".xml"
+		select Objs[i]
 		cameraPos = Objs[i].pos.x as string+" "+Objs[i].pos.y as string+" "+Objs[i].pos.z as string
-		format "\t<camera name=\"%\" type=\"%\" pos=\"%\" dir=\"%\">\n" Objs[i].name (getUserProp Objs[i] "camera_export_type") cameraPos cameraDir to:file
-		
-		cameraFile=createfile (dir+cameraDir)
-		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
-		format "<camera_key_controller name=\"%\">\n" Objs[i].name to:cameraFile
-		format "\t<key time=\"%\" pos=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" to:cameraFile
-		format "</camera_key_controller>\n" to:cameraFile		
-		close cameraFile
+		local firstframe = at time 999999999999 trackbar.getNextKeyTime()
+		if (firstframe != undefined) and ((getUserProp Objs[i] "camera_export_type") != "static") then(
+			dirExist (dir+"cameras\\")
+			cameraFileDir = "cameras\\"+Objs[i].name+".xml"
+			format "\t<camera name=\"%\" type=\"%\" pos=\"%\" dir=\"%\">\n" Objs[i].name (getUserProp Objs[i] "camera_export_type") cameraPos cameraFileDir to:file
+			local j = firstframe
+			cameraFile=createfile (dir+cameraFileDir)
+			format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
+			format "<camera_key_controller name=\"%\">\n" Objs[i].name to:cameraFile
+			do (
+				cameraPos = (at time j Objs[i].pos.x) as string+" "+(at time j Objs[i].pos.y) as string+" "+(at time j Objs[i].pos.z) as string
+				cameraDir = (at time j Objs[i].dir.x) as string+" "+(at time j Objs[i].dir.y) as string+" "+(at time j Objs[i].dir.z) as string
+				format "\t<key time=\"%\" pos=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" j cameraPos cameraDir (at time j $.fov) (at time j $.nearrange) (at time j $.farrange) to:cameraFile
+				j = at time j trackbar.getNextKeyTime()
+			) while j != firstframe
+			format "</camera_key_controller>\n" to:cameraFile		
+			close cameraFile
+		) else (
+			format "\t<camera name=\"%\" type=\"%\" pos=\"%\">\n" Objs[i].name (getUserProp Objs[i] "camera_export_type") cameraPos to:file
+		)
+		max select none
 	)
 	format "</cameras>\n" to:file		
 	close file
 )
 
-fn createFiles Dir Objs =
+/*fn createFiles Dir Objs =
 (
 	createInstanceMesh Dir "renderable_objects.xml" Objs
 	createStaticMesh Dir "static_meshes.xml" Objs
@@ -620,6 +634,5 @@ fn createFiles Dir Objs =
 	createMeshFromObjects Dir Objs
 	createLights Dir "lights.xml" Objs
 	createCameras Dir Objs
-)
-
+)*/
 --createFiles get_Dir() $*
