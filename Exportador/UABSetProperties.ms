@@ -208,7 +208,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 	
 	fn GetProperties Obj =
 	(
-		if (getUserProp Obj "render_export" == undefined) or (getUserProp Obj "light_export" == undefined) or (getUserProp Obj "camera_export" == undefined) then
+		if (getUserProp Obj "render_export" == undefined) and (getUserProp Obj "light_export" == undefined) and (getUserProp Obj "camera_export" == undefined) then
 		(
 			initUserProps Obj
 		)
@@ -282,6 +282,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		) else if(SuperClassOf Obj == camera) then
 		(
 			CameraExportBox.checked = getUserProp Obj "camera_export"
+			toggleCameras (CameraExportBox.checked)
 			case getUserProp Obj "camera_export_type" of
 				(
 					"static": CameraExportList.selection = 1
@@ -388,6 +389,8 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			if LightExportBox.checked then
 			(
 				setUserProp Obj "light_export" true
+			) else (
+				setUserProp Obj "light_export" false
 			)
 		) else if(SuperClassOf Obj == camera) then
 		(
@@ -400,6 +403,8 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 					"cycle": setUserProp Obj "camera_export_type" "cycle"
 					"reverse": setUserProp Obj "camera_export_type" "reverse"
 				)
+			) else (
+				setUserProp Obj "camera_export" false
 			)
 		)
 	)
