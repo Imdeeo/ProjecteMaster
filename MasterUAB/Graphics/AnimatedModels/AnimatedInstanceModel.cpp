@@ -103,7 +103,7 @@ void CAnimatedInstanceModel::Render(CRenderManager *RenderManager)
 			l_Transformations[l_BoneId].SetIdentity();
 			l_Transformations[l_BoneId].SetRotByQuat(l_Quaternion);
 			CalVector translationBoneSpace=m_CalHardwareModel->getTranslationBoneSpace(l_BoneId, m_CalModel->getSkeleton());
-			l_Transformations[l_BoneId].SetPos((const Vect3f&)(translationBoneSpace.x));
+			l_Transformations[l_BoneId].SetPos(Vect3f(translationBoneSpace.x,translationBoneSpace.y,translationBoneSpace.z));
 		}
 		memcpy(&CEffectManager::m_Parameters.m_Bones, l_Transformations,MAXBONES*sizeof(float)*4*4);
 		m_RenderableVertexs->RenderIndexed(RenderManager,m_Materials[l_HardwareMeshId]->GetEffectTechnique(),
