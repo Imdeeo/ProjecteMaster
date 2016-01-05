@@ -1,3 +1,5 @@
+fileIn "Math.ms"
+
 global isDebug = false
 global UABVtxsNormals=#() 
 
@@ -128,19 +130,6 @@ fn UABCalcVertexsNormals obj =
 			) 
 		) 
 	) 
-)
-
-fn circumcenter p1 p2 p3 =
-(
-    BC = distance p2 p3
-    CA = distance p3 p1
-    AB = distance p1 p2
-
-    baryCoords = [ (BC^2 * (CA^2 + AB^2 - BC^2)), (CA^2 * (AB^2 + BC^2 - CA^2)), (AB^2 * (BC^2 + CA^2 - AB^2)) ]
-    triArea = baryCoords.x + baryCoords.y + baryCoords.z
-    baryCoords /= triArea
-
-    baryCoords.x * p1 + baryCoords.y * p2 + baryCoords.z * p3
 )
 
 fn getBoundingSphere Obj =
@@ -433,9 +422,6 @@ fn procesFaces arx Obj =
 		local Nm1=normalize(UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal)
 		local Nm2=normalize(UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal)
 		local Nm3=normalize(UABGetVertexNormal l_Obj IdxsFace.z SmoothValue FaceNormal)
-		/*local Nm1=getNormal l_Obj IdxsFace.x
-		local Nm2=getNormal l_Obj IdxsFace.y
-		local Nm3=getNormal l_Obj IdxsFace.z*/
 		local IdxsMap=meshop.getMapFace l_Obj 1 i
 		local TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
 		local TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
@@ -591,7 +577,8 @@ fn createCameras dir Objs =
 (
 	local cameraFileDir
 	local cameraPos
-	local cameraDir
+	local cameraUp
+	local cameraLookAt
 	
 	file=createfile (dir+"cameras.xml")
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
@@ -611,14 +598,21 @@ fn createCameras dir Objs =
 			format "<camera_key_controller name=\"%\">\n" Objs[i].name to:cameraFile
 			do (
 				cameraPos = (at time j Objs[i].pos.x) as string+" "+(at time j Objs[i].pos.y) as string+" "+(at time j Objs[i].pos.z) as string
-				cameraDir = (at time j Objs[i].dir.x) as string+" "+(at time j Objs[i].dir.y) as string+" "+(at time j Objs[i].dir.z) as string
-				format "\t<key time=\"%\" pos=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" j cameraPos cameraDir (at time j $.fov) (at time j $.nearrange) (at time j $.farrange) to:cameraFile
+				cameraUp = mat3xvect3 (at time j Objs[i].transform) z_axis
+				cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
+				cameraLookAt = ((at time j Objs[i].pos) + (mat3xvect3 (at time j Objs[i].transform) y_axis))
+				cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
+				format "\t<key time=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" j cameraPos cameraUp cameraLookAt (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
 				j = at time j trackbar.getNextKeyTime()
 			) while j != firstframe
 			format "</camera_key_controller>\n" to:cameraFile		
 			close cameraFile
 		) else (
-			format "\t<camera name=\"%\" type=\"%\" pos=\"%\">\n" Objs[i].name (getUserProp Objs[i] "camera_export_type") cameraPos to:file
+			cameraUp = mat3xvect3 (Objs[i].transform) z_axis
+			cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
+			cameraLookAt = ((Objs[i].pos) + (mat3xvect3 (Objs[i].transform) y_axis))
+			cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
+			format "\t<camera name=\"%\" type=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" Objs[i].name (getUserProp Objs[i] "camera_export_type") cameraPos cameraUp cameraLookAt Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
 		)
 		max select none
 	)
