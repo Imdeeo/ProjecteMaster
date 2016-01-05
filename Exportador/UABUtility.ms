@@ -4,7 +4,7 @@ utility UABUtility "UABUtility" width:168 height:360
 (
 	checkbox chk1 "Checkbox" pos:[127,6] width:0 height:0
 	button SetPathButton "Set Path" pos:[8,8] width:152 height:40
-	label PathLabel "Label" pos:[8,56] width:152 height:64
+	label PathLabel "Label" pos:[8,56] width:152 height:64s
 	checkbox ExportMeshCheck "Export Mesh" pos:[8,120] width:152 height:16
 	checkbox ExportTexturesCheck "Export Textures" pos:[8,136] width:152 height:16
 	groupBox grp1 "Export" pos:[8,176] width:152 height:176
