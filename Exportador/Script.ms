@@ -579,6 +579,7 @@ fn createCameras dir Objs =
 	local cameraPos
 	local cameraUp
 	local cameraLookAt
+	local key
 	
 	file=createfile (dir+"cameras.xml")
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
@@ -588,21 +589,25 @@ fn createCameras dir Objs =
 		select Objs[i]
 		cameraPos = Objs[i].pos.x as string+" "+Objs[i].pos.y as string+" "+Objs[i].pos.z as string
 		local firstframe = at time 999999999999 trackbar.getNextKeyTime()
+		key = (at time 999999999999 trackbar.getPreviousKeyTime()) as string
+		key = replace key key.count 1 ""
 		if (firstframe != undefined) and ((getUserProp Objs[i] "camera_export_type") != "static") then(
 			dirExist (dir+"cameras\\")
 			cameraFileDir = "cameras\\"+Objs[i].name+".xml"
-			format "\t<camera name=\"%\" type=\"%\" pos=\"%\" dir=\"%\">\n" Objs[i].name (getUserProp Objs[i] "camera_export_type") cameraPos cameraFileDir to:file
+			format "\t<camera name=\"%\" total_time=\"%\" %=\"true\" pos=\"%\" filename=\"%\">\n" Objs[i].name key (getUserProp Objs[i] "camera_export_type") cameraPos cameraFileDir to:file
 			local j = firstframe
 			cameraFile=createfile (dir+cameraFileDir)
 			format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
 			format "<camera_key_controller name=\"%\">\n" Objs[i].name to:cameraFile
 			do (
+				key = j as string
+				key = replace key key.count 1 ""
 				cameraPos = (at time j Objs[i].pos.x) as string+" "+(at time j Objs[i].pos.y) as string+" "+(at time j Objs[i].pos.z) as string
 				cameraUp = mat3xvect3 (at time j Objs[i].transform) z_axis
 				cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
 				cameraLookAt = ((at time j Objs[i].pos) + (mat3xvect3 (at time j Objs[i].transform) y_axis))
 				cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
-				format "\t<key time=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" j cameraPos cameraUp cameraLookAt (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
+				format "\t<key time=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" key cameraPos cameraUp cameraLookAt (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
 				j = at time j trackbar.getNextKeyTime()
 			) while j != firstframe
 			format "</camera_key_controller>\n" to:cameraFile		
@@ -612,7 +617,7 @@ fn createCameras dir Objs =
 			cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
 			cameraLookAt = ((Objs[i].pos) + (mat3xvect3 (Objs[i].transform) y_axis))
 			cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
-			format "\t<camera name=\"%\" type=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" Objs[i].name (getUserProp Objs[i] "camera_export_type") cameraPos cameraUp cameraLookAt Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
+			format "\t<camera name=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" Objs[i].name cameraPos cameraUp cameraLookAt Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
 		)
 		max select none
 	)
