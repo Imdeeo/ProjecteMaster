@@ -32,13 +32,13 @@ CCameraInfo::CCameraInfo(CXMLTreeNode &XMLTreeNode)
 	float l_LookAtZ = std::stof(l_LookAt.substr(l_LookAtSz));
 	m_LookAt = (l_LookAtX, l_LookAtY, l_LookAtZ);
 
-	/*std::string l_Up;
+	std::string l_Up;
 	l_Up = *XMLTreeNode.GetPszProperty("up");
 	std::string::size_type l_UpSz;
 	float l_UpX = std::stof(l_Up, &l_UpSz);
 	float l_UpY = std::stof(l_Up.substr(l_UpSz), &l_UpSz);
 	float l_UpZ = std::stof(l_Up.substr(l_UpSz));
-	m_Up = (l_UpX, l_UpY, l_UpZ);*/
+	m_Up = (l_UpX, l_UpY, l_UpZ);
 	m_Up = (0.0f, 1.0f, 0.0f);
 
 	std::string l_NearPlane;
