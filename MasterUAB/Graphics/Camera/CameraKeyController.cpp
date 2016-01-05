@@ -1,15 +1,19 @@
 #include "CameraKeyController.h"
 #include "CameraKey.h"
+#include <sstream>
 
 CCameraKeyController::CCameraKeyController(CXMLTreeNode &XMLTreeNode)
+	:m_CurrentTime(0),
+	m_CurrentKey(0),
+	m_NextKey(1)
 {
 	m_CurrentTime = 0;
-	m_TotalTime = *XMLTreeNode.GetPszProperty("total_time");
+	m_TotalTime = 30.0f/(*XMLTreeNode.GetPszProperty("total_time"));
 	std::string l_Filename;
 	l_Filename = *XMLTreeNode.GetPszProperty("filename");
 	LoadXML(l_Filename);
-	m_Cycle = *XMLTreeNode.GetPszProperty("cycle");
-	m_Reverse = *XMLTreeNode.GetPszProperty("reverse");
+	std::istringstream(*XMLTreeNode.GetPszProperty("cycle")) >> std::boolalpha >> m_Cycle;
+	std::istringstream(*XMLTreeNode.GetPszProperty("reverse")) >> std::boolalpha >> m_Reverse;
 }
 
 CCameraKeyController::~CCameraKeyController()
@@ -31,7 +35,7 @@ bool CCameraKeyController::LoadXML(const std::string &FileName)
 				CXMLTreeNode l_Element = l_Input(i);
 				if (l_Element.GetName() == std::string("key"))
 				{
-					l_Time = std::stof(l_Element.GetPszProperty("time"));
+					l_Time = 30.0f/(std::stof(l_Element.GetPszProperty("key")));
 
 					CCameraInfo *l_CameraInfo = new CCameraInfo(l_Element);
 					CCameraKey *l_CameraKey = new CCameraKey(*l_CameraInfo, l_Time);
@@ -50,11 +54,16 @@ bool CCameraKeyController::LoadXML(const std::string &FileName)
 
 void CCameraKeyController::GetCurrentKey()
 {
-
+	for(size_t i = 0; i < m_Keys.size(); i++){
+		if (m_CurrentTime >= m_Keys[i]->m_Time){ m_CurrentKey = i; }
+	}
+	m_NextKey = m_CurrentKey+1;
+	if(m_NextKey > m_Keys.size()){ m_NextKey = 0; }
 }
 
 void CCameraKeyController::Update(float ElapsedTime)
 {
+
 }
 
 void CCameraKeyController::SetCurrentTime(float CurrentTime)
