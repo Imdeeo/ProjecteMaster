@@ -3,6 +3,9 @@
 
 #include <stdint.h>
 
+#define MAXBONES 29
+#define MAX_LIGHTS_BY_SHADER 4
+
 #define UAB_BUILD_GET_SET(Type, Variable) \
 private: \
 	Type			m_##Variable##; \
