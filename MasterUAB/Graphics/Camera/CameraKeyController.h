@@ -2,18 +2,20 @@
 #define CAMERA_KEY_CONTROLLER_H
 
 #include "XML\XMLTreeNode.h"
-#include "CameraKey.h"
+#include "Camera\CameraController.h"
+#include "Camera\CameraKey.h"
 #include <vector>
 
 class CCameraKey;
 
-class CCameraKeyController
+class CCameraKeyController : public CCameraController
 {	
 private:
 	std::vector<CCameraKey *> m_Keys;
 	size_t m_CurrentKey, m_NextKey;
 	float m_CurrentTime, m_TotalTime;
 	bool m_Cycle, m_Reverse;
+	CCamera m_Camera;
 	bool LoadXML(const std::string &FileName);
 	void GetCurrentKey();
 public:
@@ -22,6 +24,7 @@ public:
 	
 	void Update(float ElapsedTime);
 
+	void SetCamera(CCamera *Camera) const;
 	void SetCurrentTime(float CurrentTime);
 	void ResetTime();
 	float GetTotalTime();
