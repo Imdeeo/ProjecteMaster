@@ -2,6 +2,8 @@
 #define _UTILS_H
 
 #include <stdint.h>
+#include <Windows.h>
+#include <string>
 
 #define UAB_BUILD_GET_SET(Type, Variable) \
 private: \
@@ -34,5 +36,11 @@ public: \
 #define CHECKED_DELETE_ARRAY(x) if(x) {delete[] x; x = 0;}
 
 #define DEG2RAD(x) (x * (float)(3.14159265358979323846 / 180.0))
+
+static void UtilsLog(const std::string& text)
+{
+	// TODO: OPCIONAL esto va bi�n tenerlo escribiendo en un fichero
+	OutputDebugString(("LOG: " + text).c_str());
+}
 
 #endif //_UTILS_H
