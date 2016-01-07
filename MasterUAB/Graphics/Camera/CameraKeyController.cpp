@@ -1,19 +1,22 @@
-#include "CameraKeyController.h"
-#include "CameraKey.h"
-#include <sstream>
+#include "Camera\CameraKeyController.h"
+#include "Camera\CameraKey.h"
 
 CCameraKeyController::CCameraKeyController(CXMLTreeNode &XMLTreeNode)
 	:m_CurrentTime(0),
 	m_CurrentKey(0),
-	m_NextKey(1)
+	m_NextKey(1),
+	m_Cycle(false),
+	m_Reverse(false)
 {
 	m_CurrentTime = 0;
 	m_TotalTime = 30.0f/(*XMLTreeNode.GetPszProperty("total_time"));
 	std::string l_Filename;
 	l_Filename = *XMLTreeNode.GetPszProperty("filename");
+	std::string l_Type;
+	l_Type = *XMLTreeNode.GetPszProperty("type");
+	if(l_Type == "cycle"){ m_Cycle = true; }
+	if(l_Type == "reverse"){ m_Reverse = true; }
 	LoadXML(l_Filename);
-	std::istringstream(*XMLTreeNode.GetPszProperty("cycle")) >> std::boolalpha >> m_Cycle;
-	std::istringstream(*XMLTreeNode.GetPszProperty("reverse")) >> std::boolalpha >> m_Reverse;
 }
 
 CCameraKeyController::~CCameraKeyController()
@@ -58,12 +61,18 @@ void CCameraKeyController::GetCurrentKey()
 		if (m_CurrentTime >= m_Keys[i]->m_Time){ m_CurrentKey = i; }
 	}
 	m_NextKey = m_CurrentKey+1;
-	if(m_NextKey > m_Keys.size()){ m_NextKey = 0; }
+	if(m_NextKey >= m_Keys.size()){ m_NextKey = 0; }
 }
 
 void CCameraKeyController::Update(float ElapsedTime)
 {
+	m_CurrentTime += ElapsedTime;
 
+}
+
+void CCameraKeyController::SetCamera(CCamera *Camera) const
+{
+	m_Camera = Camera;
 }
 
 void CCameraKeyController::SetCurrentTime(float CurrentTime)

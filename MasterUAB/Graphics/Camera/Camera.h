@@ -5,7 +5,7 @@
 #include "Math\Vector3.h"
 
 class CCamera
-{	
+{
 private:
 	Mat44f				m_View;
 	Mat44f				m_Projection;
@@ -20,6 +20,16 @@ private:
 	float						m_ZFar;
 
 public:
+	enum TCameraType
+	{
+		CAMERA_TYPE_SPHERICAL = 0,
+		CAMERA_TYPE_FPS = 1,
+		CAMERA_TYPE_CYCLE = 2,
+		CAMERA_TYPE_REVERSE = 4,
+
+		CAMERA_TYPE_NULL = -1
+	};
+
 	CCamera()
 		: m_FOV(/*60.0f*/ 1.047198f)
 		, m_AspectRatio(1.0f)
@@ -76,6 +86,19 @@ public:
 
 		m_Projection.SetIdentity();
 		m_Projection.SetFromPerspective(m_FOV, m_AspectRatio, m_ZNear, m_ZFar);
+	}
+
+	static CCamera::TCameraType CCamera::GetCameraTypeByName(const std::string &StrCameraType)
+	{
+		if(StrCameraType=="spherical")
+			return CAMERA_TYPE_SPHERICAL;
+		else if (StrCameraType=="fps")
+			return CAMERA_TYPE_FPS;
+		else if (StrCameraType=="cycle")
+			return CAMERA_TYPE_CYCLE;
+		else if (StrCameraType=="reverse")
+			return CAMERA_TYPE_REVERSE;
+		return CAMERA_TYPE_NULL;
 	}
 };
 
