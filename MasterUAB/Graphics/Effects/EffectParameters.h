@@ -2,8 +2,7 @@
 #define EFFECT_PARAMETERS_H
 
 #include "Math\Matrix44.h"
-
-#define MAXBONES 29
+#include "Utils.h";
 
 class CEffectParameters
 {

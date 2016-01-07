@@ -1,11 +1,16 @@
 #include "Effects\EffectManager.h"
 #include "XML\XMLTreeNode.h"
-
+#include "SceneEffectParameters.h";
+#include "AnimatedModelEffectParameters.h";
+#include "LightEffectParameters.h";
+#include "Lights\Light.h";
+#include "Lights\DirectionalLight.h";
+#include "Lights\SpotLight.h";
+#include "Engine\UABEngine.h"
 
 CEffectManager::CEffectManager(void)
 {
 }
-
 
 CEffectManager::~CEffectManager(void)
 {
@@ -16,10 +21,9 @@ void CEffectManager::Reload()
 	Load(m_Filename);
 }
 
-CEffectParameters CEffectManager::m_Parameters;
+//CEffectParameters CEffectManager::m_Parameters;
 
 bool CEffectManager::Load(const std::string &Filename)
-
 {
 	m_Filename = Filename;
 	std::string l_EffectName;
@@ -68,4 +72,45 @@ CEffectVertexShader * CEffectManager::GetVertexShader(const std::string &VertexS
 CEffectPixelShader * CEffectManager::GetPixelShader(const std::string &PixelShader)
 {
 	return m_PixelShaders[PixelShader];
+}
+
+void CEffectManager::SetSceneConstants()
+{
+	m_SceneParameters.m_World = UABEngine.GetRenderManager()->;
+}
+
+void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
+{	
+	m_LightParameters.m_LightAmbient[IdLight] = (1.0f, 1.0f, 1.0f, 1.0f);
+	m_LightParameters.m_LightEnabled[IdLight] = 1;
+	m_LightParameters.m_LightType[IdLight] = Light->GetType();
+	m_LightParameters.m_LightPosition[IdLight] = Light->GetPosition();;	
+	m_LightParameters.m_LightAttenuationStartRange[IdLight] = Light->GetStartRangeAttenuation();
+	m_LightParameters.m_LightAttenuationEndRange[IdLight] = Light->GetEndRangeAttenuation();
+	m_LightParameters.m_LightIntensity[IdLight] = Light->GetIntensity();
+	m_LightParameters.m_LightColor[IdLight] = Light->GetColor();
+
+	switch (Light->GetType)
+	{	
+	case CLight::LIGHT_TYPE_DIRECTIONAL:
+		CDirectionalLight *aux = dynamic_cast<CDirectionalLight*>(Light);
+		m_LightParameters.m_LightDirection[IdLight] = aux->GetDirection();
+		break;
+	case CLight::LIGHT_TYPE_SPOT:
+		CSpotLight *aux2 = dynamic_cast<CSpotLight*>(Light);
+		m_LightParameters.m_LightAngle[IdLight] = aux2->GetAngle();
+		m_LightParameters.m_LightFallOffAngle[IdLight] = aux2->GetFallOff();
+		break;
+	case CLight::LIGHT_TYPE_OMNI:
+	default:
+		break;
+	}	
+}
+
+void CEffectManager::SetLightsConstants(unsigned int MaxLights)
+{
+	for (int i = 0; i < MaxLights; i++)
+	{
+		SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
+	}
 }
