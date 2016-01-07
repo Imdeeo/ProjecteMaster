@@ -124,24 +124,30 @@ void CAnimatedInstanceModel::Destroy()
 }
 void CAnimatedInstanceModel::ExecuteAction(int Id, float DelayIn, float DelayOut, float WeightTarget, bool AutoLock)
 {
-	m_ActualAnimation = Id;
+	m_ActualActionAnimation = Id;
 	m_CalModel->getMixer()->executeAction(Id,DelayIn,DelayOut,WeightTarget,AutoLock);
 	
 }
 void CAnimatedInstanceModel::BlendCycle(int Id, float Weight, float DelayIn)
 {
-	m_ActualAnimation = Id;
+	m_ActualCycleAnimation = Id;
 	m_CalModel->getMixer()->blendCycle(Id, Weight, DelayIn);
 }
 void CAnimatedInstanceModel::ClearCycle(int Id, float DelayOut)
 {
+	m_ActualCycleAnimation = -1;
 	m_CalModel->getMixer()->clearCycle(Id, DelayOut);
+}
+void CAnimatedInstanceModel::RemoveAction(int Id)
+{
+	m_ActualActionAnimation = -1;
+	m_CalModel->getMixer()->removeAction(Id);
 }
 bool CAnimatedInstanceModel::IsCycleAnimationActive(int Id) const
 {
-	return m_CalModel->getMixer()->getAnimationVector()[Id]->getState() == CalAnimation::STATE_IN;
+	return m_ActualCycleAnimation==Id;
 }
 bool CAnimatedInstanceModel::IsActionAnimationActive(int Id) const
 {
-	return m_CalModel->getMixer()->getAnimationVector()[Id]->getState() == CalAnimation::STATE_IN;
+	return m_ActualActionAnimation==Id;
 }
