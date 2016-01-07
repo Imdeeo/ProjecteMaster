@@ -5,6 +5,8 @@
 #include "CameraKey.h"
 #include <vector>
 
+class CCameraKey;
+
 class CCameraKeyController
 {	
 private:
