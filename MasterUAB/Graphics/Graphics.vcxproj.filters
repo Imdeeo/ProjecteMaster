@@ -47,9 +47,6 @@
     <ClCompile Include="StaticMesh\StaticMeshManager.cpp">
       <Filter>StaticMesh</Filter>
     </ClCompile>
-    <ClCompile Include="Texture\Dummy.cpp">
-      <Filter>Texture</Filter>
-    </ClCompile>
     <ClCompile Include="Texture\Texture.cpp">
       <Filter>Texture</Filter>
     </ClCompile>

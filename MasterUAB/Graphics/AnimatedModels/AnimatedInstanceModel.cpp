@@ -91,7 +91,7 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 void CAnimatedInstanceModel::Render(CRenderManager *RenderManager)
 {
 	Mat44f l_Transform=GetTransform();
-	CEffectManager::m_Parameters.m_World=GetTransform();
+	CEffectManager::m_SceneParameters.m_World=GetTransform();
 	for(int l_HardwareMeshId=0; l_HardwareMeshId<m_CalHardwareModel->getHardwareMeshCount(); ++l_HardwareMeshId)
 	{
 		m_Materials[l_HardwareMeshId]->Apply();
@@ -105,9 +105,9 @@ void CAnimatedInstanceModel::Render(CRenderManager *RenderManager)
 			CalVector translationBoneSpace=m_CalHardwareModel->getTranslationBoneSpace(l_BoneId, m_CalModel->getSkeleton());
 			l_Transformations[l_BoneId].SetPos(Vect3f(translationBoneSpace.x,translationBoneSpace.y,translationBoneSpace.z));
 		}
-		memcpy(&CEffectManager::m_Parameters.m_Bones, l_Transformations,MAXBONES*sizeof(float)*4*4);
+		memcpy(&CEffectManager::m_AnimatedModelEffectParameters.m_Bones, l_Transformations,MAXBONES*sizeof(float)*4*4);
 		m_RenderableVertexs->RenderIndexed(RenderManager,m_Materials[l_HardwareMeshId]->GetEffectTechnique(),
-			&CEffectManager::m_Parameters,m_CalHardwareModel->getFaceCount()*3, m_CalHardwareModel->getStartIndex(),
+			&CEffectManager::m_SceneParameters,m_CalHardwareModel->getFaceCount()*3, m_CalHardwareModel->getStartIndex(),
 			m_CalHardwareModel->getBaseVertexIndex());
 	}
 }
