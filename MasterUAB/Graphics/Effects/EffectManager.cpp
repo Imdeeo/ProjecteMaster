@@ -76,7 +76,7 @@ CEffectPixelShader * CEffectManager::GetPixelShader(const std::string &PixelShad
 
 void CEffectManager::SetSceneConstants()
 {
-	m_SceneParameters.m_World = UABEngine.GetRenderManager()->;
+	//m_SceneParameters.m_World = UABEngine.GetRenderManager()->GetContextManager()->;
 }
 
 void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
