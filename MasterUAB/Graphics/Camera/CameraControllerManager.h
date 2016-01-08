@@ -5,7 +5,7 @@
 #include "Camera\Camera.h"
 #include <string>
 
-class CCameraControllerManager  :	public CTemplatedMapManager<CCameraController>
+class CCameraControllerManager : public CTemplatedMapManager<CCameraController>
 {
 private:
 	std::string m_Filename;
@@ -13,7 +13,7 @@ public:
 	CCameraControllerManager(void){}
 	virtual ~CCameraControllerManager(void){}
 
-	void SetCurrentCamera(const CCamera& _CurrentCamera);
+	void ChooseCurrentCamera(std::string _CurrentCamera);
 	bool Load(const std::string &FileName);
 	bool Reload();
 
