@@ -3,8 +3,7 @@
 
 #include "Math\Matrix44.h"
 #include "Math\Vector3.h"
-
-class CCamera;
+#include "Camera.h"
 
 class CCameraController
 {
