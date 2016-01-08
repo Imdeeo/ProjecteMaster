@@ -1,9 +1,8 @@
-#ifndef INPUTMANAGERIMPLEMENTATION_H
-#define INPUTMANAGERIMPLEMENTATION_H
+#ifndef INPUT_MANAGER_IMPLEMENTATION_H
+#define INPUT_MANAGER_IMPLEMENTATION_H
 
 #include <dinput.h>
 
-#include <vector>
 #include "Utils.h"
 
 #include "InputManager.h"
@@ -141,4 +140,4 @@ private:
 	bool								m_ButtonMiddle, m_PreviousButtonMiddle;
 };
 
-#endif
+#endif //INPUT_MANAGER_IMPLEMENTATION_H

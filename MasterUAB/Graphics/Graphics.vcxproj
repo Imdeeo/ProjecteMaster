@@ -38,7 +38,6 @@
     <ClCompile Include="StaticMesh\InstanceMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMeshManager.cpp" />
-    <ClCompile Include="Texture\Dummy.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Texture\TextureManager.cpp" />
   </ItemGroup>
@@ -56,11 +55,14 @@
     <ClInclude Include="Camera\SphericalCameraController.h" />
     <ClInclude Include="ContextManager\ContextManager.h" />
     <ClInclude Include="DebugRender.h" />
+    <ClInclude Include="Effects\AnimatedModelEffectParameters.h" />
     <ClInclude Include="Effects\Effect.h" />
     <ClInclude Include="Effects\EffectManager.h" />
     <ClInclude Include="Effects\EffectParameters.h" />
     <ClInclude Include="Effects\EffectShader.h" />
     <ClInclude Include="Effects\EffectTechnique.h" />
+    <ClInclude Include="Effects\LightEffectParameters.h" />
+    <ClInclude Include="Effects\SceneEffectParameters.h" />
     <ClInclude Include="Lights\DirectionalLight.h" />
     <ClInclude Include="Lights\Light.h" />
     <ClInclude Include="Lights\LightManager.h" />

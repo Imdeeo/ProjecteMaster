@@ -3,6 +3,7 @@
 #include "Effects\EffectParameters.h"
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\VertexTypes.h"
+#include "Utils.h"
 
 #include <assert.h>
 
@@ -132,6 +133,9 @@ bool CEffectShader::CreateConstantBuffer()
 	l_BufferDescription.CPUAccessFlags=0;
 	if( FAILED(l_Device->CreateBuffer(&l_BufferDescription, NULL,&m_ConstantBuffer)))
 		return false;*/
+	CreateConstantBuffer( SCENE_CONSTANT_BUFFER_ID, 60*sizeof(float));
+	CreateConstantBuffer( LIGHT_CONSTANT_BUFFER_ID, 80*sizeof(float));
+	CreateConstantBuffer( ANIMATED_CONSTANT_BUFFER_ID, 640*sizeof(float));
 	return true;
 }
 
@@ -143,6 +147,11 @@ bool CEffectShader::Reload()
 {
 	assert(!"this method must not be called");
 	return false;
+}
+
+ID3D11Buffer * CEffectShader::GetConstantBuffer(unsigned int IdBuffer)
+{
+	return m_ConstantBuffers[IdBuffer];
 }
 
 CEffectVertexShader::CEffectVertexShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode),
@@ -210,7 +219,7 @@ CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShad
 
 void CEffectPixelShader::Destroy()
 {
-	CHECKED_DELETE(m_PixelShader);
+	//CHECKED_DELETE(m_PixelShader);
 	//CHECKED_DELETE(m_ConstantBuffer);
 }
 

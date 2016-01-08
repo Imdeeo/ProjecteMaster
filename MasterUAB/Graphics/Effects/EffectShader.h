@@ -6,8 +6,9 @@
 #include <d3dcommon.h>
 #include <d3d11.h>
 
-#include <string>
-#include <vector>
+#define SCENE_CONSTANT_BUFFER_ID	0
+#define LIGHT_CONSTANT_BUFFER_ID	1
+#define ANIMATED_CONSTANT_BUFFER_ID	2
 
 class CEffectShader : public CNamed
 {
