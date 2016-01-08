@@ -15,7 +15,6 @@ private:
 	size_t m_CurrentKey, m_NextKey;
 	float m_CurrentTime, m_TotalTime;
 	bool m_Cycle, m_Reverse;
-	CCamera m_Camera;
 	bool LoadXML(const std::string &FileName);
 	void GetCurrentKey();
 public:

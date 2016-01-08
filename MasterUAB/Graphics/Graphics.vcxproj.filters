@@ -86,6 +86,9 @@
     <ClCompile Include="Camera\CameraKeyController.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Camera\CameraControllerManager.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -238,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="Effects\SceneEffectParameters.h">
       <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\CameraControllerManager.h">
+      <Filter>Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
