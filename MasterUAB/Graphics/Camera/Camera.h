@@ -88,15 +88,15 @@ public:
 		m_Projection.SetFromPerspective(m_FOV, m_AspectRatio, m_ZNear, m_ZFar);
 	}
 
-	static CCamera::TCameraType CCamera::GetCameraTypeByName(const std::string &StrCameraType)
+	static CCamera::TCameraType CCamera::GetCameraTypeByName(const std::string &CameraType)
 	{
-		if(StrCameraType=="spherical")
+		if(CameraType=="spherical")
 			return CAMERA_TYPE_SPHERICAL;
-		else if (StrCameraType=="fps")
+		else if (CameraType=="fps")
 			return CAMERA_TYPE_FPS;
-		else if (StrCameraType=="cycle")
+		else if (CameraType=="cycle")
 			return CAMERA_TYPE_CYCLE;
-		else if (StrCameraType=="reverse")
+		else if (CameraType=="reverse")
 			return CAMERA_TYPE_REVERSE;
 		return CAMERA_TYPE_NULL;
 	}
