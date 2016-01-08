@@ -1,5 +1,5 @@
 #include "Camera\CameraKeyController.h"
-#include "Camera\CameraKey.h"
+#include "Camera\Camera.h"
 
 #include "Engine\UABEngine.h"
 
@@ -79,17 +79,15 @@ void CCameraKeyController::Update(float ElapsedTime)
 
 void CCameraKeyController::SetCamera(CCamera *Camera) const
 {
-	m_Camera = Camera;
+	Camera->SetPosition(m_Position);
+	Camera->SetLookAt(m_Position);
+	Camera->SetUp(GetUp());
+	Camera->SetFOV(1.047f);
+	Camera->SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
+	Camera->SetZNear(0.1f);
+	Camera->SetZFar(100.f);
 
-	m_Camera->SetPosition(m_Position);
-	m_Camera->SetLookAt(m_Position);
-	m_Camera->SetUp(GetUp());
-	m_Camera->SetFOV(1.047f);
-	m_Camera->SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
-	m_Camera->SetZNear(0.1f);
-	m_Camera->SetZFar(100.f);
-
-	m_Camera->SetMatrixs();
+	Camera->SetMatrixs();
 }
 
 void CCameraKeyController::SetCurrentTime(float CurrentTime)

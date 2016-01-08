@@ -236,6 +236,9 @@
     <ClInclude Include="Camera\CameraControllerManager.h">
       <Filter>Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Camera\CameraControllerManager.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Graphics.rc" />
