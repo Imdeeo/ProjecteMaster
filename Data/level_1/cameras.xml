@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cameras>
-	<camera name="FPSCamera" type="fps">
+	<camera name="FPSCamera" type="fps"/>
 </cameras>
