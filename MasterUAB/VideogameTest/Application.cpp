@@ -177,22 +177,11 @@ void CApplication::Update(float _ElapsedTime)
 	}
 
 	{
-		CCamera camera;
-		m_FPSCamera.SetCamera(&camera);
-		camera.SetFOV(1.047f);
-		camera.SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
-		camera.SetZNear(0.1f);
-		camera.SetZFar(100.f);
-		camera.SetMatrixs();
-		UABEngine.GetRenderManager()->SetCurrentCamera(camera);
+		UABEngine.GetCameraControllerManager()->ChooseCurrentCamera("FPSCamera");
 
-		m_SphericalCamera.SetCamera(&camera);
-		camera.SetFOV(1.047f);
-		camera.SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
-		camera.SetZNear(0.1f);
-		camera.SetZFar(100.f);
-		camera.SetMatrixs();
-		UABEngine.GetRenderManager()->SetDebugCamera(camera);
+		CCamera debugCamera;
+		m_SphericalCamera.SetCamera(&debugCamera);
+		UABEngine.GetRenderManager()->SetDebugCamera(debugCamera);
 
 		UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 	}
