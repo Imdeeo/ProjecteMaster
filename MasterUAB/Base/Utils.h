@@ -4,8 +4,9 @@
 #include <stdint.h>
 #include <Windows.h>
 #include <string>
+#include <vector>
 
-#define MAXBONES 29
+#define MAXBONES 40
 #define MAX_LIGHTS_BY_SHADER 4
 
 #define UAB_BUILD_GET_SET(Type, Variable) \
@@ -40,10 +41,10 @@ public: \
 
 #define DEG2RAD(x) (x * (float)(3.14159265358979323846 / 180.0))
 
-static void UtilsLog(const std::string& text)
-{
-	// TODO: OPCIONAL esto va bi�n tenerlo escribiendo en un fichero
-	OutputDebugString(("LOG: " + text).c_str());
-}
+static void UtilsLog(const std::string& text);
+
+std::vector<std::string> &SplitString(const std::string &s, char delim, std::vector<std::string> &elems);
+
+std::vector<std::string> SplitString(const std::string &s, char delim);
 
 #endif //_UTILS_H

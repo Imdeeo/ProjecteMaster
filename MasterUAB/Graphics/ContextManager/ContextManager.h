@@ -66,11 +66,11 @@ public:
 	ID3D11Device* GetDevice() const { return m_D3DDevice; }
 	ID3D11DeviceContext* GetDeviceContext() const { return m_DeviceContext; }
 
-	void SetBaseColor(const CColor& _Color) { CEffectManager::m_Parameters.m_BaseColor = _Color; }
-	void SetWorldMatrix(const Mat44f& _Model) { CEffectManager::m_Parameters.m_World = _Model; }
-	void SetCamera(const Mat44f& _View, const Mat44f& _Projection) { CEffectManager::m_Parameters.m_View = _View; CEffectManager::m_Parameters.m_Projection = _Projection; }
-	void SetCamera(const CCamera& _Camera) { CEffectManager::m_Parameters.m_View = _Camera.GetView(); CEffectManager::m_Parameters.m_Projection = _Camera.GetProjection(); }
-	void SetDebugSize(float _Size) { CEffectManager::m_Parameters.m_DebugRenderScale = _Size; }
+	//void SetBaseColor(const CColor& _Color) { CEffectManager::m_LightParameters.m_LightColor = _Color; }
+	void SetWorldMatrix(const Mat44f& _Model) { CEffectManager::m_SceneParameters.m_World = _Model; }
+	void SetCamera(const Mat44f& _View, const Mat44f& _Projection) { CEffectManager::m_SceneParameters.m_View = _View; CEffectManager::m_SceneParameters.m_Projection = _Projection; }
+	void SetCamera(const CCamera& _Camera) { CEffectManager::m_SceneParameters.m_View = _Camera.GetView(); CEffectManager::m_SceneParameters.m_Projection = _Camera.GetProjection(); }
+	//void SetDebugSize(float _Size) { CEffectManager::m_SceneParameters.m_DebugRenderScale = _Size; }
 
 private:
 
