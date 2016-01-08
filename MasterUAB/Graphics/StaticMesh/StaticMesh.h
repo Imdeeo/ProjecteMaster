@@ -3,7 +3,6 @@
 
 #include "Utils.h"
 #include "Named.h"
-#include <vector>
 #include "Math\MathTypes.h"
 
 class CRenderableVertexs;
