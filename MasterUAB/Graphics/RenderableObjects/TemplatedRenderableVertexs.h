@@ -51,7 +51,7 @@ public:
 		l_DeviceContext->IASetPrimitiveTopology(m_PrimitiveTopology);
 		l_DeviceContext->IASetInputLayout(l_EffectVertexShader->GetVertexLayout());
 		l_DeviceContext->VSSetShader(l_EffectVertexShader->GetVertexShader(), NULL, 0);
-		ID3D11Buffer *l_ConstantBufferVS=l_EffectVertexShader->GetConstantBuffer();
+		ID3D11Buffer *l_ConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 
 		/*OJUCUIDAO*/
 		CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
@@ -63,7 +63,7 @@ public:
 		l_DeviceContext->UpdateSubresource(l_ConstantBufferVS, 0, NULL,	Parameters, 0, 0 );
 		l_DeviceContext->VSSetConstantBuffers( 0, 1, &l_ConstantBufferVS);
 		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
-		ID3D11Buffer *l_ConstantBufferPS=l_EffectPixelShader->GetConstantBuffer();
+		ID3D11Buffer *l_ConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 		l_DeviceContext->PSSetConstantBuffers(0, 1, &l_ConstantBufferPS);
 		l_DeviceContext->Draw(m_VertexsCount, 0);
 		return true;

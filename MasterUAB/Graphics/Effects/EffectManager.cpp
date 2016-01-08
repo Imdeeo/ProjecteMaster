@@ -1,8 +1,5 @@
 #include "Effects\EffectManager.h"
 #include "XML\XMLTreeNode.h"
-#include "SceneEffectParameters.h";
-#include "AnimatedModelEffectParameters.h";
-#include "LightEffectParameters.h";
 #include "Lights\Light.h";
 #include "Lights\DirectionalLight.h";
 #include "Lights\SpotLight.h";
@@ -21,7 +18,9 @@ void CEffectManager::Reload()
 	Load(m_Filename);
 }
 
-//CEffectParameters CEffectManager::m_Parameters;
+CSceneEffectParameters CEffectManager::m_SceneParameters;
+CAnimatedModelEffectParameters CEffectManager::m_AnimatedModelEffectParameters;
+CLightEffectParameters CEffectManager::m_LightParameters;
 
 bool CEffectManager::Load(const std::string &Filename)
 {
@@ -76,7 +75,7 @@ CEffectPixelShader * CEffectManager::GetPixelShader(const std::string &PixelShad
 
 void CEffectManager::SetSceneConstants()
 {
-	//m_SceneParameters.m_World = UABEngine.GetRenderManager()->GetContextManager()->;
+//	m_SceneParameters.m_World = UABEngine.GetRenderManager()->;
 }
 
 void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
@@ -90,16 +89,14 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 	m_LightParameters.m_LightIntensity[IdLight] = Light->GetIntensity();
 	m_LightParameters.m_LightColor[IdLight] = Light->GetColor();
 
-	switch (Light->GetType)
+	switch (Light->GetType())
 	{	
 	case CLight::LIGHT_TYPE_DIRECTIONAL:
-		CDirectionalLight *aux = dynamic_cast<CDirectionalLight*>(Light);
-		m_LightParameters.m_LightDirection[IdLight] = aux->GetDirection();
+		m_LightParameters.m_LightDirection[IdLight] = dynamic_cast<CDirectionalLight*>(Light)->GetDirection();
 		break;
 	case CLight::LIGHT_TYPE_SPOT:
-		CSpotLight *aux2 = dynamic_cast<CSpotLight*>(Light);
-		m_LightParameters.m_LightAngle[IdLight] = aux2->GetAngle();
-		m_LightParameters.m_LightFallOffAngle[IdLight] = aux2->GetFallOff();
+		m_LightParameters.m_LightAngle[IdLight] = dynamic_cast<CSpotLight*>(Light)->GetAngle();
+		m_LightParameters.m_LightFallOffAngle[IdLight] = dynamic_cast<CSpotLight*>(Light)->GetFallOff();
 		break;
 	case CLight::LIGHT_TYPE_OMNI:
 	default:
