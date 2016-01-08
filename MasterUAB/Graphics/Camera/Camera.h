@@ -3,6 +3,7 @@
 
 #include "Math\Matrix44.h"
 #include "Math\Vector3.h"
+#include <string>
 
 class CCamera
 {
