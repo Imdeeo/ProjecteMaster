@@ -1,6 +1,8 @@
 #include "Effects\EffectShader.h"
 #include "RenderManager\RenderManager.h"
-#include "Effects\EffectParameters.h"
+#include "Effects\SceneEffectParameters.h"
+#include "Effects\AnimatedModelEffectParameters.h"
+#include "Effects\LightEffectParameters.h"
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\VertexTypes.h"
 
@@ -122,6 +124,10 @@ bool CEffectShader::CreateConstantBuffer(int IdBuffer, unsigned int BufferSize)
 
 bool CEffectShader::CreateConstantBuffer()
 {
+	CreateConstantBuffer(0, sizeof(CSceneEffectParameters));
+	CreateConstantBuffer(1, sizeof(CLightEffectParameters));
+	CreateConstantBuffer(2, sizeof(CAnimatedModelEffectParameters));
+
 	/*CRenderManager* l_RenderManager=UABEngine.GetRenderManager();
 	ID3D11Device *l_Device=l_RenderManager->GetDevice();
 	D3D11_BUFFER_DESC l_BufferDescription;
@@ -139,6 +145,7 @@ void CEffectShader::Destroy()
 {
 	assert(!"this method must not be called");
 }
+
 bool CEffectShader::Reload()
 {
 	assert(!"this method must not be called");
