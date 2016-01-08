@@ -7,19 +7,20 @@
 
 #include "Engine\UABEngine.h"
 
-CCameraControllerManager::CCameraControllerManager(void)
+CCameraControllerManager::CCameraControllerManager():
+	m_CurrentCamera()
 {
-	
+
 }
 
-CCameraControllerManager::~CCameraControllerManager(void)
+CCameraControllerManager::~CCameraControllerManager()
 {
 	Destroy();
 }
 
 void CCameraControllerManager::ChooseCurrentCamera(std::string _CurrentCamera)
 {
-	(*GetResource(_CurrentCamera)).SetCamera(&m_CurrentCamera);
+	GetResource(_CurrentCamera)->SetCamera(&m_CurrentCamera);
 	UABEngine.GetRenderManager()->SetCurrentCamera(m_CurrentCamera);
 }
 

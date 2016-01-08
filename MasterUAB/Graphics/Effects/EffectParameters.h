@@ -2,7 +2,7 @@
 #define EFFECT_PARAMETERS_H
 
 #include "Math\Matrix44.h"
-#include "Utils.h";
+#include "Utils.h"
 
 class CEffectParameters
 {
