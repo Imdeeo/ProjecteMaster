@@ -82,6 +82,7 @@
     <ClCompile Include="3DElement\C3DElement.cpp">
       <Filter>3DElement</Filter>
     </ClCompile>
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Math\MathUtils.inl">
