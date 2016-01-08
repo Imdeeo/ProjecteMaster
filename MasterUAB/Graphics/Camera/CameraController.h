@@ -9,10 +9,10 @@ class CCamera;
 class CCameraController
 {
 protected:
-	Vect3f 				m_Position;
+	Vect3f m_Position;
 
-	float						m_Yaw;
-	float						m_Pitch;
+	float m_Yaw;
+	float m_Pitch;
 public:
 	CCameraController();
 	virtual ~CCameraController();
