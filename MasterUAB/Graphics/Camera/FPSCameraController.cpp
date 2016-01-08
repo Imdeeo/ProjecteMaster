@@ -1,6 +1,8 @@
 #include "Camera\FPSCameraController.h"
 #include "Camera\Camera.h"
 
+#include "Engine\UABEngine.h"
+
 CFPSCameraController::CFPSCameraController()
 : m_YawSpeed(100.f)
 , m_PitchSpeed(60.f)
@@ -46,11 +48,15 @@ void CFPSCameraController::AddPitch(float Radians)
 void CFPSCameraController::SetCamera(CCamera *Camera) const
 {
 	Vect3f l_Direction = GetDirection();
-	Camera->SetFOV(0.87266f);
-	Camera->SetAspectRatio(16.0f/9.0f);
+
 	Camera->SetPosition(m_Position);
 	Camera->SetLookAt(m_Position+l_Direction);
 	Camera->SetUp(GetUp());
+	Camera->SetFOV(1.047f);
+	Camera->SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
+	Camera->SetZNear(0.1f);
+	Camera->SetZFar(100.f);
+
 	Camera->SetMatrixs();
 }
 

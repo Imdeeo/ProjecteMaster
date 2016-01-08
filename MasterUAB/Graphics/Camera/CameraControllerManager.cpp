@@ -5,6 +5,8 @@
 #include "Camera\CameraController.h"
 #include "XML\XMLTreeNode.h"
 
+#include "Engine\UABEngine.h"
+
 CCameraControllerManager::CCameraControllerManager(void)
 {
 	
@@ -15,9 +17,10 @@ CCameraControllerManager::~CCameraControllerManager(void)
 	Destroy();
 }
 
-void CCameraControllerManager::SetCurrentCamera(const CCamera& _CurrentCamera)
+void CCameraControllerManager::ChooseCurrentCamera(std::string _CurrentCamera)
 {
-	m_CurrentCamera = _CurrentCamera;
+	(*GetResource(_CurrentCamera)).SetCamera(&m_CurrentCamera);
+	UABEngine.GetRenderManager()->SetCurrentCamera(m_CurrentCamera);
 }
 
 bool CCameraControllerManager::Load(const std::string &FileName)
