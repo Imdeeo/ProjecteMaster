@@ -2,7 +2,6 @@
 #define MATERIAL_H
 
 #include "Named.h"
-#include <vector>
 #include "Utils.h"
 
 #include <assert.h>
