@@ -21,7 +21,6 @@
 #include "Effects\Effect.h"
 #include "Camera\Camera.h"
 
-#pragma comment(lib, "Graphics_d.lib")
 #pragma comment(lib, "Winmm.lib")
 
 #define APPLICATION_NAME	"VIDEOGAME"
