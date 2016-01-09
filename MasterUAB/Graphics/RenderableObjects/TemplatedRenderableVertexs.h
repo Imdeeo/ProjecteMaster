@@ -51,7 +51,10 @@ public:
 		l_DeviceContext->IASetPrimitiveTopology(m_PrimitiveTopology);
 		l_DeviceContext->IASetInputLayout(l_EffectVertexShader->GetVertexLayout());
 		l_DeviceContext->VSSetShader(l_EffectVertexShader->GetVertexShader(), NULL, 0);
-		ID3D11Buffer *l_ConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+
+		ID3D11Buffer *l_SceneConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+		ID3D11Buffer *l_LightConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
+		ID3D11Buffer *l_AnimationConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
 
 		/*OJUCUIDAO*/
 		CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
@@ -60,11 +63,32 @@ public:
 		Vect4f v(1, 1, 1, 1);
 		l_DeviceContext->OMSetBlendState(l_ContextManager->GetBlendState(CContextManager::BLEND_CLASSIC), &v.x, 0xffffffff);
 
-		l_DeviceContext->UpdateSubresource(l_ConstantBufferVS, 0, NULL,	Parameters, 0, 0 );
-		l_DeviceContext->VSSetConstantBuffers( 0, 1, &l_ConstantBufferVS);
+
+		
+		CEffectManager* l_EffectManagerInstance = UABEngine.GetEffectManager();
+
+		l_DeviceContext->UpdateSubresource(l_SceneConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_SceneParameters), 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_LightConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_LightParameters), 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters)
+			, 0, 0 );
+		ID3D11Buffer* VSBuffers[3] = {l_SceneConstantBufferVS,l_LightConstantBufferVS,l_AnimationConstantBufferVS};
+		l_DeviceContext->VSSetConstantBuffers(0, 3,VSBuffers);
+
 		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
-		ID3D11Buffer *l_ConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
-		l_DeviceContext->PSSetConstantBuffers(0, 1, &l_ConstantBufferPS);
+		
+		ID3D11Buffer *l_SceneConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+		ID3D11Buffer *l_LightConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
+		ID3D11Buffer *l_AnimationConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
+
+
+		l_DeviceContext->UpdateSubresource(l_SceneConstantBufferPS, 0, NULL, &(l_EffectManagerInstance->m_SceneParameters), 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_LightConstantBufferPS, 0, NULL, &(l_EffectManagerInstance->m_LightParameters), 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferPS, 0, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters)
+			, 0, 0 );
+
+		ID3D11Buffer* PSBuffers[3] = {l_SceneConstantBufferPS,l_LightConstantBufferPS,l_AnimationConstantBufferPS};
+		l_DeviceContext->PSSetConstantBuffers(0, 3, PSBuffers);
+
 		l_DeviceContext->Draw(m_VertexsCount, 0);
 		return true;
 	}
