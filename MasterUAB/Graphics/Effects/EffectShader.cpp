@@ -125,9 +125,14 @@ bool CEffectShader::CreateConstantBuffer(int IdBuffer, unsigned int BufferSize)
 
 bool CEffectShader::CreateConstantBuffer()
 {
-	CreateConstantBuffer(0, sizeof(CSceneEffectParameters));
-	CreateConstantBuffer(1, sizeof(CLightEffectParameters));
-	CreateConstantBuffer(2, sizeof(CAnimatedModelEffectParameters));
+	CreateConstantBuffer(SCENE_CONSTANT_BUFFER_ID, sizeof(CSceneEffectParameters));
+	CreateConstantBuffer(LIGHT_CONSTANT_BUFFER_ID, sizeof(CLightEffectParameters));
+	CreateConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID, sizeof(CAnimatedModelEffectParameters));
+
+	
+	/*CreateConstantBuffer( SCENE_CONSTANT_BUFFER_ID, 60*sizeof(float));
+	CreateConstantBuffer( LIGHT_CONSTANT_BUFFER_ID, 80*sizeof(float));
+	CreateConstantBuffer( ANIMATED_CONSTANT_BUFFER_ID, 640*sizeof(float));*/
 
 	/*CRenderManager* l_RenderManager=UABEngine.GetRenderManager();
 	ID3D11Device *l_Device=l_RenderManager->GetDevice();
@@ -139,9 +144,6 @@ bool CEffectShader::CreateConstantBuffer()
 	l_BufferDescription.CPUAccessFlags=0;
 	if( FAILED(l_Device->CreateBuffer(&l_BufferDescription, NULL,&m_ConstantBuffer)))
 		return false;*/
-	CreateConstantBuffer( SCENE_CONSTANT_BUFFER_ID, 60*sizeof(float));
-	CreateConstantBuffer( LIGHT_CONSTANT_BUFFER_ID, 80*sizeof(float));
-	CreateConstantBuffer( ANIMATED_CONSTANT_BUFFER_ID, 640*sizeof(float));
 	return true;
 }
 
