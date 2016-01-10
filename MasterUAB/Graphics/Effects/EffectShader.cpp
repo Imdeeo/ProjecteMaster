@@ -198,7 +198,7 @@ bool CEffectVertexShader::Load()
 		l_VSBlob->Release();
 		return false;
 	}
-	if (m_VertexType == "POSITION_NORMAL_TEXTURE_VERTEX")
+	if (m_VertexType == "MV_POSITION_NORMAL_TEXTURE_VERTEX")
 		l_Loaded = MV_POSITION_NORMAL_TEXTURE_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else
 		//Info("Vertex type '%s' not recognized on CEffectVertexShader::Load", m_VertexType.c_str());
