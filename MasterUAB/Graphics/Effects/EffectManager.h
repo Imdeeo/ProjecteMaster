@@ -6,9 +6,9 @@
 
 #include "Effects\EffectShader.h"
 #include "Effects\EffectTechnique.h"
-#include "SceneEffectParameters.h";
-#include "AnimatedModelEffectParameters.h";
-#include "LightEffectParameters.h";
+#include "SceneEffectParameters.h"
+#include "AnimatedModelEffectParameters.h"
+#include "LightEffectParameters.h"
 #include <string.h>
 
 class CLight;
