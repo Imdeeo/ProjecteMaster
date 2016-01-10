@@ -34,7 +34,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 	GroupBox grp4 "Cameras" pos:[8,8] width:265 height:88 visible:false
 		label CameraLabel "Nothing selected" pos:[24,32] width:232 height:24 visible:false
 		checkbox CameraExportBox "Export" pos:[24,64] width:88 height:16 visible:false
-		dropdownList CameraExportList "" pos:[120,62] width:136 height:21 enabled:false items:#("static", "cycle", "reverse")
+		dropdownList CameraExportList "" pos:[120,62] width:136 height:21 enabled:false items:#("fps", "spherical", "cycle", "reverse")
 		button GetCameraButton "Get" pos:[24,104] width:112 height:32 visible:false
 		button SetCameraButton "Set" pos:[144,104] width:112 height:32 visible:false
 	
@@ -285,9 +285,10 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			toggleCameras (CameraExportBox.checked)
 			case getUserProp Obj "camera_export_type" of
 				(
-					"static": CameraExportList.selection = 1
-					"cycle": CameraExportList.selection = 2
-					"reverse": CameraExportList.selection = 3
+					"fps": CameraExportList.selection = 1
+					"spherical": CameraExportList.selection = 2
+					"cycle": CameraExportList.selection = 3
+					"reverse": CameraExportList.selection = 4
 				)
 		)
 	)
@@ -399,7 +400,8 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 				setUserProp Obj "camera_export" true
 				case CameraExportList.items[CameraExportList.selection] of
 				(
-					"static": setUserProp Obj "camera_export_type" "static"
+					"fps": setUserProp Obj "camera_export_type" "fps"
+					"spherical": setUserProp Obj "camera_export_type" "spherical"
 					"cycle": setUserProp Obj "camera_export_type" "cycle"
 					"reverse": setUserProp Obj "camera_export_type" "reverse"
 				)
