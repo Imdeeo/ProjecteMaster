@@ -20,13 +20,7 @@ public:
 	};
 
 	typedef std::vector<T *> TVectorResources;
-	/*struct TVectorResources {
-		std::vector<T *> Element;
-	};*/
 	typedef std::map<std::string, CMapResourceValue> TMapResources;
-	/*struct TMapResources {
-		std::map<std::string, CMapResourceValue> Element;
-	};*/
 
 protected:
 	TVectorResources m_ResourcesVector;

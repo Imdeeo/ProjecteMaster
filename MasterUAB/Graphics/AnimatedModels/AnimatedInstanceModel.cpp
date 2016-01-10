@@ -62,7 +62,7 @@ bool CAnimatedInstanceModel::LoadVertexBuffer()
 void CAnimatedInstanceModel::LoadMaterials()
 {
 	std::vector <CMaterial *> l_Materials = m_AnimatedCoreModel->GetMaterials();
-	for(int i = 0; i<l_Materials.size(); i++)
+	for(size_t i = 0; i<l_Materials.size(); i++)
 	{
 		m_Materials.push_back(l_Materials[i]);
 	}
