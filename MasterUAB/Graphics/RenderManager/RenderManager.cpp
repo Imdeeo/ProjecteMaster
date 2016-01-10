@@ -62,7 +62,10 @@ void CRenderManager::Render()
 	{
 		m_ContextManager->SetCamera(m_CurrentCamera);
 	}
-
+	//Mat44f view,proj;
+	//view.SetIdentity();
+	//proj.SetIdentity();
+	//m_ContextManager->SetCamera(view,proj);
 	// TODO crear un vector para objetos transparentes
 	std::vector<BlendedSubmesh> l_SubmeshesWithBlend;
 
