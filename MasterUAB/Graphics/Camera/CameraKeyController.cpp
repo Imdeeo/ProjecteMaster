@@ -1,15 +1,18 @@
 #include "CameraKeyController.h"
 #include "CameraKey.h"
+#include "Camera\Camera.h"
 
 CCameraKeyController::CCameraKeyController(CXMLTreeNode &XMLTreeNode)
 {
-	m_CurrentTime = 0;
-	m_TotalTime = *XMLTreeNode.GetPszProperty("total_time");
+	ResetTime();
+	m_TotalTime = XMLTreeNode.GetFloatProperty("total_time", 0,true);
 	std::string l_Filename;
-	l_Filename = *XMLTreeNode.GetPszProperty("filename");
+	l_Filename = XMLTreeNode.GetPszProperty("filename");
 	LoadXML(l_Filename);
-	m_Cycle = *XMLTreeNode.GetPszProperty("cycle");
-	m_Reverse = *XMLTreeNode.GetPszProperty("reverse");
+	
+	m_Reverse = XMLTreeNode.GetBoolProperty("reverse");
+	m_ReverseDirection = 1;
+	m_Cycle = !m_Reverse;//*XMLTreeNode.GetPszProperty("cycle");
 }
 
 CCameraKeyController::~CCameraKeyController()
@@ -50,11 +53,98 @@ bool CCameraKeyController::LoadXML(const std::string &FileName)
 
 void CCameraKeyController::GetCurrentKey()
 {
+	if (IsCycle() || m_ReverseDirection == 1)
+	{
+		for (size_t i = 0; i < m_Keys.size(); i++){
+			if (m_CurrentTime >= m_Keys[i]->m_Time){ m_CurrentKey = i; }
+		}
+	}
+	else
+	{
+		float l_CurrentTime = m_TotalTime - m_CurrentTime;
+		for (int i = m_Keys.size()-1; i >= 0; i--)
+		{
+			if (l_CurrentTime <= m_Keys[i]->m_Time){ m_CurrentKey = i; }
+		}
+	}
+	
+	if (m_CurrentKey == (m_Keys.size()-1))
+	{ 
+		if (IsCycle())
+		{
+			m_CurrentKey = 0;
+			ResetTime();
+		}
+		else if (m_ReverseDirection == 1)
+		{
+			m_ReverseDirection = -1;
+			ResetTime();
+		}
+	}	
+
+	if (m_CurrentKey == 0 && IsReverse() && m_ReverseDirection == -1)
+	{
+		m_ReverseDirection = 1;
+		ResetTime();
+	}
+	m_NextKey = m_CurrentKey + m_ReverseDirection * 1;
 
 }
 
 void CCameraKeyController::Update(float ElapsedTime)
 {
+	SetCurrentTime(m_CurrentTime + ElapsedTime);
+	GetCurrentKey();
+	float l_CurrentTime;
+	float l_tI;
+	float l_tF;
+	Vect3f l_pI;
+	Vect3f l_pF;
+
+	float l_fI;
+	float l_fF;
+
+	Vect3f l_lI;
+	Vect3f l_lF;
+
+	if (IsCycle() || m_ReverseDirection == 1)
+	{
+		l_CurrentTime = m_CurrentTime;
+
+		l_tI = m_Keys[m_CurrentKey]->m_Time;
+		l_tF = m_Keys[m_NextKey]->m_Time;
+		l_pI = m_Keys[m_CurrentKey]->m_CameraInfo.m_Eye;
+		l_pF = m_Keys[m_NextKey]->m_CameraInfo.m_Eye;
+
+		l_fI = m_Keys[m_CurrentKey]->m_CameraInfo.m_FOV;
+		l_fF = m_Keys[m_NextKey]->m_CameraInfo.m_FOV;
+
+		l_lI = m_Keys[m_CurrentKey]->m_CameraInfo.m_LookAt;
+		l_lF = m_Keys[m_NextKey]->m_CameraInfo.m_LookAt;
+
+
+	}
+	else
+	{
+		l_CurrentTime = m_TotalTime - m_CurrentTime;
+
+		l_tI = m_Keys[m_NextKey]->m_Time;
+		l_tF = m_Keys[m_CurrentKey]->m_Time;
+		l_pI = m_Keys[m_NextKey]->m_CameraInfo.m_Eye;
+		l_pF = m_Keys[m_CurrentKey]->m_CameraInfo.m_Eye;
+
+		l_fI = m_Keys[m_NextKey]->m_CameraInfo.m_FOV;
+		l_fF = m_Keys[m_CurrentKey]->m_CameraInfo.m_FOV;
+
+		l_lI = m_Keys[m_NextKey]->m_CameraInfo.m_LookAt;
+		l_lF = m_Keys[m_CurrentKey]->m_CameraInfo.m_LookAt;
+	}
+
+	m_Position = (((l_pF - l_pI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pI;
+	m_FOV = (((l_fF - l_fI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_fI;
+	m_LookAt = (((l_lF - l_lI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_lI;
+	
+	
 }
 
 void CCameraKeyController::SetCurrentTime(float CurrentTime)
@@ -90,4 +180,14 @@ bool CCameraKeyController::IsReverse() const
 void CCameraKeyController::SetReverse(bool Reverse)
 {
 	m_Reverse = Reverse;
+}
+
+void CCameraKeyController::SetCamera(CCamera *Camera) const
+{
+	Camera->SetFOV(m_FOV);
+	Camera->SetAspectRatio(16.0f / 9.0f);
+	Camera->SetPosition(m_Position);
+	Camera->SetLookAt(m_LookAt);
+	Camera->SetUp(GetUp());
+	Camera->SetMatrixs();
 }

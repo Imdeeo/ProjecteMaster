@@ -137,40 +137,39 @@ void CApplication::Update(float _ElapsedTime)
 	case 0:
 		if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
 		{
+			CSphericalCameraController* l_SphericalCameraController = (CSphericalCameraController*)UABEngine.GetCameraManager()->GetResource("SphericalCamera");
 			Vect3f cameraMovement(0, 0, 0);
 
 			cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.5f;
 			cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * 0.5f;
 
-			m_SphericalCamera.Update(cameraMovement);
+			l_SphericalCameraController->Update(cameraMovement);
 		}
 		break;
 	case 1:
 		{
-			m_FPSCamera.AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.05f);
-			m_FPSCamera.AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * -0.05f);
+			CFPSCameraController* l_FPSCameraController = (CFPSCameraController*)UABEngine.GetCameraManager()->GetResource("FPSCamera");
+			l_FPSCameraController->AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.05f);
+			l_FPSCameraController->AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * -0.05f);
 
-			m_FPSCamera.Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, _ElapsedTime);
+			l_FPSCameraController->Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, _ElapsedTime);
 		}
 		break;
 	}
 
 	{
+		//std::string l_CamaraController = "FPSCamera";
+		std::string l_CamaraController = "Camera001";
 		CCamera camera;
-		m_FPSCamera.SetCamera(&camera);
-		camera.SetFOV(1.047f);
-		camera.SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
-		camera.SetZNear(0.1f);
-		camera.SetZFar(100.f);
-		camera.SetMatrixs();
+		CCameraController* l_CameraController = (CCameraController*)UABEngine.GetCameraManager()->GetResource(l_CamaraController);
+		l_CameraController->Update(_ElapsedTime);
+		l_CameraController->SetCamera(&camera);
+
 		UABEngine.GetRenderManager()->SetCurrentCamera(camera);
 
-		m_SphericalCamera.SetCamera(&camera);
-		camera.SetFOV(1.047f);
-		camera.SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
-		camera.SetZNear(0.1f);
-		camera.SetZFar(100.f);
-		camera.SetMatrixs();
+
+		CSphericalCameraController* l_SphericalCameraController = (CSphericalCameraController*)UABEngine.GetCameraManager()->GetResource("SphericalCamera");
+		l_SphericalCameraController->SetCamera(&camera);
 		UABEngine.GetRenderManager()->SetDebugCamera(camera);
 
 		UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
@@ -183,36 +182,6 @@ void CApplication::Update(float _ElapsedTime)
 void CApplication::Render()
 {
 	UABEngine.GetRenderManager()->Render();
-
-	
-	//Mat44f world;
-
-	//world.SetIdentity();
-	//m_ContextManager->SetWorldMatrix(world);
-	//m_ContextManager->Draw(m_DebugRender->GetAxis());
-
-	//if(m_RenderCameraCube)
-	//{
-	//	world.SetIdentity();
-	//	world.SetFromPitchRollYaw(Vect3f(m_FPSCamera.GetPitch(),0.f,m_FPSCamera.GetYaw()));
-	//	world.SetFromPos(m_FPSCamera.GetPosition()+Vect3f(0,-2.f,0));
-	//	m_ContextManager->SetWorldMatrix(world);
-	//	m_ContextManager->Draw(m_DebugRender->GetSimpleCube(), CContextManager::RS_WIREFRAME, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_CLASSIC);
-	//}
-
-	//
-	///*world.SetIdentity();
-	//world.SetFromPos(10, 0, 0);
-	//m_ContextManager->SetWorldMatrix(world);
-	//m_ContextManager->Draw(m_DebugRender->GetClassicBlendTriangle(), CContextManager::RS_SOLID_NO_CULL, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_CLASSIC);
-
-	//world.SetIdentity();
-	//world.SetFromPos(0, 0, -10);
-	//m_ContextManager->SetWorldMatrix(world);
-	//m_ContextManager->Draw(m_DebugRender->GetPremultBlendTriangle(), CContextManager::RS_SOLID_NO_CULL, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_PREMULT);
-	//*/
-
-	//CDebugHelper::GetDebugHelper()->Render();
 }
 
 
