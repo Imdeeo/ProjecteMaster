@@ -158,30 +158,40 @@ void CApplication::Update(float _ElapsedTime)
 	case 0:
 		if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
 		{
+			CSphericalCameraController* l_SphericalCameraController = (CSphericalCameraController*)UABEngine.GetCameraManager()->GetResource("SphericalCamera");
 			Vect3f cameraMovement(0, 0, 0);
 
 			cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.5f;
 			cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * 0.5f;
 
-			m_SphericalCamera.Update(cameraMovement);
+			l_SphericalCameraController->Update(cameraMovement);
 		}
 		break;
 	case 1:
 		{
-			m_FPSCamera.AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.05f);
-			m_FPSCamera.AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * -0.05f);
+			CFPSCameraController* l_FPSCameraController = (CFPSCameraController*)UABEngine.GetCameraManager()->GetResource("FPSCamera");
+			l_FPSCameraController->AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.05f);
+			l_FPSCameraController->AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * -0.05f);
 
-			m_FPSCamera.Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, _ElapsedTime);
+			l_FPSCameraController->Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, _ElapsedTime);
 		}
 		break;
 	}
 
 	{
-		UABEngine.GetCameraControllerManager()->ChooseCurrentCamera("FPSCamera");
+		//std::string l_CamaraController = "FPSCamera";
+		std::string l_CamaraController = "Camera001";
+		CCamera camera;
+		CCameraController* l_CameraController = (CCameraController*)UABEngine.GetCameraManager()->GetResource(l_CamaraController);
+		l_CameraController->Update(_ElapsedTime);
+		l_CameraController->SetCamera(&camera);
 
-		CCamera debugCamera;
-		m_SphericalCamera.SetCamera(&debugCamera);
-		UABEngine.GetRenderManager()->SetDebugCamera(debugCamera);
+		UABEngine.GetRenderManager()->SetCurrentCamera(camera);
+
+
+		CSphericalCameraController* l_SphericalCameraController = (CSphericalCameraController*)UABEngine.GetCameraManager()->GetResource("SphericalCamera");
+		l_SphericalCameraController->SetCamera(&camera);
+		UABEngine.GetRenderManager()->SetDebugCamera(camera);
 
 		UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 	}

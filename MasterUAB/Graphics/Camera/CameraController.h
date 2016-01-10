@@ -3,13 +3,13 @@
 
 #include "Math\Matrix44.h"
 #include "Math\Vector3.h"
-#include "Camera.h"
+
+class CCamera;
 
 class CCameraController
 {
 protected:
 	Vect3f m_Position;
-
 	float m_Yaw;
 	float m_Pitch;
 public:

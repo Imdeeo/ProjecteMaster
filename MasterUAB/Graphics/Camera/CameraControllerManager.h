@@ -18,9 +18,7 @@ public:
 	void ChooseCurrentCamera(std::string _CurrentCamera);
 	bool Load(const std::string &FileName);
 	bool Reload();
-
-private:
-	CCamera m_CurrentCamera;
+	
 
 };
 
