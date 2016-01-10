@@ -110,7 +110,9 @@ bool CEffectShader::CreateConstantBuffer(int IdBuffer, unsigned int BufferSize)
 		printf("Constant Buffer '%d' with wrong size '%d' on shader '%s'.", IdBuffer, BufferSize, m_Filename.c_str());
 
 	l_BufferDescription.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	l_BufferDescription.CPUAccessFlags = 0;
+	l_BufferDescription.CPUAccessFlags = 0 ;
+	l_BufferDescription.MiscFlags = 0;
+	l_BufferDescription.StructureByteStride = 0;
 	if (FAILED(l_Device->CreateBuffer(&l_BufferDescription, NULL,
 		&l_ConstantBuffer)))
 	{
