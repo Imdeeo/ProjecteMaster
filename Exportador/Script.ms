@@ -52,26 +52,26 @@ fn TranslationToRH translation =
 
 fn TransformToRH matrix =
 (
-	local r1 = TranslationToRH matrix.row1
-	local r2 = TranslationToRH matrix.row2
-	local r3 = TranslationToRH matrix.row3
-	local r4 = TranslationToRH matrix.row4
-	return matrix3 r1 r2 r3 r4
+    local r1 = matrix.row1
+    local r2 = matrix.row2
+    local r3 = matrix.row3
+    local r4 = TranslationToRH matrix.row4
+    return matrix3 r1 r2 r3 r4
 )
 
-fn GetYaw transform =
+fn GetYaw trans =
 (
-	return -(transform as eulerangles).z
+	return (-(trans as eulerangles).z*PI/180)
 )
 
-fn GetPitch transform =
+fn GetPitch trans =
 (
-	return -(transform as eulerangles).y
+	return (-(trans as eulerangles).y*PI/180)
 )
 
-fn GetRoll transform =
+fn GetRoll trans =
 (
-	return (transform as eulerangles).x
+	return ((trans as eulerangles).x*PI/180)
 )
 
 fn UABClearNormalsArray = 
@@ -586,6 +586,7 @@ fn createCameras dir Objs =
 (
 	local cameraFileDir
 	local cameraTransform
+	local cameraTranslation
 	local cameraPos
 	local cameraUp
 	local cameraLookAt
@@ -598,8 +599,9 @@ fn createCameras dir Objs =
 	for i=1 to Objs.count do
 	(
 		select Objs[i]
-		cameraTransform = TransformToRH Objs[i].transform
-		cameraPos = cameraTransform.translation.x as string+" "+cameraTransform.translation.y as string+" "+cameraTransform.translation.z as string
+		cameraTransform = Objs[i].transform
+		cameraTranslation = TranslationToRH cameraTransform.translation
+		cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
 		local firstframe = at time 999999999999 trackbar.getNextKeyTime()
 		key = (at time 999999999999 trackbar.getPreviousKeyTime()) as string
 		key = replace key key.count 1 ""
@@ -607,32 +609,41 @@ fn createCameras dir Objs =
 			dirExist (dir+"cameras\\")
 			cameraFileDir = "cameras\\"+Objs[i].name+".xml"
 			cameraType = getUserProp Objs[i] "camera_export_type"
-			format "\t<camera name=\"%\" total_time=\"%\" type=\"%\" %=\"true\" pos=\"%\" filename=\"%\">\n" Objs[i].name key cameraType cameraType cameraPos cameraFileDir to:file
+			format "\t<camera name=\"%\" total_time=\"%\" type=\"%\" %=\"true\" pos=\"%\" filename=\"%\"/>\n" Objs[i].name key cameraType cameraType cameraPos cameraFileDir to:file
 			local j = firstframe
 			cameraFile=createfile (dir+cameraFileDir)
 			format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
 			format "<camera_key_controller name=\"%\">\n" Objs[i].name to:cameraFile
 			do (
-				key = j as string
+				key = j as string	
 				key = replace key key.count 1 ""
-				cameraTransform = TransformToRH (at time j Objs[i].transform)
-				cameraPos = cameraTransform.translation.x as string+" "+cameraTransform.translation.y as string+" "+cameraTransform.translation.z as string
+				cameraTransform = at time j Ojbs[i].transform
+				cameraTranslation = TranslationToRH (cameraTransform.translation)
+				cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
 				cameraUp = mat3xvect3 cameraTransform z_axis
 				cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
-				cameraLookAt = (cameraPos + (mat3xvect3 cameraTransform y_axis))
+				cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis))
 				cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
-				format "\t<key time=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" key cameraPos cameraUp cameraLookAt (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
+				format "\t<key time=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraPos cameraUp cameraLookAt (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
 				j = at time j trackbar.getNextKeyTime()
 			) while j != firstframe
 			format "</camera_key_controller>\n" to:cameraFile		
 			close cameraFile
 		) else (
+			cameraTranslation = cameraTransform.translation
 			cameraUp = mat3xvect3 cameraTransform z_axis
+			--cameraUp = translationToRH cameraUp
 			cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
-			cameraLookAt = ((Objs[i].pos) + (mat3xvect3 cameraTransform y_axis))
-			cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
+			if(Objs[i].target != undefined) then
+			(
+				cameraLookAt = Objs[i].target.pos
+			) else (
+				cameraLookAt = (cameraTranslation) + (mat3xvect3 cameraTransform y_axis)
+				--cameraLookAt = translationToRH cameraLookAt
+				cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
+			)
 			cameraType = getUserProp Objs[i] "camera_export_type"
-			format "\t<camera name=\"%\" type=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" Objs[i].name cameraType cameraPos cameraUp cameraLookAt Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
+			format "\t<camera name=\"%\" type=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" Objs[i].name cameraType cameraPos cameraUp cameraLookAt Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
 		)
 		max select none
 	)
