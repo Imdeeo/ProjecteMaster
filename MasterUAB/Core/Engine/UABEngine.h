@@ -14,6 +14,8 @@
 #include "ScriptManager\ScriptManager.h"
 #include "Camera\CameraControllerManager.h"
 
+#include <string>
+
 class CUABEngine
 {
 
@@ -27,7 +29,9 @@ class CUABEngine
 	CAnimatedModelsManager * m_AnimatedModelsManager;
 	CScriptManager * m_ScriptManager;
 	CCameraControllerManager * m_CameraManager;
-	
+
+	std::string m_LevelLoaded;
+
 	UAB_GET_PROPERTY(CStaticMeshManager *, StaticMeshManager)
 	UAB_GET_PROPERTY(CRenderableObjectsManager *, RenderableObjectsManager)
 	UAB_GET_PROPERTY(CMaterialManager *, MaterialManager)
@@ -40,8 +44,12 @@ class CUABEngine
 	UAB_GET_PROPERTY(CCameraControllerManager *, CameraManager)
 
 	static CUABEngine * m_Instance;
+
+	std::string GetLevelLoaded()const{return m_LevelLoaded;}
 	
 	CUABEngine(void);
+
+	void LoadLevelXML(std::string filename);
 	
 public:
 
@@ -50,6 +58,7 @@ public:
 
 	void Destroy();
 	void Init();
+
 };
 
 #define UABEngine (*(CUABEngine::GetInstance()))
