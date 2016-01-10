@@ -60,7 +60,7 @@ void CEffectShader::CreateShaderMacro()
 			return;
 		}
 	}
-	for (int i = 0; i<l_PreprocessorItems.size(); ++i)
+	for (size_t i = 0; i<l_PreprocessorItems.size(); ++i)
 	{
 		m_ShaderMacros[i].Name = m_PreprocessorMacros[i * 2].c_str();
 		m_ShaderMacros[i].Definition = m_PreprocessorMacros[(i * 2) + 1].c_str();

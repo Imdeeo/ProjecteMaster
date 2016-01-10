@@ -1,8 +1,8 @@
 #include "Effects\EffectManager.h"
 #include "XML\XMLTreeNode.h"
-#include "Lights\Light.h";
-#include "Lights\DirectionalLight.h";
-#include "Lights\SpotLight.h";
+#include "Lights\Light.h"
+#include "Lights\DirectionalLight.h"
+#include "Lights\SpotLight.h"
 #include "Engine\UABEngine.h"
 
 CEffectManager::CEffectManager(void)
@@ -106,7 +106,7 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 
 void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 {
-	for (int i = 0; i < MaxLights; i++)
+	for (size_t i = 0; i < MaxLights; i++)
 	{
 		SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
 	}
