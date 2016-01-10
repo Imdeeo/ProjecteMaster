@@ -1,6 +1,8 @@
 #ifndef UAB_ENGINE_H
 #define UAB_ENGINE_H
 
+#define LEVEL "2"
+
 #include "Effects\EffectManager.h"
 #include "Materials\MaterialManager.h"
 #include "Texture\TextureManager.h"

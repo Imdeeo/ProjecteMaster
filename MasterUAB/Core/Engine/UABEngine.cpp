@@ -1,7 +1,7 @@
 #include "Engine\UABEngine.h"
 #include <string>
 
-#define LEVEL "1"
+
 
 CUABEngine::CUABEngine(void)
 {
@@ -46,13 +46,13 @@ CUABEngine* CUABEngine::GetInstance()
 void CUABEngine::Init()
 {
 	m_EffectManager->Load("Data\\effects.xml");
-	m_MaterialManager->Load("Data\\level_1\\materials.xml");
-	m_StaticMeshManager->Load("Data\\level_1\\static_meshes.xml");
-	m_LightManager->Load("Data\\level_1\\lights.xml");
+	m_MaterialManager->Load("Data\\level_"+std::string(LEVEL)+"\\materials.xml");
+	m_StaticMeshManager->Load("Data\\level_"+std::string(LEVEL)+"\\static_meshes.xml");
+	m_LightManager->Load("Data\\level_"+std::string(LEVEL)+"\\lights.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
-	m_RenderableObjectsManager->Load("Data\\level_1\\renderable_objects.xml");
+	m_RenderableObjectsManager->Load("Data\\level_"+std::string(LEVEL)+"\\renderable_objects.xml");
 	m_ScriptManager->Initialize();
-	m_CameraManager->Load("Data\\level_1\\cameras.xml");
+	m_CameraManager->Load("Data\\level_"+std::string(LEVEL)+"\\cameras.xml");
 }
 
 void CUABEngine::Destroy()

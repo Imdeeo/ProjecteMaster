@@ -179,8 +179,15 @@ void CApplication::Update(float _ElapsedTime)
 	}
 
 	{
-		//std::string l_CamaraController = "FPSCamera";
-		std::string l_CamaraController = "Camera001";
+		std::string l_CamaraController;
+		if(LEVEL=="1")
+		{
+			l_CamaraController = "Camera001";
+		}
+		else
+		{
+			l_CamaraController = "FPSCamera";
+		}
 		CCamera camera;
 		CCameraController* l_CameraController = (CCameraController*)UABEngine.GetCameraManager()->GetResource(l_CamaraController);
 		l_CameraController->Update(_ElapsedTime);
