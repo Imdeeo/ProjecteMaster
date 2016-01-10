@@ -57,6 +57,9 @@ void CRenderManager::Render()
 	if (m_UseDebugCamera)
 	{
 		m_ContextManager->SetCamera(m_DebugCamera);
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition=m_DebugCamera.GetPosition();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector=m_DebugCamera.GetUp();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector=Vect4f(1,1,1,1);
 	}
 	else
 	{
