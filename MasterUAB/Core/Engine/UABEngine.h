@@ -1,5 +1,5 @@
-#ifndef UABENGINE_H
-#define UABENGINE_H
+#ifndef UAB_ENGINE_H
+#define UAB_ENGINE_H
 
 #include "Effects\EffectManager.h"
 #include "Materials\MaterialManager.h"
@@ -24,7 +24,7 @@ class CUABEngine
 	CRenderManager * m_RenderManager;
 	CAnimatedModelsManager * m_AnimatedModelsManager;
 	CScriptManager * m_ScriptManager;
-	CCameraControllerManager * m_CameraControllerManager;
+	CCameraControllerManager * m_CameraManager;
 	
 	UAB_GET_PROPERTY(CStaticMeshManager *, StaticMeshManager)
 	UAB_GET_PROPERTY(CRenderableObjectsManager *, RenderableObjectsManager)
@@ -35,7 +35,7 @@ class CUABEngine
 	UAB_GET_PROPERTY(CRenderManager *, RenderManager)
 	UAB_GET_PROPERTY(CAnimatedModelsManager *, AnimatedModelsManager)
 	UAB_GET_PROPERTY(CScriptManager *, ScriptManager)
-	UAB_GET_PROPERTY(CCameraControllerManager *, CameraControllerManager)
+	UAB_GET_PROPERTY(CCameraControllerManager *, CameraManager)
 
 	static CUABEngine * m_Instance;
 	
@@ -52,4 +52,4 @@ public:
 
 #define UABEngine (*(CUABEngine::GetInstance()))
 
-#endif //UABENGINE_H
+#endif //UAB_ENGINE_H
