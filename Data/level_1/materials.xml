@@ -3,7 +3,4 @@
 	<material name="01 - Default" effect_technique="diffuse_technique">
 		<texture filename="Data\level_1\Textures\bark.dds"/>
 	</material>
-	<material name="02 - Default" effect_technique="diffuse_technique">
-		<texture filename="Data\level_1\Textures\seafloor.dds"/>
-	</material>
 </materials>

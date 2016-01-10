@@ -2,5 +2,4 @@
 <cameras>
 	<camera name="FPSCamera" type="fps"/>
 	<camera name="SphericalCamera" type="spherical"/>
-	<camera name="Camera001" total_time="10" reverse="false" filename="Data\level_1\cameras\Camera001.xml" type="key"/>
 </cameras>
