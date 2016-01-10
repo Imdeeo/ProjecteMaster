@@ -58,6 +58,10 @@ public:
 
 	virtual T * GetResource(const std::string &Name)
 	{
+		if (m_ResourcesMap.find(Name) == m_ResourcesMap.end())
+		{
+			return nullptr;
+		}
 		return m_ResourcesMap[Name].m_Value;
 	}
 
