@@ -43,9 +43,7 @@ bool CStaticMesh::Load(const std::string &FileName)
 		char l_BufferChar;
 		short l_BufferShort;
 		unsigned short l_BufferUnsignedShort;
-		unsigned int l_BufferUnsignedInt;
 		long l_BufferLong;
-		float l_BufferFloat;
 		std::string l_BufferString;
 
 		short l_MatLength;
@@ -248,7 +246,7 @@ bool CStaticMesh::Reload()
 
 void CStaticMesh::Render(CRenderManager *RM) const
 {
-	for(int i = 0 ;i<m_RVs.size();i++)
+	for (size_t i = 0; i<m_RVs.size(); i++)
 	{
 		m_Materials[i]->Apply();
 		CEffectTechnique* l_ET = m_Materials[i]->GetEffectTechnique();
@@ -260,7 +258,7 @@ bool CStaticMesh::Destroy()
 {
 	m_NumVertexs = 0;
 	m_NumFaces = 0;
-	for(int i = 0 ;i<m_RVs.size();i++)
+	for (size_t i = 0; i<m_RVs.size(); i++)
 	{
 		CHECKED_DELETE(m_RVs[i]);
 	}
