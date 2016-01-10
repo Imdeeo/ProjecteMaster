@@ -1,7 +1,7 @@
 #ifndef SCENE_EFFECT_H
 #define SCENE_EFFECT_H
 
-#include "Math\Matrix44.h";
+#include "Math\Matrix44.h"
 
 class CSceneEffectParameters
 {
