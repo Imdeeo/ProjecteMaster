@@ -13,7 +13,7 @@
 	
 	<action name="MONSTER_RUN" type="KEYBOARD" mode="ON_PRESS" key="1"/>
 	<action name="MONSTER_IDLE" type="KEYBOARD" mode="ON_PRESS" key="2"/>
-	<action name="MONSTER_HIT" type="KEYBOARD" mode="ON_PRESS" key="3CCCCCCC"/>
+	<action name="MONSTER_HIT" type="KEYBOARD" mode="ON_PRESS" key="3"/>
 	
 	<action name="MOVE_CAMERA" type="MOUSE" mode="WHILE_PRESSED" mouse_button="RIGHT"/>
 	

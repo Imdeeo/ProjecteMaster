@@ -201,6 +201,9 @@ bool CEffectVertexShader::Load()
 	if (m_VertexType == "MV_POSITION_NORMAL_TEXTURE_VERTEX")
 		l_Loaded = MV_POSITION_NORMAL_TEXTURE_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else
+	if (m_VertexType == "KG_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX")
+		l_Loaded = MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
+	else
 		//Info("Vertex type '%s' not recognized on CEffectVertexShader::Load", m_VertexType.c_str());
 		printf("Vertex type '%s' not recognized on CEffectVertexShader::Load", m_VertexType.c_str());
 	l_VSBlob->Release();
