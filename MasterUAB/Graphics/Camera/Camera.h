@@ -3,6 +3,7 @@
 
 #include "Math\Matrix44.h"
 #include "Math\Vector3.h"
+#include <string>
 
 class CCamera
 {	
@@ -20,6 +21,14 @@ private:
 	float						m_ZFar;
 
 public:
+	enum TCameraType
+	{
+		CAMERA_TYPE_SPHERICAL = 0,
+		CAMERA_TYPE_FPS = 1,
+		CAMERA_TYPE_KEY = 2,
+		CAMERA_TYPE_NULL = -1
+	};
+	
 	CCamera()
 		: m_FOV(/*60.0f*/ 1.047198f)
 		, m_AspectRatio(1.0f)
@@ -76,6 +85,17 @@ public:
 
 		m_Projection.SetIdentity();
 		m_Projection.SetFromPerspective(m_FOV, m_AspectRatio, m_ZNear, m_ZFar);
+	}
+
+	static CCamera::TCameraType CCamera::GetCameraTypeByName(const std::string &CameraType)
+	{
+		if (CameraType == "spherical")
+			return CAMERA_TYPE_SPHERICAL;
+		else if (CameraType == "fps")
+			return CAMERA_TYPE_FPS;
+		else if (CameraType == "key")
+			return CAMERA_TYPE_KEY;
+		return CAMERA_TYPE_NULL;
 	}
 };
 

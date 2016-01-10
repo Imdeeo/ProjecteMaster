@@ -14,6 +14,7 @@ CUABEngine::CUABEngine(void)
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
 	m_RenderableObjectsManager = new CRenderableObjectsManager();
 	m_ScriptManager = new CScriptManager();
+	m_CameraManager = new CCameraControllerManager();
 }
 
 
@@ -28,6 +29,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_AnimatedModelsManager);
 	CHECKED_DELETE(m_RenderableObjectsManager);
 	CHECKED_DELETE(m_ScriptManager);
+	CHECKED_DELETE(m_CameraManager);
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -50,6 +52,7 @@ void CUABEngine::Init()
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
 	m_RenderableObjectsManager->Load("Data\\level_1\\renderable_objects.xml");
 	m_ScriptManager->Initialize();
+	m_CameraManager->Load("Data\\level_1\\cameras.xml");
 }
 
 void CUABEngine::Destroy()

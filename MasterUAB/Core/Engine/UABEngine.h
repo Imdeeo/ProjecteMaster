@@ -10,6 +10,7 @@
 #include "RenderableObjects\RenderableObjectManager.h"
 #include "AnimatedModels\AnimatedModelsManager.h"
 #include "ScriptManager\ScriptManager.h"
+#include "Camera\CameraControllerManager.h"
 
 class CUABEngine
 {
@@ -23,6 +24,7 @@ class CUABEngine
 	CRenderManager * m_RenderManager;
 	CAnimatedModelsManager * m_AnimatedModelsManager;
 	CScriptManager * m_ScriptManager;
+	CCameraControllerManager * m_CameraManager;
 	
 	UAB_GET_PROPERTY(CStaticMeshManager *, StaticMeshManager)
 	UAB_GET_PROPERTY(CRenderableObjectsManager *, RenderableObjectsManager)
@@ -33,6 +35,7 @@ class CUABEngine
 	UAB_GET_PROPERTY(CRenderManager *, RenderManager)
 	UAB_GET_PROPERTY(CAnimatedModelsManager *, AnimatedModelsManager)
 	UAB_GET_PROPERTY(CScriptManager *, ScriptManager)
+	UAB_GET_PROPERTY(CCameraControllerManager *, CameraManager)
 
 	static CUABEngine * m_Instance;
 	
