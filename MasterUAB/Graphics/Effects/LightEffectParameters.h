@@ -1,7 +1,7 @@
 #ifndef LIGHT_EFFECT_SHADER_H
 #define LIGHT_EFFECT_SHADER_H
 
-#include "Math\Matrix44.h";
+#include "Math\Matrix44.h"
 
 class CLightEffectParameters
 {
