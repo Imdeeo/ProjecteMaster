@@ -1,5 +1,5 @@
 #include "Engine\UABEngine.h"
-#include <string>
+#include "XML\XMLTreeNode.h"
 
 
 
@@ -45,17 +45,33 @@ CUABEngine* CUABEngine::GetInstance()
 
 void CUABEngine::Init()
 {
+	LoadLevelXML("Data\\Level.xml");
+
 	m_EffectManager->Load("Data\\effects.xml");
-	m_MaterialManager->Load("Data\\level_"+std::string(LEVEL)+"\\materials.xml");
-	m_StaticMeshManager->Load("Data\\level_"+std::string(LEVEL)+"\\static_meshes.xml");
-	m_LightManager->Load("Data\\level_"+std::string(LEVEL)+"\\lights.xml");
+	m_MaterialManager->Load("Data\\level_"+m_LevelLoaded+"\\materials.xml");
+	m_StaticMeshManager->Load("Data\\level_"+m_LevelLoaded+"\\static_meshes.xml");
+	m_LightManager->Load("Data\\level_"+m_LevelLoaded+"\\lights.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
-	m_RenderableObjectsManager->Load("Data\\level_"+std::string(LEVEL)+"\\renderable_objects.xml");
+	m_RenderableObjectsManager->Load("Data\\level_"+m_LevelLoaded+"\\renderable_objects.xml");
 	m_ScriptManager->Initialize();
-	m_CameraManager->Load("Data\\level_"+std::string(LEVEL)+"\\cameras.xml");
+	m_CameraManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
 }
 
 void CUABEngine::Destroy()
 {
 	CHECKED_DELETE(m_Instance);
+}
+
+void CUABEngine::LoadLevelXML(std::string filename)
+{
+
+	CXMLTreeNode l_XML;
+	if (l_XML.LoadFile(filename.c_str()))
+	{
+		CXMLTreeNode l_Input = l_XML["level"];
+		if (l_Input.Exists())
+		{
+			m_LevelLoaded = l_Input.GetPszProperty("level_to_load");
+		}
+	}
 }

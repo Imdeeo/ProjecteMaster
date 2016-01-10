@@ -180,7 +180,7 @@ void CApplication::Update(float _ElapsedTime)
 
 	{
 		std::string l_CamaraController;
-		if(LEVEL=="1")
+		if(UABEngine.GetLevelLoaded()=="1")
 		{
 			l_CamaraController = "Camera001";
 		}
