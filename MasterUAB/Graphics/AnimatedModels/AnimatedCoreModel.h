@@ -7,8 +7,6 @@
 
 #include <cal3d\cal3d.h>
 
-#include <string>
-#include <vector>
 #include <map>
 
 class CMaterial;

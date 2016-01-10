@@ -1,9 +1,22 @@
+<<<<<<< HEAD
 #include "CameraKeyController.h"
 #include "CameraKey.h"
 #include "Camera\Camera.h"
+=======
+#include "Camera\CameraKeyController.h"
+#include "Camera\Camera.h"
+
+#include "Engine\UABEngine.h"
+>>>>>>> develop
 
 CCameraKeyController::CCameraKeyController(CXMLTreeNode &XMLTreeNode)
+	:m_CurrentTime(0),
+	m_CurrentKey(0),
+	m_NextKey(1),
+	m_Cycle(false),
+	m_Reverse(false)
 {
+<<<<<<< HEAD
 	ResetTime();
 	m_TotalTime = XMLTreeNode.GetFloatProperty("total_time", 0,true);
 	std::string l_Filename;
@@ -13,6 +26,17 @@ CCameraKeyController::CCameraKeyController(CXMLTreeNode &XMLTreeNode)
 	m_Reverse = XMLTreeNode.GetBoolProperty("reverse");
 	m_ReverseDirection = 1;
 	m_Cycle = !m_Reverse;//*XMLTreeNode.GetPszProperty("cycle");
+=======
+	m_CurrentTime = 0;
+	m_TotalTime = 30.0f/(*XMLTreeNode.GetPszProperty("total_time"));
+	std::string l_Filename;
+	l_Filename = *XMLTreeNode.GetPszProperty("filename");
+	std::string l_Type;
+	l_Type = *XMLTreeNode.GetPszProperty("type");
+	if(l_Type == "cycle"){ m_Cycle = true; }
+	if(l_Type == "reverse"){ m_Reverse = true; }
+	LoadXML(l_Filename);
+>>>>>>> develop
 }
 
 CCameraKeyController::~CCameraKeyController()
@@ -34,7 +58,7 @@ bool CCameraKeyController::LoadXML(const std::string &FileName)
 				CXMLTreeNode l_Element = l_Input(i);
 				if (l_Element.GetName() == std::string("key"))
 				{
-					l_Time = std::stof(l_Element.GetPszProperty("time"));
+					l_Time = 30.0f/(std::stof(l_Element.GetPszProperty("key")));
 
 					CCameraInfo *l_CameraInfo = new CCameraInfo(l_Element);
 					CCameraKey *l_CameraKey = new CCameraKey(*l_CameraInfo, l_Time);
@@ -53,6 +77,7 @@ bool CCameraKeyController::LoadXML(const std::string &FileName)
 
 void CCameraKeyController::GetCurrentKey()
 {
+<<<<<<< HEAD
 	if (IsCycle() || m_ReverseDirection == 1)
 	{
 		for (size_t i = 0; i < m_Keys.size(); i++){
@@ -89,10 +114,18 @@ void CCameraKeyController::GetCurrentKey()
 	}
 	m_NextKey = m_CurrentKey + m_ReverseDirection * 1;
 
+=======
+	for(size_t i = 0; i < m_Keys.size(); i++){
+		if (m_CurrentTime >= m_Keys[i]->m_Time){ m_CurrentKey = i; }
+	}
+	m_NextKey = m_CurrentKey+1;
+	if(m_NextKey >= m_Keys.size()){ m_NextKey = 0; }
+>>>>>>> develop
 }
 
 void CCameraKeyController::Update(float ElapsedTime)
 {
+<<<<<<< HEAD
 	SetCurrentTime(m_CurrentTime + ElapsedTime);
 	GetCurrentKey();
 	float l_CurrentTime;
@@ -145,6 +178,28 @@ void CCameraKeyController::Update(float ElapsedTime)
 	m_LookAt = (((l_lF - l_lI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_lI;
 	
 	
+=======
+	m_CurrentTime += ElapsedTime;
+	/*
+	Determinar el tiempo que ha pasado, blabla, para poder
+	obtener los parámetros actuales de la cámara, después,
+	hacer todos los sets igual que en SetCamera, pero usando
+	m_Camera, que es una referencia a la cámara del juego.
+	*/
+}
+
+void CCameraKeyController::SetCamera(CCamera *Camera) const
+{
+	Camera->SetPosition(m_Position);
+	Camera->SetLookAt(m_Position);
+	Camera->SetUp(GetUp());
+	Camera->SetFOV(1.047f);
+	Camera->SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
+	Camera->SetZNear(0.1f);
+	Camera->SetZFar(100.f);
+
+	Camera->SetMatrixs();
+>>>>>>> develop
 }
 
 void CCameraKeyController::SetCurrentTime(float CurrentTime)

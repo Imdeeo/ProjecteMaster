@@ -62,7 +62,7 @@ bool CAnimatedInstanceModel::LoadVertexBuffer()
 void CAnimatedInstanceModel::LoadMaterials()
 {
 	std::vector <CMaterial *> l_Materials = m_AnimatedCoreModel->GetMaterials();
-	for(int i = 0; i<l_Materials.size(); i++)
+	for(size_t i = 0; i<l_Materials.size(); i++)
 	{
 		m_Materials.push_back(l_Materials[i]);
 	}
@@ -91,7 +91,7 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 void CAnimatedInstanceModel::Render(CRenderManager *RenderManager)
 {
 	Mat44f l_Transform=GetTransform();
-	CEffectManager::m_Parameters.m_World=GetTransform();
+	CEffectManager::m_SceneParameters.m_World=GetTransform();
 	for(int l_HardwareMeshId=0; l_HardwareMeshId<m_CalHardwareModel->getHardwareMeshCount(); ++l_HardwareMeshId)
 	{
 		m_Materials[l_HardwareMeshId]->Apply();
@@ -105,9 +105,9 @@ void CAnimatedInstanceModel::Render(CRenderManager *RenderManager)
 			CalVector translationBoneSpace=m_CalHardwareModel->getTranslationBoneSpace(l_BoneId, m_CalModel->getSkeleton());
 			l_Transformations[l_BoneId].SetPos(Vect3f(translationBoneSpace.x,translationBoneSpace.y,translationBoneSpace.z));
 		}
-		memcpy(&CEffectManager::m_Parameters.m_Bones, l_Transformations,MAXBONES*sizeof(float)*4*4);
+		memcpy(&CEffectManager::m_AnimatedModelEffectParameters.m_Bones, l_Transformations,MAXBONES*sizeof(float)*4*4);
 		m_RenderableVertexs->RenderIndexed(RenderManager,m_Materials[l_HardwareMeshId]->GetEffectTechnique(),
-			&CEffectManager::m_Parameters,m_CalHardwareModel->getFaceCount()*3, m_CalHardwareModel->getStartIndex(),
+			&CEffectManager::m_SceneParameters,m_CalHardwareModel->getFaceCount()*3, m_CalHardwareModel->getStartIndex(),
 			m_CalHardwareModel->getBaseVertexIndex());
 	}
 }
@@ -124,24 +124,30 @@ void CAnimatedInstanceModel::Destroy()
 }
 void CAnimatedInstanceModel::ExecuteAction(int Id, float DelayIn, float DelayOut, float WeightTarget, bool AutoLock)
 {
-	m_ActualAnimation = Id;
+	m_ActualActionAnimation = Id;
 	m_CalModel->getMixer()->executeAction(Id,DelayIn,DelayOut,WeightTarget,AutoLock);
 	
 }
 void CAnimatedInstanceModel::BlendCycle(int Id, float Weight, float DelayIn)
 {
-	m_ActualAnimation = Id;
+	m_ActualCycleAnimation = Id;
 	m_CalModel->getMixer()->blendCycle(Id, Weight, DelayIn);
 }
 void CAnimatedInstanceModel::ClearCycle(int Id, float DelayOut)
 {
+	m_ActualCycleAnimation = -1;
 	m_CalModel->getMixer()->clearCycle(Id, DelayOut);
+}
+void CAnimatedInstanceModel::RemoveAction(int Id)
+{
+	m_ActualActionAnimation = -1;
+	m_CalModel->getMixer()->removeAction(Id);
 }
 bool CAnimatedInstanceModel::IsCycleAnimationActive(int Id) const
 {
-	return m_CalModel->getMixer()->getAnimationVector()[Id]->getState() == CalAnimation::STATE_IN;
+	return m_ActualCycleAnimation==Id;
 }
 bool CAnimatedInstanceModel::IsActionAnimationActive(int Id) const
 {
-	return m_CalModel->getMixer()->getAnimationVector()[Id]->getState() == CalAnimation::STATE_IN;
+	return m_ActualActionAnimation==Id;
 }

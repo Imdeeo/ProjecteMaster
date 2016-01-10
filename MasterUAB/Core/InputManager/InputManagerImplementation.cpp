@@ -174,7 +174,7 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 					{
 					case GAMEPAD:
 						axis.gamepad.axis = ParseGamepadAxis(l_Axis.GetPszProperty("gamepad_axis", "X"));
-						axis.gamepad.gamepadNumber = l_Axis.GetFloatProperty("gamepad_number", 0, false);
+						axis.gamepad.gamepadNumber = l_Axis.GetIntProperty("gamepad_number", 0, false);
 						break;
 					case MOUSE:
 						axis.mouse.axis = ParseMouseAxis(l_Axis.GetPszProperty("mouse_axis", "X"));

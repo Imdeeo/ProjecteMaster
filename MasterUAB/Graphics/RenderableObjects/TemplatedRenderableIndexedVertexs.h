@@ -62,8 +62,10 @@ public:
 			return false;
 		CEffectVertexShader *l_EffectVertexShader=EffectTechnique->GetVertexShader();
 		CEffectPixelShader *l_EffectPixelShader=EffectTechnique->GetPixelShader();
-		ID3D11Buffer *l_ConstantBufferVS=l_EffectVertexShader->GetConstantBuffer();
-		if(l_EffectPixelShader==NULL || l_EffectVertexShader==NULL || l_ConstantBufferVS==NULL)
+		ID3D11Buffer *l_SceneConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+		ID3D11Buffer *l_LightConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
+		ID3D11Buffer *l_AnimationConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
+		if(l_EffectPixelShader==NULL || l_EffectVertexShader==NULL || l_SceneConstantBufferVS==NULL || l_LightConstantBufferVS==NULL || l_AnimationConstantBufferVS==NULL)
 			return false;
 		ID3D11DeviceContext *l_DeviceContext;
 		RenderManager->GetDevice()->GetImmediateContext(&l_DeviceContext);
@@ -75,19 +77,42 @@ public:
 		l_DeviceContext->IASetInputLayout(l_EffectVertexShader->GetVertexLayout());
 		l_DeviceContext->VSSetShader(l_EffectVertexShader->GetVertexShader(), NULL, 0);
 
-		/*OJUCUIDAO*/
 		CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
 		l_DeviceContext->RSSetState(l_ContextManager->GetRasterizerState(CContextManager::RS_SOLID_BACK_CULL));
 		l_DeviceContext->OMSetDepthStencilState(l_ContextManager->GetDepthStencilState(CContextManager::DSS_DEPTH_ON), 0);
 		Vect4f v(1, 1, 1, 1);
 		l_DeviceContext->OMSetBlendState(l_ContextManager->GetBlendState(CContextManager::BLEND_CLASSIC), &v.x, 0xffffffff);
 
-		l_DeviceContext->UpdateSubresource(l_ConstantBufferVS, 0, NULL, Parameters, 0, 0 );
-		l_DeviceContext->VSSetConstantBuffers(0, 1, &l_ConstantBufferVS);
+		CEffectManager* l_EffectManagerInstance = UABEngine.GetEffectManager();
+
+		l_DeviceContext->UpdateSubresource(l_SceneConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_SceneParameters), 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_LightConstantBufferVS, 1, NULL, &(l_EffectManagerInstance->m_LightParameters), 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferVS, 2, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters)
+			, 0, 0 );
+		ID3D11Buffer* VSBuffers[3] = {l_SceneConstantBufferVS,l_LightConstantBufferVS,l_AnimationConstantBufferVS};
+		l_DeviceContext->VSSetConstantBuffers(0, 3,VSBuffers);
+		/*l_DeviceContext->VSSetConstantBuffers(0, 1,&l_SceneConstantBufferVS);
+		l_DeviceContext->VSSetConstantBuffers(1, 1,&l_LightConstantBufferVS);
+		l_DeviceContext->VSSetConstantBuffers(2, 1,&l_AnimationConstantBufferVS);*/
+
 		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
-		ID3D11Buffer *l_ConstantBufferPS=l_EffectPixelShader->GetConstantBuffer();
-		l_DeviceContext->UpdateSubresource(l_ConstantBufferPS, 0, NULL, Parameters, 0, 0 );
-		l_DeviceContext->PSSetConstantBuffers(0, 1, &l_ConstantBufferPS);
+
+		ID3D11Buffer *l_SceneConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+		ID3D11Buffer *l_LightConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
+		ID3D11Buffer *l_AnimationConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
+
+
+		l_DeviceContext->UpdateSubresource(l_SceneConstantBufferPS, 0, NULL, &(l_EffectManagerInstance->m_SceneParameters), 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_LightConstantBufferPS, 1, NULL, &(l_EffectManagerInstance->m_LightParameters), 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferPS, 2, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters)
+			, 0, 0 );
+
+		ID3D11Buffer* PSBuffers[3] = {l_SceneConstantBufferPS,l_LightConstantBufferPS,l_AnimationConstantBufferPS};
+		l_DeviceContext->PSSetConstantBuffers(0, 3, PSBuffers);
+		/*l_DeviceContext->PSSetConstantBuffers(0, 1, &l_SceneConstantBufferPS);
+		l_DeviceContext->PSSetConstantBuffers(1, 1, &l_LightConstantBufferPS);
+		l_DeviceContext->PSSetConstantBuffers(2, 1, &l_AnimationConstantBufferPS);*/
+
 		l_DeviceContext->DrawIndexed(IndexCount==-1 ? m_IndexsCount :IndexCount, StartIndexLocation, BaseVertexLocation);
 		return true;
 	}

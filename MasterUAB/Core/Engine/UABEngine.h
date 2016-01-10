@@ -24,7 +24,11 @@ class CUABEngine
 	CRenderManager * m_RenderManager;
 	CAnimatedModelsManager * m_AnimatedModelsManager;
 	CScriptManager * m_ScriptManager;
+<<<<<<< HEAD
 	CCameraControllerManager * m_CameraManager;
+=======
+	CCameraControllerManager * m_CameraControllerManager;
+>>>>>>> develop
 	
 	UAB_GET_PROPERTY(CStaticMeshManager *, StaticMeshManager)
 	UAB_GET_PROPERTY(CRenderableObjectsManager *, RenderableObjectsManager)
@@ -35,7 +39,11 @@ class CUABEngine
 	UAB_GET_PROPERTY(CRenderManager *, RenderManager)
 	UAB_GET_PROPERTY(CAnimatedModelsManager *, AnimatedModelsManager)
 	UAB_GET_PROPERTY(CScriptManager *, ScriptManager)
+<<<<<<< HEAD
 	UAB_GET_PROPERTY(CCameraControllerManager *, CameraManager)
+=======
+	UAB_GET_PROPERTY(CCameraControllerManager *, CameraControllerManager)
+>>>>>>> develop
 
 	static CUABEngine * m_Instance;
 	

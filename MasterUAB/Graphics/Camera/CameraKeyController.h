@@ -3,6 +3,8 @@
 
 #include "Camera\CameraController.h"
 #include "XML\XMLTreeNode.h"
+#include "Camera\CameraController.h"
+#include "Camera\CameraKey.h"
 #include <vector>
 
 class CCameraKey;
@@ -24,6 +26,7 @@ public:
 	
 	void Update(float ElapsedTime);
 
+	void SetCamera(CCamera *Camera) const;
 	void SetCurrentTime(float CurrentTime);
 	void ResetTime();
 	float GetTotalTime();
