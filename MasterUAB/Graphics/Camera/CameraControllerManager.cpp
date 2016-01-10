@@ -7,11 +7,7 @@
 
 #include "Engine\UABEngine.h"
 
-CCameraControllerManager::CCameraControllerManager():
-	m_CurrentCamera()
-{
-
-}
+CCameraControllerManager::CCameraControllerManager(){}
 
 CCameraControllerManager::~CCameraControllerManager()
 {
@@ -20,8 +16,8 @@ CCameraControllerManager::~CCameraControllerManager()
 
 void CCameraControllerManager::ChooseCurrentCamera(std::string _CurrentCamera)
 {
-	GetResource(_CurrentCamera)->SetCamera(&m_CurrentCamera);
-	UABEngine.GetRenderManager()->SetCurrentCamera(m_CurrentCamera);
+	//GetResource(_CurrentCamera)->SetCamera(&m_CurrentCamera);
+	//UABEngine.GetRenderManager()->SetCurrentCamera(m_CurrentCamera);
 }
 
 bool CCameraControllerManager::Load(const std::string &FileName)
@@ -48,10 +44,7 @@ bool CCameraControllerManager::Load(const std::string &FileName)
 					case CCamera::CAMERA_TYPE_FPS:
 						AddResource(l_Element.GetPszProperty("name"), new CFPSCameraController());
 						break;
-					case CCamera::CAMERA_TYPE_CYCLE:
-						AddResource(l_Element.GetPszProperty("name"), new CCameraKeyController(l_Element));
-						break;
-					case CCamera::CAMERA_TYPE_REVERSE:
+					case CCamera::CAMERA_TYPE_KEY:
 						AddResource(l_Element.GetPszProperty("name"), new CCameraKeyController(l_Element));
 						break;
 					default:

@@ -10,7 +10,6 @@ CCameraController::CCameraController()
 , m_Position(0,0,0)
 {
 }
-
 CCameraController::~CCameraController()
 {
 }
