@@ -21,8 +21,6 @@ public:
 
 	typedef std::vector<T *> TVectorResources;
 	typedef std::map<std::string, CMapResourceValue> TMapResources;
-	
-
 
 protected:
 	TVectorResources m_ResourcesVector;

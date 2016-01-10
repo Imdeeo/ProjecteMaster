@@ -7,14 +7,14 @@ CRenderableObjectsManager::~CRenderableObjectsManager(){}
 
 void CRenderableObjectsManager::Update(float ElapsedTime)
 {
-	for (int i = 0; i<m_ResourcesVector.size(); ++i)
+	for (size_t i = 0; i<m_ResourcesVector.size(); ++i)
 	{
 		m_ResourcesVector[i]->Update(ElapsedTime);
 	}
 }
 void CRenderableObjectsManager::Render(CRenderManager *RM)
 {
-	for (int i = 0; i<m_ResourcesVector.size(); ++i)
+	for (size_t i = 0; i<m_ResourcesVector.size(); ++i)
 	{
 		m_ResourcesVector[i]->Render(RM);
 	}

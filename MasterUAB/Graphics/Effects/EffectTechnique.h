@@ -17,9 +17,11 @@ private:
 public:
 	CEffectTechnique(CXMLTreeNode &TreeNode);
 	virtual ~CEffectTechnique();
+	
 	UAB_GET_PROPERTY(CEffectVertexShader*, VertexShader);
 	UAB_GET_PROPERTY(CEffectPixelShader*, PixelShader);
 	void Refresh();
+	void SetConstantBuffer(unsigned int IdBuffer, void *ConstantBuffer);
 };
 
 #endif //EFFECT_TECHNIQUE_H

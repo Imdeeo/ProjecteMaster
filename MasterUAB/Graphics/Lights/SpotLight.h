@@ -3,7 +3,7 @@
 
 #include "DirectionalLight.h"
 
-class CSpotLight : public CLight
+class CSpotLight : public CDirectionalLight
 {
 public:
 	CSpotLight();
