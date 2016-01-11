@@ -113,6 +113,8 @@ utility UABUtility "UABUtility" width:168 height:360
 	(
 		local renderableObjectsToExport = checkUserProp "render_export"
 		createInstanceMesh dir "renderable_objects.xml" renderableObjectsToExport
+		local cinematicObjectsToExport = checkUserProp "cinematic_object"
+		createCinematicObjects dir "cinematic.xml" cinematicObjectsToExport
 	)
 
 	on UABUtility open do
