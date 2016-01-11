@@ -188,22 +188,24 @@ void CApplication::Update(float _ElapsedTime)
 	}
 
 	{
-		std::string l_CamaraController;
+		std::string l_CameraControllerStr;
 		if(UABEngine.GetLevelLoaded()=="1")
 		{
-			l_CamaraController = "Camera001";
+			l_CameraControllerStr = "Camera001";
 		}
 		else
 		{
-			l_CamaraController = "FPSCamera";
+			l_CameraControllerStr = "FPSCamera";
 		}
 		CCamera camera;
-		CCameraController* l_CameraController = (CCameraController*)UABEngine.GetCameraManager()->GetResource(l_CamaraController);
+		/*CCameraController* l_CameraController = (CCameraController*)UABEngine.GetCameraManager()->GetResource(l_CameraControllerStr);
 		l_CameraController->Update(_ElapsedTime);
 		l_CameraController->SetCamera(&camera);
 
-		UABEngine.GetRenderManager()->SetCurrentCamera(camera);
+		UABEngine.GetRenderManager()->SetCurrentCamera(camera);*/
 
+		UABEngine.GetCameraManager()->ChooseCurrentCamera(l_CameraControllerStr);
+		UABEngine.GetCameraManager()->GetResource(l_CameraControllerStr)->Update(_ElapsedTime);
 
 		CSphericalCameraController* l_SphericalCameraController = (CSphericalCameraController*)UABEngine.GetCameraManager()->GetResource("SphericalCamera");
 		l_SphericalCameraController->SetCamera(&camera);

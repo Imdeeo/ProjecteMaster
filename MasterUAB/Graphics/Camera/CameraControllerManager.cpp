@@ -16,8 +16,8 @@ CCameraControllerManager::~CCameraControllerManager()
 
 void CCameraControllerManager::ChooseCurrentCamera(std::string _CurrentCamera)
 {
-	//GetResource(_CurrentCamera)->SetCamera(&m_CurrentCamera);
-	//UABEngine.GetRenderManager()->SetCurrentCamera(m_CurrentCamera);
+	GetResource(_CurrentCamera)->SetCamera(&m_CurrentCamera);
+	UABEngine.GetRenderManager()->SetCurrentCamera(m_CurrentCamera);
 }
 
 bool CCameraControllerManager::Load(const std::string &FileName)
