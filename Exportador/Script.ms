@@ -66,7 +66,7 @@ fn GetYaw trans =
 
 fn GetPitch trans =
 (
-	return (-(trans as eulerangles).y*PI/180)
+	return ((-(trans as eulerangles).y*PI/180)+(PI/2))
 )
 
 fn GetRoll trans =
@@ -617,7 +617,7 @@ fn createCameras dir Objs =
 			do (
 				key = j as string	
 				key = replace key key.count 1 ""
-				cameraTransform = at time j Ojbs[i].transform
+				cameraTransform = at time j Objs[i].transform
 				cameraTranslation = TranslationToRH (cameraTransform.translation)
 				cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
 				cameraUp = mat3xvect3 cameraTransform z_axis
