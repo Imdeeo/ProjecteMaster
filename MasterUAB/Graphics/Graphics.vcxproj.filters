@@ -89,6 +89,18 @@
     <ClCompile Include="Camera\CameraControllerManager.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Cinematics\CinematicPlayer.cpp">
+      <Filter>Cinematics</Filter>
+    </ClCompile>
+    <ClCompile Include="Cinematics\CinematicObjectKeyFrame.cpp">
+      <Filter>Cinematics</Filter>
+    </ClCompile>
+    <ClCompile Include="Cinematics\CinematicObject.cpp">
+      <Filter>Cinematics</Filter>
+    </ClCompile>
+    <ClCompile Include="Cinematics\Cinematic.cpp">
+      <Filter>Cinematics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -120,6 +132,9 @@
     </Filter>
     <Filter Include="Lights">
       <UniqueIdentifier>{68091d10-b736-4044-926c-10cddf12bf45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cinematics">
+      <UniqueIdentifier>{81c76184-03e5-4958-b30a-4bfdc8162d5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +257,18 @@
     <ClInclude Include="Effects\AnimatedModelEffectParameters.h" />
     <ClInclude Include="Effects\LightEffectParameters.h" />
     <ClInclude Include="Effects\SceneEffectParameters.h" />
+    <ClInclude Include="Cinematics\CinematicPlayer.h">
+      <Filter>Cinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="Cinematics\CinematicObjectKeyFrame.h">
+      <Filter>Cinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="Cinematics\CinematicObject.h">
+      <Filter>Cinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="Cinematics\Cinematic.h">
+      <Filter>Cinematics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Graphics.rc" />
