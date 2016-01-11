@@ -70,14 +70,10 @@ void CUABEngine::LoadLevelXML(std::string filename)
 
 	if (l_XML.LoadFile(filename.c_str()))
 	{
-		CXMLTreeNode l_Input = l_XML["levels"];
+		CXMLTreeNode l_Input = l_XML["level"];
 		if (l_Input.Exists())
 		{
-			CXMLTreeNode l_Element = l_Input(0);
-			if (l_Element.GetName() == std::string("level"))
-			{
-				m_LevelLoaded = l_Element.GetPszProperty("level_to_load");
-			}
+			m_LevelLoaded = l_Input.GetPszProperty("level_to_load");
 		}
 	}
 
