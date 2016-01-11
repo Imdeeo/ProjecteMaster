@@ -1,6 +1,7 @@
 #include "CameraKeyController.h"
 #include "CameraKey.h"
 #include "Camera\Camera.h"
+#include <sstream>
 
 CCameraKeyController::CCameraKeyController(CXMLTreeNode &XMLTreeNode)
 {
@@ -9,7 +10,7 @@ CCameraKeyController::CCameraKeyController(CXMLTreeNode &XMLTreeNode)
 	std::string l_Filename;
 	l_Filename = XMLTreeNode.GetPszProperty("filename");
 	LoadXML(l_Filename);
-	
+
 	m_Reverse = XMLTreeNode.GetBoolProperty("reverse");
 	m_ReverseDirection = 1;
 	m_Cycle = !m_Reverse;//*XMLTreeNode.GetPszProperty("cycle");
@@ -75,10 +76,14 @@ void CCameraKeyController::GetCurrentKey()
 			m_CurrentKey = 0;
 			ResetTime();
 		}
-		else if (m_ReverseDirection == 1)
+		else if (IsReverse() && m_ReverseDirection == 1)
 		{
 			m_ReverseDirection = -1;
 			ResetTime();
+		}
+		else
+		{
+			// Para otro tipo de cámara animada.
 		}
 	}	
 
@@ -113,6 +118,7 @@ void CCameraKeyController::Update(float ElapsedTime)
 
 		l_tI = m_Keys[m_CurrentKey]->m_Time;
 		l_tF = m_Keys[m_NextKey]->m_Time;
+
 		l_pI = m_Keys[m_CurrentKey]->m_CameraInfo.m_Eye;
 		l_pF = m_Keys[m_NextKey]->m_CameraInfo.m_Eye;
 
@@ -130,6 +136,7 @@ void CCameraKeyController::Update(float ElapsedTime)
 
 		l_tI = m_Keys[m_NextKey]->m_Time;
 		l_tF = m_Keys[m_CurrentKey]->m_Time;
+
 		l_pI = m_Keys[m_NextKey]->m_CameraInfo.m_Eye;
 		l_pF = m_Keys[m_CurrentKey]->m_CameraInfo.m_Eye;
 
