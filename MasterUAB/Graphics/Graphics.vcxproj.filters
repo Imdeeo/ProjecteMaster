@@ -239,6 +239,9 @@
     <ClInclude Include="Camera\CameraControllerManager.h">
       <Filter>Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Effects\AnimatedModelEffectParameters.h" />
+    <ClInclude Include="Effects\LightEffectParameters.h" />
+    <ClInclude Include="Effects\SceneEffectParameters.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Graphics.rc" />
