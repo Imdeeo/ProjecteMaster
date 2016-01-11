@@ -600,16 +600,17 @@ fn createCameras dir Objs =
 	(
 		select Objs[i]
 		cameraTransform = Objs[i].transform
-		cameraTranslation = TranslationToRH cameraTransform.translation
+		cameraTranslation = TranslationToRH (cameraTransform.translation)
 		cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
 		local firstframe = at time 999999999999 trackbar.getNextKeyTime()
 		key = (at time 999999999999 trackbar.getPreviousKeyTime()) as string
 		key = replace key key.count 1 ""
+		key = (key as float)/30
 		if (firstframe != undefined) and ((getUserProp Objs[i] "camera_export_type") != "static") then(
 			dirExist (dir+"cameras\\")
 			cameraFileDir = "cameras\\"+Objs[i].name+".xml"
 			cameraType = getUserProp Objs[i] "camera_export_type"
-			format "\t<camera name=\"%\" total_time=\"%\" type=\"%\" %=\"true\" pos=\"%\" filename=\"%\"/>\n" Objs[i].name key cameraType cameraType cameraPos cameraFileDir to:file
+			format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"%\" filename=\"%\"/>\n" Objs[i].name key cameraType cameraPos cameraFileDir to:file
 			local j = firstframe
 			cameraFile=createfile (dir+cameraFileDir)
 			format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
@@ -617,6 +618,7 @@ fn createCameras dir Objs =
 			do (
 				key = j as string	
 				key = replace key key.count 1 ""
+				key = (key as float)/30
 				cameraTransform = at time j Objs[i].transform
 				cameraTranslation = TranslationToRH (cameraTransform.translation)
 				cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
@@ -630,18 +632,11 @@ fn createCameras dir Objs =
 			format "</camera_key_controller>\n" to:cameraFile		
 			close cameraFile
 		) else (
-			cameraTranslation = cameraTransform.translation
 			cameraUp = mat3xvect3 cameraTransform z_axis
-			--cameraUp = translationToRH cameraUp
 			cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
-			if(Objs[i].target != undefined) then
-			(
-				cameraLookAt = Objs[i].target.pos
-			) else (
-				cameraLookAt = (cameraTranslation) + (mat3xvect3 cameraTransform y_axis)
-				--cameraLookAt = translationToRH cameraLookAt
-				cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
-			)
+			if(Objs[i].target != undefined) then (cameraLookAt = Objs[i].target.pos)
+			else (cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis)))
+			cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
 			cameraType = getUserProp Objs[i] "camera_export_type"
 			format "\t<camera name=\"%\" type=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" Objs[i].name cameraType cameraPos cameraUp cameraLookAt Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
 		)
