@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <effects>
+	<vertex_shader name="lights_vs" file="Data/Effects/UAB_LIGHTS_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX"/>
+	<pixel_shader name="lights_ps"	file="Data/Effects/UAB_LIGHTS_SHADER.fx" shader_model="ps_4_0"	entry_point="mainPS"/>
+	<effect_technique name="lights_technique" vertex_shader="lights_vs" pixel_shader="lights_ps"/>
+
+	<vertex_shader name="normal_vs" file="Data/Effects/UAB_NORMAL_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_VERTEX"/>
+	<pixel_shader name="normal_ps"	file="Data/Effects/UAB_NORMAL_SHADER.fx" shader_model="ps_4_0"	entry_point="mainPS"/>
+	<effect_technique name="normal_technique" vertex_shader="normal_vs" pixel_shader="normal_ps"/>
+	
 	<vertex_shader name="diffuse_vs" file="Data/Effects/UAB_POSITION_NORMAL_TEXTURE_VERTEXShader.fx" shader_model="vs_4_0" entry_point="VS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX"/>
 	<pixel_shader name="diffuse_ps"	file="Data/Effects/UAB_POSITION_NORMAL_TEXTURE_VERTEXShader.fx" shader_model="ps_4_0"	entry_point="PS"/>
+	<effect_technique name="diffuse_technique" vertex_shader="diffuse_vs" pixel_shader="diffuse_ps"/>
+	
 	<vertex_shader name="debug_render_vs" file="./Data/Effects/DebugRender.fx" shader_model="vs_4_0" entry_point="VS" vertex_type="MV_POSITION_COLOR_VERTEX"/>
 	<pixel_shader name="debug_render_ps" file="./Data/Effects/DebugRender.fx" shader_model="ps_4_0" entry_point="PS"/>
-	<effect_technique name="diffuse_technique" vertex_shader="diffuse_vs" pixel_shader="diffuse_ps"/>
 	<effect_technique name="debug_render_technique" vertex_shader="debug_render_vs"	pixel_shader="debug_render_ps"/>
+	
 	<vertex_shader name="animated_model_render_vs" file="./Data/Effects/KG_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX_Shader.fx" shader_model="vs_4_0" entry_point="VS" vertex_type="KG_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX"/>
 	<pixel_shader name="animated_model_render_ps" file="./Data/Effects/KG_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX_Shader.fx" shader_model="ps_4_0" entry_point="PS"/>
 	<effect_technique name="animated_diffuse_technique" vertex_shader="animated_model_render_vs" pixel_shader="animated_model_render_ps"/>
