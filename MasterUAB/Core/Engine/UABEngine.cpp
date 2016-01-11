@@ -45,7 +45,7 @@ CUABEngine* CUABEngine::GetInstance()
 
 void CUABEngine::Init()
 {
-	LoadLevelXML("Data\\Level.xml");
+	LoadLevelXML("Data\\level.xml");
 
 	m_EffectManager->Load("Data\\effects.xml");
 	m_MaterialManager->Load("Data\\level_"+m_LevelLoaded+"\\materials.xml");
@@ -66,12 +66,19 @@ void CUABEngine::LoadLevelXML(std::string filename)
 {
 
 	CXMLTreeNode l_XML;
+	bool isLoading = l_XML.LoadFile(filename.c_str());
+
 	if (l_XML.LoadFile(filename.c_str()))
 	{
-		CXMLTreeNode l_Input = l_XML["level"];
+		CXMLTreeNode l_Input = l_XML["levels"];
 		if (l_Input.Exists())
 		{
-			m_LevelLoaded = l_Input.GetPszProperty("level_to_load");
+			CXMLTreeNode l_Element = l_Input(0);
+			if (l_Element.GetName() == std::string("level"))
+			{
+				m_LevelLoaded = l_Element.GetPszProperty("level_to_load");
+			}
 		}
 	}
+
 }
