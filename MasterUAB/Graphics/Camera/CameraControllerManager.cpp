@@ -14,11 +14,16 @@ CCameraControllerManager::~CCameraControllerManager()
 	Destroy();
 }
 
-void CCameraControllerManager::ChooseCurrentCamera(std::string _CurrentCamera)
+void CCameraControllerManager::ChooseMainCamera(std::string _CurrentCamera)
 {
-	GetResource(_CurrentCamera)->SetCamera(&m_CurrentCamera);
-	UABEngine.GetRenderManager()->SetCurrentCamera(m_CurrentCamera);
+	m_MainCamera = GetResource(_CurrentCamera);
 }
+
+void CCameraControllerManager::ChooseDebugCamera(std::string _CurrentCamera)
+{
+	m_DebugCamera = GetResource(_CurrentCamera);
+}
+
 
 bool CCameraControllerManager::Load(const std::string &FileName)
 {
@@ -65,4 +70,30 @@ bool CCameraControllerManager::Reload()
 {
 	Destroy();
 	return Load(m_Filename);
+}
+
+void CCameraControllerManager::UpdateMainCamera(float _ElapsedTime)
+{
+	CCamera l_Camera;
+	CCameraController* l_CameraController = GetMainCamera();
+	l_CameraController->Update(_ElapsedTime);
+	l_CameraController->SetCamera(&l_Camera);
+	l_Camera.SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
+	UABEngine.GetRenderManager()->SetCurrentCamera(l_Camera);
+}
+
+void CCameraControllerManager::UpdateDebugCamera(float _ElapsedTime)
+{
+	CCamera l_Camera;
+	CCameraController* l_CameraController = GetDebugCamera();
+	l_CameraController->Update(_ElapsedTime);
+	l_CameraController->SetCamera(&l_Camera);
+	l_Camera.SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
+	UABEngine.GetRenderManager()->SetDebugCamera(l_Camera);
+}
+
+void CCameraControllerManager::Update(float _ElapsedTime)
+{
+	UpdateMainCamera(_ElapsedTime);
+	UpdateDebugCamera(_ElapsedTime);
 }
