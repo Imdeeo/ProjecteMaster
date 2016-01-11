@@ -3,6 +3,7 @@
 
 #include "TemplatedMapManager.h"
 #include "CameraController.h"
+#include "Camera\Camera.h"
 #include <string>
 
 class CCamera;
@@ -11,6 +12,7 @@ class CCameraControllerManager : public CTemplatedMapManager<CCameraController>
 {
 private:
 	std::string m_Filename;
+	CCamera m_CurrentCamera;
 public:
 	CCameraControllerManager(void);
 	virtual ~CCameraControllerManager(void);
