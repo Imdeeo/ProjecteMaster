@@ -174,7 +174,7 @@ void CApplication::Update(float _ElapsedTime)
 			cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.5f;
 			cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * 0.5f;
 
-			l_SphericalCameraController->Update(cameraMovement);
+			l_SphericalCameraController->Move(cameraMovement);
 		}
 		break;
 	case 1:
