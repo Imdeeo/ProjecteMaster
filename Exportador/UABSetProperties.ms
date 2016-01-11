@@ -11,9 +11,10 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			dropdownList RenderExportList "" pos:[120,72] width:136 height:21 enabled:false items:#("instance_mesh", "animated_instance_mesh")
 			checkbox RenderVisibleBox "Visible" pos:[24,96] width:88 height:16 enabled:false
 			checkbox RenderLayerBox "Layer" pos:[24,120] width:88 height:16 enabled:false
+			checkbox CinematicBox "Cinematic" pos:[24,144] width:88 height:16 enabled:false 
 			dropdownList RenderLayerList "" pos:[120,112] width:136 height:21 enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles")
-			label AnimModelLabel "Anim. Model" pos:[24,152] width:88 height:16
-			edittext AnimModelText "undefined" pos:[120,144] width:136 height:24 enabled:false
+			--label AnimModelLabel "Anim. Model" pos:[24,152] width:88 height:16
+			edittext AnimModelText "AnimModelLabel" pos:[120,144] width:136 height:24 enabled:false
 		GroupBox PhysicsGroup "Physics" pos:[16,176] width:248 height:80
 			checkbox PhysicsGenerateBox "Generate" pos:[24,200] width:88 height:16
 			dropdownList PhysicsGenerateList "" pos:[120,200] width:136 height:21 enabled:false items:#("triangle_mesh", "convex_shape", "box_shape", "sphere_shape", "plane_shape", "capsule_shape")
@@ -48,7 +49,8 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		RenderVisibleBox.visible = bool
 		RenderLayerBox.visible = bool
 		RenderLayerList.visible = bool
-		AnimModelLabel.visible = bool
+		--AnimModelLabel.visible = bool
+		CinematicBox.visible = bool
 		AnimModelText.visible = bool
 		PhysicsGroup.visible = bool
 		PhysicsGenerateBox.visible = bool
@@ -94,6 +96,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		RenderLayerBox.enabled = bool
 		RenderLayerList.enabled = bool
 		AnimModelText.enabled = bool
+		CinematicBox.enabled = bool
 	)
 	
 	fn togglePhysics bool =
@@ -225,9 +228,9 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 						"instance_mesh": RenderExportList.selection = 1
 						"animated_instance_mesh": RenderExportList.selection = 2
 					)
-			
+				
 				RenderVisibleBox.checked = getUserProp Obj "render_visible"
-			
+				
 				RenderLayerBox.checked = getUserProp Obj "has_render_layer"
 				case getUserProp Obj "render_layer" of
 					(
@@ -238,12 +241,13 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 					)
 			
 				AnimModelText.text = getUserProp Obj "anim_model_core"
-			
+				CinematicBox.checked = getUserProp Obj "cinematic_object"
 			) else (
 				
 				toggleRender false
 				RenderVisibleBox.checked = false
 				RenderLayerBox.checked = false
+				CinematicBox.checked = false
 			)
 			
 			PhysicsGenerateBox.checked = getUserProp Obj "physics_generate"
@@ -270,6 +274,8 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 				togglePhysics false
 				PhysicsLayerBox.checked = false
 			)
+			
+			
 			
 			LogicGenerateBox.checked = getUserProp $ "logic_generate"
 			case getUserProp Obj "logic_generate_type" of
@@ -384,6 +390,15 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			
 			) else (
 				setUserProp Obj "logic_generate" false
+			)
+			
+			if CinematicBox.checked then
+			(
+				setUserProp Obj "cinematic_object" true
+			)
+			else
+			(
+				setUserProp Obj "cinematic_object" false
 			)
 		) else if(SuperClassOf Obj == light) then
 		(

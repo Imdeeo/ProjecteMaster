@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <effects>
+	<vertex_shader name="lights_vs" file="Data/Effects/UAB_LIGHTS_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX"/>
+	<pixel_shader name="lights_ps"	file="Data/Effects/UAB_LIGHTS_SHADER.fx" shader_model="ps_4_0"	entry_point="mainPS"/>
+	<effect_technique name="lights_technique" vertex_shader="lights_vs" pixel_shader="lights_ps"/>
+
 	<vertex_shader name="normal_vs" file="Data/Effects/UAB_NORMAL_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_VERTEX"/>
 	<pixel_shader name="normal_ps"	file="Data/Effects/UAB_NORMAL_SHADER.fx" shader_model="ps_4_0"	entry_point="mainPS"/>
 	<effect_technique name="normal_technique" vertex_shader="normal_vs" pixel_shader="normal_ps"/>
