@@ -18,6 +18,9 @@ CEffectManager::~CEffectManager(void)
 
 void CEffectManager::Reload()
 {
+	m_VertexShaders.Destroy();
+	m_PixelShaders.Destroy();
+	CTemplatedMapManager::Destroy();
 	Load(m_Filename);
 }
 
@@ -83,8 +86,8 @@ void CEffectManager::SetSceneConstants()
 
 void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 {	
-	m_LightParameters.m_LightAmbient[IdLight] = (1.0f, 1.0f, 1.0f, 1.0f);
-	m_LightParameters.m_LightEnabled[IdLight] = 1;
+	m_LightParameters.m_LightAmbient[IdLight] = (0.1f, 0.1f, 0.1f, 1.0f);
+	m_LightParameters.m_LightEnabled[IdLight] = Light->GetEnabled()?1:0;
 	m_LightParameters.m_LightType[IdLight] = Light->GetType();
 	m_LightParameters.m_LightPosition[IdLight] = Light->GetPosition();;	
 	m_LightParameters.m_LightAttenuationStartRange[IdLight] = Light->GetStartRangeAttenuation();
@@ -109,8 +112,20 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 
 void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 {
+	int n_lights = UABEngine.GetLightManager()->GetResourcesVector().size();
+	
 	for (size_t i = 0; i < MaxLights; i++)
 	{
-		SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
+		if(n_lights<=i)
+		{
+			CLight* dummy = new CDirectionalLight();
+			dummy->SetEnabled(false);
+			SetLightConstants(i,dummy);
+			delete dummy;
+		}
+		else
+		{
+			SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
+		}
 	}
 }

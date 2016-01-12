@@ -27,6 +27,7 @@ public:
 	UAB_BUILD_GET_SET(float, Intensity);
 	UAB_BUILD_GET_SET(float, StartRangeAttenuation);
 	UAB_BUILD_GET_SET(float, EndRangeAttenuation);
+	UAB_BUILD_GET_SET(bool, Enabled);
 	UAB_BUILD_GET_SET(TLightType, Type);
 	virtual void Render(CRenderManager *RenderManager);
 	static TLightType GetLightTypeByName(const std::string &StrLightType);
