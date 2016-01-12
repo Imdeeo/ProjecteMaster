@@ -15,12 +15,9 @@ protected:
 public:
 	CCinematic(CXMLTreeNode &TreeNode);
 	virtual ~CCinematic();
-	virtual void Stop();
-	virtual void Play(bool Cycle);
-	virtual void Pause();
-	void LoadXML(const std::string &Filename);
+	void LoadXML(const std::string &FileName);
 	void AddCinematicObject(CCinematicObject *CinematicObject);
-	void Update(float ElapsedTime);
+	void Update(float _ElapsedTime);
 	virtual void Render(CRenderManager &RenderManager);
 };
 
