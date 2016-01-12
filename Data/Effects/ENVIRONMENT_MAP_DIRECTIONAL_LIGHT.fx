@@ -1,8 +1,8 @@
 /*
 
-% Normalmap+Spot light shader.
+% Environmental Map + Spot light shader.
 
-date: 17122015
+date: 12012016
 
 */
 
@@ -42,20 +42,15 @@ sampler2D S0Sampler = sampler_state {
 };
 
 
-	  texture T1  <
-	  string ResourceName = "";//Optional default file name
-	  string UIName =  "T1 Texture";
-	  string ResourceType = "Cube";
-	  >;
+textureCUBE <float4> T0;
 
-	  sampler2D T1Sampler = sampler_state {
-	  Texture = <T1>;
-	  MinFilter = Linear;
-	  MagFilter = Linear;
-	  MipFilter = Linear;
-	  AddressU = Wrap;
-	  AddressV = Wrap;
-	  };
+samplerCUBE T0Sampler = sampler_state
+{
+	Texture = <T0>;
+	MinFilter = Linear;
+	MagFilter = Linear;
+	MipFilter = Linear;
+};
 	
 	
 
@@ -80,6 +75,7 @@ struct TVertexPS
 	float3 Normal : NORMAL;
 	float2 UV : TEXCOORD0;
 	float3 Pixelpos : TEXCOORD1;
+	//float3 ReflectVector : TEXCOORD2;
 };
 
 TVertexPS mainVS(TVertexVS IN)
@@ -93,15 +89,15 @@ TVertexPS mainVS(TVertexVS IN)
 	l_Out.Normal = normalize(mul(IN.Normal, (float3x3)World));
 	l_Out.UV = IN.UV;
 	
-	float3 l_EyeToWorldPosition=normalize(IN.WorldPosition-InverseView[3].xyz);
-	float3 l_ReflectVector=normalize(reflect(l_EyeToWorldPosition, IN.Normal));
-	float3 l_ReflectColor=T1.Sample(S0Sampler, l_ReflectVector).xyz*g_EnvironmentFactor;
+	/*float3 l_EyeToWorldPosition = normalize(IN.WorldPosition-InverseView[3].xyz);
+	float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
+	l_Out.ReflectVector = l_ReflectVector;*/
 	
 	return l_Out;
 }
 
 float4 mainPS(TVertexPS IN) : COLOR
-{
+{	
 	// Light properties
 	float l_Angle = PI / 3; // The total angle just like in 3ds Max, not deviation from the centre.
 	float l_Falloff = l_Angle + PI / 12;
@@ -127,9 +123,13 @@ float4 mainPS(TVertexPS IN) : COLOR
 
 	// Angle attenuation (linear)
 	l_SpotAttenuation = 1 - saturate((acos(l_DirectionContrib) - l_Angle/2) / (l_Falloff/2 - l_Angle/2));
-
 	
-	return l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*tex2D(S0Sampler,IN.UV)*(float4(Lamp0Color, 1.0));
+	float4 outColor = l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*tex2D(S0Sampler,IN.UV)*(float4(Lamp0Color, 1.0));
+
+	//float3 l_ReflectColor = T0.Sample(S0Sampler, IN.ReflectVector).xyz*g_EnvironmentFactor;
+	float4 reflectionColor = texCUBE(T0Sampler, IN.Pixelpos)*0.8;
+	
+	return outColor*reflectionColor;
 }
 
 technique technique0
