@@ -1,3 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lights>
+	<ambient_light color="0.1 0.1 0.1 1.0"/>
+	<light name="DirectionalLight01" type="directional" pos="0.0 0.0 0.0" color="1.0 1.0 1.0 1.0" att_start_range="0.0" att_end_range="15.0" intensity="1.0" dir="1.0 1.0 0.5" enabled="false"/>
+	<light name="OmniLight01" type="omni" pos="0.0 0.0 0.0" color="1.0 1.0 1.0 1.0" att_start_range="0.0" att_end_range="15.0" intensity="1.0" enabled="false"/>
+	<light name="SpotLight01" type="spot" pos="10.0 10.0 10.0" color="1.0 1.0 1.0 1.0" att_start_range="0.0" att_end_range="15.0" intensity="1.0" dir="0.0 0.0 0.0" angle="2" fall_off="1" enabled="true"/>-
 </lights>
