@@ -420,7 +420,7 @@ fn getIndex vertexVect vertex IdMaterial =
 	return index
 )
 
-fn writeMesh arx vertexs indexs BBMin BBMax BSphere=
+fn writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere=
 (
 	if isDebug then
 	format "Number of materials: %\n" vertexs.count
@@ -428,9 +428,9 @@ fn writeMesh arx vertexs indexs BBMin BBMax BSphere=
 	(
 		if isDebug then
 		format "Material %:\n" i
-		writeShort arx 37 #unsigned
+		writeShort arx VtxID #unsigned
 		if isDebug then
-		format "Size of vertex: 37\n"
+		format "Size of vertex: %\n" VtxID
 		writeLong arx vertexs[i].count
 		if isDebug then
 		format "Number of vertexes: %\n" vertexs[i].count
@@ -472,25 +472,55 @@ fn writeMesh arx vertexs indexs BBMin BBMax BSphere=
 	writeFloat arx BSphere[2]
 )
 
-fn createVertex pos norm textcoord =
+fn createVertex pos col norm textcoord =
 (
 	local vertex = #()
-	append vertex pos.x
-	append vertex pos.y
-	append vertex pos.z
-	append vertex norm.x
-	append vertex norm.y
-	append vertex norm.z
-	append vertex textcoord.x
-	append vertex textcoord.y
+	if(pos!=undefined) then
+	(
+		append vertex pos.x
+		append vertex pos.y
+		append vertex pos.z
+	)
+	if(col!=undefined) then
+	(
+		append vertex col.r
+		append vertex col.g
+		append vertex col.b
+	)
+	if(norm!=undefined) then
+	(
+		append vertex norm.x
+		append vertex norm.y
+		append vertex norm.z
+	)
+	if(textcoord!=undefined)
+	(
+		append vertex textcoord.x
+		append vertex textcoord.y
+	)
 	return vertex
 )
 
 fn procesFaces arx Obj =
 (
+	local l_VtxID = 0x0001
 	local l_Obj=Obj
 	local l_ObjectConverted=false
-	if classof l_Obj!=Editable_mesh then
+	
+	local Vt1 = undefined
+	local Vt2 = undefined
+	local Vt3 = undefined
+	local Color1 = undefined
+	local Color2 = undefined
+	local Color3 = undefined
+	local Nm1 = undefined
+	local Nm2 = undefined
+	local Nm3 = undefined
+	local TUVMap1 = undefined
+	local TUVMap2 = undefined
+	local TUVMap3 = undefined
+	
+	if classof Obj != Editable_mesh then
 	(
 		l_Obj=copy Obj
 		convertToMesh l_Obj
@@ -502,43 +532,71 @@ fn procesFaces arx Obj =
 	local nFaces = getNumFaces l_Obj
 	local vertexs = #()
 	local indexs = #()
-	local l_HasMultimaterial=classof l_Obj.material==Multimaterial
-	local l_TotalMaterials=1
-	if l_HasMultimaterial then
-		l_TotalMaterials=l_Obj.material.count
 	
-	for i=1 to l_TotalMaterials do
-	(
+	if l_Obj.material != undefined then
+	(	
+		l_VtxID += 0x0020
+		local l_HasMultimaterial=classof l_Obj.material==Multimaterial
+		local l_TotalMaterials=1
+		if l_HasMultimaterial then
+			l_TotalMaterials=l_Obj.material.count
+		
+		for i=1 to l_TotalMaterials do
+		(
+			append vertexs #()
+			append indexs #()
+		)		
+	) else (
+		l_VtxID += 0x0002
 		append vertexs #()
 		append indexs #()
-	)	
-	
+	)
+
 	for i=1 to nFaces do
 	(
 		local IdxsFace=getFace l_Obj i
+		
+		--Position
+		Vt1=getVert l_Obj IdxsFace.x
+		Vt2=getVert l_Obj IdxsFace.y
+		Vt3=getVert l_Obj IdxsFace.z
+		
+		--Normal
+		l_VtxID += 0x004
 		UABCalcVertexsNormals l_Obj
 		local FaceNormal=getFaceNormal l_Obj i
 		local SmoothValue=getFaceSmoothGroup l_Obj i
-		local Vt1=getVert l_Obj IdxsFace.x
-		local Vt2=getVert l_Obj IdxsFace.y
-		local Vt3=getVert l_Obj IdxsFace.z
-		local Nm1=normalize(UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal)
-		local Nm2=normalize(UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal)
-		local Nm3=normalize(UABGetVertexNormal l_Obj IdxsFace.z SmoothValue FaceNormal)
-		local IdxsMap=meshop.getMapFace l_Obj 1 i
-		local TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
-		local TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
-		local TUVMap3= meshop.getMapVert l_Obj 1 IdxsMap.z
-		local v1 = createVertex Vt1 Nm1 TUVMap1
-		local v2 = createVertex Vt2 Nm2 TUVMap2
-		local v3 = createVertex Vt3 Nm3 TUVMap3
+		Nm1=normalize(UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal)
+		Nm2=normalize(UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal)
+		Nm3=normalize(UABGetVertexNormal l_Obj IdxsFace.z SmoothValue FaceNormal)
 		
-		local l_IdMaterial=getFaceMatID l_Obj i
-		if l_HasMultimaterial==false then
+		--Texture and material
+		if l_Obj.material != undefined then
 		(
-			l_IdMaterial=1
+			local IdxsMap=meshop.getMapFace l_Obj 1 i
+			TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
+			TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
+			TUVMap3= meshop.getMapVert l_Obj 1 IdxsMap.z
+			
+			local l_IdMaterial=getFaceMatID l_Obj i
+			if l_HasMultimaterial==false then
+			(
+				l_IdMaterial=1
+			)
+		) else (
+			local l_IdMaterial = 1
+			defaultVCFaces l_Obj
+			local ColorFace = getVCFace l_Obj i
+			Color1 = getVertColor l_Obj ColorFace.x
+			Color2 = getVertColor l_Obj Colorface.y
+			Color3 = getVertColor l_Obj ColorFace.z
 		)
+		--Vertex creation
+		local v1 = createVertex Vt1 Color1 Nm1 TUVMap1
+		local v2 = createVertex Vt2 Color2 Nm2 TUVMap2
+		local v3 = createVertex Vt3 Color3 Nm3 TUVMap3
 		
+		-- Index creation
 		local id1=getIndex vertexs v1 l_IdMaterial
 		local id2=getIndex vertexs v2 l_IdMaterial
 		local id3=getIndex vertexs v3 l_IdMaterial
@@ -555,14 +613,16 @@ fn procesFaces arx Obj =
 		append indexs[l_IdMaterial] id3
 	)
 	
+	--Bounding box
 	local ffd=ffdbox()
 	addModifier l_Obj ffd
 	BBMin=getModContextBBoxMin l_Obj ffd
 	BBMax=getModContextBBoxMax l_Obj ffd
 	
-	BSphere = getBoundingSphere l_Obj
+	--Bounding sphere
+	BSphere = getBoundingSphere l_Obj	
 	
-	writeMesh arx vertexs indexs BBMin BBMax BSphere
+	writeMesh arx l_VtxID vertexs indexs BBMin BBMax BSphere
 	
 	if l_ObjectConverted==true then
 	(
