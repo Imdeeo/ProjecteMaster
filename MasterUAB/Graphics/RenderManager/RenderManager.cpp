@@ -64,7 +64,13 @@ void CRenderManager::Render()
 	else
 	{
 		m_ContextManager->SetCamera(m_CurrentCamera);
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition=m_CurrentCamera.GetPosition();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector=m_CurrentCamera.GetUp();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector=Vect4f(1,1,1,1);
 	}
+
+	UABEngine.GetEffectManager()->SetLightsConstants(MAX_LIGHTS_BY_SHADER);
+
 	//Mat44f view,proj;
 	//view.SetIdentity();
 	//proj.SetIdentity();
