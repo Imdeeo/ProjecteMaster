@@ -362,7 +362,6 @@ fn equalVertex vt1 vt2 =
 fn getIndex vertexVect vertex IdMaterial =
 (
 	local l_FoundVertex=false
-	local index = (vertexVect[IdMaterial]).count
 	for i=1 to vertexVect[IdMaterial].count do
 	(
 		if (equalVertex vertexVect[IdMaterial][i] vertex) then
@@ -379,7 +378,7 @@ fn getIndex vertexVect vertex IdMaterial =
 	return index
 )
 
-fn writeMesh arx vertexs indexs BBMin BBMax BSphere=
+fn writeMesh arx vertexID vertexs indexs BBMin BBMax BSphere=
 (
 	if isDebug then
 	format "Number of materials: %\n" vertexs.count
@@ -387,7 +386,7 @@ fn writeMesh arx vertexs indexs BBMin BBMax BSphere=
 	(
 		if isDebug then
 		format "Material %:\n" i
-		writeShort arx 37 #unsigned
+		writeShort arx vertexID #unsigned
 		if isDebug then
 		format "Size of vertex: 37\n"
 		writeLong arx vertexs[i].count
@@ -447,6 +446,7 @@ fn createVertex pos norm textcoord =
 
 fn procesFaces arx Obj =
 (
+	local l_vertexID = 1
 	local l_Obj=Obj
 	local l_ObjectConverted=false
 	if classof l_Obj!=Editable_mesh then
@@ -461,16 +461,28 @@ fn procesFaces arx Obj =
 	local nFaces = getNumFaces l_Obj
 	local vertexs = #()
 	local indexs = #()
-	local l_HasMultimaterial=classof l_Obj.material==Multimaterial
-	local l_TotalMaterials=1
-	if l_HasMultimaterial then
-		l_TotalMaterials=l_Obj.material.count
-	
-	for i=1 to l_TotalMaterials do
+	local l_HasMaterial = classof l_Obj.material != UndefinedClass
+	if l_HasMaterial then
 	(
+		l_vertexID += 20
+		local l_HasMultimaterial=classof l_Obj.material==Multimaterial
+		local l_TotalMaterials=1
+		if l_HasMultimaterial then
+			l_TotalMaterials=l_Obj.material.count
+		
+		for i=1 to l_TotalMaterials do
+		(
+			append vertexs #()
+			append indexs #()
+		)
+	) else (
+		l_vertexID += 2
 		append vertexs #()
 		append indexs #()
-	)	
+	)
+	
+	--Normal
+	l_vertexID += 4
 	
 	for i=1 to nFaces do
 	(
@@ -520,8 +532,8 @@ fn procesFaces arx Obj =
 	BBMax=getModContextBBoxMax l_Obj ffd
 	
 	BSphere = getBoundingSphere l_Obj
-	
-	writeMesh arx vertexs indexs BBMin BBMax BSphere
+	l_vertexID = 37
+	writeMesh arx l_vertexID vertexs indexs BBMin BBMax BSphere
 	
 	if l_ObjectConverted==true then
 	(
