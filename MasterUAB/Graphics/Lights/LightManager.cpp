@@ -7,7 +7,7 @@
 
 #include "XML\XMLTreeNode.h"
 
-CLightManager::CLightManager(){}
+CLightManager::CLightManager():m_AmbientLight(Vect4f(0.1f,0.1f,0.1f,1.0f)){}
 
 CLightManager::~CLightManager(){}
 
@@ -41,6 +41,10 @@ bool CLightManager::Load(const std::string &FileName){
 						return false;
 					}
 				}
+				if (l_Element.GetName() == std::string("ambient_light"))
+				{
+					m_AmbientLight = l_Element.GetVect4fProperty("color",Vect4f(0.1f,0.1f,0.1f,1.0f));
+				}
 			}
 		}
 	}
@@ -51,7 +55,11 @@ bool CLightManager::Load(const std::string &FileName){
 	return true;
 }
 
-bool CLightManager::Render(CRenderManager *RenderManager){
+bool CLightManager::Reload(){
 	Destroy();
 	return Load(m_FileName);
+}
+
+bool CLightManager::Render(CRenderManager *RenderManager){
+	return true;
 }

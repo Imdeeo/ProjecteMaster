@@ -3,7 +3,7 @@
 #include "XML\XMLTreeNode.h"
 //#include "RenderManager\RenderManager.h"
 
-CLight::CLight() : CNamed(""){}
+CLight::CLight() : CNamed(""),m_Type(LIGHT_TYPE_OMNI),m_Position(Vect3f(0.0f,0.0f,0.0f)),m_Color(Vect4f(1.0f,1.0f,1.0f,1.0f)),m_StartRangeAttenuation(0.0f),m_EndRangeAttenuation(0.0f),m_Intensity(0.0f),m_Enabled(false){}
 
 CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
 {
@@ -13,6 +13,7 @@ CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
 	m_StartRangeAttenuation = TreeNode.GetFloatProperty("att_start_range");
 	m_EndRangeAttenuation = TreeNode.GetFloatProperty("att_end_range");
 	m_Intensity = TreeNode.GetFloatProperty("intensity");
+	m_Enabled = TreeNode.GetBoolProperty("enabled");
 }
 
 CLight::~CLight(){}
