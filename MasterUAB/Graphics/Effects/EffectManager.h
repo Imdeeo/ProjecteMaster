@@ -20,7 +20,6 @@ private:
 	CTemplatedMapManager<CEffectPixelShader> m_PixelShaders;
 	std::string m_Filename;
 
-	void Destroy();
 public:
 	static CSceneEffectParameters m_SceneParameters;
 	static CAnimatedModelEffectParameters m_AnimatedModelEffectParameters;

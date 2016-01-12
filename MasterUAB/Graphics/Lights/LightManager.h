@@ -17,6 +17,7 @@ public:
 	virtual ~CLightManager();
 	bool Load(const std::string &FileName);
 	bool Render(CRenderManager *RenderManager);
+	bool Reload();
 };
 
 #endif //LIGHT_MANAGER_H
