@@ -18,13 +18,12 @@ private:
 	CRenderableObject *m_RenderableObject;
 public:
 	CCinematicObject(CXMLTreeNode &TreeNode);
-	bool IsOk();
 	virtual ~CCinematicObject();
-	void AddCinematicObjectKeyFrame(CCinematicObjectKeyFrame
-		*CinematicObjectKeyFrame);
-	void Update(float ElapsedTime);
-	void Stop();
+	bool IsOk();
+	void AddCinematicObjectKeyFrame(CCinematicObjectKeyFrame *CinematicObjectKeyFrame);
+	void Update(float _ElapsedTime);
 	void OnRestartCycle();
+	void GetCurrentKey();
 };
 
 #endif H_CINEMATIC_OBJECT_H

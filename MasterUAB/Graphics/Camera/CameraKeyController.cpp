@@ -1,6 +1,7 @@
 #include "CameraKeyController.h"
 #include "CameraKey.h"
 #include "Camera\Camera.h"
+#include "Utils.h"
 #include <sstream>
 
 CCameraKeyController::CCameraKeyController(CXMLTreeNode &XMLTreeNode)
@@ -18,6 +19,11 @@ CCameraKeyController::CCameraKeyController(CXMLTreeNode &XMLTreeNode)
 
 CCameraKeyController::~CCameraKeyController()
 {
+	for (size_t i=0; i < m_Keys.size(); ++i)
+	{
+		CHECKED_DELETE(m_Keys[i]);
+	}
+	m_Keys.clear();
 }
 
 bool CCameraKeyController::LoadXML(const std::string &FileName)
