@@ -21,6 +21,9 @@ samplerCUBE T0Sampler = sampler_state
 float4x4 View : View;
 float4x4 World : World;
 float4x4 Projection : Projection;
+float4x4 InverseView : ViewInverse;
+const float PI = 3.14159265f;
+const float g_EnvironmentFactor = 1.0;
 
 struct TVertexVS
 {
@@ -49,14 +52,18 @@ TVertexPS mainVS(TVertexVS IN)
 	l_Out.Normal = normalize(mul(IN.Normal, (float3x3)World));
 	l_Out.UV = IN.UV;
 	
+	
 	return l_Out;
 }
 
 float4 mainPS(TVertexPS IN) : COLOR
 {	
-	float4 outColor = texCUBE(T0Sampler, IN.Pixelpos);
+	float3 Nn=normalize(IN.Normal);
+	float3 l_EyeToWorldPosition = normalize(IN.Pixelpos-InverseView[3].xyz);
+	float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, Nn));
+	float3 outColor = texCUBE(T0Sampler, l_ReflectVector).xyz*g_EnvironmentFactor;	
 	
-	return outColor;
+	return float4(outColor,1);
 }
 
 technique technique0
