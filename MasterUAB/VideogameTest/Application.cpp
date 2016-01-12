@@ -83,6 +83,7 @@ void CApplication::Update(float _ElapsedTime)
 		
 		UABEngine.GetTextureManager()->Reload();
 
+		UABEngine.GetLightManager()->Reload();
 		UABEngine.GetEffectManager()->Reload();
 		UABEngine.GetMaterialManager()->Reload();
 		UABEngine.GetStaticMeshManager()->Reload();

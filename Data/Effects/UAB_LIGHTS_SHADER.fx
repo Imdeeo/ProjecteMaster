@@ -62,7 +62,7 @@ float4 spotLight(TVertexPS IN, uint LightIndex)
 	// Angle attenuation (linear)
 	l_SpotAttenuation = 1 - saturate((acos(l_DirectionContrib) - m_LightAngleArray[LightIndex]/2) / (m_LightFallOffAngleArray[LightIndex]/2 - m_LightAngleArray[LightIndex]/2));
 	
-	return l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*(float4(m_LightColor[LightIndex].xyz, 1.0));
+	return l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*(float4(m_LightColor[LightIndex].xyz, 1.0))*m_LightIntensityArray[LightIndex];
 }
 
 float4 directionalLight(TVertexPS IN,uint LightIndex)
@@ -71,7 +71,7 @@ float4 directionalLight(TVertexPS IN,uint LightIndex)
 	l_DiffuseContrib = dot(IN.Normal, (-m_LightDirection[LightIndex]));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
 
-	return l_DiffuseContrib*(float4(m_LightColor[LightIndex].xyz, 1.0));
+	return l_DiffuseContrib*(float4(m_LightColor[LightIndex].xyz, 1.0))*m_LightIntensityArray[LightIndex];
 }
 
 float4 omniLight(TVertexPS IN, uint LightIndex)
@@ -80,14 +80,14 @@ float4 omniLight(TVertexPS IN, uint LightIndex)
 	l_DiffuseContrib = dot(IN.Normal, normalize(IN.Pixelpos - m_LightPosition[LightIndex]));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
 
-	return l_DiffuseContrib*(float4(m_LightColor[LightIndex].xyz, 1.0));
+	return l_DiffuseContrib*(float4(m_LightColor[LightIndex].xyz, 1.0))*m_LightIntensityArray[LightIndex];
 }
 float4 applyLights(TVertexPS IN)
 {
 	float4 lightContrib = m_LightAmbient;
 	for(uint i = 0;i<MAX_LIGHTS_BY_SHADER;i++)
 	{
-		if(m_LightEnabledArray[i])
+		if(m_LightEnabledArray[i]==1)
 		{
 			if(m_LightTypeArray[i] == 0) //OMNI
 			{
@@ -103,7 +103,7 @@ float4 applyLights(TVertexPS IN)
 			}
 		}
 	}
-	return lightContrib;
+	return max(min(lightContrib,1),0);
 }
 
 float4 mainPS(TVertexPS IN) : SV_Target
