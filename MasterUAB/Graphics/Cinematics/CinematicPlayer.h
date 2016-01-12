@@ -9,8 +9,8 @@ protected:
 	float m_Duration;
 	bool m_Cycle;
 public:
-	CCinematicPlayer();
-	virtual ~CCinematicPlayer();
+	CCinematicPlayer(){};
+	virtual ~CCinematicPlayer(){};
 	void Init(float Duration);
 	virtual void Update(float ElapsedTime);
 	virtual void Stop();
@@ -19,7 +19,7 @@ public:
 	bool IsFinished() { return m_CurrentTime >= m_Duration; }
 	float GetDuration() { return m_Duration; }
 	float GetCurrentTime() { return m_CurrentTime; }
-	virtual void OnRestartCycle();
+	virtual void OnRestartCycle(){};
 };
 
 #endif H_CINEMATIC_PLAYER_H

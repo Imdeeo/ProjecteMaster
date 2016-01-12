@@ -14,6 +14,10 @@ CCinematicObject::CCinematicObject(CXMLTreeNode &TreeNode):m_RenderableObject(nu
 			AddCinematicObjectKeyFrame(new CCinematicObjectKeyFrame(l_Element));
 		}
 	}
+	if (IsOk())
+	{
+		GetCurrentKey();
+	}
 }
 
 CCinematicObject::~CCinematicObject()
@@ -27,7 +31,11 @@ CCinematicObject::~CCinematicObject()
 
 bool CCinematicObject::IsOk()
 {
-	return (m_RenderableObject != nullptr); //No se que hay que mirar exactamente.
+	if (m_RenderableObject != nullptr && m_CinematicObjectKeyFrames.size()>1)
+	{
+			return true;
+	}
+	return false; 
 }
 
 void CCinematicObject::AddCinematicObjectKeyFrame(CCinematicObjectKeyFrame *CinematicObjectKeyFrame)
@@ -37,14 +45,61 @@ void CCinematicObject::AddCinematicObjectKeyFrame(CCinematicObjectKeyFrame *Cine
 
 void CCinematicObject::Update(float _ElapsedTime)
 {
-	m_CurrentTime += _ElapsedTime;
-	GetCurrentKey();
-	//interpolar
+	if(m_Playing)
+	{
+		m_CurrentTime += _ElapsedTime;
+		if(IsFinished())
+		{
+			if(m_Cycle)
+			{
+				OnRestartCycle();
+			}
+			else
+			{
+				m_Playing = false;
+			}
+		}
+		else
+		{
+			GetCurrentKey();
+
+			Vect3f l_pI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetPosition();
+			Vect3f l_pF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetPosition();
+
+			float l_tI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetKeyFrameTime();
+			float l_tF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetKeyFrameTime();
+
+			float l_yawI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetYaw();
+			float l_yawF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetYaw();
+
+			float l_pitchI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetPitch();
+			float l_pitchF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetPitch();
+
+			float l_rollI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetRoll();
+			float l_rollF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetRoll();
+
+			Vect3f l_scaleI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetScale();
+			Vect3f l_scaleF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetScale();
+			
+			m_RenderableObject->SetPosition((((l_pF - l_pI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pI);	
+
+			m_RenderableObject->SetYaw((((l_yawF - l_yawI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_yawI);	
+
+			m_RenderableObject->SetPitch((((l_pitchF - l_pitchI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pitchI);	
+
+			m_RenderableObject->SetRoll((((l_rollF - l_rollI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_rollI);
+
+			m_RenderableObject->SetScale((((l_scaleF - l_scaleI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_scaleI);		
+		}
+	}
+
+
 }
 
 void CCinematicObject::OnRestartCycle()
 {
 	m_CurrentTime = 0;
+	Play(m_Cycle);
 }
 
 void CCinematicObject::GetCurrentKey()

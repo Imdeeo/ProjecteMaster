@@ -1,6 +1,16 @@
 #include "Cinematic.h"
 #include "Cinematics\CinematicObject.h"
 
+CCinematic::CCinematic()
+{
+
+}
+
+CCinematic::~CCinematic()
+{
+
+}
+
 void CCinematic::LoadXML(const std::string &FileName)
 {
 	CXMLTreeNode l_XML;
@@ -34,5 +44,5 @@ void CCinematic::Update(float _ElapsedTime)
 	}
 }
 
-void CCinematic::Render(CRenderManager &RenderManager){}
+
 

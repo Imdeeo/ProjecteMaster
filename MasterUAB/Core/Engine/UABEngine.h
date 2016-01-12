@@ -13,6 +13,7 @@
 #include "AnimatedModels\AnimatedModelsManager.h"
 #include "ScriptManager\ScriptManager.h"
 #include "Camera\CameraControllerManager.h"
+#include "Cinematics\Cinematic.h"
 
 #include <string>
 
@@ -29,6 +30,7 @@ class CUABEngine
 	CAnimatedModelsManager * m_AnimatedModelsManager;
 	CScriptManager * m_ScriptManager;
 	CCameraControllerManager * m_CameraManager;
+	CCinematic * m_Cinematic;
 
 	std::string m_LevelLoaded;
 
@@ -42,6 +44,7 @@ class CUABEngine
 	UAB_GET_PROPERTY(CAnimatedModelsManager *, AnimatedModelsManager)
 	UAB_GET_PROPERTY(CScriptManager *, ScriptManager)
 	UAB_GET_PROPERTY(CCameraControllerManager *, CameraManager)
+	UAB_GET_PROPERTY(CCinematic *, Cinematic)
 
 	static CUABEngine * m_Instance;
 

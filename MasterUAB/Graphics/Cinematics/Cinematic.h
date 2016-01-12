@@ -13,12 +13,13 @@ class CCinematic : public CRenderableObject, public CCinematicPlayer
 protected:
 	std::vector<CCinematicObject *> m_CinematicObjects;
 public:
-	CCinematic(CXMLTreeNode &TreeNode);
+	CCinematic();
 	virtual ~CCinematic();
 	void LoadXML(const std::string &FileName);
 	void AddCinematicObject(CCinematicObject *CinematicObject);
 	void Update(float _ElapsedTime);
-	virtual void Render(CRenderManager &RenderManager);
+	virtual void Render(CRenderManager *RenderManager){};
+
 };
 
 #endif H_CINEMATIC_H
