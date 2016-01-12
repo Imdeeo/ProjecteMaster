@@ -493,7 +493,7 @@ fn createVertex pos col norm textcoord =
 		append vertex norm.y
 		append vertex norm.z
 	)
-	if(textcoord!=undefined)
+	if(textcoord!=undefined)then
 	(
 		append vertex textcoord.x
 		append vertex textcoord.y
