@@ -51,7 +51,11 @@ bool CLightManager::Load(const std::string &FileName){
 	return true;
 }
 
-bool CLightManager::Render(CRenderManager *RenderManager){
+bool CLightManager::Reload(){
 	Destroy();
 	return Load(m_FileName);
+}
+
+bool CLightManager::Render(CRenderManager *RenderManager){
+	return true;
 }
