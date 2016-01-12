@@ -59,7 +59,7 @@ float4x4 World : World;
 float4x4 Projection : Projection;
 float4x4 InverseView : ViewInverse;
 const float PI = 3.14159265f;
-const float g_EnvironmentFactor = 0.5f;
+const float g_EnvironmentFactor = 1.0f;
 
 struct TVertexVS
 {
@@ -75,7 +75,6 @@ struct TVertexPS
 	float3 Normal : NORMAL;
 	float2 UV : TEXCOORD0;
 	float3 Pixelpos : TEXCOORD1;
-	//float3 ReflectVector : TEXCOORD2;
 };
 
 TVertexPS mainVS(TVertexVS IN)
@@ -88,11 +87,7 @@ TVertexPS mainVS(TVertexVS IN)
 	l_Out.Pos = mul(l_Out.Pos, Projection);
 	l_Out.Normal = normalize(mul(IN.Normal, (float3x3)World));
 	l_Out.UV = IN.UV;
-	
-	/*float3 l_EyeToWorldPosition = normalize(IN.WorldPosition-InverseView[3].xyz);
-	float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
-	l_Out.ReflectVector = l_ReflectVector;*/
-	
+		
 	return l_Out;
 }
 
@@ -125,11 +120,14 @@ float4 mainPS(TVertexPS IN) : COLOR
 	l_SpotAttenuation = 1 - saturate((acos(l_DirectionContrib) - l_Angle/2) / (l_Falloff/2 - l_Angle/2));
 	
 	float4 outColor = l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*tex2D(S0Sampler,IN.UV)*(float4(Lamp0Color, 1.0));
-
-	//float3 l_ReflectColor = T0.Sample(S0Sampler, IN.ReflectVector).xyz*g_EnvironmentFactor;
-	float4 reflectionColor = texCUBE(T0Sampler, IN.Pixelpos)*0.8;
 	
-	return outColor*reflectionColor;
+	// Reflection Color
+	float3 Nn=normalize(IN.Normal);
+	float3 l_EyeToWorldPosition = normalize(IN.Pixelpos-InverseView[3].xyz);
+	float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, Nn));
+	float3 reflectionColor = texCUBE(T0Sampler, l_ReflectVector).xyz*g_EnvironmentFactor;	
+	
+	return outColor * float4(reflectionColor, 1);
 }
 
 technique technique0
