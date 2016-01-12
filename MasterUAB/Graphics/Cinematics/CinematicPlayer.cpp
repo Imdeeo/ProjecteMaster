@@ -11,7 +11,6 @@ void CCinematicPlayer::Init(float Duration)
 void CCinematicPlayer::Update(float _ElapsedTime)
 {
 	m_CurrentTime += _ElapsedTime;
-	//Update: actualiza el tiempo actual y el reproductor de la cinemática (Que es lo segundo?)
 }
 
 void CCinematicPlayer::Stop()

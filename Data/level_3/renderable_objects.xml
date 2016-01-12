@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<renderable_objects>
+	<renderable_object name="Box001_Part_38" core_name="Box001_Part_38" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="-1.3411e-007" visible="true"/>
+	<renderable_object name="Box001_Part_64" core_name="Box001_Part_64" position="0.0 0.0 0.0" yaw="1.73284e-007" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Sphere001" core_name="Sphere001" position="0.0 0.0 0.0" yaw="1.67638e-007" pitch="1.5708" roll="-1.78814e-007" visible="true"/>
+</renderable_objects>

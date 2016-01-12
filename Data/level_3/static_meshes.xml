@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<static_meshes>
+	<static_mesh name="Box001_Part_38" filename="Data\level_1\Meshes\Box001_Part_38.mesh"/>
+	<static_mesh name="Box001_Part_64" filename="Data\level_1\Meshes\Box001_Part_64.mesh"/>
+	<static_mesh name="Sphere001" filename="Data\level_1\Meshes\Sphere001.mesh"/>
+</static_meshes>

@@ -22,6 +22,10 @@
     <ClCompile Include="Camera\FPSCameraController.cpp" />
     <ClCompile Include="Camera\Frustum.cpp" />
     <ClCompile Include="Camera\SphericalCameraController.cpp" />
+    <ClCompile Include="Cinematics\Cinematic.cpp" />
+    <ClCompile Include="Cinematics\CinematicObject.cpp" />
+    <ClCompile Include="Cinematics\CinematicObjectKeyFrame.cpp" />
+    <ClCompile Include="Cinematics\CinematicPlayer.cpp" />
     <ClCompile Include="ContextManager\ContextManager.cpp" />
     <ClCompile Include="DebugRender.cpp" />
     <ClCompile Include="Effects\EffectManager.cpp" />
@@ -55,6 +59,10 @@
     <ClInclude Include="Camera\FPSCameraController.h" />
     <ClInclude Include="Camera\Frustum.h" />
     <ClInclude Include="Camera\SphericalCameraController.h" />
+    <ClInclude Include="Cinematics\Cinematic.h" />
+    <ClInclude Include="Cinematics\CinematicObject.h" />
+    <ClInclude Include="Cinematics\CinematicObjectKeyFrame.h" />
+    <ClInclude Include="Cinematics\CinematicPlayer.h" />
     <ClInclude Include="ContextManager\ContextManager.h" />
     <ClInclude Include="DebugRender.h" />
     <ClInclude Include="Effects\AnimatedModelEffectParameters.h" />

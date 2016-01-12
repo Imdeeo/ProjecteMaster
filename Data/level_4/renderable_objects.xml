@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<renderable_objects>
+	<renderable_object name="Plane001" core_name="Plane001" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001" core_name="Box001" position="6.59429 -0.067627 6.03783" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box002" core_name="Box002" position="-5.99617 -0.067627 6.03783" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box003" core_name="Box003" position="4.86078 -0.067627 -2.76857" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Sphere001" core_name="Sphere001" position="-5.03725 1.51416 -4.04572" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+</renderable_objects>

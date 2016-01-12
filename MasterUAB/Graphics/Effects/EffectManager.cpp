@@ -1,6 +1,6 @@
 #include "Effects\EffectManager.h"
 #include "XML\XMLTreeNode.h"
-#include "SceneEffectParameters.h";
+#include "SceneEffectParameters.h"
 #include "AnimatedModelEffectParameters.h";
 #include "LightEffectParameters.h";
 #include "Lights\Light.h";

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<materials>
+	<material name="Material #57" effect_technique="diffuse_technique">
+		<texture filename="D:\dsa\level_1\Textures\ConcreteBare0272_5_S.dds"/>
+	</material>
+	<material name="Material #58" effect_technique="diffuse_technique">
+		<texture filename="D:\dsa\level_1\Textures\concrete rough.dds"/>
+	</material>
+</materials>
