@@ -199,6 +199,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			setUserProp Obj "physics_layer" "logic"
 			setUserProp Obj "logic_generate" false
 			setUserProp Obj "logic_generate_type" "stairs"
+			setUserProp OBj "cinematic_object" false
 		) else if(SuperClassOf Obj == light) then
 		(
 			setUserProp Obj "light_export" false

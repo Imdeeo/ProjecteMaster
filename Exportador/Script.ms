@@ -254,15 +254,49 @@ fn createInstanceMesh dir filename Objs=
 fn createCinematicObjects dir filename Objs=
 (	
 	file=createfile (dir+filename)
+	
+	local max_time=0
+	for i=1 to Objs.count do
+	(
+		select Objs[i]
+		local obj_time = (at time 999999999999 trackbar.getPreviousKeyTime())
+		if obj_time > max_time then
+		(
+			max_time = obj_time
+		)	
+	)
+	
+	local key
+	key = max_time as string
+	key = replace key key.count 1 ""
+	key = (key as float)/30
+		
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
-	format "<cinematic name=\"%\" duration=\"%\">\n"  to:file
+	format "<cinematic name=\"%\" duration=\"%\">\n" maxFileName key to:file
 	if Objs != undefined then
 	(
 		for i=1 to Objs.count do
 		(
+			select Objs[i]
 			Obj = Objs[i]
-			format "\t<cinematic_object resource=\"%\" renderable_objects_manager=\"%\">" Obj.name (getUserProp Obj "render_layer") to:file
-		
+			format "\t<cinematic_object resource=\"%\" renderable_objects_manager=\"%\">\n" Obj.name (getUserProp Obj "render_layer") to:file			
+			
+			local firstframe = at time 999999999999 trackbar.getNextKeyTime()
+			local j = firstframe
+			do (
+				key = j as string	
+				key = replace key key.count 1 ""
+				key = (key as float)/30
+
+				pos = TranslationToRH Obj.transform.translation				
+				scl = TranslationToRH Obj.transform.scale
+					
+				format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" key pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) scl[1] scl[2] scl[3] to:file
+					
+				j = at time j trackbar.getNextKeyTime()
+			) while j != firstframe
+			
+			format "\t</cinematic_object>\n" to:file			
 		)
 	)
 	format "</cinematic>\n" to:file
@@ -316,25 +350,32 @@ fn writeFooter arx =
 fn getMaterials arx Obj =
 (
 	local n_materials=1
-	if(classof(Obj.material)==Multimaterial)then
+	if (Obj.material!=undefined)then
 	(
-		if isDebug then
-		format "Multimaterial\n"
-		n_materials=Obj.material.numsubs
-		writeLong arx n_materials
-		for i=1 to Obj.material.numsubs do
+		if(classof(Obj.material)==Multimaterial)then
 		(
-			WriteShort arx Obj.material[i].name.count #unsigned
-			writeString arx Obj.material[i].name
+			if isDebug then
+			format "Multimaterial\n"
+			n_materials=Obj.material.numsubs
+			writeLong arx n_materials
+			for i=1 to Obj.material.numsubs do
+			(
+				WriteShort arx Obj.material[i].name.count #unsigned
+				writeString arx Obj.material[i].name
+			)
+		)
+		else
+		(
+			if isDebug then
+			format "Single Material\n"
+			writeLong arx 1
+			WriteShort arx Obj.material.name.count #unsigned
+			writeString arx Obj.material.name
 		)
 	)
 	else
 	(
-		if isDebug then
-		format "Single Material\n"
-		writeLong arx 1
-		WriteShort arx Obj.material.name.count #unsigned
-		writeString arx Obj.material.name
+		n_materials = 0
 	)
 	return n_materials
 )
@@ -362,6 +403,7 @@ fn equalVertex vt1 vt2 =
 fn getIndex vertexVect vertex IdMaterial =
 (
 	local l_FoundVertex=false
+	local index = (vertexVect[IdMaterial]).count
 	for i=1 to vertexVect[IdMaterial].count do
 	(
 		if (equalVertex vertexVect[IdMaterial][i] vertex) then
@@ -378,7 +420,7 @@ fn getIndex vertexVect vertex IdMaterial =
 	return index
 )
 
-fn writeMesh arx vertexID vertexs indexs BBMin BBMax BSphere=
+fn writeMesh arx vertexs indexs BBMin BBMax BSphere=
 (
 	if isDebug then
 	format "Number of materials: %\n" vertexs.count
@@ -386,7 +428,7 @@ fn writeMesh arx vertexID vertexs indexs BBMin BBMax BSphere=
 	(
 		if isDebug then
 		format "Material %:\n" i
-		writeShort arx vertexID #unsigned
+		writeShort arx 37 #unsigned
 		if isDebug then
 		format "Size of vertex: 37\n"
 		writeLong arx vertexs[i].count
@@ -446,7 +488,6 @@ fn createVertex pos norm textcoord =
 
 fn procesFaces arx Obj =
 (
-	local l_vertexID = 1
 	local l_Obj=Obj
 	local l_ObjectConverted=false
 	if classof l_Obj!=Editable_mesh then
@@ -461,28 +502,16 @@ fn procesFaces arx Obj =
 	local nFaces = getNumFaces l_Obj
 	local vertexs = #()
 	local indexs = #()
-	local l_HasMaterial = classof l_Obj.material != UndefinedClass
-	if l_HasMaterial then
+	local l_HasMultimaterial=classof l_Obj.material==Multimaterial
+	local l_TotalMaterials=1
+	if l_HasMultimaterial then
+		l_TotalMaterials=l_Obj.material.count
+	
+	for i=1 to l_TotalMaterials do
 	(
-		l_vertexID += 20
-		local l_HasMultimaterial=classof l_Obj.material==Multimaterial
-		local l_TotalMaterials=1
-		if l_HasMultimaterial then
-			l_TotalMaterials=l_Obj.material.count
-		
-		for i=1 to l_TotalMaterials do
-		(
-			append vertexs #()
-			append indexs #()
-		)
-	) else (
-		l_vertexID += 2
 		append vertexs #()
 		append indexs #()
-	)
-	
-	--Normal
-	l_vertexID += 4
+	)	
 	
 	for i=1 to nFaces do
 	(
@@ -532,8 +561,8 @@ fn procesFaces arx Obj =
 	BBMax=getModContextBBoxMax l_Obj ffd
 	
 	BSphere = getBoundingSphere l_Obj
-	l_vertexID = 37
-	writeMesh arx l_vertexID vertexs indexs BBMin BBMax BSphere
+	
+	writeMesh arx vertexs indexs BBMin BBMax BSphere
 	
 	if l_ObjectConverted==true then
 	(
@@ -573,38 +602,43 @@ fn createMaterials dir filename Objs copyTexture =
 			mat = #()
 			n_materials = 1
 			
-			if(classof(Objs[i].material)==Multimaterial)then
+			if (Objs[i].material!=undefined) then
 			(
-				mat = Objs[i].material
-				n_materials = Objs[i].material.numsubs
-			)
-			else
-			(
-				append mat Objs[i].material
-			)
-			
-			for j=1 to n_materials do
-			(
-				if materialsDictionary.Item[mat[j].name]==undefined then
+				if(classof(Objs[i].material)==Multimaterial)then
 				(
-					format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" mat[j].name to:file
-					materialsDictionary.Add mat[j].name "defined"
-					if mat[j].diffuseMap != undefined then  
+					format "Multimaterial\n"
+					mat = Objs[i].material
+					n_materials = Objs[i].material.numsubs
+				)
+				else
+				(
+					format "Un material\n"
+					append mat Objs[i].material
+				)
+				
+				for j=1 to n_materials do
+				(
+					if materialsDictionary.Item[mat[j].name]==undefined then
 					(
-						if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
+						format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" mat[j].name to:file
+						materialsDictionary.Add mat[j].name "defined"
+						if mat[j].diffuseMap != undefined then  
 						(
-							nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
-							
-							pathfile = (dir+"Textures\\" + nomTextura)
-							format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
-							if copyTexture == true then
+							if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
 							(
-								dirExist (dir+"Textures")
-								copyFile mat[j].diffuseMap.bitmap.filename pathfile
+								nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
+								
+								pathfile = (dir+"Textures\\" + nomTextura)
+								format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
+								if copyTexture == true then
+								(
+									dirExist (dir+"Textures")
+									copyFile mat[j].diffuseMap.bitmap.filename pathfile
+								)
 							)
 						)
+						format "\t</material>\n" to:file 
 					)
-					format "\t</material>\n" to:file 
 				)
 			)
 		)
@@ -667,11 +701,11 @@ fn createCameras dir Objs =
 		cameraTransform = Objs[i].transform
 		cameraTranslation = TranslationToRH (cameraTransform.translation)
 		cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
-		local firstframe = at time 999999999999 trackbar.getNextKeyTime()
-		key = (at time 999999999999 trackbar.getPreviousKeyTime()) as string
-		key = replace key key.count 1 ""
-		key = (key as float)/30
 		if (firstframe != undefined) and ((getUserProp Objs[i] "camera_export_type") != "static") then(
+			local firstframe = at time 999999999999 trackbar.getNextKeyTime()
+			key = (at time 999999999999 trackbar.getPreviousKeyTime()) as string
+			key = replace key key.count 1 ""
+			key = (key as float)/30		
 			dirExist (dir+"cameras\\")
 			cameraFileDir = "cameras\\"+Objs[i].name+".xml"
 			cameraType = getUserProp Objs[i] "camera_export_type"
