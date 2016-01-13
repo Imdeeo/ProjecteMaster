@@ -21,6 +21,7 @@ CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed(TreeNode){
 	m_Filename = TreeNode.GetPszProperty("file");
 	m_ShaderModel = TreeNode.GetPszProperty("shader_model");
 	m_EntryPoint = TreeNode.GetPszProperty("entry_point");
+	m_Preprocessor = TreeNode.GetPszProperty("preprocessor","");
 }
 
 CEffectShader::~CEffectShader(void)
@@ -201,7 +202,7 @@ bool CEffectVertexShader::Load()
 	if (m_VertexType == "MV_POSITION_NORMAL_TEXTURE_VERTEX")
 		l_Loaded = MV_POSITION_NORMAL_TEXTURE_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else
-	if (m_VertexType == "KG_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX")
+	if (m_VertexType == "MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX")
 		l_Loaded = MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else
 	if (m_VertexType == "MV_POSITION4_COLOR_TEXTURE_VERTEX")
