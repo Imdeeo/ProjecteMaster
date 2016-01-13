@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <assert.h>
+#include "Utils.h"
 
 template<class T>
 class CTemplatedVectorMapManager
@@ -81,7 +82,7 @@ public:
 	{
 		for(size_t i = 0; i<m_ResourcesVector.size();i++)
 		{
-			delete m_ResourcesVector[i];
+			CHECKED_DELETE(m_ResourcesVector[i]);
 		}
 
 		m_ResourcesMap.clear();
