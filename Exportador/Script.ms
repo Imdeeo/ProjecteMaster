@@ -472,7 +472,6 @@ fn createVertex pos col norm textcoord =
 
 fn procesFaces arx Obj =
 (
-	local l_VtxID = 0x0001
 	local l_Obj=Obj
 	local l_ObjectConverted=false
 	
@@ -488,6 +487,15 @@ fn procesFaces arx Obj =
 	local TUVMap1 = undefined
 	local TUVMap2 = undefined
 	local TUVMap3 = undefined
+	local T2UVMap1 = undefined
+	local T2UVMap2 = undefined
+	local T2UVMap3 = undefined
+	
+	local VtID = 0x0001
+	local ColorID = 0x0000
+	local NmID = 0x0004
+	local UVID = 0x0000
+	local UV2ID = 0x0000
 	
 	if classof Obj != Editable_mesh then
 	(
@@ -530,7 +538,6 @@ fn procesFaces arx Obj =
 		Vt3=getVert l_Obj IdxsFace.z
 		
 		--Normal
-		l_VtxID += 0x0004
 		UABCalcVertexsNormals l_Obj
 		local FaceNormal=getFaceNormal l_Obj i
 		local SmoothValue=getFaceSmoothGroup l_Obj i
@@ -605,6 +612,7 @@ fn procesFaces arx Obj =
 	--Bounding sphere
 	BSphere = getBoundingSphere l_Obj	
 	
+	l_VtxID = VtID+ColorID+NmID+UVID+UV2ID
 	if isDebug then format "Vertex ID: %" l_VtxID
 	
 	writeMesh arx l_VtxID vertexs indexs BBMin BBMax BSphere
