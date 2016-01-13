@@ -10,7 +10,7 @@ CCinematic::~CCinematic()
 {
 	if(!m_CinematicObjects.empty())
 	{
-		for(int i; i<m_CinematicObjects.size();i++)
+		for(int i=0; i<m_CinematicObjects.size();i++)
 		{
 			delete m_CinematicObjects[i];
 		}
@@ -26,6 +26,8 @@ void CCinematic::LoadXML(const std::string &FileName)
 		CXMLTreeNode l_Input = l_XML["cinematic"];
 		if (l_Input.Exists())
 		{
+			m_Name=l_Input.GetPszProperty("name");
+			m_Duration=l_Input.GetFloatProperty("duration", 0);
 			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
 			{
 				CXMLTreeNode l_Element = l_Input(i);
