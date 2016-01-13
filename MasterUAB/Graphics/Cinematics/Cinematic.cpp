@@ -8,6 +8,13 @@ CCinematic::CCinematic()
 
 CCinematic::~CCinematic()
 {
+	if(!m_CinematicObjects.empty())
+	{
+		for(int i; i<m_CinematicObjects.size();i++)
+		{
+			delete m_CinematicObjects[i];
+		}
+	}
 
 }
 
