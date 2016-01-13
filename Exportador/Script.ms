@@ -567,7 +567,7 @@ fn procesFaces arx Obj =
 		Vt3=getVert l_Obj IdxsFace.z
 		
 		--Normal
-		l_VtxID += 0x004
+		l_VtxID += 0x0004
 		UABCalcVertexsNormals l_Obj
 		local FaceNormal=getFaceNormal l_Obj i
 		local SmoothValue=getFaceSmoothGroup l_Obj i
@@ -626,6 +626,8 @@ fn procesFaces arx Obj =
 	
 	--Bounding sphere
 	BSphere = getBoundingSphere l_Obj	
+	
+	if isDebug then format "Vertex ID: %" l_VtxID
 	
 	writeMesh arx l_VtxID vertexs indexs BBMin BBMax BSphere
 	
