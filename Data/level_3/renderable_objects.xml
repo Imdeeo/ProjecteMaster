@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <renderable_objects>
-	<renderable_object name="Box001_Part_38" core_name="Box001_Part_38" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="-1.3411e-007" visible="true"/>
-	<renderable_object name="Box001_Part_64" core_name="Box001_Part_64" position="0.0 0.0 0.0" yaw="1.73284e-007" pitch="1.5708" roll="0.0" visible="true"/>
-	<renderable_object name="Sphere001" core_name="Sphere001" position="0.0 0.0 0.0" yaw="1.67638e-007" pitch="1.5708" roll="-1.78814e-007" visible="true"/>
+	<renderable_object name="Box001_Part_6" core_name="Box001_Part_6" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_7" core_name="Box001_Part_7" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_10" core_name="Box001_Part_10" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_14" core_name="Box001_Part_14" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_17" core_name="Box001_Part_17" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_19" core_name="Box001_Part_19" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_20" core_name="Box001_Part_20" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_25" core_name="Box001_Part_25" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_26" core_name="Box001_Part_26" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_28" core_name="Box001_Part_28" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_29" core_name="Box001_Part_29" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_30" core_name="Box001_Part_30" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_33" core_name="Box001_Part_33" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_34" core_name="Box001_Part_34" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_38" core_name="Box001_Part_38" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_39" core_name="Box001_Part_39" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_43" core_name="Box001_Part_43" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_48" core_name="Box001_Part_48" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_53" core_name="Box001_Part_53" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_57" core_name="Box001_Part_57" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_58" core_name="Box001_Part_58" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_62" core_name="Box001_Part_62" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_64" core_name="Box001_Part_64" position="0.0 1.1507 -0.0196666" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_66" core_name="Box001_Part_66" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_69" core_name="Box001_Part_69" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_70" core_name="Box001_Part_70" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_76" core_name="Box001_Part_76" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_79" core_name="Box001_Part_79" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_81" core_name="Box001_Part_81" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_82" core_name="Box001_Part_82" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_83" core_name="Box001_Part_83" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_85" core_name="Box001_Part_85" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_91" core_name="Box001_Part_91" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_92" core_name="Box001_Part_92" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_93" core_name="Box001_Part_93" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_94" core_name="Box001_Part_94" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_95" core_name="Box001_Part_95" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="FixedWall" core_name="FixedWall" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_99" core_name="Box001_Part_99" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Box001_Part_100" core_name="Box001_Part_100" position="0.0 0.0 0.0" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
+	<renderable_object name="Sphere001" core_name="Sphere001" position="2.0698 0.978476 0.02281" yaw="0.0" pitch="1.5708" roll="0.0" visible="true"/>
 </renderable_objects>

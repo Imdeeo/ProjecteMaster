@@ -59,6 +59,7 @@ void CUABEngine::Init()
 	m_ScriptManager->Initialize();
 	m_CameraManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
 	
+
 }
 
 void CUABEngine::Destroy()
