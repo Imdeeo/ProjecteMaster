@@ -16,6 +16,8 @@ CCinematicObject::CCinematicObject(CXMLTreeNode &TreeNode):m_RenderableObject(nu
 	}
 	if (IsOk())
 	{
+		m_CurrentTime=0;
+		m_Duration = m_CinematicObjectKeyFrames[m_CinematicObjectKeyFrames.size()-1]->GetKeyFrameTime();
 		GetCurrentKey();
 	}
 }
