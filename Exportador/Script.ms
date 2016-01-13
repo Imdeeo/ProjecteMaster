@@ -540,7 +540,6 @@ fn procesFaces arx Obj =
 	
 	if l_Obj.material != undefined then
 	(	
-		l_VtxID += 0x0020
 		local l_HasMultimaterial=classof l_Obj.material==Multimaterial
 		local l_TotalMaterials=1
 		if l_HasMultimaterial then
@@ -552,13 +551,13 @@ fn procesFaces arx Obj =
 			append indexs #()
 		)		
 	) else (
-		l_VtxID += 0x0002
 		append vertexs #()
 		append indexs #()
 	)
 
 	for i=1 to nFaces do
 	(
+		local l_IdMaterial
 		local IdxsFace=getFace l_Obj i
 		
 		--Position
@@ -578,17 +577,30 @@ fn procesFaces arx Obj =
 		--Texture and material
 		if l_Obj.material != undefined then
 		(
-			local IdxsMap=meshop.getMapFace l_Obj 1 i
-			TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
-			TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
-			TUVMap3= meshop.getMapVert l_Obj 1 IdxsMap.z
-			
-			local l_IdMaterial=getFaceMatID l_Obj i
-			if l_HasMultimaterial==false then
+			if l_Obj.material.diffuseMap != undefined or l_Obj.material.bumpMap != undefined or l_Obj.material.selfIllumMap != undefined
 			(
-				l_IdMaterial=1
+				--Texture1
+				l_VtxID += 0x0020
+				local IdxsMap=meshop.getMapFace l_Obj 1 i
+				TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
+				TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
+				TUVMap3= meshop.getMapVert l_Obj 1 IdxsMap.z
+				
+				l_IdMaterial=getFaceMatID l_Obj i
+				if l_HasMultimaterial==false then l_IdMaterial=1
+			) else (
+				--Color
+				l_VtxID += 0x0002
+				defaultVCFaces l_Obj
+				local ColorFace = getVCFace l_Obj i
+				Color1 = getVertColor l_Obj ColorFace.x
+				Color2 = getVertColor l_Obj Colorface.y
+				Color3 = getVertColor l_Obj ColorFace.z
+				l_IdMaterial = 1
 			)
 		) else (
+			--Color
+			l_VtxID += 0x0002
 			local l_IdMaterial = 1
 			defaultVCFaces l_Obj
 			local ColorFace = getVCFace l_Obj i
@@ -596,6 +608,7 @@ fn procesFaces arx Obj =
 			Color2 = getVertColor l_Obj Colorface.y
 			Color3 = getVertColor l_Obj ColorFace.z
 		)
+		
 		--Vertex creation
 		local v1 = createVertex Vt1 Color1 Nm1 TUVMap1
 		local v2 = createVertex Vt2 Color2 Nm2 TUVMap2
@@ -613,6 +626,7 @@ fn procesFaces arx Obj =
 		format "Vertex 3: % -> Index: %\n" v2 id3
 		format "---------------------------\n\n"
 		)
+		
 		append indexs[l_IdMaterial] id1
 		append indexs[l_IdMaterial] id2
 		append indexs[l_IdMaterial] id3
