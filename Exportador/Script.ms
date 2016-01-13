@@ -441,7 +441,7 @@ fn writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere=
 	writeFloat arx BSphere[2]
 )
 
-fn createVertex pos col norm textcoord =
+fn createVertex pos col norm textcoord1 textcoord2 =
 (
 	local vertex = #()
 	if(pos!=undefined) then
@@ -462,10 +462,15 @@ fn createVertex pos col norm textcoord =
 		append vertex norm.y
 		append vertex norm.z
 	)
-	if(textcoord!=undefined)then
+	if(textcoord1!=undefined)then
 	(
-		append vertex textcoord.x
-		append vertex textcoord.y
+		append vertex textcoord1.x
+		append vertex textcoord1.y
+	)
+	if(textcoord2!=undefined)then
+	(
+		append vertex textcoord2.x
+		append vertex textcoord2.y
 	)
 	return vertex
 )
@@ -512,8 +517,8 @@ fn procesFaces arx Obj =
 	
 	if l_Obj.material != undefined then
 	(	
-		local l_HasMultimaterial=classof l_Obj.material==Multimaterial
-		local l_TotalMaterials=1
+		local l_HasMultimaterial = classof l_Obj.material==Multimaterial
+		local l_TotalMaterials = 1
 		if l_HasMultimaterial then
 			l_TotalMaterials=l_Obj.material.count
 		
@@ -529,7 +534,7 @@ fn procesFaces arx Obj =
 
 	for i=1 to nFaces do
 	(
-		local l_IdMaterial
+		local l_IdMaterial = (mod (getFaceMatID l_Obj i) l_TotalMaterials)+1
 		local IdxsFace=getFace l_Obj i
 		
 		--Position
@@ -545,45 +550,59 @@ fn procesFaces arx Obj =
 		Nm2=normalize(UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal)
 		Nm3=normalize(UABGetVertexNormal l_Obj IdxsFace.z SmoothValue FaceNormal)
 		
+		
 		--Texture and material
 		if l_Obj.material != undefined then
 		(
-			if l_Obj.material.diffuseMap != undefined or l_Obj.material.bumpMap != undefined or l_Obj.material.selfIllumMap != undefined then
+			if l_HasMultimaterial then
+			(
+				local l_DiffMap = l_Obj.material.materialList[l_IdMaterial].diffuseMap
+				local l_LightMap = l_Obj.material.materialList[l_IdMaterial].selfIllumMap
+			) else (
+				local l_DiffMap = l_Obj.material.diffuseMap
+				local l_LightMap = l_Obj.material.selfIllumMap
+			)
+			
+			if classOf l_Map == Bitmaptexture then
 			(
 				--Texture1
-				l_VtxID += 0x0020
+				UVID = 0x0020
 				local IdxsMap=meshop.getMapFace l_Obj 1 i
 				TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
 				TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
 				TUVMap3= meshop.getMapVert l_Obj 1 IdxsMap.z
-				
-				l_IdMaterial=getFaceMatID l_Obj i
-				if l_HasMultimaterial==false then l_IdMaterial=1
 			) else (
 				--Color
-				l_VtxID += 0x0002
+				ColorID = 0x0002
 				defaultVCFaces l_Obj
 				local ColorFace = getVCFace l_Obj i
 				Color1 = getVertColor l_Obj ColorFace.x
 				Color2 = getVertColor l_Obj Colorface.y
 				Color3 = getVertColor l_Obj ColorFace.z
-				l_IdMaterial = 1
+			)
+			if (classOf l_LightMap != undefined) and (meshop.getMapSupport l_Obj 2) then
+			(
+				--Texture2
+				UV2ID = 0x0040
+				local IdxsMap=meshop.getMapFace l_Obj 2 i
+				TUVMap1= meshop.getMapVert l_Obj 2 IdxsMap.x
+				TUVMap2= meshop.getMapVert l_Obj 2 IdxsMap.y
+				TUVMap3= meshop.getMapVert l_Obj 2 IdxsMap.z
 			)
 		) else (
 			--Color
-			l_VtxID += 0x0002
-			local l_IdMaterial = 1
+			ColorID = 0x0002
 			defaultVCFaces l_Obj
 			local ColorFace = getVCFace l_Obj i
 			Color1 = getVertColor l_Obj ColorFace.x
-			Color2 = getVertColor l_Obj Colorface.y
+			Color2 = getVertColor l_Obj ColorFace.y
 			Color3 = getVertColor l_Obj ColorFace.z
 		)
 		
 		--Vertex creation
-		local v1 = createVertex Vt1 Color1 Nm1 TUVMap1
-		local v2 = createVertex Vt2 Color2 Nm2 TUVMap2
-		local v3 = createVertex Vt3 Color3 Nm3 TUVMap3
+		local v1 = createVertex Vt1 Color1 Nm1 TUVMap1 T2UVMap1
+		local v2 = createVertex Vt2 Color2 Nm2 TUVMap2 T2UVMap2
+		local v3 = createVertex Vt3 Color3 Nm3 TUVMap3 T2UVMap3
 		
 		-- Index creation
 		local id1=getIndex vertexs v1 l_IdMaterial
