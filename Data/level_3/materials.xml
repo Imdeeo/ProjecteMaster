@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <materials>
-	<material name="Material #57" effect_technique="diffuse_technique">
-		<texture filename="E:\Game\Data\level_4\Textures\ConcreteBare0272_5_S.png"/>
-	</material>
-	<material name="Material #58" effect_technique="diffuse_technique">
-		<texture filename="E:\Game\Data\level_4\Textures\concrete rough.jpg"/>
+	<material name="01 - Default" effect_technique="diffuse_technique">
+		<texture filename="Data\level_3\Textures\bark.dds"/>
 	</material>
 </materials>

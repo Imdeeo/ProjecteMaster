@@ -308,40 +308,6 @@ fn createCinematicObjects dir filename Objs=
 	)
 	format "</cinematic>\n" to:file
 	close file
-	
-	/*//////ESTO NO FUNCIONAAAAA	
-		cameraTransform = Objs[i].transform
-		cameraTranslation = TranslationToRH (cameraTransform.translation)
-		cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
-		local firstframe = at time 999999999999 trackbar.getNextKeyTime()
-		key = (at time 999999999999 trackbar.getPreviousKeyTime()) as string
-		key = replace key key.count 1 ""
-		key = (key as float)/30
-		if (firstframe != undefined) and ((getUserProp Objs[i] "camera_export_type") != "static") then(
-			dirExist (dir+"cameras\\")
-			cameraFileDir = "cameras\\"+Objs[i].name+".xml"
-			cameraType = getUserProp Objs[i] "camera_export_type"
-			format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"%\" filename=\"%\"/>\n" Objs[i].name key cameraType cameraPos cameraFileDir to:file
-			local j = firstframe
-			cameraFile=createfile (dir+cameraFileDir)
-			format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
-			format "<camera_key_controller name=\"%\">\n" Objs[i].name to:cameraFile
-			do (
-				key = j as string	
-				key = replace key key.count 1 ""
-				key = (key as float)/30
-				cameraTransform = at time j Objs[i].transform
-				cameraTranslation = TranslationToRH (cameraTransform.translation)
-				cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
-				cameraUp = mat3xvect3 cameraTransform z_axis
-				cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
-				cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis))
-				cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
-				format "\t<key time=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraPos cameraUp cameraLookAt (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
-				j = at time j trackbar.getNextKeyTime()
-			) while j != firstframe
-			format "</camera_key_controller>\n" to:cameraFile		
-			close cameraFile*/
 )
 
 fn writeHeader arx =
@@ -361,7 +327,6 @@ fn getMaterials arx Obj =
 	(
 		if(classof(Obj.material)==Multimaterial)then
 		(
-			if isDebug then
 			n_materials=Obj.material.numsubs
 			writeLong arx n_materials
 			for i=1 to Obj.material.numsubs do
@@ -372,7 +337,6 @@ fn getMaterials arx Obj =
 		)
 		else
 		(
-			if isDebug then
 			writeLong arx 1
 			WriteShort arx Obj.material.name.count #unsigned
 			writeString arx Obj.material.name
@@ -577,7 +541,7 @@ fn procesFaces arx Obj =
 		--Texture and material
 		if l_Obj.material != undefined then
 		(
-			if l_Obj.material.diffuseMap != undefined or l_Obj.material.bumpMap != undefined or l_Obj.material.selfIllumMap != undefined
+			if l_Obj.material.diffuseMap != undefined or l_Obj.material.bumpMap != undefined or l_Obj.material.selfIllumMap != undefined then
 			(
 				--Texture1
 				l_VtxID += 0x0020
