@@ -259,11 +259,14 @@ fn createCinematicObjects dir filename Objs=
 	for i=1 to Objs.count do
 	(
 		select Objs[i]
-		local obj_time = (at time 999999999999 trackbar.getPreviousKeyTime())
-		if obj_time > max_time then
+		if (trackbar.getPreviousKeyTime()!=undefined) then
 		(
-			max_time = obj_time
-		)	
+			local obj_time = (at time 999999999999 trackbar.getPreviousKeyTime())
+			if obj_time > max_time then
+			(
+				max_time = obj_time
+			)	
+		)
 	)
 	
 	local key
@@ -278,25 +281,29 @@ fn createCinematicObjects dir filename Objs=
 		for i=1 to Objs.count do
 		(
 			select Objs[i]
-			Obj = Objs[i]
-			format "\t<cinematic_object resource=\"%\" renderable_objects_manager=\"%\">\n" Obj.name (getUserProp Obj "render_layer") to:file			
 			
-			local firstframe = at time 999999999999 trackbar.getNextKeyTime()
-			local j = firstframe
-			do (
-				key = j as string	
-				key = replace key key.count 1 ""
-				key = (key as float)/30
+			if (trackbar.getPreviousKeyTime()!=undefined) then
+			(
+				Obj = Objs[i]
+				format "\t<cinematic_object resource=\"%\" renderable_objects_manager=\"%\">\n" Obj.name (getUserProp Obj "render_layer") to:file			
+				
+				local firstframe = at time 999999999999 trackbar.getNextKeyTime()
+				local j = firstframe
+				do (
+					key = j as string	
+					key = replace key key.count 1 ""
+					key = (key as float)/30
 
-				pos = TranslationToRH Obj.transform.translation				
-				scl = TranslationToRH Obj.transform.scale
-					
-				format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" key pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) scl[1] scl[2] scl[3] to:file
-					
-				j = at time j trackbar.getNextKeyTime()
-			) while j != firstframe
-			
-			format "\t</cinematic_object>\n" to:file			
+					pos = TranslationToRH Obj.transform.translation				
+					scl = TranslationToRH Obj.transform.scale
+						
+					format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" key pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) scl[1] scl[2] scl[3] to:file
+						
+					j = at time j trackbar.getNextKeyTime()
+				) while j != firstframe
+				
+				format "\t</cinematic_object>\n" to:file			
+			)
 		)
 	)
 	format "</cinematic>\n" to:file
@@ -355,7 +362,6 @@ fn getMaterials arx Obj =
 		if(classof(Obj.material)==Multimaterial)then
 		(
 			if isDebug then
-			format "Multimaterial\n"
 			n_materials=Obj.material.numsubs
 			writeLong arx n_materials
 			for i=1 to Obj.material.numsubs do
@@ -367,7 +373,6 @@ fn getMaterials arx Obj =
 		else
 		(
 			if isDebug then
-			format "Single Material\n"
 			writeLong arx 1
 			WriteShort arx Obj.material.name.count #unsigned
 			writeString arx Obj.material.name
