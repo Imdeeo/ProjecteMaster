@@ -7,6 +7,10 @@ date: 17122015
 */
 #include "Globals.fxh"
 
+#ifndef HAS_UV
+#define HAS_COLOR
+#endif
+
 #ifdef HAS_UV
 Texture2D DiffuseTexture : register( t0 );
 SamplerState LinearSampler : register( s0 );
@@ -33,6 +37,9 @@ struct TVertexVS
 #ifdef HAS_UV2
 	float2 UV2 : TEXCOORD1;
 #endif
+#ifdef HAS_COLOR
+	float4 Color:SV_Target;
+#endif
 };
 
 struct TVertexPS
@@ -49,6 +56,9 @@ struct TVertexPS
 #endif
 #ifdef HAS_UV2
 	float2 UV2 : TEXCOORD1;
+#endif
+#ifdef HAS_COLOR
+	float4 Color:SV_Target;
 #endif
 };
 
@@ -101,6 +111,10 @@ TVertexPS mainVS(TVertexVS IN)
 #endif
 #ifdef HAS_UV2
 	l_Out.UV2 = IN.UV2;
+#endif
+
+#ifdef HAS_COLOR
+	l_Out.Color = IN.Color;
 #endif
 	return l_Out;
 }
@@ -179,10 +193,17 @@ float4 applyLights(TVertexPS IN)
 
 float4 mainPS(TVertexPS IN) : SV_Target
 {
+	float4 Out = float4(0,0,0,0);
+#ifdef HAS_UV
+	Out = DiffuseTexture.Sample(LinearSampler, IN.UV);
+#else
+	Out = IN.Color;
+#endif
+
 #ifdef HAS_LIGHTS
 #ifdef HAS_NORMAL
-	return DiffuseTexture.Sample(LinearSampler, IN.UV)*applyLights(IN);
+	return Out*applyLights(IN);
 #endif
 #endif
-	return DiffuseTexture.Sample(LinearSampler, IN.UV);
+	return Out;
 }
