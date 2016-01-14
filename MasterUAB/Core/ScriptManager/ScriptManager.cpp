@@ -11,9 +11,18 @@
 
 #include "Camera\Camera.h"
 #include "Camera\CameraController.h"
+#include "Camera\CameraControllerManager.h"
+#include "Camera\CameraInfo.h"
+#include "Camera\CameraKey.h"
+#include "Camera\CameraKeyController.h"
 #include "Camera\FPSCameraController.h"
 #include "Camera\Frustum.h"
 #include "Camera\SphericalCameraController.h"
+
+#include "Cinematics\Cinematic.h"
+#include "Cinematics\CinematicObject.h"
+#include "Cinematics\CinematicObjectKeyFrame.h"
+#include "Cinematics\CinematicPlayer.h"
 
 #include "XML\XMLTreeNode.h"
 
@@ -124,6 +133,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_calCoreModel", &CAnimatedCoreModel::GetCalCoreModel)
 			.def("load",&CAnimatedCoreModel::Load)
 	];
+
 	module(m_LS) [
 		class_<CAnimatedInstanceModel>("CAnimatedInstanceModel")
 			.def(constructor<CXMLTreeNode&>())
@@ -146,8 +156,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("load",&CAnimatedModelsManager::Load)
 			.def("reload", &CAnimatedModelsManager::Reload)
 			.def("get_resource", &CAnimatedModelsManager::GetResource)
-	];
-	
+	];	
 
 	// Camera----------------------------------------------------------------------------------------
 	module(m_LS) [
@@ -170,6 +179,75 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_z_near", &CCamera::GetZNear)
 			.def("set_z_near", &CCamera::GetZNear)
 			.def("set_matrixs", &CCamera::SetMatrixs)
+	];
+
+	module(m_LS)[
+		class_<CCameraController>("CCameraController")
+	//		.def(constructor<>())
+			.def("add_pitch", &CCameraController::AddPitch)
+			.def("add_yaw", &CCameraController::AddYaw)
+			.def("get_pitch", &CCameraController::GetPitch)
+			.def("get_position", &CCameraController::GetPosition)
+			.def("get_right", &CCameraController::GetRight)
+			.def("get_up", &CCameraController::GetUp)
+			.def("get_yaw", &CCameraController::GetYaw)
+			.def("set_camera", &CCameraController::SetCamera)
+			.def("set_pitch", &CCameraController::SetPitch)
+			.def("set_position", &CCameraController::SetPosition)
+			.def("set_yaw", &CCameraController::SetYaw)
+			.def("update", &CCameraController::Update)
+	];
+
+	module(m_LS)[
+		class_<CCameraControllerManager>("CCameraControllerManager")
+			.def(constructor<>())
+			.def("choose_debug_camera", &CCameraControllerManager::ChooseDebugCamera)
+			.def("choose_main_camera", &CCameraControllerManager::ChooseMainCamera)
+			.def("destroy", &CCameraControllerManager::Destroy)
+			.def("get_debug_camera", &CCameraControllerManager::GetDebugCamera)
+			.def("get_main_camera", &CCameraControllerManager::GetMainCamera)
+			.def("get_resource", &CCameraControllerManager::GetResource)
+			.def("load", &CCameraControllerManager::Load)
+			.def("reload", &CCameraControllerManager::Reload)
+			.def("update", &CCameraControllerManager::Update)
+			.def("update_debug_camera", &CCameraControllerManager::UpdateDebugCamera)
+			.def("update_main_camera", &CCameraControllerManager::UpdateMainCamera)
+	];
+
+	module(m_LS)[
+		class_<CCameraInfo>("CCameraInfo")
+			.def(constructor<>())
+			.def(constructor<Vect3f, Vect3f, Vect3f, float, float, float>())
+			.def(constructor<CXMLTreeNode&>())
+	];
+
+	module(m_LS)[
+		class_<CCameraKey>("CCameraKey")
+			.def(constructor<CCameraInfo&,float>())
+	];
+
+	module(m_LS)[
+		class_<CCameraKeyController>("CCameraKeyController")
+			.def(constructor<CXMLTreeNode&>())
+			.def("add_pitch",&CCameraKeyController::AddPitch)
+			.def("add_yaw", &CCameraKeyController::AddYaw)
+			.def("get_pitch", &CCameraKeyController::GetPitch)
+			.def("get_position", &CCameraKeyController::GetPosition)
+			.def("get_right", &CCameraKeyController::GetRight)
+			.def("get_total_time", &CCameraKeyController::GetTotalTime)
+			.def("get_up", &CCameraKeyController::GetUp)
+			.def("get_yaw", &CCameraKeyController::GetYaw)
+			.def("is_cycle", &CCameraKeyController::IsCycle)
+			.def("is_reverse", &CCameraKeyController::IsReverse)
+			.def("reset_time", &CCameraKeyController::ResetTime)
+			.def("set_camera", &CCameraKeyController::SetCamera)
+			.def("set_current_time", &CCameraKeyController::SetCurrentTime)
+			.def("set_cycle", &CCameraKeyController::SetCycle)
+			.def("set_pitch", &CCameraKeyController::SetPitch)
+			.def("set_position", &CCameraKeyController::SetPosition)
+			.def("set_reverse", &CCameraKeyController::SetReverse)
+			.def("set_yaw", &CCameraKeyController::SetYaw)
+			.def("update", &CCameraKeyController::Update)
 	];
 
 	module(m_LS) [
@@ -215,6 +293,96 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_position", &CSphericalCameraController::SetPosition)
 			.def("set_zoom", &CSphericalCameraController::SetZoom)
 			.def("update", &CSphericalCameraController::Update)
+	];
+
+	// Cinematics -----------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CCinematic>("CCinematic")
+			.def(constructor<>())
+			.def("load_xml", &CCinematic::LoadXML)
+			.def("add_cinematic_object", &CCinematic::AddCinematicObject)
+			.def("update", &CCinematic::Update)
+			.def("render", &CCinematic::Render)
+			.def("get_duration",&CCinematic::GetDuration)
+			.def("get_name",&CCinematic::GetName)
+			.def("get_pitch",&CCinematic::GetPitch)
+			.def("get_position",&CCinematic::GetPosition)
+			.def("get_prev_position",&CCinematic::GetPrevPosition)
+			.def("get_roll",&CCinematic::GetRoll)
+			.def("get_scale",&CCinematic::GetScale)
+			.def("get_tick_count",&CCinematic::GetTickCount)
+			.def("get_transform",&CCinematic::GetTransform)
+			.def("get_visible",&CCinematic::GetVisible)
+			.def("get_yaw",&CCinematic::GetYaw)
+			.def("init",&CCinematic::Init)
+			.def("is_finished",&CCinematic::IsFinished)
+			.def("on_restart_cycle",&CCinematic::OnRestartCycle)
+			.def("pause",&CCinematic::Pause)
+			.def("play",&CCinematic::Play)
+			.def("set_name",&CCinematic::SetName)
+			.def("set_pitch",&CCinematic::SetPitch)
+			.def("set_position",&CCinematic::SetPosition)
+			.def("set_roll",&CCinematic::SetRoll)
+			.def("set_scale",&CCinematic::SetScale)
+			.def("set_visible",&CCinematic::SetVisible)
+			.def("set_yaw",&CCinematic::SetYaw)
+			.def("set_yaw_pitch_roll",&CCinematic::SetYawPitchRoll)
+			.def("stop",&CCinematic::Stop)
+	];
+
+	module(m_LS)[
+		class_<CCinematicObject>("CCinematicObject")
+			.def(constructor<CXMLTreeNode&>())
+			.def("is_ok", &CCinematicObject::IsOk)
+			.def("add_cinematic_object_key_frame", &CCinematicObject::AddCinematicObjectKeyFrame)
+			.def("update", &CCinematicObject::Update)
+			.def("on_restart_cycle", &CCinematicObject::OnRestartCycle)
+			.def("get_current_key", &CCinematicObject::GetCurrentKey)
+			.def("get_duration",&CCinematicObject::GetDuration)
+			.def("get_tick_count",&CCinematicObject::GetTickCount)
+			.def("init",&CCinematicObject::Init)
+			.def("is_finished",&CCinematicObject::IsFinished)
+			.def("is_ok",&CCinematicObject::IsOk)
+			.def("pause",&CCinematicObject::Pause)
+			.def("play",&CCinematicObject::Play)
+			.def("stop",&CCinematicObject::Stop)
+	];
+
+	module(m_LS)[
+		class_<CCinematicObjectKeyFrame>("CCinematicObjectKeyFrame")
+			.def(constructor<CXMLTreeNode&>())
+			.def("get_key_frame_time",&CCinematicObjectKeyFrame::GetKeyFrameTime)
+			.def("get_pitch",&CCinematicObjectKeyFrame::GetPitch)
+			.def("get_position",&CCinematicObjectKeyFrame::GetPosition)
+			.def("get_prev_position",&CCinematicObjectKeyFrame::GetPrevPosition)
+			.def("get_roll",&CCinematicObjectKeyFrame::GetRoll)
+			.def("get_scale",&CCinematicObjectKeyFrame::GetScale)
+			.def("get_transform",&CCinematicObjectKeyFrame::GetTransform)
+			.def("get_visible",&CCinematicObjectKeyFrame::GetVisible)
+			.def("get_yaw",&CCinematicObjectKeyFrame::GetYaw)
+			.def("render",&CCinematicObjectKeyFrame::Render)
+			.def("set_key_frame_time",&CCinematicObjectKeyFrame::SetKeyFrameTime)
+			.def("set_pitch",&CCinematicObjectKeyFrame::SetPitch)
+			.def("set_position",&CCinematicObjectKeyFrame::SetPosition)
+			.def("set_roll",&CCinematicObjectKeyFrame::SetRoll)
+			.def("set_scale",&CCinematicObjectKeyFrame::SetScale)
+			.def("set_visible",&CCinematicObjectKeyFrame::SetVisible)
+			.def("set_yaw",&CCinematicObjectKeyFrame::SetYaw)
+			.def("set_yaw_pitch_roll",&CCinematicObjectKeyFrame::SetYawPitchRoll)
+	];
+
+	module(m_LS)[
+		class_<CCinematicPlayer>("CCinematicPlayer")
+			.def(constructor<>())
+			.def("get_duration", &CCinematicPlayer::GetDuration)
+			.def("get_tick_count", &CCinematicPlayer::GetTickCount)
+			.def("init", &CCinematicPlayer::Init)
+			.def("is_finished", &CCinematicPlayer::IsFinished)
+			.def("on_restart_cycle", &CCinematicPlayer::OnRestartCycle)
+			.def("pause", &CCinematicPlayer::Pause)
+			.def("play", &CCinematicPlayer::Play)
+			.def("stop", &CCinematicPlayer::Stop)
+			.def("update", &CCinematicPlayer::Update)
 	];
 
 	//RunFile("./data/scripting/init.lua");
