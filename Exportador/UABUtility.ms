@@ -32,6 +32,7 @@ utility UABUtility "UABUtility" width:168 height:360
 		(
 			if (getUserProp $*[i] usrProp) == true then
 			(
+				local this_Obj = $*[i]
 				append usrDefined $*[i]
 			)
 		)
@@ -111,10 +112,10 @@ utility UABUtility "UABUtility" width:168 height:360
 
 	fn exportRenderableObject dir =
 	(
-		local renderableObjectsToExport = checkUserProp "render_export"
-		createInstanceMesh dir "renderable_objects.xml" renderableObjectsToExport
 		local cinematicObjectsToExport = checkUserProp "cinematic_object"
 		createCinematicObjects dir "cinematic.xml" cinematicObjectsToExport
+		local renderableObjectsToExport = checkUserProp "render_export"
+		createInstanceMesh dir "renderable_objects.xml" renderableObjectsToExport
 	)
 
 	on UABUtility open do
