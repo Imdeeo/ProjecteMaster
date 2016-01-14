@@ -29,7 +29,7 @@ public:
 	CEffectManager();
 	virtual ~CEffectManager();
 		
-	void ReloadFile();
+	void ReloadFile(){};
 	void Reload();
 	bool Load(const std::string &Filename);
 	CEffectVertexShader * GetVertexShader(const std::string &VertexShader);

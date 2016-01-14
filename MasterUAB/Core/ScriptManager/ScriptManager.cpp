@@ -466,7 +466,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_device_context", &CContextManager::GetDeviceContext)
 			//.def("set_base_color", &CContextManager::SetBaseColor)
 			.def("set_world_matrix", &CContextManager::SetWorldMatrix)
-			.def("set_camera", &CContextManager::SetCamera)
+			//.def("set_camera", &CContextManager::SetCamera) cosas
 			//.def("set_debug_size", &CContextManager::SetDebugSize)
 	];
 
@@ -502,7 +502,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CEffectShader>("CEffectShader")
-			.def(constructor<>())
+			//.def(constructor<>())
 			.def("load", &CEffectShader::Load)
 			.def("reload", &CEffectShader::Reload)
 			.def("set_constant_buffer", &CEffectShader::SetConstantBuffer)
@@ -510,7 +510,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CEffectVertexShader>("CEffectVertexShader")
-			.def(constructor<>())
+			.def(constructor<const CXMLTreeNode &>())
 			.def("load", &CEffectVertexShader::Load)
 			.def("set_constant_buffer", &CEffectVertexShader::SetConstantBuffer)
 			.def("get_vertex_shader", &CEffectVertexShader::GetVertexShader)
@@ -520,7 +520,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CEffectPixelShader>("CEffectPixelShader")
-			.def(constructor<>())
+			.def(constructor<const CXMLTreeNode &>())
 			.def("load", &CEffectPixelShader::Load)
 			.def("set_constant_buffer", &CEffectPixelShader::SetConstantBuffer)
 			.def("get_pixel_shader", &CEffectPixelShader::GetPixelShader)
@@ -621,8 +621,8 @@ void CScriptManager::RegisterLUAFunctions()
 	// RenderableObjects------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CRenderableObject>("CRenderableObject")
-			.def(constructor<>())
-			.def(constructor<CXMLTreeNode&>())
+			//.def(constructor<>())
+			//.def(constructor<CXMLTreeNode&>())
 			.def("update", &CRenderableObject::Update)
 			.def("render", &CRenderableObject::Render)
 	];
@@ -632,8 +632,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<>())
 			.def("update", &CRenderableObjectsManager::Update)
 			.def("render", &CRenderableObjectsManager::Render)
-			.def("add_mesh_instance", &CRenderableObjectsManager::AddMeshInstance)
-			.def("add_animated_instance_model", &CRenderableObjectsManager::AddAnimatedInstanceModel)
+			//.def("add_mesh_instance", &CRenderableObjectsManager::AddMeshInstance)  //cosas
+			//.def("add_animated_instance_model", &CRenderableObjectsManager::AddAnimatedInstanceModel) //cosas
 			//.def("clean_up", &CRenderableObjectsManager::CleanUp)
 			.def("reload", &CRenderableObjectsManager::Reload)
 			.def("load", &CRenderableObjectsManager::Load)
@@ -701,7 +701,8 @@ void CScriptManager::RegisterLUAFunctions()
 
 	//RunFile("./data/scripting/init.lua");
 
-	//RunCode("Init()");
+	RunCode("Init()");
+	RunCode("local light=COmniLight();light.set_intensity(1.1);");
 	//RunCode("local value=3;set_speed_player(value); value=get_speed_player()+2; set_speed_player(value)");
 	//RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");
 }
