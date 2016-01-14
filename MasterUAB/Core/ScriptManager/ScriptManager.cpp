@@ -565,8 +565,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_position", &CLight::SetPosition)
 			.def("get_color", &CLight::GetColor)
 			.def("set_color", &CLight::SetColor)
-			.def("get_intensity", &CLight::GetIntensity)
-			.def("set_intensity", &CLight::SetIntensity)
+			.property("intensity", &CLight::GetIntensity,&CLight::SetIntensity)
 			.def("get_start_range_attenuation", &CLight::GetStartRangeAttenuation)
 			.def("set_start_range_attenuation", &CLight::SetStartRangeAttenuation)
 			.def("get_end_range_attenuation", &CLight::GetEndRangeAttenuation)
@@ -589,7 +588,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<COmniLight>("COmniLight")
+		class_<COmniLight,CLight>("COmniLight")
 			.def(constructor<>())
 			.def(constructor<CXMLTreeNode&>())
 	];
@@ -703,7 +702,7 @@ void CScriptManager::RegisterLUAFunctions()
 	//RunFile("./data/scripting/init.lua");
 
 	//RunCode("Init();");
-	RunCode("local light=COmniLight();light.set_intensity(1.1);");
+	RunCode("local light=COmniLight();light.intensity=1.1;");
 	//RunCode("local value=3;set_speed_player(value); value=get_speed_player()+2; set_speed_player(value)");
 	//RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");
 }
