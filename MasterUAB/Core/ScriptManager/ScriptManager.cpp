@@ -63,6 +63,7 @@
 #include "DebugRender.h"
 
 #include "XML\XMLTreeNode.h"
+#include "Utils.h"
 
 using namespace luabind;
 
@@ -138,7 +139,7 @@ void CScriptManager::RunCode(const std::string &Code) const
 	if(luaL_dostring(m_LS,Code.c_str()))
 	{
 		const char *l_Str=lua_tostring(m_LS, -1);
-		//Info("%s",l_Str);
+		UtilsLog(l_Str);
 		assert(!"must be log");
 	}
 }
@@ -149,7 +150,7 @@ void CScriptManager::RunFile(const std::string &FileName) const
 	if(luaL_dofile(m_LS, FileName.c_str()))
 	{
 		const char *l_Str=lua_tostring(m_LS, -1);
-		//Info("%s",l_Str);
+		UtilsLog(l_Str);
 		assert(!"must be log");
 	}
 }
@@ -701,7 +702,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	//RunFile("./data/scripting/init.lua");
 
-	RunCode("Init()");
+	//RunCode("Init();");
 	RunCode("local light=COmniLight();light.set_intensity(1.1);");
 	//RunCode("local value=3;set_speed_player(value); value=get_speed_player()+2; set_speed_player(value)");
 	//RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");
