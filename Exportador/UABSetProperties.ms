@@ -122,54 +122,118 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		(
 			UnsupportedLabel.text = "Nothing selected."
 		) else (
-			UnsupportedLabel.text = ""+(ClassOf Obj) as string+" is not a supported object type."
+			UnsupportedLabel.text = ""+(ClassOf Obj) as string+" is not a supported selection."
 		)
 	)
 	
 	fn loadLightMode Obj =
 	(
-		if (ClassOf Obj == Omnilight) or
-		(ClassOf Obj == targetSpot) or
-		(ClassOf Obj == freeSpot) or
-		(ClassOf Obj == Directionallight) or
-		(ClassOf Obj == TargetDirectionallight)
-		then (
+		if ClassOf Obj == ObjectSet then
+		(
+			local Objs = Obj
+			local textLabel = "Light Set"
+		) else (
+			local Objs = #()
+			append Objs Obj
+			local textLabel = Obj.name+" ("+(ClassOf Obj) as string+")"
+		)
+		
+		local allValid = true
+		
+		for i = 1 to Objs.count do
+		(
+			if (ClassOf Objs[i] != Omnilight) and
+			(ClassOf Objs[i] != targetSpot) and
+			(ClassOf Objs[i] != freeSpot) and
+			(ClassOf Objs[i] != Directionallight) and
+			(ClassOf Objs[i] != TargetDirectionallight)
+			then (
+				allValid = false
+			)
+		)
+		
+		if allValid then (
 			toggleLightsGroup true
 			toggleGeometryGroup false
 			toggleUnsupportedGroup false
 			toggleCamerasGroup false
-			LightLabel.text = Obj.name+" ("+(ClassOf Obj) as string+")"
+			LightLabel.text = textLabel
 			UABSetProperties.height = 150
 		) else (
-			loadUnsupportedSelection Obj
+			loadUnsupportedSelection Objs
 		)
 	)
 	
 	fn loadGeometryMode Obj =
 	(
-		if (findString Obj.name ".Target" == undefined) then
+		if ClassOf Obj == ObjectSet then
+		(
+			local Objs = Obj
+			local textLabel = "Geometry Set"
+		) else (
+			local Objs = #()
+			append Objs Obj
+			local textLabel = Obj.name+" ("+(ClassOf Obj) as string+")"
+		)
+		
+		local allValid = true
+		for i = 1 to Objs.count do
+		(
+			if (findString Objs[i].name ".Target" != undefined) then
+			(
+				allValid = false
+			)
+		)
+	
+		if allValid then
 		(
 			toggleLightsGroup false
 			toggleGeometryGroup true
 			toggleUnsupportedGroup false
 			toggleCamerasGroup false
-			GeometryLabel.text = Obj.name+" ("+(ClassOf Obj) as string+")"
+			GeometryLabel.text = textLabel
 			UABSetProperties.height = 370
 		)
 		else
 		(
-			loadUnsupportedSelection Obj
+			loadUnsupportedSelection Objs
 		)
 	)
 	
 	fn loadCameraMode Obj =
 	(
+		if ClassOf Obj == ObjectSet then
+		(
+			local Objs = Obj
+			local textLabel = "Camera Set"
+		) else (
+			local Objs = #()
+			append Objs Obj
+			local textLabel = Obj.name+" ("+(ClassOf Obj) as string+")"
+		)
 		toggleLightsGroup false
 		toggleGeometryGroup false
 		toggleUnsupportedGroup false
 		toggleCamerasGroup true
-		CameraLabel.text = Obj.name+" ("+(ClassOf Obj) as string+")"
+		CameraLabel.text = textLabel
 		UABSetProperties.height = 150
+	)
+	
+	fn loadSetMode Objs =
+	(
+		local allCamera = true
+		local allLight = true
+		local allGeometry = true
+		for i = 1 to Objs.count do
+		(
+			allCamera = allCamera and (SuperClassOf Objs[i] == camera)
+			allLight = allLight and (SuperClassOf Objs[i] == light)
+			allGeometry = allGeometry and (SuperClassOf Objs[i] == GeometryClass)
+		)
+		if allCamera then loadCameraMode Objs
+		else if allLight then loadLightMode Objs
+		else if allGeometry then loadGeometryMode Objs
+		else loadUnsupportedSelection Objs
 	)
 		
 	fn swapMode Obj =
@@ -179,6 +243,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			camera: loadCameraMode Obj
 			light: loadLightMode Obj
 			GeometryClass:  loadGeometryMode Obj
+			Set: loadSetMode Obj
 			default: loadUnsupportedSelection Obj
 		)
 	)
@@ -212,28 +277,37 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 	
 	fn GetProperties Obj =
 	(
-		if (getUserProp Obj "render_export" == undefined) and (getUserProp Obj "light_export" == undefined) and (getUserProp Obj "camera_export" == undefined) then
+		if ClassOf Obj == ObjectSet then
 		(
-			initUserProps Obj
+			local Objs = Obj
+		) else (
+			local Objs = #()
+			append Objs Obj
 		)
-			
-		if(SuperClassOf Obj == GeometryClass) then
+		for i = 1 to Objs.count do
 		(
-			RenderExportBox.checked = getUserProp Obj "render_export"
+			if (getUserProp Objs[i] "render_export" == undefined) and (getUserProp Objs[i] "light_export" == undefined) and (getUserProp Objs[i] "camera_export" == undefined) then
+			(
+				initUserProps Objs[i]
+			)
+		)	
+		if(SuperClassOf Objs[1] == GeometryClass) then
+		(
+			RenderExportBox.checked = getUserProp Objs[1] "render_export"
 			if RenderExportBox.checked == true then
 			(
 				toggleRender true
 				
-				case getUserProp Obj "render_export_type" of
+				case getUserProp Objs[1] "render_export_type" of
 					(
 						"instance_mesh": RenderExportList.selection = 1
 						"animated_instance_mesh": RenderExportList.selection = 2
 					)
 				
-				RenderVisibleBox.checked = getUserProp Obj "render_visible"
+				RenderVisibleBox.checked = getUserProp Objs[1] "render_visible"
 				
-				RenderLayerBox.checked = getUserProp Obj "has_render_layer"
-				case getUserProp Obj "render_layer" of
+				RenderLayerBox.checked = getUserProp Objs[1] "has_render_layer"
+				case getUserProp Objs[1] "render_layer" of
 					(
 						"solid": RenderLayerList.selection = 1
 						"alpha_objects": RenderLayerList.selection = 2
@@ -241,8 +315,8 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 						"particles": RenderLayerList.selection = 4
 					)
 			
-				AnimModelText.text = getUserProp Obj "anim_model_core"
-				CinematicBox.checked = getUserProp Obj "cinematic_object"
+				AnimModelText.text = getUserProp Objs[1] "anim_model_core"
+				CinematicBox.checked = getUserProp Objs[1] "cinematic_object"
 			) else (
 				
 				toggleRender false
@@ -251,11 +325,11 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 				CinematicBox.checked = false
 			)
 			
-			PhysicsGenerateBox.checked = getUserProp Obj "physics_generate"
+			PhysicsGenerateBox.checked = getUserProp Objs[1] "physics_generate"
 			if PhysicsGenerateBox.checked == true then
 			(
 				togglePhysics true
-				case getUserProp Obj "physics_generate_type" of
+				case getUserProp Objs[1] "physics_generate_type" of
 					(
 						"triangle_mesh": PhysicsGenerateList.selection = 1
 						"convex_shape": PhysicsGenerateList.selection = 2
@@ -265,8 +339,8 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 						"capsule_shape": PhysicsGenerateList.selection = 6
 					)
 			
-				PhysicsLayerBox.checked = getUserProp Obj "has_physics_layer"
-				case getUserProp Obj "physics_layer" of
+				PhysicsLayerBox.checked = getUserProp Objs[1] "has_physics_layer"
+				case getUserProp Objs[1] "physics_layer" of
 					(
 						"logic": PhysicsLayerList.selection = 1
 					)
@@ -276,21 +350,19 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 				PhysicsLayerBox.checked = false
 			)
 			
-			
-			
-			LogicGenerateBox.checked = getUserProp $ "logic_generate"
-			case getUserProp Obj "logic_generate_type" of
+			LogicGenerateBox.checked = getUserProp Objs[1] "logic_generate"
+			case getUserProp Objs[1] "logic_generate_type" of
 				(
 					"stairs": LogicGenerateList.selection = 1
 				)
-		) else if(SuperClassOf Obj == light) then
+		) else if(SuperClassOf Objs[1] == light) then
 		(
-			LightExportBox.checked = getUserProp Obj "light_export"
-		) else if(SuperClassOf Obj == camera) then
+			LightExportBox.checked = getUserProp Objs[1] "light_export"
+		) else if(SuperClassOf Objs[1] == camera) then
 		(
-			CameraExportBox.checked = getUserProp Obj "camera_export"
+			CameraExportBox.checked = getUserProp Objs[1] "camera_export"
 			toggleCameras (CameraExportBox.checked)
-			case getUserProp Obj "camera_export_type" of
+			case getUserProp Objs[1] "camera_export_type" of
 				(
 					"fps": CameraExportList.selection = 1
 					"spherical": CameraExportList.selection = 2
@@ -302,127 +374,138 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 	
 	fn SetProperties Obj =
 	(
-		if(SuperClassOf Obj == GeometryClass) then
+		if ClassOf Obj == ObjectSet then
 		(
-			if RenderExportBox.checked then
-			(
-				setUserProp Obj "render_export" true
-				
-				case RenderExportList.items[RenderExportList.selection] of
-				(
-					"instance_mesh": setUserProp Obj "render_export_type" "instance_mesh"
-					"animated_instance_mesh": setUserProp Obj "render_export_type" "animated_instance_mesh"
-				)	
-			
-			) else (
-				setUserProp Obj "render_export" false
-			)
-			
-			if RenderVisibleBox.checked then
-			(
-				setUserProp Obj "render_visible" true
-			) else (
-				setUserProp Obj "render_visible" false
-			)
-			
-			if RenderLayerBox.checked then
-			(
-				setUserProp Obj "has_render_layer" true
-				
-				case RenderLayerList.items[RenderLayerList.selection] of
-				(
-					"solid": setUserProp Obj "render_layer" "solid"
-					"alpha_objects": setUserProp Obj "render_layer" "alpha_objects"
-					"alpha_blend_objects": setUserProp Obj "render_layer" "alpha_blend_objects"
-					"particles": setUserProp Obj "render_layer" "particles"
-				)	
-				
-			) else (
-				setUserProp Obj "has_render_layer" false
-			)
-			
-			if AnimModelText.text == "" then
-			(
-				--messageBox "Introduce el core para el modelo animado" title:"ERROR"
-				setUserProp Obj "anim_model_core" "undefined"
-			) else (
-				setUserProp Obj "anim_model_core" AnimModelText.text
-			)
-			
-			if PhysicsGenerateBox.checked then
-			(
-				setUserProp Obj "physics_generate" true
-				
-				case PhysicsGenerateList.items[PhysicsGenerateList.selection] of
-				(
-					"triangle_mesh": setUserProp Obj "physics_generate_type" "triangle_mesh"
-					"convex_shape": setUserProp Obj "physics_generate_type" "convex_shape"
-					"box_shape": setUserProp Obj "physics_generate_type" "box_shape"
-					"sphere_shape": setUserProp Obj "physics_generate_type" "sphere_shape"
-					"plane_shape": setUserProp Obj "physics_generate_type" "plane_shape"
-					"capsule_shape": setUserProp Obj "physics_generate_type" "capsule_shape"
-				)	
-			
-			) else (
-				setUserProp Obj "physics_generate" false
-			)
-			
-			if PhysicsLayerBox.checked then
-			(
-				setUserProp Obj "has_physics_layer" true
-				
-				case PhysicsLayerList.items[PhysicsLayerList.selection] of
-				(
-					"logic": setUserProp Obj "physics_layer" "logic"
-				)	
-			
-			) else (
-				setUserProp Obj "has_physics_layer" false
-			)
-			
-			if LogicGenerateBox.checked then
-			(
-				setUserProp Obj "logic_generate" true
-				
-				case LogicGenerateList.items[LogicGenerateList.selection] of
-				(
-					"stairs": setUserProp Obj "logic_generate_type" "stairs"
-				)	
-			
-			) else (
-				setUserProp Obj "logic_generate" false
-			)
-			
-			if CinematicBox.checked then
-			(
-				setUserProp Obj "cinematic_object" true
-			)
-			else
-			(
-				setUserProp Obj "cinematic_object" false
-			)
-		) else if(SuperClassOf Obj == light) then
+			local Objs = Obj
+		) else (
+			local Objs = #()
+			append Objs Obj
+		)
+		
+		for i = 1 to Objs.count do
 		(
-			if LightExportBox.checked then
+			if(SuperClassOf Objs[i] == GeometryClass) then
 			(
-				setUserProp Obj "light_export" true
-			) else (
-				setUserProp Obj "light_export" false
-			)
-		) else if(SuperClassOf Obj == camera) then
-		(
-			if CameraExportBox.checked then
-			(
-				setUserProp Obj "camera_export" true
-				case CameraExportList.items[CameraExportList.selection] of
+				if RenderExportBox.checked then
 				(
-					"fps": setUserProp Obj "camera_export_type" "fps"
-					"spherical": setUserProp Obj "camera_export_type" "spherical"
-					"cycle": setUserProp Obj "camera_export_type" "cycle"
-					"reverse": setUserProp Obj "camera_export_type" "reverse"
+					setUserProp Objs[i] "render_export" true
+					
+					case RenderExportList.items[RenderExportList.selection] of
+					(
+						"instance_mesh": setUserProp Objs[i] "render_export_type" "instance_mesh"
+						"animated_instance_mesh": setUserProp Objs[i] "render_export_type" "animated_instance_mesh"
+					)	
+				
+				) else (
+					setUserProp Objs[i] "render_export" false
 				)
-			) else (
-				setUserProp Obj "camera_export" false
+				
+				if RenderVisibleBox.checked then
+				(
+					setUserProp Objs[i] "render_visible" true
+				) else (
+					setUserProp Objs[i] "render_visible" false
+				)
+				
+				if RenderLayerBox.checked then
+				(
+					setUserProp Objs[i] "has_render_layer" true
+					
+					case RenderLayerList.items[RenderLayerList.selection] of
+					(
+						"solid": setUserProp Objs[i] "render_layer" "solid"
+						"alpha_objects": setUserProp Objs[i] "render_layer" "alpha_objects"
+						"alpha_blend_objects": setUserProp Objs[i] "render_layer" "alpha_blend_objects"
+						"particles": setUserProp Objs[i] "render_layer" "particles"
+					)	
+					
+				) else (
+					setUserProp Objs[i] "has_render_layer" false
+				)
+				
+				if AnimModelText.text == "" then
+				(
+					--messageBox "Introduce el core para el modelo animado" title:"ERROR"
+					setUserProp Objs[i] "anim_model_core" "undefined"
+				) else (
+					setUserProp Objs[i] "anim_model_core" AnimModelText.text
+				)
+				
+				if PhysicsGenerateBox.checked then
+				(
+					setUserProp Objs[i] "physics_generate" true
+					
+					case PhysicsGenerateList.items[PhysicsGenerateList.selection] of
+					(
+						"triangle_mesh": setUserProp Objs[i] "physics_generate_type" "triangle_mesh"
+						"convex_shape": setUserProp Objs[i] "physics_generate_type" "convex_shape"
+						"box_shape": setUserProp Objs[i] "physics_generate_type" "box_shape"
+						"sphere_shape": setUserProp Objs[i] "physics_generate_type" "sphere_shape"
+						"plane_shape": setUserProp Objs[i] "physics_generate_type" "plane_shape"
+						"capsule_shape": setUserProp Objs[i] "physics_generate_type" "capsule_shape"
+					)	
+				
+				) else (
+					setUserProp Objs[i] "physics_generate" false
+				)
+				
+				if PhysicsLayerBox.checked then
+				(
+					setUserProp Objs[i] "has_physics_layer" true
+					
+					case PhysicsLayerList.items[PhysicsLayerList.selection] of
+					(
+						"logic": setUserProp Objs[i] "physics_layer" "logic"
+					)	
+				
+				) else (
+					setUserProp Objs[i] "has_physics_layer" false
+				)
+				
+				if LogicGenerateBox.checked then
+				(
+					setUserProp Objs[i] "logic_generate" true
+					
+					case LogicGenerateList.items[LogicGenerateList.selection] of
+					(
+						"stairs": setUserProp Objs[i] "logic_generate_type" "stairs"
+					)	
+				
+				) else (
+					setUserProp Objs[i] "logic_generate" false
+				)
+				
+				if CinematicBox.checked then
+				(
+					setUserProp Objs[i] "cinematic_object" true
+				)
+				else
+				(
+					setUserProp Objs[i] "cinematic_object" false
+				)
+			) else if(SuperClassOf Objs[i] == light) then
+			(
+				if LightExportBox.checked then
+				(
+					setUserProp Objs[i] "light_export" true
+				) else (
+					setUserProp Objs[i] "light_export" false
+				)
+			) else if(SuperClassOf Objs[i] == camera) then
+			(
+				if CameraExportBox.checked then
+				(
+					setUserProp Objs[i] "camera_export" true
+					case CameraExportList.items[CameraExportList.selection] of
+					(
+						"fps": setUserProp Objs[i] "camera_export_type" "fps"
+						"spherical": setUserProp Objs[i] "camera_export_type" "spherical"
+						"cycle": setUserProp Objs[i] "camera_export_type" "cycle"
+						"reverse": setUserProp Objs[i] "camera_export_type" "reverse"
+					)
+				) else (
+					setUserProp Objs[i] "camera_export" false
+				)
 			)
 		)
 	)
