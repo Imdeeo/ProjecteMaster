@@ -24,6 +24,23 @@
 #include "Cinematics\CinematicObjectKeyFrame.h"
 #include "Cinematics\CinematicPlayer.h"
 
+#include "ContextManager\ContextManager.h"
+
+#include "Effects\AnimatedModelEffectParameters.h"
+#include "Effects\Effect.h"
+#include "Effects\EffectManager.h"
+#include "Effects\EffectParameters.h"
+#include "Effects\EffectShader.h"
+#include "Effects\EffectTechnique.h"
+#include "Effects\LightEffectParameters.h"
+#include "Effects\SceneEffectParameters.h"
+
+#include "Lights\DirectionalLight.h"
+#include "Lights\Light.h"
+#include "Lights\LightManager.h"
+#include "Lights\OmniLight.h"
+#include "Lights\SpotLight.h"
+
 #include "XML\XMLTreeNode.h"
 
 using namespace luabind;
@@ -383,6 +400,160 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("play", &CCinematicPlayer::Play)
 			.def("stop", &CCinematicPlayer::Stop)
 			.def("update", &CCinematicPlayer::Update)
+	];
+
+	// ContextManager----------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CContextManager>("CContextManager")
+			.def(constructor<>())
+			.def("dispose", &CContextManager::Dispose)
+			.def("resize", &CContextManager::Resize)
+			.def("create_context", &CContextManager::CreateContext)
+			.def("create_back_buffer", &CContextManager::CreateBackBuffer)
+			.def("init_states", &CContextManager::InitStates)
+			.def("get_aspect_ratio", &CContextManager::GetAspectRatio)
+			.def("begin_render", &CContextManager::BeginRender)
+			.def("end_render", &CContextManager::EndRender)
+			.def("draw", &CContextManager::Draw)
+			.def("get_device", &CContextManager::GetDevice)
+			.def("get_device_context", &CContextManager::GetDeviceContext)
+			//.def("set_base_color", &CContextManager::SetBaseColor)
+			.def("set_world_matrix", &CContextManager::SetWorldMatrix)
+			.def("set_camera", &CContextManager::SetCamera)
+			//.def("set_debug_size", &CContextManager::SetDebugSize)
+	];
+
+	// Effects----------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CAnimatedModelEffectParameters>("CAnimatedModelEffectParameters")
+			.def(constructor<>())
+	];
+
+	module(m_LS)[
+		class_<CEffect>("CEffect")
+			.def(constructor<>())
+			.def("update_parameters", &CEffect::UpdateParameters)
+			.def("set_active", &CEffect::SetActive)
+	];
+
+	module(m_LS)[
+		class_<CEffectManager>("CEffectManager")
+			.def(constructor<>())
+			.def("reload_file", &CEffectManager::ReloadFile)
+			.def("reload", &CEffectManager::Reload)
+			.def("load", &CEffectManager::Load)
+			.def("get_vertex_shader", &CEffectManager::GetVertexShader)
+			.def("get_pixel_shader", &CEffectManager::GetPixelShader)
+			.def("set_scene_constants", &CEffectManager::SetSceneConstants)
+			.def("set_light_constants", &CEffectManager::SetLightConstants)
+	];
+
+	module(m_LS)[
+		class_<CEffectParameters>("CEffectParameters")
+			.def(constructor<>())
+	];
+
+	module(m_LS)[
+		class_<CEffectShader>("CEffectShader")
+			.def(constructor<>())
+			.def("load", &CEffectShader::Load)
+			.def("reload", &CEffectShader::Reload)
+			.def("set_constant_buffer", &CEffectShader::SetConstantBuffer)
+	];
+
+	module(m_LS)[
+		class_<CEffectVertexShader>("CEffectVertexShader")
+			.def(constructor<>())
+			.def("load", &CEffectVertexShader::Load)
+			.def("set_constant_buffer", &CEffectVertexShader::SetConstantBuffer)
+			.def("get_vertex_shader", &CEffectVertexShader::GetVertexShader)
+			.def("get_vertex_layout", &CEffectVertexShader::GetVertexLayout)
+			//.def("get_constant_buffer", &CEffectVertexShader::GetConstantBuffer)
+	];
+
+	module(m_LS)[
+		class_<CEffectPixelShader>("CEffectPixelShader")
+			.def(constructor<>())
+			.def("load", &CEffectPixelShader::Load)
+			.def("set_constant_buffer", &CEffectPixelShader::SetConstantBuffer)
+			.def("get_pixel_shader", &CEffectPixelShader::GetPixelShader)
+			//.def("get_constant_buffer", &CEffectPixelShader::GetConstantBuffer)
+	];
+
+	module(m_LS)[
+		class_<CEffectTechnique>("CEffectTechnique")
+			.def(constructor<CXMLTreeNode&>())
+			.def("get_vertex_shader", &CEffectTechnique::GetVertexShader)
+			.def("get_pixel_shader", &CEffectTechnique::GetPixelShader)
+			.def("refresh", &CEffectTechnique::Refresh)
+			.def("set_constant_buffer", &CEffectTechnique::SetConstantBuffer)
+	];
+
+	module(m_LS)[
+		class_<CLightEffectParameters>("CLightEffectParameters")
+			.def(constructor<>())
+	];
+
+	module(m_LS)[
+		class_<CSceneEffectParameters>("CSceneEffectParameters")
+			.def(constructor<>())
+	];
+
+	// Lights-----------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CDirectionalLight>("CDirectionalLight")
+			.def(constructor<>())
+			.def(constructor<CXMLTreeNode&>())
+			.def("get_direction", &CDirectionalLight::GetDirection)
+			.def("set_direction", &CDirectionalLight::SetDirection)
+			.def("render", &CDirectionalLight::Render)
+	];
+
+	module(m_LS)[
+		class_<CLight>("CLight")
+			.def(constructor<>())
+			.def(constructor<CXMLTreeNode&>())
+			.def("get_position", &CLight::GetPosition)
+			.def("set_position", &CLight::SetPosition)
+			.def("get_color", &CLight::GetColor)
+			.def("set_color", &CLight::SetColor)
+			.def("get_intensity", &CLight::GetIntensity)
+			.def("set_intensity", &CLight::SetIntensity)
+			.def("get_start_range_attenuation", &CLight::GetStartRangeAttenuation)
+			.def("set_start_range_attenuation", &CLight::SetStartRangeAttenuation)
+			.def("get_end_range_attenuation", &CLight::GetEndRangeAttenuation)
+			.def("set_end_range_attenuation", &CLight::SetEndRangeAttenuation)
+			.def("get_enabled", &CLight::GetEnabled)
+			.def("set_enabled", &CLight::SetEnabled)
+			.def("get_type", &CLight::GetType)
+			.def("set_type", &CLight::SetType)
+			.def("render", &CLight::Render)
+			.def("get_light_type_by_name", &CLight::GetLightTypeByName)
+	];
+
+	module(m_LS)[
+		class_<CLightManager>("CLightManager")
+			.def(constructor<>())
+			.def("load", &CLightManager::Load)
+			.def("render", &CLightManager::Render)
+			.def("reload", &CLightManager::Reload)
+			.def("get_ambient_light", &CLightManager::GetAmbientLight)
+	];
+
+	module(m_LS)[
+		class_<COmniLight>("COmniLight")
+			.def(constructor<>())
+			.def(constructor<CXMLTreeNode&>())
+	];
+
+	module(m_LS)[
+		class_<CSpotLight>("CSpotLight")
+			.def(constructor<>())
+			.def(constructor<CXMLTreeNode&>())
+			.def("get_angle", &CSpotLight::GetAngle)
+			.def("set_angle", &CSpotLight::SetAngle)
+			.def("get_fall_off", &CSpotLight::GetFallOff)
+			.def("set_fall_off", &CSpotLight::SetFallOff)
 	];
 
 	//RunFile("./data/scripting/init.lua");
