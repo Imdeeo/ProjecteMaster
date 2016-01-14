@@ -41,6 +41,27 @@
 #include "Lights\OmniLight.h"
 #include "Lights\SpotLight.h"
 
+#include "Materials\Material.h"
+#include "Materials\MaterialManager.h"
+
+#include "RenderableObjects\RenderableObject.h"
+#include "RenderableObjects\RenderableObjectManager.h"
+#include "RenderableObjects\RenderableVertexs.h"
+#include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
+#include "RenderableObjects\TemplatedRenderableVertexs.h"
+#include "RenderableObjects\VertexTypes.h"
+
+#include "RenderManager\RenderManager.h"
+
+#include "StaticMesh\InstanceMesh.h"
+#include "StaticMesh\StaticMesh.h"
+#include "StaticMesh\StaticMeshManager.h"
+
+#include "Texture\Texture.h"
+#include "Texture\TextureManager.h"
+
+#include "DebugRender.h"
+
 #include "XML\XMLTreeNode.h"
 
 using namespace luabind;
@@ -140,6 +161,32 @@ void CScriptManager::RegisterLUAFunctions()
 	lua_register(m_LS, "get_speed_player", GetSpeedPlayer);*/
 	//REGISTER_LUA_FUNCTION("set_speed_player", SetSpeedPlayer);
 	//REGISTER_LUA_FUNCTION("get_speed_player", GetSpeedPlayer);
+
+	// GRAPHICS-----------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CDebugRender>("CDebugRender")
+			.def(constructor<ID3D11Device*>())
+			.def("get_simple_triangle", &CDebugRender::GetSimpleTriangle)
+			.def("get_classic_blend_triangle", &CDebugRender::GetClassicBlendTriangle)
+			.def("get_premult_blend_triangle", &CDebugRender::GetPremultBlendTriangle)
+			.def("get_simple_cube", &CDebugRender::GetSimpleCube)
+			.def("get_axis", &CDebugRender::GetAxis)
+			.def("get_simple_triangle_bs_radi", &CDebugRender::GetSimpleTriangleBSRadi)
+			.def("get_premult_blend_triangle_bs_radi", &CDebugRender::GetClassicBlendTriangleBSRadi)
+			.def("get_premult_blend_triangle_bs_radi", &CDebugRender::GetPremultBlendTriangleBSRadi)
+			.def("get_simple_cube_bs_radi", &CDebugRender::GetSimpleCubeBSRadi)
+			.def("get_axis_bs_radi", &CDebugRender::GetAxisBSRadi)
+			.def("get_simple_triangle_bb_min", &CDebugRender::GetSimpleTriangleBBMin)
+			.def("get_classic_blend_triangle_bb_min", &CDebugRender::GetClassicBlendTriangleBBMin)
+			.def("get_premult_blend_triangle_bb_min", &CDebugRender::GetPremultBlendTriangleBBMin)
+			.def("get_simple_cube_bb_min", &CDebugRender::GetSimpleCubeBBMin)
+			.def("get_axis_bb_min", &CDebugRender::GetAxisBBMin)
+			.def("get_simple_triangle_bb_max", &CDebugRender::GetSimpleTriangleBBMax)
+			.def("get_classic_blend_triangle_bb_max", &CDebugRender::GetClassicBlendTriangleBBMax)
+			.def("get_premult_blend_triangle_bb_max", &CDebugRender::GetPremultBlendTriangleBBMax)
+			.def("get_simple_cube_bb_max", &CDebugRender::GetSimpleCubeBBMax)
+			.def("get_axis_bb_max", &CDebugRender::GetAxisBBMax)
+	];
 
 	// AnimatedModels----------------------------------------------------------------------------------
 	module(m_LS) [
@@ -554,6 +601,102 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_angle", &CSpotLight::SetAngle)
 			.def("get_fall_off", &CSpotLight::GetFallOff)
 			.def("set_fall_off", &CSpotLight::SetFallOff)
+	];
+
+	// Materials--------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CMaterial>("CMaterial")
+			.def(constructor<CXMLTreeNode&>())
+			.def("apply", &CMaterial::Apply)
+			.def("get_effect_technique", &CMaterial::GetEffectTechnique)
+	];
+
+	module(m_LS)[
+		class_<CMaterialManager>("CMaterialManager")
+			.def(constructor<>())
+			.def("load", &CMaterialManager::Load)
+			.def("reload", &CMaterialManager::Reload)
+	];
+
+	// RenderableObjects------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CRenderableObject>("CRenderableObject")
+			.def(constructor<>())
+			.def(constructor<CXMLTreeNode&>())
+			.def("update", &CRenderableObject::Update)
+			.def("render", &CRenderableObject::Render)
+	];
+
+	module(m_LS)[
+		class_<CRenderableObjectsManager>("CRenderableObjectsManager")
+			.def(constructor<>())
+			.def("update", &CRenderableObjectsManager::Update)
+			.def("render", &CRenderableObjectsManager::Render)
+			.def("add_mesh_instance", &CRenderableObjectsManager::AddMeshInstance)
+			.def("add_animated_instance_model", &CRenderableObjectsManager::AddAnimatedInstanceModel)
+			//.def("clean_up", &CRenderableObjectsManager::CleanUp)
+			.def("reload", &CRenderableObjectsManager::Reload)
+			.def("load", &CRenderableObjectsManager::Load)
+			//.def("get_instance", &CRenderableObjectsManager::GetInstance)
+	];
+
+	module(m_LS)[
+		class_<CRenderableVertexs>("CRenderableVertexs")
+			//.def(constructor<>())
+			.def("render", &CRenderableVertexs::Render)
+			.def("render_indexed", &CRenderableVertexs::RenderIndexed)
+	];
+
+			// Falta TemplatedRenderableIndexedVertexs, TemplatedRenderableVertexs y VertexTypes
+
+	// RenderManager----------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CRenderManager>("CRenderManager")
+			.def(constructor<>())
+			.def("set_current_camera", &CRenderManager::SetCurrentCamera)
+			.def("set_debug_camera", &CRenderManager::SetDebugCamera)
+			.def("set_use_debug_camera", &CRenderManager::SetUseDebugCamera)
+			//.def("add_renderable_object_to_render_list", &CRenderManager::AddRenderableObjectToRenderList)
+			.def("render", &CRenderManager::Render)
+	];
+
+	// StaticMesh-------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CInstanceMesh>("CInstanceMesh")
+			.def(constructor<std::string&, std::string&>())
+			.def(constructor<CXMLTreeNode&>())
+			.def("render", &CInstanceMesh::Render)
+	];
+
+	module(m_LS)[
+		class_<CStaticMesh>("CStaticMesh")
+			.def(constructor<>())
+			.def("load", &CStaticMesh::Load)
+			.def("reload", &CStaticMesh::Reload)
+			.def("render", &CStaticMesh::Render)
+	];
+
+	module(m_LS)[
+		class_<CStaticMeshManager>("CStaticMeshManager")
+			.def(constructor<>())
+			.def("load", &CStaticMeshManager::Load)
+			.def("reload", &CStaticMeshManager::Reload)
+	];
+
+	// Texture----------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CTexture>("CTexture")
+			.def(constructor<>())
+			.def("load", &CTexture::Load)
+			.def("activate", &CTexture::Activate)
+			.def("reload", &CTexture::Reload)
+	];
+
+	module(m_LS)[
+		class_<CTextureManager>("CTextureManager")
+			.def(constructor<>())
+			.def("get_texture", &CTextureManager::GetTexture)
+			.def("reload", &CTextureManager::Reload)
 	];
 
 	//RunFile("./data/scripting/init.lua");
