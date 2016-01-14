@@ -38,15 +38,20 @@ class CPhysXManagerImplementation:
 	public physx::PxUserControllerHitReport
 {
 public:
-	CPhysXManagerImplementation();
+	CPhysXManagerImplementation(){};
 
 	void onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count){}
 	void onWake(physx::PxActor** actors, physx::PxU32 count){}
 	void onSleep(physx::PxActor** actors, physx::PxU32 count){}
 	void onContact(const physx::PxContactPairHeader& pairHeader,const physx::PxContactPair* pairs, physx::PxU32 nbPairs){}
-	void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count){};
+	void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count){}
 
 	void onShapeHit(const physx::PxControllerShapeHit& hit){}
 	void onControllerHit(const physx::PxControllerHit& hit){}
 	void onObstacleHit(const physx::PxControllerObstacleHit& hit){}
 };
+
+CPhysXManager* CPhysXManager::CreatePhysXManager()
+{
+	return new CPhysXManagerImplementation();
+}
