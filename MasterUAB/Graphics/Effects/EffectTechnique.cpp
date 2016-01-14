@@ -20,3 +20,9 @@ void CEffectTechnique::Refresh()
 	m_VertexShader = UABEngine.GetEffectManager()->GetVertexShader(m_VertexShaderName);
 	m_PixelShader = UABEngine.GetEffectManager()->GetPixelShader(m_PixelShaderName);
 }
+
+void CEffectTechnique::SetConstantBuffer(unsigned int IdBuffer, void *ConstantBuffer)
+{
+	m_VertexShader->SetConstantBuffer(IdBuffer,ConstantBuffer);
+	m_PixelShader->SetConstantBuffer(IdBuffer,ConstantBuffer);
+}
