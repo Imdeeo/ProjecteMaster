@@ -19,7 +19,10 @@ public:
 	void AddCinematicObject(CCinematicObject *CinematicObject);
 	void Update(float _ElapsedTime);
 	virtual void Render(CRenderManager *RenderManager){};
-
+	void Play(bool _cycle);
+	void Stop();
+	void Pause();
+	void OnRestartCycle();
 };
 
 #endif H_CINEMATIC_H

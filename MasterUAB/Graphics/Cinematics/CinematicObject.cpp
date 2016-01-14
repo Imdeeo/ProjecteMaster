@@ -52,14 +52,7 @@ void CCinematicObject::Update(float _ElapsedTime)
 		m_CurrentTime += _ElapsedTime;
 		if(IsFinished())
 		{
-			if(m_Cycle)
-			{
-				OnRestartCycle();
-			}
-			else
-			{
-				m_Playing = false;
-			}
+			m_Playing = false;
 		}
 		else
 		{
@@ -101,7 +94,8 @@ void CCinematicObject::Update(float _ElapsedTime)
 void CCinematicObject::OnRestartCycle()
 {
 	m_CurrentTime = 0;
-	Play(m_Cycle);
+	GetCurrentKey();
+	m_Playing=true;
 }
 
 void CCinematicObject::GetCurrentKey()

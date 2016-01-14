@@ -1,4 +1,4 @@
-#ifndef _UTILS_H
+﻿#ifndef _UTILS_H
 #define _UTILS_H
 
 #include <stdint.h>
@@ -41,7 +41,11 @@ public: \
 
 #define DEG2RAD(x) (x * (float)(3.14159265358979323846 / 180.0))
 
-static void UtilsLog(const std::string& text);
+static void UtilsLog(const std::string& text)
+{
+// TODO: OPCIONAL esto va bi�n tenerlo escribiendo en un fichero
+	OutputDebugString(("LOG: " + text).c_str());
+}
 
 std::vector<std::string> &SplitString(const std::string &s, char delim, std::vector<std::string> &elems);
 
