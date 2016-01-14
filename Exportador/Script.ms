@@ -251,7 +251,7 @@ fn createInstanceMesh dir filename Objs=
 )
 
 
-fn createCinematicObjects dir filename Objs=
+fn createCinematicObjects dir filename Objs =
 (	
 	file=createfile (dir+filename)
 	
@@ -293,8 +293,8 @@ fn createCinematicObjects dir filename Objs=
 					key = j as string	
 					key = replace key key.count 1 ""
 					key = (key as float)/30
-
-					pos = TranslationToRH Obj.transform.translation				
+					
+					pos = TranslationToRH Obj.transform.translation
 					scl = TranslationToRH Obj.transform.scale
 						
 					format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" key pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) scl[1] scl[2] scl[3] to:file
@@ -477,8 +477,12 @@ fn createVertex pos col norm textcoord1 textcoord2 =
 
 fn procesFaces arx Obj =
 (
-	local l_Obj=Obj
-	local l_ObjectConverted=false
+	local l_Obj = copy Obj
+	local l_ObjectConverted=true
+	if classof Obj != Editable_mesh then
+	(
+		convertToMesh l_Obj
+	)
 	
 	local Vt1 = undefined
 	local Vt2 = undefined
@@ -501,13 +505,6 @@ fn procesFaces arx Obj =
 	local NmID = 0x0004
 	local UVID = 0x0000
 	local UV2ID = 0x0000
-	
-	if classof Obj != Editable_mesh then
-	(
-		l_Obj=copy Obj
-		convertToMesh l_Obj
-		l_ObjectConverted=true
-	)
 	
 	l_Obj.transform *= inverse(l_Obj.transform)
 	
@@ -563,7 +560,7 @@ fn procesFaces arx Obj =
 				local l_LightMap = l_Obj.material.selfIllumMap
 			)
 			
-			if classOf l_Map == Bitmaptexture then
+			if classOf l_DiffMap == Bitmaptexture then
 			(
 				--Texture1
 				UVID = 0x0020
