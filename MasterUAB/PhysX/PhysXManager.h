@@ -21,7 +21,7 @@ namespace physx
 	typedef debugger::comm::PvdConnection PxVisualDebuggerConnection;
 }
 
-#define USE_PHYSX_DEBUG 0
+#define USE_PHYSX_DEBUG 1
 
 class CPhysXManager
 {
@@ -34,7 +34,7 @@ public:
 protected:
 
 	physx::PxFoundation				*m_Foundation;
-	physx::PxPhysics				*m_Physics;
+	physx::PxPhysics				*m_PhysX;
 
 #if USE_PHYSX_DEBUG
 	physx::PxVisualDebuggerConnection *m_DebugConnection;
