@@ -9,7 +9,6 @@
 class CAnimatedInstanceModel : public CRenderableObject
 {
 private:
-
 	int m_ActualCycleAnimation;
 	int m_ActualActionAnimation;
 
@@ -22,6 +21,7 @@ private:
 	int m_NumFaces;
 	bool LoadVertexBuffer();
 	void LoadMaterials();
+
 public:
 	CAnimatedInstanceModel(CXMLTreeNode &TreeNode);
 	virtual ~CAnimatedInstanceModel();

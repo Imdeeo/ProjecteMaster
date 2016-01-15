@@ -5,3 +5,8 @@ CCinematicObjectKeyFrame::CCinematicObjectKeyFrame(CXMLTreeNode &TreeNode):C3DEl
 	SetKeyFrameTime(TreeNode.GetFloatProperty("time",0));
 	
 }
+
+CCinematicObjectKeyFrame::~CCinematicObjectKeyFrame()
+{
+	
+}
