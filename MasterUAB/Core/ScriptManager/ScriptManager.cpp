@@ -5,6 +5,18 @@
 #include <luabind/class.hpp>
 #include <luabind/operator.hpp>
 
+#include "3DElement\3DElement.h"
+
+#include "Utils\Named.h"
+
+#include "Engine\UABEngine.h"
+
+#include "InputManager\InputManager.h"
+#include "InputManager\InputManagerImplementation.h"
+
+#include "DebugHelper.h"
+#include "DebugHelperImplementation.h"
+
 #include "AnimatedModels\AnimatedCoreModel.h"
 #include "AnimatedModels\AnimatedInstanceModel.h"
 #include "AnimatedModels\AnimatedModelsManager.h"
@@ -61,6 +73,10 @@
 #include "Texture\TextureManager.h"
 
 #include "DebugRender.h"
+
+#include "PhysXManager\PhysXManager.h"
+
+#include "Application.h"
 
 #include "XML\XMLTreeNode.h"
 #include "Utils.h"
@@ -164,23 +180,100 @@ void CScriptManager::RegisterLUAFunctions()
 	//REGISTER_LUA_FUNCTION("get_speed_player", GetSpeedPlayer);
 	
 // BASE--------------------------------------------------------------------------------------------
-
+	
 	// 3DElement---------------------------------------------------------------------------------------
-	
-	// Math--------------------------------------------------------------------------------------------
-	
+	module(m_LS)[
+		class_<C3DElement>("C3DElement")
+			.def(constructor<>())
+			.def(constructor<const Vect3f&>())
+			.def(constructor<const Vect3f&, float, float, float>())
+			.def(constructor<float, float, float>())
+			.def(constructor<const CXMLTreeNode&>())
+			.def("set_position", &C3DElement::SetPosition)
+			.def("get_position", &C3DElement::GetPosition)
+			.def("get_prev_position", &C3DElement::GetPrevPosition)
+			.def("get_yaw", &C3DElement::GetYaw)
+			.def("get_pitch", &C3DElement::GetPitch)
+			.def("get_roll", &C3DElement::GetRoll)
+			.def("set_yaw", &C3DElement::SetYaw)
+			.def("set_pitch", &C3DElement::SetPitch)
+			.def("set_roll", &C3DElement::SetRoll)
+			.def("set_yaw_pitch_roll", &C3DElement::SetYawPitchRoll)
+			.def("set_scale", &C3DElement::SetScale)
+			.def("get_scale", &C3DElement::GetScale)
+			.def("render", &C3DElement::Render)
+			.def("get_transform", &C3DElement::GetTransform)
+			.def("get_visible", &C3DElement::GetVisible)
+			.def("set_visible", &C3DElement::SetVisible)
+	];
+
 	// Utils-------------------------------------------------------------------------------------------
-	
-	// XML---------------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CNamed>("CNamed")
+			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<const std::string&>())
+			.def("set_name", &CNamed::SetName)
+			.def("get_name", &CNamed::GetName)
+	];
 
 	
 // CORE---------------------------------------------------------------------------------------------
-	
-	// Engine-------------------------------------------------------------------------------------------
-	
-	// InputManager-------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CDebugHelper>("CDebugHelper")
+			.def("render", &CDebugHelper::Render)
+			.def("log", &CDebugHelper::Log)
+			.def("register_bar", &CDebugHelper::RegisterBar)
+			.def("remove_bar", &CDebugHelper::RemoveBar)
+			.def("get_debug_helper", &CDebugHelper::GetDebugHelper)
+			.def("set_current_debug_helper", &CDebugHelper::SetCurrentDebugHelper)
+	];
 
+	module(m_LS)[
+		class_<CDebugHelperImplementation, CDebugHelper>("CNamed")
+			.def(constructor<void*>())
+			.def("update", &CDebugHelperImplementation::Update)
+			.def("render", &CDebugHelperImplementation::Render)
+			.def("log", &CDebugHelperImplementation::Log)
+			.def("register_bar", &CDebugHelperImplementation::RegisterBar)
+			.def("remove_bar", &CDebugHelperImplementation::RemoveBar)
+	];
+
+	// Engine-------------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CUABEngine>("CUABEngine")
+			.def("get_instance", &CUABEngine::GetInstance)
+			.def("destroy", &CUABEngine::Destroy)
+			.def("init", &CUABEngine::Init)
+	];
+
+	// InputManager-------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CInputManager>("CInputManager")
+			.def("is_action_active", &CInputManager::IsActionActive)
+			.def("get_axis", &CInputManager::GetAxis)
+			.def("get_cursor", &CInputManager::GetCursor)
+			.def("get_cursor_movement", &CInputManager::GetCursorMovement)
+			.def("has_focus", &CInputManager::HasFocus)
+			.def("set_current_input_manager", &CInputManager::SetCurrentInputManager)
+			.def("get_input_manager", &CInputManager::GetInputManager)
+			.def("reload", &CInputManager::reload)
+	];
+
+	module(m_LS)[
+		class_<CInputManagerImplementation>("CInputManagerImplementation")
+			.def(constructor<HWND>())
+			.def("load_commands_from_file", &CInputManagerImplementation::LoadCommandsFromFile)
+			.def("begin_frame", &CInputManagerImplementation::BeginFrame)
+			.def("end_frame", &CInputManagerImplementation::EndFrame)
+			.def("set_focus", &CInputManagerImplementation::SetFocus)
+			.def("set_mouse_speed", &CInputManagerImplementation::SetMouseSpeed)
+			.def("key_event_received", &CInputManagerImplementation::KeyEventReceived)
+			.def("update_cursor", &CInputManagerImplementation::UpdateCursor)
+			.def("update_cursor_movement", &CInputManagerImplementation::UpdateCursorMovement)
+			.def("reload", &CInputManagerImplementation::reload)
+	];
 	
+
 // GRAPHICS-----------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CDebugRender>("CDebugRender")
@@ -553,7 +646,7 @@ void CScriptManager::RegisterLUAFunctions()
 	// Materials--------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CMaterial, CNamed>("CMaterial")
-			.def(const constructor<CXMLTreeNode&>())
+			.def(constructor<const CXMLTreeNode&>())
 			.def("apply", &CMaterial::Apply)
 			.def("get_effect_technique", &CMaterial::GetEffectTechnique)
 	];
@@ -569,7 +662,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CRenderableObject, bases<C3DElement, CNamed>>("CRenderableObject")
 			.def(constructor<>())
-			.def(const constructor<CXMLTreeNode&>())
+			.def(constructor<const CXMLTreeNode&>())
 			.def("update", &CRenderableObject::Update)
 			.def("render", &CRenderableObject::Render)
 	];
@@ -657,13 +750,25 @@ void CScriptManager::RegisterLUAFunctions()
 // PHYSX--------------------------------------------------------------------------------------------
 	
 	// PhysxManager-------------------------------------------------------------------------------------
-	
+	module(m_LS)[
+		class_<CPhysXManager>("CPhysXManager")
+			.def(constructor<>())
+			.def("get_texture", &CTextureManager::GetTexture)
+			.def("reload", &CTextureManager::Reload)
+	];
 
 // SOUND--------------------------------------------------------------------------------------------
 	
 	
 // VIDEOGAME----------------------------------------------------------------------------------------
-
+	module(m_LS)[
+		class_<CApplication>("CApplication")
+			.def(constructor<CContextManager*>())
+			.def("switch_camera", &CApplication::SwitchCamera)
+			.def("update", &CApplication::Update)
+			.def("render", &CApplication::Render)
+			.def("init", &CApplication::Init)
+	];
 
 
 	//RunFile("./data/scripting/init.lua");

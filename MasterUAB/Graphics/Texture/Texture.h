@@ -1,7 +1,7 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include "Named.h"
+#include "Utils\Named.h"
 #include <d3d11.h>
 
 class CTexture : CNamed

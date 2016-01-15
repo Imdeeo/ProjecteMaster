@@ -1,7 +1,7 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 
-#include "Named.h"
+#include "Utils\Named.h"
 #include "Utils.h"
 #include "Math\Color.h"
 

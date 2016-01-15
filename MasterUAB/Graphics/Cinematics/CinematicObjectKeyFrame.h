@@ -1,7 +1,7 @@
 #ifndef H_CINEMATIC_OBJECT_KEY_FRAME_H
 #define H_CINEMATIC_OBJECT_KEY_FRAME_H
 
-#include "3DElement\C3DElement.h"
+#include "3DElement\3DElement.h"
 #include "Utils.h"
 #include "XML\XMLTreeNode.h"
 
