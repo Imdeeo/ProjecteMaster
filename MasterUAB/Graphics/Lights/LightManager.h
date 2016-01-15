@@ -1,7 +1,7 @@
 #ifndef LIGHT_MANAGER_H
 #define LIGHT_MANAGER_H
 
-#include "TemplatedVectorMapManager.h"
+#include "Utils\TemplatedVectorMapManager.h"
 
 #include "Math\Vector4.h"
 #include <string>

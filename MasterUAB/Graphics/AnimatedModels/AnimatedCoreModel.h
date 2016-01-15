@@ -3,7 +3,7 @@
 
 #include "Math\Vector3.h"
 #include "Utils.h"
-#include "Named.h"
+#include "Utils\Named.h"
 
 #include <cal3d\cal3d.h>
 

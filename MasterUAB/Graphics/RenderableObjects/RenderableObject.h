@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include "Named.h"
-#include "3DElement\C3DElement.h"
+#include "Utils\Named.h"
+#include "3DElement\3DElement.h"
 
 class CXMLTreeNode;
 class CRenderManager;

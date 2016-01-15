@@ -2,7 +2,7 @@
 #define TEXTUREMANAGER_H
 
 #include "Texture\Texture.h"
-#include "TemplatedMapManager.h"
+#include "Utils\TemplatedMapManager.h"
 
 class CTextureManager :	public CTemplatedMapManager<CTexture>
 {
