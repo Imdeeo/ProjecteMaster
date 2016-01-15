@@ -6,6 +6,19 @@
 #include "Engine\UABEngine.h"
 
 #define SCREEN_DEPTH 20.f
+
+CRenderManager::CRenderManager()
+	: m_UseDebugCamera(false)
+	, m_CurrentRenderlistLength(0)
+{
+
+}
+
+CRenderManager::~CRenderManager()
+{
+
+}
+
 void CRenderManager::SetCurrentCamera(const CCamera& _CurrentCamera)
 {
 	m_CurrentCamera = _CurrentCamera;
