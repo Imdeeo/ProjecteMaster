@@ -43,7 +43,7 @@ public: \
 
 static void UtilsLog(const std::string& text)
 {
-// TODO: OPCIONAL esto va bi�n tenerlo escribiendo en un fichero
+// TODO: OPCIONAL esto va bien tenerlo escribiendo en un fichero
 	OutputDebugString(("LOG: " + text).c_str());
 }
 

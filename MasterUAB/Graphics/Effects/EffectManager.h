@@ -1,7 +1,7 @@
 #ifndef EFFECT_MANAGER_H
 #define EFFECT_MANAGER_H
 
-#include "TemplatedMapManager.h"
+#include "Utils\TemplatedMapManager.h"
 #include "Effects\EffectTechnique.h"
 
 #include "Effects\EffectShader.h"

@@ -1,7 +1,7 @@
 #ifndef H_RENDERABLEOBJECTMANAGER_H
 #define H_RENDERABLEOBJECTMANAGER_H
 
-#include "TemplatedVectorMapManager.h"
+#include "Utils\TemplatedVectorMapManager.h"
 #include "RenderableObject.h"
 
 #include <string>
