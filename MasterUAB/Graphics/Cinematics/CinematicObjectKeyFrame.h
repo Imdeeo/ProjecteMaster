@@ -10,6 +10,7 @@ class CCinematicObjectKeyFrame : public C3DElement
 
 public:
 	CCinematicObjectKeyFrame(CXMLTreeNode &TreeNode);
+	virtual ~CCinematicObjectKeyFrame();
 
 	UAB_BUILD_GET_SET(float,KeyFrameTime);
 };

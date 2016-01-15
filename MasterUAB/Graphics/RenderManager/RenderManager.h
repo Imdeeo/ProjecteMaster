@@ -11,10 +11,8 @@ class CMaterialManager;
 class CRenderManager
 {
 public:
-	CRenderManager()
-		: m_UseDebugCamera(false)
-		, m_CurrentRenderlistLength(0)
-	{}
+	CRenderManager();
+	virtual ~CRenderManager();
 
 	void SetCurrentCamera(const CCamera& _CurrentCamera);
 	void SetDebugCamera(const CCamera& _DebugCamera) { m_DebugCamera = _DebugCamera; }
