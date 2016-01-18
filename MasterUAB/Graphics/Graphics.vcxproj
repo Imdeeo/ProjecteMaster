@@ -35,6 +35,7 @@
     <ClCompile Include="Effects\EffectManager.cpp" />
     <ClCompile Include="Effects\EffectShader.cpp" />
     <ClCompile Include="Effects\EffectTechnique.cpp" />
+    <ClCompile Include="Layers\LayerManager.cpp" />
     <ClCompile Include="Lights\DirectionalLight.cpp" />
     <ClCompile Include="Lights\Light.cpp" />
     <ClCompile Include="Lights\LightManager.cpp" />
@@ -77,6 +78,7 @@
     <ClInclude Include="Effects\EffectTechnique.h" />
     <ClInclude Include="Effects\LightEffectParameters.h" />
     <ClInclude Include="Effects\SceneEffectParameters.h" />
+    <ClInclude Include="Layers\LayerManager.h" />
     <ClInclude Include="Lights\DirectionalLight.h" />
     <ClInclude Include="Lights\Light.h" />
     <ClInclude Include="Lights\LightManager.h" />
