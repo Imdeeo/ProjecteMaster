@@ -182,7 +182,7 @@ void CScriptManager::RegisterLUAFunctions()
 // TEMPLATES-------------------------------------------------------------------------------------------
 
 	// Templated Map Manager---------------------------------------------------------------------------
-	module(m_LS)[
+	/*module(m_LS)[
 		class_<CTemplatedMapManager<CAnimatedCoreModel>>("CTemplatedMapManager<CAnimatedCoreModel>")
 			.def("get_resource", &CTemplatedMapManager<CAnimatedCoreModel>::GetResource)
 			.def("add_resource", &CTemplatedMapManager<CAnimatedCoreModel>::AddResource)
@@ -842,7 +842,7 @@ void CScriptManager::RegisterLUAFunctions()
 	//RunCode("Init();");
 	RunCode("local light=COmniLight();light.intensity=1.1;");
 	//RunCode("local value=3;set_speed_player(value); value=get_speed_player()+2; set_speed_player(value)");
-	//RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");
+	//RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");*/
 }
 
 /*void OnEnterEvent(CEvent *Event)
