@@ -179,8 +179,68 @@ void CScriptManager::RegisterLUAFunctions()
 	//REGISTER_LUA_FUNCTION("set_speed_player", SetSpeedPlayer);
 	//REGISTER_LUA_FUNCTION("get_speed_player", GetSpeedPlayer);
 	
-// BASE--------------------------------------------------------------------------------------------
-	
+// TEMPLATES-------------------------------------------------------------------------------------------
+
+	// Templated Map Manager---------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CTemplatedMapManager<CAnimatedCoreModel>>("CTemplatedMapManager<CAnimatedCoreModel>")
+			.def("get_resource", &CTemplatedMapManager<CAnimatedCoreModel>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CAnimatedCoreModel>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CAnimatedCoreModel>::Destroy)
+	];
+
+	module(m_LS)[
+		class_<CTemplatedMapManager<CCameraControllerManager>>("CTemplatedMapManager<CCameraControllerManager>")
+			.def("get_resource", &CTemplatedMapManager<CCameraControllerManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CCameraControllerManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CCameraControllerManager>::Destroy)
+	];
+
+	module(m_LS)[
+		class_<CTemplatedMapManager<CEffectTechnique>>("CTemplatedMapManager<CEffectTechnique>")
+			.def("get_resource", &CTemplatedMapManager<CEffectTechnique>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CEffectTechnique>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CEffectTechnique>::Destroy)
+	];
+
+	module(m_LS)[
+		class_<CTemplatedMapManager<CMaterialManager>>("CTemplatedMapManager<CMaterialManager>")
+			.def("get_resource", &CTemplatedMapManager<CMaterialManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CMaterialManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CMaterialManager>::Destroy)
+	];
+
+	module(m_LS)[
+		class_<CTemplatedMapManager<CStaticMeshManager>>("CTemplatedMapManager<CStaticMeshManager>")
+			.def("get_resource", &CTemplatedMapManager<CStaticMeshManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CStaticMeshManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CStaticMeshManager>::Destroy)
+	];
+
+	module(m_LS)[
+		class_<CTemplatedMapManager<CTextureManager>>("CTemplatedMapManager<CTextureManager>")
+			.def("get_resource", &CTemplatedMapManager<CTextureManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CTextureManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CTextureManager>::Destroy)
+	];
+
+	// Templated Vector Map Manager---------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CTemplatedVectorMapManager<CLightManager>>("CTemplatedVectorMapManager<CLightManager>")
+			.def("get_resource", &CTemplatedMapManager<CLightManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CLightManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CLightManager>::Destroy)
+	];
+
+	module(m_LS)[
+		class_<CTemplatedVectorMapManager<CRenderableObjectsManager>>("CTemplatedVectorMapManager<CRenderableObjectsManager>")
+			.def("get_resource", &CTemplatedMapManager<CRenderableObjectsManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CRenderableObjectsManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CRenderableObjectsManager>::Destroy)
+	];
+
+// BASE------------------------------------------------------------------------------------------------
+
 	// 3DElement---------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<C3DElement>("C3DElement")
@@ -241,7 +301,6 @@ void CScriptManager::RegisterLUAFunctions()
 	// Engine-------------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CUABEngine>("CUABEngine")
-			.def(constructor<void>())
 			.def("get_static_mesh_manager", &CUABEngine::GetStaticMeshManager)
 			.def("get_renderable_objects_manager", &CUABEngine::GetRenderableObjectsManager)
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)
@@ -372,7 +431,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCameraController>("CCameraController")
-			.def(constructor<>())
+			//.def(constructor<>())
 			.def("set_camera", &CCameraController::SetCamera)
 			.def("add_yaw", &CCameraController::AddYaw)
 			.def("add_pitch", &CCameraController::AddPitch)
@@ -389,7 +448,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCameraControllerManager, CTemplatedMapManager<CCameraController>>("CCameraControllerManager")
-			.def(constructor<void>())
+			.def(constructor<>())
 			.def("choose_main_camera", &CCameraControllerManager::ChooseMainCamera)
 			.def("choose_debug_camera", &CCameraControllerManager::ChooseDebugCamera)
 			.def("load", &CCameraControllerManager::Load)
@@ -556,7 +615,6 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CEffectShader, CNamed>("CEffectShader")
-			.def(constructor<const CXMLTreeNode&>())
 			.def("load", &CEffectShader::Load)
 			.def("reload", &CEffectShader::Reload)
 			.def("set_constant_buffer", &CEffectShader::SetConstantBuffer)
@@ -674,8 +732,6 @@ void CScriptManager::RegisterLUAFunctions()
 	// RenderableObjects------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CRenderableObject, bases<C3DElement, CNamed>>("CRenderableObject")
-			.def(constructor<>())
-			.def(constructor<const CXMLTreeNode&>())
 			.def("update", &CRenderableObject::Update)
 			.def("render", &CRenderableObject::Render)
 	];
@@ -700,8 +756,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render", &CRenderableVertexs::Render)
 			.def("render_indexed", &CRenderableVertexs::RenderIndexed)
 	];
-
-			// Falta TemplatedRenderableIndexedVertexs, TemplatedRenderableVertexs y VertexTypes
 
 	// RenderManager----------------------------------------------------------------------------------
 	module(m_LS)[
