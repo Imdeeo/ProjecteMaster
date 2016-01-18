@@ -475,7 +475,7 @@ fn createVertex pos col norm textcoord1 textcoord2 =
 	return vertex
 )
 
-fn procesFaces arx Obj =
+fn processFaces arx Obj =
 (
 	local l_Obj = copy Obj
 	local l_ObjectConverted=true
@@ -511,6 +511,7 @@ fn procesFaces arx Obj =
 	local nFaces = getNumFaces l_Obj
 	local vertexs = #()
 	local indexs = #()
+	local vertexsDictionary = dotnetobject "System.Collections.Generic::Dictionary"
 	
 	if l_Obj.material != undefined then
 	(	
@@ -606,6 +607,10 @@ fn procesFaces arx Obj =
 		local id2=getIndex vertexs v2 l_IdMaterial
 		local id3=getIndex vertexs v3 l_IdMaterial
 		
+		vertexsDictionary.Add id1 v1
+		vertexsDictionary.Add id2 v2
+		vertexsDictionary.Add id3 v3
+		
 		if isDebug then
 		(format "---------FACE %-----------\n" i
 		format "Vertex 1: % -> Index: %\n" v1 id1
@@ -643,7 +648,7 @@ fn writeMeshFromObject arx Obj =
 (
 	writeHeader arx
 	getMaterials arx Obj
-	procesFaces arx Obj
+	processFaces arx Obj
 	writeFooter arx
 )
 
@@ -665,7 +670,7 @@ fn createMaterials dir filename Objs copyTexture =
 	format "<materials>\n" to:file
 	if Objs != undefined then
 	(
-		materialsDictionary = dotNetObject "System.Collections.Hashtable"
+		materialsDictionary = dotNetObject "System.Collections.Generic::Dictionary"
 		for i=1 to Objs.count do
 		(
 			mat = #()
