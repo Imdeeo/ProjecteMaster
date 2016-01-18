@@ -125,3 +125,88 @@ CPhysXManager* CPhysXManager::CreatePhysXManager()
 {
 	return new CPhysXManagerImplementation();
 }
+
+void CPhysXManager::RegisterMaterial(const std::string &name, float staticFriction, float dynamicFriction, float restitution)
+{
+	/*
+	auto it = m_Materials.find(name);
+	if (it != m_Materials.end())
+	{
+		it->second->release(); // if a material with that name exist, we remove it
+	}
+	/*/
+	assert(m_Materials.find(name)==m_Materials.end());
+	//*/
+	m_Materials[name] = m_PhysX->createMaterial(staticFriction,dynamicFriction,restitution);
+}
+
+inline void CPhysXManager::AssertCoordArrays()
+{
+	assert(m_Actors.size()==m_ActorNames.size()); // AOS sync fail
+	assert(m_Actors.size()==m_ActorPositions.size()); // AOS sync fail
+	assert(m_Actors.size()==m_ActorOrientations.size()); // AOS sync fail
+	assert(m_Actors.size()==m_ActorIndexs.size()); // AOS sync fail
+}
+
+void CPhysXManager::AddActor(std::string _actorName, Vect3f _position, Quatf _orientation, physx::PxActor* _actor)
+{
+	int index = m_Actors.size();
+
+	m_ActorIndexs[_actorName] = index;
+	m_ActorNames.push_back(_actorName);
+	m_ActorPositions.push_back(_position);
+	m_ActorOrientations.push_back(_orientation);
+	m_Actors.push_back(_actor);
+
+#ifdef _DEBUG
+	AssertCoordArrays();
+#endif
+
+}
+
+
+inline size_t CPhysXManager::GetActorIndexFromName(const std::string& _actorName)
+{
+	auto it = m_ActorIndexs.find(_actorName);
+	assert(it != m_ActorIndexs.end());
+	return it->second;
+}
+
+Vect3f CPhysXManager::GetActorPosition(const std::string& _actorName)
+{
+	return m_ActorPositions[GetActorIndexFromName(_actorName)];
+}
+
+Quatf CPhysXManager::GetActorOrientation(const std::string& _actorName)
+{
+	return m_ActorOrientations[GetActorIndexFromName(_actorName)];
+}
+
+void CPhysXManager::GetActorPositionAndOrientation(const std::string& _actorName,Vect3f* Pos_, Quatf* Orienation_)
+{
+	size_t l_index = GetActorIndexFromName(_actorName);
+	Pos_ = &(m_ActorPositions[l_index]);
+	Orienation_ = &(m_ActorOrientations[l_index]);
+}
+
+void CPhysXManager::CreateStaticShape(Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,size_t* index)
+{
+	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x/2, _size.y/2, _size.z/2), _Material);
+	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
+	body->attachShape(*shape);
+	body->userData = (void*)index;
+	m_Scene->addActor(*body);
+
+	shape->release();
+}
+
+void CPhysXManager::CreateStaticPlane(Vect4f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,size_t* index)
+{
+	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_size.x, _size.y, _size.z,_size.w), _Material);
+	groundPlane->userData = (void*)index;
+	m_Scene->addActor(*groundPlane);
+
+	physx::PxShape* shape;
+	size_t numShapes = groundPlane->getShapes(&shape,1);
+	assert(numShapes == 1);
+}
