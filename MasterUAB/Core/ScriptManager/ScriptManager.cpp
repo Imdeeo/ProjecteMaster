@@ -819,7 +819,6 @@ void CScriptManager::RegisterLUAFunctions()
 	// PhysxManager-------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CPhysXManager>("CPhysXManager")
-			.def(constructor<>())
 			.def("get_texture", &CTextureManager::GetTexture)
 			.def("reload", &CTextureManager::Reload)
 	];
@@ -837,7 +836,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("init", &CApplication::Init)
 	];
 
-
+	
 	//RunFile("./data/scripting/init.lua");
 
 	//RunCode("Init();");
