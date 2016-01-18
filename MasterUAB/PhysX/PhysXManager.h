@@ -49,6 +49,8 @@ public:
 	void CreateStaticShape(Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,size_t* index);
 	void CreateStaticPlane(Vect4f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,size_t* index);
 
+	void CreateDinamicShape(Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,size_t* index, float _density);
+
 protected:
 
 	physx::PxFoundation				*m_Foundation;
@@ -72,5 +74,6 @@ protected:
 	std::vector<physx::PxActor*>	m_Actors;
 	
 	void AddActor(std::string _actorName, Vect3f _position, Quatf _orientation, physx::PxActor*);
+	void CreateComplexShape();
 
 };

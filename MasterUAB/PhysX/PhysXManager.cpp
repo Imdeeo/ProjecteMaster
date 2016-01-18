@@ -210,3 +210,34 @@ void CPhysXManager::CreateStaticPlane(Vect4f _size,physx::PxMaterial &_Material,
 	size_t numShapes = groundPlane->getShapes(&shape,1);
 	assert(numShapes == 1);
 }
+
+void CPhysXManager::CreateDinamicShape(Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,size_t* index, float _density)
+{
+	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x/2, _size.y/2, _size.z/2), _Material);
+	physx::PxRigidDynamic* body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
+	body->attachShape(*shape);
+	physx::PxRigidBodyExt::updateMassAndInertia(*body,_density);
+	body->userData = (void*)index;
+	m_Scene->addActor(*body);
+
+	shape->release();
+}
+
+void CPhysXManager::CreateComplexShape()
+{
+	std::vector<Vect3f> l_vertices;
+	physx::PxConvexMeshDesc convexDesc;
+	convexDesc.points.count = l_vertices.size();
+	convexDesc.points.stride = sizeof(Vect3f);
+	convexDesc.points.data = &l_vertices[0];
+	convexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
+
+	physx::PxDefaultMemoryOutputStream buff;
+	physx::PxConvexMeshCookingResult::Enum result;
+	bool succes = m_Cooking->cookConvexMesh(convexDesc,buff,&result);
+	assert (succes);
+	physx::PxDefaultMemoryInputData input(buff.getData(),buff.getSize());
+	physx::PxConvexMesh* convexMesh = m_PhysX->createConvexMesh(input);
+
+	physx::PxRigidDynamic* body = m_PhysX ->createRigidDynamic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
+}
