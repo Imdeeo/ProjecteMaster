@@ -101,6 +101,9 @@
     <ClCompile Include="Cinematics\CinematicPlayer.cpp">
       <Filter>Cinematics</Filter>
     </ClCompile>
+    <ClCompile Include="Layers\LayerManager.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -135,6 +138,9 @@
     </Filter>
     <Filter Include="Cinematics">
       <UniqueIdentifier>{81c76184-03e5-4958-b30a-4bfdc8162d5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layers">
+      <UniqueIdentifier>{6784774d-1854-4fee-9265-d832a366caf9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="Cinematics\CinematicPlayer.h">
       <Filter>Cinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="Layers\LayerManager.h">
+      <Filter>Layers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
