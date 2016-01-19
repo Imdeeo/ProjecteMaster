@@ -1,3 +1,7 @@
+#if !(defined NDEBUG ^ defined _DEBUG)
+#define _DEBUG
+#endif
+
 #include "PhysXManager.h"
 #include "Math\Vector3.h"
 #include "Math\Quatn.h"
@@ -223,7 +227,7 @@ void CPhysXManager::CreateDinamicShape(Vect3f _size,physx::PxMaterial &_Material
 	shape->release();
 }
 
-void CPhysXManager::CreateComplexShape()
+void CPhysXManager::CreateComplexShape(Vect3f _size, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, size_t* index, float _density)
 {
 	std::vector<Vect3f> l_vertices;
 	physx::PxConvexMeshDesc convexDesc;
@@ -240,4 +244,12 @@ void CPhysXManager::CreateComplexShape()
 	physx::PxConvexMesh* convexMesh = m_PhysX->createConvexMesh(input);
 
 	physx::PxRigidDynamic* body = m_PhysX ->createRigidDynamic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
+	physx::PxShape* shape = body->createShape(physx::PxConvexMeshGeometry(convexMesh), _Material);
+
+	body->attachShape(*shape);
+	physx::PxRigidBodyExt::updateMassAndInertia(*body, _density);
+	body->userData = (void*)index;
+	m_Scene->addActor(*body);
+
+	shape->release();
 }
