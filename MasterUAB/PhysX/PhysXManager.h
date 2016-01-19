@@ -32,6 +32,8 @@ namespace physx
 
 #define USE_PHYSX_DEBUG 1
 
+#define PHYSX_UPDATE_STEP 1
+
 class CPhysXManager
 {
 protected:
@@ -49,11 +51,17 @@ public:
 
 	void GetActorPositionAndOrientation(const std::string& _actorName,Vect3f* Pos_, Quatf* Orienation_);
 
-	void CreateStaticShape(Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,size_t* index);
-	void CreateStaticPlane(Vect4f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,size_t* index);
+	void CreateStaticShape(const std::string _name, Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation);
+	void CreateStaticPlane(const std::string _name, Vect4f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation);
 
-	void CreateDinamicShape(Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,size_t* index, float _density);
+	void CreateDinamicShape(const std::string _name, Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation, float _density);
+	void CreateComplexShape(const std::string _name, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, float _density);
 
+	void CreateTrigger(const std::string _name, Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation);
+
+	virtual void CreateCharacterController(std::string _name, float _height, float _radius, float _density, Vect3f _position,std::string _MaterialName) = 0;
+
+	void Update(float _dt);
 protected:
 
 	physx::PxFoundation				*m_Foundation;
@@ -69,15 +77,17 @@ protected:
 	physx::PxControllerManager		*m_ControllerManager;
 
 	std::map<std::string,physx::PxMaterial*> m_Materials;
+	std::map<std::string,physx::PxController*> m_CharacterControllers;
 
 	std::map<std::string, size_t>	m_ActorIndexs;
 	std::vector<std::string>		m_ActorNames;
 	std::vector<Vect3f>				m_ActorPositions;
 	std::vector<Quatf>				m_ActorOrientations;
 	std::vector<physx::PxActor*>	m_Actors;
+
+	float							m_LeftoverSeconds;
 	
-	void AddActor(std::string _actorName, Vect3f _position, Quatf _orientation, physx::PxActor*);
-	void CreateComplexShape(Vect3f _size, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, size_t* index, float _density);
+	size_t* AddActor(std::string _actorName, Vect3f _position, Quatf _orientation, physx::PxActor*);
 
 };
 
