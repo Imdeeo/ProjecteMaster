@@ -1,3 +1,6 @@
+#ifndef PHYSX_MANAGER_H
+#define PHYSX_MANAGER_H
+
 #include <map>
 #include <string>
 #include <vector>
@@ -74,6 +77,8 @@ protected:
 	std::vector<physx::PxActor*>	m_Actors;
 	
 	void AddActor(std::string _actorName, Vect3f _position, Quatf _orientation, physx::PxActor*);
-	void CreateComplexShape();
+	void CreateComplexShape(Vect3f _size, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, size_t* index, float _density);
 
 };
+
+#endif //PHYSX_MANAGER_H
