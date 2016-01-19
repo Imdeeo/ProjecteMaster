@@ -224,7 +224,7 @@ fn createStaticMesh dir level filename Objs=
 	(
 		for i=1 to Objs.count do
 		(
-			format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" Objs[i].name ("Data\\" + level + "\\Meshes\\"+Objs[i].name+".mesh") to:file
+			if Objs[i].material != undefined then format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" Objs[i].name ("Data\\" + level + "\\Meshes\\"+Objs[i].name+".mesh") to:file
 		)
 	)
 	format "</static_meshes>\n" to:file
@@ -241,9 +241,12 @@ fn createInstanceMesh dir filename Objs=
 		for i=1 to Objs.count do
 		(
 			Obj = Objs[i]
+			if Obj.material != undefined then
+			(
 			print (getUserProp Obj "core_name")
 			pos = TranslationToRH Obj.transform.translation
 			format "\t<renderable_object name=\"%\" core_name=\"%\" position=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" visible=\"%\"/>\n" Obj.name (getUserProp Obj "core_name") pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) true to:file
+			)
 		)
 	)
 	format "</renderable_objects>\n" to:file
@@ -369,8 +372,23 @@ fn equalVertex vt1 vt2 =
 	return equals
 )
 
-fn getIndex vertexVect vertex IdMaterial =
+fn getIndex vertexVect vertex IdMaterial vertexsDictionary =
 (
+	local vtxStr = vertex as string
+	local vtxN
+	local doContain = vertexsDictionary.ContainsKey vtxStr
+
+	if doContain then
+	(
+		vtxN = vertexsDictionary.Item[vtxStr]
+	) else (
+		vtxN = vertexVect[IdMaterial].count
+		vertexsDictionary.Add vtxStr vtxN
+		append vertexVect[IdMaterial] vertex
+	)
+	
+	return vtxN
+	/*
 	local l_FoundVertex=false
 	local index = (vertexVect[IdMaterial]).count
 	for i=1 to vertexVect[IdMaterial].count do
@@ -387,6 +405,7 @@ fn getIndex vertexVect vertex IdMaterial =
 		append vertexVect[IdMaterial] vertex
 	)
 	return index
+	*/
 )
 
 fn writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere=
@@ -511,7 +530,7 @@ fn processFaces arx Obj =
 	local nFaces = getNumFaces l_Obj
 	local vertexs = #()
 	local indexs = #()
-	local vertexsDictionary = dotnetobject "System.Collections.Generic::Dictionary"
+	local vertexsDictionary = dotnetobject "System.Collections.Generic.Dictionary`2[System.String, System.UInt32]"
 	
 	if l_Obj.material != undefined then
 	(	
@@ -603,19 +622,15 @@ fn processFaces arx Obj =
 		local v3 = createVertex Vt3 Color3 Nm3 TUVMap3 T2UVMap3
 		
 		-- Index creation
-		local id1=getIndex vertexs v1 l_IdMaterial
-		local id2=getIndex vertexs v2 l_IdMaterial
-		local id3=getIndex vertexs v3 l_IdMaterial
-		
-		vertexsDictionary.Add id1 v1
-		vertexsDictionary.Add id2 v2
-		vertexsDictionary.Add id3 v3
+		local id1=getIndex vertexs v1 l_IdMaterial vertexsDictionary
+		local id2=getIndex vertexs v2 l_IdMaterial vertexsDictionary
+		local id3=getIndex vertexs v3 l_IdMaterial vertexsDictionary
 		
 		if isDebug then
 		(format "---------FACE %-----------\n" i
 		format "Vertex 1: % -> Index: %\n" v1 id1
 		format "Vertex 2: % -> Index: %\n" v2 id2
-		format "Vertex 3: % -> Index: %\n" v2 id3
+		format "Vertex 3: % -> Index: %\n" v3 id3
 		format "---------------------------\n\n"
 		)
 		
@@ -657,9 +672,14 @@ fn createMeshFromObjects dir Objs =
 	dirExist (dir+"\\Meshes")
 	for i=1 to Objs.count do
 	(
-		file=fopen (dir+"\\Meshes\\"+Objs[i].name+".mesh") "wb"
-		writeMeshFromObject file (Objs[i])
-		FClose file
+		if Objs[i].material != undefined then
+		(
+			file=fopen (dir+"\\Meshes\\"+Objs[i].name+".mesh") "wb"
+			writeMeshFromObject file (Objs[i])
+			FClose file
+		) else (
+			format "The object % has no material!\n" Objs[i].name
+		)
 	)
 )
 
@@ -670,7 +690,7 @@ fn createMaterials dir filename Objs copyTexture =
 	format "<materials>\n" to:file
 	if Objs != undefined then
 	(
-		materialsDictionary = dotNetObject "System.Collections.Generic::Dictionary"
+		materialsDictionary = dotNetObject "System.Collections.Hashtable"
 		for i=1 to Objs.count do
 		(
 			mat = #()
