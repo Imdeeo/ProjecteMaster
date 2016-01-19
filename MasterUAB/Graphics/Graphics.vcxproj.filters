@@ -104,6 +104,15 @@
     <ClCompile Include="Layers\LayerManager.cpp">
       <Filter>Layers</Filter>
     </ClCompile>
+    <ClCompile Include="RenderableObjects\RenderableObjectTechnique.cpp">
+      <Filter>RenderableObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderableObjects\PoolRenderableObjectTechnique.cpp">
+      <Filter>RenderableObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp">
+      <Filter>RenderableObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -283,6 +292,15 @@
     </ClInclude>
     <ClInclude Include="Layers\LayerManager.h">
       <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderableObjects\RenderableObjectTechnique.h">
+      <Filter>RenderableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderableObjects\PoolRenderableObjectTechnique.h">
+      <Filter>RenderableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderableObjects\RenderableObjectTechniqueManager.h">
+      <Filter>RenderableObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
