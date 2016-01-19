@@ -118,11 +118,49 @@ public:
 	void onWake(physx::PxActor** actors, physx::PxU32 count){}
 	void onSleep(physx::PxActor** actors, physx::PxU32 count){}
 	void onContact(const physx::PxContactPairHeader& pairHeader,const physx::PxContactPair* pairs, physx::PxU32 nbPairs){}
-	void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count){}
+	void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
+	{
+		for(physx::PxU32 i = 0; i < count; i++)
+		{
+			if((pairs[i].flags & (physx::PxTriggerPairFlag::eREMOVED_SHAPE_TRIGGER| physx::PxTriggerPairFlag::eREMOVED_SHAPE_OTHER)))
+				continue;
+
+			size_t l_indexTrigger = (size_t)pairs[i].triggerActor->userData;
+			size_t l_indexActor = (size_t)pairs[i].otherActor->userData;
+
+			std::string l_triggerName = m_ActorNames[l_indexTrigger];
+			std::string l_actorName = m_ActorNames[l_indexActor];
+
+			printf("Trigger \"%s\" fired with \"%s\"", l_triggerName.c_str(),l_actorName.c_str());
+		}
+	}
 
 	void onShapeHit(const physx::PxControllerShapeHit& hit){}
 	void onControllerHit(const physx::PxControllersHit& hit){}
 	void onObstacleHit(const physx::PxControllerObstacleHit& hit){}
+
+	void CreateCharacterController(std::string _name, float _height, float _radius, float _density, Vect3f _position,std::string _MaterialName)
+	{
+		assert(m_CharacterControllers.find(_name)!=m_CharacterControllers.end());
+
+		physx::PxMaterial* l_Material = m_Materials[_MaterialName];
+
+		physx::PxCapsuleControllerDesc desc;
+		desc.height = _height;
+		desc.radius = _radius;
+		desc.climbingMode = physx::PxCapsuleClimbingMode::eEASY;
+		desc.slopeLimit = cosf(3.1415f / 6); //30º
+		desc.stepOffset = 0.5f;
+		desc.density = _density;
+		desc.reportCallback = this;
+		desc.position = physx::PxExtendedVec3(_position.x,_position.y+_radius + _height*0.5,_position.z);
+		desc.material = l_Material;
+		//desc.userData = (void*)index;
+
+		m_CharacterControllers[_name] = m_ControllerManager->createController(desc);
+
+		AddActor(_name,_position,Quatf(0,0,0,1),m_CharacterControllers[_name]->getActor());
+	}
 };
 
 CPhysXManager* CPhysXManager::CreatePhysXManager()
@@ -152,9 +190,11 @@ inline void CPhysXManager::AssertCoordArrays()
 	assert(m_Actors.size()==m_ActorIndexs.size()); // AOS sync fail
 }
 
-void CPhysXManager::AddActor(std::string _actorName, Vect3f _position, Quatf _orientation, physx::PxActor* _actor)
+size_t CPhysXManager::AddActor(std::string _actorName, Vect3f _position, Quatf _orientation, physx::PxActor* _actor)
 {
-	int index = m_Actors.size();
+	size_t index = m_Actors.size();
+
+	_actor->userData = (void*)index;
 
 	m_ActorIndexs[_actorName] = index;
 	m_ActorNames.push_back(_actorName);
@@ -165,6 +205,8 @@ void CPhysXManager::AddActor(std::string _actorName, Vect3f _position, Quatf _or
 #ifdef _DEBUG
 	AssertCoordArrays();
 #endif
+
+	return m_ActorIndexs[_actorName];
 
 }
 
@@ -193,41 +235,60 @@ void CPhysXManager::GetActorPositionAndOrientation(const std::string& _actorName
 	Orienation_ = &(m_ActorOrientations[l_index]);
 }
 
-void CPhysXManager::CreateStaticShape(Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,size_t* index)
+void CPhysXManager::CreateStaticShape(const std::string _name, Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation)
 {
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x/2, _size.y/2, _size.z/2), _Material);
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
 	body->attachShape(*shape);
-	body->userData = (void*)index;
+
+	body->userData = (void*)AddActor(_name,_position,_orientation,body);
 	m_Scene->addActor(*body);
 
 	shape->release();
 }
 
-void CPhysXManager::CreateStaticPlane(Vect4f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,size_t* index)
+
+void CPhysXManager::CreateTrigger(const std::string _name, Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation)
+{
+	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x/2, _size.y/2, _size.z/2), _Material);
+	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
+	body->attachShape(*shape);
+
+	body->userData = (void*)AddActor(_name,_position,_orientation,body);
+	m_Scene->addActor(*body);
+
+	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE,false);
+	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE,true);
+
+	shape->release();
+
+}
+
+void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation)
 {
 	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_size.x, _size.y, _size.z,_size.w), _Material);
-	groundPlane->userData = (void*)index;
+	groundPlane->userData = (void*)AddActor(_name,_position,_orientation,groundPlane);
 	m_Scene->addActor(*groundPlane);
 
 	physx::PxShape* shape;
 	size_t numShapes = groundPlane->getShapes(&shape,1);
 	assert(numShapes == 1);
+
 }
 
-void CPhysXManager::CreateDinamicShape(Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,size_t* index, float _density)
+void CPhysXManager::CreateDinamicShape(const std::string _name,Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation, float _density)
 {
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x/2, _size.y/2, _size.z/2), _Material);
 	physx::PxRigidDynamic* body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
 	body->attachShape(*shape);
 	physx::PxRigidBodyExt::updateMassAndInertia(*body,_density);
-	body->userData = (void*)index;
+	body->userData = (void*)AddActor(_name,_position,_orientation,body);
 	m_Scene->addActor(*body);
 
 	shape->release();
 }
 
-void CPhysXManager::CreateComplexShape(Vect3f _size, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, size_t* index, float _density)
+void CPhysXManager::CreateComplexShape(const std::string _name, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, float _density)
 {
 	std::vector<Vect3f> l_vertices;
 	physx::PxConvexMeshDesc convexDesc;
@@ -248,8 +309,31 @@ void CPhysXManager::CreateComplexShape(Vect3f _size, physx::PxMaterial &_Materia
 
 	body->attachShape(*shape);
 	physx::PxRigidBodyExt::updateMassAndInertia(*body, _density);
-	body->userData = (void*)index;
+	
+	body->userData = (void*)AddActor(_name,_position,_orientation,body);
 	m_Scene->addActor(*body);
-
-	shape->release();
 }
+
+void CPhysXManager::Update(float _dt)
+{
+	m_LeftoverSeconds = m_LeftoverSeconds + _dt;
+	if(m_LeftoverSeconds >= PHYSX_UPDATE_STEP )
+	{
+		m_Scene->simulate(PHYSX_UPDATE_STEP);
+		m_Scene->fetchResults(true);
+
+		physx::PxU32 numActiveTransform;
+		const physx::PxActiveTransform* activeTransforms = m_Scene->getActiveTransforms(numActiveTransform);
+
+		for(physx::PxU32 i = 0;i<numActiveTransform; i++)
+		{
+			uintptr_t index = (uintptr_t)(activeTransforms[i].userData);
+			m_ActorPositions[index] = CastVec(activeTransforms[i].actor2World.p);
+			m_ActorOrientations[index] = CastQuat(activeTransforms[i].actor2World.q);
+		}
+
+		m_LeftoverSeconds = fmod(m_LeftoverSeconds, PHYSX_UPDATE_STEP);
+	}
+}
+
+
