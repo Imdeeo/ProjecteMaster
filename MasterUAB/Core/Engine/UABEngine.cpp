@@ -61,8 +61,7 @@ void CUABEngine::Init()
 	m_RenderableObjectsManager->AddResource("Cinematic",m_Cinematic);
 	m_ScriptManager->Initialize();
 	m_CameraManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
-	
-
+	m_Cinematic->Play("true");
 }
 
 void CUABEngine::Destroy()

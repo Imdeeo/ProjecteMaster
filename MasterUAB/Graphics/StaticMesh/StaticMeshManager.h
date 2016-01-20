@@ -1,7 +1,7 @@
 #ifndef STATIC_MESH_MANAGER_H
 #define STATIC_MESH_MANAGER_H
 
-#include "TemplatedMapManager.h"
+#include "Utils\TemplatedMapManager.h"
 #include "StaticMesh\StaticMesh.h"
 #include <string>
 

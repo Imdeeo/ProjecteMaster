@@ -5,7 +5,6 @@
 
 #include <unordered_map>
 
-// TODO: Activar AntTeakBar
 #include <AntTweakBar.h>
 
 #include "DebugHelper.h"

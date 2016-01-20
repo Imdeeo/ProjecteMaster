@@ -33,20 +33,20 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="HelperTypes.h" />
-    <ClInclude Include="Named.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="TemplatedVectorMapManager.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="TemplatedMapManager.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="3DElement\C3DElement.h">
-      <Filter>3DElement</Filter>
-    </ClInclude>
     <ClInclude Include="Math\Quatn.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Named.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\TemplatedMapManager.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\TemplatedVectorMapManager.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="3DElement\3DElement.h">
+      <Filter>3DElement</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -73,16 +73,16 @@
     <ClCompile Include="XML\XMLTreeNode.cpp">
       <Filter>XML</Filter>
     </ClCompile>
-    <ClCompile Include="Named.cpp">
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Utils\dummy.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="dummy.cpp">
+    <ClCompile Include="Utils\Named.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="3DElement\C3DElement.cpp">
+    <ClCompile Include="3DElement\3DElement.cpp">
       <Filter>3DElement</Filter>
     </ClCompile>
-    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Math\MathUtils.inl">
