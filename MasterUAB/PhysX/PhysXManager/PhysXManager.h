@@ -82,6 +82,8 @@ public:
 
 	bool Raycast(const Vect3f _origin, const Vect3f _end, int _GROUPS, RaycastData* result_);
 
+	void RemoveActor(const std::string _ActorName);
+
 	void Update(float _dt);
 protected:
 
