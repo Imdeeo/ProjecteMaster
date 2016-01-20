@@ -38,7 +38,13 @@ inline physx::PxQuat CastQuat(const Quatf& q)
 inline Quatf CastQuat(const physx::PxQuat& q)
 { return Quatf(q.x,q.y,q.z,q.w);}
 
-
+inline void L_PutGroupToShape(physx::PxShape* shape, int _group)
+{
+	physx::PxFilterData filterData;
+	filterData.setToDefault();
+	filterData.word0 = _group;
+	shape->setQueryFilterData(filterData);
+}
 
 class CPhysXManagerImplementation:
 	public CPhysXManager,
@@ -96,6 +102,8 @@ private :
 
 	void Destroy()
 	{
+		CleanCharacterControllers();
+
 		CHECKED_RELEASE(m_ControllerManager);
 		CHECKED_RELEASE(m_Scene);
 		CHECKED_RELEASE(m_Dispatcher);
@@ -109,7 +117,19 @@ private :
 		CHECKED_RELEASE(m_PhysX);
 		CHECKED_RELEASE(profileZoneManager);
 		CHECKED_RELEASE(m_Foundation);
+
+		CPhysXManager::Destroy();
 	}
+
+	void CleanCharacterControllers()
+	{
+		for (auto it = m_CharacterControllers.begin(); it != m_CharacterControllers.end(); ++it)
+		{
+			CHECKED_RELEASE(it->second);
+		}
+		m_CharacterControllers.clear();
+	}
+
 public:
 	CPhysXManagerImplementation(){Init();}
 	virtual ~CPhysXManagerImplementation(){Destroy();}
@@ -132,6 +152,7 @@ public:
 			std::string l_actorName = m_ActorNames[l_indexActor];
 
 			printf("Trigger \"%s\" fired with \"%s\"", l_triggerName.c_str(),l_actorName.c_str());
+			//lo suyo seria llamar a una funcion lua que gestionara la activacion del trigger
 		}
 	}
 
@@ -139,7 +160,7 @@ public:
 	void onControllerHit(const physx::PxControllersHit& hit){}
 	void onObstacleHit(const physx::PxControllerObstacleHit& hit){}
 
-	void CreateCharacterController(std::string _name, float _height, float _radius, float _density, Vect3f _position,std::string _MaterialName)
+	void CreateCharacterController(std::string _name, float _height, float _radius, float _density, Vect3f _position, std::string _MaterialName, int _group)
 	{
 		assert(m_CharacterControllers.find(_name)!=m_CharacterControllers.end());
 
@@ -159,7 +180,12 @@ public:
 
 		m_CharacterControllers[_name] = m_ControllerManager->createController(desc);
 
-		AddActor(_name,_position,Quatf(0,0,0,1),m_CharacterControllers[_name]->getActor());
+		physx::PxRigidDynamic* l_actor = m_CharacterControllers[_name]->getActor();
+		physx::PxShape *shape = l_actor->createShape(physx::PxBoxGeometry(_radius, _height + _radius * 2, _radius), *l_Material);
+
+		L_PutGroupToShape(shape, _group);
+
+		AddActor(_name,_position,Quatf(0,0,0,1),l_actor);
 	}
 };
 
@@ -210,7 +236,6 @@ size_t CPhysXManager::AddActor(std::string _actorName, Vect3f _position, Quatf _
 
 }
 
-
 inline size_t CPhysXManager::GetActorIndexFromName(const std::string& _actorName)
 {
 	auto it = m_ActorIndexs.find(_actorName);
@@ -235,10 +260,13 @@ void CPhysXManager::GetActorPositionAndOrientation(const std::string& _actorName
 	Orienation_ = &(m_ActorOrientations[l_index]);
 }
 
-void CPhysXManager::CreateStaticShape(const std::string _name, Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation)
+void CPhysXManager::CreateStaticShape(const std::string _name, Vect3f _size, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x/2, _size.y/2, _size.z/2), _Material);
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
+
+	L_PutGroupToShape(shape, _group);
+
 	body->attachShape(*shape);
 
 	body->userData = (void*)AddActor(_name,_position,_orientation,body);
@@ -248,10 +276,13 @@ void CPhysXManager::CreateStaticShape(const std::string _name, Vect3f _size,phys
 }
 
 
-void CPhysXManager::CreateTrigger(const std::string _name, Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation)
+void CPhysXManager::CreateTrigger(const std::string _name, Vect3f _size, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x/2, _size.y/2, _size.z/2), _Material);
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
+
+	L_PutGroupToShape(shape, _group);
+
 	body->attachShape(*shape);
 
 	body->userData = (void*)AddActor(_name,_position,_orientation,body);
@@ -264,9 +295,11 @@ void CPhysXManager::CreateTrigger(const std::string _name, Vect3f _size,physx::P
 
 }
 
-void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation)
+void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance,physx::PxMaterial &_Material,
+	Vect3f _position, Quatf _orientation, int _group)
 {
-	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_size.x, _size.y, _size.z,_size.w), _Material);
+	physx::PxRigidStatic* groundPlane = 
+		physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z,_PlaneDistance),_Material);
 	groundPlane->userData = (void*)AddActor(_name,_position,_orientation,groundPlane);
 	m_Scene->addActor(*groundPlane);
 
@@ -274,12 +307,18 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 	size_t numShapes = groundPlane->getShapes(&shape,1);
 	assert(numShapes == 1);
 
+	L_PutGroupToShape(shape, _group);
+
 }
 
-void CPhysXManager::CreateDinamicShape(const std::string _name,Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation, float _density)
+void CPhysXManager::CreateDinamicShape(const std::string _name,Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,
+	float _density, int _group)
 {
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x/2, _size.y/2, _size.z/2), _Material);
 	physx::PxRigidDynamic* body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
+
+	L_PutGroupToShape(shape, _group);
+
 	body->attachShape(*shape);
 	physx::PxRigidBodyExt::updateMassAndInertia(*body,_density);
 	body->userData = (void*)AddActor(_name,_position,_orientation,body);
@@ -288,7 +327,8 @@ void CPhysXManager::CreateDinamicShape(const std::string _name,Vect3f _size,phys
 	shape->release();
 }
 
-void CPhysXManager::CreateComplexShape(const std::string _name, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, float _density)
+void CPhysXManager::CreateComplexShape(const std::string _name, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation,
+	float _density, int _group)
 {
 	std::vector<Vect3f> l_vertices;
 	physx::PxConvexMeshDesc convexDesc;
@@ -306,6 +346,8 @@ void CPhysXManager::CreateComplexShape(const std::string _name, physx::PxMateria
 
 	physx::PxRigidDynamic* body = m_PhysX ->createRigidDynamic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
 	physx::PxShape* shape = body->createShape(physx::PxConvexMeshGeometry(convexMesh), _Material);
+
+	L_PutGroupToShape(shape, _group);
 
 	body->attachShape(*shape);
 	physx::PxRigidBodyExt::updateMassAndInertia(*body, _density);
@@ -336,4 +378,35 @@ void CPhysXManager::Update(float _dt)
 	}
 }
 
+void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime)
+{
+	physx::PxController* cct = m_CharacterControllers[_name];
+	const physx::PxControllerFilters filters(nullptr, nullptr, nullptr);
 
+	size_t index = (size_t)cct->getUserData();
+
+	cct->move(CastVec(_movement), _movement.Length()*0.01, _elapsedTime, filters);
+
+	physx::PxRigidDynamic* actor = cct->getActor();
+
+	physx::PxExtendedVec3 p = cct->getFootPosition();
+	physx::PxVec3 v = actor->getLinearVelocity();
+}
+
+bool CPhysXManager::RayHit(Vect3f _origin, Vect3f _dir, float _len, int GROUPS)
+{
+	physx::PxFilterData l_filterData;
+	l_filterData.setToDefault();
+	l_filterData.word0 = GROUPS;  // GROUP1 | GROUP2;
+	physx::PxRaycastBuffer L_hit;
+	return m_Scene->raycast(
+		CastVec(_origin),
+		CastVec(_dir),
+		_len,
+		L_hit,
+		physx::PxHitFlags(physx::PxHitFlag::eDEFAULT),
+		physx::PxQueryFilterData(
+			l_filterData,
+			physx::PxQueryFlag::eDYNAMIC | physx::PxQueryFlag::eSTATIC)
+		);
+}

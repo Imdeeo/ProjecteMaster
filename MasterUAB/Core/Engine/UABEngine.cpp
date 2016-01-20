@@ -16,21 +16,24 @@ CUABEngine::CUABEngine(void)
 	m_ScriptManager = new CScriptManager();
 	m_CameraManager = new CCameraControllerManager();
 	m_Cinematic= new CCinematic();
+	m_PhysXManager = CPhysXManager::CreatePhysXManager();
 }
 
 
 CUABEngine::~CUABEngine(void)
 {
-	CHECKED_DELETE(m_EffectManager);
-	CHECKED_DELETE(m_MaterialManager);
 	CHECKED_DELETE(m_TextureManager);
 	CHECKED_DELETE(m_RenderManager);
-	CHECKED_DELETE(m_StaticMeshManager);
-	CHECKED_DELETE(m_LightManager);
-	CHECKED_DELETE(m_AnimatedModelsManager);
-	CHECKED_DELETE(m_RenderableObjectsManager);
-	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_CameraManager);
+	CHECKED_DELETE(m_ScriptManager);
+	CHECKED_DELETE(m_Cinematic);
+	CHECKED_DELETE(m_RenderableObjectsManager);
+	CHECKED_DELETE(m_AnimatedModelsManager);
+	CHECKED_DELETE(m_LightManager);
+	CHECKED_DELETE(m_StaticMeshManager);
+	CHECKED_DELETE(m_MaterialManager);
+	CHECKED_DELETE(m_EffectManager);
+	CHECKED_DELETE(m_PhysXManager);
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
