@@ -1,8 +1,8 @@
 #ifndef CAMERA_CONTROLLER_MANAGER_H
 #define CAMERA_CONTROLLER_MANAGER_H
 
-#include "TemplatedMapManager.h"
-#include "CameraController.h"
+#include "Utils\TemplatedMapManager.h"
+#include "Camera\CameraController.h"
 #include "Camera\Camera.h"
 #include <string>
 

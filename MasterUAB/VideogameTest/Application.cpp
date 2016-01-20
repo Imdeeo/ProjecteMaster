@@ -14,6 +14,27 @@ static void __stdcall SwitchCameraCallback(void* _app)
 {
 	((CApplication*)_app)->SwitchCamera();
 }
+static void __stdcall ReloadCamerasManager(void* _app)
+{
+	UABEngine.GetCameraManager()->Reload();
+}
+static void __stdcall ReloadRenderableObjectsManager(void* _app)
+{
+	UABEngine.GetRenderableObjectsManager()->Reload();
+}
+static void __stdcall ReloadLights(void* _app)
+{
+	UABEngine.GetLightManager()->Reload();
+}
+static void __stdcall ReloadMaterials(void* _app)
+{
+	UABEngine.GetMaterialManager()->Reload();
+	UABEngine.GetStaticMeshManager()->Reload();
+}
+static void __stdcall ReloadTextures(void* _app)
+{
+	UABEngine.GetTextureManager()->Reload();
+}
 
 CApplication::CApplication( CContextManager *_ContextManager)
 	: m_BackgroundColor(.2f, .1f, .4f)
@@ -56,7 +77,61 @@ CApplication::CApplication( CContextManager *_ContextManager)
 		bar.variables.push_back(var);
 	}
 
+
+	CDebugHelper::SDebugBar bar2;
+	bar2.name = "Reload";
+	{
+		CDebugHelper::SDebugVariable var = {};
+		var.name = "RenderableObjectsManager";
+		var.type = CDebugHelper::BUTTON;
+		var.callback = ReloadRenderableObjectsManager;
+		var.data = this;
+
+		bar2.variables.push_back(var);
+	}
+
+	{
+		CDebugHelper::SDebugVariable var = {};
+		var.name = "CameraManager";
+		var.type = CDebugHelper::BUTTON;
+		var.callback = ReloadCamerasManager;
+		var.data = this;
+
+		bar2.variables.push_back(var);
+	}
+
+	{
+		CDebugHelper::SDebugVariable var = {};
+		var.name = "Lights";
+		var.type = CDebugHelper::BUTTON;
+		var.callback = ReloadLights;
+		var.data = this;
+
+		bar2.variables.push_back(var);
+	}
+
+	{
+		CDebugHelper::SDebugVariable var = {};
+		var.name = "Materials Manager";
+		var.type = CDebugHelper::BUTTON;
+		var.callback = ReloadMaterials;
+		var.data = this;
+
+		bar2.variables.push_back(var);
+	}
+
+		{
+		CDebugHelper::SDebugVariable var = {};
+		var.name = "Textures Manager";
+		var.type = CDebugHelper::BUTTON;
+		var.callback = ReloadTextures;
+		var.data = this;
+
+		bar2.variables.push_back(var);
+	}
+
 	CDebugHelper::GetDebugHelper()->RegisterBar(bar);
+	CDebugHelper::GetDebugHelper()->RegisterBar(bar2);
 
 }
 

@@ -5,6 +5,18 @@
 #include <luabind/class.hpp>
 #include <luabind/operator.hpp>
 
+#include "3DElement\3DElement.h"
+
+#include "Utils\Named.h"
+
+#include "Engine\UABEngine.h"
+
+#include "InputManager\InputManager.h"
+#include "InputManager\InputManagerImplementation.h"
+
+#include "DebugHelper.h"
+#include "DebugHelperImplementation.h"
+
 #include "AnimatedModels\AnimatedCoreModel.h"
 #include "AnimatedModels\AnimatedInstanceModel.h"
 #include "AnimatedModels\AnimatedModelsManager.h"
@@ -62,7 +74,12 @@
 
 #include "DebugRender.h"
 
+#include "PhysXManager\PhysXManager.h"
+
+#include "Application.h"
+
 #include "XML\XMLTreeNode.h"
+#include "Utils.h"
 
 using namespace luabind;
 
@@ -138,7 +155,7 @@ void CScriptManager::RunCode(const std::string &Code) const
 	if(luaL_dostring(m_LS,Code.c_str()))
 	{
 		const char *l_Str=lua_tostring(m_LS, -1);
-		//Info("%s",l_Str);
+		UtilsLog(l_Str);
 		assert(!"must be log");
 	}
 }
@@ -149,7 +166,7 @@ void CScriptManager::RunFile(const std::string &FileName) const
 	if(luaL_dofile(m_LS, FileName.c_str()))
 	{
 		const char *l_Str=lua_tostring(m_LS, -1);
-		//Info("%s",l_Str);
+		UtilsLog(l_Str);
 		assert(!"must be log");
 	}
 }
@@ -161,8 +178,175 @@ void CScriptManager::RegisterLUAFunctions()
 	lua_register(m_LS, "get_speed_player", GetSpeedPlayer);*/
 	//REGISTER_LUA_FUNCTION("set_speed_player", SetSpeedPlayer);
 	//REGISTER_LUA_FUNCTION("get_speed_player", GetSpeedPlayer);
+	
+// TEMPLATES-------------------------------------------------------------------------------------------
 
-	// GRAPHICS-----------------------------------------------------------------------------------------
+	// Templated Map Manager---------------------------------------------------------------------------
+	/*module(m_LS)[
+		class_<CTemplatedMapManager<CAnimatedCoreModel>>("CTemplatedMapManager<CAnimatedCoreModel>")
+			.def("get_resource", &CTemplatedMapManager<CAnimatedCoreModel>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CAnimatedCoreModel>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CAnimatedCoreModel>::Destroy)
+	];
+
+	module(m_LS)[
+		class_<CTemplatedMapManager<CCameraControllerManager>>("CTemplatedMapManager<CCameraControllerManager>")
+			.def("get_resource", &CTemplatedMapManager<CCameraControllerManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CCameraControllerManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CCameraControllerManager>::Destroy)
+	];
+
+	module(m_LS)[
+		class_<CTemplatedMapManager<CEffectTechnique>>("CTemplatedMapManager<CEffectTechnique>")
+			.def("get_resource", &CTemplatedMapManager<CEffectTechnique>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CEffectTechnique>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CEffectTechnique>::Destroy)
+	];
+
+	module(m_LS)[
+		class_<CTemplatedMapManager<CMaterialManager>>("CTemplatedMapManager<CMaterialManager>")
+			.def("get_resource", &CTemplatedMapManager<CMaterialManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CMaterialManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CMaterialManager>::Destroy)
+	];
+
+	module(m_LS)[
+		class_<CTemplatedMapManager<CStaticMeshManager>>("CTemplatedMapManager<CStaticMeshManager>")
+			.def("get_resource", &CTemplatedMapManager<CStaticMeshManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CStaticMeshManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CStaticMeshManager>::Destroy)
+	];
+
+	module(m_LS)[
+		class_<CTemplatedMapManager<CTextureManager>>("CTemplatedMapManager<CTextureManager>")
+			.def("get_resource", &CTemplatedMapManager<CTextureManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CTextureManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CTextureManager>::Destroy)
+	];
+
+	// Templated Vector Map Manager---------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CTemplatedVectorMapManager<CLightManager>>("CTemplatedVectorMapManager<CLightManager>")
+			.def("get_resource", &CTemplatedMapManager<CLightManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CLightManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CLightManager>::Destroy)
+	];
+
+	module(m_LS)[
+		class_<CTemplatedVectorMapManager<CRenderableObjectsManager>>("CTemplatedVectorMapManager<CRenderableObjectsManager>")
+			.def("get_resource", &CTemplatedMapManager<CRenderableObjectsManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CRenderableObjectsManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CRenderableObjectsManager>::Destroy)
+	];
+
+// BASE------------------------------------------------------------------------------------------------
+
+	// 3DElement---------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<C3DElement>("C3DElement")
+			.def(constructor<>())
+			.def(constructor<const Vect3f&>())
+			.def(constructor<const Vect3f&, float, float, float>())
+			.def(constructor<float, float, float>())
+			.def(constructor<const CXMLTreeNode&>())
+			.def("set_position", &C3DElement::SetPosition)
+			.def("get_position", &C3DElement::GetPosition)
+			.def("get_prev_position", &C3DElement::GetPrevPosition)
+			.def("get_yaw", &C3DElement::GetYaw)
+			.def("get_pitch", &C3DElement::GetPitch)
+			.def("get_roll", &C3DElement::GetRoll)
+			.def("set_yaw", &C3DElement::SetYaw)
+			.def("set_pitch", &C3DElement::SetPitch)
+			.def("set_roll", &C3DElement::SetRoll)
+			.def("set_yaw_pitch_roll", &C3DElement::SetYawPitchRoll)
+			.def("set_scale", &C3DElement::SetScale)
+			.def("get_scale", &C3DElement::GetScale)
+			.def("render", &C3DElement::Render)
+			.def("get_transform", &C3DElement::GetTransform)
+			.def("get_visible", &C3DElement::GetVisible)
+			.def("set_visible", &C3DElement::SetVisible)
+	];
+
+	// Utils-------------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CNamed>("CNamed")
+			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<const std::string&>())
+			.def("set_name", &CNamed::SetName)
+			.def("get_name", &CNamed::GetName)
+	];
+
+	
+// CORE---------------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CDebugHelper>("CDebugHelper")
+			.def("render", &CDebugHelper::Render)
+			.def("log", &CDebugHelper::Log)
+			.def("register_bar", &CDebugHelper::RegisterBar)
+			.def("remove_bar", &CDebugHelper::RemoveBar)
+			.def("get_debug_helper", &CDebugHelper::GetDebugHelper)
+			.def("set_current_debug_helper", &CDebugHelper::SetCurrentDebugHelper)
+	];
+
+	module(m_LS)[
+		class_<CDebugHelperImplementation, CDebugHelper>("CNamed")
+			.def(constructor<void*>())
+			.def("update", &CDebugHelperImplementation::Update)
+			.def("render", &CDebugHelperImplementation::Render)
+			.def("log", &CDebugHelperImplementation::Log)
+			.def("register_bar", &CDebugHelperImplementation::RegisterBar)
+			.def("remove_bar", &CDebugHelperImplementation::RemoveBar)
+	];
+
+	// Engine-------------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CUABEngine>("CUABEngine")
+			.def("get_static_mesh_manager", &CUABEngine::GetStaticMeshManager)
+			.def("get_renderable_objects_manager", &CUABEngine::GetRenderableObjectsManager)
+			.def("get_material_manager", &CUABEngine::GetMaterialManager)
+			.def("get_effect_manager", &CUABEngine::GetEffectManager)
+			.def("get_light_manager", &CUABEngine::GetLightManager)
+			.def("get_render_manager", &CUABEngine::GetRenderManager)
+			.def("get_animated_models_manager", &CUABEngine::GetAnimatedModelsManager)
+			.def("get_script_manager", &CUABEngine::GetScriptManager)
+			.def("get_camera_manager", &CUABEngine::GetCameraManager)
+			.def("get_cinematic", &CUABEngine::GetCinematic)
+			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
+			.def("load_level_xml", &CUABEngine::LoadLevelXML)
+			.def("get_instance", &CUABEngine::GetInstance)
+			.def("destroy", &CUABEngine::Destroy)
+			.def("init", &CUABEngine::Init)
+	];
+
+	// InputManager-------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CInputManager>("CInputManager")
+			.def("is_action_active", &CInputManager::IsActionActive)
+			.def("get_axis", &CInputManager::GetAxis)
+			.def("get_cursor", &CInputManager::GetCursor)
+			.def("get_cursor_movement", &CInputManager::GetCursorMovement)
+			.def("has_focus", &CInputManager::HasFocus)
+			.def("set_current_input_manager", &CInputManager::SetCurrentInputManager)
+			.def("get_input_manager", &CInputManager::GetInputManager)
+			.def("reload", &CInputManager::reload)
+	];
+
+	module(m_LS)[
+		class_<CInputManagerImplementation>("CInputManagerImplementation")
+			.def(constructor<HWND>())
+			.def("load_commands_from_file", &CInputManagerImplementation::LoadCommandsFromFile)
+			.def("begin_frame", &CInputManagerImplementation::BeginFrame)
+			.def("end_frame", &CInputManagerImplementation::EndFrame)
+			.def("set_focus", &CInputManagerImplementation::SetFocus)
+			.def("set_mouse_speed", &CInputManagerImplementation::SetMouseSpeed)
+			.def("key_event_received", &CInputManagerImplementation::KeyEventReceived)
+			.def("update_cursor", &CInputManagerImplementation::UpdateCursor)
+			.def("update_cursor_movement", &CInputManagerImplementation::UpdateCursorMovement)
+			.def("reload", &CInputManagerImplementation::reload)
+	];
+	
+
+// GRAPHICS-----------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CDebugRender>("CDebugRender")
 			.def(constructor<ID3D11Device*>())
@@ -190,263 +374,192 @@ void CScriptManager::RegisterLUAFunctions()
 
 	// AnimatedModels----------------------------------------------------------------------------------
 	module(m_LS) [
-		class_<CAnimatedCoreModel>("CAnimatedCoreModel")
+		class_<CAnimatedCoreModel, CNamed>("CAnimatedCoreModel")
 			.def(constructor<>())
-			.def("get_name", &CAnimatedCoreModel::GetName)
-			.def("set_name", &CAnimatedCoreModel::SetName)
-			.def("get_calCoreModel", &CAnimatedCoreModel::GetCalCoreModel)
+			.def("get_cal_core_model", &CAnimatedCoreModel::GetCalCoreModel)
+			.def("get_materials", &CAnimatedCoreModel::GetMaterials)
 			.def("load",&CAnimatedCoreModel::Load)
 	];
 
 	module(m_LS) [
-		class_<CAnimatedInstanceModel>("CAnimatedInstanceModel")
+		class_<CAnimatedInstanceModel, CRenderableObject>("CAnimatedInstanceModel")
 			.def(constructor<CXMLTreeNode&>())
-			.def("get_name", &CAnimatedInstanceModel::GetName)
-			.def("set_name", &CAnimatedInstanceModel::SetName)
-			.def("initialize",&CAnimatedInstanceModel::Initialize)
-			.def("render",&CAnimatedInstanceModel::Render)
-			.def("update",&CAnimatedInstanceModel::Update)
-			.def("destroy",&CAnimatedInstanceModel::Destroy)
-			.def("execute_action",&CAnimatedInstanceModel::ExecuteAction)
+			.def("initialize", &CAnimatedInstanceModel::Initialize)
+			.def("render", &CAnimatedInstanceModel::Render)
+			.def("update", &CAnimatedInstanceModel::Update)
+			.def("destroy", &CAnimatedInstanceModel::Destroy)
+			.def("execute_action", &CAnimatedInstanceModel::ExecuteAction)
+			.def("remove_action", &CAnimatedInstanceModel::RemoveAction)
 			.def("blend_cycle", &CAnimatedInstanceModel::BlendCycle)
-			.def("clera_cycle",&CAnimatedInstanceModel::ClearCycle)
-			.def("is_cycle_animation_active",&CAnimatedInstanceModel::IsCycleAnimationActive)
-			.def("is_action_animation_active",&CAnimatedInstanceModel::IsActionAnimationActive)
+			.def("clear_cycle", &CAnimatedInstanceModel::ClearCycle)
+			.def("is_cycle_animation_active", &CAnimatedInstanceModel::IsCycleAnimationActive)
+			.def("is_action_animation_active", &CAnimatedInstanceModel::IsActionAnimationActive)
+			.def("get_actual_cycle_animation", &CAnimatedInstanceModel::GetActualCycleAnimation)
+			.def("get_actual_action_animation", &CAnimatedInstanceModel::GetActualActionAnimation)
 	];
 
 	module(m_LS) [
-		class_<CAnimatedModelsManager>("CAnimatedModelsManager")
+		class_<CAnimatedModelsManager, CTemplatedMapManager<CAnimatedCoreModel>>("CAnimatedModelsManager")
 			.def(constructor<>())
 			.def("load",&CAnimatedModelsManager::Load)
 			.def("reload", &CAnimatedModelsManager::Reload)
-			.def("get_resource", &CAnimatedModelsManager::GetResource)
 	];	
 
 	// Camera----------------------------------------------------------------------------------------
 	module(m_LS) [
 		class_<CCamera>("CCamera")
 			.def(constructor<>())
-			.def("get_aspect_ratio",&CCamera::GetAspectRatio)
-			.def("set_aspect_ratio",&CCamera::SetAspectRatio)
-			.def("get_fov", &CCamera::GetFOV)
 			.def("set_fov", &CCamera::SetFOV)
-			.def("get_look_at", &CCamera::GetLookAt)
-			.def("set_look_at", &CCamera::SetLookAt)
-			.def("get_position", &CCamera::GetPosition)
-			.def("set_position", &CCamera::SetPosition)
-			.def("get_projection", &CCamera::GetProjection)
-			.def("get_up", &CCamera::GetUp)
-			.def("set_up", &CCamera::SetUp)
-			.def("get_view", &CCamera::GetView)
-			.def("get_z_far", &CCamera::GetZFar)
-			.def("set_z_far", &CCamera::SetZFar)
-			.def("get_z_near", &CCamera::GetZNear)
+			.def("get_fov", &CCamera::GetFOV)
+			.def("set_aspect_ratio", &CCamera::SetAspectRatio)
+			.def("get_aspect_ratio",&CCamera::GetAspectRatio)
 			.def("set_z_near", &CCamera::GetZNear)
+			.def("get_z_near", &CCamera::GetZNear)
+			.def("set_z_far", &CCamera::SetZFar)
+			.def("get_z_far", &CCamera::GetZFar)
+			.def("set_position", &CCamera::SetPosition)
+			.def("get_position", &CCamera::GetPosition)
+			.def("set_look_at", &CCamera::SetLookAt)
+			.def("get_look_at", &CCamera::GetLookAt)
+			.def("set_up", &CCamera::SetUp)
+			.def("get_up", &CCamera::GetUp)
+			.def("get_view", &CCamera::GetView)
+			.def("get_projection", &CCamera::GetProjection)
 			.def("set_matrixs", &CCamera::SetMatrixs)
+			.def("get_camera_type_by_name", &CCamera::GetCameraTypeByName)
 	];
 
 	module(m_LS)[
 		class_<CCameraController>("CCameraController")
-	//		.def(constructor<>())
-			.def("add_pitch", &CCameraController::AddPitch)
+			//.def(constructor<>())
+			.def("set_camera", &CCameraController::SetCamera)
 			.def("add_yaw", &CCameraController::AddYaw)
+			.def("add_pitch", &CCameraController::AddPitch)
+			.def("set_yaw", &CCameraController::SetYaw)
+			.def("get_yaw", &CCameraController::GetYaw)
+			.def("set_pitch", &CCameraController::SetPitch)
 			.def("get_pitch", &CCameraController::GetPitch)
-			.def("get_position", &CCameraController::GetPosition)
 			.def("get_right", &CCameraController::GetRight)
 			.def("get_up", &CCameraController::GetUp)
-			.def("get_yaw", &CCameraController::GetYaw)
-			.def("set_camera", &CCameraController::SetCamera)
-			.def("set_pitch", &CCameraController::SetPitch)
+			.def("get_position", &CCameraController::GetPosition)
 			.def("set_position", &CCameraController::SetPosition)
-			.def("set_yaw", &CCameraController::SetYaw)
 			.def("update", &CCameraController::Update)
 	];
 
 	module(m_LS)[
-		class_<CCameraControllerManager>("CCameraControllerManager")
+		class_<CCameraControllerManager, CTemplatedMapManager<CCameraController>>("CCameraControllerManager")
 			.def(constructor<>())
-			.def("choose_debug_camera", &CCameraControllerManager::ChooseDebugCamera)
 			.def("choose_main_camera", &CCameraControllerManager::ChooseMainCamera)
-			.def("destroy", &CCameraControllerManager::Destroy)
-			.def("get_debug_camera", &CCameraControllerManager::GetDebugCamera)
-			.def("get_main_camera", &CCameraControllerManager::GetMainCamera)
-			.def("get_resource", &CCameraControllerManager::GetResource)
+			.def("choose_debug_camera", &CCameraControllerManager::ChooseDebugCamera)
 			.def("load", &CCameraControllerManager::Load)
 			.def("reload", &CCameraControllerManager::Reload)
-			.def("update", &CCameraControllerManager::Update)
-			.def("update_debug_camera", &CCameraControllerManager::UpdateDebugCamera)
+			.def("get_main_camera", &CCameraControllerManager::GetMainCamera)
+			.def("get_debug_camera", &CCameraControllerManager::GetDebugCamera)
 			.def("update_main_camera", &CCameraControllerManager::UpdateMainCamera)
+			.def("update_debug_camera", &CCameraControllerManager::UpdateDebugCamera)
+			.def("update", &CCameraControllerManager::Update)
 	];
 
 	module(m_LS)[
 		class_<CCameraInfo>("CCameraInfo")
 			.def(constructor<>())
-			.def(constructor<Vect3f, Vect3f, Vect3f, float, float, float>())
+			.def(constructor<const Vect3f, const Vect3f, const Vect3f, float, float, float>())
 			.def(constructor<CXMLTreeNode&>())
 	];
 
 	module(m_LS)[
 		class_<CCameraKey>("CCameraKey")
-			.def(constructor<CCameraInfo&,float>())
+			.def(constructor<CCameraInfo&, float>())
 	];
 
 	module(m_LS)[
-		class_<CCameraKeyController>("CCameraKeyController")
+		class_<CCameraKeyController, CCameraController>("CCameraKeyController")
 			.def(constructor<CXMLTreeNode&>())
-			.def("add_pitch",&CCameraKeyController::AddPitch)
-			.def("add_yaw", &CCameraKeyController::AddYaw)
-			.def("get_pitch", &CCameraKeyController::GetPitch)
-			.def("get_position", &CCameraKeyController::GetPosition)
-			.def("get_right", &CCameraKeyController::GetRight)
-			.def("get_total_time", &CCameraKeyController::GetTotalTime)
-			.def("get_up", &CCameraKeyController::GetUp)
-			.def("get_yaw", &CCameraKeyController::GetYaw)
-			.def("is_cycle", &CCameraKeyController::IsCycle)
-			.def("is_reverse", &CCameraKeyController::IsReverse)
-			.def("reset_time", &CCameraKeyController::ResetTime)
-			.def("set_camera", &CCameraKeyController::SetCamera)
-			.def("set_current_time", &CCameraKeyController::SetCurrentTime)
-			.def("set_cycle", &CCameraKeyController::SetCycle)
-			.def("set_pitch", &CCameraKeyController::SetPitch)
-			.def("set_position", &CCameraKeyController::SetPosition)
-			.def("set_reverse", &CCameraKeyController::SetReverse)
-			.def("set_yaw", &CCameraKeyController::SetYaw)
 			.def("update", &CCameraKeyController::Update)
+			.def("set_current_time", &CCameraKeyController::SetCurrentTime)
+			.def("reset_time", &CCameraKeyController::ResetTime)
+			.def("get_total_time", &CCameraKeyController::GetTotalTime)
+			.def("is_cycle", &CCameraKeyController::IsCycle)
+			.def("set_cycle", &CCameraKeyController::SetCycle)
+			.def("is_reverse", &CCameraKeyController::IsReverse)
+			.def("set_reverse", &CCameraKeyController::SetReverse)
+			.def("set_camera", &CCameraKeyController::SetCamera)			
 	];
 
 	module(m_LS) [
-		class_<CFPSCameraController>("CFPSCameraController")
+		class_<CFPSCameraController, CCameraController>("CFPSCameraController")
 			.def(constructor<>())
-			.def("add_pitch",&CFPSCameraController::AddPitch)
-			.def("add_yaw", &CFPSCameraController::AddYaw)
-			.def("get_direction", &CFPSCameraController::GetDirection)
-			.def("get_pitch", &CFPSCameraController::GetPitch)
-			.def("set_pitch", &CFPSCameraController::SetPitch)
-			.def("get_right", &CFPSCameraController::GetRight)
-			.def("get_up", &CFPSCameraController::GetUp)
-			.def("get_yaw", &CFPSCameraController::GetYaw)
-			.def("set_yaw", &CFPSCameraController::SetYaw)
 			.def("move", &CFPSCameraController::Move)
 			.def("set_camera", &CFPSCameraController::SetCamera)
-			.def("set_position", &CFPSCameraController::SetPosition)
-			.def("update", &CFPSCameraController::Update)
+			.def("add_yaw", &CFPSCameraController::AddYaw)
+			.def("add_pitch",&CFPSCameraController::AddPitch)
+			.def("get_direction", &CFPSCameraController::GetDirection)
 	];
 
 	module(m_LS) [
 		class_<CFrustum>("CFrustum")
-			.def(constructor<>())
-			.def("box_visible",&CFrustum::BoxVisible)
-			.def("sphere_visible", &CFrustum::SphereVisible)
 			.def("update", &CFrustum::Update)
+			.def("sphere_visible", &CFrustum::SphereVisible)
+			.def("box_visible",&CFrustum::BoxVisible)
 	];
 
 	module(m_LS) [
-		class_<CSphericalCameraController>("CSphericalCameraController")
+		class_<CSphericalCameraController, CCameraController>("CSphericalCameraController")
 			.def(constructor<>())
-			.def("add_pitch",&CSphericalCameraController::AddPitch)
-			.def("add_yaw", &CSphericalCameraController::AddYaw)
 			.def("add_zoom", &CSphericalCameraController::AddZoom)
-			.def("get_direction", &CSphericalCameraController::GetDirection)
-			.def("set_camera", &CSphericalCameraController::SetCamera)
-			.def("get_pitch", &CSphericalCameraController::GetPitch)
-			.def("set_pitch", &CSphericalCameraController::SetPitch)
-			.def("get_right", &CSphericalCameraController::GetRight)
-			.def("get_up", &CSphericalCameraController::GetUp)
-			.def("get_yaw", &CSphericalCameraController::GetYaw)
-			.def("set_yaw", &CSphericalCameraController::SetYaw)
-			.def("set_position", &CSphericalCameraController::SetPosition)
 			.def("set_zoom", &CSphericalCameraController::SetZoom)
-			.def("update", &CSphericalCameraController::Update)
+			.def("set_camera", &CSphericalCameraController::SetCamera)
+			.def("get_direction", &CSphericalCameraController::GetDirection)
+			.def("move", &CSphericalCameraController::Move)
 	];
 
 	// Cinematics -----------------------------------------------------------------------------------
 	module(m_LS)[
-		class_<CCinematic>("CCinematic")
+		class_<CCinematic, bases<CRenderableObject, CCinematicPlayer>>("CCinematic")
 			.def(constructor<>())
 			.def("load_xml", &CCinematic::LoadXML)
 			.def("add_cinematic_object", &CCinematic::AddCinematicObject)
 			.def("update", &CCinematic::Update)
 			.def("render", &CCinematic::Render)
-			.def("get_duration",&CCinematic::GetDuration)
-			.def("get_name",&CCinematic::GetName)
-			.def("get_pitch",&CCinematic::GetPitch)
-			.def("get_position",&CCinematic::GetPosition)
-			.def("get_prev_position",&CCinematic::GetPrevPosition)
-			.def("get_roll",&CCinematic::GetRoll)
-			.def("get_scale",&CCinematic::GetScale)
-			.def("get_tick_count",&CCinematic::GetTickCount)
-			.def("get_transform",&CCinematic::GetTransform)
-			.def("get_visible",&CCinematic::GetVisible)
-			.def("get_yaw",&CCinematic::GetYaw)
-			.def("init",&CCinematic::Init)
-			.def("is_finished",&CCinematic::IsFinished)
-			.def("on_restart_cycle",&CCinematic::OnRestartCycle)
-			.def("pause",&CCinematic::Pause)
 			.def("play",&CCinematic::Play)
-			.def("set_name",&CCinematic::SetName)
-			.def("set_pitch",&CCinematic::SetPitch)
-			.def("set_position",&CCinematic::SetPosition)
-			.def("set_roll",&CCinematic::SetRoll)
-			.def("set_scale",&CCinematic::SetScale)
-			.def("set_visible",&CCinematic::SetVisible)
-			.def("set_yaw",&CCinematic::SetYaw)
-			.def("set_yaw_pitch_roll",&CCinematic::SetYawPitchRoll)
 			.def("stop",&CCinematic::Stop)
+			.def("pause", &CCinematic::Pause)
+			.def("on_restart_cycle", &CCinematic::OnRestartCycle)
 	];
 
 	module(m_LS)[
-		class_<CCinematicObject>("CCinematicObject")
+		class_<CCinematicObject, CCinematicPlayer>("CCinematicObject")
 			.def(constructor<CXMLTreeNode&>())
 			.def("is_ok", &CCinematicObject::IsOk)
 			.def("add_cinematic_object_key_frame", &CCinematicObject::AddCinematicObjectKeyFrame)
 			.def("update", &CCinematicObject::Update)
 			.def("on_restart_cycle", &CCinematicObject::OnRestartCycle)
 			.def("get_current_key", &CCinematicObject::GetCurrentKey)
-			.def("get_duration",&CCinematicObject::GetDuration)
-			.def("get_tick_count",&CCinematicObject::GetTickCount)
-			.def("init",&CCinematicObject::Init)
-			.def("is_finished",&CCinematicObject::IsFinished)
-			.def("is_ok",&CCinematicObject::IsOk)
-			.def("pause",&CCinematicObject::Pause)
-			.def("play",&CCinematicObject::Play)
-			.def("stop",&CCinematicObject::Stop)
 	];
 
 	module(m_LS)[
-		class_<CCinematicObjectKeyFrame>("CCinematicObjectKeyFrame")
+		class_<CCinematicObjectKeyFrame, C3DElement>("CCinematicObjectKeyFrame")
 			.def(constructor<CXMLTreeNode&>())
 			.def("get_key_frame_time",&CCinematicObjectKeyFrame::GetKeyFrameTime)
-			.def("get_pitch",&CCinematicObjectKeyFrame::GetPitch)
-			.def("get_position",&CCinematicObjectKeyFrame::GetPosition)
-			.def("get_prev_position",&CCinematicObjectKeyFrame::GetPrevPosition)
-			.def("get_roll",&CCinematicObjectKeyFrame::GetRoll)
-			.def("get_scale",&CCinematicObjectKeyFrame::GetScale)
-			.def("get_transform",&CCinematicObjectKeyFrame::GetTransform)
-			.def("get_visible",&CCinematicObjectKeyFrame::GetVisible)
-			.def("get_yaw",&CCinematicObjectKeyFrame::GetYaw)
-			.def("render",&CCinematicObjectKeyFrame::Render)
 			.def("set_key_frame_time",&CCinematicObjectKeyFrame::SetKeyFrameTime)
-			.def("set_pitch",&CCinematicObjectKeyFrame::SetPitch)
-			.def("set_position",&CCinematicObjectKeyFrame::SetPosition)
-			.def("set_roll",&CCinematicObjectKeyFrame::SetRoll)
-			.def("set_scale",&CCinematicObjectKeyFrame::SetScale)
-			.def("set_visible",&CCinematicObjectKeyFrame::SetVisible)
-			.def("set_yaw",&CCinematicObjectKeyFrame::SetYaw)
-			.def("set_yaw_pitch_roll",&CCinematicObjectKeyFrame::SetYawPitchRoll)
 	];
 
 	module(m_LS)[
 		class_<CCinematicPlayer>("CCinematicPlayer")
 			.def(constructor<>())
-			.def("get_duration", &CCinematicPlayer::GetDuration)
-			.def("get_tick_count", &CCinematicPlayer::GetTickCount)
 			.def("init", &CCinematicPlayer::Init)
-			.def("is_finished", &CCinematicPlayer::IsFinished)
-			.def("on_restart_cycle", &CCinematicPlayer::OnRestartCycle)
-			.def("pause", &CCinematicPlayer::Pause)
-			.def("play", &CCinematicPlayer::Play)
-			.def("stop", &CCinematicPlayer::Stop)
 			.def("update", &CCinematicPlayer::Update)
+			.def("stop", &CCinematicPlayer::Stop)
+			.def("play", &CCinematicPlayer::Play)
+			.def("pause", &CCinematicPlayer::Pause)
+			.def("is_finished", &CCinematicPlayer::IsFinished)
+			.def("get_duration", &CCinematicPlayer::GetDuration)
+			.def("get_current_time", &CCinematicPlayer::GetTickCount)
+			.def("on_restart_cycle", &CCinematicPlayer::OnRestartCycle)
+			
+			
+			
+			
 	];
 
 	// ContextManager----------------------------------------------------------------------------------
@@ -466,14 +579,14 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_device_context", &CContextManager::GetDeviceContext)
 			//.def("set_base_color", &CContextManager::SetBaseColor)
 			.def("set_world_matrix", &CContextManager::SetWorldMatrix)
-			//.def("set_camera", &CContextManager::SetCamera) cosas
+			.def("set_camera", (void(CContextManager::*)(const Mat44f&, const Mat44f&))&CContextManager::SetCamera)
+			.def("set_camera", (void(CContextManager::*)(const CCamera&))&CContextManager::SetCamera)
 			//.def("set_debug_size", &CContextManager::SetDebugSize)
 	];
 
 	// Effects----------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CAnimatedModelEffectParameters>("CAnimatedModelEffectParameters")
-			.def(constructor<>())
 	];
 
 	module(m_LS)[
@@ -484,7 +597,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<CEffectManager>("CEffectManager")
+		class_<CEffectManager, CTemplatedMapManager<CEffectTechnique>>("CEffectManager")
 			.def(constructor<>())
 			.def("reload_file", &CEffectManager::ReloadFile)
 			.def("reload", &CEffectManager::Reload)
@@ -493,24 +606,24 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_pixel_shader", &CEffectManager::GetPixelShader)
 			.def("set_scene_constants", &CEffectManager::SetSceneConstants)
 			.def("set_light_constants", &CEffectManager::SetLightConstants)
+			.def("set_lights_constants", &CEffectManager::SetLightsConstants)
 	];
 
 	module(m_LS)[
 		class_<CEffectParameters>("CEffectParameters")
-			.def(constructor<>())
 	];
 
 	module(m_LS)[
-		class_<CEffectShader>("CEffectShader")
-			//.def(constructor<>())
+		class_<CEffectShader, CNamed>("CEffectShader")
 			.def("load", &CEffectShader::Load)
 			.def("reload", &CEffectShader::Reload)
 			.def("set_constant_buffer", &CEffectShader::SetConstantBuffer)
+			.def("get_constant_buffer", &CEffectShader::GetConstantBuffer)
 	];
 
 	module(m_LS)[
-		class_<CEffectVertexShader>("CEffectVertexShader")
-			.def(constructor<const CXMLTreeNode &>())
+		class_<CEffectVertexShader, CEffectShader>("CEffectVertexShader")
+			.def(constructor<const CXMLTreeNode&>())
 			.def("load", &CEffectVertexShader::Load)
 			.def("set_constant_buffer", &CEffectVertexShader::SetConstantBuffer)
 			.def("get_vertex_shader", &CEffectVertexShader::GetVertexShader)
@@ -519,8 +632,8 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<CEffectPixelShader>("CEffectPixelShader")
-			.def(constructor<const CXMLTreeNode &>())
+		class_<CEffectPixelShader, CEffectShader>("CEffectPixelShader")
+			.def(constructor<const CXMLTreeNode&>())
 			.def("load", &CEffectPixelShader::Load)
 			.def("set_constant_buffer", &CEffectPixelShader::SetConstantBuffer)
 			.def("get_pixel_shader", &CEffectPixelShader::GetPixelShader)
@@ -528,7 +641,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<CEffectTechnique>("CEffectTechnique")
+		class_<CEffectTechnique, CNamed>("CEffectTechnique")
 			.def(constructor<CXMLTreeNode&>())
 			.def("get_vertex_shader", &CEffectTechnique::GetVertexShader)
 			.def("get_pixel_shader", &CEffectTechnique::GetPixelShader)
@@ -538,17 +651,15 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CLightEffectParameters>("CLightEffectParameters")
-			.def(constructor<>())
 	];
 
 	module(m_LS)[
 		class_<CSceneEffectParameters>("CSceneEffectParameters")
-			.def(constructor<>())
 	];
 
 	// Lights-----------------------------------------------------------------------------------------
 	module(m_LS)[
-		class_<CDirectionalLight>("CDirectionalLight")
+		class_<CDirectionalLight, CLight>("CDirectionalLight")
 			.def(constructor<>())
 			.def(constructor<CXMLTreeNode&>())
 			.def("get_direction", &CDirectionalLight::GetDirection)
@@ -557,14 +668,14 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<CLight>("CLight")
+		class_<CLight, CNamed>("CLight")
 			.def(constructor<>())
 			.def(constructor<CXMLTreeNode&>())
 			.def("get_position", &CLight::GetPosition)
 			.def("set_position", &CLight::SetPosition)
 			.def("get_color", &CLight::GetColor)
 			.def("set_color", &CLight::SetColor)
-			.def("get_intensity", &CLight::GetIntensity)
+			.def("set_intensity", &CLight::SetIntensity)
 			.def("set_intensity", &CLight::SetIntensity)
 			.def("get_start_range_attenuation", &CLight::GetStartRangeAttenuation)
 			.def("set_start_range_attenuation", &CLight::SetStartRangeAttenuation)
@@ -579,7 +690,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<CLightManager>("CLightManager")
+		class_<CLightManager, CTemplatedVectorMapManager<CLight>>("CLightManager")
 			.def(constructor<>())
 			.def("load", &CLightManager::Load)
 			.def("render", &CLightManager::Render)
@@ -588,13 +699,13 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<COmniLight>("COmniLight")
+		class_<COmniLight,CLight>("COmniLight")
 			.def(constructor<>())
 			.def(constructor<CXMLTreeNode&>())
 	];
 
 	module(m_LS)[
-		class_<CSpotLight>("CSpotLight")
+		class_<CSpotLight, CDirectionalLight>("CSpotLight")
 			.def(constructor<>())
 			.def(constructor<CXMLTreeNode&>())
 			.def("get_angle", &CSpotLight::GetAngle)
@@ -605,14 +716,14 @@ void CScriptManager::RegisterLUAFunctions()
 
 	// Materials--------------------------------------------------------------------------------------
 	module(m_LS)[
-		class_<CMaterial>("CMaterial")
-			.def(constructor<CXMLTreeNode&>())
+		class_<CMaterial, CNamed>("CMaterial")
+			.def(constructor<const CXMLTreeNode&>())
 			.def("apply", &CMaterial::Apply)
 			.def("get_effect_technique", &CMaterial::GetEffectTechnique)
 	];
 
 	module(m_LS)[
-		class_<CMaterialManager>("CMaterialManager")
+		class_<CMaterialManager, CTemplatedMapManager<CMaterial>>("CMaterialManager")
 			.def(constructor<>())
 			.def("load", &CMaterialManager::Load)
 			.def("reload", &CMaterialManager::Reload)
@@ -620,20 +731,20 @@ void CScriptManager::RegisterLUAFunctions()
 
 	// RenderableObjects------------------------------------------------------------------------------
 	module(m_LS)[
-		class_<CRenderableObject>("CRenderableObject")
-			//.def(constructor<>())
-			//.def(constructor<CXMLTreeNode&>())
+		class_<CRenderableObject, bases<C3DElement, CNamed>>("CRenderableObject")
 			.def("update", &CRenderableObject::Update)
 			.def("render", &CRenderableObject::Render)
 	];
 
 	module(m_LS)[
-		class_<CRenderableObjectsManager>("CRenderableObjectsManager")
+		class_<CRenderableObjectsManager, CTemplatedVectorMapManager<CRenderableObject>>("CRenderableObjectsManager")
 			.def(constructor<>())
 			.def("update", &CRenderableObjectsManager::Update)
 			.def("render", &CRenderableObjectsManager::Render)
-			//.def("add_mesh_instance", &CRenderableObjectsManager::AddMeshInstance)  //cosas
-			//.def("add_animated_instance_model", &CRenderableObjectsManager::AddAnimatedInstanceModel) //cosas
+			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&))&CRenderableObjectsManager::AddMeshInstance)
+			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string &, const std::string&, const Vect3f&, const float, const float, const float, const float, const bool))&CRenderableObjectsManager::AddMeshInstance)
+			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
+			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
 			//.def("clean_up", &CRenderableObjectsManager::CleanUp)
 			.def("reload", &CRenderableObjectsManager::Reload)
 			.def("load", &CRenderableObjectsManager::Load)
@@ -642,12 +753,9 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CRenderableVertexs>("CRenderableVertexs")
-			//.def(constructor<>())
 			.def("render", &CRenderableVertexs::Render)
 			.def("render_indexed", &CRenderableVertexs::RenderIndexed)
 	];
-
-			// Falta TemplatedRenderableIndexedVertexs, TemplatedRenderableVertexs y VertexTypes
 
 	// RenderManager----------------------------------------------------------------------------------
 	module(m_LS)[
@@ -662,14 +770,14 @@ void CScriptManager::RegisterLUAFunctions()
 
 	// StaticMesh-------------------------------------------------------------------------------------
 	module(m_LS)[
-		class_<CInstanceMesh>("CInstanceMesh")
-			.def(constructor<std::string&, std::string&>())
-			.def(constructor<CXMLTreeNode&>())
+		class_<CInstanceMesh, CRenderableObject>("CInstanceMesh")
+			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<const std::string&, const std::string&>())
 			.def("render", &CInstanceMesh::Render)
 	];
 
 	module(m_LS)[
-		class_<CStaticMesh>("CStaticMesh")
+		class_<CStaticMesh, CNamed>("CStaticMesh")
 			.def(constructor<>())
 			.def("load", &CStaticMesh::Load)
 			.def("reload", &CStaticMesh::Reload)
@@ -677,7 +785,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<CStaticMeshManager>("CStaticMeshManager")
+		class_<CStaticMeshManager, CTemplatedMapManager<CStaticMesh>>("CStaticMeshManager")
 			.def(constructor<>())
 			.def("load", &CStaticMeshManager::Load)
 			.def("reload", &CStaticMeshManager::Reload)
@@ -685,7 +793,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	// Texture----------------------------------------------------------------------------------------
 	module(m_LS)[
-		class_<CTexture>("CTexture")
+		class_<CTexture, CNamed>("CTexture")
 			.def(constructor<>())
 			.def("load", &CTexture::Load)
 			.def("activate", &CTexture::Activate)
@@ -693,18 +801,48 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<CTextureManager>("CTextureManager")
+		class_<CTextureManager, CTemplatedMapManager<CTexture>>("CTextureManager")
 			.def(constructor<>())
 			.def("get_texture", &CTextureManager::GetTexture)
 			.def("reload", &CTextureManager::Reload)
 	];
 
+
+// GUI----------------------------------------------------------------------------------------------
+	
+	
+// NETWORK------------------------------------------------------------------------------------------
+	
+	
+// PHYSX--------------------------------------------------------------------------------------------
+	
+	// PhysxManager-------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CPhysXManager>("CPhysXManager")
+			.def("get_texture", &CTextureManager::GetTexture)
+			.def("reload", &CTextureManager::Reload)
+	];
+
+// SOUND--------------------------------------------------------------------------------------------
+	
+	
+// VIDEOGAME----------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CApplication>("CApplication")
+			.def(constructor<CContextManager*>())
+			.def("switch_camera", &CApplication::SwitchCamera)
+			.def("update", &CApplication::Update)
+			.def("render", &CApplication::Render)
+			.def("init", &CApplication::Init)
+	];
+
+	
 	//RunFile("./data/scripting/init.lua");
 
-	RunCode("Init()");
-	RunCode("local light=COmniLight();light.set_intensity(1.1);");
+	//RunCode("Init();");
+	RunCode("local light=COmniLight();light.intensity=1.1;");
 	//RunCode("local value=3;set_speed_player(value); value=get_speed_player()+2; set_speed_player(value)");
-	//RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");
+	//RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");*/
 }
 
 /*void OnEnterEvent(CEvent *Event)

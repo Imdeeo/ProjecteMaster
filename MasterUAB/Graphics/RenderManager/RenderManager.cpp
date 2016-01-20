@@ -4,8 +4,22 @@
 #include "RenderableObjects\RenderableObject.h"
 
 #include "Engine\UABEngine.h"
+#include "DebugHelper.h"
 
 #define SCREEN_DEPTH 20.f
+
+CRenderManager::CRenderManager()
+	: m_UseDebugCamera(false)
+	, m_CurrentRenderlistLength(0)
+{
+
+}
+
+CRenderManager::~CRenderManager()
+{
+
+}
+
 void CRenderManager::SetCurrentCamera(const CCamera& _CurrentCamera)
 {
 	m_CurrentCamera = _CurrentCamera;
@@ -140,6 +154,7 @@ void CRenderManager::Render()
 	//}
 
 	m_CurrentRenderlistLength = 0;
+	CDebugHelper::GetDebugHelper()->Render();
 
 	m_ContextManager->EndRender();
 }
