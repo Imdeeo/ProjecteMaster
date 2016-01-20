@@ -260,9 +260,10 @@ void CPhysXManager::GetActorTransform(const std::string& _actorName, Vect3f* Pos
 	Orienation_ = &(m_ActorOrientations[l_index]);
 }
 
-void CPhysXManager::CreateStaticShape(const std::string _name, Vect3f _size, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, int _group)
+physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, physx::PxGeometry _geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
-	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x/2, _size.y/2, _size.z/2), _Material);
+	physx::PxMaterial* l_Material = m_Materials[_Material];
+	physx::PxShape* shape = m_PhysX->createShape(_geometry, *l_Material);
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
 
 	L_PutGroupToShape(shape, _group);
@@ -271,22 +272,46 @@ void CPhysXManager::CreateStaticShape(const std::string _name, Vect3f _size, phy
 
 	body->userData = (void*)AddActor(_name,_position,_orientation,body);
 	m_Scene->addActor(*body);
+
+	return shape;
+}
+
+void CPhysXManager::CreateStaticBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
+{
+	physx::PxShape* shape = CreateStaticShape(
+		_name,
+		physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2),
+		_Material,
+		_position,
+		_orientation,
+		_group);
+
+	shape->release();
+}
+
+void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
+{
+	physx::PxShape* shape = CreateStaticShape(
+		_name,
+		physx::PxSphereGeometry(_radius),
+		_Material,
+		_position,
+		_orientation,
+		_group);
 
 	shape->release();
 }
 
 
-void CPhysXManager::CreateTrigger(const std::string _name, Vect3f _size, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, int _group)
+void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
-	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x/2, _size.y/2, _size.z/2), _Material);
-	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
-
-	L_PutGroupToShape(shape, _group);
-
-	body->attachShape(*shape);
-
-	body->userData = (void*)AddActor(_name,_position,_orientation,body);
-	m_Scene->addActor(*body);
+	physx::PxShape* shape = CreateStaticShape(
+		_name,
+		physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2),
+		_Material,
+		_position,
+		_orientation,
+		_group);
 
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE,false);
 	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE,true);
@@ -295,11 +320,12 @@ void CPhysXManager::CreateTrigger(const std::string _name, Vect3f _size, physx::
 
 }
 
-void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance,physx::PxMaterial &_Material,
+void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance, const std::string _Material,
 	Vect3f _position, Quatf _orientation, int _group)
 {
+	physx::PxMaterial* l_Material = m_Materials[_Material];
 	physx::PxRigidStatic* groundPlane = 
-		physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z,_PlaneDistance),_Material);
+		physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z,_PlaneDistance),*l_Material);
 	groundPlane->userData = (void*)AddActor(_name,_position,_orientation,groundPlane);
 	m_Scene->addActor(*groundPlane);
 
@@ -311,10 +337,11 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 
 }
 
-void CPhysXManager::CreateDinamicShape(const std::string _name,Vect3f _size,physx::PxMaterial &_Material,Vect3f _position, Quatf _orientation,
+void CPhysXManager::CreateDinamicShape(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation,
 	float _density, int _group)
 {
-	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x/2, _size.y/2, _size.z/2), _Material);
+	physx::PxMaterial* l_Material = m_Materials[_Material];
+	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x/2, _size.y/2, _size.z/2), *l_Material);
 	physx::PxRigidDynamic* body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
 
 	L_PutGroupToShape(shape, _group);
@@ -327,9 +354,10 @@ void CPhysXManager::CreateDinamicShape(const std::string _name,Vect3f _size,phys
 	shape->release();
 }
 
-void CPhysXManager::CreateComplexShape(const std::string _name, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation,
+void CPhysXManager::CreateComplexShape(const std::string _name, const std::string _Material, Vect3f _position, Quatf _orientation,
 	float _density, int _group)
 {
+	physx::PxMaterial* l_Material = m_Materials[_Material];
 	std::vector<Vect3f> l_vertices;
 	physx::PxConvexMeshDesc convexDesc;
 	convexDesc.points.count = l_vertices.size();
@@ -345,7 +373,7 @@ void CPhysXManager::CreateComplexShape(const std::string _name, physx::PxMateria
 	physx::PxConvexMesh* convexMesh = m_PhysX->createConvexMesh(input);
 
 	physx::PxRigidDynamic* body = m_PhysX ->createRigidDynamic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
-	physx::PxShape* shape = body->createShape(physx::PxConvexMeshGeometry(convexMesh), _Material);
+	physx::PxShape* shape = body->createShape(physx::PxConvexMeshGeometry(convexMesh), *l_Material);
 
 	L_PutGroupToShape(shape, _group);
 
