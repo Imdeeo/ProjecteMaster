@@ -30,6 +30,14 @@ namespace physx
 	typedef debugger::comm::PvdConnection PxVisualDebuggerConnection;
 }
 
+typedef struct SRaycastData
+{
+	Vect3f position;
+	Vect3f normal;
+	float distance;
+	std::string actorname;
+} RaycastData;
+
 #define USE_PHYSX_DEBUG 1
 
 #define PHYSX_UPDATE_STEP 1
@@ -63,7 +71,7 @@ public:
 
 	void CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime);
 
-	bool RayHit(Vect3f _origin, Vect3f _dir, float _len, int _GROUPS);
+	bool Raycast(const Vect3f _origin, const Vect3f _end, int _GROUPS, RaycastData* result_);
 
 	void Update(float _dt);
 protected:

@@ -393,20 +393,33 @@ void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement,
 	physx::PxVec3 v = actor->getLinearVelocity();
 }
 
-bool CPhysXManager::RayHit(Vect3f _origin, Vect3f _dir, float _len, int GROUPS)
+bool CPhysXManager::Raycast(const Vect3f _origin, const Vect3f _end, int GROUPS,RaycastData* result_)
 {
 	physx::PxFilterData l_filterData;
 	l_filterData.setToDefault();
 	l_filterData.word0 = GROUPS;  // GROUP1 | GROUP2;
-	physx::PxRaycastBuffer L_hit;
-	return m_Scene->raycast(
+	physx::PxRaycastBuffer l_hit;
+	bool didHit = m_Scene->raycast(
 		CastVec(_origin),
-		CastVec(_dir),
-		_len,
-		L_hit,
+		CastVec((_end - _origin).GetNormalized()),
+		_origin.Distance(_end),
+		l_hit,
 		physx::PxHitFlags(physx::PxHitFlag::eDEFAULT),
 		physx::PxQueryFilterData(
 			l_filterData,
 			physx::PxQueryFlag::eDYNAMIC | physx::PxQueryFlag::eSTATIC)
 		);
+	if (didHit)
+	{
+		if (l_hit.hasBlock)
+		{
+			result_->position = CastVec(l_hit.block.position);
+			result_->normal = CastVec(l_hit.block.normal);
+			result_->distance = l_hit.block.distance;
+			result_->actorname = m_ActorNames[(size_t)l_hit.block.actor->userData];
+		}
+		else
+			didHit = false;
+	}
+	return didHit;
 }
