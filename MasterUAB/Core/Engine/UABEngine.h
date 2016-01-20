@@ -14,6 +14,8 @@
 #include "ScriptManager\ScriptManager.h"
 #include "Camera\CameraControllerManager.h"
 #include "Cinematics\Cinematic.h"
+#include "PhysXManager\PhysXManager.h"
+
 
 #include <string>
 
@@ -31,6 +33,7 @@ class CUABEngine
 	CScriptManager * m_ScriptManager;
 	CCameraControllerManager * m_CameraManager;
 	CCinematic * m_Cinematic;
+	CPhysXManager * m_PhysXManager;
 
 	std::string m_LevelLoaded;
 
@@ -45,6 +48,7 @@ class CUABEngine
 	UAB_GET_PROPERTY(CScriptManager *, ScriptManager)
 	UAB_GET_PROPERTY(CCameraControllerManager *, CameraManager)
 	UAB_GET_PROPERTY(CCinematic *, Cinematic)
+	UAB_GET_PROPERTY(CPhysXManager *, PhysXManager)
 
 	static CUABEngine * m_Instance;
 

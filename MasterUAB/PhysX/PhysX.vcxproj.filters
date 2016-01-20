@@ -6,13 +6,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PhysXManager.h">
-      <Filter>PhysxManager</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="PhysXManager.cpp">
+    <ClCompile Include="PhysXManager\PhysXManager.cpp">
       <Filter>PhysxManager</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PhysXManager\PhysXManager.h">
+      <Filter>PhysxManager</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
