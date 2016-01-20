@@ -69,7 +69,19 @@ bool CCameraControllerManager::Load(const std::string &FileName)
 bool CCameraControllerManager::Reload()
 {
 	Destroy();
-	return Load(m_Filename);
+	bool l_loadResult = Load(m_Filename);
+	std::string l_CameraControllerStr;
+	if (UABEngine.GetLevelLoaded() == "1")
+	{
+		l_CameraControllerStr = "Camera001";
+	}
+	else
+	{
+		l_CameraControllerStr = "FPSCamera";
+	}
+	UABEngine.GetCameraManager()->ChooseMainCamera(l_CameraControllerStr);
+	UABEngine.GetCameraManager()->ChooseDebugCamera("SphericalCamera");
+	return l_loadResult;
 }
 
 void CCameraControllerManager::UpdateMainCamera(float _ElapsedTime)

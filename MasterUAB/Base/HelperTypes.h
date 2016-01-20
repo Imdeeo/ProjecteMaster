@@ -8,7 +8,7 @@ struct SPositionOrientation
 {
 	Vect3f Position;
 	float Yaw, Pitch, Roll;
-
+	
 	SPositionOrientation()
 		: Position(0,0,0)
 		, Yaw(0)

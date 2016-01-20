@@ -1,10 +1,10 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include "Named.h"
+#include "Utils\Named.h"
 #include <d3d11.h>
 
-class CTexture : CNamed
+class CTexture : public CNamed
 {
 private:
 	ID3D11ShaderResourceView *m_Texture;

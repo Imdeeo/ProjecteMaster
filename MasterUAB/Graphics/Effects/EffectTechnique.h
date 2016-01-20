@@ -1,7 +1,7 @@
 #ifndef EFFECT_TECHNIQUE_H
 #define EFFECT_TECHNIQUE_H
 
-#include "Named.h"
+#include "Utils\Named.h"
 #include "Utils.h"
 
 class CEffectVertexShader;
