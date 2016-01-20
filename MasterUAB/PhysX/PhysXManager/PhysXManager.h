@@ -49,7 +49,7 @@ public:
 	Vect3f GetActorPosition(const std::string& _actorName);
 	Quatf GetActorOrientation(const std::string& _actorName);
 
-	void GetActorPositionAndOrientation(const std::string& _actorName,Vect3f* Pos_, Quatf* Orienation_);
+	void GetActorTransform(const std::string& _actorName,Vect3f* Pos_, Quatf* Orienation_);
 
 	void CreateStaticShape(const std::string _name, Vect3f _size, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, int _group);
 	void CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance, physx::PxMaterial &_Material, Vect3f _position, Quatf _orientation, int _group);
