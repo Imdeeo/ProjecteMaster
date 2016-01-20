@@ -253,7 +253,7 @@ Quatf CPhysXManager::GetActorOrientation(const std::string& _actorName)
 	return m_ActorOrientations[GetActorIndexFromName(_actorName)];
 }
 
-void CPhysXManager::GetActorPositionAndOrientation(const std::string& _actorName,Vect3f* Pos_, Quatf* Orienation_)
+void CPhysXManager::GetActorTransform(const std::string& _actorName, Vect3f* Pos_, Quatf* Orienation_)
 {
 	size_t l_index = GetActorIndexFromName(_actorName);
 	Pos_ = &(m_ActorPositions[l_index]);
