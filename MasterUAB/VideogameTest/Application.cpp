@@ -189,6 +189,7 @@ void CApplication::Update(float _ElapsedTime)
 		break;
 	}
 
+	UABEngine.GetPhysXManager()->Update(_ElapsedTime);
 	UABEngine.GetCameraManager()->Update(_ElapsedTime);
 	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 	UABEngine.GetRenderableObjectsManager()->Update(_ElapsedTime);
