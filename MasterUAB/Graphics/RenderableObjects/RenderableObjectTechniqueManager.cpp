@@ -12,6 +12,7 @@ CRenderableObjectTechniqueManager::~CRenderableObjectTechniqueManager()
 bool CRenderableObjectTechniqueManager::InsertRenderableObjectTechnique(CPoolRenderableObjectTechnique *PoolRenderableObjectTechniques, 
 	const std::string &RenderableObjectTechniqueName, const std::string &TechniqueName)
 {
+	return true;
 }
 
 void CRenderableObjectTechniqueManager::Destroy()
@@ -33,14 +34,14 @@ bool CRenderableObjectTechniqueManager::Load(const std::string &FileName)
 			{
 				CXMLTreeNode l_Element = l_Input(i);
 
-				if (l_Element.GetName() == std::string("pool_renderable_object_technique"))
+				if (l_Element.GetName() == "pool_renderable_object_technique")
 				{
-
 					m_PoolRenderableObjectTechniques.AddResource(l_Element.GetPszProperty("name"), new CPoolRenderableObjectTechnique(l_Element));
 				}
 			}
 		}
 	}	
+	return true;
 }
 
 bool CRenderableObjectTechniqueManager::Reload()
