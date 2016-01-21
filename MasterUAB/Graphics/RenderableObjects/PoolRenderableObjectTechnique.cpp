@@ -4,7 +4,21 @@
 
 CPoolRenderableObjectTechnique::CPoolRenderableObjectTechnique(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
 {
-
+	for (size_t i = 0; i < TreeNode.GetNumChildren(); i++)
+	{
+		CXMLTreeNode l_Element = TreeNode(i);
+		if (l_Element.GetName() == "default_technique")
+		{
+			//TODO
+		}
+		if (l_Element.GetName() == "renderable_object_technique")
+		{
+			std::string l_name = l_Element.GetPszProperty("name");
+			std::string l_technique = l_Element.GetPszProperty("technique");
+			UABEngine.GetRenderableObjectTechniqueManager()->AddResource(l_name, new CRenderableObjectTechnique(l_name, nullptr));
+			m_RenderableObjectTechniqueElements.push_back(new CPoolRenderableObjectTechniqueElement(l_name, UABEngine.GetEffectManager()->GetResource(l_technique), UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_name)));
+		}
+	}
 }
 
 CPoolRenderableObjectTechnique::~CPoolRenderableObjectTechnique()

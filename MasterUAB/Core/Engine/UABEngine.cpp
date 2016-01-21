@@ -17,6 +17,7 @@ CUABEngine::CUABEngine(void)
 	m_CameraManager = new CCameraControllerManager();
 	m_Cinematic= new CCinematic();
 	m_PhysXManager = CPhysXManager::CreatePhysXManager();
+	m_RenderableObjectTechniqueManager = new CRenderableObjectTechniqueManager();
 }
 
 
@@ -32,6 +33,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_LightManager);
 	CHECKED_DELETE(m_StaticMeshManager);
 	CHECKED_DELETE(m_MaterialManager);
+	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
 	CHECKED_DELETE(m_EffectManager);
 	CHECKED_DELETE(m_PhysXManager);
 }
@@ -52,6 +54,7 @@ void CUABEngine::Init()
 	LoadLevelXML("Data\\level.xml");
 
 	m_EffectManager->Load("Data\\effects.xml");
+	m_RenderableObjectTechniqueManager->Load("Data\\renderable_object_technique.xml");
 	m_MaterialManager->Load("Data\\level_"+m_LevelLoaded+"\\materials.xml");
 	m_StaticMeshManager->Load("Data\\level_"+m_LevelLoaded+"\\static_meshes.xml");
 	m_LightManager->Load("Data\\level_"+m_LevelLoaded+"\\lights.xml");

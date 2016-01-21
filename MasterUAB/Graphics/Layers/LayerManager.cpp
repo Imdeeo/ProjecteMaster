@@ -1,5 +1,5 @@
 #include "LayerManager.h"
-#include "RenderableObjects\CRenderableObjectsManager.h"
+#include "RenderableObjects\RenderableObjectManager.h"
 #include "Utils.h"
 
 CLayerManager::CLayerManager(){}
@@ -11,7 +11,7 @@ CLayerManager::~CLayerManager()
 
 void CLayerManager::Destroy()
 {
-	CHECKED_RELEASE(m_DefaultLayer);
+	CHECKED_DELETE(m_DefaultLayer);
 }
 
 void CLayerManager::Load(const std::string &Filename)
