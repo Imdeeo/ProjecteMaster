@@ -13,6 +13,12 @@ fn get_FileName =
 	return "F:\\" + (get_LocalFileName())
 )
 
+fn get_RelativePath pathString = 
+(
+		local startFrom = (findString pathString "Data")
+		return substring pathString startFrom (pathString.count-startFrom+1)
+)
+
 fn get_Cores Objs =
 (
 	local cores = #()
@@ -640,13 +646,13 @@ fn createMaterials dir filename Objs copyTexture =
 			(
 				if(classof(Objs[i].material)==Multimaterial)then
 				(
-					format "Multimaterial\n"
+					if isDebug then format "Multimaterial\n"
 					mat = Objs[i].material
 					n_materials = Objs[i].material.numsubs
 				)
 				else
 				(
-					format "Un material\n"
+					if isDebug then format "Un material\n"
 					append mat Objs[i].material
 				)
 				
@@ -662,8 +668,7 @@ fn createMaterials dir filename Objs copyTexture =
 							(
 								nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
 								pathfile = (dir + "Textures\\" + nomTextura)
-								local strDataIdx = (findString pathfile "Data")
-								pathfile = substring pathfile strDataIdx (pathfile.count-strDataIdx+1)
+								pathfile = get_RelativePath pathfile
 								
 								format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
 								if copyTexture == true then
@@ -821,7 +826,7 @@ fn createCinematicObjects dir filename Objs =
 			
 			if (trackbar.getPreviousKeyTime()!=undefined) then
 			(
-				format "\t<cinematic_object resource=\"%\" renderable_objects_manager=\"%\">\n" l_Obj.name (getUserProp Obj "render_layer") to:file			
+				format "\t<cinematic_object resource=\"%\" renderable_objects_manager=\"%\">\n" Objs[i].name (getUserProp l_Obj "render_layer") to:file			
 				
 				local firstframe = at time 999999999999 trackbar.getNextKeyTime()
 				local j = firstframe
