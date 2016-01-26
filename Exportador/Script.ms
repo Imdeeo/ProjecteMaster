@@ -253,66 +253,6 @@ fn createInstanceMesh dir filename Objs=
 	close file
 )
 
-
-fn createCinematicObjects dir filename Objs =
-(	
-	file=createfile (dir+filename)
-	
-	local max_time=0
-	for i=1 to Objs.count do
-	(
-		select Objs[i]
-		if (trackbar.getPreviousKeyTime()!=undefined) then
-		(
-			local obj_time = (at time 999999999999 trackbar.getPreviousKeyTime())
-			if obj_time > max_time then
-			(
-				max_time = obj_time
-			)	
-		)
-	)
-	
-	local key
-	key = max_time as string
-	key = replace key key.count 1 ""
-	key = (key as float)/30
-		
-	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
-	format "<cinematic name=\"%\" duration=\"%\">\n" maxFileName key to:file
-	if Objs != undefined then
-	(
-		for i=1 to Objs.count do
-		(
-			select Objs[i]
-			
-			if (trackbar.getPreviousKeyTime()!=undefined) then
-			(
-				Obj = Objs[i]
-				format "\t<cinematic_object resource=\"%\" renderable_objects_manager=\"%\">\n" Obj.name (getUserProp Obj "render_layer") to:file			
-				
-				local firstframe = at time 999999999999 trackbar.getNextKeyTime()
-				local j = firstframe
-				do (
-					key = j as string	
-					key = replace key key.count 1 ""
-					key = (key as float)/30
-					
-					pos = TranslationToRH Obj.transform.translation
-					scl = TranslationToRH Obj.transform.scale
-						
-					format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" key pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) scl[1] scl[2] scl[3] to:file
-						
-					j = at time j trackbar.getNextKeyTime()
-				) while j != firstframe
-				
-				format "\t</cinematic_object>\n" to:file			
-			)
-		)
-	)
-	format "</cinematic>\n" to:file
-	close file
-)
-
 fn writeHeader arx =
 (
 	WriteShort arx 0xFE55
@@ -777,66 +717,135 @@ fn createLights dir filename Objs =
 
 fn createCameras dir Objs =
 (
-	local cameraFileDir
-	local cameraTransform
-	local cameraTranslation
-	local cameraPos
-	local cameraUp
-	local cameraLookAt
-	local key
-	local cameraType
-	
-	file=createfile (dir+"cameras.xml")
-	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
-	format "<cameras>\n" to:file
-	for i=1 to Objs.count do
+	if Objs != undefined then
 	(
-		select Objs[i]
-		cameraTransform = Objs[i].transform
-		cameraTranslation = TranslationToRH (cameraTransform.translation)
-		cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
-		if (firstframe != undefined) and ((getUserProp Objs[i] "camera_export_type") != "static") then(
+		local cameraFileDir
+		local cameraTransform
+		local cameraTranslation
+		local cameraPos
+		local cameraUp
+		local cameraLookAt
+		local key
+		local cameraType
+		
+		file=createfile (dir+"cameras.xml")
+		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
+		format "<cameras>\n" to:file
+		for i=1 to Objs.count do
+		(
+			select Objs[i]
+			cameraTransform = Objs[i].transform
+			cameraTranslation = TranslationToRH (cameraTransform.translation)
+			cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
 			local firstframe = at time 999999999999 trackbar.getNextKeyTime()
-			key = (at time 999999999999 trackbar.getPreviousKeyTime()) as string
-			key = replace key key.count 1 ""
-			key = (key as float)/30		
-			dirExist (dir+"cameras\\")
-			cameraFileDir = "cameras\\"+Objs[i].name+".xml"
-			cameraType = getUserProp Objs[i] "camera_export_type"
-			format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"%\" filename=\"%\"/>\n" Objs[i].name key cameraType cameraPos cameraFileDir to:file
-			local j = firstframe
-			cameraFile=createfile (dir+cameraFileDir)
-			format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
-			format "<camera_key_controller name=\"%\">\n" Objs[i].name to:cameraFile
-			do (
-				key = j as string	
+			if (firstframe != undefined) and ((getUserProp Objs[i] "camera_export_type") != "static") then(
+				key = (at time 999999999999 trackbar.getPreviousKeyTime()) as string
 				key = replace key key.count 1 ""
-				key = (key as float)/30
-				cameraTransform = at time j Objs[i].transform
-				cameraTranslation = TranslationToRH (cameraTransform.translation)
-				cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
+				key = (key as float)/30		
+				dirExist (dir+"cameras\\")
+				cameraFileDir = "cameras\\"+Objs[i].name+".xml"
+				cameraType = getUserProp Objs[i] "camera_export_type"
+				format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"%\" filename=\"%\"/>\n" Objs[i].name key cameraType cameraPos cameraFileDir to:file
+				local j = firstframe
+				cameraFile=createfile (dir+cameraFileDir)
+				format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
+				format "<camera_key_controller name=\"%\">\n" Objs[i].name to:cameraFile
+				do (
+					key = j as string	
+					key = replace key key.count 1 ""
+					key = (key as float)/30
+					cameraTransform = at time j Objs[i].transform
+					cameraTranslation = TranslationToRH (cameraTransform.translation)
+					cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
+					cameraUp = mat3xvect3 cameraTransform z_axis
+					cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
+					cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis))
+					cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
+					format "\t<key time=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraPos cameraUp cameraLookAt (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
+					j = at time j trackbar.getNextKeyTime()
+				) while j != firstframe
+				format "</camera_key_controller>\n" to:cameraFile		
+				close cameraFile
+			) else (
 				cameraUp = mat3xvect3 cameraTransform z_axis
 				cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
-				cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis))
+				if(Objs[i].target != undefined) then (cameraLookAt = Objs[i].target.pos)
+				else (cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis)))
 				cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
-				format "\t<key time=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraPos cameraUp cameraLookAt (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
-				j = at time j trackbar.getNextKeyTime()
-			) while j != firstframe
-			format "</camera_key_controller>\n" to:cameraFile		
-			close cameraFile
-		) else (
-			cameraUp = mat3xvect3 cameraTransform z_axis
-			cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
-			if(Objs[i].target != undefined) then (cameraLookAt = Objs[i].target.pos)
-			else (cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis)))
-			cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
-			cameraType = getUserProp Objs[i] "camera_export_type"
-			format "\t<camera name=\"%\" type=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" Objs[i].name cameraType cameraPos cameraUp cameraLookAt Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
+				cameraType = getUserProp Objs[i] "camera_export_type"
+				format "\t<camera name=\"%\" type=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" Objs[i].name cameraType cameraPos cameraUp cameraLookAt Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
+			)
+			max select none
 		)
-		max select none
+		format "</cameras>\n" to:file
+		close file
 	)
-	format "</cameras>\n" to:file
-	close file
+)
+
+fn createCinematicObjects dir filename Objs =
+(	
+	if Objs != undefined then
+	(
+		file=createfile (dir+filename)
+		local key
+		local obj_time
+		local max_time=0
+		local tform
+		
+		for i=1 to Objs.count do
+		(
+			select Objs[i]
+			if (trackbar.getPreviousKeyTime()!=undefined) then
+			(
+				obj_time = (at time 999999999999 trackbar.getPreviousKeyTime())
+				if obj_time > max_time then
+				(
+					max_time = obj_time
+				)	
+			)
+		)
+		
+		key = max_time as string
+		key = replace key key.count 1 ""
+		key = (key as float)/30
+			
+		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
+		format "<cinematic name=\"%\" duration=\"%\">\n" maxFileName key to:file
+		
+		for i=1 to Objs.count do
+		(
+			local l_Obj = copy Objs[i]
+			select l_Obj
+			
+			if (trackbar.getPreviousKeyTime()!=undefined) then
+			(
+				format "\t<cinematic_object resource=\"%\" renderable_objects_manager=\"%\">\n" l_Obj.name (getUserProp Obj "render_layer") to:file			
+				
+				local firstframe = at time 999999999999 trackbar.getNextKeyTime()
+				local j = firstframe
+				do (
+					key = j as string	
+					key = replace key key.count 1 ""
+					key = (key as float)/30
+					
+					tform = at time j l_Obj.transform
+					
+					pos = TranslationToRH tform.translation
+					scl = TranslationToRH tform.scale
+						
+					format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" key pos[1] pos[2] pos[3] (GetYaw tform) (GetPitch tform) (GetRoll tform) scl[1] scl[2] scl[3] to:file
+						
+					j = at time j trackbar.getNextKeyTime()
+				) while j != firstframe
+				
+				format "\t</cinematic_object>\n" to:file			
+			)
+			delete l_Obj
+		)
+		
+		format "</cinematic>\n" to:file
+		close file
+	)
 )
 
 /*fn createFiles Dir Objs =
