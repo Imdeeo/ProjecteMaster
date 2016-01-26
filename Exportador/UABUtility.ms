@@ -95,7 +95,7 @@ utility UABUtility "UABUtility" width:168 height:360
 	fn exportMaterials dir textureCheck =
 	(
 		local materialsToExport = checkUserProp "render_export"
-		createMaterials  dir "materials.xml" materialsToExport textureCheck
+		createMaterials dir "materials.xml" materialsToExport textureCheck
 	)
 
 	fn exportStaticMesh dir meshCheck =

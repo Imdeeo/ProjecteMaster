@@ -661,8 +661,10 @@ fn createMaterials dir filename Objs copyTexture =
 							if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
 							(
 								nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
+								pathfile = (dir + "Textures\\" + nomTextura)
+								local strDataIdx = (findString pathfile "Data")
+								pathfile = substring pathfile strDataIdx (pathfile.count-strDataIdx+1)
 								
-								pathfile = (dir+"Textures\\" + nomTextura)
 								format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
 								if copyTexture == true then
 								(
