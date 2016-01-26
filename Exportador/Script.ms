@@ -826,7 +826,7 @@ fn createCinematicObjects dir filename Objs =
 			
 			if (trackbar.getPreviousKeyTime()!=undefined) then
 			(
-				format "\t<cinematic_object resource=\"%\" renderable_objects_manager=\"%\">\n" Objs[i].name (getUserProp l_Obj "render_layer") to:file			
+				format "\t<cinematic_object resource=\"%\" renderable_objects_manager=\"%\">\n" Objs[i].name (getUserProp Objs[i] "render_layer") to:file			
 				
 				local firstframe = at time 999999999999 trackbar.getNextKeyTime()
 				local j = firstframe
