@@ -75,7 +75,7 @@ void CUABEngine::LoadLevelXML(std::string filename)
 	CXMLTreeNode l_XML;
 	bool isLoading = l_XML.LoadFile(filename.c_str());
 
-	if (l_XML.LoadFile(filename.c_str()))
+	if (isLoading)
 	{
 		CXMLTreeNode l_Input = l_XML["level"];
 		if (l_Input.Exists())
