@@ -17,7 +17,7 @@ CFPSCameraController::~CFPSCameraController()
 void CFPSCameraController::Move(float Strafe, float Forward, bool Speed, float ElapsedTime)
 {
 	Vect3f l_AddPos;
-	l_AddPos.y=0.0f;
+	l_AddPos.y = Forward*(sin(m_Pitch));
 	l_AddPos.x=Forward*(cos(m_Yaw))+Strafe*(cos(m_Yaw+3.14159f*0.5f));
 	l_AddPos.z=Forward*(sin(m_Yaw))+Strafe*(sin(m_Yaw+3.14159f*0.5f));
 	
