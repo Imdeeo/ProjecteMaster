@@ -44,7 +44,7 @@
     <ClCompile Include="Materials\Material.cpp" />
     <ClCompile Include="Materials\MaterialManager.cpp" />
     <ClCompile Include="RenderableObjects\PoolRenderableObjectTechnique.cpp" />
-    <ClCompile Include="RenderableObjects\RenderableObjectManager.cpp" />
+    <ClCompile Include="RenderableObjects\RenderableObjectsManager.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectTechnique.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp" />
     <ClCompile Include="RenderManager\RenderManager.cpp" />
@@ -91,7 +91,7 @@
     <ClInclude Include="Materials\MaterialManager.h" />
     <ClInclude Include="RenderableObjects\PoolRenderableObjectTechnique.h" />
     <ClInclude Include="RenderableObjects\RenderableObject.h" />
-    <ClInclude Include="RenderableObjects\RenderableObjectManager.h" />
+    <ClInclude Include="RenderableObjects\RenderableObjectsManager.h" />
     <ClInclude Include="RenderableObjects\RenderableObjectTechnique.h" />
     <ClInclude Include="RenderableObjects\RenderableObjectTechniqueManager.h" />
     <ClInclude Include="RenderableObjects\RenderableVertexs.h" />

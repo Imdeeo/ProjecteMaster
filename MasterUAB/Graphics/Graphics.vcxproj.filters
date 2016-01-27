@@ -32,9 +32,6 @@
     <ClCompile Include="Materials\MaterialManager.cpp">
       <Filter>Materials</Filter>
     </ClCompile>
-    <ClCompile Include="RenderableObjects\RenderableObjectManager.cpp">
-      <Filter>RenderableObjects</Filter>
-    </ClCompile>
     <ClCompile Include="RenderManager\RenderManager.cpp">
       <Filter>RenderManager</Filter>
     </ClCompile>
@@ -111,6 +108,9 @@
       <Filter>RenderableObjects</Filter>
     </ClCompile>
     <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp">
+      <Filter>RenderableObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderableObjects\RenderableObjectsManager.cpp">
       <Filter>RenderableObjects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -195,9 +195,6 @@
       <Filter>Materials</Filter>
     </ClInclude>
     <ClInclude Include="RenderableObjects\RenderableObject.h">
-      <Filter>RenderableObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderableObjects\RenderableObjectManager.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
     <ClInclude Include="RenderableObjects\RenderableVertexs.h">
@@ -300,6 +297,9 @@
       <Filter>RenderableObjects</Filter>
     </ClInclude>
     <ClInclude Include="RenderableObjects\RenderableObjectTechniqueManager.h">
+      <Filter>RenderableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderableObjects\RenderableObjectsManager.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
   </ItemGroup>
