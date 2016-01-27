@@ -25,7 +25,8 @@ public:
 	//bool AddRenderableObjectToRenderList(CRenderableObject* _RenderableObject);
 
 	void Render();
-	void Clear();
+	void Clear(bool renderTarget, bool depthStencil);
+	void Present();
 private:
 
 	CCamera m_CurrentCamera;

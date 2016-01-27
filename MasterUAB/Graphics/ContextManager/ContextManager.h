@@ -73,6 +73,8 @@ public:
 	void SetCamera(const CCamera& _Camera) { CEffectManager::m_SceneParameters.m_View = _Camera.GetView(); CEffectManager::m_SceneParameters.m_Projection = _Camera.GetProjection(); }
 	//void SetDebugSize(float _Size) { CEffectManager::m_SceneParameters.m_DebugRenderScale = _Size; }
 
+	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.2f, .1f, .4f));
+	void Present();
 private:
 
 	void InitRasterizerStates();
