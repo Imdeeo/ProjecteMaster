@@ -9,7 +9,7 @@
 #include "RenderManager\RenderManager.h"
 #include "StaticMesh\StaticMeshManager.h"
 #include "Lights\LightManager.h"
-#include "RenderableObjects\RenderableObjectManager.h"
+#include "Layers\LayerManager.h"
 #include "AnimatedModels\AnimatedModelsManager.h"
 #include "ScriptManager\ScriptManager.h"
 #include "Camera\CameraControllerManager.h"
@@ -24,7 +24,7 @@ class CUABEngine
 {
 
 	CStaticMeshManager * m_StaticMeshManager;
-	CRenderableObjectsManager * m_RenderableObjectsManager;
+	CLayerManager * m_LayerManager;
 	CMaterialManager * m_MaterialManager;
 	CEffectManager * m_EffectManager;
 	CTextureManager * m_TextureManager;
@@ -40,7 +40,7 @@ class CUABEngine
 	std::string m_LevelLoaded;
 
 	UAB_GET_PROPERTY(CStaticMeshManager *, StaticMeshManager)
-	UAB_GET_PROPERTY(CRenderableObjectsManager *, RenderableObjectsManager)
+	UAB_GET_PROPERTY(CLayerManager *, LayerManager)
 	UAB_GET_PROPERTY(CMaterialManager *, MaterialManager)
 	UAB_GET_PROPERTY(CEffectManager *, EffectManager)
 	UAB_GET_PROPERTY(CTextureManager *, TextureManager)

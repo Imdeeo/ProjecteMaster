@@ -2,7 +2,7 @@
 #define RENDER_MANAGER_H
 
 #include "Camera\Frustum.h"
-#include "RenderableObjects\RenderableObjectManager.h"
+#include "RenderableObjects\RenderableObjectsManager.h"
 #include "Utils.h"
 #include "ContextManager\ContextManager.h"
 
