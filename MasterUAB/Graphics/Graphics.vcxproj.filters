@@ -32,9 +32,6 @@
     <ClCompile Include="Materials\MaterialManager.cpp">
       <Filter>Materials</Filter>
     </ClCompile>
-    <ClCompile Include="RenderableObjects\RenderableObjectManager.cpp">
-      <Filter>RenderableObjects</Filter>
-    </ClCompile>
     <ClCompile Include="RenderManager\RenderManager.cpp">
       <Filter>RenderManager</Filter>
     </ClCompile>
@@ -113,29 +110,8 @@
     <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp">
       <Filter>RenderableObjects</Filter>
     </ClCompile>
-    <ClCompile Include="SceneRender\SceneRendererCommand.cpp">
-      <Filter>SceneRender</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp">
-      <Filter>SceneRender</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneRender\ClearSceneRendererCommand.cpp">
-      <Filter>SceneRender</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneRender\PresentSceneRendererCommand.cpp">
-      <Filter>SceneRender</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneRender\SetMatricesSceneRendererCommand.cpp">
-      <Filter>SceneRender</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneRender\SetDepthStencilStateSceneRendererCommand.cpp">
-      <Filter>SceneRender</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRend.cpp">
-      <Filter>SceneRender</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneRender\RenderLayerSceneRendererCommand.cpp">
-      <Filter>SceneRender</Filter>
+    <ClCompile Include="RenderableObjects\RenderableObjectsManager.cpp">
+      <Filter>RenderableObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,10 +150,6 @@
     </Filter>
     <Filter Include="Layers">
       <UniqueIdentifier>{6784774d-1854-4fee-9265-d832a366caf9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SceneRender">
-      <UniqueIdentifier>{36138837-be4a-486b-8bf9-b888d5245041}</UniqueIdentifier>
-      <Extensions>SceneRender</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -223,9 +195,6 @@
       <Filter>Materials</Filter>
     </ClInclude>
     <ClInclude Include="RenderableObjects\RenderableObject.h">
-      <Filter>RenderableObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderableObjects\RenderableObjectManager.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
     <ClInclude Include="RenderableObjects\RenderableVertexs.h">
@@ -330,29 +299,8 @@
     <ClInclude Include="RenderableObjects\RenderableObjectTechniqueManager.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
-    <ClInclude Include="SceneRender\SceneRendererCommand.h">
-      <Filter>SceneRender</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRender\SceneRendererCommandManager.h">
-      <Filter>SceneRender</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRender\ClearSceneRendererCommand.h">
-      <Filter>SceneRender</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRender\PresentSceneRendererCommand.h">
-      <Filter>SceneRender</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRender\SetMatricesSceneRendererCommand.h">
-      <Filter>SceneRender</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRender\SetDepthStencilStateSceneRendererCommand.h">
-      <Filter>SceneRender</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRend.h">
-      <Filter>SceneRender</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRender\RenderLayerSceneRendererCommand.h">
-      <Filter>SceneRender</Filter>
+    <ClInclude Include="RenderableObjects\RenderableObjectsManager.h">
+      <Filter>RenderableObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

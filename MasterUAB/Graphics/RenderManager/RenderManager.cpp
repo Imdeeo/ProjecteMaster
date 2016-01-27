@@ -92,7 +92,7 @@ void CRenderManager::Render()
 	// TODO crear un vector para objetos transparentes
 	std::vector<BlendedSubmesh> l_SubmeshesWithBlend;
 
-	UABEngine.GetRenderableObjectsManager()->Render(this);
+	UABEngine.GetLayerManager()->Render(this);
 
 	//for (size_t i = 0; i < m_CurrentRenderlistLength; ++i)
 	//{
@@ -157,4 +157,10 @@ void CRenderManager::Render()
 	CDebugHelper::GetDebugHelper()->Render();
 
 	m_ContextManager->EndRender();
+}
+
+
+void CRenderManager::DisableAlphaBlendState()
+{
+	m_ContextManager->GetDeviceContext()->OMSetBlendState(NULL,NULL,0xffffffff);
 }

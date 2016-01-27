@@ -1,4 +1,4 @@
-#include "RenderableObjectManager.h"
+#include "RenderableObjectsManager.h"
 #include "StaticMesh\InstanceMesh.h"
 #include "AnimatedModels\AnimatedInstanceModel.h"
 
