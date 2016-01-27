@@ -48,7 +48,8 @@
     <ClCompile Include="RenderableObjects\RenderableObjectTechnique.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp" />
     <ClCompile Include="RenderManager\RenderManager.cpp" />
-    <ClCompile Include="RenderManager\SceneRendererCommandManager.cpp" />
+    <ClCompile Include="SceneRender\SceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp" />
     <ClCompile Include="StaticMesh\InstanceMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMeshManager.cpp" />
@@ -100,8 +101,9 @@
     <ClInclude Include="RenderableObjects\TemplatedRenderableVertexs.h" />
     <ClInclude Include="RenderableObjects\VertexTypes.h" />
     <ClInclude Include="RenderManager\RenderManager.h" />
-    <ClInclude Include="RenderManager\SceneRendererCommandManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneRender\SceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SceneRendererCommandManager.h" />
     <ClInclude Include="StaticMesh\InstanceMesh.h" />
     <ClInclude Include="StaticMesh\StaticMesh.h" />
     <ClInclude Include="StaticMesh\StaticMeshManager.h" />

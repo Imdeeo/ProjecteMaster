@@ -113,7 +113,10 @@
     <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp">
       <Filter>RenderableObjects</Filter>
     </ClCompile>
-    <ClCompile Include="RenderManager\SceneRendererCommandManager.cpp">
+    <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\SceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
   </ItemGroup>
@@ -309,7 +312,10 @@
     <ClInclude Include="RenderableObjects\RenderableObjectTechniqueManager.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
-    <ClInclude Include="RenderManager\SceneRendererCommandManager.h">
+    <ClInclude Include="SceneRender\SceneRendererCommandManager.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\SceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
