@@ -1,11 +1,6 @@
 #ifndef CAMERA_KEY_CONTROLLER_H
 #define CAMERA_KEY_CONTROLLER_H
 
-<<<<<<< HEAD
-#include "Camera\CameraController.h"
-#include "XML\XMLTreeNode.h"
-=======
->>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 #include "Camera\CameraController.h"
 #include "XML\XMLTreeNode.h"
 #include <vector>

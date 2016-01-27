@@ -14,18 +14,10 @@ CUABEngine::CUABEngine(void)
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
 	m_LayerManager = new CLayerManager();
 	m_ScriptManager = new CScriptManager();
-<<<<<<< HEAD
-<<<<<<< HEAD
-	m_CameraManager = new CCameraControllerManager();
-=======
 	m_CameraControllerManager = new CCameraControllerManager();
->>>>>>> develop
-=======
-	m_CameraManager = new CCameraControllerManager();
 	m_Cinematic= new CCinematic();
 	m_PhysXManager = CPhysXManager::CreatePhysXManager();
 	m_RenderableObjectTechniqueManager = new CRenderableObjectTechniqueManager();
->>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 }
 
 
@@ -33,27 +25,19 @@ CUABEngine::~CUABEngine(void)
 {
 	CHECKED_DELETE(m_TextureManager);
 	CHECKED_DELETE(m_RenderManager);
-	CHECKED_DELETE(m_CameraManager);
 	CHECKED_DELETE(m_ScriptManager);
 	//CHECKED_DELETE(m_Cinematic);
 	CHECKED_DELETE(m_LightManager);
 	CHECKED_DELETE(m_AnimatedModelsManager);
-<<<<<<< HEAD
 	CHECKED_DELETE(m_RenderableObjectsManager);
 	CHECKED_DELETE(m_ScriptManager);
-<<<<<<< HEAD
-	CHECKED_DELETE(m_CameraManager);
-=======
 	CHECKED_DELETE(m_CameraControllerManager);
->>>>>>> develop
-=======
 	CHECKED_DELETE(m_LightManager);
 	CHECKED_DELETE(m_StaticMeshManager);
 	CHECKED_DELETE(m_MaterialManager);
 	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
 	CHECKED_DELETE(m_EffectManager);
 	CHECKED_DELETE(m_PhysXManager);
->>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -81,12 +65,8 @@ void CUABEngine::Init()
 	m_Cinematic->LoadXML("Data\\level_"+m_LevelLoaded+"\\cinematic.xml");
 	//m_LayerManager->GetLayer()->AddResource("Cinematic",m_Cinematic);
 	m_ScriptManager->Initialize();
-<<<<<<< HEAD
-	m_CameraManager->Load("Data\\level_1\\cameras.xml");
-=======
-	m_CameraManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
+	m_CameraControllerManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
 	//m_Cinematic->Play("true");
->>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 }
 
 void CUABEngine::Destroy()

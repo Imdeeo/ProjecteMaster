@@ -299,18 +299,8 @@
     <ClInclude Include="Camera\CameraKeyController.h">
       <Filter>Camera</Filter>
     </ClInclude>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     <ClInclude Include="Effects\AnimatedModelEffectParameters.h">
       <Filter>Effects</Filter>
-=======
-    <ClInclude Include="Camera\CameraControllerManager.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera\CameraControllerManager.h">
-      <Filter>Camera</Filter>
->>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
     </ClInclude>
     <ClInclude Include="Effects\LightEffectParameters.h">
       <Filter>Effects</Filter>
@@ -321,11 +311,9 @@
     <ClInclude Include="Effects\SceneEffectParameters.h">
       <Filter>Effects</Filter>
     </ClInclude>
-<<<<<<< HEAD
->>>>>>> develop
     <ClInclude Include="Camera\CameraControllerManager.h">
       <Filter>Camera</Filter>
-=======
+	</ClInclude>
     <ClInclude Include="Cinematics\Cinematic.h">
       <Filter>Cinematics</Filter>
     </ClInclude>
@@ -388,7 +376,6 @@
     </ClInclude>
     <ClInclude Include="SceneRender\SceneRendererCommandManager.h">
       <Filter>SceneRender</Filter>
->>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
