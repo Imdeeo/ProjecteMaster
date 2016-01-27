@@ -48,6 +48,9 @@
     <ClInclude Include="3DElement\3DElement.h">
       <Filter>3DElement</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\Active.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -82,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="3DElement\3DElement.cpp">
       <Filter>3DElement</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Active.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

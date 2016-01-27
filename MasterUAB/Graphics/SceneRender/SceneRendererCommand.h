@@ -4,10 +4,11 @@
 #include "Utils\Named.h"
 #include "XML\XMLTreeNode.h"
 #include "Materials\Material.h"
+#include "Utils\Active.h"
 
 class CRenderManager;
 
-class CSceneRendererCommand :/*public CActive,*/ public CNamed
+class CSceneRendererCommand :public CActive, public CNamed
 {
 protected:
 	CMaterial *m_Material;

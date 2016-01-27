@@ -3,6 +3,12 @@
 
 #include "Utils\Named.h"
 
+#include <vector>
+
+class CTexture;
+class CMaterialParameter;
+class CRenderableObjectTechnique;
+
 class CMaterial : public CNamed
 {
 private:
@@ -15,9 +21,9 @@ public:
 	CMaterial(CXMLTreeNode &TreeNode);
 	virtual ~CMaterial();
 	virtual void Apply(CRenderableObjectTechnique *RenderableObjectTechnique = NULL);
-	UAB_GET_PROPERTY_POINTER(CRenderableObjectTechnique, RenderableObjectTechnique);
+	//UAB_GET_PROPERTY_POINTER(CRenderableObjectTechnique, RenderableObjectTechnique);
 	void * GetNextParameterAddress(unsigned int NumBytes);
-	UAB_GET_PROPERTY_REFERENCE(std::vector<CMaterialParameter *>, Parameters);
+	//UAB_GET_PROPERTY_REFERENCE(std::vector<CMaterialParameter *>, Parameters);
 };
 
 #endif //MATERIAL_H
