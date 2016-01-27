@@ -23,13 +23,14 @@ public:
 	void ChooseDebugCamera(std::string _CurrentCamera);
 	bool Load(const std::string &FileName);
 	bool Reload();
+	void Update(float _ElapsedTime);
 
 private:
 	CCameraController* GetMainCamera(){ return m_MainCamera; };
 	CCameraController* GetDebugCamera(){ return m_DebugCamera; };
 	void UpdateMainCamera(float _ElapsedTime);
 	void UpdateDebugCamera(float _ElapsedTime);
-	void Update(float _ElapsedTime);
+	
 
 };
 
