@@ -13,5 +13,5 @@ CSetDepthStencilStateSceneRendererCommand::~CSetDepthStencilStateSceneRendererCo
 
 void CSetDepthStencilStateSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
-
+	// TODO
 }
