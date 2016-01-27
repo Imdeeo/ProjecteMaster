@@ -128,9 +128,6 @@
     <ClCompile Include="SceneRender\SetMatricesSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
-    <ClCompile Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRend.cpp">
-      <Filter>SceneRender</Filter>
-    </ClCompile>
     <ClCompile Include="SceneRender\EnbableAlphaBlendSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
@@ -167,7 +164,19 @@
     <ClCompile Include="SceneRender\UnsetRenderTargetSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
-    <ClCompile Include="SceneRender\StagedTexturedSceneRendererCommand.cpp">
+    <ClCompile Include="SceneRender\RenderDebugLayerSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\RenderDebugLightsSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\LightsSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\RenderGUISceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
     <ClCompile Include="SceneRender\DrawQuadRendererCommand.cpp">
@@ -380,9 +389,6 @@
     <ClInclude Include="SceneRender\SetMatricesSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
-    <ClInclude Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRend.h">
-      <Filter>SceneRender</Filter>
-    </ClInclude>
     <ClInclude Include="SceneRender\EnbableAlphaBlendSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
@@ -419,7 +425,19 @@
     <ClInclude Include="SceneRender\UnsetRenderTargetSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
-    <ClInclude Include="SceneRender\StagedTexturedSceneRendererCommand.h">
+    <ClInclude Include="SceneRender\RenderDebugLayerSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\RenderDebugLightsSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\LightsSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\RenderGUISceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
     <ClInclude Include="SceneRender\DrawQuadRendererCommand.h">
