@@ -25,10 +25,12 @@ public:
 	{
 		CAMERA_TYPE_SPHERICAL = 0,
 		CAMERA_TYPE_FPS = 1,
-		CAMERA_TYPE_KEY = 2,
+		CAMERA_TYPE_CYCLE = 2,
+		CAMERA_TYPE_REVERSE = 4,
+
 		CAMERA_TYPE_NULL = -1
 	};
-	
+
 	CCamera()
 		: m_FOV(/*60.0f*/ 1.047198f)
 		, m_AspectRatio(1.0f)
@@ -93,8 +95,10 @@ public:
 			return CAMERA_TYPE_SPHERICAL;
 		else if (CameraType == "fps")
 			return CAMERA_TYPE_FPS;
-		else if (CameraType == "key")
-			return CAMERA_TYPE_KEY;
+		else if (CameraType=="cycle")
+			return CAMERA_TYPE_CYCLE;
+		else if (CameraType=="reverse")
+			return CAMERA_TYPE_REVERSE;
 		return CAMERA_TYPE_NULL;
 	}
 };

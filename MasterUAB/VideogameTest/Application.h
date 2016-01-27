@@ -24,10 +24,6 @@ public:
 	void Init();
 
 private:
-
-	CSphericalCameraController m_SphericalCamera;
-	CFPSCameraController m_FPSCamera;
-
 	int m_CurrentCamera_vision;
 	int m_CurrentCamera_control;
 
