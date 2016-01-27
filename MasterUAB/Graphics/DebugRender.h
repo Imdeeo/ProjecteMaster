@@ -58,6 +58,7 @@ private:
 	CRenderableVertexs				*m_SimpleCube;
 	CRenderableVertexs				*m_Axis;
 	CRenderableVertexs				*m_LongAxis;
+	CRenderableVertexs				*m_DrawQuadRV;
 
 	float m_SimpleTriangleBSRadi;
 	float m_ClassicBlendTriangleBSRadi;
@@ -82,6 +83,8 @@ private:
 	Vect3f m_SimpleCubeBBMax;
 	Vect3f m_AxisBBMax;
 	Vect3f m_LongAxisBBMax;
+
+	Vect
 };
 
 #endif

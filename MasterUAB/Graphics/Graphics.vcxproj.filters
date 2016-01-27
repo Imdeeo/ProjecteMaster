@@ -170,6 +170,9 @@
     <ClCompile Include="SceneRender\StagedTexturedSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRender\DrawQuadRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -417,6 +420,9 @@
       <Filter>SceneRender</Filter>
     </ClInclude>
     <ClInclude Include="SceneRender\StagedTexturedSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\DrawQuadRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>

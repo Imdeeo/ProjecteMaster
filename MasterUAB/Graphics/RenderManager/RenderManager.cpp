@@ -6,6 +6,9 @@
 #include "Engine\UABEngine.h"
 #include "DebugHelper.h"
 
+#include "Effects\EffectTechnique.h"
+#include "Texture\Texture.h";
+
 #define SCREEN_DEPTH 20.f
 
 CRenderManager::CRenderManager()
@@ -190,5 +193,25 @@ void CRenderManager::UnsetRenderTargets()
 	m_CurrentRenderTargetViews = &m_RenderTargetView;
 	m_CurrentDepthStencilView = m_DepthStencilView;
 	m_DeviceContext->OMSetRenderTargets(m_NumViews, &m_RenderTargetView,m_DepthStencilView);
+	m_DeviceContext->RSSetViewports(1, &m_Viewport);*/
+}
+
+
+//Funcones Draw
+void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture *_Texture, float x, float y, float _Width, float _Height, const CColor &Color)
+{
+	/*CEffectManager::m_SceneParameters.m_BaseColor=Color;
+	if(Texture!=NULL)
+		Texture->Activate(0);
+	D3D11_VIEWPORT l_Viewport;
+	l_Viewport.Width=Width*m_Viewport.Width;
+	l_Viewport.Height=Height*m_Viewport.Height;
+	l_Viewport.MinDepth = 0.0f;
+	l_Viewport.MaxDepth = 1.0f;
+	l_Viewport.TopLeftX = x*m_Viewport.Width;
+	l_Viewport.TopLeftY = y*m_Viewport.Height;
+	m_DeviceContext->RSSetViewports(1, &l_Viewport);
+	m_DrawQuadRV->Render(this, EffectTechnique,
+	&CEffectManager::m_SceneParameters);
 	m_DeviceContext->RSSetViewports(1, &m_Viewport);*/
 }

@@ -6,6 +6,9 @@
 #include "Utils.h"
 #include "ContextManager\ContextManager.h"
 
+class CEffectTechnique;
+class CTexture;
+
 class CMaterialManager;
 
 class CRenderManager
@@ -28,6 +31,9 @@ public:
 	void Clear(bool renderTarget, bool depthStencil);
 	void Present();
 	void CRenderManager::SetMatrixViewProjection();
+
+	//funciones de Draw
+	void DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture *_Texture, float x, float y, float _Width, float _Height, const CColor &Color);
 private:
 
 	CCamera m_CurrentCamera;
