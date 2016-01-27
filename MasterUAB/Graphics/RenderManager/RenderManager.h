@@ -27,6 +27,7 @@ public:
 	void Render();
 	void Clear(bool renderTarget, bool depthStencil);
 	void Present();
+	void CRenderManager::SetMatrixViewProjection();
 private:
 
 	CCamera m_CurrentCamera;

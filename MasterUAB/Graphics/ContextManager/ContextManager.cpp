@@ -1,16 +1,11 @@
 #include "ContextManager.h"
-
 #include "RenderableObjects\VertexTypes.h"
 #include "RenderableObjects\RenderableVertexs.h"
-
 #include "Math\Matrix44.h"
-
 #include "DebugRender.h"
-
 #include "AntTweakBar.h"
 
 #pragma comment(lib,"d3d11.lib")
-
 
 CContextManager::CContextManager()
 	: m_D3DDevice(nullptr)
@@ -21,7 +16,6 @@ CContextManager::CContextManager()
 	, m_DepthStencilView(nullptr)
 	, m_D3DDebug(nullptr)
 {
-
 	for (int i = 0; i < RS_COUNT; ++i)
 	{
 		m_RasterizerSates[i] = nullptr;
@@ -34,7 +28,6 @@ CContextManager::CContextManager()
 	{
 		m_BlendStates[i] = nullptr;
 	}
-
 }
 
 CContextManager::~CContextManager()
@@ -77,11 +70,8 @@ void CContextManager::Dispose()
 	CHECKED_RELEASE(m_SwapChain);
 }
 
-
-
 HRESULT CContextManager::CreateContext(HWND hWnd, int Width, int Height)
 {
-
 	D3D_FEATURE_LEVEL featureLevels[] =
 	{
 		D3D_FEATURE_LEVEL_11_0,
@@ -123,8 +113,7 @@ HRESULT CContextManager::CreateContext(HWND hWnd, int Width, int Height)
 	if (FAILED(hr))
 		return hr;
 #endif
-
-
+	
 	// treure el ALT+INTRO automàtic
 	IDXGIFactory* dxgiFactory;
 	hr = m_SwapChain->GetParent(__uuidof(IDXGIFactory), (void **)&dxgiFactory);
@@ -140,7 +129,6 @@ HRESULT CContextManager::CreateContext(HWND hWnd, int Width, int Height)
 
 HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 {
-
 	CHECKED_RELEASE(m_RenderTargetView);
 	CHECKED_RELEASE(m_DepthStencil);
 	CHECKED_RELEASE(m_DepthStencilView);
@@ -155,7 +143,6 @@ HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 	pBackBuffer->Release();
 	if (FAILED(hr))
 		return FALSE;
-
 
 	D3D11_TEXTURE2D_DESC descDepth;
 	ZeroMemory(&descDepth, sizeof(descDepth));
@@ -185,8 +172,6 @@ HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 
 	return S_OK;
 }
-
-
 
 class CDebugCEffect : public CEffect
 {
@@ -256,9 +241,7 @@ public:
 			, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 			, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 		const int ps_size = 464;
-
-
-
+		
 		HRESULT l_HR = Device->CreateVertexShader(vs, vs_size, NULL, &m_VertexShader);
 		assert(l_HR == S_OK);
 
@@ -270,11 +253,9 @@ public:
 		l_HR = Device->CreateInputLayout(l_Layout, 2, vs, vs_size, &m_VertexLayout);
 		assert(l_HR == S_OK);
 
-
 		l_HR = Device->CreatePixelShader(ps, ps_size, NULL, &m_PixelShader);
 		assert(l_HR == S_OK);
-
-
+		
 		D3D11_BUFFER_DESC l_BufferDescription = {};
 
 		l_BufferDescription.Usage = D3D11_USAGE_DEFAULT;
@@ -394,7 +375,6 @@ void CContextManager::InitDepthStencilStates()
 		HRESULT l_HR = m_D3DDevice->CreateDepthStencilState(&l_desc, &m_DepthStencilStates[DSS_TEST_WRITE]);
 		assert(l_HR == S_OK);
 	}
-
 }
 
 void CContextManager::InitBlendStates()

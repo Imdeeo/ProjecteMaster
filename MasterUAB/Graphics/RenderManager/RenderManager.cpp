@@ -178,3 +178,8 @@ void CRenderManager::Present()
 {
 	m_ContextManager->Present();
 }
+
+void CRenderManager::SetMatrixViewProjection()
+{
+	m_ContextManager->SetCamera(m_CurrentCamera);
+}
