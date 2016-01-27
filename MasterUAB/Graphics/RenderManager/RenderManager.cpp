@@ -4,8 +4,22 @@
 #include "RenderableObjects\RenderableObject.h"
 
 #include "Engine\UABEngine.h"
+#include "DebugHelper.h"
 
 #define SCREEN_DEPTH 20.f
+
+CRenderManager::CRenderManager()
+	: m_UseDebugCamera(false)
+	, m_CurrentRenderlistLength(0)
+{
+
+}
+
+CRenderManager::~CRenderManager()
+{
+
+}
+
 void CRenderManager::SetCurrentCamera(const CCamera& _CurrentCamera)
 {
 	m_CurrentCamera = _CurrentCamera;
@@ -64,7 +78,13 @@ void CRenderManager::Render()
 	else
 	{
 		m_ContextManager->SetCamera(m_CurrentCamera);
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition=m_CurrentCamera.GetPosition();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector=m_CurrentCamera.GetUp();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector=Vect4f(1,1,1,1);
 	}
+
+	UABEngine.GetEffectManager()->SetLightsConstants(MAX_LIGHTS_BY_SHADER);
+
 	//Mat44f view,proj;
 	//view.SetIdentity();
 	//proj.SetIdentity();
@@ -72,7 +92,7 @@ void CRenderManager::Render()
 	// TODO crear un vector para objetos transparentes
 	std::vector<BlendedSubmesh> l_SubmeshesWithBlend;
 
-	UABEngine.GetRenderableObjectsManager()->Render(this);
+	UABEngine.GetLayerManager()->Render(this);
 
 	//for (size_t i = 0; i < m_CurrentRenderlistLength; ++i)
 	//{
@@ -134,6 +154,17 @@ void CRenderManager::Render()
 	//}
 
 	m_CurrentRenderlistLength = 0;
+	CDebugHelper::GetDebugHelper()->Render();
 
 	m_ContextManager->EndRender();
+}
+
+void CRenderManager::EngableAlphaBlendState()
+{
+	ID3D11BlendState* l_AlphaBlendState = m_ContextManager->GetBlendState(CContextManager::BLEND_ALPHA);
+	m_ContextManager->GetDeviceContext()->OMSetBlendState(l_AlphaBlendState,NULL,0xffffffff);
+}
+void CRenderManager::DisableAlphaBlendState()
+{
+	m_ContextManager->GetDeviceContext()->OMSetBlendState(NULL,NULL,0xffffffff);
 }

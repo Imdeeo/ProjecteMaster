@@ -1,7 +1,7 @@
 #ifndef EFFECT_MANAGER_H
 #define EFFECT_MANAGER_H
 
-#include "TemplatedMapManager.h"
+#include "Utils\TemplatedMapManager.h"
 #include "Effects\EffectTechnique.h"
 
 #include "Effects\EffectShader.h"
@@ -20,7 +20,6 @@ private:
 	CTemplatedMapManager<CEffectPixelShader> m_PixelShaders;
 	std::string m_Filename;
 
-	void Destroy();
 public:
 	static CSceneEffectParameters m_SceneParameters;
 	static CAnimatedModelEffectParameters m_AnimatedModelEffectParameters;
@@ -30,7 +29,7 @@ public:
 	CEffectManager();
 	virtual ~CEffectManager();
 		
-	void ReloadFile();
+	void ReloadFile(){};
 	void Reload();
 	bool Load(const std::string &Filename);
 	CEffectVertexShader * GetVertexShader(const std::string &VertexShader);

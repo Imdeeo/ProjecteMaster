@@ -11,9 +11,6 @@
     <ClCompile Include="Application.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="motor3d.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Application.h" />
   </ItemGroup>
 </Project>

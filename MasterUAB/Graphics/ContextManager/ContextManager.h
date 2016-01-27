@@ -39,6 +39,7 @@ public:
 		BLEND_SOLID,
 		BLEND_CLASSIC,
 		BLEND_PREMULT,
+		BLEND_ALPHA,
 		
 		// NOTA: Si se añaden más estados aquí, modificar CMaterial::HasBlending
 

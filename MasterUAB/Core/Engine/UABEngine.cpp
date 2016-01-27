@@ -1,7 +1,7 @@
 #include "Engine\UABEngine.h"
-#include <string>
+#include "XML\XMLTreeNode.h"
 
-#define LEVEL "1"
+
 
 CUABEngine::CUABEngine(void)
 {
@@ -12,25 +12,33 @@ CUABEngine::CUABEngine(void)
 	m_StaticMeshManager = new CStaticMeshManager();
 	m_LightManager = new CLightManager();
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
-	m_RenderableObjectsManager = new CRenderableObjectsManager();
+	m_LayerManager = new CLayerManager();
 	m_ScriptManager = new CScriptManager();
+<<<<<<< HEAD
 <<<<<<< HEAD
 	m_CameraManager = new CCameraControllerManager();
 =======
 	m_CameraControllerManager = new CCameraControllerManager();
 >>>>>>> develop
+=======
+	m_CameraManager = new CCameraControllerManager();
+	m_Cinematic= new CCinematic();
+	m_PhysXManager = CPhysXManager::CreatePhysXManager();
+	m_RenderableObjectTechniqueManager = new CRenderableObjectTechniqueManager();
+>>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 }
 
 
 CUABEngine::~CUABEngine(void)
 {
-	CHECKED_DELETE(m_EffectManager);
-	CHECKED_DELETE(m_MaterialManager);
 	CHECKED_DELETE(m_TextureManager);
 	CHECKED_DELETE(m_RenderManager);
-	CHECKED_DELETE(m_StaticMeshManager);
+	CHECKED_DELETE(m_CameraManager);
+	CHECKED_DELETE(m_ScriptManager);
+	//CHECKED_DELETE(m_Cinematic);
 	CHECKED_DELETE(m_LightManager);
 	CHECKED_DELETE(m_AnimatedModelsManager);
+<<<<<<< HEAD
 	CHECKED_DELETE(m_RenderableObjectsManager);
 	CHECKED_DELETE(m_ScriptManager);
 <<<<<<< HEAD
@@ -38,6 +46,14 @@ CUABEngine::~CUABEngine(void)
 =======
 	CHECKED_DELETE(m_CameraControllerManager);
 >>>>>>> develop
+=======
+	CHECKED_DELETE(m_LightManager);
+	CHECKED_DELETE(m_StaticMeshManager);
+	CHECKED_DELETE(m_MaterialManager);
+	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
+	CHECKED_DELETE(m_EffectManager);
+	CHECKED_DELETE(m_PhysXManager);
+>>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -53,18 +69,44 @@ CUABEngine* CUABEngine::GetInstance()
 
 void CUABEngine::Init()
 {
+	LoadLevelXML("Data\\level.xml");
+
 	m_EffectManager->Load("Data\\effects.xml");
-	m_MaterialManager->Load("Data\\level_1\\materials.xml");
-	m_StaticMeshManager->Load("Data\\level_1\\static_meshes.xml");
-	m_LightManager->Load("Data\\level_1\\lights.xml");
+	m_RenderableObjectTechniqueManager->Load("Data\\renderable_object_technique.xml");
+	m_MaterialManager->Load("Data\\level_"+m_LevelLoaded+"\\materials.xml");
+	m_StaticMeshManager->Load("Data\\level_"+m_LevelLoaded+"\\static_meshes.xml");
+	m_LightManager->Load("Data\\level_"+m_LevelLoaded+"\\lights.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
-	m_RenderableObjectsManager->Load("Data\\level_1\\renderable_objects.xml");
-	m_CameraControllerManager->Load("Data\\level_1\\cameras.xml");
+	m_LayerManager->Load("Data\\level_" + m_LevelLoaded + "\\renderable_objects.xml");
+	m_Cinematic->LoadXML("Data\\level_"+m_LevelLoaded+"\\cinematic.xml");
+	//m_LayerManager->GetLayer()->AddResource("Cinematic",m_Cinematic);
 	m_ScriptManager->Initialize();
+<<<<<<< HEAD
 	m_CameraManager->Load("Data\\level_1\\cameras.xml");
+=======
+	m_CameraManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
+	//m_Cinematic->Play("true");
+>>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 }
 
 void CUABEngine::Destroy()
 {
 	CHECKED_DELETE(m_Instance);
+}
+
+void CUABEngine::LoadLevelXML(std::string filename)
+{
+
+	CXMLTreeNode l_XML;
+	bool isLoading = l_XML.LoadFile(filename.c_str());
+
+	if (l_XML.LoadFile(filename.c_str()))
+	{
+		CXMLTreeNode l_Input = l_XML["level"];
+		if (l_Input.Exists())
+		{
+			m_LevelLoaded = l_Input.GetPszProperty("level_to_load");
+		}
+	}
+
 }

@@ -2,7 +2,7 @@
 
 #include "XML\XMLTreeNode.h"
 
-CSpotLight::CSpotLight(){}
+CSpotLight::CSpotLight():CDirectionalLight(),m_Angle(0.0f),m_FallOff(0.0f){}
 
 CSpotLight::CSpotLight(CXMLTreeNode &TreeNode) : CDirectionalLight(TreeNode)
 {

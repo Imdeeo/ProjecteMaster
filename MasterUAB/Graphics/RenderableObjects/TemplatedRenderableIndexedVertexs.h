@@ -86,8 +86,8 @@ public:
 		CEffectManager* l_EffectManagerInstance = UABEngine.GetEffectManager();
 
 		l_DeviceContext->UpdateSubresource(l_SceneConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_SceneParameters), 0, 0 );
-		l_DeviceContext->UpdateSubresource(l_LightConstantBufferVS, 1, NULL, &(l_EffectManagerInstance->m_LightParameters), 0, 0 );
-		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferVS, 2, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters)
+		l_DeviceContext->UpdateSubresource(l_LightConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_LightParameters), 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters)
 			, 0, 0 );
 		ID3D11Buffer* VSBuffers[3] = {l_SceneConstantBufferVS,l_LightConstantBufferVS,l_AnimationConstantBufferVS};
 		l_DeviceContext->VSSetConstantBuffers(0, 3,VSBuffers);
@@ -103,8 +103,8 @@ public:
 
 
 		l_DeviceContext->UpdateSubresource(l_SceneConstantBufferPS, 0, NULL, &(l_EffectManagerInstance->m_SceneParameters), 0, 0 );
-		l_DeviceContext->UpdateSubresource(l_LightConstantBufferPS, 1, NULL, &(l_EffectManagerInstance->m_LightParameters), 0, 0 );
-		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferPS, 2, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters)
+		l_DeviceContext->UpdateSubresource(l_LightConstantBufferPS, 0, NULL, &(l_EffectManagerInstance->m_LightParameters), 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferPS, 0, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters)
 			, 0, 0 );
 
 		ID3D11Buffer* PSBuffers[3] = {l_SceneConstantBufferPS,l_LightConstantBufferPS,l_AnimationConstantBufferPS};

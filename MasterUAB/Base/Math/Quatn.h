@@ -14,6 +14,7 @@ public:
 	T x, y, z, w;
 
 public:
+	Quatn(){}
 	Quatn(T qx, T qy,T qz,T qw) : x(qx), y(qy), z(qz), w(qw)
 	{
 	}

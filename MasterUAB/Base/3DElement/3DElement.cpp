@@ -1,4 +1,4 @@
-#include "3DElement\C3DElement.h"
+#include "3DElement\3DElement.h"
 #include <assert.h>
 
 
@@ -30,7 +30,7 @@ C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode)
 	m_Pitch = l_Element.GetFloatProperty("pitch",0.f,true);
 	m_Roll = l_Element.GetFloatProperty("roll",0.f,true);
 	m_Scale = l_Element.GetFloatProperty("scale",1.f,true);
-	m_Visible = l_Element.GetBoolProperty("visible",false,true);
+	m_Visible = l_Element.GetBoolProperty("visible", true, false);	
 }
 
 C3DElement::~C3DElement(void)

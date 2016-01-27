@@ -2,7 +2,7 @@
 #define STATIC_MESH_H
 
 #include "Utils.h"
-#include "Named.h"
+#include "Utils\Named.h"
 #include "Math\MathTypes.h"
 
 class CRenderableVertexs;

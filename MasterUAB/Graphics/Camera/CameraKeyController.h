@@ -1,10 +1,13 @@
 #ifndef CAMERA_KEY_CONTROLLER_H
 #define CAMERA_KEY_CONTROLLER_H
 
+<<<<<<< HEAD
 #include "Camera\CameraController.h"
 #include "XML\XMLTreeNode.h"
+=======
+>>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 #include "Camera\CameraController.h"
-#include "Camera\CameraKey.h"
+#include "XML\XMLTreeNode.h"
 #include <vector>
 
 class CCameraKey;
@@ -26,7 +29,6 @@ public:
 	
 	void Update(float ElapsedTime);
 
-	void SetCamera(CCamera *Camera) const;
 	void SetCurrentTime(float CurrentTime);
 	void ResetTime();
 	float GetTotalTime();

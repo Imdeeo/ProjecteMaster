@@ -6,7 +6,7 @@
 #include <string>
 
 class CCamera
-{
+{	
 private:
 	Mat44f				m_View;
 	Mat44f				m_Projection;
@@ -26,6 +26,7 @@ public:
 		CAMERA_TYPE_SPHERICAL = 0,
 		CAMERA_TYPE_FPS = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		CAMERA_TYPE_KEY = 2,
 		CAMERA_TYPE_NULL = -1
 	};
@@ -38,6 +39,12 @@ public:
 	};
 
 >>>>>>> develop
+=======
+		CAMERA_TYPE_KEY = 2,
+		CAMERA_TYPE_NULL = -1
+	};
+	
+>>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 	CCamera()
 		: m_FOV(/*60.0f*/ 1.047198f)
 		, m_AspectRatio(1.0f)
@@ -99,6 +106,7 @@ public:
 	static CCamera::TCameraType CCamera::GetCameraTypeByName(const std::string &CameraType)
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (CameraType == "spherical")
 			return CAMERA_TYPE_SPHERICAL;
 		else if (CameraType == "fps")
@@ -107,14 +115,22 @@ public:
 			return CAMERA_TYPE_KEY;
 =======
 		if(CameraType=="spherical")
+=======
+		if (CameraType == "spherical")
+>>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 			return CAMERA_TYPE_SPHERICAL;
-		else if (CameraType=="fps")
+		else if (CameraType == "fps")
 			return CAMERA_TYPE_FPS;
+<<<<<<< HEAD
 		else if (CameraType=="cycle")
 			return CAMERA_TYPE_CYCLE;
 		else if (CameraType=="reverse")
 			return CAMERA_TYPE_REVERSE;
 >>>>>>> develop
+=======
+		else if (CameraType == "key")
+			return CAMERA_TYPE_KEY;
+>>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 		return CAMERA_TYPE_NULL;
 	}
 };

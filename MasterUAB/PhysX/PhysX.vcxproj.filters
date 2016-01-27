@@ -1,6 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="dummy.cpp" />
+    <Filter Include="PhysxManager">
+      <UniqueIdentifier>{81643f9c-17d6-4e99-a96a-8f9ed2beb0a3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PhysXManager\PhysXManager.cpp">
+      <Filter>PhysxManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PhysXManager\PhysXManager.h">
+      <Filter>PhysxManager</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 #define MATERIAL_MANAGER_H
 
 #include <string>
-#include "TemplatedMapManager.h"
+#include "Utils\TemplatedMapManager.h"
 #include "Materials\Material.h"
 
 class CMaterialManager : public CTemplatedMapManager<CMaterial>
