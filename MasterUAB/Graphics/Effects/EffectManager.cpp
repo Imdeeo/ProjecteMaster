@@ -1,8 +1,11 @@
 #include "Effects\EffectManager.h"
 #include "XML\XMLTreeNode.h"
-#include "Lights\Light.h"
-#include "Lights\DirectionalLight.h"
-#include "Lights\SpotLight.h"
+#include "SceneEffectParameters.h"
+#include "AnimatedModelEffectParameters.h";
+#include "LightEffectParameters.h";
+#include "Lights\Light.h";
+#include "Lights\DirectionalLight.h";
+#include "Lights\SpotLight.h";
 #include "Engine\UABEngine.h"
 
 CEffectManager::CEffectManager(void)
@@ -15,6 +18,9 @@ CEffectManager::~CEffectManager(void)
 
 void CEffectManager::Reload()
 {
+	m_VertexShaders.Destroy();
+	m_PixelShaders.Destroy();
+	CTemplatedMapManager::Destroy();
 	Load(m_Filename);
 }
 
@@ -75,13 +81,12 @@ CEffectPixelShader * CEffectManager::GetPixelShader(const std::string &PixelShad
 
 void CEffectManager::SetSceneConstants()
 {
-//	m_SceneParameters.m_World = UABEngine.GetRenderManager()->;
+	//m_SceneParameters.m_World = UABEngine.GetRenderManager()->GetContextManager()->;
 }
 
 void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 {	
-	m_LightParameters.m_LightAmbient[IdLight] = (1.0f, 1.0f, 1.0f, 1.0f);
-	m_LightParameters.m_LightEnabled[IdLight] = 1;
+	m_LightParameters.m_LightEnabled[IdLight] = Light->GetEnabled()?1:0;
 	m_LightParameters.m_LightType[IdLight] = Light->GetType();
 	m_LightParameters.m_LightPosition[IdLight] = Light->GetPosition();;	
 	m_LightParameters.m_LightAttenuationStartRange[IdLight] = Light->GetStartRangeAttenuation();
@@ -91,12 +96,11 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 
 	switch (Light->GetType())
 	{	
-	case CLight::LIGHT_TYPE_DIRECTIONAL:
-		m_LightParameters.m_LightDirection[IdLight] = dynamic_cast<CDirectionalLight*>(Light)->GetDirection();
-		break;
 	case CLight::LIGHT_TYPE_SPOT:
 		m_LightParameters.m_LightAngle[IdLight] = dynamic_cast<CSpotLight*>(Light)->GetAngle();
 		m_LightParameters.m_LightFallOffAngle[IdLight] = dynamic_cast<CSpotLight*>(Light)->GetFallOff();
+	case CLight::LIGHT_TYPE_DIRECTIONAL:
+		m_LightParameters.m_LightDirection[IdLight] = dynamic_cast<CDirectionalLight*>(Light)->GetDirection();
 		break;
 	case CLight::LIGHT_TYPE_OMNI:
 	default:
@@ -106,8 +110,20 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 
 void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 {
+	int n_lights = UABEngine.GetLightManager()->GetResourcesVector().size();
+	m_LightParameters.m_LightAmbient = UABEngine.GetLightManager()->GetAmbientLight();
 	for (size_t i = 0; i < MaxLights; i++)
 	{
-		SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
+		if(n_lights<=i)
+		{
+			CLight* dummy = new CDirectionalLight();
+			dummy->SetEnabled(false);
+			SetLightConstants(i,dummy);
+			delete dummy;
+		}
+		else
+		{
+			SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
+		}
 	}
 }

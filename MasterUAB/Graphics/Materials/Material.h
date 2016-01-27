@@ -1,7 +1,7 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include "Named.h"
+#include "Utils\Named.h"
 #include "Utils.h"
 
 #include <assert.h>

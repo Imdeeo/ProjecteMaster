@@ -52,26 +52,26 @@ fn TranslationToRH translation =
 
 fn TransformToRH matrix =
 (
-	local r1 = TranslationToRH matrix.row1
-	local r2 = TranslationToRH matrix.row2
-	local r3 = TranslationToRH matrix.row3
-	local r4 = TranslationToRH matrix.row4
-	return matrix3 r1 r2 r3 r4
+    local r1 = matrix.row1
+    local r2 = matrix.row2
+    local r3 = matrix.row3
+    local r4 = TranslationToRH matrix.row4
+    return matrix3 r1 r2 r3 r4
 )
 
-fn GetYaw transform =
+fn GetYaw trans =
 (
-	return -(transform as eulerangles).z
+	return (-(trans as eulerangles).z*PI/180)
 )
 
-fn GetPitch transform =
+fn GetPitch trans =
 (
-	return -(transform as eulerangles).y
+	return ((-(trans as eulerangles).y*PI/180)+(PI/2))
 )
 
-fn GetRoll transform =
+fn GetRoll trans =
 (
-	return (transform as eulerangles).x
+	return ((trans as eulerangles).x*PI/180)
 )
 
 fn UABClearNormalsArray = 
@@ -224,7 +224,7 @@ fn createStaticMesh dir level filename Objs=
 	(
 		for i=1 to Objs.count do
 		(
-			format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" Objs[i].name ("Data\\" + level + "\\Meshes\\"+Objs[i].name+".mesh") to:file
+			if Objs[i].material != undefined then format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" Objs[i].name ("Data\\" + level + "\\Meshes\\"+Objs[i].name+".mesh") to:file
 		)
 	)
 	format "</static_meshes>\n" to:file
@@ -241,12 +241,75 @@ fn createInstanceMesh dir filename Objs=
 		for i=1 to Objs.count do
 		(
 			Obj = Objs[i]
+			if Obj.material != undefined then
+			(
 			print (getUserProp Obj "core_name")
 			pos = TranslationToRH Obj.transform.translation
 			format "\t<renderable_object name=\"%\" core_name=\"%\" position=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" visible=\"%\"/>\n" Obj.name (getUserProp Obj "core_name") pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) true to:file
+			)
 		)
 	)
 	format "</renderable_objects>\n" to:file
+	close file
+)
+
+
+fn createCinematicObjects dir filename Objs =
+(	
+	file=createfile (dir+filename)
+	
+	local max_time=0
+	for i=1 to Objs.count do
+	(
+		select Objs[i]
+		if (trackbar.getPreviousKeyTime()!=undefined) then
+		(
+			local obj_time = (at time 999999999999 trackbar.getPreviousKeyTime())
+			if obj_time > max_time then
+			(
+				max_time = obj_time
+			)	
+		)
+	)
+	
+	local key
+	key = max_time as string
+	key = replace key key.count 1 ""
+	key = (key as float)/30
+		
+	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
+	format "<cinematic name=\"%\" duration=\"%\">\n" maxFileName key to:file
+	if Objs != undefined then
+	(
+		for i=1 to Objs.count do
+		(
+			select Objs[i]
+			
+			if (trackbar.getPreviousKeyTime()!=undefined) then
+			(
+				Obj = Objs[i]
+				format "\t<cinematic_object resource=\"%\" renderable_objects_manager=\"%\">\n" Obj.name (getUserProp Obj "render_layer") to:file			
+				
+				local firstframe = at time 999999999999 trackbar.getNextKeyTime()
+				local j = firstframe
+				do (
+					key = j as string	
+					key = replace key key.count 1 ""
+					key = (key as float)/30
+					
+					pos = TranslationToRH Obj.transform.translation
+					scl = TranslationToRH Obj.transform.scale
+						
+					format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" key pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) scl[1] scl[2] scl[3] to:file
+						
+					j = at time j trackbar.getNextKeyTime()
+				) while j != firstframe
+				
+				format "\t</cinematic_object>\n" to:file			
+			)
+		)
+	)
+	format "</cinematic>\n" to:file
 	close file
 )
 
@@ -263,25 +326,28 @@ fn writeFooter arx =
 fn getMaterials arx Obj =
 (
 	local n_materials=1
-	if(classof(Obj.material)==Multimaterial)then
+	if (Obj.material!=undefined)then
 	(
-		if isDebug then
-		format "Multimaterial\n"
-		n_materials=Obj.material.numsubs
-		writeLong arx n_materials
-		for i=1 to Obj.material.numsubs do
+		if(classof(Obj.material)==Multimaterial)then
 		(
-			WriteShort arx Obj.material[i].name.count #unsigned
-			writeString arx Obj.material[i].name
+			n_materials=Obj.material.numsubs
+			writeLong arx n_materials
+			for i=1 to Obj.material.numsubs do
+			(
+				WriteShort arx Obj.material[i].name.count #unsigned
+				writeString arx Obj.material[i].name
+			)
+		)
+		else
+		(
+			writeLong arx 1
+			WriteShort arx Obj.material.name.count #unsigned
+			writeString arx Obj.material.name
 		)
 	)
 	else
 	(
-		if isDebug then
-		format "Single Material\n"
-		writeLong arx 1
-		WriteShort arx Obj.material.name.count #unsigned
-		writeString arx Obj.material.name
+		n_materials = 0
 	)
 	return n_materials
 )
@@ -306,8 +372,23 @@ fn equalVertex vt1 vt2 =
 	return equals
 )
 
-fn getIndex vertexVect vertex IdMaterial =
+fn getIndex vertexVect vertex IdMaterial vertexsDictionary =
 (
+	local vtxStr = vertex as string
+	local vtxN
+	local doContain = vertexsDictionary.ContainsKey vtxStr
+
+	if doContain then
+	(
+		vtxN = vertexsDictionary.Item[vtxStr]
+	) else (
+		vtxN = vertexVect[IdMaterial].count
+		vertexsDictionary.Add vtxStr vtxN
+		append vertexVect[IdMaterial] vertex
+	)
+	
+	return vtxN
+	/*
 	local l_FoundVertex=false
 	local index = (vertexVect[IdMaterial]).count
 	for i=1 to vertexVect[IdMaterial].count do
@@ -324,9 +405,10 @@ fn getIndex vertexVect vertex IdMaterial =
 		append vertexVect[IdMaterial] vertex
 	)
 	return index
+	*/
 )
 
-fn writeMesh arx vertexs indexs BBMin BBMax BSphere=
+fn writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere=
 (
 	if isDebug then
 	format "Number of materials: %\n" vertexs.count
@@ -334,9 +416,9 @@ fn writeMesh arx vertexs indexs BBMin BBMax BSphere=
 	(
 		if isDebug then
 		format "Material %:\n" i
-		writeShort arx 37 #unsigned
+		writeShort arx VtxID #unsigned
 		if isDebug then
-		format "Size of vertex: 37\n"
+		format "Size of vertex: %\n" VtxID
 		writeLong arx vertexs[i].count
 		if isDebug then
 		format "Number of vertexes: %\n" vertexs[i].count
@@ -378,97 +460,198 @@ fn writeMesh arx vertexs indexs BBMin BBMax BSphere=
 	writeFloat arx BSphere[2]
 )
 
-fn createVertex pos norm textcoord =
+fn createVertex pos col norm textcoord1 textcoord2 =
 (
 	local vertex = #()
-	append vertex pos.x
-	append vertex pos.y
-	append vertex pos.z
-	append vertex norm.x
-	append vertex norm.y
-	append vertex norm.z
-	append vertex textcoord.x
-	append vertex textcoord.y
+	if(pos!=undefined) then
+	(
+		append vertex pos.x
+		append vertex pos.y
+		append vertex pos.z
+	)
+	if(col!=undefined) then
+	(
+		append vertex col.r
+		append vertex col.g
+		append vertex col.b
+	)
+	if(norm!=undefined) then
+	(
+		append vertex norm.x
+		append vertex norm.y
+		append vertex norm.z
+	)
+	if(textcoord1!=undefined)then
+	(
+		append vertex textcoord1.x
+		append vertex textcoord1.y
+	)
+	if(textcoord2!=undefined)then
+	(
+		append vertex textcoord2.x
+		append vertex textcoord2.y
+	)
 	return vertex
 )
 
-fn procesFaces arx Obj =
+fn processFaces arx Obj =
 (
-	local l_Obj=Obj
-	local l_ObjectConverted=false
-	if classof l_Obj!=Editable_mesh then
+	local l_Obj = copy Obj
+	local l_ObjectConverted=true
+	if classof Obj != Editable_mesh then
 	(
-		l_Obj=copy Obj
 		convertToMesh l_Obj
-		l_ObjectConverted=true
 	)
+	
+	local Vt1 = undefined
+	local Vt2 = undefined
+	local Vt3 = undefined
+	local Color1 = undefined
+	local Color2 = undefined
+	local Color3 = undefined
+	local Nm1 = undefined
+	local Nm2 = undefined
+	local Nm3 = undefined
+	local TUVMap1 = undefined
+	local TUVMap2 = undefined
+	local TUVMap3 = undefined
+	local T2UVMap1 = undefined
+	local T2UVMap2 = undefined
+	local T2UVMap3 = undefined
+	
+	local VtID = 0x0001
+	local ColorID = 0x0000
+	local NmID = 0x0004
+	local UVID = 0x0000
+	local UV2ID = 0x0000
 	
 	l_Obj.transform *= inverse(l_Obj.transform)
 	
 	local nFaces = getNumFaces l_Obj
 	local vertexs = #()
 	local indexs = #()
-	local l_HasMultimaterial=classof l_Obj.material==Multimaterial
-	local l_TotalMaterials=1
-	if l_HasMultimaterial then
-		l_TotalMaterials=l_Obj.material.count
+	local vertexsDictionary = dotnetobject "System.Collections.Generic.Dictionary`2[System.String, System.UInt32]"
 	
-	for i=1 to l_TotalMaterials do
-	(
+	if l_Obj.material != undefined then
+	(	
+		local l_HasMultimaterial = classof l_Obj.material==Multimaterial
+		local l_TotalMaterials = 1
+		if l_HasMultimaterial then
+			l_TotalMaterials=l_Obj.material.count
+		
+		for i=1 to l_TotalMaterials do
+		(
+			append vertexs #()
+			append indexs #()
+		)		
+	) else (
 		append vertexs #()
 		append indexs #()
-	)	
-	
+	)
+
 	for i=1 to nFaces do
 	(
+		local l_IdMaterial = (mod (getFaceMatID l_Obj i) l_TotalMaterials)+1
 		local IdxsFace=getFace l_Obj i
+		
+		--Position
+		Vt1=getVert l_Obj IdxsFace.x
+		Vt2=getVert l_Obj IdxsFace.y
+		Vt3=getVert l_Obj IdxsFace.z
+		
+		--Normal
 		UABCalcVertexsNormals l_Obj
 		local FaceNormal=getFaceNormal l_Obj i
 		local SmoothValue=getFaceSmoothGroup l_Obj i
-		local Vt1=getVert l_Obj IdxsFace.x
-		local Vt2=getVert l_Obj IdxsFace.y
-		local Vt3=getVert l_Obj IdxsFace.z
-		local Nm1=normalize(UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal)
-		local Nm2=normalize(UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal)
-		local Nm3=normalize(UABGetVertexNormal l_Obj IdxsFace.z SmoothValue FaceNormal)
-		local IdxsMap=meshop.getMapFace l_Obj 1 i
-		local TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
-		local TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
-		local TUVMap3= meshop.getMapVert l_Obj 1 IdxsMap.z
-		local v1 = createVertex Vt1 Nm1 TUVMap1
-		local v2 = createVertex Vt2 Nm2 TUVMap2
-		local v3 = createVertex Vt3 Nm3 TUVMap3
+		Nm1=normalize(UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal)
+		Nm2=normalize(UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal)
+		Nm3=normalize(UABGetVertexNormal l_Obj IdxsFace.z SmoothValue FaceNormal)
 		
-		local l_IdMaterial=getFaceMatID l_Obj i
-		if l_HasMultimaterial==false then
+		
+		--Texture and material
+		if l_Obj.material != undefined then
 		(
-			l_IdMaterial=1
+			if l_HasMultimaterial then
+			(
+				local l_DiffMap = l_Obj.material.materialList[l_IdMaterial].diffuseMap
+				local l_LightMap = l_Obj.material.materialList[l_IdMaterial].selfIllumMap
+			) else (
+				local l_DiffMap = l_Obj.material.diffuseMap
+				local l_LightMap = l_Obj.material.selfIllumMap
+			)
+			
+			if classOf l_DiffMap == Bitmaptexture then
+			(
+				--Texture1
+				UVID = 0x0020
+				local IdxsMap=meshop.getMapFace l_Obj 1 i
+				TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
+				TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
+				TUVMap3= meshop.getMapVert l_Obj 1 IdxsMap.z
+			) else (
+				--Color
+				ColorID = 0x0002
+				defaultVCFaces l_Obj
+				local ColorFace = getVCFace l_Obj i
+				Color1 = getVertColor l_Obj ColorFace.x
+				Color2 = getVertColor l_Obj Colorface.y
+				Color3 = getVertColor l_Obj ColorFace.z
+			)
+			if (classOf l_LightMap != undefined) and (meshop.getMapSupport l_Obj 2) then
+			(
+				--Texture2
+				UV2ID = 0x0040
+				local IdxsMap=meshop.getMapFace l_Obj 2 i
+				TUVMap1= meshop.getMapVert l_Obj 2 IdxsMap.x
+				TUVMap2= meshop.getMapVert l_Obj 2 IdxsMap.y
+				TUVMap3= meshop.getMapVert l_Obj 2 IdxsMap.z
+			)
+		) else (
+			--Color
+			ColorID = 0x0002
+			defaultVCFaces l_Obj
+			local ColorFace = getVCFace l_Obj i
+			Color1 = getVertColor l_Obj ColorFace.x
+			Color2 = getVertColor l_Obj ColorFace.y
+			Color3 = getVertColor l_Obj ColorFace.z
 		)
 		
-		local id1=getIndex vertexs v1 l_IdMaterial
-		local id2=getIndex vertexs v2 l_IdMaterial
-		local id3=getIndex vertexs v3 l_IdMaterial
+		--Vertex creation
+		local v1 = createVertex Vt1 Color1 Nm1 TUVMap1 T2UVMap1
+		local v2 = createVertex Vt2 Color2 Nm2 TUVMap2 T2UVMap2
+		local v3 = createVertex Vt3 Color3 Nm3 TUVMap3 T2UVMap3
+		
+		-- Index creation
+		local id1=getIndex vertexs v1 l_IdMaterial vertexsDictionary
+		local id2=getIndex vertexs v2 l_IdMaterial vertexsDictionary
+		local id3=getIndex vertexs v3 l_IdMaterial vertexsDictionary
 		
 		if isDebug then
 		(format "---------FACE %-----------\n" i
 		format "Vertex 1: % -> Index: %\n" v1 id1
 		format "Vertex 2: % -> Index: %\n" v2 id2
-		format "Vertex 3: % -> Index: %\n" v2 id3
+		format "Vertex 3: % -> Index: %\n" v3 id3
 		format "---------------------------\n\n"
 		)
+		
 		append indexs[l_IdMaterial] id1
 		append indexs[l_IdMaterial] id2
 		append indexs[l_IdMaterial] id3
 	)
 	
+	--Bounding box
 	local ffd=ffdbox()
 	addModifier l_Obj ffd
 	BBMin=getModContextBBoxMin l_Obj ffd
 	BBMax=getModContextBBoxMax l_Obj ffd
 	
-	BSphere = getBoundingSphere l_Obj
+	--Bounding sphere
+	BSphere = getBoundingSphere l_Obj	
 	
-	writeMesh arx vertexs indexs BBMin BBMax BSphere
+	l_VtxID = VtID+ColorID+NmID+UVID+UV2ID
+	if isDebug then format "Vertex ID: %" l_VtxID
+	
+	writeMesh arx l_VtxID vertexs indexs BBMin BBMax BSphere
 	
 	if l_ObjectConverted==true then
 	(
@@ -480,7 +663,7 @@ fn writeMeshFromObject arx Obj =
 (
 	writeHeader arx
 	getMaterials arx Obj
-	procesFaces arx Obj
+	processFaces arx Obj
 	writeFooter arx
 )
 
@@ -489,9 +672,14 @@ fn createMeshFromObjects dir Objs =
 	dirExist (dir+"\\Meshes")
 	for i=1 to Objs.count do
 	(
-		file=fopen (dir+"\\Meshes\\"+Objs[i].name+".mesh") "wb"
-		writeMeshFromObject file (Objs[i])
-		FClose file
+		if Objs[i].material != undefined then
+		(
+			file=fopen (dir+"\\Meshes\\"+Objs[i].name+".mesh") "wb"
+			writeMeshFromObject file (Objs[i])
+			FClose file
+		) else (
+			format "The object % has no material!\n" Objs[i].name
+		)
 	)
 )
 
@@ -508,38 +696,43 @@ fn createMaterials dir filename Objs copyTexture =
 			mat = #()
 			n_materials = 1
 			
-			if(classof(Objs[i].material)==Multimaterial)then
+			if (Objs[i].material!=undefined) then
 			(
-				mat = Objs[i].material
-				n_materials = Objs[i].material.numsubs
-			)
-			else
-			(
-				append mat Objs[i].material
-			)
-			
-			for j=1 to n_materials do
-			(
-				if materialsDictionary.Item[mat[j].name]==undefined then
+				if(classof(Objs[i].material)==Multimaterial)then
 				(
-					format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" mat[j].name to:file
-					materialsDictionary.Add mat[j].name "defined"
-					if mat[j].diffuseMap != undefined then  
+					format "Multimaterial\n"
+					mat = Objs[i].material
+					n_materials = Objs[i].material.numsubs
+				)
+				else
+				(
+					format "Un material\n"
+					append mat Objs[i].material
+				)
+				
+				for j=1 to n_materials do
+				(
+					if materialsDictionary.Item[mat[j].name]==undefined then
 					(
-						if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
+						format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" mat[j].name to:file
+						materialsDictionary.Add mat[j].name "defined"
+						if mat[j].diffuseMap != undefined then  
 						(
-							nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
-							
-							pathfile = (dir+"Textures\\" + nomTextura)
-							format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
-							if copyTexture == true then
+							if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
 							(
-								dirExist (dir+"Textures")
-								copyFile mat[j].diffuseMap.bitmap.filename pathfile
+								nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
+								
+								pathfile = (dir+"Textures\\" + nomTextura)
+								format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
+								if copyTexture == true then
+								(
+									dirExist (dir+"Textures")
+									copyFile mat[j].diffuseMap.bitmap.filename pathfile
+								)
 							)
 						)
+						format "\t</material>\n" to:file 
 					)
-					format "\t</material>\n" to:file 
 				)
 			)
 		)
@@ -586,6 +779,7 @@ fn createCameras dir Objs =
 (
 	local cameraFileDir
 	local cameraTransform
+	local cameraTranslation
 	local cameraPos
 	local cameraUp
 	local cameraLookAt
@@ -598,30 +792,34 @@ fn createCameras dir Objs =
 	for i=1 to Objs.count do
 	(
 		select Objs[i]
-		cameraTransform = TransformToRH Objs[i].transform
-		cameraPos = cameraTransform.translation.x as string+" "+cameraTransform.translation.y as string+" "+cameraTransform.translation.z as string
-		local firstframe = at time 999999999999 trackbar.getNextKeyTime()
-		key = (at time 999999999999 trackbar.getPreviousKeyTime()) as string
-		key = replace key key.count 1 ""
+		cameraTransform = Objs[i].transform
+		cameraTranslation = TranslationToRH (cameraTransform.translation)
+		cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
 		if (firstframe != undefined) and ((getUserProp Objs[i] "camera_export_type") != "static") then(
+			local firstframe = at time 999999999999 trackbar.getNextKeyTime()
+			key = (at time 999999999999 trackbar.getPreviousKeyTime()) as string
+			key = replace key key.count 1 ""
+			key = (key as float)/30		
 			dirExist (dir+"cameras\\")
 			cameraFileDir = "cameras\\"+Objs[i].name+".xml"
 			cameraType = getUserProp Objs[i] "camera_export_type"
-			format "\t<camera name=\"%\" total_time=\"%\" type=\"%\" %=\"true\" pos=\"%\" filename=\"%\">\n" Objs[i].name key cameraType cameraType cameraPos cameraFileDir to:file
+			format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"%\" filename=\"%\"/>\n" Objs[i].name key cameraType cameraPos cameraFileDir to:file
 			local j = firstframe
 			cameraFile=createfile (dir+cameraFileDir)
 			format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
 			format "<camera_key_controller name=\"%\">\n" Objs[i].name to:cameraFile
 			do (
-				key = j as string
+				key = j as string	
 				key = replace key key.count 1 ""
-				cameraTransform = TransformToRH (at time j Objs[i].transform)
-				cameraPos = cameraTransform.translation.x as string+" "+cameraTransform.translation.y as string+" "+cameraTransform.translation.z as string
+				key = (key as float)/30
+				cameraTransform = at time j Objs[i].transform
+				cameraTranslation = TranslationToRH (cameraTransform.translation)
+				cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
 				cameraUp = mat3xvect3 cameraTransform z_axis
 				cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
-				cameraLookAt = (cameraPos + (mat3xvect3 cameraTransform y_axis))
+				cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis))
 				cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
-				format "\t<key time=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" key cameraPos cameraUp cameraLookAt (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
+				format "\t<key time=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraPos cameraUp cameraLookAt (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
 				j = at time j trackbar.getNextKeyTime()
 			) while j != firstframe
 			format "</camera_key_controller>\n" to:cameraFile		
@@ -629,10 +827,11 @@ fn createCameras dir Objs =
 		) else (
 			cameraUp = mat3xvect3 cameraTransform z_axis
 			cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
-			cameraLookAt = ((Objs[i].pos) + (mat3xvect3 cameraTransform y_axis))
+			if(Objs[i].target != undefined) then (cameraLookAt = Objs[i].target.pos)
+			else (cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis)))
 			cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
 			cameraType = getUserProp Objs[i] "camera_export_type"
-			format "\t<camera name=\"%\" type=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\">\n" Objs[i].name cameraType cameraPos cameraUp cameraLookAt Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
+			format "\t<camera name=\"%\" type=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" Objs[i].name cameraType cameraPos cameraUp cameraLookAt Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
 		)
 		max select none
 	)

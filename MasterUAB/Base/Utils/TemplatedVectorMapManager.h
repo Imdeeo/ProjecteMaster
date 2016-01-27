@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <assert.h>
+#include "Utils.h"
 
 template<class T>
 class CTemplatedVectorMapManager
@@ -58,6 +59,10 @@ public:
 
 	virtual T * GetResource(const std::string &Name)
 	{
+		if (m_ResourcesMap.find(Name) == m_ResourcesMap.end())
+		{
+			return nullptr;
+		}
 		return m_ResourcesMap[Name].m_Value;
 	}
 
@@ -77,7 +82,7 @@ public:
 	{
 		for(size_t i = 0; i<m_ResourcesVector.size();i++)
 		{
-			delete m_ResourcesVector[i];
+			CHECKED_DELETE(m_ResourcesVector[i]);
 		}
 
 		m_ResourcesMap.clear();

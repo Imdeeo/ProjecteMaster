@@ -17,12 +17,16 @@ CCameraInfo::CCameraInfo(const Vect3f &Eye, const Vect3f &LookAt, const Vect3f &
 CCameraInfo::CCameraInfo(CXMLTreeNode &XMLTreeNode)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 	m_Eye = XMLTreeNode.GetVect3fProperty("pos", Vect3f(0, 0, 0));
 	m_LookAt = XMLTreeNode.GetVect3fProperty("look_at", Vect3f(0, 0, 0));
 	m_Up = XMLTreeNode.GetVect3fProperty("up", Vect3f(0, 0, 0));
 	m_FOV = XMLTreeNode.GetFloatProperty("fox", 45);
 	m_NearPlane = XMLTreeNode.GetFloatProperty("near_plane", 1000.0);
 	m_FarPlane = XMLTreeNode.GetFloatProperty("far_plane", 1000.0);
+<<<<<<< HEAD
 =======
 	std::string l_Eye;
 	l_Eye = *XMLTreeNode.GetPszProperty("pos");
@@ -61,6 +65,8 @@ CCameraInfo::CCameraInfo(CXMLTreeNode &XMLTreeNode)
 	l_FOV = *XMLTreeNode.GetPszProperty("fov");
 	m_FOV = std::stof(l_FOV);
 >>>>>>> develop
+=======
+>>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 }
 
 CCameraInfo::~CCameraInfo()

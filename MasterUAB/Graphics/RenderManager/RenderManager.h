@@ -2,7 +2,7 @@
 #define RENDER_MANAGER_H
 
 #include "Camera\Frustum.h"
-#include "RenderableObjects\RenderableObjectManager.h"
+#include "RenderableObjects\RenderableObjectsManager.h"
 #include "Utils.h"
 #include "ContextManager\ContextManager.h"
 
@@ -11,15 +11,16 @@ class CMaterialManager;
 class CRenderManager
 {
 public:
-	CRenderManager()
-		: m_UseDebugCamera(false)
-		, m_CurrentRenderlistLength(0)
-	{}
+	CRenderManager();
+	virtual ~CRenderManager();
 
 	void SetCurrentCamera(const CCamera& _CurrentCamera);
 	void SetDebugCamera(const CCamera& _DebugCamera) { m_DebugCamera = _DebugCamera; }
 
 	void SetUseDebugCamera(bool _use) { m_UseDebugCamera = _use; }
+
+	void EngableAlphaBlendState();
+	void DisableAlphaBlendState();
 
 	//bool AddRenderableObjectToRenderList(CRenderableObject* _RenderableObject);
 

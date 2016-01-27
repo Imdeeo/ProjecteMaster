@@ -2,6 +2,6 @@
 
 #include "XML\XMLTreeNode.h"
 
-COmniLight::COmniLight(){}
+COmniLight::COmniLight():CLight(){}
 
 COmniLight::COmniLight(CXMLTreeNode &TreeNode) : CLight(TreeNode){}

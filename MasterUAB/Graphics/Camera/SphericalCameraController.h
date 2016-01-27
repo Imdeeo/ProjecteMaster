@@ -17,8 +17,8 @@ public:
 	
 	void SetCamera(CCamera *Camera) const;
 	Vect3f GetDirection() const;
-
-	void Update(Vect3f movement)
+	
+	void Move(Vect3f movement)
 	{
 		AddYaw(movement.x*30.0f);
 		AddPitch(movement.y*30.0f);
