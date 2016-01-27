@@ -2,7 +2,7 @@
 #define RENDER_MANAGER_H
 
 #include "Camera\Frustum.h"
-#include "RenderableObjects\RenderableObjectManager.h"
+#include "RenderableObjects\RenderableObjectsManager.h"
 #include "Utils.h"
 #include "ContextManager\ContextManager.h"
 
@@ -19,6 +19,7 @@ public:
 
 	void SetUseDebugCamera(bool _use) { m_UseDebugCamera = _use; }
 
+	void DisableAlphaBlendState();
 	//bool AddRenderableObjectToRenderList(CRenderableObject* _RenderableObject);
 
 	void Render();

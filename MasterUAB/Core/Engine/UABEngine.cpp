@@ -12,7 +12,7 @@ CUABEngine::CUABEngine(void)
 	m_StaticMeshManager = new CStaticMeshManager();
 	m_LightManager = new CLightManager();
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
-	m_RenderableObjectsManager = new CRenderableObjectsManager();
+	m_LayerManager = new CLayerManager();
 	m_ScriptManager = new CScriptManager();
 	m_CameraManager = new CCameraControllerManager();
 	m_Cinematic= new CCinematic();
@@ -28,7 +28,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_CameraManager);
 	CHECKED_DELETE(m_ScriptManager);
 	//CHECKED_DELETE(m_Cinematic);
-	CHECKED_DELETE(m_RenderableObjectsManager);
+	CHECKED_DELETE(m_LightManager);
 	CHECKED_DELETE(m_AnimatedModelsManager);
 	CHECKED_DELETE(m_LightManager);
 	CHECKED_DELETE(m_StaticMeshManager);
@@ -59,12 +59,12 @@ void CUABEngine::Init()
 	m_StaticMeshManager->Load("Data\\level_"+m_LevelLoaded+"\\static_meshes.xml");
 	m_LightManager->Load("Data\\level_"+m_LevelLoaded+"\\lights.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
-	m_RenderableObjectsManager->Load("Data\\level_"+m_LevelLoaded+"\\renderable_objects.xml");
+	m_LayerManager->Load("Data\\level_" + m_LevelLoaded + "\\renderable_objects.xml");
 	m_Cinematic->LoadXML("Data\\level_"+m_LevelLoaded+"\\cinematic.xml");
-	m_RenderableObjectsManager->AddResource("Cinematic",m_Cinematic);
+	//m_LayerManager->GetLayer()->AddResource("Cinematic",m_Cinematic);
 	m_ScriptManager->Initialize();
 	m_CameraManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
-	m_Cinematic->Play("true");
+	//m_Cinematic->Play("true");
 }
 
 void CUABEngine::Destroy()

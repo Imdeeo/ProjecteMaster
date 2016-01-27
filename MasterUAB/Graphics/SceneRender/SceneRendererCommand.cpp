@@ -1,8 +1,9 @@
 #include "SceneRendererCommand.h"
 
 
-CSceneRendererCommand::CSceneRendererCommand() : CNamed("")
+CSceneRendererCommand::CSceneRendererCommand(CXMLTreeNode &TreeNode) :CNamed(TreeNode)
 {
+
 }
 
 

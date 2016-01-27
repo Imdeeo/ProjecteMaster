@@ -20,7 +20,7 @@ static void __stdcall ReloadCamerasManager(void* _app)
 }
 static void __stdcall ReloadRenderableObjectsManager(void* _app)
 {
-	UABEngine.GetRenderableObjectsManager()->Reload();
+	UABEngine.GetLayerManager()->Reload();
 }
 static void __stdcall ReloadLights(void* _app)
 {
@@ -163,7 +163,7 @@ void CApplication::Update(float _ElapsedTime)
 		UABEngine.GetMaterialManager()->Reload();
 		UABEngine.GetStaticMeshManager()->Reload();
 		UABEngine.GetAnimatedModelsManager()->Reload();
-		UABEngine.GetRenderableObjectsManager()->Reload();
+		UABEngine.GetLayerManager()->Reload();
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_BOTH"))
 	{
@@ -187,7 +187,7 @@ void CApplication::Update(float _ElapsedTime)
 		m_RenderCameraCube = !m_RenderCameraCube;
 	}
 
-	if(CInputManager::GetInputManager()->IsActionActive("MONSTER_IDLE"))
+	/*if(CInputManager::GetInputManager()->IsActionActive("MONSTER_IDLE"))
 	{
 		if(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")!=nullptr)
 		{
@@ -230,14 +230,14 @@ void CApplication::Update(float _ElapsedTime)
 				GetActualActionAnimation());
 			}
 			else
-			{
+			{*/
 				/*((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
 				ClearCycle(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
 				GetActualAnimation(),0.1f);*/
-			}
-			((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ExecuteAction(2,0.1f,0.1f);
+			/*}
+		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ExecuteAction(2,0.1f,0.1f);
 		}
-	}
+	}*/
 
 	switch (m_CurrentCamera_control)
 	{
@@ -267,7 +267,7 @@ void CApplication::Update(float _ElapsedTime)
 	UABEngine.GetPhysXManager()->Update(_ElapsedTime);
 	UABEngine.GetCameraManager()->Update(_ElapsedTime);
 	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
-	UABEngine.GetRenderableObjectsManager()->Update(_ElapsedTime);
+	UABEngine.GetLayerManager()->Update(_ElapsedTime);
 
 }
 
@@ -311,7 +311,7 @@ void CApplication::Init()
 {
 	UABEngine.Init();
 	std::string l_CameraControllerStr;
-	if (UABEngine.GetLevelLoaded() == "1")
+	if (UABEngine.GetLevelLoaded() == "3")
 	{
 		l_CameraControllerStr = "Camera001";
 	}
