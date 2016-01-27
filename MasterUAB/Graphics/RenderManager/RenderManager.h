@@ -25,7 +25,7 @@ public:
 	//bool AddRenderableObjectToRenderList(CRenderableObject* _RenderableObject);
 
 	void Render();
-
+	void Clear();
 private:
 
 	CCamera m_CurrentCamera;

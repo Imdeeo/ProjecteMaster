@@ -2,9 +2,9 @@
 #define CLEAR_SCENE_RENDERER_COMMAND_H
 
 #include "SceneRendererCommand.h"
-#include "XML\XMLTreeNode.h"
 
 class CRenderManager;
+class CXMLTreeNode;
 
 class CClearSceneRendererCommand : public CSceneRendererCommand
 {
@@ -13,6 +13,7 @@ protected:
 	bool m_DepthStencil;
 public:
 	CClearSceneRendererCommand(CXMLTreeNode &TreeNode);
+	virtual ~CClearSceneRendererCommand();
 	virtual void Execute(CRenderManager &RenderManager);
 };
 

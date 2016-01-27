@@ -1,7 +1,7 @@
 #include "SetDepthStencilStateSceneRendererCommand.h"
 #include "RenderManager\RenderManager.h"
 
-CSetDepthStencilStateSceneRendererCommand::CSetDepthStencilStateSceneRendererCommand(CXMLTreeNode &TreeNode)
+CSetDepthStencilStateSceneRendererCommand::CSetDepthStencilStateSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
 {
 
 }

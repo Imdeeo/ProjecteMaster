@@ -1,3 +1,6 @@
+#ifndef RENDER_DEBUG_SHADOW_MAPS_SCENE_RENDERER_COMMAND_h
+#define RENDER_DEBUG_SHADOW_MAPS_SCENE_RENDERER_COMMAND_h
+
 #include "SceneRendererCommand.h"
 #include "RenderableObjects\RenderableObjectTechnique.h"
 
@@ -15,3 +18,4 @@ public:
 	void Execute(CRenderManager &RenderManager);
 };
 
+#endif //RENDER_DEBUG_SHADOW_MAPS_SCENE_RENDERER_COMMAND_h
