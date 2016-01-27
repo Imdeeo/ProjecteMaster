@@ -631,6 +631,8 @@ fn createMeshFromObjects dir Objs =
 
 fn createMaterials dir filename Objs copyTexture =
 (	
+	local pathfile
+	local relativePathfile
 	file=createfile (dir+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<materials>\n" to:file
@@ -668,9 +670,8 @@ fn createMaterials dir filename Objs copyTexture =
 							(
 								nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
 								pathfile = (dir + "Textures\\" + nomTextura)
-								pathfile = get_RelativePath pathfile
-								
-								format "\t\t<texture filename=\"%\"/>\n" pathfile to:file
+								relativePathfile = get_RelativePath pathfile
+								format "\t\t<texture filename=\"%\"/>\n" relativePathfile to:file
 								if copyTexture == true then
 								(
 									dirExist (dir+"Textures")
