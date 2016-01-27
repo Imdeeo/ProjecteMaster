@@ -32,13 +32,13 @@ class CUABEngine
 	CRenderManager * m_RenderManager;
 	CAnimatedModelsManager * m_AnimatedModelsManager;
 	CScriptManager * m_ScriptManager;
-	CCameraControllerManager * m_CameraManager;
+	CCameraControllerManager * m_CameraControllerManager;
 	CCinematic * m_Cinematic;
 	CPhysXManager * m_PhysXManager;
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
+	
 
 	std::string m_LevelLoaded;
-
 	UAB_GET_PROPERTY(CStaticMeshManager *, StaticMeshManager)
 	UAB_GET_PROPERTY(CLayerManager *, LayerManager)
 	UAB_GET_PROPERTY(CMaterialManager *, MaterialManager)
@@ -48,7 +48,7 @@ class CUABEngine
 	UAB_GET_PROPERTY(CRenderManager *, RenderManager)
 	UAB_GET_PROPERTY(CAnimatedModelsManager *, AnimatedModelsManager)
 	UAB_GET_PROPERTY(CScriptManager *, ScriptManager)
-	UAB_GET_PROPERTY(CCameraControllerManager *, CameraManager)
+	UAB_GET_PROPERTY(CCameraControllerManager *, CameraControllerManager)
 	UAB_GET_PROPERTY(CCinematic *, Cinematic)
 	UAB_GET_PROPERTY(CPhysXManager *, PhysXManager)
 	UAB_GET_PROPERTY(CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)

@@ -7,7 +7,11 @@
 
 #include "Engine\UABEngine.h"
 
-CCameraControllerManager::CCameraControllerManager(){}
+CCameraControllerManager::CCameraControllerManager():
+	m_CurrentCamera()
+{
+
+}
 
 CCameraControllerManager::~CCameraControllerManager()
 {
@@ -21,6 +25,8 @@ void CCameraControllerManager::ChooseMainCamera(std::string _CurrentCamera)
 
 void CCameraControllerManager::ChooseDebugCamera(std::string _CurrentCamera)
 {
+	GetResource(_CurrentCamera)->SetCamera(&m_CurrentCamera);
+	UABEngine.GetRenderManager()->SetCurrentCamera(m_CurrentCamera);
 	m_DebugCamera = GetResource(_CurrentCamera);
 }
 
@@ -49,7 +55,10 @@ bool CCameraControllerManager::Load(const std::string &FileName)
 					case CCamera::CAMERA_TYPE_FPS:
 						AddResource(l_Element.GetPszProperty("name"), new CFPSCameraController());
 						break;
-					case CCamera::CAMERA_TYPE_KEY:
+					case CCamera::CAMERA_TYPE_CYCLE:
+						AddResource(l_Element.GetPszProperty("name"), new CCameraKeyController(l_Element));
+						break;
+					case CCamera::CAMERA_TYPE_REVERSE:
 						AddResource(l_Element.GetPszProperty("name"), new CCameraKeyController(l_Element));
 						break;
 					default:
@@ -79,8 +88,8 @@ bool CCameraControllerManager::Reload()
 	{
 		l_CameraControllerStr = "FPSCamera";
 	}
-	UABEngine.GetCameraManager()->ChooseMainCamera(l_CameraControllerStr);
-	UABEngine.GetCameraManager()->ChooseDebugCamera("SphericalCamera");
+	UABEngine.GetCameraControllerManager()->ChooseMainCamera(l_CameraControllerStr);
+	UABEngine.GetCameraControllerManager()->ChooseDebugCamera("SphericalCamera");
 	return l_loadResult;
 }
 

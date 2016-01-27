@@ -16,7 +16,7 @@ static void __stdcall SwitchCameraCallback(void* _app)
 }
 static void __stdcall ReloadCamerasManager(void* _app)
 {
-	UABEngine.GetCameraManager()->Reload();
+	UABEngine.GetCameraControllerManager()->Reload();
 }
 static void __stdcall ReloadRenderableObjectsManager(void* _app)
 {
@@ -157,7 +157,6 @@ void CApplication::Update(float _ElapsedTime)
 		CInputManager::GetInputManager()->reload();
 		
 		UABEngine.GetTextureManager()->Reload();
-
 		UABEngine.GetLightManager()->Reload();
 		UABEngine.GetEffectManager()->Reload();
 		UABEngine.GetMaterialManager()->Reload();
@@ -244,7 +243,7 @@ void CApplication::Update(float _ElapsedTime)
 	case 0:
 		if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
 		{
-			CSphericalCameraController* l_SphericalCameraController = (CSphericalCameraController*)UABEngine.GetCameraManager()->GetResource("SphericalCamera");
+			CSphericalCameraController* l_SphericalCameraController = (CSphericalCameraController*)UABEngine.GetCameraControllerManager()->GetResource("SphericalCamera");
 			Vect3f cameraMovement(0, 0, 0);
 
 			cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.5f;
@@ -255,7 +254,7 @@ void CApplication::Update(float _ElapsedTime)
 		break;
 	case 1:
 		{
-			CFPSCameraController* l_FPSCameraController = (CFPSCameraController*)UABEngine.GetCameraManager()->GetResource("FPSCamera");
+			CFPSCameraController* l_FPSCameraController = (CFPSCameraController*)UABEngine.GetCameraControllerManager()->GetResource("FPSCamera");
 			l_FPSCameraController->AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.05f);
 			l_FPSCameraController->AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * -0.05f);
 
@@ -264,46 +263,16 @@ void CApplication::Update(float _ElapsedTime)
 		break;
 	}
 
+	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 	UABEngine.GetPhysXManager()->Update(_ElapsedTime);
-	UABEngine.GetCameraManager()->Update(_ElapsedTime);
+	UABEngine.GetCameraControllerManager()->Update(_ElapsedTime);
 	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 	UABEngine.GetLayerManager()->Update(_ElapsedTime);
-
 }
 
 void CApplication::Render()
 {
 	UABEngine.GetRenderManager()->Render();
-
-	
-	//Mat44f world;
-
-	//world.SetIdentity();
-	//m_ContextManager->SetWorldMatrix(world);
-	//m_ContextManager->Draw(m_DebugRender->GetAxis());
-
-	//if(m_RenderCameraCube)
-	//{
-	//	world.SetIdentity();
-	//	world.SetFromPitchRollYaw(Vect3f(m_FPSCamera.GetPitch(),0.f,m_FPSCamera.GetYaw()));
-	//	world.SetFromPos(m_FPSCamera.GetPosition()+Vect3f(0,-2.f,0));
-	//	m_ContextManager->SetWorldMatrix(world);
-	//	m_ContextManager->Draw(m_DebugRender->GetSimpleCube(), CContextManager::RS_WIREFRAME, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_CLASSIC);
-	//}
-
-	//
-	///*world.SetIdentity();
-	//world.SetFromPos(10, 0, 0);
-	//m_ContextManager->SetWorldMatrix(world);
-	//m_ContextManager->Draw(m_DebugRender->GetClassicBlendTriangle(), CContextManager::RS_SOLID_NO_CULL, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_CLASSIC);
-
-	//world.SetIdentity();
-	//world.SetFromPos(0, 0, -10);
-	//m_ContextManager->SetWorldMatrix(world);
-	//m_ContextManager->Draw(m_DebugRender->GetPremultBlendTriangle(), CContextManager::RS_SOLID_NO_CULL, CContextManager::DSS_DEPTH_ON, CContextManager::BLEND_PREMULT);
-	//*/
-
-	//CDebugHelper::GetDebugHelper()->Render();
 }
 
 
@@ -319,6 +288,6 @@ void CApplication::Init()
 	{
 		l_CameraControllerStr = "FPSCamera";
 	}
-	UABEngine.GetCameraManager()->ChooseMainCamera(l_CameraControllerStr);
-	UABEngine.GetCameraManager()->ChooseDebugCamera("SphericalCamera");
+	UABEngine.GetCameraControllerManager()->ChooseMainCamera(l_CameraControllerStr);
+	UABEngine.GetCameraControllerManager()->ChooseDebugCamera("SphericalCamera");
 }
