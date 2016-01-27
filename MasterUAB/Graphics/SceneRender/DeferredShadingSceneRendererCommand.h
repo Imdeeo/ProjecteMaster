@@ -2,7 +2,8 @@
 #define DEFFERRED_SHADING_SCENE_RENDER_H
 
 #include "SceneRendererCommand.h"
-#include "SceneRender\CStagedTexturedSceneRendererCommand"
+#include "StagedTexturedSceneRendererCommand.h"
+
 class CDeferredShadingSceneRendererCommand : public
 	CStagedTexturedSceneRendererCommand
 {

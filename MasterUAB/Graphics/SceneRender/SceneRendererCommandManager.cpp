@@ -2,7 +2,13 @@
 #include "RenderManager\RenderManager.h"
 #include "XML\XMLTreeNode.h"
 #include "SetDepthStencilStateSceneRendererCommand.h"
-#include "SetPoolRenderableObjectsTechniqueSceneRend.h"
+#include "SetPoolRenderableObjectsTechniqueSceneRendererCommand.h"
+#include "SetMatricesSceneRendererCommand.h"
+#include "ClearSceneRendererCommand.h"
+#include "LightsSceneRendererCommand.h"
+#include "RenderLayerSceneRendererCommand.h"
+#include "PresentSceneRendererCommand.h"
+#include "RenderDebugLightsSceneRendererCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -38,11 +44,33 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				{
 					AddResource(l_Element.GetName(), new CSetPoolRenderableObjectsTechniqueSceneRendererCommand(l_Element));
 				}
-				else if (l_Element.GetName() == std::string("effect_technique"))
+				else if (l_Element.GetName() == std::string("set_matrices"))
 				{
-					/*l_EffectName = l_Element.GetPszProperty("name");
-					CEffectTechnique *l_EffectTechnique = new CEffectTechnique(l_Element);
-					AddResource(l_EffectName, l_EffectTechnique);*/
+					AddResource(l_Element.GetName(), new CSetMatricesSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("clear"))
+				{
+					AddResource(l_Element.GetName(), new CClearSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("set_light_constants"))
+				{
+					AddResource(l_Element.GetName(), new CLightsSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("render_layer"))
+				{
+					AddResource(l_Element.GetName(), new CRenderLayerSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("present"))
+				{
+					AddResource(l_Element.GetName(), new CPresentSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("render_debug_grid"))
+				{
+					//AddResource(l_Element.GetName(), new CRenderDebubGridSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("render_debug_lights"))
+				{
+					AddResource(l_Element.GetName(), new CRenderDebugLightsSceneRendererCommand(l_Element));
 				}
 			}
 		}
