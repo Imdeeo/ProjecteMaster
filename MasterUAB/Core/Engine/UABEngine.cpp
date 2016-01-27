@@ -29,7 +29,6 @@ CUABEngine::~CUABEngine(void)
 	//CHECKED_DELETE(m_Cinematic);
 	CHECKED_DELETE(m_LightManager);
 	CHECKED_DELETE(m_AnimatedModelsManager);
-	CHECKED_DELETE(m_RenderableObjectsManager);
 	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_CameraControllerManager);
 	CHECKED_DELETE(m_LightManager);

@@ -157,7 +157,6 @@ void CApplication::Update(float _ElapsedTime)
 		CInputManager::GetInputManager()->reload();
 		
 		UABEngine.GetTextureManager()->Reload();
-
 		UABEngine.GetLightManager()->Reload();
 		UABEngine.GetEffectManager()->Reload();
 		UABEngine.GetMaterialManager()->Reload();
@@ -265,7 +264,6 @@ void CApplication::Update(float _ElapsedTime)
 	}
 
 	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
-	UABEngine.GetRenderableObjectsManager()->Update(_ElapsedTime);
 	UABEngine.GetPhysXManager()->Update(_ElapsedTime);
 	UABEngine.GetCameraControllerManager()->Update(_ElapsedTime);
 	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
