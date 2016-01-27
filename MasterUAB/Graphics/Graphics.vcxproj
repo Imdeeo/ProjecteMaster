@@ -48,6 +48,7 @@
     <ClCompile Include="RenderableObjects\RenderableObjectTechnique.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp" />
     <ClCompile Include="RenderManager\RenderManager.cpp" />
+    <ClCompile Include="SceneRender\CaptureFrameBufferSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\ClearSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\EnableAlphaBlendSceneRendererCommand.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="RenderableObjects\VertexTypes.h" />
     <ClInclude Include="RenderManager\RenderManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneRender\CaptureFrameBufferSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\ClearSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\EnableAlphaBlendSceneRendererCommand.h" />

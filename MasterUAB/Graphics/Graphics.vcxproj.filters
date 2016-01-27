@@ -152,6 +152,9 @@
     <ClCompile Include="SceneRender\EnableAlphaBlendSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRender\CaptureFrameBufferSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -381,6 +384,9 @@
       <Filter>SceneRender</Filter>
     </ClInclude>
     <ClInclude Include="SceneRender\EnableAlphaBlendSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\CaptureFrameBufferSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
