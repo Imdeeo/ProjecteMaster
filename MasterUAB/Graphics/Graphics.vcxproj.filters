@@ -149,6 +149,12 @@
     <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
+    <ClCompile Include="Materials\MaterialParameter.cpp">
+      <Filter>Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="Materials\TemplatedMaterialParameter.cpp">
+      <Filter>Materials</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -313,7 +319,7 @@
     </ClInclude>
     <ClInclude Include="Camera\CameraControllerManager.h">
       <Filter>Camera</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Cinematics\Cinematic.h">
       <Filter>Cinematics</Filter>
     </ClInclude>
@@ -376,6 +382,12 @@
     </ClInclude>
     <ClInclude Include="SceneRender\SceneRendererCommandManager.h">
       <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="Materials\MaterialParameter.h">
+      <Filter>Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Materials\TemplatedMaterialParameter.h">
+      <Filter>Materials</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

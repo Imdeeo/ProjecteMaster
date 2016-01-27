@@ -41,8 +41,10 @@
     <ClCompile Include="Lights\LightManager.cpp" />
     <ClCompile Include="Lights\OmniLight.cpp" />
     <ClCompile Include="Lights\SpotLight.cpp" />
+    <ClCompile Include="Materials\TemplatedMaterialParameter.cpp" />
     <ClCompile Include="Materials\Material.cpp" />
     <ClCompile Include="Materials\MaterialManager.cpp" />
+    <ClCompile Include="Materials\MaterialParameter.cpp" />
     <ClCompile Include="RenderableObjects\PoolRenderableObjectTechnique.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectsManager.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectTechnique.cpp" />
@@ -99,8 +101,10 @@
     <ClInclude Include="Lights\LightManager.h" />
     <ClInclude Include="Lights\OmniLight.h" />
     <ClInclude Include="Lights\SpotLight.h" />
+    <ClInclude Include="Materials\TemplatedMaterialParameter.h" />
     <ClInclude Include="Materials\Material.h" />
     <ClInclude Include="Materials\MaterialManager.h" />
+    <ClInclude Include="Materials\MaterialParameter.h" />
     <ClInclude Include="RenderableObjects\PoolRenderableObjectTechnique.h" />
     <ClInclude Include="RenderableObjects\RenderableObject.h" />
     <ClInclude Include="RenderableObjects\RenderableObjectsManager.h" />

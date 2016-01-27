@@ -2,24 +2,22 @@
 #define MATERIAL_H
 
 #include "Utils\Named.h"
-#include "Utils.h"
-
-#include <assert.h>
-
-#include "Texture\Texture.h"
-#include "Effects\EffectTechnique.h"
 
 class CMaterial : public CNamed
 {
 private:
 	std::vector<CTexture *> m_Textures;
-	CEffectTechnique *m_EffectTechnique;
+	std::vector<CMaterialParameter *> m_Parameters;
+	CRenderableObjectTechnique *m_RenderableObjectTechnique;
+	unsigned int m_CurrentParameterData;
 	void Destroy();
 public:
-	CMaterial(const CXMLTreeNode &TreeNode);
-	virtual ~CMaterial(){}
-	virtual void Apply();
-	UAB_GET_PROPERTY(CEffectTechnique*, EffectTechnique);
+	CMaterial(CXMLTreeNode &TreeNode);
+	virtual ~CMaterial();
+	virtual void Apply(CRenderableObjectTechnique *RenderableObjectTechnique = NULL);
+	UAB_GET_PROPERTY_POINTER(CRenderableObjectTechnique, RenderableObjectTechnique);
+	void * GetNextParameterAddress(unsigned int NumBytes);
+	UAB_GET_PROPERTY_REFERENCE(std::vector<CMaterialParameter *>, Parameters);
 };
 
 #endif //MATERIAL_H
