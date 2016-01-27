@@ -100,7 +100,14 @@ void CCinematicObject::OnRestartCycle()
 
 void CCinematicObject::GetCurrentKey()
 {
-	for (size_t i = 0; i < m_CinematicObjectKeyFrames.size(); i++){
-		if (m_CurrentTime >= m_CinematicObjectKeyFrames[i]->GetKeyFrameTime()){ m_CurrentKeyFrame = i; }
+	for (size_t i = 0; i < m_CinematicObjectKeyFrames.size()-1; i++){
+		if (m_CurrentTime >= m_CinematicObjectKeyFrames[i]->GetKeyFrameTime())
+		{
+			m_CurrentKeyFrame = i;
+		}
+		else
+			{
+			return;
+		}
 	}	
 }
