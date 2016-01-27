@@ -14,7 +14,8 @@ class CLayerManager : public CTemplatedVectorMapManager<CRenderableObjectsManage
 private:
 	std::string m_Filename;
 	CRenderableObjectsManager *m_DefaultLayer;
-	CRenderableObjectsManager * GetLayer(CXMLTreeNode &Node);
+	
+	
 	CRenderableObjectsManager * AddLayer(CXMLTreeNode &TreeNode);
 public:
 	CLayerManager();
@@ -23,8 +24,10 @@ public:
 	void Load(const std::string &Filename);
 	void Reload();
 	void Update(float ElapsedTime);
-	void Render(CRenderManager &RenderManager);
-	void Render(CRenderManager &RenderManager, const std::string &LayerName);
+	void Render(CRenderManager *RenderManager);
+	void Render(CRenderManager *RenderManager, const std::string &LayerName);
+	CRenderableObjectsManager * GetLayer();
+	CRenderableObjectsManager * GetLayer(CXMLTreeNode &Node);
 };
 
 #endif //H_LAYER_MANAGER_H
