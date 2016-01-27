@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <levels>
-<<<<<<< HEAD
-	<level level_to_load="1"/>
-=======
 	<level level_to_load="2"/>
->>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 </levels>
