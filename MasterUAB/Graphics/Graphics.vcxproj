@@ -50,9 +50,12 @@
     <ClCompile Include="RenderableObjects\RenderableObjectTechnique.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp" />
     <ClCompile Include="RenderManager\RenderManager.cpp" />
+    <ClCompile Include="SceneRender\CaptureFrameBufferSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\ClearSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\DeferredShadingSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\EnbableAlphaBlendSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\GenerateShadowMapsSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\PresentSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\RenderGridSceneRendererCommand.cpp" />
@@ -62,6 +65,7 @@
     <ClCompile Include="SceneRender\SetDepthStencilStateSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SetMatricesSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRend.cpp" />
+    <ClCompile Include="SceneRender\UnsetRenderTargetSceneRendererCommand.cpp" />
     <ClCompile Include="StaticMesh\InstanceMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMeshManager.cpp" />
@@ -116,9 +120,12 @@
     <ClInclude Include="RenderableObjects\VertexTypes.h" />
     <ClInclude Include="RenderManager\RenderManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneRender\CaptureFrameBufferSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\ClearSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\DeferredShadingSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\EnbableAlphaBlendSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\GenerateShadowMapsSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\PresentSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\RenderGridSceneRendererCommand.h" />
@@ -128,6 +135,7 @@
     <ClInclude Include="SceneRender\SetDepthStencilStateSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SetMatricesSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRend.h" />
+    <ClInclude Include="SceneRender\UnsetRenderTargetSceneRendererCommand.h" />
     <ClInclude Include="StaticMesh\InstanceMesh.h" />
     <ClInclude Include="StaticMesh\StaticMesh.h" />
     <ClInclude Include="StaticMesh\StaticMeshManager.h" />

@@ -178,3 +178,12 @@ void CRenderManager::Present()
 {
 	m_ContextManager->Present();
 }
+
+void CRenderManager::UnsetRenderTargets()
+{
+	m_NumViews = 1;
+	m_CurrentRenderTargetViews = &m_RenderTargetView;
+	m_CurrentDepthStencilView = m_DepthStencilView;
+	m_DeviceContext->OMSetRenderTargets(m_NumViews, &m_RenderTargetView,m_DepthStencilView);
+	m_DeviceContext->RSSetViewports(1, &m_Viewport);
+}
