@@ -155,6 +155,18 @@
     <ClCompile Include="Materials\TemplatedMaterialParameter.cpp">
       <Filter>Materials</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRender\CaptureFrameBufferSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\GenerateShadowMapsSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\DeferredShadingSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\UnsetRenderTargetSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -388,6 +400,18 @@
     </ClInclude>
     <ClInclude Include="Materials\TemplatedMaterialParameter.h">
       <Filter>Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\CaptureFrameBufferSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\GenerateShadowMapsSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\DeferredShadingSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\UnsetRenderTargetSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
