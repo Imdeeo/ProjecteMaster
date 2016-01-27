@@ -113,6 +113,27 @@
     <ClCompile Include="RenderableObjects\RenderableObjectsManager.cpp">
       <Filter>RenderableObjects</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp" />
+    <ClCompile Include="SceneRender\ClearSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\PresentSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\RenderLayerSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\SetDepthStencilStateSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\SetMatricesSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRend.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -150,6 +171,9 @@
     </Filter>
     <Filter Include="Layers">
       <UniqueIdentifier>{6784774d-1854-4fee-9265-d832a366caf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneRender">
+      <UniqueIdentifier>{e41d0af4-fa15-441a-8464-36c17c9cc9be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +325,27 @@
     </ClInclude>
     <ClInclude Include="RenderableObjects\RenderableObjectsManager.h">
       <Filter>RenderableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SceneRendererCommandManager.h" />
+    <ClInclude Include="SceneRender\ClearSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\PresentSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\RenderLayerSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\SetDepthStencilStateSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\SetMatricesSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRend.h">
+      <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
