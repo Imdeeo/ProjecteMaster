@@ -113,9 +113,6 @@
     <ClCompile Include="RenderableObjects\RenderableObjectsManager.cpp">
       <Filter>RenderableObjects</Filter>
     </ClCompile>
-    <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp" />
-    <ClCompile Include="SceneRender\SceneRendererCommand.cpp" />
-    <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp" />
     <ClCompile Include="SceneRender\ClearSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
@@ -135,6 +132,21 @@
       <Filter>SceneRender</Filter>
     </ClCompile>
     <ClCompile Include="SceneRender\EnbableAlphaBlendSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\RenderGridSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\SceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
   </ItemGroup>
@@ -329,9 +341,6 @@
     <ClInclude Include="RenderableObjects\RenderableObjectsManager.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
-    <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h" />
-    <ClInclude Include="SceneRender\SceneRendererCommand.h" />
-    <ClInclude Include="SceneRender\SceneRendererCommandManager.h" />
     <ClInclude Include="SceneRender\ClearSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
@@ -351,6 +360,21 @@
       <Filter>SceneRender</Filter>
     </ClInclude>
     <ClInclude Include="SceneRender\EnbableAlphaBlendSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\RenderGridSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\SceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\SceneRendererCommandManager.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
