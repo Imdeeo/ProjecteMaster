@@ -25,7 +25,15 @@ C3DElement::C3DElement(float Yaw, float Pitch, float Roll):
 C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode)
 {
 	CXMLTreeNode l_Element = XMLTreeNode; 
-	m_Position = l_Element.GetVect3fProperty("position", Vect3f(0.0f, 0.0f, 0.0f), true);
+	const char * existPos = l_Element.GetPszProperty("position");
+	if (existPos == NULL)
+	{
+		m_Position = l_Element.GetVect3fProperty("pos", Vect3f(0.0f, 0.0f, 0.0f), true);
+	}
+	else
+	{
+		m_Position = l_Element.GetVect3fProperty("position", Vect3f(0.0f, 0.0f, 0.0f), true);
+	}
 	m_Yaw = l_Element.GetFloatProperty("yaw",0.f,true);
 	m_Pitch = l_Element.GetFloatProperty("pitch",0.f,true);
 	m_Roll = l_Element.GetFloatProperty("roll",0.f,true);
