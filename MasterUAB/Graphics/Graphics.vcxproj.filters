@@ -113,6 +113,9 @@
     <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp">
       <Filter>RenderableObjects</Filter>
     </ClCompile>
+    <ClCompile Include="RenderManager\SceneRendererCommandManager.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -150,6 +153,10 @@
     </Filter>
     <Filter Include="Layers">
       <UniqueIdentifier>{6784774d-1854-4fee-9265-d832a366caf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneRender">
+      <UniqueIdentifier>{36138837-be4a-486b-8bf9-b888d5245041}</UniqueIdentifier>
+      <Extensions>SceneRender</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +308,9 @@
     </ClInclude>
     <ClInclude Include="RenderableObjects\RenderableObjectTechniqueManager.h">
       <Filter>RenderableObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderManager\SceneRendererCommandManager.h">
+      <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
