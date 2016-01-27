@@ -1,4 +1,9 @@
-fileIn "Script.ms"
+fileIn "camera.ms"
+fileIn "cinematic.ms"
+fileIn "export.ms"
+fileIn "light.ms"
+fileIn "renderable_object.ms"
+fileIn "static_mesh.ms"
 
 utility UABUtility "UABUtility" width:168 height:360
 (
@@ -23,20 +28,6 @@ utility UABUtility "UABUtility" width:168 height:360
 		dir += LevelList.items[LevelList.selection] + "\\"
 		dirExist dir
 		return dir
-	)
-	
-	fn checkUserProp usrProp =
-	(
-		local usrDefined = #()
-		for i = 1 to $*.count do
-		(
-			if (getUserProp $*[i] usrProp) == true then
-			(
-				local this_Obj = $*[i]
-				append usrDefined $*[i]
-			)
-		)
-		return usrDefined
 	)
 	
 	fn exportLights dir =
@@ -117,7 +108,7 @@ utility UABUtility "UABUtility" width:168 height:360
 		local renderableObjectsToExport = checkUserProp "render_export"
 		createInstanceMesh dir "renderable_objects.xml" renderableObjectsToExport
 	)
-
+	
 	on UABUtility open do
 	(
 		PathLabel.text="F:\\Game\\Data"
@@ -143,7 +134,9 @@ utility UABUtility "UABUtility" width:168 height:360
         )
 		else 
 		(
+			checkForSave() 
 			exportLights (get_Dir())
+			resetMaxFile() #noPrompt
 		)
 	)
 	
@@ -161,7 +154,9 @@ utility UABUtility "UABUtility" width:168 height:360
             )
             else
             (
+				checkForSave() 
                 exportMesh (get_Dir()) $
+				resetMaxFile() #noPrompt
             )
         )
     )
@@ -174,7 +169,9 @@ utility UABUtility "UABUtility" width:168 height:360
         )
 		else 
 		(
+			checkForSave() 
 			exportCameras (get_Dir())
+			resetMaxFile() #noPrompt
 		)
 	)
 	
@@ -186,7 +183,9 @@ utility UABUtility "UABUtility" width:168 height:360
 		)
 		else
 		(
+			checkForSave() 
 			exportMaterials (get_Dir()) (ExportTexturesCheck.checked)
+			resetMaxFile() #noPrompt
 		)
 	)
 	
@@ -198,7 +197,9 @@ utility UABUtility "UABUtility" width:168 height:360
         )
         else
         (
+			checkForSave() 
             exportStaticMesh (get_Dir()) (ExportMeshCheck.checked)
+			resetMaxFile() #noPrompt
         )
     )
 	
@@ -210,20 +211,14 @@ utility UABUtility "UABUtility" width:168 height:360
         )
         else
         (
+			checkForSave() 
 			local dir = get_Dir()
 			exportLights dir
 			exportCameras dir
 			exportMaterials dir (ExportTexturesCheck.checked)
-			exportStaticMesh dir (ExportMeshCheck.checked)
 			exportRenderableObject dir
+			exportStaticMesh dir (ExportMeshCheck.checked)
+			resetMaxFile() #noPrompt
 		)
 	)
 )
-
---Level -> Carpeta data con los niveles
---Lights -> Exporta las luces
---Mesh -> Exporta el binario de mesh
---Camera -> Exporta xml de cmaras
---Materials -> Exporta xml de materiales, si está export textures marcado
---StaticMeshManager -> Genera xml de staticmesh, si está mesh marcado, tambien el binario
---Scene -> Genera xml de materials, staticmesh y renderableobjects, y las luces y camaras, usando las casillas
