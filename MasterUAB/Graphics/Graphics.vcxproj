@@ -65,6 +65,7 @@
     <ClCompile Include="SceneRender\SetDepthStencilStateSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SetMatricesSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRend.cpp" />
+    <ClCompile Include="SceneRender\StagedTexturedSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\UnsetRenderTargetSceneRendererCommand.cpp" />
     <ClCompile Include="StaticMesh\InstanceMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMesh.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="SceneRender\SetDepthStencilStateSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SetMatricesSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRend.h" />
+    <ClInclude Include="SceneRender\StagedTexturedSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\UnsetRenderTargetSceneRendererCommand.h" />
     <ClInclude Include="StaticMesh\InstanceMesh.h" />
     <ClInclude Include="StaticMesh\StaticMesh.h" />

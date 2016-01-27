@@ -167,6 +167,9 @@
     <ClCompile Include="SceneRender\UnsetRenderTargetSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRender\StagedTexturedSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -411,6 +414,9 @@
       <Filter>SceneRender</Filter>
     </ClInclude>
     <ClInclude Include="SceneRender\UnsetRenderTargetSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\StagedTexturedSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
