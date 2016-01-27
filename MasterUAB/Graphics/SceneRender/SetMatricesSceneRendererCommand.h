@@ -9,6 +9,7 @@ class CSetMatricesSceneRendererCommand : public CSceneRendererCommand
 {
 public:
 	CSetMatricesSceneRendererCommand(CXMLTreeNode &TreeNode);
+	virtual ~CSetMatricesSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };
 

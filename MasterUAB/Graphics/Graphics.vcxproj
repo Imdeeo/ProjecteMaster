@@ -50,7 +50,6 @@
     <ClCompile Include="RenderManager\RenderManager.cpp" />
     <ClCompile Include="SceneRender\ClearSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp" />
-    <ClCompile Include="SceneRender\EnbableAlphaBlendSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\PresentSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\RenderLayerSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SceneRendererCommand.cpp" />
@@ -112,7 +111,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneRender\ClearSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h" />
-    <ClInclude Include="SceneRender\EnbableAlphaBlendSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\PresentSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\RenderLayerSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SceneRendererCommand.h" />
