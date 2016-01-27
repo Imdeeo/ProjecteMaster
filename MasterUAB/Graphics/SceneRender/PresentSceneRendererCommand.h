@@ -9,6 +9,7 @@ class CPresentSceneRendererCommand : public CSceneRendererCommand
 {
 public:
 	CPresentSceneRendererCommand(CXMLTreeNode &TreeNode);
+	virtual ~CPresentSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };
 
