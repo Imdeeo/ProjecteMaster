@@ -12,6 +12,7 @@ private:
 	CRenderableObjectsManager *m_Layer;
 public:
 	CRenderLayerSceneRendererCommand(CXMLTreeNode &TreeNode);
+	virtual ~CRenderLayerSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };
 

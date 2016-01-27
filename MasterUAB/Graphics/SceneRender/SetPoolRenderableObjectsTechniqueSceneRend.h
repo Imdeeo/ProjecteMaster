@@ -12,6 +12,7 @@ private:
 	CPoolRenderableObjectTechnique *m_Pool;
 public:
 	CSetPoolRenderableObjectsTechniqueSceneRendererCommand(CXMLTreeNode &TreeNode);
+	virtual ~CSetPoolRenderableObjectsTechniqueSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };
 
