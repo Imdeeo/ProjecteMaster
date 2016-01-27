@@ -249,9 +249,9 @@ fn createInstanceMesh dir filename Objs=
 			Obj = Objs[i]
 			if Obj.material != undefined then
 			(
-			print (getUserProp Obj "core_name")
-			pos = TranslationToRH Obj.transform.translation
-			format "\t<renderable_object name=\"%\" core_name=\"%\" position=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" visible=\"%\"/>\n" Obj.name (getUserProp Obj "core_name") pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) true to:file
+				if isDebug then print (getUserProp Obj "core_name")
+				pos = TranslationToRH Obj.transform.translation
+				format "\t<renderable_object name=\"%\" core_name=\"%\" position=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" visible=\"%\"/>\n" Obj.name (getUserProp Obj "core_name") pos[1] pos[2] pos[3] (GetYaw Obj.transform) (GetPitch Obj.transform) (GetRoll Obj.transform) true to:file
 			)
 		)
 	)
@@ -690,32 +690,23 @@ fn createMaterials dir filename Objs copyTexture =
 
 fn createLights dir filename Objs =
 (
-	local lightPos
-	local lightDir
-	local lightColor
-
 	file=createfile (dir+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<lights>\n" to:file
 	
 	for i=1 to Objs.count do
 	(
-		lightPos = Objs[i].pos.x as string+" "+Objs[i].pos.y as string+" "+Objs[i].pos.z as string
-		lightColor = (Objs[i].color.r/255*100) as string+" "+(Objs[i].color.g/255*100) as string+" "+(Objs[i].color.b/255*100) as string
-		
 		if (ClassOf Objs[i] == Omnilight) then
 		(
-		format "\t<light name=\"%\" type=\"omni\" pos=\"%\" color=\"%\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\">\n" Objs[i].name lightPos lightColor Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier to:file
+			format "\t<light name=\"%\" type=\"omni\" pos=\"% % %\" color=\"% % %\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\">\n" Objs[i].name Objs[i].pos.x Objs[i].pos.y Objs[i].pos.z (Objs[i].color.r/255*100) (Objs[i].color.g/255*100) (Objs[i].color.b/255*100) Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier to:file
 		) 
 		else if (ClassOf Objs[i] == Directionallight or ClassOf Objs[i] == TargetDirectionallight) then
 		(
-			lightDir = Objs[i].dir.x as string+" "+Objs[i].dir.y as string+" "+Objs[i].dir.z as string
-			format "\t<light name=\"%\" type=\"directional\" pos=\"%\" dir=\"%\" color=\"%\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\">\n" Objs[i].name lightPos lightDir lightColor Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier to:file
+			format "\t<light name=\"%\" type=\"directional\" pos=\"% % %\" dir=\"% % %\" color=\"% % %\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\">\n" Objs[i].name Objs[i].pos.x Objs[i].pos.y Objs[i].pos.z Objs[i].dir.x Objs[i].dir.y Objs[i].dir.z (Objs[i].color.r/255*100) (Objs[i].color.g/255*100) (Objs[i].color.b/255*100) Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier to:file
 		) 
 		else if (ClassOf Objs[i] == freeSpot or ClassOf Objs[i] == targetSpot) then
 		(
-			lightDir = Objs[i].dir.x as string+" "+Objs[i].dir.y as string+" "+Objs[i].dir.z as string
-			format "\t<light name=\"%\" type=\"spot\" pos=\"%\" dir=\"%\" color=\"%\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\">\n" Objs[i].name lightPos lightDir lightColor Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier to:file
+			format "\t<light name=\"%\" type=\"spot\" pos=\"% % %\" dir=\"% % %\" color=\"% % %\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\">\n" Objs[i].name Objs[i].pos.x Objs[i].pos.y Objs[i].pos.z Objs[i].dir.x Objs[i].dir.y Objs[i].dir.z (Objs[i].color.r/255*100) (Objs[i].color.g/255*100) (Objs[i].color.b/255*100) Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier to:file
 		)
 	)
 	format "</lights>\n" to:file		
@@ -743,7 +734,6 @@ fn createCameras dir Objs =
 			select Objs[i]
 			cameraTransform = Objs[i].transform
 			cameraTranslation = TranslationToRH (cameraTransform.translation)
-			cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
 			local firstframe = at time 999999999999 trackbar.getNextKeyTime()
 			if (firstframe != undefined) and ((getUserProp Objs[i] "camera_export_type") != "static") then(
 				key = (at time 999999999999 trackbar.getPreviousKeyTime()) as string
@@ -752,7 +742,7 @@ fn createCameras dir Objs =
 				dirExist (dir+"cameras\\")
 				cameraFileDir = "cameras\\"+Objs[i].name+".xml"
 				cameraType = getUserProp Objs[i] "camera_export_type"
-				format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"%\" filename=\"%\"/>\n" Objs[i].name key cameraType cameraPos cameraFileDir to:file
+				format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"% % %\" filename=\"%\"/>\n" Objs[i].name key cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraFileDir to:file
 				local j = firstframe
 				cameraFile=createfile (dir+cameraFileDir)
 				format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
@@ -763,24 +753,19 @@ fn createCameras dir Objs =
 					key = (key as float)/30
 					cameraTransform = at time j Objs[i].transform
 					cameraTranslation = TranslationToRH (cameraTransform.translation)
-					cameraPos = cameraTranslation.x as string+" "+cameraTranslation.y as string+" "+cameraTranslation.z as string
 					cameraUp = mat3xvect3 cameraTransform z_axis
-					cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
 					cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis))
-					cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
-					format "\t<key time=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraPos cameraUp cameraLookAt (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
+					format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
 					j = at time j trackbar.getNextKeyTime()
 				) while j != firstframe
 				format "</camera_key_controller>\n" to:cameraFile		
 				close cameraFile
 			) else (
 				cameraUp = mat3xvect3 cameraTransform z_axis
-				cameraUp = (CameraUp.x) as string+" "+(CameraUp.y) as string+" "+(CameraUp.z) as string
 				if(Objs[i].target != undefined) then (cameraLookAt = Objs[i].target.pos)
 				else (cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis)))
-				cameraLookAt = (cameraLookAt.x) as string+" "+(cameraLookAt.y) as string+" "+(cameraLookAt.z) as string
 				cameraType = getUserProp Objs[i] "camera_export_type"
-				format "\t<camera name=\"%\" type=\"%\" pos=\"%\" up=\"%\" look_at=\"%\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" Objs[i].name cameraType cameraPos cameraUp cameraLookAt Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
+				format "\t<camera name=\"%\" type=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" Objs[i].name cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
 			)
 			max select none
 		)
@@ -838,7 +823,7 @@ fn createCinematicObjects dir filename Objs =
 					tform = at time j l_Obj.transform
 					
 					pos = TranslationToRH tform.translation
-					scl = TranslationToRH tform.scale
+					scl = tform.scale
 						
 					format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" key pos[1] pos[2] pos[3] (GetYaw tform) (GetPitch tform) (GetRoll tform) scl[1] scl[2] scl[3] to:file
 						
