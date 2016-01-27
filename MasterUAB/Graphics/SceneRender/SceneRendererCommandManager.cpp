@@ -1,6 +1,5 @@
 #include "SceneRendererCommandManager.h"
 #include "RenderManager\RenderManager.h"
-#include "RenderManager.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager()
 {
