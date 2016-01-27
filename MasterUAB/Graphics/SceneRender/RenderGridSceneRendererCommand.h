@@ -1,4 +1,6 @@
-#pragma once
+#ifndef RENDER_GRID_SCENE_RENDERER_COMMAND_H
+#define RENDER_GRID_SCENE_RENDERER_COMMAND_H
+
 #include "SceneRendererCommand.h"
 class CRenderGridSceneRendererCommand :
 	public CSceneRendererCommand
@@ -10,3 +12,4 @@ public:
 	void Execute(CRenderManager &RenderManager);
 };
 
+#endif //RENDER_GRID_SCENE_RENDERER_COMMAND_H

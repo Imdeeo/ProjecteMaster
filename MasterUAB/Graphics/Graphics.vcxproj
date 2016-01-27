@@ -50,6 +50,8 @@
     <ClCompile Include="RenderManager\RenderManager.cpp" />
     <ClCompile Include="SceneRender\ClearSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\EnableAlphaBlendSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\GenerateShadowMapsSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\PresentSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\RenderGridSceneRendererCommand.cpp" />
@@ -113,6 +115,8 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneRender\ClearSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\EnableAlphaBlendSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\GenerateShadowMapsSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\PresentSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\RenderGridSceneRendererCommand.h" />

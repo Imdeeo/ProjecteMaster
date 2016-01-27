@@ -134,15 +134,6 @@
     <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
-    <ClCompile Include="SceneRender\SceneRendererCommand.cpp">
-      <Filter>SceneRender</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp">
-      <Filter>SceneRender</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp">
-      <Filter>SceneRender</Filter>
-    </ClCompile>
     <ClCompile Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
@@ -153,6 +144,12 @@
       <Filter>SceneRender</Filter>
     </ClCompile>
     <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\GenerateShadowMapsSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\EnableAlphaBlendSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
   </ItemGroup>
@@ -319,7 +316,7 @@
     </ClInclude>
     <ClInclude Include="Camera\CameraControllerManager.h">
       <Filter>Camera</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Cinematics\Cinematic.h">
       <Filter>Cinematics</Filter>
     </ClInclude>
@@ -368,15 +365,6 @@
     <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
-    <ClInclude Include="SceneRender\SceneRendererCommand.h">
-      <Filter>SceneRender</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRender\SceneRendererCommandManager.h">
-      <Filter>SceneRender</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h">
-      <Filter>SceneRender</Filter>
-    </ClInclude>
     <ClInclude Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
@@ -387,6 +375,12 @@
       <Filter>SceneRender</Filter>
     </ClInclude>
     <ClInclude Include="SceneRender\SceneRendererCommandManager.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\GenerateShadowMapsSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\EnableAlphaBlendSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
