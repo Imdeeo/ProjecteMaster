@@ -37,7 +37,16 @@ C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode)
 	m_Yaw = l_Element.GetFloatProperty("yaw",0.f,true);
 	m_Pitch = l_Element.GetFloatProperty("pitch",0.f,true);
 	m_Roll = l_Element.GetFloatProperty("roll",0.f,true);
-	m_Scale = l_Element.GetFloatProperty("scale",1.f,true);
+	const char * existScale = l_Element.GetPszProperty("scale");
+	if (existScale == NULL)
+	{
+		m_Scale = Vect3f(1.f, 1.f, 1.f);
+	}
+	else
+	{
+		m_Scale = l_Element.GetVect3fProperty("scale", Vect3f(1.f, 1.f, 1.f), true);
+		m_Scale.x = abs(m_Scale.x);
+	}
 	m_Visible = l_Element.GetBoolProperty("visible", true, false);	
 }
 
