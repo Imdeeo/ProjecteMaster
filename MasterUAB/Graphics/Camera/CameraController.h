@@ -10,13 +10,6 @@ class CCameraController
 {
 protected:
 	Vect3f m_Position;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> develop
-=======
->>>>>>> 2415e5237c3b6016faf70d3a66b60ecd2a66b0a7
 	float m_Yaw;
 	float m_Pitch;
 public:
