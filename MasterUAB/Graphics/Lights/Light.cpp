@@ -9,7 +9,7 @@ CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
 {
 	m_Type = GetLightTypeByName(TreeNode.GetPszProperty("type"));
 	m_Position = TreeNode.GetVect3fProperty("pos", Vect3f(0.0f, 0.0f, 0.0f), true);
-	m_Color = CColor(TreeNode.GetVect4fProperty("color", Vect4f(255.0f, 255.0f, 255.0f, 0.0f), true));
+	m_Color = CColor(TreeNode.GetVect4fProperty("color", Vect4f(255.0f, 255.0f, 255.0f, 1.0f), true));
 	m_StartRangeAttenuation = TreeNode.GetFloatProperty("att_start_range");
 	m_EndRangeAttenuation = TreeNode.GetFloatProperty("att_end_range");
 	m_Intensity = TreeNode.GetFloatProperty("intensity");
