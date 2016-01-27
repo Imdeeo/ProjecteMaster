@@ -4,14 +4,13 @@
 
 CClearSceneRendererCommand::CClearSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
 {
-	// TODO
-	/*m_DepthStencil = TreeNode.GetPszProperty("name");
-	m_RenderTarget = TreeNode.GetPszProperty("name");*/
+	m_DepthStencil = TreeNode.GetBoolProperty("render_target");
+	m_RenderTarget = TreeNode.GetBoolProperty("depth_stencil");
 }
 
 CClearSceneRendererCommand::~CClearSceneRendererCommand(){}
 
 void CClearSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
-	RenderManager.Clear();
+	RenderManager.Clear(m_RenderTarget, m_DepthStencil);
 }

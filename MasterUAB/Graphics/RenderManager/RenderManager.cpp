@@ -169,7 +169,12 @@ void CRenderManager::DisableAlphaBlendState()
 	m_ContextManager->GetDeviceContext()->OMSetBlendState(NULL,NULL,0xffffffff);
 }
 
-void CRenderManager::Clear()
+void CRenderManager::Clear(bool renderTarget, bool depthStencil)
 {
-	
+	m_ContextManager->Clear(renderTarget, depthStencil);
+}
+
+void CRenderManager::Present()
+{
+	m_ContextManager->Present();
 }
