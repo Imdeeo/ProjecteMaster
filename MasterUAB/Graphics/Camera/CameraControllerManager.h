@@ -25,9 +25,10 @@ public:
 	bool Reload();
 	void Update(float _ElapsedTime);
 
-private:
 	CCameraController* GetMainCamera(){ return m_MainCamera; };
 	CCameraController* GetDebugCamera(){ return m_DebugCamera; };
+
+private:
 	void UpdateMainCamera(float _ElapsedTime);
 	void UpdateDebugCamera(float _ElapsedTime);
 	
