@@ -113,10 +113,28 @@
     <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp">
       <Filter>RenderableObjects</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRender\SceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
     <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
-    <ClCompile Include="SceneRender\SceneRendererCommand.cpp">
+    <ClCompile Include="SceneRender\ClearSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\PresentSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\SetMatricesSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\SetDepthStencilStateSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRend.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\RenderLayerSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
   </ItemGroup>
@@ -312,10 +330,28 @@
     <ClInclude Include="RenderableObjects\RenderableObjectTechniqueManager.h">
       <Filter>RenderableObjects</Filter>
     </ClInclude>
+    <ClInclude Include="SceneRender\SceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
     <ClInclude Include="SceneRender\SceneRendererCommandManager.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
-    <ClInclude Include="SceneRender\SceneRendererCommand.h">
+    <ClInclude Include="SceneRender\ClearSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\PresentSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\SetMatricesSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\SetDepthStencilStateSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRend.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\RenderLayerSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
