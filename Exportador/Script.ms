@@ -548,9 +548,9 @@ fn processFaces arx Obj =
 				--Texture2
 				UV2ID = 0x0040
 				local IdxsMap=meshop.getMapFace l_Obj 2 i
-				TUVMap1= meshop.getMapVert l_Obj 2 IdxsMap.x
-				TUVMap2= meshop.getMapVert l_Obj 2 IdxsMap.y
-				TUVMap3= meshop.getMapVert l_Obj 2 IdxsMap.z
+				T2UVMap1= meshop.getMapVert l_Obj 2 IdxsMap.x
+				T2UVMap2= meshop.getMapVert l_Obj 2 IdxsMap.y
+				T2UVMap3= meshop.getMapVert l_Obj 2 IdxsMap.z
 			)
 		) else (
 			--Color
