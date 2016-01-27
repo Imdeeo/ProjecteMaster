@@ -26,6 +26,8 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 		m_AxisBBMin = Vect3f(0, 0, 0);
 		m_AxisBBMax = Vect3f(1, 1, 1);
 	}
+
+	//LongAxis
 	{
 		MV_POSITION_COLOR_VERTEX l_LongAxisVtxs[12] =
 		{
@@ -116,6 +118,22 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 		m_SimpleGridBBMin = Vect3f(-1.f, 0.f, -1.f);
 		m_SimpleGridBBMax = Vect3f(1.f, 0.f, 1.f);
 	}
+
+	// Quad 2D
+
+		MV_POSITION4_COLOR_TEXTURE_VERTEX l_ScreenVertexsQuad[4]=
+		{
+		{Vect4f(-1.0f, 1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
+		Vect2f(0.0f, 0.0f)},
+		{Vect4f(-1.0f, -1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
+		Vect2f(0.0f, 1.0f)},
+		{Vect4f(1.0f, 1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
+		Vect2f(1.0f, 0.0f)},
+		{Vect4f(1.0f, -1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
+		Vect2f(1.0f, 1.0f)}
+		};
+		m_DrawQuadRV=new CUABTrianglesStripRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(l_ScreenVertexsQuad, 4, 2);
+
 	{
 		// Simple Cube
 		MV_POSITION_COLOR_VERTEX l_SimpleCubeVtxs[] =
