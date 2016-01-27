@@ -23,7 +23,7 @@ public:
 	void DisableAlphaBlendState();
 
 	//bool AddRenderableObjectToRenderList(CRenderableObject* _RenderableObject);
-
+	void UnsetRenderTargets();
 	void Render();
 	void Clear(bool renderTarget, bool depthStencil);
 	void Present();
