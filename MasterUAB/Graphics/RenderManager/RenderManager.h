@@ -19,6 +19,7 @@ public:
 
 	void SetUseDebugCamera(bool _use) { m_UseDebugCamera = _use; }
 
+	void DisableAlphaBlendState();
 	//bool AddRenderableObjectToRenderList(CRenderableObject* _RenderableObject);
 
 	void Render();

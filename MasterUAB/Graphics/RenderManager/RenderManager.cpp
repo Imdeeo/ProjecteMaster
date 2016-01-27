@@ -158,3 +158,9 @@ void CRenderManager::Render()
 
 	m_ContextManager->EndRender();
 }
+
+
+void CRenderManager::DisableAlphaBlendState()
+{
+	m_ContextManager->GetDeviceContext()->OMSetBlendState(NULL,NULL,0xffffffff);
+}
