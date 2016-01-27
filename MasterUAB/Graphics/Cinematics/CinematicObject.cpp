@@ -5,7 +5,7 @@
 
 CCinematicObject::CCinematicObject(CXMLTreeNode &TreeNode):m_RenderableObject(nullptr)
 {
-	m_RenderableObject=UABEngine.GetRenderableObjectsManager()->GetResource(TreeNode.GetPszProperty("resource"));
+	m_RenderableObject=UABEngine.GetLayerManager()->GetLayer(TreeNode)->GetResource(TreeNode.GetPszProperty("resource"));
 	for (int i = 0; i < TreeNode.GetNumChildren(); ++i)
 	{		
 		CXMLTreeNode l_Element = TreeNode(i);
