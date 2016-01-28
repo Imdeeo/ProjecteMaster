@@ -3,6 +3,7 @@ fn IsSmoothingGroupEnabled IdGroup Value &ret=
 	ret = ((bit.and Value (2^(IdGroup-1) ))==ValueMask)
 )
 
+
 fn UABGetVertexNormal obj IdVertex SmoothValue FaceNormal UABVtxsNormals &Normal = 
 ( 
 	local HasNormal=false 
@@ -13,7 +14,7 @@ fn UABGetVertexNormal obj IdVertex SmoothValue FaceNormal UABVtxsNormals &Normal
 		IsSmoothingGroupEnabled b SmoothValue &isSmooth
 		if(isSmooth==true) then 
 		( 
-			Normal=Normal+UABVtxsNormals[IdVertex][b] 
+			Normal += UABVtxsNormals[IdVertex][b] 
 			HasNormal=true 
 		) 
 	) 
@@ -23,7 +24,7 @@ fn UABGetVertexNormal obj IdVertex SmoothValue FaceNormal UABVtxsNormals &Normal
 	) 
 )
 
-fn UABCalcVertexsNormals obj &UABVtxsNormals= 
+/*fn UABCalcVertexsNormals obj &UABVtxsNormals= 
 ( 
 	local NumVtxs=getNumVerts obj
 	
@@ -60,4 +61,4 @@ fn UABCalcVertexsNormals obj &UABVtxsNormals=
 			) 
 		)
 	)
-)
+)*/
