@@ -170,6 +170,14 @@ HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 	if (FAILED(hr))
 		return hr;
 
+	m_ViewPort = new D3D11_VIEWPORT();
+	m_ViewPort->Width = (FLOAT)m_Width;
+	m_ViewPort->Height = (FLOAT)m_Height;
+	m_ViewPort->MinDepth = 0.0f;
+	m_ViewPort->MaxDepth = 1.0f;
+	m_ViewPort->TopLeftX = 0;
+	m_ViewPort->TopLeftY = 0;
+
 	return S_OK;
 }
 
@@ -475,14 +483,14 @@ void CContextManager::Draw(const CRenderableVertexs* _VerticesToRender, ERasteri
 
 void CContextManager::BeginRender(CColor backgroundColor)
 {
-	D3D11_VIEWPORT vp;
+	/*D3D11_VIEWPORT vp;
 	vp.Width = (FLOAT)m_Width;
 	vp.Height = (FLOAT)m_Height;
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = 1.0f;
 	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
-	m_DeviceContext->RSSetViewports(1, &vp);
+	vp.TopLeftY = 0;*/
+	m_DeviceContext->RSSetViewports(1, m_ViewPort);
 
 	Clear(true, true);
 	

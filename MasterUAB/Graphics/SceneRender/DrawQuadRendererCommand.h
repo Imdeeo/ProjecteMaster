@@ -1,11 +1,14 @@
 #ifndef	DRAW_QUAD_RENDERER_COMMAND_H
 #define DRAW_QUAD_RENDERER_COMMAND_H
 
-#include "scenerenderercommand.h"
+#include "StagedTexturedSceneRendererCommand.h"
 
-class CDrawQuadRendererCommand :
-	public CSceneRendererCommand
+class CRenderableObjectTechnique;
+
+class CDrawQuadRendererCommand : public CStagedTexturedSceneRendererCommand
 {
+private:
+	CRenderableObjectTechnique* m_RenderableObjectTechnique;
 public:
 	CDrawQuadRendererCommand(CXMLTreeNode &TreeNode);
 	virtual ~CDrawQuadRendererCommand(void);

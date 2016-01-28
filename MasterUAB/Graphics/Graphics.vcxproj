@@ -70,10 +70,13 @@
     <ClCompile Include="SceneRender\SetDepthStencilStateSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SetMatricesSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SetRenderTargetSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\StagedTexturedSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\UnsetRenderTargetSceneRendererCommand.cpp" />
     <ClCompile Include="StaticMesh\InstanceMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMeshManager.cpp" />
+    <ClCompile Include="Texture\DynamicTexture.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Texture\TextureManager.cpp" />
   </ItemGroup>
@@ -145,10 +148,13 @@
     <ClInclude Include="SceneRender\SetDepthStencilStateSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SetMatricesSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SetRenderTargetSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\StagedTexturedSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\UnsetRenderTargetSceneRendererCommand.h" />
     <ClInclude Include="StaticMesh\InstanceMesh.h" />
     <ClInclude Include="StaticMesh\StaticMesh.h" />
     <ClInclude Include="StaticMesh\StaticMeshManager.h" />
+    <ClInclude Include="Texture\DynamicTexture.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Texture\TextureManager.h" />
   </ItemGroup>

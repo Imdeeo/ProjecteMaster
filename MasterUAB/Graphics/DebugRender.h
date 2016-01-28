@@ -30,6 +30,7 @@ public:
 	CRenderableVertexs * GetPremultBlendTriangle() const { return m_PremultBlendTriangle; }
 	CRenderableVertexs * GetSimpleCube() const { return m_SimpleCube; }
 	CRenderableVertexs * GetAxis() const { return m_Axis; }
+	CRenderableVertexs * GetQuadRV() const { return m_DrawQuadRV; }
 
 	float GetSimpleTriangleBSRadi() const { return m_SimpleTriangleBSRadi; }
 	float GetClassicBlendTriangleBSRadi() const { return m_ClassicBlendTriangleBSRadi; }
@@ -83,8 +84,6 @@ private:
 	Vect3f m_SimpleCubeBBMax;
 	Vect3f m_AxisBBMax;
 	Vect3f m_LongAxisBBMax;
-
-	Vect
 };
 
 #endif
