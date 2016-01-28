@@ -37,13 +37,14 @@ fn writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere=
 )
 
 fn processFaces arx Obj =
-(
+(	
 	if classof Obj != Editable_mesh then
 	(
 		convertToMesh Obj
 	)
 	
 	Obj.transform *= inverse(Obj.transform)
+	local InvTransform=inverse Obj.transform
 	
 	local Vt1 = undefined
 	local Vt2 = undefined
@@ -66,7 +67,18 @@ fn processFaces arx Obj =
 	local NmID = 0x0004
 	local UVID = 0x0000
 	local UV2ID = 0x0000
-
+	
+	local NumVtxs=getNumVerts Obj
+	local UABVtxsNormals = #()
+	for b=1 to NumVtxs do 
+	( 
+		UABVtxsNormals[b]=#() 
+		for t=1 to 32 do 
+		( 
+			UABVtxsNormals[b][t]=point3 0 0 0  
+		) 
+	)
+	
 	local nFaces = getNumFaces Obj
 	local vertexs = #()
 	local indexs = #()
@@ -87,25 +99,41 @@ fn processFaces arx Obj =
 		append vertexs #()
 		append indexs #()
 	)
-
+	
 	for i=1 to nFaces do
-	(
+	(	
+		
 		local l_IdMaterial = (mod (getFaceMatID Obj i) l_TotalMaterials)+1
 		local IdxsFace=getFace Obj i
+		local FaceNormal=getFaceNormal Obj i
+		local SmoothValue=getFaceSmoothGroup Obj i
+		local isSmooth
 		
 		Vt1=getVert Obj IdxsFace.x
 		Vt2=getVert Obj IdxsFace.y
 		Vt3=getVert Obj IdxsFace.z
 		
-		UABCalcVertexsNormals Obj
-		local FaceNormal=getFaceNormal Obj i
-		local SmoothValue=getFaceSmoothGroup Obj i
-		Nm1=normalize(UABGetVertexNormal Obj IdxsFace.x SmoothValue FaceNormal)
-		Nm2=normalize(UABGetVertexNormal Obj IdxsFace.y SmoothValue FaceNormal)
-		Nm3=normalize(UABGetVertexNormal Obj IdxsFace.z SmoothValue FaceNormal)
+		for b=1 to 32 do
+		( 
+			IsSmoothingGroupEnabled b SmoothValue &isSmooth
+			if(isSmooth==true) then
+			(                                                    
+				UABVtxsNormals[IdxsFace.x][b]=UABVtxsNormals[IdxsFace.x][b] + FaceNormal 
+				UABVtxsNormals[IdxsFace.y][b]=UABVtxsNormals[IdxsFace.y][b] + FaceNormal 
+				UABVtxsNormals[IdxsFace.z][b]=UABVtxsNormals[IdxsFace.z][b] + FaceNormal 
+			) 
+		)
+		
+		UABGetVertexNormal Obj IdxsFace.x SmoothValue FaceNormal UABVtxsNormals &Nm1
+		UABGetVertexNormal Obj IdxsFace.y SmoothValue FaceNormal UABVtxsNormals &Nm2
+		UABGetVertexNormal Obj IdxsFace.z SmoothValue FaceNormal UABVtxsNormals &Nm3
+		Nm1=normalize(Nm1)
+		Nm2=normalize(Nm2)
+		Nm3=normalize(Nm3)
 		
 		if Obj.material != undefined then
 		(
+			
 			if l_HasMultimaterial then
 			(
 				local l_DiffMap = Obj.material.materialList[l_IdMaterial].diffuseMap
@@ -164,6 +192,9 @@ fn processFaces arx Obj =
 		append indexs[l_IdMaterial] id1
 		append indexs[l_IdMaterial] id2
 		append indexs[l_IdMaterial] id3
+		
+		free UABVtxsNormals
+		
 	)
 	
 	local ffd=ffdbox()
@@ -174,7 +205,7 @@ fn processFaces arx Obj =
 	getBoundingSphere Obj	&BSphere
 	l_VtxID = VtID+ColorID+NmID+UVID+UV2ID
 	
-	writeMesh arx l_VtxID vertexs indexs BBMin BBMax BSphere
+	writeMesh arx l_VtxID vertexs indexs BBMin BBMax BSphere	
 )
 
 fn writeMeshFromObject arx Obj =
@@ -189,15 +220,16 @@ fn writeMeshFromObject arx Obj =
 fn createMeshFromObjects dir Objs =
 (
 	dirExist (dir+"\\Meshes")
-	for i=1 to Objs.count do
+			
+	for l_Obj in Objs do
 	(
-		if Objs[i].material != undefined then
+		if l_Obj.material != undefined then
 		(
-			file=fopen (dir+"\\Meshes\\"+Objs[i].name+".mesh") "wb"
-			writeMeshFromObject file (Objs[i])
+			file=fopen (dir+"\\Meshes\\"+l_Obj.name+".mesh") "wb"
+			writeMeshFromObject file (l_Obj)
 			FClose file
 		) else (
-			format "The object % has no material!\n" Objs[i].name
+			format "The object % has no material!\n" l_Obj.name
 		)
 	)
 )
