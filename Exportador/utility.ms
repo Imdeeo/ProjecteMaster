@@ -94,12 +94,12 @@ utility UABUtility "UABUtility" width:168 height:360
 
 	fn exportStaticMesh dir meshCheck =
 	(
+		
 		local meshToExport = #()
 		checkUserProp "render_export" &meshToExport
 		local coresToExport = #()
 		getCores meshToExport &coresToExport
 		createStaticMesh dir (LevelList.items[LevelList.selection]) "static_meshes.xml" coresToExport
-		
 		if meshCheck == true then 
 		(
 			createMeshFromObjects dir meshToExport
@@ -177,34 +177,19 @@ utility UABUtility "UABUtility" width:168 height:360
 	
 	on ExportSceneButton pressed do
 	(
-		local theWatch = PerformanceTester()
-		checkForSave() 
-		local dir = get_Dir()
-		print 'exportlights'
-		theWatch.start()
-		exportLights dir
-		theWatch.stop()
-		theWatch.report()
-		print 'exportcameras'
-		theWatch.start()
-		exportCameras dir
-		theWatch.stop()
-		theWatch.report()
-		print 'exportmaterials'
-		theWatch.start()
-		exportMaterials dir (ExportTexturesCheck.checked)
-		theWatch.stop()
-		theWatch.report()
-		print 'exportrenderableobject'
-		theWatch.start()
-		exportRenderableObject dir
-		theWatch.stop()
-		theWatch.report()
-		print 'exportstaticmesh'
-		theWatch.start()
-		exportStaticMesh dir (ExportMeshCheck.checked)
-		theWatch.stop()
-		resetMaxFile() #noPrompt
-		theWatch.report()
+		--checkForSave() 
+		undo off(
+			local theWatch = PerformanceTester()
+			theWatch.start()
+			local dir = get_Dir()
+			exportLights dir
+			exportCameras dir
+			exportMaterials dir (ExportTexturesCheck.checked)
+			exportRenderableObject dir
+			exportStaticMesh dir (ExportMeshCheck.checked)
+			theWatch.stop()
+			theWatch.report()
+		)
+		--resetMaxFile()
 	)
 )

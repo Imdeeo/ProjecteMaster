@@ -1,26 +1,17 @@
-global UABVtxsNormals=#()
-
-fn UABClearNormalsArray = 
+fn IsSmoothingGroupEnabled IdGroup Value &ret= 
 (
-	while UABVtxsNormals.count>0 do 
-	(
-		deleteItem UABVtxsNormals 1
-	)
+	ret = ((bit.and Value (2^(IdGroup-1) ))==ValueMask)
 )
 
-fn IsSmoothingGroupEnabled IdGroup Value = 
-(
-	local ValueMask=2^(IdGroup-1) 
-	return (bit.and Value ValueMask)==ValueMask 
-)
-
-fn UABGetVertexNormal obj IdVertex SmoothValue FaceNormal = 
+fn UABGetVertexNormal obj IdVertex SmoothValue FaceNormal UABVtxsNormals &Normal = 
 ( 
 	local HasNormal=false 
 	local Normal=point3 0 0 0 
+	local isSmooth
 	for b=1 to 32 do 
 	( 
-		if((IsSmoothingGroupEnabled b SmoothValue)==true) then 
+		IsSmoothingGroupEnabled b SmoothValue &isSmooth
+		if(isSmooth==true) then 
 		( 
 			Normal=Normal+UABVtxsNormals[IdVertex][b] 
 			HasNormal=true 
@@ -30,13 +21,12 @@ fn UABGetVertexNormal obj IdVertex SmoothValue FaceNormal =
 	( 
 		Normal=FaceNormal 
 	) 
-	return Normal 
 )
 
-fn UABCalcVertexsNormals obj = 
+fn UABCalcVertexsNormals obj &UABVtxsNormals= 
 ( 
-	UABClearNormalsArray() 
-	local NumVtxs=getNumVerts obj 
+	local NumVtxs=getNumVerts obj
+	
 	for b=1 to NumVtxs do 
 	( 
 		UABVtxsNormals[b]=#() 
@@ -44,9 +34,11 @@ fn UABCalcVertexsNormals obj =
 		( 
 			UABVtxsNormals[b][t]=point3 0 0 0  
 		) 
-	) 
-	local NumFaces=getNumFaces obj 
-	local InvTransform=inverse obj.transform 
+	)
+	
+	local NumFaces=getNumFaces obj
+	local InvTransform=inverse obj.transform
+	
 	for IdFace=1 to NumFaces do 
 	( 
 		local IdxsFace=getFace obj IdFace 
@@ -55,14 +47,17 @@ fn UABCalcVertexsNormals obj =
 		local Vtx3=(getVert obj IdxsFace.z)*InvTransform 
 		local FaceNormal=getFaceNormal obj IdFace 
 		local SmoothValue=getFaceSmoothGroup obj IdFace 
-		for b=1 to 32 do 
+		local isSmooth
+		
+		for b=1 to 32 do
 		( 
-			if((IsSmoothingGroupEnabled b SmoothValue)==true) then
+			IsSmoothingGroupEnabled b SmoothValue &isSmooth
+			if(isSmooth==true) then
 			(                                                    
 				UABVtxsNormals[IdxsFace.x][b]=UABVtxsNormals[IdxsFace.x][b] + FaceNormal 
 				UABVtxsNormals[IdxsFace.y][b]=UABVtxsNormals[IdxsFace.y][b] + FaceNormal 
 				UABVtxsNormals[IdxsFace.z][b]=UABVtxsNormals[IdxsFace.z][b] + FaceNormal 
 			) 
-		) 
-	) 
+		)
+	)
 )

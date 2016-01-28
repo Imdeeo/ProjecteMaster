@@ -1,14 +1,3 @@
-fn getLocalFileName &str =
-(
-	str = "Game\\Data\\"
-)
-
-fn getFileName &str =
-(
-	getLocalFileName &str
-	str = "F:\\" + str
-)
-
 fn getRelativePath &pathString = 
 (
 		local startFrom = (findString pathString "Data")
@@ -17,9 +6,9 @@ fn getRelativePath &pathString =
 
 fn checkUserProp usrProp &usrDefined =
 (
-	for i = 1 to $*.count do
+	for Obj in $* do
 	(
-		if (getUserProp $*[i] usrProp) == true then append usrDefined $*[i]
+		if (getUserProp Obj usrProp) == true then append usrDefined Obj
 	)
 )
 
@@ -33,22 +22,22 @@ fn getCores Objs &cores=
 (
 	local areInstances
 	append cores Objs[1]
-	setUserProp Objs[1] "core_name" Objs[1].name
-	for i = 2 to Objs.count do
+	
+	for l_Obj in Objs do
 	(
 		areInstances = false
-		for j = 1 to cores.count do
+		for l_Core in cores do
 		(
-			if ((AreNodesInstances Objs[i] cores[j]) == true) then
+			if ((AreNodesInstances l_Obj l_Core) == true) then
 			(
 				areInstances = true
-				setUserProp Objs[i] "core_name" cores[j].name
+				setUserProp l_Obj "core_name" l_Core.name
 			)
 		)
 		if areInstances == false then
 		(
-			append cores Objs[i]
-			setUserProp Objs[i] "core_name" Objs[i].name
+			append cores l_Obj
+			setUserProp l_Obj "core_name" l_Obj.name
 		)
 	)
 )
