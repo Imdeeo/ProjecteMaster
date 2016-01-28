@@ -9,18 +9,25 @@
 #include "Effects\EffectTechnique.h"
 #include "Texture\Texture.h";
 
+#include "DebugRender.h"
+
 #define SCREEN_DEPTH 20.f
 
 CRenderManager::CRenderManager()
 	: m_UseDebugCamera(false)
-	, m_CurrentRenderlistLength(0)
+	, m_CurrentRenderlistLength(0),
+	m_DebugRender(nullptr)
 {
-
 }
 
 CRenderManager::~CRenderManager()
 {
 
+}
+
+void CRenderManager::Init()
+{
+	m_DebugRender = new CDebugRender(m_ContextManager->GetDevice());
 }
 
 void CRenderManager::SetCurrentCamera(const CCamera& _CurrentCamera)
@@ -187,31 +194,40 @@ void CRenderManager::SetMatrixViewProjection()
 	m_ContextManager->SetCamera(m_CurrentCamera);
 }
 
-void CRenderManager::UnsetRenderTargets()
-{
-	/*m_NumViews = 1;
-	m_CurrentRenderTargetViews = &m_RenderTargetView;
-	m_CurrentDepthStencilView = m_DepthStencilView;
-	m_DeviceContext->OMSetRenderTargets(m_NumViews, &m_RenderTargetView,m_DepthStencilView);
-	m_DeviceContext->RSSetViewports(1, &m_Viewport);*/
-}
-
 
 //Funcones Draw
 void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture *_Texture, float x, float y, float _Width, float _Height, const CColor &Color)
 {
-	/*CEffectManager::m_SceneParameters.m_BaseColor=Color;
-	if(Texture!=NULL)
-		Texture->Activate(0);
+	CEffectManager::m_SceneParameters.m_BaseColor=Color;
+	if(_Texture!=NULL)
+		_Texture->Activate(0);
 	D3D11_VIEWPORT l_Viewport;
-	l_Viewport.Width=Width*m_Viewport.Width;
-	l_Viewport.Height=Height*m_Viewport.Height;
+	l_Viewport.Width = _Width*m_ContextManager->getViewPort()->Width;
+	l_Viewport.Height = _Height*(m_ContextManager->getViewPort()->Height);
 	l_Viewport.MinDepth = 0.0f;
 	l_Viewport.MaxDepth = 1.0f;
-	l_Viewport.TopLeftX = x*m_Viewport.Width;
-	l_Viewport.TopLeftY = y*m_Viewport.Height;
-	m_DeviceContext->RSSetViewports(1, &l_Viewport);
-	m_DrawQuadRV->Render(this, EffectTechnique,
-	&CEffectManager::m_SceneParameters);
-	m_DeviceContext->RSSetViewports(1, &m_Viewport);*/
+	l_Viewport.TopLeftX = x*m_ContextManager->getViewPort()->Width;
+	l_Viewport.TopLeftY = y*m_ContextManager->getViewPort()->Height;
+	m_ContextManager->GetDeviceContext()->RSSetViewports(1, &l_Viewport);
+	m_DebugRender->GetQuadRV()->Render(this, _EffectTechnique,	&CEffectManager::m_SceneParameters);
+	m_ContextManager->GetDeviceContext()->RSSetViewports(1, m_ContextManager->getViewPort());
+}
+
+
+void CRenderManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const *_RenderTargetViews,
+	ID3D11DepthStencilView *_DepthStencilView)
+{
+	m_NumViews = _NumViews;
+	m_CurrentRenderTargetViews = _RenderTargetViews;
+	m_CurrentDepthStencilView = _DepthStencilView;
+	m_ContextManager->GetDeviceContext()->OMSetRenderTargets(m_NumViews, _RenderTargetViews,	_DepthStencilView);
+}
+
+void CRenderManager::UnsetRenderTargets()
+{
+	m_NumViews = 1;
+	m_CurrentRenderTargetViews = &m_RenderTargetView;
+	m_CurrentDepthStencilView = m_DepthStencilView;
+	m_ContextManager->GetDeviceContext()->OMSetRenderTargets(m_NumViews, &m_RenderTargetView, m_DepthStencilView);
+	m_ContextManager->GetDeviceContext()->RSSetViewports(1, m_ContextManager->getViewPort());
 }

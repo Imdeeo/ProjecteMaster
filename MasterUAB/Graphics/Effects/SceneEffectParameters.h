@@ -9,10 +9,10 @@ public:
 	Mat44f m_World;
 	Mat44f m_View;
 	Mat44f m_Projection;
-	//Mat44f m_LightViewMatrix;
 	Vect4f m_CameraPosition;
 	Vect4f m_CameraRightVector;
 	Vect4f m_CameraUpVector;
+	Vect4f m_BaseColor;
 };
 
 #endif //SCENE_EFFECT_H

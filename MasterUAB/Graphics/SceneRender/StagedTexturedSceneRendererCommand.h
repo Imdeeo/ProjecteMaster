@@ -5,6 +5,8 @@
 #include "Texture\Texture.h"
 #include <vector>
 
+class CDynamicTexture;
+
 class CStagedTexturedSceneRendererCommand :
 	public CSceneRendererCommand
 {
@@ -27,7 +29,7 @@ protected:
 	};
 
 	std::vector<CStagedTexture>				m_StagedTextures;
-	//std::vector<CDynamicTexture*>			m_DynamicTextures;
+	std::vector<CDynamicTexture*>			m_DynamicTextures;
 	std::vector<ID3D11RenderTargetView*>	m_RenderTargetViews;
 
 public:

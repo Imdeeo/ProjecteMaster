@@ -90,6 +90,7 @@ private:
 	ID3D11DepthStencilView*	m_DepthStencilView;
 
 	int m_Width, m_Height;
+	D3D11_VIEWPORT* m_ViewPort;
 
 	ID3D11RasterizerState*	m_RasterizerSates[RS_COUNT];
 	ID3D11DepthStencilState * m_DepthStencilStates[DSS_COUNT];
@@ -99,6 +100,8 @@ public:
 	ID3D11RasterizerState*	GetRasterizerState(ERasterizedState _RasterizedState){return m_RasterizerSates[_RasterizedState];}
 	ID3D11DepthStencilState * GetDepthStencilState(EDepthStencilStates _DepthStencilState){return m_DepthStencilStates[_DepthStencilState];}
 	ID3D11BlendState* GetBlendState(EBlendStates _BlendState){return m_BlendStates[_BlendState];}
+
+	D3D11_VIEWPORT *getViewPort(){ return m_ViewPort; }
 };
 
 #endif

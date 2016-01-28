@@ -91,9 +91,6 @@ public:
 			, 0, 0 );
 		ID3D11Buffer* VSBuffers[3] = {l_SceneConstantBufferVS,l_LightConstantBufferVS,l_AnimationConstantBufferVS};
 		l_DeviceContext->VSSetConstantBuffers(0, 3,VSBuffers);
-		/*l_DeviceContext->VSSetConstantBuffers(0, 1,&l_SceneConstantBufferVS);
-		l_DeviceContext->VSSetConstantBuffers(1, 1,&l_LightConstantBufferVS);
-		l_DeviceContext->VSSetConstantBuffers(2, 1,&l_AnimationConstantBufferVS);*/
 
 		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
 
