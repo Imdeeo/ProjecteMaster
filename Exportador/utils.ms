@@ -1,27 +1,26 @@
-fn get_LocalFileName =
+fn getLocalFileName &str =
 (
-	return "Game\\Data\\"
+	str = "Game\\Data\\"
 )
 
-fn get_FileName =
+fn getFileName &str =
 (
-	return "F:\\" + (get_LocalFileName())
+	getLocalFileName &str
+	str = "F:\\" + str
 )
 
-fn get_RelativePath pathString = 
+fn getRelativePath &pathString = 
 (
 		local startFrom = (findString pathString "Data")
-		return substring pathString startFrom (pathString.count-startFrom+1)
+		pathString = substring pathString startFrom (pathString.count-startFrom+1)
 )
 
-fn checkUserProp usrProp =
+fn checkUserProp usrProp &usrDefined =
 (
-	local usrDefined = #()
 	for i = 1 to $*.count do
 	(
 		if (getUserProp $*[i] usrProp) == true then append usrDefined $*[i]
 	)
-	return usrDefined
 )
 
 fn dirExist dir =
@@ -30,9 +29,8 @@ fn dirExist dir =
 		makeDir dir all:true
 )
 
-fn get_Cores Objs =
+fn getCores Objs &cores=
 (
-	local cores = #()
 	local areInstances
 	append cores Objs[1]
 	setUserProp Objs[1] "core_name" Objs[1].name
@@ -53,5 +51,46 @@ fn get_Cores Objs =
 			setUserProp Objs[i] "core_name" Objs[i].name
 		)
 	)
-	return cores
+)
+
+struct PerformanceTester
+(
+    iStartMem = 0,
+    iStartTime = 0,
+    iStopMem = 0,
+    iStopTime = 0,
+    
+    iCycle = 0,
+    
+    iResTime = 0,
+    iResMem = 0,
+    
+    function start =
+    (
+        gc()
+        iCycle += 1
+        iStartMem = (heapSize - heapFree)
+        iStartTime = timeStamp()    
+    ),
+    
+    function stop =
+    (
+        iStopTime = timeStamp()
+        iStopMem = (heapSize - heapFree)
+
+        iResTime += ((iStopTime - iStartTime) / 1000.0)
+        iResMem += ((iStopMem - iStartMem) / 1024.0)
+    ),
+    
+    function report =
+    (
+        format "Average processing on % iteration(s) took:\n" iCycle
+        format "% seconds\n" (iResTime / iCycle)
+        format "% Kbytes\n\n" (iResMem / iCycle)
+
+        iCycle = 0
+    
+        iResTime = 0
+        iResMem = 0
+    )
 )

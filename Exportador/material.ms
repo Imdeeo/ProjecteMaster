@@ -27,7 +27,6 @@ fn getMaterials arx Obj =
 	(
 		n_materials = 0
 	)
-	return n_materials
 )
 
 fn createMaterials dir filename Objs copyTexture =
@@ -69,7 +68,8 @@ fn createMaterials dir filename Objs copyTexture =
 							(
 								nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
 								pathfile = (dir + "Textures\\" + nomTextura)
-								relativePathfile = get_RelativePath pathfile
+								relativePathfile = pathfile
+								getRelativePath &relativePathFile
 								format "\t\t<texture filename=\"%\"/>\n" relativePathfile to:file
 								if copyTexture == true then
 								(

@@ -1,4 +1,4 @@
-fn circumcenter p1 p2 p3 =
+fn circumcenter p1 p2 p3 &ccenter=
 (
     BC = distance p2 p3
     CA = distance p3 p1
@@ -8,19 +8,18 @@ fn circumcenter p1 p2 p3 =
     triArea = baryCoords.x + baryCoords.y + baryCoords.z
     baryCoords /= triArea
 
-    baryCoords.x * p1 + baryCoords.y * p2 + baryCoords.z * p3
+    ccenter = (baryCoords.x * p1 + baryCoords.y * p2 + baryCoords.z * p3)
 )
 
-fn mat3xvect3 mat vect =
+fn mat3xvect3 mat vect &res =
 ( 
-    local res = [0, 0, 0]
+    res = [0, 0, 0]
 	local x = vect.x
 	local y = vect.y
 	local z = vect.z
     res.x = (mat.row1.x*x) + (mat.row1.y*y) + (mat.row1.z*z)
     res.y = (mat.row2.x*x) + (mat.row2.y*y) + (mat.row2.z*z)
     res.z = (mat.row3.x*x) + (mat.row3.y*y) + (mat.row3.z*z)
-    return res
 )
 
 fn mat4xvect3 mat vect w =
@@ -36,36 +35,32 @@ fn mat4xvect3 mat vect w =
     return res
 )
 
-fn TranslationToRH translation =
+fn TranslationToRH &translation =
 (
-	return point3 -translation.x translation.z translation.y
+	translation = [-translation.x, translation.z, translation.y]
 )
 
-fn TransformToRH matrix =
+fn TransformToRH &matrix =
 (
-    local r1 = matrix.row1
-    local r2 = matrix.row2
-    local r3 = matrix.row3
-    local r4 = TranslationToRH matrix.row4
-    return matrix3 r1 r2 r3 r4
+    matrix.row4 = TranslationToRH matrix.row4
 )
 
-fn GetYaw trans =
+fn GetYaw trans &yaw =
 (
-	return (-(trans as eulerangles).z*PI/180)
+	yaw = (-(trans as eulerangles).z*PI/180)
 )
 
-fn GetPitch trans =
+fn GetPitch trans &pitch =
 (
-	return ((-(trans as eulerangles).y*PI/180)+(PI/2))
+	pitch = ((-(trans as eulerangles).y*PI/180)+(PI/2))
 )
 
-fn GetRoll trans =
+fn GetRoll trans &roll =
 (
-	return ((trans as eulerangles).x*PI/180)
+	roll = ((trans as eulerangles).x*PI/180)
 )
 
-fn getBoundingSphere Obj =
+fn getBoundingSphere Obj &BSphere =
 (
 	struct vtxPair (vtxA, vtxB, dist)
 	local vertexs = #()
@@ -122,8 +117,9 @@ fn getBoundingSphere Obj =
 					   
 						if ((distance vtxC vtxA) > (radius * sqrt 2)) and ((distance vtxC vtxB) > (radius * sqrt 2)) do
 						(
-							c = (circumcenter vtxA vtxB vtxC)
-							r = (distance c vtxA)
+							local c 
+							circumcenter vtxA vtxB vtxC &c
+							local r = distance c vtxA
 							if r > radius do
 							(
 								radius = r
@@ -136,12 +132,12 @@ fn getBoundingSphere Obj =
 		)
 	)
 	
-	return #(center, radius)
+	append BSphere center
+	append BSphere radius
 )
 
-fn createVertex pos col norm textcoord1 textcoord2 =
+fn createVertex pos col norm textcoord1 textcoord2 &vertex =
 (
-	local vertex = #()
 	if(pos!=undefined) then
 	(
 		append vertex pos.x
@@ -170,7 +166,6 @@ fn createVertex pos col norm textcoord1 textcoord2 =
 		append vertex textcoord2.x
 		append vertex textcoord2.y
 	)
-	return vertex
 )
 
 fn equalVertex vt1 vt2 =
@@ -193,13 +188,12 @@ fn equalVertex vt1 vt2 =
 	return equals
 )
 
-fn getIndex vertexVect vertex IdMaterial vertexsDictionary =
+fn getIndex vertexVect vertex IdMaterial vertexsDictionary &vtxN =
 (
 	local vtxStr = vertex as string
-	local vtxN
 	local doContain = vertexsDictionary.ContainsKey vtxStr
 
-	if doContain then
+    if doContain then
 	(
 		vtxN = vertexsDictionary.Item[vtxStr]
 	) else (
@@ -207,24 +201,4 @@ fn getIndex vertexVect vertex IdMaterial vertexsDictionary =
 		vertexsDictionary.Add vtxStr vtxN
 		append vertexVect[IdMaterial] vertex
 	)
-	
-	return vtxN
-	/*
-	local l_FoundVertex=false
-	local index = (vertexVect[IdMaterial]).count
-	for i=1 to vertexVect[IdMaterial].count do
-	(
-		if (equalVertex vertexVect[IdMaterial][i] vertex) then
-		(
-			index = i-1
-			l_FoundVertex=true
-		)
-	)
-	if l_FoundVertex==false then
-	(
-		index=vertexVect[IdMaterial].count
-		append vertexVect[IdMaterial] vertex
-	)
-	return index
-	*/
 )

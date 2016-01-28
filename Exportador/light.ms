@@ -12,8 +12,10 @@ fn createLights dir filename Objs =
 	
 	for i=1 to Objs.count do
 	(
-		lightPos = TranslationToRH Objs[i].pos
-		lightDir = TranslationToRH Objs[i].dir
+		lightPos = Objs[i].pos
+		TranslationToRH &lightPos
+		lightDir = Objs[i].dir
+		TranslationToRH &lightDir
 		if (ClassOf Objs[i] == Omnilight) then
 		(
 			format "\t<light name=\"%\" enabled=\"%\" type=\"omni\" pos=\"% % %\" color=\"% % % %\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\"/>\n" Objs[i].name (getUserProp Objs[i] "light_enabled") lightPos.x lightPos.y lightPos.z (Objs[i].color.r/255) (Objs[i].color.g/255) (Objs[i].color.b/255) 1 Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier to:file

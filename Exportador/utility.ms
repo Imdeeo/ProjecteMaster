@@ -27,18 +27,20 @@ utility UABUtility "UABUtility" width:168 height:360
 		dirExist dir
 		dir += LevelList.items[LevelList.selection] + "\\"
 		dirExist dir
-		return dir
+		dir
 	)
 	
 	fn exportLights dir =
 	(
-		local lightsToExport = checkUserProp "light_export"
+		local lightsToExport = #()
+		checkUserProp "light_export" &lightsToExport
 		createLights dir "lights.xml" lightsToExport
 	)
 
 	fn exportCameras dir =
 	(
-		local camerasToExport = checkUserProp "camera_export"
+		local camerasToExport = #()
+		checkUserProp "camera_export" &camerasToExport
 		createCameras dir camerasToExport
 	)
 
@@ -85,14 +87,17 @@ utility UABUtility "UABUtility" width:168 height:360
 
 	fn exportMaterials dir textureCheck =
 	(
-		local materialsToExport = checkUserProp "render_export"
+		local materialsToExport = #()
+		checkUserProp "render_export" &materialsToExport
 		createMaterials dir "materials.xml" materialsToExport textureCheck
 	)
 
 	fn exportStaticMesh dir meshCheck =
 	(
-		local meshToExport = checkUserProp "render_export"
-		local coresToExport = get_Cores meshToExport
+		local meshToExport = #()
+		checkUserProp "render_export" &meshToExport
+		local coresToExport = #()
+		getCores meshToExport &coresToExport
 		createStaticMesh dir (LevelList.items[LevelList.selection]) "static_meshes.xml" coresToExport
 		
 		if meshCheck == true then 
@@ -103,9 +108,11 @@ utility UABUtility "UABUtility" width:168 height:360
 
 	fn exportRenderableObject dir =
 	(
-		local cinematicObjectsToExport = checkUserProp "cinematic_object"
+		local cinematicObjectsToExport = #()
+		checkUserProp "cinematic_object" &cinematicObjectsToExport
 		createCinematicObjects dir "cinematic.xml" cinematicObjectsToExport
-		local renderableObjectsToExport = checkUserProp "render_export"
+		local renderableObjectsToExport = #()
+		checkUserProp "render_export" &renderableObjectsToExport
 		createInstanceMesh dir "renderable_objects.xml" renderableObjectsToExport
 	)
 	
@@ -113,7 +120,7 @@ utility UABUtility "UABUtility" width:168 height:360
 	(
 		PathLabel.text="F:\\Game\\Data"
 		
-		local levels=#("","level_1","level_2", "level_3","level_4", "main_menu", "select_player")
+		local levels=#("level_1","level_2", "level_3","level_4", "main_menu", "select_player")
 		LevelList.items=levels		
 	)
 	
@@ -128,97 +135,76 @@ utility UABUtility "UABUtility" width:168 height:360
 	
 	on ExportLightsButton pressed do
 	(
-		if LevelList.items[LevelList.selection] == "" then
-        (
-            messageBox "You must select a level!" title:"ERROR"
-        )
-		else 
-		(
-			checkForSave() 
-			exportLights (get_Dir())
-			resetMaxFile() #noPrompt
-		)
+		checkForSave() 
+		exportLights (get_Dir())
+		resetMaxFile() #noPrompt
 	)
 	
 	on ExportMeshButton pressed do
     (        
-        if LevelList.items[LevelList.selection] == "" then
-        (
-            messageBox "You must select a level!" title:"ERROR"
-        )
-        else
-        (
-            if $ == undefined then
-            (
-                messageBox "You must select a scene object" title:"ERROR"
-            )
-            else
-            (
-				checkForSave() 
-                exportMesh (get_Dir()) $
-				resetMaxFile() #noPrompt
-            )
-        )
-    )
-	
-	on ExportCameraButton pressed do
-	(
-		if LevelList.items[LevelList.selection] == "" then
-        (
-            messageBox "You must select a level!" title:"ERROR"
-        )
-		else 
+		if $ == undefined then
 		(
-			checkForSave() 
-			exportCameras (get_Dir())
-			resetMaxFile() #noPrompt
-		)
-	)
-	
-	on ExportMaterialsButton pressed do
-	(
-		if LevelList.items[LevelList.selection] == "" then
-		(			
-			messageBox "You must select a level" title:"ERROR"
+			messageBox "You must select a scene object" title:"ERROR"
 		)
 		else
 		(
 			checkForSave() 
-			exportMaterials (get_Dir()) (ExportTexturesCheck.checked)
+			exportMesh (get_Dir()) $
 			resetMaxFile() #noPrompt
 		)
+    )
+	
+	on ExportCameraButton pressed do
+	(
+		checkForSave() 
+		exportCameras (get_Dir())
+		resetMaxFile() #noPrompt
+	)
+	
+	on ExportMaterialsButton pressed do
+	(
+		checkForSave() 
+		exportMaterials (get_Dir()) (ExportTexturesCheck.checked)
+		resetMaxFile() #noPrompt
 	)
 	
 	on ExportStaticMeshButton pressed do
     (
-        if LevelList.items[LevelList.selection] == "" then
-        (
-            messageBox "You must select a level!" title:"ERROR"
-        )
-        else
-        (
-			checkForSave() 
-            exportStaticMesh (get_Dir()) (ExportMeshCheck.checked)
-			resetMaxFile() #noPrompt
-        )
+		checkForSave() 
+		exportStaticMesh (get_Dir()) (ExportMeshCheck.checked)
+		resetMaxFile() #noPrompt
     )
 	
 	on ExportSceneButton pressed do
 	(
-		 if LevelList.items[LevelList.selection] == "" then
-        (
-            messageBox "You must select a level!" title:"ERROR"
-        )
-        else
-        (
-			checkForSave() 
-			local dir = get_Dir()
-			exportLights dir
-			exportCameras dir
-			exportMaterials dir (ExportTexturesCheck.checked)
-			exportRenderableObject dir
-			exportStaticMesh dir (ExportMeshCheck.checked)
-			resetMaxFile() #noPrompt
-		)
+		local theWatch = PerformanceTester()
+		checkForSave() 
+		local dir = get_Dir()
+		print 'exportlights'
+		theWatch.start()
+		exportLights dir
+		theWatch.stop()
+		theWatch.report()
+		print 'exportcameras'
+		theWatch.start()
+		exportCameras dir
+		theWatch.stop()
+		theWatch.report()
+		print 'exportmaterials'
+		theWatch.start()
+		exportMaterials dir (ExportTexturesCheck.checked)
+		theWatch.stop()
+		theWatch.report()
+		print 'exportrenderableobject'
+		theWatch.start()
+		exportRenderableObject dir
+		theWatch.stop()
+		theWatch.report()
+		print 'exportstaticmesh'
+		theWatch.start()
+		exportStaticMesh dir (ExportMeshCheck.checked)
+		theWatch.stop()
+		resetMaxFile() #noPrompt
+		theWatch.report()
 	)
 )
