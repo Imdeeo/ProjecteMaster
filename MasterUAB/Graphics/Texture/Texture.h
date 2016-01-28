@@ -6,7 +6,7 @@
 
 class CTexture : public CNamed
 {
-private:
+protected:
 	ID3D11ShaderResourceView *m_Texture;
 	ID3D11SamplerState *m_SamplerState;
 	virtual bool LoadFile();

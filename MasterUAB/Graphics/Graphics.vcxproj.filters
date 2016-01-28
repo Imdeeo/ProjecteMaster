@@ -185,11 +185,11 @@
     <ClCompile Include="SceneRender\StagedTexturedSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
-    <ClCompile Include="Texture\DynamicTexture.cpp">
-      <Filter>StaticMesh</Filter>
-    </ClCompile>
     <ClCompile Include="SceneRender\SetRenderTargetSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\DynamicTexture.cpp">
+      <Filter>Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -455,9 +455,11 @@
     <ClInclude Include="SceneRender\StagedTexturedSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
-    <ClInclude Include="Texture\DynamicTexture.h" />
     <ClInclude Include="SceneRender\SetRenderTargetSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\DynamicTexture.h">
+      <Filter>Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
