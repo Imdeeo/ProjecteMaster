@@ -21,7 +21,8 @@ fn createCameras dir Objs =
 		(
 			select Objs[i]
 			cameraTransform = Objs[i].transform
-			cameraTranslation = TranslationToRH (cameraTransform.translation)
+			cameraTranslation = cameraTransform.translation
+			TranslationToRH &cameraTranslation
 			local firstframe = at time 999999999999 trackbar.getNextKeyTime()
 			if (firstframe != undefined) and ((getUserProp Objs[i] "camera_export_type") != "static") then(
 				key = (at time 999999999999 trackbar.getPreviousKeyTime()) as string
@@ -40,18 +41,25 @@ fn createCameras dir Objs =
 					key = replace key key.count 1 ""
 					key = (key as float)/30
 					cameraTransform = at time j Objs[i].transform
-					cameraTranslation = TranslationToRH (cameraTransform.translation)
-					cameraUp = mat3xvect3 cameraTransform z_axis
-					cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis))
+					cameraTranslation = cameraTransform.translation
+					TranslationToRH &cameraTranslation
+					mat3xvect3 cameraTransform z_axis &cameraUp
+					mat3xvect3 cameraTransform y_axis &cameraLookAt
+					cameraLookAt += cameraTranslation
 					format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
 					j = at time j trackbar.getNextKeyTime()
 				) while j != firstframe
 				format "</camera_key_controller>\n" to:cameraFile		
 				close cameraFile
 			) else (
-				cameraUp = mat3xvect3 cameraTransform z_axis
-				if(Objs[i].target != undefined) then (cameraLookAt = Objs[i].target.pos)
-				else (cameraLookAt = (cameraTranslation + (mat3xvect3 cameraTransform y_axis)))
+				mat3xvect3 cameraTransform z_axis &cameraUp
+				if(Objs[i].target != undefined) then
+				(
+					cameraLookAt = Objs[i].target.pos
+				) else (
+					mat3xvect3 cameraTransform y_axis &cameraLookAt
+					cameraLookAt += cameraTranslation
+				)
 				cameraType = getUserProp Objs[i] "camera_export_type"
 				format "\t<camera name=\"%\" type=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" Objs[i].name cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
 			)

@@ -43,6 +43,8 @@ fn processFaces arx Obj =
 		convertToMesh Obj
 	)
 	
+	Obj.transform *= inverse(Obj.transform)
+	
 	local Vt1 = undefined
 	local Vt2 = undefined
 	local Vt3 = undefined
@@ -64,9 +66,7 @@ fn processFaces arx Obj =
 	local NmID = 0x0004
 	local UVID = 0x0000
 	local UV2ID = 0x0000
-	
-	Obj.transform *= inverse(Obj.transform)
-	
+
 	local nFaces = getNumFaces Obj
 	local vertexs = #()
 	local indexs = #()
@@ -147,13 +147,19 @@ fn processFaces arx Obj =
 			Color3 = getVertColor Obj ColorFace.z
 		)
 		
-		local v1 = createVertex Vt1 Color1 Nm1 TUVMap1 T2UVMap1
-		local v2 = createVertex Vt2 Color2 Nm2 TUVMap2 T2UVMap2
-		local v3 = createVertex Vt3 Color3 Nm3 TUVMap3 T2UVMap3
+		local v1 = #()
+		local v2 = #()
+		local v3 = #()
+		createVertex Vt1 Color1 Nm1 TUVMap1 T2UVMap1 &v1
+		createVertex Vt2 Color2 Nm2 TUVMap2 T2UVMap2 &v2
+		createVertex Vt3 Color3 Nm3 TUVMap3 T2UVMap3 &v3
 		
-		local id1=getIndex vertexs v1 l_IdMaterial vertexsDictionary
-		local id2=getIndex vertexs v2 l_IdMaterial vertexsDictionary
-		local id3=getIndex vertexs v3 l_IdMaterial vertexsDictionary
+		local id1
+		local id2
+		local id3
+		getIndex vertexs v1 l_IdMaterial vertexsDictionary &id1
+		getIndex vertexs v2 l_IdMaterial vertexsDictionary &id2
+		getIndex vertexs v3 l_IdMaterial vertexsDictionary &id3
 		
 		append indexs[l_IdMaterial] id1
 		append indexs[l_IdMaterial] id2
@@ -164,7 +170,8 @@ fn processFaces arx Obj =
 	addModifier Obj ffd
 	BBMin=getModContextBBoxMin Obj ffd
 	BBMax=getModContextBBoxMax Obj ffd
-	BSphere = getBoundingSphere Obj	
+	BSphere = #()
+	getBoundingSphere Obj	&BSphere
 	l_VtxID = VtID+ColorID+NmID+UVID+UV2ID
 	
 	writeMesh arx l_VtxID vertexs indexs BBMin BBMax BSphere
@@ -173,6 +180,7 @@ fn processFaces arx Obj =
 fn writeMeshFromObject arx Obj =
 (
 	WriteShort arx 0xFE55
+	local nMaterials
 	getMaterials arx Obj
 	processFaces arx Obj
 	WriteShort arx 0x55FE

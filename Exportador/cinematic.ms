@@ -10,6 +10,9 @@ fn createCinematicObjects dir filename Objs =
 		local obj_time
 		local max_time=0
 		local tform
+		local yaw
+		local pitch
+		local roll
 		
 		for i=1 to Objs.count do
 		(
@@ -47,11 +50,15 @@ fn createCinematicObjects dir filename Objs =
 					key = (key as float)/30
 					
 					tform = at time j Objs[i].transform
-					
-					pos = TranslationToRH tform.translation
+					pos = tform.translation
+					TranslationToRH &pos
 					scl = tform.scale
-						
-					format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" key pos[1] pos[2] pos[3] (GetYaw tform) (GetPitch tform) (GetRoll tform) scl[1] scl[2] scl[3] to:file
+					
+					GetYaw tform &yaw
+					GetPitch tform &pitch
+					GetRoll tform &roll
+					
+					format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" key pos.x pos.y pos.z yaw pitch roll scl.x scl.y scl.z to:file
 						
 					j = at time j trackbar.getNextKeyTime()
 				) while j != firstframe
