@@ -72,10 +72,10 @@ fn processFaces arx Obj =
 	local UABVtxsNormals = #()
 	for b=1 to NumVtxs do 
 	( 
-		UABVtxsNormals[b]=#() 
+		UABVtxsNormals[b] = #() 
 		for t=1 to 32 do 
 		( 
-			UABVtxsNormals[b][t]=point3 0 0 0  
+			UABVtxsNormals[b][t] = point3 0 0 0  
 		) 
 	)
 	
@@ -111,18 +111,7 @@ fn processFaces arx Obj =
 		
 		Vt1=getVert Obj IdxsFace.x
 		Vt2=getVert Obj IdxsFace.y
-		Vt3=getVert Obj IdxsFace.z
-		
-		for b=1 to 32 do
-		( 
-			IsSmoothingGroupEnabled b SmoothValue &isSmooth
-			if(isSmooth==true) then
-			(                                                    
-				UABVtxsNormals[IdxsFace.x][b]=UABVtxsNormals[IdxsFace.x][b] + FaceNormal 
-				UABVtxsNormals[IdxsFace.y][b]=UABVtxsNormals[IdxsFace.y][b] + FaceNormal 
-				UABVtxsNormals[IdxsFace.z][b]=UABVtxsNormals[IdxsFace.z][b] + FaceNormal 
-			) 
-		)
+		Vt3=getVert Obj IdxsFace.z		
 		
 		UABGetVertexNormal Obj IdxsFace.x SmoothValue FaceNormal UABVtxsNormals &Nm1
 		UABGetVertexNormal Obj IdxsFace.y SmoothValue FaceNormal UABVtxsNormals &Nm2
