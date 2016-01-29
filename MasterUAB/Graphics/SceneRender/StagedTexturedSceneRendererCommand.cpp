@@ -5,14 +5,14 @@
 
 CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(CXMLTreeNode & TreeNode):CSceneRendererCommand(TreeNode)
 {
-	CXMLTreeNode l_Element = TreeNode;
-	for (int i = 0; i < l_Element.GetNumChildren(); i++)
+	CXMLTreeNode l_Input = TreeNode;
+	for (int i = 0; i < l_Input.GetNumChildren(); i++)
 	{
-		CXMLTreeNode l_Child = l_Element(i);
-		if (l_Child.GetName() == "texture")
+		CXMLTreeNode l_Element = l_Input(i);
+		if (l_Element.GetName() == "texture")
 		{
-			unsigned int l_StagedId = l_Child.GetIntProperty("stage_id");
-			std::string l_TextureFile = l_Child.GetPszProperty("file");
+			unsigned int l_StagedId = l_Element.GetIntProperty("stage_id");
+			std::string l_TextureFile = l_Element.GetPszProperty("file");
 			AddStageTexture(l_StagedId,UABEngine.GetTextureManager()->GetTexture(l_TextureFile));
 		}
 	}
