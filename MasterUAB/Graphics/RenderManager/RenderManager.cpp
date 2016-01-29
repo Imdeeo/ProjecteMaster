@@ -12,7 +12,6 @@ CRenderManager::CRenderManager()
 	: m_UseDebugCamera(false)
 	, m_CurrentRenderlistLength(0)
 {
-
 }
 
 CRenderManager::~CRenderManager()
@@ -94,6 +93,8 @@ void CRenderManager::Render()
 
 	UABEngine.GetRenderableObjectsManager()->Render(this);
 
+	UABEngine.GetLightManager()->Render(this);
+
 	//for (size_t i = 0; i < m_CurrentRenderlistLength; ++i)
 	//{
 	//	
@@ -157,4 +158,9 @@ void CRenderManager::Render()
 	CDebugHelper::GetDebugHelper()->Render();
 
 	m_ContextManager->EndRender();
+}
+
+void CRenderManager::Init()
+{
+	m_DebugRender = new CDebugRender(m_ContextManager->GetDevice());
 }

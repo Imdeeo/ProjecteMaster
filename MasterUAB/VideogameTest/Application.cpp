@@ -165,6 +165,10 @@ void CApplication::Update(float _ElapsedTime)
 		UABEngine.GetAnimatedModelsManager()->Reload();
 		UABEngine.GetRenderableObjectsManager()->Reload();
 	}
+	if (CInputManager::GetInputManager()->IsActionActive("SWITCH_RENDER_LIGHTS"))
+	{
+		UABEngine.GetLightManager()->SwitchRenderLights();
+	}
 	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_BOTH"))
 	{
 

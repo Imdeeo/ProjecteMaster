@@ -1,14 +1,19 @@
 #include "Light.h"
 
+#include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+
 #include "XML\XMLTreeNode.h"
 //#include "RenderManager\RenderManager.h"
 
-CLight::CLight() : CNamed(""),m_Type(LIGHT_TYPE_OMNI),m_Position(Vect3f(0.0f,0.0f,0.0f)),m_Color(Vect4f(1.0f,1.0f,1.0f,1.0f)),m_StartRangeAttenuation(0.0f),m_EndRangeAttenuation(0.0f),m_Intensity(0.0f),m_Enabled(false){}
+CLight::CLight() : CNamed(""),C3DElement(Vect3f(0,0,0)),m_Type(LIGHT_TYPE_OMNI),m_Color(Vect4f(1.0f,1.0f,1.0f,1.0f)),m_StartRangeAttenuation(0.0f),m_EndRangeAttenuation(0.0f),m_Intensity(0.0f),m_Enabled(false)
+{
+}
 
-CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
+CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)
 {
 	m_Type = GetLightTypeByName(TreeNode.GetPszProperty("type"));
-	m_Position = TreeNode.GetVect3fProperty("pos", Vect3f(0.0f, 0.0f, 0.0f), true);
+	//m_Position = TreeNode.GetVect3fProperty("pos", Vect3f(0.0f, 0.0f, 0.0f), true);
 	m_Color = CColor(TreeNode.GetVect4fProperty("color", Vect4f(255.0f, 255.0f, 255.0f, 1.0f), true));
 	m_StartRangeAttenuation = TreeNode.GetFloatProperty("att_start_range");
 	m_EndRangeAttenuation = TreeNode.GetFloatProperty("att_end_range");
@@ -18,8 +23,15 @@ CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
 
 CLight::~CLight(){}
 
-void CLight::Render(CRenderManager *RenderManager)
+void CLight::Render(CRenderManager *_RenderManager)
 {
+	if (m_Enabled)
+	{
+		CEffectManager::m_SceneParameters.m_ColorBase = m_Color*m_Intensity;
+		CEffectManager::m_SceneParameters.m_ColorBase.SetAlpha(1.f);
+		_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
+		_RenderManager->GetDebugRender()->GetSimpleCube()->RenderIndexed(_RenderManager, UABEngine.GetEffectManager()->GetResource("render_lights_technique"), nullptr);
+	}
 }
 
 CLight::TLightType CLight::GetLightTypeByName(const std::string &StrLightType)
@@ -31,4 +43,20 @@ CLight::TLightType CLight::GetLightTypeByName(const std::string &StrLightType)
 	else if (StrLightType=="directional")
 		return LIGHT_TYPE_DIRECTIONAL;
 	return LIGHT_TYPE_NULL;
+}
+
+const Mat44f & CLight::GetTransform()
+{
+	m_ScaleMatrix.SetIdentity();
+	m_ScaleMatrix.Scale(m_Intensity, m_Intensity, m_Intensity);
+
+	m_RotationMatrix.SetIdentity();
+	m_RotationMatrix.SetPitchRollYaw(Vect3f(0, 0, 0));
+
+	m_TranslationMatrix.SetIdentity();
+	m_TranslationMatrix.SetPos(m_Position.x, m_Position.y, m_Position.z);
+
+	m_TransformMatrix = m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
+
+	return m_TransformMatrix;
 }

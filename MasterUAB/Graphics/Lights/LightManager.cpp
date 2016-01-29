@@ -60,6 +60,13 @@ bool CLightManager::Reload(){
 	return Load(m_FileName);
 }
 
-bool CLightManager::Render(CRenderManager *RenderManager){
+bool CLightManager::Render(CRenderManager *_RenderManager){
+	if (m_RenderLights)
+	{
+		for (int i = 0; i < GetResourcesVector().size(); i++)
+		{
+			GetResourcesVector()[i]->Render(_RenderManager);
+		}
+	}
 	return true;
 }
