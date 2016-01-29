@@ -5,6 +5,7 @@
 	<action name="STRAFE_RIGHT" type="KEYBOARD" mode="WHILE_PRESSED" key="D" triggers_axis="true" axis="STRAFE" axis_value="1"/>
 	
 	<action name="RELOAD" type="KEYBOARD" mode="ON_PRESS" key="R"/>
+	<action name="SWITCH_RENDER_LIGHTS" type="KEYBOARD" mode="ON_PRESS" key="L"/>
 	
 	<action name="CHANGE_CAMERA_CONTROL" type="KEYBOARD" mode="ON_PRESS" key="C"/>
 	<action name="CHANGE_CAMERA_VISION" type="KEYBOARD" mode="ON_PRESS" key="V"/>
