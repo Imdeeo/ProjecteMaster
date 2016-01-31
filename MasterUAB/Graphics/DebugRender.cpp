@@ -349,4 +349,15 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 
 
 	}
+
+}
+
+CRenderableVertexs * CDebugRender::GetLine(Vect3f inici, Vect3f final) const
+{
+	MV_POSITION_COLOR_VERTEX l_Line[2] =
+	{
+		{ inici, CColor(1.f, 1.f, 1.f, 1.f) },
+		{ final, CColor(1.f, 1.f, 1.f, 1.f) }
+	};
+	return new CUABLinesListRenderableVertexs<MV_POSITION_COLOR_VERTEX>(l_Line,2,1);
 }

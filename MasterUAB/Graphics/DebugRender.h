@@ -24,6 +24,7 @@ class CDebugRender
 public:
 	CDebugRender(ID3D11Device* _Device);
 
+	CRenderableVertexs * GetLine(Vect3f inici, Vect3f final) const;
 
 	CRenderableVertexs * GetSimpleTriangle() const { return m_SimpleTriangle; }
 	CRenderableVertexs * GetClassicBlendTriangle() const { return m_ClassicBlendTriangle; }

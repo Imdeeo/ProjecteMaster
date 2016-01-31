@@ -19,6 +19,10 @@ void CSpotLight::Render(CRenderManager *_RenderManager)
 		CEffectManager::m_SceneParameters.m_ColorBase.SetAlpha(1.f);
 		_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
 		_RenderManager->GetDebugRender()->GetCone()->RenderIndexed(_RenderManager, UABEngine.GetEffectManager()->GetResource("render_lights_technique"), nullptr);
+		CRenderableVertexs* l_Line = _RenderManager->GetDebugRender()->GetLine(m_Position, GetDirection() * GetEndRangeAttenuation());
+		_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
+		l_Line->Render(_RenderManager, UABEngine.GetEffectManager()->GetResource("render_lights_technique"),nullptr);
+		delete l_Line;
 	}
 }
 
