@@ -30,7 +30,7 @@ void CLight::Render(CRenderManager *_RenderManager)
 		CEffectManager::m_SceneParameters.m_ColorBase = m_Color*m_Intensity;
 		CEffectManager::m_SceneParameters.m_ColorBase.SetAlpha(1.f);
 		_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
-		_RenderManager->GetDebugRender()->GetSimpleCube()->RenderIndexed(_RenderManager, UABEngine.GetEffectManager()->GetResource("render_lights_technique"), nullptr);
+		_RenderManager->GetDebugRender()->GetSPhere10()->RenderIndexed(_RenderManager, UABEngine.GetEffectManager()->GetResource("render_lights_technique"), nullptr);
 	}
 }
 
