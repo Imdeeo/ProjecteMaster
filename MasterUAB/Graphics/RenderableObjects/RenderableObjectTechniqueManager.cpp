@@ -45,14 +45,16 @@ bool CRenderableObjectTechniqueManager::Load(const std::string &FileName)
 						CXMLTreeNode l_ElementAux = l_Element(i);
 						if (l_ElementAux.GetName() == "default_technique")
 						{
-							//TODO
+							std::string l_name = l_ElementAux.GetPszProperty("vertex_type");
+							std::string l_technique = l_ElementAux.GetPszProperty("technique");
+							AddResource(l_name, new CRenderableObjectTechnique(l_name, UABEngine.GetEffectManager()->GetResource(l_technique)));
 						}
 						if (l_ElementAux.GetName() == "renderable_object_technique")
 						{
 							std::string l_name = l_ElementAux.GetPszProperty("name");
 							std::string l_technique = l_ElementAux.GetPszProperty("technique");
-							AddResource(l_name, new CRenderableObjectTechnique(l_name, nullptr));
-							auxPoolRenderableObjectTechnique->AddElement(l_name, l_technique, UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_name));
+							AddResource(l_name, new CRenderableObjectTechnique(l_name, UABEngine.GetEffectManager()->GetResource(l_technique)));
+							auxPoolRenderableObjectTechnique->AddElement(l_name, l_technique, GetResource(l_name));
 						}
 					}
 					m_PoolRenderableObjectTechniques.AddResource(l_Element.GetPszProperty("name"), auxPoolRenderableObjectTechnique);
