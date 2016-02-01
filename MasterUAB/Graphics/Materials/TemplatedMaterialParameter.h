@@ -4,15 +4,14 @@
 #include <string.h>
 #include "Materials\MaterialParameter.h"
 
-//template<typename T>
-typedef int T;
+template<typename T>
 class CTemplatedMaterialParameter : public CMaterialParameter
 {
 private:
 	T m_Value;
 	void *m_EffectAddress;
 public:
-	CTemplatedMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode,const T &Value, CMaterialParameter::TMaterialType MaterialType):CMaterialParameter(Material,TreeNode,MaterialType)
+	CTemplatedMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode, CMaterialParameter::TMaterialType MaterialType):CMaterialParameter(Material,TreeNode,MaterialType)
 	{
 
 	}
