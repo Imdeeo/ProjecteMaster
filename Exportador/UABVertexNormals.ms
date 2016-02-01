@@ -24,20 +24,8 @@ fn UABGetVertexNormal obj IdVertex SmoothValue FaceNormal UABVtxsNormals &Normal
 	) 
 )
 
-/*fn UABCalcVertexsNormals obj &UABVtxsNormals= 
+fn UABCalcVertexsNormals obj NumVtxs NumFaces &UABVtxsNormals= 
 ( 
-	local NumVtxs=getNumVerts obj
-	
-	for b=1 to NumVtxs do 
-	( 
-		UABVtxsNormals[b]=#() 
-		for t=1 to 32 do 
-		( 
-			UABVtxsNormals[b][t]=point3 0 0 0  
-		) 
-	)
-	
-	local NumFaces=getNumFaces obj
 	local InvTransform=inverse obj.transform
 	
 	for IdFace=1 to NumFaces do 
@@ -61,4 +49,4 @@ fn UABGetVertexNormal obj IdVertex SmoothValue FaceNormal UABVtxsNormals &Normal
 			) 
 		)
 	)
-)*/
+)
