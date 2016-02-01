@@ -149,6 +149,7 @@ fn createVertex pos col norm textcoord1 textcoord2 &vertex =
 		append vertex col.r
 		append vertex col.g
 		append vertex col.b
+		append vertex 1
 	)
 	if(norm!=undefined) then
 	(
