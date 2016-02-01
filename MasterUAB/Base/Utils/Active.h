@@ -10,7 +10,7 @@ class CActive
 public:
 	CActive(const CXMLTreeNode &TreeNode);
 	CActive(bool l_active);
-	virtual ~CActive() = 0;
+	virtual ~CActive() {}
 	UAB_BUILD_GET_SET(bool, active);
 };
 

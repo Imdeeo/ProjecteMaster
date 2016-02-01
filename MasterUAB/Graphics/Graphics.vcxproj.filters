@@ -128,9 +128,6 @@
     <ClCompile Include="SceneRender\SetMatricesSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
-    <ClCompile Include="SceneRender\EnbableAlphaBlendSceneRendererCommand.cpp">
-      <Filter>SceneRender</Filter>
-    </ClCompile>
     <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
@@ -193,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="Texture\CapturedFrameBufferTexture.cpp">
       <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneRender\EnableAlphaBlendSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -401,9 +401,6 @@
     <ClInclude Include="SceneRender\SetMatricesSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
-    <ClInclude Include="SceneRender\EnbableAlphaBlendSceneRendererCommand.h">
-      <Filter>SceneRender</Filter>
-    </ClInclude>
     <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
@@ -466,6 +463,9 @@
     </ClInclude>
     <ClInclude Include="Texture\CapturedFrameBufferTexture.h">
       <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\EnableAlphaBlendSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

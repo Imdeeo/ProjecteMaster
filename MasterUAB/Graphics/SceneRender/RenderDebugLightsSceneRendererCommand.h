@@ -10,7 +10,7 @@ class CRenderDebugLightsSceneRendererCommand : public CSceneRendererCommand
 {
 public:
 	CRenderDebugLightsSceneRendererCommand(CXMLTreeNode &TreeNode);
-	virtual ~CRenderDebugLightsSceneRendererCommand();
+	virtual ~CRenderDebugLightsSceneRendererCommand(){}
 	virtual void Execute(CRenderManager &RenderManager);
 };
 

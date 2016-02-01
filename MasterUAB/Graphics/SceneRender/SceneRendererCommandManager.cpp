@@ -87,7 +87,10 @@ bool CSceneRendererCommandManager::Reload()
 	return Load(m_Filename);
 }
 
-void CSceneRendererCommandManager::Execute(CRenderManager &RenderManager)
+void CSceneRendererCommandManager::Execute(CRenderManager *RenderManager)
 {
-	// TODO
+	for(int i=0;i<m_ResourcesVector.size();++i)
+	{
+		m_ResourcesVector[i]->Execute(*RenderManager);
+	}
 }

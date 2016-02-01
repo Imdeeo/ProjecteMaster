@@ -111,4 +111,5 @@ bool CDynamicTexture::CreateSamplerState()
 	l_SampDesc.MaxLOD = D3D11_FLOAT32_MAX;
 	HRESULT l_HR = l_Device->CreateSamplerState(&l_SampDesc, &m_SamplerState);
 	assert(!FAILED(l_HR));
+	return true;
 }
