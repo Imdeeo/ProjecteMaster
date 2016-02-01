@@ -76,6 +76,7 @@
     <ClCompile Include="StaticMesh\InstanceMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMeshManager.cpp" />
+    <ClCompile Include="Texture\CapturedFrameBufferTexture.cpp" />
     <ClCompile Include="Texture\DynamicTexture.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Texture\TextureManager.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="StaticMesh\InstanceMesh.h" />
     <ClInclude Include="StaticMesh\StaticMesh.h" />
     <ClInclude Include="StaticMesh\StaticMeshManager.h" />
+    <ClInclude Include="Texture\CapturedFrameBufferTexture.h" />
     <ClInclude Include="Texture\DynamicTexture.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Texture\TextureManager.h" />

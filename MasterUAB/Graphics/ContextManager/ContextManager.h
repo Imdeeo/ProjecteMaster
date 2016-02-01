@@ -103,6 +103,7 @@ public:
 	ID3D11BlendState* GetBlendState(EBlendStates _BlendState){return m_BlendStates[_BlendState];}
 
 	D3D11_VIEWPORT *getViewPort(){ return m_ViewPort; }
+	UAB_GET_PROPERTY(IDXGISwapChain*, SwapChain);
 };
 
 #endif
