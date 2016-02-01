@@ -61,12 +61,12 @@ void * CMaterial::GetNextParameterAddress(unsigned int NumBytes)
 	return m_Parameters[m_CurrentParameterData + 1]->GetValueAddress();
 }
 
-/*void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
+void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 {
 	for (int i = 0; i < m_Textures.size(); i++)
 	{
-		m_Textures[i]->
+		m_Textures[i]->Activate(i);
 	}
-}*/
+}
 
 
