@@ -1,27 +1,32 @@
 #include "Material.h"
 
-
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 
+#include "TemplatedMaterialParameter.h"
+
 CMaterial::CMaterial(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
 {
-	std::string effectTechnique = TreeNode.GetPszProperty("effect_technique");
-	m_EffectTechnique = UABEngine.GetEffectManager()->GetResource(effectTechnique);
+	std::string l_RenderableObjectTechnique = TreeNode.GetPszProperty("renderable_object_technique");
+	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_RenderableObjectTechnique);
 	CXMLTreeNode material = TreeNode;
 	for (int i = 0; i < material.GetNumChildren(); ++i)
 	{
-		CXMLTreeNode texture = TreeNode(i);
-		if (texture.GetName() == std::string("texture"))
+		CXMLTreeNode l_Child = TreeNode(i);
+		if (l_Child.GetName() == std::string("texture"))
 		{
-			m_Textures.push_back(CUABEngine::GetInstance()->GetTextureManager()->GetTexture(texture.GetPszProperty("filename")));
+			m_Textures.push_back(CUABEngine::GetInstance()->GetTextureManager()->GetTexture(l_Child.GetPszProperty("filename")));
 		}
+		if (l_Child.GetName() == std::string("parameter"))
+		{
+			std::string type = l_Child.GetPszProperty("type");
+			CMaterialParameter::GetTypeFromString(type);
+			m_Parameters.push_back(new CTemplatedMaterialParameter<>(this,l_Child,));
+		}
+		if (l_Child.GetName() == std::string("texture"))
+		{
+			m_Textures.push_back(CUABEngine::GetInstance()->GetTextureManager()->GetTexture(l_Child.GetPszProperty("filename")));
+		}
+
 	}
 }
-
-/*
-void CMaterial::Apply()
-{
-	for (size_t i = 0; i<m_Textures.size(); ++i)
-		m_Textures[i]->Activate(i);
-}*/
