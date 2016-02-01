@@ -45,9 +45,6 @@ fn processFaces arx Obj =
 		convertToMesh l_Obj
 	)
 	
-	Obj.transform *= inverse(l_Obj.transform)
-	local InvTransform=inverse l_Obj.transform
-	
 	local Vt1 = undefined
 	local Vt2 = undefined
 	local Vt3 = undefined
@@ -71,6 +68,11 @@ fn processFaces arx Obj =
 	local UV2ID = 0x0000
 	
 	local NumVtxs=getNumVerts l_Obj
+	local nFaces = getNumFaces l_Obj
+	local vertexs = #()
+	local indexs = #()
+	local vertexsDictionary = dotnetobject "System.Collections.Generic.Dictionary`2[System.String, System.UInt32]"
+	
 	local UABVtxsNormals = #()
 	for b=1 to NumVtxs do 
 	( 
@@ -80,18 +82,14 @@ fn processFaces arx Obj =
 			UABVtxsNormals[b][t] = point3 0 0 0  
 		) 
 	)
-	
-	local nFaces = getNumFaces Obj
-	local vertexs = #()
-	local indexs = #()
-	local vertexsDictionary = dotnetobject "System.Collections.Generic.Dictionary`2[System.String, System.UInt32]"
+	UABCalcVertexsNormals l_Obj NumVtxs nFaces &UABVtxsNormals
 	
 	if l_Obj.material != undefined then
 	(	
 		local l_HasMultimaterial = classof l_Obj.material==Multimaterial
 		local l_TotalMaterials = 1
 		if l_HasMultimaterial then
-			l_TotalMaterials=Obj.material.count
+			l_TotalMaterials=l_Obj.material.count
 		for i=1 to l_TotalMaterials do
 		(
 			append vertexs #()
@@ -111,9 +109,9 @@ fn processFaces arx Obj =
 		local SmoothValue=getFaceSmoothGroup l_Obj i
 		local isSmooth
 		
-		Vt1=getVert l_Obj IdxsFace.x
-		Vt2=getVert l_Obj IdxsFace.y
-		Vt3=getVert l_Obj IdxsFace.z		
+		Vt1=getVert l_Obj IdxsFace.x*inverse(l_Obj.transform)
+		Vt2=getVert l_Obj IdxsFace.y*inverse(l_Obj.transform)
+		Vt3=getVert l_Obj IdxsFace.z*inverse(l_Obj.transform)
 		
 		UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal UABVtxsNormals &Nm1
 		UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal UABVtxsNormals &Nm2
