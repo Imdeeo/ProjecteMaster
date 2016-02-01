@@ -2,7 +2,7 @@
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 
-CPoolRenderableObjectTechnique::CPoolRenderableObjectTechnique(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
+/*CPoolRenderableObjectTechnique::CPoolRenderableObjectTechnique(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
 {
 	for (size_t i = 0; i < TreeNode.GetNumChildren(); i++)
 	{
@@ -19,7 +19,9 @@ CPoolRenderableObjectTechnique::CPoolRenderableObjectTechnique(CXMLTreeNode &Tre
 			m_RenderableObjectTechniqueElements.push_back(new CPoolRenderableObjectTechniqueElement(l_name, UABEngine.GetEffectManager()->GetResource(l_technique), UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_name)));
 		}
 	}
-}
+}*/
+CPoolRenderableObjectTechnique::CPoolRenderableObjectTechnique(CXMLTreeNode &TreeNode) :CNamed(TreeNode)
+{}
 
 CPoolRenderableObjectTechnique::~CPoolRenderableObjectTechnique()
 {
