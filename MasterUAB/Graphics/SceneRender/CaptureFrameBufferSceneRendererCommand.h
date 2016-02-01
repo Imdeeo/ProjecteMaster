@@ -1,9 +1,9 @@
 #ifndef CAPTURE_FRAME_BUFFER_SCENE_RENDERER_COMMAND_H
 #define CAPTURE_FRAME_BUFFER_SCENE_RENDERER_COMMAND_H
 
-#include "SceneRendererCommand.h"
+#include "StagedTexturedSceneRendererCommand.h"
 class CCaptureFrameBufferSceneRendererCommand :
-	public CSceneRendererCommand
+	public CStagedTexturedSceneRendererCommand
 {
 public:
 	CCaptureFrameBufferSceneRendererCommand(CXMLTreeNode &TreeNode);

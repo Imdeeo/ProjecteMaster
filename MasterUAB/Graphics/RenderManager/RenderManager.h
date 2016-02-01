@@ -77,6 +77,11 @@ private:
 		return m_ContextManager->GetDeviceContext();
 	}
 
+	IDXGISwapChain*	GetSwapChain()
+	{
+		return m_ContextManager->GetSwapChain();
+	}
+
 };
 
 #endif //RENDER_MANAGER_H
