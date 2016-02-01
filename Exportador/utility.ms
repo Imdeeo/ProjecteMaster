@@ -185,8 +185,8 @@ utility UABUtility "UABUtility" width:168 height:360
 			exportLights dir
 			exportCameras dir
 			exportMaterials dir (ExportTexturesCheck.checked)
-			exportRenderableObject dir
 			exportStaticMesh dir (ExportMeshCheck.checked)
+			exportRenderableObject dir
 			theWatch.stop()
 			theWatch.report()
 		)
