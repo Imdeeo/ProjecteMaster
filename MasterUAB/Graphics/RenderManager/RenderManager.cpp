@@ -16,7 +16,8 @@
 CRenderManager::CRenderManager()
 	: m_UseDebugCamera(false)
 	, m_CurrentRenderlistLength(0),
-	m_DebugRender(nullptr)
+	m_DebugRender(nullptr),
+	m_RenderTargetView(nullptr)
 {
 }
 
@@ -76,7 +77,7 @@ struct BlendedSubmesh
 
 void CRenderManager::Render()
 {
-	m_ContextManager->BeginRender();
+	/*m_ContextManager->BeginRender();
 
 	if (m_UseDebugCamera)
 	{
@@ -166,7 +167,8 @@ void CRenderManager::Render()
 	m_CurrentRenderlistLength = 0;
 	CDebugHelper::GetDebugHelper()->Render();
 
-	m_ContextManager->EndRender();
+	m_ContextManager->EndRender();*/
+	UABEngine.GetSceneRendererCommandManager()->Execute(this);
 }
 
 void CRenderManager::EngableAlphaBlendState()

@@ -16,6 +16,7 @@
 #include "Cinematics\Cinematic.h"
 #include "PhysXManager\PhysXManager.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
+#include "SceneRender\SceneRendererCommandManager.h"
 
 
 #include <string>
@@ -36,6 +37,7 @@ class CUABEngine
 	CCinematic * m_Cinematic;
 	CPhysXManager * m_PhysXManager;
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
+	CSceneRendererCommandManager* m_SceneRendererCommandManager;
 	
 
 	std::string m_LevelLoaded;
@@ -52,6 +54,7 @@ class CUABEngine
 	UAB_GET_PROPERTY(CCinematic *, Cinematic)
 	UAB_GET_PROPERTY(CPhysXManager *, PhysXManager)
 	UAB_GET_PROPERTY(CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
+	UAB_GET_PROPERTY(CSceneRendererCommandManager *, SceneRendererCommandManager)
 
 	static CUABEngine * m_Instance;
 

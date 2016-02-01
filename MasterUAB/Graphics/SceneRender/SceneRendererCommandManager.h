@@ -17,7 +17,7 @@ public:
 	std::string GetNextName();
 	bool Load(const std::string &Filename);
 	bool Reload();
-	void Execute(CRenderManager &RenderManager);
+	void Execute(CRenderManager *RenderManager);
 };
 
 #endif //SCENE_RENDERER_COMMAND_MANAGER_H

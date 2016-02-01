@@ -55,7 +55,7 @@
     <ClCompile Include="SceneRender\DeferredShadingSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\DrawQuadRendererCommand.cpp" />
-    <ClCompile Include="SceneRender\EnbableAlphaBlendSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\EnableAlphaBlendSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\GenerateShadowMapsSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\LightsSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\PresentSceneRendererCommand.cpp" />
@@ -134,7 +134,7 @@
     <ClInclude Include="SceneRender\DeferredShadingSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\DrawQuadRendererCommand.h" />
-    <ClInclude Include="SceneRender\EnbableAlphaBlendSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\EnableAlphaBlendSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\GenerateShadowMapsSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\LightsSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\PresentSceneRendererCommand.h" />

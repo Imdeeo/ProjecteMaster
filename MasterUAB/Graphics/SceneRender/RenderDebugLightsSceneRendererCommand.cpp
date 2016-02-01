@@ -3,7 +3,7 @@
 
 CRenderDebugLightsSceneRendererCommand::CRenderDebugLightsSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode){}
 
-void Execute(CRenderManager &RenderManager)
+void CRenderDebugLightsSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
 	//TODO DEBUG LUCES
 }

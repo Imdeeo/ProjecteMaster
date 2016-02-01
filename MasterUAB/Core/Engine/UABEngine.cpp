@@ -16,6 +16,7 @@ CUABEngine::CUABEngine(void)
 	m_Cinematic= new CCinematic();
 	m_PhysXManager = CPhysXManager::CreatePhysXManager();
 	m_RenderableObjectTechniqueManager = new CRenderableObjectTechniqueManager();
+	m_SceneRendererCommandManager = new CSceneRendererCommandManager();
 }
 
 
@@ -35,6 +36,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
 	CHECKED_DELETE(m_EffectManager);
 	CHECKED_DELETE(m_PhysXManager);
+	CHECKED_DELETE(m_SceneRendererCommandManager);
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -50,14 +52,14 @@ CUABEngine* CUABEngine::GetInstance()
 
 void CUABEngine::Init()
 {
-	LoadLevelXML("Data\\level.xml");
-
+	LoadLevelXML("Data\\level.xml");	
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_object_technique.xml");
 	m_MaterialManager->Load("Data\\level_"+m_LevelLoaded+"\\materials.xml");
 	m_StaticMeshManager->Load("Data\\level_"+m_LevelLoaded+"\\static_meshes.xml");
 	m_LightManager->Load("Data\\level_"+m_LevelLoaded+"\\lights.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
+	m_SceneRendererCommandManager->Load("Data\\level_"+m_LevelLoaded+"\\scene_renderer_commands.xml");
 	m_LayerManager->Load("Data\\level_" + m_LevelLoaded + "\\renderable_objects.xml");
 	m_Cinematic->LoadXML("Data\\level_"+m_LevelLoaded+"\\cinematic.xml");
 	//m_LayerManager->GetLayer()->AddResource("Cinematic",m_Cinematic);
