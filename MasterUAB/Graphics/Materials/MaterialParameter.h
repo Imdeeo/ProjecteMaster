@@ -3,9 +3,10 @@
 
 #include "Utils\Named.h"
 #include "Utils\CEmptyPointerClass.h"
-#include "XML\XMLTreeNode.h"
-#include "Materials\Material.h"
 #include <string>
+
+class CXMLTreeNode;
+class CMaterial;
 
 class CMaterialParameter : public CNamed
 {

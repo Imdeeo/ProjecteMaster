@@ -1,6 +1,5 @@
 #include "MaterialParameter.h"
 
-
 CMaterialParameter::TMaterialType CMaterialParameter::GetTypeFromString(std::string _SType)
 {
 	if(_SType == "Vector2")
