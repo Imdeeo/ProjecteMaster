@@ -22,6 +22,7 @@ private:
 	std::vector<CPoolRenderableObjectTechniqueElement *> m_RenderableObjectTechniqueElements;
 public:
 	CPoolRenderableObjectTechnique(CXMLTreeNode &TreeNode);
+	
 	virtual ~CPoolRenderableObjectTechnique();
 	void Destroy();
 	void AddElement(const std::string &Name, const std::string &TechniqueName, CRenderableObjectTechnique *ROTOnRenderableObjectTechniqueManager);

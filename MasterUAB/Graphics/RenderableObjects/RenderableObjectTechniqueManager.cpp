@@ -1,6 +1,8 @@
 #include "RenderableObjectTechniqueManager.h"
 #include "XML\XMLTreeNode.h"
 #include "PoolRenderableObjectTechnique.h"
+#include "Engine\UABEngine.h"
+#include "PoolRenderableObjectTechnique.h"
 
 CRenderableObjectTechniqueManager::CRenderableObjectTechniqueManager(){}
 
@@ -25,6 +27,7 @@ bool CRenderableObjectTechniqueManager::Load(const std::string &FileName)
 {
 	m_Filename = FileName;
 	CXMLTreeNode l_XML;
+	CPoolRenderableObjectTechnique* auxPoolRenderableObjectTechnique; 
 	if (l_XML.LoadFile(FileName.c_str()))
 	{
 		CXMLTreeNode l_Input = l_XML["renderable_object_techniques"];
@@ -36,7 +39,23 @@ bool CRenderableObjectTechniqueManager::Load(const std::string &FileName)
 
 				if (l_Element.GetName() == "pool_renderable_object_technique")
 				{
-					m_PoolRenderableObjectTechniques.AddResource(l_Element.GetPszProperty("name"), new CPoolRenderableObjectTechnique(l_Element));
+					auxPoolRenderableObjectTechnique = new  CPoolRenderableObjectTechnique(l_Element);
+					for (size_t i = 0; i < l_Element.GetNumChildren(); i++)
+					{
+						CXMLTreeNode l_ElementAux = l_Element(i);
+						if (l_ElementAux.GetName() == "default_technique")
+						{
+							//TODO
+						}
+						if (l_ElementAux.GetName() == "renderable_object_technique")
+						{
+							std::string l_name = l_ElementAux.GetPszProperty("name");
+							std::string l_technique = l_ElementAux.GetPszProperty("technique");
+							AddResource(l_name, new CRenderableObjectTechnique(l_name, nullptr));
+							auxPoolRenderableObjectTechnique->AddElement(l_name, l_technique, UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_name));
+						}
+					}
+					m_PoolRenderableObjectTechniques.AddResource(l_Element.GetPszProperty("name"), auxPoolRenderableObjectTechnique);
 				}
 			}
 		}
