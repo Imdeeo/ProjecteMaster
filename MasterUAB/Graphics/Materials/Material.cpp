@@ -5,7 +5,7 @@
 
 #include "TemplatedMaterialParameter.h"
 
-CMaterial::CMaterial(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
+CMaterial::CMaterial(CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0)
 {
 	std::string l_RenderableObjectTechnique = TreeNode.GetPszProperty("renderable_object_technique");
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_RenderableObjectTechnique);
@@ -19,14 +19,54 @@ CMaterial::CMaterial(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
 		}
 		if (l_Child.GetName() == std::string("parameter"))
 		{
-			std::string type = l_Child.GetPszProperty("type");
-			CMaterialParameter::GetTypeFromString(type);
-			m_Parameters.push_back(new CTemplatedMaterialParameter<>(this,l_Child,));
-		}
-		if (l_Child.GetName() == std::string("texture"))
-		{
-			m_Textures.push_back(CUABEngine::GetInstance()->GetTextureManager()->GetTexture(l_Child.GetPszProperty("filename")));
+			CMaterialParameter::TMaterialType l_type = CMaterialParameter::GetTypeFromString(l_Child.GetPszProperty("type"));
+			if (l_type == CMaterialParameter::FLOAT)
+			{
+				m_Parameters.push_back(new CTemplatedMaterialParameter<float>(this, l_Child, l_type));
+			}
+			if (l_type == CMaterialParameter::VECT2F)
+			{
+				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect2f>(this, l_Child, l_type));
+			}
+			if (l_type == CMaterialParameter::VECT3F)
+			{
+				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect3f>(this, l_Child, l_type));
+			}
+			if (l_type == CMaterialParameter::VECT4F)
+			{
+				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect4f>(this, l_Child, l_type));
+			}
 		}
 
 	}
 }
+
+CMaterial::~CMaterial()
+{
+	Destroy();
+}
+
+void CMaterial::Destroy()
+{
+	for (int i = 0; i < m_Parameters.size(); i++)
+	{
+		CHECKED_DELETE(m_Parameters[i]);
+	}
+	m_Parameters.clear();
+}
+
+void * CMaterial::GetNextParameterAddress(unsigned int NumBytes)
+{
+
+	return m_Parameters[m_CurrentParameterData + 1]->GetValueAddress();
+}
+
+/*void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
+{
+	for (int i = 0; i < m_Textures.size(); i++)
+	{
+		m_Textures[i]->
+	}
+}*/
+
+
