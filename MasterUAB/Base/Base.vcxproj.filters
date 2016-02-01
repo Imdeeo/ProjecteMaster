@@ -51,6 +51,9 @@
     <ClInclude Include="Utils\Active.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\CEmptyPointerClass.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

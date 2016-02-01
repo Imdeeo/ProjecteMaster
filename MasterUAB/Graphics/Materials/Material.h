@@ -1,8 +1,9 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
+#include "Utils.h"
 #include "Utils\Named.h"
-
+#include "RenderableObjects\RenderableObjectTechnique.h"
 #include <vector>
 
 class CTexture;
@@ -21,9 +22,9 @@ public:
 	CMaterial(CXMLTreeNode &TreeNode);
 	virtual ~CMaterial();
 	virtual void Apply(CRenderableObjectTechnique *RenderableObjectTechnique = NULL);
-	//UAB_GET_PROPERTY_POINTER(CRenderableObjectTechnique, RenderableObjectTechnique);
+	UAB_GET_PROPERTY(CRenderableObjectTechnique*, RenderableObjectTechnique);
 	void * GetNextParameterAddress(unsigned int NumBytes);
-	//UAB_GET_PROPERTY_REFERENCE(std::vector<CMaterialParameter *>, Parameters);
+	std::vector<CMaterialParameter *> GetParameters()const{ return m_Parameters;}
 };
 
 #endif //MATERIAL_H

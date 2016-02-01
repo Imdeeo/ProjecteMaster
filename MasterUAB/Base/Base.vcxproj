@@ -28,6 +28,7 @@
     <ClInclude Include="Math\Vector4.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Utils\Active.h" />
+    <ClInclude Include="Utils\CEmptyPointerClass.h" />
     <ClInclude Include="Utils\Named.h" />
     <ClInclude Include="Utils\TemplatedMapManager.h" />
     <ClInclude Include="Utils\TemplatedVectorMapManager.h" />

@@ -1,6 +1,12 @@
 #ifndef MATERIAL_PARAMETER_H
 #define MATERIAL_PARAMETER_H
 
+#include "Utils\Named.h"
+#include "Utils\CEmptyPointerClass.h"
+#include "XML\XMLTreeNode.h"
+#include "Materials\Material.h"
+#include <string>
+
 class CMaterialParameter : public CNamed
 {
 public:
@@ -14,16 +20,16 @@ public:
 protected:
 	TMaterialType m_MaterialType;
 public:
-	CMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode,
-		CMaterialParameter::TMaterialType MaterialType);
-	virtual ~CMaterialParameter();
+	CMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode,	CMaterialParameter::TMaterialType MaterialType):CNamed(TreeNode){}
+	virtual ~CMaterialParameter(){}
 	virtual void Apply() = 0;
 	virtual void * GetValueAddress() const = 0;
-	UAB_GET_STANDARD_PROPERTY(TMaterialType, MaterialType);
+	TMaterialType getMaterialType()const{ return m_MaterialType;}
 	virtual CEmptyPointerClass * GetValueLuaAddress() const {
-		return
-			(CEmptyPointerClass *)GetValueAddress();
+		return (CEmptyPointerClass *)GetValueAddress();
 	}
+
+	static TMaterialType GetTypeFromString(std::string _SType);
 };
 
 #endif //MATERIAL_PARAMETER_H
