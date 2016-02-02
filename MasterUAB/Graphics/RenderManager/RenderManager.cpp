@@ -154,7 +154,7 @@ void CRenderManager::SetAntTweakBar()
 //Funcones Draw
 void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture *_Texture, float x, float y, float _Width, float _Height, const CColor &Color)
 {
-	CEffectManager::m_SceneParameters.m_BaseColor=Color;
+	CEffectManager::m_SceneParameters.m_ColorBase=Color;
 	if(_Texture!=NULL)
 		_Texture->Activate(0);
 	D3D11_VIEWPORT l_Viewport;
