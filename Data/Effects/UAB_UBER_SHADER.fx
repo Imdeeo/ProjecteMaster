@@ -17,8 +17,13 @@ SamplerState LinearSampler : register( s0 );
 #endif
 
 #ifdef HAS_UV2
-Texture2D LightMapTexture : register( l0 );
+#ifdef HAS_UV
+Texture2D LightMapTexture : register( t1 );
 SamplerState LinearSampler2 : register( s1 );
+#else
+Texture2D LightMapTexture : register( t0 );
+SamplerState LinearSampler2 : register( s0 );
+#endif
 #endif
 
 struct TVertexVS
@@ -52,7 +57,11 @@ struct TVertexPS
 	float2 UV : TEXCOORD0;
 #endif
 #ifdef HAS_LIGHTS
-	float3 Pixelpos : TEXCOORD1;
+#if HAS_COLOR
+	float3 Pixelpos : TEXCOORD0;
+#else
+	float3 Pixelpos : COLOR0;
+#endif
 #endif
 #ifdef HAS_UV2
 	float2 UV2 : TEXCOORD1;
@@ -165,7 +174,7 @@ float4 omniLight(TVertexPS IN, uint LightIndex)
 float4 applyLights(TVertexPS IN)
 {
 #ifdef HAS_UV2
-	float4 lightContrib = LightMapTexture.Sample(LinearSampler2, IN.UV)
+	float4 lightContrib = LightMapTexture.Sample(LinearSampler2, IN.UV2);
 #else
 	float4 lightContrib = m_LightAmbient;
 #endif
