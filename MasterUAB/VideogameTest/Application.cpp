@@ -258,11 +258,11 @@ void CApplication::Update(float _ElapsedTime)
 		break;
 	case 1:
 		{
-			CFPSCameraController* l_FPSCameraController = (CFPSCameraController*)UABEngine.GetCameraControllerManager()->GetResource("FPSCamera");
+			CFPSCameraController* l_FPSCameraController = (CFPSCameraController*)UABEngine.GetCameraControllerManager()->GetResource(m_MainCameraName);
 			l_FPSCameraController->AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.05f);
-			l_FPSCameraController->AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * -0.05f);
+			l_FPSCameraController->AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * 0.5f);
 
-			//l_FPSCameraController->Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, _ElapsedTime);
+			l_FPSCameraController->Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, _ElapsedTime);
 		}
 		break;
 	}
