@@ -10,6 +10,7 @@
 #include "PresentSceneRendererCommand.h"
 #include "RenderDebugLightsSceneRendererCommand.h"
 #include "RenderAntTweakBarSceneRendereCommand.h"
+#include "RenderGridSceneRendererCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -67,7 +68,7 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				}
 				else if (l_Element.GetName() == std::string("render_debug_grid"))
 				{
-					//AddResource(l_Element.GetName(), new CRenderDebubGridSceneRendererCommand(l_Element));
+					AddResource(l_Element.GetName(), new CRenderGridSceneRendererCommand(l_Element));
 				}
 				else if (l_Element.GetName() == std::string("render_debug_lights"))
 				{

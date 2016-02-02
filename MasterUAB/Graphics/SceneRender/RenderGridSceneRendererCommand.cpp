@@ -13,5 +13,7 @@ CRenderGridSceneRendererCommand::~CRenderGridSceneRendererCommand()
 
 void CRenderGridSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
-	//TODO RenderGrid
+	RenderManager.GetContextManager()->SetWorldMatrix(m44fIDENTITY);
+	CEffectTechnique * l_ET = RenderManager.GetDebugRender()->GetDebugTechnique();
+	RenderManager.GetDebugRender()->GetBigGrid()->RenderIndexed(&RenderManager,l_ET,nullptr);
 }
