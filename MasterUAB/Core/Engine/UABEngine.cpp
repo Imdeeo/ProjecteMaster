@@ -55,10 +55,10 @@ void CUABEngine::Init()
 	LoadLevelXML("Data\\level.xml");	
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_object_technique.xml");
+	m_MaterialManager->Load("Data\\level_" + m_LevelLoaded + "\\materials.xml");
 	m_StaticMeshManager->Load("Data\\level_" + m_LevelLoaded + "\\static_meshes.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
-	m_LayerManager->Load("Data\\level_" + m_LevelLoaded + "\\renderable_objects.xml");
-	m_MaterialManager->Load("Data\\level_"+m_LevelLoaded+"\\materials.xml");	
+	m_LayerManager->Load("Data\\level_" + m_LevelLoaded + "\\renderable_objects.xml");	
 	m_LightManager->Load("Data\\level_"+m_LevelLoaded+"\\lights.xml");	
 	m_Cinematic->LoadXML("Data\\level_"+m_LevelLoaded+"\\cinematic.xml");
 	//m_LayerManager->GetLayer()->AddResource("Cinematic",m_Cinematic);

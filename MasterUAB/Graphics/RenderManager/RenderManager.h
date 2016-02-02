@@ -37,6 +37,7 @@ public:
 	void Render();
 	void Clear(bool renderTarget, bool depthStencil);
 	void Present();
+	void SetAntTweakBar();
 	void CRenderManager::SetMatrixViewProjection();
 
 	//funciones de Draw

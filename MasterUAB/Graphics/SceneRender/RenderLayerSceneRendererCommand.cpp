@@ -2,7 +2,6 @@
 #include "RenderManager\RenderManager.h"
 #include "Engine\UABEngine.h"
 
-
 CRenderLayerSceneRendererCommand::CRenderLayerSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
 {
 	m_Layer = UABEngine.GetLayerManager()->GetLayer(TreeNode);
