@@ -38,11 +38,12 @@ fn writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere=
 
 fn processFaces arx Obj =
 (	
-	local l_Obj = copy Obj
-	
-	if classof l_Obj != Editable_mesh then
+	if classof Obj != Editable_mesh then
 	(
+		local l_Obj = copy Obj
 		convertToMesh l_Obj
+	) else (
+		local l_Obj = Obj
 	)
 	
 	local Vt1 = undefined
@@ -82,7 +83,8 @@ fn processFaces arx Obj =
 			UABVtxsNormals[b][t] = point3 0 0 0  
 		) 
 	)
-	UABCalcVertexsNormals l_Obj NumVtxs nFaces &UABVtxsNormals
+	local InvTransform=inverse obj.transform
+	UABCalcVertexsNormals l_Obj NumVtxs nFaces InvTransform &UABVtxsNormals
 	
 	if l_Obj.material != undefined then
 	(	
@@ -196,7 +198,7 @@ fn processFaces arx Obj =
 	
 	writeMesh arx l_VtxID vertexs indexs BBMin BBMax BSphere
 	
-	delete l_Obj
+	if classof Obj != Editable_mesh then ( delete l_Obj )
 )
 
 fn writeMeshFromObject arx Obj =
