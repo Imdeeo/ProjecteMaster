@@ -9,11 +9,19 @@ CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(CXMLTre
 	for (int i = 0; i < l_Input.GetNumChildren(); i++)
 	{
 		CXMLTreeNode l_Element = l_Input(i);
-		if (l_Element.GetName() == "texture")
+		if (l_Element.GetName() == std::string("texture"))
 		{
 			unsigned int l_StagedId = l_Element.GetIntProperty("stage_id");
 			std::string l_TextureFile = l_Element.GetPszProperty("file");
 			AddStageTexture(l_StagedId,UABEngine.GetTextureManager()->GetTexture(l_TextureFile));
+		}
+		else if(l_Element.GetName() == std::string("dynamic_texture"))
+		{
+			AddDynamicTexture(l_Element);
+		}
+		else if(l_Element.GetName() == std::string("capture_texture"))
+		{
+
 		}
 	}
 	CreateRenderTargetViewVector();
@@ -38,8 +46,15 @@ void CStagedTexturedSceneRendererCommand::AddStageTexture(unsigned int _StagedId
 	m_StagedTextures.push_back(CStagedTexture(_StagedId, _Texture));
 }
 
+void CStagedTexturedSceneRendererCommand::AddDynamicTexture(CXMLTreeNode & TreeNode)
+{
+	m_DynamicTextures.push_back(new CDynamicTexture(TreeNode));
+}
 
 void CStagedTexturedSceneRendererCommand::CreateRenderTargetViewVector()
 {
-	//TODO
+	for(int i = 0; m_DynamicTextures.size(); ++i)
+	{
+		m_RenderTargetViews.push_back(m_DynamicTextures[i]->GetRenderTargetView());
+	}
 }

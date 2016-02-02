@@ -39,6 +39,7 @@ public:
 	void CreateRenderTargetViewVector();
 	void ActivateTextures();
 	void AddStageTexture(unsigned int _StageId, CTexture* _Texture);
+	void AddDynamicTexture(CXMLTreeNode & TreeNode);
 	virtual void Execute(CRenderManager &_RenderManager) = 0;
 
 

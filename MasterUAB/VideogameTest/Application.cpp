@@ -35,6 +35,10 @@ static void __stdcall ReloadTextures(void* _app)
 {
 	UABEngine.GetTextureManager()->Reload();
 }
+static void __stdcall ReloadSceneCommand(void* _app)
+{
+	UABEngine.GetSceneRendererCommandManager()->Reload();
+}
 
 CApplication::CApplication( CContextManager *_ContextManager)
 	: m_BackgroundColor(.2f, .1f, .4f)
@@ -120,11 +124,21 @@ CApplication::CApplication( CContextManager *_ContextManager)
 		bar2.variables.push_back(var);
 	}
 
-		{
+	{
 		CDebugHelper::SDebugVariable var = {};
 		var.name = "Textures Manager";
 		var.type = CDebugHelper::BUTTON;
 		var.callback = ReloadTextures;
+		var.data = this;
+
+		bar2.variables.push_back(var);
+	}
+
+	{
+		CDebugHelper::SDebugVariable var = {};
+		var.name = "Scene Render Command";
+		var.type = CDebugHelper::BUTTON;
+		var.callback = ReloadSceneCommand;
 		var.data = this;
 
 		bar2.variables.push_back(var);

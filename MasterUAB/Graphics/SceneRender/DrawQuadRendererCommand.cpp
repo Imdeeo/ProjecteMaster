@@ -9,14 +9,12 @@
 CDrawQuadRendererCommand::CDrawQuadRendererCommand(CXMLTreeNode &TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
 {
 	CXMLTreeNode l_Element = TreeNode;
-	const char* c = l_Element.GetPszProperty("renderable_object_technique");
+	const char* c = l_Element.GetPszProperty("material");
 	if (c != NULL)
 	{
-		std::string l_TechniqueName = std::string(c);
-		m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_TechniqueName);
+		m_RenderableObjectTechnique = UABEngine.GetMaterialManager()->GetResource(std::string(c))->GetRenderableObjectTechnique();
 	}
 }
-
 
 CDrawQuadRendererCommand::~CDrawQuadRendererCommand(void)
 {
