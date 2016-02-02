@@ -13,7 +13,6 @@ public:
 	Vect4f m_CameraPosition;
 	Vect4f m_CameraRightVector;
 	Vect4f m_CameraUpVector;
-	Vect4f m_BaseColor;
 	CColor m_ColorBase;
 };
 
