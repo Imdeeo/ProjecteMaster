@@ -4,6 +4,7 @@
 #include "RenderableObjects\TemplatedRenderableVertexs.h"
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
 #include "Effects\Effect.h"
+#include "Engine\UABEngine.h"
 
 CDebugRender::CDebugRender(ID3D11Device* _Device)
 {
@@ -29,32 +30,32 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 
 	//LongAxis
 	{
-		MV_POSITION_COLOR_VERTEX l_LongAxisVtxs[12] =
-		{
-			{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },
-			{ Vect3f(1.0f, 0.0f, 0.0f), CColor(1.0f, 0.0f, 0.0f, 1.0f) },
+	MV_POSITION_COLOR_VERTEX l_LongAxisVtxs[12] =
+	{
+		{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },
+		{ Vect3f(1.0f, 0.0f, 0.0f), CColor(1.0f, 0.0f, 0.0f, 1.0f) },
 
-			{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },
-			{ Vect3f(0.0f, 1.0f, 0.0f), CColor(0.0f, 1.0f, 0.0f, 1.0f) },
+		{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },
+		{ Vect3f(0.0f, 1.0f, 0.0f), CColor(0.0f, 1.0f, 0.0f, 1.0f) },
 
-			{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },
-			{ Vect3f(0.0f, 0.0f, 1.0f), CColor(0.0f, 0.0f, 1.0f, 1.0f) },
+		{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },
+		{ Vect3f(0.0f, 0.0f, 1.0f), CColor(0.0f, 0.0f, 1.0f, 1.0f) },
 
-			{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },
-			{ Vect3f(-1.0f, 0.0f, 0.0f), CColor(0.0f, 1.0f, 1.0f, 1.0f) },
+		{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },
+		{ Vect3f(-1.0f, 0.0f, 0.0f), CColor(0.0f, 1.0f, 1.0f, 1.0f) },
 
-			{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },
-			{ Vect3f(0.0f, -1.0f, 0.0f), CColor(1.0f, 0.0f, 1.0f, 1.0f) },
+		{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },
+		{ Vect3f(0.0f, -1.0f, 0.0f), CColor(1.0f, 0.0f, 1.0f, 1.0f) },
 
-			{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },
-			{ Vect3f(0.0f, 0.0f, -1.0f), CColor(1.0f, 1.0f, 0.0f, 1.0f) }
-		};
+		{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },
+		{ Vect3f(0.0f, 0.0f, -1.0f), CColor(1.0f, 1.0f, 0.0f, 1.0f) }
+	};
 
-		m_LongAxis = new CUABLinesListRenderableVertexs<MV_POSITION_COLOR_VERTEX>( l_LongAxisVtxs, 12, 6);
-		m_LongAxisBSRadi = 1;
-		m_LongAxisBBMin = Vect3f(-1, -1, -1);
-		m_LongAxisBBMax = Vect3f(1, 1, 1);
-	}
+	m_LongAxis = new CUABLinesListRenderableVertexs<MV_POSITION_COLOR_VERTEX>(l_LongAxisVtxs, 12, 6);
+	m_LongAxisBSRadi = 1;
+	m_LongAxisBBMin = Vect3f(-1, -1, -1);
+	m_LongAxisBBMax = Vect3f(1, 1, 1);
+}
 	{
 		//SIMPLE TRIANGLE
 		MV_POSITION_COLOR_VERTEX l_SimpleTriangleVtxs[3] =
@@ -64,7 +65,7 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 			{ Vect3f(+0.5f, -0.5f, 0.5f), CColor(0.0f, 0.0f, 1.0f, 1.0f) },
 		};
 
-		m_SimpleTriangle = new CUABTrianglesListRenderableVertexs<MV_POSITION_COLOR_VERTEX>( l_SimpleTriangleVtxs, 3, 1);
+		m_SimpleTriangle = new CUABTrianglesListRenderableVertexs<MV_POSITION_COLOR_VERTEX>(l_SimpleTriangleVtxs, 3, 1);
 		m_SimpleTriangleBSRadi = 0.86603f;
 		m_SimpleTriangleBBMin = Vect3f(-0.5f, -0.5f, 0.5f);
 		m_SimpleTriangleBBMax = Vect3f(0.5f, 0.5f, 0.5f);
@@ -118,22 +119,76 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 		m_SimpleGridBBMin = Vect3f(-1.f, 0.f, -1.f);
 		m_SimpleGridBBMax = Vect3f(1.f, 0.f, 1.f);
 	}
-
-	// Quad 2D
-
-		MV_POSITION4_COLOR_TEXTURE_VERTEX l_ScreenVertexsQuad[4]=
+	{
+		// Simple Grid
+		MV_POSITION_COLOR_VERTEX l_BigGridVtxs[] =
 		{
-		{Vect4f(-1.0f, 1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
-		Vect2f(0.0f, 0.0f)},
-		{Vect4f(-1.0f, -1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
-		Vect2f(0.0f, 1.0f)},
-		{Vect4f(1.0f, 1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
-		Vect2f(1.0f, 0.0f)},
-		{Vect4f(1.0f, -1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
-		Vect2f(1.0f, 1.0f)}
-		};
-		m_DrawQuadRV=new CUABTrianglesStripRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(l_ScreenVertexsQuad, 4, 2);
+			{ Vect3f(5.0f, 0.0f, 5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//0
+			{ Vect3f(5.0f, 0.0f, 4.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//1
+			{ Vect3f(5.0f, 0.0f, 3.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//2
+			{ Vect3f(5.0f, 0.0f, 2.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//3
+			{ Vect3f(5.0f, 0.0f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//4
+			{ Vect3f(5.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//5
+			{ Vect3f(5.0f, 0.0f, -1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//6
+			{ Vect3f(5.0f, 0.0f, -2.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//7
+			{ Vect3f(5.0f, 0.0f, -3.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//8
+			{ Vect3f(5.0f, 0.0f, -4.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//9
+			{ Vect3f(5.0f, 0.0f, -5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//10
 
+			{ Vect3f(-5.0f, 0.0f, 5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//11
+			{ Vect3f(-5.0f, 0.0f, 4.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//12
+			{ Vect3f(-5.0f, 0.0f, 3.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//13
+			{ Vect3f(-5.0f, 0.0f, 2.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//14
+			{ Vect3f(-5.0f, 0.0f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//15
+			{ Vect3f(-5.0f, 0.0f, 0.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//16
+			{ Vect3f(-5.0f, 0.0f, -1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//17
+			{ Vect3f(-5.0f, 0.0f, -2.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//18
+			{ Vect3f(-5.0f, 0.0f, -3.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//19
+			{ Vect3f(-5.0f, 0.0f, -4.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//20
+			{ Vect3f(-5.0f, 0.0f, -5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//21
+
+			{ Vect3f(4.0f, 0.0f, 5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//22
+			{ Vect3f(3.0f, 0.0f, 5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//23
+			{ Vect3f(2.0f, 0.0f, 5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//24
+			{ Vect3f(1.0f, 0.0f, 5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//25
+			{ Vect3f(0.0f, 0.0f, 5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//26
+			{ Vect3f(-1.0f, 0.0f, 5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//27
+			{ Vect3f(-2.0f, 0.0f, 5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//28
+			{ Vect3f(-3.0f, 0.0f, 5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//29
+			{ Vect3f(-4.0f, 0.0f, 5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//30
+
+			{ Vect3f(4.0f, 0.0f, -5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//31
+			{ Vect3f(3.0f, 0.0f, -5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//32
+			{ Vect3f(2.0f, 0.0f, -5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//33
+			{ Vect3f(1.0f, 0.0f, -5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//34
+			{ Vect3f(0.0f, 0.0f, -5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//35
+			{ Vect3f(-1.0f, 0.0f, -5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//36
+			{ Vect3f(-2.0f, 0.0f, -5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//37
+			{ Vect3f(-3.0f, 0.0f, -5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//38
+			{ Vect3f(-4.0f, 0.0f, -5.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f) },	//39
+		};
+
+		uint16_t l_BigGridIdxs[] = { 0, 11, 1, 12, 2, 13, 3, 14, 4, 15, 5, 16, 6, 17, 7, 18, 8, 19, 9, 20, 10, 21,
+			0 , 10, 22, 31, 23, 32, 24, 33, 25, 34, 26, 35, 27, 36, 28, 37, 29, 38, 30, 39, 11, 21 };
+
+		m_BigGrid = new CUABLineListRenderableIndexed16Vertexs<MV_POSITION_COLOR_VERTEX>(l_BigGridVtxs, 40, l_BigGridIdxs, 44);
+	}
+	{
+		// Quad 2D
+
+		MV_POSITION4_COLOR_TEXTURE_VERTEX l_ScreenVertexsQuad[4] =
+		{
+			{ Vect4f(-1.0f, 1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
+			Vect2f(0.0f, 0.0f) },
+			{ Vect4f(-1.0f, -1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
+			Vect2f(0.0f, 1.0f) },
+			{ Vect4f(1.0f, 1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
+			Vect2f(1.0f, 0.0f) },
+			{ Vect4f(1.0f, -1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
+			Vect2f(1.0f, 1.0f) }
+		};
+		m_DrawQuadRV = new CUABTrianglesStripRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(l_ScreenVertexsQuad, 4, 2);
+	}
 	{
 		// Simple Cube
 		MV_POSITION_COLOR_VERTEX l_SimpleCubeVtxs[] =
@@ -367,6 +422,8 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 
 
 	}
+
+	m_EffectTechnique = UABEngine.GetEffectManager()->GetResource("debug_render_technique");
 
 }
 
