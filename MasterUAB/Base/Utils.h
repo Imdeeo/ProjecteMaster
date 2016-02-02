@@ -9,6 +9,8 @@
 #define MAXBONES 40
 #define MAX_LIGHTS_BY_SHADER 4
 
+#define UAB_PI 3.14159265359f
+
 #define UAB_BUILD_GET_SET(Type, Variable) \
 private: \
 	Type			m_##Variable##; \

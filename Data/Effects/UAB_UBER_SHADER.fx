@@ -157,7 +157,7 @@ float4 directionalLight(TVertexPS IN,uint LightIndex)
 float4 omniLight(TVertexPS IN, uint LightIndex)
 {
 	float l_DiffuseContrib;
-	l_DiffuseContrib = dot(IN.Normal, normalize(IN.Pixelpos - m_LightPosition[LightIndex]));
+	l_DiffuseContrib = dot(IN.Normal, -normalize(IN.Pixelpos - m_LightPosition[LightIndex]));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
 
 	return l_DiffuseContrib*(float4(m_LightColor[LightIndex].xyz, 1.0))*m_LightIntensityArray[LightIndex];
