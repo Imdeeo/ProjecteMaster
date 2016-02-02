@@ -4,6 +4,7 @@
 #include "Engine\UABEngine.h"
 #include "PoolRenderableObjectTechnique.h"
 
+
 CRenderableObjectTechniqueManager::CRenderableObjectTechniqueManager(){}
 
 CRenderableObjectTechniqueManager::~CRenderableObjectTechniqueManager()
@@ -35,21 +36,20 @@ bool CRenderableObjectTechniqueManager::Load(const std::string &FileName)
 		{
 			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-
-				if (l_Element.GetName() == "pool_renderable_object_technique")
+				CXMLTreeNode l_Element = l_Input(i);		
+				if (l_Element.GetName() == std::string("pool_renderable_object_technique"))
 				{
 					auxPoolRenderableObjectTechnique = new  CPoolRenderableObjectTechnique(l_Element);
 					for (size_t i = 0; i < l_Element.GetNumChildren(); i++)
 					{
 						CXMLTreeNode l_ElementAux = l_Element(i);
-						if (l_ElementAux.GetName() == "default_technique")
+						if (l_ElementAux.GetName() == std::string("default_technique"))
 						{
 							std::string l_name = l_ElementAux.GetPszProperty("vertex_type");
 							std::string l_technique = l_ElementAux.GetPszProperty("technique");
 							AddResource(l_name, new CRenderableObjectTechnique(l_name, UABEngine.GetEffectManager()->GetResource(l_technique)));
 						}
-						if (l_ElementAux.GetName() == "renderable_object_technique")
+						if (l_ElementAux.GetName() == std::string("renderable_object_technique"))
 						{
 							std::string l_name = l_ElementAux.GetPszProperty("name");
 							std::string l_technique = l_ElementAux.GetPszProperty("technique");

@@ -37,7 +37,6 @@ CMaterial::CMaterial(CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParame
 				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect4f>(this, l_Child, l_type));
 			}
 		}
-
 	}
 }
 
@@ -57,7 +56,6 @@ void CMaterial::Destroy()
 
 void * CMaterial::GetNextParameterAddress(unsigned int NumBytes)
 {
-
 	return m_Parameters[m_CurrentParameterData + 1]->GetValueAddress();
 }
 

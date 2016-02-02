@@ -20,7 +20,7 @@ public:
 	void Destroy();
 	bool Load(const std::string &Filename);
 	bool Reload();
-	CTemplatedMapManager<CPoolRenderableObjectTechnique> & GetPoolRenderableObjectTechniques();
+	CTemplatedMapManager<CPoolRenderableObjectTechnique> & GetPoolRenderableObjectTechniques(){ return m_PoolRenderableObjectTechniques;}
 };
 
 #endif // H_RENDERABLEOBJECTTECHNIQUEMANAGER_H
