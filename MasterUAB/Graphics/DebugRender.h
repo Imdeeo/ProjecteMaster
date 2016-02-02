@@ -24,34 +24,47 @@ class CDebugRender
 public:
 	CDebugRender(ID3D11Device* _Device);
 
+	CRenderableVertexs * GetLine(Vect3f inici, Vect3f final) const;
 
 	CRenderableVertexs * GetSimpleTriangle() const { return m_SimpleTriangle; }
 	CRenderableVertexs * GetClassicBlendTriangle() const { return m_ClassicBlendTriangle; }
 	CRenderableVertexs * GetPremultBlendTriangle() const { return m_PremultBlendTriangle; }
 	CRenderableVertexs * GetSimpleCube() const { return m_SimpleCube; }
 	CRenderableVertexs * GetAxis() const { return m_Axis; }
+
 	CRenderableVertexs * GetQuadRV() const { return m_DrawQuadRV; }
+
+	CRenderableVertexs * GetSPhere10() const { return m_Sphere_10Seg; }
+	CRenderableVertexs * GetCone() const { return m_Cone; }
 
 	float GetSimpleTriangleBSRadi() const { return m_SimpleTriangleBSRadi; }
 	float GetClassicBlendTriangleBSRadi() const { return m_ClassicBlendTriangleBSRadi; }
 	float GetPremultBlendTriangleBSRadi() const { return m_PremultBlendTriangleBSRadi; }
 	float GetSimpleCubeBSRadi() const { return m_SimpleCubeBSRadi; }
 	float GetAxisBSRadi() const { return m_AxisBSRadi; }
+	float GetSphere10BSRadi() const { return m_Sphere_10SegBSRadi; }
+	float GetConeBSRadi() const { return m_ConeBSRadi; }
 
 	Vect3f GetSimpleTriangleBBMin() const { return m_SimpleTriangleBBMin; }
 	Vect3f GetClassicBlendTriangleBBMin() const { return m_ClassicBlendTriangleBBMin; }
 	Vect3f GetPremultBlendTriangleBBMin() const { return m_PremultBlendTriangleBBMin; }
 	Vect3f GetSimpleCubeBBMin() const { return m_SimpleCubeBBMin; }
 	Vect3f GetAxisBBMin() const { return m_AxisBBMin; }
+	Vect3f GetSPhere10BBMin() const { return m_Sphere_10SegBBMin; }
+	Vect3f GetConeBBMin() const { return m_ConeBBMin; }
 
 	Vect3f GetSimpleTriangleBBMax() const { return m_SimpleTriangleBBMax; }
 	Vect3f GetClassicBlendTriangleBBMax() const { return m_ClassicBlendTriangleBBMax; }
 	Vect3f GetPremultBlendTriangleBBMax() const { return m_PremultBlendTriangleBBMax; }
 	Vect3f GetSimpleCubeBBMax() const { return m_SimpleCubeBBMax; }
 	Vect3f GetAxisBBMax() const { return m_AxisBBMax; }
+	Vect3f GetSphere10BBMax() const { return m_Sphere_10SegBBMax; }
+	Vect3f GetConeBBMax() const { return m_ConeBBMax; }
+
+	Vect3f GetSphere10BSCenter() const { return m_Sphere_10SegBSCenter; }
+	Vect3f GetConeBSCenter() const { return m_ConeBSCenter; }
 
 private:
-
 	CRenderableVertexs				*m_SimpleTriangle;
 	CRenderableVertexs				*m_ClassicBlendTriangle;
 	CRenderableVertexs				*m_PremultBlendTriangle;
@@ -61,6 +74,9 @@ private:
 	CRenderableVertexs				*m_LongAxis;
 	CRenderableVertexs				*m_DrawQuadRV;
 
+	CRenderableVertexs				*m_Sphere_10Seg;
+	CRenderableVertexs				*m_Cone;
+
 	float m_SimpleTriangleBSRadi;
 	float m_ClassicBlendTriangleBSRadi;
 	float m_PremultBlendTriangleBSRadi;
@@ -68,6 +84,8 @@ private:
 	float m_SimpleCubeBSRadi;
 	float m_AxisBSRadi;
 	float m_LongAxisBSRadi;
+	float m_Sphere_10SegBSRadi;
+	float m_ConeBSRadi;
 
 	Vect3f m_SimpleTriangleBBMin;
 	Vect3f m_ClassicBlendTriangleBBMin;
@@ -76,6 +94,8 @@ private:
 	Vect3f m_SimpleCubeBBMin;
 	Vect3f m_AxisBBMin;
 	Vect3f m_LongAxisBBMin;
+	Vect3f m_Sphere_10SegBBMin;
+	Vect3f m_ConeBBMin;
 
 	Vect3f m_SimpleTriangleBBMax;
 	Vect3f m_ClassicBlendTriangleBBMax;
@@ -84,6 +104,11 @@ private:
 	Vect3f m_SimpleCubeBBMax;
 	Vect3f m_AxisBBMax;
 	Vect3f m_LongAxisBBMax;
+	Vect3f m_Sphere_10SegBBMax;
+	Vect3f m_ConeBBMax;
+	
+	Vect3f m_Sphere_10SegBSCenter;
+	Vect3f m_ConeBSCenter;
 };
 
 #endif

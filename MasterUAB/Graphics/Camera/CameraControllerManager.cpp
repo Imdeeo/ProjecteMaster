@@ -72,6 +72,7 @@ bool CCameraControllerManager::Load(const std::string &FileName)
 	{
 		return false;
 	}
+	
 	return true;
 }
 
@@ -79,6 +80,7 @@ bool CCameraControllerManager::Reload()
 {
 	Destroy();
 	bool l_loadResult = Load(m_Filename);
+<<<<<<< HEAD
 	std::string l_CameraControllerStr;
 	if (UABEngine.GetLevelLoaded() == "1")
 	{
@@ -90,6 +92,8 @@ bool CCameraControllerManager::Reload()
 	}
 	UABEngine.GetCameraControllerManager()->ChooseMainCamera(l_CameraControllerStr);
 	UABEngine.GetCameraControllerManager()->ChooseDebugCamera("SphericalCamera");
+=======
+>>>>>>> develop
 	return l_loadResult;
 }
 
