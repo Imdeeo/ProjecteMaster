@@ -11,9 +11,10 @@ private:
 	T m_Value;
 	void *m_EffectAddress;
 public:
-	CTemplatedMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode, CMaterialParameter::TMaterialType MaterialType):CMaterialParameter(Material,TreeNode,MaterialType)
+	CTemplatedMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode, const T &Value, CMaterialParameter::TMaterialType MaterialType):CMaterialParameter(Material,TreeNode,MaterialType)
 	{
-
+		
+		m_Value = Value;
 	}
 	virtual ~CTemplatedMaterialParameter(){}
 	void Apply()

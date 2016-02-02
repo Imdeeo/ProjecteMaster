@@ -22,19 +22,23 @@ CMaterial::CMaterial(CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParame
 			CMaterialParameter::TMaterialType l_type = CMaterialParameter::GetTypeFromString(l_Child.GetPszProperty("type"));
 			if (l_type == CMaterialParameter::FLOAT)
 			{
-				m_Parameters.push_back(new CTemplatedMaterialParameter<float>(this, l_Child, l_type));
+				float Value = l_Child.GetFloatProperty("value");
+				m_Parameters.push_back(new CTemplatedMaterialParameter<float>(this, l_Child, Value, l_type));
 			}
 			if (l_type == CMaterialParameter::VECT2F)
 			{
-				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect2f>(this, l_Child, l_type));
+				Vect2f Value = l_Child.GetVect2fProperty("value",Vect2f(1.0f,1.0f));
+				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect2f>(this, l_Child, Value, l_type));
 			}
 			if (l_type == CMaterialParameter::VECT3F)
 			{
-				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect3f>(this, l_Child, l_type));
+				Vect3f Value = l_Child.GetVect3fProperty("value",Vect3f(1.0f,1.0f,1.0f));
+				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect3f>(this, l_Child, Value, l_type));
 			}
 			if (l_type == CMaterialParameter::VECT4F)
 			{
-				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect4f>(this, l_Child, l_type));
+				Vect4f Value = l_Child.GetVect4fProperty("value",Vect4f(1.0f,1.0f,1.0f,1.0f));
+				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect4f>(this, l_Child, Value, l_type));
 			}
 		}
 	}
