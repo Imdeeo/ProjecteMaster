@@ -11,6 +11,7 @@
 #include "RenderDebugLightsSceneRendererCommand.h"
 #include "RenderAntTweakBarSceneRendereCommand.h"
 #include "RenderGridSceneRendererCommand.h"
+#include "DrawQuadRendererCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -26,6 +27,7 @@ std::string CSceneRendererCommandManager::GetNextName()
 
 bool CSceneRendererCommandManager::Load(const std::string &Filename)
 {
+	Destroy();
 	m_Filename = Filename;
 
 	CXMLTreeNode l_XML;
@@ -77,6 +79,10 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				else if (l_Element.GetName() == std::string("set_ant_tweak_bar"))
 				{
 					AddResource(l_Element.GetName(), new CRenderAntTweakBarSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("render_draw_quad"))
+				{
+					AddResource(l_Element.GetName(), new CDrawQuadRendererCommand(l_Element));
 				}
 			}
 		}
