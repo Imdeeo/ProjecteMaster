@@ -61,9 +61,10 @@ fn createCinematicObjects dir filename Objs =
 				
 					tform = at time l_key l_Obj.transform
 					pos = tform.translation
-					TranslationToRH &pos
 					scl = tform.scale
-
+					TranslationToRH &pos
+					TranslationToRH &tform
+					
 					GetYaw tform &yaw
 					GetPitch tform &pitch
 					GetRoll tform &roll
