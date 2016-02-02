@@ -14,7 +14,7 @@ class CLightManager : public CTemplatedVectorMapManager<CLight>
 private:
 	std::string m_FileName;
 	Vect4f m_AmbientLight;
-	bool m_RenderLights=false;
+	bool m_RenderLights;
 public:
 	CLightManager();
 	virtual ~CLightManager();

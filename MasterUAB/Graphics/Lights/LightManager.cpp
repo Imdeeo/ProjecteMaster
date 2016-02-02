@@ -7,7 +7,7 @@
 
 #include "XML\XMLTreeNode.h"
 
-CLightManager::CLightManager():m_AmbientLight(Vect4f(0.1f,0.1f,0.1f,1.0f)){}
+CLightManager::CLightManager():m_AmbientLight(Vect4f(0.1f,0.1f,0.1f,1.0f)),m_RenderLights(false){}
 
 CLightManager::~CLightManager(){}
 
