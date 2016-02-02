@@ -177,6 +177,13 @@ bool CStaticMesh::Load(const std::string &FileName)
 					else
 						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_COLOR_TEXTURE_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
 				}
+				else if(l_VertexType==MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX::GetVertexType())
+				{
+					if(l_IndexType==16)
+						l_RV=new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+				}
 
 				free(l_VertexData);
 				free(l_IndexData);
