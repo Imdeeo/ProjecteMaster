@@ -2,15 +2,15 @@
 
 CMaterialParameter::TMaterialType CMaterialParameter::GetTypeFromString(std::string _SType)
 {
-	if(_SType == "Vector2")
+	if(_SType == "float2")
 	{
 		return VECT2F;
 	}
-	if(_SType == "Vector3")
+	if(_SType == "float3")
 	{
 		return VECT3F;
 	}
-	if(_SType == "Vector4")
+	if(_SType == "float4")
 	{
 		return VECT4F;
 	}
