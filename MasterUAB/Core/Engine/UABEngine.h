@@ -23,7 +23,6 @@
 
 class CUABEngine
 {
-
 	CStaticMeshManager * m_StaticMeshManager;
 	CLayerManager * m_LayerManager;
 	CMaterialManager * m_MaterialManager;
@@ -38,7 +37,6 @@ class CUABEngine
 	CPhysXManager * m_PhysXManager;
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
 	CSceneRendererCommandManager* m_SceneRendererCommandManager;
-	
 
 	std::string m_LevelLoaded;
 	UAB_GET_PROPERTY(CStaticMeshManager *, StaticMeshManager)
@@ -63,7 +61,6 @@ class CUABEngine
 	CUABEngine(void);
 
 	void LoadLevelXML(std::string filename);
-	
 public:
 
 	static CUABEngine * GetInstance();
