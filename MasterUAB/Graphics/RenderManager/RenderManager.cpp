@@ -196,6 +196,10 @@ void CRenderManager::SetMatrixViewProjection()
 	m_ContextManager->SetCamera(m_CurrentCamera);
 }
 
+void CRenderManager::SetAntTweakBar()
+{
+	CDebugHelper::GetDebugHelper()->Render();
+}
 
 //Funcones Draw
 void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture *_Texture, float x, float y, float _Width, float _Height, const CColor &Color)

@@ -59,6 +59,7 @@
     <ClCompile Include="SceneRender\GenerateShadowMapsSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\LightsSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\PresentSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderAntTweakBarSceneRendereCommand.cpp" />
     <ClCompile Include="SceneRender\RenderDebugLayerSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\RenderDebugLightsSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="SceneRender\GenerateShadowMapsSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\LightsSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\PresentSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderAntTweakBarSceneRendereCommand.h" />
     <ClInclude Include="SceneRender\RenderDebugLayerSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\RenderDebugLightsSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.h" />
