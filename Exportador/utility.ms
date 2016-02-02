@@ -12,7 +12,7 @@ utility UABUtility "UABUtility" width:168 height:360
 	label PathLabel "Label" pos:[8,56] width:152 height:64s
 	checkbox ExportMeshCheck "Export Mesh" pos:[8,120] width:152 height:16
 	checkbox ExportTexturesCheck "Export Textures" pos:[8,136] width:152 height:16
-	groupBox grp1 "Export" pos:[8,176] width:152 height:176
+	groupBox grp1 "Export" pos:[8,176] width:152 height:221
 	button ExportLightsButton "Lights" pos:[16,192] width:64 height:32
 	button ExportMeshButton "Mesh" pos:[88,192] width:64 height:32
 	button ExportCameraButton "Camera" pos:[16,232] width:64 height:32
@@ -20,6 +20,8 @@ utility UABUtility "UABUtility" width:168 height:360
 	button ExportStaticMeshButton "Static Mesh Manager" pos:[16,272] width:136 height:32
 	button ExportSceneButton "Scene" pos:[16,312] width:136 height:32
 	dropDownList LevelList "" pos:[8,152] width:152 height:21
+	label progLabel "Progress bar" pos:[16,352] width:140 height:20
+	progressbar prog color:gray pos:[16,372]
 	
 	fn get_Dir =
 	(
@@ -53,7 +55,7 @@ utility UABUtility "UABUtility" width:168 height:360
 			if (SuperClassOf  Obj) == GeometryClass then
 			(
 				append Objs Obj
-				createMeshFromObjects dir Objs
+				createMeshFromObjects dir Objs &prog
 			)
 			else
 			(
@@ -102,7 +104,7 @@ utility UABUtility "UABUtility" width:168 height:360
 		createStaticMesh dir (LevelList.items[LevelList.selection]) "static_meshes.xml" coresToExport
 		if meshCheck == true then 
 		(
-			createMeshFromObjects dir meshToExport
+			createMeshFromObjects dir meshToExport &prog &progLabel
 		)
 	)
 

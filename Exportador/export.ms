@@ -36,8 +36,9 @@ fn writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere=
 	writeFloat arx BSphere[2]
 )
 
-fn processFaces arx Obj =
+fn processFaces arx Obj &prog=
 (	
+	prog.value = 0
 	local l_Obj = copy Obj
 	
 	if classof l_Obj != Editable_mesh then
@@ -100,9 +101,16 @@ fn processFaces arx Obj =
 		append indexs #()
 	)
 	
+	local ffd=ffdbox()
+	addModifier l_Obj ffd
+	BBMin=getModContextBBoxMin l_Obj ffd
+	BBMax=getModContextBBoxMax l_Obj ffd
+	BSphere = #()
+	lerp BBMin BBMax .5 &BSphere[1]
+	BSphere[2] = 0
+	
 	for i=1 to nFaces do
 	(	
-		
 		local l_IdMaterial = (mod (getFaceMatID l_Obj i) l_TotalMaterials)+1
 		local IdxsFace=getFace l_Obj i
 		local FaceNormal=getFaceNormal l_Obj i
@@ -112,7 +120,10 @@ fn processFaces arx Obj =
 		Vt1=getVert l_Obj IdxsFace.x*inverse(l_Obj.transform)
 		Vt2=getVert l_Obj IdxsFace.y*inverse(l_Obj.transform)
 		Vt3=getVert l_Obj IdxsFace.z*inverse(l_Obj.transform)
-		
+		getBoundingSphere Vt1 &BSphere
+		getBoundingSphere Vt2 &BSphere
+		getBoundingSphere Vt3 &BSphere
+
 		UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal UABVtxsNormals &Nm1
 		UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal UABVtxsNormals &Nm2
 		UABGetVertexNormal l_Obj IdxsFace.z SmoothValue FaceNormal UABVtxsNormals &Nm3
@@ -122,7 +133,7 @@ fn processFaces arx Obj =
 		
 		if l_Obj.material != undefined then
 		(
-			
+			-- Add reflectionMap
 			if l_HasMultimaterial then
 			(
 				local l_DiffMap = l_Obj.material.materialList[l_IdMaterial].diffuseMap
@@ -139,14 +150,8 @@ fn processFaces arx Obj =
 				TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
 				TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
 				TUVMap3= meshop.getMapVert l_Obj 1 IdxsMap.z
-			) else (
-				ColorID = 0x0002
-				defaultVCFaces l_Obj
-				local ColorFace = getVCFace l_Obj i
-				Color1 = getVertColor l_Obj ColorFace.x
-				Color2 = getVertColor l_Obj Colorface.y
-				Color3 = getVertColor l_Obj ColorFace.z
 			)
+			
 			if (classOf l_LightMap != undefined) and (meshop.getMapSupport l_Obj 2) then
 			(
 				UV2ID = 0x0040
@@ -184,31 +189,25 @@ fn processFaces arx Obj =
 		
 		free UABVtxsNormals
 		
+		prog.value = 100.*i/nFaces
 	)
 	
-	local ffd=ffdbox()
-	addModifier l_Obj ffd
-	BBMin=getModContextBBoxMin l_Obj ffd
-	BBMax=getModContextBBoxMax l_Obj ffd
-	BSphere = #()
-	getBoundingSphere l_Obj &BSphere
 	l_VtxID = VtID+ColorID+NmID+UVID+UV2ID
-	
 	writeMesh arx l_VtxID vertexs indexs BBMin BBMax BSphere
 	
 	delete l_Obj
 )
 
-fn writeMeshFromObject arx Obj =
+fn writeMeshFromObject arx Obj &prog =
 (
 	WriteShort arx 0xFE55
 	local nMaterials
 	getMaterials arx Obj
-	processFaces arx Obj
+	processFaces arx Obj prog
 	WriteShort arx 0x55FE
 )
 
-fn createMeshFromObjects dir Objs =
+fn createMeshFromObjects dir Objs &prog &progLabel =
 (
 	dirExist (dir+"\\Meshes")
 	
@@ -216,8 +215,9 @@ fn createMeshFromObjects dir Objs =
 	(
 		if l_Obj.material != undefined then
 		(
+			progLabel.text = l_Obj.name
 			file=fopen (dir+"\\Meshes\\"+l_Obj.name+".mesh") "wb"
-			writeMeshFromObject file (l_Obj)
+			writeMeshFromObject file l_Obj prog
 			FClose file
 		) else (
 			format "The object % has no material!\n" l_Obj.name
