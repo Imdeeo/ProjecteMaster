@@ -15,7 +15,7 @@ public:
 	{
 
 	}
-	virtual ~CTemplatedMaterialParameter();
+	virtual ~CTemplatedMaterialParameter(){}
 	void Apply()
 	{
 		memcpy(m_EffectAddress,&m_Value,sizeof(T));
