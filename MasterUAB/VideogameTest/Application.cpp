@@ -258,18 +258,11 @@ void CApplication::Update(float _ElapsedTime)
 		break;
 	case 1:
 		{
-<<<<<<< HEAD
 			CFPSCameraController* l_FPSCameraController = (CFPSCameraController*)UABEngine.GetCameraControllerManager()->GetResource("FPSCamera");
 			l_FPSCameraController->AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.05f);
 			l_FPSCameraController->AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * -0.05f);
-=======
->>>>>>> develop
 
-			//CFPSCameraController* l_FPSCameraController = (CFPSCameraController*)UABEngine.GetCameraManager()->GetMainCamera();
-			m_FPSCamera->AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.05f);
-			m_FPSCamera->AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * 0.5f);
-
-			m_FPSCamera->Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, _ElapsedTime);
+			//l_FPSCameraController->Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, _ElapsedTime);
 		}
 		break;
 	}
@@ -290,12 +283,7 @@ void CApplication::Render()
 void CApplication::Init()
 {
 	UABEngine.Init();
-<<<<<<< HEAD
-	std::string l_CameraControllerStr;
-	if (UABEngine.GetLevelLoaded() == "3")
-=======
 	if (UABEngine.GetLevelLoaded() == "1" || UABEngine.GetLevelLoaded() == "3")
->>>>>>> develop
 	{
 		m_MainCameraName = "Camera001";
 	}
@@ -303,14 +291,9 @@ void CApplication::Init()
 	{
 		m_MainCameraName = "FPSCamera";
 	}
-<<<<<<< HEAD
-	UABEngine.GetCameraControllerManager()->ChooseMainCamera(l_CameraControllerStr);
-	UABEngine.GetCameraControllerManager()->ChooseDebugCamera("SphericalCamera");
-=======
 	m_DebugCameraName = "SphericalCamera";
-	UABEngine.GetCameraManager()->ChooseMainCamera(m_MainCameraName);
-	UABEngine.GetCameraManager()->ChooseDebugCamera(m_DebugCameraName);
-	m_FPSCamera = (CFPSCameraController*)UABEngine.GetCameraManager()->GetMainCamera();
-	m_SphericalCamera = (CSphericalCameraController*)UABEngine.GetCameraManager()->GetMainCamera();
->>>>>>> develop
+	UABEngine.GetCameraControllerManager()->ChooseMainCamera(m_MainCameraName);
+	UABEngine.GetCameraControllerManager()->ChooseDebugCamera(m_DebugCameraName);
+	m_FPSCamera = (CFPSCameraController*)UABEngine.GetCameraControllerManager()->GetMainCamera();
+	m_SphericalCamera = (CSphericalCameraController*)UABEngine.GetCameraControllerManager()->GetMainCamera();
 }
