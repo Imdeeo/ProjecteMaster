@@ -1,3 +1,8 @@
+fn lerp minVal maxVal term &ret = 
+(
+	ret = (maxVal - minVal) * term + minVal
+)
+
 fn circumcenter p1 p2 p3 &ccenter=
 (
     BC = distance p2 p3
@@ -60,7 +65,13 @@ fn GetRoll trans &roll =
 	roll = ((trans as eulerangles).x*PI/180)
 )
 
-fn getBoundingSphere Obj &BSphere =
+fn getBoundingSphere vertex &BSphere =
+(
+	local dist = distance BSphere[1] vertex
+	if dist > BSphere[2] then BSphere[2] = dist
+)
+
+/*fn getBoundingSphere Obj &BSphere =
 (
 	struct vtxPair (vtxA, vtxB, dist)
 	local vertexs = #()
@@ -134,7 +145,7 @@ fn getBoundingSphere Obj &BSphere =
 	
 	append BSphere center
 	append BSphere radius
-)
+)*/
 
 fn createVertex pos col norm textcoord1 textcoord2 &vertex =
 (
