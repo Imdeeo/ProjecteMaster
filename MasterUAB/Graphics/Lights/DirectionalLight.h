@@ -10,6 +10,7 @@ public:
 	CDirectionalLight(CXMLTreeNode &TreeNode);
 	UAB_BUILD_GET_SET_BY_REFERENCE(Vect3f, Direction);
 	virtual void Render(CRenderManager *RenderManager);
+	const Mat44f & GetTransform();
 };
 
 #endif //DIRECTIONAL_LIGHT_H

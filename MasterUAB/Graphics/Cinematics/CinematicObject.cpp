@@ -66,12 +66,15 @@ void CCinematicObject::Update(float _ElapsedTime)
 
 			float l_yawI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetYaw();
 			float l_yawF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetYaw();
+			l_yawF = calculateBestAngle(l_yawI, l_yawF);
 
 			float l_pitchI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetPitch();
 			float l_pitchF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetPitch();
+			l_pitchF = calculateBestAngle(l_pitchI, l_pitchF);
 
 			float l_rollI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetRoll();
 			float l_rollF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetRoll();
+			l_rollF = calculateBestAngle(l_rollI, l_rollF);
 
 			Vect3f l_scaleI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetScale();
 			Vect3f l_scaleF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetScale();
@@ -91,6 +94,32 @@ void CCinematicObject::Update(float _ElapsedTime)
 
 }
 
+float CCinematicObject::calculateBestAngle(float _Current, float _Next)
+{
+	if (_Current == _Next){
+		return _Next;
+	}
+	float l_best = _Next;
+	if (_Current > _Next){
+		while (_Current > l_best)
+		{
+			l_best = l_best + 2*UAB_PI;
+		}
+		_Next = l_best - 2 * UAB_PI;
+	}
+	else
+	{
+		while (_Current < l_best)
+		{
+			l_best = l_best - 2*UAB_PI;
+		}
+		_Next = l_best + 2 * UAB_PI;
+	}
+
+	return (abs(_Current - l_best) < abs(_Current - _Next)) ? l_best : _Next;
+
+}
+
 void CCinematicObject::OnRestartCycle()
 {
 	m_CurrentTime = 0;
@@ -100,7 +129,15 @@ void CCinematicObject::OnRestartCycle()
 
 void CCinematicObject::GetCurrentKey()
 {
-	for (size_t i = 0; i < m_CinematicObjectKeyFrames.size(); i++){
-		if (m_CurrentTime >= m_CinematicObjectKeyFrames[i]->GetKeyFrameTime()){ m_CurrentKeyFrame = i; }
+	m_CurrentKeyFrame = 0;
+	for (size_t i = 0; i < m_CinematicObjectKeyFrames.size()-1; i++){
+		if (m_CurrentTime >= m_CinematicObjectKeyFrames[i]->GetKeyFrameTime())
+		{
+			m_CurrentKeyFrame = i;
+		}
+		else
+		{
+			return;
+		}
 	}	
 }

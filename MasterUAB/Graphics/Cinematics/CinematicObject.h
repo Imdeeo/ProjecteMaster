@@ -16,6 +16,8 @@ private:
 	std::vector<CCinematicObjectKeyFrame *> m_CinematicObjectKeyFrames;
 	size_t m_CurrentKeyFrame;
 	CRenderableObject *m_RenderableObject;
+
+	float calculateBestAngle(float _Current, float _Next);
 public:
 	CCinematicObject(CXMLTreeNode &TreeNode);
 	virtual ~CCinematicObject();

@@ -25,11 +25,12 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			dropdownList LogicGenerateList "" pos:[120,272] width:136 height:21 items:#("stairs")
 		button GetButton "Get" pos:[24,320] width:112 height:32
 		button SetButton "Set" pos:[144,320] width:112 height:32
-	GroupBox grp2 "Lights" pos:[8,8] width:265 height:88 visible:false
+	GroupBox grp2 "Lights" pos:[8,8] width:265 height:108 visible:false
 		label LightLabel "Nothing selected" pos:[24,32] width:232 height:24 visible:false
 		checkbox LightExportBox "Export" pos:[24,64] width:88 height:16 visible:false
-		button GetLightButton "Get" pos:[24,104] width:112 height:32 visible:false
-		button SetLightButton "Set" pos:[144,104] width:112 height:32 visible:false
+		checkbox LightEnabledBox "Enabled" pos:[24,84] width:88 height:16 visible:false enabled:false
+		button GetLightButton "Get" pos:[24,124] width:112 height:32 visible:false
+		button SetLightButton "Set" pos:[144,124] width:112 height:32 visible:false
 	GroupBox grp3 "Inactive" pos:[8,8] width:265 height:61 visible:false
 		label UnsupportedLabel "Current selection is not supported." pos:[24,32] width:232 height:24 visible:false
 	GroupBox grp4 "Cameras" pos:[8,8] width:265 height:88 visible:false
@@ -69,6 +70,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		grp2.visible = bool
 		LightLabel.visible = bool
 		LightExportBox.visible = bool
+		LightEnabledBox.visible = bool
 		GetLightButton.visible = bool
 		SetLightButton.visible = bool
 	)
@@ -104,6 +106,11 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		PhysicsGenerateList.enabled = bool
 		PhysicsLayerBox.enabled =  bool
 		PhysicsLayerList.enabled =  bool
+	)
+	
+	fn toggleLights bool =
+	(
+		LightEnabledBox.enabled = bool
 	)
 	
 	fn toggleCameras bool =
@@ -158,7 +165,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			toggleUnsupportedGroup false
 			toggleCamerasGroup false
 			LightLabel.text = textLabel
-			UABSetProperties.height = 150
+			UABSetProperties.height = 170
 		) else (
 			loadUnsupportedSelection Objs
 		)
@@ -252,9 +259,9 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 	(
 		if(SuperClassOf Obj == GeometryClass) then
 		(
-			setUserProp Obj "render_export" false
+			setUserProp Obj "render_export" true
 			setUserProp Obj "render_export_type" "instance_mesh"
-			setUserProp Obj "render_visible" false
+			setUserProp Obj "render_visible" true
 			setUserProp Obj "has_render_layer" false
 			setUserProp Obj "render_layer" "solid"
 			setUserProp Obj "anim_model_core" "undefined"
@@ -267,10 +274,11 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			setUserProp OBj "cinematic_object" false
 		) else if(SuperClassOf Obj == light) then
 		(
-			setUserProp Obj "light_export" false
+			setUserProp Obj "light_export" true
+			setUserProp Obj "light_enabled" true
 		) else if(SuperClassOf Obj == camera) then
 		(
-			setUserProp Obj "camera_export" false
+			setUserProp Obj "camera_export" true
 			setUserProp Obj "camera_export_type" "static"
 		)
 	)
@@ -358,6 +366,8 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		) else if(SuperClassOf Objs[1] == light) then
 		(
 			LightExportBox.checked = getUserProp Objs[1] "light_export"
+			toggleLights (LightExportBox.checked)
+			LightEnabledBox.checked = getUserProp Objs[1] "light_enabled"
 		) else if(SuperClassOf Objs[1] == camera) then
 		(
 			CameraExportBox.checked = getUserProp Objs[1] "camera_export"
@@ -491,6 +501,12 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 				) else (
 					setUserProp Objs[i] "light_export" false
 				)
+				if LightEnabledBox.checked then
+				(
+					setUserProp Objs[i] "light_enabled" true
+				) else (
+					setUserProp Objs[i] "light_enabled" false
+				)
 			) else if(SuperClassOf Objs[i] == camera) then
 			(
 				if CameraExportBox.checked then
@@ -528,6 +544,16 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 	on PhysicsGenerateBox changed true do
 	(
 		togglePhysics true
+	)
+	
+	on LightExportBox changed false do
+	(
+		toggleLights false
+	)
+	
+	on LightExportBox changed  true do
+	(
+		toggleLights  true
 	)
 	
 	on CameraExportBox changed false do
@@ -662,10 +688,3 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 	)
 )
 createDialog UABSetProperties
-
-
-
-
-
-
-
