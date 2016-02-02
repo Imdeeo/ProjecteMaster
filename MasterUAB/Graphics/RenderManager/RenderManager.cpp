@@ -77,9 +77,9 @@ struct BlendedSubmesh
 
 void CRenderManager::Render()
 {
-	/*m_ContextManager->BeginRender();
+	m_ContextManager->BeginRender();
 
-	if (m_UseDebugCamera)
+	/*if (m_UseDebugCamera)
 	{
 		m_ContextManager->SetCamera(m_DebugCamera);
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition=m_DebugCamera.GetPosition();
@@ -93,82 +93,21 @@ void CRenderManager::Render()
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector=m_CurrentCamera.GetUp();
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector=Vect4f(1,1,1,1);
 	}
+//	UABEngine.GetRenderableObjectTechniqueManager()->GetPoolRenderableObjectTechniques().GetResource("forward_shading")->Apply();
 
 	UABEngine.GetEffectManager()->SetLightsConstants(MAX_LIGHTS_BY_SHADER);
 
-	//Mat44f view,proj;
-	//view.SetIdentity();
-	//proj.SetIdentity();
-	//m_ContextManager->SetCamera(view,proj);
-	// TODO crear un vector para objetos transparentes
 	std::vector<BlendedSubmesh> l_SubmeshesWithBlend;
 
 	UABEngine.GetLayerManager()->Render(this);
 
-	//for (size_t i = 0; i < m_CurrentRenderlistLength; ++i)
-	//{
-	//	
-	//	Mat44f world;
-	//	world.SetFromPosAndAnglesYXZ(l_Transform.Position, l_Transform.Yaw, l_Transform.Pitch, l_Transform.Roll);
-	//	_Context->SetWorldMatrix(world);
-
-	//	for (int j = 0; j < l_RenderableObject->GetNumSubmeshes(); ++j)
-	//	{
-	//		const CRenderableObject::SSubmesh& l_Submesh = l_RenderableObject->GetSubmesh(j);
-	//		const CMaterial* l_Material = _MaterialManager->GetMaterial(l_Submesh.material);
-	//		// TODO no pintar el objeto, sino añadirlo a la lista l_SubmeshesWithBlend si tiene blend
-	//		if(l_Material->HasBlending())
-	//		{
-	//			struct BlendedSubmesh _BlendedSubmesh;
-	//			_BlendedSubmesh.material = l_Material;
-	//			_BlendedSubmesh.vertices = l_Submesh.vertices;
-	//			_BlendedSubmesh.world = world;
-	//			_BlendedSubmesh.position = l_Transform.Position;
-
-	//			l_SubmeshesWithBlend.push_back(_BlendedSubmesh);
-	//		}
-	//		else
-	//		{
-	//			l_Material->SetShaderParameters(_Context);
-	//			_Context->Draw(l_Submesh.vertices, l_Material->GetRasterizerState(), l_Material->GetDepthStencilState(), l_Material->GetBlendState());
-	//		}
-	//	}
-	//}
-
-	//// TODO: Ordenar objetos según la distáncia a la cámara
-	//// NOTA: El quicksort es más rápido que el buble sort cuando la lista tiene más de ~100 objetos. NO OS MATÉIS SI NO HACE FALTA.
-	//const Vect3f& l_CameraPosition = m_CurrentCamera.GetPosition();
-	//for (int i = 0; i < l_SubmeshesWithBlend.size(); ++i)
-	//{
-	//	for (int j = 0; j < l_SubmeshesWithBlend.size()-i-1; ++j)
-	//	{
-	//		struct BlendedSubmesh _BlendedSubmeshAux;
-	//		float l_DistanceSQ = l_SubmeshesWithBlend[j].position.SqDistance(l_CameraPosition);
-	//		float l_DistanceSQ2 = l_SubmeshesWithBlend[j+1].position.SqDistance(l_CameraPosition);
-	//		if(l_DistanceSQ<l_DistanceSQ2)
-	//		{
-	//			_BlendedSubmeshAux = l_SubmeshesWithBlend[j+1];
-	//			l_SubmeshesWithBlend[j+1] = l_SubmeshesWithBlend[j];
-	//			l_SubmeshesWithBlend[j] = _BlendedSubmeshAux;
-	//		}
-	//	}
-	//}
-
-	//// TODO: Pintar objetos translúcidos
-	//for (int i = 0; i < l_SubmeshesWithBlend.size(); ++i)
-	//{
-	//	BlendedSubmesh l_BlendedSubmesh = l_SubmeshesWithBlend[i];
-	//	l_BlendedSubmesh.material->SetShaderParameters(_Context);
-	//	_Context->SetWorldMatrix(l_BlendedSubmesh.world);
-	//	_Context->Draw(l_BlendedSubmesh.vertices, l_BlendedSubmesh.material->GetRasterizerState(), l_BlendedSubmesh.material->GetDepthStencilState(), l_BlendedSubmesh.material->GetBlendState());
-	//
-	//}
 
 	m_CurrentRenderlistLength = 0;
-	CDebugHelper::GetDebugHelper()->Render();
+	CDebugHelper::GetDebugHelper()->Render();*/
 
-	m_ContextManager->EndRender();*/
+	
 	UABEngine.GetSceneRendererCommandManager()->Execute(this);
+	m_ContextManager->EndRender();
 }
 
 void CRenderManager::EngableAlphaBlendState()
@@ -193,7 +132,20 @@ void CRenderManager::Present()
 
 void CRenderManager::SetMatrixViewProjection()
 {
-	m_ContextManager->SetCamera(m_CurrentCamera);
+	if (m_UseDebugCamera)
+	{
+		m_ContextManager->SetCamera(m_DebugCamera);
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition = m_DebugCamera.GetPosition();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector = m_DebugCamera.GetUp();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = Vect4f(1, 1, 1, 1);
+	}
+	else
+	{
+		m_ContextManager->SetCamera(m_CurrentCamera);
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition = m_CurrentCamera.GetPosition();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector = m_CurrentCamera.GetUp();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = Vect4f(1, 1, 1, 1);
+	}
 }
 
 void CRenderManager::SetAntTweakBar()
