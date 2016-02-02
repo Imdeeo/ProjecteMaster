@@ -1,6 +1,7 @@
 #ifndef RENDER_MANAGER_H
 #define RENDER_MANAGER_H
 
+#include "DebugRender.h"
 #include "Camera\Frustum.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 #include "Utils.h"
@@ -42,6 +43,8 @@ public:
 
 	//funciones de Draw
 	void DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture *_Texture, float x, float y, float _Width, float _Height, const CColor &Color);
+
+	//void Init();
 private:
 
 	CCamera							m_CurrentCamera;
@@ -62,7 +65,8 @@ private:
 	
 	CRenderableObjectsManager		m_RenderableObjectManager;
 
-	UAB_BUILD_GET_SET(CContextManager*,ContextManager);
+	UAB_GET_PROPERTY(CDebugRender*, DebugRender)
+	UAB_BUILD_GET_SET(CContextManager*,ContextManager)
 
 	UAB_GET_PROPERTY(int, NumViews)
 	UAB_GET_PROPERTY(ID3D11RenderTargetView* const*, CurrentRenderTargetViews)

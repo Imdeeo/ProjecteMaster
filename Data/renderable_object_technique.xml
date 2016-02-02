@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<renderable_object_techniques>
+	<pool_renderable_object_technique name="forward_shading">
+		<default_technique vertex_type="UAB_POSITION_COLOR_VERTEX"	technique="debug_render_technique"/>
+		<default_technique	vertex_type="UAB_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX"	technique="animated_diffuse_technique"/>
+		<default_technique vertex_type="UAB_POSITION_NORMAL_TEXTURE_VERTEX"	technique="diffuse_technique"/>
+		<default_technique	vertex_type="UAB_POSITION_ENVIRONMENT_NORMAL_TEXTURE_VERTEX" technique="environment_map_technique"/>
+		<default_technique vertex_type="UAB_POSITION_NORMAL_2TEXTURES_VERTEX" technique="UAB_POSITION_NORMAL_2TEXTURES_VERTEX_technique"/>
+		<default_technique vertex_type="UAB_POSITION4_COLOR_TEXTURE_VERTEX"	technique="gui_technique"/>
+		<default_technique	vertex_type="UAB_POSITION_NORMAL_TANGENT_BINORMAL_TEXTURE_VERTEX" technique="UAB_POSITION_NORMAL_TANGENT_BINORMAL_TEXTURE_VERTEX_technique"/>
+		<default_technique	vertex_type="UAB_POSITION_NORMAL_TANGENT_BINORMAL_2TEXTURES_VERTEX"	technique="UAB_POSITION_NORMAL_TANGENT_BINORMAL_2TEXTURES_VERTEX_technique"/>
+		
+		<renderable_object_technique name="UAB_POSITION_NORMAL_TANGENT_BINORMAL_TEXTURE_VERTEX_ENVIRONMENT_technique" technique="UAB_POSITION_NORMAL_TANGENT_BINORMAL_TEXTURE_VERTEX_ENVIRONMENT_technique"/>
+		<renderable_object_technique name="UAB_POSITION_NORMAL_TANGENT_BINORMAL_2TEXTURES_VERTEX_ENVIRONMENT_technique" technique="UAB_POSITION_NORMAL_TANGENT_BINORMAL_2TEXTURES_VERTEX_ENVIRONMENT_technique"/>
+		<renderable_object_technique name="UAB_POSITION_NORMAL_TANGENT_BINORMAL_2TEXTURES_VERTEX_RNM_technique"	technique="UAB_POSITION_NORMAL_TANGENT_BINORMAL_2TEXTURES_VERTEX_RNM_technique"/>
+		<renderable_object_technique name="UAB_POSITION_NORMAL_TANGENT_BINORMAL_2TEXTURES_VERTEX_RNM_ENVIRONMENT_technique" technique="UAB_POSITION_NORMAL_TANGENT_BINORMAL_2TEXTURES_VERTEX_RNM_ENVIRONMENT_technique"/>
+		<renderable_object_technique name="skybox" technique="skybox_technique"/>
+		<renderable_object_technique name="alpha_test" technique="alpha_test_diffuse_technique"/>
+	</pool_renderable_object_technique>
+</renderable_object_techniques>

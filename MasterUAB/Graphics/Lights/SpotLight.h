@@ -10,6 +10,11 @@ public:
 	CSpotLight(CXMLTreeNode &TreeNode);
 	UAB_BUILD_GET_SET(float, Angle);
 	UAB_BUILD_GET_SET(float, FallOff);
+
+	void Render(CRenderManager *_RenderManager);
+
+
+	const Mat44f & GetTransform();
 };
 
 #endif //SPOT_LIGHT_H
