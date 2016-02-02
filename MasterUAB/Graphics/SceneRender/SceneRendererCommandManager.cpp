@@ -9,6 +9,7 @@
 #include "RenderLayerSceneRendererCommand.h"
 #include "PresentSceneRendererCommand.h"
 #include "RenderDebugLightsSceneRendererCommand.h"
+#include "RenderAntTweakBarSceneRendereCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -71,6 +72,10 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				else if (l_Element.GetName() == std::string("render_debug_lights"))
 				{
 					AddResource(l_Element.GetName(), new CRenderDebugLightsSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("set_ant_tweak_bar"))
+				{
+					AddResource(l_Element.GetName(), new CRenderAntTweakBarSceneRendererCommand(l_Element));
 				}
 			}
 		}

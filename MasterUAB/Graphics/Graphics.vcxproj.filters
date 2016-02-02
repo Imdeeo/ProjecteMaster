@@ -194,6 +194,9 @@
     <ClCompile Include="SceneRender\EnableAlphaBlendSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRender\RenderAntTweakBarSceneRendereCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -465,6 +468,9 @@
       <Filter>Texture</Filter>
     </ClInclude>
     <ClInclude Include="SceneRender\EnableAlphaBlendSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\RenderAntTweakBarSceneRendereCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,5 +12,5 @@ CSetPoolRenderableObjectsTechniqueSceneRendererCommand::~CSetPoolRenderableObjec
 
 void CSetPoolRenderableObjectsTechniqueSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
-	//m_Pool->Apply();
+	m_Pool->Apply();
 }
