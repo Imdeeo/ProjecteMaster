@@ -1,5 +1,8 @@
 #include "globals.fxh"
 
+Texture2D T0Texture: register( t0 );
+SamplerState S0Sampler: register( s0 );
+
 struct VS_INPUT
 {
 	float4 Pos : POSITION;
@@ -14,7 +17,7 @@ struct PS_INPUT
 	float2 UV : TEXCOORD0;
 };
 
-PS_INPUT VS(VS_INPUT IN)
+PS_INPUT mainVS(VS_INPUT IN)
 {
 	PS_INPUT l_Output = (PS_INPUT)0;
 	l_Output.Pos=IN.Pos;
@@ -23,10 +26,12 @@ PS_INPUT VS(VS_INPUT IN)
 	return l_Output;
 }
 
-float4 PS(PS_INPUT IN) : SV_Target
+float4 mainPS(PS_INPUT IN) : SV_Target
 {
 	if (IN.UV.x<0.5f)
-		Clip(-1);
+	{
+		clip(-1);
+	}
 		
 	return T0Texture.Sample(S0Sampler, IN.UV)*IN.Color;
 }
