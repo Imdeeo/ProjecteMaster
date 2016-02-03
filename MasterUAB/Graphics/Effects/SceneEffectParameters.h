@@ -12,8 +12,9 @@ public:
 	Mat44f m_Projection;
 	Vect4f m_CameraPosition;
 	Vect4f m_CameraRightVector;
-	Vect4f m_CameraUpVector;
-	CColor m_ColorBase;
+	Vect4f m_CameraUpVector;	
+	CColor m_BaseColor;
+	//Vect4f m_Time;
 };
 
 #endif //SCENE_EFFECT_H

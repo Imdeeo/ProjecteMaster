@@ -13,6 +13,10 @@
 	<pixel_shader name="render_lights_ps" file="./Data/Effects/UAB_RENDER_LIGHTS_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
 	<effect_technique name="render_lights_technique" vertex_shader="render_lights_vs" pixel_shader="render_lights_ps"/>
 	
+	<vertex_shader name="2d_vs" file="Data/Effects/UAB_2D.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="2d_ps"	file="Data/Effects/UAB_2D.fx" shader_model="ps_4_0"	entry_point="mainPS"/>
+	<effect_technique name="2d_technique" vertex_shader="2d_vs" pixel_shader="2d_ps"/>
+		
 	<vertex_shader name="debug_render_vs" file="./Data/Effects/UAB_UBER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_COLOR_VERTEX" preprocessor="HAS_COLOR"/>
 	<pixel_shader name="debug_render_ps" file="./Data/Effects/UAB_UBER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS"/>
 	<effect_technique name="debug_render_technique" vertex_shader="debug_render_vs"	pixel_shader="debug_render_ps"/>
@@ -37,6 +41,10 @@
 	<pixel_shader name="diffuse_ps"	file="Data/Effects/UAB_POSITION_NORMAL_TEXTURE_VERTEXShader.fx" shader_model="ps_4_0"	entry_point="PS"/>
 	<effect_technique name="diffuse_technique" vertex_shader="diffuse_vs" pixel_shader="diffuse_ps"/>
 
+	
+	<vertex_shader name="noise_and_vignetting_vs" file="Data/Effects/UAB_NOISE_AND_VIGNETTING.fx" shader_model="vs_4_0" entry_point="VS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="noise_and_vignetting_ps"	file="Data/Effects/UAB_NOISE_AND_VIGNETTING.fx" shader_model="ps_4_0" entry_point="PS"/>
+	<effect_technique name="noise_and_vignetting" vertex_shader="noise_and_vignetting_vs" pixel_shader="noise_and_vignetting_ps"/>	
 </effects>
 
 
