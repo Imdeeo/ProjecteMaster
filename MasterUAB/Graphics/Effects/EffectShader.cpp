@@ -222,6 +222,9 @@ bool CEffectVertexShader::Load()
 	else
 	if (m_VertexType == "MV_POSITION_NORMAL_VERTEX")
 		l_Loaded = MV_POSITION_NORMAL_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
+	else 
+	if (m_VertexType == "MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX")
+		l_Loaded = MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else
 		//Info("Vertex type '%s' not recognized on CEffectVertexShader::Load", m_VertexType.c_str());
 		printf("Vertex type '%s' not recognized on CEffectVertexShader::Load", m_VertexType.c_str());
