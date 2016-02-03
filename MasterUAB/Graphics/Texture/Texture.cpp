@@ -34,7 +34,8 @@ bool CTexture::LoadFile()
 
 void CTexture::Unload()
 {
-
+	m_SamplerState = nullptr;
+	m_Texture = nullptr;
 }
 
 bool CTexture::Load(const std::string &Filename)

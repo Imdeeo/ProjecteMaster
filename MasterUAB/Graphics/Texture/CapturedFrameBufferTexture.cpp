@@ -6,13 +6,21 @@
 CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(const CXMLTreeNode &_TreeNode)
 {
 	m_Name = _TreeNode.GetPszProperty("file");
+	if (_TreeNode.GetBoolProperty("texture_width_as_frame_buffer"))
+	{
+		m_Width = UABEngine.GetRenderManager()->GetContextManager()->GetWidth();
+		m_Height = UABEngine.GetRenderManager()->GetContextManager()->GetHeight();
+	}
+	else
+	{
+		m_Width = _TreeNode.GetIntProperty("width");
+		m_Height = _TreeNode.GetIntProperty("height");		
+	}	
 	Load(m_Name);
-	m_Height = _TreeNode.GetIntProperty("height");
-	m_Width = _TreeNode.GetIntProperty("width");
 }
 
 CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(const std::string &_Name, unsigned int _Width, unsigned int _Height):
- m_Height(_Height), m_Width(_Width)
+ m_Width(_Width), m_Height(_Height)
 {
 	m_Name = _Name;
 	Load(m_Name);
@@ -20,7 +28,6 @@ CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(const std::string &_Nam
 
 CCapturedFrameBufferTexture::~CCapturedFrameBufferTexture()
 {
-
 }
 
 void CCapturedFrameBufferTexture::Init(const std::string &_Name, unsigned int _Width, unsigned int _Height)
@@ -67,12 +74,11 @@ void CCapturedFrameBufferTexture::Init(const std::string &_Name, unsigned int _W
 		return;
 	}
 	CreateSamplerState();
-
 }
 
 void CCapturedFrameBufferTexture::Unload()
 {
-	//TODO
+	CTexture::Unload();
 }
 
 bool CCapturedFrameBufferTexture::CreateSamplerState()

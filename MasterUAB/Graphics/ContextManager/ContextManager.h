@@ -104,6 +104,8 @@ public:
 
 	D3D11_VIEWPORT *getViewPort(){ return m_ViewPort; }
 	UAB_GET_PROPERTY(IDXGISwapChain*, SwapChain);
+	UAB_GET_PROPERTY(float, Width);
+	UAB_GET_PROPERTY(float, Height);
 };
 
 #endif
