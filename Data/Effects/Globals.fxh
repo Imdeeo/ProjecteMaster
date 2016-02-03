@@ -10,6 +10,7 @@ cbuffer SceneConstantBuffer : register( b0 )
 	float4 m_CameraPosition;
 	float4 m_CameraRightVector;
 	float4 m_CameraUpVector;
+	float4 m_BaseColor;
 }
 
 cbuffer LightsConstantBuffer : register (b1)

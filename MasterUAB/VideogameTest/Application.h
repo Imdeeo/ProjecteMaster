@@ -24,7 +24,6 @@ public:
 	void Init();
 
 private:
-
 	std::string m_DebugCameraName;
 	std::string m_MainCameraName;
 

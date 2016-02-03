@@ -57,7 +57,7 @@
 #include "Materials\MaterialManager.h"
 
 #include "RenderableObjects\RenderableObject.h"
-#include "RenderableObjects\RenderableObjectManager.h"
+#include "RenderableObjects\RenderableObjectsManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
 #include "RenderableObjects\TemplatedRenderableVertexs.h"

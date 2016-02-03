@@ -8,7 +8,9 @@ date: 17122015
 #include "Globals.fxh"
 
 #ifndef HAS_UV
+#ifndef HAS_COLOR
 #define HAS_COLOR
+#endif
 #endif
 
 #ifdef HAS_UV
@@ -28,7 +30,14 @@ SamplerState LinearSampler2 : register( s0 );
 
 struct TVertexVS
 {
+#ifdef HAS_POSITION4
+	float4 Pos : POSITION;
+#else
 	float3 Pos : POSITION;
+#endif
+#ifdef HAS_COLOR
+	float4 Color:COLOR0;
+#endif
 #ifdef HAS_WEIGHT_INDICES
 	float4 Weight:BLENDWEIGHT;
 	float4 Indices:BLENDINDICES;
@@ -42,14 +51,14 @@ struct TVertexVS
 #ifdef HAS_UV2
 	float2 UV2 : TEXCOORD1;
 #endif
-#ifdef HAS_COLOR
-	float4 Color:SV_Target;
-#endif
 };
 
 struct TVertexPS
 {
 	float4 Pos : SV_POSITION;
+#ifdef HAS_COLOR
+	float4 Color:COLOR0;
+#endif
 #ifdef HAS_NORMAL
 	float3 Normal : NORMAL;
 #endif
@@ -65,9 +74,6 @@ struct TVertexPS
 #endif
 #ifdef HAS_UV2
 	float2 UV2 : TEXCOORD1;
-#endif
-#ifdef HAS_COLOR
-	float4 Color:SV_Target;
 #endif
 };
 
@@ -166,7 +172,7 @@ float4 directionalLight(TVertexPS IN,uint LightIndex)
 float4 omniLight(TVertexPS IN, uint LightIndex)
 {
 	float l_DiffuseContrib;
-	l_DiffuseContrib = dot(IN.Normal, -normalize(IN.Pixelpos - m_LightPosition[LightIndex]));
+	l_DiffuseContrib = dot(IN.Normal, normalize(m_LightPosition[LightIndex]-IN.Pixelpos));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
 
 	return l_DiffuseContrib*(float4(m_LightColor[LightIndex].xyz, 1.0))*m_LightIntensityArray[LightIndex];
@@ -205,7 +211,8 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	float4 Out = float4(0,0,0,0);
 #ifdef HAS_UV
 	Out = DiffuseTexture.Sample(LinearSampler, IN.UV);
-#else
+#endif
+#ifdef HAS_COLOR
 	Out = IN.Color;
 #endif
 

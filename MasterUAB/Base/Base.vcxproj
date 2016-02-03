@@ -27,6 +27,8 @@
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Math\Vector4.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="Utils\Active.h" />
+    <ClInclude Include="Utils\CEmptyPointerClass.h" />
     <ClInclude Include="Utils\Named.h" />
     <ClInclude Include="Utils\TemplatedMapManager.h" />
     <ClInclude Include="Utils\TemplatedVectorMapManager.h" />
@@ -37,6 +39,7 @@
     <ClCompile Include="3DElement\3DElement.cpp" />
     <ClCompile Include="Math\MathConstants.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Utils\Active.cpp" />
     <ClCompile Include="Utils\dummy.cpp" />
     <ClCompile Include="Utils\Named.cpp" />
     <ClCompile Include="XML\Example.cpp">
@@ -79,7 +82,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
