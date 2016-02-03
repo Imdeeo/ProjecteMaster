@@ -78,8 +78,15 @@ fn createCameras dir Objs =
 			)
 			max select none
 		)
-		format "\t <camera name=\"SphericalCamera\" type=\"spherical\"/>" to: file
+		format "\t<camera name=\"SphericalCamera\" type=\"spherical\"/>\n" to: file
 		format "</cameras>\n" to:file
 		close file
+	) else (
+		file=createfile (dir+"cameras.xml")
+		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
+		format "<cameras>\n" to:file
+		format "\t<camera name=\"FPSCamera\" type=\"fps\"/>\n" to: file
+		format "\t<camera name=\"SphericalCamera\" type=\"spherical\"/>\n" to: file
+		format "</cameras>\n" to:file
 	)
 )

@@ -63,7 +63,6 @@ fn createCinematicObjects dir filename Objs =
 					pos = tform.translation
 					scl = tform.scale
 					TranslationToRH &pos
-					TranslationToRH &tform
 					
 					GetYaw tform &yaw
 					GetPitch tform &pitch

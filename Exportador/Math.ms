@@ -1,19 +1,6 @@
 fn lerp minVal maxVal term &ret = 
 (
-	ret = (maxVal - minVal) * term + minVal
-)
-
-fn circumcenter p1 p2 p3 &ccenter=
-(
-    BC = distance p2 p3
-    CA = distance p3 p1
-    AB = distance p1 p2
-
-    baryCoords = [ (BC^2 * (CA^2 + AB^2 - BC^2)), (CA^2 * (AB^2 + BC^2 - CA^2)), (AB^2 * (BC^2 + CA^2 - AB^2)) ]
-    triArea = baryCoords.x + baryCoords.y + baryCoords.z
-    baryCoords /= triArea
-
-    ccenter = (baryCoords.x * p1 + baryCoords.y * p2 + baryCoords.z * p3)
+    ret = (maxVal - minVal) * term + minVal
 )
 
 fn mat3xvect3 mat vect &res =
@@ -70,6 +57,87 @@ fn getBoundingSphere vertex &BSphere =
 	local dist = distance BSphere[1] vertex
 	if dist > BSphere[2] then BSphere[2] = dist
 )
+
+fn createVertex pos col norm textcoord1 textcoord2 &vertex =
+(
+	if(pos!=undefined) then
+	(
+		append vertex pos.x
+		append vertex pos.y
+		append vertex pos.z
+	)
+	if(col!=undefined) then
+	(
+		append vertex col.r
+		append vertex col.g
+		append vertex col.b
+		append vertex 1
+	)
+	if(norm!=undefined) then
+	(
+		append vertex norm.x
+		append vertex norm.y
+		append vertex norm.z
+	)
+	if(textcoord1!=undefined)then
+	(
+		append vertex textcoord1.x
+		append vertex textcoord1.y
+	)
+	if(textcoord2!=undefined)then
+	(
+		append vertex textcoord2.x
+		append vertex textcoord2.y
+	)
+)
+
+fn getIndex vertexVect vertex IdMaterial vertexsDictionary &vtxN =
+(
+	local vtxStr = vertex as string
+	local doContain = vertexsDictionary.ContainsKey vtxStr
+
+    if doContain then
+	(
+		vtxN = vertexsDictionary.Item[vtxStr]
+	) else (
+		vtxN = vertexVect[IdMaterial].count
+		vertexsDictionary.Add vtxStr vtxN
+		append vertexVect[IdMaterial] vertex
+	)
+)
+
+/*fn equalVertex vt1 vt2 =
+(
+	local equals = true
+	if vt1.count==vt2.count then
+	(
+		for i=1 to vt1.count do
+		(
+			if(vt1[i]!=vt2[i]) then
+			(
+				equals = false
+			)
+		)
+	)
+	else
+	(
+		equals = false
+	)
+	return equals
+)*/
+
+/*fn circumcenter p1 p2 p3 &ccenter=
+(
+    BC = distance p2 p3
+    CA = distance p3 p1
+    AB = distance p1 p2
+
+    baryCoords = [ (BC^2 * (CA^2 + AB^2 - BC^2)), (CA^2 * (AB^2 + BC^2 - CA^2)), (AB^2 * (BC^2 + CA^2 - AB^2)) ]
+    triArea = baryCoords.x + baryCoords.y + baryCoords.z
+    baryCoords /= triArea
+
+    ccenter = (baryCoords.x * p1 + baryCoords.y * p2 + baryCoords.z * p3)
+)*/
 
 /*fn getBoundingSphere Obj &BSphere =
 (
@@ -146,71 +214,3 @@ fn getBoundingSphere vertex &BSphere =
 	append BSphere center
 	append BSphere radius
 )*/
-
-fn createVertex pos col norm textcoord1 textcoord2 &vertex =
-(
-	if(pos!=undefined) then
-	(
-		append vertex pos.x
-		append vertex pos.y
-		append vertex pos.z
-	)
-	if(col!=undefined) then
-	(
-		append vertex col.r
-		append vertex col.g
-		append vertex col.b
-		append vertex 1
-	)
-	if(norm!=undefined) then
-	(
-		append vertex norm.x
-		append vertex norm.y
-		append vertex norm.z
-	)
-	if(textcoord1!=undefined)then
-	(
-		append vertex textcoord1.x
-		append vertex textcoord1.y
-	)
-	if(textcoord2!=undefined)then
-	(
-		append vertex textcoord2.x
-		append vertex textcoord2.y
-	)
-)
-
-fn equalVertex vt1 vt2 =
-(
-	local equals = true
-	if vt1.count==vt2.count then
-	(
-		for i=1 to vt1.count do
-		(
-			if(vt1[i]!=vt2[i]) then
-			(
-				equals = false
-			)
-		)
-	)
-	else
-	(
-		equals = false
-	)
-	return equals
-)
-
-fn getIndex vertexVect vertex IdMaterial vertexsDictionary &vtxN =
-(
-	local vtxStr = vertex as string
-	local doContain = vertexsDictionary.ContainsKey vtxStr
-
-    if doContain then
-	(
-		vtxN = vertexsDictionary.Item[vtxStr]
-	) else (
-		vtxN = vertexVect[IdMaterial].count
-		vertexsDictionary.Add vtxStr vtxN
-		append vertexVect[IdMaterial] vertex
-	)
-)
