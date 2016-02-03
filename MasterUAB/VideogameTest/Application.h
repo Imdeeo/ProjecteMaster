@@ -39,6 +39,7 @@ private:
 
 	CColor m_BackgroundColor;
 
+	float m_Timer;
 };
 
 #endif

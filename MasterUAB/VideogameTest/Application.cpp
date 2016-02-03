@@ -45,6 +45,7 @@ CApplication::CApplication( CContextManager *_ContextManager)
 	, m_CurrentCamera_control(0)
 	, m_CurrentCamera_vision(0)
 	,m_RenderCameraCube(false)
+	,m_Timer(0)
 {
 	CDebugHelper::GetDebugHelper()->Log("CApplication::CApplication");
 
@@ -166,6 +167,9 @@ void CApplication::SwitchCamera()
 
 void CApplication::Update(float _ElapsedTime)
 {	
+	m_Timer+=_ElapsedTime;
+	//UABEngine.GetEffectManager()->m_SceneParameters.m_Time = m_Timer;
+
 	if(CInputManager::GetInputManager()->IsActionActive("RELOAD"))
 	{
 		CInputManager::GetInputManager()->reload();
@@ -176,7 +180,7 @@ void CApplication::Update(float _ElapsedTime)
 		UABEngine.GetMaterialManager()->Reload();
 		UABEngine.GetStaticMeshManager()->Reload();
 		UABEngine.GetAnimatedModelsManager()->Reload();
-		UABEngine.GetLayerManager()->Reload();
+		UABEngine.GetLayerManager()->Reload();		
 	}
 	if (CInputManager::GetInputManager()->IsActionActive("SWITCH_RENDER_LIGHTS"))
 	{
