@@ -103,7 +103,9 @@ bool CStaticMesh::Load(const std::string &FileName)
 					l_NumBytes = sizeof(MV_POSITION_TEXTURE_VERTEX)*l_NumVertexs;
 				else if(l_VertexType==MV_POSITION_COLOR_TEXTURE_VERTEX::GetVertexType())
 					l_NumBytes = sizeof(MV_POSITION_COLOR_TEXTURE_VERTEX)*l_NumVertexs;
-
+				else if(l_VertexType==MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX::GetVertexType())
+					l_NumBytes = sizeof(MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX)*l_NumVertexs;
+				
 				// Read Vertex Data
 				void *l_VertexData = NULL;
 				l_VertexData = malloc(l_NumBytes);
@@ -184,7 +186,14 @@ bool CStaticMesh::Load(const std::string &FileName)
 					else
 						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
 				}
-
+				else if(l_VertexType==MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX::GetVertexType())
+				{
+					if(l_IndexType==16)
+						l_RV=new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+				}
+				
 				free(l_VertexData);
 				free(l_IndexData);
 
