@@ -15,8 +15,8 @@ void CSpotLight::Render(CRenderManager *_RenderManager)
 {
 	if (GetEnabled())
 	{
-		CEffectManager::m_SceneParameters.m_ColorBase = GetColor()*GetIntensity();
-		CEffectManager::m_SceneParameters.m_ColorBase.SetAlpha(1.f);
+		CEffectManager::m_SceneParameters.m_BaseColor = GetColor()*GetIntensity();
+		CEffectManager::m_SceneParameters.m_BaseColor.SetAlpha(1.f);
 		_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
 		_RenderManager->GetDebugRender()->GetCone()->RenderIndexed(_RenderManager, UABEngine.GetEffectManager()->GetResource("render_lights_technique"), nullptr);
 		CRenderableVertexs* l_Line = _RenderManager->GetDebugRender()->GetLine(m_Position,m_Position+(GetDirection() * GetEndRangeAttenuation()));
