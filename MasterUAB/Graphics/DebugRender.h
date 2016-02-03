@@ -17,6 +17,8 @@ private:
 #include "RenderableObjects\RenderableVertexs.h"
 #include "Math\Vector3.h"
 
+#include "Effects\EffectTechnique.h"
+
 class CEffect;
 
 class CDebugRender
@@ -31,6 +33,11 @@ public:
 	CRenderableVertexs * GetPremultBlendTriangle() const { return m_PremultBlendTriangle; }
 	CRenderableVertexs * GetSimpleCube() const { return m_SimpleCube; }
 	CRenderableVertexs * GetAxis() const { return m_Axis; }
+	CRenderableVertexs * GetSimleGrid() const { return m_SimpleGrid; }
+	CRenderableVertexs * GetBigGrid() const { return m_BigGrid; }
+
+	CRenderableVertexs * GetQuadRV() const { return m_DrawQuadRV; }
+
 	CRenderableVertexs * GetSPhere10() const { return m_Sphere_10Seg; }
 	CRenderableVertexs * GetCone() const { return m_Cone; }
 
@@ -61,15 +68,21 @@ public:
 	Vect3f GetSphere10BSCenter() const { return m_Sphere_10SegBSCenter; }
 	Vect3f GetConeBSCenter() const { return m_ConeBSCenter; }
 
+	CEffectTechnique *	GetDebugTechnique() const { return m_EffectTechnique; }
+
 private:
+	CEffectTechnique				*m_EffectTechnique;
 
 	CRenderableVertexs				*m_SimpleTriangle;
 	CRenderableVertexs				*m_ClassicBlendTriangle;
 	CRenderableVertexs				*m_PremultBlendTriangle;
 	CRenderableVertexs				*m_SimpleGrid;
+	CRenderableVertexs				*m_BigGrid;
 	CRenderableVertexs				*m_SimpleCube;
 	CRenderableVertexs				*m_Axis;
 	CRenderableVertexs				*m_LongAxis;
+	CRenderableVertexs				*m_DrawQuadRV;
+
 	CRenderableVertexs				*m_Sphere_10Seg;
 	CRenderableVertexs				*m_Cone;
 
@@ -92,7 +105,6 @@ private:
 	Vect3f m_LongAxisBBMin;
 	Vect3f m_Sphere_10SegBBMin;
 	Vect3f m_ConeBBMin;
-	
 
 	Vect3f m_SimpleTriangleBBMax;
 	Vect3f m_ClassicBlendTriangleBBMax;

@@ -1,16 +1,11 @@
 #include "ContextManager.h"
-
 #include "RenderableObjects\VertexTypes.h"
 #include "RenderableObjects\RenderableVertexs.h"
-
 #include "Math\Matrix44.h"
-
 #include "DebugRender.h"
-
 #include "AntTweakBar.h"
 
 #pragma comment(lib,"d3d11.lib")
-
 
 CContextManager::CContextManager()
 	: m_D3DDevice(nullptr)
@@ -21,7 +16,6 @@ CContextManager::CContextManager()
 	, m_DepthStencilView(nullptr)
 	, m_D3DDebug(nullptr)
 {
-
 	for (int i = 0; i < RS_COUNT; ++i)
 	{
 		m_RasterizerSates[i] = nullptr;
@@ -34,9 +28,7 @@ CContextManager::CContextManager()
 	{
 		m_BlendStates[i] = nullptr;
 	}
-
 }
-
 
 CContextManager::~CContextManager()
 {
@@ -78,11 +70,8 @@ void CContextManager::Dispose()
 	CHECKED_RELEASE(m_SwapChain);
 }
 
-
-
 HRESULT CContextManager::CreateContext(HWND hWnd, int Width, int Height)
 {
-
 	D3D_FEATURE_LEVEL featureLevels[] =
 	{
 		D3D_FEATURE_LEVEL_11_0,
@@ -124,8 +113,7 @@ HRESULT CContextManager::CreateContext(HWND hWnd, int Width, int Height)
 	if (FAILED(hr))
 		return hr;
 #endif
-
-
+	
 	// treure el ALT+INTRO automàtic
 	IDXGIFactory* dxgiFactory;
 	hr = m_SwapChain->GetParent(__uuidof(IDXGIFactory), (void **)&dxgiFactory);
@@ -141,7 +129,6 @@ HRESULT CContextManager::CreateContext(HWND hWnd, int Width, int Height)
 
 HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 {
-
 	CHECKED_RELEASE(m_RenderTargetView);
 	CHECKED_RELEASE(m_DepthStencil);
 	CHECKED_RELEASE(m_DepthStencilView);
@@ -156,7 +143,6 @@ HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 	pBackBuffer->Release();
 	if (FAILED(hr))
 		return FALSE;
-
 
 	D3D11_TEXTURE2D_DESC descDepth;
 	ZeroMemory(&descDepth, sizeof(descDepth));
@@ -184,10 +170,16 @@ HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 	if (FAILED(hr))
 		return hr;
 
+	m_ViewPort = new D3D11_VIEWPORT();
+	m_ViewPort->Width = (FLOAT)m_Width;
+	m_ViewPort->Height = (FLOAT)m_Height;
+	m_ViewPort->MinDepth = 0.0f;
+	m_ViewPort->MaxDepth = 1.0f;
+	m_ViewPort->TopLeftX = 0;
+	m_ViewPort->TopLeftY = 0;
+
 	return S_OK;
 }
-
-
 
 class CDebugCEffect : public CEffect
 {
@@ -257,9 +249,7 @@ public:
 			, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 			, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 		const int ps_size = 464;
-
-
-
+		
 		HRESULT l_HR = Device->CreateVertexShader(vs, vs_size, NULL, &m_VertexShader);
 		assert(l_HR == S_OK);
 
@@ -271,11 +261,9 @@ public:
 		l_HR = Device->CreateInputLayout(l_Layout, 2, vs, vs_size, &m_VertexLayout);
 		assert(l_HR == S_OK);
 
-
 		l_HR = Device->CreatePixelShader(ps, ps_size, NULL, &m_PixelShader);
 		assert(l_HR == S_OK);
-
-
+		
 		D3D11_BUFFER_DESC l_BufferDescription = {};
 
 		l_BufferDescription.Usage = D3D11_USAGE_DEFAULT;
@@ -395,7 +383,6 @@ void CContextManager::InitDepthStencilStates()
 		HRESULT l_HR = m_D3DDevice->CreateDepthStencilState(&l_desc, &m_DepthStencilStates[DSS_TEST_WRITE]);
 		assert(l_HR == S_OK);
 	}
-
 }
 
 void CContextManager::InitBlendStates()
@@ -444,6 +431,39 @@ void CContextManager::InitBlendStates()
 		HRESULT l_HR = m_D3DDevice->CreateBlendState(&l_desc, &m_BlendStates[BLEND_PREMULT]);
 		assert(l_HR == S_OK);
 	}
+
+	{
+		D3D11_BLEND_DESC l_AlphablendDesc;
+		ZeroMemory(&l_AlphablendDesc, sizeof(D3D11_BLEND_DESC));
+		l_AlphablendDesc.RenderTarget[0].BlendEnable = true;
+		l_AlphablendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+		l_AlphablendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+		l_AlphablendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+		l_AlphablendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+		l_AlphablendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+		l_AlphablendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		l_AlphablendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+		HRESULT l_HR = m_D3DDevice->CreateBlendState(&l_AlphablendDesc, &m_BlendStates[BLEND_ALPHA]);
+		assert(l_HR == S_OK);
+	}
+
+	{
+		D3D11_BLEND_DESC l_AlphablendDesc;
+		ZeroMemory(&l_AlphablendDesc, sizeof(D3D11_BLEND_DESC));
+		l_AlphablendDesc.RenderTarget[0].BlendEnable = true;
+		l_AlphablendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+		l_AlphablendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+		l_AlphablendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+		l_AlphablendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+		l_AlphablendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+		l_AlphablendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		l_AlphablendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;;
+
+		HRESULT l_HR = m_D3DDevice->CreateBlendState(&l_AlphablendDesc, &m_BlendStates[BLEND_DEFERRED]);
+	}
+	
+return;
 }
 
 void CContextManager::Resize(HWND hWnd, unsigned int Width, unsigned int Height)
@@ -480,23 +500,42 @@ void CContextManager::Draw(const CRenderableVertexs* _VerticesToRender, ERasteri
 
 void CContextManager::BeginRender(CColor backgroundColor)
 {
-	D3D11_VIEWPORT vp;
+	/*D3D11_VIEWPORT vp;
 	vp.Width = (FLOAT)m_Width;
 	vp.Height = (FLOAT)m_Height;
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = 1.0f;
 	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
-	m_DeviceContext->RSSetViewports(1, &vp);
+	vp.TopLeftY = 0;*/
+	m_DeviceContext->RSSetViewports(1, m_ViewPort);
 
-	m_DeviceContext->ClearRenderTargetView(m_RenderTargetView, &backgroundColor.x);
-	m_DeviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
-
-
+	Clear(true, true);
+	
+	/*m_DeviceContext->ClearRenderTargetView(m_RenderTargetView, &backgroundColor.x);
+	m_DeviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);*/
+	
 	m_DeviceContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
 }
 
 void CContextManager::EndRender()
+{
+	Present();
+	//m_SwapChain->Present(0, 0);
+}
+
+void CContextManager::Clear(bool renderTarget, bool depthStencil, CColor backgroundColor)
+{
+	if (renderTarget)
+	{
+		GetDeviceContext()->ClearRenderTargetView(m_RenderTargetView, &backgroundColor.x);
+	}
+	if (depthStencil)
+	{
+		GetDeviceContext()->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	}
+}
+
+void CContextManager::Present()
 {
 	m_SwapChain->Present(0, 0);
 }

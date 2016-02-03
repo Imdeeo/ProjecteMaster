@@ -39,6 +39,8 @@ public:
 		BLEND_SOLID,
 		BLEND_CLASSIC,
 		BLEND_PREMULT,
+		BLEND_ALPHA,
+		BLEND_DEFERRED,
 		
 		// NOTA: Si se añaden más estados aquí, modificar CMaterial::HasBlending
 
@@ -72,6 +74,8 @@ public:
 	void SetCamera(const CCamera& _Camera) { CEffectManager::m_SceneParameters.m_View = _Camera.GetView(); CEffectManager::m_SceneParameters.m_Projection = _Camera.GetProjection(); }
 	//void SetDebugSize(float _Size) { CEffectManager::m_SceneParameters.m_DebugRenderScale = _Size; }
 
+	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.2f, .1f, .4f));
+	void Present();
 private:
 
 	void InitRasterizerStates();
@@ -87,6 +91,7 @@ private:
 	ID3D11DepthStencilView*	m_DepthStencilView;
 
 	int m_Width, m_Height;
+	D3D11_VIEWPORT* m_ViewPort;
 
 	ID3D11RasterizerState*	m_RasterizerSates[RS_COUNT];
 	ID3D11DepthStencilState * m_DepthStencilStates[DSS_COUNT];
@@ -96,6 +101,11 @@ public:
 	ID3D11RasterizerState*	GetRasterizerState(ERasterizedState _RasterizedState){return m_RasterizerSates[_RasterizedState];}
 	ID3D11DepthStencilState * GetDepthStencilState(EDepthStencilStates _DepthStencilState){return m_DepthStencilStates[_DepthStencilState];}
 	ID3D11BlendState* GetBlendState(EBlendStates _BlendState){return m_BlendStates[_BlendState];}
+
+	D3D11_VIEWPORT *getViewPort(){ return m_ViewPort; }
+	UAB_GET_PROPERTY(IDXGISwapChain*, SwapChain);
+	UAB_GET_PROPERTY(float, Width);
+	UAB_GET_PROPERTY(float, Height);
 };
 
 #endif

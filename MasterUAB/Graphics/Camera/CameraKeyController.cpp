@@ -1,6 +1,8 @@
-#include "CameraKeyController.h"
-#include "CameraKey.h"
+
+#include "Camera\CameraKeyController.h"
 #include "Camera\Camera.h"
+#include "Engine\UABEngine.h"
+#include "CameraKey.h"
 #include "Utils.h"
 #include <sstream>
 
@@ -97,6 +99,11 @@ void CCameraKeyController::GetCurrentKey()
 	{
 		m_ReverseDirection = 1;
 		ResetTime();
+		for(size_t i = 0; i < m_Keys.size(); i++){
+			if (m_CurrentTime >= m_Keys[i]->m_Time){ m_CurrentKey = i; }
+		}
+		m_NextKey = m_CurrentKey+1;
+		if(m_NextKey >= m_Keys.size()){ m_NextKey = 0; }
 	}
 	m_NextKey = m_CurrentKey + m_ReverseDirection * 1;
 
@@ -111,6 +118,7 @@ void CCameraKeyController::Update(float ElapsedTime)
 	float l_tF;
 	Vect3f l_pI;
 	Vect3f l_pF;
+
 
 	float l_fI;
 	float l_fF;
@@ -156,7 +164,6 @@ void CCameraKeyController::Update(float ElapsedTime)
 	m_Position = (((l_pF - l_pI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pI;
 	m_FOV = (((l_fF - l_fI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_fI;
 	m_LookAt = (((l_lF - l_lI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_lI;
-	
 	
 }
 

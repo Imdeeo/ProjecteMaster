@@ -4,6 +4,10 @@
 	<vertex_shader name="lights_lm_vs" file="Data/Effects/UAB_UBER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_LIGHTS"/>
 	<pixel_shader name="lights_lm_ps"	file="Data/Effects/UAB_UBER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_LIGHTS"/>
 	<effect_technique name="lights_lm_technique" vertex_shader="lights_lm_vs" pixel_shader="lights_lm_ps"/>
+		
+	<vertex_shader name="debug_render_vs" file="./Data/Effects/UAB_UBER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_COLOR_VERTEX" preprocessor="HAS_COLOR"/>
+	<pixel_shader name="debug_render_ps" file="./Data/Effects/UAB_UBER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS"/>
+	<effect_technique name="debug_render_technique" vertex_shader="debug_render_vs"	pixel_shader="debug_render_ps"/>
 	
 	<vertex_shader name="color_shader_vs" file="./Data/Effects/UAB_UBER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_COLOR_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_COLOR;HAS_NORMAL;HAS_UV"/>
 	<pixel_shader name="color_shader_ps" file="./Data/Effects/UAB_UBER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_COLOR;HAS_NORMAL;HAS_UV"/>
@@ -28,12 +32,10 @@
 	<vertex_shader name="diffuse_vs" file="Data/Effects/UAB_POSITION_NORMAL_TEXTURE_VERTEXShader.fx" shader_model="vs_4_0" entry_point="VS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV"/>
 	<pixel_shader name="diffuse_ps"	file="Data/Effects/UAB_POSITION_NORMAL_TEXTURE_VERTEXShader.fx" shader_model="ps_4_0"	entry_point="PS"/>
 	<effect_technique name="diffuse_technique" vertex_shader="diffuse_vs" pixel_shader="diffuse_ps"/>
-	
-	<vertex_shader name="debug_render_vs" file="./Data/Effects/DebugRender.fx" shader_model="vs_4_0" entry_point="VS" vertex_type="MV_POSITION_COLOR_VERTEX" preprocessor=""/>
-	<pixel_shader name="debug_render_ps" file="./Data/Effects/DebugRender.fx" shader_model="ps_4_0" entry_point="PS"/>
-	<effect_technique name="debug_render_technique" vertex_shader="debug_render_vs"	pixel_shader="debug_render_ps"/>
 
-	
+	<vertex_shader name="2d_vs" file="Data/Effects/UAB_2D.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="2d_ps" file="Data/Effects/UAB_2D.fx" shader_model="ps_4_0" entry_point="mainPS"/>
+	<effect_technique name="2d_technique" vertex_shader="2d_vs" pixel_shader="2d_ps"/>
 </effects>
 
 

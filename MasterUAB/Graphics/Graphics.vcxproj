@@ -35,18 +35,50 @@
     <ClCompile Include="Effects\EffectManager.cpp" />
     <ClCompile Include="Effects\EffectShader.cpp" />
     <ClCompile Include="Effects\EffectTechnique.cpp" />
+    <ClCompile Include="Layers\LayerManager.cpp" />
     <ClCompile Include="Lights\DirectionalLight.cpp" />
     <ClCompile Include="Lights\Light.cpp" />
     <ClCompile Include="Lights\LightManager.cpp" />
     <ClCompile Include="Lights\OmniLight.cpp" />
     <ClCompile Include="Lights\SpotLight.cpp" />
+    <ClCompile Include="Materials\TemplatedMaterialParameter.cpp" />
     <ClCompile Include="Materials\Material.cpp" />
     <ClCompile Include="Materials\MaterialManager.cpp" />
-    <ClCompile Include="RenderableObjects\RenderableObjectManager.cpp" />
+    <ClCompile Include="Materials\MaterialParameter.cpp" />
+    <ClCompile Include="RenderableObjects\PoolRenderableObjectTechnique.cpp" />
+    <ClCompile Include="RenderableObjects\RenderableObjectsManager.cpp" />
+    <ClCompile Include="RenderableObjects\RenderableObjectTechnique.cpp" />
+    <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp" />
     <ClCompile Include="RenderManager\RenderManager.cpp" />
+    <ClCompile Include="SceneRender\CaptureFrameBufferSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\ClearSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\DeferredShadingSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\DrawQuadRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\EnableAlphaBlendSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\GenerateShadowMapsSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\LightsSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\PresentSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderAntTweakBarSceneRendereCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderDebugLayerSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderDebugLightsSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderGridSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderGUISceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderLayerSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp" />
+    <ClCompile Include="SceneRender\SetDepthStencilStateSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SetMatricesSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SetRenderTargetSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\StagedTexturedSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\UnsetRenderTargetSceneRendererCommand.cpp" />
     <ClCompile Include="StaticMesh\InstanceMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMeshManager.cpp" />
+    <ClCompile Include="Texture\CapturedFrameBufferTexture.cpp" />
+    <ClCompile Include="Texture\DynamicTexture.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Texture\TextureManager.cpp" />
   </ItemGroup>
@@ -77,24 +109,56 @@
     <ClInclude Include="Effects\EffectTechnique.h" />
     <ClInclude Include="Effects\LightEffectParameters.h" />
     <ClInclude Include="Effects\SceneEffectParameters.h" />
+    <ClInclude Include="Layers\LayerManager.h" />
     <ClInclude Include="Lights\DirectionalLight.h" />
     <ClInclude Include="Lights\Light.h" />
     <ClInclude Include="Lights\LightManager.h" />
     <ClInclude Include="Lights\OmniLight.h" />
     <ClInclude Include="Lights\SpotLight.h" />
+    <ClInclude Include="Materials\TemplatedMaterialParameter.h" />
     <ClInclude Include="Materials\Material.h" />
     <ClInclude Include="Materials\MaterialManager.h" />
+    <ClInclude Include="Materials\MaterialParameter.h" />
+    <ClInclude Include="RenderableObjects\PoolRenderableObjectTechnique.h" />
     <ClInclude Include="RenderableObjects\RenderableObject.h" />
-    <ClInclude Include="RenderableObjects\RenderableObjectManager.h" />
+    <ClInclude Include="RenderableObjects\RenderableObjectsManager.h" />
+    <ClInclude Include="RenderableObjects\RenderableObjectTechnique.h" />
+    <ClInclude Include="RenderableObjects\RenderableObjectTechniqueManager.h" />
     <ClInclude Include="RenderableObjects\RenderableVertexs.h" />
     <ClInclude Include="RenderableObjects\TemplatedRenderableIndexedVertexs.h" />
     <ClInclude Include="RenderableObjects\TemplatedRenderableVertexs.h" />
     <ClInclude Include="RenderableObjects\VertexTypes.h" />
     <ClInclude Include="RenderManager\RenderManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneRender\CaptureFrameBufferSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\ClearSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\DeferredShadingSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\DrawQuadRendererCommand.h" />
+    <ClInclude Include="SceneRender\EnableAlphaBlendSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\GenerateShadowMapsSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\LightsSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\PresentSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderAntTweakBarSceneRendereCommand.h" />
+    <ClInclude Include="SceneRender\RenderDebugLayerSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderDebugLightsSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderGridSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderGUISceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderLayerSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SceneRendererCommandManager.h" />
+    <ClInclude Include="SceneRender\SetDepthStencilStateSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SetMatricesSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SetRenderTargetSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\StagedTexturedSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\UnsetRenderTargetSceneRendererCommand.h" />
     <ClInclude Include="StaticMesh\InstanceMesh.h" />
     <ClInclude Include="StaticMesh\StaticMesh.h" />
     <ClInclude Include="StaticMesh\StaticMeshManager.h" />
+    <ClInclude Include="Texture\CapturedFrameBufferTexture.h" />
+    <ClInclude Include="Texture\DynamicTexture.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Texture\TextureManager.h" />
   </ItemGroup>
@@ -166,7 +230,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include\;$(SolutionDir)3rdParty\AntTweakBar\include\;$(SolutionDir)Base\;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include\;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include\;$(SolutionDir)Core\;$(SolutionDir)Graphics\;$(SolutionDir)3rdParty\cal3d-0.11rc2\src\;$(SolutionDir)3rdParty\Lua\src\;$(SolutionDir)3rdParty\luabind\;$(SolutionDir)3rdParty\boost_1_34_0\;$(SolutionDir)PhysX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include\;$(SolutionDir)3rdParty\AntTweakBar\include\;$(SolutionDir)Base\;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include\;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include\;$(SolutionDir)Core\;$(SolutionDir)Graphics\;$(SolutionDir)3rdParty\cal3d-0.11rc2\src\;$(SolutionDir)3rdParty\Lua\src\;$(SolutionDir)3rdParty\luabind\;$(SolutionDir)3rdParty\boost_1_34_0\;$(SolutionDir)3rdParty\PhysXvs10\Include;$(SolutionDir)PhysX\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

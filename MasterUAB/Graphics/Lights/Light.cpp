@@ -48,7 +48,7 @@ CLight::TLightType CLight::GetLightTypeByName(const std::string &StrLightType)
 const Mat44f & CLight::GetTransform()
 {
 	m_ScaleMatrix.SetIdentity();
-	m_ScaleMatrix.Scale(m_Intensity, m_Intensity, m_Intensity);
+	m_ScaleMatrix.Scale(m_Intensity*0.25f, m_Intensity*0.25f, m_Intensity*0.25f);
 
 	m_RotationMatrix.SetIdentity();
 	m_RotationMatrix.SetPitchRollYaw(Vect3f(0, 0, 0));

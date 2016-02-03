@@ -106,9 +106,9 @@ void CAnimatedInstanceModel::Render(CRenderManager *RenderManager)
 			l_Transformations[l_BoneId].SetPos(Vect3f(translationBoneSpace.x,translationBoneSpace.y,translationBoneSpace.z));
 		}
 		memcpy(&CEffectManager::m_AnimatedModelEffectParameters.m_Bones, l_Transformations,MAXBONES*sizeof(float)*4*4);
-		m_RenderableVertexs->RenderIndexed(RenderManager,m_Materials[l_HardwareMeshId]->GetEffectTechnique(),
-			&CEffectManager::m_SceneParameters,m_CalHardwareModel->getFaceCount()*3, m_CalHardwareModel->getStartIndex(),
-			m_CalHardwareModel->getBaseVertexIndex());
+		//m_RenderableVertexs->RenderIndexed(RenderManager,m_Materials[l_HardwareMeshId]->GetEffectTechnique(),
+		//	&CEffectManager::m_SceneParameters,m_CalHardwareModel->getFaceCount()*3, m_CalHardwareModel->getStartIndex(),
+		//	m_CalHardwareModel->getBaseVertexIndex());
 	}
 }
 void CAnimatedInstanceModel::Update(float ElapsedTime)
