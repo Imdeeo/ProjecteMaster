@@ -2,6 +2,7 @@
 #include "Engine\UABEngine.h"
 
 #include "Texture\DynamicTexture.h"
+#include "Texture\CapturedFrameBufferTexture.h"
 
 CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(CXMLTreeNode & TreeNode):CSceneRendererCommand(TreeNode)
 {
@@ -22,17 +23,15 @@ CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(CXMLTre
 		}
 		else if(l_Element.GetName() == std::string("capture_texture"))
 		{
-
+			AddCaptureFrameBufferTexture(l_Element);
 		}
 	}
 	CreateRenderTargetViewVector();
 }
 
-
 CStagedTexturedSceneRendererCommand::~CStagedTexturedSceneRendererCommand(void)
 {
 }
-
 
 void CStagedTexturedSceneRendererCommand::ActivateTextures()
 {
@@ -50,6 +49,11 @@ void CStagedTexturedSceneRendererCommand::AddStageTexture(unsigned int _StagedId
 void CStagedTexturedSceneRendererCommand::AddDynamicTexture(CXMLTreeNode & TreeNode)
 {
 	m_DynamicTextures.push_back(new CDynamicTexture(TreeNode));
+}
+
+void CStagedTexturedSceneRendererCommand::AddCaptureFrameBufferTexture(CXMLTreeNode & TreeNode)
+{
+	Capt
 }
 
 void CStagedTexturedSceneRendererCommand::CreateRenderTargetViewVector()

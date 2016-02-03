@@ -6,6 +6,7 @@
 #include <vector>
 
 class CDynamicTexture;
+class CCaptureFrameBufferTexture;
 
 class CStagedTexturedSceneRendererCommand :
 	public CSceneRendererCommand
@@ -30,6 +31,7 @@ protected:
 
 	std::vector<CStagedTexture>				m_StagedTextures;
 	std::vector<CDynamicTexture*>			m_DynamicTextures;
+	CCaptureFrameBufferTexture*				m_CaptureFrameBufferTexture;
 	std::vector<ID3D11RenderTargetView*>	m_RenderTargetViews;
 
 public:
@@ -40,9 +42,8 @@ public:
 	void ActivateTextures();
 	void AddStageTexture(unsigned int _StageId, CTexture* _Texture);
 	void AddDynamicTexture(CXMLTreeNode & TreeNode);
+	void AddCaptureFrameBufferTexture(CXMLTreeNode & TreeNode);
 	virtual void Execute(CRenderManager &_RenderManager) = 0;
-
-
 };
 
 #endif //STAGED_TEXTURED_SCENE_RENDERER_COMMAND_H

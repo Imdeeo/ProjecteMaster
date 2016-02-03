@@ -28,7 +28,7 @@ PS_INPUT mainVS(VS_INPUT IN)
 
 float4 mainPS(PS_INPUT IN) : SV_Target
 {
-	if (IN.UV.x<0.5f)
+	if (IN.UV.y<0.5f)
 	{
 		clip(-1);
 	}
