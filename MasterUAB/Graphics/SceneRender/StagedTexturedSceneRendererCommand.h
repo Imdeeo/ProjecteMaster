@@ -6,7 +6,7 @@
 #include <vector>
 
 class CDynamicTexture;
-class CCaptureFrameBufferTexture;
+class CCapturedFrameBufferTexture;
 
 class CStagedTexturedSceneRendererCommand :
 	public CSceneRendererCommand
@@ -31,7 +31,7 @@ protected:
 
 	std::vector<CStagedTexture>				m_StagedTextures;
 	std::vector<CDynamicTexture*>			m_DynamicTextures;
-	CCaptureFrameBufferTexture*				m_CaptureFrameBufferTexture;
+	CCapturedFrameBufferTexture*			m_CapturedFrameBufferTexture;
 	std::vector<ID3D11RenderTargetView*>	m_RenderTargetViews;
 
 public:

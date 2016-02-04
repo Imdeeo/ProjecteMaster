@@ -53,6 +53,7 @@ void CStagedTexturedSceneRendererCommand::AddDynamicTexture(CXMLTreeNode & TreeN
 
 void CStagedTexturedSceneRendererCommand::AddCaptureFrameBufferTexture(CXMLTreeNode & TreeNode)
 {
+	m_CapturedFrameBufferTexture = new CCapturedFrameBufferTexture(TreeNode);
 }
 
 void CStagedTexturedSceneRendererCommand::CreateRenderTargetViewVector()
