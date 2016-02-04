@@ -14,7 +14,7 @@ public:
 	Vect4f m_CameraRightVector;
 	Vect4f m_CameraUpVector;	
 	CColor m_BaseColor;
-	//Vect4f m_Time;
+	Vect4f m_Time;
 };
 
 #endif //SCENE_EFFECT_H
