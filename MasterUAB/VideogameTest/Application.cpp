@@ -168,7 +168,7 @@ void CApplication::SwitchCamera()
 void CApplication::Update(float _ElapsedTime)
 {	
 	m_Timer+=_ElapsedTime;
-	//UABEngine.GetEffectManager()->m_SceneParameters.m_Time = m_Timer;
+	UABEngine.GetEffectManager()->m_SceneParameters.m_Time = m_Timer;
 
 	if(CInputManager::GetInputManager()->IsActionActive("RELOAD"))
 	{

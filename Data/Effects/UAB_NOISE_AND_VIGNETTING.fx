@@ -41,5 +41,11 @@ float4 NoiseAndVignettingPS(PS_INPUT IN) : SV_Target
 	float2 l_DistortUV=float2(l_DistortX, l_DistortY);
 	float4 l_Noise=T0Texture.Sample(S0Sampler, IN.UV+l_DistortUV)*m_NoisePct;
 	float4 l_Vignetting=T1Texture.Sample(S1Sampler, IN.UV)*m_VignettingPct;
-	return l_Noise+l_Vignetting;
+	
+	if (IN.UV.y<0.5f)
+	{
+		clip(-1);
+	}
+	
+	return l_Vignetting;
 }
