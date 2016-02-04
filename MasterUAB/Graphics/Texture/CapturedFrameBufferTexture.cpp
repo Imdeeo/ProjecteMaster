@@ -16,14 +16,12 @@ CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(const CXMLTreeNode &_Tr
 		m_Width = _TreeNode.GetIntProperty("width");
 		m_Height = _TreeNode.GetIntProperty("height");		
 	}	
-	Load(m_Name);
+	Init(m_Name,m_Width,m_Height);
 }
 
-CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(const std::string &_Name, unsigned int _Width, unsigned int _Height):
- m_Width(_Width), m_Height(_Height)
+CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(const std::string &_Name, unsigned int _Width, unsigned int _Height)
 {
-	m_Name = _Name;
-	Load(m_Name);
+	Init(_Name,_Width,_Height);
 }
 
 CCapturedFrameBufferTexture::~CCapturedFrameBufferTexture()
@@ -99,7 +97,7 @@ bool CCapturedFrameBufferTexture::CreateSamplerState()
 
 bool CCapturedFrameBufferTexture::Reload()
 {
-	return Load(m_Name);
+	return false;
 }
 
 bool CCapturedFrameBufferTexture::Capture(unsigned int StagedId)
