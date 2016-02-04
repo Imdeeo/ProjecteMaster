@@ -1,7 +1,7 @@
 #include "Texture.h"
 #include "ContextManager\ContextManager.h"
 #include "Engine\UABEngine.h"
-
+#include "Utils.h"
 #include <D3DX11tex.h>
 
 CTexture::CTexture(): CNamed(""),
@@ -34,8 +34,8 @@ bool CTexture::LoadFile()
 
 void CTexture::Unload()
 {
-	m_SamplerState = nullptr;
-	m_Texture = nullptr;
+	CHECKED_RELEASE(m_SamplerState);
+	CHECKED_RELEASE(m_Texture);
 }
 
 bool CTexture::Load(const std::string &Filename)
