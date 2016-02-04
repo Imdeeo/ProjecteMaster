@@ -25,6 +25,7 @@ public:
 	static CAnimatedModelEffectParameters m_AnimatedModelEffectParameters;
 	static CLightEffectParameters m_LightParameters;
 	//static CEffectParameters m_Parameters;
+	//CrearRawData
 
 	CEffectManager();
 	virtual ~CEffectManager();
