@@ -17,7 +17,9 @@ CRenderManager::CRenderManager()
 	: m_UseDebugCamera(false)
 	, m_CurrentRenderlistLength(0),
 	m_DebugRender(nullptr),
-	m_RenderTargetView(nullptr)
+	m_RenderTargetView(nullptr),
+	m_DepthStencilView(nullptr),
+	m_CurrentDepthStencilView(nullptr)
 {
 }
 
@@ -181,9 +183,6 @@ void CRenderManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView *con
 
 void CRenderManager::UnsetRenderTargets()
 {
-	m_NumViews = 1;
-	m_CurrentRenderTargetViews = &m_RenderTargetView;
-	m_CurrentDepthStencilView = m_DepthStencilView;
-	m_ContextManager->GetDeviceContext()->OMSetRenderTargets(m_NumViews, &m_RenderTargetView, m_DepthStencilView);
+	GetContextManager()->Unset();
 	m_ContextManager->GetDeviceContext()->RSSetViewports(1, m_ContextManager->getViewPort());
 }

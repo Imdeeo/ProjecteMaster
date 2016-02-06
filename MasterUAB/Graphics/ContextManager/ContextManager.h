@@ -106,6 +106,8 @@ public:
 	UAB_GET_PROPERTY(IDXGISwapChain*, SwapChain);
 	UAB_GET_PROPERTY(int, Width);
 	UAB_GET_PROPERTY(int, Height);
+
+	void Unset();
 };
 
 #endif
