@@ -48,7 +48,10 @@ void CStagedTexturedSceneRendererCommand::AddStageTexture(unsigned int _StagedId
 
 void CStagedTexturedSceneRendererCommand::AddDynamicTexture(CXMLTreeNode & TreeNode)
 {
-	m_DynamicTextures.push_back(new CDynamicTexture(TreeNode));
+	std::string l_Name = TreeNode.GetPszProperty("name");
+	CDynamicTexture* l_DynamicTexture = new CDynamicTexture(TreeNode);
+	m_DynamicTextures.push_back(l_DynamicTexture);
+	UABEngine.GetTextureManager()->AddResource(l_Name, l_DynamicTexture);
 }
 
 void CStagedTexturedSceneRendererCommand::AddCaptureFrameBufferTexture(CXMLTreeNode & TreeNode)
