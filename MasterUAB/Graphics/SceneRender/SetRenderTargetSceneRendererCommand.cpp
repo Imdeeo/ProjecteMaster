@@ -13,7 +13,6 @@ CSetRenderTargetSceneRendererCommand::~CSetRenderTargetSceneRendererCommand()
 {
 }
 
-
 void CSetRenderTargetSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 {
 	ID3D11DepthStencilView *l_DepthStencilView = m_DynamicTextures.empty() ? NULL : 

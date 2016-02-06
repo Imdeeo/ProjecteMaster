@@ -539,3 +539,8 @@ void CContextManager::Present()
 {
 	m_SwapChain->Present(0, 0);
 }
+
+void CContextManager::Unset()
+{
+	m_DeviceContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+}

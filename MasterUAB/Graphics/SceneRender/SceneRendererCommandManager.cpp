@@ -12,6 +12,8 @@
 #include "RenderAntTweakBarSceneRendereCommand.h"
 #include "RenderGridSceneRendererCommand.h"
 #include "DrawQuadRendererCommand.h"
+#include "SetRenderTargetSceneRendererCommand.h"
+#include "UnsetRenderTargetSceneRendererCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -83,6 +85,14 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				else if (l_Element.GetName() == std::string("render_draw_quad"))
 				{
 					AddResource(l_Element.GetName(), new CDrawQuadRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("set_render_target"))
+				{
+					AddResource(l_Element.GetName(), new CSetRenderTargetSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("unset_render_target"))
+				{
+					AddResource(l_Element.GetName(), new CUnsetRenderTargetSceneRendererCommand(l_Element));
 				}
 			}
 		}
