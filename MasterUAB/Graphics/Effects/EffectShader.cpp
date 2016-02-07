@@ -184,16 +184,14 @@ bool CEffectVertexShader::Load()
 {
 	CreateShaderMacro();
 	ID3DBlob *l_VSBlob = NULL;
-	bool l_Loaded = LoadShader(m_Filename, m_EntryPoint, m_ShaderModel,
-		&l_VSBlob);
+	bool l_Loaded = LoadShader(m_Filename, m_EntryPoint, m_ShaderModel, &l_VSBlob);
 	if (!l_Loaded)
 		return false;
 	/*CRenderManager &l_RenderManager = UABEngine.GetRenderManager();
 	ID3D11Device *l_Device = l_RenderManager.GetDevice();*/
 	CRenderManager* l_RenderManager = UABEngine.GetRenderManager();
 	ID3D11Device *l_Device = l_RenderManager->GetDevice();
-	HRESULT l_HR = l_Device->CreateVertexShader(l_VSBlob->GetBufferPointer(),
-		l_VSBlob->GetBufferSize(), NULL, &m_VertexShader);
+	HRESULT l_HR = l_Device->CreateVertexShader(l_VSBlob->GetBufferPointer(), l_VSBlob->GetBufferSize(), NULL, &m_VertexShader);
 	if (FAILED(l_HR))
 	{
 		l_VSBlob->Release();
