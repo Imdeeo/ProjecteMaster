@@ -34,6 +34,11 @@ cbuffer AnimatedModelConstantBuffer : register (b2)
 	float4x4 m_Bones[MAXBONES];
 }
 
+cbuffer MaterialConstantBuffer : register(b3)
+{
+	float4 m_RawData[16];
+}
+
 static float m_LightEnabledArray[4]=(float[4])m_LightEnabled;
 static float m_LightTypeArray[4]=(float[4])m_LightType;
 static float m_LightAngleArray[4]=(float[4])m_LightAngle;
