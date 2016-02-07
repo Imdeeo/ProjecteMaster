@@ -18,7 +18,7 @@ struct TVertexVS
 struct TVertexPS
 {
 	float4 Pos : POSITION;
-	float4 Depth : TEXCOORD0;
+	float Depth : TEXCOORD0;
 };
 
 TVertexPS mainVS(TVertexVS IN)
@@ -28,15 +28,14 @@ TVertexPS mainVS(TVertexVS IN)
 	l_Out.Pos = mul(float4(IN.Pos.xyz, 1.0), World);
 	l_Out.Pos = mul(l_Out.Pos, View);
 	l_Out.Pos = mul(l_Out.Pos, Projection);
+	l_Out.Depth = 1.0f - (l_Out.Pos.z / l_Out.Pos.w);
 	
 	return l_Out;
 }
 
 float4 mainPS(TVertexPS IN) : SV_Target
-{
-	float l_Depth=IN.Depth.z/IN.Depth.w;
-	
-	return float4(l_Depth,l_Depth,l_Depth,1); 
+{	
+	return float4(IN.Depth, IN.Depth, IN.Depth, 1.0f); 
 }
 
 technique technique0
