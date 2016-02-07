@@ -6,7 +6,7 @@
 #include "Lights\Light.h";
 #include "Lights\DirectionalLight.h";
 #include "Lights\SpotLight.h";
-#include "Engine\UABEngine.h"
+#include "Engine\UABEngine.h";
 
 CEffectManager::CEffectManager(void)
 {
@@ -126,4 +126,17 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 			SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
 		}
 	}
+}
+
+int CEffectManager::m_RawDataCount = 0;
+Vect4f CEffectManager::m_RawData[MAX_RAW_DATA_ELEMENTS];
+void* CEffectManager::AddMaterialParameter()
+{
+	if (m_RawDataCount == MAX_RAW_DATA_ELEMENTS)
+	{
+		return nullptr;
+	}
+	void* l_Adress = &(m_RawData[m_RawDataCount]);
+	m_RawDataCount = m_RawDataCount + 1;
+	return l_Adress;
 }
