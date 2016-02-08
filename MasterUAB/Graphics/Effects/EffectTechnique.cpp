@@ -17,6 +17,7 @@ CEffectTechnique::~CEffectTechnique()
 
 void CEffectTechnique::Refresh()
 {
+
 	m_VertexShader = UABEngine.GetEffectManager()->GetVertexShader(m_VertexShaderName);
 	m_PixelShader = UABEngine.GetEffectManager()->GetPixelShader(m_PixelShaderName);
 }
