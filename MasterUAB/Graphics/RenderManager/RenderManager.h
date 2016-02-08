@@ -36,7 +36,7 @@ public:
 		ID3D11DepthStencilView *_DepthStencilView);
 
 	void Render();
-	void Clear(bool renderTarget, bool depthStencil);
+	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.2f, .1f, .4f));
 	void Present();
 	void SetAntTweakBar();
 	void CRenderManager::SetMatrixViewProjection();

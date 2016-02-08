@@ -74,7 +74,6 @@ public:
 	void SetCamera(const CCamera& _Camera) { CEffectManager::m_SceneParameters.m_View = _Camera.GetView(); CEffectManager::m_SceneParameters.m_Projection = _Camera.GetProjection(); CEffectManager::m_SceneParameters.m_CameraPosition = _Camera.GetPosition(); }
 	//void SetDebugSize(float _Size) { CEffectManager::m_SceneParameters.m_DebugRenderScale = _Size; }
 
-	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.2f, .1f, .4f));
 	void Present();
 private:
 

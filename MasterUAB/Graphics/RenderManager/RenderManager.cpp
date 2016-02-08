@@ -120,9 +120,16 @@ void CRenderManager::DisableAlphaBlendState()
 	m_ContextManager->GetDeviceContext()->OMSetBlendState(NULL,NULL,0xffffffff);
 }
 
-void CRenderManager::Clear(bool renderTarget, bool depthStencil)
+void CRenderManager::Clear(bool renderTarget, bool depthStencil, CColor backgroundColor)
 {
-	m_ContextManager->Clear(renderTarget, depthStencil);
+	if (renderTarget)
+	{
+		GetDeviceContext()->ClearRenderTargetView(*m_CurrentRenderTargetViews, &backgroundColor.x);
+	}
+	if (depthStencil)
+	{
+		GetDeviceContext()->ClearDepthStencilView(m_CurrentDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	}
 }
 
 void CRenderManager::Present()

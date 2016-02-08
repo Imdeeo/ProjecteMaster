@@ -523,18 +523,6 @@ void CContextManager::EndRender()
 	//m_SwapChain->Present(0, 0);
 }
 
-void CContextManager::Clear(bool renderTarget, bool depthStencil, CColor backgroundColor)
-{
-	if (renderTarget)
-	{
-		GetDeviceContext()->ClearRenderTargetView(m_RenderTargetView, &backgroundColor.x);
-	}
-	if (depthStencil)
-	{
-		GetDeviceContext()->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
-	}
-}
-
 void CContextManager::Present()
 {
 	m_SwapChain->Present(0, 0);
