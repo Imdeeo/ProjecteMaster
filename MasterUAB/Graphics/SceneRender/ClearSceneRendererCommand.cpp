@@ -4,8 +4,8 @@
 
 CClearSceneRendererCommand::CClearSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
 {
-	m_DepthStencil = TreeNode.GetBoolProperty("render_target");
-	m_RenderTarget = TreeNode.GetBoolProperty("depth_stencil");
+	m_RenderTarget = TreeNode.GetBoolProperty("render_target");
+	m_DepthStencil = TreeNode.GetBoolProperty("depth_stencil");
 }
 
 CClearSceneRendererCommand::~CClearSceneRendererCommand(){}

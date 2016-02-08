@@ -115,4 +115,12 @@ void CSceneRendererCommandManager::Execute(CRenderManager *RenderManager)
 	{
 		m_ResourcesVector[i]->Execute(*RenderManager);
 	}
+
+}
+
+bool CSceneRendererCommandManager::AddResource(const std::string &Name, CSceneRendererCommand *Resource)
+{
+	m_ResourcesMap.insert(std::pair<std::string, CMapResourceValue>(Name, CMapResourceValue(Resource, m_ResourcesVector.size())));
+	m_ResourcesVector.push_back(Resource);
+	return true;
 }

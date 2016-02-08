@@ -42,6 +42,8 @@ static void __stdcall ReloadSceneCommand(void* _app)
 static void __stdcall ReloadEffectsManager(void* _app)
 {
 	UABEngine.GetEffectManager()->Reload();
+	UABEngine.GetMaterialManager()->Reload();
+	UABEngine.GetStaticMeshManager()->Reload();
 }
 
 CApplication::CApplication( CContextManager *_ContextManager)
