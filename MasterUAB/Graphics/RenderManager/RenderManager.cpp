@@ -18,8 +18,7 @@ CRenderManager::CRenderManager()
 	, m_CurrentRenderlistLength(0),
 	m_DebugRender(nullptr),
 	m_RenderTargetView(nullptr),
-	m_DepthStencilView(nullptr),
-	m_CurrentDepthStencilView(nullptr)
+	m_DepthStencilView(nullptr)	
 {
 }
 
@@ -120,16 +119,9 @@ void CRenderManager::DisableAlphaBlendState()
 	m_ContextManager->GetDeviceContext()->OMSetBlendState(NULL,NULL,0xffffffff);
 }
 
-void CRenderManager::Clear(bool renderTarget, bool depthStencil, CColor backgroundColor)
+void CRenderManager::Clear(bool renderTarget, bool depthStencil)
 {
-	if (renderTarget)
-	{
-		GetDeviceContext()->ClearRenderTargetView(*m_CurrentRenderTargetViews, &backgroundColor.x);
-	}
-	if (depthStencil)
-	{
-		GetDeviceContext()->ClearDepthStencilView(m_CurrentDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
-	}
+	m_ContextManager->Clear(renderTarget, depthStencil);
 }
 
 void CRenderManager::Present()
@@ -182,10 +174,7 @@ void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture
 void CRenderManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const *_RenderTargetViews,
 	ID3D11DepthStencilView *_DepthStencilView)
 {
-	m_NumViews = _NumViews;
-	m_CurrentRenderTargetViews = _RenderTargetViews;
-	m_CurrentDepthStencilView = _DepthStencilView;
-	m_ContextManager->GetDeviceContext()->OMSetRenderTargets(m_NumViews, _RenderTargetViews,	_DepthStencilView);
+	m_ContextManager->SetRenderTargets(_NumViews, _RenderTargetViews, _DepthStencilView);
 }
 
 void CRenderManager::UnsetRenderTargets()

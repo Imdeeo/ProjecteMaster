@@ -18,5 +18,5 @@ void CSetRenderTargetSceneRendererCommand::Execute(CRenderManager &_RenderManage
 	ID3D11DepthStencilView *l_DepthStencilView = m_DynamicTextures.empty() ? NULL : 
 		(m_DynamicTextures[0]->GetDepthStencilView());
 	_RenderManager.SetRenderTargets((UINT)m_DynamicTextures.size(),&m_RenderTargetViews[0],l_DepthStencilView==NULL?
-		_RenderManager.GetCurrentDepthStencilView():l_DepthStencilView);
+		_RenderManager.GetContextManager()->GetCurrentDepthStencilView():l_DepthStencilView);
 }

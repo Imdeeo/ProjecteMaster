@@ -39,6 +39,10 @@ static void __stdcall ReloadSceneCommand(void* _app)
 {
 	UABEngine.GetSceneRendererCommandManager()->Reload();
 }
+static void __stdcall ReloadEffectsManager(void* _app)
+{
+	UABEngine.GetEffectManager()->Reload();
+}
 
 CApplication::CApplication( CContextManager *_ContextManager)
 	: m_BackgroundColor(.2f, .1f, .4f)
@@ -140,6 +144,16 @@ CApplication::CApplication( CContextManager *_ContextManager)
 		var.name = "Scene Render Command";
 		var.type = CDebugHelper::BUTTON;
 		var.callback = ReloadSceneCommand;
+		var.data = this;
+
+		bar2.variables.push_back(var);
+	}
+
+	{
+		CDebugHelper::SDebugVariable var = {};
+		var.name = "Shaders";
+		var.type = CDebugHelper::BUTTON;
+		var.callback = ReloadEffectsManager;
 		var.data = this;
 
 		bar2.variables.push_back(var);
