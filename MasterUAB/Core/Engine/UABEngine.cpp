@@ -62,7 +62,7 @@ void CUABEngine::Init()
 	m_LayerManager->Load("Data\\level_" + m_LevelLoaded + "\\renderable_objects.xml");	
 	m_LightManager->Load("Data\\level_"+m_LevelLoaded+"\\lights.xml");	
 	m_Cinematic->LoadXML("Data\\level_"+m_LevelLoaded+"\\cinematic.xml");
-	//m_LayerManager->GetLayer()->AddResource("Cinematic",m_Cinematic);
+	m_LayerManager->GetLayer()->AddResource("Cinematic",m_Cinematic);
 	m_ScriptManager->Initialize();
 	m_CameraControllerManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
 	//m_Cinematic->Play("true");

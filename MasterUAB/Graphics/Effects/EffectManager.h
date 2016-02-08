@@ -29,6 +29,7 @@ public:
 	static CAnimatedModelEffectParameters m_AnimatedModelEffectParameters;
 	static CLightEffectParameters m_LightParameters;
 
+	static void* GetRawData(){ return m_RawData; }
 	static void* AddMaterialParameter();
 	//static CEffectParameters m_Parameters;
 
