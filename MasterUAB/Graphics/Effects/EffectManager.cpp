@@ -16,12 +16,24 @@ CEffectManager::~CEffectManager(void)
 {
 }
 
+void CEffectManager::ReloadShader()
+{
+	typedef  std::map<std::string, CEffectVertexShader*>::iterator it_type;
+	for (it_type iterator = m_VertexShaders.GetResourcesMap().begin(); iterator != m_VertexShaders.GetResourcesMap().end(); iterator++)
+	{
+		iterator->second->Reload();
+	}
+	
+	typedef  std::map<std::string, CEffectPixelShader*>::iterator it_type2;
+	for (it_type2 iterator2 = m_PixelShaders.GetResourcesMap().begin(); iterator2 != m_PixelShaders.GetResourcesMap().end(); iterator2++)
+	{
+		iterator2->second->Reload();
+	}
+}
+
 void CEffectManager::Reload()
 {
-	m_VertexShaders.Destroy();
-	m_PixelShaders.Destroy();
-	Destroy();
-	Load(m_Filename);
+	ReloadShader();
 	typedef  std::map<std::string, CEffectTechnique*>::iterator it_type;
 	for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
 	{
