@@ -20,8 +20,13 @@ void CEffectManager::Reload()
 {
 	m_VertexShaders.Destroy();
 	m_PixelShaders.Destroy();
-	CTemplatedMapManager::Destroy();
+	Destroy();
 	Load(m_Filename);
+	typedef  std::map<std::string, CEffectTechnique*>::iterator it_type;
+	for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
+	{
+		iterator->second->Refresh();
+	}
 }
 
 CSceneEffectParameters CEffectManager::m_SceneParameters;

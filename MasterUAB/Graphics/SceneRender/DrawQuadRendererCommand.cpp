@@ -14,6 +14,10 @@ CDrawQuadRendererCommand::CDrawQuadRendererCommand(CXMLTreeNode &TreeNode) :CSta
 	{
 		m_RenderableObjectTechnique = UABEngine.GetMaterialManager()->GetResource(std::string(c))->GetRenderableObjectTechnique();
 	}
+	else
+	{
+		m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("2d");
+	}
 }
 
 CDrawQuadRendererCommand::~CDrawQuadRendererCommand(void)
@@ -26,8 +30,7 @@ void CDrawQuadRendererCommand::Execute(CRenderManager &_RenderManager)
 	{
 		for (int i = 0; i < m_StagedTextures.size(); i++)
 		{
-			m_StagedTextures[i].m_Texture->Activate(m_StagedTextures[i].m_StageId);
+			_RenderManager.DrawScreenQuad(m_RenderableObjectTechnique->GetEffectTechnique(), m_StagedTextures[i].m_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 		}
-		_RenderManager.DrawScreenQuad(m_RenderableObjectTechnique->GetEffectTechnique(), NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	}
 }

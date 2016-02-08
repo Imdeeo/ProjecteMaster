@@ -168,7 +168,7 @@ ID3D11Buffer * CEffectShader::GetConstantBuffer(unsigned int IdBuffer)
 
 CEffectVertexShader::CEffectVertexShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode),
 	m_VertexShader(nullptr),
-	m_VertexLayout(nullptr)
+	m_VertexLayout(nullptr)	
 {
 	m_VertexType = TreeNode.GetPszProperty("vertex_type");
 }
