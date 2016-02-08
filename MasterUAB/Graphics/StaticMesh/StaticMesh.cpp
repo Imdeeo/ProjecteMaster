@@ -268,7 +268,7 @@ void CStaticMesh::Render(CRenderManager *RM) const
 	{
 		m_Materials[i]->Apply();
 		CEffectTechnique* l_ET = m_Materials[i]->GetRenderableObjectTechnique()->GetEffectTechnique();
-		m_RVs[i]->RenderIndexed(RM,l_ET,&(UABEngine.GetEffectManager()->m_SceneParameters));
+		m_RVs[i]->RenderIndexed(RM,l_ET,CEffectManager::GetRawData());
 	}
 }
 

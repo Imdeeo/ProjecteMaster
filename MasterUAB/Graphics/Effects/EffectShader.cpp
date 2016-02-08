@@ -131,6 +131,7 @@ bool CEffectShader::CreateConstantBuffer()
 	CreateConstantBuffer(SCENE_CONSTANT_BUFFER_ID, sizeof(CSceneEffectParameters));
 	CreateConstantBuffer(LIGHT_CONSTANT_BUFFER_ID, sizeof(CLightEffectParameters));
 	CreateConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID, sizeof(CAnimatedModelEffectParameters));
+	CreateConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID, sizeof(Vect4f)*MAX_RAW_DATA_ELEMENTS);
 
 	
 	/*CreateConstantBuffer( SCENE_CONSTANT_BUFFER_ID, 60*sizeof(float));

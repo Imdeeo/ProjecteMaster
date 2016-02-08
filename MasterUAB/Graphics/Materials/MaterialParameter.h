@@ -3,6 +3,7 @@
 
 #include "Utils\Named.h"
 #include "Utils\CEmptyPointerClass.h"
+#include "Effects\EffectManager.h"
 #include <string>
 
 class CXMLTreeNode;
@@ -21,7 +22,7 @@ public:
 protected:
 	TMaterialType m_MaterialType;
 public:
-	CMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode,	CMaterialParameter::TMaterialType MaterialType):CNamed(TreeNode){}
+	CMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode, CMaterialParameter::TMaterialType MaterialType) :CNamed(TreeNode){}
 	virtual ~CMaterialParameter(){}
 	virtual void Apply() = 0;
 	virtual void * GetValueAddress() const = 0;
