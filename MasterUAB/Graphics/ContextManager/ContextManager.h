@@ -96,6 +96,11 @@ private:
 	ID3D11DepthStencilState * m_DepthStencilStates[DSS_COUNT];
 	ID3D11BlendState* m_BlendStates[BLEND_COUNT];
 
+	int								m_NumViews;
+	ID3D11RenderTargetView* const*	m_CurrentRenderTargetViews;
+	ID3D11DepthStencilView*			m_CurrentDepthStencilView;
+
+
 public:
 	ID3D11RasterizerState*	GetRasterizerState(ERasterizedState _RasterizedState){return m_RasterizerSates[_RasterizedState];}
 	ID3D11DepthStencilState * GetDepthStencilState(EDepthStencilStates _DepthStencilState){return m_DepthStencilStates[_DepthStencilState];}
@@ -105,8 +110,12 @@ public:
 	UAB_GET_PROPERTY(IDXGISwapChain*, SwapChain);
 	UAB_GET_PROPERTY(int, Width);
 	UAB_GET_PROPERTY(int, Height);
-
+	UAB_GET_PROPERTY(int, NumViews)
+	UAB_GET_PROPERTY(ID3D11RenderTargetView* const*, CurrentRenderTargetViews)
+	UAB_GET_PROPERTY(ID3D11DepthStencilView*, CurrentDepthStencilView)
+	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.2f, .1f, .4f));
 	void Unset();
+	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const*_RenderTargetViews,ID3D11DepthStencilView *_DepthStencilView);
 };
 
 #endif

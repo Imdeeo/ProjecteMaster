@@ -15,6 +15,7 @@ CContextManager::CContextManager()
 	, m_DepthStencil(nullptr)
 	, m_DepthStencilView(nullptr)
 	, m_D3DDebug(nullptr)
+	,m_CurrentDepthStencilView(nullptr)
 {
 	for (int i = 0; i < RS_COUNT; ++i)
 	{
@@ -509,11 +510,11 @@ void CContextManager::BeginRender(CColor backgroundColor)
 	vp.TopLeftY = 0;*/
 	m_DeviceContext->RSSetViewports(1, m_ViewPort);
 
-	Clear(true, true);
-	
 	/*m_DeviceContext->ClearRenderTargetView(m_RenderTargetView, &backgroundColor.x);
 	m_DeviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);*/
-	
+	m_NumViews = 1;
+	m_CurrentRenderTargetViews = &m_RenderTargetView;
+	m_CurrentDepthStencilView = m_DepthStencilView;
 	m_DeviceContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
 }
 
@@ -523,12 +524,41 @@ void CContextManager::EndRender()
 	//m_SwapChain->Present(0, 0);
 }
 
+
 void CContextManager::Present()
 {
 	m_SwapChain->Present(0, 0);
 }
 
+
+
 void CContextManager::Unset()
 {
+	m_NumViews = 1;
+	m_CurrentRenderTargetViews = &m_RenderTargetView;
+	m_CurrentDepthStencilView = m_DepthStencilView;
 	m_DeviceContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
 }
+
+void CContextManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const *_RenderTargetViews,
+	ID3D11DepthStencilView *_DepthStencilView)
+{
+	m_NumViews = _NumViews;
+	m_CurrentRenderTargetViews = _RenderTargetViews;
+	m_CurrentDepthStencilView = _DepthStencilView;
+	GetDeviceContext()->OMSetRenderTargets(m_NumViews, _RenderTargetViews, _DepthStencilView);
+}
+
+void CContextManager::Clear(bool renderTarget, bool depthStencil, CColor backgroundColor)
+{
+	if (renderTarget)
+	{
+		GetDeviceContext()->ClearRenderTargetView(*m_CurrentRenderTargetViews, &backgroundColor.x);
+	}
+	if (depthStencil)
+	{
+		GetDeviceContext()->ClearDepthStencilView(m_CurrentDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	}
+	
+}
+

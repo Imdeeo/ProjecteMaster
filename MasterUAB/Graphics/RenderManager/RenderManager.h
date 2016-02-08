@@ -32,11 +32,10 @@ public:
 
 	//bool AddRenderableObjectToRenderList(CRenderableObject* _RenderableObject);
 	void UnsetRenderTargets();
-	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const*_RenderTargetViews,
-		ID3D11DepthStencilView *_DepthStencilView);
+	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const*_RenderTargetViews,ID3D11DepthStencilView *_DepthStencilView);
 
 	void Render();
-	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.2f, .1f, .4f));
+	void Clear(bool renderTarget, bool depthStencil);
 	void Present();
 	void SetAntTweakBar();
 	void CRenderManager::SetMatrixViewProjection();
@@ -57,9 +56,6 @@ private:
 	ID3D11RenderTargetView* const	m_RenderTargetView;
 	ID3D11DepthStencilView*			m_DepthStencilView;
 
-	int								m_NumViews;
-	ID3D11RenderTargetView* const*	m_CurrentRenderTargetViews;
-	ID3D11DepthStencilView*			m_CurrentDepthStencilView;
 
 	size_t							m_CurrentRenderlistLength;
 	
@@ -68,9 +64,7 @@ private:
 	UAB_GET_PROPERTY(CDebugRender*, DebugRender)
 	UAB_BUILD_GET_SET(CContextManager*,ContextManager)
 
-	UAB_GET_PROPERTY(int, NumViews)
-	UAB_GET_PROPERTY(ID3D11RenderTargetView* const*, CurrentRenderTargetViews)
-	UAB_GET_PROPERTY(ID3D11DepthStencilView*, CurrentDepthStencilView)
+
 
 	ID3D11Device* GetDevice ()
 	{
