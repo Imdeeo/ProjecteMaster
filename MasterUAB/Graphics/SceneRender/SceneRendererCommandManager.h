@@ -18,6 +18,7 @@ public:
 	bool Load(const std::string &Filename);
 	bool Reload();
 	void Execute(CRenderManager *RenderManager);
+	bool AddResource(const std::string &Name, CSceneRendererCommand *Resource) override;
 };
 
 #endif //SCENE_RENDERER_COMMAND_MANAGER_H

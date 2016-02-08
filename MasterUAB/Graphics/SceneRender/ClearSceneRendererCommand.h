@@ -8,7 +8,7 @@ class CXMLTreeNode;
 
 class CClearSceneRendererCommand : public CSceneRendererCommand
 {
-protected:
+private:
 	bool m_RenderTarget;
 	bool m_DepthStencil;
 public:
