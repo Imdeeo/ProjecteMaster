@@ -4,7 +4,7 @@
 	<pixel_shader name="gBuffer_ps" file="Data/Effects/UAB_DEFERRED_SHADING.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS"/>
 	<effect_technique name="gBuffer_technique" vertex_shader="gBuffer_vs" pixel_shader="gBuffer_ps"/>
 	
-	<vertex_shader name="noise_and_vignetting_vs" file="Data/Effects/UAB_NOISE_AND_VIGNETTING.fx" shader_model="vs_4_0" entry_point="NoiseAndVignettingVS" vertex_type="MV_POSITION_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	<vertex_shader name="noise_and_vignetting_vs" file="Data/Effects/UAB_NOISE_AND_VIGNETTING.fx" shader_model="vs_4_0" entry_point="NoiseAndVignettingVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="noise_and_vignetting_ps" file="Data/Effects/UAB_NOISE_AND_VIGNETTING.fx" shader_model="ps_4_0" entry_point="NoiseAndVignettingPS"/>
 	<effect_technique name="noise_and_vignetting" vertex_shader="noise_and_vignetting_vs" pixel_shader="noise_and_vignetting_ps"/>
 	
@@ -20,7 +20,7 @@
 	<pixel_shader name="render_lights_ps" file="./Data/Effects/UAB_RENDER_LIGHTS_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
 	<effect_technique name="render_lights_technique" vertex_shader="render_lights_vs" pixel_shader="render_lights_ps"/>
 	
-	<vertex_shader name="2d_vs" file="Data/Effects/UAB_2D.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	<vertex_shader name="2d_vs" file="Data/Effects/UAB_2D.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="2d_ps"	file="Data/Effects/UAB_2D.fx" shader_model="ps_4_0"	entry_point="mainPS"/>
 	<effect_technique name="2d_technique" vertex_shader="2d_vs" pixel_shader="2d_ps"/>
 		

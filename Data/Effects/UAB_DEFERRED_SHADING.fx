@@ -1,7 +1,5 @@
 #include "globals.fxh"
-
-Texture2D DiffuseTexture: register( t0 );
-SamplerState LinearSampler: register( s0 );
+#include "samplers.fxh"
 
 struct VS_INPUT
 {
@@ -44,7 +42,7 @@ PS_INPUT mainVS(VS_INPUT IN)
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
 	l_Output.Normal = normalize(IN.Normal);
 	l_Output.UV = IN.UV;
-	l_Output.Depth = 1.0f - (l_Output.Pos.z / l_Output.Pos.w);
+	l_Output.Depth = l_Output.Pos.z / l_Output.Pos.w;
 	
 	return l_Output;
 }
@@ -53,14 +51,14 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 {
 	PS_OUTPUT l_Out = (PS_OUTPUT)0;
 	
-	float m_SpecularPower = 50.0f;
+	float m_SpecularPower = 1.0f;
 	float m_SpecularFactor = 1.0f;
 	
-	float4 l_Albedo = DiffuseTexture.Sample(LinearSampler, IN.UV);
+	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
 	float3 l_Normal = Normal2Texture(IN.Normal);
-	l_Out.Target0 = (l_Albedo.xyz, m_SpecularFactor);
-	l_Out.Target1 = (m_LightAmbient.xyz, m_SpecularPower);
-	l_Out.Target2 = (l_Normal, 1.0);
+	l_Out.Target0 = float4(l_Albedo.xyz, m_SpecularFactor);
+	l_Out.Target1 = float4(l_Albedo.xyz*m_LightAmbient.xyz, m_SpecularPower);
+	l_Out.Target2 = float4(l_Normal, 1.0);
 	l_Out.Target3 = float4(IN.Depth, IN.Depth, IN.Depth, 1.0f);
 		
 	return l_Out;

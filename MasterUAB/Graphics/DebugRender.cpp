@@ -187,7 +187,7 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 			{ Vect4f(1.0f, -1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
 			Vect2f(1.0f, 1.0f) }
 		};
-		m_DrawQuadRV = new CUABTrianglesStripRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(l_ScreenVertexsQuad, 4, 2);
+		m_DrawQuadRV = new CUABTrianglesStripRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(&l_ScreenVertexsQuad[0].Position.x, 4, 2);
 	}
 	{
 		// Simple Cube
