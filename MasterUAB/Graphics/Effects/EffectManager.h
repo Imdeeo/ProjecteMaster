@@ -40,6 +40,7 @@ public:
 
 	void ReloadFile(){};
 	void Reload();
+	void ReloadShader();
 	bool Load(const std::string &Filename);
 	CEffectVertexShader * GetVertexShader(const std::string &VertexShader);
 	CEffectPixelShader * GetPixelShader(const std::string &PixelShader);

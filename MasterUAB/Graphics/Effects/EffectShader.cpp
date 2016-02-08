@@ -176,9 +176,13 @@ CEffectVertexShader::CEffectVertexShader(const CXMLTreeNode &TreeNode):CEffectSh
 
 void CEffectVertexShader::Destroy()
 {
-	//delete m_VertexLayout;
-	//delete m_VertexShader;
-	//delete m_ConstantBuffer;
+	CHECKED_RELEASE(m_VertexLayout);
+	CHECKED_RELEASE(m_VertexShader);
+	for(int i = 0; i<m_ConstantBuffers.size(); ++i)
+	{
+		CHECKED_RELEASE(m_ConstantBuffers[i]);
+	}
+	m_ConstantBuffers.clear();
 }
 
 bool CEffectVertexShader::Load()
@@ -233,6 +237,13 @@ bool CEffectVertexShader::Load()
 	return CreateConstantBuffer();
 }
 
+
+bool CEffectVertexShader::Reload()
+{
+	Destroy();
+	return Load();
+}
+
 void CEffectVertexShader::SetConstantBuffer(unsigned int IdBuffer, void
 	*ConstantBuffer)
 {
@@ -254,8 +265,12 @@ CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShad
 
 void CEffectPixelShader::Destroy()
 {
-	//CHECKED_DELETE(m_PixelShader);
-	//CHECKED_DELETE(m_ConstantBuffer);
+	CHECKED_RELEASE(m_PixelShader);
+	for(int i = 0; i<m_ConstantBuffers.size(); ++i)
+	{
+		CHECKED_RELEASE(m_ConstantBuffers[i]);
+	}
+	m_ConstantBuffers.clear();
 }
 
 bool CEffectPixelShader::Load()
@@ -274,6 +289,12 @@ bool CEffectPixelShader::Load()
 		l_PSBlob->GetBufferSize(), NULL, &m_PixelShader);
 	l_PSBlob->Release();
 	return CreateConstantBuffer();
+}
+
+bool CEffectPixelShader::Reload()
+{
+	Destroy();
+	return Load();
 }
 
 void CEffectPixelShader::SetConstantBuffer(unsigned int IdBuffer, void *ConstantBuffer)

@@ -31,7 +31,7 @@ public:
 	CEffectShader(const CXMLTreeNode &TreeNode);
 	virtual ~CEffectShader();
 	virtual bool Load() = 0;
-	virtual bool Reload();
+	virtual bool Reload() = 0;
 	virtual void SetConstantBuffer(unsigned int IdBuffer, void *ConstantBuffer) = 0;
 	ID3D11Buffer * GetConstantBuffer(unsigned int IdBuffer);
 };
@@ -50,7 +50,7 @@ public:
 
 	bool Load();
 	void SetConstantBuffer(unsigned int IdBuffer, void *ConstantBuffer);
-
+	bool Reload();
 	UAB_GET_PROPERTY(ID3D11VertexShader*, VertexShader);
 	UAB_GET_PROPERTY(ID3D11InputLayout*, VertexLayout);
 	//UAB_GET_PROPERTY(ID3D11Buffer*, ConstantBuffer);
@@ -65,7 +65,7 @@ protected:
 public:
 	CEffectPixelShader(const CXMLTreeNode &TreeNode);
 	virtual ~CEffectPixelShader() { Destroy(); }
-
+	bool Reload();
 	bool Load();
 	void SetConstantBuffer(unsigned int IdBuffer, void *ConstantBuffer);
 

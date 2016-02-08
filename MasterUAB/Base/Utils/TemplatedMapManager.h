@@ -53,6 +53,10 @@ public:
 	{
 		return m_Resources[b];
 	}
+	TMapResource & GetResourcesMap()
+	{
+		return m_Resources;
+	}
 };
 
 #endif //TEMPLATED_MAP_MANAGER_H
