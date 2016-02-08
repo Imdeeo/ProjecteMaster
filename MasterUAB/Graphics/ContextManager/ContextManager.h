@@ -6,6 +6,9 @@
 #include "Effects\EffectParameters.h"
 #include "Effects\EffectManager.h"
 
+
+#define MAX_RENDER_TARGETS 4
+
 class CRenderableVertexs;
 
 class CContextManager
@@ -89,6 +92,8 @@ private:
 	ID3D11Texture2D*		m_DepthStencil;
 	ID3D11DepthStencilView*	m_DepthStencilView;
 
+	ID3D11RenderTargetView *m_CurrentRenderTargetViews[MAX_RENDER_TARGETS];
+
 	int m_Width, m_Height;
 	D3D11_VIEWPORT* m_ViewPort;
 
@@ -97,7 +102,6 @@ private:
 	ID3D11BlendState* m_BlendStates[BLEND_COUNT];
 
 	int								m_NumViews;
-	ID3D11RenderTargetView* const*	m_CurrentRenderTargetViews;
 	ID3D11DepthStencilView*			m_CurrentDepthStencilView;
 
 
@@ -113,9 +117,10 @@ public:
 	UAB_GET_PROPERTY(int, NumViews)
 	UAB_GET_PROPERTY(ID3D11RenderTargetView* const*, CurrentRenderTargetViews)
 	UAB_GET_PROPERTY(ID3D11DepthStencilView*, CurrentDepthStencilView)
+	UAB_GET_PROPERTY(ID3D11DepthStencilView*, DepthStencilView)
 	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.2f, .1f, .4f));
-	void Unset();
-	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const*_RenderTargetViews,ID3D11DepthStencilView *_DepthStencilView);
+	void UnsetRenderTargets();
+	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_RenderTargetViews, ID3D11DepthStencilView *_DepthStencilView);
 };
 
 #endif

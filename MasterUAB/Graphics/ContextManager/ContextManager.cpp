@@ -171,6 +171,8 @@ HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 	if (FAILED(hr))
 		return hr;
 
+	SetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+
 	m_ViewPort = new D3D11_VIEWPORT();
 	m_ViewPort->Width = (FLOAT)m_Width;
 	m_ViewPort->Height = (FLOAT)m_Height;
@@ -512,7 +514,8 @@ void CContextManager::BeginRender(CColor backgroundColor)
 
 	/*m_DeviceContext->ClearRenderTargetView(m_RenderTargetView, &backgroundColor.x);
 	m_DeviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);*/
-	m_DeviceContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+	//m_DeviceContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+	//m_DeviceContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
 }
 
 void CContextManager::EndRender()
@@ -529,41 +532,37 @@ void CContextManager::Present()
 
 
 
-void CContextManager::Unset()
+void CContextManager::UnsetRenderTargets()
 {	
-	m_DeviceContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+	SetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
 }
 
-void CContextManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const *_RenderTargetViews,
-	ID3D11DepthStencilView *_DepthStencilView)
+void CContextManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_RenderTargetViews, ID3D11DepthStencilView *_DepthStencilView)
 {
 	m_NumViews = _NumViews;
 	m_CurrentDepthStencilView = _DepthStencilView;
-	m_CurrentRenderTargetViews = _RenderTargetViews;
-	GetDeviceContext()->OMSetRenderTargets(_NumViews, _RenderTargetViews, _DepthStencilView);
+	
+	assert(m_NumViews<=MAX_RENDER_TARGETS);
+	
+	for(int i=0;i<_NumViews;++i)
+		m_CurrentRenderTargetViews[i]=_RenderTargetViews[i];
+
+	//m_CurrentRenderTargetViews = _RenderTargetViews;
+	GetDeviceContext()->OMSetRenderTargets(_NumViews, m_CurrentRenderTargetViews, _DepthStencilView);
 }
 
 void CContextManager::Clear(bool renderTarget, bool depthStencil, CColor backgroundColor)
 {
 	if (renderTarget)
 	{
-		GetDeviceContext()->ClearRenderTargetView(m_RenderTargetView, &backgroundColor.x);
-	}
-	else
-	{
 		for (int i = 0; i < m_NumViews; ++i)
 		{
 			GetDeviceContext()->ClearRenderTargetView(m_CurrentRenderTargetViews[i], &backgroundColor.x);
 		}	
-	}	
-	if (depthStencil)
-	{
-		GetDeviceContext()->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
-	else
+	if (depthStencil)
 	{
 		GetDeviceContext()->ClearDepthStencilView(m_CurrentDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
-	
 }
 

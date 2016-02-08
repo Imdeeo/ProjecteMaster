@@ -6,6 +6,7 @@
 CDynamicTexture::CDynamicTexture(const std::string &Name, int Width, int Height, bool CreateDepthStencilBuffer):
 m_Width(Width), m_Height(Height), m_CreateDepthStencilBuffer(CreateDepthStencilBuffer), m_DepthStencilBuffer(nullptr), m_DepthStencilView(nullptr)
 {
+	SetName(Name);
 	Init();
 }
 
@@ -14,6 +15,7 @@ CDynamicTexture::CDynamicTexture(const CXMLTreeNode &TreeNode) :m_DepthStencilBu
 	//<dynamic_texture name = "DepthMapTexture" texture_width_as_frame_buffer = "true" format_type = "R32F" / >
 	
 	std::string l_name = TreeNode.GetPszProperty("name");
+	SetName(l_name);
 	if (TreeNode.GetBoolProperty("texture_width_as_frame_buffer"))
 	{
 		m_Width = UABEngine.GetRenderManager()->GetContextManager()->GetWidth();

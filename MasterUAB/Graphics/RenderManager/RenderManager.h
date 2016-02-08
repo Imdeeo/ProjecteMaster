@@ -31,8 +31,8 @@ public:
 	void DisableAlphaBlendState();
 
 	//bool AddRenderableObjectToRenderList(CRenderableObject* _RenderableObject);
-	void UnsetRenderTargets();
-	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const*_RenderTargetViews,ID3D11DepthStencilView *_DepthStencilView);
+	/*void UnsetRenderTargets();
+	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const*_RenderTargetViews,ID3D11DepthStencilView *_DepthStencilView);*/
 
 	void Render();
 	void Clear(bool renderTarget, bool depthStencil);
@@ -53,8 +53,8 @@ private:
 
 	CDebugRender*					m_DebugRender;
 
-	ID3D11RenderTargetView* const	m_RenderTargetView;
-	ID3D11DepthStencilView*			m_DepthStencilView;
+	//ID3D11RenderTargetView* const	m_RenderTargetView;
+	//ID3D11DepthStencilView*			m_DepthStencilView;
 
 
 	size_t							m_CurrentRenderlistLength;

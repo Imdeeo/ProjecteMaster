@@ -9,5 +9,5 @@ CUnsetRenderTargetSceneRendererCommand::CUnsetRenderTargetSceneRendererCommand(C
 
 void CUnsetRenderTargetSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
-	UABEngine.GetRenderManager()->UnsetRenderTargets();
+	RenderManager.GetContextManager()->UnsetRenderTargets();
 }
