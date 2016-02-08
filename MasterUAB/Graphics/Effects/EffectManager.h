@@ -13,6 +13,8 @@
 
 class CLight;
 
+#define MAX_RAW_DATA_ELEMENTS 16
+
 class CEffectManager : public CTemplatedMapManager<CEffectTechnique>
 {
 private:
@@ -20,16 +22,22 @@ private:
 	CTemplatedMapManager<CEffectPixelShader> m_PixelShaders;
 	std::string m_Filename;
 
+	static Vect4f m_RawData[MAX_RAW_DATA_ELEMENTS];
+	
 public:
 	static CSceneEffectParameters m_SceneParameters;
 	static CAnimatedModelEffectParameters m_AnimatedModelEffectParameters;
 	static CLightEffectParameters m_LightParameters;
+
+	static void* GetRawData(){ return m_RawData; }
+	static void* AddMaterialParameter();
 	//static CEffectParameters m_Parameters;
-	//CrearRawData
+
+	static int m_RawDataCount;
 
 	CEffectManager();
 	virtual ~CEffectManager();
-		
+
 	void ReloadFile(){};
 	void Reload();
 	void ReloadShader();

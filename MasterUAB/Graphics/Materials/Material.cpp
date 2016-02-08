@@ -10,6 +10,7 @@ CMaterial::CMaterial(CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParame
 	std::string l_RenderableObjectTechnique = TreeNode.GetPszProperty("renderable_object_technique","");
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_RenderableObjectTechnique);
 	CXMLTreeNode material = TreeNode;
+	CEffectManager::m_RawDataCount = 0;
 	for (int i = 0; i < material.GetNumChildren(); ++i)
 	{
 		CXMLTreeNode l_Child = TreeNode(i);
@@ -68,5 +69,9 @@ void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 	for (int i = 0; i < m_Textures.size(); i++)
 	{
 		m_Textures[i]->Activate(i);
+	}
+	for (int i = 0; i < m_Parameters.size(); i++)
+	{
+		m_Parameters[i]->Apply();
 	}
 }
