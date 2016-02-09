@@ -59,55 +59,55 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 					l_Name = std::string(c);
 				}
 
-				if (l_Name == std::string("set_depth_stencil_state"))
+				if (l_Element.GetName() == std::string("set_depth_stencil_state"))
 				{
 					AddResource(l_Name, new CSetDepthStencilStateSceneRendererCommand(l_Element));
 				}
-				else if (l_Name == std::string("set_pool_renderable_objects_technique"))
+				else if (l_Element.GetName() == std::string("set_pool_renderable_objects_technique"))
 				{
 					AddResource(l_Name, new CSetPoolRenderableObjectsTechniqueSceneRendererCommand(l_Element));
 				}
-				else if (l_Name == std::string("set_matrices"))
+				else if (l_Element.GetName() == std::string("set_matrices"))
 				{
 					AddResource(l_Name, new CSetMatricesSceneRendererCommand(l_Element));
 				}
-				else if (l_Name == std::string("clear"))
+				else if (l_Element.GetName() == std::string("clear"))
 				{
 					AddResource(l_Name, new CClearSceneRendererCommand(l_Element));
 				}
-				else if (l_Name == std::string("set_light_constants"))
+				else if (l_Element.GetName() == std::string("set_light_constants"))
 				{
 					AddResource(l_Name, new CLightsSceneRendererCommand(l_Element));
 				}
-				else if (l_Name == std::string("render_layer"))
+				else if (l_Element.GetName() == std::string("render_layer"))
 				{
 					AddResource(l_Name, new CRenderLayerSceneRendererCommand(l_Element));
 				}
-				else if (l_Name == std::string("present"))
+				else if (l_Element.GetName() == std::string("present"))
 				{
 					AddResource(l_Name, new CPresentSceneRendererCommand(l_Element));
 				}
-				else if (l_Name == std::string("render_debug_grid"))
+				else if (l_Element.GetName() == std::string("render_debug_grid"))
 				{
 					AddResource(l_Name, new CRenderGridSceneRendererCommand(l_Element));
 				}
-				else if (l_Name == std::string("render_debug_lights"))
+				else if (l_Element.GetName() == std::string("render_debug_lights"))
 				{
 					AddResource(l_Name, new CRenderDebugLightsSceneRendererCommand(l_Element));
 				}
-				else if (l_Name == std::string("set_ant_tweak_bar"))
+				else if (l_Element.GetName() == std::string("set_ant_tweak_bar"))
 				{
 					AddResource(l_Name, new CRenderAntTweakBarSceneRendererCommand(l_Element));
 				}
-				else if (l_Name == std::string("render_draw_quad"))
+				else if (l_Element.GetName() == std::string("render_draw_quad"))
 				{
 					AddResource(l_Name, new CDrawQuadRendererCommand(l_Element));
 				}
-				else if (l_Name == std::string("set_render_target"))
+				else if (l_Element.GetName() == std::string("set_render_target"))
 				{
 					AddResource(l_Name, new CSetRenderTargetSceneRendererCommand(l_Element));
 				}
-				else if (l_Name == std::string("unset_render_target"))
+				else if (l_Element.GetName() == std::string("unset_render_target"))
 				{
 					AddResource(l_Name, new CUnsetRenderTargetSceneRendererCommand(l_Element));
 				}
