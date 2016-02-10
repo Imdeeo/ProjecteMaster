@@ -9,7 +9,6 @@
 
 class CRenderManager;
 class CRenderableObjectsManager;
-class CEffectManager;
 
 class CLight : public CNamed, public C3DElement
 {
