@@ -1,3 +1,6 @@
+#include "globals.fxh"
+#include "samplers.fxh"
+
 /*
 
 % Shadowmap Shader.

@@ -28,6 +28,10 @@ cbuffer LightsConstantBuffer : register (b1)
 	float4 m_LightAttenuationEndRange;
 	float4 m_LightIntensity;
 	float4 m_LightColor[MAX_LIGHTS_BY_SHADER];
+	float4 m_UseShadowMap;
+	float4 m_UseShadowMask;
+	float4x4 m_LightView[MAX_LIGHTS_BY_SHADER];
+	float4x4 m_LightProjection[MAX_LIGHTS_BY_SHADER];
 }
 
 cbuffer AnimatedModelConstantBuffer : register (b2)
