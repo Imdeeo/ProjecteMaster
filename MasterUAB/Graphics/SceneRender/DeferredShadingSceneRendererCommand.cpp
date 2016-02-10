@@ -21,11 +21,12 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
 	Vect4f v(1, 1, 1, 1);
 	_RenderManager.GetContextManager()->GetDeviceContext()->OMSetBlendState(m_EnabledAlphaBlendState,&v.x,0xffffffff);
 
+	for (int i = 0; i < m_StagedTextures.size(); ++i)
+				m_StagedTextures[i].Activate();
+
 	for (int j = 0; j < UABEngine.GetLightManager()->GetResourcesVector().size(); ++j)
 	{
 		UABEngine.GetEffectManager()->SetOneLightConstants(UABEngine.GetLightManager()->GetResourceById(j));
-		for (int i = 0; i < m_StagedTextures.size(); ++i)
-				m_StagedTextures[i].Activate();
 		_RenderManager.DrawScreenQuad(m_RenderableObjectTechnique->GetEffectTechnique(), NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	}
 }		
