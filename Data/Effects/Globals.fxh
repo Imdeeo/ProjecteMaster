@@ -6,7 +6,9 @@ cbuffer SceneConstantBuffer : register( b0 )
 {
 	float4x4 m_World;
 	float4x4 m_View;
+	float4x4 m_InverseView;	
 	float4x4 m_Projection;
+	float4x4 m_InverseProjection;
 	float4 m_CameraPosition;
 	float4 m_CameraRightVector;
 	float4 m_CameraUpVector;
