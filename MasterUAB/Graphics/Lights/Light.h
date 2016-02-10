@@ -9,6 +9,7 @@
 
 class CRenderManager;
 class CRenderableObjectsManager;
+class CEffectManager;
 
 class CLight : public CNamed, public C3DElement
 {
@@ -47,7 +48,7 @@ public:
 	UAB_BUILD_GET_BY_REFERENCE(Mat44f, ViewShadowMap);
 	UAB_BUILD_GET_BY_REFERENCE(Mat44f, ProjectionShadowMap);
 	UAB_BUILD_GET_BY_REFERENCE(std::vector<CRenderableObjectsManager *>, Layers);
-	//virtual void SetShadowMap(CRenderManager &RenderManager) = 0;
+	virtual void SetShadowMap(CRenderManager &RenderManager) = 0;
 };
 
 #endif //LIGHT_H

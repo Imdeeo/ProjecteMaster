@@ -12,14 +12,14 @@
 #define UAB_PI 3.14159265359f
 
 #define UAB_BUILD_GET_SET(Type, Variable) \
-private: \
+protected: \
 	Type			m_##Variable##; \
 public: \
 	void Set##Variable##(Type Variable) {m_##Variable##=Variable;} \
 	Type Get##Variable##() const {return m_##Variable##;}
 
 #define UAB_BUILD_GET_SET_AND_GET_ADDRESS(Type, Variable) \
-private: \
+protected: \
 	Type			m_##Variable##; \
 public: \
 	void Set##Variable##(Type Variable) { m_##Variable## = Variable; } \
@@ -27,13 +27,13 @@ public: \
 	Type Get##Variable##Address() const { return &m_##Variable##; }
 
 #define UAB_BUILD_GET_BY_REFERENCE(Type, Variable) \
-private: \
+protected: \
 	Type			m_##Variable##; \
 public: \
 	const Type & Get##Variable##() const { return m_##Variable##; }
 
 #define UAB_BUILD_GET_SET_BY_REFERENCE(Type, Variable) \
-private: \
+protected: \
 	Type			m_##Variable##; \
 public: \
 	void Set##Variable##(const Type &Variable) {m_##Variable##=Variable;} \

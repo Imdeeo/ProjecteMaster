@@ -28,7 +28,7 @@ const Mat44f & CDirectionalLight::GetTransform()
 
 	return m_TransformMatrix;
 }
-/*
+
 void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 {
 	m_ViewShadowMap.SetIdentity();
@@ -48,5 +48,5 @@ void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 	m_viewport.TopLeftX = 0.0f;
 	m_viewport.TopLeftY = 0.0f;
 	RenderManager.GetDeviceContext()->RSSetViewports(1, &m_viewport);
-	RenderManager.SetRenderTargets(1, l_RenderTargetViews, m_ShadowMap ->GetDepthStencilView());
-}*/
+	RenderManager.SetRenderTargets(1, l_RenderTargetViews, m_ShadowMap->GetDepthStencilView());
+}
