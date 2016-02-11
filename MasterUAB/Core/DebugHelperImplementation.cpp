@@ -1,6 +1,8 @@
 #include "DebugHelperImplementation.h"
 
 #include <cassert>
+#include <iostream>     // std::cout, std::ostream, std::ios
+#include <fstream>  
 
 CDebugHelperImplementation::CDebugHelperImplementation(void *device)
 {
@@ -22,23 +24,28 @@ CDebugHelperImplementation::CDebugHelperImplementation(void *device)
 
 		m_PosRotType = TwDefineStruct("POSITION_ORIENTATION", structMembers, 6, sizeof(SPositionOrientation), nullptr, nullptr);
 	}
-	
+	m_Log = "";
 }
 
 
 CDebugHelperImplementation::~CDebugHelperImplementation()
 {
 	// TODO: finalizar AntTweakBar
-	
+	std::filebuf l_LogFile;
+	l_LogFile.open("Data\\LogFile.txt", std::ios::out);
+	std::ostream os(&l_LogFile);
+	os << std::string(m_Log);
+	l_LogFile.close();
 	int status = TwTerminate();
 	assert(status);
 	
 }
 
-void CDebugHelperImplementation::Log(const std::string& text) const
+void CDebugHelperImplementation::Log(const std::string& text) 
 {
 	// TODO: OPCIONAL esto va bién tenerlo escribiendo en un fichero
-	OutputDebugString(("LOG: " + text).c_str());
+	//OutputDebugString(("LOG: " + text).c_str());
+	m_Log = m_Log + text + "\n";
 }
 
 void CDebugHelperImplementation::Render()
