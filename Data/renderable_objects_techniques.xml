@@ -18,4 +18,7 @@
 	<pool_renderable_object_technique name="deferred_shading_lighting">
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="deff_technique"/>	
 	</pool_renderable_object_technique>	
+	<pool_renderable_object_technique name="zblur_pool">
+		<renderable_object_technique name="zblur" technique="zblur_technique"/>
+	</pool_renderable_object_technique>	
 </renderable_object_techniques>
