@@ -6,6 +6,7 @@
 #include "Effects\Effect.h"
 #include "Engine\UABEngine.h"
 
+
 CDebugRender::CDebugRender(ID3D11Device* _Device)
 {
 	{
@@ -423,7 +424,7 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 
 	}
 
-	m_EffectTechnique = UABEngine.GetEffectManager()->GetResource("debug_render_technique");
+	m_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid");
 
 }
 

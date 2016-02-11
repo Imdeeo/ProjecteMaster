@@ -18,6 +18,7 @@ private:
 #include "Math\Vector3.h"
 
 #include "Effects\EffectTechnique.h"
+#include "RenderableObjects\PoolRenderableObjectTechnique.h"
 
 class CEffect;
 
@@ -68,10 +69,10 @@ public:
 	Vect3f GetSphere10BSCenter() const { return m_Sphere_10SegBSCenter; }
 	Vect3f GetConeBSCenter() const { return m_ConeBSCenter; }
 
-	CEffectTechnique *	GetDebugTechnique() const { return m_EffectTechnique; }
+	CEffectTechnique *	GetDebugTechnique() const { return m_EffectTechnique->GetEffectTechnique(); }
 
 private:
-	CEffectTechnique				*m_EffectTechnique;
+	CRenderableObjectTechnique				*m_EffectTechnique;
 
 	CRenderableVertexs				*m_SimpleTriangle;
 	CRenderableVertexs				*m_ClassicBlendTriangle;
