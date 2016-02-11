@@ -126,6 +126,7 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				{
 					AddResource(l_Name, new CCaptureFrameBufferSceneRendererCommand(l_Element));
 				}
+
 			}
 		}
 	}
@@ -147,4 +148,5 @@ void CSceneRendererCommandManager::Execute(CRenderManager *RenderManager)
 	{
 		m_ResourcesVector[i]->Execute(*RenderManager);
 	}
+
 }
