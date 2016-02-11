@@ -15,6 +15,7 @@ CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(CXMLTre
 			unsigned int l_StagedId = l_Element.GetIntProperty("stage_id");
 			std::string l_TextureFile = l_Element.GetPszProperty("file");
 			//todo if load_file
+
 			AddStageTexture(l_StagedId,UABEngine.GetTextureManager()->GetTexture(l_TextureFile));
 		}
 		else if(l_Element.GetName() == std::string("dynamic_texture"))
@@ -57,6 +58,7 @@ void CStagedTexturedSceneRendererCommand::AddDynamicTexture(CXMLTreeNode & TreeN
 void CStagedTexturedSceneRendererCommand::AddCaptureFrameBufferTexture(CXMLTreeNode & TreeNode)
 {
 	m_CapturedFrameBufferTexture = new CCapturedFrameBufferTexture(TreeNode);
+	UABEngine.GetTextureManager()->AddResource(m_CapturedFrameBufferTexture->GetName(),m_CapturedFrameBufferTexture);
 }
 
 void CStagedTexturedSceneRendererCommand::CreateRenderTargetViewVector()
