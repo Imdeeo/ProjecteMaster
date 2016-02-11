@@ -6,9 +6,7 @@ date: 17122015
 
 */
 #include "Globals.fxh"
-
-Texture3D CubeTexture : register( t0 );
-SamplerState CubeSampler : register( s0 );
+#include "Samplers.fxh"
 
 	
 const float g_EnvironmentFactor = 1.0;
