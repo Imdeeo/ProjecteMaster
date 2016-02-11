@@ -8,6 +8,7 @@
 
 #define MAXBONES 40
 #define MAX_LIGHTS_BY_SHADER 4
+#define UAB_ID_SHADOW_MAP 0
 
 #define UAB_PI 3.14159265359f
 
