@@ -25,7 +25,7 @@
 	<set_depth_stencil_state enable_z_test="false" write_z_buffer="false"/>
 	<render_draw_quad active="true">
 		<texture stage_id="0" file="LightMapTexture" load_file="false"/>
-	</render_draw_quad>	
+	</render_draw_quad>
 
 	<set_pool_renderable_objects_technique pool="deferred_shading_lighting"/>
 	<render_deferred_shading>

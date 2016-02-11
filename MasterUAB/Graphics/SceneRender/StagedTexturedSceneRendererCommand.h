@@ -8,8 +8,7 @@
 class CDynamicTexture;
 class CCapturedFrameBufferTexture;
 
-class CStagedTexturedSceneRendererCommand :
-	public CSceneRendererCommand
+class CStagedTexturedSceneRendererCommand : public CSceneRendererCommand
 {
 protected:
 	class CStagedTexture
