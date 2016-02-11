@@ -17,6 +17,8 @@ void CApplyFiltersSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 	{
 		if (i == 0)
 			m_StagedTextures[0].Activate();
+		else
+			m_DynamicTextures[i-1]->Activate(0);
 		
 		l_ContextManager->GetDeviceContext()->OMSetRenderTargets(1, &m_RenderTargetViews[i], l_DepthStencilView);
 	}
