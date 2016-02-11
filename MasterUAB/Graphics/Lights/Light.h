@@ -5,11 +5,16 @@
 #include "Utils.h"
 #include "Math\Color.h"
 #include "3DElement\3DElement.h"
+#include "Texture\DynamicTexture.h"
 
 class CRenderManager;
+class CRenderableObjectsManager;
 
 class CLight : public CNamed, public C3DElement
 {
+protected:
+	CDynamicTexture *m_ShadowMap;
+	CTexture *m_ShadowMaskTexture;
 public:
 	enum TLightType
 	{
@@ -34,6 +39,15 @@ public:
 	static TLightType GetLightTypeByName(const std::string &StrLightType);
 
 	const Mat44f & GetTransform();
+
+	// Shadowmap
+	UAB_BUILD_GET_SET_AND_GET_ADDRESS(bool, GenerateShadowMap);
+	UAB_GET_PROPERTY_POINTER(CDynamicTexture, ShadowMap);
+	UAB_GET_PROPERTY_POINTER(CTexture, ShadowMaskTexture);
+	UAB_BUILD_GET_BY_REFERENCE(Mat44f, ViewShadowMap);
+	UAB_BUILD_GET_BY_REFERENCE(Mat44f, ProjectionShadowMap);
+	UAB_BUILD_GET_BY_REFERENCE(std::vector<CRenderableObjectsManager *>, Layers);
+	//virtual void SetShadowMap(CRenderManager &RenderManager) = 0;
 };
 
 #endif //LIGHT_H

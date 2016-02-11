@@ -69,7 +69,7 @@ public:
 
 	virtual void Render() {};
 
-	virtual void Log(const std::string& text) const {};
+	virtual void Log(const std::string& text) {};
 
 	virtual void RegisterBar(const SDebugBar& bar) {};
 	virtual void RemoveBar(const std::string& bar) {};

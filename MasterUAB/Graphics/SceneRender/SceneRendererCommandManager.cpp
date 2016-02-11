@@ -14,6 +14,8 @@
 #include "DrawQuadRendererCommand.h"
 #include "SetRenderTargetSceneRendererCommand.h"
 #include "UnsetRenderTargetSceneRendererCommand.h"
+#include "DeferredShadingSceneRendererCommand.h"
+#include "ApplyFiltersSceneRendererCommand.h"
 #include "CaptureFrameBufferSceneRendererCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
@@ -111,6 +113,14 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				else if (l_Element.GetName() == std::string("unset_render_target"))
 				{
 					AddResource(l_Name, new CUnsetRenderTargetSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("render_deferred_shading"))
+				{
+					AddResource(l_Name, new CDeferredShadingSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("apply_filters"))
+				{
+					AddResource(l_Name, new CApplyFiltersSceneRendererCommand(l_Element));
 				}
 				else if (l_Element.GetName() == std::string("capture_frame_buffer"))
 				{

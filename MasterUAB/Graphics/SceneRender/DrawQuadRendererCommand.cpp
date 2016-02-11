@@ -16,7 +16,7 @@ CDrawQuadRendererCommand::CDrawQuadRendererCommand(CXMLTreeNode &TreeNode) :CSta
 	}
 	else
 	{
-		m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("2d");
+		m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("MV_POSITION4_NORMAL_TEXTURE_VERTEX");
 	}
 }
 
@@ -26,7 +26,7 @@ CDrawQuadRendererCommand::~CDrawQuadRendererCommand(void)
 
 void CDrawQuadRendererCommand::Execute(CRenderManager &_RenderManager)
 {
-	if (Getactive())
+	if (Getactive())	
 	{
 		for (int i = 0; i < m_StagedTextures.size(); i++)
 			m_StagedTextures[i].Activate();

@@ -8,17 +8,17 @@
 class CCamera
 {	
 private:
-	Mat44f				m_View;
-	Mat44f				m_Projection;
+	Mat44f					m_View;
+	Mat44f					m_Projection;
 
 	Vect3f					m_Position;
 	Vect3f					m_LookAt;
 	Vect3f					m_Up;
 
-	float						m_FOV;
-	float						m_AspectRatio;
-	float						m_ZNear;
-	float						m_ZFar;
+	float					m_FOV;
+	float					m_AspectRatio;
+	float					m_ZNear;
+	float					m_ZFar;
 
 public:
 	enum TCameraType

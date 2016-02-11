@@ -74,7 +74,7 @@ public:
 	//void SetBaseColor(const CColor& _Color) { CEffectManager::m_LightParameters.m_LightColor = _Color; }
 	void SetWorldMatrix(const Mat44f& _Model) { CEffectManager::m_SceneParameters.m_World = _Model; }
 	void SetCamera(const Mat44f& _View, const Mat44f& _Projection) { CEffectManager::m_SceneParameters.m_View = _View; CEffectManager::m_SceneParameters.m_Projection = _Projection; }
-	void SetCamera(const CCamera& _Camera) { CEffectManager::m_SceneParameters.m_View = _Camera.GetView(); CEffectManager::m_SceneParameters.m_Projection = _Camera.GetProjection(); CEffectManager::m_SceneParameters.m_CameraPosition = _Camera.GetPosition(); }
+	void SetCamera(const CCamera& _Camera) { CEffectManager::m_SceneParameters.m_View = _Camera.GetView(); CEffectManager::m_SceneParameters.m_Projection = _Camera.GetProjection(); CEffectManager::m_SceneParameters.m_CameraPosition = _Camera.GetPosition(); CEffectManager::m_SceneParameters.m_CameraProjectionInfo = Vect4f(_Camera.GetZNear(), _Camera.GetZFar(), _Camera.GetFOV(), _Camera.GetAspectRatio()); }
 	//void SetDebugSize(float _Size) { CEffectManager::m_SceneParameters.m_DebugRenderScale = _Size; }
 
 	void Present();

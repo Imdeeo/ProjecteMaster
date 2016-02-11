@@ -54,7 +54,7 @@ void CCapturedFrameBufferTexture::Init(const std::string &_Name, unsigned int _W
 	l_texture2DDescription.SampleDesc.Quality=0;
 	l_texture2DDescription.Usage = D3D11_USAGE_DEFAULT;
 
-	HRESULT l_HR = l_Device->CreateTexture2D(&l_texture2DDescription, NULL, (ID3D11Texture2D**)(&m_Texture));
+	HRESULT l_HR = l_Device->CreateTexture2D(&l_texture2DDescription, NULL, &m_DataTexture);
 	if (FAILED(l_HR))
 	{
 		return;

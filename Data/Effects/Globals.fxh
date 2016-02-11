@@ -6,12 +6,15 @@ cbuffer SceneConstantBuffer : register( b0 )
 {
 	float4x4 m_World;
 	float4x4 m_View;
+	float4x4 m_InverseView;	
 	float4x4 m_Projection;
+	float4x4 m_InverseProjection;
 	float4 m_CameraPosition;
 	float4 m_CameraRightVector;
 	float4 m_CameraUpVector;
 	float4 m_BaseColor;
 	float4 m_Time;
+	float4 m_CameraProjectionInfo;
 }
 
 cbuffer LightsConstantBuffer : register (b1)
@@ -27,6 +30,10 @@ cbuffer LightsConstantBuffer : register (b1)
 	float4 m_LightAttenuationEndRange;
 	float4 m_LightIntensity;
 	float4 m_LightColor[MAX_LIGHTS_BY_SHADER];
+	float4 m_UseShadowMap;
+	float4 m_UseShadowMask;
+	float4x4 m_LightView[MAX_LIGHTS_BY_SHADER];
+	float4x4 m_LightProjection[MAX_LIGHTS_BY_SHADER];
 }
 
 cbuffer AnimatedModelConstantBuffer : register (b2)

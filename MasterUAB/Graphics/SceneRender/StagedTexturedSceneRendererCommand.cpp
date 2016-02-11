@@ -57,6 +57,7 @@ void CStagedTexturedSceneRendererCommand::AddDynamicTexture(CXMLTreeNode & TreeN
 void CStagedTexturedSceneRendererCommand::AddCaptureFrameBufferTexture(CXMLTreeNode & TreeNode)
 {
 	m_CapturedFrameBufferTexture = new CCapturedFrameBufferTexture(TreeNode);
+	UABEngine.GetTextureManager()->AddResource(m_CapturedFrameBufferTexture->GetName(), m_CapturedFrameBufferTexture);
 }
 
 void CStagedTexturedSceneRendererCommand::CreateRenderTargetViewVector()

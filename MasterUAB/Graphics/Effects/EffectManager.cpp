@@ -110,7 +110,6 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 	m_LightParameters.m_LightAttenuationEndRange[IdLight] = Light->GetEndRangeAttenuation();
 	m_LightParameters.m_LightIntensity[IdLight] = Light->GetIntensity();
 	m_LightParameters.m_LightColor[IdLight] = Light->GetColor();
-
 	switch (Light->GetType())
 	{	
 	case CLight::LIGHT_TYPE_SPOT:
@@ -142,6 +141,29 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 		{
 			SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
 		}
+	}
+}
+
+void CEffectManager::SetOneLightConstants(CLight *Light)
+{
+	m_LightParameters.m_LightEnabled[0] = Light->GetEnabled() ? 1 : 0;
+	m_LightParameters.m_LightType[0] = Light->GetType();
+	m_LightParameters.m_LightPosition[0] = Light->GetPosition();;
+	m_LightParameters.m_LightAttenuationStartRange[0] = Light->GetStartRangeAttenuation();
+	m_LightParameters.m_LightAttenuationEndRange[0] = Light->GetEndRangeAttenuation();
+	m_LightParameters.m_LightIntensity[0] = Light->GetIntensity();
+	m_LightParameters.m_LightColor[0] = Light->GetColor();
+	switch (Light->GetType())
+	{
+	case CLight::LIGHT_TYPE_SPOT:
+		m_LightParameters.m_LightAngle[0] = dynamic_cast<CSpotLight*>(Light)->GetAngle();
+		m_LightParameters.m_LightFallOffAngle[0] = dynamic_cast<CSpotLight*>(Light)->GetFallOff();
+	case CLight::LIGHT_TYPE_DIRECTIONAL:
+		m_LightParameters.m_LightDirection[0] = dynamic_cast<CDirectionalLight*>(Light)->GetDirection();
+		break;
+	case CLight::LIGHT_TYPE_OMNI:
+	default:
+		break;
 	}
 }
 
