@@ -18,6 +18,20 @@ public: \
 	void Set##Variable##(Type Variable) {m_##Variable##=Variable;} \
 	Type Get##Variable##() const {return m_##Variable##;}
 
+#define UAB_BUILD_GET_SET_AND_GET_ADDRESS(Type, Variable) \
+private: \
+	Type			m_##Variable##; \
+public: \
+	void Set##Variable##(Type Variable) { m_##Variable## = Variable; } \
+	Type Get##Variable##() const { return m_##Variable##; } \
+	Type Get##Variable##Address() const { return &m_##Variable##; }
+
+#define UAB_BUILD_GET_BY_REFERENCE(Type, Variable) \
+private: \
+	Type			m_##Variable##; \
+public: \
+	const Type & Get##Variable##() const { return m_##Variable##; }
+
 #define UAB_BUILD_GET_SET_BY_REFERENCE(Type, Variable) \
 private: \
 	Type			m_##Variable##; \
@@ -29,6 +43,9 @@ public: \
 public: \
 	Type Get##Variable##() const {return m_##Variable##;}
 
+#define UAB_GET_PROPERTY_POINTER(Type, Variable) \
+public: \
+	Type * Get##Variable##() const { return m_##Variable##; }
 
 #define UAB_GET_PROPERTY_H(Class, Type, Variable) \
 	public:\

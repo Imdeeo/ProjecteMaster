@@ -89,8 +89,7 @@ public:
 
 		l_DeviceContext->UpdateSubresource(l_SceneConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_SceneParameters), 0, 0 );
 		l_DeviceContext->UpdateSubresource(l_LightConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_LightParameters), 0, 0 );
-		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters)
-			, 0, 0);
+		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters), 0, 0);
 		l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferVS, 0, NULL, _Parameters, 0, 0);
 
 		ID3D11Buffer* VSBuffers[4] = { l_SceneConstantBufferVS, l_LightConstantBufferVS, l_AnimationConstantBufferVS, l_MaterialParametersConstantBufferVS };

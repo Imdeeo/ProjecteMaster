@@ -237,7 +237,6 @@ bool CEffectVertexShader::Load()
 	return CreateConstantBuffer();
 }
 
-
 bool CEffectVertexShader::Reload()
 {
 	Destroy();

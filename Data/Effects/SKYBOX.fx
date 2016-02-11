@@ -1,3 +1,5 @@
+/* Skybox cannot be made to work in fx composer (according to Jordi) */
+
 textureCUBE <float4> T0;
 
 samplerCUBE T0Sampler = sampler_state
