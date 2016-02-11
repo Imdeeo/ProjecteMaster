@@ -197,6 +197,9 @@
     <ClCompile Include="SceneRender\RenderAntTweakBarSceneRendereCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRender\ApplyFiltersSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -471,6 +474,9 @@
       <Filter>SceneRender</Filter>
     </ClInclude>
     <ClInclude Include="SceneRender\RenderAntTweakBarSceneRendereCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\ApplyFiltersSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>

@@ -137,5 +137,4 @@ void CSceneRendererCommandManager::Execute(CRenderManager *RenderManager)
 	{
 		m_ResourcesVector[i]->Execute(*RenderManager);
 	}
-
 }
