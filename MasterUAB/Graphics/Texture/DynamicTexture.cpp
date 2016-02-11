@@ -26,7 +26,7 @@ CDynamicTexture::CDynamicTexture(const CXMLTreeNode &TreeNode) :m_DepthStencilBu
 		m_Width = TreeNode.GetIntProperty("width");
 		m_Height = TreeNode.GetIntProperty("height");		
 	}	
-	m_CreateDepthStencilBuffer = TreeNode.GetBoolProperty("create_depth_stencil_buffer",false);
+	m_CreateDepthStencilBuffer = TreeNode.GetBoolProperty("create_depth_stencil_buffer",false);	
 	Init();
 }
 

@@ -18,8 +18,9 @@ void CApplyFiltersSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 		if (i == 0)
 			m_StagedTextures[0].Activate();
 		else
-			m_DynamicTextures[i-1]->Activate(0);
-		
+			m_DynamicTextures[i-1]->Activate(0);	
+
 		l_ContextManager->GetDeviceContext()->OMSetRenderTargets(1, &m_RenderTargetViews[i], l_DepthStencilView);
+		_RenderManager.DrawScreenQuad(m_Material->GetRenderableObjectTechnique()->GetEffectTechnique(), NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	}
 }
