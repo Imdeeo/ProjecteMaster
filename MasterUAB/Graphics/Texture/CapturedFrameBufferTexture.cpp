@@ -5,8 +5,9 @@
 
 CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(const CXMLTreeNode &_TreeNode)
 {
-	m_Name = _TreeNode.GetPszProperty("file");
-	if (_TreeNode.GetBoolProperty("texture_width_as_frame_buffer"))
+	m_Name = _TreeNode.GetPszProperty("name");
+	bool l_TextuerWidthAsFrameBuffer = _TreeNode.GetBoolProperty("texture_width_as_frame_buffer");
+	if (l_TextuerWidthAsFrameBuffer)
 	{
 		m_Width = UABEngine.GetRenderManager()->GetContextManager()->GetWidth();
 		m_Height = UABEngine.GetRenderManager()->GetContextManager()->GetHeight();
