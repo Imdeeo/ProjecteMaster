@@ -49,7 +49,6 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 }
 
 
-/*
 float4 spotLight(PS_INPUT IN)
 {	
 	// Factors in the final multiplication.
@@ -58,15 +57,22 @@ float4 spotLight(PS_INPUT IN)
 	float l_SpotAttenuation;
 	float P = 50;
 	float4 SpecularColor = float4(1, 1, 1, 1);
-	float3 Nn=normalize(IN.Normal);
+	//float3 Nn=normalize(IN.Normal);
+	float3 Nn = Texture2Normal(T2Texture.Sample(S2Sampler, IN.UV).xyz);
+	
+	float l_Depth=T3Texture.Sample(S3Sampler, IN.UV).r;
+	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
 	
 	// Intermediate values
-	float3 l_RayDirection = normalize(IN.Pixelpos - m_LightPosition[0]);
-	float l_Distance = distance(IN.Pixelpos, m_LightPosition[0]);
+	//float3 l_RayDirection = normalize(IN.Pixelpos - m_LightPosition[0]);
+	float3 l_RayDirection = normalize(l_WorldPosition - m_LightPosition[0]);
+	//float l_Distance = distance(IN.Pixelpos, m_LightPosition[0]);
+	float l_Distance = distance(l_WorldPosition, m_LightPosition[0]);
 	float l_DirectionContrib = dot(l_RayDirection, normalize(m_LightDirection[0]));
 	
 	// Diffusion
-	l_DiffuseContrib = dot(IN.Normal, -l_RayDirection);
+	//l_DiffuseContrib = dot(IN.Normal, -l_RayDirection);
+	l_DiffuseContrib = dot(Nn, -l_RayDirection);
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
 	
 	// Distance attenuation (linear)
@@ -76,14 +82,15 @@ float4 spotLight(PS_INPUT IN)
 	l_SpotAttenuation = 1 - saturate((acos(l_DirectionContrib) - m_LightAngleArray[0]/2) / (m_LightFallOffAngleArray[0]/2 - m_LightAngleArray[0]/2));
 	
 	// Specular
-	float3 cameraToVertex = normalize(m_CameraPosition.xyz - IN.Pixelpos);
+	//float3 cameraToVertex = normalize(m_CameraPosition.xyz - IN.Pixelpos);
+	float3 cameraToVertex = normalize(m_CameraPosition.xyz - l_WorldPosition);
 	float3 H = normalize(cameraToVertex - m_LightDirection[0]);
 	float4 specular = SpecularColor * ((m_LightColor[0].xyz, 1.0) * pow(dot(Nn, H), P) * l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation);
 	
 	float4 outLight = l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*(float4(m_LightColor[0].xyz, 1.0))*m_LightIntensityArray[0]+specular;
 	
 	return outLight;
-}*/
+}
 
 float4 directionalLight(PS_INPUT IN)
 {
@@ -108,18 +115,26 @@ float4 directionalLight(PS_INPUT IN)
 	return outLight;
 }
 
-/*float4 omniLight(PS_INPUT IN)
+float4 omniLight(PS_INPUT IN)
 {
 	float P = 50;
 	float4 SpecularColor = float4(1, 1, 1, 1);
 	float l_DiffuseContrib;
-	float3 Nn=normalize(IN.Normal);
-	l_DiffuseContrib = dot(IN.Normal, normalize(m_LightPosition[0]-IN.Pixelpos));
+	
+	float l_Depth=T3Texture.Sample(S3Sampler, IN.UV).r;
+	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
+	
+	//float3 Nn=normalize(IN.Normal);
+	float3 Nn=Texture2Normal(T2Texture.Sample(S2Sampler, IN.UV).xyz);
+	//l_DiffuseContrib = dot(IN.Normal, normalize(m_LightPosition[0]-IN.Pixelpos));
+	l_DiffuseContrib = dot(Nn, normalize(m_LightPosition[0]-l_WorldPosition));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
 
 	// Specular
-	float3 cameraToVertex = normalize(m_CameraPosition.xyz - IN.Pixelpos);
-	float3 lightToVertex = normalize(m_LightPosition[0].xyz - IN.Pixelpos);
+	//float3 cameraToVertex = normalize(m_CameraPosition.xyz - IN.Pixelpos);
+	float3 cameraToVertex = normalize(m_CameraPosition.xyz - l_WorldPosition);
+	// float3 lightToVertex = normalize(m_LightPosition[0].xyz - IN.Pixelpos);
+	float3 lightToVertex = normalize(m_LightPosition[0].xyz - l_WorldPosition);
 	float3 H = normalize(cameraToVertex - lightToVertex);
 	float4 specular = SpecularColor * ((m_LightColor[0].xyz, 1.0) * pow(dot(Nn, H), P) * l_DiffuseContrib);
 	
@@ -127,7 +142,7 @@ float4 directionalLight(PS_INPUT IN)
 	
 	return outLight;
 }
-*/
+
 float4 applyLights(PS_INPUT IN)
 {
 	float4 lightContrib=float4(0,0,0,1);
@@ -135,7 +150,7 @@ float4 applyLights(PS_INPUT IN)
 	{
 		if(m_LightTypeArray[0] == 0) //OMNI
 		{
-			//lightContrib = omniLight(IN);
+			lightContrib = omniLight(IN);
 		}
 		if(m_LightTypeArray[0] == 1) //DIRECTIONAL
 		{
@@ -143,7 +158,7 @@ float4 applyLights(PS_INPUT IN)
 		}
 		if(m_LightTypeArray[0] == 2) //SPOT
 		{
-			//lightContrib = spotLight(IN);
+			lightContrib = spotLight(IN);
 		}
 	}
 	return max(min(lightContrib,1),0);
