@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <renderable_object_techniques>
-	<pool_renderable_object_technique name="forward_shading">
-		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>	
+	<pool_renderable_object_technique name="forward_shading">		
+		<renderable_object_technique name="debug_lights" technique="render_lights_technique"/>
+		<renderable_object_technique name="debug_grid" technique="debug_render_technique"/>		
 		<renderable_object_technique name="animated" technique="animated_diffuse_technique"/>
 		<renderable_object_technique name="lights" technique="lights_technique"/>
-		<renderable_object_technique name="noise_and_vignetting" technique="noise_and_vignetting"/>
+		<renderable_object_technique name="noise_and_vignetting" technique="noise_and_vignetting"/>		
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="gBuffer">
 		<renderable_object_technique name="lights" technique="gBuffer_technique"/>
+		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="deferred_shading">
 		<default_technique vertex_type="MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX" technique="gbuffer_animated_diffuse_technique"/>
