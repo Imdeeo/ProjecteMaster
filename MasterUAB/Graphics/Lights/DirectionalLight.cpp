@@ -1,6 +1,7 @@
 #include "DirectionalLight.h"
 
 #include "XML\XMLTreeNode.h"
+#include "Engine\UABEngine.h"
 
 CDirectionalLight::CDirectionalLight() : CLight(),m_Direction(Vect3f(0.0f,0.0f,0.0f)) {}
 
@@ -12,6 +13,10 @@ CDirectionalLight::CDirectionalLight(CXMLTreeNode &TreeNode) : CLight(TreeNode)
 void CDirectionalLight::Render(CRenderManager *RenderManager)
 {
 	CLight::Render(RenderManager);
+	CRenderableVertexs* l_Line = RenderManager->GetDebugRender()->GetLine(m_Position, m_Position + (GetDirection() * GetEndRangeAttenuation()));
+	RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
+	l_Line->Render(RenderManager, UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique(), CEffectManager::GetRawData());
+	delete l_Line;
 }
 const Mat44f & CDirectionalLight::GetTransform()
 {
