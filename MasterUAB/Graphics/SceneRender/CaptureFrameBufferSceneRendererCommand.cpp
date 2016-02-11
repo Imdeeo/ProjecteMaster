@@ -15,5 +15,4 @@ CCaptureFrameBufferSceneRendererCommand::~CCaptureFrameBufferSceneRendererComman
 void CCaptureFrameBufferSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 {
 	m_CapturedFrameBufferTexture->Capture(0);
-	UABEngine.GetTextureManager()->AddResource(m_CapturedFrameBufferTexture->GetName(),m_CapturedFrameBufferTexture);
 }
