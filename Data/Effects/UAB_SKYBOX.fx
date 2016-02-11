@@ -1,22 +1,20 @@
 #include "Globals.fxh"
+#include "Samplers.fxh"
 
-Texture3D CubeTexture : register( t0 );
-SamplerState CubeSampler : register( s0 );
-
-struct TVertexVS
+struct VS_INPUT
 {
 	float3 Pos : POSITION;
 };
 
-struct TVertexPS
+struct PS_INPUT
 {
 	float4 Pos : SV_POSITION;
 	float3 UV : TEXCOORD0;
 };
 
-TVertexPS mainVS(TVertexVS IN)
+PS_INPUT mainVS(VS_INPUT IN)
 {
-	TVertexPS l_Output=(TVertexPS)0;
+	PS_INPUT l_Output=(PS_INPUT)0;
 	l_Output.UV=IN.Pos-float3(0.0, 0.5, 0.0);
 	l_Output.Pos=float4(m_CameraPosition.xyz+l_Output.UV*m_CameraProjectionInfo.y,1.0);
 	l_Output.Pos=mul(l_Output.Pos, m_View);
@@ -25,18 +23,8 @@ TVertexPS mainVS(TVertexVS IN)
 	return l_Output;
 }
 
-float4 mainPS(TVertexPS IN) : SV_Target
+float4 mainPS(PS_INPUT IN) : SV_Target
 {	
 	float3 outColor = tex3D(CubeSampler, IN.UV);
 	return float4(outColor,1);
-}
-
-technique technique0
-{
-	pass p0
-	{
-		CullMode = None;
-		VertexShader = compile vs_3_0 mainVS();
-		PixelShader = compile ps_3_0 mainPS();
-	}
 }
