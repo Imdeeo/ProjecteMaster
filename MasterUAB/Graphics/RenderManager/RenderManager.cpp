@@ -133,7 +133,7 @@ void CRenderManager::SetMatrixViewProjection()
 {
 	if (m_UseDebugCamera)
 	{
-		m_ContextManager->SetCamera(m_DebugCamera);
+		m_ContextManager->SetCamera(m_DebugCamera);		
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition = m_DebugCamera.GetPosition();
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector = m_DebugCamera.GetUp();
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = Vect4f(1, 1, 1, 1);
@@ -141,12 +141,12 @@ void CRenderManager::SetMatrixViewProjection()
 	else
 	{
 		m_ContextManager->SetCamera(m_CurrentCamera);
-		UABEngine.GetEffectManager()->m_SceneParameters.m_InverseView = UABEngine.GetEffectManager()->m_SceneParameters.m_View.Invert();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_InverseProjection = UABEngine.GetEffectManager()->m_SceneParameters.m_Projection.Invert();
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition = m_CurrentCamera.GetPosition();
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector = m_CurrentCamera.GetUp();
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = Vect4f(1, 1, 1, 1);
 	}
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseView = UABEngine.GetEffectManager()->m_SceneParameters.m_View.GetInverted();
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseProjection = UABEngine.GetEffectManager()->m_SceneParameters.m_Projection.GetInverted();
 }
 
 void CRenderManager::SetAntTweakBar()
