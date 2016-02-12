@@ -138,6 +138,10 @@ TVertexPS mainVS(TVertexVS IN)
 float4 spotLight(TVertexPS IN, uint LightIndex)
 {	
 	// Factors in the final multiplication.
+	float4 l_Out = float4(1,1,1,1);
+	#ifdef HAS_UV
+		l_Out = DiffuseTexture.Sample(LinearSampler, IN.UV);
+	#endif
 	float l_DiffuseContrib;
 	float l_DistanceAttenuation;
 	float l_SpotAttenuation;
@@ -165,13 +169,17 @@ float4 spotLight(TVertexPS IN, uint LightIndex)
 	float3 H = normalize(cameraToVertex - m_LightDirection[LightIndex]);
 	float3 specular = SpecularColor*m_LightColor[LightIndex]*pow(dot(Nn, H), P);
 	
-	float4 outLight = float4((l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*m_LightColor[LightIndex]*m_LightIntensityArray[LightIndex]+specular).xyz,1);
+	float4 outLight = l_Out*float4((l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*m_LightColor[LightIndex]*m_LightIntensityArray[LightIndex]+specular).xyz,1);
 	
 	return saturate(outLight);
 }
 
 float4 directionalLight(TVertexPS IN,uint LightIndex)
 {
+	float4 l_Out = float4(1,1,1,1);
+	#ifdef HAS_UV
+		l_Out = DiffuseTexture.Sample(LinearSampler, IN.UV);
+	#endif
 	float P = 50;
 	float4 SpecularColor = float4(1, 1, 1, 1);
 	float l_DiffuseContrib;
@@ -184,13 +192,17 @@ float4 directionalLight(TVertexPS IN,uint LightIndex)
 	float3 H = normalize(cameraToVertex - m_LightDirection[LightIndex]);
 	float3 specular = SpecularColor*m_LightColor[LightIndex]*pow(dot(Nn, H), P);
 	
-	float4 outLight = float4((l_DiffuseContrib*m_LightColor[LightIndex]*m_LightIntensityArray[LightIndex]+specular).xyz,1);
+	float4 outLight = l_Out*float4((l_DiffuseContrib*m_LightColor[LightIndex]*m_LightIntensityArray[LightIndex]+specular).xyz,1);
 	
 	return saturate(outLight);
 }
 
 float4 omniLight(TVertexPS IN, uint LightIndex)
 {
+	float4 l_Out = float4(1,1,1,1);
+	#ifdef HAS_UV
+		l_Out = DiffuseTexture.Sample(LinearSampler, IN.UV);
+	#endif
 	float P = 50;
 	float4 SpecularColor = float4(1, 1, 1, 1);
 	float l_DiffuseContrib;
@@ -204,7 +216,7 @@ float4 omniLight(TVertexPS IN, uint LightIndex)
 	float3 H = normalize(cameraToVertex + lightToVertex);
 	float3 specular = SpecularColor*m_LightColor[LightIndex]*pow(dot(Nn, H), P);
 	
-	float4 outLight = float4((l_DiffuseContrib*m_LightColor[LightIndex]*m_LightIntensityArray[LightIndex]+specular).xyz,1);
+	float4 outLight = l_Out*float4((l_DiffuseContrib*m_LightColor[LightIndex]*m_LightIntensityArray[LightIndex]+specular).xyz,1);
 	
 	return saturate(outLight);
 }
@@ -213,7 +225,11 @@ float4 applyLights(TVertexPS IN)
 #ifdef HAS_UV2
 	float4 lightContrib = LightMapTexture.Sample(LinearSampler2, IN.UV2);
 #else
-	float4 lightContrib = m_LightAmbient;
+	float4 l_Out = float4(1,1,1,1);
+	#ifdef HAS_UV
+		l_Out = DiffuseTexture.Sample(LinearSampler, IN.UV);
+	#endif
+	float4 lightContrib = m_LightAmbient*l_Out;
 #endif
 	for(uint i = 0;i<MAX_LIGHTS_BY_SHADER;i++)
 	{
@@ -239,10 +255,7 @@ float4 applyLights(TVertexPS IN)
 
 float4 mainPS(TVertexPS IN) : SV_Target
 {
-	float4 Out = float4(0,0,0,0);
-#ifdef HAS_UV
-	Out = DiffuseTexture.Sample(LinearSampler, IN.UV);
-#endif
+	float4 Out = float4(1,1,1,1);
 #ifdef HAS_COLOR
 	Out = IN.Color;
 #endif
