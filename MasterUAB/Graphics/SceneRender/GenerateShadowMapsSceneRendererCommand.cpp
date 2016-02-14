@@ -16,8 +16,7 @@ void CGenerateShadowMapsSceneRendererCommand::Execute(CRenderManager &_RenderMan
 {
 	/*
 		por cada luz si está activada y genera shadowmap
-		Matrices view y projection de cada luz con el método SetShadowMap
-		SetRenderTarget
+		Matrices view y projectionm, y SetRenderTarget de cada luz con el método SetShadowMap
 		Clear Depth
 		Pintar las capas de luces
 	*/
@@ -27,6 +26,8 @@ void CGenerateShadowMapsSceneRendererCommand::Execute(CRenderManager &_RenderMan
 	{
 		if(UABEngine.GetLightManager()->GetResourceById(i)->GetEnabled() && UABEngine.GetLightManager()->GetResourceById(i)->GetGenerateShadowMap()){
 			UABEngine.GetLightManager()->GetResourceById(i)->SetShadowMap(_RenderManager);
+			_RenderManager.Clear(false, true);
+			UABEngine.GetLightManager()->GetResourceById(i)->GetShadowMap();
 		}
 	}
 }
