@@ -5,7 +5,10 @@
 
 #include "XML\XMLTreeNode.h"
 
-CDirectionalLight::CDirectionalLight() : CLight(),m_Direction(Vect3f(0.0f,0.0f,0.0f)) {}
+CDirectionalLight::CDirectionalLight() : CLight(), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
+{
+	m_GenerateShadowMap = false;
+}
 
 CDirectionalLight::CDirectionalLight(CXMLTreeNode &TreeNode) : CLight(TreeNode)
 {
