@@ -67,5 +67,5 @@ float4 GetGaussianBlurFromSampler(Texture2D _Texture2D, SamplerState _SamplerSta
 
 float4 PSBlur(PS_INPUT IN) : SV_Target
 {
-	return float4(0,0,0,1);//GetGaussianBlurFromSampler(T0Texture, S0Sampler, IN.UV, 1/m_TextureSize, m_BlurScale);
+	return GetGaussianBlurFromSampler(T0Texture, S0Sampler, IN.UV, 1/m_TextureSize, m_BlurScale);
 }
