@@ -147,6 +147,7 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 		{
 			CLight* dummy = new CDirectionalLight();
 			dummy->SetEnabled(false);
+			dummy->SetGenerateShadowMap(false);
 			SetLightConstants(i,dummy);
 			delete dummy;
 		}

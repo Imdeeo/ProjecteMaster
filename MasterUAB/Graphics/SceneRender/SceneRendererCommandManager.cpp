@@ -15,6 +15,7 @@
 #include "SetRenderTargetSceneRendererCommand.h"
 #include "UnsetRenderTargetSceneRendererCommand.h"
 #include "DeferredShadingSceneRendererCommand.h"
+#include "GenerateShadowMapsSceneRendererCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -115,6 +116,10 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				else if (l_Element.GetName() == std::string("render_deferred_shading"))
 				{
 					AddResource(l_Name, new CDeferredShadingSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("generate_shadow_maps"))
+				{
+					AddResource(l_Name, new CGenerateShadowMapsSceneRendererCommand(l_Element));
 				}
 			}
 		}
