@@ -26,7 +26,7 @@ CDrawQuadRendererCommand::~CDrawQuadRendererCommand(void)
 
 void CDrawQuadRendererCommand::Execute(CRenderManager &_RenderManager)
 {
-	if (Getactive())	
+	if (Getactive())
 	{
 		for (int i = 0; i < m_StagedTextures.size(); i++)
 			m_StagedTextures[i].Activate();
