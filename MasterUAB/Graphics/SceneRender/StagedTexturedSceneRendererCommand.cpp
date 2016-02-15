@@ -31,7 +31,18 @@ CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(CXMLTre
 }
 
 CStagedTexturedSceneRendererCommand::~CStagedTexturedSceneRendererCommand(void)
-{
+{	
+	m_StagedTextures.clear();	
+
+	for(int i=0; i<m_DynamicTextures.size(); ++i)
+	{
+		UABEngine.GetTextureManager()->RemoveResource(m_DynamicTextures[i]->GetName());
+	}
+
+	m_DynamicTextures.clear();
+
+	//CHECKED_DELETE(m_CapturedFrameBufferTexture);
+	
 }
 
 void CStagedTexturedSceneRendererCommand::ActivateTextures()

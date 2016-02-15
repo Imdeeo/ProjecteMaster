@@ -121,12 +121,15 @@ float4 omniLight(PS_INPUT IN)
 	float4 SpecularColor = float4(1, 1, 1, 1);
 	float l_DiffuseContrib;
 	float4 l_albedo =T0Texture.Sample(S0Sampler, IN.UV);
+	
 	float l_Depth=T3Texture.Sample(S3Sampler, IN.UV).r;
 	//return float4(l_Depth,l_Depth,l_Depth,1);
 	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
-	
+	//return float4(l_WorldPosition/10, 1.0);
 	//float3 Nn=normalize(IN.Normal);
 	float3 Nn=Texture2Normal(T2Texture.Sample(S2Sampler, IN.UV).xyz);
+	//return float4(Nn, 1.0);
+	
 	//l_DiffuseContrib = dot(IN.Normal, normalize(m_LightPosition[0]-IN.Pixelpos));
 	l_DiffuseContrib = dot(Nn, normalize(m_LightPosition[0]-l_WorldPosition));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
@@ -167,5 +170,6 @@ float4 applyLights(PS_INPUT IN)
 
 float4 mainPS(PS_INPUT IN) : SV_Target
 {	
+	//return float4(m_InverseView[3].xyz,1);
 	return applyLights(IN);
 }

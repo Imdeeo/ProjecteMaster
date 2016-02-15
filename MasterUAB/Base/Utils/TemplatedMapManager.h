@@ -16,6 +16,16 @@ public:
 	{
 		Destroy();
 	}
+	void RemoveResource(const std::string &Name)
+	{
+		TMapResource::iterator it;	
+		it = m_Resources.find(Name);
+		if(it!=m_Resources.end())
+		{
+			delete it->second;
+			m_Resources.erase(it);          
+		}
+	}
 	virtual T * GetResource(const std::string &Name)
 	{
 		if(m_Resources.find(Name)==m_Resources.end())

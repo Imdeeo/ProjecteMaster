@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <effects>
+	<vertex_shader name="bloom_vs" file="Data/Effects/UAB_BLOOM.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BLOOM"/>
+	<pixel_shader name="bloom_ps" file="Data/Effects/UAB_BLOOM.fx" shader_model="ps_4_0" entry_point="PSBloom" preprocessor="HAS_BLOOM"/>
+	<effect_technique name="bloom_technique" vertex_shader="bloom_vs" pixel_shader="bloom_ps"/>
+	
+	<vertex_shader name="bloom_vs" file="Data/Effects/UAB_BLOOM.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BLUR"/>
+	<pixel_shader name="bloom_ps" file="Data/Effects/UAB_BLOOM.fx" shader_model="ps_4_0" entry_point="PSBlur" preprocessor="HAS_BLUR"/>
+	<effect_technique name="blur_bloom_technique" vertex_shader="bloom_vs" pixel_shader="bloom_ps"/>
+	
+	<vertex_shader name="bloom_vs" file="Data/Effects/UAB_BLOOM.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_COMBINE"/>
+	<pixel_shader name="bloom_ps" file="Data/Effects/UAB_BLOOM.fx" shader_model="ps_4_0" entry_point="PSBloomCombine" preprocessor="HAS_COMBINE"/>
+	<effect_technique name="bloom_combine_technique" vertex_shader="bloom_vs" pixel_shader="bloom_ps"/>
+	
+	<vertex_shader name="zblur_vs" file="Data/Effects/UAB_ZBLUR.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="zblur_ps" file="Data/Effects/UAB_ZBLUR.fx" shader_model="ps_4_0" entry_point="PSZBlur" preprocessor=""/>
+	<effect_technique name="zblur_technique" vertex_shader="zblur_vs" pixel_shader="zblur_ps"/>
+	
 	<vertex_shader name="blur_vs" file="Data/Effects/UAB_BLUR_MATERIAL.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="blur_ps" file="Data/Effects/UAB_BLUR_MATERIAL.fx" shader_model="ps_4_0" entry_point="PSBlur" preprocessor=""/>
-	<effect_technique name="zblur_technique" vertex_shader="blur_vs" pixel_shader="blur_ps"/>
+	<effect_technique name="blur_technique" vertex_shader="blur_vs" pixel_shader="blur_ps"/>
 
 	<vertex_shader name="deff_vs" file="Data/Effects/UAB_UBER_DEFERRED_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="deff_ps" file="Data/Effects/UAB_UBER_DEFERRED_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>

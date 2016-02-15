@@ -26,7 +26,7 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
 
 	for (int j = 0; j < UABEngine.GetLightManager()->GetResourcesVector().size(); ++j)
 	{
-		UABEngine.GetEffectManager()->SetOneLightConstants(UABEngine.GetLightManager()->GetResourceById(j));
+		UABEngine.GetEffectManager()->SetLightConstants(0,UABEngine.GetLightManager()->GetResourceById(j));
 		_RenderManager.DrawScreenQuad(m_RenderableObjectTechnique->GetEffectTechnique(), NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	}
 }		
