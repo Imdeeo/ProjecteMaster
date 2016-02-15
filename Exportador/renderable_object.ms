@@ -27,7 +27,7 @@ fn createInstanceMesh dir filename Objs=
 				GetYaw Objs[i].transform &yaw
 				GetPitch Objs[i].transform &pitch
 				GetRoll Objs[i].transform &roll
-				if (getUserProp Objs[i] physics_generate) then
+				if (getUserProp Objs[i] "physics_generate") then
 				(
 					format "\t<instance_mesh name=\"%\" layer =\"%\" core_name=\"%\" position=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" create_physics=\"true\" physics_type=\"%\" visible=\"%\"/>\n" Objs[i].name (getUserProp Objs[i] "layer") (getUserProp Objs[i] "core_name") pos[1] pos[2] pos[3] yaw pitch roll (getUserProp Objs[i] "physics_generate_type") true to:file
 				) else (
