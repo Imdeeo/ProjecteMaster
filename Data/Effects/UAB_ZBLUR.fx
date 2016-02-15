@@ -1,12 +1,4 @@
-/*
-
-% ZBlur Shader.
-
-date: 15022016
-
-*/
-
-#include "Globals.fxh"
+#include "globals.fxh"
 #include "Samplers.fxh"
 
 static float m_RawDataValues[64]=((float[64])m_RawData);
@@ -26,7 +18,8 @@ struct VS_INPUT
 
 struct PS_INPUT
 {
-	float4 Pos : POSITION;
+	float4 Pos : SV_POSITION;
+	float4 Color : COLOR0;
 	float2 UV : TEXCOORD0;
 };
 
@@ -73,11 +66,11 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 
 float4 PSZBlur(PS_INPUT IN) : SV_Target
 {
+	//return float4(1,0,0,1);
 	float4 l_SourceColor=T0Texture.Sample(S0Sampler, IN.UV);
 	float l_Depth=T2Texture.Sample(S2Sampler, IN.UV).r;
 	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
 	float3 l_CameraPosition=m_InverseView[3].xyz;
 	float l_Distance=length(l_WorldPosition-l_CameraPosition);
-	//return GetZBlurColor(l_Distance, T0Texture.Sample(S0Sampler, IN.UV), T1Texture.Sample(S1Sampler, IN.UV));
-	return float4(1,0,0,1);
+	return GetZBlurColor(l_Distance, T0Texture.Sample(S0Sampler, IN.UV), T1Texture.Sample(S1Sampler, IN.UV));	
 }
