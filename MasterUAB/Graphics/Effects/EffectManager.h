@@ -47,7 +47,6 @@ public:
 
 	void SetSceneConstants();
 	void SetLightConstants(unsigned int IdLight, CLight *Light);
-	void SetOneLightConstants(CLight *Light);
 	void SetLightsConstants(unsigned int MaxLights = MAX_LIGHTS_BY_SHADER);
 };
 
