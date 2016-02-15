@@ -38,7 +38,7 @@ public:
 	{
 		CHECKED_RELEASE(m_VertexBuffer);
 	}
-	bool Render(CRenderManager *RenderManager, CEffectTechnique	*EffectTechnique, void *Parameters)
+	bool Render(CRenderManager *RenderManager, CEffectTechnique	*EffectTechnique, void *_Parameters)
 	{
 		CEffectVertexShader *l_EffectVertexShader=EffectTechnique->GetVertexShader();
 		CEffectPixelShader *l_EffectPixelShader=EffectTechnique->GetPixelShader();
@@ -55,6 +55,7 @@ public:
 		ID3D11Buffer *l_SceneConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_LightConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_AnimationConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
+		ID3D11Buffer *l_MaterialParametersConstantBufferVS = l_EffectVertexShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
 
 		/*OJUCUIDAO*/
 		CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
@@ -62,32 +63,30 @@ public:
 		l_DeviceContext->OMSetDepthStencilState(l_ContextManager->GetDepthStencilState(CContextManager::DSS_DEPTH_ON), 0);
 		Vect4f v(1, 1, 1, 1);
 		l_DeviceContext->OMSetBlendState(l_ContextManager->GetBlendState(CContextManager::BLEND_CLASSIC), &v.x, 0xffffffff);
-
-
-		
+				
 		CEffectManager* l_EffectManagerInstance = UABEngine.GetEffectManager();
 
 		l_DeviceContext->UpdateSubresource(l_SceneConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_SceneParameters), 0, 0 );
 		l_DeviceContext->UpdateSubresource(l_LightConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_LightParameters), 0, 0 );
-		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters)
-			, 0, 0 );
-		ID3D11Buffer* VSBuffers[3] = {l_SceneConstantBufferVS,l_LightConstantBufferVS,l_AnimationConstantBufferVS};
-		l_DeviceContext->VSSetConstantBuffers(0, 3,VSBuffers);
+		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferVS, 0, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters), 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferVS, 0, NULL, _Parameters, 0, 0);
+		ID3D11Buffer* VSBuffers[4] = { l_SceneConstantBufferVS, l_LightConstantBufferVS, l_AnimationConstantBufferVS, l_MaterialParametersConstantBufferVS };
+		l_DeviceContext->VSSetConstantBuffers(0, 4,VSBuffers);
 
 		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
 		
 		ID3D11Buffer *l_SceneConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_LightConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_AnimationConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
-
+		ID3D11Buffer *l_MaterialParametersConstantBufferPS = l_EffectVertexShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
 
 		l_DeviceContext->UpdateSubresource(l_SceneConstantBufferPS, 0, NULL, &(l_EffectManagerInstance->m_SceneParameters), 0, 0 );
 		l_DeviceContext->UpdateSubresource(l_LightConstantBufferPS, 0, NULL, &(l_EffectManagerInstance->m_LightParameters), 0, 0 );
-		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferPS, 0, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters)
-			, 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_AnimationConstantBufferPS, 0, NULL, &(l_EffectManagerInstance->m_AnimatedModelEffectParameters), 0, 0 );
+		l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferPS, 0, NULL, _Parameters, 0, 0);
 
-		ID3D11Buffer* PSBuffers[3] = {l_SceneConstantBufferPS,l_LightConstantBufferPS,l_AnimationConstantBufferPS};
-		l_DeviceContext->PSSetConstantBuffers(0, 3, PSBuffers);
+		ID3D11Buffer* PSBuffers[4] = { l_SceneConstantBufferPS, l_LightConstantBufferPS, l_AnimationConstantBufferPS, l_MaterialParametersConstantBufferPS };
+		l_DeviceContext->PSSetConstantBuffers(0, 4, PSBuffers);
 
 		l_DeviceContext->Draw(m_VertexsCount, 0);
 		return true;
