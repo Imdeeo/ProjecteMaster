@@ -145,8 +145,10 @@ void CRenderManager::SetMatrixViewProjection()
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector = m_CurrentCamera.GetUp();
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = Vect4f(1, 1, 1, 1);
 	}
-	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseView = UABEngine.GetEffectManager()->m_SceneParameters.m_View.GetInverted();
-	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseProjection = UABEngine.GetEffectManager()->m_SceneParameters.m_Projection.GetInverted();
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseView = UABEngine.GetEffectManager()->m_SceneParameters.m_View;
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseView.Invert();
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseProjection = UABEngine.GetEffectManager()->m_SceneParameters.m_Projection;
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseProjection.Invert();
 }
 
 void CRenderManager::SetAntTweakBar()
