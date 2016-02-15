@@ -23,9 +23,9 @@
 	
 	<clear render_target="true" depth_stencil="false"/>
 	<set_depth_stencil_state enable_z_test="false" write_z_buffer="false"/>
-	<render_draw_quad active="true">
+	<!--<render_draw_quad active="true">
 		<texture stage_id="0" file="LightMapTexture" load_file="false"/>
-	</render_draw_quad>
+	</render_draw_quad>-->
 
 	<set_pool_renderable_objects_technique pool="deferred_shading_lighting"/>
 	<render_deferred_shading>
@@ -39,7 +39,7 @@
 		<capture_texture name="CapturedZBlurTexture" texture_width_as_frame_buffer="true"/>
 	</capture_frame_buffer>
 	
-	<set_pool_renderable_objects_technique pool="zblur_pool"/>
+	<!--<set_pool_renderable_objects_technique pool="zblur_pool"/>
 	<apply_filters>
 		<texture stage_id="0" file="CapturedZBlurTexture"/>
 		<dynamic_texture name="StartZBlur" width="512" height="512" material="GUIMaterial"/>
@@ -47,12 +47,12 @@
 		<dynamic_texture name="ZBlur2" width="512" height="512" material="BlurMaterial"/>
 		<dynamic_texture name="ZBlur1" width="512" height="512" material="BlurMaterial"/>
 		<dynamic_texture name="ZBlur" width="512" height="512" material="BlurMaterial"/>
-	</apply_filters>
+	</apply_filters>-->
 	
 	<!--<render_draw_quad material="NoiseAndVignettingMaterial" active="true">
 		<texture stage_id="0" file="Data/GUI/Textures/noise.dds" load_file="true"/>
 		<texture stage_id="1" file="Data/GUI/Textures/vignetting.dds" load_file="true"/>
-	</render_draw_quad>-->
+	</render_draw_quad>-->"/>
 	<set_pool_renderable_objects_technique pool="forward_shading"/>	
 	<set_ant_tweak_bar/>	
 	<render_debug_grid/>
