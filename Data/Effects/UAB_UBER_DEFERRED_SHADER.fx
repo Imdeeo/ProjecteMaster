@@ -94,7 +94,7 @@ float4 spotLight(PS_INPUT IN)
 
 float4 directionalLight(PS_INPUT IN)
 {
-	float P = 5;
+	float P = 50;
 	float4 SpecularColor = float4(1, 1, 1, 1);
 	float l_DiffuseContrib;
 	float3 Nn=Texture2Normal(T2Texture.Sample(S2Sampler, IN.UV).xyz);
@@ -120,8 +120,9 @@ float4 omniLight(PS_INPUT IN)
 	float P = 50;
 	float4 SpecularColor = float4(1, 1, 1, 1);
 	float l_DiffuseContrib;
-	
+	float4 l_albedo =T0Texture.Sample(S0Sampler, IN.UV);
 	float l_Depth=T3Texture.Sample(S3Sampler, IN.UV).r;
+	//return float4(l_Depth,l_Depth,l_Depth,1);
 	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
 	
 	//float3 Nn=normalize(IN.Normal);
@@ -138,7 +139,7 @@ float4 omniLight(PS_INPUT IN)
 	float3 H = normalize(cameraToVertex - lightToVertex);
 	float4 specular = SpecularColor * ((m_LightColor[0].xyz, 1.0) * pow(dot(Nn, H), P) * l_DiffuseContrib);
 	
-	float4 outLight = l_DiffuseContrib*(float4(m_LightColor[0].xyz, 1.0))*m_LightIntensityArray[0]+specular;
+	float4 outLight = float4((l_albedo*l_DiffuseContrib*m_LightColor[0]*m_LightIntensityArray[0]).xyz,1);//+specular;
 	
 	return outLight;
 }
@@ -165,7 +166,6 @@ float4 applyLights(PS_INPUT IN)
 }
 
 float4 mainPS(PS_INPUT IN) : SV_Target
-{
-	float4 Out = T0Texture.Sample(S0Sampler, IN.UV)*IN.Color;
+{	
 	return applyLights(IN);
 }
