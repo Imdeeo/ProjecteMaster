@@ -21,6 +21,7 @@ CUABEngine::CUABEngine(void)
 
 CUABEngine::~CUABEngine(void)
 {
+	CHECKED_DELETE(m_SceneRendererCommandManager);
 	CHECKED_DELETE(m_TextureManager);
 	CHECKED_DELETE(m_RenderManager);
 	CHECKED_DELETE(m_ScriptManager);
@@ -34,10 +35,8 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_RenderManager);
 	CHECKED_DELETE(m_MaterialManager);
 	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
-	CHECKED_DELETE(m_EffectManager);
-	CHECKED_DELETE(m_TextureManager);
+	CHECKED_DELETE(m_EffectManager);	
 	CHECKED_DELETE(m_PhysXManager);
-	CHECKED_DELETE(m_SceneRendererCommandManager);
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
