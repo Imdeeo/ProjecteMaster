@@ -10,7 +10,6 @@ CTexture::CTexture(): CNamed(""),
 {
 }
 
-
 CTexture::~CTexture(void)
 {
 }
