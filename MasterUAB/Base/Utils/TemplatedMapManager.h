@@ -50,6 +50,21 @@ public:
 		m_Resources[Name] = Resource;
 		return true;
 	}
+	virtual bool AddUpdateResource(const std::string &Name, T *Resource)
+	{
+		if (m_Resources.find(Name) != m_Resources.end())
+		{
+			*(m_Resources[Name]) = *(Resource);
+			return true;
+		}
+		if (Resource == nullptr)
+		{
+			printf("CMapManager error: Recurs NULL\n");
+			return false;
+		}
+		m_Resources[Name] = Resource;
+		return true;
+	}
 	void Destroy()
 	{
 		typedef TMapResource::iterator it_type;
@@ -66,6 +81,23 @@ public:
 	TMapResource & GetResourcesMap()
 	{
 		return m_Resources;
+	}
+	bool RemoveAllBut(std::map<std::string, std::string> _Names)
+	{
+		std::vector<std::string> l_NamesToRemove;
+		typedef TMapResource::iterator it_type;
+		for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
+		{
+			if (_Names.find(iterator->first) == _Names.end())
+			{
+				l_NamesToRemove.push_back(iterator->first);
+			}
+		}
+		for (int i = 0; i < l_NamesToRemove.size(); i++)
+		{
+			RemoveResource(l_NamesToRemove[i]);
+		}
+		return true;
 	}
 };
 
