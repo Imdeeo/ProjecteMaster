@@ -19,7 +19,7 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
  	if (m_EnabledAlphaBlendState == nullptr)
 		return;
 	Vect4f v(1, 1, 1, 1);
-	_RenderManager.GetContextManager()->GetDeviceContext()->OMSetBlendState(m_EnabledAlphaBlendState,&v.x,0xffffffff);
+	_RenderManager.GetContextManager()->GetDeviceContext()->OMSetBlendState(m_EnabledAlphaBlendState, NULL, 0xffffffff);
 
 	for (int i = 0; i < m_StagedTextures.size(); ++i)
 				m_StagedTextures[i].Activate();
@@ -29,4 +29,5 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
 		UABEngine.GetEffectManager()->SetLightConstants(0,UABEngine.GetLightManager()->GetResourceById(j));
 		_RenderManager.DrawScreenQuad(m_RenderableObjectTechnique->GetEffectTechnique(), NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	}
-}		
+	_RenderManager.GetContextManager()->GetDeviceContext()->OMSetBlendState(NULL, NULL, 0xffffffff);
+}	
