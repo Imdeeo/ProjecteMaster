@@ -15,12 +15,9 @@
 #include "SetRenderTargetSceneRendererCommand.h"
 #include "UnsetRenderTargetSceneRendererCommand.h"
 #include "DeferredShadingSceneRendererCommand.h"
-<<<<<<< HEAD
 #include "ApplyFiltersSceneRendererCommand.h"
 #include "CaptureFrameBufferSceneRendererCommand.h"
-=======
 #include "GenerateShadowMapsSceneRendererCommand.h"
->>>>>>> shadowmap
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -122,7 +119,6 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				{
 					AddResource(l_Name, new CDeferredShadingSceneRendererCommand(l_Element));
 				}
-<<<<<<< HEAD
 				else if (l_Element.GetName() == std::string("apply_filters"))
 				{
 					AddResource(l_Name, new CApplyFiltersSceneRendererCommand(l_Element));
@@ -131,13 +127,10 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				{
 					AddResource(l_Name, new CCaptureFrameBufferSceneRendererCommand(l_Element));
 				}
-
-=======
 				else if (l_Element.GetName() == std::string("generate_shadow_maps"))
 				{
 					AddResource(l_Name, new CGenerateShadowMapsSceneRendererCommand(l_Element));
 				}
->>>>>>> shadowmap
 			}
 		}
 	}
