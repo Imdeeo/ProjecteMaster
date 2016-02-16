@@ -8,6 +8,7 @@ class COmniLight : public CLight
 public:
 	COmniLight();
 	COmniLight(CXMLTreeNode &TreeNode);
+	void SetShadowMap(CRenderManager &RenderManager);
 };
 
 #endif //OMNI_LIGHT_H

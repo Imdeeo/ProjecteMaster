@@ -50,7 +50,7 @@ fn createCameras dir Objs =
 					(
 						cameraLookAt = at time j Objs[i].target.pos
 					) else (
-						mat3xvect3 cameraRotation (-y_axis) &cameraLookAt
+						mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
 						cameraLookAt += cameraTranslation
 					)
 					TranslationToRH &cameraUp
@@ -67,7 +67,7 @@ fn createCameras dir Objs =
 				(
 					cameraLookAt = Objs[i].target.pos
 				) else (
-					mat3xvect3 cameraRotation (-y_axis) &cameraLookAt
+					mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
 					cameraLookAt += cameraTranslation
 				)
 				cameraType = getUserProp Objs[i] "camera_export_type"

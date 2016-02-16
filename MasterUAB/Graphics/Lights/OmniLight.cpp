@@ -5,3 +5,5 @@
 COmniLight::COmniLight():CLight(){}
 
 COmniLight::COmniLight(CXMLTreeNode &TreeNode) : CLight(TreeNode){}
+
+void COmniLight::SetShadowMap(CRenderManager &RenderManager){}

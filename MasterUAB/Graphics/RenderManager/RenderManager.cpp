@@ -175,15 +175,14 @@ void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture
 }
 
 
-/*void CRenderManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const *_RenderTargetViews,
+void CRenderManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_RenderTargetViews,
 	ID3D11DepthStencilView *_DepthStencilView)
 {
 	m_ContextManager->SetRenderTargets(_NumViews, _RenderTargetViews, _DepthStencilView);
 }
 
-void CRenderManager::UnsetRenderTargets()
+/*void CRenderManager::UnsetRenderTargets()
 {
 	GetContextManager()->Unset();
 	m_ContextManager->GetDeviceContext()->RSSetViewports(1, m_ContextManager->getViewPort());
-}
-*/
+}*/

@@ -15,6 +15,7 @@ class CLight : public CNamed, public C3DElement
 protected:
 	CDynamicTexture *m_ShadowMap;
 	CTexture *m_ShadowMaskTexture;
+	std::vector<CRenderableObjectsManager *> m_Layers;
 public:
 	enum TLightType
 	{
@@ -46,8 +47,8 @@ public:
 	UAB_GET_PROPERTY_POINTER(CTexture, ShadowMaskTexture);
 	UAB_BUILD_GET_BY_REFERENCE(Mat44f, ViewShadowMap);
 	UAB_BUILD_GET_BY_REFERENCE(Mat44f, ProjectionShadowMap);
-	UAB_BUILD_GET_BY_REFERENCE(std::vector<CRenderableObjectsManager *>, Layers);
-	//virtual void SetShadowMap(CRenderManager &RenderManager) = 0;
+	std::vector<CRenderableObjectsManager *> & GetLayers() {return m_Layers;}
+	virtual void SetShadowMap(CRenderManager &RenderManager) = 0;
 };
 
 #endif //LIGHT_H

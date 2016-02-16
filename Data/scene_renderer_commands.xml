@@ -4,9 +4,14 @@
 	<set_light_constants/>
 	<set_matrices/>
 	
+<<<<<<< HEAD
 	<!--FORWARD<clear render_target="true" depth_stencil="true"/>
 	<set_pool_renderable_objects_technique pool="forward_shading"/>
 	<render_layer layer="solid" active="true"/>-->
+=======
+	<set_pool_renderable_objects_technique pool="generate_shadow_map"/>
+	<generate_shadow_maps/>
+>>>>>>> shadowmap
 	
 	<set_render_target name="deferred_multiple_render_target">
 		<dynamic_texture name="DiffuseMapTexture" texture_width_as_frame_buffer="true" create_depth_stencil_buffer="false"/>

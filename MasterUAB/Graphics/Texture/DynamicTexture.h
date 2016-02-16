@@ -26,6 +26,8 @@ public:
 	bool Reload();
 	UAB_GET_PROPERTY(ID3D11RenderTargetView*, RenderTargetView);
 	UAB_GET_PROPERTY(ID3D11DepthStencilView*, DepthStencilView);
+	UAB_GET_PROPERTY(int, Width);
+	UAB_GET_PROPERTY(int, Height);
 };
 
 #endif
