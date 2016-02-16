@@ -3,10 +3,10 @@ fileIn "utils.ms"
 
 fn getMaterials arx Obj =
 (
-	local n_materials=1
-	if (Obj.material!=undefined)then
+	local n_materials = 1
+	if (Obj.material != undefined)then
 	(
-		if(classof(Obj.material)==Multimaterial)then
+		if(classOf(Obj.material)==Multimaterial)then
 		(
 			n_materials=Obj.material.numsubs
 			writeLong arx n_materials

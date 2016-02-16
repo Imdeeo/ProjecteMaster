@@ -10,16 +10,16 @@ fn writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere=
 	(
 		writeShort arx VtxID #unsigned
 		writeLong arx vertexs[i].count
-		for j=1 to vertexs[i].count do
+		for j = 1 to vertexs[i].count do
 		(
-			for k=1 to vertexs[i][j].count do
+			for k = 1 to vertexs[i][j].count do
 			(
 				writeFloat arx vertexs[i][j][k]
 			)
 		)
 		writeShort arx 16 #unsigned
 		writeLong arx indexs[i].count
-		for j=1 to indexs[i].count do
+		for j = 1 to indexs[i].count do
 		(
 			writeShort arx indexs[i][j] #unsigned
 		)
@@ -69,18 +69,18 @@ fn processFaces arx Obj &prog=
 	local UVID = 0x0000
 	local UV2ID = 0x0000
 	
-	local InvTransform=inverse obj.transform
-	local NumVtxs=getNumVerts l_Obj
+	local InvTransform = inverse obj.transform
+	local NumVtxs = getNumVerts l_Obj
 	local nFaces = getNumFaces l_Obj
 	local vertexs = #()
 	local indexs = #()
 	local vertexsDictionary = dotnetobject "System.Collections.Generic.Dictionary`2[System.String, System.UInt32]"
 	
 	local UABVtxsNormals = #()
-	for b=1 to NumVtxs do 
+	for b = 1 to NumVtxs do 
 	( 
 		UABVtxsNormals[b] = #() 
-		for t=1 to 32 do 
+		for t = 1 to 32 do 
 		( 
 			UABVtxsNormals[b][t] = point3 0 0 0  
 		) 
@@ -90,7 +90,7 @@ fn processFaces arx Obj &prog=
 	
 	if l_Obj.material != undefined then
 	(	
-		local l_HasMultimaterial = classof l_Obj.material==Multimaterial
+		local l_HasMultimaterial = classof l_Obj.material == Multimaterial
 		local l_TotalMaterials = 1
 		if l_HasMultimaterial then
 			l_TotalMaterials=l_Obj.material.count
@@ -104,20 +104,20 @@ fn processFaces arx Obj &prog=
 		append indexs #()
 	)
 	
-	local ffd=ffdbox()
+	local ffd = ffdbox()
     addModifier l_Obj ffd
-    BBMin=getModContextBBoxMin l_Obj ffd
-    BBMax=getModContextBBoxMax l_Obj ffd
+    BBMin = getModContextBBoxMin l_Obj ffd
+    BBMax = getModContextBBoxMax l_Obj ffd
     BSphere = #()
     lerp BBMin BBMax .5 &BSphere[1]
     BSphere[2] = 0
 	
 for i=1 to nFaces do
 (	
-	local l_IdMaterial = (mod (getFaceMatID l_Obj i) l_TotalMaterials)+1
-	local IdxsFace=getFace l_Obj i
-	local FaceNormal=getFaceNormal l_Obj i
-	local SmoothValue=getFaceSmoothGroup l_Obj i
+	local l_IdMaterial = (mod(getFaceMatID l_Obj i) l_TotalMaterials)+1
+	local IdxsFace = getFace l_Obj i
+	local FaceNormal = getFaceNormal l_Obj i
+	local SmoothValue = getFaceSmoothGroup l_Obj i
 	local isSmooth
 	
 	Vt1=(getVert l_Obj IdxsFace.x)*InvTransform
@@ -130,9 +130,9 @@ for i=1 to nFaces do
 	UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal UABVtxsNormals &Nm1
 	UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal UABVtxsNormals &Nm2
 	UABGetVertexNormal l_Obj IdxsFace.z SmoothValue FaceNormal UABVtxsNormals &Nm3
-	Nm1=normalize(Nm1)
-	Nm2=normalize(Nm2)
-	Nm3=normalize(Nm3)
+	Nm1 = normalize(Nm1)
+	Nm2 = normalize(Nm2)
+	Nm3 = normalize(Nm3)
 	
 	if l_Obj.material != undefined then
 	(
@@ -149,7 +149,7 @@ for i=1 to nFaces do
 		if classOf l_DiffMap == Bitmaptexture then
 		(
 			UVID = 0x0020
-			local IdxsMap=meshop.getMapFace l_Obj 1 i
+			local IdxsMap = meshop.getMapFace l_Obj 1 i
 			TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
 			TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
 			TUVMap3= meshop.getMapVert l_Obj 1 IdxsMap.z
@@ -158,7 +158,7 @@ for i=1 to nFaces do
 		if (classOf l_LightMap != undefined) and (meshop.getMapSupport l_Obj 2) then
 		(
 			UV2ID = 0x0040
-			local IdxsMap=meshop.getMapFace l_Obj 2 i
+			local IdxsMap = meshop.getMapFace l_Obj 2 i
 			T2UVMap1= meshop.getMapVert l_Obj 2 IdxsMap.x
 			T2UVMap2= meshop.getMapVert l_Obj 2 IdxsMap.y
 			T2UVMap3= meshop.getMapVert l_Obj 2 IdxsMap.z

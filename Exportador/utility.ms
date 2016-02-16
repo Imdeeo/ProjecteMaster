@@ -96,7 +96,6 @@ utility UABUtility "UABUtility" width:168 height:360
 
 	fn exportStaticMesh dir meshCheck =
 	(
-		
 		local meshToExport = #()
 		checkUserProp "render_export" &meshToExport
 		local coresToExport = #()
