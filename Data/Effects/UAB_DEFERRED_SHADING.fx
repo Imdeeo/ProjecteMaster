@@ -11,7 +11,7 @@ struct VS_INPUT
 struct PS_INPUT
 {
 	float4 Pos : SV_POSITION;
-	float4 Normal : NORMAL;
+	float3 Normal : NORMAL;
 	float2 UV : TEXCOORD0;
 	float4 HPos : TEXCOORD1;
 };
@@ -41,7 +41,7 @@ PS_INPUT mainVS(VS_INPUT IN)
 	l_Output.Pos = mul( l_Output.Pos, m_View );
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
 	l_Output.HPos = l_Output.Pos ;
-	l_Output.Normal = float4(normalize(IN.Normal),1);	
+	l_Output.Normal = normalize(mul(IN.Normal, (float3x3)m_World));
 	l_Output.UV = IN.UV;
 	
 	return l_Output;
@@ -57,10 +57,10 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	float m_SpecularFactor = 1.0f;
 	
 	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
-	float3 l_Normal = Normal2Texture(IN.Normal.xyz);
+	
 	l_Out.Target0 = float4(l_Albedo.xyz, m_SpecularFactor);
 	l_Out.Target1 = float4(l_Albedo.xyz*m_LightAmbient.xyz, m_SpecularPower);
-	l_Out.Target2 = float4(l_Normal, 1.0);
+	l_Out.Target2 = float4(Normal2Texture(IN.Normal), 1.0);
 	l_Out.Target3 = float4(l_Depth,l_Depth,l_Depth, 1.0f);
 		
 	return l_Out;

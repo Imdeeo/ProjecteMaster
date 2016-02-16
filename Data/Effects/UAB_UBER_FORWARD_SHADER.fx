@@ -156,7 +156,7 @@ float4 spotLight(TVertexPS IN, uint LightIndex)
 	
 	// Diffusion
 	l_DiffuseContrib = dot(IN.Normal, -l_RayDirection);
-	l_DiffuseContrib = max(0, l_DiffuseContrib);
+	l_DiffuseContrib = saturate(l_DiffuseContrib);
 	
 	// Distance attenuation (linear)
 	l_DistanceAttenuation = 1 - saturate((l_Distance - m_LightAttenuationStartRangeArray[LightIndex]) / (m_LightAttenuationEndRangeArray[LightIndex] - m_LightAttenuationStartRangeArray[LightIndex]));
@@ -167,9 +167,9 @@ float4 spotLight(TVertexPS IN, uint LightIndex)
 		// Specular
 	float3 cameraToVertex = normalize(m_CameraPosition.xyz - IN.Pixelpos);
 	float3 H = normalize(cameraToVertex - m_LightDirection[LightIndex]);
-	float3 specular = SpecularColor*m_LightColor[LightIndex]*pow(dot(Nn, H), P);
+	float3 specular = saturate(SpecularColor*m_LightColor[LightIndex]*pow(dot(Nn, H), P));
 	
-	float4 outLight = l_Out*float4((l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*m_LightColor[LightIndex]*m_LightIntensityArray[LightIndex]+specular).xyz,1);
+	float4 outLight = float4((l_Out.xyz*l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*m_LightColor[LightIndex]*m_LightIntensityArray[LightIndex]+specular).xyz,1);
 	
 	return saturate(outLight);
 }
@@ -185,14 +185,14 @@ float4 directionalLight(TVertexPS IN,uint LightIndex)
 	float l_DiffuseContrib;
 	float3 Nn=normalize(IN.Normal);
 	l_DiffuseContrib = dot(IN.Normal, (-m_LightDirection[LightIndex]));
-	l_DiffuseContrib = max(0, l_DiffuseContrib);
+	l_DiffuseContrib = saturate(l_DiffuseContrib);
 	
 	// Specular
 	float3 cameraToVertex = normalize(m_CameraPosition.xyz - IN.Pixelpos);
 	float3 H = normalize(cameraToVertex - m_LightDirection[LightIndex]);
-	float3 specular = SpecularColor*m_LightColor[LightIndex]*pow(dot(Nn, H), P);
+	float3 specular = saturate(SpecularColor*m_LightColor[LightIndex]*pow(dot(Nn, H), P));
 	
-	float4 outLight = l_Out*float4((l_DiffuseContrib*m_LightColor[LightIndex]*m_LightIntensityArray[LightIndex]+specular).xyz,1);
+	float4 outLight = float4((l_Out.xyz*l_DiffuseContrib*m_LightColor[LightIndex]*m_LightIntensityArray[LightIndex]+specular).xyz,1);
 	
 	return saturate(outLight);
 }
@@ -208,15 +208,15 @@ float4 omniLight(TVertexPS IN, uint LightIndex)
 	float l_DiffuseContrib;
 	float3 Nn=normalize(IN.Normal);
 	l_DiffuseContrib = dot(IN.Normal, normalize(m_LightPosition[LightIndex]-IN.Pixelpos));
-	l_DiffuseContrib = max(0, l_DiffuseContrib);
-
+	l_DiffuseContrib = saturate(l_DiffuseContrib);
+	
 	// Specular
 	float3 cameraToVertex = normalize(m_CameraPosition.xyz - IN.Pixelpos);
 	float3 lightToVertex = normalize(m_LightPosition[LightIndex].xyz - IN.Pixelpos);
 	float3 H = normalize(cameraToVertex + lightToVertex);
-	float3 specular = SpecularColor*m_LightColor[LightIndex]*pow(dot(Nn, H), P);
+	float3 specular = saturate(SpecularColor*m_LightColor[LightIndex]*pow(dot(Nn, H), P));
 	
-	float4 outLight = l_Out*float4((l_DiffuseContrib*m_LightColor[LightIndex]*m_LightIntensityArray[LightIndex]+specular).xyz,1);
+	float4 outLight = float4((l_Out.xyz*l_DiffuseContrib*m_LightColor[LightIndex]*m_LightIntensityArray[LightIndex]+specular).xyz,1);
 	
 	return saturate(outLight);
 }
