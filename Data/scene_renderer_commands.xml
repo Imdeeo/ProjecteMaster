@@ -38,7 +38,7 @@
 	<render_debug_grid/>
 	<render_debug_lights/>
 	
-	<capture_frame_buffer>
+	<!--<capture_frame_buffer>
 		<capture_texture name="CaptureFog" texture_width_as_frame_buffer="true"/>
 	</capture_frame_buffer>
 	
@@ -46,9 +46,9 @@
 	<render_draw_quad active="true" material="FogMaterial">
 		<texture stage_id="0" file="CaptureFog" load_file="false"/>
 		<texture stage_id="1" file="DepthMapTexture" load_file="false"/>
-	</render_draw_quad>
+	</render_draw_quad>-->
 	
-	<!--<capture_frame_buffer>
+	<capture_frame_buffer>
 		<capture_texture name="CapturedZBlurTexture" texture_width_as_frame_buffer="true"/>
 	</capture_frame_buffer>
 	
@@ -65,7 +65,7 @@
 	<set_pool_renderable_objects_technique pool="forward_shading"/>	
 	<render_draw_quad active="true">
 		<texture stage_id="0" file="BloomCombine" load_file="false"/>
-	</render_draw_quad>-->
+	</render_draw_quad>
 
 	<!--<render_draw_quad material="ZBlurMaterial" active="true">
 		<texture stage_id="0" file="CapturedZBlurTexture" load_file="false"/>
