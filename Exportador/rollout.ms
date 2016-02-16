@@ -25,12 +25,19 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			dropdownList LogicGenerateList "" pos:[120,272] width:136 height:21 items:#("stairs")
 		button GetButton "Get" pos:[24,320] width:112 height:32
 		button SetButton "Set" pos:[144,320] width:112 height:32
-	GroupBox grp2 "Lights" pos:[8,8] width:265 height:108 visible:false
-		label LightLabel "Nothing selected" pos:[24,32] width:232 height:24 visible:false
-		checkbox LightExportBox "Export" pos:[24,64] width:88 height:16 visible:false
-		checkbox LightEnabledBox "Enabled" pos:[24,84] width:88 height:16 visible:false enabled:false
-		button GetLightButton "Get" pos:[24,124] width:112 height:32 visible:false
-		button SetLightButton "Set" pos:[144,124] width:112 height:32 visible:false
+	GroupBox grp2 "Lights" pos:[8,8] width:265 height:208 visible:false
+		GroupBox LightGroup "Light" pos:[16,24] width:248 height:100
+			label LightLabel "Nothing selected" pos:[24,42] width:232 height:24 visible:false
+			checkbox LightExportBox "Export" pos:[24,68] width:88 height:16 visible:false
+			checkbox LightEnabledBox "Enabled" pos:[24,88] width:88 height:16 visible:false enabled:false
+		GroupBox ShadowmapGroup "Shadowmap" pos:[16,126] width:248 height:80
+			checkbox ShadowmapExportBox "Export" pos:[24,144] width:88 height:16 visible:false
+			dropdownList ShadowmapLayerList "" pos:[120,144] width:136 height:21 visible:false enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles")
+			label ShadowmapWHLabel "Width and height" pos:[24,171] width:88 height:16
+			edittext ShadowmapWText pos:[117,169] width:40 height:20 visible:false enabled:false text: "1024"
+			edittext ShadowmapHText pos:[157,169] width:40 height:20 visible:false enabled:false text: "1024"
+		button GetLightButton "Get" pos:[24,224] width:112 height:32 visible:false
+		button SetLightButton "Set" pos:[144,224] width:112 height:32 visible:false
 	GroupBox grp3 "Inactive" pos:[8,8] width:265 height:61 visible:false
 		label UnsupportedLabel "Current selection is not supported." pos:[24,32] width:232 height:24 visible:false
 	GroupBox grp4 "Cameras" pos:[8,8] width:265 height:88 visible:false
@@ -68,9 +75,16 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 	fn toggleLightsGroup bool =
 	(
 		grp2.visible = bool
+		LightGroup.visible = bool
 		LightLabel.visible = bool
 		LightExportBox.visible = bool
 		LightEnabledBox.visible = bool
+		ShadowmapGroup.visible = bool
+		ShadowmapExportBox.visible = bool
+		ShadowmapLayerList.visible = bool
+		ShadowmapWHLabel.visible = bool
+		ShadowmapWText.visible = bool
+		ShadowmapHText.visible = bool
 		GetLightButton.visible = bool
 		SetLightButton.visible = bool
 	)
@@ -111,6 +125,14 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 	fn toggleLights bool =
 	(
 		LightEnabledBox.enabled = bool
+	)
+	
+	fn toggleShadowmap bool =
+	(
+		ShadowmapLayerList.enabled = bool
+		ShadowmapWHLabel.enabled = bool
+		ShadowmapWText.enabled = bool
+		ShadowmapHText.enabled = bool
 	)
 	
 	fn toggleCameras bool =
@@ -165,7 +187,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			toggleUnsupportedGroup false
 			toggleCamerasGroup false
 			LightLabel.text = textLabel
-			UABSetProperties.height = 170
+			UABSetProperties.height = 268
 		) else (
 			loadUnsupportedSelection Objs
 		)
@@ -276,6 +298,10 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		(
 			setUserProp Obj "light_export" true
 			setUserProp Obj "light_enabled" true
+			setUserProp Obj "shadowmap_export" false
+			setUserProp Obj "shadowmap_layer" "solid"
+			setUserProp Obj "shadowmap_w" (1024 as string)
+			setUserProp Obj "shadowmap_h" (1024 as string)
 		) else if(SuperClassOf Obj == camera) then
 		(
 			setUserProp Obj "camera_export" true
@@ -368,6 +394,18 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			LightExportBox.checked = getUserProp Objs[1] "light_export"
 			toggleLights (LightExportBox.checked)
 			LightEnabledBox.checked = getUserProp Objs[1] "light_enabled"
+			ShadowmapExportBox.checked = getUserProp Objs[1] "shadowmap_export"
+			toggleShadowmap (ShadowmapExportBox.checked)
+			case getUserProp Objs[1] "shadowmap_layer" of
+				(
+					"solid": ShadowmapLayerList.selection = 1
+					"alpha_objects": ShadowmapLayerList.selection = 2
+					"alpha_blend_objects": ShadowmapLayerList.selection = 3
+					"particles": ShadowmapLayerList.selection = 4
+				)
+			ShadowmapWText.text = (getUserProp Objs[1] "shadowmap_w") as string
+			ShadowmapHText.text = (getUserProp Objs[1] "shadowmap_h") as string
+			
 		) else if(SuperClassOf Objs[1] == camera) then
 		(
 			CameraExportBox.checked = getUserProp Objs[1] "camera_export"
@@ -507,6 +545,31 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 				) else (
 					setUserProp Objs[i] "light_enabled" false
 				)
+				if ShadowmapExportBox.checked then
+				(
+					setUserProp Objs[i] "shadowmap_export" true
+				) else (
+					setUserProp Objs[i] "shadowmap_export" false
+				)
+				case ShadowmapLayerList.items[ShadowmapLayerList.selection] of
+					(
+						"solid": setUserProp Objs[i] "shadowmap_layer" "solid"
+						"alpha_objects": setUserProp Objs[i] "shadowmap_layer" "alpha_objects"
+						"alpha_blend_objects": setUserProp Objs[i] "shadowmap_layer" "alpha_blend_objects"
+						"particles": setUserProp Objs[i] "shadowmap_layer" "particles"
+					)
+				if ShadowmapWText.text == "" then
+				(
+					setUserProp Objs[i] "shadowmap_w" (1024 as string)
+				) else (
+					setUserProp Objs[i] "shadowmap_w" ShadowmapWText.text as string
+				)
+				if ShadowmapHText.text == "" then
+				(
+					setUserProp Objs[i] "shadowmap_h" (1024 as string)
+				) else (
+					setUserProp Objs[i] "shadowmap_h" ShadowmapHText.text as string
+				)
 			) else if(SuperClassOf Objs[i] == camera) then
 			(
 				if CameraExportBox.checked then
@@ -554,6 +617,16 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 	on LightExportBox changed  true do
 	(
 		toggleLights  true
+	)
+	
+	on ShadowmapExportBox changed  false do
+	(
+		toggleShadowmap  false
+	)
+	
+	on ShadowmapExportBox changed  true do
+	(
+		toggleShadowmap  true
 	)
 	
 	on CameraExportBox changed false do

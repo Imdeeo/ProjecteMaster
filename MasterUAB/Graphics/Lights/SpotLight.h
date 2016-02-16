@@ -13,8 +13,9 @@ public:
 
 	void Render(CRenderManager *_RenderManager);
 
-
 	const Mat44f & GetTransform();
+
+	void SetShadowMap(CRenderManager &RenderManager);
 };
 
 #endif //SPOT_LIGHT_H

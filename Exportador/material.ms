@@ -60,7 +60,7 @@ fn createMaterials dir filename Objs copyTexture =
 				(
 					if materialsDictionary.Item[mat[j].name]==undefined then
 					(
-						format "\t<material name=\"%\" effect_technique=\"diffuse_technique\">\n" mat[j].name to:file
+						format "\t<material name=\"%\" renderable_object_technique=\"diffuse_technique\">\n" mat[j].name to:file
 						materialsDictionary.Add mat[j].name "defined"
 						if mat[j].diffuseMap != undefined then  
 						(

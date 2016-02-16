@@ -1,9 +1,14 @@
 #include "DirectionalLight.h"
 
+#include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 
-CDirectionalLight::CDirectionalLight() : CLight(),m_Direction(Vect3f(0.0f,0.0f,0.0f)) {}
+CDirectionalLight::CDirectionalLight() : CLight(), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
+{
+}
 
 CDirectionalLight::CDirectionalLight(CXMLTreeNode &TreeNode) : CLight(TreeNode)
 {
@@ -33,7 +38,7 @@ const Mat44f & CDirectionalLight::GetTransform()
 
 	return m_TransformMatrix;
 }
-/*
+
 void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 {
 	m_ViewShadowMap.SetIdentity();
@@ -41,6 +46,8 @@ void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 	unsigned int l_ShadowMapWidth = m_ShadowMap->GetWidth();
 	unsigned int l_ShadowMapHeight = m_ShadowMap->GetHeight();
 	m_ProjectionShadowMap.SetFromOrtho(m_OrthoShadowMapSize.x, m_OrthoShadowMapSize.y, 0.1f, m_EndRangeAttenuation);
+	//UABEngine.GetEffectManager()->m_SceneParameters.m_View = m_ViewShadowMap;
+	//UABEngine.GetEffectManager()->m_SceneParameters.m_Projection = m_ProjectionShadowMap;
 	CEffectManager::m_SceneParameters.m_View = m_ViewShadowMap;
 	CEffectManager::m_SceneParameters.m_Projection = m_ProjectionShadowMap;
 	ID3D11RenderTargetView *l_RenderTargetViews[1];
@@ -53,5 +60,5 @@ void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 	m_viewport.TopLeftX = 0.0f;
 	m_viewport.TopLeftY = 0.0f;
 	RenderManager.GetDeviceContext()->RSSetViewports(1, &m_viewport);
-	RenderManager.SetRenderTargets(1, l_RenderTargetViews, m_ShadowMap ->GetDepthStencilView());
-}*/
+	RenderManager.SetRenderTargets(1, l_RenderTargetViews, m_ShadowMap->GetDepthStencilView());
+}
