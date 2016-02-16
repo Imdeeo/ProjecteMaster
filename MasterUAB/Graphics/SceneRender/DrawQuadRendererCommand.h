@@ -4,11 +4,13 @@
 #include "StagedTexturedSceneRendererCommand.h"
 
 class CRenderableObjectTechnique;
+class CMaterial;
 
 class CDrawQuadRendererCommand : public CStagedTexturedSceneRendererCommand
 {
 private:
 	CRenderableObjectTechnique* m_RenderableObjectTechnique;
+	CMaterial*					m_Material;
 public:
 	CDrawQuadRendererCommand(CXMLTreeNode &TreeNode);
 	virtual ~CDrawQuadRendererCommand(void);
