@@ -15,29 +15,18 @@ CGenerateShadowMapsSceneRendererCommand::~CGenerateShadowMapsSceneRendererComman
 
 void CGenerateShadowMapsSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 {
-	/*
-		por cada luz si está activada y genera shadowmap
-		Matrices view y projectionm de cada luz con el método SetShadowMap
-		SetRenderTarget
-		Clear Depth
-		Pintar las capas de luces
-	*/
-
-	int n_lights = UABEngine.GetLightManager()->GetResourcesVector().size();
+	CLightManager *l_LightManager=UABEngine.GetLightManager();
+	int n_lights = l_LightManager->GetResourcesVector().size();
 	for (size_t i = 0; i < n_lights; i++)
 	{
-		if(UABEngine.GetLightManager()->GetResourceById(i)->GetEnabled() && UABEngine.GetLightManager()->GetResourceById(i)->GetGenerateShadowMap()){
-			UABEngine.GetLightManager()->GetResourceById(i)->SetShadowMap(_RenderManager);
-			_RenderManager.SetMatrixViewProjection();
-			_RenderManager.GetContextManager()->UnsetRenderTargets();
-			/*CContextManager *l_ContextManager = _RenderManager.GetContextManager();
-			CDynamicTexture *l_DynamicTexture = new CDynamicTexture("shadowmap", 1024, 1024, false);
-			ID3D11DepthStencilView *l_DepthStencilView = l_DynamicTexture->GetDepthStencilView();
-			l_ContextManager->SetRenderTargets((UINT)1, l_DynamicTexture->GetRenderTargetView, l_DepthStencilView == NULL ? l_ContextManager->GetDepthStencilView() : l_DepthStencilView);
-			l_DynamicTexture->Activate(1);*/
+		CLight *l_Light=l_LightManager->GetResourceById(i);
+		if(l_Light->GetEnabled() && l_Light->GetGenerateShadowMap()){
+			l_Light->SetShadowMap(_RenderManager);
 			_RenderManager.Clear(false, true);
-			UABEngine.GetLightManager()->GetResourceById(i)->GetShadowMap()->Activate(0);
-			_RenderManager.DrawScreenQuad(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("2d")->GetEffectTechnique(), NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
+			std::vector<CRenderableObjectsManager *> &l_Layers=l_Light->GetLayers();
+			for(size_t j=0;j<l_Layers.size();++j)
+				l_Layers[j]->Render(&_RenderManager);
+			_RenderManager.GetContextManager()->UnsetRenderTargets();
 		}
 	}
 }
