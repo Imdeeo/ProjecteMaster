@@ -101,9 +101,5 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	//return float4(l_DistanceEyeToWorldPosition/10,l_DistanceEyeToWorldPosition/10,l_DistanceEyeToWorldPosition/10,1);
 	float4 l_FinalColor = T0Texture.Sample(S0Sampler,IN.UV);
 	//return l_FinalColor; // renderiza la textura tal cual, sin modificar
-	if(IN.UV.x<0.5)
-	{
-		clip(-1);
-	}
 	return float4(GetFogColor(l_DistanceEyeToWorldPosition, l_FinalColor.xyz),1);
 }
