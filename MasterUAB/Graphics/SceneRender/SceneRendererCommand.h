@@ -11,13 +11,11 @@ class CRenderManager;
 class CSceneRendererCommand :public CActive, public CNamed
 {
 protected:
-	CMaterial *m_Material;
-
+	std::vector<CMaterial*> m_Materials;
 public:
 	CSceneRendererCommand(CXMLTreeNode &TreeNode);
 	virtual ~CSceneRendererCommand();
 	virtual void Execute(CRenderManager &RenderManager) = 0;
-
 };
 
 #endif //SCENE_RENDERER_COMMAND_H
