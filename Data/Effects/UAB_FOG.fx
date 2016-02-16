@@ -48,6 +48,8 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 
 float CalcAttenuation(float Depth, float StartFog, float EndFog)
 {
+	
+float maxAttenuation = m_RawData[0].x;
 	if(Depth<EndFog){
 		return maxAttenuation*smoothstep(StartFog, EndFog, Depth);
 	} else {
@@ -57,7 +59,7 @@ float CalcAttenuation(float Depth, float StartFog, float EndFog)
 float4 CalcLinearFog(float Depth, float StartFog, float EndFog, float3 FogColor) 
 {
 	float l_Fog = CalcAttenuation(Depth, StartFog, EndFog);
-	return float4(FogColor, 1.0);
+	return float4(FogColor, l_Fog);
 } 
 float4 CalcExp2Fog(float Depth, float ExpDensityFog, float3 FogColor) 
 { 
@@ -73,9 +75,13 @@ float4 CalcExpFog(float Depth, float ExpDensityFog, float3 FogColor)
 } 
 float3 GetFogColor(float Depth, float3 CurrentColor) 
 { 
-	//float4 l_FogColor=CalcLinearFog(Depth, m_StartLinearFog, m_EndLinearFog, m_FogColor);
-return float3(1.0, 1.0, 1.0);
-//	return CurrentColor+l_FogColor.xyz*l_FogColor.a;
+
+float m_StartLinearFog = m_RawData[0].y;
+float m_EndLinearFog = m_RawData[0].z;
+float3 m_FogColor = ((float3)m_RawData[1].xyz);
+	float4 l_FogColor=CalcLinearFog(Depth, m_StartLinearFog, m_EndLinearFog, m_FogColor);
+	//return(l_FogColor.xyz*l_FogColor.a);
+	return saturate(CurrentColor+l_FogColor.xyz*l_FogColor.a);
 } 
 
 TVertexPS mainVS(TVertexVS IN)
@@ -90,14 +96,14 @@ TVertexPS mainVS(TVertexVS IN)
 
 float4 mainPS(TVertexPS IN) : SV_Target
 {
-	if(IN.UV.x<0.5)
-	{
-		clip(-1);
-	}
 	float3 l_worldPos = GetPositionFromZDepthView((T1Texture.Sample(S1Sampler,IN.UV).r),IN.UV, m_InverseView, m_InverseProjection);	
 	float l_DistanceEyeToWorldPosition=length(l_worldPos-m_InverseView[3].xyz);
 	//return float4(l_DistanceEyeToWorldPosition/10,l_DistanceEyeToWorldPosition/10,l_DistanceEyeToWorldPosition/10,1);
 	float4 l_FinalColor = T0Texture.Sample(S0Sampler,IN.UV);
 	//return l_FinalColor; // renderiza la textura tal cual, sin modificar
+	if(IN.UV.x<0.5)
+	{
+		clip(-1);
+	}
 	return float4(GetFogColor(l_DistanceEyeToWorldPosition, l_FinalColor.xyz),1);
 }
