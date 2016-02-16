@@ -35,6 +35,19 @@
 		<texture stage_id="3" file="DepthMapTexture" load_file="false"/>
 	</render_deferred_shading>
 	
+	<render_debug_grid/>
+	<render_debug_lights/>
+	
+	<capture_frame_buffer>
+		<capture_texture name="CaptureFog" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
+	
+	<set_pool_renderable_objects_technique pool="deferred_shading_lighting"/>
+	<render_draw_quad active="true" material="FogMaterial">
+		<texture stage_id="0" file="CaptureFog" load_file="false"/>
+		<texture stage_id="1" file="DepthMapTexture" load_file="false"/>
+	</render_draw_quad>
+	
 	<!--<capture_frame_buffer>
 		<capture_texture name="CapturedZBlurTexture" texture_width_as_frame_buffer="true"/>
 	</capture_frame_buffer>
@@ -81,8 +94,6 @@
 	</render_draw_quad>-->
 	
 	<set_ant_tweak_bar/>	
-	<render_debug_grid/>
-	<render_debug_lights/>
 	<present/>
 </scene_renderer_commands>
 
