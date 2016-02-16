@@ -51,20 +51,16 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 
 float4 spotLight(PS_INPUT IN)
 {	
-
-	float4 l_albedo =T0Texture.Sample(S0Sampler, IN.UV);
-
-	float P = 50;
-	float4 SpecularColor = float4(1, 1, 1, 1);
-
-	float l_Depth=T3Texture.Sample(S3Sampler, IN.UV).r;
-	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
-	float3 Nn=Texture2Normal(T2Texture.Sample(S2Sampler, IN.UV).xyz);
-	
 	// Factors in the final multiplication.
+	float4 l_albedo =T0Texture.Sample(S0Sampler, IN.UV);
 	float l_DiffuseContrib;
 	float l_DistanceAttenuation;
 	float l_SpotAttenuation;
+	float P = 50;
+	float4 SpecularColor = float4(1, 1, 1, 1);
+	float l_Depth=T3Texture.Sample(S3Sampler, IN.UV).r;
+	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
+	float3 Nn=Texture2Normal(T2Texture.Sample(S2Sampler, IN.UV).xyz);
 	
 	// Intermediate values
 	float3 l_RayDirection = normalize(l_WorldPosition - m_LightPosition[0]);
@@ -72,7 +68,7 @@ float4 spotLight(PS_INPUT IN)
 	float l_DirectionContrib = dot(l_RayDirection, normalize(m_LightDirection[0]));
 	
 	// Diffusion
-	l_DiffuseContrib = dot(l_WorldPosition, -l_RayDirection);
+	l_DiffuseContrib = dot(Nn, -l_RayDirection);
 	l_DiffuseContrib = saturate(l_DiffuseContrib);
 	
 	// Distance attenuation (linear)
@@ -83,13 +79,13 @@ float4 spotLight(PS_INPUT IN)
 	
 	// Specular
 	float3 cameraToVertex = normalize(m_CameraPosition.xyz - l_WorldPosition);
-	float3 lightToVertex = normalize(m_LightPosition[0].xyz - l_WorldPosition);
-	float3 H = normalize(cameraToVertex + lightToVertex);
-	float3 specular = float3(0,0,0); //saturate(SpecularColor*m_LightColor[0]*pow(dot(Nn, H), P));
+	float3 H = normalize(cameraToVertex - m_LightDirection[0]);
+	float3 specular = saturate(SpecularColor*m_LightColor[0]*pow(dot(Nn, H), P));
+	//specular *= l_SpotAttenuation;
 	
-	float4 outLight = float4((l_albedo.xyz*l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*m_LightColor[0]*m_LightIntensityArray[0]+specular).xyz,1);
+	float4 outLight = float4((l_albedo*l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*m_LightColor[0]*m_LightIntensityArray[0]+specular).xyz,0);
 	
-	return saturate(outLight);	
+	return saturate(outLight);
 }
 
 float4 directionalLight(PS_INPUT IN)
@@ -127,7 +123,6 @@ float4 omniLight(PS_INPUT IN)
 	float l_Depth=T3Texture.Sample(S3Sampler, IN.UV).r;
 	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
 	float3 Nn=Texture2Normal(T2Texture.Sample(S2Sampler, IN.UV).xyz);
-		
 	l_DiffuseContrib = dot(Nn, normalize(m_LightPosition[0]-l_WorldPosition));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
 	
