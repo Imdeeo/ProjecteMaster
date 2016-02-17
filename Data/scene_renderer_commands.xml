@@ -4,7 +4,7 @@
 	<set_light_constants/>
 	<set_matrices/>
 	
-	<set_pool_renderable_objects_technique pool="shadowmap_pool"/>
+	<set_pool_renderable_objects_technique pool="generate_shadowmap_pool"/>
 	<generate_shadow_maps/>
 	
 	<!--FORWARD<clear render_target="true" depth_stencil="true"/>
