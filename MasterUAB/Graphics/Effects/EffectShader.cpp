@@ -91,7 +91,10 @@ bool CEffectShader::LoadShader(const std::string &Filename, const std::string
 		return false;
 	}
 	if (pErrorBlob)
+	{
+		OutputDebugStringA((char*)pErrorBlob->GetBufferPointer());
 		pErrorBlob->Release();
+	}
 	return true;
 }
 
@@ -164,6 +167,8 @@ bool CEffectShader::Reload()
 
 ID3D11Buffer * CEffectShader::GetConstantBuffer(unsigned int IdBuffer)
 {
+	if(IdBuffer>=m_ConstantBuffers.size())
+		return NULL;
 	return m_ConstantBuffers[IdBuffer];
 }
 

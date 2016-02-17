@@ -9,11 +9,12 @@
 #include "SceneEffectParameters.h"
 #include "AnimatedModelEffectParameters.h"
 #include "LightEffectParameters.h"
+#include "Materials\MaterialParameter.h"
 #include <string.h>
 
 class CLight;
 
-#define MAX_RAW_DATA_ELEMENTS 16
+#define MAX_RAW_DATA_ELEMENTS 64
 
 class CEffectManager : public CTemplatedMapManager<CEffectTechnique>
 {
@@ -22,7 +23,7 @@ private:
 	CTemplatedMapManager<CEffectPixelShader> m_PixelShaders;
 	std::string m_Filename;
 
-	static Vect4f m_RawData[MAX_RAW_DATA_ELEMENTS];
+	static float m_RawData[MAX_RAW_DATA_ELEMENTS];
 	
 public:
 	static CSceneEffectParameters m_SceneParameters;
@@ -30,7 +31,7 @@ public:
 	static CLightEffectParameters m_LightParameters;
 
 	static void* GetRawData(){ return m_RawData; }
-	static void* AddMaterialParameter();
+	static void* AddMaterialParameter(CMaterialParameter::TMaterialType _MaterialType);
 	//static CEffectParameters m_Parameters;
 
 	static int m_RawDataCount;
