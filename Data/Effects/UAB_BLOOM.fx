@@ -3,20 +3,20 @@
 
 #ifdef HAS_BLOOM
 	// BLOOM
-	static float m_Threshold=m_RawData[0];
+	static float m_Threshold=m_RawDataArray[0];
 #endif	
 #ifdef HAS_BLUR
 	// BLUR
-	static float m_TextureSize=m_RawData[0];
-	static float m_BlurScale=m_RawData[1];
+	static float m_TextureSize=m_RawDataArray[0];
+	static float m_BlurScale=m_RawDataArray[1];
 #endif
 #ifdef HAS_COMBINE
 	// COMBINE
-	static float m_BloomActive=m_RawData[0];
-	static float m_BloomIntensity=m_RawData[1];
-	static float m_OriginalIntensity=m_RawData[2];
-	static float m_BloomSaturation=m_RawData[3];
-	static float m_OriginalSaturation=m_RawData[4];
+	static float m_BloomActive=m_RawDataArray[0];
+	static float m_BloomIntensity=m_RawDataArray[1];
+	static float m_OriginalIntensity=m_RawDataArray[2];
+	static float m_BloomSaturation=m_RawDataArray[3];
+	static float m_OriginalSaturation=m_RawDataArray[4];
 #endif
 
 struct VS_INPUT

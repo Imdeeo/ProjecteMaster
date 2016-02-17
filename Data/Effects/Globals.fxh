@@ -46,6 +46,8 @@ cbuffer MaterialConstantBuffer : register(b3)
 	float4 m_RawData[16];
 }
 
+static float m_RawDataArray[64]=((float[64])m_RawData);
+
 static float m_LightEnabledArray[4]=(float[4])m_LightEnabled;
 static float m_LightTypeArray[4]=(float[4])m_LightType;
 static float m_LightAngleArray[4]=(float[4])m_LightAngle;
