@@ -30,7 +30,8 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
 	{
 		CLight *l_Light = UABEngine.GetLightManager()->GetResourceById(j);
 		UABEngine.GetEffectManager()->SetLightConstants(0, l_Light);
-		l_Light->GetShadowMap()->Activate(l_ShadowmapStageId);
+		if(l_Light->GetGenerateShadowMap())
+			l_Light->GetShadowMap()->Activate(l_ShadowmapStageId);
 		_RenderManager.DrawScreenQuad(m_RenderableObjectTechnique->GetEffectTechnique(), NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	}
 	_RenderManager.GetContextManager()->GetDeviceContext()->OMSetBlendState(NULL, NULL, 0xffffffff);

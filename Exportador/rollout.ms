@@ -12,7 +12,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			checkbox RenderVisibleBox "Visible" pos:[24,96] width:88 height:16 enabled:false
 			checkbox RenderLayerBox "Layer" pos:[24,120] width:88 height:16 enabled:false
 			checkbox CinematicBox "Cinematic" pos:[24,144] width:88 height:16 enabled:false 
-			dropdownList RenderLayerList "" pos:[120,112] width:136 height:21 enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles")
+			dropdownList RenderLayerList "" pos:[120,112] width:136 height:21 enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles", "skybox")
 			--label AnimModelLabel "Anim. Model" pos:[24,152] width:88 height:16
 			edittext AnimModelText "AnimModelLabel" pos:[120,144] width:136 height:24 enabled:false
 		GroupBox PhysicsGroup "Physics" pos:[16,176] width:248 height:80
