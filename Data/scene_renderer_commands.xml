@@ -4,13 +4,8 @@
 	<set_light_constants/>
 	<set_matrices/>
 	
-<<<<<<< HEAD
-	<set_pool_renderable_objects_technique pool="generate_shadowmap_pool"/>
-	<generate_shadow_maps/>
-=======
-	<!--<set_pool_renderable_objects_technique pool="generate_shadow_map"/>
-	<generate_shadow_maps/>-->
->>>>>>> d6565c21989cb6e0c584d15e2d0acc9ad24da253
+	<!--<set_pool_renderable_objects_technique pool="generate_shadowmap_pool"/>
+	<generate_shadow_maps/> OJOCUIDAO, hace que no se vea nada -->
 	
 	<!--FORWARD<clear render_target="true" depth_stencil="true"/>
 	<set_pool_renderable_objects_technique pool="forward_shading"/>
