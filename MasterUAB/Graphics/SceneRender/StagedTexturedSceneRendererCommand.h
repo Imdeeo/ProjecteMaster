@@ -5,7 +5,7 @@
 #include "Texture\Texture.h"
 #include <vector>
 
-class CDynamicTexture;
+class CDynamicTextureManager;
 class CCapturedFrameBufferTexture;
 
 class CStagedTexturedSceneRendererCommand : public CSceneRendererCommand
@@ -29,7 +29,7 @@ protected:
 	};
 
 	std::vector<CStagedTexture>				m_StagedTextures;
-	std::vector<CDynamicTexture*>			m_DynamicTextures;
+	std::vector<CDynamicTextureManager*>	m_DynamicTextures;
 	CCapturedFrameBufferTexture*			m_CapturedFrameBufferTexture;
 	std::vector<ID3D11RenderTargetView*>	m_RenderTargetViews;
 

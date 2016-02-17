@@ -1,6 +1,6 @@
 #include "StagedTexturedSceneRendererCommand.h"
 #include "Engine\UABEngine.h"
-
+#include "Texture\DynamicTextureManager.h"
 #include "Texture\DynamicTexture.h"
 #include "Texture\CapturedFrameBufferTexture.h"
 
@@ -36,7 +36,7 @@ CStagedTexturedSceneRendererCommand::~CStagedTexturedSceneRendererCommand(void)
 
 	for(size_t i=0; i<m_DynamicTextures.size(); ++i)
 	{
-		UABEngine.GetTextureManager()->RemoveResource(m_DynamicTextures[i]->GetName());
+		UABEngine.GetTextureManager()->RemoveResource(m_DynamicTextures[i]->GetTexture()->GetName());
 	}
 
 	m_DynamicTextures.clear();
@@ -62,9 +62,9 @@ void CStagedTexturedSceneRendererCommand::AddDynamicTexture(CXMLTreeNode & TreeN
 {
 	std::string l_Name = TreeNode.GetPszProperty("name");
 	if (TreeNode.GetPszProperty("material") != NULL)
-		m_Materials.push_back(UABEngine.GetMaterialManager()->GetResource(TreeNode.GetPszProperty("material")));
+		m_Material = UABEngine.GetMaterialManager()->GetResource(TreeNode.GetPszProperty("material"));
 	CDynamicTexture* l_DynamicTexture = new CDynamicTexture(TreeNode);
-	m_DynamicTextures.push_back(l_DynamicTexture);
+	m_DynamicTextures.push_back(new CDynamicTextureManager(l_DynamicTexture,m_Material));
 	UABEngine.GetTextureManager()->AddResource(l_Name, l_DynamicTexture);
 }
 
@@ -78,6 +78,6 @@ void CStagedTexturedSceneRendererCommand::CreateRenderTargetViewVector()
 {
 	for(size_t i = 0; i<m_DynamicTextures.size(); ++i)
 	{
-		m_RenderTargetViews.push_back(m_DynamicTextures[i]->GetRenderTargetView());
+		m_RenderTargetViews.push_back(m_DynamicTextures[i]->GetTexture()->GetRenderTargetView());
 	}
 }
