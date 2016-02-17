@@ -36,4 +36,7 @@
 		<renderable_object_technique name="bloom_blur" technique="blur_bloom_technique"/>
 		<renderable_object_technique name="bloom_combine" technique="bloom_combine_technique"/>
 	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="shadowmap_pool">
+		<renderable_object_technique name="shadowmap" technique="shadowmap_technique"/>
+	</pool_renderable_object_technique>	
 </renderable_object_techniques>
