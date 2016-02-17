@@ -1,8 +1,8 @@
 #include "Globals.fxh"
 #include "Samplers.fxh"
 
-static float m_TextureSize=m_RawData[0];
-static float m_BlurScale=m_RawData[1];
+static float m_TextureSize=m_RawDataArray[0];
+static float m_BlurScale=m_RawDataArray[1];
 
 struct VS_INPUT
 {
