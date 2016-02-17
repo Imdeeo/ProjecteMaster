@@ -21,6 +21,8 @@ public:
 	float m_UseShadowMask[MAX_LIGHTS_BY_SHADER];
 	Mat44f m_LightView[MAX_LIGHTS_BY_SHADER];
 	Mat44f m_LightProjection[MAX_LIGHTS_BY_SHADER];
+	Vect4f m_MaxAttenuation_StartLinearFog_EndLinearFog;
+	Vect4f m_FogColor;
 };
 
 #endif //LIGHT_EFFECT_SHADER_H
