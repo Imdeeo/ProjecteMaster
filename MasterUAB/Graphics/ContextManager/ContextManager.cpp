@@ -535,6 +535,7 @@ void CContextManager::Present()
 void CContextManager::UnsetRenderTargets()
 {	
 	SetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+	//GetDeviceContext()->RSSetViewports(1, getViewPort());
 }
 
 void CContextManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_RenderTargetViews, ID3D11DepthStencilView *_DepthStencilView)

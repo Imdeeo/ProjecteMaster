@@ -20,6 +20,14 @@ CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)
 	m_Intensity = TreeNode.GetFloatProperty("intensity");
 	m_Enabled = TreeNode.GetBoolProperty("enabled");
 	m_GenerateShadowMap = TreeNode.GetBoolProperty("generate_shadow_map");
+	CXMLTreeNode l_Input = TreeNode["layer"];
+	if (l_Input.Exists())
+	{
+		if (l_Input.GetName() == std::string("layer"))
+		{
+			m_Layers.push_back(UABEngine.GetLayerManager()->GetResource(l_Input.GetPszProperty("layer")));
+		}
+	}
 	if (m_GenerateShadowMap){
 		m_ShadowMap = new CDynamicTexture("shadowmap", TreeNode.GetFloatProperty("shadow_map_width"), TreeNode.GetFloatProperty("shadow_map_height"), false);
 		m_ShadowMaskTexture = new CTexture();

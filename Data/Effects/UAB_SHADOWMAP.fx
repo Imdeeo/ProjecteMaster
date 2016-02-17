@@ -1,5 +1,4 @@
 #include "globals.fxh"
-#include "samplers.fxh"
 
 struct VS_INPUT
 {
@@ -12,9 +11,9 @@ struct PS_INPUT
 	float Depth : TEXCOORD0;
 };
 
-PS_INPUT VS(VS_INPUT IN)
+PS_INPUT mainVS(VS_INPUT IN)
 {
-	TVertexPS l_Out = (TVertexPS)0;
+	PS_INPUT l_Out = (PS_INPUT)0;
 	
 	l_Out.Pos = mul(float4(IN.Pos.xyz, 1.0), m_World);
 	l_Out.Pos = mul(l_Out.Pos, m_View);
@@ -24,7 +23,7 @@ PS_INPUT VS(VS_INPUT IN)
 	return l_Out;
 }
 
-float4 PS(PS_INPUT IN) : SV_Target
+float4 mainPS(PS_INPUT IN) : SV_Target
 {	
 	return float4(IN.Depth, IN.Depth, IN.Depth, 1.0f); 
 }

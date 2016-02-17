@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <effects>
-	<vertex_shader name="shadowmap_vs" file="Data/Effects/UAB_SHADOWMAP.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_COLOR_VERTEX" preprocessor=""/>
-	<pixel_shader name="shadowmap_ps" file="Data/Effects/UAB_SHADOWMAP.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
-	<effect_technique name="shadowmap_technique" vertex_shader="shadowmap_vs" pixel_shader="shadowmap_ps"/>
+	<vertex_shader name="generate_shadowmap_vs" file="Data/Effects/UAB_SHADOWMAP.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="generate_shadowmap_ps" file="Data/Effects/UAB_SHADOWMAP.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
+	<effect_technique name="generate_shadowmap_technique" vertex_shader="generate_shadowmap_vs" pixel_shader="generate_shadowmap_ps"/>
 	
 	<vertex_shader name="fog_vs" file="Data/Effects/UAB_FOG.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="fog_ps" file="Data/Effects/UAB_FOG.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
@@ -27,7 +27,11 @@
 	<vertex_shader name="blur_vs" file="Data/Effects/UAB_BLUR_MATERIAL.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="blur_ps" file="Data/Effects/UAB_BLUR_MATERIAL.fx" shader_model="ps_4_0" entry_point="PSBlur" preprocessor=""/>
 	<effect_technique name="blur_technique" vertex_shader="blur_vs" pixel_shader="blur_ps"/>
-
+	
+	<vertex_shader name="shadowmap_vs" file="Data/Effects/UAB_UBER_DEFERRED_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_SHADOWMAP"/>
+	<pixel_shader name="shadowmap_ps" file="Data/Effects/UAB_UBER_DEFERRED_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_SHADOWMAP"/>
+	<effect_technique name="shadowmap_technique" vertex_shader="shadowmap_vs" pixel_shader="shadowmap_ps"/>
+	
 	<vertex_shader name="deff_vs" file="Data/Effects/UAB_UBER_DEFERRED_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="deff_ps" file="Data/Effects/UAB_UBER_DEFERRED_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
 	<effect_technique name="deff_technique" vertex_shader="deff_vs" pixel_shader="deff_ps"/>

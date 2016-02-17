@@ -21,6 +21,10 @@
 	<pool_renderable_object_technique name="deferred_shading_lighting">
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="deff_technique"/>	
 		<renderable_object_technique name="fog" technique="fog_technique"/>	
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="deferred_shading_shadowmap">
+		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="shadowmap_technique"/>
+		<renderable_object_technique name="fog" technique="fog_technique"/>
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="blur_pool">
 		<renderable_object_technique name="blur" technique="blur_technique"/>
@@ -36,7 +40,7 @@
 		<renderable_object_technique name="bloom_blur" technique="blur_bloom_technique"/>
 		<renderable_object_technique name="bloom_combine" technique="bloom_combine_technique"/>
 	</pool_renderable_object_technique>
-	<pool_renderable_object_technique name="shadowmap_pool">
-		<renderable_object_technique name="shadowmap" technique="shadowmap_technique"/>
+	<pool_renderable_object_technique name="generate_shadowmap_pool">
+		<renderable_object_technique name="generate_shadowmap" technique="generate_shadowmap_technique"/>
 	</pool_renderable_object_technique>	
 </renderable_object_techniques>
