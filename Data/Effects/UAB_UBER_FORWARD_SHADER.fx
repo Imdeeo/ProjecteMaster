@@ -75,6 +75,11 @@ struct TVertexPS
 #ifdef HAS_UV2
 	float2 UV2 : TEXCOORD1;
 #endif
+#ifdef HAS_FOG
+#ifndef HAS_LIGHTS
+	float3 Pixelpos : TEXCOORD2;
+#endif
+#endif
 };
 
 
@@ -109,6 +114,10 @@ TVertexPS mainVS(TVertexVS IN)
 
 #ifdef HAS_LIGHTS
 	l_Out.Pixelpos = l_Out.Pos.xyz;
+#else
+#ifdef HAS_FOG
+	l_Out.Pixelpos = l_Out.Pos.xyz;
+#endif
 #endif
 	l_Out.Pos = mul(l_Out.Pos, m_View);
 	l_Out.Pos = mul(l_Out.Pos, m_Projection);
@@ -253,6 +262,43 @@ float4 applyLights(TVertexPS IN)
 }
 #endif
 
+#ifdef HAS_FOG
+
+float CalcAttenuation(float Depth, float StartFog, float EndFog)
+{
+	if(Depth<EndFog){
+		return maxAttenuation*smoothstep(StartFog, EndFog, Depth);
+	} else {
+		return maxAttenuation;
+	}
+}
+float CalcLinearFog(float Depth, float StartFog, float EndFog) 
+{
+	float l_Fog = CalcAttenuation(Depth, StartFog, EndFog);
+	return l_Fog;
+} 
+float CalcExp2Fog(float Depth, float ExpDensityFog) 
+{ 
+	const float LOG2E = 1.442695; // = 1 / log(2) 
+	float l_Fog = exp2(-ExpDensityFog * ExpDensityFog * Depth * Depth * LOG2E); 
+	return l_Fog;
+} 
+float CalcExpFog(float Depth, float ExpDensityFog) 
+{ 
+	const float LOG2E = 1.442695; // = 1 / log(2) 
+	float l_Fog = exp2(-ExpDensityFog * Depth * LOG2E); 
+	return l_Fog;
+} 
+float4 GetFogColor(float Depth) 
+{ 
+
+	float l_FogIntensity=CalcLinearFog(Depth, m_StartLinearFog, m_EndLinearFog);
+	//return(l_FogColor.xyz*l_FogColor.a);
+	return saturate(float4(m_FogColor,l_FogIntensity));
+} 
+
+#endif
+
 float4 mainPS(TVertexPS IN) : SV_Target
 {
 	float4 Out = float4(1,1,1,1);
@@ -262,8 +308,13 @@ float4 mainPS(TVertexPS IN) : SV_Target
 
 #ifdef HAS_LIGHTS
 #ifdef HAS_NORMAL
-	return Out*applyLights(IN);
+	Out = Out*applyLights(IN);
 #endif
+#endif
+#ifdef HAS_FOG
+	float l_DistanceEyeToWorldPosition=length(IN.PixelPos-m_InverseView[3].xyz);
+	float4 l_FogColor = GetFogColor(l_DistanceEyeToWorldPosition);
+	Out = float4(Out.xyz+l_FogColor.xyz*l_FogColor.a,Out.a);
 #endif
 	return Out;
 }

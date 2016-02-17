@@ -9,10 +9,9 @@ date: 05022016
 #include "Globals.fxh"
 #include "Samplers.fxh"
 
-float maxAttenuation = 1;
-float m_StartLinearFog = 1;
-float m_EndLinearFog = 5;
-float3 m_FogColor = float3(1.0, 1.0, 1.0);
+static float maxAttenuation = m_MaxAttenuation_StartLinearFog_EndLinearFog.x;
+static float m_StartLinearFog = m_MaxAttenuation_StartLinearFog_EndLinearFog.y;
+static float m_EndLinearFog = m_MaxAttenuation_StartLinearFog_EndLinearFog.z;
 
 struct TVertexVS
 {
@@ -48,40 +47,35 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 
 float CalcAttenuation(float Depth, float StartFog, float EndFog)
 {
-	
-float maxAttenuation = m_RawData[0].x;
 	if(Depth<EndFog){
 		return maxAttenuation*smoothstep(StartFog, EndFog, Depth);
 	} else {
 		return maxAttenuation;
 	}
 }
-float4 CalcLinearFog(float Depth, float StartFog, float EndFog, float3 FogColor) 
+float CalcLinearFog(float Depth, float StartFog, float EndFog) 
 {
 	float l_Fog = CalcAttenuation(Depth, StartFog, EndFog);
-	return float4(FogColor, l_Fog);
+	return l_Fog;
 } 
-float4 CalcExp2Fog(float Depth, float ExpDensityFog, float3 FogColor) 
+float CalcExp2Fog(float Depth, float ExpDensityFog) 
 { 
 	const float LOG2E = 1.442695; // = 1 / log(2) 
 	float l_Fog = exp2(-ExpDensityFog * ExpDensityFog * Depth * Depth * LOG2E); 
-	return float4(FogColor, 1.0-l_Fog);
+	return l_Fog;
 } 
-float4 CalcExpFog(float Depth, float ExpDensityFog, float3 FogColor) 
+float CalcExpFog(float Depth, float ExpDensityFog) 
 { 
 	const float LOG2E = 1.442695; // = 1 / log(2) 
 	float l_Fog = exp2(-ExpDensityFog * Depth * LOG2E); 
-	return float4(FogColor, 1.0-l_Fog);
+	return l_Fog;
 } 
-float3 GetFogColor(float Depth, float3 CurrentColor) 
+float4 GetFogColor(float Depth) 
 { 
 
-float m_StartLinearFog = m_RawData[0].y;
-float m_EndLinearFog = m_RawData[0].z;
-float3 m_FogColor = ((float3)m_RawData[1].xyz);
-	float4 l_FogColor=CalcLinearFog(Depth, m_StartLinearFog, m_EndLinearFog, m_FogColor);
+	float l_FogIntensity=CalcLinearFog(Depth, m_StartLinearFog, m_EndLinearFog);
 	//return(l_FogColor.xyz*l_FogColor.a);
-	return saturate(CurrentColor+l_FogColor.xyz*l_FogColor.a);
+	return saturate(float4(m_FogColor.xyz,l_FogIntensity));
 } 
 
 TVertexPS mainVS(TVertexVS IN)
@@ -96,10 +90,9 @@ TVertexPS mainVS(TVertexVS IN)
 
 float4 mainPS(TVertexPS IN) : SV_Target
 {
-	float3 l_worldPos = GetPositionFromZDepthView((T1Texture.Sample(S1Sampler,IN.UV).r),IN.UV, m_InverseView, m_InverseProjection);	
+	float3 l_worldPos = GetPositionFromZDepthView((T0Texture.Sample(S0Sampler,IN.UV).r),IN.UV, m_InverseView, m_InverseProjection);	
 	float l_DistanceEyeToWorldPosition=length(l_worldPos-m_InverseView[3].xyz);
 	//return float4(l_DistanceEyeToWorldPosition/10,l_DistanceEyeToWorldPosition/10,l_DistanceEyeToWorldPosition/10,1);
-	float4 l_FinalColor = T0Texture.Sample(S0Sampler,IN.UV);
 	//return l_FinalColor; // renderiza la textura tal cual, sin modificar
-	return float4(GetFogColor(l_DistanceEyeToWorldPosition, l_FinalColor.xyz),1);
+	return GetFogColor(l_DistanceEyeToWorldPosition);
 }
