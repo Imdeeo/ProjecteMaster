@@ -1,13 +1,12 @@
 #include "globals.fxh"
 #include "Samplers.fxh"
 
-static float m_RawDataValues[64]=((float[64])m_RawData);
-static float m_ZBlurActive=m_RawDataValues[0];
-static float m_ZBlurShowDepths=m_RawDataValues[1];
-static float m_ZBlurConstantBlur=m_RawDataValues[2];
-static float m_ZBlurFocalStart=m_RawDataValues[3];
-static float m_ZBlurFocalEnd=m_RawDataValues[4];
-static float m_ZBlurEnd=m_RawDataValues[5];
+static float m_ZBlurActive=m_RawData[0];
+static float m_ZBlurShowDepths=m_RawData[1];
+static float m_ZBlurConstantBlur=m_RawData[2];
+static float m_ZBlurFocalStart=m_RawData[3];
+static float m_ZBlurFocalEnd=m_RawData[4];
+static float m_ZBlurEnd=m_RawData[5];
 
 struct VS_INPUT
 {
@@ -66,7 +65,6 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 
 float4 PSZBlur(PS_INPUT IN) : SV_Target
 {
-	//return float4(1,0,0,1);
 	float4 l_SourceColor=T0Texture.Sample(S0Sampler, IN.UV);
 	float l_Depth=T2Texture.Sample(S2Sampler, IN.UV).r;
 	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);

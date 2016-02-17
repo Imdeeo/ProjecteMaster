@@ -11,7 +11,7 @@ class CRenderManager;
 class CSceneRendererCommand :public CActive, public CNamed
 {
 protected:
-	std::vector<CMaterial*> m_Materials;
+	CMaterial* m_Material;
 public:
 	CSceneRendererCommand(CXMLTreeNode &TreeNode);
 	virtual ~CSceneRendererCommand();
