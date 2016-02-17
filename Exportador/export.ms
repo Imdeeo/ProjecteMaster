@@ -141,12 +141,23 @@ for i=1 to nFaces do
 		(
 			local l_DiffMap = l_Obj.material.materialList[l_IdMaterial].diffuseMap
 			local l_LightMap = l_Obj.material.materialList[l_IdMaterial].selfIllumMap
+			local l_RefMap = l_Obj.material.materialList[l_IdMaterial].reflectionMap
 		) else (
 			local l_DiffMap = l_Obj.material.diffuseMap
 			local l_LightMap = l_Obj.material.selfIllumMap
+			local l_RefMap = l_Obj.material.reflectionMap
+
 		)
 		
 		if classOf l_DiffMap == Bitmaptexture then
+		(
+			UVID = 0x0020
+			local IdxsMap = meshop.getMapFace l_Obj 1 i
+			TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
+			TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
+			TUVMap3= meshop.getMapVert l_Obj 1 IdxsMap.z
+		)
+		else if classOf l_RefMap == Bitmaptexture then
 		(
 			UVID = 0x0020
 			local IdxsMap = meshop.getMapFace l_Obj 1 i
@@ -163,6 +174,7 @@ for i=1 to nFaces do
 			T2UVMap2= meshop.getMapVert l_Obj 2 IdxsMap.y
 			T2UVMap3= meshop.getMapVert l_Obj 2 IdxsMap.z
 		)
+		
 	) else (
 		ColorID = 0x0002
 		defaultVCFaces l_Obj
