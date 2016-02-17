@@ -1,12 +1,12 @@
 #include "globals.fxh"
 #include "Samplers.fxh"
 
-static float m_ZBlurActive=m_RawData[0];
-static float m_ZBlurShowDepths=m_RawData[1];
-static float m_ZBlurConstantBlur=m_RawData[2];
-static float m_ZBlurFocalStart=m_RawData[3];
-static float m_ZBlurFocalEnd=m_RawData[4];
-static float m_ZBlurEnd=m_RawData[5];
+static float m_ZBlurActive=m_RawDataArray[0];
+static float m_ZBlurShowDepths=m_RawDataArray[1];
+static float m_ZBlurConstantBlur=m_RawDataArray[2];
+static float m_ZBlurFocalStart=m_RawDataArray[3];
+static float m_ZBlurFocalEnd=m_RawDataArray[4];
+static float m_ZBlurEnd=m_RawDataArray[5];
 
 struct VS_INPUT
 {

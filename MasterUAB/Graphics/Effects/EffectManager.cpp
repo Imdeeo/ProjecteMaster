@@ -1,8 +1,5 @@
 #include "Effects\EffectManager.h"
 #include "XML\XMLTreeNode.h"
-#include "SceneEffectParameters.h"
-#include "AnimatedModelEffectParameters.h";
-#include "LightEffectParameters.h";
 #include "Lights\Light.h";
 #include "Lights\DirectionalLight.h";
 #include "Lights\SpotLight.h";
@@ -158,14 +155,21 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 }
 
 int CEffectManager::m_RawDataCount = 0;
-Vect4f CEffectManager::m_RawData[MAX_RAW_DATA_ELEMENTS];
-void* CEffectManager::AddMaterialParameter()
+float CEffectManager::m_RawData[MAX_RAW_DATA_ELEMENTS];
+void* CEffectManager::AddMaterialParameter(CMaterialParameter::TMaterialType _MaterialType)
 {
 	if (m_RawDataCount == MAX_RAW_DATA_ELEMENTS)
 	{
 		return nullptr;
 	}
 	void* l_Adress = &(m_RawData[m_RawDataCount]);
-	m_RawDataCount = m_RawDataCount + 1;
+	if(_MaterialType == CMaterialParameter::FLOAT)
+		m_RawDataCount = m_RawDataCount + 1;
+	if(_MaterialType == CMaterialParameter::VECT2F)
+		m_RawDataCount = m_RawDataCount + 2;
+	if(_MaterialType == CMaterialParameter::VECT3F)
+		m_RawDataCount = m_RawDataCount + 3;
+	if(_MaterialType == CMaterialParameter::VECT4F)
+		m_RawDataCount = m_RawDataCount + 4;
 	return l_Adress;
 }
