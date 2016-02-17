@@ -1,23 +1,22 @@
 #include "globals.fxh"
 #include "Samplers.fxh"
 
-static float m_RawDataValues[64]=((float[64])m_RawData);
 #ifdef HAS_BLOOM
 	// BLOOM
-	static float m_Threshold=m_RawDataValues[0];
+	static float m_Threshold=m_RawData[0];
 #endif	
 #ifdef HAS_BLUR
 	// BLUR
-	static float m_TextureSize=m_RawDataValues[0];
-	static float m_BlurScale=m_RawDataValues[1];
+	static float m_TextureSize=m_RawData[0];
+	static float m_BlurScale=m_RawData[1];
 #endif
 #ifdef HAS_COMBINE
 	// COMBINE
-	static float m_BloomActive=m_RawDataValues[0];
-	static float m_BloomIntensity=m_RawDataValues[1];
-	static float m_OriginalIntensity=m_RawDataValues[2];
-	static float m_BloomSaturation=m_RawDataValues[3];
-	static float m_OriginalSaturation=m_RawDataValues[4];
+	static float m_BloomActive=m_RawData[0];
+	static float m_BloomIntensity=m_RawData[1];
+	static float m_OriginalIntensity=m_RawData[2];
+	static float m_BloomSaturation=m_RawData[3];
+	static float m_OriginalSaturation=m_RawData[4];
 #endif
 
 struct VS_INPUT

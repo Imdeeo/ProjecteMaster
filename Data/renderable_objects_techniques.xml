@@ -23,6 +23,7 @@
 		<renderable_object_technique name="fog" technique="fog_technique"/>	
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="blur_pool">
+		<renderable_object_technique name="gui" technique="2d_technique"/>
 		<renderable_object_technique name="blur" technique="blur_technique"/>
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="NoiseAndvignetting">	
