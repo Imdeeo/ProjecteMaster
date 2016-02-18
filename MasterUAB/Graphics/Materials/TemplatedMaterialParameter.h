@@ -13,7 +13,7 @@ private:
 public:
 	CTemplatedMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode, const T &Value, CMaterialParameter::TMaterialType MaterialType):CMaterialParameter(Material,TreeNode,MaterialType)
 	{
-		m_EffectAddress = CEffectManager::AddMaterialParameter();
+		m_EffectAddress = CEffectManager::AddMaterialParameter(MaterialType);
 		m_Value = Value;
 	}
 	virtual ~CTemplatedMaterialParameter(){}
