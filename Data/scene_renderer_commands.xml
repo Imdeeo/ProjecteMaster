@@ -40,6 +40,15 @@
 		<texture stage_id="3" file="DepthMapTexture" load_file="false"/>
 	</render_deferred_shading>
 	
+	<!--
+	<set_pool_renderable_objects_technique pool="deferred_shading_lighting"/>
+	<enable_alpha_blend/>
+	<render_draw_quad active="true" material="FogMaterial">
+		<texture stage_id="0" file="DepthMapTexture" load_file="false"/>
+	</render_draw_quad>
+	<disable_alpha_blend/>
+	-->
+	
 	<!--<render_debug_grid/>
 	<render_debug_lights/>-->
 

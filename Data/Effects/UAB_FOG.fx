@@ -9,10 +9,6 @@ date: 05022016
 #include "Globals.fxh"
 #include "Samplers.fxh"
 
-static float maxAttenuation = m_MaxAttenuation_StartLinearFog_EndLinearFog.x;
-static float m_StartLinearFog = m_MaxAttenuation_StartLinearFog_EndLinearFog.y;
-static float m_EndLinearFog = m_MaxAttenuation_StartLinearFog_EndLinearFog.z;
-
 struct TVertexVS
 {
 	float4 Pos : POSITION;
@@ -48,9 +44,9 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 float CalcAttenuation(float Depth, float StartFog, float EndFog)
 {
 	if(Depth<EndFog){
-		return maxAttenuation*smoothstep(StartFog, EndFog, Depth);
+		return m_MaxAttenuation*smoothstep(StartFog, EndFog, Depth);
 	} else {
-		return maxAttenuation;
+		return m_MaxAttenuation;
 	}
 }
 float CalcLinearFog(float Depth, float StartFog, float EndFog) 
@@ -73,11 +69,9 @@ float CalcExpFog(float Depth, float ExpDensityFog)
 float4 GetFogColor(float Depth) 
 { 
 
-	float l_FogIntensity=CalcLinearFog(Depth, m_StartLinearFog, m_EndLinearFog);
-	//return(l_FogColor.xyz*l_FogColor.a);
+	float l_FogIntensity=CalcLinearFog(Depth, m_StartFog, m_EndFog);
 	return saturate(float4(m_FogColor.xyz,l_FogIntensity));
-} 
-
+}
 TVertexPS mainVS(TVertexVS IN)
 {
 	TVertexPS l_Out = (TVertexPS)0;
@@ -92,7 +86,5 @@ float4 mainPS(TVertexPS IN) : SV_Target
 {
 	float3 l_worldPos = GetPositionFromZDepthView((T0Texture.Sample(S0Sampler,IN.UV).r),IN.UV, m_InverseView, m_InverseProjection);	
 	float l_DistanceEyeToWorldPosition=length(l_worldPos-m_InverseView[3].xyz);
-	//return float4(l_DistanceEyeToWorldPosition/10,l_DistanceEyeToWorldPosition/10,l_DistanceEyeToWorldPosition/10,1);
-	//return l_FinalColor; // renderiza la textura tal cual, sin modificar
 	return GetFogColor(l_DistanceEyeToWorldPosition);
 }
