@@ -115,12 +115,6 @@ float4 directionalLight(PS_INPUT IN)
 	float4 specular = saturate(SpecularColor * m_LightColor[0] * pow(dot(Nn, H), P));
 	float4 outLight = float4((l_albedo*l_DiffuseContrib*m_LightColor[0]*m_LightIntensityArray[0]+specular).xyz,1);
 	
-	/*#ifdef HAS_SHADOWMAP
-		float l_LightDepth = distance(l_WorldPosition, m_LightPosition[0]);
-		float l_ShadowDepth = T4Texture.Sample(S4Sampler, IN.UV).r;
-		if(l_ShadowDepth > l_LightDepth){ outLight = float4(0, 0, 0, 1); }
-	#endif*/
-	
 	return saturate(outLight);
 }
 
@@ -172,6 +166,9 @@ float4 applyLights(PS_INPUT IN)
 
 float4 mainPS(PS_INPUT IN) : SV_Target
 {	
+	if (m_UseShadowMapArray[0]==1.0)
+		return T6Texture.Sample(S6Sampler, IN.UV);
+	
 	//return float4(0,1,1,1);
 	return applyLights(IN);
 }

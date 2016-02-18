@@ -22,8 +22,6 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
 	Vect4f v(1, 1, 1, 1);
 	_RenderManager.GetContextManager()->GetDeviceContext()->OMSetBlendState(m_EnabledAlphaBlendState, NULL, 0xffffffff);
 
-	int l_ShadowmapStageId = m_StagedTextures.size();
-
 	for (int i = 0; i < m_StagedTextures.size(); ++i)
 				m_StagedTextures[i].Activate();
 
