@@ -41,6 +41,9 @@
 		<renderable_object_technique name="bloom_blur" technique="blur_bloom_technique"/>
 		<renderable_object_technique name="bloom_combine" technique="bloom_combine_technique"/>
 	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="hdao_pool">
+		<renderable_object_technique name="hdao" technique="hdao_technique"/>
+	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="generate_shadowmap_pool">
 		<renderable_object_technique name="generate_shadowmap" technique="generate_shadowmap_technique"/>
 	</pool_renderable_object_technique>	

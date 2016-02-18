@@ -65,10 +65,15 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 
 float4 PSZBlur(PS_INPUT IN) : SV_Target
 {
-	float4 l_SourceColor=T0Texture.Sample(S0Sampler, IN.UV);
-	float l_Depth=T2Texture.Sample(S2Sampler, IN.UV).r;
-	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
-	float3 l_CameraPosition=m_InverseView[3].xyz;
-	float l_Distance=length(l_WorldPosition-l_CameraPosition);
-	return GetZBlurColor(l_Distance, T0Texture.Sample(S0Sampler, IN.UV), T1Texture.Sample(S1Sampler, IN.UV));	
+	if(m_ZBlurActive==0.0)
+		return T0Texture.Sample(S0Sampler, IN.UV);
+	else
+	{
+		float4 l_SourceColor=T0Texture.Sample(S0Sampler, IN.UV);
+		float l_Depth=T2Texture.Sample(S2Sampler, IN.UV).r;
+		float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
+		float3 l_CameraPosition=m_InverseView[3].xyz;
+		float l_Distance=length(l_WorldPosition-l_CameraPosition);
+		return GetZBlurColor(l_Distance, T0Texture.Sample(S0Sampler, IN.UV), T1Texture.Sample(S1Sampler, IN.UV));
+	}
 }
