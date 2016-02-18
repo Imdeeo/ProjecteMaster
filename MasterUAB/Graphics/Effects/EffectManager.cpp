@@ -127,9 +127,9 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 		CEffectManager::m_LightParameters.m_UseShadowMask[IdLight] = l_ShadowMask != NULL ? 1.0f : 0.0f;
 		CEffectManager::m_LightParameters.m_LightView[IdLight] = Light->GetViewShadowMap();
 		CEffectManager::m_LightParameters.m_LightProjection[IdLight] = Light->GetProjectionShadowMap();
-		l_ShadowMap->Activate(UAB_ID_SHADOW_MAP + IdLight * 2);
+		l_ShadowMap->Activate(INDEX_SHADOWMAP_TEXTURE);
 		if (l_ShadowMask != NULL)
-			l_ShadowMask->Activate(UAB_ID_SHADOW_MAP + 1 + IdLight * 2);
+			l_ShadowMask->Activate(INDEX_SHADOWMAP_TEXTURE+1);
 	}
 }
 
