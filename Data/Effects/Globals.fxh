@@ -34,6 +34,8 @@ cbuffer LightsConstantBuffer : register (b1)
 	float4 m_UseShadowMask;
 	float4x4 m_LightView[MAX_LIGHTS_BY_SHADER];
 	float4x4 m_LightProjection[MAX_LIGHTS_BY_SHADER];
+	float4 m_MaxAttenuation_StartFog_EndFog;
+	float4 m_FogColor;
 }
 
 cbuffer AnimatedModelConstantBuffer : register (b2)
@@ -55,5 +57,6 @@ static float m_LightFallOffAngleArray[4]=(float[4])m_LightFallOffAngle;
 static float m_LightAttenuationStartRangeArray[4]=(float[4])m_LightAttenuationStartRange;
 static float m_LightAttenuationEndRangeArray[4]=(float[4])m_LightAttenuationEndRange;
 static float m_LightIntensityArray[4]=(float[4])m_LightIntensity;
-static float m_UseShadowMapArray[4]=(float[4])m_UseShadowMap;
-static float m_UseShadowMaskArray[4]=(float[4])m_UseShadowMask;
+static float m_MaxAttenuation = m_MaxAttenuation_StartFog_EndFog.x;
+static float m_StartFog = m_MaxAttenuation_StartFog_EndFog.y;
+static float m_EndFog = m_MaxAttenuation_StartFog_EndFog.z;
