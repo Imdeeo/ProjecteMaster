@@ -152,6 +152,13 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 			SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
 		}
 	}
+	CEffectManager::m_LightParameters.m_FogColor = Vect4f(UABEngine.GetLightManager()->GetFogColor(),1.0f);
+	float maxAttenuation =
+		UABEngine.GetLightManager()->GetFogEnabled() ? UABEngine.GetLightManager()->GetFogMaxAttenuation() : 0.f;
+	CEffectManager::m_LightParameters.m_MaxAttenuation_StartLinearFog_EndLinearFog = 
+		Vect4f(maxAttenuation, UABEngine.GetLightManager()->GetFogStart(),
+		UABEngine.GetLightManager()->GetFogEnd(),1.0f);
+
 }
 
 int CEffectManager::m_RawDataCount = 0;
