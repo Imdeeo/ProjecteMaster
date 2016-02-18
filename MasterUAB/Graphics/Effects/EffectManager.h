@@ -15,6 +15,7 @@
 class CLight;
 
 #define MAX_RAW_DATA_ELEMENTS 64
+#define INDEX_SHADOWMAP_TEXTURE 6
 
 class CEffectManager : public CTemplatedMapManager<CEffectTechnique>
 {
