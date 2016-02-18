@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <scene_renderer_commands>
-	<set_depth_stencil_state enable_z_test="true" write_z_buffer="true"/>
 	<set_light_constants/>
+	
+	<set_pool_renderable_objects_technique pool="generate_shadowmap_pool"/>
+	<generate_shadow_maps/> 
+	
+	<set_depth_stencil_state enable_z_test="true" write_z_buffer="true"/>
 	<set_matrices/>
-	
-	<!--<set_pool_renderable_objects_technique pool="generate_shadowmap_pool"/>
-	<generate_shadow_maps/> OJOCUIDAO, hace que no se vea nada -->
-	
+		
 	<!--FORWARD<clear render_target="true" depth_stencil="true"/>
 	<set_pool_renderable_objects_technique pool="forward_shading"/>
 	<render_layer layer="solid" active="true"/>-->
@@ -21,16 +22,19 @@
 	<clear render_target="true" depth_stencil="true"/>
 	<set_pool_renderable_objects_technique pool="gBuffer"/>
 	<render_layer layer="solid" active="true"/>
-	
 	<unset_render_target/>
 	
 	<clear render_target="true" depth_stencil="true"/>
 	<set_depth_stencil_state enable_z_test="false" write_z_buffer="false"/>
+	<set_pool_renderable_objects_technique pool="forward_shading"/>
 	<render_draw_quad active="true">
 		<texture stage_id="0" file="LightMapTexture" load_file="false"/>
 	</render_draw_quad>
 
-	<set_pool_renderable_objects_technique pool="deferred_shading_lighting"/>
+	<!--<set_pool_renderable_objects_technique pool="deferred_shading_lighting"/>
+	<set_pool_renderable_objects_technique pool="deferred_shading_shadowmap"/>-->
+	<set_pool_renderable_objects_technique pool="deferred_shading_shadowmap"/>
+	
 	<render_deferred_shading>
 		<texture stage_id="0" file="DiffuseMapTexture" load_file="false"/>
 		<texture stage_id="1" file="LightMapTexture" load_file="false"/>
@@ -50,7 +54,7 @@
 		<texture stage_id="0" file="CaptureFog" load_file="false"/>
 		<texture stage_id="1" file="DepthMapTexture" load_file="false"/>
 	</render_draw_quad>-->
-	
+	<!--
 	<capture_frame_buffer>
 		<capture_texture name="CapturedZBlurTexture" texture_width_as_frame_buffer="true"/>
 	</capture_frame_buffer>
@@ -65,14 +69,9 @@
 		<dynamic_texture name="ZBlur" width="800" height="600" material="BlurMaterial"/>
 	</apply_filters>
 	
-	<unset_render_target/>
+	<unset_render_target/>	
 	
-	<set_pool_renderable_objects_technique pool="forward_shading"/>
-	<render_draw_quad active="true">
-		<texture stage_id="0" file="ZBlur" load_file="false"/>
-	</render_draw_quad>
-	
-	<!--<set_pool_renderable_objects_technique pool="zblur_pool"/>
+	<set_pool_renderable_objects_technique pool="zblur_pool"/>
 	<render_draw_quad material="ZBlurMaterial" active="true">
 		<texture stage_id="0" file="CapturedZBlurTexture" load_file="false"/>
 		<texture stage_id="1" file="ZBlur" load_file="false"/>
@@ -97,16 +96,21 @@
 		<texture stage_id="1" file="BloomBlurTexture" load_file="false"/>
 	</render_draw_quad>
 	
+	<capture_frame_buffer>
+		<capture_texture name="CapturedTexture" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
+	
 	<set_pool_renderable_objects_technique pool="hdao_pool"/>
 	<render_draw_quad material="HDAOMaterial" active="true">
-		<texture stage_id="0" file="CapturedZBlurTexture" load_file="false"/>
+		<texture stage_id="0" file="CapturedTexture" load_file="false"/>
 		<texture stage_id="1" file="NormalMapTexture" load_file="false"/>
 		<texture stage_id="2" file="DepthMapTexture" load_file="false"/>
 	</render_draw_quad>-->
 	
-	<!--<render_draw_quad material="NoiseAndVignettingMaterial" active="true">
-		<texture stage_id="0" file="Data/GUI/Textures/noise.dds" load_file="true"/>
-		<texture stage_id="1" file="Data/GUI/Textures/vignetting.dds" load_file="true"/>
+	<!--<set_pool_renderable_objects_technique pool="forward_shading"/>
+	<render_draw_quad material="NoiseAndVignettingMaterial" active="true">
+		<texture stage_id="0" file="Data/GUI/textures/noise.dds" load_file="true"/>
+		<texture stage_id="1" file="Data/GUI/textures/vignetting.dds" load_file="true"/>
 	</render_draw_quad>-->
 	
 	<set_ant_tweak_bar/>	

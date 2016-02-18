@@ -282,7 +282,7 @@ float4 PSHDAO(PS_INPUT IN) : SV_Target
 	}
 	
 	fOcclusion *= ( m_HDAOIntensity );
-	fOcclusion = 1.0f - saturate( fOcclusion );
+	fOcclusion = 1.0f - saturate( fOcclusion );	
 
 	if(m_HDAOShowAO)
 		return float4(fOcclusion, fOcclusion, fOcclusion, 1.0);

@@ -3,6 +3,7 @@
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
 #include "Texture\DynamicTexture.h"
+#include "RenderableObjects\RenderableObjectsManager.h"
 
 CGenerateShadowMapsSceneRendererCommand::CGenerateShadowMapsSceneRendererCommand(CXMLTreeNode &TreeNode) :CSceneRendererCommand(TreeNode)
 {
@@ -22,10 +23,10 @@ void CGenerateShadowMapsSceneRendererCommand::Execute(CRenderManager &_RenderMan
 		CLight *l_Light=l_LightManager->GetResourceById(i);
 		if(l_Light->GetEnabled() && l_Light->GetGenerateShadowMap()){
 			l_Light->SetShadowMap(_RenderManager);
-			_RenderManager.Clear(false, true);
+			_RenderManager.Clear(true, true);
 			std::vector<CRenderableObjectsManager *> &l_Layers = l_Light->GetLayers();
 			for(size_t j=0;j<l_Layers.size();++j)
-				l_Layers[j]->Render(&_RenderManager);
+				//l_Layers[j]->Render(&_RenderManager);
 			_RenderManager.GetContextManager()->UnsetRenderTargets();
 		}
 	}

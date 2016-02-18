@@ -2,7 +2,7 @@
 #include "StaticMesh\InstanceMesh.h"
 #include "AnimatedModels\AnimatedInstanceModel.h"
 
-CRenderableObjectsManager::CRenderableObjectsManager() {}
+CRenderableObjectsManager::CRenderableObjectsManager(std::string _Name):CNamed(_Name) {}
 CRenderableObjectsManager::~CRenderableObjectsManager(){}
 
 void CRenderableObjectsManager::Update(float ElapsedTime)
