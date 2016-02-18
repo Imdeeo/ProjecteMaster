@@ -3,6 +3,7 @@
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
 #include "Texture\DynamicTexture.h"
+#include "RenderableObjects\RenderableObjectsManager.h"
 
 CGenerateShadowMapsSceneRendererCommand::CGenerateShadowMapsSceneRendererCommand(CXMLTreeNode &TreeNode) :CSceneRendererCommand(TreeNode)
 {

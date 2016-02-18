@@ -89,8 +89,9 @@ CRenderableObjectsManager* CLayerManager::GetLayer()
 CRenderableObjectsManager* CLayerManager::AddLayer(CXMLTreeNode &TreeNode)
 {
 	const char * l_existDefault;
-	CRenderableObjectsManager* l_auxROM = new CRenderableObjectsManager();
-	AddResource(TreeNode.GetPszProperty("name"), l_auxROM);
+	std::string l_Name = TreeNode.GetPszProperty("name");
+	CRenderableObjectsManager* l_auxROM = new CRenderableObjectsManager(l_Name);
+	AddResource(l_Name, l_auxROM);
 	l_existDefault = TreeNode.GetPszProperty("default");
 	if (l_existDefault != NULL)
 	{

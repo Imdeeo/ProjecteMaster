@@ -1,6 +1,6 @@
 #include "Engine\UABEngine.h"
 #include "XML\XMLTreeNode.h"
-
+#include "RenderableObjects\RenderableObjectsManager.h"
 CUABEngine::CUABEngine(void)
 {
 	m_EffectManager = new CEffectManager();
