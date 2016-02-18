@@ -6,6 +6,8 @@
 		<renderable_object_technique name="animated" technique="animated_diffuse_technique"/>
 		<renderable_object_technique name="lights" technique="lights_technique"/>
 		<renderable_object_technique name="noise_and_vignetting" technique="noise_and_vignetting"/>
+		<renderable_object_technique name="zblur" technique="zblur_technique"/>		
+		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="gBuffer">
 		<renderable_object_technique name="lights" technique="gBuffer_technique"/>
@@ -23,4 +25,22 @@
 	<pool_renderable_object_technique name="zblur_pool">
 		<renderable_object_technique name="zblur" technique="zblur_technique"/>
 	</pool_renderable_object_technique>	
+	<pool_renderable_object_technique name="blur_pool">
+		<renderable_object_technique name="gui" technique="2d_technique"/>
+		<renderable_object_technique name="blur" technique="blur_technique"/>
+	</pool_renderable_object_technique>	
+	<pool_renderable_object_technique name="bloom_pool">
+		<renderable_object_technique name="bloom" technique="bloom_technique"/>
+		<renderable_object_technique name="bloom_blur" technique="blur_bloom_technique"/>
+		<renderable_object_technique name="bloom_combine" technique="bloom_combine_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="hdao_pool">
+		<renderable_object_technique name="hdao" technique="hdao_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="generate_shadowmap_pool">
+		<renderable_object_technique name="lights" technique="generate_shadowmap_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="NoiseAndvignetting">
+		<default_technique technique="noise_and_vignetting" vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX"/>
+	</pool_renderable_object_technique>
 </renderable_object_techniques>

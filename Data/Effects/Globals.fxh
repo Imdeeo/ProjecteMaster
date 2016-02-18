@@ -60,3 +60,6 @@ static float m_LightIntensityArray[4]=(float[4])m_LightIntensity;
 static float m_MaxAttenuation = m_MaxAttenuation_StartFog_EndFog.x;
 static float m_StartFog = m_MaxAttenuation_StartFog_EndFog.y;
 static float m_EndFog = m_MaxAttenuation_StartFog_EndFog.z;
+
+static float m_UseShadowMapArray[4] = (float[4])m_UseShadowMap;
+static float m_UseShadowMaskArray[4] = (float[4])m_UseShadowMask;

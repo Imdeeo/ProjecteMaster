@@ -21,7 +21,7 @@ public:
 	{
 		memcpy(m_EffectAddress,&m_Value,sizeof(T));
 	}
-	void * GetValueAddress() const {return m_EffectAddress;}
+	void * GetValueAddress() const {return (void*)&m_Value;}
 };
 
 #endif //TEMPLATED_MATERIAL_PARAMETER_H
