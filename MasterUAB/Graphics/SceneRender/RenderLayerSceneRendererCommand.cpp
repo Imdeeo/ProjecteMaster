@@ -1,6 +1,7 @@
 #include "RenderLayerSceneRendererCommand.h"
 #include "RenderManager\RenderManager.h"
 #include "Engine\UABEngine.h"
+#include "RenderableObjects\RenderableObjectsManager.h"
 
 CRenderLayerSceneRendererCommand::CRenderLayerSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
 {

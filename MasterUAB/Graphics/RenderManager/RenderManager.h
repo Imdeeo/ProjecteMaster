@@ -3,7 +3,6 @@
 
 #include "DebugRender.h"
 #include "Camera\Frustum.h"
-#include "RenderableObjects\RenderableObjectsManager.h"
 #include "Utils.h"
 #include "ContextManager\ContextManager.h"
 
@@ -59,8 +58,6 @@ private:
 
 	size_t							m_CurrentRenderlistLength;
 	
-	CRenderableObjectsManager		m_RenderableObjectManager;
-
 	UAB_GET_PROPERTY(CDebugRender*, DebugRender)
 	UAB_BUILD_GET_SET(CContextManager*,ContextManager)
 

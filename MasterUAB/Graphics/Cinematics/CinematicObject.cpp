@@ -2,6 +2,7 @@
 #include "Cinematics\CinematicObjectKeyFrame.h"
 #include "RenderableObjects\RenderableObject.h"
 #include "Engine\UABEngine.h"
+#include "RenderableObjects\RenderableObjectsManager.h"
 
 CCinematicObject::CCinematicObject(CXMLTreeNode &TreeNode):m_RenderableObject(nullptr)
 {

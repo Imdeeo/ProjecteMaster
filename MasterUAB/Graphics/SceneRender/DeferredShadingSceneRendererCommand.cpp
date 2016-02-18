@@ -2,6 +2,7 @@
 #include "RenderManager\RenderManager.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "Engine\UABEngine.h"
+#include "Effects\EffectManager.h"
 
 CDeferredShadingSceneRendererCommand::CDeferredShadingSceneRendererCommand(CXMLTreeNode &TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
 {
@@ -31,7 +32,7 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
 		CLight *l_Light = UABEngine.GetLightManager()->GetResourceById(j);
 		UABEngine.GetEffectManager()->SetLightConstants(0, l_Light);
 		if(l_Light->GetGenerateShadowMap())
-			l_Light->GetShadowMap()->Activate(l_ShadowmapStageId);
+			l_Light->GetShadowMap()->Activate(INDEX_SHADOWMAP_TEXTURE);
 		_RenderManager.DrawScreenQuad(m_RenderableObjectTechnique->GetEffectTechnique(), NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	}
 	_RenderManager.GetContextManager()->GetDeviceContext()->OMSetBlendState(NULL, NULL, 0xffffffff);
