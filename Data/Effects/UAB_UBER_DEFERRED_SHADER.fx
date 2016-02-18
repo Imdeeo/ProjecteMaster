@@ -62,6 +62,26 @@ float4 spotLight(PS_INPUT IN)
 	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
 	float3 Nn=Texture2Normal(T2Texture.Sample(S2Sampler, IN.UV).xyz);
 	
+	if(m_UseShadowMapArray[0]==1.0)
+	{
+		float4 l_LightViewPosition=mul(float4(l_WorldPosition, 1), m_LightView[0]);
+		l_LightViewPosition=mul(l_LightViewPosition, m_LightProjection[0]);
+		float2 l_ProjectedLightCoords=float2(((l_LightViewPosition.x/l_LightViewPosition.w)/2.0f)+0.5f, ((-l_LightViewPosition.y/l_LightViewPosition.w)/2.0f)+0.5f);
+		float l_DepthShadowMap=T6Texture.Sample(S6Sampler, l_ProjectedLightCoords).r;
+		float l_LightDepth=l_LightViewPosition.z/l_LightViewPosition.w;
+		float m_ShadowMapBias = 0.0001f;
+		l_DepthShadowMap=l_DepthShadowMap+m_ShadowMapBias;
+		if((saturate(l_ProjectedLightCoords.x)==l_ProjectedLightCoords.x) && (saturate(l_ProjectedLightCoords.y)==l_ProjectedLightCoords.y))
+		{
+			if(l_LightDepth>l_DepthShadowMap)
+			{
+				return float4(0,0,0,1);
+			}
+		}
+	}
+
+
+	
 	// Intermediate values
 	float3 l_RayDirection = normalize(l_WorldPosition - m_LightPosition[0]);
 	float l_Distance = distance(l_WorldPosition, m_LightPosition[0]);
@@ -84,13 +104,7 @@ float4 spotLight(PS_INPUT IN)
 	//specular *= l_SpotAttenuation;
 	
 	float4 outLight = float4((l_albedo*l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*m_LightColor[0]*m_LightIntensityArray[0]+specular).xyz,0);
-	
-	/*#ifdef HAS_SHADOWMAP
-		float l_LightDepth = distance(l_WorldPosition, m_LightPosition[0]);
-		float l_ShadowDepth = T4Texture.Sample(S4Sampler, IN.UV).r;
-		if(l_ShadowDepth > l_LightDepth){ outLight = float4(0, 0, 0, 1); }
-	#endif*/
-	
+		
 	return saturate(outLight);
 }
 
@@ -165,10 +179,6 @@ float4 applyLights(PS_INPUT IN)
 }
 
 float4 mainPS(PS_INPUT IN) : SV_Target
-{	
-	if (m_UseShadowMapArray[0]==1.0)
-		return T6Texture.Sample(S6Sampler, IN.UV);
-	
-	//return float4(0,1,1,1);
+{		
 	return applyLights(IN);
 }
