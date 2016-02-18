@@ -3,7 +3,7 @@
 	<set_light_constants/>
 	
 	<set_pool_renderable_objects_technique pool="generate_shadowmap_pool"/>
-	<generate_shadow_maps/> 
+	<generate_shadow_maps/>
 	
 	<set_depth_stencil_state enable_z_test="true" write_z_buffer="true"/>
 	<set_matrices/>
@@ -50,8 +50,64 @@
 	-->
 	
 	<!--<render_debug_grid/>
-	<render_debug_lights/>-->
+	-->
+	
+	<!--<capture_frame_buffer>
+		<capture_texture name="CapturedZBlurTexture" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
 
+	<set_pool_renderable_objects_technique pool="blur_pool"/>
+	<apply_filters>
+		<texture file="CapturedZBlurTexture" stage_id="0"/>
+		<dynamic_texture name="StartZBlur" material="GUIMaterial" height="600" width="800"/>
+		<dynamic_texture name="ZBlur3" material="BlurMaterial" height="600" width="800"/>
+		<dynamic_texture name="ZBlur2" material="BlurMaterial" height="600" width="800"/>
+		<dynamic_texture name="ZBlur1" material="BlurMaterial" height="600" width="800"/>
+		<dynamic_texture name="ZBlur" material="BlurMaterial" height="600" width="800"/>
+	</apply_filters>
+
+	<unset_render_target/>
+
+	<set_pool_renderable_objects_technique pool="zblur_pool"/>
+	
+	<render_draw_quad active="true" material="ZBlurMaterial">
+		<texture load_file="false" file="CapturedZBlurTexture" stage_id="0"/>
+		<texture load_file="false" file="ZBlur" stage_id="1"/>
+		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
+	</render_draw_quad>
+
+	<capture_frame_buffer>
+		<capture_texture name="CapturedBloomTexture" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
+	
+	<set_pool_renderable_objects_technique pool="bloom_pool"/>
+
+	<apply_filters>
+		<texture file="CapturedBloomTexture" stage_id="0"/>
+		<dynamic_texture name="BloomTexture" material="BloomMaterial" height="600" width="800"/>
+		<dynamic_texture name="BloomBlurTexture" material="BloomBlurMaterial" height="600" width="800"/>
+	</apply_filters>
+
+	<unset_render_target/>
+
+	<render_draw_quad active="true" material="BloomCombineMaterial">
+		<texture load_file="false" file="CapturedBloomTexture" stage_id="0"/>
+		<texture load_file="false" file="BloomBlurTexture" stage_id="1"/>
+	</render_draw_quad>
+
+	<capture_frame_buffer>
+		<capture_texture name="CapturedTexture" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
+
+	<set_pool_renderable_objects_technique pool="hdao_pool"/>
+	<render_draw_quad active="true" material="HDAOMaterial">
+		<texture load_file="false" file="CapturedTexture" stage_id="0"/>
+		<texture load_file="false" file="NormalMapTexture" stage_id="1"/>
+		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
+	</render_draw_quad>-->
+
+	<set_pool_renderable_objects_technique pool="forward_shading"/>
+	<render_debug_lights/>
 	<set_ant_tweak_bar/>	
 	<present/>
 </scene_renderer_commands>

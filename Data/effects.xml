@@ -83,7 +83,6 @@
 	<vertex_shader name="diffuse_vs" file="Data/Effects/UAB_POSITION_NORMAL_TEXTURE_VERTEXShader.fx" shader_model="vs_4_0" entry_point="VS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV"/>
 	<pixel_shader name="diffuse_ps"	file="Data/Effects/UAB_POSITION_NORMAL_TEXTURE_VERTEXShader.fx" shader_model="ps_4_0"	entry_point="PS"/>
 	<effect_technique name="diffuse_technique" vertex_shader="diffuse_vs" pixel_shader="diffuse_ps"/>
-	
 </effects>
 
 
