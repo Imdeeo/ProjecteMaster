@@ -8,12 +8,12 @@
 
 class CXMLTreeNode;
 
-class CRenderableObjectsManager : public CTemplatedVectorMapManager<CRenderableObject>
+class CRenderableObjectsManager : public CTemplatedVectorMapManager<CRenderableObject>, public CNamed
 {
 private:
 	std::string m_Filename;
 public:
-	CRenderableObjectsManager();
+	CRenderableObjectsManager(std::string _Name);
 	virtual ~CRenderableObjectsManager();
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
