@@ -90,8 +90,6 @@ void CSpotLight::SetShadowMap(CRenderManager &RenderManager)
 	unsigned int l_ShadowMapHeight = m_ShadowMap->GetHeight();
 	m_ProjectionShadowMap.SetIdentity();
 	m_ProjectionShadowMap.SetFromPerspective(m_FallOff, l_ShadowMapWidth / (float)l_ShadowMapHeight, 0.1f, m_EndRangeAttenuation);
-	//UABEngine.GetEffectManager()->m_SceneParameters.m_View = m_ViewShadowMap;
-	//UABEngine.GetEffectManager()->m_SceneParameters.m_Projection = m_ProjectionShadowMap;
 	CEffectManager::m_SceneParameters.m_View = m_ViewShadowMap;
 	CEffectManager::m_SceneParameters.m_Projection = m_ProjectionShadowMap;
 	ID3D11RenderTargetView *l_RenderTargetViews[1];

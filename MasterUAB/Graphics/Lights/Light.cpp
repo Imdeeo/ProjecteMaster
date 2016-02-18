@@ -32,6 +32,11 @@ CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)
 		m_ShadowMap = new CDynamicTexture("shadowmap", TreeNode.GetFloatProperty("shadow_map_width"), TreeNode.GetFloatProperty("shadow_map_height"), false);
 		m_ShadowMaskTexture = new CTexture();
 	}
+	else
+	{
+		m_ShadowMap = nullptr;
+		m_ShadowMaskTexture = nullptr;
+	}
 }
 
 CLight::~CLight(){}

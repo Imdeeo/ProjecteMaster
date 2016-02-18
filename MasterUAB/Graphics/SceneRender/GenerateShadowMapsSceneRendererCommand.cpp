@@ -26,7 +26,7 @@ void CGenerateShadowMapsSceneRendererCommand::Execute(CRenderManager &_RenderMan
 			_RenderManager.Clear(true, true);
 			std::vector<CRenderableObjectsManager *> &l_Layers = l_Light->GetLayers();
 			for(size_t j=0;j<l_Layers.size();++j)
-				//l_Layers[j]->Render(&_RenderManager);
+				l_Layers[j]->Render(&_RenderManager);
 			_RenderManager.GetContextManager()->UnsetRenderTargets();
 		}
 	}
