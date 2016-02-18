@@ -114,7 +114,10 @@ fn processFaces arx Obj &prog=
 	
 for i=1 to nFaces do
 (	
-	local l_IdMaterial = (mod(getFaceMatID l_Obj i) l_TotalMaterials)+1
+	local l_IdMaterial = (mod (getFaceMatID l_Obj i) l_TotalMaterials)+1
+	local l_IdMaterial = getFaceMatID l_Obj i
+	print l_IdMaterial
+	print l_Obj.material.materialList[l_IdMaterial]
 	local IdxsFace = getFace l_Obj i
 	local FaceNormal = getFaceNormal l_Obj i
 	local SmoothValue = getFaceSmoothGroup l_Obj i

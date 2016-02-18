@@ -142,7 +142,7 @@ utility UABUtility "UABUtility" width:168 height:360
 	)
 	
 	on ExportMeshButton pressed do
-    (        
+    (
 		if $ == undefined then
 		(
 			messageBox "You must select a scene object" title:"ERROR"
