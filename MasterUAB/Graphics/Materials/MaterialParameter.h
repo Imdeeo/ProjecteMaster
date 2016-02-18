@@ -3,7 +3,6 @@
 
 #include "Utils\Named.h"
 #include "Utils\CEmptyPointerClass.h"
-#include "Effects\EffectManager.h"
 #include <string>
 
 class CXMLTreeNode;

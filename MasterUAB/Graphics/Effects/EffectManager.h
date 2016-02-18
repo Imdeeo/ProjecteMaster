@@ -3,13 +3,13 @@
 
 #include "Utils\TemplatedMapManager.h"
 #include "Effects\EffectTechnique.h"
-
 #include "Effects\EffectShader.h"
 #include "Effects\EffectTechnique.h"
+#include "Materials\MaterialParameter.h"
 #include "SceneEffectParameters.h"
 #include "AnimatedModelEffectParameters.h"
 #include "LightEffectParameters.h"
-#include "Materials\MaterialParameter.h"
+
 #include <string.h>
 
 class CLight;
