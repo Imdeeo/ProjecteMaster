@@ -65,14 +65,9 @@
 		<dynamic_texture name="ZBlur" width="800" height="600" material="BlurMaterial"/>
 	</apply_filters>
 	
-	<unset_render_target/>
+	<unset_render_target/>	
 	
-	<set_pool_renderable_objects_technique pool="forward_shading"/>
-	<render_draw_quad active="true">
-		<texture stage_id="0" file="ZBlur" load_file="false"/>
-	</render_draw_quad>
-	
-	<!--<set_pool_renderable_objects_technique pool="zblur_pool"/>
+	<set_pool_renderable_objects_technique pool="zblur_pool"/>
 	<render_draw_quad material="ZBlurMaterial" active="true">
 		<texture stage_id="0" file="CapturedZBlurTexture" load_file="false"/>
 		<texture stage_id="1" file="ZBlur" load_file="false"/>
@@ -97,16 +92,21 @@
 		<texture stage_id="1" file="BloomBlurTexture" load_file="false"/>
 	</render_draw_quad>
 	
+	<capture_frame_buffer>
+		<capture_texture name="CapturedTexture" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
+	
 	<set_pool_renderable_objects_technique pool="hdao_pool"/>
 	<render_draw_quad material="HDAOMaterial" active="true">
-		<texture stage_id="0" file="CapturedZBlurTexture" load_file="false"/>
+		<texture stage_id="0" file="CapturedTexture" load_file="false"/>
 		<texture stage_id="1" file="NormalMapTexture" load_file="false"/>
 		<texture stage_id="2" file="DepthMapTexture" load_file="false"/>
-	</render_draw_quad>-->
+	</render_draw_quad>
 	
-	<!--<render_draw_quad material="NoiseAndVignettingMaterial" active="true">
-		<texture stage_id="0" file="Data/GUI/Textures/noise.dds" load_file="true"/>
-		<texture stage_id="1" file="Data/GUI/Textures/vignetting.dds" load_file="true"/>
+	<!--<set_pool_renderable_objects_technique pool="forward_shading"/>
+	<render_draw_quad material="NoiseAndVignettingMaterial" active="true">
+		<texture stage_id="0" file="Data/GUI/textures/noise.dds" load_file="true"/>
+		<texture stage_id="1" file="Data/GUI/textures/vignetting.dds" load_file="true"/>
 	</render_draw_quad>-->
 	
 	<set_ant_tweak_bar/>	
