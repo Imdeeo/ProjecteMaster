@@ -18,6 +18,8 @@
 #include "ApplyFiltersSceneRendererCommand.h"
 #include "CaptureFrameBufferSceneRendererCommand.h"
 #include "GenerateShadowMapsSceneRendererCommand.h"
+#include "EnableAlphaBlendSceneRendererCommand.h"
+#include "DisableAlphaBlendSceneRendererCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -130,6 +132,14 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				else if (l_Element.GetName() == std::string("generate_shadow_maps"))
 				{
 					AddResource(l_Name, new CGenerateShadowMapsSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("enable_alpha_blend"))
+				{
+					AddResource(l_Name, new CEnableAlphaBlendSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("disable_alpha_blend"))
+				{
+					AddResource(l_Name, new CDisableAlphaBlendSceneRendererCommand(l_Element));
 				}
 			}
 		}
