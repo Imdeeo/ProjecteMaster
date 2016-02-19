@@ -96,6 +96,7 @@ fn processFaces arx Obj &prog=
 			l_TotalMaterials=l_Obj.material.count
 		for i=1 to l_TotalMaterials do
 		(
+			--l_Obj.Material.MaterialList[i].DiffuseMap.Coords.V_Mirror = true
 			append vertexs #()
 			append indexs #()
 		)		
@@ -115,9 +116,6 @@ fn processFaces arx Obj &prog=
 for i=1 to nFaces do
 (	
 	local l_IdMaterial = (mod (getFaceMatID l_Obj i) l_TotalMaterials)+1
-	local l_IdMaterial = getFaceMatID l_Obj i
-	print l_IdMaterial
-	print l_Obj.material.materialList[l_IdMaterial]
 	local IdxsFace = getFace l_Obj i
 	local FaceNormal = getFaceNormal l_Obj i
 	local SmoothValue = getFaceSmoothGroup l_Obj i
@@ -152,15 +150,7 @@ for i=1 to nFaces do
 
 		)
 		
-		if classOf l_DiffMap == Bitmaptexture then
-		(
-			UVID = 0x0020
-			local IdxsMap = meshop.getMapFace l_Obj 1 i
-			TUVMap1= meshop.getMapVert l_Obj 1 IdxsMap.x
-			TUVMap2= meshop.getMapVert l_Obj 1 IdxsMap.y
-			TUVMap3= meshop.getMapVert l_Obj 1 IdxsMap.z
-		)
-		else if classOf l_RefMap == Bitmaptexture then
+		if classOf l_DiffMap == Bitmaptexture or l_RefMap == Bitmaptexture then
 		(
 			UVID = 0x0020
 			local IdxsMap = meshop.getMapFace l_Obj 1 i
