@@ -82,6 +82,7 @@ fn createVertex pos col norm textcoord1 textcoord2 &vertex =
 	if(textcoord1!=undefined)then
 	(
 		append vertex textcoord1.x
+		--format "V: %\n1-V: %\n" textcoord1.y (1-textcoord1.y)
 		append vertex textcoord1.y
 	)
 	if(textcoord2!=undefined)then

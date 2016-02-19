@@ -284,7 +284,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			setUserProp Obj "render_export" true
 			setUserProp Obj "render_export_type" "instance_mesh"
 			setUserProp Obj "render_visible" true
-			setUserProp Obj "has_render_layer" false
+			setUserProp Obj "has_render_layer" true
 			setUserProp Obj "render_layer" "solid"
 			setUserProp Obj "anim_model_core" "undefined"
 			setUserProp Obj "physics_generate" false
