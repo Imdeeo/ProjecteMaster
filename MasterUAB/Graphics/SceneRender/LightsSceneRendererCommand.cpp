@@ -8,4 +8,5 @@ CLightsSceneRendererCommand::CLightsSceneRendererCommand(CXMLTreeNode &TreeNode)
 void CLightsSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 {
 	UABEngine.GetEffectManager()->SetLightsConstants(MAX_LIGHTS_BY_SHADER);
+
 }

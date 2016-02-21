@@ -20,7 +20,7 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
  	if (m_EnabledAlphaBlendState == nullptr)
 		return;
 	Vect4f v(1, 1, 1, 1);
-	_RenderManager.GetContextManager()->GetDeviceContext()->OMSetBlendState(m_EnabledAlphaBlendState, NULL, 0xffffffff);
+	_RenderManager.GetDeviceContext()->OMSetBlendState(m_EnabledAlphaBlendState, NULL, 0xffffffff);
 
 	for (int i = 0; i < m_StagedTextures.size(); ++i)
 				m_StagedTextures[i].Activate();
@@ -29,7 +29,15 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
 	{
 		CLight *l_Light = UABEngine.GetLightManager()->GetResourceById(j);
 		UABEngine.GetEffectManager()->SetLightConstants(0, l_Light);
-		_RenderManager.DrawScreenQuad(m_RenderableObjectTechnique->GetEffectTechnique(), NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
+
+		CEffectTechnique* l_EffectTechnique = m_RenderableObjectTechnique->GetEffectTechnique();
+		ID3D11Buffer *l_LightConstantBufferVS = l_EffectTechnique->GetVertexShader()->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
+		ID3D11Buffer *l_LightConstantBufferPS = l_EffectTechnique->GetPixelShader()->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
+
+		_RenderManager.GetDeviceContext()->UpdateSubresource(l_LightConstantBufferVS, 0, NULL, &(CEffectManager::m_LightParameters), 0, 0);
+		_RenderManager.GetDeviceContext()->UpdateSubresource(l_LightConstantBufferPS, 0, NULL, &(CEffectManager::m_LightParameters), 0, 0);
+
+		_RenderManager.DrawScreenQuad(l_EffectTechnique, NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	}
 	_RenderManager.GetContextManager()->GetDeviceContext()->OMSetBlendState(NULL, NULL, 0xffffffff);
 }	

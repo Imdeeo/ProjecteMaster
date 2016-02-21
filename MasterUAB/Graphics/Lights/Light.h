@@ -7,6 +7,7 @@
 #include "3DElement\3DElement.h"
 #include "Texture\DynamicTexture.h"
 
+class CRenderableVertexs;
 class CRenderManager;
 class CRenderableObjectsManager;
 
@@ -16,6 +17,7 @@ protected:
 	CDynamicTexture *m_ShadowMap;
 	CTexture *m_ShadowMaskTexture;
 	std::vector<CRenderableObjectsManager *> m_Layers;
+	virtual CRenderableVertexs* GetShape(CRenderManager *_RenderManager);
 public:
 	enum TLightType
 	{
@@ -39,7 +41,7 @@ public:
 	virtual void Render(CRenderManager *RenderManager);
 	static TLightType GetLightTypeByName(const std::string &StrLightType);
 
-	const Mat44f & GetTransform();
+	virtual const Mat44f & GetTransform();
 
 	// Shadowmap
 	UAB_BUILD_GET_SET_AND_GET_ADDRESS(bool, GenerateShadowMap);

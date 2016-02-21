@@ -47,7 +47,7 @@ public:
 	CEffectVertexShader * GetVertexShader(const std::string &VertexShader);
 	CEffectPixelShader * GetPixelShader(const std::string &PixelShader);
 
-	void SetSceneConstants();
+	static void SetSceneConstants(CEffectTechnique* _EffectTechnique);
 	void SetLightConstants(unsigned int IdLight, CLight *Light);
 	void SetLightsConstants(unsigned int MaxLights = MAX_LIGHTS_BY_SHADER);
 };

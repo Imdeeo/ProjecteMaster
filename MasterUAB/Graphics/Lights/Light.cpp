@@ -49,7 +49,9 @@ void CLight::Render(CRenderManager *_RenderManager)
 		CEffectManager::m_SceneParameters.m_BaseColor = m_Color*m_Intensity;
 		CEffectManager::m_SceneParameters.m_BaseColor.SetAlpha(1.f);
 		_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
-		_RenderManager->GetDebugRender()->GetSPhere10()->RenderIndexed(_RenderManager, UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique(), CEffectManager::GetRawData());
+		CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
+		CEffectManager::SetSceneConstants(l_EffectTechnique);
+		GetShape(_RenderManager)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 	}
 }
 
@@ -78,4 +80,9 @@ const Mat44f & CLight::GetTransform()
 	m_TransformMatrix = m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
 
 	return m_TransformMatrix;
+}
+
+CRenderableVertexs* CLight::GetShape(CRenderManager *_RenderManager)
+{
+	return _RenderManager->GetDebugRender()->GetSPhere10();
 }
