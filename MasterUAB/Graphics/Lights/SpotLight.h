@@ -5,6 +5,8 @@
 
 class CSpotLight : public CDirectionalLight
 {
+protected:
+	virtual CRenderableVertexs* GetShape(CRenderManager *_RenderManager);
 public:
 	CSpotLight();
 	CSpotLight(CXMLTreeNode &TreeNode);
@@ -13,7 +15,7 @@ public:
 
 	void Render(CRenderManager *_RenderManager);
 
-	const Mat44f & GetTransform();
+	virtual const Mat44f & GetTransform();
 
 	void SetShadowMap(CRenderManager &RenderManager);
 };
