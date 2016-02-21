@@ -6,12 +6,7 @@ date: 27012015
 
 */
 #include "Globals.fxh"
-
-Texture2D DiffuseTexture : register( t0 );
-SamplerState LinearSampler : register( s0 );
-
-Texture2D NormalMapTexture : register( t1 );
-SamplerState NormalMapTextureSampler : register( s1 );
+#include "Samplers.fxh"
 
 const float g_Bump = 2.4;
 
@@ -56,7 +51,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	
 	float3 Tn=normalize(IN.WorldTangent);
 	float3 Bn=normalize(IN.WorldBinormal);
-	float3 bump=g_Bump*(tex2D(NormalMapTextureSampler,IN.UV).rgb - float3(0.5,0.5,0.5));
+	float3 bump=g_Bump*((T1Texture.Sample(S1Sampler,IN.UV).rgb) - float3(0.5,0.5,0.5));
 	float3 Nn = IN.Normal;
 	Nn = Nn + bump.x*Tn + bump.y*Bn;
 	Nn = normalize(Nn);
@@ -65,6 +60,6 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	l_DiffuseContrib = dot(Nn, IN.Pixelpos);
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
 	
-	return float4(0,0,0,0);
-	//return l_DiffuseContrib*DiffuseTexture(LinearSampler,IN.UV);
+	// return float4(1,0,0,1);
+	return l_DiffuseContrib*T0Texture.Sample(S0Sampler,IN.UV);
 }
