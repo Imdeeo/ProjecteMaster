@@ -143,14 +143,15 @@ for i=1 to nFaces do
 			local l_DiffMap = l_Obj.material.materialList[l_IdMaterial].diffuseMap
 			local l_LightMap = l_Obj.material.materialList[l_IdMaterial].selfIllumMap
 			local l_RefMap = l_Obj.material.materialList[l_IdMaterial].reflectionMap
+			local l_BumpMap = l_Obj.material.materialList[l_IdMaterial].bumpMap
 		) else (
 			local l_DiffMap = l_Obj.material.diffuseMap
 			local l_LightMap = l_Obj.material.selfIllumMap
 			local l_RefMap = l_Obj.material.reflectionMap
-
+			local l_BumpMap = l_Obj.material.bumpMap
 		)
 		
-		if classOf l_DiffMap == Bitmaptexture or l_RefMap == Bitmaptexture then
+		if classOf l_DiffMap == Bitmaptexture or l_RefMap == Bitmaptexture or l_BumpMap == Bitmaptexture then
 		(
 			UVID = 0x0020
 			local IdxsMap = meshop.getMapFace l_Obj 1 i
