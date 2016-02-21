@@ -70,11 +70,50 @@ fn createMaterials dir filename Objs copyTexture =
 								pathfile = (dir + "Textures\\" + nomTextura)
 								relativePathfile = pathfile
 								getRelativePath &relativePathFile
-								format "\t\t<texture filename=\"%\"/>\n" relativePathfile to:file
+								format "\t\t<texture type=\"diffuse\" filename=\"%\"/>\n" relativePathfile to:file
 								if copyTexture == true then
 								(
 									dirExist (dir+"Textures")
 									copyFile mat[j].diffuseMap.bitmap.filename pathfile
+								)
+							)
+							if (classof mat[j].selfIllumMap == Bitmaptexture) and (mat[j].selfIllumMap.bitmap != undefined) then
+							(
+								nomTextura = filenameFromPath (mat[j].selfIllumMap.bitmap.filename)					
+								pathfile = (dir + "Textures\\" + nomTextura)
+								relativePathfile = pathfile
+								getRelativePath &relativePathFile
+								format "\t\t<texture type=\"lightmap\" filename=\"%\"/>\n" relativePathfile to:file
+								if copyTexture == true then
+								(
+									dirExist (dir+"Textures")
+									copyFile mat[j].selfIllumMap.bitmap.filename pathfile
+								)
+							)
+							if (classof mat[j].reflectionMap == Bitmaptexture) and (mat[j].reflectionMap.bitmap != undefined) then
+							(
+								nomTextura = filenameFromPath (mat[j].reflectionMap.bitmap.filename)					
+								pathfile = (dir + "Textures\\" + nomTextura)
+								relativePathfile = pathfile
+								getRelativePath &relativePathFile
+								format "\t\t<texture type=\"reflection\" filename=\"%\"/>\n" relativePathfile to:file
+								if copyTexture == true then
+								(
+									dirExist (dir+"Textures")
+									copyFile mat[j].reflectionMap.bitmap.filename pathfile
+								)
+							)
+							if (classof mat[j].bumpMap == Bitmaptexture) and (mat[j].bumpMap.bitmap != undefined) then
+							(
+								nomTextura = filenameFromPath (mat[j].bumpMap.bitmap.filename)					
+								pathfile = (dir + "Textures\\" + nomTextura)
+								relativePathfile = pathfile
+								getRelativePath &relativePathFile
+								format "\t\t<texture type=\"normal\" filename=\"%\"/>\n" relativePathfile to:file
+								if copyTexture == true then
+								(
+									dirExist (dir+"Textures")
+									copyFile mat[j].bumpMap.bitmap.filename pathfile
 								)
 							)
 						)
