@@ -1,3 +1,6 @@
+#ifndef LIGHTS_FXH
+#define LIGHTS_FXH
+
 #include "Globals.fxh"
 #include "Samplers.fxh"
 
@@ -132,3 +135,5 @@ float4 applyLights(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int light
 	}
 	return float4(0,0,0,1);
 }
+
+#endif //LIGHTS_FXH
