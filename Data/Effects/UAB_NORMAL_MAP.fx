@@ -1,14 +1,4 @@
-/*
-
-% Normalmap shader.
-
-date: 27012015
-
-*/
-#include "Globals.fxh"
-#include "Samplers.fxh"
-
-
+#include "Lights.fxh"
 
 struct TVertexVS
 {
@@ -56,11 +46,9 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	float3 Nn = IN.Normal;
 	Nn = Nn + bump.x*Tn + bump.y*Bn;
 	Nn = normalize(Nn);
-	return float4(bump,1);
 	
-	// Diffusion
-	l_DiffuseContrib = dot(Nn, IN.Pixelpos);
-	l_DiffuseContrib = max(0, l_DiffuseContrib);
-	
-	return l_DiffuseContrib*T0Texture.Sample(S0Sampler,IN.UV);
+	float4 aux  = applyLights(IN.Pixelpos, Nn, T0Texture.Sample(S0Sampler,IN.UV), 0);
+	return aux;
+		
+	return float4(Nn,1);
 }
