@@ -58,7 +58,7 @@ fn getBoundingSphere vertex &BSphere =
 	if dist > BSphere[2] then BSphere[2] = dist
 )
 
-fn createVertex pos col norm textcoord1 textcoord2 &vertex =
+fn createVertex pos col norm textcoord1 textcoord2 binormal tangent &vertex =
 (
 	if(pos!=undefined) then
 	(
@@ -82,13 +82,26 @@ fn createVertex pos col norm textcoord1 textcoord2 &vertex =
 	if(textcoord1!=undefined)then
 	(
 		append vertex textcoord1.x
-		--format "V: %\n1-V: %\n" textcoord1.y (1-textcoord1.y)
 		append vertex textcoord1.y
 	)
 	if(textcoord2!=undefined)then
 	(
 		append vertex textcoord2.x
 		append vertex textcoord2.y
+	)
+	if(binormal==0x0100)then
+	(
+		append vertex 0
+		append vertex 0
+		append vertex 0
+		append vertex 0
+	)
+	if(tangent==0x0200)then
+	(
+		append vertex 0
+		append vertex 0
+		append vertex 0
+		append vertex 0
 	)
 )
 
