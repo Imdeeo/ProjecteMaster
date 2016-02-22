@@ -53,7 +53,7 @@ float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	float3 specular = saturate(SpecularColor*m_LightColor[lightIndex]*pow(dot(Nn, H), P));
 	//specular *= l_SpotAttenuation;
 	
-	float4 outLight = float4((l_albedo*l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular).xyz,0);
+	float4 outLight = float4((l_albedo*l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular).xyz,1);
 		
 	return saturate(outLight);
 }
