@@ -88,7 +88,7 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 	Update(0.0f);
 }
 
-void CAnimatedInstanceModel::Render(CRenderManager *RenderManager)
+void CAnimatedInstanceModel::Render(CRenderManager *_RenderManager)
 {
 	Mat44f l_Transform=GetTransform();
 	CEffectManager::m_SceneParameters.m_World=GetTransform();
@@ -106,6 +106,15 @@ void CAnimatedInstanceModel::Render(CRenderManager *RenderManager)
 			l_Transformations[l_BoneId].SetPos(Vect3f(translationBoneSpace.x,translationBoneSpace.y,translationBoneSpace.z));
 		}
 		memcpy(&CEffectManager::m_AnimatedModelEffectParameters.m_Bones, l_Transformations,MAXBONES*sizeof(float)*4*4);
+
+		CEffectTechnique* l_EffectTechnique = m_Materials[l_HardwareMeshId]->GetRenderableObjectTechnique()->GetEffectTechnique();
+		ID3D11Buffer *l_AnimationConstantBufferVS = l_EffectTechnique->GetVertexShader()->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
+		ID3D11Buffer *l_AnimationConstantBufferPS = l_EffectTechnique->GetPixelShader()->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
+
+		_RenderManager->GetDeviceContext()->UpdateSubresource(l_AnimationConstantBufferVS, 0, NULL, &(CEffectManager::m_AnimatedModelEffectParameters), 0, 0);
+		_RenderManager->GetDeviceContext()->UpdateSubresource(l_AnimationConstantBufferPS, 0, NULL, &(CEffectManager::m_AnimatedModelEffectParameters), 0, 0);
+
+		CEffectManager::SetSceneConstants(l_EffectTechnique);
 		//m_RenderableVertexs->RenderIndexed(RenderManager,m_Materials[l_HardwareMeshId]->GetEffectTechnique(),
 		//	&CEffectManager::m_SceneParameters,m_CalHardwareModel->getFaceCount()*3, m_CalHardwareModel->getStartIndex(),
 		//	m_CalHardwareModel->getBaseVertexIndex());
