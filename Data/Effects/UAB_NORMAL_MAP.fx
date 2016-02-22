@@ -8,14 +8,14 @@ date: 27012015
 #include "Globals.fxh"
 #include "Samplers.fxh"
 
-const float g_Bump = 2.4;
+
 
 struct TVertexVS
 {
 	float3 Pos : POSITION;
 	float3 Normal : NORMAL;
 	float2 UV : TEXCOORD0;
-	float3 Tangent : TEXCOORD1;
+	float4 Tangent : TEXCOORD3;
 };
 
 struct TVertexPS
@@ -47,6 +47,7 @@ TVertexPS mainVS(TVertexVS IN)
 
 float4 mainPS(TVertexPS IN) : SV_Target
 {
+	float g_Bump = 2.4;
 	float l_DiffuseContrib = 0;
 	
 	float3 Tn=normalize(IN.WorldTangent);
@@ -55,11 +56,11 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	float3 Nn = IN.Normal;
 	Nn = Nn + bump.x*Tn + bump.y*Bn;
 	Nn = normalize(Nn);
+	return float4(bump,1);
 	
 	// Diffusion
 	l_DiffuseContrib = dot(Nn, IN.Pixelpos);
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
 	
-	// return float4(1,0,0,1);
 	return l_DiffuseContrib*T0Texture.Sample(S0Sampler,IN.UV);
 }
