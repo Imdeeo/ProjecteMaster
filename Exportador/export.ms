@@ -199,9 +199,9 @@ for i=1 to nFaces do
 	local v1 = #()
 	local v2 = #()
 	local v3 = #()
-	createVertex Vt1 Color1 Nm1 TUVMap1 T2UVMap1 &v1
-	createVertex Vt2 Color2 Nm2 TUVMap2 T2UVMap2 &v2
-	createVertex Vt3 Color3 Nm3 TUVMap3 T2UVMap3 &v3
+	createVertex Vt1 Color1 Nm1 TUVMap1 T2UVMap1 BnmID TngID &v1
+	createVertex Vt2 Color2 Nm2 TUVMap2 T2UVMap2 BnmID TngID &v2
+	createVertex Vt3 Color3 Nm3 TUVMap3 T2UVMap3 BnmID TngID &v3
 	
 	local id1
 	local id2
