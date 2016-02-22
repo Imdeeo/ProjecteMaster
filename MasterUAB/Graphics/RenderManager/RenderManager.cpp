@@ -170,6 +170,9 @@ void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture
 	l_Viewport.TopLeftX = x*m_ContextManager->getViewPort()->Width;
 	l_Viewport.TopLeftY = y*m_ContextManager->getViewPort()->Height;
 	m_ContextManager->GetDeviceContext()->RSSetViewports(1, &l_Viewport);
+
+	CEffectManager::SetSceneConstants(_EffectTechnique);
+
 	m_DebugRender->GetQuadRV()->Render(this, _EffectTechnique,	CEffectManager::GetRawData());
 	m_ContextManager->GetDeviceContext()->RSSetViewports(1, m_ContextManager->getViewPort());
 }

@@ -15,14 +15,7 @@ void CSpotLight::Render(CRenderManager *_RenderManager)
 {
 	if (GetEnabled())
 	{
-		CEffectManager::m_SceneParameters.m_BaseColor = GetColor()*GetIntensity();
-		CEffectManager::m_SceneParameters.m_BaseColor.SetAlpha(1.f);
-		_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
-		_RenderManager->GetDebugRender()->GetCone()->RenderIndexed(_RenderManager, UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique(), CEffectManager::GetRawData());
-		CRenderableVertexs* l_Line = _RenderManager->GetDebugRender()->GetLine(m_Position,m_Position+(GetDirection() * GetEndRangeAttenuation()));
-		_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
-		l_Line->Render(_RenderManager, UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique(), CEffectManager::GetRawData());
-		delete l_Line;
+		CDirectionalLight::Render(_RenderManager);
 	}
 }
 
@@ -103,4 +96,9 @@ void CSpotLight::SetShadowMap(CRenderManager &RenderManager)
 	m_viewport.TopLeftY = 0.0f;
 	RenderManager.GetDeviceContext()->RSSetViewports(1, &m_viewport);
 	RenderManager.SetRenderTargets(1, l_RenderTargetViews, m_ShadowMap->GetDepthStencilView());
+}
+
+CRenderableVertexs* CSpotLight::GetShape(CRenderManager *_RenderManager)
+{
+	return _RenderManager->GetDebugRender()->GetCone();
 }

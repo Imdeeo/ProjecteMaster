@@ -4,6 +4,7 @@
 #include "Lights\DirectionalLight.h";
 #include "Lights\SpotLight.h";
 #include "Engine\UABEngine.h";
+#include "EffectShader.h"
 
 CEffectManager::CEffectManager(void)
 {
@@ -93,9 +94,13 @@ CEffectPixelShader * CEffectManager::GetPixelShader(const std::string &PixelShad
 	return m_PixelShaders[PixelShader];
 }
 
-void CEffectManager::SetSceneConstants()
+void CEffectManager::SetSceneConstants(CEffectTechnique* _EffectTechnique)
 {
-	//m_SceneParameters.m_World = UABEngine.GetRenderManager()->GetContextManager()->;
+	ID3D11DeviceContext* l_DeviceContext = UABEngine.GetRenderManager()->GetDeviceContext();
+	ID3D11Buffer *l_SceneConstantBufferVS = _EffectTechnique->GetVertexShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+	l_DeviceContext->UpdateSubresource(l_SceneConstantBufferVS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
+	ID3D11Buffer *l_SceneConstantBufferPS = _EffectTechnique->GetPixelShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+	l_DeviceContext->UpdateSubresource(l_SceneConstantBufferPS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
 }
 
 void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
@@ -164,6 +169,21 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 		Vect4f(maxAttenuation, UABEngine.GetLightManager()->GetFogStart(),
 		UABEngine.GetLightManager()->GetFogEnd(),1.0f);
 
+	std::map<std::string, CEffectTechnique*>::iterator it;
+	std::map<std::string, CEffectTechnique*>::iterator end =GetResourcesMap().end();
+	for (it = GetResourcesMap().begin(); it != end; it++)
+	{
+		ID3D11Buffer * l_LightConstantBufferVS = it->second->GetVertexShader()->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
+		ID3D11Buffer * l_LightConstantBufferPS = it->second->GetPixelShader()->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
+		if (l_LightConstantBufferVS != NULL)
+		{
+			UABEngine.GetRenderManager()->GetDeviceContext()->UpdateSubresource(l_LightConstantBufferVS, 0, NULL, &(CEffectManager::m_LightParameters), 0, 0);
+		}
+		if (l_LightConstantBufferPS != NULL)
+		{
+			UABEngine.GetRenderManager()->GetDeviceContext()->UpdateSubresource(l_LightConstantBufferPS, 0, NULL, &(CEffectManager::m_LightParameters), 0, 0);
+		}
+	}
 }
 
 int CEffectManager::m_RawDataCount = 0;
