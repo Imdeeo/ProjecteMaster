@@ -42,7 +42,6 @@ PS_INPUT mainVS(VS_INPUT IN)
 	return l_Output;
 }
 
-
 static const float m_RingWeightsTotal[RING_4] =
 {
 	5.30864,
