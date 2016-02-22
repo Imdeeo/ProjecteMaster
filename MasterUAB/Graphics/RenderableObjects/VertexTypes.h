@@ -9,9 +9,9 @@
 
 #include "RenderManager\RenderManager.h"
 
+#include <d3d9.h>
 #include <d3d11.h>
 #include <d3dCommon.h>
-
 
 #define MV_VERTEX_TYPE_POSITION				0x0001
 #define MV_VERTEX_TYPE_COLOR				0x0002
@@ -25,7 +25,61 @@
 #define MV_VERTEX_TYPE_TANGENT				0x0200 // Si tiene normalmap y es textura
 #define MV_VERTEX_TYPE_NORMAL4				0x0400 // GUI
 
+struct TNORMAL_TANGENT_BINORMAL_TEXTURED_VERTEX
+{
+	float x, y, z;
+	float nx, ny, nz, nw;
+	float tangentx, tangenty, tangentz, tangentw;
+	float binormalx, binormaly, binormalz, binormalw;
+	float tu, tv;
+	static inline unsigned short GetVertexType();
+	static inline unsigned int GetFVF()
+	{
+		return 0;
+	}
+	static LPDIRECT3DVERTEXDECLARATION9 s_VertexDeclaration;
+	static LPDIRECT3DVERTEXDECLARATION9 & GetVertexDeclaration();
+	static void ReleaseVertexDeclaration()
+	{
+		CHECKED_RELEASE(s_VertexDeclaration);
+	}
+};
 
+struct TCOLORED_VERTEX
+{
+	Vect3f x, y, z;
+	float nx, ny, nz, nw;
+	float tangentx, tangenty, tangentz, tangentw;
+	float binormalx, binormaly, binormalz, binormalw;
+	float tu, tv;
+	static bool CreateInputLayout(CRenderManager *RenderManager, ID3DBlob *VSBlob,
+		ID3D11InputLayout **VertexLayout)
+	{
+		D3D11_INPUT_ELEMENT_DESC l_Layout[] =
+		{
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,
+			D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "NORMAL", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12,
+			D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TANGENT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 28,
+			D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "BINORMAL", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 44,
+			D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 60,
+			D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		};
+		UINT l_NumElements = ARRAYSIZE(l_Layout);
+		HRESULT l_HR = RenderManager->GetDevice()->CreateInputLayout(l_Layout,
+			l_NumElements, VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), VertexLayout);
+		return !FAILED(l_HR);
+	}
+	static unsigned int GetVertexType()
+	{
+		return MV_VERTEX_TYPE_POSITION | MV_VERTEX_TYPE_NORMAL4 |
+			MV_VERTEX_TYPE_TANGENT | MV_VERTEX_TYPE_BINORMAL |
+			MV_VERTEX_TYPE_TEXTURE1;
+	}
+};
 
 #define CREATE_INPUT_LAYOUT(LayoutVariable, IdLayoutVariable, OffsetBytesVariable, NumBytes) \
 	LayoutVariable[IdLayoutVariable].AlignedByteOffset=OffsetBytesVariable; \
@@ -200,7 +254,7 @@ struct StructName \
 	static unsigned int GetVertexType() \
 		{ \
 		return IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition##_POSITION | \
-IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition4##_POSITION4 | \
+	IFDEF_CREATE_GET_VERTEX_TYPE_##HasPosition4##_POSITION4 | \
 	IFDEF_CREATE_GET_VERTEX_TYPE_##HasColor##_COLOR | \
 	IFDEF_CREATE_GET_VERTEX_TYPE_##HasNormal##_NORMAL | \
 	IFDEF_CREATE_GET_VERTEX_TYPE_##HasWeightIndices##_WEIGHT_INDICES | \
