@@ -58,13 +58,13 @@ fn createMaterials dir filename Objs copyTexture =
 				
 				for j=1 to n_materials do
 				(
-					if materialsDictionary.Item[mat[j].name]==undefined then
+					if (materialsDictionary.Item[mat[j].name]==undefined) then
 					(
 						format "\t<material name=\"%\" renderable_object_technique=\"diffuse_technique\">\n" mat[j].name to:file
 						materialsDictionary.Add mat[j].name "defined"
-						if mat[j].diffuseMap != undefined then  
+						if (classof mat[j].diffuseMap == Bitmaptexture) then
 						(
-							if (classof mat[j].diffuseMap == Bitmaptexture) and (mat[j].diffuseMap.bitmap != undefined) then
+							if (mat[j].diffuseMap.bitmap != undefined) then
 							(
 								nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
 								pathfile = (dir + "Textures\\" + nomTextura)
@@ -77,7 +77,10 @@ fn createMaterials dir filename Objs copyTexture =
 									copyFile mat[j].diffuseMap.bitmap.filename pathfile
 								)
 							)
-							if (classof mat[j].selfIllumMap == Bitmaptexture) and (mat[j].selfIllumMap.bitmap != undefined) then
+						)
+						if (classof mat[j].selfIllumMap == Bitmaptexture) then
+						(
+							if (mat[j].selfIllumMap.bitmap != undefined) then
 							(
 								nomTextura = filenameFromPath (mat[j].selfIllumMap.bitmap.filename)					
 								pathfile = (dir + "Textures\\" + nomTextura)
@@ -90,7 +93,10 @@ fn createMaterials dir filename Objs copyTexture =
 									copyFile mat[j].selfIllumMap.bitmap.filename pathfile
 								)
 							)
-							if (classof mat[j].reflectionMap == Bitmaptexture) and (mat[j].reflectionMap.bitmap != undefined) then
+						)
+						if (classof mat[j].reflectionMap == Bitmaptexture) then
+						(
+							if (mat[j].reflectionMap.bitmap != undefined) then
 							(
 								nomTextura = filenameFromPath (mat[j].reflectionMap.bitmap.filename)					
 								pathfile = (dir + "Textures\\" + nomTextura)
@@ -103,7 +109,10 @@ fn createMaterials dir filename Objs copyTexture =
 									copyFile mat[j].reflectionMap.bitmap.filename pathfile
 								)
 							)
-							if (classof mat[j].bumpMap == Bitmaptexture) and (mat[j].bumpMap.bitmap != undefined) then
+						)
+						if (classof mat[j].bumpMap == Bitmaptexture) then
+						(
+							if (mat[j].bumpMap.bitmap != undefined) then
 							(
 								nomTextura = filenameFromPath (mat[j].bumpMap.bitmap.filename)					
 								pathfile = (dir + "Textures\\" + nomTextura)
@@ -114,6 +123,21 @@ fn createMaterials dir filename Objs copyTexture =
 								(
 									dirExist (dir+"Textures")
 									copyFile mat[j].bumpMap.bitmap.filename pathfile
+								)
+							)
+						) else if (classof mat[j].bumpMap == Normal_Bump) then
+						(
+							if (mat[j].bumpMap.normal_map.bitmap != undefined) then
+							(
+								nomTextura = filenameFromPath (mat[j].bumpMap.normal_map.bitmap.filename)					
+								pathfile = (dir + "Textures\\" + nomTextura)
+								relativePathfile = pathfile
+								getRelativePath &relativePathFile
+								format "\t\t<texture type=\"normal\" filename=\"%\"/>\n" relativePathfile to:file
+								if copyTexture == true then
+								(
+									dirExist (dir+"Textures")
+									copyFile mat[j].bumpMap.normal_map.bitmap.filename pathfile
 								)
 							)
 						)
