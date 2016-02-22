@@ -37,7 +37,7 @@ fn writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere=
 )
 
 fn processFaces arx Obj &prog=
-(	
+(
 	prog.value = 0
 	if classof Obj != Editable_mesh then
 	(
@@ -63,11 +63,29 @@ fn processFaces arx Obj &prog=
 	local T2UVMap2 = undefined
 	local T2UVMap3 = undefined
 	
-	local VtID = 0x0001
+	local PosID = 0x0001
 	local ColorID = 0x0000
 	local NmID = 0x0004
 	local UVID = 0x0000
 	local UV2ID = 0x0000
+	local BnmID = 0x0000
+	local TngID = 0x0000
+	
+	if (classof l_Obj.material.bumpMap == Bitmaptexture) then
+	(
+		if (classof l_Obj.material.bumpMap.bitmap == Bitmap) then
+		(
+			BnmID = 0x0100
+			TngID = 0x0200
+		)
+	) else if (classof l_Obj.material.bumpMap == Normal_Bump) then
+	(
+		if (classof l_Obj.material.bumpMap.normal_map.bitmap == Bitmap) then
+		(
+			BnmID = 0x0100
+			TngID = 0x0200
+		)
+	)
 	
 	local InvTransform = inverse obj.transform
 	local NumVtxs = getNumVerts l_Obj
@@ -200,8 +218,9 @@ for i=1 to nFaces do
 	prog.value = 100.*i/nFaces
 )
 	
-	l_VtxID = VtID+ColorID+NmID+UVID+UV2ID
-	writeMesh arx l_VtxID vertexs indexs BBMin BBMax BSphere
+	local VtxID = 0x0000
+	VtxID = PosID+ColorID+NmID+UVID+UV2ID+BnmID+TngID
+	writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere
 	
 	if classof Obj != Editable_mesh then ( delete l_Obj )
 )
