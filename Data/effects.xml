@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <effects>
-	<vertex_shader name="deff_vs" file="Data/Effects/UAB_UBER_DEFERRED_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
-	<pixel_shader name="deff_ps" file="Data/Effects/UAB_UBER_DEFERRED_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
+	<vertex_shader name="deff_vs" file="Data/Effects/UAB_DEFERRED_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="deff_ps" file="Data/Effects/UAB_DEFERRED_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
 	<effect_technique name="deff_technique" vertex_shader="deff_vs" pixel_shader="deff_ps"/>
 
 	<vertex_shader name="generate_shadowmap_vs" file="Data/Effects/UAB_SHADOWMAP.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor=""/>
@@ -40,8 +40,8 @@
 	<pixel_shader name="2d_ps"	file="Data/Effects/UAB_2D.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor=""/>
 	<effect_technique name="2d_technique" vertex_shader="2d_vs" pixel_shader="2d_ps"/>
 			
-	<vertex_shader name="gBuffer_vs" file="Data/Effects/UAB_DEFERRED_SHADING.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS"/>
-	<pixel_shader name="gBuffer_ps" file="Data/Effects/UAB_DEFERRED_SHADING.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS"/>
+	<vertex_shader name="gBuffer_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS"/>
+	<pixel_shader name="gBuffer_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS"/>
 	<effect_technique name="gBuffer_technique" vertex_shader="gBuffer_vs" pixel_shader="gBuffer_ps"/>
 	
 	<vertex_shader name="noise_and_vignetting_vs" file="Data/Effects/UAB_NOISE_AND_VIGNETTING.fx" shader_model="vs_4_0" entry_point="NoiseAndVignettingVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
