@@ -1,4 +1,7 @@
 //Globals.fxh
+#ifndef GLOBALS_FXH
+#define GLOBALS_FXH
+
 #define MAXBONES 40
 #define MAX_LIGHTS_BY_SHADER 4
 
@@ -63,3 +66,6 @@ static float m_EndFog = m_MaxAttenuation_StartFog_EndFog.z;
 
 static float m_UseShadowMapArray[4] = (float[4])m_UseShadowMap;
 static float m_UseShadowMaskArray[4] = (float[4])m_UseShadowMask;
+
+
+#endif //GLOBALS_FXH
