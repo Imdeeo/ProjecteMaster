@@ -5,7 +5,9 @@
 
 #include "TemplatedMaterialParameter.h"
 
-CMaterial::CMaterial(CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0)
+#define INDEX_CUBEMAP_TEXTURE 8
+
+CMaterial::CMaterial(CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0), m_ReflectionStageId(99)
 {
 	std::string l_RenderableObjectTechnique = TreeNode.GetPszProperty("renderable_object_technique","");
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_RenderableObjectTechnique);
@@ -17,6 +19,11 @@ CMaterial::CMaterial(CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParame
 		if (l_Child.GetName() == std::string("texture"))
 		{
 			m_Textures.push_back(CUABEngine::GetInstance()->GetTextureManager()->GetTexture(l_Child.GetPszProperty("filename")));
+			std::string l_TextureType = l_Child.GetPszProperty("type");
+			if (l_TextureType == "reflection")
+			{
+				m_ReflectionStageId = i;
+			}
 		}
 		if (l_Child.GetName() == std::string("parameter"))
 		{
@@ -68,7 +75,11 @@ void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 {
 	for (int i = 0; i < m_Textures.size(); i++)
 	{
-		m_Textures[i]->Activate(i);	
+		if (i == m_ReflectionStageId){
+			m_Textures[i]->Activate(INDEX_CUBEMAP_TEXTURE);
+		}else{
+			m_Textures[i]->Activate(i);
+		}
 	}
 	for (int i = 0; i < m_Parameters.size(); i++)
 	{

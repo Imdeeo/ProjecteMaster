@@ -17,6 +17,7 @@ private:
 	std::vector<CMaterialParameter *> m_Parameters;
 	CRenderableObjectTechnique *m_RenderableObjectTechnique;
 	unsigned int m_CurrentParameterData;
+	unsigned int m_ReflectionStageId;
 	void Destroy();
 public:
 	CMaterial(CXMLTreeNode &TreeNode);
