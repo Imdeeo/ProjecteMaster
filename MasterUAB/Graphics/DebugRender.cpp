@@ -427,7 +427,22 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 	m_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid");
 
 }
+CDebugRender::~CDebugRender()
+{
 
+	delete m_SimpleTriangle;
+	delete m_ClassicBlendTriangle;
+	delete m_PremultBlendTriangle;
+	delete m_SimpleGrid;
+	delete m_BigGrid;
+	delete m_SimpleCube;
+	delete m_Axis;
+	delete m_LongAxis;
+	delete m_DrawQuadRV;
+	delete m_Sphere_10Seg;
+	delete m_Cone;
+
+}
 CRenderableVertexs * CDebugRender::GetLine(Vect3f inici, Vect3f final) const
 {
 	MV_POSITION_COLOR_VERTEX l_Line[2] =

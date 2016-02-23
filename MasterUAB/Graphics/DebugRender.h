@@ -26,6 +26,7 @@ class CDebugRender
 {
 public:
 	CDebugRender(ID3D11Device* _Device);
+	~CDebugRender();
 
 	CRenderableVertexs * GetLine(Vect3f inici, Vect3f final) const;
 
@@ -72,7 +73,7 @@ public:
 	CEffectTechnique *	GetDebugTechnique() const { return m_EffectTechnique->GetEffectTechnique(); }
 
 private:
-	CRenderableObjectTechnique				*m_EffectTechnique;
+	CRenderableObjectTechnique		*m_EffectTechnique;
 
 	CRenderableVertexs				*m_SimpleTriangle;
 	CRenderableVertexs				*m_ClassicBlendTriangle;

@@ -94,7 +94,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 {
 	//-----------Para detectar Memory Leaks-------------------------
 	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(28668);
+	//_CrtSetBreakAlloc(32455);
 	//----------
 
 	// Register the window class

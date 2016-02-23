@@ -24,7 +24,7 @@ CRenderManager::CRenderManager()
 
 CRenderManager::~CRenderManager()
 {
-
+	CHECKED_DELETE(m_DebugRender);
 }
 
 void CRenderManager::Init()

@@ -69,6 +69,7 @@ void CContextManager::Dispose()
 	CHECKED_RELEASE(m_D3DDevice);
 	CHECKED_RELEASE(m_DeviceContext);
 	CHECKED_RELEASE(m_SwapChain);
+	CHECKED_DELETE(m_ViewPort);
 }
 
 HRESULT CContextManager::CreateContext(HWND hWnd, int Width, int Height)
@@ -172,6 +173,8 @@ HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 		return hr;
 
 	SetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+
+	CHECKED_DELETE(m_ViewPort);
 
 	m_ViewPort = new D3D11_VIEWPORT();
 	m_ViewPort->Width = (FLOAT)m_Width;
