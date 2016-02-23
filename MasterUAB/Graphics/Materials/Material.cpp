@@ -68,7 +68,7 @@ void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 {
 	for (int i = 0; i < m_Textures.size(); i++)
 	{
-		m_Textures[i]->Activate(i);
+		m_Textures[i]->Activate(i);	
 	}
 	for (int i = 0; i < m_Parameters.size(); i++)
 	{
