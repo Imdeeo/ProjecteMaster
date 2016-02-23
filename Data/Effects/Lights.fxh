@@ -4,20 +4,12 @@
 #include "Globals.fxh"
 #include "Samplers.fxh"
 
-float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex)
-{	
-	// Factors in the final multiplication.	
-	float l_DiffuseContrib;
-	float l_DistanceAttenuation;
-	float l_SpotAttenuation;
-	float P = 50;
-	float4 SpecularColor = float4(1, 1, 1, 1);
-		
-	
+/*float4 shadowMapCalc(float3 l_WorldPosition)
+{
 	if(m_UseShadowMapArray[lightIndex]==1.0)
 	{
-		float4 l_LightViewPosition=mul(float4(l_WorldPosition, 1), m_LightView[lightIndex]);
-		l_LightViewPosition=mul(l_LightViewPosition, m_LightProjection[lightIndex]);
+		float4 l_LightViewPosition=mul(float4(l_WorldPosition, 1), m_LightView[0]);
+		l_LightViewPosition=mul(l_LightViewPosition, m_LightProjection[0]);
 		float2 l_ProjectedLightCoords=float2(((l_LightViewPosition.x/l_LightViewPosition.w)/2.0f)+0.5f, ((-l_LightViewPosition.y/l_LightViewPosition.w)/2.0f)+0.5f);
 		float l_DepthShadowMap=T6Texture.Sample(S6Sampler, l_ProjectedLightCoords).r;
 		float l_LightDepth=l_LightViewPosition.z/l_LightViewPosition.w;
@@ -31,6 +23,18 @@ float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 			}
 		}
 	}
+	return float4(1,1,1,1);
+}*/
+
+
+float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex)
+{	
+	// Factors in the final multiplication.	
+	float l_DiffuseContrib;
+	float l_DistanceAttenuation;
+	float l_SpotAttenuation;
+	float P = 50;
+	float4 SpecularColor = float4(1, 1, 1, 1);
 	
 	// Intermediate values
 	float3 l_RayDirection = normalize(l_WorldPosition - m_LightPosition[lightIndex]);
@@ -60,24 +64,6 @@ float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 
 float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex)
 {
-	if(m_UseShadowMapArray[lightIndex]==1.0)
-	{
-		float4 l_LightViewPosition=mul(float4(l_WorldPosition, 1), m_LightView[lightIndex]);
-		l_LightViewPosition=mul(l_LightViewPosition, m_LightProjection[lightIndex]);
-		float2 l_ProjectedLightCoords=float2(((l_LightViewPosition.x/l_LightViewPosition.w)/2.0f)+0.5f, ((-l_LightViewPosition.y/l_LightViewPosition.w)/2.0f)+0.5f);
-		float l_DepthShadowMap=T6Texture.Sample(S6Sampler, l_ProjectedLightCoords).r;
-		float l_LightDepth=l_LightViewPosition.z/l_LightViewPosition.w;
-		float m_ShadowMapBias = 0.0001f;
-		l_DepthShadowMap=l_DepthShadowMap+m_ShadowMapBias;
-		if((saturate(l_ProjectedLightCoords.x)==l_ProjectedLightCoords.x) && (saturate(l_ProjectedLightCoords.y)==l_ProjectedLightCoords.y))
-		{
-			if(l_LightDepth>l_DepthShadowMap)
-			{
-				return float4(0,0,0,1);
-			}
-		}
-	}
-
 	float P = 50;
 	float4 SpecularColor = float4(1, 1, 1, 1);
 	float l_DiffuseContrib;	
@@ -117,7 +103,6 @@ float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 
 float4 applyLights(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex)
 {
-	
 	if(m_LightEnabledArray[lightIndex]==1)
 	{	
 		if(m_LightTypeArray[lightIndex] == 0) //OMNI

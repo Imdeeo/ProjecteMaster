@@ -49,10 +49,10 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 
 float4 mainPS(PS_INPUT IN) : SV_Target
 {		
-	//return mecmec(1);
 	float l_Depth=T3Texture.Sample(S3Sampler, IN.UV).r;
 	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
 	float3 Nn=Texture2Normal(T2Texture.Sample(S2Sampler, IN.UV).xyz);
 	float4 l_albedo =T0Texture.Sample(S0Sampler, IN.UV);
-	return applyLights(l_WorldPosition, Nn, l_albedo, 0);
+	return l_albedo;
+	return applyLights(l_WorldPosition, Nn, l_albedo, 0);//*shadowMapCalc(l_WorldPosition);
 }

@@ -1,10 +1,3 @@
-/*
-
-% Spot light shader.
-
-date: 17122015
-
-*/
 #include "Lights.fxh"
 
 #ifndef HAS_UV
@@ -136,9 +129,9 @@ TVertexPS mainVS(TVertexVS IN)
 
 	#ifdef HAS_NORMAL
 		#ifdef HAS_WEIGHT_INDICES
-				l_Out.Normal = l_Normal;
+			l_Out.Normal = l_Normal;
 		#else
-				l_Out.Normal = normalize(mul(IN.Normal, (float3x3)m_World));
+			l_Out.Normal = normalize(mul(IN.Normal, (float3x3)m_World));
 		#endif
 	#endif
 
@@ -226,14 +219,13 @@ float CalcExpFog(float Depth, float ExpDensityFog)
 float4 GetFogColor(float Depth) 
 { 
 	float l_FogIntensity=CalcLinearFog(Depth, m_StartFog, m_EndFog);
-	//return(l_FogColor.xyz*l_FogColor.a);
 	return saturate(float4(m_FogColor.xyz,l_FogIntensity));
 }
 
 float4 mainPS(TVertexPS IN) : SV_Target
 {
 	float4 Out = float4(1,1,1,1);
-	
+
 	#ifdef HAS_COLOR
 		Out = IN.Color;
 	#endif
@@ -245,7 +237,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		
 		float l_DistanceEyeToWorldPosition=length(IN.Pixelpos-m_InverseView[3].xyz);
 		float4 l_FogColor = GetFogColor(l_DistanceEyeToWorldPosition);
-		Out = float4(Out.xyz+l_FogColor.xyz*l_FogColor.a,Out.a);
+		Out = float4(Out.xyz+l_FogColor.xyz*l_FogColor.a,Out.a);		
 	#endif
 
 	return Out;
