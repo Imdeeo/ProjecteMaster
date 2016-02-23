@@ -26,6 +26,7 @@ CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed(TreeNode){
 
 CEffectShader::~CEffectShader(void)
 {
+	CHECKED_DELETE(m_ShaderMacros);
 }
 
 void CEffectShader::CreateShaderMacro()

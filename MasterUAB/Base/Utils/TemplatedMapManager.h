@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string>
 #include <map>
+#include "Utils.h"
 
 template<class T>
 class CTemplatedMapManager
@@ -37,14 +38,15 @@ public:
 	}
 	virtual bool AddResource(const std::string &Name, T *Resource)
 	{
-		if(m_Resources.find(Name)!=m_Resources.end())
-		{
-			printf("CMapManager error: El recurs %s ja existeix al MapManager\n",Name.c_str());
-			return false;
-		}
-		if( Resource == nullptr )
+		if (Resource == nullptr)
 		{
 			printf("CMapManager error: Recurs NULL\n");
+			return false;
+		}
+		if(m_Resources.find(Name)!=m_Resources.end())
+		{
+			CHECKED_DELETE(Resource);
+			printf("CMapManager error: El recurs %s ja existeix al MapManager\n",Name.c_str());
 			return false;
 		}
 		m_Resources[Name] = Resource;
@@ -52,15 +54,16 @@ public:
 	}
 	virtual bool AddUpdateResource(const std::string &Name, T *Resource)
 	{
-		if (m_Resources.find(Name) != m_Resources.end())
-		{
-			*(m_Resources[Name]) = *(Resource);
-			return true;
-		}
 		if (Resource == nullptr)
 		{
 			printf("CMapManager error: Recurs NULL\n");
 			return false;
+		}
+		if (m_Resources.find(Name) != m_Resources.end())
+		{
+			*(m_Resources[Name]) = *(Resource);
+			CHECKED_DELETE(Resource);
+			return true;
 		}
 		m_Resources[Name] = Resource;
 		return true;
@@ -70,7 +73,7 @@ public:
 		typedef TMapResource::iterator it_type;
 		for(it_type iterator = m_Resources.begin();iterator != m_Resources.end();iterator++)
 		{
-			delete iterator->second;
+			CHECKED_DELETE(iterator->second);
 		}
 		m_Resources.clear();
 	}
