@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <effects>
-	<vertex_shader name="bump_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_TANGENT"/>
-	<pixel_shader name="bump_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_TANGENT"/>
-	<effect_technique name="bump_deferred_technique" vertex_shader="bump_deferred_vs" pixel_shader="bump_deferred_ps"/>
-	
-	<vertex_shader name="deff_vs" file="Data/Effects/UAB_DEFERRED_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
-	<pixel_shader name="deff_ps" file="Data/Effects/UAB_DEFERRED_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
-	<effect_technique name="deff_technique" vertex_shader="deff_vs" pixel_shader="deff_ps"/>
-
 	<!--EFECTOS -->
 	<vertex_shader name="color_grading_vs" file="Data/Effects/UAB_COLOR_GRADING.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="color_grading_ps" file="Data/Effects/UAB_COLOR_GRADING.fx" shader_model="ps_4_0" entry_point="PSGUIColorGrading"/>
@@ -82,6 +74,14 @@
 	<vertex_shader name="gBuffer_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS"/>
 	<pixel_shader name="gBuffer_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS"/>
 	<effect_technique name="gBuffer_technique" vertex_shader="gBuffer_vs" pixel_shader="gBuffer_ps"/>
+	
+	<vertex_shader name="bump_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_TANGENT"/>
+	<pixel_shader name="bump_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_TANGENT"/>
+	<effect_technique name="bump_deferred_technique" vertex_shader="bump_deferred_vs" pixel_shader="bump_deferred_ps"/>
+	
+	<vertex_shader name="deff_vs" file="Data/Effects/UAB_DEFERRED_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="deff_ps" file="Data/Effects/UAB_DEFERRED_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
+	<effect_technique name="deff_technique" vertex_shader="deff_vs" pixel_shader="deff_ps"/>
 		
 	<!-- SHADOWMAP -->
 	<vertex_shader name="generate_shadowmap_vs" file="Data/Effects/UAB_SHADOWMAP.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor=""/>
