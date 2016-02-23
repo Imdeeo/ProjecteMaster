@@ -1,48 +1,37 @@
-/*
-
-% Normalmap+Spot light shader.
-
-date: 17122015
-
-*/
 #include "Globals.fxh"
 #include "Samplers.fxh"
 
-	
-const float g_EnvironmentFactor = 1.0;
-
-struct TVertexVS
+struct VS_INPUT
 {
 	float3 Pos : POSITION;
 	float3 Normal : NORMAL;
 };
 
-struct TVertexPS
+struct PS_INPUT
 {
 	float4 Pos : SV_POSITION;
 	float3 Normal : NORMAL;
-	float3 Pixelpos : TEXCOORD1;
+	float3 HPos : TEXCOORD1;
 };
 
-TVertexPS mainVS(TVertexVS IN)
+PS_INPUT mainVS(VS_INPUT IN)
 {
-	TVertexPS l_Out = (TVertexPS)0;
+	PS_INPUT l_Out = (PS_INPUT)0;
 	
 	l_Out.Pos = mul(float4(IN.Pos.xyz, 1.0), m_World);
-	l_Out.Pixelpos = l_Out.Pos.xyz;
+	l_Out.HPos = l_Out.Pos.xyz;
 	l_Out.Pos = mul(l_Out.Pos, m_View);
 	l_Out.Pos = mul(l_Out.Pos, m_Projection);
 	l_Out.Normal = normalize(mul(IN.Normal, (float3x3)m_World));
 	
-	
 	return l_Out;
 }
 
-float4 mainPS(TVertexPS IN) : SV_Target
+float4 mainPS(PS_INPUT IN) : SV_Target
 {	
 	float3 Nn=normalize(IN.Normal);
-	float3 l_EyeToWorldPosition = normalize(IN.Pixelpos-m_CameraPosition.xyz);
+	float3 l_EyeToWorldPosition = normalize(IN.HPos-m_CameraPosition.xyz);
 	float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, Nn));
-	float3 outColor = tex3D(CubeSampler, l_ReflectVector).xyz*g_EnvironmentFactor;
-	return float4(outColor,1);
+	float3 l_ReflectColor = T1Texture.Sample(S1Sampler, l_ReflectVector).xyz;
+	return float4(l_ReflectColor,1);
 }

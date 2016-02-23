@@ -58,7 +58,15 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	
 	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
 	
-	l_Out.Target0 = float4(l_Albedo.xyz, m_SpecularFactor);
+#ifdef HAS_REFLECTION
+	float3 l_EyeToWorldPosition = normalize(IN.HPos-m_CameraPosition.xyz);
+	float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
+	float4 l_ReflectColor = T1Texture.Sample(S1Sampler, l_ReflectVector)*0.75;
+#else
+	float3 l_ReflectColor = float3(0,0,0);
+#endif
+	
+	l_Out.Target0 = float4(l_Albedo.xyz+l_ReflectColor.xyz, m_SpecularFactor);
 	l_Out.Target1 = float4(l_Albedo.xyz*m_LightAmbient.xyz, m_SpecularPower);
 	l_Out.Target2 = float4(Normal2Texture(IN.Normal), 1.0);
 	l_Out.Target3 = float4(l_Depth,l_Depth,l_Depth, 1.0f);

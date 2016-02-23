@@ -107,7 +107,7 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 {	
 	m_LightParameters.m_LightEnabled[IdLight] = Light->GetEnabled()?1:0;
 	m_LightParameters.m_LightType[IdLight] = Light->GetType();
-	m_LightParameters.m_LightPosition[IdLight] = Light->GetPosition();;	
+	m_LightParameters.m_LightPosition[IdLight] = Light->GetPosition();
 	m_LightParameters.m_LightAttenuationStartRange[IdLight] = Light->GetStartRangeAttenuation();
 	m_LightParameters.m_LightAttenuationEndRange[IdLight] = Light->GetEndRangeAttenuation();
 	m_LightParameters.m_LightIntensity[IdLight] = Light->GetIntensity();
