@@ -11,6 +11,7 @@
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="gBuffer">
 		<renderable_object_technique name="lights" technique="gBuffer_technique"/>
+		<renderable_object_technique name="reflection" technique="reflection_technique"/>
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="deferred_shading">
