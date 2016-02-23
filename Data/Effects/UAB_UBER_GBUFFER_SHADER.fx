@@ -6,6 +6,10 @@ struct VS_INPUT
 	float3 Pos : POSITION;
 	float3 Normal : NORMAL;
 	float2 UV : TEXCOORD0;
+		
+	#ifdef HAS_TANGENT
+		float4 Tangent : TEXCOORD3;
+	#endif
 };
 
 struct PS_INPUT
@@ -17,7 +21,7 @@ struct PS_INPUT
 };
 
 struct PS_OUTPUT
-{ 
+{
 	float4 Target0 : SV_Target0;
 	float4 Target1 : SV_Target1;
 	float4 Target2 : SV_Target2;
@@ -58,15 +62,16 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	
 	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
 	
-#ifdef HAS_REFLECTION
+/*#ifdef HAS_REFLECTION
 	float3 l_EyeToWorldPosition = normalize(IN.HPos-m_CameraPosition.xyz);
 	float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
-	float4 l_ReflectColor = T8Texture.Sample(S8Sampler, l_ReflectVector)*0.75;
+	float4 l_ReflectColor = T1Texture.Sample(S1Sampler, l_ReflectVector)*0.75;
+	l_Albedo.xyz += l_ReflectColor.xyz;
 #else
 	float3 l_ReflectColor = float3(0,0,0);
-#endif
-	
-	l_Out.Target0 = float4(l_Albedo.xyz+l_ReflectColor.xyz, m_SpecularFactor);
+#endif*/
+	l_Out.Target0 = float4(0,1,0,1);
+	//l_Out.Target0 = float4(l_Albedo.xyz, m_SpecularFactor);
 	l_Out.Target1 = float4(l_Albedo.xyz*m_LightAmbient.xyz, m_SpecularPower);
 	l_Out.Target2 = float4(Normal2Texture(IN.Normal), 1.0);
 	l_Out.Target3 = float4(l_Depth,l_Depth,l_Depth, 1.0f);

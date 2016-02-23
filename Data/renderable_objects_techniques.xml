@@ -5,13 +5,15 @@
 		<renderable_object_technique name="debug_grid" technique="debug_render_technique"/>		
 		<renderable_object_technique name="animated" technique="animated_diffuse_technique"/>
 		<renderable_object_technique name="lights" technique="lights_technique"/>
+		<renderable_object_technique name="bump" technique="bump_technique"/>
+		<renderable_object_technique name="environment" technique="environment_technique"/>
 		<renderable_object_technique name="noise_and_vignetting" technique="noise_and_vignetting"/>
-		<renderable_object_technique name="zblur" technique="zblur_technique"/>		
+		<renderable_object_technique name="zblur" technique="zblur_technique"/>
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="gBuffer">
 		<renderable_object_technique name="lights" technique="gBuffer_technique"/>
-		<renderable_object_technique name="reflection" technique="reflection_technique"/>
+		<renderable_object_technique name="bump" technique="bump_deferred_technique"/>
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="deferred_shading">
