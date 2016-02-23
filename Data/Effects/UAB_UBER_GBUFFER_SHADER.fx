@@ -61,7 +61,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 #ifdef HAS_REFLECTION
 	float3 l_EyeToWorldPosition = normalize(IN.HPos-m_CameraPosition.xyz);
 	float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
-	float4 l_ReflectColor = T1Texture.Sample(S1Sampler, l_ReflectVector)*0.75;
+	float4 l_ReflectColor = T8Texture.Sample(S8Sampler, l_ReflectVector)*0.75;
 #else
 	float3 l_ReflectColor = float3(0,0,0);
 #endif
