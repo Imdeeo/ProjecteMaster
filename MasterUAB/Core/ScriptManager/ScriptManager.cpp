@@ -182,7 +182,7 @@ void CScriptManager::RegisterLUAFunctions()
 // TEMPLATES-------------------------------------------------------------------------------------------
 
 	// Templated Map Manager---------------------------------------------------------------------------
-	/*module(m_LS)[
+	module(m_LS)[
 		class_<CTemplatedMapManager<CAnimatedCoreModel>>("CTemplatedMapManager<CAnimatedCoreModel>")
 			.def("get_resource", &CTemplatedMapManager<CAnimatedCoreModel>::GetResource)
 			.def("add_resource", &CTemplatedMapManager<CAnimatedCoreModel>::AddResource)
@@ -302,14 +302,14 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CUABEngine>("CUABEngine")
 			.def("get_static_mesh_manager", &CUABEngine::GetStaticMeshManager)
-			.def("get_renderable_objects_manager", &CUABEngine::GetRenderableObjectsManager)
+			.def("get_layer_manager", &CUABEngine::GetLayerManager)
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)
 			.def("get_effect_manager", &CUABEngine::GetEffectManager)
 			.def("get_light_manager", &CUABEngine::GetLightManager)
 			.def("get_render_manager", &CUABEngine::GetRenderManager)
 			.def("get_animated_models_manager", &CUABEngine::GetAnimatedModelsManager)
 			.def("get_script_manager", &CUABEngine::GetScriptManager)
-			.def("get_camera_manager", &CUABEngine::GetCameraManager)
+			.def("get_camera_controller_manager", &CUABEngine::GetCameraControllerManager)
 			.def("get_cinematic", &CUABEngine::GetCinematic)
 			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
 			.def("load_level_xml", &CUABEngine::LoadLevelXML)
@@ -455,8 +455,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("reload", &CCameraControllerManager::Reload)
 			.def("get_main_camera", &CCameraControllerManager::GetMainCamera)
 			.def("get_debug_camera", &CCameraControllerManager::GetDebugCamera)
-			.def("update_main_camera", &CCameraControllerManager::UpdateMainCamera)
-			.def("update_debug_camera", &CCameraControllerManager::UpdateDebugCamera)
 			.def("update", &CCameraControllerManager::Update)
 	];
 
@@ -669,8 +667,6 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CLight, CNamed>("CLight")
-			.def(constructor<>())
-			.def(constructor<CXMLTreeNode&>())
 			.def("get_position", &CLight::GetPosition)
 			.def("set_position", &CLight::SetPosition)
 			.def("get_color", &CLight::GetColor)
@@ -719,7 +715,9 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CMaterial, CNamed>("CMaterial")
 			.def(constructor<const CXMLTreeNode&>())
 			.def("apply", &CMaterial::Apply)
-			.def("get_effect_technique", &CMaterial::GetEffectTechnique)
+			.def("get_next_parameter_adress", &CMaterial::GetNextParameterAddress)
+			.def("get_parameters", &CMaterial::GetParameters)
+			.def("get_renderable_object_technique", &CMaterial::GetRenderableObjectTechnique)
 	];
 
 	module(m_LS)[
@@ -736,7 +734,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render", &CRenderableObject::Render)
 	];
 
-	module(m_LS)[
+/*	module(m_LS)[
 		class_<CRenderableObjectsManager, CTemplatedVectorMapManager<CRenderableObject>>("CRenderableObjectsManager")
 			.def(constructor<>())
 			.def("update", &CRenderableObjectsManager::Update)
@@ -749,7 +747,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("reload", &CRenderableObjectsManager::Reload)
 			.def("load", &CRenderableObjectsManager::Load)
 			//.def("get_instance", &CRenderableObjectsManager::GetInstance)
-	];
+	];*/ //Cambiar per LayerManager
+
 
 	module(m_LS)[
 		class_<CRenderableVertexs>("CRenderableVertexs")
@@ -842,7 +841,7 @@ void CScriptManager::RegisterLUAFunctions()
 	//RunCode("Init();");
 	RunCode("local light=COmniLight();light.intensity=1.1;");
 	//RunCode("local value=3;set_speed_player(value); value=get_speed_player()+2; set_speed_player(value)");
-	//RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");*/
+	//RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");
 }
 
 /*void OnEnterEvent(CEvent *Event)
