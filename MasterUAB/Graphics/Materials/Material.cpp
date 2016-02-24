@@ -88,7 +88,7 @@ void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 }
 
 
-void CMaterial::operator=(CMaterial b)
+void CMaterial::operator=(CMaterial &b)
 {
 	Destroy();
 	m_Textures = b.m_Textures;
