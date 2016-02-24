@@ -5,6 +5,14 @@
 #include "Lights\SpotLight.h";
 #include "Engine\UABEngine.h";
 #include "EffectShader.h"
+#include "DebugHelper.h"
+
+static void __stdcall ReloadEffect(void* _app)
+{
+	CEffectTechnique* l_technique = (CEffectTechnique*)_app;
+	l_technique->GetVertexShader()->Reload();
+	l_technique->GetPixelShader()->Reload();
+}
 
 CEffectManager::CEffectManager(void)
 {
@@ -51,9 +59,13 @@ bool CEffectManager::Load(const std::string &Filename)
 	CXMLTreeNode l_XML;
 	if (l_XML.LoadFile(m_Filename.c_str()))
 	{
+		CDebugHelper::GetDebugHelper()->RemoveBar("Effects:");
+		CDebugHelper::SDebugBar l_effects_bar;
 		CXMLTreeNode l_Input = l_XML["effects"];
 		if (l_Input.Exists())
 		{
+			l_effects_bar.name = "Effects:";
+
 			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
 			{
 				CXMLTreeNode l_Element = l_Input(i);
@@ -74,9 +86,20 @@ bool CEffectManager::Load(const std::string &Filename)
 					l_EffectName = l_Element.GetPszProperty("name");
 					CEffectTechnique *l_EffectTechnique = new CEffectTechnique(l_Element);
 					AddResource(l_EffectName, l_EffectTechnique);
+
+					{
+						CDebugHelper::SDebugVariable var = {};
+						var.name = l_EffectName;
+						var.type = CDebugHelper::BUTTON;
+						var.callback = ReloadEffect;
+						var.data = l_EffectTechnique;
+
+						l_effects_bar.variables.push_back(var);
+					}
 				}
 			}
 		}
+		CDebugHelper::GetDebugHelper()->RegisterBar(l_effects_bar);
 	}
 	else
 	{
