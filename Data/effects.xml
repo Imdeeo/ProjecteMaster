@@ -40,8 +40,16 @@
 	<vertex_shader name="hdao_vs" file="Data/Effects/UAB_HDAO.fx" shader_model="vs_4_1" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="hdao_ps" file="Data/Effects/UAB_HDAO.fx" shader_model="ps_4_1" entry_point="PSHDAO" preprocessor=""/>
 	<effect_technique name="hdao_technique" vertex_shader="hdao_vs" pixel_shader="hdao_ps"/>
+	
+	<vertex_shader name="light_scattering_vs" file="Data/Effects/UAB_LIGHT_SCATTERING.fx" shader_model="vs_4_0" entry_point="VSLightScattering" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="light_scattering_ps"	file="Data/Effects/UAB_LIGHT_SCATTERING.fx" shader_model="ps_4_0"	entry_point="PSLightScattering" preprocessor=""/>
+	<effect_technique name="light_scattering_technique" vertex_shader="light_scattering_vs" pixel_shader="light_scattering_ps"/>
 			
-	<!-- FORWARD --> 	
+	<!-- FORWARD --> 
+	<vertex_shader name="skybox_vs" file="Data/Effects/UAB_SKYBOX.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="skybox_ps"	file="Data/Effects/UAB_SKYBOX.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor=""/>
+	<effect_technique name="skybox_technique" vertex_shader="skybox_vs" pixel_shader="skybox_ps"/>
+	
 	<vertex_shader name="lights_vs" file="Data/Effects/UAB_UBER_FORWARD_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS"/>
 	<pixel_shader name="lights_ps"	file="Data/Effects/UAB_UBER_FORWARD_SHADER.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS"/>
 	<effect_technique name="lights_technique" vertex_shader="lights_vs" pixel_shader="lights_ps"/>
@@ -67,8 +75,8 @@
 	<effect_technique name="bump_technique" vertex_shader="bump_vs" pixel_shader="bump_ps"/>
 	
 	<!-- DEFERRED -->
-	<vertex_shader name="reflection_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS;HAS_REFLECTION"/>
-	<pixel_shader name="reflection_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS;HAS_REFLECTION"/>
+	<vertex_shader name="reflection_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_REFLECTION"/>
+	<pixel_shader name="reflection_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_REFLECTION"/>
 	<effect_technique name="reflection_technique" vertex_shader="reflection_vs" pixel_shader="reflection_ps"/>
 	
 	<vertex_shader name="gBuffer_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS"/>
