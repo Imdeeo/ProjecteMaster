@@ -15,7 +15,7 @@ struct PS_INPUT
 PS_INPUT mainVS(VS_INPUT IN)
 {
 	PS_INPUT l_Output=(PS_INPUT)0;
-	l_Output.UV=IN.Pos-float3(0.0, 0.5, 0.0);
+	l_Output.UV=IN.Pos;
 	l_Output.Pos=float4(m_CameraPosition.xyz+l_Output.UV*m_CameraProjectionInfo.y,1.0);
 	l_Output.Pos=mul(l_Output.Pos, m_View);
 	l_Output.Pos=mul(l_Output.Pos, m_Projection);
@@ -25,6 +25,7 @@ PS_INPUT mainVS(VS_INPUT IN)
 
 float4 mainPS(PS_INPUT IN) : SV_Target
 {	
-	float3 outColor = tex3D(S9Sampler, IN.UV);
+	float3 outColor = T8Texture.Sample(S8Sampler, IN.UV);
+	//float3 outColor = tex3D(S8Sampler, IN.UV);
 	return float4(outColor,1);
 }

@@ -13,6 +13,7 @@
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="gBuffer">
 		<renderable_object_technique name="lights" technique="gBuffer_technique"/>
+		<renderable_object_technique name="reflection" technique="reflection_technique"/>
 		<renderable_object_technique name="bump" technique="bump_deferred_technique"/>
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
 	</pool_renderable_object_technique>	
@@ -25,6 +26,9 @@
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="deff_technique"/>	
 		<renderable_object_technique name="fog" technique="fog_technique"/>
 	</pool_renderable_object_technique>	
+	<pool_renderable_object_technique name="skybox_pool">
+		<renderable_object_technique name="skybox" technique="skybox_technique"/>
+	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="zblur_pool">
 		<renderable_object_technique name="zblur" technique="zblur_technique"/>
 	</pool_renderable_object_technique>	
