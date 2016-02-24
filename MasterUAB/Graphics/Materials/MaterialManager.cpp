@@ -1,6 +1,11 @@
 #include "Materials\MaterialManager.h"
 #include "XML\XMLTreeNode.h"
 
+static void __stdcall ReloadMaterial(void* _app)
+{
+	CMaterial* l_material = (CMaterial*)_app;
+}
+
 CMaterialManager::CMaterialManager()
 {
 
