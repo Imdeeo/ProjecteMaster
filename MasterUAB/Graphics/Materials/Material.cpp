@@ -7,7 +7,7 @@
 
 #define INDEX_CUBEMAP_TEXTURE 8
 
-CMaterial::CMaterial(CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0), m_ReflectionStageId(99)
+CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0), m_ReflectionStageId(99)
 {
 	std::string l_RenderableObjectTechnique = TreeNode.GetPszProperty("renderable_object_technique","");
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_RenderableObjectTechnique);
