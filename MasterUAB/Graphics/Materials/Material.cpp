@@ -1,11 +1,11 @@
-#include "Material.h"
+#include "Materials\Material.h"
 
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 
 #include "TemplatedMaterialParameter.h"
 
-CMaterial::CMaterial(CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0)
+CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0)
 {
 	std::string l_RenderableObjectTechnique = TreeNode.GetPszProperty("renderable_object_technique","");
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_RenderableObjectTechnique);
