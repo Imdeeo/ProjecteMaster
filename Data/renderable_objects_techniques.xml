@@ -44,6 +44,9 @@
 	<pool_renderable_object_technique name="hdao_pool">
 		<renderable_object_technique name="hdao" technique="hdao_technique"/>
 	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="light_scattering_pool">
+		<renderable_object_technique name="light_scattering" technique="light_scattering_technique"/>
+	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="generate_shadowmap_pool">
 		<renderable_object_technique name="lights" technique="generate_shadowmap_technique"/>
 	</pool_renderable_object_technique>
