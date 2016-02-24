@@ -848,13 +848,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("init", &CApplication::Init)
 	];
 
-	
-	//RunFile("./data/scripting/init.lua");
-
-	//RunCode("Init();");
-	//RunCode("local light=COmniLight();light.intensity=1.1;");
-	//RunCode("local value=3;set_speed_player(value); value=get_speed_player()+2; set_speed_player(value)");
-	//RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");
 }
 
 /*void OnEnterEvent(CEvent *Event)
