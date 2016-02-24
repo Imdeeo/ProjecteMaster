@@ -20,7 +20,7 @@ private:
 	unsigned int m_ReflectionStageId;
 	void Destroy();
 public:
-	CMaterial(CXMLTreeNode &TreeNode);
+	CMaterial(const CXMLTreeNode &TreeNode);
 	virtual ~CMaterial();
 	virtual void Apply(CRenderableObjectTechnique *RenderableObjectTechnique = NULL);
 	UAB_GET_PROPERTY(CRenderableObjectTechnique*, RenderableObjectTechnique);
