@@ -70,20 +70,24 @@ fn processFaces arx Obj &prog=
 	local UV2ID = 0x0000
 	local BnmID = 0x0000
 	local TngID = 0x0000
-	
-	if (classof l_Obj.material.bumpMap == Bitmaptexture) then
+	/*FIXME: Added this outer if contition for multimaterial just to avoid an error. 
+	The case of multimaterial should be handled properly.*/
+	if (classof l_Obj.material != MultiMaterial) then
 	(
-		if (classof l_Obj.material.bumpMap.bitmap == Bitmap) then
+		if (classof l_Obj.material.bumpMap == Bitmaptexture) then
 		(
-			BnmID = 0x0100
-			TngID = 0x0200
-		)
-	) else if (classof l_Obj.material.bumpMap == Normal_Bump) then
-	(
-		if (classof l_Obj.material.bumpMap.normal_map.bitmap == Bitmap) then
+			if (classof l_Obj.material.bumpMap.bitmap == Bitmap) then
+			(
+				BnmID = 0x0100
+				TngID = 0x0200
+			)
+		) else if (classof l_Obj.material.bumpMap == Normal_Bump) then
 		(
-			BnmID = 0x0100
-			TngID = 0x0200
+			if (classof l_Obj.material.bumpMap.normal_map.bitmap == Bitmap) then
+			(
+				BnmID = 0x0100
+				TngID = 0x0200
+			)
 		)
 	)
 	
@@ -133,7 +137,7 @@ fn processFaces arx Obj &prog=
 	
 for i=1 to nFaces do
 (	
-	local l_IdMaterial = (mod (getFaceMatID l_Obj i) l_TotalMaterials)+1
+	local l_IdMaterial = (mod ((getFaceMatID l_Obj i)-1) l_TotalMaterials)+1
 	local IdxsFace = getFace l_Obj i
 	local FaceNormal = getFaceNormal l_Obj i
 	local SmoothValue = getFaceSmoothGroup l_Obj i
@@ -142,6 +146,9 @@ for i=1 to nFaces do
 	Vt1=(getVert l_Obj IdxsFace.x)*InvTransform
 	Vt2=(getVert l_Obj IdxsFace.y)*InvTransform
 	Vt3=(getVert l_Obj IdxsFace.z)*InvTransform
+	TranslationToRH &Vt1
+	TranslationToRH &Vt2
+	TranslationToRH &Vt3
 	getBoundingSphere Vt1 &BSphere
 	getBoundingSphere Vt2 &BSphere
 	getBoundingSphere Vt3 &BSphere
@@ -152,6 +159,9 @@ for i=1 to nFaces do
 	Nm1 = normalize(Nm1)
 	Nm2 = normalize(Nm2)
 	Nm3 = normalize(Nm3)
+	TranslationToRH &Nm1
+	TranslationToRH &Nm2
+	TranslationToRH &Nm3
 	
 	if l_Obj.material != undefined then
 	(

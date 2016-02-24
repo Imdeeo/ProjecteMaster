@@ -39,12 +39,12 @@ fn TransformToRH &matrix =
 
 fn GetYaw trans &yaw =
 (
-	yaw = ((-(trans as eulerangles).z*PI/180)+PI)
+	yaw = ((-(trans as eulerangles).z*PI/180))
 )
 
 fn GetPitch trans &pitch =
 (
-	pitch = ((-(trans as eulerangles).y*PI/180)+(PI/2))
+	pitch = ((-(trans as eulerangles).y*PI/180))
 )
 
 fn GetRoll trans &roll =
