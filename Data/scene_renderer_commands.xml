@@ -49,9 +49,9 @@
 	<disable_alpha_blend/>
 	-->
 	
-	<set_depth_stencil_state enable_z_test="true" write_z_buffer="false"/>
+	<!--<set_depth_stencil_state enable_z_test="true" write_z_buffer="false"/>
 	<set_pool_renderable_objects_technique pool="skybox_pool"/>
-	<render_layer layer="skybox" active="true"/>
+	<render_layer layer="skybox" active="true"/>-->
 	
 	<!-- LIGHT SCATTERING
 	<set_render_target>
