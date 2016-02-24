@@ -39,6 +39,7 @@
 		<texture stage_id="2" file="NormalMapTexture" load_file="false"/>
 		<texture stage_id="3" file="DepthMapTexture" load_file="false"/>
 	</render_deferred_shading>
+
 	
 	<!--
 	<set_pool_renderable_objects_technique pool="deferred_shading_lighting"/>
@@ -47,6 +48,12 @@
 		<texture stage_id="0" file="DepthMapTexture" load_file="false"/>
 	</render_draw_quad>
 	<disable_alpha_blend/>
+	-->
+	
+	<!--
+	<set_depth_stencil_state enable_z_test="true" write_z_buffer="false"/>
+	<set_pool_renderable_objects_technique pool="skybox_pool"/>
+	<render_layer layer="skybox" active="true"/>
 	-->
 	
 	<!--<render_debug_grid/>

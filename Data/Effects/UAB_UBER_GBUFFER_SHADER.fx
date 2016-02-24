@@ -74,8 +74,8 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	#ifdef HAS_REFLECTION
 		float3 l_EyeToWorldPosition = normalize(IN.HPos-m_CameraPosition.xyz);
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
-		float4 l_ReflectColor = T1Texture.Sample(S1Sampler, l_ReflectVector)*0.75;
-		l_Albedo.xyz += l_ReflectColor.xyz;
+		float4 l_ReflectColor = T8Texture.Sample(S8Sampler, l_ReflectVector)*0.75;
+		l_Albedo += l_ReflectColor*0.6;
 	#endif
 	#ifdef HAS_TANGENT
 		float g_Bump = 2.4;
