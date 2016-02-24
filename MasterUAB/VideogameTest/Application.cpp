@@ -184,17 +184,10 @@ void CApplication::Update(float _ElapsedTime)
 	m_Timer+= _ElapsedTime;
 	UABEngine.GetEffectManager()->m_SceneParameters.m_Time = m_Timer;
 
-	if(CInputManager::GetInputManager()->IsActionActive("RELOAD"))
+	if(CInputManager::GetInputManager()->IsActionActive("RELOAD_LUA"))
 	{
-		CInputManager::GetInputManager()->reload();
-		
-		UABEngine.GetTextureManager()->Reload();
-		UABEngine.GetLightManager()->Reload();
-		UABEngine.GetEffectManager()->Reload();
-		UABEngine.GetMaterialManager()->Reload();
-		UABEngine.GetStaticMeshManager()->Reload();
-		UABEngine.GetAnimatedModelsManager()->Reload();
-		UABEngine.GetLayerManager()->Reload();		
+		UABEngine.GetScriptManager()->RunFile("Data\\Lua\\init.lua");
+		UtilsLog("Reloading Lua");
 	}
 	if (CInputManager::GetInputManager()->IsActionActive("SWITCH_RENDER_LIGHTS"))
 	{
