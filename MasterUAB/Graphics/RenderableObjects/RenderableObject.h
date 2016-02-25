@@ -5,6 +5,7 @@
 
 #include "Utils\Named.h"
 #include "3DElement\3DElement.h"
+#include "Components\UABComponentManager.h"
 
 class CXMLTreeNode;
 class CRenderManager;
@@ -17,6 +18,7 @@ public:
 	virtual ~CRenderableObject() {}
 	virtual void Update(float ElapsedTime) {}
 	virtual void Render(CRenderManager *RM) = 0;
+	UAB_BUILD_GET_SET(CUABComponentManager*, ComponentManager)
 };
 
 #endif //RENDERABLE_OBJECT_H
