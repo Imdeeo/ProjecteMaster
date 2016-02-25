@@ -16,6 +16,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DElement\3DElement.h" />
+    <ClInclude Include="Components\UABComponent.h" />
+    <ClInclude Include="Components\UABComponentManager.h" />
     <ClInclude Include="HelperTypes.h" />
     <ClInclude Include="Math\Quatn.h" />
     <ClInclude Include="Math\MathTypes.h" />
@@ -37,6 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DElement\3DElement.cpp" />
+    <ClCompile Include="Components\UABComponent.cpp" />
+    <ClCompile Include="Components\UABComponentManager.cpp" />
     <ClCompile Include="Math\MathConstants.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Utils\Active.cpp" />
