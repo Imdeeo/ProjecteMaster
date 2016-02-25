@@ -188,6 +188,7 @@ void CApplication::Update(float _ElapsedTime)
 	{
 		UABEngine.GetScriptManager()->RunFile("Data\\Lua\\init.lua");
 		UtilsLog("Reloading Lua");
+		UABEngine.GetScriptManager()->RunCode("mainLua()");
 	}
 	if (CInputManager::GetInputManager()->IsActionActive("SWITCH_RENDER_LIGHTS"))
 	{
