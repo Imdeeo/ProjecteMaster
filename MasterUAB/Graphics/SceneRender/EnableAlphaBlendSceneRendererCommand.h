@@ -5,6 +5,18 @@
 class CEnableAlphaBlendSceneRendererCommand :
 	public CSceneRendererCommand
 {
+private:
+	std::vector<D3D11_BLEND> m_Blend;
+
+	srcBlend;
+	destBlend;
+	opBlend;
+
+	AlphasrcBlend;
+	AlphadestBlend;
+	AlphaopBlend;
+
+	D3D11_BLEND CheckBlendType(std::string _type);
 public:
 	CEnableAlphaBlendSceneRendererCommand(CXMLTreeNode &TreeNode);
 	virtual ~CEnableAlphaBlendSceneRendererCommand();

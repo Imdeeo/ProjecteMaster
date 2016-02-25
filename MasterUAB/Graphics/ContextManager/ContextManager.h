@@ -119,7 +119,7 @@ public:
 	UAB_GET_PROPERTY(ID3D11RenderTargetView* const*, CurrentRenderTargetViews)
 	UAB_GET_PROPERTY(ID3D11DepthStencilView*, CurrentDepthStencilView)
 	UAB_GET_PROPERTY(ID3D11DepthStencilView*, DepthStencilView)
-	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.2f, .1f, .4f));
+	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.0f, .0f, .0f));
 	void UnsetRenderTargets();
 	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_RenderTargetViews, ID3D11DepthStencilView *_DepthStencilView);
 };
