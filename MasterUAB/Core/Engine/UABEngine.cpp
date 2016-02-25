@@ -70,6 +70,7 @@ void CUABEngine::Init()
 	m_RenderManager->Init();
 
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
+	m_ScriptManager->RunCode("mainLua()");
 }
 
 void CUABEngine::Destroy()
