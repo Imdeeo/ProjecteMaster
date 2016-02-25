@@ -49,10 +49,14 @@
 	<disable_alpha_blend/>
 	-->
 	
+<<<<<<< HEAD
 	<!-- SKYBOX -->
 	<set_depth_stencil_state enable_z_test="true" write_z_buffer="false"/>
+=======
+	<!--<set_depth_stencil_state enable_z_test="true" write_z_buffer="false"/>
+>>>>>>> 9d83e40a84da50c53d63b69efc4eedf581c797be
 	<set_pool_renderable_objects_technique pool="skybox_pool"/>
-	<render_layer layer="skybox" active="true"/>
+	<render_layer layer="skybox" active="true"/>-->
 	
 	<!-- LIGHT SCATTERING 
 	<capture_frame_buffer>

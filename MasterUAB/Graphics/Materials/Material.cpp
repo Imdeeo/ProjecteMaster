@@ -86,3 +86,34 @@ void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 		m_Parameters[i]->Apply();
 	}
 }
+
+
+void CMaterial::operator=(CMaterial &b)
+{
+	Destroy();
+	m_Textures = b.m_Textures;
+	m_RenderableObjectTechnique = b.m_RenderableObjectTechnique;
+	m_CurrentParameterData = b.m_CurrentParameterData;
+	m_ReflectionStageId = b.m_ReflectionStageId;
+	for (int i = 0; i < b.GetParameters().size(); i++)
+	{
+		CMaterialParameter* l_MaterialParameter = b.GetParameters()[i];
+		CMaterialParameter::TMaterialType l_type = l_MaterialParameter->getMaterialType();
+		if (l_type == CMaterialParameter::FLOAT)
+		{
+			m_Parameters.push_back(new CTemplatedMaterialParameter<float>(*((CTemplatedMaterialParameter<float>*)l_MaterialParameter)));
+		}
+		if (l_type == CMaterialParameter::VECT2F)
+		{
+			m_Parameters.push_back(new CTemplatedMaterialParameter<Vect2f>(*((CTemplatedMaterialParameter<Vect2f>*)l_MaterialParameter)));
+		}
+		if (l_type == CMaterialParameter::VECT3F)
+		{
+			m_Parameters.push_back(new CTemplatedMaterialParameter<Vect3f>(*((CTemplatedMaterialParameter<Vect3f>*)l_MaterialParameter)));
+		}
+		if (l_type == CMaterialParameter::VECT4F)
+		{
+			m_Parameters.push_back(new CTemplatedMaterialParameter<Vect4f>(*((CTemplatedMaterialParameter<Vect4f>*)l_MaterialParameter)));
+		}
+	}
+}
