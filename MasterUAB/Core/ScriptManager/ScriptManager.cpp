@@ -78,16 +78,36 @@
 #include "PhysXManager\PhysXManager.h"
 
 #include "Application.h"
+#include "DebugHelper.h"
 
 #include "XML\XMLTreeNode.h"
 #include "Utils.h"
 
 using namespace luabind;
 
-CScriptManager g_ScriptManager;
+
 
 #define LUA_STATE CUABEngine::GetInstance().GetScriptManager()->GetLuaState()
 #define REGISTER_LUA_FUNCTION(FunctionName,AddrFunction) {luabind::module(LUA_STATE) [ luabind::def(FunctionName,AddrFunction) ];}
+
+
+int ShowLuaErrorDebugInfo(lua_State* L)
+{
+	lua_Debug d;
+	lua_getstack(L, 1, &d);
+	lua_getinfo(L, "Sln", &d);
+	std::string err = lua_tostring(L, -1);
+	lua_pop(L, 1);
+	std::stringstream msg;
+	msg << d.short_src << ":" << d.currentline;
+	if (d.name != 0)
+	{
+	msg << "(" << d.namewhat << " " << d.name << ")";
+	}
+	msg << " " << err;
+	CDebugHelper::GetDebugHelper()->Log(("Error: %s", msg.str().c_str()));
+	return 0;
+}
 
 CScriptManager::CScriptManager()
 : m_LS(NULL)
@@ -139,6 +159,8 @@ void CScriptManager::Initialize()
 	luabind::open(m_LS);
 
 	RegisterLUAFunctions();
+	lua_atpanic(m_LS, ShowLuaErrorDebugInfo);
+	luabind::set_pcall_callback(ShowLuaErrorDebugInfo);
 }
 
 //Para desinicializar el motor de LUA
@@ -149,6 +171,7 @@ void CScriptManager::Destroy()
 		lua_close(m_LS);
 	}
 }
+
 
 //Para ejecutar un fragmento de código LUA
 void CScriptManager::RunCode(const std::string &Code) const
