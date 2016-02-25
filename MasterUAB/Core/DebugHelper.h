@@ -75,6 +75,8 @@ public:
 	virtual void RegisterBar(const SDebugBar& bar) {};
 	virtual void RemoveBar(const std::string& bar) {};
 
+	virtual void AddLuaButton(CDebugHelper::SDebugBar &bar,const std::string &ButtonName, const std::string &LuaScript, const std::string &ButtonDefinition){};
+
 	static CDebugHelper* GetDebugHelper();
 	static void SetCurrentDebugHelper(CDebugHelper* _DebugHelper);
 
