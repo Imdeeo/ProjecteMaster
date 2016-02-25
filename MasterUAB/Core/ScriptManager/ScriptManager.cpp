@@ -83,6 +83,10 @@
 #include "XML\XMLTreeNode.h"
 #include "Utils.h"
 
+#include <string>
+#include <vector>
+#include <map>
+
 using namespace luabind;
 
 
@@ -203,7 +207,13 @@ void CScriptManager::RegisterLUAFunctions()
 	//REGISTER_LUA_FUNCTION("set_speed_player", SetSpeedPlayer);
 	//REGISTER_LUA_FUNCTION("get_speed_player", GetSpeedPlayer);
 
+// String
 
+	/*module(m_LS)[
+		class_<std::string>("StdString")
+	];*/
+
+	
 
 // BASE------------------------------------------------------------------------------------------------
 
@@ -242,8 +252,13 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_name", &CNamed::GetName)
 	];
 
-	
 // CORE---------------------------------------------------------------------------------------------
+	/*module(m_LS)[
+		class_<std::vector<CDebugHelper::SDebugVariable>>("Vector<SDebugVariable>")
+			.def("push_back", (void(std::vector<CDebugHelper::SDebugVariable>::*)())&std::vector<CDebugHelper::SDebugVariable>::push_back)
+			.def("push_back", &std::vector<CDebugHelper::SDebugVariable>::push_back)
+	];*/
+
 	module(m_LS)[
 		class_<CDebugHelper>("CDebugHelper")
 			.def("render", &CDebugHelper::Render)
@@ -252,10 +267,44 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("remove_bar", &CDebugHelper::RemoveBar)
 			.def("get_debug_helper", &CDebugHelper::GetDebugHelper)
 			.def("set_current_debug_helper", &CDebugHelper::SetCurrentDebugHelper)
+			.enum_("e_debug_type")[
+				value("button", CDebugHelper::BUTTON),
+				value("bool", CDebugHelper::BOOL),
+				value("float", CDebugHelper::FLOAT),
+				value("int", CDebugHelper::INT),
+				value("color_32", CDebugHelper::COLOR32),
+				value("color", CDebugHelper::COLOR),
+				value("string", CDebugHelper::STRING),
+				value("position_orientation", CDebugHelper::POSITION_ORIENTATION)
+			]
+			.enum_("mode")[
+				value("read", CDebugHelper::READ),
+				value("read_write", CDebugHelper::READ_WRITE)
+			]
+			.scope[
+				class_<CDebugHelper::SDebugVariable>("SDebugVariable")
+					.def_readwrite("name",&CDebugHelper::SDebugVariable::name)
+					.def_readwrite("type", &CDebugHelper::SDebugVariable::type)
+					.def_readwrite("mode", &CDebugHelper::SDebugVariable::mode)
+					//.def_readwrite("callback", (void (_stdcall* CDebugHelper::SDebugVariable::*)(void*))&CDebugHelper::SDebugVariable::callback)
+					.def_readwrite("p_bool", &CDebugHelper::SDebugVariable::pBool)
+					.def_readwrite("p_float", &CDebugHelper::SDebugVariable::pFloat)
+					.def_readwrite("p_int", &CDebugHelper::SDebugVariable::pInt)
+					.def_readwrite("p_color_32", &CDebugHelper::SDebugVariable::pColor32)
+					.def_readwrite("p_color", &CDebugHelper::SDebugVariable::pColor)
+					.def_readwrite("p_string", &CDebugHelper::SDebugVariable::pString)
+					.def_readwrite("p_position_orientation", &CDebugHelper::SDebugVariable::pPositionOrientation)
+					.def_readwrite("data", &CDebugHelper::SDebugVariable::data)
+					.def_readwrite("ptr", &CDebugHelper::SDebugVariable::ptr),
+
+				class_<CDebugHelper::SDebugBar>("SDebugBar")
+					.def_readwrite("name",&CDebugHelper::SDebugBar::name)
+					.def_readwrite("variables",&CDebugHelper::SDebugBar::variables)
+			]
 	];
 
 	module(m_LS)[
-		class_<CDebugHelperImplementation, CDebugHelper>("CNamed")
+		class_<CDebugHelperImplementation, CDebugHelper>("CDebugHelperImplementation")
 			.def(constructor<void*>())
 			.def("update", &CDebugHelperImplementation::Update)
 			.def("render", &CDebugHelperImplementation::Render)
