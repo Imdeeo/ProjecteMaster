@@ -19,12 +19,12 @@
 		<dynamic_texture name="DepthMapTexture" texture_width_as_frame_buffer="true"/>
 	</set_render_target>
 	
-	<clear render_target="true" depth_stencil="true"/>
+	<clear render_target="false" depth_stencil="true"/>
 	<set_pool_renderable_objects_technique pool="gBuffer"/>
 	<render_layer layer="solid" active="true"/>
 	<unset_render_target/>
 	
-	<clear render_target="true" depth_stencil="true"/>
+	<clear render_target="true" depth_stencil="false"/>
 	<set_depth_stencil_state enable_z_test="false" write_z_buffer="false"/>
 	<set_pool_renderable_objects_technique pool="forward_shading"/>
 	<render_draw_quad active="true">
@@ -49,34 +49,38 @@
 	<disable_alpha_blend/>
 	-->
 	
+	<!-- SKYBOX -->
 	<set_depth_stencil_state enable_z_test="true" write_z_buffer="false"/>
 	<set_pool_renderable_objects_technique pool="skybox_pool"/>
 	<render_layer layer="skybox" active="true"/>
 	
-	<!-- LIGHT SCATTERING
-	<set_render_target>
-		<dynamic_texture name="LightScatteringTextureSkybox" texture_width_as_frame_buffer="true" create_depth_stencil_buffer="false"/>
-	</set_render_target>
-	
+	<!-- LIGHT SCATTERING 
 	<capture_frame_buffer>
-		<capture_texture name="LightScatteringTextureSkybox" texture_width_as_frame_buffer="true"/>
+		<capture_texture name="LightScatteringStart" texture_width_as_frame_buffer="true"/>
 	</capture_frame_buffer>
 	
+	<set_render_target>
+		<dynamic_texture name="LightScattering" texture_width_as_frame_buffer="true" create_depth_stencil_buffer="false"/>
+	</set_render_target>
 	<clear render_target="true" depth_stencil="false"/>
 	<render_layer layer="skybox" active="true"/>
+	
 	<unset_render_target/>
 	
+	<set_pool_renderable_objects_technique pool="blur_pool"/>
 	<apply_filters>
-		<texture load_file="false" file="LightScatteringTextureSkybox" stage_id="0"/>
-		<dynamic_texture name="LightScatteringTextureSkyboxBlurred2" width="512" height="512" material="BlurMaterial"/>
-		<dynamic_texture name="LightScatteringTextureSkyboxBlurred1" width="512" height="512" material="BlurMaterial"/>
-		<dynamic_texture name="LightScatteringTextureSkyboxBlurred" width="512" height="512" material="BlurMaterial"/>
+		<texture load_file="false" file="LightScattering" stage_id="0"/>
+		<dynamic_texture name="LightScattering2" width="800" height="600" material="BlurMaterial"/>
+		<dynamic_texture name="LightScattering1" width="800" height="600" material="BlurMaterial"/>
+		<dynamic_texture name="LightScatteringFinal" width="800" height="600" material="BlurMaterial"/>
 	</apply_filters>
 	
-	<enable_additive_alpha_blend/>
+	<unset_render_target/>
+	
 	<set_pool_renderable_objects_technique pool="light_scattering_pool"/>
-	<render_draw_quad material="LightScatteringMaterial">
-		<texture stage_id="0" file="LightScatteringTextureSkyboxBlurred"/>
+	<render_draw_quad active="true" material="LightScatteringMaterial">
+		<texture stage_id="0" file="LightScatteringStart"/>
+		<texture stage_id="1" file="LightScatteringFinal"/>
 	</render_draw_quad>
 	-->
 	
