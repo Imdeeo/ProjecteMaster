@@ -15,14 +15,22 @@ void CApplyFiltersSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 	CContextManager *l_ContextManager = _RenderManager.GetContextManager();
 	ID3D11DepthStencilView *l_DepthStencilView = m_DynamicTextures.empty() ? NULL : (m_DynamicTextures[0]->GetTexture()->GetDepthStencilView());
 
+	D3D11_VIEWPORT *l_CurrentViewport=_RenderManager.GetContextManager()->getViewPort();
+	
 	for (size_t i = 0; i < m_DynamicTextures.size(); ++i)
 	{
+		D3D11_VIEWPORT l_Viewport;
+		l_Viewport.TopLeftX=0.0f;
+		l_Viewport.TopLeftY=0.0f;
+		l_Viewport.MinDepth=0.0f;
+		l_Viewport.MaxDepth=1.0f;
+		l_Viewport.Width=m_DynamicTextures[i]->GetTexture()->GetWidth();
+		l_Viewport.Height=m_DynamicTextures[i]->GetTexture()->GetHeight();
+		_RenderManager.GetContextManager()->setViewPort(&l_Viewport);
+
 		m_DynamicTextures[i]->GetMaterial()->Apply();		
-		l_ContextManager->GetDeviceContext()->OMSetRenderTargets(1, &m_RenderTargetViews[i], nullptr);
-		l_ContextManager->Clear(true, true);
-		if (i == 0)
-			_RenderManager.DrawScreenQuad(m_DynamicTextures[i]->GetMaterial()->GetRenderableObjectTechnique()->GetEffectTechnique(), m_StagedTextures[0].m_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
-		else
-			_RenderManager.DrawScreenQuad(m_DynamicTextures[i]->GetMaterial()->GetRenderableObjectTechnique()->GetEffectTechnique(), m_DynamicTextures[i-1]->GetTexture(), 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
+		l_ContextManager->SetRenderTargets(1, &m_RenderTargetViews[i], nullptr);
+		_RenderManager.DrawScreenQuad(m_DynamicTextures[i]->GetMaterial()->GetRenderableObjectTechnique()->GetEffectTechnique(), i==0 ? m_StagedTextures[0].m_Texture : m_DynamicTextures[i-1]->GetTexture(), 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));_RenderManager.DrawScreenQuad(m_DynamicTextures[i]->GetMaterial()->GetRenderableObjectTechnique()->GetEffectTechnique(), m_StagedTextures[0].m_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	}
+	_RenderManager.GetContextManager()->setViewPort(l_CurrentViewport);
 }
