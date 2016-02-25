@@ -48,8 +48,8 @@ CApplication::CApplication( CContextManager *_ContextManager)
 	: m_BackgroundColor(.2f, .1f, .4f)
 	, m_CurrentCamera_control(0)
 	, m_CurrentCamera_vision(0)
-	,m_RenderCameraCube(false)
-	,m_Timer(0)
+	, m_RenderCameraCube(false)
+	, m_Timer(0)
 {
 	CDebugHelper::GetDebugHelper()->Log("CApplication::CApplication");
 
