@@ -153,7 +153,7 @@ void CDebugHelperImplementation::RemoveBar(const std::string& bar)
 	m_ButtonLuaScripts.clear();
 }
 
-void CDebugHelperImplementation::AddLuaButton(const std::string &ButtonName, const std::string &LuaScript, const std::string &ButtonDefinition)
+void CDebugHelperImplementation::AddLuaButton(CDebugHelper::SDebugBar &bar, const std::string &ButtonName, const std::string &LuaScript, const std::string &ButtonDefinition)
 {
 	m_ButtonLuaScripts.push_back(LuaScript);
 	SDebugVariable l_InfoButton;
@@ -162,6 +162,7 @@ void CDebugHelperImplementation::AddLuaButton(const std::string &ButtonName, con
 	l_InfoButton.name=ButtonName;
 	l_InfoButton.type=BUTTON;
 	l_InfoButton.definition=ButtonDefinition;
+	bar.variables.push_back(l_InfoButton);
 }
 
 void __stdcall CDebugHelperImplementation::RunLuaButton(void *Data)

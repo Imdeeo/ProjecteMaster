@@ -253,11 +253,6 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 // CORE---------------------------------------------------------------------------------------------
-	/*module(m_LS)[
-		class_<std::vector<CDebugHelper::SDebugVariable>>("Vector<SDebugVariable>")
-			.def("push_back", (void(std::vector<CDebugHelper::SDebugVariable>::*)())&std::vector<CDebugHelper::SDebugVariable>::push_back)
-			.def("push_back", &std::vector<CDebugHelper::SDebugVariable>::push_back)
-	];*/
 
 	module(m_LS)[
 		class_<CDebugHelper>("CDebugHelper")
@@ -268,6 +263,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.scope[
 				def("get_debug_helper", &CDebugHelper::GetDebugHelper)
 			]
+			.def("add_lua_button",&CDebugHelper::AddLuaButton)
 			.def("set_current_debug_helper", &CDebugHelper::SetCurrentDebugHelper)
 			.enum_("e_debug_type")[
 				value("button", CDebugHelper::BUTTON),
