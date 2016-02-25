@@ -39,6 +39,7 @@ public:
 	struct SDebugVariable
 	{
 		std::string name;
+		std::string definition;
 		EDebugType type;
 		union {
 			Mode mode;
