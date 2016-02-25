@@ -363,8 +363,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
 			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
 			//.def("clean_up", &CRenderableObjectsManager::CleanUp)
-			.def("reload", &CRenderableObjectsManager::Reload)
-			.def("load", &CRenderableObjectsManager::Load)
 			//.def("get_instance", &CRenderableObjectsManager::GetInstance)
 	];
 
