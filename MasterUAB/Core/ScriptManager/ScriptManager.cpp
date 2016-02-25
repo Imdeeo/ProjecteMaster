@@ -184,7 +184,7 @@ void CScriptManager::RunCode(const std::string &Code) const
 	{
 		const char *l_Str=lua_tostring(m_LS, -1);
 		UtilsLog(l_Str);
-		assert(!"must be log");
+		//assert(!"must be log");
 	}
 }
 
@@ -195,7 +195,7 @@ void CScriptManager::RunFile(const std::string &FileName) const
 	{
 		const char *l_Str=lua_tostring(m_LS, -1);
 		UtilsLog(l_Str);
-		assert(!"must be log");
+		//assert(!"must be log");
 	}
 }
 
@@ -265,7 +265,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("log", &CDebugHelper::Log)
 			.def("register_bar", &CDebugHelper::RegisterBar)
 			.def("remove_bar", &CDebugHelper::RemoveBar)
-			.def("get_debug_helper", &CDebugHelper::GetDebugHelper)
+			.scope[
+				def("get_debug_helper", &CDebugHelper::GetDebugHelper)
+			]
 			.def("set_current_debug_helper", &CDebugHelper::SetCurrentDebugHelper)
 			.enum_("e_debug_type")[
 				value("button", CDebugHelper::BUTTON),
@@ -328,7 +330,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_cinematic", &CUABEngine::GetCinematic)
 			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
 			.def("load_level_xml", &CUABEngine::LoadLevelXML)
-			.def("get_instance", &CUABEngine::GetInstance)
+			.scope[
+				def("get_instance", &CUABEngine::GetInstance)
+			]
 			.def("destroy", &CUABEngine::Destroy)
 			.def("init", &CUABEngine::Init)
 	];
