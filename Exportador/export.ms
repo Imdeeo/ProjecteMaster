@@ -188,7 +188,7 @@ for i=1 to nFaces do
 			TUVMap3= meshop.getMapVert l_Obj 1 IdxsMap.z
 		)
 		
-		if (classOf l_LightMap != undefined) and (meshop.getMapSupport l_Obj 2) then
+		if (classOf l_LightMap != UndefinedClass) and (meshop.getMapSupport l_Obj 2) then
 		(
 			UV2ID = 0x0040
 			local IdxsMap = meshop.getMapFace l_Obj 2 i
