@@ -35,7 +35,7 @@ public:
 		: m_FOV(/*60.0f*/ 1.047198f)
 		, m_AspectRatio(1.0f)
 		, m_ZNear(0.1f)
-		, m_ZFar(100.0f)
+		, m_ZFar(400.0f)
 		, m_Position(5.0f, 5.0f, 0.0f)
 		, m_LookAt(0.0f, 0.0f, 0.0f)
 		, m_Up(0.0f, 1.0f, 0.0f)
