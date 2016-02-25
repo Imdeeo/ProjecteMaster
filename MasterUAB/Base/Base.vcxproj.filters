@@ -60,6 +60,9 @@
     <ClInclude Include="Components\UABComponentManager.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Components\ScriptedComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -101,10 +104,10 @@
     <ClCompile Include="Utils\Active.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Components\UABComponent.cpp">
+    <ClCompile Include="Components\UABComponentManager.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Components\UABComponentManager.cpp">
+    <ClCompile Include="Components\ScriptedComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
