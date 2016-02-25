@@ -60,12 +60,21 @@ fn createMaterials dir filename Objs copyTexture =
 				(
 					if (materialsDictionary.Item[mat[j].name]==undefined) then
 					(
-						format "\t<material name=\"%\" renderable_object_technique=\"diffuse_technique\">\n" mat[j].name to:file
+						if (classof mat[j].diffuseMap == Bitmaptexture) then
+						(
+							if (classof mat[j].reflectionMap == Bitmaptexture) then
+							(
+								format "\t<material name=\"%\" renderable_object_technique=\"reflection\">\n" mat[j].name to:file
+							)else(
+								format "\t<material name=\"%\" renderable_object_technique=\"lights\">\n" mat[j].name to:file
+							)
+						)
 						materialsDictionary.Add mat[j].name "defined"
 						if (classof mat[j].diffuseMap == Bitmaptexture) then
 						(
 							if (mat[j].diffuseMap.bitmap != undefined) then
 							(
+								--nomTextura = (openBitMap mat[j].diffuseMap.bitmap.filename).fileName
 								nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
 								pathfile = (dir + "Textures\\" + nomTextura)
 								relativePathfile = pathfile
@@ -74,7 +83,8 @@ fn createMaterials dir filename Objs copyTexture =
 								if copyTexture == true then
 								(
 									dirExist (dir+"Textures")
-									copyFile mat[j].diffuseMap.bitmap.filename pathfile
+									copyFile (openBitMap mat[j].diffuseMap.bitmap.filename).fileName pathfile
+									--copyFile mat[j].diffuseMap.bitmap.filename pathfile
 								)
 							)
 						)
