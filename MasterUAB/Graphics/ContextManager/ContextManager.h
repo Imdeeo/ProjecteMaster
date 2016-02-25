@@ -110,7 +110,8 @@ public:
 	ID3D11DepthStencilState * GetDepthStencilState(EDepthStencilStates _DepthStencilState){return m_DepthStencilStates[_DepthStencilState];}
 	ID3D11BlendState* GetBlendState(EBlendStates _BlendState){return m_BlendStates[_BlendState];}
 
-	D3D11_VIEWPORT *getViewPort(){ return m_ViewPort; }
+	D3D11_VIEWPORT * getViewPort(){ return m_ViewPort; }
+	void setViewPort(D3D11_VIEWPORT *ViewPort){ m_ViewPort=ViewPort; }
 	UAB_GET_PROPERTY(IDXGISwapChain*, SwapChain);
 	UAB_GET_PROPERTY(int, Width);
 	UAB_GET_PROPERTY(int, Height);
