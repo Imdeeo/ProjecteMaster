@@ -1,6 +1,14 @@
 #ifndef UAB_COMPONENT_H
 #define UAB_COMPONENT_H
 
+#include "Utils\Named.h"
+#include <string>
+#include "Utils.h"
+
+
+class CRenderableObject;
+class CRenderManager;
+
 class CUABComponent : public CNamed
 {
 	private:
