@@ -14,6 +14,9 @@ using namespace std;
 class CDebugHelperImplementation : public CDebugHelper
 {
 
+private:
+	std::vector<std::string>				m_ButtonLuaScripts;
+
 public:
 	CDebugHelperImplementation(void *device);
 	~CDebugHelperImplementation();
@@ -26,11 +29,14 @@ public:
 
 	virtual void RegisterBar(const SDebugBar& bar);
 	virtual void RemoveBar(const std::string& bar);
+	void AddLuaButton(const std::string &ButtonName, const std::string &LuaScript, const std::string &ButtonDefinition);
 
 	
 	std::unordered_map<std::string, TwBar*> m_Bars;
 	TwType m_PosRotType;
 	UAB_BUILD_GET_SET(std::string, Log);
+
+	static void __stdcall RunLuaButton(void *Data);
 };
 
 #endif

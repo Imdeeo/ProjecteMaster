@@ -1,5 +1,6 @@
 #include "DebugHelperImplementation.h"
 
+#include "Engine\UABEngine.h"
 #include <cassert>
 #include <iostream>     // std::cout, std::ostream, std::ios
 #include <fstream>  
@@ -85,13 +86,13 @@ void CDebugHelperImplementation::RegisterBar(const SDebugBar& bar)
 	{
 		if (bar.variables[i].type == BUTTON)
 		{
-			status = TwAddButton(twBar, bar.variables[i].name.c_str(), bar.variables[i].callback, bar.variables[i].data, "");
+			status = TwAddButton(twBar, bar.variables[i].name.c_str(), bar.variables[i].callback, bar.variables[i].data, bar.variables[i].definition.c_str());
 			assert(status);
 		}
 		else
 		{
 			TwType type = TW_TYPE_FLOAT;
-			const char* params = "";
+			std::string params = bar.variables[i].definition;
 			switch (bar.variables[i].type)
 			{
 			case BOOL:
@@ -105,7 +106,7 @@ void CDebugHelperImplementation::RegisterBar(const SDebugBar& bar)
 				break;
 			case COLOR32:
 				type = TW_TYPE_COLOR32;
-				params = " coloralpha=true colororder=argb ";
+				params = params + " coloralpha=true colororder=argb ";
 				break;
 			case COLOR:
 				type = TW_TYPE_COLOR4F;
@@ -125,12 +126,12 @@ void CDebugHelperImplementation::RegisterBar(const SDebugBar& bar)
 			switch (bar.variables[i].mode)
 			{
 			case READ:
-				status = TwAddVarRO(twBar, bar.variables[i].name.c_str(), type, bar.variables[i].ptr, params);
+				status = TwAddVarRO(twBar, bar.variables[i].name.c_str(), type, bar.variables[i].ptr, params.c_str());
 				assert(status);
 				break;
 
 			case READ_WRITE:
-				status = TwAddVarRW(twBar, bar.variables[i].name.c_str(), type, bar.variables[i].ptr, params);
+				status = TwAddVarRW(twBar, bar.variables[i].name.c_str(), type, bar.variables[i].ptr, params.c_str());
 				assert(status);
 				break;
 
@@ -149,5 +150,21 @@ void CDebugHelperImplementation::RemoveBar(const std::string& bar)
 	// TODO: eliminar una ventana de debug
 	TwDeleteBar(m_Bars[bar]);
 	m_Bars.erase(bar);
-	
+	m_ButtonLuaScripts.clear();
+}
+
+void CDebugHelperImplementation::AddLuaButton(const std::string &ButtonName, const std::string &LuaScript, const std::string &ButtonDefinition)
+{
+	m_ButtonLuaScripts.push_back(LuaScript);
+	SDebugVariable l_InfoButton;
+	l_InfoButton.callback=RunLuaButton;
+	l_InfoButton.data=(void *)&m_ButtonLuaScripts[m_ButtonLuaScripts.size()-1].c_str()[0];
+	l_InfoButton.name=ButtonName;
+	l_InfoButton.type=BUTTON;
+	l_InfoButton.definition=ButtonDefinition;
+}
+
+void __stdcall CDebugHelperImplementation::RunLuaButton(void *Data)
+{
+	UABEngine.GetScriptManager()->RunCode((const char*)Data);
 }
