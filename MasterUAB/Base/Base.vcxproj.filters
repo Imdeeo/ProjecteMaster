@@ -54,6 +54,15 @@
     <ClInclude Include="Utils\CEmptyPointerClass.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Components\UABComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\UABComponentManager.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ScriptedComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -67,6 +76,9 @@
     </Filter>
     <Filter Include="3DElement">
       <UniqueIdentifier>{63b1d6f3-4af0-4cb0-8f58-c8d6c6672dee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{57f71843-eccc-4fa7-bd96-e2339bfe039a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +103,12 @@
     </ClCompile>
     <ClCompile Include="Utils\Active.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\UABComponentManager.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\ScriptedComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
