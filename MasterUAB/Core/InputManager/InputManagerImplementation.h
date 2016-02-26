@@ -27,7 +27,7 @@ public:
 
 	void reload();
 private:
-
+	void AddReloadKey();
 	std::string m_FileName;
 
 	enum InputType {

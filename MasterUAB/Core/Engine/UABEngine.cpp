@@ -68,6 +68,9 @@ void CUABEngine::Init()
 	//m_Cinematic->Play("true");
 	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
 	m_RenderManager->Init();
+
+	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
+	m_ScriptManager->RunCode("mainLua()");
 }
 
 void CUABEngine::Destroy()
