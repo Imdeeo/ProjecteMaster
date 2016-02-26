@@ -407,6 +407,13 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
+		class_<CTemplatedVectorMapManager<CRenderableObjectsManager>>("CTemplatedVectorMapManager<CRenderableObjectsManager>")
+			.def("get_resource", &CTemplatedMapManager<CRenderableObjectsManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CRenderableObjectsManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CRenderableObjectsManager>::Destroy)
+	];
+
+	module(m_LS)[
 		class_<CRenderableObjectsManager, CTemplatedVectorMapManager<CRenderableObject>>("CRenderableObjectsManager")
 			.def(constructor<std::string>())
 			.def("update", &CRenderableObjectsManager::Update)
@@ -415,6 +422,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string &, const std::string&, const Vect3f&, const float, const float, const float, const float, const bool))&CRenderableObjectsManager::AddMeshInstance)
 			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
 			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
+			.def("get_resource", &CRenderableObjectsManager::GetResource)
 			//.def("clean_up", &CRenderableObjectsManager::CleanUp)
 			.def("reload", &CRenderableObjectsManager::Reload)
 			.def("load", &CRenderableObjectsManager::Load)
@@ -422,6 +430,12 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	// TODO Añadir LayerManager
+	module(m_LS)[
+		class_<CLayerManager, CTemplatedVectorMapManager<CRenderableObjectsManager>>("CLayerManager")
+			.def(constructor<>())
+			.def("get_resource", &CLayerManager::GetResource)
+	];
+
 
 	module(m_LS)[
 		class_<CRenderableObjectTechnique>("CRenderableObjectTechnique")
