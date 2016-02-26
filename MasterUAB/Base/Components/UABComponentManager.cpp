@@ -32,8 +32,3 @@ void CUABComponentManager::RenderDebug(CRenderManager &RenderManager)
 		m_ResourcesVector[i]->RenderDebug(RenderManager);
 	}
 }
-
-void CUABComponentManager::AddComponent(const std::string &Name, CUABComponent *Component)
-{
-
-}
