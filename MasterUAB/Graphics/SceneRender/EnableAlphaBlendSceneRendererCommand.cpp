@@ -1,21 +1,30 @@
 #include "EnableAlphaBlendSceneRendererCommand.h"
 
 #include "RenderManager\RenderManager.h"
+#include "Engine\UABEngine.h"
 
 CEnableAlphaBlendSceneRendererCommand::CEnableAlphaBlendSceneRendererCommand(CXMLTreeNode &TreeNode) :CSceneRendererCommand(TreeNode),
 	m_SrcBlend(TreeNode, "src"),
 	m_DestBlend(TreeNode, "dest"),
-	m_SrcAlphaBlend(TreeNode, "src_alpha"),					//C2614 illegal initialization
+	m_SrcAlphaBlend(TreeNode, "src_alpha"),
 	m_DestAlphaBlend(TreeNode, "dest_alpha"),
 	m_OpBlend(TreeNode, "operation"),
-	m_OpAlphaBlend(TreeNode, "operation_alpha")
+	m_OpAlphaBlend(TreeNode, "operation_alpha"),
+	m_BlendState(nullptr)
 {
-	m_SrcBlend = CBlend(TreeNode, "src");
-	m_DestBlend = CBlend(TreeNode, "dest");
-	m_SrcAlphaBlend = CBlend(TreeNode, "src_alpha");		// C2065 identificador no declarado
-	m_DestAlphaBlend = CBlend(TreeNode, "dest_alpha");
-	m_OpBlend = CBlendOp(TreeNode, "operation");
-	m_OpAlphaBlend = CBlendOp(TreeNode, "operation_alpha");
+	D3D11_BLEND_DESC l_desc = {};
+	l_desc.RenderTarget[0].BlendEnable = false;
+	l_desc.RenderTarget[0].SrcBlend = D3D11_BLEND(m_SrcBlend.GetBlend());
+	l_desc.RenderTarget[0].DestBlend = D3D11_BLEND(m_DestBlend.GetBlend());
+	l_desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP(m_OpBlend.GetBlendOp());
+	l_desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND(m_SrcAlphaBlend.GetBlend());
+	l_desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND(m_DestAlphaBlend.GetBlend());
+	l_desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP(m_OpAlphaBlend.GetBlendOp());
+	l_desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	ID3D11Device* l_Device = UABEngine.GetInstance()->GetRenderManager()->GetContextManager()->GetDevice();
+	HRESULT l_HR = l_Device->CreateBlendState(&l_desc, &m_BlendState);
+	assert(l_HR == S_OK);
 }
 
 CEnableAlphaBlendSceneRendererCommand::~CEnableAlphaBlendSceneRendererCommand()
@@ -24,7 +33,7 @@ CEnableAlphaBlendSceneRendererCommand::~CEnableAlphaBlendSceneRendererCommand()
 
 void CEnableAlphaBlendSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 {
-	//_RenderManager.EnableBlendState(&m_Blend);
+	_RenderManager.EnableBlendState(m_BlendState);
 }
 
 

@@ -26,7 +26,7 @@ public:
 
 	void SetUseDebugCamera(bool _use) { m_UseDebugCamera = _use; }
 
-	void EnableBlendState(std::vector<D3D11_BLEND> *_blend);
+	void EnableBlendState(ID3D11BlendState* _blendState);
 	void EnableAlphaBlendState();
 	void DisableAlphaBlendState();
 
