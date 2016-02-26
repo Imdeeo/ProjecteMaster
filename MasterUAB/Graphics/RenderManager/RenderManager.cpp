@@ -109,10 +109,9 @@ void CRenderManager::Render()
 	m_ContextManager->EndRender();
 }
 
-void CRenderManager::EnableBlendState(std::vector<D3D11_BLEND> *_blend)
+void CRenderManager::EnableBlendState(ID3D11BlendState* _blendState)
 {
-	ID3D11BlendState* l_BlendState = m_ContextManager->GetBlendState(CContextManager::BLEND_ALPHA);
-	m_ContextManager->GetDeviceContext()->OMSetBlendState(l_BlendState,NULL,0xffffffff);
+	m_ContextManager->GetDeviceContext()->OMSetBlendState(_blendState, NULL, 0xffffffff);
 }
 void CRenderManager::EnableAlphaBlendState()
 {
