@@ -77,10 +77,16 @@
 	
 	<unset_render_target/>
 	
+	<set_pool_renderable_objects_technique pool="forward_shading"/>
+	<render_draw_quad active="true">
+		<texture stage_id="0" file="LightScatteringStart"/>
+	</render_draw_quad>
+	
+	<enable_alpha_blend operation="add" src="one" dest="one" operation_alpha="add" src_alpha="one" dest_alpha="one" />
+	<set_light_position light="FDirect01" material="LightScatteringMaterial"/>
 	<set_pool_renderable_objects_technique pool="light_scattering_pool"/>
 	<render_draw_quad active="true" material="LightScatteringMaterial">
-		<texture stage_id="0" file="LightScatteringStart"/>
-		<texture stage_id="1" file="LightScatteringFinal"/>
+		<texture stage_id="0" file="LightScatteringFinal"/>
 	</render_draw_quad>
 	-->
 	
