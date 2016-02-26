@@ -109,7 +109,11 @@ void CRenderManager::Render()
 	m_ContextManager->EndRender();
 }
 
-void CRenderManager::EngableAlphaBlendState()
+void CRenderManager::EnableBlendState(ID3D11BlendState* _blendState)
+{
+	m_ContextManager->GetDeviceContext()->OMSetBlendState(_blendState, NULL, 0xffffffff);
+}
+void CRenderManager::EnableAlphaBlendState()
 {
 	ID3D11BlendState* l_AlphaBlendState = m_ContextManager->GetBlendState(CContextManager::BLEND_ALPHA);
 	m_ContextManager->GetDeviceContext()->OMSetBlendState(l_AlphaBlendState,NULL,0xffffffff);
