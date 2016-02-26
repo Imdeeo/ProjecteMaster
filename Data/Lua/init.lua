@@ -1,4 +1,6 @@
-function cosis (n)
-	n = n or 1
-	return n + 1
+dofile("Data\\Lua\\components.lua")
+dofile("Data\\Lua\\antweakbar.lua")
+function mainLua()
+	InitAntweakBar()
+	InitComponents()
 end
