@@ -213,7 +213,14 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<std::string>("StdString")
 	];*/
 
-	
+	// Utils-------------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CNamed>("CNamed")
+			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<const std::string&>())
+			.def("set_name", &CNamed::SetName)
+			.def("get_name", &CNamed::GetName)
+	];
 
 // BASE------------------------------------------------------------------------------------------------
 
@@ -243,14 +250,18 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_visible", &C3DElement::SetVisible)
 	];
 
-	// Utils-------------------------------------------------------------------------------------------
 	module(m_LS)[
-		class_<CNamed>("CNamed")
-			.def(constructor<const CXMLTreeNode&>())
-			.def(constructor<const std::string&>())
-			.def("set_name", &CNamed::SetName)
-			.def("get_name", &CNamed::GetName)
+		class_<CUABComponent, CNamed>("CUABComponent")
 	];
+
+	module(m_LS)[
+		class_<CUABComponentManager>("CUABComponentManager")
+			.def(constructor<>())
+			//.def("get_resource", &CUABComponentManager::GetResource)
+	];
+
+	
+
 
 // CORE---------------------------------------------------------------------------------------------
 
@@ -393,6 +404,7 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CRenderableObject, bases<C3DElement, CNamed>>("CRenderableObject")
 			.def("update", &CRenderableObject::Update)
 			.def("render", &CRenderableObject::Render)
+			.def("get_component_manager", &CRenderableObject::GetComponentManager)
 	];
 
 	module(m_LS)[

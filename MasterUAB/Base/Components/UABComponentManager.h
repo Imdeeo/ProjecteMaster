@@ -15,7 +15,7 @@ public:
 	void Update(float ElapsedTime);
 	void Render(CRenderManager &RenderManager);
 	void RenderDebug(CRenderManager &RenderManager);
-	void AddComponent(const std::string &Name, CUABComponent *Component);
+	//void AddComponent(const std::string &Name, CUABComponent *Component);
 };
 
 #endif //UAB_COMPONENT_MANAGER_H
