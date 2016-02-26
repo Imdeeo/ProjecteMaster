@@ -43,6 +43,9 @@ public:
 	//funciones de Draw
 	void DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture *_Texture, float x, float y, float _Width, float _Height, const CColor &Color);
 
+	//funcion para sacar posicion en pantalla de la luz desde la camara
+	Vect2f GetScreenPosFrom3D(const Vect3f &Position) const { return m_CurrentCamera.GetPositionInScreenCoordinates(Position); }
+
 	//void Init();
 private:
 

@@ -70,6 +70,7 @@
     <ClCompile Include="SceneRender\SceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp" />
     <ClCompile Include="SceneRender\SetDepthStencilStateSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SetLightPositionSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SetMatricesSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SetRenderTargetSceneRendererCommand.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="SceneRender\SceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SceneRendererCommandManager.h" />
     <ClInclude Include="SceneRender\SetDepthStencilStateSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SetLightPositionSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SetMatricesSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SetRenderTargetSceneRendererCommand.h" />
