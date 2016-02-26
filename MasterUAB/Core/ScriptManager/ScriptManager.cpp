@@ -8,6 +8,8 @@
 #include "3DElement\3DElement.h"
 
 #include "Utils\Named.h"
+#include "Components\UABComponent.h"
+#include "Components\UABComponentManager.h"
 
 #include "Engine\UABEngine.h"
 
@@ -94,6 +96,11 @@ using namespace luabind;
 #define LUA_STATE CUABEngine::GetInstance().GetScriptManager()->GetLuaState()
 #define REGISTER_LUA_FUNCTION(FunctionName,AddrFunction) {luabind::module(LUA_STATE) [ luabind::def(FunctionName,AddrFunction) ];}
 
+CUABComponent* CreateScriptedComponent(const std::string &Name, CRenderableObject *Owner, std::string _FnOnCreate, std::string _FnOnDestroy, std::string _FnOnUpdate, std::string _FnOnRender, std::string _FnOnRenderDebug)
+{
+	CUABComponent* l_component = new CScriptedComponent(Name, Owner, _FnOnCreate, _FnOnDestroy,  _FnOnUpdate, _FnOnRender, _FnOnRenderDebug);
+	return l_component;
+}
 
 int ShowLuaErrorDebugInfo(lua_State* L)
 {
@@ -147,6 +154,7 @@ int Alert(lua_State * State)
 	assert(!"must be log");
 	return true;
 }
+
 
 //Para inicializar el motor de LUA
 void CScriptManager::Initialize()
@@ -222,6 +230,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_name", &CNamed::GetName)
 	];
 
+	luabind::module(m_LS) [ luabind::def("utils_log", &UtilsLog) ];
+
 // BASE------------------------------------------------------------------------------------------------
 
 	// 3DElement---------------------------------------------------------------------------------------
@@ -252,15 +262,20 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CUABComponent, CNamed>("CUABComponent")
+			.def(constructor<const std::string &, CRenderableObject *>())
+			.def("Update", &CUABComponent::Update)
+			.def("render", &CUABComponent::Render)
+			.def("render_debug", &CUABComponent::RenderDebug)
 	];
+
 
 	module(m_LS)[
 		class_<CUABComponentManager>("CUABComponentManager")
-			.def(constructor<>())
-			//.def("get_resource", &CUABComponentManager::GetResource)
+			.def("get_resource", &CUABComponentManager::GetResource)
 	];
 
-	
+	luabind::module(m_LS) [ luabind::def("create_scripted_component", &CreateScriptedComponent) ];
+
 
 
 // CORE---------------------------------------------------------------------------------------------
