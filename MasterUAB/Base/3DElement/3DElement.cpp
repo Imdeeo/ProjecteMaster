@@ -59,13 +59,42 @@ void C3DElement::Render(CKGRenderManager *RenderManager)
 	assert(!"This method mustn't be called");
 }
 
+int g_Test=0;
+
 const Mat44f & C3DElement::GetTransform()
 {
 	m_ScaleMatrix.SetIdentity();
 	m_ScaleMatrix.Scale(m_Scale.x, m_Scale.y, m_Scale.z);
 	
 	m_RotationMatrix.SetIdentity();
-	m_RotationMatrix.SetPitchRollYaw(Vect3f(m_Pitch,m_Roll,m_Yaw));
+
+
+	Mat44f l_RotX;
+	l_RotX.SetIdentity();
+	l_RotX.RotByAngleX(m_Roll);
+	Mat44f l_RotY;
+	l_RotY.SetIdentity();
+	l_RotY.RotByAngleY(m_Yaw);
+	Mat44f l_RotZ;
+	l_RotZ.SetIdentity();
+	l_RotZ.RotByAngleZ(m_Pitch);
+
+	if(g_Test==0)
+		m_RotationMatrix=l_RotX*l_RotZ*l_RotY;
+	else if(g_Test==1)
+		m_RotationMatrix=l_RotX*l_RotY*l_RotZ;
+	else if(g_Test==2)
+		m_RotationMatrix=l_RotY*l_RotX*l_RotZ;
+	else if(g_Test==3)
+		m_RotationMatrix=l_RotY*l_RotZ*l_RotX;
+	else if(g_Test==4)
+		m_RotationMatrix=l_RotZ*l_RotX*l_RotY;
+	else if(g_Test==5)
+		m_RotationMatrix=l_RotZ*l_RotY*l_RotX;
+
+
+	//m_RotationMatrix.SetPitchRollYaw(Vect3f(m_Pitch,m_Yaw,m_Roll));
+//	m_RotationMatrix.Transpose();
 
 	m_TranslationMatrix.SetIdentity();
 	m_TranslationMatrix.SetPos(m_Position.x, m_Position.y, m_Position.z);
