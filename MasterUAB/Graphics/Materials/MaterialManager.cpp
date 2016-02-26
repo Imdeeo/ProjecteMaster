@@ -1,11 +1,6 @@
 #include "Materials\MaterialManager.h"
 #include "XML\XMLTreeNode.h"
 
-static void __stdcall ReloadMaterial(void* _app)
-{
-	CMaterial* l_material = (CMaterial*)_app;
-}
-
 CMaterialManager::CMaterialManager()
 {
 
@@ -31,7 +26,9 @@ void CMaterialManager::Load(const std::string &Filename)
 				CXMLTreeNode l_Element = l_Input(i);
 				if (l_Element.GetName() == std::string("material"))
 				{
-					AddResource(l_Element.GetPszProperty("name"),new CMaterial(l_Element));
+					CMaterial* l_Material = new CMaterial(l_Element);
+					AddResource(l_Element.GetPszProperty("name"),l_Material);
+
 				}
 			}
 		}
