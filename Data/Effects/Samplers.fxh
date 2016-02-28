@@ -1,4 +1,7 @@
 //Samplers.fxh
+#ifndef SAMPLERS_FXH
+#define SAMPLERS_FXH
+
 Texture2D T0Texture: register( t0 );
 Texture2D T1Texture: register( t1 );
 Texture2D T2Texture: register( t2 );
@@ -20,3 +23,5 @@ SamplerState S6Sampler: register( s6 );
 SamplerState S7Sampler: register( s7 );
 SamplerState S8Sampler: register( s8 );
 SamplerState S9Sampler: register( s9 );
+
+#endif //SAMPLERS_FXH
