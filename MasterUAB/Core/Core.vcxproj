@@ -15,16 +15,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DebugHelper.cpp" />
-    <ClCompile Include="DebugHelperImplementation.cpp" />
+    <ClCompile Include="DebugHelper\DebugHelper.cpp" />
+    <ClCompile Include="DebugHelper\DebugHelperImplementation.cpp" />
     <ClCompile Include="Engine\UABEngine.cpp" />
     <ClCompile Include="InputManager\InputManager.cpp" />
     <ClCompile Include="InputManager\InputManagerImplementation.cpp" />
     <ClCompile Include="ScriptManager\ScriptManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DebugHelper.h" />
-    <ClInclude Include="DebugHelperImplementation.h" />
+    <ClInclude Include="DebugHelper\DebugHelper.h" />
+    <ClInclude Include="DebugHelper\DebugHelperImplementation.h" />
     <ClInclude Include="Engine\UABEngine.h" />
     <ClInclude Include="InputManager\InputManager.h" />
     <ClInclude Include="InputManager\InputManagerImplementation.h" />

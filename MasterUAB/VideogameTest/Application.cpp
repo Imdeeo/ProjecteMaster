@@ -7,7 +7,7 @@
 #include "DebugRender.h"
 #include "InputManager\InputManager.h"
 #include "AnimatedModels\AnimatedInstanceModel.h"
-#include "DebugHelper.h"
+#include "DebugHelper\DebugHelper.h"
 #include "Engine\UABEngine.h"
 
 static void __stdcall SwitchCameraCallback(void* _app)
