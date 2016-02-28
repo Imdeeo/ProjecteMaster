@@ -386,7 +386,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_cursor_movement", &CInputManager::GetCursorMovement)
 			.def("has_focus", &CInputManager::HasFocus)
 			.def("set_current_input_manager", &CInputManager::SetCurrentInputManager)
-			.def("get_input_manager", &CInputManager::GetInputManager)
+			.scope[
+				def("get_input_manager", &CInputManager::GetInputManager)
+			]
 			.def("reload", &CInputManager::reload)
 	];
 
