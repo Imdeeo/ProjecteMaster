@@ -5,7 +5,7 @@
 #include "Lights\SpotLight.h";
 #include "Engine\UABEngine.h";
 #include "EffectShader.h"
-#include "DebugHelper.h"
+#include "DebugHelper\DebugHelper.h"
 
 static void __stdcall ReloadEffect(void* _app)
 {

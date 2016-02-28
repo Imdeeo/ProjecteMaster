@@ -17,8 +17,8 @@
 #include "InputManager\InputManager.h"
 #include "InputManager\InputManagerImplementation.h"
 
-#include "DebugHelper.h"
-#include "DebugHelperImplementation.h"
+#include "DebugHelper\DebugHelper.h"
+#include "DebugHelper\DebugHelperImplementation.h"
 
 #include "AnimatedModels\AnimatedCoreModel.h"
 #include "AnimatedModels\AnimatedInstanceModel.h"
@@ -81,7 +81,7 @@
 #include "PhysXManager\PhysXManager.h"
 
 #include "Application.h"
-#include "DebugHelper.h"
+#include "DebugHelper\DebugHelper.h"
 
 #include "XML\XMLTreeNode.h"
 #include "Utils.h"
