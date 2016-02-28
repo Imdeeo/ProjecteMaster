@@ -68,32 +68,36 @@ bool CDebugHelperImplementation::Update(HWND hWnd, UINT msg, WPARAM wParam, LPAR
 	return TwEventWin(hWnd, msg, wParam, lParam)!=0;
 }
 
-void CDebugHelperImplementation::RegisterBar(const SDebugBar& bar)
+void CDebugHelperImplementation::StartRegisterBar(std::string _BarName)
 {
-	// TODO: registrar una ventana de debug
-	
+	m_ActualBar = SDebugBar();
+	m_ActualBar.name = _BarName;
+}
+
+void CDebugHelperImplementation::RegisterBar()
+{
 	int status = 0;
-	std::unordered_map<std::string, TwBar*>::iterator it = m_Bars.find(bar.name);
+	std::unordered_map<std::string, TwBar*>::iterator it = m_Bars.find(m_ActualBar.name);
 	if (it != m_Bars.end())
 	{
 		status = TwDeleteBar(it->second);
 		assert(status);
 	}
 
-	TwBar* twBar = TwNewBar(bar.name.c_str());
+	TwBar* twBar = TwNewBar(m_ActualBar.name.c_str());
 
-	for (size_t i = 0; i < bar.variables.size(); ++i)
+	for (size_t i = 0; i < m_ActualBar.variables.size(); ++i)
 	{
-		if (bar.variables[i].type == BUTTON)
+		if (m_ActualBar.variables[i].type == BUTTON)
 		{
-			status = TwAddButton(twBar, bar.variables[i].name.c_str(), bar.variables[i].callback, bar.variables[i].data, bar.variables[i].definition.c_str());
+			status = TwAddButton(twBar, m_ActualBar.variables[i].name.c_str(), m_ActualBar.variables[i].callback, m_ActualBar.variables[i].data, m_ActualBar.variables[i].definition.c_str());
 			assert(status);
 		}
 		else
 		{
 			TwType type = TW_TYPE_FLOAT;
-			std::string params = bar.variables[i].definition;
-			switch (bar.variables[i].type)
+			std::string params = m_ActualBar.variables[i].definition;
+			switch (m_ActualBar.variables[i].type)
 			{
 			case BOOL:
 				type = TW_TYPE_BOOLCPP;
@@ -123,15 +127,15 @@ void CDebugHelperImplementation::RegisterBar(const SDebugBar& bar)
 				break;
 			}
 
-			switch (bar.variables[i].mode)
+			switch (m_ActualBar.variables[i].mode)
 			{
 			case READ:
-				status = TwAddVarRO(twBar, bar.variables[i].name.c_str(), type, bar.variables[i].ptr, params.c_str());
+				status = TwAddVarRO(twBar, m_ActualBar.variables[i].name.c_str(), type, m_ActualBar.variables[i].ptr, params.c_str());
 				assert(status);
 				break;
 
 			case READ_WRITE:
-				status = TwAddVarRW(twBar, bar.variables[i].name.c_str(), type, bar.variables[i].ptr, params.c_str());
+				status = TwAddVarRW(twBar, m_ActualBar.variables[i].name.c_str(), type, m_ActualBar.variables[i].ptr, params.c_str());
 				assert(status);
 				break;
 
@@ -141,19 +145,19 @@ void CDebugHelperImplementation::RegisterBar(const SDebugBar& bar)
 		}
 	}
 
-	m_Bars[bar.name] = twBar;
+	m_Bars[m_ActualBar.name] = twBar;
 	
 }
 
-void CDebugHelperImplementation::RemoveBar(const std::string& bar)
+void CDebugHelperImplementation::RemoveBar(std::string _BarName)
 {
-	// TODO: eliminar una ventana de debug
-	TwDeleteBar(m_Bars[bar]);
-	m_Bars.erase(bar);
+	TwDeleteBar(m_Bars[_BarName]);
+	m_Bars.erase(_BarName);
 	m_ButtonLuaScripts.clear();
+	m_ActualBar = SDebugBar();
 }
 
-void CDebugHelperImplementation::AddLuaButton(CDebugHelper::SDebugBar &bar, const std::string &ButtonName, const std::string &LuaScript, const std::string &ButtonDefinition)
+void CDebugHelperImplementation::AddLuaButton(const std::string &ButtonName, const std::string &LuaScript, const std::string &ButtonDefinition)
 {
 	m_ButtonLuaScripts.push_back(LuaScript);
 	SDebugVariable l_InfoButton;
@@ -162,7 +166,42 @@ void CDebugHelperImplementation::AddLuaButton(CDebugHelper::SDebugBar &bar, cons
 	l_InfoButton.name=ButtonName;
 	l_InfoButton.type=BUTTON;
 	l_InfoButton.definition=ButtonDefinition;
-	bar.variables.push_back(l_InfoButton);
+	m_ActualBar.variables.push_back(l_InfoButton);
+}
+void CDebugHelperImplementation::AddVariable(const std::string &_VarName, const EDebugType _type, const Mode _mode, void* _pointer)
+{
+	SDebugVariable var = {};
+	var.name = _VarName;
+	var.type = _type;
+	var.mode = _mode;
+	if (_type == BOOL)
+	{
+		var.pBool = (bool*)_pointer;
+	}
+	if (_type == FLOAT)
+	{
+		var.pFloat = (float*)_pointer;
+	}
+	if (_type == INT)
+	{
+		var.pInt = (int*)_pointer;
+	}
+	if (_type == COLOR32)
+	{
+		var.pColor = (CColor*)_pointer;
+	}
+	if (_type == COLOR)
+	{
+		var.pColor32= (uint32*)_pointer;
+	}
+	if (_type == STRING)
+	{
+		var.pString = (char*)_pointer;
+	}
+	if (_type == POSITION_ORIENTATION)
+	{
+		var.pPositionOrientation = (SPositionOrientation*)_pointer;
+	}
 }
 
 void __stdcall CDebugHelperImplementation::RunLuaButton(void *Data)
