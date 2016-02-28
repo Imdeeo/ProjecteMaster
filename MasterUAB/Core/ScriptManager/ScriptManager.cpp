@@ -10,6 +10,7 @@
 #include "Utils\Named.h"
 #include "Components\UABComponent.h"
 #include "Components\UABComponentManager.h"
+#include "Components\ScriptedComponent.h"
 
 #include "Engine\UABEngine.h"
 
@@ -272,6 +273,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CUABComponentManager>("CUABComponentManager")
 			.def("get_resource", &CUABComponentManager::GetResource)
+			.def("add_resource", &CUABComponentManager::AddResource)
 	];
 
 	luabind::module(m_LS) [ luabind::def("create_scripted_component", &CreateScriptedComponent) ];
