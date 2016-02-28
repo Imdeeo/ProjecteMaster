@@ -422,6 +422,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update", &CRenderableObject::Update)
 			.def("render", &CRenderableObject::Render)
 			.def("get_component_manager", &CRenderableObject::GetComponentManager)
+			.def("get_pos", &C3DElement::GetPosition)
+			.def("set_pos", &C3DElement::SetPosition)
 	];
 
 	module(m_LS)[
@@ -948,8 +950,11 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CPhysXManager>("CPhysXManager")
 			.def("get_texture", &CTextureManager::GetTexture)
 			.def("reload", &CTextureManager::Reload)
+			.def("create_character_controller", &CPhysXManager::CreateCharacterController)
+			.def("character_controller_move", &CPhysXManager::CharacterControllerMove)			
 	];
 
+	
 // SOUND--------------------------------------------------------------------------------------------
 	
 	

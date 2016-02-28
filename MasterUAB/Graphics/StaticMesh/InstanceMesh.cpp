@@ -12,7 +12,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(l_Element.GetPszProperty("core_name"));
 }
 
-CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreName)
+CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreName) :CRenderableObject()
 {
 	SetName(Name);
 	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(CoreName);
@@ -21,11 +21,12 @@ CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreNam
 
 CInstanceMesh::~CInstanceMesh(void)
 {
-
+	CRenderableObject::~CRenderableObject();
 }
 
 void CInstanceMesh::Render(CRenderManager *RM)
 {
+	CRenderableObject::Render(RM);
 	if(GetVisible())
 	{
 		/*OJUCUIDAO*/ //Exportem els vertex dels objectes en un espai real, per tant si els transformem amb pos rot i scale es lia
