@@ -286,12 +286,14 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CDebugHelper>("CDebugHelper")
 			.def("render", &CDebugHelper::Render)
 			.def("log", &CDebugHelper::Log)
+			.def("start_register_bar", &CDebugHelper::StartRegisterBar)
 			.def("register_bar", &CDebugHelper::RegisterBar)
 			.def("remove_bar", &CDebugHelper::RemoveBar)
 			.scope[
 				def("get_debug_helper", &CDebugHelper::GetDebugHelper)
 			]
 			.def("add_lua_button",&CDebugHelper::AddLuaButton)
+			.def("add_variable", &CDebugHelper::AddVariable)
 			.def("set_current_debug_helper", &CDebugHelper::SetCurrentDebugHelper)
 			.enum_("e_debug_type")[
 				value("button", CDebugHelper::BUTTON),
@@ -338,6 +340,14 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("register_bar", &CDebugHelperImplementation::RegisterBar)
 			.def("remove_bar", &CDebugHelperImplementation::RemoveBar)
 	];
+
+	//ScriptManager
+	module(m_LS)[
+		class_<CScriptManager>("CScriptManager")
+			.def(constructor<>())
+			.def("runcode", &CScriptManager::RunCode)
+	];
+
 
 	// Engine-------------------------------------------------------------------------------------------
 	module(m_LS)[
@@ -760,6 +770,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_resource", &CTemplatedMapManager<CEffectTechnique>::GetResource)
 			.def("add_resource", &CTemplatedMapManager<CEffectTechnique>::AddResource)
 			.def("destroy", &CTemplatedMapManager<CEffectTechnique>::Destroy)
+			.def("size", &CTemplatedMapManager<CEffectTechnique>::Size)
+			.def("get_map", &CTemplatedMapManager<CEffectTechnique>::GetResourcesMap)
+			.def("get_elements_array", &CTemplatedMapManager<CEffectTechnique>::GetElementsArray)
 	];
 
 	module(m_LS)[

@@ -17,6 +17,7 @@ public:
 	{
 		Destroy();
 	}
+
 	void RemoveResource(const std::string &Name)
 	{
 		TMapResource::iterator it;	
@@ -27,6 +28,7 @@ public:
 			m_Resources.erase(it);          
 		}
 	}
+
 	virtual T * GetResource(const std::string &Name)
 	{
 		if(m_Resources.find(Name)==m_Resources.end())
@@ -36,6 +38,7 @@ public:
 		}
 		return m_Resources[Name];
 	}
+
 	virtual bool AddResource(const std::string &Name, T *Resource)
 	{
 		if (Resource == nullptr)
@@ -52,6 +55,7 @@ public:
 		m_Resources[Name] = Resource;
 		return true;
 	}
+
 	virtual bool AddUpdateResource(const std::string &Name, T *Resource)
 	{
 		if (Resource == nullptr)
@@ -68,6 +72,7 @@ public:
 		m_Resources[Name] = Resource;
 		return true;
 	}
+
 	void Destroy()
 	{
 		typedef TMapResource::iterator it_type;
@@ -77,14 +82,22 @@ public:
 		}
 		m_Resources.clear();
 	}
+
 	T* CTemplatedMapManager::operator[](std::string b)
 	{
 		return m_Resources[b];
 	}
+
+	size_t Size()
+	{
+		return m_Resources.size();
+	}
+
 	TMapResource & GetResourcesMap()
 	{
 		return m_Resources;
 	}
+
 	bool RemoveAllBut(std::map<std::string, std::string> _Names)
 	{
 		std::vector<std::string> l_NamesToRemove;
@@ -101,6 +114,19 @@ public:
 			RemoveResource(l_NamesToRemove[i]);
 		}
 		return true;
+	}
+
+	T** GetElementsArray()
+	{
+		T** l_ElementsArray = (T**)malloc(sizeof(T*)*m_Resources.size());
+		typedef TMapResource::iterator it_type;
+		size_t i = 0;
+		for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
+		{
+			l_ElementsArray[i] = iterator->second;
+			i = i + 1;
+		}
+		return l_ElementsArray;
 	}
 };
 
