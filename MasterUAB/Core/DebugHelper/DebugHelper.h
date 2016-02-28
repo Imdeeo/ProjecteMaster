@@ -6,6 +6,9 @@
 #include "HelperTypes.h"
 #include "Math\Color.h"
 
+#include <map>
+#include <string>
+
 class CDebugHelper
 {
 public:
@@ -65,17 +68,20 @@ public:
 		std::string name;
 		std::vector<SDebugVariable> variables;
 	};
-
+protected:
+	SDebugBar m_ActualBar;
 public:
 
 	virtual void Render() {};
 
 	virtual void Log(const std::string& text) {};
 
-	virtual void RegisterBar(const SDebugBar& bar) {};
-	virtual void RemoveBar(const std::string& bar) {};
+	virtual void StartRegisterBar(std::string _BarName){};
+	virtual void RegisterBar() {};
+	virtual void RemoveBar(std::string _BarName) {};
 
-	virtual void AddLuaButton(CDebugHelper::SDebugBar &bar,const std::string &ButtonName, const std::string &LuaScript, const std::string &ButtonDefinition){};
+	virtual void AddLuaButton(const std::string &ButtonName, const std::string &LuaScript, const std::string &ButtonDefinition){};
+	virtual void AddVariable(const std::string &_VarName, const EDebugType _type, const Mode _mode, void* _pointer){}
 
 	static CDebugHelper* GetDebugHelper();
 	static void SetCurrentDebugHelper(CDebugHelper* _DebugHelper);
