@@ -10,6 +10,7 @@
 #include "Utils\Named.h"
 #include "Components\UABComponent.h"
 #include "Components\UABComponentManager.h"
+#include "Components\ScriptedComponent.h"
 
 #include "Engine\UABEngine.h"
 
