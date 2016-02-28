@@ -20,8 +20,14 @@ public:
 		m_ComponentManager = new CUABComponentManager();
 	};
 	virtual ~CRenderableObject() { CHECKED_DELETE(m_ComponentManager);}
-	virtual void Update(float ElapsedTime) {}
-	virtual void Render(CRenderManager *RM) = 0;
+	virtual void Update(float ElapsedTime) 
+	{
+		m_ComponentManager->Update(ElapsedTime);
+	}
+	virtual void Render(CRenderManager *RM)
+	{
+		m_ComponentManager->Render(*RM);
+	}
 	UAB_BUILD_GET_SET(CUABComponentManager*, ComponentManager)
 };
 
