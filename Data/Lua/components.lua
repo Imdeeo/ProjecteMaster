@@ -22,9 +22,25 @@ function FnOnCreateController ()
 end
 
 function FnOnDestroyController ()
-	-- destruir character controller
+	
 end
 
 function FnOnUpdateController ()
+	local l_InputManager = CInputManager.get_input_manager()
+	local l_AddPos = new Vect3f(1,1,1)
 
+	local Forward = l_InputManager:get_axis("MOVE_CHARACTER")
+	--local Strafe = l_InputManager:get_axis("STRAFE_CHARACTER")
+	
+	--if Strafe != 0 then
+		utils_log("uno!")
+	--end
+	--l_AddPos.y = 
+	--[[Forward*(sin(m_Pitch));
+	l_AddPos.x=Forward*(cos(m_Yaw))+Strafe*(cos(m_Yaw+3.14159f*0.5f));
+	l_AddPos.z=Forward*(sin(m_Yaw))+Strafe*(sin(m_Yaw+3.14159f*0.5f));
+	if ((x * x + y * y + z * z) > 0)
+	l_AddPos.Normalize();
+	l_AddPos *= l_ConstantSpeed;
+	move_character_controller(l_AddPos)]]
 end
