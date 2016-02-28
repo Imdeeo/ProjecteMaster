@@ -4,7 +4,7 @@
 #include "RenderableObjects\RenderableObject.h"
 
 #include "Engine\UABEngine.h"
-#include "DebugHelper.h"
+#include "DebugHelper\DebugHelper.h"
 
 #include "Effects\EffectTechnique.h"
 #include "Texture\Texture.h";
