@@ -74,7 +74,7 @@ public:
   inline Vector3<T>& operator ()  (const T tx, const T ty, const T tz);
   inline void        Set          (const T tx, const T ty, const T tz);
   inline void        SetZero      ();
-
+  inline float		 GetModule	  ();
 
   // Coordenadas polares
   void  SetFromPolar (const T longitude, const T latitude, const T length);
