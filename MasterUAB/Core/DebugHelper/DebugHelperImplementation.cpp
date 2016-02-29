@@ -168,12 +168,13 @@ void CDebugHelperImplementation::AddLuaButton(const std::string &ButtonName, con
 	l_InfoButton.definition=ButtonDefinition;
 	m_ActualBar.variables.push_back(l_InfoButton);
 }
-void CDebugHelperImplementation::AddVariable(const std::string &_VarName, const EDebugType _type, const Mode _mode, void* _pointer)
+void CDebugHelperImplementation::AddVariable(const std::string &_VarName, const EDebugType _type, const Mode _mode, void* _pointer, const std::string &_params)
 {
 	SDebugVariable var = {};
 	var.name = _VarName;
 	var.type = _type;
 	var.mode = _mode;
+	var.definition = _params;
 	if (_type == BOOL)
 	{
 		var.pBool = (bool*)_pointer;
