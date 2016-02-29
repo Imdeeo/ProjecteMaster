@@ -14,7 +14,7 @@ fn createLights dir filename Objs =
 	(
 		lightPos = Objs[i].pos
 		TranslationToRH &lightPos
-		lightDir = Objs[i].dir
+		lightDir = -Objs[i].dir
 		TranslationToRH &lightDir
 		if (ClassOf Objs[i] == Omnilight) then
 		(
@@ -33,13 +33,15 @@ fn createLights dir filename Objs =
 		)
 		else if (ClassOf Objs[i] == freeSpot or ClassOf Objs[i] == targetSpot) then
 		(
+			l_angle = Objs[i].hotspot * (PI/180)
+			l_falloff = Objs[i].falloff * (PI/180)
 			if (getUserProp Objs[i] "shadowmap_export" == true) then
 			(
-				format "\t<light name=\"%\" enabled=\"%\" type=\"spot\" pos=\"% % %\" dir=\"% % %\" color=\"% % % %\" angle=\"%\" fall_off=\"%\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\" generate_shadow_map=\"true\" shadow_map_width=\"%\" shadow_map_height=\"%\" shadow_texture_mask=\"./data/textures/shadow_mask.tga\">\n" Objs[i].name (getUserProp Objs[i] "light_enabled") lightPos.x lightPos.y lightPos.z lightDir.x lightDir.y lightDir.z (Objs[i].color.r/255) (Objs[i].color.g/255) (Objs[i].color.b/255) 1 Objs[i].hotspot Objs[i].falloff Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier (getUserProp Objs[i] "shadowmap_w") (getUserProp Objs[i] "shadowmap_h") to:file
+				format "\t<light name=\"%\" enabled=\"%\" type=\"spot\" pos=\"% % %\" dir=\"% % %\" color=\"% % % %\" angle=\"%\" fall_off=\"%\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\" generate_shadow_map=\"true\" shadow_map_width=\"%\" shadow_map_height=\"%\" shadow_texture_mask=\"./data/textures/shadow_mask.tga\">\n" Objs[i].name (getUserProp Objs[i] "light_enabled") lightPos.x lightPos.y lightPos.z lightDir.x lightDir.y lightDir.z (Objs[i].color.r/255) (Objs[i].color.g/255) (Objs[i].color.b/255) 1 l_angle l_falloff Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier (getUserProp Objs[i] "shadowmap_w") (getUserProp Objs[i] "shadowmap_h") to:file
 				format "\t\t<layer layer=\"%\"/>\n" (getUserProp Objs[i] "shadowmap_layer") to:file
 				format "\t</light>\n" to:file
 			) else (
-				format "\t<light name=\"%\" enabled=\"%\" type=\"spot\" pos=\"% % %\" dir=\"% % %\" color=\"% % % %\" angle=\"%\" fall_off=\"%\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\" generate_shadow_map=\"false\"/>\n" Objs[i].name (getUserProp Objs[i] "light_enabled") lightPos.x lightPos.y lightPos.z lightDir.x lightDir.y lightDir.z (Objs[i].color.r/255) (Objs[i].color.g/255) (Objs[i].color.b/255) 1 Objs[i].hotspot Objs[i].falloff Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier to:file
+				format "\t<light name=\"%\" enabled=\"%\" type=\"spot\" pos=\"% % %\" dir=\"% % %\" color=\"% % % %\" angle=\"%\" fall_off=\"%\" att_start_range=\"%\" att_end_range=\"%\" intensity=\"%\" generate_shadow_map=\"false\"/>\n" Objs[i].name (getUserProp Objs[i] "light_enabled") lightPos.x lightPos.y lightPos.z lightDir.x lightDir.y lightDir.z (Objs[i].color.r/255) (Objs[i].color.g/255) (Objs[i].color.b/255) 1 l_angle l_falloff Objs[i].farAttenStart Objs[i].farAttenEnd Objs[i].multiplier to:file
 			)
 		)
 	)
