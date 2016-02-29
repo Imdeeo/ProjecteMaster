@@ -5,6 +5,10 @@
 #include "PhysXManager.h"
 #include "Math\Vector3.h"
 #include "Math\Quatn.h"
+#include "RenderManager\RenderManager.h"
+#include "Effects\EffectManager.h"
+#include "Math\MathTypes.h"
+#include "Engine\UABEngine.h"
 
 #include <assert.h>
 
@@ -534,4 +538,28 @@ void CPhysXManager::RemoveActor(const std::string _ActorName)
 		m_ActorIndexs.clear();
 	}
 	
+}
+
+void CPhysXManager::Render(const std::string _name, CRenderManager *RenderManager)
+{
+	CEffectManager::m_SceneParameters.m_BaseColor = CColor(0.5,0,0.5,1);
+	CEffectManager::m_SceneParameters.m_BaseColor.SetAlpha(1.f);
+	Mat44f l_ScaleMatrix, l_RotationMatrix, l_TranslationMatrix;
+
+	l_ScaleMatrix.SetIdentity();
+	l_ScaleMatrix.Scale(1.0f, 1.0f, 1.0f);
+
+	l_RotationMatrix.SetIdentity();
+	l_RotationMatrix.SetPitchRollYaw(Vect3f(0, 0, 0));
+
+	l_TranslationMatrix.SetIdentity();
+	
+	l_TranslationMatrix.SetPos(m_CharacterControllers[_name]->getPosition().x, m_CharacterControllers[_name]->getPosition().y, m_CharacterControllers[_name]->getPosition().z);
+
+	l_TranslationMatrix = l_ScaleMatrix*l_RotationMatrix*l_TranslationMatrix;
+
+	RenderManager->GetContextManager()->SetWorldMatrix(l_TranslationMatrix);
+	CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
+	CEffectManager::SetSceneConstants(l_EffectTechnique);
+	RenderManager->GetDebugRender()->GetSPhere10()->RenderIndexed(RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 }
