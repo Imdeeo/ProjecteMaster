@@ -162,8 +162,8 @@ public:
 
 	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, int _group)
 	{
-		assert(m_CharacterControllers.find(_name)!=m_CharacterControllers.end());
-
+		assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
+		
 		physx::PxMaterial* l_Material = m_Materials[_MaterialName];
 
 		physx::PxCapsuleControllerDesc desc;
