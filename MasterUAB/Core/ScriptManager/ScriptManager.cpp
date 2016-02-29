@@ -233,12 +233,17 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_name", &CNamed::GetName)
 	];
 
-	luabind::module(m_LS) [ luabind::def("utils_log", &UtilsLog) ];
+	luabind::module(m_LS)[ luabind::def("utils_log", &UtilsLog) ];
 
 	module(m_LS)[
 		class_<Vect3f>("Vect3f")
 			.def(constructor<float, float, float>())
+			.def("set", &Vect3f::Set)
+			//.def("normalize", &Vect3f::Normalize)
 	];
+
+
+	
 	
 // BASE------------------------------------------------------------------------------------------------
 
@@ -397,7 +402,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<CInputManagerImplementation>("CInputManagerImplementation")
+		class_<CInputManagerImplementation, CInputManager>("CInputManagerImplementation")
 			.def(constructor<HWND>())
 			.def("load_commands_from_file", &CInputManagerImplementation::LoadCommandsFromFile)
 			.def("begin_frame", &CInputManagerImplementation::BeginFrame)
@@ -977,6 +982,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("create_character_controller", &CPhysXManager::CreateCharacterController)
 			.def("character_controller_move", &CPhysXManager::CharacterControllerMove)		
 			.def("register_material", &CPhysXManager::RegisterMaterial)
+			.def("render", &CPhysXManager::Render)
 	];
 
 	
