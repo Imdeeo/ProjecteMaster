@@ -90,7 +90,6 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 
 void CAnimatedInstanceModel::Render(CRenderManager *_RenderManager)
 {
-	Mat44f l_Transform=GetTransform();
 	CEffectManager::m_SceneParameters.m_World=GetTransform();
 	for(int l_HardwareMeshId=0; l_HardwareMeshId<m_CalHardwareModel->getHardwareMeshCount(); ++l_HardwareMeshId)
 	{
@@ -115,9 +114,9 @@ void CAnimatedInstanceModel::Render(CRenderManager *_RenderManager)
 		_RenderManager->GetDeviceContext()->UpdateSubresource(l_AnimationConstantBufferPS, 0, NULL, &(CEffectManager::m_AnimatedModelEffectParameters), 0, 0);
 
 		CEffectManager::SetSceneConstants(l_EffectTechnique);
-		//m_RenderableVertexs->RenderIndexed(RenderManager,m_Materials[l_HardwareMeshId]->GetEffectTechnique(),
-		//	&CEffectManager::m_SceneParameters,m_CalHardwareModel->getFaceCount()*3, m_CalHardwareModel->getStartIndex(),
-		//	m_CalHardwareModel->getBaseVertexIndex());
+		m_RenderableVertexs->RenderIndexed(_RenderManager, l_EffectTechnique, &CEffectManager::m_SceneParameters, 
+			m_CalHardwareModel->getFaceCount()*3, m_CalHardwareModel->getStartIndex(),
+			m_CalHardwareModel->getBaseVertexIndex());
 	}
 }
 void CAnimatedInstanceModel::Update(float ElapsedTime)
