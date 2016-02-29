@@ -207,3 +207,15 @@ void* CEffectManager::AddMaterialParameter(CMaterialParameter::TMaterialType _Ma
 		m_RawDataCount = m_RawDataCount + 4;
 	return l_Adress;
 }
+
+luabind::object CEffectManager::GetEffectsNames(lua_State *L)
+{
+	luabind::object l_ElementsVector = luabind::newtable(L);
+	typedef TMapResource::iterator it_type;
+	size_t i = 0;
+	for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
+	{
+		l_ElementsVector[i++] = iterator->second->GetName().c_str();
+	}
+	return l_ElementsVector;
+}

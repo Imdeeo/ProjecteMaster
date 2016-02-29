@@ -14,6 +14,12 @@
 
 class CLight;
 
+#include <luabind/luabind.hpp>
+#include <luabind/function.hpp>
+#include <luabind/class.hpp>
+#include <luabind/operator.hpp>
+class lua_State;
+
 #define MAX_RAW_DATA_ELEMENTS 64
 #define INDEX_SHADOWMAP_TEXTURE 6
 
@@ -50,6 +56,8 @@ public:
 	static void SetSceneConstants(CEffectTechnique* _EffectTechnique);
 	void SetLightConstants(unsigned int IdLight, CLight *Light);
 	void SetLightsConstants(unsigned int MaxLights = MAX_LIGHTS_BY_SHADER);
+
+	luabind::object GetEffectsNames(lua_State *L);
 };
 
 #endif //EFFECT_MANAGER_H

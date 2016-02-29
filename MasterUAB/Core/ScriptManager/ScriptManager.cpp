@@ -7,6 +7,8 @@
 
 #include "3DElement\3DElement.h"
 
+#include "Utils\CEmptyPointerClass.h"
+
 #include "Utils\Named.h"
 #include "Components\UABComponent.h"
 #include "Components\UABComponentManager.h"
@@ -279,7 +281,9 @@ void CScriptManager::RegisterLUAFunctions()
 	luabind::module(m_LS) [ luabind::def("create_scripted_component", &CreateScriptedComponent) ];
 
 
-
+	module(m_LS)[
+		class_<CEmptyPointerClass>("CEmptyPointerClass")
+	];
 // CORE---------------------------------------------------------------------------------------------
 
 	module(m_LS)[
@@ -772,7 +776,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("destroy", &CTemplatedMapManager<CEffectTechnique>::Destroy)
 			.def("size", &CTemplatedMapManager<CEffectTechnique>::Size)
 			.def("get_map", &CTemplatedMapManager<CEffectTechnique>::GetResourcesMap)
-			.def("get_elements_array", &CTemplatedMapManager<CEffectTechnique>::GetElementsArray)
+			//.def("get_elements_array", &CTemplatedMapManager<CEffectTechnique>::GetEmptyPointerArray)
 	];
 
 	module(m_LS)[
@@ -786,6 +790,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_scene_constants", &CEffectManager::SetSceneConstants)
 			.def("set_light_constants", &CEffectManager::SetLightConstants)
 			.def("set_lights_constants", &CEffectManager::SetLightsConstants)
+			.def("get_effects_names", &CEffectManager::GetEffectsNames)
 	];
 
 	module(m_LS)[
