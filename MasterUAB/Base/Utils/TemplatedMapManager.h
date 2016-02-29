@@ -116,18 +116,20 @@ public:
 		return true;
 	}
 
-	T** GetElementsArray()
+	/*T* GetElementsArray()
 	{
-		T** l_ElementsArray = (T**)malloc(sizeof(T*)*m_Resources.size());
+		std::vector<T> l_ElementsVector;
 		typedef TMapResource::iterator it_type;
-		size_t i = 0;
 		for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
 		{
-			l_ElementsArray[i] = iterator->second;
-			i = i + 1;
+			l_ElementsVector.push_back(*(iterator->second));
 		}
-		return l_ElementsArray;
+		return &l_ElementsVector[0];
 	}
+	CEmptyPointerClass* GetEmptyPointerArray()
+	{
+		return (CEmptyPointerClass*)GetElementsArray();
+	}*/
 };
 
 #endif //TEMPLATED_MAP_MANAGER_H
