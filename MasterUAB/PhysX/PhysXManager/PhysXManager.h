@@ -7,6 +7,8 @@
 #include "Math\Vector4.h"
 #include "Math\Quatn.h"
 
+class CRenderManager;
+
 namespace physx
 {
 	class PxFoundation;
@@ -85,6 +87,8 @@ public:
 	void RemoveActor(const std::string _ActorName);
 
 	void Update(float _dt);
+	void Render(const std::string _name, CRenderManager *RenderManager);
+
 protected:
 
 	physx::PxFoundation				*m_Foundation;
