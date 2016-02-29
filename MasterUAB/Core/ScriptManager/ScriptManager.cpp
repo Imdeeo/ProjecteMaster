@@ -235,6 +235,11 @@ void CScriptManager::RegisterLUAFunctions()
 
 	luabind::module(m_LS) [ luabind::def("utils_log", &UtilsLog) ];
 
+	module(m_LS)[
+		class_<Vect3f>("Vect3f")
+			.def(constructor<float, float, float>())
+	];
+	
 // BASE------------------------------------------------------------------------------------------------
 
 	// 3DElement---------------------------------------------------------------------------------------
@@ -365,6 +370,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_animated_models_manager", &CUABEngine::GetAnimatedModelsManager)
 			.def("get_script_manager", &CUABEngine::GetScriptManager)
 			.def("get_camera_controller_manager", &CUABEngine::GetCameraControllerManager)
+			.def("get_physX_manager", &CUABEngine::GetPhysXManager)
 			.def("get_cinematic", &CUABEngine::GetCinematic)
 			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
 			.def("load_level_xml", &CUABEngine::LoadLevelXML)
@@ -384,7 +390,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_cursor_movement", &CInputManager::GetCursorMovement)
 			.def("has_focus", &CInputManager::HasFocus)
 			.def("set_current_input_manager", &CInputManager::SetCurrentInputManager)
-			.def("get_input_manager", &CInputManager::GetInputManager)
+			.scope[
+				def("get_input_manager", &CInputManager::GetInputManager)
+			]
 			.def("reload", &CInputManager::reload)
 	];
 
@@ -436,8 +444,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update", &CRenderableObject::Update)
 			.def("render", &CRenderableObject::Render)
 			.def("get_component_manager", &CRenderableObject::GetComponentManager)
-			.def("get_pos", &C3DElement::GetPosition)
-			.def("set_pos", &C3DElement::SetPosition)
 	];
 
 	module(m_LS)[
@@ -969,7 +975,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_texture", &CTextureManager::GetTexture)
 			.def("reload", &CTextureManager::Reload)
 			.def("create_character_controller", &CPhysXManager::CreateCharacterController)
-			.def("character_controller_move", &CPhysXManager::CharacterControllerMove)			
+			.def("character_controller_move", &CPhysXManager::CharacterControllerMove)		
+			.def("register_material", &CPhysXManager::RegisterMaterial)
 	];
 
 	
