@@ -31,7 +31,7 @@ public:
 	virtual void RegisterBar();
 	virtual void RemoveBar(std::string _BarName);
 	void AddLuaButton(const std::string &ButtonName, const std::string &LuaScript, const std::string &ButtonDefinition);
-	void AddVariable(const std::string &_VarName, const EDebugType _type, const Mode _mode = READ_WRITE, void* _pointer = nullptr);
+	void AddVariable(const std::string &_VarName, const EDebugType _type, const Mode _mode = READ_WRITE, void* _pointer = nullptr, const std::string &_params="");
 
 	
 	std::unordered_map<std::string, TwBar*> m_Bars;

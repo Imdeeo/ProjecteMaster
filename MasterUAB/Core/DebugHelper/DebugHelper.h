@@ -81,7 +81,7 @@ public:
 	virtual void RemoveBar(std::string _BarName) {};
 
 	virtual void AddLuaButton(const std::string &ButtonName, const std::string &LuaScript, const std::string &ButtonDefinition){};
-	virtual void AddVariable(const std::string &_VarName, const EDebugType _type, const Mode _mode, void* _pointer){}
+	virtual void AddVariable(const std::string &_VarName, const EDebugType _type, const Mode _mode, void* _pointer,const std::string &_params){}
 
 	static CDebugHelper* GetDebugHelper();
 	static void SetCurrentDebugHelper(CDebugHelper* _DebugHelper);

@@ -7,6 +7,12 @@
 #include <assert.h>
 #include "Utils.h"
 
+#include <luabind/luabind.hpp>
+#include <luabind/function.hpp>
+#include <luabind/class.hpp>
+#include <luabind/operator.hpp>
+class lua_State;
+
 template<class T>
 class CTemplatedVectorMapManager
 {
@@ -97,6 +103,21 @@ public:
 	TVectorResources & GetResourcesVector()
 	{
 		return m_ResourcesVector;
+	}
+
+	size_t Size()
+	{
+		return m_ResourcesVector.size();
+	}
+
+	luabind::object GetElementsArray(lua_State *L)
+	{
+		luabind::object l_ElementsVector = luabind::newtable(L);
+		for (int i = 0; i < m_ResourcesVector.size();i++)
+		{
+			l_ElementsVector[i] = m_ResourcesVector[i];
+		}
+		return l_ElementsVector;
 	}
 };
 
