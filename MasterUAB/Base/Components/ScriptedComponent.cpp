@@ -58,7 +58,7 @@ void CScriptedComponent::Render(CRenderManager &RenderManager)
 	try
 	{
 		if (!m_FnOnRender.empty())
-			luabind::call_function<void>(UABEngine.GetScriptManager()->GetLuaState(), m_FnOnRender.c_str(), GetOwner(), RenderManager);
+			luabind::call_function<void>(UABEngine.GetScriptManager()->GetLuaState(), m_FnOnRender.c_str(), GetOwner(), &RenderManager);
 	}
 	catch (const luabind::error &e)
 	{
@@ -71,7 +71,7 @@ void CScriptedComponent::RenderDebug(CRenderManager &RenderManager)
 	try
 	{
 		if (!m_FnOnRenderDebug.empty())
-			luabind::call_function<void>(UABEngine.GetScriptManager()->GetLuaState(), m_FnOnRenderDebug.c_str(), GetOwner(), RenderManager);
+			luabind::call_function<void>(UABEngine.GetScriptManager()->GetLuaState(), m_FnOnRenderDebug.c_str(), GetOwner(), &RenderManager);
 	}
 	catch (const luabind::error &e)
 	{
