@@ -5,6 +5,8 @@
 
 #include "TemplatedMaterialParameter.h"
 
+#define INDEX_LIGHTMAP_TEXTURE 1
+#define INDEX_NORMAL_TEXTURE 2
 #define INDEX_CUBEMAP_TEXTURE 8
 
 CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0), m_ReflectionStageId(99)
@@ -20,6 +22,14 @@ CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_Current
 		{
 			m_Textures.push_back(CUABEngine::GetInstance()->GetTextureManager()->GetTexture(l_Child.GetPszProperty("filename")));
 			std::string l_TextureType = l_Child.GetPszProperty("type");
+			if (l_TextureType == "lightmap")
+			{
+				m_LightmapStageId = i;
+			}
+			if (l_TextureType == "normal")
+			{
+				m_NormalStageId = i;
+			}
 			if (l_TextureType == "reflection")
 			{
 				m_ReflectionStageId = i;
@@ -75,9 +85,13 @@ void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 {
 	for (int i = 0; i < m_Textures.size(); i++)
 	{
-		if (i == m_ReflectionStageId){
+		if (i == m_LightmapStageId){
+			m_Textures[i]->Activate(INDEX_LIGHTMAP_TEXTURE);
+		} else if (i == m_NormalStageId) {
+			m_Textures[i]->Activate(INDEX_NORMAL_TEXTURE);
+		} else if (i == m_ReflectionStageId) {
 			m_Textures[i]->Activate(INDEX_CUBEMAP_TEXTURE);
-		}else{
+		} else {
 			m_Textures[i]->Activate(i);
 		}
 	}
