@@ -11,6 +11,7 @@
 #include "Utils\CEmptyPointerClass.h"
 
 #include "Utils\Named.h"
+#include "Utils\Active.h"
 #include "Components\UABComponent.h"
 #include "Components\UABComponentManager.h"
 #include "Components\ScriptedComponent.h"
@@ -75,6 +76,9 @@
 #include "StaticMesh\InstanceMesh.h"
 #include "StaticMesh\StaticMesh.h"
 #include "StaticMesh\StaticMeshManager.h"
+
+#include "SceneRender\SceneRendererCommandManager.h"
+#include "SceneRender\SceneRendererCommand.h"
 
 #include "Texture\Texture.h"
 #include "Texture\TextureManager.h"
@@ -266,9 +270,16 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CNamed>("CNamed")
 			.def(constructor<const CXMLTreeNode&>())
 			.def(constructor<const std::string&>())
-			.def("set_name", &CNamed::SetName)
-			.def("get_name", &CNamed::GetName)
+			.property("name", &CNamed::GetName, &CNamed::SetName)
 	];
+
+	module(m_LS)[
+		class_<CActive>("CActive")
+			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<bool>())
+			.property("active",&CActive::Getactive,&CActive::Setactive)
+	];
+
 
 	luabind::module(m_LS)[ luabind::def("utils_log", &UtilsLog) ];
 
@@ -414,6 +425,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_camera_controller_manager", &CUABEngine::GetCameraControllerManager)
 			.def("get_physX_manager", &CUABEngine::GetPhysXManager)
 			.def("get_cinematic", &CUABEngine::GetCinematic)
+			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
 			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
 			.def("load_level_xml", &CUABEngine::LoadLevelXML)
 			.scope[
@@ -479,6 +491,20 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_axis_bb_max", &CDebugRender::GetAxisBBMax)
 	];
 
+
+	// SceneRendererCommand
+
+	module(m_LS)[
+		class_<CSceneRendererCommand, bases<CActive,CNamed>>("CSceneRendererCommand")
+			.def("execute",&CSceneRendererCommand::Execute)
+	];
+
+	RegisterTemplatedVectorMapManager<CSceneRendererCommand>(m_LS);
+	module(m_LS)[
+		class_<CSceneRendererCommandManager, CTemplatedVectorMapManager<CSceneRendererCommand>>("CSceneRendererCommandManager")
+			.def(constructor<>())
+			.def("reload",&CSceneRendererCommandManager::Reload)
+	];
 
 	// RenderableObjects------------------------------------------------------------------------------
 	module(m_LS)[
