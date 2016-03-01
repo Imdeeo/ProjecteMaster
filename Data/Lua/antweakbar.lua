@@ -12,6 +12,7 @@ function RegisterMainBar()
 	DebugHelper:start_register_bar("MainBar")
 	DebugHelper:add_lua_button("Shaders","RegisterShadersBar()","");
 	DebugHelper:add_lua_button("Materials","RegisterMaterialsBar()","");
+	DebugHelper:add_lua_button("Reload","RegisterReloadBar()","");
 	DebugHelper:register_bar()
 end
 
@@ -29,7 +30,7 @@ function RegisterShadersBar()
 	local EffectManager = UABEngine:get_effect_manager()
 	local EffecTechniques = EffectManager:get_elements_array()
 	for i = 0,EffectManager:size()-1 do
-		DebugHelper:add_lua_button(EffecTechniques[i]:get_name(),"ReloadEffectTechnique(\""..EffecTechniques[i]:get_name().."\")","");
+		DebugHelper:add_lua_button(EffecTechniques[i].name,"ReloadEffectTechnique(\""..EffecTechniques[i].name.."\")","");
 	end
 	
 	DebugHelper:register_bar()
@@ -46,12 +47,37 @@ function ReloadEffectTechnique(EffectTechniqueName)
 
 end
 
-function AddParameterVariable(parameter)
+function AddParameterVariable(parameter,material_name)
 
 	local UABEngine = CUABEngine.get_instance()
 	local DebugHelper = CDebugHelper.get_debug_helper()
 	
-	DebugHelper:add_variable(parameter:get_name(),DebugHelper.float,parameter:get_value_address(),"")
+	if(parameter:get_material_type()==CMaterialParameter.float)then
+	
+		utils_log("float")
+		DebugHelper:add_variable(parameter.name,CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group='"..material_name.."' ")
+		
+	elseif(parameter:get_material_type()==CMaterialParameter.vect2f)then
+
+		utils_log("vect2f")
+		DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--"" group="..parameter.name.." ")
+		DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+		
+	elseif(parameter:get_material_type()==CMaterialParameter.vect3f)then
+	
+		DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
+		DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
+		DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+		
+	elseif(parameter:get_material_type()==CMaterialParameter.vect4f)then
+	
+		DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
+		DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
+		DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
+		DebugHelper:add_variable(parameter.name..": w",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+		
+	end
+	
 	
 end
 
@@ -68,12 +94,10 @@ function RegisterMaterialsBar()
 	local MaterialsManager = UABEngine:get_material_manager()
 	local Materials = MaterialsManager:get_elements_array()
 	for i = 0,MaterialsManager:size()-1 do
-		DebugHelper:add_lua_button(Materials[i]:get_name(),"ReloadMaterial(\""..Materials[i]:get_name().."\")","");
+		DebugHelper:add_lua_button(Materials[i].name,"ReloadMaterial(\""..Materials[i].name.."\")","");
 		local MaterialParameters = Materials[i]:get_parameters()
-		utils_log("cap elefant")
-		for prameter in MaterialParameters do
-			utils_log("un elefant")
-		--	AddParameterVariable(parameter)
+		for parameter in MaterialParameters do
+			AddParameterVariable(parameter,Materials[i].name)
 		end
 	end
 	
@@ -87,4 +111,21 @@ function ReloadMaterial(MaterialName)
 	local MaterialsManager = UABEngine:get_material_manager()
 	local Material = MaterialsManager:get_resource(MaterialName)
 
+end
+
+function RegisterReloadBar()
+	local UABEngine = CUABEngine.get_instance()
+	local DebugHelper = CDebugHelper.get_debug_helper()
+	
+	DebugHelper:remove_bar("MainBar")
+	DebugHelper:start_register_bar("Reload")
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Reload\");RegisterMainBar()","");
+	DebugHelper:add_lua_button("Materials","ReloadMaterial","");
+	DebugHelper:add_lua_button("Lights","ReloadMaterial","");
+	DebugHelper:add_lua_button("Textures","ReloadMaterial","");
+	DebugHelper:add_lua_button("SceneComamands","CUABEngine.get_instance():get_scene_command_manager():reload()","");
+	DebugHelper:add_lua_button("Shaders","ReloadMaterial","");
+	
+	DebugHelper:register_bar()
 end

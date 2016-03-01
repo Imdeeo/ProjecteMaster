@@ -25,7 +25,7 @@ public:
 	virtual void Apply(CRenderableObjectTechnique *RenderableObjectTechnique = NULL);
 	UAB_GET_PROPERTY(CRenderableObjectTechnique*, RenderableObjectTechnique);
 	void * GetNextParameterAddress(unsigned int NumBytes);
-	std::vector<CMaterialParameter *> GetParameters()const{ return m_Parameters;}
+	const std::vector<CMaterialParameter *> & GetParameters(){ return m_Parameters;}
 	void CMaterial::operator=(CMaterial &b);
 };
 
