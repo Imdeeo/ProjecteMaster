@@ -88,7 +88,7 @@ public:
 
 	void Update(float _dt);
 	void Render(const std::string _name, CRenderManager *RenderManager);
-
+	Vect3f GetCharacterControllersPosition(const std::string _name);
 protected:
 
 	physx::PxFoundation				*m_Foundation;

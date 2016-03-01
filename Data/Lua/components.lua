@@ -1,9 +1,6 @@
-function InitComponents()
-	InitBoxMove()
-end
-
 function InitBoxMove()
 	local UABEngine = CUABEngine.get_instance()
+
 	local l_Box=UABEngine:get_layer_manager():get_resource("solid"):get_resource("porsche")
 	local l_Component=l_Box:get_component_manager():get_resource("ScriptedComponent")
 	
@@ -17,7 +14,7 @@ function FnOnCreateController (owner)
 	local UABEngine = CUABEngine.get_instance()
 	local l_physXManager = UABEngine:get_physX_manager()
 	l_physXManager:register_material("controllerMaterial", 0.5,0.5,1)
-	l_physXManager:create_character_controller("player", 1.5, 1, 0.5, owner:get_position(),"controllerMaterial", 1)
+	l_physXManager:create_character_controller("player", 1.5, 1, 0.5, Vect3f(0,0,10),"controllerMaterial", 1)
 end
 
 function FnOnDestroyController ()
@@ -32,12 +29,13 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	
 	local l_AddPos = Vect3f(Forward,0,Strafe)
 	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
+	
+	
 	--if ((x * x + y * y + z * z) > 0)
 	--l_AddPos.Normalize();
 	--l_AddPos *= l_ConstantSpeed;
-
+	
 	l_physXManager:character_controller_move("player", l_AddPos, _ElapsedTime)
-
 end
 
 function FnOnRenderController(_owner, _rm)

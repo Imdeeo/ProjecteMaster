@@ -461,14 +461,13 @@ void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement,
 	size_t index = (size_t)cct->getUserData();
 
 	Vect3f movemenAux = _movement;
-	if (movemenAux.GetModule() != 0)
-	{
-		movemenAux = _elapsedTime*movemenAux.Normalize()*5;
-	}
+	movemenAux = _elapsedTime*movemenAux*4;
+
 	
 	cct->move(CastVec(movemenAux), movemenAux.Length()*0.01, _elapsedTime, filters);
 
 	physx::PxRigidDynamic* actor = cct->getActor();
+	
 
 	physx::PxExtendedVec3 p = cct->getFootPosition();
 	physx::PxVec3 v = actor->getLinearVelocity();
@@ -548,7 +547,15 @@ void CPhysXManager::RemoveActor(const std::string _ActorName)
 
 void CPhysXManager::Render(const std::string _name, CRenderManager *RenderManager)
 {
-	CEffectManager::m_SceneParameters.m_BaseColor = CColor(0.5,0,0.5,1);
+	if (_name == "player")
+	{
+		CEffectManager::m_SceneParameters.m_BaseColor = CColor(1, 0, 0, 1);
+	}
+	else
+	{
+		CEffectManager::m_SceneParameters.m_BaseColor = CColor(0, 0, 1, 1);
+	}
+	
 	CEffectManager::m_SceneParameters.m_BaseColor.SetAlpha(1.f);
 	Mat44f l_ScaleMatrix, l_RotationMatrix, l_TranslationMatrix;
 
@@ -557,7 +564,7 @@ void CPhysXManager::Render(const std::string _name, CRenderManager *RenderManage
 
 	l_RotationMatrix.SetIdentity();
 	l_RotationMatrix.SetPitchRollYaw(Vect3f(0, 0, 0));
-
+	
 	l_TranslationMatrix.SetIdentity();
 	
 	l_TranslationMatrix.SetPos(m_CharacterControllers[_name]->getPosition().x, m_CharacterControllers[_name]->getPosition().y, m_CharacterControllers[_name]->getPosition().z);
@@ -567,5 +574,12 @@ void CPhysXManager::Render(const std::string _name, CRenderManager *RenderManage
 	RenderManager->GetContextManager()->SetWorldMatrix(l_TranslationMatrix);
 	CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
 	CEffectManager::SetSceneConstants(l_EffectTechnique);
-	RenderManager->GetDebugRender()->GetSPhere10()->RenderIndexed(RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	RenderManager->GetDebugRender()->GetCone()->RenderIndexed(RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+}
+
+
+Vect3f CPhysXManager::GetCharacterControllersPosition(const std::string _name)
+{
+	physx::PxController* aux = m_CharacterControllers[_name];
+	return Vect3f(aux->getPosition().x, aux->getPosition().y, aux->getPosition().z);
 }

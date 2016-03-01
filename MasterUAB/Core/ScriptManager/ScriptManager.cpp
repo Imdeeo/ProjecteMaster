@@ -1059,6 +1059,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update", &CApplication::Update)
 			.def("render", &CApplication::Render)
 			.def("init", &CApplication::Init)
+			.scope[
+				def("actualiza_enemy", &CApplication::ActualizarEnemigo)
+			]
 	];
 
 }
