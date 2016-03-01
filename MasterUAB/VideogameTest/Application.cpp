@@ -9,6 +9,7 @@
 #include "AnimatedModels\AnimatedInstanceModel.h"
 #include "DebugHelper\DebugHelper.h"
 #include "Engine\UABEngine.h"
+#include "RenderableObjects\RenderableObject.h"
 
 CApplication::CApplication( CContextManager *_ContextManager)
 	: m_BackgroundColor(.2f, .1f, .4f)
@@ -180,4 +181,13 @@ void CApplication::Init()
 	UABEngine.GetCameraControllerManager()->ChooseDebugCamera(m_DebugCameraName);
 	m_FPSCamera = (CFPSCameraController*)UABEngine.GetCameraControllerManager()->GetMainCamera();
 	m_SphericalCamera = (CSphericalCameraController*)UABEngine.GetCameraControllerManager()->GetMainCamera();
+}
+
+void CApplication::ActualizarEnemigo(CRenderableObject* owner, float _ElapsedTime)
+{
+	Vect3f playerPos = UABEngine.GetPhysXManager()->GetCharacterControllersPosition("player");
+	Vect3f enemyPos = UABEngine.GetPhysXManager()->GetCharacterControllersPosition("enemy");
+	Vect3f move = playerPos - enemyPos;
+	if (move.GetModule() > 1)
+		UABEngine.GetPhysXManager()->CharacterControllerMove("enemy", move.GetNormalized()*0.5, _ElapsedTime);
 }
