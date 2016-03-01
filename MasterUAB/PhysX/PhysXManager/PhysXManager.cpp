@@ -460,7 +460,13 @@ void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement,
 
 	size_t index = (size_t)cct->getUserData();
 
-	cct->move(CastVec(_movement), _movement.Length()*0.01, _elapsedTime, filters);
+	Vect3f movemenAux = _movement;
+	if (movemenAux.GetModule() != 0)
+	{
+		movemenAux = _elapsedTime*movemenAux.Normalize()*5;
+	}
+	
+	cct->move(CastVec(movemenAux), movemenAux.Length()*0.01, _elapsedTime, filters);
 
 	physx::PxRigidDynamic* actor = cct->getActor();
 
