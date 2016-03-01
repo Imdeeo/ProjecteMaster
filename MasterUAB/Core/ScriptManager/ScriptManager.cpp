@@ -275,8 +275,14 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<Vect3f>("Vect3f")
 			.def(constructor<float, float, float>())
-			.def("set", &Vect3f::Set)
-			//.def("normalize", &Vect3f::Normalize)
+			.def_readwrite("x", &Vect3f::x)
+			.def_readwrite("y", &Vect3f::y)
+			.def_readwrite("z", &Vect3f::z)
+			.def(const_self + const_self)
+			.def(const_self - const_self)
+			.def(const_self * other<const float>())
+			.def(const_self / other<const float>())
+			.def("set", &Vect3f::Set)			
 	];
 
 
@@ -1045,6 +1051,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("character_controller_move", &CPhysXManager::CharacterControllerMove)		
 			.def("register_material", &CPhysXManager::RegisterMaterial)
 			.def("render", &CPhysXManager::Render)
+			.def("get_character_controler_pos", &CPhysXManager::GetCharacterControllersPosition)
 	];
 
 	

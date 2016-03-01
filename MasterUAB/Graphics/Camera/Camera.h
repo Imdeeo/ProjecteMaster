@@ -27,6 +27,7 @@ public:
 		CAMERA_TYPE_FPS = 1,
 		CAMERA_TYPE_CYCLE = 2,
 		CAMERA_TYPE_REVERSE = 4,
+		CAMERA_TYPE_3PS = 5,
 
 		CAMERA_TYPE_NULL = -1
 	};
@@ -99,6 +100,8 @@ public:
 			return CAMERA_TYPE_CYCLE;
 		else if (CameraType=="reverse")
 			return CAMERA_TYPE_REVERSE;
+		else if (CameraType == "3ps")
+			return CAMERA_TYPE_3PS;
 		return CAMERA_TYPE_NULL;
 	}
 };

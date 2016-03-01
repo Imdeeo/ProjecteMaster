@@ -3,6 +3,7 @@
 #include "Camera\FPSCameraController.h"
 #include "Camera\CameraKeyController.h"
 #include "Camera\CameraController.h"
+#include "Camera\3PersonCameraController.h"
 #include "XML\XMLTreeNode.h"
 
 #include "Engine\UABEngine.h"
@@ -54,6 +55,9 @@ bool CCameraControllerManager::Load(const std::string &FileName)
 						break;
 					case CCamera::CAMERA_TYPE_FPS:
 						AddResource(l_Element.GetPszProperty("name"), new CFPSCameraController());
+						break;
+					case CCamera::CAMERA_TYPE_3PS:
+						AddResource(l_Element.GetPszProperty("name"), new C3PersonCameraController(l_Element));
 						break;
 					case CCamera::CAMERA_TYPE_CYCLE:
 						AddResource(l_Element.GetPszProperty("name"), new CCameraKeyController(l_Element));

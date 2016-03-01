@@ -178,7 +178,7 @@ public:
 		desc.stepOffset = 0.5f;
 		desc.density = _density;
 		desc.reportCallback = this;
-		desc.position = physx::PxExtendedVec3(_position.x,_position.y+_radius + _height*0.5,_position.z);
+		desc.position = physx::PxExtendedVec3(_position.x,_position.y,_position.z);
 		desc.material = l_Material;
 		//desc.userData = (void*)index;
 
@@ -461,9 +461,8 @@ void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement,
 	size_t index = (size_t)cct->getUserData();
 
 	Vect3f movemenAux = _movement;
-	movemenAux = _elapsedTime*movemenAux*4;
-
 	
+	movemenAux = _elapsedTime*movemenAux * 2;
 	cct->move(CastVec(movemenAux), movemenAux.Length()*0.01, _elapsedTime, filters);
 
 	physx::PxRigidDynamic* actor = cct->getActor();
