@@ -6,6 +6,8 @@
 #include "HelperTypes.h"
 #include "Math\Color.h"
 
+#include "Utils\CEmptyPointerClass.h"
+
 #include <map>
 #include <string>
 
@@ -80,8 +82,9 @@ public:
 	virtual void RegisterBar() {};
 	virtual void RemoveBar(std::string _BarName) {};
 
+
 	virtual void AddLuaButton(const std::string &ButtonName, const std::string &LuaScript, const std::string &ButtonDefinition){};
-	virtual void AddVariable(const std::string &_VarName, const EDebugType _type, const Mode _mode, void* _pointer,const std::string &_params){}
+	virtual void AddVariable(const std::string &_VarName, const EDebugType _type, const Mode _mode, CEmptyPointerClass* _pointer,const std::string &_params){}
 
 	static CDebugHelper* GetDebugHelper();
 	static void SetCurrentDebugHelper(CDebugHelper* _DebugHelper);
