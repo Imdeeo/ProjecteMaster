@@ -22,11 +22,11 @@ function State:add_condition(condition,state2go)
 	self.n_conditions = self.n_conditions + 1
 end
 
-function State:add_do_first_function(_do_first_function)
+function State:set_do_first_function(_do_first_function)
 	self.do_first_function = _do_first_function
 end
 
-function State:add_do_end_function(_do_end_function)
+function State:set_do_end_function(_do_end_function)
 	self.do_end_function = _do_end_function
 end
 
@@ -59,13 +59,15 @@ function StateMachine:start__s(state_to_start)
 end
 
 function StateMachine:update(args,elapsed_time)
+	
 	local state = self.states[self.actual_state]
 	if(state.is_first) then
 		state.do_first_function(args)
 		self.states[self.actual_state].is_first = false
 	end
-	state.update_function(args,elapsed_time)
 	
+	state.update_function(args,elapsed_time)
+
 	local change = false
 	local prev_state
 	for i=0,state.n_conditions-1 do

@@ -1,21 +1,29 @@
 dofile("Data\\Lua\\state_machine.lua")
+dofile("Data\\Lua\\EnemyUtils.lua")
 
 EnemyStateMachine = StateMachine.create()
 
-function setEnemyStateMAchine()
+function setEnemyStateMachine()
 
 	chase_state = State.create(state1fn)
-	chase_state:add_condition(state1cond1,"wait")
-	chase_state:add_do_first_function(chase_do_first)
-	chase_state:add_do_end_function(chase_do_end)
+	chase_state:add_condition(state1cond1,"patrol")
+	chase_state:set_do_first_function(chase_do_first)
+	chase_state:set_do_end_function(chase_do_end)
+	
+	patrol_state = State.create(patrol_update)
+	patrol_state:add_condition(state2cond1,"chase")
+	patrol_state:set_do_first_function(patrol_first)
+	
+	utils_log("doing these")
 	
 	wait_state = State.create(state2fn)
 	wait_state:add_condition(state2cond1,"chase")
-	wait_state:add_do_first_function(wait_do_first)
-	wait_state:add_do_end_function(wait_do_end)
+	wait_state:set_do_first_function(wait_do_first)
+	wait_state:set_do_end_function(wait_do_end)
 	
 	EnemyStateMachine:add_state("chase",chase_state)
 	EnemyStateMachine:add_state("wait",wait_state)
+	EnemyStateMachine:add_state("patrol",patrol_state)
 end
 
 function chase_do_first(args)
@@ -32,34 +40,14 @@ function state1cond1()
 end
 
 function state1fn(args,_ElapsedTime)
-
 	
-	local _owner = args[0]
 	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
+	local playerPos = l_physXManager:get_character_controler_pos("player")
 	
-	local playerPos = l_physXManager:get_character_controler_pos("player");
+	args["point2go"] = playerPos
 	
-	local enemyPos = l_physXManager:get_character_controler_pos("enemy");
-
-	local move = playerPos - enemyPos;
-	l_physXManager:character_controller_move("enemy", move*0.5, _ElapsedTime);
-	local l_PosCharacterController = l_physXManager:get_character_controler_pos("enemy")
-	_owner:set_position(l_PosCharacterController)	
-
-	local dir = Vect3f(math.cos(_owner:get_yaw()),0,-math.sin(_owner:get_yaw()));
-	--utils_log(type(enemyPos))
-	--utils_log(type(move))
-	local yaw = _owner:get_yaw()
-	local dot_result = dir.x*move.x + dir.y*move.y + dir.z*move.z
-	--local cross_result = Vect3f(dir.y*move.z - dir.z* move.y, dir.z*move.x-dir.x*move.z, dir.x*move.y-dir.y*move.x)
-	local y_cross = dir.z*move.x-dir.x*move.z
-	--if y_cross >= 0 then
-		_owner:set_yaw(yaw -dot_result*_ElapsedTime)
-	--else
-		--_owner:set_yaw(yaw + dot_result*_ElapsedTime)
-	--end
-
---	_owner:set_yaw(
+	go2point(args,_ElapsedTime)
+	
 end
 
 function wait_do_first(args)
@@ -76,4 +64,31 @@ function state2cond1()
 end
 
 function state2fn(args,elapsedTime)
+end
+
+
+function patrol_update(args,_ElapsedTime)
+	
+	
+	args["point2go"] = waypoints[actual_waypoint]
+	local _enemy_name = args["enemy_name"]
+	go2point(args,_ElapsedTime)
+	
+	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
+	local enemyPos = l_physXManager:get_character_controler_pos(_enemy_name);
+	local dist = modulus(enemyPos-waypoints[actual_waypoint])
+	
+	if(dist<arrive_value) then
+		actual_waypoint = get_next_waypoint(actual_waypoint)
+	end
+end
+
+function patrol_first(args)
+	utils_log("patrol_state")
+	
+	actual_waypoint = 0
+
+	mode = "circular"
+
+	step = 1
 end
