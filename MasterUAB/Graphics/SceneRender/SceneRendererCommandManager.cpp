@@ -20,11 +20,8 @@
 #include "GenerateShadowMapsSceneRendererCommand.h"
 #include "EnableAlphaBlendSceneRendererCommand.h"
 #include "DisableAlphaBlendSceneRendererCommand.h"
-<<<<<<< HEAD
 #include "RenderAxisSceneRenderCommand.h"
-=======
 #include "SetLightPositionSceneRendererCommand.h"
->>>>>>> origin/shaders
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
