@@ -82,12 +82,13 @@ fn createVertex pos col norm textcoord1 textcoord2 binormal tangent &vertex =
 	if(textcoord1!=undefined)then
 	(
 		append vertex textcoord1.x
-		append vertex textcoord1.y
+		--append vertex textcoord1.y
+		append vertex (1 - textcoord1.y)
 	)
 	if(textcoord2!=undefined)then
 	(
 		append vertex textcoord2.x
-		append vertex textcoord2.y
+		append vertex (1 - textcoord2.y)
 	)
 	if(binormal==0x0100)then
 	(
