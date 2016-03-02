@@ -9,7 +9,7 @@ function InitEnemyMove()
 		local l_Component=create_scripted_component("ScriptedComponentEnemy", l_Box, "FnOnCreateEnemy","FnOnDestroyEnemy", "FnOnUpdateEnemy", "FnOnRenderEnemy", "")
 		l_Box:get_component_manager():add_resource("ScriptedComponentEnemy", l_Component)
 	end
-	setEnemyStateMAchine()
+	setEnemyStateMachine()
 	EnemyStateMachine:start()
 end
 
@@ -28,7 +28,8 @@ end
 function FnOnUpdateEnemy (_owner, _ElapsedTime)
 	
 	local args = {}
-	args[0] = _owner
+	args["owner"] = _owner
+	args["enemy_name"] = "enemy"
 	EnemyStateMachine:update(args,_ElapsedTime)
 	
 end
