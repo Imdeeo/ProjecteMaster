@@ -207,6 +207,8 @@
       <Filter>Camera</Filter>
     </ClCompile>
     <ClCompile Include="SceneRender\RenderAxisSceneRenderCommand.cpp">
+		<Filter>SceneRender</Filter>
+	</ClCompile>
     <ClCompile Include="SceneRender\SetLightPositionSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
@@ -496,6 +498,8 @@
       <Filter>Camera</Filter>
     </ClInclude>
     <ClInclude Include="SceneRender\RenderAxisSceneRenderCommand.h">
+	  <Filter>SceneRender</Filter>
+    </ClInclude>
     <ClInclude Include="SceneRender\SetLightPositionSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
