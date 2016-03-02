@@ -110,7 +110,8 @@ public:
 	ID3D11DepthStencilState * GetDepthStencilState(EDepthStencilStates _DepthStencilState){return m_DepthStencilStates[_DepthStencilState];}
 	ID3D11BlendState* GetBlendState(EBlendStates _BlendState){return m_BlendStates[_BlendState];}
 
-	D3D11_VIEWPORT *getViewPort(){ return m_ViewPort; }
+	D3D11_VIEWPORT * getViewPort(){ return m_ViewPort; }
+	void setViewPort(D3D11_VIEWPORT *ViewPort){ m_ViewPort=ViewPort; }
 	UAB_GET_PROPERTY(IDXGISwapChain*, SwapChain);
 	UAB_GET_PROPERTY(int, Width);
 	UAB_GET_PROPERTY(int, Height);
@@ -118,7 +119,7 @@ public:
 	UAB_GET_PROPERTY(ID3D11RenderTargetView* const*, CurrentRenderTargetViews)
 	UAB_GET_PROPERTY(ID3D11DepthStencilView*, CurrentDepthStencilView)
 	UAB_GET_PROPERTY(ID3D11DepthStencilView*, DepthStencilView)
-	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.2f, .1f, .4f));
+	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.0f, .0f, .0f));
 	void UnsetRenderTargets();
 	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_RenderTargetViews, ID3D11DepthStencilView *_DepthStencilView);
 };

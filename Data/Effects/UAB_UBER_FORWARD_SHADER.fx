@@ -1,3 +1,4 @@
+#include "Samplers.fxh"
 #include "Lights.fxh"
 
 #ifndef HAS_UV
@@ -240,6 +241,13 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		float l_DistanceEyeToWorldPosition=length(IN.Pixelpos-m_InverseView[3].xyz);
 		float4 l_FogColor = GetFogColor(l_DistanceEyeToWorldPosition);
 		Out = float4(Out.xyz+l_FogColor.xyz*l_FogColor.a,Out.a);		
+	#endif
+	
+	#ifdef HAS_REFLECTION
+		float3 l_EyeToWorldPosition = normalize(IN.Pixelpos-m_InverseView[3].xyz);
+		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
+		float4 l_ReflectColor = T8Texture.Sample(S8Sampler, l_ReflectVector);
+		Out = Out*0.7 + l_ReflectColor*0.3;
 	#endif
 
 	return Out;
