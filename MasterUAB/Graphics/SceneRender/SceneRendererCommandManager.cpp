@@ -20,6 +20,7 @@
 #include "GenerateShadowMapsSceneRendererCommand.h"
 #include "EnableAlphaBlendSceneRendererCommand.h"
 #include "DisableAlphaBlendSceneRendererCommand.h"
+#include "RenderAxisSceneRenderCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -96,6 +97,10 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				else if (l_Element.GetName() == std::string("render_debug_grid"))
 				{
 					AddResource(l_Name, new CRenderGridSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("render_debug_axis"))
+				{
+					AddResource(l_Name, new CRenderAxisSceneRenderCommand(l_Element));
 				}
 				else if (l_Element.GetName() == std::string("render_debug_lights"))
 				{

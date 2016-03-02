@@ -14,19 +14,19 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 		MV_POSITION_COLOR_VERTEX l_AxisVtxs[6] =
 		{
 			{ Vect3f(0.0f, 0.0f, 0.0f), CColor(1.0f, 0.0f, 0.0f, 1.0f) },
-			{ Vect3f(1.0f, 0.0f, 0.0f), CColor(1.0f, 0.0f, 0.0f, 1.0f) },
+			{ Vect3f(2.0f, 0.0f, 0.0f), CColor(1.0f, 0.0f, 0.0f, 1.0f) },
 
 			{ Vect3f(0.0f, 0.0f, 0.0f), CColor(0.0f, 1.0f, 0.0f, 1.0f) },
-			{ Vect3f(0.0f, 1.0f, 0.0f), CColor(0.0f, 1.0f, 0.0f, 1.0f) },
+			{ Vect3f(0.0f, 2.0f, 0.0f), CColor(0.0f, 1.0f, 0.0f, 1.0f) },
 
 			{ Vect3f(0.0f, 0.0f, 0.0f), CColor(0.0f, 0.0f, 1.0f, 1.0f) },
-			{ Vect3f(0.0f, 0.0f, 1.0f), CColor(0.0f, 0.0f, 1.0f, 1.0f) }
+			{ Vect3f(0.0f, 0.0f, 2.0f), CColor(0.0f, 0.0f, 1.0f, 1.0f) }
 		};
 
 		m_Axis = new CUABLinesListRenderableVertexs<MV_POSITION_COLOR_VERTEX>(l_AxisVtxs, 6, 3);
-		m_AxisBSRadi = 1;
+		m_AxisBSRadi = 1.41;
 		m_AxisBBMin = Vect3f(0, 0, 0);
-		m_AxisBBMax = Vect3f(1, 1, 1);
+		m_AxisBBMax = Vect3f(2, 2, 2);
 	}
 
 	//LongAxis

@@ -155,6 +155,7 @@ TVertexPS mainVS(TVertexVS IN)
 	return l_Out;
 }
 
+#ifdef HAS_LIGHTS
 float4 applyAllLights(TVertexPS IN)
 {
 	float3 Nn = IN.Normal;
@@ -221,6 +222,7 @@ float4 GetFogColor(float Depth)
 	float l_FogIntensity=CalcLinearFog(Depth, m_StartFog, m_EndFog);
 	return saturate(float4(m_FogColor.xyz,l_FogIntensity));
 }
+#endif
 
 float4 mainPS(TVertexPS IN) : SV_Target
 {
