@@ -16,6 +16,7 @@
 
 	<set_pool_renderable_objects_technique pool="forward_shading"/>
 	<render_debug_lights/>
+	<render_debug_axis/>
 	<set_ant_tweak_bar/>	
 	<present/>
 </scene_renderer_commands>

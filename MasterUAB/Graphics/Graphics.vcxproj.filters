@@ -206,6 +206,9 @@
     <ClCompile Include="Camera\3PersonCameraController.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRender\RenderAxisSceneRenderCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -490,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="Camera\3PersonCameraController.h">
       <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\RenderAxisSceneRenderCommand.h">
+      <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

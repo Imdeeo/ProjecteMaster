@@ -7,7 +7,7 @@ C3PersonCameraController::C3PersonCameraController(CXMLTreeNode &node)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
 {
-	m_Position=Vect3f(0.0f, 2.0f, 0.0f);
+	m_Position = node.GetVect3fProperty("pos", Vect3f(0.0f, 0.0f, 0.0f), true);
 
 }
 
