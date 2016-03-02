@@ -10,7 +10,8 @@ class CRenderDebugShadowMapsSceneRendererCommand :
 private:
 	float m_Width;
 	float m_Offset;
-	CRenderableObjectTechnique	*m_RenderableObjecTechnique;
+	float m_Light;
+	CRenderableObjectTechnique	*m_RenderableObjectTechnique;
 public:
 	CRenderDebugShadowMapsSceneRendererCommand(CXMLTreeNode &TreeNode);
 	virtual ~CRenderDebugShadowMapsSceneRendererCommand();

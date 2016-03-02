@@ -109,7 +109,11 @@ void CRenderManager::Render()
 	m_ContextManager->EndRender();
 }
 
-void CRenderManager::EngableAlphaBlendState()
+void CRenderManager::EnableBlendState(ID3D11BlendState* _blendState)
+{
+	m_ContextManager->GetDeviceContext()->OMSetBlendState(_blendState, NULL, 0xffffffff);
+}
+void CRenderManager::EnableAlphaBlendState()
 {
 	ID3D11BlendState* l_AlphaBlendState = m_ContextManager->GetBlendState(CContextManager::BLEND_ALPHA);
 	m_ContextManager->GetDeviceContext()->OMSetBlendState(l_AlphaBlendState,NULL,0xffffffff);
@@ -162,19 +166,22 @@ void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture
 	CEffectManager::m_SceneParameters.m_BaseColor=Color;
 	if(_Texture!=NULL)
 		_Texture->Activate(0);
+
+	D3D11_VIEWPORT *l_CurrentViewport=m_ContextManager->getViewPort();
 	D3D11_VIEWPORT l_Viewport;
-	l_Viewport.Width = _Width*m_ContextManager->getViewPort()->Width;
-	l_Viewport.Height = _Height*(m_ContextManager->getViewPort()->Height);
+
+	l_Viewport.Width = _Width*l_CurrentViewport->Width;
+	l_Viewport.Height = _Height*(l_CurrentViewport->Height);
 	l_Viewport.MinDepth = 0.0f;
 	l_Viewport.MaxDepth = 1.0f;
-	l_Viewport.TopLeftX = x*m_ContextManager->getViewPort()->Width;
-	l_Viewport.TopLeftY = y*m_ContextManager->getViewPort()->Height;
+	l_Viewport.TopLeftX = x*l_CurrentViewport->Width;
+	l_Viewport.TopLeftY = y*l_CurrentViewport->Height;
 	m_ContextManager->GetDeviceContext()->RSSetViewports(1, &l_Viewport);
 
 	CEffectManager::SetSceneConstants(_EffectTechnique);
 
 	m_DebugRender->GetQuadRV()->Render(this, _EffectTechnique,	CEffectManager::GetRawData());
-	m_ContextManager->GetDeviceContext()->RSSetViewports(1, m_ContextManager->getViewPort());
+	m_ContextManager->GetDeviceContext()->RSSetViewports(1, l_CurrentViewport);
 }
 
 

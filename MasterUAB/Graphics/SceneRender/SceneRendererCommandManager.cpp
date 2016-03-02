@@ -20,7 +20,11 @@
 #include "GenerateShadowMapsSceneRendererCommand.h"
 #include "EnableAlphaBlendSceneRendererCommand.h"
 #include "DisableAlphaBlendSceneRendererCommand.h"
+<<<<<<< HEAD
 #include "RenderAxisSceneRenderCommand.h"
+=======
+#include "SetLightPositionSceneRendererCommand.h"
+>>>>>>> origin/shaders
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -145,6 +149,10 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				else if (l_Element.GetName() == std::string("disable_alpha_blend"))
 				{
 					AddResource(l_Name, new CDisableAlphaBlendSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("set_light_position"))
+				{
+					AddResource(l_Name, new CSetLightPositionSceneRendererCommand(l_Element));
 				}
 			}
 		}

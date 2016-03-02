@@ -59,13 +59,27 @@ void C3DElement::Render(CKGRenderManager *RenderManager)
 	assert(!"This method mustn't be called");
 }
 
+
 const Mat44f & C3DElement::GetTransform()
 {
 	m_ScaleMatrix.SetIdentity();
 	m_ScaleMatrix.Scale(m_Scale.x, m_Scale.y, m_Scale.z);
 	
 	m_RotationMatrix.SetIdentity();
-	m_RotationMatrix.SetPitchRollYaw(Vect3f(m_Pitch,m_Roll,m_Yaw));
+
+	/* Using m_RotationMatrix.SetPitchRollYaw has problems with
+	multiplication order,so it's better to do rotations separately. */
+	Mat44f l_RotX;
+	l_RotX.SetIdentity();
+	l_RotX.RotByAngleX(m_Roll);
+	Mat44f l_RotY;
+	l_RotY.SetIdentity();
+	l_RotY.RotByAngleY(m_Yaw);
+	Mat44f l_RotZ;
+	l_RotZ.SetIdentity();
+	l_RotZ.RotByAngleZ(m_Pitch);
+
+	m_RotationMatrix=l_RotX*l_RotZ*l_RotY;
 
 	m_TranslationMatrix.SetIdentity();
 	m_TranslationMatrix.SetPos(m_Position.x, m_Position.y, m_Position.z);

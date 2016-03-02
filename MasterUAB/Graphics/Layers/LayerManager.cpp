@@ -36,6 +36,10 @@ void CLayerManager::Load(const std::string &FileName)
 				{					
 					GetLayer(l_Element)->AddMeshInstance(l_Element);
 				}
+				else if (l_Element.GetName() == std::string("animated_model_mesh"))
+				{
+					GetLayer(l_Element)->AddAnimatedInstanceModel(l_Element);
+				}
 			}
 		}
 	}

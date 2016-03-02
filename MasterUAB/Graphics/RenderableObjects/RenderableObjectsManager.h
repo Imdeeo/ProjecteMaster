@@ -25,10 +25,6 @@ public:
 	CRenderableObject * AddAnimatedInstanceModel(CXMLTreeNode &TreeNode);
 	CRenderableObject * AddAnimatedInstanceModel(const std::string &CoreModelName,
 		const std::string &InstanceModelName, const Vect3f &Position);
-	//void CleanUp();
-	bool Reload();
-	bool Load(const std::string &FileName);
-	//CRenderableObject * GetInstance(const std::string &Name) const;
 };
 
 #endif

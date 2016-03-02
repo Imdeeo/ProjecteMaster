@@ -15,13 +15,13 @@ struct PS_INPUT
 	float2 UV : TEXCOORD0;
 };
 
-static bool m_Active=m_RawDataValues[0]==1.0;
-static float m_Exposure=m_RawDataValues[1];
-static float m_Decay=m_RawDataValues[2];
-static float m_Density=m_RawDataValues[3];
-static float m_Weight=m_RawDataValues[4];
-static int m_NumSamples=(int)m_RawDataValues[5];
-static float2 m_LightScatteringPosition=float2(m_RawDataValues[6], m_RawDataValues[7]);
+static bool m_Active=m_RawDataArray[0]==1.0;
+static float m_Exposure=m_RawDataArray[1];
+static float m_Decay=m_RawDataArray[2];
+static float m_Density=m_RawDataArray[3];
+static float m_Weight=m_RawDataArray[4];
+static int m_NumSamples=(int)m_RawDataArray[5];
+static float2 m_LightScatteringPosition=float2(m_RawDataArray[6], m_RawDataArray[7]);
 
 void Calc2DLinearFunction(float2 PosA, float2 PosB, out float m, out float b)
 {
@@ -77,17 +77,17 @@ float2 ClampLightScatteringPosition(float2 UV, float2 LightScatteringPosition)
 
 PS_INPUT VSLightScattering(VS_INPUT IN)
 {
-	PS_INPUT l_Output = (PS_INPUT)0;
-	l_Output.Pos=IN.Pos;
-	l_Output.Color=IN.Color;
-	l_Output.UV=IN.UV;
-	return l_Output;
+	PS_INPUT l_Out = (PS_INPUT)0;
+	l_Out.Pos=IN.Pos;
+	l_Out.Color=IN.Color;
+	l_Out.UV=IN.UV;
+	return l_Out;
 }
 
 float4 PSLightScattering(PS_INPUT IN) : SV_Target
 {
 	if(!m_Active)
-		return float4(0,0,0,0);
+		return float4(1,0,0,1);
 	
 	float2 l_LightScatteringPosition=ClampLightScatteringPosition(IN.UV, m_LightScatteringPosition);
 	float2 l_DeltaTextCoord=IN.UV-l_LightScatteringPosition;
@@ -95,7 +95,6 @@ float4 PSLightScattering(PS_INPUT IN) : SV_Target
 	l_DeltaTextCoord *= 1.0/float(m_NumSamples) * m_Density;
 	float l_IlluminationDecay=1.0;
 	float4 l_Color=float4(0,0,0,0);
-	
 	for(int i=0; i < m_NumSamples ; i++)
 	{
 		l_TextCoo -= l_DeltaTextCoord;
@@ -105,5 +104,5 @@ float4 PSLightScattering(PS_INPUT IN) : SV_Target
 		l_IlluminationDecay*=m_Decay;
 	}
 	
-	return float4(l_Color.xyz*m_Exposure, 0.0);
+	return float4(l_Color.xyz*m_Exposure, 1.0);
 }

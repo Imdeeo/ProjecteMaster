@@ -20,8 +20,8 @@ CCameraInfo::CCameraInfo(CXMLTreeNode &XMLTreeNode)
 	m_LookAt = XMLTreeNode.GetVect3fProperty("look_at", Vect3f(0, 0, 0));
 	m_Up = XMLTreeNode.GetVect3fProperty("up", Vect3f(0, 0, 0));
 	m_FOV = XMLTreeNode.GetFloatProperty("fox", 45);
-	m_NearPlane = XMLTreeNode.GetFloatProperty("near_plane", 1000.0);
-	m_FarPlane = XMLTreeNode.GetFloatProperty("far_plane", 1000.0);
+	m_NearPlane = XMLTreeNode.GetFloatProperty("near_plane", 800.0);
+	m_FarPlane = XMLTreeNode.GetFloatProperty("far_plane", 1600.0);
 }
 
 CCameraInfo::~CCameraInfo()
