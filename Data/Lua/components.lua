@@ -10,11 +10,11 @@ function InitBoxMove()
 	end
 end
 
-function FnOnCreateController (owner)
+function FnOnCreateController (_owner)
 	local UABEngine = CUABEngine.get_instance()
 	local l_physXManager = UABEngine:get_physX_manager()
 	l_physXManager:register_material("controllerMaterial", 0.5,0.5,1)
-	l_physXManager:create_character_controller("player", 1.5, 1, 0.5, Vect3f(0,0,10),"controllerMaterial", 1)
+	l_physXManager:create_character_controller("player", 1.5, 1.0, 0.5, _owner:get_position(),"controllerMaterial", 1)
 end
 
 function FnOnDestroyController ()
@@ -29,17 +29,14 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	
 	local l_AddPos = Vect3f(Forward,0,Strafe)
 	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
-	
-	
-	--if ((x * x + y * y + z * z) > 0)
-	--l_AddPos.Normalize();
-	--l_AddPos *= l_ConstantSpeed;
-	
-	l_physXManager:character_controller_move("player", l_AddPos, _ElapsedTime)
+
+	l_physXManager:character_controller_move("player", l_AddPos*4, _ElapsedTime)
+	local l_PosCharacterController = l_physXManager:get_character_controler_pos("player")
+	_owner:set_position(l_PosCharacterController)
+
 end
 
 function FnOnRenderController(_owner, _rm)
 	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
-	l_physXManager:render("player", _rm)
-	--utils_log("render")
+	--l_physXManager:render("player", _rm)
 end
