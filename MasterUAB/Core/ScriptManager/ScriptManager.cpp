@@ -293,7 +293,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(const_self - const_self)
 			.def(const_self * other<const float>())
 			.def(const_self / other<const float>())
-			.def("set", &Vect3f::Set)			
+			.def("set", &Vect3f::Set)
+			.def("normalize", &Vector3<float>::Normalize)
+			.def("get_normalized", &Vector3<float>::GetNormalized)
 	];
 
 

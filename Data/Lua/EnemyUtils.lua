@@ -2,7 +2,7 @@
 
 function go2point(args,_ElapsedTime)
 
-	
+	local _velocity = args["velocity"]
 	local _owner = args["owner"]
 	local _point2go = args["point2go"]
 	local _enemy_name = args["enemy_name"]
@@ -11,10 +11,12 @@ function go2point(args,_ElapsedTime)
 	local enemyPos = l_physXManager:get_character_controler_pos(_enemy_name);
 
 	local move = _point2go - enemyPos;
-	l_physXManager:character_controller_move(_enemy_name, move*0.5, _ElapsedTime);
+	move:normalize(1)
+	l_physXManager:character_controller_move(_enemy_name, move*_velocity, _ElapsedTime);
 	local l_PosCharacterController = l_physXManager:get_character_controler_pos(_enemy_name)
 	_owner:set_position(l_PosCharacterController)	
 
+	
 	local dir = Vect3f(math.cos(_owner:get_yaw()),0,-math.sin(_owner:get_yaw()));
 	--utils_log(type(enemyPos))
 	--utils_log(type(move))
@@ -23,7 +25,7 @@ function go2point(args,_ElapsedTime)
 	--local cross_result = Vect3f(dir.y*move.z - dir.z* move.y, dir.z*move.x-dir.x*move.z, dir.x*move.y-dir.y*move.x)
 	local y_cross = dir.z*move.x-dir.x*move.z
 	--if y_cross >= 0 then
-		_owner:set_yaw(yaw -dot_result*_ElapsedTime)
+		_owner:set_yaw(yaw -dot_result*_ElapsedTime*_velocity)
 	--else
 		--_owner:set_yaw(yaw + dot_result*_ElapsedTime)
 	--end

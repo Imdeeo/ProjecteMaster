@@ -30,6 +30,7 @@ function FnOnUpdateEnemy (_owner, _ElapsedTime)
 	local args = {}
 	args["owner"] = _owner
 	args["enemy_name"] = "enemy"
+	args["velocity"] = 10
 	EnemyStateMachine:update(args,_ElapsedTime)
 	
 end
