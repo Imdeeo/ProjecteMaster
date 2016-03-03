@@ -72,6 +72,11 @@ void CLayerManager::Render(CRenderManager *RenderManager, const std::string &Lay
 	GetResource(LayerName)->Render(RenderManager); 
 }
 
+void CLayerManager::RenderDebug(CRenderManager *RenderManager, const std::string &LayerName)
+{
+	GetResource(LayerName)->RenderDebug(RenderManager);
+}
+
 CRenderableObjectsManager* CLayerManager::GetLayer(CXMLTreeNode &Node)
 {
 	const char * l_layerExist = Node.GetPszProperty("layer");

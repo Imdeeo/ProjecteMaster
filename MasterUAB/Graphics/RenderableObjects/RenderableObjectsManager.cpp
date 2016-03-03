@@ -20,6 +20,15 @@ void CRenderableObjectsManager::Render(CRenderManager *RM)
 	}
 }
 
+void CRenderableObjectsManager::RenderDebug(CRenderManager *RM)
+{
+	for (size_t i = 0; i<m_ResourcesVector.size(); ++i)
+	{
+		m_ResourcesVector[i]->RenderDebug(RM);
+	}
+}
+
+
 CRenderableObject * CRenderableObjectsManager::AddMeshInstance(CXMLTreeNode &TreeNode)
 {
 	CInstanceMesh* instanceMesh = new CInstanceMesh(TreeNode);
