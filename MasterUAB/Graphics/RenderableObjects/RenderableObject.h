@@ -15,9 +15,11 @@ class CRenderableObject : public C3DElement, public CNamed
 public:
 	CRenderableObject():CNamed("") {
 		m_ComponentManager = new CUABComponentManager();
+		m_DebugRender = true;
 	};
 	CRenderableObject(const CXMLTreeNode &TreeNode):C3DElement(TreeNode),CNamed(TreeNode){
 		m_ComponentManager = new CUABComponentManager();
+		m_DebugRender = true;
 	};
 	virtual ~CRenderableObject() { CHECKED_DELETE(m_ComponentManager);}
 	virtual void Update(float ElapsedTime) 
@@ -28,7 +30,12 @@ public:
 	{
 		m_ComponentManager->Render(*RM);
 	}
+	virtual void RenderDebug(CRenderManager *RM)
+	{
+		m_ComponentManager->RenderDebug(*RM);
+	}
 	UAB_BUILD_GET_SET(CUABComponentManager*, ComponentManager)
+	UAB_BUILD_GET_SET(bool, DebugRender)
 };
 
 #endif //RENDERABLE_OBJECT_H

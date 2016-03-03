@@ -38,3 +38,15 @@ void CInstanceMesh::Render(CRenderManager *RM)
 		m_StaticMesh->Render(RM);
 	}
 }
+
+void CInstanceMesh::RenderDebug(CRenderManager *RM)
+{
+	if (GetDebugRender())
+	{
+		CRenderableObject::RenderDebug(RM);
+		RM->GetContextManager()->SetWorldMatrix(GetTransform());
+		CEffectTechnique * l_ET = RM->GetDebugRender()->GetDebugTechnique();
+		CEffectManager::SetSceneConstants(l_ET);
+		RM->GetDebugRender()->GetAxis()->Render(RM, l_ET, CEffectManager::GetRawData());
+	}
+}

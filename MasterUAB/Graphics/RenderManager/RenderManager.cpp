@@ -80,31 +80,7 @@ void CRenderManager::Render()
 {
 	m_ContextManager->BeginRender();
 
-	/*if (m_UseDebugCamera)
-	{
-		m_ContextManager->SetCamera(m_DebugCamera);
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition=m_DebugCamera.GetPosition();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector=m_DebugCamera.GetUp();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector=Vect4f(1,1,1,1);
-	}
-	else
-	{
-		m_ContextManager->SetCamera(m_CurrentCamera);
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition=m_CurrentCamera.GetPosition();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector=m_CurrentCamera.GetUp();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector=Vect4f(1,1,1,1);
-	}
-//	UABEngine.GetRenderableObjectTechniqueManager()->GetPoolRenderableObjectTechniques().GetResource("forward_shading")->Apply();
-
-	UABEngine.GetEffectManager()->SetLightsConstants(MAX_LIGHTS_BY_SHADER);
-
-	std::vector<BlendedSubmesh> l_SubmeshesWithBlend;
-
-	UABEngine.GetLayerManager()->Render(this);
-
-	m_CurrentRenderlistLength = 0;
-	CDebugHelper::GetDebugHelper()->Render();*/
-		
+	
 	UABEngine.GetSceneRendererCommandManager()->Execute(this);
 	m_ContextManager->EndRender();
 }
