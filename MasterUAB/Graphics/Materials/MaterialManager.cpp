@@ -36,7 +36,7 @@ void CMaterialManager::Load(const std::string &Filename)
 }
 void CMaterialManager::Reload()
 {
-	std::map<std::string, std::string> m_MaterialNames;
+	std::map<std::string, std::string> l_MaterialNames;
 	CXMLTreeNode l_XML;
 	if (l_XML.LoadFile(m_Filename.c_str()))
 	{
@@ -48,11 +48,11 @@ void CMaterialManager::Reload()
 				CXMLTreeNode l_Element = l_Input(i);
 				if (l_Element.GetName() == std::string("material"))
 				{
-					m_MaterialNames[l_Element.GetPszProperty("name")]="defined";
+					l_MaterialNames[l_Element.GetPszProperty("name")]="defined";
 					AddUpdateResource(l_Element.GetPszProperty("name"), new CMaterial(l_Element));
 				}
 			}
 		}
 	}
-	RemoveAllBut(m_MaterialNames);
+	RemoveAllBut(l_MaterialNames);
 }

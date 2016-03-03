@@ -10,7 +10,6 @@
 #include <luabind/function.hpp>
 #include <luabind/class.hpp>
 #include <luabind/operator.hpp>
-class lua_State;
 
 template<class T>
 class CTemplatedMapManager
