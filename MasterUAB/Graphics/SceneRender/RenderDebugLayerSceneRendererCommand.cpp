@@ -7,6 +7,8 @@
 
 CRenderDebugLayerSceneRendererCommand::CRenderDebugLayerSceneRendererCommand(CXMLTreeNode &TreeNode):CSceneRendererCommand(TreeNode)
 {
+	m_Layer = UABEngine.GetLayerManager()->GetLayer(TreeNode);
+	Setactive(TreeNode.GetBoolProperty("active", false));
 }
 
 CRenderDebugLayerSceneRendererCommand::~CRenderDebugLayerSceneRendererCommand()
@@ -14,6 +16,7 @@ CRenderDebugLayerSceneRendererCommand::~CRenderDebugLayerSceneRendererCommand()
 	//CHECKED_RELEASE(m_Layer);
 }
 
-void Execute(CRenderManager &RenderManager)
+void CRenderDebugLayerSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
+	m_Layer->RenderDebug(&RenderManager);
 }

@@ -1,5 +1,8 @@
 #include "Camera\3PersonCameraController.h"
 #include "Camera\Camera.h"
+#include "Engine\UABEngine.h"
+#include "RenderableObjects\RenderableObjectsManager.h"
+#include "InputManager\InputManager.h"
 
 C3PersonCameraController::C3PersonCameraController(CXMLTreeNode &node)
 : m_YawSpeed(100.f)
@@ -7,32 +10,22 @@ C3PersonCameraController::C3PersonCameraController(CXMLTreeNode &node)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
 {
-	m_Position = node.GetVect3fProperty("pos", Vect3f(0.0f, 0.0f, 0.0f), true);
-
+	m_offset = node.GetVect3fProperty("offset", Vect3f(0.0f, 0.0f, 0.0f), true);
+	m_Target = UABEngine.GetLayerManager()->GetResource(node.GetPszProperty("layer"))->GetResource(node.GetPszProperty("target"));
+	m_Position = m_Target->GetPosition() - m_offset;
+	Vect2f zero = Vect2f(1, 0);
+	Vect2f offset = Vect2f(m_offset.x, m_offset.z);
+	m_distance = sqrtf(offset.x*offset.x + offset.y*offset.y);
+	m_angle = acosf(zero*offset.GetNormalized());
 }
 
 C3PersonCameraController::~C3PersonCameraController()
 {	
 }
 
-void C3PersonCameraController::Move(float Strafe, float Forward, bool Speed, float ElapsedTime)
+void C3PersonCameraController::Move(Vect3f _MovementVector, float ElapsedTime)
 {	
-	Vect3f l_AddPos;
-	
-	l_AddPos.y = Forward*(sin(m_Pitch));
-	l_AddPos.x=Forward*(cos(m_Yaw))+Strafe*(cos(m_Yaw+3.14159f*0.5f));
-	l_AddPos.z=Forward*(sin(m_Yaw))+Strafe*(sin(m_Yaw+3.14159f*0.5f));
-	
-	float l_ConstantSpeed=ElapsedTime*m_Speed;
-	if(Speed)
-		l_ConstantSpeed*=m_FastSpeed;
-
-	if (l_AddPos.SquaredLength() > 0)
-	{
-		l_AddPos.Normalize();
-		l_AddPos *= l_ConstantSpeed;
-		m_Position += l_AddPos;
-	}
+	m_Position = m_Position + _MovementVector;
 }
 
 void C3PersonCameraController::AddYaw(float Radians)
@@ -51,13 +44,37 @@ void C3PersonCameraController::SetCamera(CCamera *Camera) const
 	Camera->SetFOV(0.87266f);
 	Camera->SetAspectRatio(16.0f/9.0f);
 	Camera->SetPosition(m_Position);
-	Camera->SetLookAt(m_Position+l_Direction);
+	Camera->SetLookAt(m_Target->GetPosition());
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
 }
 
 Vect3f C3PersonCameraController::GetDirection() const
 {
-	Vect3f l_Direction(cos(m_Yaw)*cos(m_Pitch), sin(m_Pitch), sin(m_Yaw)*cos(m_Pitch));
-	return l_Direction;
+	return m_Target->GetPosition()-m_Position;
+}
+
+void C3PersonCameraController::Update(float ElapsedTime)
+{
+	Vect3f cameraMovement(0, 0, 0);
+	cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 20.f;
+	if (cameraMovement.x > 0)
+	{
+		int i = 1;
+	}
+	//cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * 0.5f;
+	m_angle = m_angle + cameraMovement.x;
+	while (m_angle > (3.1415*0.5))
+	{
+		m_angle = m_angle - 3.1415;
+	}
+	while (m_angle < -(3.1415*0.5))
+	{
+		m_angle = m_angle + 3.1415;
+	}
+	Vect2f l_2Doffset = Vect2f(cos(m_angle),sin(m_angle));
+	l_2Doffset = l_2Doffset*m_distance;
+	Vect3f l_offset = Vect3f(l_2Doffset.x, m_offset.y, l_2Doffset.y);
+	Vect3f l_NewPos = m_Target->GetPosition() - l_offset;
+	Move(l_NewPos-m_Position, ElapsedTime);
 }

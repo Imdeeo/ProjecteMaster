@@ -17,6 +17,7 @@ public:
 	virtual ~CRenderableObjectsManager();
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
+	void RenderDebug(CRenderManager *RM);
 	CRenderableObject * AddMeshInstance(CXMLTreeNode &TreeNode);
 	CRenderableObject * AddMeshInstance(const std::string &CoreMeshName,
 		const std::string &InstanceName, const Vect3f &Position, const float _Yaw = 0.f,

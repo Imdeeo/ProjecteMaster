@@ -26,6 +26,7 @@ public:
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RenderManager);
 	void Render(CRenderManager *RenderManager, const std::string &LayerName);
+	void RenderDebug(CRenderManager *RenderManager, const std::string &LayerName);
 	CRenderableObjectsManager * GetLayer();
 	CRenderableObjectsManager * GetLayer(CXMLTreeNode &Node);
 };

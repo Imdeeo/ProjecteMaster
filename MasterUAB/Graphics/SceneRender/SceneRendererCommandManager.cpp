@@ -22,6 +22,7 @@
 #include "DisableAlphaBlendSceneRendererCommand.h"
 #include "RenderAxisSceneRenderCommand.h"
 #include "SetLightPositionSceneRendererCommand.h"
+#include "RenderDebugLayerSceneRendererCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -107,6 +108,10 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				{
 					AddResource(l_Name, new CRenderDebugLightsSceneRendererCommand(l_Element));
 				}
+				else if (l_Element.GetName() == std::string("render_debug_layer"))
+				{
+					AddResource(l_Name, new CRenderDebugLayerSceneRendererCommand(l_Element));
+				}
 				else if (l_Element.GetName() == std::string("set_ant_tweak_bar"))
 				{
 					AddResource(l_Name, new CRenderAntTweakBarSceneRendererCommand(l_Element));
@@ -151,6 +156,8 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				{
 					AddResource(l_Name, new CSetLightPositionSceneRendererCommand(l_Element));
 				}
+
+				
 			}
 		}
 	}

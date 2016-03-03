@@ -13,7 +13,6 @@
 
 CApplication::CApplication( CContextManager *_ContextManager)
 	: m_BackgroundColor(.2f, .1f, .4f)
-	, m_CurrentCamera_control(0)
 	, m_CurrentCamera_vision(0)
 	, m_RenderCameraCube(false)
 	, m_Timer(0)
@@ -35,7 +34,7 @@ void CApplication::SwitchCamera()
 {
 	m_CurrentCamera_vision++;
 	m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
-	m_CurrentCamera_control = m_CurrentCamera_vision;
+	UABEngine.GetCameraControllerManager()->SetCurrentCameraControl(m_CurrentCamera_vision);
 }
 
 void CApplication::Update(float _ElapsedTime)
@@ -55,20 +54,19 @@ void CApplication::Update(float _ElapsedTime)
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_BOTH"))
 	{
-
 		SwitchCamera();
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_VISION"))
 	{
-
 		m_CurrentCamera_vision++;
 		m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_CONTROL"))
 	{
-
-		m_CurrentCamera_control++;
-		m_CurrentCamera_control = m_CurrentCamera_control % 2;
+		int l_currentCameraCotnrol = UABEngine.GetCameraControllerManager()->GetCurrentCameraControl();
+		l_currentCameraCotnrol++;
+		l_currentCameraCotnrol = l_currentCameraCotnrol % 2;
+		UABEngine.GetCameraControllerManager()->SetCurrentCameraControl(l_currentCameraCotnrol);
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("RENDER_CAMERA"))
 	{
@@ -125,32 +123,7 @@ void CApplication::Update(float _ElapsedTime)
 			/*}
 		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ExecuteAction(2,0.1f,0.1f);
 		}
-	}*/
-
-	switch (m_CurrentCamera_control)
-	{
-	case 0:
-		if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
-		{
-			CSphericalCameraController* l_SphericalCameraController = (CSphericalCameraController*)UABEngine.GetCameraControllerManager()->GetResource("SphericalCamera");
-			Vect3f cameraMovement(0, 0, 0);
-
-			cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.5f;
-			cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * 0.5f;
-
-			l_SphericalCameraController->Move(cameraMovement);
-		}
-		break;
-	case 1:
-		{
-			CFPSCameraController* l_FPSCameraController = (CFPSCameraController*)UABEngine.GetCameraControllerManager()->GetResource(m_MainCameraName);
-			l_FPSCameraController->AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.05f);
-			l_FPSCameraController->AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * 0.5f);
-
-			l_FPSCameraController->Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, _ElapsedTime);
-		}
-		break;
-	}
+	}*/	
 
 	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 	UABEngine.GetPhysXManager()->Update(_ElapsedTime);
@@ -179,8 +152,6 @@ void CApplication::Init()
 	m_DebugCameraName = "SphericalCamera";
 	UABEngine.GetCameraControllerManager()->ChooseMainCamera(m_MainCameraName);
 	UABEngine.GetCameraControllerManager()->ChooseDebugCamera(m_DebugCameraName);
-	m_FPSCamera = (CFPSCameraController*)UABEngine.GetCameraControllerManager()->GetMainCamera();
-	m_SphericalCamera = (CSphericalCameraController*)UABEngine.GetCameraControllerManager()->GetMainCamera();
 }
 
 void CApplication::ActualizarEnemigo(CRenderableObject* owner, float _ElapsedTime)
