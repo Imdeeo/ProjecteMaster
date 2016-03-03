@@ -4,5 +4,4 @@ dofile("Data\\Lua\\antweakbar.lua")
 function mainLua()
 	InitAntweakBar()
 	InitBoxMove()
-	InitEnemyMove()	
 end
