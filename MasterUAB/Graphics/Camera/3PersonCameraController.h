@@ -13,17 +13,18 @@ private:
 	float						m_PitchSpeed;
 	float						m_Speed;
 	float						m_FastSpeed;
-	CRenderableObject			m_Target;
+	CRenderableObject*			m_Target;
+	Vect3f						m_offset;
 public:
 	C3PersonCameraController(CXMLTreeNode &node);
 	virtual ~C3PersonCameraController();
 	
-	void Move(float Strafe, float Forward, bool Speed, float ElapsedTime);
+	void Move(Vect3f _newPos, float ElapsedTime);
 	void SetCamera(CCamera *Camera) const;
 	void AddYaw(float Radians);
 	void AddPitch(float Radians);
 	Vect3f GetDirection() const;
-
+	void Update(float ElapsedTime);
 };
 
 #endif

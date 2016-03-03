@@ -14,5 +14,6 @@ CDisableAlphaBlendSceneRendererCommand::~CDisableAlphaBlendSceneRendererCommand(
 
 void CDisableAlphaBlendSceneRendererCommand::Execute(CRenderManager &RM)
 {
+	RM.DisableAlphaBlendState();
 	//RM.DisableAlphaBlendState()
 }

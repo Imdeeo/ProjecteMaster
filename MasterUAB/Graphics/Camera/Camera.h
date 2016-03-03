@@ -28,7 +28,6 @@ public:
 		CAMERA_TYPE_CYCLE = 2,
 		CAMERA_TYPE_REVERSE = 4,
 		CAMERA_TYPE_3PS = 5,
-
 		CAMERA_TYPE_NULL = -1
 	};
 

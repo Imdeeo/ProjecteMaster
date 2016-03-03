@@ -19,7 +19,7 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
 	m_EnabledAlphaBlendState = _RenderManager.GetContextManager()->GetBlendState(CContextManager::BLEND_DEFERRED);
  	if (m_EnabledAlphaBlendState == nullptr)
 		return;
-	Vect4f v(1, 1, 1, 1);
+	
 	_RenderManager.GetDeviceContext()->OMSetBlendState(m_EnabledAlphaBlendState, NULL, 0xffffffff);
 
 	for (int i = 0; i < m_StagedTextures.size(); ++i)

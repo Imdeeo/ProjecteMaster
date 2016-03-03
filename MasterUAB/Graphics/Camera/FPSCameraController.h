@@ -21,7 +21,7 @@ public:
 	void AddYaw(float Radians);
 	void AddPitch(float Radians);
 	Vect3f GetDirection() const;
-
+	void Update(float ElapsedTime);
 };
 
 #endif
