@@ -2,6 +2,7 @@
 #include "Camera\Camera.h"
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
+#include "InputManager\InputManager.h"
 
 C3PersonCameraController::C3PersonCameraController(CXMLTreeNode &node)
 : m_YawSpeed(100.f)
@@ -9,18 +10,22 @@ C3PersonCameraController::C3PersonCameraController(CXMLTreeNode &node)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
 {
-	m_Position = node.GetVect3fProperty("pos", Vect3f(0.0f, 0.0f, 0.0f), true);
+	m_offset = node.GetVect3fProperty("offset", Vect3f(0.0f, 0.0f, 0.0f), true);
 	m_Target = UABEngine.GetLayerManager()->GetResource(node.GetPszProperty("layer"))->GetResource(node.GetPszProperty("target"));
-	m_offset = m_Target->GetPosition() - m_Position;
+	m_Position = m_Target->GetPosition() - m_offset;
+	Vect2f zero = Vect2f(1, 0);
+	Vect2f offset = Vect2f(m_offset.x, m_offset.z);
+	m_distance = sqrtf(offset.x*offset.x + offset.y*offset.y);
+	m_angle = acosf(zero*offset.GetNormalized());
 }
 
 C3PersonCameraController::~C3PersonCameraController()
 {	
 }
 
-void C3PersonCameraController::Move(Vect3f _newPos, float ElapsedTime)
+void C3PersonCameraController::Move(Vect3f _MovementVector, float ElapsedTime)
 {	
-	m_Position = _newPos;
+	m_Position = m_Position + _MovementVector;
 }
 
 void C3PersonCameraController::AddYaw(float Radians)
@@ -51,6 +56,25 @@ Vect3f C3PersonCameraController::GetDirection() const
 
 void C3PersonCameraController::Update(float ElapsedTime)
 {
-	Vect3f move = m_Target->GetPosition() + m_offset;
-	Move(move, ElapsedTime);
+	Vect3f cameraMovement(0, 0, 0);
+	cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 20.f;
+	if (cameraMovement.x > 0)
+	{
+		int i = 1;
+	}
+	//cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * 0.5f;
+	m_angle = m_angle + cameraMovement.x;
+	while (m_angle > (3.1415*0.5))
+	{
+		m_angle = m_angle - 3.1415;
+	}
+	while (m_angle < -(3.1415*0.5))
+	{
+		m_angle = m_angle + 3.1415;
+	}
+	Vect2f l_2Doffset = Vect2f(cos(m_angle),sin(m_angle));
+	l_2Doffset = l_2Doffset*m_distance;
+	Vect3f l_offset = Vect3f(l_2Doffset.x, m_offset.y, l_2Doffset.y);
+	Vect3f l_NewPos = m_Target->GetPosition() - l_offset;
+	Move(l_NewPos-m_Position, ElapsedTime);
 }
