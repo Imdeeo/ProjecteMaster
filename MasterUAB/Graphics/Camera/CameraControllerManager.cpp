@@ -9,7 +9,8 @@
 #include "Engine\UABEngine.h"
 
 CCameraControllerManager::CCameraControllerManager():
-	m_CurrentCamera()
+	m_CurrentCamera(),
+	m_CurrentCameraControl(0)
 {
 
 }
@@ -120,6 +121,13 @@ void CCameraControllerManager::UpdateDebugCamera(float _ElapsedTime)
 
 void CCameraControllerManager::Update(float _ElapsedTime)
 {
-	UpdateMainCamera(_ElapsedTime);
-	UpdateDebugCamera(_ElapsedTime);
+	switch (m_CurrentCameraControl)
+	{
+	case 0:
+		UpdateDebugCamera(_ElapsedTime);
+		break;
+	case 1:
+		UpdateMainCamera(_ElapsedTime); 
+		break;
+	}
 }

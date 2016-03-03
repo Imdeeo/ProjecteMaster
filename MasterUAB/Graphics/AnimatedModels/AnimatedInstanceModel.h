@@ -37,5 +37,6 @@ public:
 	bool IsActionAnimationActive(int Id) const;
 	int	 GetActualCycleAnimation()const{return m_ActualCycleAnimation;}
 	int	 GetActualActionAnimation()const{return m_ActualActionAnimation;}
+	void RenderDebug(CRenderManager *RenderManager);
 };
 #endif //ANIMATED_INSTANCE_MODEL_H

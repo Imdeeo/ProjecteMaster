@@ -32,7 +32,6 @@ private:
 	CFPSCameraController* m_FPSCamera;
 
 	int m_CurrentCamera_vision;
-	int m_CurrentCamera_control;
 
 	bool m_RenderCameraCube;
 
