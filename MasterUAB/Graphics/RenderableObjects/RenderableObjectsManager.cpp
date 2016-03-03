@@ -3,7 +3,10 @@
 #include "AnimatedModels\AnimatedInstanceModel.h"
 
 CRenderableObjectsManager::CRenderableObjectsManager(std::string _Name):CNamed(_Name) {}
-CRenderableObjectsManager::~CRenderableObjectsManager(){}
+CRenderableObjectsManager::~CRenderableObjectsManager()
+{
+	CTemplatedVectorMapManager::Destroy();
+}
 
 void CRenderableObjectsManager::Update(float ElapsedTime)
 {

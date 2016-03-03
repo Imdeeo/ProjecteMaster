@@ -299,7 +299,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>D3DX11.lib;Core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>D3DX11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)\lib\x86;$(SolutionDir)bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

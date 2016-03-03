@@ -556,7 +556,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CLayerManager, CTemplatedVectorMapManager<CRenderableObjectsManager>>("CLayerManager")
 			.def(constructor<>())
-			.def("get_resource", &CLayerManager::GetResource)
+			.def("reload", &CLayerManager::Reload)
 	];
 
 

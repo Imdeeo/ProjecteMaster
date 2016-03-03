@@ -12,11 +12,11 @@ CLayerManager::~CLayerManager()
 void CLayerManager::Destroy()
 {
 	//CHECKED_DELETE(m_DefaultLayer);
+	CTemplatedVectorMapManager::Destroy();
 }
 
 void CLayerManager::Load(const std::string &FileName)
 {
-	Destroy();
 	m_Filename = FileName;
 	CXMLTreeNode l_XML;
 	
