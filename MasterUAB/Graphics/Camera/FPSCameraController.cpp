@@ -1,5 +1,6 @@
 #include "Camera\FPSCameraController.h"
 #include "Camera\Camera.h"
+#include "InputManager\InputManager.h"
 
 CFPSCameraController::CFPSCameraController()
 : m_YawSpeed(100.f)
@@ -61,4 +62,11 @@ Vect3f CFPSCameraController::GetDirection() const
 {
 	Vect3f l_Direction(cos(m_Yaw)*cos(m_Pitch), sin(m_Pitch), sin(m_Yaw)*cos(m_Pitch));
 	return l_Direction;
+}
+
+void CFPSCameraController::Update(float ElapsedTime)
+{
+	AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 0.05f);
+	AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * 0.5f);
+	Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, ElapsedTime);
 }
