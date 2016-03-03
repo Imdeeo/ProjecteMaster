@@ -41,9 +41,9 @@ bool CAnimatedInstanceModel::LoadVertexBuffer()
 		(m_NumFaces*3*sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
 	CalIndex *l_Faces=(CalIndex *)malloc(m_NumFaces*3*sizeof(CalIndex));
 	m_CalHardwareModel->setVertexBuffer((char*)l_Vertexs,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
-	m_CalHardwareModel->setWeightBuffer(((char*)l_Vertexs) + 12,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
-	m_CalHardwareModel->setMatrixIndexBuffer(((char*)l_Vertexs) + 28,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
-	m_CalHardwareModel->setNormalBuffer(((char*)l_Vertexs)+44,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
+	m_CalHardwareModel->setNormalBuffer(((char*)l_Vertexs) + 12, sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
+	m_CalHardwareModel->setWeightBuffer(((char*)l_Vertexs) + 24,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
+	m_CalHardwareModel->setMatrixIndexBuffer(((char*)l_Vertexs) + 40,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));	
 	m_CalHardwareModel->setTextureCoordNum(1);
 	m_CalHardwareModel->setTextureCoordBuffer(0,((char*)l_Vertexs)+56,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
 	m_CalHardwareModel->setIndexBuffer(l_Faces);
@@ -90,6 +90,7 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 
 void CAnimatedInstanceModel::Render(CRenderManager *_RenderManager)
 {
+	CRenderableObject::Render(_RenderManager);
 	CEffectManager::m_SceneParameters.m_World=GetTransform();
 	for(int l_HardwareMeshId=0; l_HardwareMeshId<m_CalHardwareModel->getHardwareMeshCount(); ++l_HardwareMeshId)
 	{
@@ -121,6 +122,7 @@ void CAnimatedInstanceModel::Render(CRenderManager *_RenderManager)
 }
 void CAnimatedInstanceModel::Update(float ElapsedTime)
 {
+	CRenderableObject::Update(ElapsedTime);
 	m_CalModel->update(ElapsedTime);
 }
 void CAnimatedInstanceModel::Destroy()
@@ -158,4 +160,9 @@ bool CAnimatedInstanceModel::IsCycleAnimationActive(int Id) const
 bool CAnimatedInstanceModel::IsActionAnimationActive(int Id) const
 {
 	return m_ActualActionAnimation==Id;
+}
+
+void CAnimatedInstanceModel::RenderDebug(CRenderManager *RenderManager)
+{
+	CRenderableObject::RenderDebug(RenderManager);
 }
