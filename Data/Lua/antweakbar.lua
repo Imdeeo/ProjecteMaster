@@ -1,3 +1,4 @@
+dofile("Data\\Lua\\Player\\PlayerATB.lua")
 function InitAntweakBar()
 
 	RegisterMainBar()
@@ -13,6 +14,7 @@ function RegisterMainBar()
 	DebugHelper:add_lua_button("Shaders","RegisterShadersBar()","");
 	DebugHelper:add_lua_button("Materials","RegisterMaterialsBar()","");
 	DebugHelper:add_lua_button("Reload","RegisterReloadBar()","");
+	DebugHelper:add_lua_button("Player","RegisterPlayerBar()","");
 	DebugHelper:register_bar()
 end
 
@@ -121,11 +123,13 @@ function RegisterReloadBar()
 	DebugHelper:start_register_bar("Reload")
 	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Reload\");RegisterMainBar()","");
-	DebugHelper:add_lua_button("Materials","ReloadMaterial","");
-	DebugHelper:add_lua_button("Lights","ReloadMaterial","");
-	DebugHelper:add_lua_button("Textures","ReloadMaterial","");
+	DebugHelper:add_lua_button("Material Manager","CUABEngine.get_instance():get_material_manager():reload()","");
+	DebugHelper:add_lua_button("Light Manager","CUABEngine.get_instance():get_light_manager():reload()","");
+	--DebugHelper:add_lua_button("Textures","ReloadMaterial","");
 	DebugHelper:add_lua_button("SceneComamands","CUABEngine.get_instance():get_scene_command_manager():reload()","");
-	DebugHelper:add_lua_button("Shaders","ReloadMaterial","");
+	DebugHelper:add_lua_button("Effect Manager","CUABEngine.get_instance():get_effect_manager():reload()","");
+	--DebugHelper:add_lua_button("Layer Manager","CUABEngine.get_instance():get_layer_manager():reload();CUABEngine.get_instance():get_scene_command_manager():reload()","");
+	DebugHelper:add_lua_button("Camera Controllers","CUABEngine.get_instance():get_camera_controller_manager():reload();","");
 	
 	DebugHelper:register_bar()
 end
