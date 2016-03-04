@@ -4,6 +4,12 @@
 struct VS_INPUT
 {
 	float3 Pos : POSITION;
+	
+	#ifdef HAS_WEIGHT_INDICES
+		float4 Weight:BLENDWEIGHT;
+		float4 Indices:BLENDINDICES;
+	#endif
+	
 	float3 Normal : NORMAL;
 	float2 UV : TEXCOORD0;
 	#ifdef HAS_UV2
@@ -50,11 +56,43 @@ PS_INPUT mainVS(VS_INPUT IN)
 {
 	PS_INPUT l_Output = (PS_INPUT)0;
 	
-	l_Output.Pos = mul( float4(IN.Pos, 1.0), m_World );
+	#ifdef HAS_WEIGHT_INDICES
+		float4 l_TempPos=float4(IN.Pos.xyz, 1.0);
+		float3 l_Position= 0;
+		float4 l_Indices=IN.Indices;					
+		l_Position=mul(l_TempPos, m_Bones[l_Indices.x]) * IN.Weight.x;
+		l_Position+=mul(l_TempPos, m_Bones[l_Indices.y]) * IN.Weight.y;
+		l_Position+=mul(l_TempPos, m_Bones[l_Indices.z]) * IN.Weight.z;
+		l_Position+=mul(l_TempPos, m_Bones[l_Indices.w]) * IN.Weight.w;
+		
+		#ifdef HAS_NORMAL
+			float3 l_Normal= 0;	
+			float3x3 m;					
+			m[0].xyz = m_Bones[l_Indices.x][0].xyz;
+			m[1].xyz = m_Bones[l_Indices.x][1].xyz;
+			m[2].xyz = m_Bones[l_Indices.x][2].xyz;				
+			l_Normal+=mul(IN.Normal.xyz, m)* IN.Weight.x;					
+			m[0].xyz = m_Bones[l_Indices.y][0].xyz;
+			m[1].xyz = m_Bones[l_Indices.y][1].xyz;
+			m[2].xyz = m_Bones[l_Indices.y][2].xyz;				
+			l_Normal+=mul(IN.Normal.xyz, m)* IN.Weight.y;
+		#endif	
+		
+		l_Output.Pos = mul(float4(l_Position, 1.0), m_World);
+	#else
+		l_Output.Pos = mul( float4(IN.Pos, 1.0), m_World );
+	#endif
+		
 	l_Output.Pos = mul( l_Output.Pos, m_View );
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
 	l_Output.HPos = l_Output.Pos ;
-	l_Output.Normal = normalize(mul(IN.Normal, (float3x3)m_World));
+	
+	#ifdef HAS_WEIGHT_INDICES
+		l_Output.Normal = l_Normal;
+	#else
+		l_Output.Normal = normalize(mul(IN.Normal, (float3x3)m_World));
+	#endif
+	
 	l_Output.UV = IN.UV;
 	
 	#ifdef HAS_TANGENT
