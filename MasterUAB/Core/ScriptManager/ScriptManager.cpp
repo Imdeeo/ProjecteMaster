@@ -101,8 +101,6 @@
 
 using namespace luabind;
 
-
-
 #define LUA_STATE CUABEngine::GetInstance().GetScriptManager()->GetLuaState()
 #define REGISTER_LUA_FUNCTION(FunctionName,AddrFunction) {luabind::module(LUA_STATE) [ luabind::def(FunctionName,AddrFunction) ];}
 
