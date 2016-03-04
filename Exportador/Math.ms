@@ -81,6 +81,8 @@ fn createVertex pos col norm textcoord1 textcoord2 binormal tangent &vertex =
 	)
 	if(textcoord1!=undefined)then
 	(
+		stahp textcoord1
+		format "U: %, V: %\n" textcoord1.x textcoord1.y
 		append vertex textcoord1.x
 		--append vertex textcoord1.y
 		append vertex (1 - textcoord1.y)
@@ -118,6 +120,18 @@ fn getIndex vertexVect vertex IdMaterial vertexsDictionary &vtxN =
 		vtxN = vertexVect[IdMaterial].count
 		vertexsDictionary.Add vtxStr vtxN
 		append vertexVect[IdMaterial] vertex
+	)
+)
+
+fn stahp uv =
+(
+	if (uv.x > 1 or uv.x < 0) then
+	( 
+		uv.x -= floor(uv.x)
+	)
+	if (uv.y > 1 or uv.y < 0) then
+	( 
+		uv.y -= floor(uv.y)
 	)
 )
 
