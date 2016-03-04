@@ -11,6 +11,8 @@
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObject.h"
 
+#include "Characters\CharacterManager.h"
+
 CApplication::CApplication( CContextManager *_ContextManager)
 	: m_BackgroundColor(.2f, .1f, .4f)
 	, m_CurrentCamera_vision(0)
@@ -152,6 +154,8 @@ void CApplication::Init()
 	m_DebugCameraName = "SphericalCamera";
 	UABEngine.GetCameraControllerManager()->ChooseMainCamera(m_MainCameraName);
 	UABEngine.GetCameraControllerManager()->ChooseDebugCamera(m_DebugCameraName);
+
+	CCharacterManager::GetInstance()->Load("Data\\level_1\\characters.xml");
 }
 
 void CApplication::ActualizarEnemigo(CRenderableObject* owner, float _ElapsedTime)

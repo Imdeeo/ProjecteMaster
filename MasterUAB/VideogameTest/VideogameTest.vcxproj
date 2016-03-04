@@ -147,10 +147,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Characters\CharacterManager.cpp" />
+    <ClCompile Include="Characters\Character.cpp" />
+    <ClCompile Include="Characters\Player.cpp" />
     <ClCompile Include="videogame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Characters\CharacterManager.h" />
+    <ClInclude Include="Characters\Character.h" />
+    <ClInclude Include="Characters\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base\Base.vcxproj">

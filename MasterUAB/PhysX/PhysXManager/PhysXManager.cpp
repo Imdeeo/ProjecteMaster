@@ -462,7 +462,7 @@ void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement,
 
 	Vect3f movemenAux = _movement;
 	
-	movemenAux = _elapsedTime*movemenAux * 2;
+	movemenAux = _elapsedTime*movemenAux;
 	cct->move(CastVec(movemenAux), movemenAux.Length()*0.01, _elapsedTime, filters);
 
 	physx::PxRigidDynamic* actor = cct->getActor();
