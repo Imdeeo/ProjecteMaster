@@ -48,6 +48,13 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	local l_PosCharacterController = l_physXManager:get_character_controler_pos("player")
 	_owner:set_position(l_PosCharacterController)
 	
+	local yaw = _owner:get_yaw()
+	local dir = Vect3f(math.cos(yaw),0,math.sin(yaw));
+	local dot_result = final_direction.x*dir.x + final_direction.y*dir.z
+	local y_cross = dir.z*final_direction.x-dir.x*final_direction.y
+	_owner:set_yaw(yaw -dot_result*_ElapsedTime*l_velocity)
+
+	
 	local x = l_AddPos.x*l_AddPos.x
 	local y = l_AddPos.y*l_AddPos.y
 	local z = l_AddPos.z*l_AddPos.z
