@@ -33,7 +33,7 @@ CEnableAlphaBlendSceneRendererCommand::~CEnableAlphaBlendSceneRendererCommand()
 
 void CEnableAlphaBlendSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 {
-	m_BlendState = _RenderManager.GetContextManager()->GetBlendState(CContextManager::BLEND_DEFERRED);
+	m_BlendState = _RenderManager.GetContextManager()->GetBlendState(CContextManager::BLEND_ALPHA);
 	_RenderManager.EnableBlendState(m_BlendState);
 }
 
