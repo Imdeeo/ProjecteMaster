@@ -37,6 +37,7 @@
 #include "Camera\FPSCameraController.h"
 #include "Camera\Frustum.h"
 #include "Camera\SphericalCameraController.h"
+#include "Camera\3PersonCameraController.h"
 
 #include "Cinematics\Cinematic.h"
 #include "Cinematics\CinematicObject.h"
@@ -89,6 +90,10 @@
 
 #include "Application.h"
 #include "DebugHelper\DebugHelper.h"
+
+#include "Characters\Character.h"
+#include "Characters\CharacterManager.h"
+#include "Characters\Player.h"
 
 #include "XML\XMLTreeNode.h"
 #include "Utils.h"
@@ -268,8 +273,7 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CNamed>("CNamed")
 			.def(constructor<const CXMLTreeNode&>())
 			.def(constructor<const std::string&>())
-			.property("name", &CNamed::GetName, &CNamed::SetName)
-	];
+			.property("name", &CNamed::GetName, &CNamed::SetName)	];
 
 	module(m_LS)[
 		class_<CActive>("CActive")
@@ -294,6 +298,18 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set", &Vect3f::Set)
 			.def("normalize", &Vector3<float>::Normalize)
 			.def("get_normalized", &Vector3<float>::GetNormalized)
+	];
+
+	module(m_LS)[
+		class_<Vect2f>("Vect2f")
+			.def(constructor<float, float>())
+			.def_readwrite("x", &Vect2f::x)
+			.def_readwrite("y", &Vect2f::y)
+			.def(const_self + const_self)
+			.def(const_self - const_self)
+			.def(const_self * other<const float>())
+			.def(const_self / other<const float>())
+			.def("set", &Vect2f::Set)
 	];
 
 
@@ -698,6 +714,12 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_camera", &CCameraKeyController::SetCamera)			
 	];
 
+	module(m_LS)[
+		class_<C3PersonCameraController, CCameraController>("C3PersonCameraController")
+			.def(constructor<CXMLTreeNode&>())
+			.def("get_direction",&C3PersonCameraController::GetDirection)
+	];
+
 	module(m_LS) [
 		class_<CFPSCameraController, CCameraController>("CFPSCameraController")
 			.def(constructor<>())
@@ -1093,6 +1115,31 @@ void CScriptManager::RegisterLUAFunctions()
 			.scope[
 				def("actualiza_enemy", &CApplication::ActualizarEnemigo)
 			]
+	];
+
+
+	module(m_LS)[
+		class_<CCharacter, CNamed>("CCharacter")
+			.def("get_renderable_object",&CCharacter::GetRenderableObject)
+			.def("refresh", &CCharacter::Refresh)
+			.def("execute_lua_command", &CCharacter::ExecuteLuaCommand)
+	];
+	
+	module(m_LS)[
+		class_<CPlayer, CCharacter>("CPlayer")
+			.def(constructor<const CXMLTreeNode&>())
+			.def("get_camera_controller", &CPlayer::GetCameraController)
+			.def("update", &CPlayer::Update)
+	];
+	RegisterTemplatedVectorMapManager<CCharacter>(m_LS);
+
+	module(m_LS)[
+		class_<CCharacterManager, CTemplatedVectorMapManager<CCharacter>>("CCharacterManager")
+			.scope[
+				def("get_instance",&CCharacterManager::GetInstance)
+			]
+			.def("load",&CCameraControllerManager::Load)
+			.def("reload", &CCameraControllerManager::Reload)
 	];
 
 }

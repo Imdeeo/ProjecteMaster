@@ -113,7 +113,7 @@ public:
 	luabind::object GetElementsArray(lua_State *L)
 	{
 		luabind::object l_ElementsVector = luabind::newtable(L);
-		for (int i = 0; i < m_ResourcesVector.size();i++)
+		for (size_t i = 0; i < m_ResourcesVector.size();i++)
 		{
 			l_ElementsVector[i] = m_ResourcesVector[i];
 		}
