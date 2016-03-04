@@ -1,7 +1,8 @@
-function InitBoxMove()
+function InitPlayerMove()
 	local UABEngine = CUABEngine.get_instance()
 
-	local l_Box=UABEngine:get_layer_manager():get_resource("solid"):get_resource("Bruja")
+	local l_Player = CCharacterManager.get_instance():get_resource("player")
+	local l_Box=l_Player:get_renderable_object()
 	local l_Component=l_Box:get_component_manager():get_resource("ScriptedComponent")
 	
 	if l_Component==nil then
@@ -23,14 +24,27 @@ end
 
 function FnOnUpdateController (_owner, _ElapsedTime)
 	
+	local l_Player = CCharacterManager.get_instance():get_resource("player")
+	
 	local l_InputManager = CInputManager.get_input_manager()
 	local Forward = l_InputManager:get_axis("MOVE_CHARACTER")
 	local Strafe = l_InputManager:get_axis("STRAFE_CHARACTER")
 	
-	local l_AddPos = Vect3f(Forward,0,Strafe)
 	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
 
-	l_physXManager:character_controller_move("player", l_AddPos*2, _ElapsedTime)
+	local player_camera_direction = l_Player:get_camera_controller():get_direction():get_normalized(1)
+	
+	local player_camera_direction_xz = Vect2f(Forward*player_camera_direction.x,Forward*player_camera_direction.z)
+	local player_camera_direction_xz_ort = Vect2f(-player_camera_direction.z*Strafe,Strafe*player_camera_direction.x)
+	
+	local final_direction = Vect2f(player_camera_direction_xz.x + player_camera_direction_xz_ort.x,player_camera_direction_xz.y + player_camera_direction_xz_ort.y)
+	
+	
+	local l_AddPos = Vect3f(final_direction.x,0,final_direction.y)
+	
+	local l_velocity = 10
+	
+	l_physXManager:character_controller_move("player", l_AddPos*l_velocity, _ElapsedTime)
 	local l_PosCharacterController = l_physXManager:get_character_controler_pos("player")
 	_owner:set_position(l_PosCharacterController)
 	
@@ -39,19 +53,18 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	local z = l_AddPos.z*l_AddPos.z
 	local result = math.sqrt(x+y+z)
 	
-	_owner:clear_cycle(_owner:get_actual_cycle_animation(),0.1);
+	--[[_owner:clear_cycle(_owner:get_actual_cycle_animation(),0.1);
 	if result == 0 then		
 		_owner:blend_cycle(1,1.0,0.1);
 	else
 		_owner:blend_cycle(0,1.,0.1);
 	end
 	
-	local jump = l_InputManager:is_action_active("MONSTER_RUN")
+	local jump = l_InputManager:is_action_active("MONSTER_RUN")]]
 	
 	--_owner:execute_action(6,0.1,0.1);
 	
 	
-	utils_log("no peta");
 
 	--[[/*if(CInputManager::GetInputManager()->IsActionActive("MONSTER_IDLE"))
 	{
