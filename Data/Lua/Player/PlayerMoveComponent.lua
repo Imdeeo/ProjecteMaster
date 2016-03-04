@@ -27,8 +27,8 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	local l_Player = CCharacterManager.get_instance():get_resource("player")
 	
 	local l_InputManager = CInputManager.get_input_manager()
-	local Forward = l_InputManager:get_axis("MOVE_CHARACTER")
-	local Strafe = l_InputManager:get_axis("STRAFE_CHARACTER")
+	local Forward = l_InputManager:get_axis("MOVE_FWD")
+	local Strafe = l_InputManager:get_axis("STRAFE")
 	
 	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
 
@@ -60,51 +60,12 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	local z = l_AddPos.z*l_AddPos.z
 	local result = math.sqrt(x+y+z)
 	
-	--[[_owner:clear_cycle(_owner:get_actual_cycle_animation(),0.1);
+	_owner:clear_cycle(_owner:get_actual_cycle_animation(),0.1);
 	if result == 0 then		
 		_owner:blend_cycle(1,1.0,0.1);
 	else
 		_owner:blend_cycle(0,1.,0.1);
-	end
-	
-	local jump = l_InputManager:is_action_active("MONSTER_RUN")]]
-	
-	--_owner:execute_action(6,0.1,0.1);
-	
-	
-
-	--[[/*if(CInputManager::GetInputManager()->IsActionActive("MONSTER_IDLE"))
-	{
-		if(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")!=nullptr)
-		{
-			if(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->IsActionAnimationActive(2))
-			{
-				((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-					RemoveAction(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-					GetActualActionAnimation());
-			}
-			((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-			ClearCycle(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-			GetActualCycleAnimation(),0.1f);
-			((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(0,1.f,0.1f);
-		}
-	}
-	if(CInputManager::GetInputManager()->IsActionActive("MONSTER_RUN"))
-	{
-		if(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")!=nullptr)
-		{
-			if(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->IsActionAnimationActive(2))
-			{
-				((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-					RemoveAction(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-				GetActualActionAnimation());
-			}
-			((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-			ClearCycle(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-			GetActualCycleAnimation(),0.1f);
-			((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(1,1.f,0.1f);
-		}
-	}]]
+	end	
 end
 
 function FnOnRenderController(_owner, _rm)
