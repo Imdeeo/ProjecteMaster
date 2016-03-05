@@ -86,13 +86,14 @@ private :
 		m_Dispatcher = physx::PxDefaultCpuDispatcherCreate(N_CPUS);
 
 		physx::PxSceneDesc sceneDesc(m_PhysX->getTolerancesScale());
-		sceneDesc.gravity = physx::PxVec3(0.0f,-10.f,0.0f);
+		sceneDesc.gravity = physx::PxVec3(.0f, -9.81f, .0f);
 		sceneDesc.cpuDispatcher = m_Dispatcher;
 		sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
 		sceneDesc.flags = physx::PxSceneFlag::eENABLE_ACTIVETRANSFORMS;
 		m_Scene = m_PhysX->createScene(sceneDesc);
 		assert(m_Scene);
 
+		m_Scene->setGravity(physx::PxVec3(.0f, -9.81f, .0f));
 		m_Scene->setSimulationEventCallback(this);
 
 #if PHYSX_VERSION_VS10 == PX_PHYSICS_VERSION
