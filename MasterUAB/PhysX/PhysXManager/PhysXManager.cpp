@@ -178,16 +178,18 @@ public:
 		desc.stepOffset = 0.5f;
 		desc.density = _density;
 		desc.reportCallback = this;
-		desc.position = physx::PxExtendedVec3(_position.x,_position.y,_position.z);
+		desc.position = physx::PxExtendedVec3(_position.x,_position.y + _radius + _height*0.5f,_position.z);
 		desc.material = l_Material;
-		//desc.userData = (void*)index;
+		size_t l_index = m_CharacterControllers.size();
+		desc.userData = (void*)l_index;
 
 		m_CharacterControllers[_name] = m_ControllerManager->createController(desc);
 
-		physx::PxRigidDynamic* l_actor = m_CharacterControllers[_name]->getActor();
-		physx::PxShape *shape = l_actor->createShape(physx::PxBoxGeometry(_radius, _height + _radius * 2, _radius), *l_Material);
 
-		L_PutGroupToShape(shape, _group);
+		physx::PxRigidDynamic* l_actor = m_CharacterControllers[_name]->getActor();
+		/*physx::PxShape *shape = l_actor->createShape(physx::PxBoxGeometry(_radius, _height + _radius * 2, _radius), *l_Material);
+
+		L_PutGroupToShape(shape, _group);*/
 
 		AddActor(_name,_position,Quatf(0,0,0,1),l_actor);
 	}
@@ -338,8 +340,7 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 	Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
-	physx::PxRigidStatic* groundPlane = 
-		physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z,_PlaneDistance),*l_Material);
+	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z,_PlaneDistance),*l_Material);
 	groundPlane->userData = (void*)AddActor(_name,_position,_orientation,groundPlane);
 	m_Scene->addActor(*groundPlane);
 
@@ -461,10 +462,11 @@ void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement,
 	size_t index = (size_t)cct->getUserData();
 
 	Vect3f movemenAux = _movement;
-	
+	Vect3f move1 = CastVec(cct->getPosition());
 	movemenAux = _elapsedTime*movemenAux;
 	cct->move(CastVec(movemenAux), movemenAux.Length()*0.01, _elapsedTime, filters);
 
+	Vect3f move2 = CastVec(cct->getPosition());
 	physx::PxRigidDynamic* actor = cct->getActor();
 	
 

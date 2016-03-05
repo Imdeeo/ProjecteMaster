@@ -11,7 +11,10 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 	CXMLTreeNode l_Element = TreeNode;
 	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(l_Element.GetPszProperty("core_name"));
 	CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
-	l_PhysXManager->CreateStaticBox(GetName(), m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin(), "FisicasAux", GetPosition(), qfIDENTITY, 1);
+	Vect3f l_BBMax = m_StaticMesh->GetBoundingBoxMax();
+	Vect3f l_BBMin = m_StaticMesh->GetBoundingBoxMin();
+	Vect3f l_BB = Vect3f(9, 4.5, 9);
+	l_PhysXManager->CreateStaticBox(GetName(), l_BB, "FisicasAux", GetPosition(), qfIDENTITY, 1);
 }
 
 CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreName) :CRenderableObject()
@@ -51,6 +54,4 @@ void CInstanceMesh::RenderDebug(CRenderManager *RM)
 		CEffectManager::SetSceneConstants(l_ET);
 		RM->GetDebugRender()->GetAxis()->Render(RM, l_ET, CEffectManager::GetRawData());
 	}
-	CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
-//	l_PhysXManager = ""
 }
