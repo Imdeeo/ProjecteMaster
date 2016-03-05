@@ -114,12 +114,12 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 	// Añadir aquí el Init de la applicacioón
 
-	s_Context.CreateContext(hWnd, rc.right, rc.bottom);
+	s_Context.CreateContext(hWnd, 1280, 720);
 
 
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
 
-	s_Context.CreateBackBuffer(hWnd, rc.right, rc.bottom);
+	s_Context.CreateBackBuffer(hWnd, 1280, 720);
 	s_Context.InitStates();
 	{
 		//CDebugRender debugRender(s_Context.GetDevice());
