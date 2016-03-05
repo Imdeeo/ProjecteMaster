@@ -82,9 +82,7 @@ fn createVertex pos col norm textcoord1 textcoord2 binormal tangent &vertex =
 	if(textcoord1!=undefined)then
 	(
 		stahp textcoord1
-		format "U: %, V: %\n" textcoord1.x textcoord1.y
 		append vertex textcoord1.x
-		--append vertex textcoord1.y
 		append vertex (1 - textcoord1.y)
 	)
 	if(textcoord2!=undefined)then
