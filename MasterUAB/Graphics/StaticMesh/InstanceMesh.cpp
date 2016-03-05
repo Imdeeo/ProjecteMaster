@@ -26,7 +26,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 			l_PhysXManager->CreateComplexStaticShape(GetName(), l_Vertexs, l_PxMaterial, GetPosition(), qfIDENTITY, l_PxGroup);
 		}else if (l_PxType == "sphere_shape")
 		{
-			l_PhysXManager->CreateStaticSphere(GetName(), m_StaticMesh->GetBoundingSphereRadius, l_PxMaterial, GetPosition(), qfIDENTITY, l_PxGroup);
+			l_PhysXManager->CreateStaticSphere(GetName(), m_StaticMesh->GetBoundingSphereRadius(), l_PxMaterial, GetPosition(), qfIDENTITY, l_PxGroup);
 		}
 		else if (l_PxType == "plane_shape")
 		{
