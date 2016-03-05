@@ -6,6 +6,7 @@
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
 #include "Utils.h"
 
+
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -214,7 +215,7 @@ bool CStaticMesh::Load(const std::string &FileName)
 					else
 						l_RV = new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
 				}
-
+				
 				
 				free(l_VertexData);
 				free(l_IndexData);

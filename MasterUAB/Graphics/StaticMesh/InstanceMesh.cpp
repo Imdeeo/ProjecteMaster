@@ -1,7 +1,7 @@
 #include "StaticMesh\InstanceMesh.h"
 #include "Engine\UABEngine.h"
 #include "XML\XMLTreeNode.h"
-
+#include "PhysXManager\PhysXManager.h"
 #include <d3d11.h>
 #include "Math\Matrix44.h"
 
@@ -10,6 +10,8 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 {
 	CXMLTreeNode l_Element = TreeNode;
 	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(l_Element.GetPszProperty("core_name"));
+	CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
+	l_PhysXManager->CreateStaticBox(GetName(), m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin(), "FisicasAux", GetPosition(), qfIDENTITY, 1);
 }
 
 CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreName) :CRenderableObject()
@@ -49,4 +51,6 @@ void CInstanceMesh::RenderDebug(CRenderManager *RM)
 		CEffectManager::SetSceneConstants(l_ET);
 		RM->GetDebugRender()->GetAxis()->Render(RM, l_ET, CEffectManager::GetRawData());
 	}
+	CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
+//	l_PhysXManager = ""
 }

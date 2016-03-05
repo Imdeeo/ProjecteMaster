@@ -42,6 +42,7 @@ private:
 	UAB_GET_PROPERTY(Vect3f*,BoundingBoxMin);
 	UAB_GET_PROPERTY(Vect3f*,BoundingSphereCenter);
 	UAB_GET_PROPERTY(float  ,BoundingSphereRadius);
+	UAB_GET_PROPERTY(std::vector<CMaterial *>, Materials);
 };
 
 #endif //STATIC_MESH_H
