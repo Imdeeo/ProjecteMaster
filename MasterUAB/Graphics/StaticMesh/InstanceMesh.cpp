@@ -15,8 +15,8 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 	if (l_GeneratePhysx)
 	{
 		std::string l_PxType = l_Element.GetPszProperty("physics_type");
-		std::string l_PxMaterial = l_Element.GetPszProperty("physx_material");
-		int l_PxGroup = l_Element.GetIntProperty("physx_group");
+		std::string l_PxMaterial = l_Element.GetPszProperty("physics_material");
+		int l_PxGroup = l_Element.GetIntProperty("physics_group");
 		Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
 
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
@@ -37,6 +37,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		}
 		else
 		{
+			//l_PhysXManager->CreateDinamicBox(GetName(), l_BB, l_PxMaterial, GetPosition(), qfIDENTITY, 1.0f, l_PxGroup);
 			l_PhysXManager->CreateStaticBox(GetName(), l_BB, l_PxMaterial, GetPosition(), qfIDENTITY, l_PxGroup);
 		}
 	}
