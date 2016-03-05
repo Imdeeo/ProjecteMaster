@@ -1,13 +1,14 @@
 #include "Globals.fxh"
 #include "Samplers.fxh"
 
-static float m_BrownSepiaColorGrading=m_RawDataArray[0];
-static float m_GreenSepiaColorGrading=m_RawDataArray[1];
-static float m_BlueSepiaColorGrading=m_RawDataArray[2];
-static float m_MonochromeColorGrading=m_RawDataArray[3];
-static float m_ColorColorGrading=m_RawDataArray[4];
-static float m_ContrastColorGrading=m_RawDataArray[5];
-static float m_BrightnessColorGrading=m_RawDataArray[6];
+static float m_ActiveColorGrading=m_RawDataArray[0];
+static float m_BrownSepiaColorGrading=m_RawDataArray[1];
+static float m_GreenSepiaColorGrading=m_RawDataArray[2];
+static float m_BlueSepiaColorGrading=m_RawDataArray[3];
+static float m_MonochromeColorGrading=m_RawDataArray[4];
+static float m_ColorColorGrading=m_RawDataArray[5];
+static float m_ContrastColorGrading=m_RawDataArray[6];
+static float m_BrightnessColorGrading=m_RawDataArray[7];
 
 struct VS_INPUT
 {
@@ -67,6 +68,9 @@ float4 ColorGrading(float4 _Color)
 
 float4 PSGUIColorGrading(PS_INPUT IN) : SV_Target
 {
+	if(m_ActiveColorGrading==0.0)
+		return T0Texture.Sample(S0Sampler, IN.UV);
+	
 	float4 l_Color=T0Texture.Sample(S0Sampler, IN.UV);
 	return ColorGrading(l_Color);
 }
