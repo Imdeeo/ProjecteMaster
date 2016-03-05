@@ -155,7 +155,7 @@ void CApplication::Init()
 	UABEngine.GetCameraControllerManager()->ChooseMainCamera(m_MainCameraName);
 	UABEngine.GetCameraControllerManager()->ChooseDebugCamera(m_DebugCameraName);
 
-	CCharacterManager::GetInstance()->Load("Data\\level_1\\characters.xml");
+	CCharacterManager::GetInstance()->Load("Data\\level_"+UABEngine.GetLevelLoaded()+"\\characters.xml");
 }
 
 void CApplication::ActualizarEnemigo(CRenderableObject* owner, float _ElapsedTime)
