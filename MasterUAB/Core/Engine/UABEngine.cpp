@@ -52,8 +52,8 @@ CUABEngine* CUABEngine::GetInstance()
 
 void CUABEngine::Init()
 {
-	m_PhysXManager->RegisterMaterial("FisicasAux", 0.5, 0.5, 0.5);
-	LoadLevelXML("Data\\level.xml");	
+	LoadLevelXML("Data\\level.xml");
+	m_PhysXManager->LoadMaterials("Data\\physx.xml");
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_MaterialManager->Load("Data\\level_" + m_LevelLoaded + "\\materials.xml");

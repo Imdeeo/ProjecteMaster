@@ -58,6 +58,7 @@ public:
 	virtual ~CPhysXManager(){ Destroy(); }
 
 	void RegisterMaterial(const std::string &name, float staticFriction, float dynamicFriction, float restitution);
+	bool LoadMaterials(const std::string &Filename);
 	inline void AssertCoordArrays();
 	inline size_t GetActorIndexFromName(const std::string& _actorName);
 
@@ -90,6 +91,7 @@ public:
 	void Render(const std::string _name, CRenderManager *RenderManager);
 	Vect3f GetCharacterControllersPosition(const std::string _name);
 protected:
+	std::string						m_Filename;
 
 	physx::PxFoundation				*m_Foundation;
 	physx::PxPhysics				*m_PhysX;

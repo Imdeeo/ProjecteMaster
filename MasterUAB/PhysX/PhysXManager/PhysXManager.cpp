@@ -138,6 +138,41 @@ public:
 	CPhysXManagerImplementation(){Init();}
 	virtual ~CPhysXManagerImplementation(){Destroy();}
 
+	bool LoadMaterials(const std::string &Filename)
+	{
+		m_Filename = Filename;
+		std::string l_EffectName;
+		float l_StaticFriction;
+		float l_DynamicFriction;
+		float l_Restitution;
+
+		CXMLTreeNode l_XML;
+		if (l_XML.LoadFile(m_Filename.c_str()))
+		{
+			CXMLTreeNode l_Input = l_XML["physx"];
+			if (l_Input.Exists())
+			{
+				for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+				{
+					CXMLTreeNode l_Element = l_Input(i);
+					if (l_Element.GetName() == std::string("material"))
+					{
+						l_EffectName = l_Element.GetPszProperty("name");
+						l_StaticFriction = l_Element.GetFloatProperty("static_friction");
+						l_DynamicFriction = l_Element.GetFloatProperty("dynamic_friction");
+						l_Restitution = l_Element.GetFloatProperty("restitution");
+						RegisterMaterial(l_EffectName, l_StaticFriction, l_DynamicFriction, l_Restitution);
+					}
+				}
+			}
+		}
+		else
+		{
+			return false;
+		}
+		return true;
+	}
+
 	void onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count){}
 	void onWake(physx::PxActor** actors, physx::PxU32 count){}
 	void onSleep(physx::PxActor** actors, physx::PxU32 count){}
