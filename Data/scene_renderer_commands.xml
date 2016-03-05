@@ -7,16 +7,37 @@
 	
 	<set_depth_stencil_state enable_z_test="true" write_z_buffer="true"/>
 	<set_matrices/>
-		
-	<!--FORWARD-->
+	
+	<set_render_target name="deferred_multiple_render_target">
+		<dynamic_texture name="DiffuseMapTexture" texture_width_as_frame_buffer="true" create_depth_stencil_buffer="false"/>
+		<dynamic_texture name="LightMapTexture" texture_width_as_frame_buffer="true"/>
+		<dynamic_texture name="NormalMapTexture" texture_width_as_frame_buffer="true"/>
+		<dynamic_texture name="DepthMapTexture" texture_width_as_frame_buffer="true"/>
+	</set_render_target>
+	
 	<clear render_target="true" depth_stencil="true"/>
-	<set_pool_renderable_objects_technique pool="forward_shading"/>
+	<set_pool_renderable_objects_technique pool="gBuffer"/>
 	<render_layer layer="solid" active="true"/>
-		
+	
+	<unset_render_target/>
+	
+	<clear render_target="true" depth_stencil="true"/>
+	<set_depth_stencil_state enable_z_test="false" write_z_buffer="false"/>
+	<render_draw_quad active="true">
+		<texture stage_id="0" file="LightMapTexture" load_file="false"/>
+	</render_draw_quad>
+
+	<set_pool_renderable_objects_technique pool="deferred_shading_lighting"/>
+	
+	<render_deferred_shading>
+		<texture stage_id="0" file="DiffuseMapTexture" load_file="false"/>
+		<texture stage_id="1" file="LightMapTexture" load_file="false"/>
+		<texture stage_id="2" file="NormalMapTexture" load_file="false"/>
+		<texture stage_id="3" file="DepthMapTexture" load_file="false"/>
+	</render_deferred_shading>
 
 	<set_pool_renderable_objects_technique pool="forward_shading"/>
 	<render_debug_lights/>
-	<render_debug_axis/>
 	<set_ant_tweak_bar/>	
 	<present/>
 </scene_renderer_commands>
