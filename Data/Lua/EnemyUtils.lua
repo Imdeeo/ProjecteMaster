@@ -17,7 +17,7 @@ function go2point(args,_ElapsedTime)
 	_owner:set_position(l_PosCharacterController)	
 
 	
-	local dir = Vect3f(math.cos(_owner:get_yaw()),0,-math.sin(_owner:get_yaw()));
+	local dir = Vect3f(math.cos(_owner:get_yaw()),0,math.sin(_owner:get_yaw()));
 	--utils_log(type(enemyPos))
 	--utils_log(type(move))
 	local yaw = _owner:get_yaw()

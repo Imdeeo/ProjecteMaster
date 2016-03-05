@@ -176,8 +176,7 @@ float4 applyAllLights(TVertexPS IN)
 		
 		float3 Tn=normalize(IN.WorldTangent);
 		float3 Bn=normalize(IN.WorldBinormal);
-		float3 bump=g_Bump*((T1Texture.Sample(S1Sampler,IN.UV).rgb) - float3(0.5,0.5,0.5));
-		
+		float3 bump=g_Bump*((T2Texture.Sample(S2Sampler,IN.UV).rgb) - float3(0.5,0.5,0.5));
 		Nn = Nn + bump.x*Tn + bump.y*Bn;
 		Nn = normalize(Nn);
 	#endif
@@ -186,7 +185,7 @@ float4 applyAllLights(TVertexPS IN)
 	{
 		lightContrib += applyLights(IN.Pixelpos,Nn,l_Out,i);
 	}
-	return saturate(lightContrib);
+	return saturate(float4(lightContrib.xyz, l_Out.w));
 }
 
 float CalcAttenuation(float Depth, float StartFog, float EndFog)

@@ -109,9 +109,9 @@ HRESULT CContextManager::CreateContext(HWND hWnd, int Width, int Height)
 	{
 		return S_FALSE;
 	}
-
+	HRESULT hr;
 #if _DEBUG
-	HRESULT hr = m_D3DDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&m_D3DDebug));
+	hr = m_D3DDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&m_D3DDebug));
 	if (FAILED(hr))
 		return hr;
 #endif

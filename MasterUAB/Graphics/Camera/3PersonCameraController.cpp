@@ -4,6 +4,9 @@
 #include "RenderableObjects\RenderableObjectsManager.h"
 #include "InputManager\InputManager.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 C3PersonCameraController::C3PersonCameraController(CXMLTreeNode &node)
 : m_YawSpeed(100.f)
 , m_PitchSpeed(60.f)
@@ -44,14 +47,16 @@ void C3PersonCameraController::SetCamera(CCamera *Camera) const
 	Camera->SetFOV(0.87266f);
 	Camera->SetAspectRatio(16.0f/9.0f);
 	Camera->SetPosition(m_Position);
-	Camera->SetLookAt(m_Target->GetPosition());
+	Vect3f auxLookAt = m_Target->GetPosition();
+	auxLookAt.y += 2;
+	Camera->SetLookAt(auxLookAt);
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
 }
 
 Vect3f C3PersonCameraController::GetDirection() const
-{
-	return m_Target->GetPosition()-m_Position;
+{	
+	return  m_Target->GetPosition() - m_Position;
 }
 
 void C3PersonCameraController::Update(float ElapsedTime)
@@ -64,13 +69,13 @@ void C3PersonCameraController::Update(float ElapsedTime)
 	}
 	//cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * 0.5f;
 	m_angle = m_angle + cameraMovement.x;
-	while (m_angle > (3.1415*0.5))
+	while (m_angle > M_PI)
 	{
-		m_angle = m_angle - 3.1415;
+		m_angle = m_angle - M_PI * 2;
 	}
-	while (m_angle < -(3.1415*0.5))
+	while (m_angle < -M_PI)
 	{
-		m_angle = m_angle + 3.1415;
+		m_angle = m_angle + M_PI * 2;
 	}
 	Vect2f l_2Doffset = Vect2f(cos(m_angle),sin(m_angle));
 	l_2Doffset = l_2Doffset*m_distance;
