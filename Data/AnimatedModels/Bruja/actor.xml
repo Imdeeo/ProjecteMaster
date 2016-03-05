@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<actor name="bruja" radius_bs="2.0" pos_bs="0.0 1.0 0.0">
+	<skeleton filename="brujaSkeleton.csf"/>
+	<mesh filename="brujaMesh.cmf"/>
+	<!--
+	<material name="bruja_material_1" renderable_object_technique="KG_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_ENVIRONMENT_VERTEX_RENDERABLE_OBJECT_TECHNIQUE">
+	-->
+	<material name="bruja_material_1" renderable_object_technique="animated">
+		<texture type="diffuse" filename="Data/AnimatedModels/Bruja/WhitchTextura.dds"/>
+		<texture type="normal" filename="Data/AnimatedModels/Bruja/WhitchTextura_NRM.dds"/>
+		<texture type="reflection" filename="Data/level_2/Textures/KGSkybox2.dds"/>
+		<parameter type="float" name="specular" value="1.0"/>
+		<parameter type="float" name="gloss" value="10.0"/>
+		<parameter type="float" name="bump" value="2.0"/>
+		<parameter type="float" name="environment_factor" value="0.4"/>
+		<parameter type="float" name="cutout_factor" value="1.0"/>
+	</material>
+	<animation name="walk" filename="brujaWalk.caf" />
+	<animation name="idle" filename="bruja_idle.caf" />
+	<animation name="run" filename="brujaRun.caf" />
+	<animation name="crouchWalk" filename="brujaCrouchWalk.caf" />
+	<animation name="crouchIdle" filename="brujaCrouchIdle.caf" />
+	<animation name="normalAttack" filename="ataqueNormal.caf" />
+	<animation name="iraAttack" filename="ataqueIra.caf" />
+	<animation name="die" filename="brujaDie.caf" />
+</actor>

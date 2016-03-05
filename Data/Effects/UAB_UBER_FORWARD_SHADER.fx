@@ -177,7 +177,6 @@ float4 applyAllLights(TVertexPS IN)
 		float3 Tn=normalize(IN.WorldTangent);
 		float3 Bn=normalize(IN.WorldBinormal);
 		float3 bump=g_Bump*((T2Texture.Sample(S2Sampler,IN.UV).rgb) - float3(0.5,0.5,0.5));
-		
 		Nn = Nn + bump.x*Tn + bump.y*Bn;
 		Nn = normalize(Nn);
 	#endif

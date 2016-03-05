@@ -47,14 +47,16 @@ void C3PersonCameraController::SetCamera(CCamera *Camera) const
 	Camera->SetFOV(0.87266f);
 	Camera->SetAspectRatio(16.0f/9.0f);
 	Camera->SetPosition(m_Position);
-	Camera->SetLookAt(m_Target->GetPosition());
+	Vect3f auxLookAt = m_Target->GetPosition();
+	auxLookAt.y += 2;
+	Camera->SetLookAt(auxLookAt);
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
 }
 
 Vect3f C3PersonCameraController::GetDirection() const
-{
-	return m_Target->GetPosition()-m_Position;
+{	
+	return  m_Target->GetPosition() - m_Position;
 }
 
 void C3PersonCameraController::Update(float ElapsedTime)
