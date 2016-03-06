@@ -19,11 +19,12 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		std::string l_PxMaterial = l_Element.GetPszProperty("physics_material");
 		int l_PxGroup = l_Element.GetIntProperty("physics_group");
 		//Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
-		Vect3f l_BB = m_StaticMesh->GetBoundingSphereRadius()*2;
-		Vect3f l_Pos = GetPosition();
+		Vect3f l_BBMin = m_StaticMesh->GetBoundingBoxMax();
+		Vect3f l_BBMax = m_StaticMesh->GetBoundingBoxMin(); 
+		
 
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
-		if (l_PxType == "triangle_mesh")
+		/*if (l_PxType == "triangle_mesh")
 		{
 			std::vector<Vect3f> l_Vertexs;
 			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, l_PxMaterial, l_Pos, qfIDENTITY, l_PxGroup);
@@ -42,7 +43,17 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		{
 			//l_PhysXManager->CreateDinamicBox(GetName(), l_BB, l_PxMaterial, GetPosition(), qfIDENTITY, 1.0f, l_PxGroup);
 			l_PhysXManager->CreateStaticBox(GetName(), Vect3f(20.f,5.f,20.f), l_PxMaterial, GetPosition(), qfIDENTITY, l_PxGroup);
-		}
+		}*/
+		Vect3f aux = l_BBMax - l_BBMin;
+		aux.x = abs(aux.x);
+		aux.y = abs(aux.y);
+		aux.z = abs(aux.z);
+		Vect3f l_Pos = (l_BBMax + l_BBMin) / 2;
+		l_PhysXManager->CreateRigidStatic(l_Name, aux, l_Pos+GetPosition(), qfIDENTITY, "FisicasAux");
+	}
+	else
+	{
+		float aux = 3;
 	}
 }
 
