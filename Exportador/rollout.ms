@@ -349,6 +349,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:394
 						"alpha_objects": RenderLayerList.selection = 2
 						"alpha_blend_objects": RenderLayerList.selection = 3
 						"particles": RenderLayerList.selection = 4
+						"skybox": RenderLayerList.selection = 5
 					)
 			
 				AnimModelText.text = getUserProp Objs[1] "anim_model_core"
@@ -469,6 +470,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:394
 						"alpha_objects": setUserProp Objs[i] "render_layer" "alpha_objects"
 						"alpha_blend_objects": setUserProp Objs[i] "render_layer" "alpha_blend_objects"
 						"particles": setUserProp Objs[i] "render_layer" "particles"
+						"skybox": setUserProp Objs[i] "render_layer" "skybox"
 					)	
 					
 				) else (
