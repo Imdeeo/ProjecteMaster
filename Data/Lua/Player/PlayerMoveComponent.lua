@@ -14,8 +14,9 @@ end
 function FnOnCreateController (_owner)
 	local UABEngine = CUABEngine.get_instance()
 	local l_physXManager = UABEngine:get_physX_manager()
+	local l_Player = CCharacterManager.get_instance():get_resource("player")
 	l_physXManager:register_material("controllerMaterial", 0.5,0.5,1)
-	l_physXManager:create_character_controller("player", 1.5, 1.0, 0.5, _owner:get_position(),"controllerMaterial", 1)
+	l_physXManager:create_character_controller(l_Player.name, 1.5, 1.0, 0.5, _owner:get_position(),"controllerMaterial", 1)
 end
 
 function FnOnDestroyController ()
@@ -46,6 +47,7 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	
 	l_physXManager:character_controller_move("player", l_AddPos*l_velocity, _ElapsedTime)
 	local l_PosCharacterController = l_physXManager:get_character_controler_pos("player")
+	utils_log("Position x: "..l_PosCharacterController.x..",y: "..l_PosCharacterController.y..",z: "..l_PosCharacterController.z)
 	_owner:set_position(l_PosCharacterController)
 	
 	local yaw = _owner:get_yaw()

@@ -341,6 +341,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_transform", &C3DElement::GetTransform)
 			.def("get_visible", &C3DElement::GetVisible)
 			.def("set_visible", &C3DElement::SetVisible)
+			.def("get_lua_pos_x", &C3DElement::GetPositionX)
+			.def("get_lua_pos_y", &C3DElement::GetPositionY)
+			.def("get_lua_pos_z", &C3DElement::GetPositionZ)
 	];
 
 	module(m_LS)[
@@ -1098,6 +1101,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("register_material", &CPhysXManager::RegisterMaterial)
 			.def("render", &CPhysXManager::Render)
 			.def("get_character_controler_pos", &CPhysXManager::GetCharacterControllersPosition)
+			.def("get_character_controler_lua_pos_x", &CPhysXManager::GetCharacterControllersPositionX)
+			.def("get_character_controler_lua_pos_y", &CPhysXManager::GetCharacterControllersPositionY)
+			.def("get_character_controler_lua_pos_z", &CPhysXManager::GetCharacterControllersPositionZ)
 	];
 
 	
