@@ -10,6 +10,8 @@
 #include "Math\MathTypes.h"
 #include "Engine\UABEngine.h"
 
+#include "Utils\CEmptyPointerClass.h"
+
 #include <assert.h>
 
 #define N_CPUS 2
@@ -327,6 +329,9 @@ void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shap
 physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, physx::PxGeometry _geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
+	//physx::PxVec3 v = CastVec(Size);
+	//physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(v.x / 2, v.y / 2, v.z / 2), *l_Material);
+
 	physx::PxShape* shape = m_PhysX->createShape(_geometry, *l_Material);
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
 
@@ -419,6 +424,23 @@ void CPhysXManager::CreateDinamicSphere(const std::string _name, float _radius, 
 	CreateDinamicShape(_name,
 		physx::PxSphereGeometry(_radius),
 		_Material, _position, _orientation, _density, _group, isKinematic);
+}
+
+void CPhysXManager::CreateRigidStatic(const std::string &Name, const Vect3f Size, const Vect3f &Position, const Quatf &Orientation, const std::string &MaterialName)
+{
+	AssertCoordArrays();
+	const physx::PxMaterial* l_Material = m_Materials[MaterialName];
+	physx::PxVec3 v = CastVec(Size);
+	physx::PxShape* l_Shape = m_PhysX->createShape(physx::PxBoxGeometry(v.x/2,v.y/2,v.z/2),*l_Material);
+	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(Position),CastQuat(Orientation)));
+	
+	l_Body->attachShape(*l_Shape);
+	size_t index=m_Actors.size();
+	l_Body->userData = (void*)index;
+	m_Scene->addActor(*l_Body);
+	l_Shape->release();
+	AddActor(Name, Position, Orientation, l_Body);
+
 }
 
 physx::PxShape* CPhysXManager::CreateStaticShapeFromBody(const std::string _name, physx::PxGeometry _geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
@@ -624,4 +646,20 @@ Vect3f CPhysXManager::GetCharacterControllersPosition(const std::string _name)
 {
 	physx::PxController* aux = m_CharacterControllers[_name];
 	return Vect3f(aux->getPosition().x, aux->getPosition().y, aux->getPosition().z);
+}
+
+CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionX(const std::string _name)
+{
+	physx::PxController* aux = m_CharacterControllers[_name];
+	return (CEmptyPointerClass*)(&aux->getPosition().x);
+}
+CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionY(const std::string _name)
+{
+	physx::PxController* aux = m_CharacterControllers[_name];
+	return (CEmptyPointerClass*)(&aux->getPosition().y);
+}
+CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionZ(const std::string _name)
+{
+	physx::PxController* aux = m_CharacterControllers[_name];
+	return (CEmptyPointerClass*)(&aux->getPosition().z);
 }

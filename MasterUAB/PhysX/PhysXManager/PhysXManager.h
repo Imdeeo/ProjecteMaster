@@ -8,6 +8,7 @@
 #include "Math\Quatn.h"
 
 class CRenderManager;
+class CEmptyPointerClass;
 
 namespace physx
 {
@@ -71,7 +72,7 @@ public:
 	void CreateStaticBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group);
 	void CreateStaticSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, int _group);
 	void CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance, const std::string _Material, Vect3f _position, Quatf _orientation, int _group);
-
+	void CreateRigidStatic(const std::string &Name, const Vect3f Size, const Vect3f &Position, const Quatf &Orientation, const std::string &MaterialName);
 	void CreateDinamicBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, int _group, bool _isKinematic = false);
 	void CreateDinamicSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, int _group, bool _isKinematic = false);
 
@@ -91,6 +92,9 @@ public:
 	void Update(float _dt);
 	void Render(const std::string _name, CRenderManager *RenderManager);
 	Vect3f GetCharacterControllersPosition(const std::string _name);
+	CEmptyPointerClass* GetCharacterControllersPositionX(const std::string _name);
+	CEmptyPointerClass* GetCharacterControllersPositionY(const std::string _name);
+	CEmptyPointerClass* GetCharacterControllersPositionZ(const std::string _name);
 protected:
 	std::string						m_Filename;
 
