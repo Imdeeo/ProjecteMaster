@@ -58,6 +58,16 @@ fn getBoundingSphere vertex &BSphere =
 	if dist > BSphere[2] then BSphere[2] = dist
 )
 
+fn getBoundingBox vertex &BBMax &BBMin =
+(
+	if vertex.x > BBMax.x then ( BBMax.x = vertex.x )
+	if vertex.y > BBMax.y then ( BBMax.y = vertex.y )
+	if vertex.z > BBMax.z then ( BBMax.z = vertex.z )
+	if vertex.x < BBMin.x then ( BBMin.x = vertex.x )
+	if vertex.y < BBMin.y then ( BBMin.y = vertex.y )
+	if vertex.z < BBMin.z then ( BBMin.z = vertex.z )			
+)
+
 fn createVertex pos col norm textcoord1 textcoord2 binormal tangent &vertex =
 (
 	if(pos!=undefined) then
@@ -81,12 +91,8 @@ fn createVertex pos col norm textcoord1 textcoord2 binormal tangent &vertex =
 	)
 	if(textcoord1!=undefined)then
 	(
-		stahp textcoord1		
 		append vertex textcoord1.x
-		--append vertex textcoord1.y
 		append vertex (1 - textcoord1.y)
-		
-		format "U: %, V: %\n" textcoord1.x (1 - textcoord1.y)
 	)
 	if(textcoord2!=undefined)then
 	(

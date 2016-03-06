@@ -63,6 +63,10 @@ fn processFaces arx Obj &prog=
 	local T2UVMap2 = undefined
 	local T2UVMap3 = undefined
 	
+	local BBMin = point3 0 0 0
+	local BBMax = point3 0 0 0
+	local BSphere = #()
+	
 	local PosID = 0x0001
 	local ColorID = 0x0000
 	local NmID = 0x0004
@@ -127,11 +131,30 @@ fn processFaces arx Obj &prog=
 		append indexs #()
 	)
 	
-	local ffd = ffdbox()
-    addModifier l_Obj ffd
-    BBMin = getModContextBBoxMin l_Obj ffd
-    BBMax = getModContextBBoxMax l_Obj ffd
-    BSphere = #()
+	local BBFace = getFace l_Obj 1
+	local BBStart = (getVert l_Obj BBFace.x)*InvTransform
+	TranslationToRH &BBFace
+	BBMax.x = BBStart.x
+	BBMax.y = BBStart.y
+	BBMax.z = BBStart.z
+	BBMin.x = BBStart.x
+	BBMin.y = BBStart.y
+	BBMin.z = BBStart.z
+	
+	for i=1 to nFaces do
+	(
+		local IdxsFace = getFace l_Obj i
+		Vt1=(getVert l_Obj IdxsFace.x)*InvTransform
+		Vt2=(getVert l_Obj IdxsFace.y)*InvTransform
+		Vt3=(getVert l_Obj IdxsFace.z)*InvTransform
+		TranslationToRH &Vt1
+		TranslationToRH &Vt2
+		TranslationToRH &Vt3
+		getBoundingBox Vt1 &BBMax &BBMin
+		getBoundingBox Vt2 &BBMax &BBMin
+		getBoundingBox Vt3 &BBMax &BBMin
+	)
+	
     lerp BBMin BBMax .5 &BSphere[1]
     BSphere[2] = 0
 	
