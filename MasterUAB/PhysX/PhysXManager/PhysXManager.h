@@ -32,6 +32,7 @@ namespace physx
 		namespace comm
 		{
 			class PvdConnection;
+			class PxVisualDebuggerConnectionFlags;
 		}
 	}
 

@@ -14,26 +14,29 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 	bool l_GeneratePhysx = l_Element.GetBoolProperty("create_physics");
 	if (l_GeneratePhysx)
 	{
+		std::string l_Name = GetName();
 		std::string l_PxType = l_Element.GetPszProperty("physics_type");
 		std::string l_PxMaterial = l_Element.GetPszProperty("physics_material");
 		int l_PxGroup = l_Element.GetIntProperty("physics_group");
-		Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
+		//Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
+		Vect3f l_BB = m_StaticMesh->GetBoundingSphereRadius()*2;
+		Vect3f l_Pos = GetPosition();
 
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
 		if (l_PxType == "triangle_mesh")
 		{
 			std::vector<Vect3f> l_Vertexs;
-			l_PhysXManager->CreateComplexStaticShape(GetName(), l_Vertexs, l_PxMaterial, GetPosition(), qfIDENTITY, l_PxGroup);
+			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, l_PxMaterial, l_Pos, qfIDENTITY, l_PxGroup);
 		}else if (l_PxType == "sphere_shape")
 		{
-			l_PhysXManager->CreateStaticSphere(GetName(), m_StaticMesh->GetBoundingSphereRadius(), l_PxMaterial, GetPosition(), qfIDENTITY, l_PxGroup);
+			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), l_PxMaterial, l_Pos, qfIDENTITY, l_PxGroup);
 		}
 		else if (l_PxType == "plane_shape")
 		{
-			Vect3f l_Normal = Vect3f(1, 1, 1);
-			float l_Distance = 1.0f;
+			Vect3f l_Normal = Vect3f(.0f, 1.0f, .0f);
+			float l_Distance = 100.0f;
 
-			l_PhysXManager->CreateStaticPlane(GetName(), l_Normal, l_Distance, l_PxMaterial, GetPosition(), qfIDENTITY, l_PxGroup);
+			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, l_Distance, l_PxMaterial, l_Pos, qfIDENTITY, l_PxGroup);
 		}
 		else
 		{
