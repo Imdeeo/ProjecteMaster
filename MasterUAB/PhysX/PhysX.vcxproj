@@ -129,6 +129,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib;$(SolutionDir)3rdParty\PhysX-3.3-master\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PhysX3_x86.lib;PhysX3Common_x86.lib;PhysX3Extensions.lib;PhysXProfileSDK.lib;PhysXVisualDebuggerSDK.lib;PhysX3CharacterKinematic_x86.lib;PhysX3Cooking_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
     <ClCompile>
