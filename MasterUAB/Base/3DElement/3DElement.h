@@ -4,6 +4,7 @@
 #include "Math\Matrix44.h"
 #include <d3d11.h>
 #include "XML\XMLTreeNode.h"
+#include "Utils\CEmptyPointerClass.h"
 
 class CKGRenderManager;
 
@@ -87,6 +88,18 @@ public:
 		m_Visible = newVisible;
 	}
 
+	virtual CEmptyPointerClass*  GetPositionX()
+	{
+		return (CEmptyPointerClass*)(&m_Position.x);
+	}
+	virtual CEmptyPointerClass*  GetPositionY()
+	{
+		return (CEmptyPointerClass*)(&m_Position.y);
+	}
+	virtual CEmptyPointerClass*  GetPositionZ()
+	{
+		return (CEmptyPointerClass*)(&m_Position.z);
+	}
 };
 
 #endif //C3D_ELEMENT_H

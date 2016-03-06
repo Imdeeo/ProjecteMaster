@@ -10,6 +10,8 @@
 #include "Math\MathTypes.h"
 #include "Engine\UABEngine.h"
 
+#include "Utils\CEmptyPointerClass.h"
+
 #include <assert.h>
 
 #define N_CPUS 2
@@ -644,4 +646,20 @@ Vect3f CPhysXManager::GetCharacterControllersPosition(const std::string _name)
 {
 	physx::PxController* aux = m_CharacterControllers[_name];
 	return Vect3f(aux->getPosition().x, aux->getPosition().y, aux->getPosition().z);
+}
+
+CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionX(const std::string _name)
+{
+	physx::PxController* aux = m_CharacterControllers[_name];
+	return (CEmptyPointerClass*)(&aux->getPosition().x);
+}
+CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionY(const std::string _name)
+{
+	physx::PxController* aux = m_CharacterControllers[_name];
+	return (CEmptyPointerClass*)(&aux->getPosition().y);
+}
+CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionZ(const std::string _name)
+{
+	physx::PxController* aux = m_CharacterControllers[_name];
+	return (CEmptyPointerClass*)(&aux->getPosition().z);
 }
