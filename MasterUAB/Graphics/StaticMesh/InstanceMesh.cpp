@@ -8,16 +8,15 @@
 
 CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
 {
-	CXMLTreeNode l_Element = TreeNode;
-	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(l_Element.GetPszProperty("core_name"));
+	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(TreeNode.GetPszProperty("core_name"));
 
-	bool l_GeneratePhysx = l_Element.GetBoolProperty("create_physics");
+	bool l_GeneratePhysx = TreeNode.GetBoolProperty("create_physics");
 	if (l_GeneratePhysx)
 	{
 		std::string l_Name = GetName();
-		std::string l_PxType = l_Element.GetPszProperty("physics_type");
-		std::string l_PxMaterial = l_Element.GetPszProperty("physics_material");
-		int l_PxGroup = l_Element.GetIntProperty("physics_group");
+		//std::string l_PxType = TreeNode.GetPszProperty("physics_type");
+		//std::string l_PxMaterial = TreeNode.GetPszProperty("physics_material");
+		//int l_PxGroup = TreeNode.GetIntProperty("physics_group");
 		//Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
 		Vect3f l_BBMin = m_StaticMesh->GetBoundingBoxMax();
 		Vect3f l_BBMax = m_StaticMesh->GetBoundingBoxMin(); 
