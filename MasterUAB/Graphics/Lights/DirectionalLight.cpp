@@ -25,6 +25,7 @@ void CDirectionalLight::Render(CRenderManager *RenderManager)
 	l_Line->Render(RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 	delete l_Line;
 }
+
 const Mat44f & CDirectionalLight::GetTransform()
 {
 	m_ScaleMatrix.SetIdentity();
@@ -44,12 +45,12 @@ const Mat44f & CDirectionalLight::GetTransform()
 void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 {
 	m_ViewShadowMap.SetIdentity();
-	m_ViewShadowMap.SetFromLookAt(m_Position, m_Position + m_Direction, v3fY);
+	Vect3f up = Vect3f(m_Direction.z, m_Direction.y, m_Direction.x);
+	up = ((up) ^ (m_Direction));
+	m_ViewShadowMap.SetFromLookAt(m_Position, m_Position + m_Direction, up.y < 0 ? (up * -1) : up);
 	unsigned int l_ShadowMapWidth = m_ShadowMap->GetWidth();
 	unsigned int l_ShadowMapHeight = m_ShadowMap->GetHeight();
 	m_ProjectionShadowMap.SetFromOrtho(m_OrthoShadowMapSize.x, m_OrthoShadowMapSize.y, 0.1f, m_EndRangeAttenuation);
-	//UABEngine.GetEffectManager()->m_SceneParameters.m_View = m_ViewShadowMap;
-	//UABEngine.GetEffectManager()->m_SceneParameters.m_Projection = m_ProjectionShadowMap;
 	CEffectManager::m_SceneParameters.m_View = m_ViewShadowMap;
 	CEffectManager::m_SceneParameters.m_Projection = m_ProjectionShadowMap;
 	ID3D11RenderTargetView *l_RenderTargetViews[1];
