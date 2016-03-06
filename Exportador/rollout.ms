@@ -513,7 +513,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:394
 					setUserProp Objs[i] "has_physics_layer" false
 				)
 				
-				if PhysicsMaterial.text == "" then
+				if PhysicsMaterialText.text == "" then
 				(
 					setUserProp Objs[i] "physics_material" "undefined"
 				) else (
