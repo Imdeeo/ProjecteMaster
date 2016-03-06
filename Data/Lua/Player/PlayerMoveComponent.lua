@@ -1,3 +1,5 @@
+cct_velocity = Vect3f(0,0,0)
+
 function InitPlayerMove()
 	local UABEngine = CUABEngine.get_instance()
 
@@ -16,12 +18,16 @@ function FnOnCreateController (_owner)
 	local l_physXManager = UABEngine:get_physX_manager()
 	local l_Player = CCharacterManager.get_instance():get_resource("player")
 	l_physXManager:register_material("controllerMaterial", 0.5,0.5,1)
-	l_physXManager:create_character_controller(l_Player.name, 1.5, 1.0, 0.5, _owner:get_position(),"controllerMaterial", 1)
+	l_physXManager:create_character_controller(l_Player.name, 1.5, 1, 0.5, _owner:get_position(),"controllerMaterial", 1)
 end
 
 function FnOnDestroyController ()
 	
 end
+
+--gravity = Vect3f(0,-9.81,0)
+--gravity = -9.81
+gravity = 0
 
 function FnOnUpdateController (_owner, _ElapsedTime)
 	
@@ -44,8 +50,13 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	local l_AddPos = Vect3f(final_direction.x,0,final_direction.y)
 	
 	local l_velocity = 10
+	cct_velocity = Vect3f(final_direction.x*l_velocity,cct_velocity.y+gravity * _ElapsedTime,final_direction.y*l_velocity)
+	--cct_velocity = cct_velocity + 
 	
-	l_physXManager:character_controller_move("player", l_AddPos*l_velocity, _ElapsedTime)
+	local l_velocity = 5
+	
+	
+	l_physXManager:character_controller_move("player", cct_velocity, _ElapsedTime)
 	local l_PosCharacterController = l_physXManager:get_character_controler_pos("player")
 	utils_log("Position x: "..l_PosCharacterController.x..",y: "..l_PosCharacterController.y..",z: "..l_PosCharacterController.z)
 	_owner:set_position(l_PosCharacterController)
@@ -54,7 +65,7 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	local dir = Vect3f(math.cos(yaw),0,math.sin(yaw));
 	local dot_result = final_direction.x*dir.x + final_direction.y*dir.z
 	local y_cross = dir.z*final_direction.x-dir.x*final_direction.y
-	_owner:set_yaw(yaw -dot_result*_ElapsedTime*l_velocity)
+	_owner:set_yaw(yaw -(dot_result*_ElapsedTime*l_velocity))
 
 	
 	local x = l_AddPos.x*l_AddPos.x
