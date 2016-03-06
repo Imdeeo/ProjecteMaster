@@ -8,6 +8,7 @@
 #include "Math\Quatn.h"
 
 class CRenderManager;
+class CEmptyPointerClass;
 
 namespace physx
 {
@@ -90,6 +91,9 @@ public:
 	void Update(float _dt);
 	void Render(const std::string _name, CRenderManager *RenderManager);
 	Vect3f GetCharacterControllersPosition(const std::string _name);
+	CEmptyPointerClass* GetCharacterControllersPositionX(const std::string _name);
+	CEmptyPointerClass* GetCharacterControllersPositionY(const std::string _name);
+	CEmptyPointerClass* GetCharacterControllersPositionZ(const std::string _name);
 protected:
 	std::string						m_Filename;
 
