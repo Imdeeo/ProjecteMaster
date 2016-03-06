@@ -48,7 +48,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		aux.y = abs(aux.y);
 		aux.z = abs(aux.z);
 		Vect3f l_Pos = (l_BBMax + l_BBMin) / 2;
-		l_PhysXManager->CreateRigidStatic(l_Name, aux, l_Pos+GetPosition(), qfIDENTITY, "FisicasAux");
+		l_PhysXManager->CreateRigidStatic(l_Name, aux, GetPosition(), qfIDENTITY, "FisicasAux");
 	}
 	else
 	{
