@@ -73,11 +73,14 @@ private :
 #if USE_PHYSX_DEBUG		
 		if(m_PhysX->getPvdConnectionManager())
 		{
+			physx::PxVisualDebuggerConnectionFlags connectionFlags ( physx::PxVisualDebuggerExt::getAllConnectionFlags() );
+
 			m_PhysX->getVisualDebugger()->setVisualizeConstraints(true);
-			m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONSTRAINTS, true);
-			m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONTACTS,true);
-			physx::PxVisualDebuggerConnectionFlags connectionFlags = physx::PxVisualDebuggerExt::getAllConnectionFlags();
+			//m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONSTRAINTS, true);
+			//m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONTACTS,true);		
 			m_DebugConnection = physx::PxVisualDebuggerExt::createConnection(m_PhysX->getPvdConnectionManager(), PVD_HOST, 5425, 100, connectionFlags);
+			if (m_DebugConnection)
+				m_DebugConnection->release();
 		}
 		else
 		{
@@ -334,9 +337,10 @@ physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, physx:
 
 void CPhysXManager::CreateStaticBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
+	physx::PxVec3 l_HalfSize = physx::PxVec3(_size.x / 2, _size.y / 2, _size.z / 2);
 	CreateStaticShape(
 		_name,
-		physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2),
+		physx::PxBoxGeometry(l_HalfSize),
 		_Material,
 		_position,
 		_orientation,

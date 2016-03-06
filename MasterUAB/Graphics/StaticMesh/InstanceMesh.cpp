@@ -40,7 +40,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		}
 		else
 		{
-			//l_PhysXManager->CreateDinamicBox(GetName(), l_BB, l_PxMaterial, GetPosition(), qfIDENTITY, 1.0f, l_PxGroup);
+			//l_PhysXManager->CreateDinamicBox(l_Name, l_BB, l_PxMaterial, l_Pos, qfIDENTITY, 1.0f, l_PxGroup);
 			l_PhysXManager->CreateStaticBox(l_Name, l_BB, l_PxMaterial, l_Pos, qfIDENTITY, l_PxGroup);
 		}
 	}
