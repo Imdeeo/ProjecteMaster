@@ -396,6 +396,8 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 
 	L_PutGroupToShape(shape, _group);
 
+	shape->userData = groundPlane->userData;
+
 }
 
 void CPhysXManager::CreateDinamicShape(const std::string _name, physx::PxGeometry _geometry, const std::string _Material, Vect3f _position, Quatf _orientation,

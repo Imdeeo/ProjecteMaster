@@ -18,7 +18,7 @@ function FnOnCreateController (_owner)
 	local l_physXManager = UABEngine:get_physX_manager()
 	local l_Player = CCharacterManager.get_instance():get_resource("player")
 	l_physXManager:register_material("controllerMaterial", 0.5,0.5,1)
-	l_physXManager:create_character_controller(l_Player.name, 1.5, 1, 0.5, _owner:get_position(),"controllerMaterial", 1)
+	l_physXManager:create_character_controller(l_Player.name, 1.5, 0.3, 0.5, _owner:get_position(),"controllerMaterial", 1)
 end
 
 function FnOnDestroyController ()
@@ -26,8 +26,10 @@ function FnOnDestroyController ()
 end
 
 --gravity = Vect3f(0,-9.81,0)
---gravity = -9.81
-gravity = 0
+gravity = -9.81
+--gravity = 0
+is_jumping = false
+is_ascending = false
 
 function FnOnUpdateController (_owner, _ElapsedTime)
 	
@@ -37,6 +39,20 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	local Forward = l_InputManager:get_axis("MOVE_FWD")
 	local Strafe = l_InputManager:get_axis("STRAFE")
 	
+	if(l_InputManager:is_action_active("JUMP")==true and is_jumping==false and cct_velocity.y == 0) then
+		cct_velocity.y = 10
+		is_jumping =  true
+		is_ascending = true
+	end
+	
+	if(is_ascending==true and cct_velocity.y<0) then
+		is_ascending = false
+	end
+	
+	if( is_ascending==false and cct_velocity.y == 0)then
+		is_jumping = false
+	end
+	
 	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
 
 	local player_camera_direction = l_Player:get_camera_controller():get_direction():get_normalized(1)
@@ -45,21 +61,23 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	local player_camera_direction_xz_ort = Vect2f(-player_camera_direction.z*Strafe,Strafe*player_camera_direction.x)
 	
 	local final_direction = Vect2f(player_camera_direction_xz.x + player_camera_direction_xz_ort.x,player_camera_direction_xz.y + player_camera_direction_xz_ort.y)
-	
-	
-	local l_AddPos = Vect3f(final_direction.x,0,final_direction.y)
-	
+			
 	local l_velocity = 10
-	cct_velocity = Vect3f(final_direction.x*l_velocity,cct_velocity.y+gravity * _ElapsedTime,final_direction.y*l_velocity)
+	local l_AddPos = Vect3f(final_direction.x*l_velocity,cct_velocity.y+gravity * _ElapsedTime,final_direction.y*l_velocity)
 	--cct_velocity = cct_velocity + 
 	
 	local l_velocity = 5
 	
+	--utils_log("Position x: "..l_AddPos.x..",y: "..l_AddPos.y..",z: "..l_AddPos.z)
 	
-	l_physXManager:character_controller_move("player", cct_velocity, _ElapsedTime)
-	local l_PosCharacterController = l_physXManager:get_character_controler_pos("player")
-	utils_log("Position x: "..l_PosCharacterController.x..",y: "..l_PosCharacterController.y..",z: "..l_PosCharacterController.z)
-	_owner:set_position(l_PosCharacterController)
+	local l_PrevPosCharacterController = l_physXManager:get_character_controler_pos("player")
+	l_physXManager:character_controller_move("player", l_AddPos, _ElapsedTime)
+	local l_PostPosCharacterController = l_physXManager:get_character_controler_pos("player")
+	_owner:set_position(l_PostPosCharacterController)
+	local l_desplacamiento = l_PostPosCharacterController-l_PrevPosCharacterController
+	cct_velocity = l_desplacamiento/_ElapsedTime
+	--utils_log("Position x: "..l_PosCharacterController.x..",y: "..l_PosCharacterController.y..",z: "..l_PosCharacterController.z)
+	
 	
 	local yaw = _owner:get_yaw()
 	local dir = Vect3f(math.cos(yaw),0,math.sin(yaw));
@@ -68,9 +86,10 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	_owner:set_yaw(yaw -(dot_result*_ElapsedTime*l_velocity))
 
 	
-	local x = l_AddPos.x*l_AddPos.x
-	local y = l_AddPos.y*l_AddPos.y
-	local z = l_AddPos.z*l_AddPos.z
+	local x = l_desplacamiento.x*l_desplacamiento.x
+	--local y = l_desplacamiento.y*l_desplacamiento.y
+	local y = 0
+	local z = l_desplacamiento.z*l_desplacamiento.z
 	local result = math.sqrt(x+y+z)
 	
 	_owner:clear_cycle(_owner:get_actual_cycle_animation(),0.1);

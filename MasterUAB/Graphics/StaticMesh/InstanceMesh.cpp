@@ -14,9 +14,9 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 	if (l_GeneratePhysx)
 	{
 		std::string l_Name = GetName();
-		//std::string l_PxType = TreeNode.GetPszProperty("physics_type");
-		//std::string l_PxMaterial = TreeNode.GetPszProperty("physics_material");
-		//int l_PxGroup = TreeNode.GetIntProperty("physics_group");
+		std::string l_PxType = TreeNode.GetPszProperty("physics_type");
+		std::string l_PxMaterial = TreeNode.GetPszProperty("physics_material");
+		int l_PxGroup = TreeNode.GetIntProperty("physics_group");
 		//Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
 		Vect3f l_BBMin = m_StaticMesh->GetBoundingBoxMax();
 		Vect3f l_BBMax = m_StaticMesh->GetBoundingBoxMin(); 
@@ -43,12 +43,30 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 			//l_PhysXManager->CreateDinamicBox(GetName(), l_BB, l_PxMaterial, GetPosition(), qfIDENTITY, 1.0f, l_PxGroup);
 			l_PhysXManager->CreateStaticBox(GetName(), Vect3f(20.f,5.f,20.f), l_PxMaterial, GetPosition(), qfIDENTITY, l_PxGroup);
 		}*/
-		Vect3f aux = l_BBMax - l_BBMin;
-		aux.x = abs(aux.x);
-		aux.y = abs(aux.y);
-		aux.z = abs(aux.z);
-		Vect3f l_Pos = (l_BBMax + l_BBMin) / 2;
-		l_PhysXManager->CreateRigidStatic(l_Name, aux, GetPosition(), qfIDENTITY, "FisicasAux");
+		if (l_PxType == "plane_shape")
+		{
+			Vect3f l_Pos = Vect3f(0.f,0.f,0.f);
+			Vect3f l_Normal = Vect3f(.0f, 1.0f, .0f);
+			float l_Distance = 100.0f;
+			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, l_Distance, l_PxMaterial, l_Pos, qfIDENTITY, l_PxGroup);
+		}
+		else
+		{
+			Vect3f l_Pos = GetPosition();
+			Vect3f aux = l_BBMax - l_BBMin;
+			aux.x = abs(aux.x);
+			aux.y = abs(aux.y);
+			if (aux.y == 0)
+			{
+				aux.y = 0.05;
+				l_Pos = l_Pos - 0.05*0.5;
+			}
+			
+			aux.z = abs(aux.z);
+			//Vect3f l_Pos = (l_BBMax + l_BBMin) / 2;
+			l_PhysXManager->CreateRigidStatic(l_Name, aux, GetPosition(), qfIDENTITY, "FisicasAux");
+		}
+		
 	}
 	else
 	{
