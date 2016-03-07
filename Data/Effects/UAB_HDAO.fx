@@ -167,7 +167,7 @@ float4 GatherZSamples( Texture2D Tex, SamplerState _SamplerState, float2 f2TexCo
 float4 PSHDAO(PS_INPUT IN) : SV_Target
 {
 	if(m_HDAOActive==0.0)
-		clip(-1);
+		return T0Texture.Sample(S0Sampler, IN.UV);
 		
 	// Locals
 	int2 i2ScreenCoord;
