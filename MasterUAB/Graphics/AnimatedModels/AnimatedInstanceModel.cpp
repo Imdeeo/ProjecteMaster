@@ -115,7 +115,7 @@ void CAnimatedInstanceModel::Render(CRenderManager *_RenderManager)
 		_RenderManager->GetDeviceContext()->UpdateSubresource(l_AnimationConstantBufferPS, 0, NULL, &(CEffectManager::m_AnimatedModelEffectParameters), 0, 0);
 
 		CEffectManager::SetSceneConstants(l_EffectTechnique);
-		m_RenderableVertexs->RenderIndexed(_RenderManager, l_EffectTechnique, &CEffectManager::m_SceneParameters, 
+		m_RenderableVertexs->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData(), 
 			m_CalHardwareModel->getFaceCount()*3, m_CalHardwareModel->getStartIndex(),
 			m_CalHardwareModel->getBaseVertexIndex());
 	}
