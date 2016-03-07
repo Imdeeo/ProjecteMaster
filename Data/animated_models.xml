@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <animated_models>
-	<!--<animated_model name="Bot" path="Data/AnimatedModels/Bot/"/>-->
 	<animated_model name="Bruja" path="Data/AnimatedModels/Bruja/"/>
 	<animated_model name="Guardia" path="Data/AnimatedModels/Guardia/"/>
 	<animated_model name="Sereno" path="Data/AnimatedModels/Sereno/"/>

@@ -6,7 +6,6 @@
 		<renderable_object_technique name="animated" technique="animated_diffuse_technique"/>
 		<renderable_object_technique name="lights" technique="lights_technique"/>
 		<renderable_object_technique name="bump" technique="bump_technique"/>
-		<renderable_object_technique name="reflection" technique="forward_reflection_technique"/>
 		<renderable_object_technique name="noise_and_vignetting" technique="noise_and_vignetting"/>
 		<renderable_object_technique name="zblur" technique="zblur_technique"/>
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
@@ -14,23 +13,22 @@
 	<pool_renderable_object_technique name="gBuffer">
 		<renderable_object_technique name="lights" technique="gBuffer_technique"/>
 		<renderable_object_technique name="reflection" technique="reflection_technique"/>
-		<renderable_object_technique name="lightmap" technique="lightmap_technique"/>
 		<renderable_object_technique name="bump" technique="bump_deferred_technique"/>
-		<renderable_object_technique name="animated" technique="animated_deferred_diffuse_technique"/>
+		<renderable_object_technique name="animated" technique="animated_gbuffer_diffuse_technique"/>
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="generate_shadowmap_pool">
+		<renderable_object_technique name="lights" technique="generate_shadowmap_technique"/>
+		<renderable_object_technique name="bump" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="animated" technique="generate_shadowmap_animated_technique"/>
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="deferred_shading">
-		<default_technique vertex_type="MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX" technique="gbuffer_animated_diffuse_technique"/>
-		<default_technique vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" technique="gbuffer_lights_technique"/>
 		<renderable_object_technique name="fog" technique="fog_technique"/>
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="deferred_shading_lighting">
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="deff_technique"/>	
 		<renderable_object_technique name="fog" technique="fog_technique"/>
 	</pool_renderable_object_technique>	
-	<pool_renderable_object_technique name="skybox_pool">
-		<renderable_object_technique name="skybox" technique="skybox_technique"/>
-	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="zblur_pool">
 		<renderable_object_technique name="zblur" technique="zblur_technique"/>
 	</pool_renderable_object_technique>	
@@ -45,14 +43,14 @@
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="hdao_pool">
 		<renderable_object_technique name="hdao" technique="hdao_technique"/>
-	</pool_renderable_object_technique>
-	<pool_renderable_object_technique name="light_scattering_pool">
-		<renderable_object_technique name="light_scattering" technique="light_scattering_technique"/>
-	</pool_renderable_object_technique>
-	<pool_renderable_object_technique name="generate_shadowmap_pool">
-		<renderable_object_technique name="lights" technique="generate_shadowmap_technique"/>
-	</pool_renderable_object_technique>
+	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="NoiseAndvignetting">
 		<default_technique technique="noise_and_vignetting" vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="color_grading">
+		<renderable_object_technique name="colorgrading" technique="color_grading_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="skybox_pool">
+		<renderable_object_technique name="skybox" technique="skybox_technique"/>
 	</pool_renderable_object_technique>
 </renderable_object_techniques>
