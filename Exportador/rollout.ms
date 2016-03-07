@@ -519,7 +519,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:394
 				(
 					setUserProp Objs[i] "physics_material" "undefined"
 				) else (
-					setUserProp Objs[i] "physics_material" PhysicsMaterial.text
+					setUserProp Objs[i] "physics_material" PhysicsMaterialText.text
 				)
 				
 				if LogicGenerateBox.checked then

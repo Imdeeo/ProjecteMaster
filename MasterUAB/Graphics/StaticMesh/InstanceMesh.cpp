@@ -4,6 +4,7 @@
 #include "PhysXManager\PhysXManager.h"
 #include <d3d11.h>
 #include "Math\Matrix44.h"
+#include "Utils.h"
 
 
 CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
@@ -19,8 +20,8 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		int l_PxGroup = TreeNode.GetIntProperty("physics_group");
 		//Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
 		Vect3f l_BBMin = m_StaticMesh->GetBoundingBoxMax();
-		Vect3f l_BBMax = m_StaticMesh->GetBoundingBoxMin(); 
-		
+		Vect3f l_BBMax = m_StaticMesh->GetBoundingBoxMin();
+		Quatf l_Q = QuatFromYawPitchRoll(m_Yaw, m_Pitch, m_Roll);
 
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
 		/*if (l_PxType == "triangle_mesh")
@@ -66,7 +67,6 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 			//Vect3f l_Pos = (l_BBMax + l_BBMin) / 2;
 			l_PhysXManager->CreateRigidStatic(l_Name, aux, GetPosition(), qfIDENTITY, "FisicasAux");
 		}
-		
 	}
 	else
 	{
