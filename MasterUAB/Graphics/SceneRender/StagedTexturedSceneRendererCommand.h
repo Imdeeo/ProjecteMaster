@@ -2,11 +2,14 @@
 #define STAGED_TEXTURED_SCENE_RENDERER_COMMAND_H
 
 #include "SceneRender\SceneRendererCommand.h"
-#include "Texture\Texture.h"
+
 #include <vector>
 
 class CDynamicTextureManager;
 class CCapturedFrameBufferTexture;
+class CTexture;
+
+class ID3D11RenderTargetView;
 
 class CStagedTexturedSceneRendererCommand : public CSceneRendererCommand
 {
@@ -17,15 +20,8 @@ protected:
 		unsigned int m_StageId;
 		CTexture * m_Texture;
 
-		CStagedTexture(unsigned int _StageId, CTexture *_Texture)
-		{
-			m_StageId = _StageId;
-			m_Texture = _Texture;
-		}
-		void Activate()
-		{
-			m_Texture->Activate(m_StageId);
-		}
+		CStagedTexture(unsigned int _StageId, CTexture *_Texture);
+		void Activate();
 	};
 
 	std::vector<CStagedTexture>				m_StagedTextures;

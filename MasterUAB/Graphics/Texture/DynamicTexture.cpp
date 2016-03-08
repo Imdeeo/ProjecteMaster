@@ -1,7 +1,14 @@
 #include "DynamicTexture.h"
 
 #include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
+
 #include "XML\XMLTreeNode.h"
+
+#include <d3d11.h>
+
+#include <assert.h>
 
 CDynamicTexture::CDynamicTexture(const std::string &Name, int Width, int Height, bool CreateDepthStencilBuffer):
 m_Width(Width), m_Height(Height), m_CreateDepthStencilBuffer(CreateDepthStencilBuffer), m_DepthStencilBuffer(nullptr), m_DepthStencilView(nullptr)
@@ -127,4 +134,13 @@ bool CDynamicTexture::CreateSamplerState()
 	HRESULT l_HR = l_Device->CreateSamplerState(&l_SampDesc, &m_SamplerState);
 	assert(!FAILED(l_HR));
 	return true;
+}
+
+ID3D11RenderTargetView* CDynamicTexture::GetRenderTargetView()
+{
+	return m_RenderTargetView;
+}
+ID3D11DepthStencilView* CDynamicTexture::GetDepthStencilView()
+{
+	return m_DepthStencilView;
 }

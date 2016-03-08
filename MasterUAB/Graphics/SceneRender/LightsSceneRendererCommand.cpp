@@ -1,6 +1,8 @@
 #include "LightsSceneRendererCommand.h"
 #include "RenderManager\RenderManager.h"
 #include "Engine\UABEngine.h"
+#include "Effects\EffectManager.h"
+
 #include "Utils.h"
 
 CLightsSceneRendererCommand::CLightsSceneRendererCommand(CXMLTreeNode &TreeNode) :CSceneRendererCommand(TreeNode){}

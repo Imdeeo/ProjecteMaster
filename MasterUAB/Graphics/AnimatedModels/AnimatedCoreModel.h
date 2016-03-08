@@ -2,13 +2,13 @@
 #define ANIMATED_CORE_MODEL_H
 
 #include "Math\Vector3.h"
-#include "Utils.h"
 #include "Utils\Named.h"
 
-#include <cal3d\cal3d.h>
-
 #include <map>
+#include <vector>
+#include <string>
 
+class CalCoreModel;
 class CMaterial;
 
 class CAnimatedCoreModel: public CNamed
@@ -28,8 +28,8 @@ private:
 public:
 	CAnimatedCoreModel();
 	virtual ~CAnimatedCoreModel();
-	
-	UAB_GET_PROPERTY(CalCoreModel* ,CalCoreModel)
+
+	CalCoreModel* GetCalCoreModel();
 	const std::vector<CMaterial *> & GetMaterials() const {return m_Materials;}
 	bool Load(const std::string &Path);
 };

@@ -55,6 +55,8 @@
 #include "Effects\LightEffectParameters.h"
 #include "Effects\SceneEffectParameters.h"
 
+#include "Layers\LayerManager.h"
+
 #include "Lights\DirectionalLight.h"
 #include "Lights\Light.h"
 #include "Lights\LightManager.h"
@@ -103,6 +105,8 @@
 #include <map>
 
 #include <typeinfo.h>
+
+#include <cal3d\cal3d.h>
 
 using namespace luabind;
 
@@ -279,7 +283,7 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CActive>("CActive")
 			.def(constructor<const CXMLTreeNode&>())
 			.def(constructor<bool>())
-			.property("active",&CActive::Getactive,&CActive::Setactive)
+			.property("active",&CActive::GetActive,&CActive::SetActive)
 	];
 
 
@@ -825,17 +829,6 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CAnimatedModelEffectParameters>("CAnimatedModelEffectParameters")
 	];
 
-	module(m_LS)[
-		class_<CEffect>("CEffect")
-			.def(constructor<>())
-			.def("update_parameters", &CEffect::UpdateParameters)
-			.def("set_active", &CEffect::SetActive)
-	];
-
-
-	module(m_LS)[
-		class_<CEffectParameters>("CEffectParameters")
-	];
 
 	module(m_LS)[
 		class_<CEffectShader, CNamed>("CEffectShader")

@@ -1,8 +1,15 @@
 #include "Camera\3PersonCameraController.h"
 #include "Camera\Camera.h"
+
 #include "Engine\UABEngine.h"
+
 #include "RenderableObjects\RenderableObjectsManager.h"
+#include "RenderableObjects\RenderableObject.h"
 #include "InputManager\InputManager.h"
+
+#include "Layers\LayerManager.h"
+
+#include "XML\XMLTreeNode.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>

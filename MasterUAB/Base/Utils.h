@@ -5,6 +5,7 @@
 #include <Windows.h>
 #include <string>
 #include <vector>
+
 #include "Math\Quatn.h"
 
 #define MAXBONES 40

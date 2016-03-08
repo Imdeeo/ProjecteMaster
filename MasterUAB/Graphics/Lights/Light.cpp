@@ -2,6 +2,16 @@
 
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
+#include "DebugRender.h"
+
+#include "Layers\LayerManager.h"
+#include "Effects\EffectManager.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
+#include "RenderableObjects\RenderableVertexs.h"
+
+#include "Texture\DynamicTexture.h"
+
 
 #include "XML\XMLTreeNode.h"
 //#include "RenderManager\RenderManager.h"
@@ -85,4 +95,13 @@ const Mat44f & CLight::GetTransform()
 CRenderableVertexs* CLight::GetShape(CRenderManager *_RenderManager)
 {
 	return _RenderManager->GetDebugRender()->GetSPhere10();
+}
+
+CDynamicTexture* CLight::GetShadowMap()
+{
+	return m_ShadowMap;
+}
+CTexture* CLight::GetShadowMaskTexture()
+{
+	return m_ShadowMaskTexture;
 }

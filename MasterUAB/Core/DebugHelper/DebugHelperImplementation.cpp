@@ -1,5 +1,9 @@
 #include "DebugHelperImplementation.h"
 
+#include <AntTweakBar.h>
+
+#include "ScriptManager\ScriptManager.h"
+#include "HelperTypes.h"
 #include "Engine\UABEngine.h"
 #include <cassert>
 #include <iostream>     // std::cout, std::ostream, std::ios
@@ -8,6 +12,7 @@
 CDebugHelperImplementation::CDebugHelperImplementation(void *device)
 {
 	// TODO: inicializar AntTweakBar
+	m_PosRotType = new TwType();
 	
 	int status = TwInit(TW_DIRECT3D11, device);
 	assert(status);
@@ -23,7 +28,7 @@ CDebugHelperImplementation::CDebugHelperImplementation(void *device)
 			{ "roll", TW_TYPE_FLOAT, offsetof(SPositionOrientation, Roll), "step=0.05 precision=2" }
 		};
 
-		m_PosRotType = TwDefineStruct("POSITION_ORIENTATION", structMembers, 6, sizeof(SPositionOrientation), nullptr, nullptr);
+		*(m_PosRotType) = TwDefineStruct("POSITION_ORIENTATION", structMembers, 6, sizeof(SPositionOrientation), nullptr, nullptr);
 	}
 	m_Log = "";
 }
@@ -39,6 +44,8 @@ CDebugHelperImplementation::~CDebugHelperImplementation()
 	l_LogFile.close();
 	int status = TwTerminate();
 	assert(status);
+
+	delete m_PosRotType;
 	
 }
 
@@ -120,7 +127,7 @@ void CDebugHelperImplementation::RegisterBar()
 				break;
 
 			case POSITION_ORIENTATION:
-				type = m_PosRotType;
+				type = *(m_PosRotType);
 				break;
 
 			default:

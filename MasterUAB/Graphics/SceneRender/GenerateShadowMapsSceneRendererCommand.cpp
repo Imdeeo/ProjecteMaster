@@ -1,7 +1,9 @@
 #include "GenerateShadowMapsSceneRendererCommand.h"
 
 #include "Engine\UABEngine.h"
+#include "Lights\LightManager.h"
 #include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
 #include "Texture\DynamicTexture.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 

@@ -2,9 +2,11 @@
 #define SET_DEPTH_STENCIL_SCENE_RENDERER_COMMAND_H
 
 #include "SceneRendererCommand.h"
-#include "D3D11.h"
 
+
+class ID3D11DepthStencilState;
 class CRenderManager;
+class CXMLTreeNode;
 
 class CSetDepthStencilStateSceneRendererCommand : public CSceneRendererCommand
 {

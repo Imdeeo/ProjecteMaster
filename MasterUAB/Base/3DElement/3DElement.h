@@ -3,10 +3,10 @@
 
 #include "Math\Matrix44.h"
 #include <d3d11.h>
-#include "XML\XMLTreeNode.h"
-#include "Utils\CEmptyPointerClass.h"
 
-class CKGRenderManager;
+class CXMLTreeNode;
+class CEmptyPointerClass;
+class CRenderManager;
 
 class C3DElement
 {
@@ -25,81 +25,34 @@ public:
 	C3DElement(float Yaw, float Pitch, float Roll);
 	C3DElement(const CXMLTreeNode &XMLTreeNode);
 	virtual ~C3DElement(void);
-	virtual void SetPosition(const Vect3f &Position)
-	{
-		m_PrevPos = m_Position;
-		m_Position = Position;
-	}
-	inline const Vect3f & GetPosition() const
-	{
+	virtual void SetPosition(const Vect3f &Position);
+	inline const Vect3f & GetPosition() const{
 		return m_Position;
 	}
 	inline const Vect3f & GetPrevPosition() const
 	{
 		return m_PrevPos;
 	}
-	float GetYaw() const
-	{
-		return m_Yaw;
-	}
-	float GetPitch() const
-	{
-		return m_Pitch;
-	}
-	float GetRoll() const
-	{
-		return m_Roll;
-	}
-	virtual void SetYaw(float Yaw)
-	{
-		m_Yaw = Yaw;
-	}
-	virtual void SetPitch(float Pitch)
-	{
-		m_Pitch = Pitch;
-	}
-	virtual void SetRoll(float Roll)
-	{
-		m_Roll = Roll;
-	}
-	virtual void SetYawPitchRoll(float Yaw, float Pitch, float Roll)
-	{
-		m_Yaw = Yaw;
-		m_Pitch = Pitch;
-		m_Roll = Roll;
-	}
-	virtual void SetScale(const Vect3f &Scale)
-	{
-		m_Scale = Scale;
-	}
+	float GetYaw() const;
+	float GetPitch() const;
+	float GetRoll() const;
+	virtual void SetYaw(float Yaw);
+	virtual void SetPitch(float Pitch);
+	virtual void SetRoll(float Roll);
+	virtual void SetYawPitchRoll(float Yaw, float Pitch, float Roll);
+	virtual void SetScale(const Vect3f &Scale);
 	inline const Vect3f & GetScale() const
 	{
 		return m_Scale;
 	}
-	virtual void Render(CKGRenderManager *RenderManager);
+	virtual void Render(CRenderManager *RenderManager);
 	const Mat44f & GetTransform();
-	float GetVisible() const
-	{
-		return m_Visible;
-	}
+	float GetVisible() const;
+	virtual void SetVisible(bool newVisible);
 
-	virtual void SetVisible(bool newVisible) 
-	{
-		m_Visible = newVisible;
-	}
-
-	virtual CEmptyPointerClass*  GetPositionX()
-	{
-		return (CEmptyPointerClass*)(&m_Position.x);
-	}
-	virtual CEmptyPointerClass*  GetPositionY()
-	{
-		return (CEmptyPointerClass*)(&m_Position.y);
-	}
-	virtual CEmptyPointerClass*  GetPositionZ()
-	{
-		return (CEmptyPointerClass*)(&m_Position.z);
-	}
+	virtual CEmptyPointerClass*  GetPositionX();
+	virtual CEmptyPointerClass*  GetPositionY();
+	virtual CEmptyPointerClass*  GetPositionZ();
 };
 
 #endif //C3D_ELEMENT_H

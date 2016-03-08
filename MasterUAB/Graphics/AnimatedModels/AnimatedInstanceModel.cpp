@@ -1,14 +1,23 @@
 #include "AnimatedInstanceModel.h"
 
 #include "Math/Matrix44.h"
-
 #include "Math/Quatn.h"
 
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
+#include "Effects\EffectManager.h"
 
+#include "AnimatedModelsManager.h"
+#include "AnimatedCoreModel.h"
+
+#include "RenderableObjects\RenderableVertexs.h"
 #include "RenderableObjects\VertexTypes.h"
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
+#include "RenderableObjects\RenderableObjectTechnique.h"
+
+#include "Materials\Material.h"
+
+#include <cal3d\cal3d.h>
 
 CAnimatedInstanceModel::CAnimatedInstanceModel(CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
 {

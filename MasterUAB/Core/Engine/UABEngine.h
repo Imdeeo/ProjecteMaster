@@ -3,26 +3,31 @@
 
 #define LEVEL "2"
 
-#include "Effects\EffectManager.h"
-#include "Materials\MaterialManager.h"
-#include "Texture\TextureManager.h"
-#include "RenderManager\RenderManager.h"
-#include "StaticMesh\StaticMeshManager.h"
-#include "Lights\LightManager.h"
-#include "Layers\LayerManager.h"
-#include "AnimatedModels\AnimatedModelsManager.h"
-#include "ScriptManager\ScriptManager.h"
-#include "Camera\CameraControllerManager.h"
-#include "Cinematics\Cinematic.h"
-#include "PhysXManager\PhysXManager.h"
-#include "RenderableObjects\RenderableObjectTechniqueManager.h"
-#include "SceneRender\SceneRendererCommandManager.h"
+class CStaticMeshManager;
+class CLayerManager;
+class CMaterialManager;
+class CEffectManager;
+class CTextureManager;
+class CLightManager;
+class CRenderManager;
+class CAnimatedModelsManager;
+class CScriptManager;
+class CCameraControllerManager;
+class CCinematic;
+class CPhysXManager;
+class CRenderableObjectTechniqueManager;
+class CSceneRendererCommandManager;
 
 
 #include <string>
 
 class CUABEngine
 {
+private:
+
+	static CUABEngine * m_Instance;
+	CUABEngine(void);
+
 	CStaticMeshManager * m_StaticMeshManager;
 	CLayerManager * m_LayerManager;
 	CMaterialManager * m_MaterialManager;
@@ -39,27 +44,25 @@ class CUABEngine
 	CSceneRendererCommandManager* m_SceneRendererCommandManager;
 
 	std::string m_LevelLoaded;
-	UAB_GET_PROPERTY(CStaticMeshManager *, StaticMeshManager)
-	UAB_GET_PROPERTY(CLayerManager *, LayerManager)
-	UAB_GET_PROPERTY(CMaterialManager *, MaterialManager)
-	UAB_GET_PROPERTY(CEffectManager *, EffectManager)
-	UAB_GET_PROPERTY(CTextureManager *, TextureManager)
-	UAB_GET_PROPERTY(CLightManager *, LightManager)
-	UAB_GET_PROPERTY(CRenderManager *, RenderManager)
-	UAB_GET_PROPERTY(CAnimatedModelsManager *, AnimatedModelsManager)
-	UAB_GET_PROPERTY(CScriptManager *, ScriptManager)
-	UAB_GET_PROPERTY(CCameraControllerManager *, CameraControllerManager)
-	UAB_GET_PROPERTY(CCinematic *, Cinematic)
-	UAB_GET_PROPERTY(CPhysXManager *, PhysXManager)
-	UAB_GET_PROPERTY(CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
-	UAB_GET_PROPERTY(CSceneRendererCommandManager *, SceneRendererCommandManager)
-
-	static CUABEngine * m_Instance;
+	
+public:
+	CStaticMeshManager * GetStaticMeshManager()const;
+	CLayerManager * GetLayerManager()const;
+	CMaterialManager * GetMaterialManager()const;
+	CEffectManager * GetEffectManager()const;
+	CTextureManager * GetTextureManager()const;
+	CLightManager * GetLightManager()const;
+	CRenderManager * GetRenderManager()const;
+	CAnimatedModelsManager * GetAnimatedModelsManager()const;
+	CScriptManager * GetScriptManager()const;
+	CCameraControllerManager * GetCameraControllerManager()const;
+	CCinematic * GetCinematic()const;
+	CPhysXManager * GetPhysXManager()const;
+	CRenderableObjectTechniqueManager * GetRenderableObjectTechniqueManager()const;
+	CSceneRendererCommandManager * GetSceneRendererCommandManager()const;
 
 	std::string GetLevelLoaded()const{return m_LevelLoaded;}
 	
-	CUABEngine(void);
-
 	void LoadLevelXML(std::string filename);
 public:
 

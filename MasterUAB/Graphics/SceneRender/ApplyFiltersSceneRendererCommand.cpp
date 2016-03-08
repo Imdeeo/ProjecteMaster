@@ -1,9 +1,16 @@
 #include "ApplyFiltersSceneRendererCommand.h"
 #include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
 #include "Texture\DynamicTextureManager.h"
 #include "Texture\DynamicTexture.h"
 #include "Engine\UABEngine.h"
+
+#include "Materials\Material.h"
 #include "Materials\MaterialParameter.h"
+
+#include "RenderableObjects\RenderableObjectTechnique.h"
+
+#include <d3d11.h>
 
 CApplyFiltersSceneRendererCommand::CApplyFiltersSceneRendererCommand(CXMLTreeNode &TreeNode) : CStagedTexturedSceneRendererCommand(TreeNode)
 {

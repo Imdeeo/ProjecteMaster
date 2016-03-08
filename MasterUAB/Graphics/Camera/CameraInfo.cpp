@@ -1,5 +1,7 @@
 #include "CameraInfo.h"
 
+#include "XML\XMLTreeNode.h"
+
 CCameraInfo::CCameraInfo()
 {
 }

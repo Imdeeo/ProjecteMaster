@@ -1,6 +1,13 @@
 #include "RenderDebugShadowMapsSceneRendererCommand.h"
 #include "RenderManager\RenderManager.h"
 #include "Engine\UABEngine.h"
+#include "Lights\LightManager.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
+#include "Texture\DynamicTexture.h"
+
+#include "RenderableObjects\RenderableObjectTechnique.h"
+
+#include "XML\XMLTreeNode.h"
 
 CRenderDebugShadowMapsSceneRendererCommand::CRenderDebugShadowMapsSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
 {

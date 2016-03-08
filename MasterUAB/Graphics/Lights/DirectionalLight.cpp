@@ -2,9 +2,16 @@
 
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
+#include "Effects\EffectManager.h"
+#include "DebugRender.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
+#include "RenderableObjects\RenderableVertexs.h"
 
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
+
+#include "Texture\DynamicTexture.h"
 
 CDirectionalLight::CDirectionalLight() : CLight(), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
 {

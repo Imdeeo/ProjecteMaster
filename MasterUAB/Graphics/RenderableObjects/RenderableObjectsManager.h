@@ -3,6 +3,7 @@
 
 #include "Utils\TemplatedVectorMapManager.h"
 #include "RenderableObject.h"
+#include "Utils\Named.h"
 
 #include <string>
 

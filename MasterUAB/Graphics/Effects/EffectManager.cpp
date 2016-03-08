@@ -1,11 +1,17 @@
 #include "Effects\EffectManager.h"
 #include "XML\XMLTreeNode.h"
+
 #include "Lights\Light.h";
 #include "Lights\DirectionalLight.h";
 #include "Lights\SpotLight.h";
+
+#include "Texture\DynamicTexture.h"
+
 #include "Engine\UABEngine.h";
-#include "EffectShader.h"
-#include "DebugHelper\DebugHelper.h"
+#include "RenderManager\RenderManager.h";
+#include "Lights\LightManager.h";
+
+#include "DebugHelper\DebugHelper.h";
 
 CEffectManager::CEffectManager(void)
 {

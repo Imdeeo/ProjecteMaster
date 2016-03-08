@@ -1,7 +1,11 @@
 #include "CapturedFrameBufferTexture.h"
 
 #include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
 #include "XML\XMLTreeNode.h"
+#include "ContextManager\ContextManager.h"
+
+#include <d3d11.h>
 
 CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(const CXMLTreeNode &_TreeNode)
 {

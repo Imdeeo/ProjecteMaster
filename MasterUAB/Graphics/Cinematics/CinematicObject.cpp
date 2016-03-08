@@ -3,6 +3,9 @@
 #include "RenderableObjects\RenderableObject.h"
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
+#include "Layers\LayerManager.h"
+
+#include "XML\XMLTreeNode.h"
 
 CCinematicObject::CCinematicObject(CXMLTreeNode &TreeNode):m_RenderableObject(nullptr)
 {

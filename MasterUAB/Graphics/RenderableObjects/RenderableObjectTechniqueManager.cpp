@@ -2,6 +2,7 @@
 #include "XML\XMLTreeNode.h"
 #include "PoolRenderableObjectTechnique.h"
 #include "Engine\UABEngine.h"
+#include "Effects\EffectManager.h"
 #include "PoolRenderableObjectTechnique.h"
 
 

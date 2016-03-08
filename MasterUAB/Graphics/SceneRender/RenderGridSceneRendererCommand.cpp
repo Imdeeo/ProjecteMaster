@@ -1,6 +1,10 @@
 #include "RenderGridSceneRendererCommand.h"
 
 #include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
+#include "DebugRender.h"
+#include "Effects\EffectManager.h"
+#include "RenderableObjects\RenderableVertexs.h"
 
 CRenderGridSceneRendererCommand::CRenderGridSceneRendererCommand(CXMLTreeNode &TreeNode) :CSceneRendererCommand(TreeNode)
 {

@@ -1,15 +1,12 @@
 #ifndef STATIC_MESH_H
 #define STATIC_MESH_H
 
-#include "Utils.h"
 #include "Utils\Named.h"
 #include "Math\Matrix44.h"
-#include <assert.h>
+#include "Materials\Material.h"
 
 class CRenderableVertexs;
-class CMaterial;
 class CRenderManager;
-
 
 class CStaticMesh :	public CNamed
 {
@@ -33,14 +30,16 @@ public:
 	void CStaticMesh::CalcTangentsAndBinormals(void *VtxsData, unsigned short *IdxsData, size_t
 		VtxCount, size_t IdxCount, size_t VertexStride, size_t GeometryStride, size_t
 		NormalStride, size_t TangentStride, size_t BiNormalStride, size_t TextureCoordsStride);
-	UAB_GET_PROPERTY(Vect3f, BoundingBoxMax)
-	UAB_GET_PROPERTY(Vect3f, BoundingBoxMin)
-	UAB_GET_PROPERTY(Vect3f, BoundingSphereCenter)
+
+	Vect3f GetBoundingBoxMax(){ return m_BoundingBoxMax; }
+	Vect3f GetBoundingBoxMin(){ return m_BoundingBoxMin; }
+	Vect3f GetBoundingSphereCenter(){ return m_BoundingSphereCenter; }
+	float GetBoundingSphereRadius(){ return m_BoundingSphereRadius; }
+
+	std::vector<CMaterial *> GetMaterials()const;
 	
 private:
 	bool Destroy ();
-	UAB_GET_PROPERTY(float  ,BoundingSphereRadius)
-	UAB_GET_PROPERTY(std::vector<CMaterial *>, Materials)
 };
 
 #endif //STATIC_MESH_H

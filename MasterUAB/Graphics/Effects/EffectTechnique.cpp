@@ -1,5 +1,8 @@
 #include "Effects\EffectTechnique.h"
+
 #include "Engine\UABEngine.h"
+#include "EffectManager.h"
+
 #include "XML\XMLTreeNode.h"
 
 CEffectTechnique::CEffectTechnique(CXMLTreeNode &TreeNode):CNamed(TreeNode)
@@ -26,4 +29,13 @@ void CEffectTechnique::SetConstantBuffer(unsigned int IdBuffer, void *ConstantBu
 {
 	m_VertexShader->SetConstantBuffer(IdBuffer,ConstantBuffer);
 	m_PixelShader->SetConstantBuffer(IdBuffer,ConstantBuffer);
+}
+
+CEffectVertexShader* CEffectTechnique::GetVertexShader()
+{
+	return m_VertexShader;
+}
+CEffectPixelShader* CEffectTechnique::GetPixelShader()
+{
+	return m_PixelShader;
 }

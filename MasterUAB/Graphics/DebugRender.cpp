@@ -1,10 +1,14 @@
 #include "DebugRender.h"
 
+#include "Engine\UABEngine.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
+
 #include "RenderableObjects\VertexTypes.h"
 #include "RenderableObjects\TemplatedRenderableVertexs.h"
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
 #include "Effects\Effect.h"
-#include "Engine\UABEngine.h"
+
+#include <d3d11.h>
 
 
 CDebugRender::CDebugRender(ID3D11Device* _Device)
@@ -451,4 +455,10 @@ CRenderableVertexs * CDebugRender::GetLine(Vect3f inici, Vect3f final) const
 		{ final, CColor(1.f, 1.f, 1.f, 1.f) }
 	};
 	return new CUABLinesListRenderableVertexs<MV_POSITION_COLOR_VERTEX>(l_Line,2,1);
+}
+
+
+CEffectTechnique *	CDebugRender::GetDebugTechnique() const
+{
+	return m_EffectTechnique->GetEffectTechnique();
 }

@@ -4,7 +4,7 @@
 #include "Utils\TemplatedMapManager.h"
 #include "Effects\EffectTechnique.h"
 #include "Effects\EffectShader.h"
-#include "Effects\EffectTechnique.h"
+
 #include "Materials\MaterialParameter.h"
 #include "SceneEffectParameters.h"
 #include "AnimatedModelEffectParameters.h"
@@ -12,13 +12,12 @@
 
 #include <string.h>
 
-class CLight;
-
 #include <luabind/luabind.hpp>
 #include <luabind/function.hpp>
 #include <luabind/class.hpp>
 #include <luabind/operator.hpp>
 class lua_State;
+class CLight;
 
 #define MAX_RAW_DATA_ELEMENTS 64
 #define INDEX_SHADOWMAP_TEXTURE 6

@@ -1,16 +1,22 @@
 #include "StaticMesh\StaticMesh.h"
-#include "RenderManager\RenderManager.h"
+
 #include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "Effects\EffectManager.h"
+#include "Materials\MaterialManager.h"
+
 #include "RenderableObjects\RenderableVertexs.h"
 #include "RenderableObjects\VertexTypes.h"
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
+#include "RenderableObjects\RenderableObjectTechnique.h"
+
 #include "Utils.h"
-
-
 
 #include <iostream>
 #include <fstream>
 #include <cstring>
+
+#include <assert.h>
 
 #define HEADER 65109
 #define FOOTER 22014
@@ -369,4 +375,9 @@ void CStaticMesh::CalcTangentsAndBinormals(void *VtxsData, unsigned short *IdxsD
 		*l_BiNormalVtx = (*l_NormalVtx) ^ (*l_TangentVtx);
 	}
 	delete[] tan1;
+}
+
+std::vector<CMaterial *> CStaticMesh::GetMaterials()const
+{
+	return m_Materials;
 }

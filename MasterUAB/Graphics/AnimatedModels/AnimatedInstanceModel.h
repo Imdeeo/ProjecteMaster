@@ -2,9 +2,15 @@
 #define ANIMATED_INSTANCE_MODEL_H
 
 #include "RenderableObjects\RenderableObject.h"
-#include "RenderableObjects\RenderableVertexs.h"
-#include "AnimatedCoreModel.h"
 #include <map>
+
+class CalModel;
+class CalHardwareModel;
+class CRenderManager;
+class CAnimatedCoreModel;
+class CMaterial;
+class CRenderableVertexs;
+class CXMLTreeNode;
 
 class CAnimatedInstanceModel : public CRenderableObject
 {

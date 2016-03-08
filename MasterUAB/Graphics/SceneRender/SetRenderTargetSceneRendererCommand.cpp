@@ -3,6 +3,9 @@
 #include "Texture\DynamicTextureManager.h"
 #include "Texture\DynamicTexture.h"
 #include "Engine\UABEngine.h"
+#include "ContextManager\ContextManager.h"
+
+#include <d3d11.h>
 
 CSetRenderTargetSceneRendererCommand::CSetRenderTargetSceneRendererCommand(CXMLTreeNode &TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
 {

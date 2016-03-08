@@ -2,9 +2,10 @@
 #define H_3PERSON_CAMERA_CONTROLLER_H
 
 #include "Camera\CameraController.h"
-#include "RenderableObjects\RenderableObject.h"
 
 class CCamera;
+class CRenderableObject;
+class CXMLTreeNode;
 
 class C3PersonCameraController : public CCameraController
 {

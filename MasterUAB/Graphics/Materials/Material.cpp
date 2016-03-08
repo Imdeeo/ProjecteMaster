@@ -2,7 +2,11 @@
 
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
+#include "Effects\EffectManager.h"
+#include "Texture\TextureManager.h"
 
+#include "RenderableObjects\RenderableObjectTechnique.h"
 #include "TemplatedMaterialParameter.h"
 
 #define INDEX_LIGHTMAP_TEXTURE 1
@@ -130,4 +134,9 @@ void CMaterial::operator=(CMaterial &b)
 			m_Parameters.push_back(new CTemplatedMaterialParameter<Vect4f>(*((CTemplatedMaterialParameter<Vect4f>*)l_MaterialParameter)));
 		}
 	}
+}
+
+CRenderableObjectTechnique* CMaterial::GetRenderableObjectTechnique()
+{
+	return m_RenderableObjectTechnique;
 }

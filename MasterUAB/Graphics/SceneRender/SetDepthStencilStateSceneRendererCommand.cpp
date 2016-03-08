@@ -3,6 +3,10 @@
 #include <D3DX11.h>
 #include "Engine\UABEngine.h"
 
+#include "XML\XMLTreeNode.h"
+
+#include "Utils.h"
+
 CSetDepthStencilStateSceneRendererCommand::CSetDepthStencilStateSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
 {
 	D3D11_DEPTH_STENCIL_DESC l_DepthStencilStateDescription;

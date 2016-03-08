@@ -63,6 +63,9 @@
     <ClInclude Include="Components\ScriptedComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Math\Color.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -85,16 +88,10 @@
     <ClCompile Include="Math\MathConstants.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="XML\Example.cpp">
-      <Filter>XML</Filter>
-    </ClCompile>
     <ClCompile Include="XML\XMLTreeNode.cpp">
       <Filter>XML</Filter>
     </ClCompile>
     <ClCompile Include="Utils.cpp" />
-    <ClCompile Include="Utils\dummy.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\Named.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -108,6 +105,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Components\ScriptedComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\UABComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -134,5 +134,8 @@
       <Filter>Math</Filter>
     </None>
     <None Include="ClassDiagram1.cd" />
+    <None Include="Math\Color.inl">
+      <Filter>Math</Filter>
+    </None>
   </ItemGroup>
 </Project>

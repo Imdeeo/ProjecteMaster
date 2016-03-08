@@ -1,15 +1,24 @@
 #ifndef EFFECT_SHADER_H
 #define EFFECT_SHADER_H
-#include "Utils\Named.h"
-#include "Utils.h"
 
-#include <d3dcommon.h>
-#include <d3d11.h>
+#include "Utils\Named.h"
+#include <vector>
 
 #define SCENE_CONSTANT_BUFFER_ID	0
 #define LIGHT_CONSTANT_BUFFER_ID	1
 #define ANIMATED_CONSTANT_BUFFER_ID	2
 #define MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID	3
+
+class ID3D11VertexShader;
+class ID3D11InputLayout;
+class ID3D11PixelShader;
+class ID3D11Buffer;
+
+typedef struct _D3D_SHADER_MACRO D3D_SHADER_MACRO;
+typedef D3D_SHADER_MACRO D3D10_SHADER_MACRO;
+
+class ID3D10Blob;
+typedef ID3D10Blob ID3DBlob;
 
 class CEffectShader : public CNamed
 {
@@ -40,7 +49,7 @@ class CEffectVertexShader : public CEffectShader
 {
 protected:
 	ID3D11VertexShader *m_VertexShader;
-	ID3D11InputLayout *m_VertexLayout;
+	ID3D11InputLayout  *m_VertexLayout;
 	std::string m_VertexType;
 
 	void Destroy();
@@ -51,8 +60,8 @@ public:
 	bool Load();
 	void SetConstantBuffer(unsigned int IdBuffer, void *ConstantBuffer);
 	bool Reload();
-	UAB_GET_PROPERTY(ID3D11VertexShader*, VertexShader);
-	UAB_GET_PROPERTY(ID3D11InputLayout*, VertexLayout);
+	ID3D11VertexShader* GetVertexShader();
+	ID3D11InputLayout*  GetVertexLayout();
 	//UAB_GET_PROPERTY(ID3D11Buffer*, ConstantBuffer);
 };
 
@@ -69,7 +78,7 @@ public:
 	bool Load();
 	void SetConstantBuffer(unsigned int IdBuffer, void *ConstantBuffer);
 
-	UAB_GET_PROPERTY(ID3D11PixelShader*, PixelShader);
+	ID3D11PixelShader* GetPixelShader();
 	//UAB_GET_PROPERTY(ID3D11Buffer*, ConstantBuffer);
 };
 

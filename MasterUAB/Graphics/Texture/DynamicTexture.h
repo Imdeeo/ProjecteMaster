@@ -1,8 +1,15 @@
 #ifndef DYNAMIC_TEXTURE_H
 #define DYNAMIC_TEXTURE_H
 
-#include "Utils.h"
 #include "Texture.h"
+
+class ID3D11RenderTargetView;
+class ID3D11DepthStencilView;
+class ID3D11Texture2D;	  
+class ID3D11RenderTargetView;
+class ID3D11DepthStencilView;
+
+class CXMLTreeNode;
 
 class CDynamicTexture : public CTexture
 {
@@ -24,10 +31,10 @@ public:
 	CDynamicTexture(const CXMLTreeNode &TreeNode);
 	~CDynamicTexture();
 	bool Reload();
-	UAB_GET_PROPERTY(ID3D11RenderTargetView*, RenderTargetView);
-	UAB_GET_PROPERTY(ID3D11DepthStencilView*, DepthStencilView);
-	UAB_GET_PROPERTY(int, Width);
-	UAB_GET_PROPERTY(int, Height);
+	ID3D11RenderTargetView* GetRenderTargetView();
+	ID3D11DepthStencilView* GetDepthStencilView();
+	int GetWidth (){return m_Width;}
+	int GetHeight(){return m_Height;}
 };
 
 #endif

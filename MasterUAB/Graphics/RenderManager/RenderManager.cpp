@@ -2,9 +2,14 @@
 
 #include "Materials\MaterialManager.h"
 #include "RenderableObjects\RenderableObject.h"
+#include "RenderableObjects\RenderableVertexs.h"
 
 #include "Engine\UABEngine.h"
+#include "ContextManager\ContextManager.h"
 #include "DebugHelper\DebugHelper.h"
+
+#include "SceneRender\SceneRendererCommandManager.h"
+#include "Effects\EffectManager.h"
 
 #include "Effects\EffectTechnique.h"
 #include "Texture\Texture.h";
@@ -80,7 +85,6 @@ void CRenderManager::Render()
 {
 	m_ContextManager->BeginRender();
 
-	
 	UABEngine.GetSceneRendererCommandManager()->Execute(this);
 	m_ContextManager->EndRender();
 }
@@ -172,3 +176,37 @@ void CRenderManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_R
 	GetContextManager()->Unset();
 	m_ContextManager->GetDeviceContext()->RSSetViewports(1, m_ContextManager->getViewPort());
 }*/
+
+Vect2f CRenderManager::GetScreenPosFrom3D(const Vect3f &Position) const
+{
+	return m_CurrentCamera.GetPositionInScreenCoordinates(Position);
+}
+
+CContextManager* CRenderManager::GetContextManager()const
+{
+	return m_ContextManager;
+}
+void CRenderManager::SetContextManager(CContextManager* _ContextManager)
+{
+	m_ContextManager = _ContextManager;
+}
+
+ID3D11Device* CRenderManager::GetDevice()
+{
+	return m_ContextManager->GetDevice();
+}
+
+ID3D11DeviceContext* CRenderManager::GetDeviceContext()
+{
+	return m_ContextManager->GetDeviceContext();
+}
+
+IDXGISwapChain*	CRenderManager::GetSwapChain()
+{
+	return m_ContextManager->GetSwapChain();
+}
+
+CDebugRender* CRenderManager::GetDebugRender()const
+{
+	return m_DebugRender;
+}

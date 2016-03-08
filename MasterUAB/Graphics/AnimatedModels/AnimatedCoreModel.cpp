@@ -2,8 +2,12 @@
 #include "Materials\Material.h"
 #include "Engine\UABEngine.h"
 
+#include "Materials\MaterialManager.h"
+
 #include "XML\XMLTreeNode.h"
 
+
+#include <cal3d\cal3d.h>
 #include <cal3d/coretrack.h>
 
 CAnimatedCoreModel::CAnimatedCoreModel():CNamed("")
@@ -118,4 +122,9 @@ bool CAnimatedCoreModel::LoadAnimation(const std::string &Name, const std::strin
 		return false;
     }
 	return true;
+}
+
+CalCoreModel* CAnimatedCoreModel::GetCalCoreModel()
+{
+	return m_CalCoreModel; 
 }

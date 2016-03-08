@@ -1,6 +1,8 @@
 #include "LayerManager.h"
-#include "RenderableObjects\RenderableObjectsManager.h"
+#include "RenderManager\RenderManager.h"
 #include "Utils.h"
+
+#include "XML\XMLTreeNode.h"
 
 CLayerManager::CLayerManager():m_DefaultLayer(nullptr){}
 
