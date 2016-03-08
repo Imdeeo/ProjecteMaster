@@ -11,7 +11,6 @@
 #include <luabind/function.hpp>
 #include <luabind/class.hpp>
 #include <luabind/operator.hpp>
-class lua_State;
 
 template<class T>
 class CTemplatedVectorMapManager
@@ -72,15 +71,34 @@ public:
 		return m_ResourcesMap[Name].m_Value;
 	}
 
-	virtual bool AddResource(const std::string &Name, T *Resource)
+	virtual bool AddResource(const std::string &Name, T *_Resource)
 	{
 		if (m_ResourcesMap.find(Name) != m_ResourcesMap.end())
 		{
+			CHECKED_DELETE(_Resource);
 			return false;
 		}
 
-		m_ResourcesMap.insert(std::pair<std::string, CMapResourceValue>(Name, CMapResourceValue(Resource, m_ResourcesVector.size())));
-		m_ResourcesVector.push_back(Resource);
+		m_ResourcesMap.insert(std::pair<std::string, CMapResourceValue>(Name, CMapResourceValue(_Resource, m_ResourcesVector.size())));
+		m_ResourcesVector.push_back(_Resource);
+		return true;
+	}
+
+	virtual bool AddUpdateResource(const std::string &Name, T *_Resource)
+	{
+		if (_Resource == nullptr)
+		{
+			printf("CMapManager error: Recurs NULL\n");
+			return false;
+		}
+		if (m_ResourcesMap.find(Name) != m_ResourcesMap.end())
+		{
+			*(m_ResourcesMap[Name].m_Value) = *(_Resource);
+			CHECKED_DELETE(_Resource);
+			return true;
+		}
+		m_ResourcesMap.insert(std::pair<std::string, CMapResourceValue>(Name, CMapResourceValue(_Resource, m_ResourcesVector.size())));
+		m_ResourcesVector.push_back(_Resource);
 		return true;
 	}
 
