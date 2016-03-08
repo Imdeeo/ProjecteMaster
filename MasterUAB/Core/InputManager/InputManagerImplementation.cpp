@@ -1,6 +1,9 @@
 #include <Windows.h>
 #include <Xinput.h>
 
+
+#include "Utils.h"
+
 #include "InputManagerImplementation.h"
 
 #include "XML\XMLTreeNode.h"
@@ -90,6 +93,25 @@ CInputManagerImplementation::~CInputManagerImplementation()
 
 	CHECKED_RELEASE(m_Mouse);
 	CHECKED_RELEASE(m_DI);
+}
+
+void CInputManagerImplementation::AddReloadKey()
+{
+	Action action = {};
+	action.name = "RELOAD_LUA";
+	std::string type = "KEYBOARD";
+	action.inputType = ParseInputType(type);
+	action.mode = ParseMode("ON_PRESS");
+
+	action.triggersAxis = false;
+	action.axisName = "";
+	action.axisValue = 1.0f;
+
+	action.keyboard.key = 118; //F7
+	action.keyboard.needsAlt = false;
+	action.keyboard.needsCtrl = false;
+
+	m_Actions.push_back(action);
 }
 
 void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
@@ -189,7 +211,7 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 			}
 		}
 	}
-
+	AddReloadKey();
 	EndFrame();
 }
 

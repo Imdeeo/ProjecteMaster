@@ -5,12 +5,21 @@
 
 class CDirectionalLight : public CLight
 {
+protected:
+	Vect2f m_OrthoShadowMapSize;
+	virtual CRenderableVertexs* GetShape(CRenderManager *_RenderManager);
+
+	Vect3f m_Direction;
 public:
 	CDirectionalLight();
 	CDirectionalLight(CXMLTreeNode &TreeNode);
-	UAB_BUILD_GET_SET_BY_REFERENCE(Vect3f, Direction);
+
+	const Vect3f & GetDirection() const { return m_Direction; }
+	void SetDirection(Vect3f _Direction) { m_Direction = _Direction; }
+
 	virtual void Render(CRenderManager *RenderManager);
-	const Mat44f & GetTransform();
+	virtual const Mat44f & GetTransform();
+	void SetShadowMap(CRenderManager &RenderManager);
 };
 
 #endif //DIRECTIONAL_LIGHT_H

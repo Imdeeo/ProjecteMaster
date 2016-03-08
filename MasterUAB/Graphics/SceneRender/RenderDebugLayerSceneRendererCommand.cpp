@@ -2,11 +2,14 @@
 
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
+#include "Layers\LayerManager.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 
 
 CRenderDebugLayerSceneRendererCommand::CRenderDebugLayerSceneRendererCommand(CXMLTreeNode &TreeNode):CSceneRendererCommand(TreeNode)
 {
+	m_Layer = UABEngine.GetLayerManager()->GetLayer(TreeNode);
+	SetActive(TreeNode.GetBoolProperty("active", false));
 }
 
 CRenderDebugLayerSceneRendererCommand::~CRenderDebugLayerSceneRendererCommand()
@@ -14,6 +17,7 @@ CRenderDebugLayerSceneRendererCommand::~CRenderDebugLayerSceneRendererCommand()
 	//CHECKED_RELEASE(m_Layer);
 }
 
-void Execute(CRenderManager &RenderManager)
+void CRenderDebugLayerSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
+	m_Layer->RenderDebug(&RenderManager);
 }

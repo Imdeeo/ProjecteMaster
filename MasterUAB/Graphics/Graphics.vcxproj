@@ -18,6 +18,7 @@
     <ClCompile Include="AnimatedModels\AnimatedCoreModel.cpp" />
     <ClCompile Include="AnimatedModels\AnimatedInstanceModel.cpp" />
     <ClCompile Include="AnimatedModels\AnimatedModelsManager.cpp" />
+    <ClCompile Include="Camera\3PersonCameraController.cpp" />
     <ClCompile Include="Camera\CameraController.cpp" />
     <ClCompile Include="Camera\CameraControllerManager.cpp" />
     <ClCompile Include="Camera\CameraInfo.cpp" />
@@ -46,10 +47,12 @@
     <ClCompile Include="Materials\MaterialManager.cpp" />
     <ClCompile Include="Materials\MaterialParameter.cpp" />
     <ClCompile Include="RenderableObjects\PoolRenderableObjectTechnique.cpp" />
+    <ClCompile Include="RenderableObjects\RenderableObject.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectsManager.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectTechnique.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp" />
     <ClCompile Include="RenderManager\RenderManager.cpp" />
+    <ClCompile Include="SceneRender\ApplyFiltersSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\CaptureFrameBufferSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\ClearSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\DeferredShadingSceneRendererCommand.cpp" />
@@ -60,6 +63,7 @@
     <ClCompile Include="SceneRender\LightsSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\PresentSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\RenderAntTweakBarSceneRendereCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderAxisSceneRenderCommand.cpp" />
     <ClCompile Include="SceneRender\RenderDebugLayerSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\RenderDebugLightsSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.cpp" />
@@ -69,6 +73,7 @@
     <ClCompile Include="SceneRender\SceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp" />
     <ClCompile Include="SceneRender\SetDepthStencilStateSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SetLightPositionSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SetMatricesSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SetRenderTargetSceneRendererCommand.cpp" />
@@ -79,6 +84,7 @@
     <ClCompile Include="StaticMesh\StaticMeshManager.cpp" />
     <ClCompile Include="Texture\CapturedFrameBufferTexture.cpp" />
     <ClCompile Include="Texture\DynamicTexture.cpp" />
+    <ClCompile Include="Texture\DynamicTextureManager.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Texture\TextureManager.cpp" />
   </ItemGroup>
@@ -86,6 +92,7 @@
     <ClInclude Include="AnimatedModels\AnimatedCoreModel.h" />
     <ClInclude Include="AnimatedModels\AnimatedInstanceModel.h" />
     <ClInclude Include="AnimatedModels\AnimatedModelsManager.h" />
+    <ClInclude Include="Camera\3PersonCameraController.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\CameraController.h" />
     <ClInclude Include="Camera\CameraControllerManager.h" />
@@ -130,6 +137,7 @@
     <ClInclude Include="RenderableObjects\VertexTypes.h" />
     <ClInclude Include="RenderManager\RenderManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneRender\ApplyFiltersSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\CaptureFrameBufferSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\ClearSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\DeferredShadingSceneRendererCommand.h" />
@@ -140,6 +148,7 @@
     <ClInclude Include="SceneRender\LightsSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\PresentSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\RenderAntTweakBarSceneRendereCommand.h" />
+    <ClInclude Include="SceneRender\RenderAxisSceneRenderCommand.h" />
     <ClInclude Include="SceneRender\RenderDebugLayerSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\RenderDebugLightsSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.h" />
@@ -149,6 +158,7 @@
     <ClInclude Include="SceneRender\SceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SceneRendererCommandManager.h" />
     <ClInclude Include="SceneRender\SetDepthStencilStateSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SetLightPositionSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SetMatricesSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SetRenderTargetSceneRendererCommand.h" />
@@ -159,6 +169,7 @@
     <ClInclude Include="StaticMesh\StaticMeshManager.h" />
     <ClInclude Include="Texture\CapturedFrameBufferTexture.h" />
     <ClInclude Include="Texture\DynamicTexture.h" />
+    <ClInclude Include="Texture\DynamicTextureManager.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Texture\TextureManager.h" />
   </ItemGroup>
@@ -175,7 +186,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -188,7 +199,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -281,7 +292,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_VS13;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;$(SolutionDir)3rdParty\AntTweakBar\include;$(SolutionDir)PhysX;$(SolutionDir)Base;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)Core;$(SolutionDir)Graphics;$(SolutionDir)3rdParty\cal3d-0.11rc2\src;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -289,7 +300,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>D3DX11.lib;Core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>D3DX11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)\lib\x86;$(SolutionDir)bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -309,8 +320,8 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include\;$(SolutionDir)3rdParty\AntTweakBar\include\;$(SolutionDir)Base\;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include\;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include\;$(SolutionDir)Core\;$(SolutionDir)Graphics\;$(SolutionDir)3rdParty\cal3d-0.11rc2\src\;$(SolutionDir)3rdParty\Lua\src\;$(SolutionDir)3rdParty\luabind\;$(SolutionDir)3rdParty\boost_1_34_0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_VS13;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include\;$(SolutionDir)3rdParty\AntTweakBar\include\;$(SolutionDir)Base\;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include\;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include\;$(SolutionDir)Core\;$(SolutionDir)Graphics\;$(SolutionDir)3rdParty\cal3d-0.11rc2\src\;$(SolutionDir)3rdParty\Lua\src\;$(SolutionDir)3rdParty\luabind\;$(SolutionDir)3rdParty\boost_1_34_0\;$(SolutionDir)PhysX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

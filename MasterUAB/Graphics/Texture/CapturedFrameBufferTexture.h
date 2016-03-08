@@ -2,6 +2,8 @@
 #define CAPTURED_FRAME_BUFFER_TEXTURE_H
 #include "Texture.h"
 
+class ID3D11Texture2D;
+
 class CCapturedFrameBufferTexture :
 	public CTexture
 {

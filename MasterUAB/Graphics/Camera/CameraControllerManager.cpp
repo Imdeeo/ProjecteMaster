@@ -3,12 +3,17 @@
 #include "Camera\FPSCameraController.h"
 #include "Camera\CameraKeyController.h"
 #include "Camera\CameraController.h"
+#include "Camera\3PersonCameraController.h"
 #include "XML\XMLTreeNode.h"
+
+#include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
 
 #include "Engine\UABEngine.h"
 
 CCameraControllerManager::CCameraControllerManager():
-	m_CurrentCamera()
+	m_CurrentCamera(),
+	m_CurrentCameraControl(0)
 {
 
 }
@@ -54,6 +59,9 @@ bool CCameraControllerManager::Load(const std::string &FileName)
 						break;
 					case CCamera::CAMERA_TYPE_FPS:
 						AddResource(l_Element.GetPszProperty("name"), new CFPSCameraController());
+						break;
+					case CCamera::CAMERA_TYPE_3PS:
+						AddResource(l_Element.GetPszProperty("name"), new C3PersonCameraController(l_Element));
 						break;
 					case CCamera::CAMERA_TYPE_CYCLE:
 						AddResource(l_Element.GetPszProperty("name"), new CCameraKeyController(l_Element));
@@ -116,6 +124,13 @@ void CCameraControllerManager::UpdateDebugCamera(float _ElapsedTime)
 
 void CCameraControllerManager::Update(float _ElapsedTime)
 {
-	UpdateMainCamera(_ElapsedTime);
-	UpdateDebugCamera(_ElapsedTime);
+	switch (m_CurrentCameraControl)
+	{
+	case 0:
+		UpdateDebugCamera(_ElapsedTime);
+		break;
+	case 1:
+		UpdateMainCamera(_ElapsedTime); 
+		break;
+	}
 }

@@ -2,6 +2,7 @@
 #include "XML\XMLTreeNode.h"
 #include "PoolRenderableObjectTechnique.h"
 #include "Engine\UABEngine.h"
+#include "Effects\EffectManager.h"
 #include "PoolRenderableObjectTechnique.h"
 
 
@@ -48,6 +49,7 @@ bool CRenderableObjectTechniqueManager::Load(const std::string &FileName)
 							std::string l_name = l_ElementAux.GetPszProperty("vertex_type");
 							std::string l_technique = l_ElementAux.GetPszProperty("technique");
 							AddResource(l_name, new CRenderableObjectTechnique(l_name, UABEngine.GetEffectManager()->GetResource(l_technique)));
+							auxPoolRenderableObjectTechnique->AddElement(l_name, l_technique, GetResource(l_name));
 						}
 						if (l_ElementAux.GetName() == std::string("renderable_object_technique"))
 						{

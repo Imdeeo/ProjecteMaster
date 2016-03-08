@@ -7,6 +7,7 @@
 #include "RenderManager\RenderManager.h"
 #include "Materials\MaterialManager.h"
 
+class CRenderableObject;
 class CDebugRender;
 class CContextManager;
 
@@ -22,7 +23,7 @@ public:
 	void Render();
 
 	void Init();
-
+	static void ActualizarEnemigo(CRenderableObject* owner, float _ElapsedTime);
 private:
 	std::string m_DebugCameraName;
 	std::string m_MainCameraName;
@@ -31,7 +32,6 @@ private:
 	CFPSCameraController* m_FPSCamera;
 
 	int m_CurrentCamera_vision;
-	int m_CurrentCamera_control;
 
 	bool m_RenderCameraCube;
 

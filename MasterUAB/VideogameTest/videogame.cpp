@@ -14,7 +14,7 @@
 #include "Application.h"
 
 #include "InputManager\InputManagerImplementation.h"
-#include "DebugHelperImplementation.h"
+#include "DebugHelper\DebugHelperImplementation.h"
 
 #include "ContextManager\ContextManager.h"
 #include "DebugRender.h"
@@ -94,7 +94,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 {
 	//-----------Para detectar Memory Leaks-------------------------
 	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(28668);
+	//_CrtSetBreakAlloc(32455);
 	//----------
 
 	// Register the window class
@@ -105,7 +105,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 	// Calcular el tamano de nuestra ventana
 	RECT rc = {
-		0, 0, 800, 600
+		0, 0, 1280, 720
 	};
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
@@ -114,12 +114,12 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 	// Añadir aquí el Init de la applicacioón
 
-	s_Context.CreateContext(hWnd, 800, 600);
+	s_Context.CreateContext(hWnd, 1280, 720);
 
 
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
 
-	s_Context.CreateBackBuffer(hWnd, 800, 600);
+	s_Context.CreateBackBuffer(hWnd, 1280, 720);
 	s_Context.InitStates();
 	{
 		//CDebugRender debugRender(s_Context.GetDevice());

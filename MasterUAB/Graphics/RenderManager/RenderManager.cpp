@@ -2,9 +2,14 @@
 
 #include "Materials\MaterialManager.h"
 #include "RenderableObjects\RenderableObject.h"
+#include "RenderableObjects\RenderableVertexs.h"
 
 #include "Engine\UABEngine.h"
-#include "DebugHelper.h"
+#include "ContextManager\ContextManager.h"
+#include "DebugHelper\DebugHelper.h"
+
+#include "SceneRender\SceneRendererCommandManager.h"
+#include "Effects\EffectManager.h"
 
 #include "Effects\EffectTechnique.h"
 #include "Texture\Texture.h";
@@ -16,14 +21,15 @@
 CRenderManager::CRenderManager()
 	: m_UseDebugCamera(false)
 	, m_CurrentRenderlistLength(0),
-	m_DebugRender(nullptr),
-	m_RenderTargetView(nullptr)
+	m_DebugRender(nullptr)
+	/*m_RenderTargetView(nullptr),
+	m_DepthStencilView(nullptr)	*/
 {
 }
 
 CRenderManager::~CRenderManager()
 {
-
+	CHECKED_DELETE(m_DebugRender);
 }
 
 void CRenderManager::Init()
@@ -79,36 +85,15 @@ void CRenderManager::Render()
 {
 	m_ContextManager->BeginRender();
 
-	/*if (m_UseDebugCamera)
-	{
-		m_ContextManager->SetCamera(m_DebugCamera);
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition=m_DebugCamera.GetPosition();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector=m_DebugCamera.GetUp();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector=Vect4f(1,1,1,1);
-	}
-	else
-	{
-		m_ContextManager->SetCamera(m_CurrentCamera);
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition=m_CurrentCamera.GetPosition();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector=m_CurrentCamera.GetUp();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector=Vect4f(1,1,1,1);
-	}
-//	UABEngine.GetRenderableObjectTechniqueManager()->GetPoolRenderableObjectTechniques().GetResource("forward_shading")->Apply();
-
-	UABEngine.GetEffectManager()->SetLightsConstants(MAX_LIGHTS_BY_SHADER);
-
-	std::vector<BlendedSubmesh> l_SubmeshesWithBlend;
-
-	UABEngine.GetLayerManager()->Render(this);
-
-	m_CurrentRenderlistLength = 0;
-	CDebugHelper::GetDebugHelper()->Render();*/
-		
 	UABEngine.GetSceneRendererCommandManager()->Execute(this);
 	m_ContextManager->EndRender();
 }
 
-void CRenderManager::EngableAlphaBlendState()
+void CRenderManager::EnableBlendState(ID3D11BlendState* _blendState)
+{
+	m_ContextManager->GetDeviceContext()->OMSetBlendState(_blendState, NULL, 0xffffffff);
+}
+void CRenderManager::EnableAlphaBlendState()
 {
 	ID3D11BlendState* l_AlphaBlendState = m_ContextManager->GetBlendState(CContextManager::BLEND_ALPHA);
 	m_ContextManager->GetDeviceContext()->OMSetBlendState(l_AlphaBlendState,NULL,0xffffffff);
@@ -132,7 +117,7 @@ void CRenderManager::SetMatrixViewProjection()
 {
 	if (m_UseDebugCamera)
 	{
-		m_ContextManager->SetCamera(m_DebugCamera);
+		m_ContextManager->SetCamera(m_DebugCamera);		
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition = m_DebugCamera.GetPosition();
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector = m_DebugCamera.GetUp();
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = Vect4f(1, 1, 1, 1);
@@ -144,6 +129,10 @@ void CRenderManager::SetMatrixViewProjection()
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector = m_CurrentCamera.GetUp();
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = Vect4f(1, 1, 1, 1);
 	}
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseView = UABEngine.GetEffectManager()->m_SceneParameters.m_View;
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseView.Invert();
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseProjection = UABEngine.GetEffectManager()->m_SceneParameters.m_Projection;
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseProjection.Invert();
 }
 
 void CRenderManager::SetAntTweakBar()
@@ -157,33 +146,67 @@ void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture
 	CEffectManager::m_SceneParameters.m_BaseColor=Color;
 	if(_Texture!=NULL)
 		_Texture->Activate(0);
+
+	D3D11_VIEWPORT *l_CurrentViewport=m_ContextManager->getViewPort();
 	D3D11_VIEWPORT l_Viewport;
-	l_Viewport.Width = _Width*m_ContextManager->getViewPort()->Width;
-	l_Viewport.Height = _Height*(m_ContextManager->getViewPort()->Height);
+
+	l_Viewport.Width = _Width*l_CurrentViewport->Width;
+	l_Viewport.Height = _Height*(l_CurrentViewport->Height);
 	l_Viewport.MinDepth = 0.0f;
 	l_Viewport.MaxDepth = 1.0f;
-	l_Viewport.TopLeftX = x*m_ContextManager->getViewPort()->Width;
-	l_Viewport.TopLeftY = y*m_ContextManager->getViewPort()->Height;
+	l_Viewport.TopLeftX = x*l_CurrentViewport->Width;
+	l_Viewport.TopLeftY = y*l_CurrentViewport->Height;
 	m_ContextManager->GetDeviceContext()->RSSetViewports(1, &l_Viewport);
-	m_DebugRender->GetQuadRV()->Render(this, _EffectTechnique,	&CEffectManager::m_SceneParameters);
-	m_ContextManager->GetDeviceContext()->RSSetViewports(1, m_ContextManager->getViewPort());
+
+	CEffectManager::SetSceneConstants(_EffectTechnique);
+
+	m_DebugRender->GetQuadRV()->Render(this, _EffectTechnique,	CEffectManager::GetRawData());
+	m_ContextManager->GetDeviceContext()->RSSetViewports(1, l_CurrentViewport);
 }
 
 
-void CRenderManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const *_RenderTargetViews,
+void CRenderManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_RenderTargetViews,
 	ID3D11DepthStencilView *_DepthStencilView)
 {
-	m_NumViews = _NumViews;
-	m_CurrentRenderTargetViews = _RenderTargetViews;
-	m_CurrentDepthStencilView = _DepthStencilView;
-	m_ContextManager->GetDeviceContext()->OMSetRenderTargets(m_NumViews, _RenderTargetViews,	_DepthStencilView);
+	m_ContextManager->SetRenderTargets(_NumViews, _RenderTargetViews, _DepthStencilView);
 }
 
-void CRenderManager::UnsetRenderTargets()
+/*void CRenderManager::UnsetRenderTargets()
 {
-	m_NumViews = 1;
-	m_CurrentRenderTargetViews = &m_RenderTargetView;
-	m_CurrentDepthStencilView = m_DepthStencilView;
-	m_ContextManager->GetDeviceContext()->OMSetRenderTargets(m_NumViews, &m_RenderTargetView, m_DepthStencilView);
+	GetContextManager()->Unset();
 	m_ContextManager->GetDeviceContext()->RSSetViewports(1, m_ContextManager->getViewPort());
+}*/
+
+Vect2f CRenderManager::GetScreenPosFrom3D(const Vect3f &Position) const
+{
+	return m_CurrentCamera.GetPositionInScreenCoordinates(Position);
+}
+
+CContextManager* CRenderManager::GetContextManager()const
+{
+	return m_ContextManager;
+}
+void CRenderManager::SetContextManager(CContextManager* _ContextManager)
+{
+	m_ContextManager = _ContextManager;
+}
+
+ID3D11Device* CRenderManager::GetDevice()
+{
+	return m_ContextManager->GetDevice();
+}
+
+ID3D11DeviceContext* CRenderManager::GetDeviceContext()
+{
+	return m_ContextManager->GetDeviceContext();
+}
+
+IDXGISwapChain*	CRenderManager::GetSwapChain()
+{
+	return m_ContextManager->GetSwapChain();
+}
+
+CDebugRender* CRenderManager::GetDebugRender()const
+{
+	return m_DebugRender;
 }

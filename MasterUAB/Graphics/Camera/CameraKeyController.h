@@ -2,10 +2,10 @@
 #define CAMERA_KEY_CONTROLLER_H
 
 #include "Camera\CameraController.h"
-#include "XML\XMLTreeNode.h"
 #include <vector>
 
 class CCameraKey;
+class CXMLTreeNode;
 
 class CCameraKeyController : public CCameraController
 {	

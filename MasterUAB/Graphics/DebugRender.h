@@ -1,3 +1,5 @@
+#ifdef _DEBUG
+
 #ifndef DEBUGRENDER_H
 #define DEBUGRENDER_H
 
@@ -12,19 +14,21 @@ private:
 
 #endif*/
 
-#include <d3d11.h>
 
-#include "RenderableObjects\RenderableVertexs.h"
+
 #include "Math\Vector3.h"
 
-#include "Effects\EffectTechnique.h"
-
 class CEffect;
+class ID3D11Device;
+class CRenderableObjectTechnique;
+class CRenderableVertexs;
+class CEffectTechnique;
 
 class CDebugRender
 {
 public:
 	CDebugRender(ID3D11Device* _Device);
+	~CDebugRender();
 
 	CRenderableVertexs * GetLine(Vect3f inici, Vect3f final) const;
 
@@ -68,10 +72,10 @@ public:
 	Vect3f GetSphere10BSCenter() const { return m_Sphere_10SegBSCenter; }
 	Vect3f GetConeBSCenter() const { return m_ConeBSCenter; }
 
-	CEffectTechnique *	GetDebugTechnique() const { return m_EffectTechnique; }
+	CEffectTechnique *	GetDebugTechnique() const;
 
 private:
-	CEffectTechnique				*m_EffectTechnique;
+	CRenderableObjectTechnique		*m_EffectTechnique;
 
 	CRenderableVertexs				*m_SimpleTriangle;
 	CRenderableVertexs				*m_ClassicBlendTriangle;
@@ -119,5 +123,7 @@ private:
 	Vect3f m_Sphere_10SegBSCenter;
 	Vect3f m_ConeBSCenter;
 };
+
+#endif
 
 #endif

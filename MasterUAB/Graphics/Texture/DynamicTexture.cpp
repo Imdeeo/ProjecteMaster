@@ -1,19 +1,28 @@
 #include "DynamicTexture.h"
 
 #include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
+
 #include "XML\XMLTreeNode.h"
 
+#include <d3d11.h>
+
+#include <assert.h>
+
 CDynamicTexture::CDynamicTexture(const std::string &Name, int Width, int Height, bool CreateDepthStencilBuffer):
-m_Width(Width), m_Height(Height), m_CreateDepthStencilBuffer(CreateDepthStencilBuffer)
+m_Width(Width), m_Height(Height), m_CreateDepthStencilBuffer(CreateDepthStencilBuffer), m_DepthStencilBuffer(nullptr), m_DepthStencilView(nullptr)
 {
-	Load(Name);
+	SetName(Name);
+	Init();
 }
 
-CDynamicTexture::CDynamicTexture(const CXMLTreeNode &TreeNode) 
+CDynamicTexture::CDynamicTexture(const CXMLTreeNode &TreeNode) :m_DepthStencilBuffer(nullptr), m_DepthStencilView(nullptr)
 {
 	//<dynamic_texture name = "DepthMapTexture" texture_width_as_frame_buffer = "true" format_type = "R32F" / >
+	
 	std::string l_name = TreeNode.GetPszProperty("name");
-	Load(l_name);
+	SetName(l_name);
 	if (TreeNode.GetBoolProperty("texture_width_as_frame_buffer"))
 	{
 		m_Width = UABEngine.GetRenderManager()->GetContextManager()->GetWidth();
@@ -23,8 +32,9 @@ CDynamicTexture::CDynamicTexture(const CXMLTreeNode &TreeNode)
 	{
 		m_Width = TreeNode.GetIntProperty("width");
 		m_Height = TreeNode.GetIntProperty("height");		
-	}	
-	m_CreateDepthStencilBuffer = TreeNode.GetBoolProperty("texture_width_as_frame_buffer");
+	}
+	m_CreateDepthStencilBuffer = TreeNode.GetBoolProperty("create_depth_stencil_buffer",false);	
+	Init();
 }
 
 
@@ -67,7 +77,7 @@ void CDynamicTexture::Init()
 	l_ShaderResourceViewDescription.Texture2D.MipLevels = 1;
 
 	l_HR = l_Device->CreateShaderResourceView(m_RenderTargetTexture, &l_ShaderResourceViewDescription, &m_Texture);
-	assert(l_HR);
+	assert(!FAILED(l_HR));
 
 	if (m_CreateDepthStencilBuffer)
 	{
@@ -100,6 +110,10 @@ void CDynamicTexture::Init()
 		l_HR = l_Device->CreateDepthStencilView(m_DepthStencilBuffer, &l_DepthStencilViewDescription, &m_DepthStencilView);
 		assert(!FAILED(l_HR));
 	}
+	else
+	{
+		m_DepthStencilBuffer = nullptr;
+	}
 
 	CreateSamplerState();
 }
@@ -120,4 +134,13 @@ bool CDynamicTexture::CreateSamplerState()
 	HRESULT l_HR = l_Device->CreateSamplerState(&l_SampDesc, &m_SamplerState);
 	assert(!FAILED(l_HR));
 	return true;
+}
+
+ID3D11RenderTargetView* CDynamicTexture::GetRenderTargetView()
+{
+	return m_RenderTargetView;
+}
+ID3D11DepthStencilView* CDynamicTexture::GetDepthStencilView()
+{
+	return m_DepthStencilView;
 }

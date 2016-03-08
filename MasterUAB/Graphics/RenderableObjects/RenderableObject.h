@@ -5,18 +5,30 @@
 
 #include "Utils\Named.h"
 #include "3DElement\3DElement.h"
+#include "Components\UABComponentManager.h"
 
+class CUABComponentManager;
 class CXMLTreeNode;
 class CRenderManager;
 
 class CRenderableObject : public C3DElement, public CNamed
 {
+private:
+	CUABComponentManager* m_ComponentManager;
+	bool m_DebugRender;
 public:
-	CRenderableObject():CNamed(""){};
-	CRenderableObject(const CXMLTreeNode &TreeNode):C3DElement(TreeNode),CNamed(TreeNode){};
-	virtual ~CRenderableObject() {}
-	virtual void Update(float ElapsedTime) {}
-	virtual void Render(CRenderManager *RM) = 0;
+	CRenderableObject();
+	CRenderableObject(const CXMLTreeNode &TreeNode);
+	virtual ~CRenderableObject();
+	virtual void Update(float ElapsedTime);
+	virtual void Render(CRenderManager *RM);
+	virtual void RenderDebug(CRenderManager *RM);
+
+	void SetComponentManager(CUABComponentManager* _ComponentManager);
+	CUABComponentManager* GetComponentManager()const;
+
+	void SetDebugRender(bool _DebugRender){ m_DebugRender = _DebugRender;}
+	bool GetDebugRender(){ return m_DebugRender; }
 };
 
 #endif //RENDERABLE_OBJECT_H

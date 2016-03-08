@@ -7,7 +7,7 @@ class CUnsetRenderTargetSceneRendererCommand : public CSceneRendererCommand
 {
 public:
 	CUnsetRenderTargetSceneRendererCommand(CXMLTreeNode &TreeNode);
-	virtual ~CUnsetRenderTargetSceneRendererCommand();
+	virtual ~CUnsetRenderTargetSceneRendererCommand(){};
 	void Execute(CRenderManager &RenderManager);
 };
 

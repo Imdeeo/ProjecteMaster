@@ -4,9 +4,8 @@
 #include "Cinematics\CinematicPlayer.h"
 #include <stdlib.h>
 #include <vector>
-#include "XML\XMLTreeNode.h"
 
-
+class CXMLTreeNode;
 class CCinematicObjectKeyFrame;
 class CRenderableObject;
 

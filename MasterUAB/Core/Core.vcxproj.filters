@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="DebugHelper.cpp" />
-    <ClCompile Include="DebugHelperImplementation.cpp" />
     <ClCompile Include="Engine\UABEngine.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -15,10 +13,17 @@
     <ClCompile Include="ScriptManager\ScriptManager.cpp">
       <Filter>ScriptManager</Filter>
     </ClCompile>
+    <ClCompile Include="DebugHelper\DebugHelper.cpp">
+      <Filter>DebugHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugHelper\DebugHelperImplementation.cpp">
+      <Filter>DebugHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="IA\AStar.cpp">
+      <Filter>IA</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DebugHelper.h" />
-    <ClInclude Include="DebugHelperImplementation.h" />
     <ClInclude Include="Engine\UABEngine.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -31,6 +36,15 @@
     <ClInclude Include="ScriptManager\ScriptManager.h">
       <Filter>ScriptManager</Filter>
     </ClInclude>
+    <ClInclude Include="DebugHelper\DebugHelperImplementation.h">
+      <Filter>DebugHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugHelper\DebugHelper.h">
+      <Filter>DebugHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="IA\AStar.h">
+      <Filter>IA</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -41,6 +55,12 @@
     </Filter>
     <Filter Include="ScriptManager">
       <UniqueIdentifier>{176bee89-660d-4925-8990-3ea2554dfce9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DebugHelper">
+      <UniqueIdentifier>{5327097c-2cd6-4b2b-bf3f-f3b1fd5d53d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IA">
+      <UniqueIdentifier>{520379ca-a962-48e1-9742-5de43c0097ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

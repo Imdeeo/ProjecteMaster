@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <animated_models>
-	<animated_model name="bot" path="Data/AnimatedModels/Bot/"/>
+	<animated_model name="Bruja" path="Data/AnimatedModels/Bruja/"/>
+	<animated_model name="Guardia" path="Data/AnimatedModels/Guardia/"/>
+	<animated_model name="Sereno" path="Data/AnimatedModels/Sereno/"/>
+	<animated_model name="Obispo" path="Data/AnimatedModels/Obispo/"/>
 </animated_models>

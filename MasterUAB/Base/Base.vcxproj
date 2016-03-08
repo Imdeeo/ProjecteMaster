@@ -16,7 +16,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DElement\3DElement.h" />
+    <ClInclude Include="Components\ScriptedComponent.h" />
+    <ClInclude Include="Components\UABComponent.h" />
+    <ClInclude Include="Components\UABComponentManager.h" />
     <ClInclude Include="HelperTypes.h" />
+    <ClInclude Include="Math\Color.h" />
     <ClInclude Include="Math\Quatn.h" />
     <ClInclude Include="Math\MathTypes.h" />
     <ClInclude Include="Math\MathUtils.h" />
@@ -37,20 +41,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DElement\3DElement.cpp" />
+    <ClCompile Include="Components\ScriptedComponent.cpp" />
+    <ClCompile Include="Components\UABComponent.cpp" />
+    <ClCompile Include="Components\UABComponentManager.cpp" />
     <ClCompile Include="Math\MathConstants.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Utils\Active.cpp" />
-    <ClCompile Include="Utils\dummy.cpp" />
     <ClCompile Include="Utils\Named.cpp" />
-    <ClCompile Include="XML\Example.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="XML\XMLTreeNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="Math\Color.inl" />
     <None Include="Math\MathUtils.inl" />
     <None Include="Math\Matrix33.inl" />
     <None Include="Math\Matrix34.inl" />
@@ -69,7 +71,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -118,7 +120,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Base\;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\include\;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include\;$(SolutionDir)\3rdParty\cal3d-0.11rc2\src\;$(SolutionDir)3rdParty\Lua\src\;$(SolutionDir)3rdParty\luabind\;$(SolutionDir)3rdParty\boost_1_34_0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include\;$(SolutionDir)Base\;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\include\;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include\;$(SolutionDir)\3rdParty\cal3d-0.11rc2\src\;$(SolutionDir)3rdParty\Lua\src\;$(SolutionDir)3rdParty\luabind\;$(SolutionDir)3rdParty\boost_1_34_0\;$(SolutionDir)Graphics;$(SolutionDir)Core;$(SolutionDir)PhysX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -160,7 +162,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Base;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\include;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)\3rdParty\cal3d-0.11rc2\src;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)PhysX;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\include;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)\3rdParty\cal3d-0.11rc2\src;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;$(SolutionDir)Core;$(SolutionDir)Graphics;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -183,7 +185,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Base\;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\include\;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include\;$(SolutionDir)\3rdParty\cal3d-0.11rc2\src\;$(SolutionDir)3rdParty\Lua\src\;$(SolutionDir)3rdParty\luabind\;$(SolutionDir)3rdParty\boost_1_34_0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Base\;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\include\;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include\;$(SolutionDir)\3rdParty\cal3d-0.11rc2\src\;$(SolutionDir)3rdParty\Lua\src\;$(SolutionDir)3rdParty\luabind\;$(SolutionDir)3rdParty\boost_1_34_0\;$(SolutionDir)Graphics;$(SolutionDir)Core;$(SolutionDir)PhysX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

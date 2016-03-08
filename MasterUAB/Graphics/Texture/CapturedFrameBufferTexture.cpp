@@ -1,12 +1,17 @@
 #include "CapturedFrameBufferTexture.h"
 
 #include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
 #include "XML\XMLTreeNode.h"
+#include "ContextManager\ContextManager.h"
+
+#include <d3d11.h>
 
 CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(const CXMLTreeNode &_TreeNode)
 {
-	m_Name = _TreeNode.GetPszProperty("file");
-	if (_TreeNode.GetBoolProperty("texture_width_as_frame_buffer"))
+	m_Name = _TreeNode.GetPszProperty("name");
+	bool l_TextuerWidthAsFrameBuffer = _TreeNode.GetBoolProperty("texture_width_as_frame_buffer");
+	if (l_TextuerWidthAsFrameBuffer)
 	{
 		m_Width = UABEngine.GetRenderManager()->GetContextManager()->GetWidth();
 		m_Height = UABEngine.GetRenderManager()->GetContextManager()->GetHeight();
@@ -53,7 +58,7 @@ void CCapturedFrameBufferTexture::Init(const std::string &_Name, unsigned int _W
 	l_texture2DDescription.SampleDesc.Quality=0;
 	l_texture2DDescription.Usage = D3D11_USAGE_DEFAULT;
 
-	HRESULT l_HR = l_Device->CreateTexture2D(&l_texture2DDescription, NULL, (ID3D11Texture2D**)(&m_Texture));
+	HRESULT l_HR = l_Device->CreateTexture2D(&l_texture2DDescription, NULL, &m_DataTexture);
 	if (FAILED(l_HR))
 	{
 		return;
@@ -110,6 +115,5 @@ bool CCapturedFrameBufferTexture::Capture(unsigned int StagedId)
 		return false;
 	}
 	l_RenderManager.GetDeviceContext()->CopyResource(m_DataTexture, l_Surface);
-
 	return true;
 }

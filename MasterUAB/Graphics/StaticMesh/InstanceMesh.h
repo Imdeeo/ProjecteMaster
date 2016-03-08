@@ -15,6 +15,7 @@ public:
 	CInstanceMesh(const std::string &Name, const std::string &CoreName);
 	~CInstanceMesh();
 	void Render(CRenderManager *RM);
+	void RenderDebug(CRenderManager *RM);
 };
 
 #endif //INSTANCE_MESH_H

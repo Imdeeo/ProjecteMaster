@@ -15,17 +15,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DebugHelper.cpp" />
-    <ClCompile Include="DebugHelperImplementation.cpp" />
+    <ClCompile Include="DebugHelper\DebugHelper.cpp" />
+    <ClCompile Include="DebugHelper\DebugHelperImplementation.cpp" />
     <ClCompile Include="Engine\UABEngine.cpp" />
+    <ClCompile Include="IA\AStar.cpp" />
     <ClCompile Include="InputManager\InputManager.cpp" />
     <ClCompile Include="InputManager\InputManagerImplementation.cpp" />
     <ClCompile Include="ScriptManager\ScriptManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DebugHelper.h" />
-    <ClInclude Include="DebugHelperImplementation.h" />
+    <ClInclude Include="DebugHelper\DebugHelper.h" />
+    <ClInclude Include="DebugHelper\DebugHelperImplementation.h" />
     <ClInclude Include="Engine\UABEngine.h" />
+    <ClInclude Include="IA\AStar.h" />
     <ClInclude Include="InputManager\InputManager.h" />
     <ClInclude Include="InputManager\InputManagerImplementation.h" />
     <ClInclude Include="ScriptManager\ScriptManager.h" />
@@ -40,7 +42,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -138,7 +140,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>PhysX_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

@@ -1,18 +1,25 @@
 #ifndef RENDER_MANAGER_H
 #define RENDER_MANAGER_H
 
-#include "DebugRender.h"
 #include "Camera\Frustum.h"
-#include "RenderableObjects\RenderableObjectsManager.h"
-#include "Utils.h"
-#include "ContextManager\ContextManager.h"
+#include "Camera\Camera.h"
 
 class CEffectTechnique;
 class CTexture;
+class CColor;
 
 class CMaterialManager;
 
 class CDebugRender;
+class CContextManager;
+
+class ID3D11BlendState;
+class ID3D11Device;
+class ID3D11DeviceContext;
+class IDXGISwapChain;
+
+class ID3D11RenderTargetView;
+class ID3D11DepthStencilView;
 
 class CRenderManager
 {
@@ -27,13 +34,13 @@ public:
 
 	void SetUseDebugCamera(bool _use) { m_UseDebugCamera = _use; }
 
-	void EngableAlphaBlendState();
+	void EnableBlendState(ID3D11BlendState* _blendState);
+	void EnableAlphaBlendState();
 	void DisableAlphaBlendState();
 
 	//bool AddRenderableObjectToRenderList(CRenderableObject* _RenderableObject);
-	void UnsetRenderTargets();
-	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView *const*_RenderTargetViews,
-		ID3D11DepthStencilView *_DepthStencilView);
+	//void UnsetRenderTargets();
+	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_RenderTargetViews,ID3D11DepthStencilView *_DepthStencilView);
 
 	void Render();
 	void Clear(bool renderTarget, bool depthStencil);
@@ -44,7 +51,20 @@ public:
 	//funciones de Draw
 	void DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture *_Texture, float x, float y, float _Width, float _Height, const CColor &Color);
 
+	//funcion para sacar posicion en pantalla de la luz desde la camara
+	Vect2f GetScreenPosFrom3D(const Vect3f &Position) const;
+
 	//void Init();
+	CDebugRender* GetDebugRender()const;
+
+	CContextManager* GetContextManager()const;
+	void SetContextManager(CContextManager* _ContextManager);
+
+	ID3D11Device* GetDevice();
+	ID3D11DeviceContext* GetDeviceContext();
+	IDXGISwapChain*	GetSwapChain();
+
+
 private:
 
 	CCamera							m_CurrentCamera;
@@ -54,38 +74,13 @@ private:
 
 	CDebugRender*					m_DebugRender;
 
-	ID3D11RenderTargetView* const	m_RenderTargetView;
-	ID3D11DepthStencilView*			m_DepthStencilView;
+	//ID3D11RenderTargetView* const	m_RenderTargetView;
+	//ID3D11DepthStencilView*			m_DepthStencilView;
 
-	int								m_NumViews;
-	ID3D11RenderTargetView* const*	m_CurrentRenderTargetViews;
-	ID3D11DepthStencilView*			m_CurrentDepthStencilView;
 
 	size_t							m_CurrentRenderlistLength;
 	
-	CRenderableObjectsManager		m_RenderableObjectManager;
-
-	UAB_GET_PROPERTY(CDebugRender*, DebugRender)
-	UAB_BUILD_GET_SET(CContextManager*,ContextManager)
-
-	UAB_GET_PROPERTY(int, NumViews)
-	UAB_GET_PROPERTY(ID3D11RenderTargetView* const*, CurrentRenderTargetViews)
-	UAB_GET_PROPERTY(ID3D11DepthStencilView*, CurrentDepthStencilView)
-
-	ID3D11Device* GetDevice ()
-	{
-		return m_ContextManager->GetDevice();
-	}
-
-	ID3D11DeviceContext* GetDeviceContext ()
-	{
-		return m_ContextManager->GetDeviceContext();
-	}
-
-	IDXGISwapChain*	GetSwapChain()
-	{
-		return m_ContextManager->GetSwapChain();
-	}
+	CContextManager*				m_ContextManager;
 
 };
 
