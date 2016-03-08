@@ -1,9 +1,5 @@
 #include "globals.fxh"
-
-Texture2D T0Texture: register( t0 );
-Texture2D T1Texture: register( t1 );
-SamplerState S0Sampler: register( s0 );
-SamplerState S1Sampler: register( s1 );
+#include "samplers.fxh"
 
 static float m_NoisePct=0.5;
 static float m_VignettingPct=1.0;
@@ -41,11 +37,5 @@ float4 NoiseAndVignettingPS(PS_INPUT IN) : SV_Target
 	float2 l_DistortUV=float2(l_DistortX, l_DistortY);
 	float4 l_Noise=T0Texture.Sample(S0Sampler, IN.UV+l_DistortUV)*m_NoisePct;
 	float4 l_Vignetting=T1Texture.Sample(S1Sampler, IN.UV)*m_VignettingPct;
-	
-	if (IN.UV.y<0.5f)
-	{
-		clip(-1);
-	}
-	
-	return l_Vignetting;
+	return l_Vignetting+l_Noise;
 }

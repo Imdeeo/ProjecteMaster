@@ -1,10 +1,15 @@
 #include "DebugRender.h"
 
+#include "Engine\UABEngine.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
+
 #include "RenderableObjects\VertexTypes.h"
 #include "RenderableObjects\TemplatedRenderableVertexs.h"
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
 #include "Effects\Effect.h"
-#include "Engine\UABEngine.h"
+
+#include <d3d11.h>
+
 
 CDebugRender::CDebugRender(ID3D11Device* _Device)
 {
@@ -187,7 +192,7 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 			{ Vect4f(1.0f, -1.0f, 0.5f, 1.0f), CColor(1.0f, 1.0f, 1.0f, 1.0f),
 			Vect2f(1.0f, 1.0f) }
 		};
-		m_DrawQuadRV = new CUABTrianglesStripRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(l_ScreenVertexsQuad, 4, 2);
+		m_DrawQuadRV = new CUABTrianglesStripRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(&l_ScreenVertexsQuad[0].Position.x, 4, 2);
 	}
 	{
 		// Simple Cube
@@ -423,10 +428,25 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 
 	}
 
-	m_EffectTechnique = UABEngine.GetEffectManager()->GetResource("debug_render_technique");
+	m_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid");
 
 }
+CDebugRender::~CDebugRender()
+{
 
+	delete m_SimpleTriangle;
+	delete m_ClassicBlendTriangle;
+	delete m_PremultBlendTriangle;
+	delete m_SimpleGrid;
+	delete m_BigGrid;
+	delete m_SimpleCube;
+	delete m_Axis;
+	delete m_LongAxis;
+	delete m_DrawQuadRV;
+	delete m_Sphere_10Seg;
+	delete m_Cone;
+
+}
 CRenderableVertexs * CDebugRender::GetLine(Vect3f inici, Vect3f final) const
 {
 	MV_POSITION_COLOR_VERTEX l_Line[2] =
@@ -435,4 +455,10 @@ CRenderableVertexs * CDebugRender::GetLine(Vect3f inici, Vect3f final) const
 		{ final, CColor(1.f, 1.f, 1.f, 1.f) }
 	};
 	return new CUABLinesListRenderableVertexs<MV_POSITION_COLOR_VERTEX>(l_Line,2,1);
+}
+
+
+CEffectTechnique *	CDebugRender::GetDebugTechnique() const
+{
+	return m_EffectTechnique->GetEffectTechnique();
 }

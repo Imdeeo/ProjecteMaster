@@ -2,6 +2,16 @@
 
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
+#include "DebugRender.h"
+
+#include "Layers\LayerManager.h"
+#include "Effects\EffectManager.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
+#include "RenderableObjects\RenderableVertexs.h"
+
+#include "Texture\DynamicTexture.h"
+
 
 #include "XML\XMLTreeNode.h"
 //#include "RenderManager\RenderManager.h"
@@ -19,6 +29,25 @@ CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)
 	m_EndRangeAttenuation = TreeNode.GetFloatProperty("att_end_range");
 	m_Intensity = TreeNode.GetFloatProperty("intensity");
 	m_Enabled = TreeNode.GetBoolProperty("enabled");
+	m_GenerateShadowMap = TreeNode.GetBoolProperty("generate_shadow_map");
+	CXMLTreeNode l_Input = TreeNode["layer"];
+	if (l_Input.Exists())
+	{
+		if (l_Input.GetName() == std::string("layer"))
+		{
+			m_Layers.push_back(UABEngine.GetLayerManager()->GetResource(l_Input.GetPszProperty("layer")));
+		}
+	}
+	if (m_GenerateShadowMap){
+		m_ShadowMap = new CDynamicTexture("shadowmap", TreeNode.GetFloatProperty("shadow_map_width"), TreeNode.GetFloatProperty("shadow_map_height"), false);
+		//m_ShadowMaskTexture = new CTexture();
+		m_ShadowMaskTexture = nullptr;
+	}
+	else
+	{
+		m_ShadowMap = nullptr;
+		m_ShadowMaskTexture = nullptr;
+	}
 }
 
 CLight::~CLight(){}
@@ -30,7 +59,9 @@ void CLight::Render(CRenderManager *_RenderManager)
 		CEffectManager::m_SceneParameters.m_BaseColor = m_Color*m_Intensity;
 		CEffectManager::m_SceneParameters.m_BaseColor.SetAlpha(1.f);
 		_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
-		_RenderManager->GetDebugRender()->GetSPhere10()->RenderIndexed(_RenderManager, UABEngine.GetEffectManager()->GetResource("render_lights_technique"), nullptr);
+		CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
+		CEffectManager::SetSceneConstants(l_EffectTechnique);
+		GetShape(_RenderManager)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 	}
 }
 
@@ -59,4 +90,18 @@ const Mat44f & CLight::GetTransform()
 	m_TransformMatrix = m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
 
 	return m_TransformMatrix;
+}
+
+CRenderableVertexs* CLight::GetShape(CRenderManager *_RenderManager)
+{
+	return _RenderManager->GetDebugRender()->GetSPhere10();
+}
+
+CDynamicTexture* CLight::GetShadowMap()
+{
+	return m_ShadowMap;
+}
+CTexture* CLight::GetShadowMaskTexture()
+{
+	return m_ShadowMaskTexture;
 }

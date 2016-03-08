@@ -21,7 +21,7 @@ public:
 protected:
 	TMaterialType m_MaterialType;
 public:
-	CMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode,	CMaterialParameter::TMaterialType MaterialType):CNamed(TreeNode){}
+	CMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode, CMaterialParameter::TMaterialType MaterialType) :CNamed(TreeNode),m_MaterialType(MaterialType){}
 	virtual ~CMaterialParameter(){}
 	virtual void Apply() = 0;
 	virtual void * GetValueAddress() const = 0;

@@ -4,18 +4,25 @@
 #include <luabind/function.hpp>
 #include <luabind/class.hpp>
 #include <luabind/operator.hpp>
+#include <luabind/iterator_policy.hpp>
 
 #include "3DElement\3DElement.h"
 
+#include "Utils\CEmptyPointerClass.h"
+
 #include "Utils\Named.h"
+#include "Utils\Active.h"
+#include "Components\UABComponent.h"
+#include "Components\UABComponentManager.h"
+#include "Components\ScriptedComponent.h"
 
 #include "Engine\UABEngine.h"
 
 #include "InputManager\InputManager.h"
 #include "InputManager\InputManagerImplementation.h"
 
-#include "DebugHelper.h"
-#include "DebugHelperImplementation.h"
+#include "DebugHelper\DebugHelper.h"
+#include "DebugHelper\DebugHelperImplementation.h"
 
 #include "AnimatedModels\AnimatedCoreModel.h"
 #include "AnimatedModels\AnimatedInstanceModel.h"
@@ -30,6 +37,7 @@
 #include "Camera\FPSCameraController.h"
 #include "Camera\Frustum.h"
 #include "Camera\SphericalCameraController.h"
+#include "Camera\3PersonCameraController.h"
 
 #include "Cinematics\Cinematic.h"
 #include "Cinematics\CinematicObject.h"
@@ -47,6 +55,8 @@
 #include "Effects\LightEffectParameters.h"
 #include "Effects\SceneEffectParameters.h"
 
+#include "Layers\LayerManager.h"
+
 #include "Lights\DirectionalLight.h"
 #include "Lights\Light.h"
 #include "Lights\LightManager.h"
@@ -59,6 +69,7 @@
 #include "RenderableObjects\RenderableObject.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
 #include "RenderableObjects\TemplatedRenderableVertexs.h"
 #include "RenderableObjects\VertexTypes.h"
@@ -69,6 +80,9 @@
 #include "StaticMesh\StaticMesh.h"
 #include "StaticMesh\StaticMeshManager.h"
 
+#include "SceneRender\SceneRendererCommandManager.h"
+#include "SceneRender\SceneRendererCommand.h"
+
 #include "Texture\Texture.h"
 #include "Texture\TextureManager.h"
 
@@ -77,16 +91,51 @@
 #include "PhysXManager\PhysXManager.h"
 
 #include "Application.h"
+#include "DebugHelper\DebugHelper.h"
+
+#include "Characters\Character.h"
+#include "Characters\CharacterManager.h"
+#include "Characters\Player.h"
 
 #include "XML\XMLTreeNode.h"
 #include "Utils.h"
 
-using namespace luabind;
+#include <string>
+#include <vector>
+#include <map>
 
-CScriptManager g_ScriptManager;
+#include <typeinfo.h>
+
+#include <cal3d\cal3d.h>
+
+using namespace luabind;
 
 #define LUA_STATE CUABEngine::GetInstance().GetScriptManager()->GetLuaState()
 #define REGISTER_LUA_FUNCTION(FunctionName,AddrFunction) {luabind::module(LUA_STATE) [ luabind::def(FunctionName,AddrFunction) ];}
+
+CUABComponent* CreateScriptedComponent(const std::string &Name, CRenderableObject *Owner, std::string _FnOnCreate, std::string _FnOnDestroy, std::string _FnOnUpdate, std::string _FnOnRender, std::string _FnOnRenderDebug)
+{
+	CUABComponent* l_component = new CScriptedComponent(Name, Owner, _FnOnCreate, _FnOnDestroy,  _FnOnUpdate, _FnOnRender, _FnOnRenderDebug);
+	return l_component;
+}
+
+int ShowLuaErrorDebugInfo(lua_State* L)
+{
+	lua_Debug d;
+	lua_getstack(L, 1, &d);
+	lua_getinfo(L, "Sln", &d);
+	std::string err = lua_tostring(L, -1);
+	lua_pop(L, 1);
+	std::stringstream msg;
+	msg << d.short_src << ":" << d.currentline;
+	if (d.name != 0)
+	{
+	msg << "(" << d.namewhat << " " << d.name << ")";
+	}
+	msg << " " << err;
+	CDebugHelper::GetDebugHelper()->Log(("Error: %s", msg.str().c_str()));
+	return 0;
+}
 
 CScriptManager::CScriptManager()
 : m_LS(NULL)
@@ -123,6 +172,7 @@ int Alert(lua_State * State)
 	return true;
 }
 
+
 //Para inicializar el motor de LUA
 void CScriptManager::Initialize()
 {
@@ -138,6 +188,8 @@ void CScriptManager::Initialize()
 	luabind::open(m_LS);
 
 	RegisterLUAFunctions();
+	lua_atpanic(m_LS, ShowLuaErrorDebugInfo);
+	luabind::set_pcall_callback(ShowLuaErrorDebugInfo);
 }
 
 //Para desinicializar el motor de LUA
@@ -149,6 +201,7 @@ void CScriptManager::Destroy()
 	}
 }
 
+
 //Para ejecutar un fragmento de código LUA
 void CScriptManager::RunCode(const std::string &Code) const
 {
@@ -156,7 +209,7 @@ void CScriptManager::RunCode(const std::string &Code) const
 	{
 		const char *l_Str=lua_tostring(m_LS, -1);
 		UtilsLog(l_Str);
-		assert(!"must be log");
+		//assert(!"must be log");
 	}
 }
 
@@ -167,78 +220,105 @@ void CScriptManager::RunFile(const std::string &FileName) const
 	{
 		const char *l_Str=lua_tostring(m_LS, -1);
 		UtilsLog(l_Str);
-		assert(!"must be log");
+		//assert(!"must be log");
 	}
 }
 
+template <class T>
+void RegisterTemplatedMapManager(lua_State* _LS)
+{
+	std::string name = "CTemplatedMapManager<" + std::string(typeid(T).name()) + ">";
+	module(_LS)[
+		class_<CTemplatedMapManager<T>>(name.c_str())
+			.def("get_resource", &CTemplatedMapManager<T>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<T>::AddResource)
+			.def("destroy", &CTemplatedMapManager<T>::Destroy)
+			.def("size", &CTemplatedMapManager<T>::Size)
+			.def("get_map", &CTemplatedMapManager<T>::GetResourcesMap)
+			.def("get_elements_array", &CTemplatedMapManager<T>::GetElementsArray)
+	];
+}
+
+template <class T>
+void RegisterTemplatedVectorMapManager(lua_State* _LS)
+{
+	std::string name = "CTemplatedVectorMapManager<" + std::string(typeid(T).name()) + ">";
+	module(_LS)[
+		class_<CTemplatedVectorMapManager<T>>(name.c_str())
+			.def("get_resource", &CTemplatedVectorMapManager<T>::GetResource)
+			.def("get_resource_by_id", &CTemplatedVectorMapManager<T>::GetResourceById)
+			.def("add_resource", &CTemplatedVectorMapManager<T>::AddResource)
+			.def("destroy", &CTemplatedVectorMapManager<T>::Destroy)
+			.def("size", &CTemplatedVectorMapManager<T>::Size)
+			.def("get_map", &CTemplatedVectorMapManager<T>::GetResourcesMap)
+			.def("get_vector", &CTemplatedVectorMapManager<T>::GetResourcesVector)
+			.def("get_elements_array", &CTemplatedVectorMapManager<T>::GetElementsArray)
+	];
+}
+
+
 void CScriptManager::RegisterLUAFunctions()
 {
+	//RegisterTemplatedVector<int>(m_LS);
 	//lua_register(m_LS, "set_speed_player", SetSpeedPlayer);
 	/*lua_register(m_LS, "set_speed_player", SetSpeedPlayer);
 	lua_register(m_LS, "get_speed_player", GetSpeedPlayer);*/
 	//REGISTER_LUA_FUNCTION("set_speed_player", SetSpeedPlayer);
 	//REGISTER_LUA_FUNCTION("get_speed_player", GetSpeedPlayer);
-	
-// TEMPLATES-------------------------------------------------------------------------------------------
 
-	// Templated Map Manager---------------------------------------------------------------------------
+// String
+
 	/*module(m_LS)[
-		class_<CTemplatedMapManager<CAnimatedCoreModel>>("CTemplatedMapManager<CAnimatedCoreModel>")
-			.def("get_resource", &CTemplatedMapManager<CAnimatedCoreModel>::GetResource)
-			.def("add_resource", &CTemplatedMapManager<CAnimatedCoreModel>::AddResource)
-			.def("destroy", &CTemplatedMapManager<CAnimatedCoreModel>::Destroy)
+		class_<std::string>("StdString")
+	];*/
+
+	// Utils-------------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CNamed>("CNamed")
+			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<const std::string&>())
+			.property("name", &CNamed::GetName, &CNamed::SetName)	];
+
+	module(m_LS)[
+		class_<CActive>("CActive")
+			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<bool>())
+			.property("active",&CActive::GetActive,&CActive::SetActive)
+	];
+
+
+	luabind::module(m_LS)[ luabind::def("utils_log", &UtilsLog) ];
+
+	module(m_LS)[
+		class_<Vect3f>("Vect3f")
+			.def(constructor<float, float, float>())
+			.def_readwrite("x", &Vect3f::x)
+			.def_readwrite("y", &Vect3f::y)
+			.def_readwrite("z", &Vect3f::z)
+			.def(const_self + const_self)
+			.def(const_self - const_self)
+			.def(const_self * other<const float>())
+			.def(const_self / other<const float>())
+			.def("set", &Vect3f::Set)
+			.def("normalize", &Vector3<float>::Normalize)
+			.def("get_normalized", &Vector3<float>::GetNormalized)
 	];
 
 	module(m_LS)[
-		class_<CTemplatedMapManager<CCameraControllerManager>>("CTemplatedMapManager<CCameraControllerManager>")
-			.def("get_resource", &CTemplatedMapManager<CCameraControllerManager>::GetResource)
-			.def("add_resource", &CTemplatedMapManager<CCameraControllerManager>::AddResource)
-			.def("destroy", &CTemplatedMapManager<CCameraControllerManager>::Destroy)
+		class_<Vect2f>("Vect2f")
+			.def(constructor<float, float>())
+			.def_readwrite("x", &Vect2f::x)
+			.def_readwrite("y", &Vect2f::y)
+			.def(const_self + const_self)
+			.def(const_self - const_self)
+			.def(const_self * other<const float>())
+			.def(const_self / other<const float>())
+			.def("set", &Vect2f::Set)
 	];
 
-	module(m_LS)[
-		class_<CTemplatedMapManager<CEffectTechnique>>("CTemplatedMapManager<CEffectTechnique>")
-			.def("get_resource", &CTemplatedMapManager<CEffectTechnique>::GetResource)
-			.def("add_resource", &CTemplatedMapManager<CEffectTechnique>::AddResource)
-			.def("destroy", &CTemplatedMapManager<CEffectTechnique>::Destroy)
-	];
 
-	module(m_LS)[
-		class_<CTemplatedMapManager<CMaterialManager>>("CTemplatedMapManager<CMaterialManager>")
-			.def("get_resource", &CTemplatedMapManager<CMaterialManager>::GetResource)
-			.def("add_resource", &CTemplatedMapManager<CMaterialManager>::AddResource)
-			.def("destroy", &CTemplatedMapManager<CMaterialManager>::Destroy)
-	];
-
-	module(m_LS)[
-		class_<CTemplatedMapManager<CStaticMeshManager>>("CTemplatedMapManager<CStaticMeshManager>")
-			.def("get_resource", &CTemplatedMapManager<CStaticMeshManager>::GetResource)
-			.def("add_resource", &CTemplatedMapManager<CStaticMeshManager>::AddResource)
-			.def("destroy", &CTemplatedMapManager<CStaticMeshManager>::Destroy)
-	];
-
-	module(m_LS)[
-		class_<CTemplatedMapManager<CTextureManager>>("CTemplatedMapManager<CTextureManager>")
-			.def("get_resource", &CTemplatedMapManager<CTextureManager>::GetResource)
-			.def("add_resource", &CTemplatedMapManager<CTextureManager>::AddResource)
-			.def("destroy", &CTemplatedMapManager<CTextureManager>::Destroy)
-	];
-
-	// Templated Vector Map Manager---------------------------------------------------------------------------
-	module(m_LS)[
-		class_<CTemplatedVectorMapManager<CLightManager>>("CTemplatedVectorMapManager<CLightManager>")
-			.def("get_resource", &CTemplatedMapManager<CLightManager>::GetResource)
-			.def("add_resource", &CTemplatedMapManager<CLightManager>::AddResource)
-			.def("destroy", &CTemplatedMapManager<CLightManager>::Destroy)
-	];
-
-	module(m_LS)[
-		class_<CTemplatedVectorMapManager<CRenderableObjectsManager>>("CTemplatedVectorMapManager<CRenderableObjectsManager>")
-			.def("get_resource", &CTemplatedMapManager<CRenderableObjectsManager>::GetResource)
-			.def("add_resource", &CTemplatedMapManager<CRenderableObjectsManager>::AddResource)
-			.def("destroy", &CTemplatedMapManager<CRenderableObjectsManager>::Destroy)
-	];
-
+	
+	
 // BASE------------------------------------------------------------------------------------------------
 
 	// 3DElement---------------------------------------------------------------------------------------
@@ -265,31 +345,85 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_transform", &C3DElement::GetTransform)
 			.def("get_visible", &C3DElement::GetVisible)
 			.def("set_visible", &C3DElement::SetVisible)
+			.def("get_lua_pos_x", &C3DElement::GetPositionX)
+			.def("get_lua_pos_y", &C3DElement::GetPositionY)
+			.def("get_lua_pos_z", &C3DElement::GetPositionZ)
 	];
 
-	// Utils-------------------------------------------------------------------------------------------
 	module(m_LS)[
-		class_<CNamed>("CNamed")
-			.def(constructor<const CXMLTreeNode&>())
-			.def(constructor<const std::string&>())
-			.def("set_name", &CNamed::SetName)
-			.def("get_name", &CNamed::GetName)
+		class_<CUABComponent, CNamed>("CUABComponent")
+			.def(constructor<const std::string &, CRenderableObject *>())
+			.def("Update", &CUABComponent::Update)
+			.def("render", &CUABComponent::Render)
+			.def("render_debug", &CUABComponent::RenderDebug)
 	];
 
-	
+
+	module(m_LS)[
+		class_<CUABComponentManager>("CUABComponentManager")
+			.def("get_resource", &CUABComponentManager::GetResource)
+			.def("add_resource", &CUABComponentManager::AddResource)
+	];
+
+	luabind::module(m_LS) [ luabind::def("create_scripted_component", &CreateScriptedComponent) ];
+
+
+	module(m_LS)[
+		class_<CEmptyPointerClass>("CEmptyPointerClass")
+	];
 // CORE---------------------------------------------------------------------------------------------
+
 	module(m_LS)[
 		class_<CDebugHelper>("CDebugHelper")
 			.def("render", &CDebugHelper::Render)
 			.def("log", &CDebugHelper::Log)
+			.def("start_register_bar", &CDebugHelper::StartRegisterBar)
 			.def("register_bar", &CDebugHelper::RegisterBar)
 			.def("remove_bar", &CDebugHelper::RemoveBar)
-			.def("get_debug_helper", &CDebugHelper::GetDebugHelper)
+			.scope[
+				def("get_debug_helper", &CDebugHelper::GetDebugHelper)
+			]
+			.def("add_lua_button",&CDebugHelper::AddLuaButton)
+			.def("add_variable", &CDebugHelper::AddVariable)
 			.def("set_current_debug_helper", &CDebugHelper::SetCurrentDebugHelper)
+			.enum_("e_debug_type")[
+				value("button", CDebugHelper::BUTTON),
+				value("bool", CDebugHelper::BOOL),
+				value("float", CDebugHelper::FLOAT),
+				value("int", CDebugHelper::INT),
+				value("color_32", CDebugHelper::COLOR32),
+				value("color", CDebugHelper::COLOR),
+				value("string", CDebugHelper::STRING),
+				value("position_orientation", CDebugHelper::POSITION_ORIENTATION)
+			]
+			.enum_("mode")[
+				value("read", CDebugHelper::READ),
+				value("read_write", CDebugHelper::READ_WRITE)
+			]
+			.scope[
+				class_<CDebugHelper::SDebugVariable>("SDebugVariable")
+					.def_readwrite("name",&CDebugHelper::SDebugVariable::name)
+					.def_readwrite("type", &CDebugHelper::SDebugVariable::type)
+					.def_readwrite("mode", &CDebugHelper::SDebugVariable::mode)
+					//.def_readwrite("callback", (void (_stdcall* CDebugHelper::SDebugVariable::*)(void*))&CDebugHelper::SDebugVariable::callback)
+					.def_readwrite("p_bool", &CDebugHelper::SDebugVariable::pBool)
+					.def_readwrite("p_float", &CDebugHelper::SDebugVariable::pFloat)
+					.def_readwrite("p_int", &CDebugHelper::SDebugVariable::pInt)
+					.def_readwrite("p_color_32", &CDebugHelper::SDebugVariable::pColor32)
+					.def_readwrite("p_color", &CDebugHelper::SDebugVariable::pColor)
+					.def_readwrite("p_string", &CDebugHelper::SDebugVariable::pString)
+					.def_readwrite("p_position_orientation", &CDebugHelper::SDebugVariable::pPositionOrientation)
+					.def_readwrite("data", &CDebugHelper::SDebugVariable::data)
+					.def_readwrite("ptr", &CDebugHelper::SDebugVariable::ptr),
+
+				class_<CDebugHelper::SDebugBar>("SDebugBar")
+					.def_readwrite("name",&CDebugHelper::SDebugBar::name)
+					.def_readwrite("variables",&CDebugHelper::SDebugBar::variables)
+			]
 	];
 
 	module(m_LS)[
-		class_<CDebugHelperImplementation, CDebugHelper>("CNamed")
+		class_<CDebugHelperImplementation, CDebugHelper>("CDebugHelperImplementation")
 			.def(constructor<void*>())
 			.def("update", &CDebugHelperImplementation::Update)
 			.def("render", &CDebugHelperImplementation::Render)
@@ -298,22 +432,34 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("remove_bar", &CDebugHelperImplementation::RemoveBar)
 	];
 
+	//ScriptManager
+	module(m_LS)[
+		class_<CScriptManager>("CScriptManager")
+			.def(constructor<>())
+			.def("runcode", &CScriptManager::RunCode)
+	];
+
+
 	// Engine-------------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CUABEngine>("CUABEngine")
 			.def("get_static_mesh_manager", &CUABEngine::GetStaticMeshManager)
-			.def("get_renderable_objects_manager", &CUABEngine::GetRenderableObjectsManager)
+			.def("get_layer_manager", &CUABEngine::GetLayerManager)
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)
 			.def("get_effect_manager", &CUABEngine::GetEffectManager)
 			.def("get_light_manager", &CUABEngine::GetLightManager)
 			.def("get_render_manager", &CUABEngine::GetRenderManager)
 			.def("get_animated_models_manager", &CUABEngine::GetAnimatedModelsManager)
 			.def("get_script_manager", &CUABEngine::GetScriptManager)
-			.def("get_camera_manager", &CUABEngine::GetCameraManager)
+			.def("get_camera_controller_manager", &CUABEngine::GetCameraControllerManager)
+			.def("get_physX_manager", &CUABEngine::GetPhysXManager)
 			.def("get_cinematic", &CUABEngine::GetCinematic)
+			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
 			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
 			.def("load_level_xml", &CUABEngine::LoadLevelXML)
-			.def("get_instance", &CUABEngine::GetInstance)
+			.scope[
+				def("get_instance", &CUABEngine::GetInstance)
+			]
 			.def("destroy", &CUABEngine::Destroy)
 			.def("init", &CUABEngine::Init)
 	];
@@ -327,12 +473,14 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_cursor_movement", &CInputManager::GetCursorMovement)
 			.def("has_focus", &CInputManager::HasFocus)
 			.def("set_current_input_manager", &CInputManager::SetCurrentInputManager)
-			.def("get_input_manager", &CInputManager::GetInputManager)
+			.scope[
+				def("get_input_manager", &CInputManager::GetInputManager)
+			]
 			.def("reload", &CInputManager::reload)
 	];
 
 	module(m_LS)[
-		class_<CInputManagerImplementation>("CInputManagerImplementation")
+		class_<CInputManagerImplementation, CInputManager>("CInputManagerImplementation")
 			.def(constructor<HWND>())
 			.def("load_commands_from_file", &CInputManagerImplementation::LoadCommandsFromFile)
 			.def("begin_frame", &CInputManagerImplementation::BeginFrame)
@@ -372,6 +520,79 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_axis_bb_max", &CDebugRender::GetAxisBBMax)
 	];
 
+
+	// SceneRendererCommand
+
+	module(m_LS)[
+		class_<CSceneRendererCommand, bases<CActive,CNamed>>("CSceneRendererCommand")
+			.def("execute",&CSceneRendererCommand::Execute)
+	];
+
+	RegisterTemplatedVectorMapManager<CSceneRendererCommand>(m_LS);
+	module(m_LS)[
+		class_<CSceneRendererCommandManager, CTemplatedVectorMapManager<CSceneRendererCommand>>("CSceneRendererCommandManager")
+			.def(constructor<>())
+			.def("reload",&CSceneRendererCommandManager::Reload)
+	];
+
+	// RenderableObjects------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CRenderableObject, bases<C3DElement, CNamed>>("CRenderableObject")
+			.def("update", &CRenderableObject::Update)
+			.def("render", &CRenderableObject::Render)
+			.def("get_component_manager", &CRenderableObject::GetComponentManager)
+	];
+
+	RegisterTemplatedVectorMapManager<CRenderableObject>(m_LS);
+	/*module(m_LS)[
+		class_<CTemplatedVectorMapManager<CRenderableObject>>("CTemplatedVectorMapManager<CRenderableObject>")
+			.def("get_resource", &CTemplatedMapManager<CRenderableObject>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CRenderableObject>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CRenderableObject>::Destroy)
+	];*/
+
+	RegisterTemplatedVectorMapManager<CRenderableObjectsManager>(m_LS);
+	/*module(m_LS)[
+		class_<CTemplatedVectorMapManager<CRenderableObjectsManager>>("CTemplatedVectorMapManager<CRenderableObjectsManager>")
+			.def("get_resource", &CTemplatedMapManager<CRenderableObjectsManager>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CRenderableObjectsManager>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CRenderableObjectsManager>::Destroy)
+	];*/
+
+	module(m_LS)[
+		class_<CRenderableObjectsManager, CTemplatedVectorMapManager<CRenderableObject>>("CRenderableObjectsManager")
+			.def(constructor<std::string>())
+			.def("update", &CRenderableObjectsManager::Update)
+			.def("render", &CRenderableObjectsManager::Render)
+			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&))&CRenderableObjectsManager::AddMeshInstance)
+			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string &, const std::string&, const Vect3f&, const float, const float, const float, const float, const bool))&CRenderableObjectsManager::AddMeshInstance)
+			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
+			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
+			.def("get_resource", &CRenderableObjectsManager::GetResource)
+			//.def("clean_up", &CRenderableObjectsManager::CleanUp)
+			//.def("get_instance", &CRenderableObjectsManager::GetInstance)
+	];
+
+	// TODO Añadir LayerManager
+	module(m_LS)[
+		class_<CLayerManager, CTemplatedVectorMapManager<CRenderableObjectsManager>>("CLayerManager")
+			.def(constructor<>())
+			.def("reload", &CLayerManager::Reload)
+	];
+
+
+	module(m_LS)[
+		class_<CRenderableObjectTechnique>("CRenderableObjectTechnique")
+			.def(constructor<std::string, CEffectTechnique*>())
+			.property("effect_technique", &CRenderableObjectTechnique::GetEffectTechnique, &CRenderableObjectTechnique::SetEffectTechnique)
+	];
+
+	module(m_LS)[
+		class_<CRenderableVertexs>("CRenderableVertexs")
+			.def("render", &CRenderableVertexs::Render)
+			.def("render_indexed", &CRenderableVertexs::RenderIndexed)
+	];
+
 	// AnimatedModels----------------------------------------------------------------------------------
 	module(m_LS) [
 		class_<CAnimatedCoreModel, CNamed>("CAnimatedCoreModel")
@@ -380,6 +601,14 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_materials", &CAnimatedCoreModel::GetMaterials)
 			.def("load",&CAnimatedCoreModel::Load)
 	];
+
+	RegisterTemplatedMapManager<CAnimatedCoreModel>(m_LS);
+	/*module(m_LS)[
+		class_<CTemplatedMapManager<CAnimatedCoreModel>>("CTemplatedMapManager<CAnimatedCoreModel>")
+			.def("get_resource", &CTemplatedMapManager<CAnimatedCoreModel>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CAnimatedCoreModel>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CAnimatedCoreModel>::Destroy)
+	];*/
 
 	module(m_LS) [
 		class_<CAnimatedInstanceModel, CRenderableObject>("CAnimatedInstanceModel")
@@ -446,6 +675,14 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update", &CCameraController::Update)
 	];
 
+	RegisterTemplatedMapManager<CCameraController>(m_LS);
+	/*module(m_LS)[
+		class_<CTemplatedMapManager<CCameraController>>("CTemplatedMapManager<CCameraController>")
+			.def("get_resource", &CTemplatedMapManager<CCameraController>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CCameraController>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CCameraController>::Destroy)
+	];*/
+
 	module(m_LS)[
 		class_<CCameraControllerManager, CTemplatedMapManager<CCameraController>>("CCameraControllerManager")
 			.def(constructor<>())
@@ -455,8 +692,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("reload", &CCameraControllerManager::Reload)
 			.def("get_main_camera", &CCameraControllerManager::GetMainCamera)
 			.def("get_debug_camera", &CCameraControllerManager::GetDebugCamera)
-			.def("update_main_camera", &CCameraControllerManager::UpdateMainCamera)
-			.def("update_debug_camera", &CCameraControllerManager::UpdateDebugCamera)
 			.def("update", &CCameraControllerManager::Update)
 	];
 
@@ -484,6 +719,12 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("is_reverse", &CCameraKeyController::IsReverse)
 			.def("set_reverse", &CCameraKeyController::SetReverse)
 			.def("set_camera", &CCameraKeyController::SetCamera)			
+	];
+
+	module(m_LS)[
+		class_<C3PersonCameraController, CCameraController>("C3PersonCameraController")
+			.def(constructor<CXMLTreeNode&>())
+			.def("get_direction",&C3PersonCameraController::GetDirection)
 	];
 
 	module(m_LS) [
@@ -514,6 +755,21 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	// Cinematics -----------------------------------------------------------------------------------
+	
+	module(m_LS)[
+		class_<CCinematicPlayer>("CCinematicPlayer")
+			.def(constructor<>())
+			.def("init", &CCinematicPlayer::Init)
+			.def("update", &CCinematicPlayer::Update)
+			.def("stop", &CCinematicPlayer::Stop)
+			.def("play", &CCinematicPlayer::Play)
+			.def("pause", &CCinematicPlayer::Pause)
+			.def("is_finished", &CCinematicPlayer::IsFinished)
+			.def("get_duration", &CCinematicPlayer::GetDuration)
+			.def("get_current_time", &CCinematicPlayer::GetTickCount)
+			.def("on_restart_cycle", &CCinematicPlayer::OnRestartCycle)
+	];
+
 	module(m_LS)[
 		class_<CCinematic, bases<CRenderableObject, CCinematicPlayer>>("CCinematic")
 			.def(constructor<>())
@@ -544,23 +800,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_key_frame_time",&CCinematicObjectKeyFrame::SetKeyFrameTime)
 	];
 
-	module(m_LS)[
-		class_<CCinematicPlayer>("CCinematicPlayer")
-			.def(constructor<>())
-			.def("init", &CCinematicPlayer::Init)
-			.def("update", &CCinematicPlayer::Update)
-			.def("stop", &CCinematicPlayer::Stop)
-			.def("play", &CCinematicPlayer::Play)
-			.def("pause", &CCinematicPlayer::Pause)
-			.def("is_finished", &CCinematicPlayer::IsFinished)
-			.def("get_duration", &CCinematicPlayer::GetDuration)
-			.def("get_current_time", &CCinematicPlayer::GetTickCount)
-			.def("on_restart_cycle", &CCinematicPlayer::OnRestartCycle)
-			
-			
-			
-			
-	];
+	
 
 	// ContextManager----------------------------------------------------------------------------------
 	module(m_LS)[
@@ -589,29 +829,6 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CAnimatedModelEffectParameters>("CAnimatedModelEffectParameters")
 	];
 
-	module(m_LS)[
-		class_<CEffect>("CEffect")
-			.def(constructor<>())
-			.def("update_parameters", &CEffect::UpdateParameters)
-			.def("set_active", &CEffect::SetActive)
-	];
-
-	module(m_LS)[
-		class_<CEffectManager, CTemplatedMapManager<CEffectTechnique>>("CEffectManager")
-			.def(constructor<>())
-			.def("reload_file", &CEffectManager::ReloadFile)
-			.def("reload", &CEffectManager::Reload)
-			.def("load", &CEffectManager::Load)
-			.def("get_vertex_shader", &CEffectManager::GetVertexShader)
-			.def("get_pixel_shader", &CEffectManager::GetPixelShader)
-			.def("set_scene_constants", &CEffectManager::SetSceneConstants)
-			.def("set_light_constants", &CEffectManager::SetLightConstants)
-			.def("set_lights_constants", &CEffectManager::SetLightsConstants)
-	];
-
-	module(m_LS)[
-		class_<CEffectParameters>("CEffectParameters")
-	];
 
 	module(m_LS)[
 		class_<CEffectShader, CNamed>("CEffectShader")
@@ -626,6 +843,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<const CXMLTreeNode&>())
 			.def("load", &CEffectVertexShader::Load)
 			.def("set_constant_buffer", &CEffectVertexShader::SetConstantBuffer)
+			.def("reload", &CEffectVertexShader::Reload)
 			.def("get_vertex_shader", &CEffectVertexShader::GetVertexShader)
 			.def("get_vertex_layout", &CEffectVertexShader::GetVertexLayout)
 			//.def("get_constant_buffer", &CEffectVertexShader::GetConstantBuffer)
@@ -634,6 +852,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CEffectPixelShader, CEffectShader>("CEffectPixelShader")
 			.def(constructor<const CXMLTreeNode&>())
+			.def("reload", &CEffectPixelShader::Reload)
 			.def("load", &CEffectPixelShader::Load)
 			.def("set_constant_buffer", &CEffectPixelShader::SetConstantBuffer)
 			.def("get_pixel_shader", &CEffectPixelShader::GetPixelShader)
@@ -649,6 +868,31 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_constant_buffer", &CEffectTechnique::SetConstantBuffer)
 	];
 
+	RegisterTemplatedMapManager<CEffectTechnique>(m_LS);
+	/*module(m_LS)[
+		class_<CTemplatedMapManager<CEffectTechnique>>("CTemplatedMapManager<CEffectTechnique>")
+			.def("get_resource", &CTemplatedMapManager<CEffectTechnique>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CEffectTechnique>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CEffectTechnique>::Destroy)
+			.def("size", &CTemplatedMapManager<CEffectTechnique>::Size)
+			.def("get_map", &CTemplatedMapManager<CEffectTechnique>::GetResourcesMap)
+			.def("get_elements_array", &CTemplatedMapManager<CEffectTechnique>::GetElementsArray)
+	];*/
+
+	module(m_LS)[
+		class_<CEffectManager, CTemplatedMapManager<CEffectTechnique>>("CEffectManager")
+			.def(constructor<>())
+			.def("reload_file", &CEffectManager::ReloadFile)
+			.def("reload", &CEffectManager::Reload)
+			.def("load", &CEffectManager::Load)
+			.def("get_vertex_shader", &CEffectManager::GetVertexShader)
+			.def("get_pixel_shader", &CEffectManager::GetPixelShader)
+			.def("set_scene_constants", &CEffectManager::SetSceneConstants)
+			.def("set_light_constants", &CEffectManager::SetLightConstants)
+			.def("set_lights_constants", &CEffectManager::SetLightsConstants)
+			.def("get_effects_names", &CEffectManager::GetEffectsNames)
+	];
+
 	module(m_LS)[
 		class_<CLightEffectParameters>("CLightEffectParameters")
 	];
@@ -658,19 +902,10 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	// Lights-----------------------------------------------------------------------------------------
-	module(m_LS)[
-		class_<CDirectionalLight, CLight>("CDirectionalLight")
-			.def(constructor<>())
-			.def(constructor<CXMLTreeNode&>())
-			.def("get_direction", &CDirectionalLight::GetDirection)
-			.def("set_direction", &CDirectionalLight::SetDirection)
-			.def("render", &CDirectionalLight::Render)
-	];
+
 
 	module(m_LS)[
 		class_<CLight, CNamed>("CLight")
-			.def(constructor<>())
-			.def(constructor<CXMLTreeNode&>())
 			.def("get_position", &CLight::GetPosition)
 			.def("set_position", &CLight::SetPosition)
 			.def("get_color", &CLight::GetColor)
@@ -689,6 +924,14 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_light_type_by_name", &CLight::GetLightTypeByName)
 	];
 
+	RegisterTemplatedVectorMapManager<CLight>(m_LS);
+	/*module(m_LS)[
+		class_<CTemplatedVectorMapManager<CLight>>("CTemplatedVectorMapManager<CLight>")
+			.def("get_resource", &CTemplatedMapManager<CLight>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CLight>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CLight>::Destroy)
+	];*/
+
 	module(m_LS)[
 		class_<CLightManager, CTemplatedVectorMapManager<CLight>>("CLightManager")
 			.def(constructor<>())
@@ -705,6 +948,15 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
+		class_<CDirectionalLight, CLight>("CDirectionalLight")
+			.def(constructor<>())
+			.def(constructor<CXMLTreeNode&>())
+			.def("get_direction", &CDirectionalLight::GetDirection)
+			.def("set_direction", &CDirectionalLight::SetDirection)
+			.def("render", &CDirectionalLight::Render)
+	];
+
+	module(m_LS)[
 		class_<CSpotLight, CDirectionalLight>("CSpotLight")
 			.def(constructor<>())
 			.def(constructor<CXMLTreeNode&>())
@@ -716,11 +968,38 @@ void CScriptManager::RegisterLUAFunctions()
 
 	// Materials--------------------------------------------------------------------------------------
 	module(m_LS)[
+		class_<CMaterialParameter, CNamed>("CMaterialParameter")
+			//.def(constructor<CMaterial*, CXMLTreeNode&, CMaterialParameter::TMaterialType>())
+			.enum_("t_material_type")[
+				value("float",CMaterialParameter::FLOAT),
+				value("vect2f", CMaterialParameter::VECT2F),
+				value("vect3f", CMaterialParameter::VECT3F),
+				value("vect4f", CMaterialParameter::VECT4F)
+			]
+			.def("apply", &CMaterialParameter::Apply)
+			.def("get_material_type", &CMaterialParameter::getMaterialType)
+			.def("get_value_address", &CMaterialParameter::GetValueLuaAddress)
+			.scope[
+				def("get_type_from_string",&CMaterialParameter::GetTypeFromString)
+			]
+	];
+
+	module(m_LS)[
 		class_<CMaterial, CNamed>("CMaterial")
 			.def(constructor<const CXMLTreeNode&>())
 			.def("apply", &CMaterial::Apply)
-			.def("get_effect_technique", &CMaterial::GetEffectTechnique)
+			.def("get_next_parameter_adress", &CMaterial::GetNextParameterAddress)
+			.def("get_parameters", &CMaterial::GetParameters, luabind::return_stl_iterator)
+			.def("get_renderable_object_technique", &CMaterial::GetRenderableObjectTechnique)
 	];
+
+	RegisterTemplatedMapManager<CMaterial>(m_LS);
+	/*module(m_LS)[
+		class_<CTemplatedMapManager<CMaterial>>("CTemplatedMapManager<CMaterial>")
+			.def("get_resource", &CTemplatedMapManager<CMaterial>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CMaterial>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CMaterial>::Destroy)
+	];*/
 
 	module(m_LS)[
 		class_<CMaterialManager, CTemplatedMapManager<CMaterial>>("CMaterialManager")
@@ -729,33 +1008,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("reload", &CMaterialManager::Reload)
 	];
 
-	// RenderableObjects------------------------------------------------------------------------------
-	module(m_LS)[
-		class_<CRenderableObject, bases<C3DElement, CNamed>>("CRenderableObject")
-			.def("update", &CRenderableObject::Update)
-			.def("render", &CRenderableObject::Render)
-	];
-
-	module(m_LS)[
-		class_<CRenderableObjectsManager, CTemplatedVectorMapManager<CRenderableObject>>("CRenderableObjectsManager")
-			.def(constructor<>())
-			.def("update", &CRenderableObjectsManager::Update)
-			.def("render", &CRenderableObjectsManager::Render)
-			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&))&CRenderableObjectsManager::AddMeshInstance)
-			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string &, const std::string&, const Vect3f&, const float, const float, const float, const float, const bool))&CRenderableObjectsManager::AddMeshInstance)
-			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
-			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
-			//.def("clean_up", &CRenderableObjectsManager::CleanUp)
-			.def("reload", &CRenderableObjectsManager::Reload)
-			.def("load", &CRenderableObjectsManager::Load)
-			//.def("get_instance", &CRenderableObjectsManager::GetInstance)
-	];
-
-	module(m_LS)[
-		class_<CRenderableVertexs>("CRenderableVertexs")
-			.def("render", &CRenderableVertexs::Render)
-			.def("render_indexed", &CRenderableVertexs::RenderIndexed)
-	];
 
 	// RenderManager----------------------------------------------------------------------------------
 	module(m_LS)[
@@ -784,6 +1036,14 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render", &CStaticMesh::Render)
 	];
 
+	RegisterTemplatedMapManager<CStaticMesh>(m_LS);
+	/*module(m_LS)[
+		class_<CTemplatedMapManager<CStaticMesh>>("CTemplatedMapManager<CStaticMesh>")
+			.def("get_resource", &CTemplatedMapManager<CStaticMesh>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CStaticMesh>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CStaticMesh>::Destroy)
+	];*/
+
 	module(m_LS)[
 		class_<CStaticMeshManager, CTemplatedMapManager<CStaticMesh>>("CStaticMeshManager")
 			.def(constructor<>())
@@ -799,6 +1059,14 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("activate", &CTexture::Activate)
 			.def("reload", &CTexture::Reload)
 	];
+
+	RegisterTemplatedMapManager<CTexture>(m_LS);
+	/*module(m_LS)[
+		class_<CTemplatedMapManager<CTexture>>("CTemplatedMapManager<CTexture>")
+			.def("get_resource", &CTemplatedMapManager<CTexture>::GetResource)
+			.def("add_resource", &CTemplatedMapManager<CTexture>::AddResource)
+			.def("destroy", &CTemplatedMapManager<CTexture>::Destroy)
+	];*/
 
 	module(m_LS)[
 		class_<CTextureManager, CTemplatedMapManager<CTexture>>("CTextureManager")
@@ -821,8 +1089,17 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CPhysXManager>("CPhysXManager")
 			.def("get_texture", &CTextureManager::GetTexture)
 			.def("reload", &CTextureManager::Reload)
+			.def("create_character_controller", &CPhysXManager::CreateCharacterController)
+			.def("character_controller_move", &CPhysXManager::CharacterControllerMove)		
+			.def("register_material", &CPhysXManager::RegisterMaterial)
+			.def("render", &CPhysXManager::Render)
+			.def("get_character_controler_pos", &CPhysXManager::GetCharacterControllersPosition)
+			.def("get_character_controler_lua_pos_x", &CPhysXManager::GetCharacterControllersPositionX)
+			.def("get_character_controler_lua_pos_y", &CPhysXManager::GetCharacterControllersPositionY)
+			.def("get_character_controler_lua_pos_z", &CPhysXManager::GetCharacterControllersPositionZ)
 	];
 
+	
 // SOUND--------------------------------------------------------------------------------------------
 	
 	
@@ -834,15 +1111,36 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update", &CApplication::Update)
 			.def("render", &CApplication::Render)
 			.def("init", &CApplication::Init)
+			.scope[
+				def("actualiza_enemy", &CApplication::ActualizarEnemigo)
+			]
 	];
 
-	
-	//RunFile("./data/scripting/init.lua");
 
-	//RunCode("Init();");
-	RunCode("local light=COmniLight();light.intensity=1.1;");
-	//RunCode("local value=3;set_speed_player(value); value=get_speed_player()+2; set_speed_player(value)");
-	//RunCode("local animatedcoremodel=CAnimatedCoreModel(); animatedcoremodel:set_name(\"Nombre\"); local name=animatedcoremodel:get_name()");*/
+	module(m_LS)[
+		class_<CCharacter, CNamed>("CCharacter")
+			.def("get_renderable_object",&CCharacter::GetRenderableObject)
+			.def("refresh", &CCharacter::Refresh)
+			.def("execute_lua_command", &CCharacter::ExecuteLuaCommand)
+	];
+	
+	module(m_LS)[
+		class_<CPlayer, CCharacter>("CPlayer")
+			.def(constructor<const CXMLTreeNode&>())
+			.def("get_camera_controller", &CPlayer::GetCameraController)
+			.def("update", &CPlayer::Update)
+	];
+	RegisterTemplatedVectorMapManager<CCharacter>(m_LS);
+
+	module(m_LS)[
+		class_<CCharacterManager, CTemplatedVectorMapManager<CCharacter>>("CCharacterManager")
+			.scope[
+				def("get_instance",&CCharacterManager::GetInstance)
+			]
+			.def("load",&CCameraControllerManager::Load)
+			.def("reload", &CCameraControllerManager::Reload)
+	];
+
 }
 
 /*void OnEnterEvent(CEvent *Event)

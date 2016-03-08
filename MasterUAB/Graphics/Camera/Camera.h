@@ -8,17 +8,17 @@
 class CCamera
 {	
 private:
-	Mat44f				m_View;
-	Mat44f				m_Projection;
+	Mat44f					m_View;
+	Mat44f					m_Projection;
 
 	Vect3f					m_Position;
 	Vect3f					m_LookAt;
 	Vect3f					m_Up;
 
-	float						m_FOV;
-	float						m_AspectRatio;
-	float						m_ZNear;
-	float						m_ZFar;
+	float					m_FOV;
+	float					m_AspectRatio;
+	float					m_ZNear;
+	float					m_ZFar;
 
 public:
 	enum TCameraType
@@ -27,7 +27,7 @@ public:
 		CAMERA_TYPE_FPS = 1,
 		CAMERA_TYPE_CYCLE = 2,
 		CAMERA_TYPE_REVERSE = 4,
-
+		CAMERA_TYPE_3PS = 5,
 		CAMERA_TYPE_NULL = -1
 	};
 
@@ -35,7 +35,7 @@ public:
 		: m_FOV(/*60.0f*/ 1.047198f)
 		, m_AspectRatio(1.0f)
 		, m_ZNear(0.1f)
-		, m_ZFar(100.0f)
+		, m_ZFar(400.0f)
 		, m_Position(5.0f, 5.0f, 0.0f)
 		, m_LookAt(0.0f, 0.0f, 0.0f)
 		, m_Up(0.0f, 1.0f, 0.0f)
@@ -99,7 +99,22 @@ public:
 			return CAMERA_TYPE_CYCLE;
 		else if (CameraType=="reverse")
 			return CAMERA_TYPE_REVERSE;
+		else if (CameraType == "3ps")
+			return CAMERA_TYPE_3PS;
 		return CAMERA_TYPE_NULL;
+	}
+
+	Vect2f CCamera::GetPositionInScreenCoordinates(const Vect3f &Position) const
+	{
+		Mat44f l_ViewProj = m_View*m_Projection;
+		Vect4f l_Pos4f(Position.x, Position.y, Position.z, 1.0);
+		float x = l_Pos4f.x*l_ViewProj.m00 + l_Pos4f.y*l_ViewProj.m10 +	l_Pos4f.z*l_ViewProj.m20 + l_ViewProj.m30;
+		float y = l_Pos4f.x*l_ViewProj.m01 + l_Pos4f.y*l_ViewProj.m11 +	l_Pos4f.z*l_ViewProj.m21 + l_ViewProj.m31;
+		float z = l_Pos4f.x*l_ViewProj.m02 + l_Pos4f.y*l_ViewProj.m12 +	l_Pos4f.z*l_ViewProj.m22 + l_ViewProj.m32;
+		float w = l_Pos4f.x*l_ViewProj.m03 + l_Pos4f.y*l_ViewProj.m13 +	l_Pos4f.z*l_ViewProj.m23 + l_ViewProj.m33;
+		if (w == 0)
+			w = 1;
+		return Vect2f(x / w, y / w);
 	}
 };
 

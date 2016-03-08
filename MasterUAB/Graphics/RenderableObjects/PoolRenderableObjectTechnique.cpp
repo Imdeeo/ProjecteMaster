@@ -1,6 +1,7 @@
 #include "PoolRenderableObjectTechnique.h"
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
+#include "Effects\EffectManager.h"
 
 /*CPoolRenderableObjectTechnique::CPoolRenderableObjectTechnique(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
 {
@@ -48,4 +49,9 @@ void CPoolRenderableObjectTechnique::Apply()
 	{
 		m_RenderableObjectTechniqueElements[i]->m_OnRenderableObjectTechniqueManager->SetEffectTechnique(m_RenderableObjectTechniqueElements[i]->m_RenderableObjectTechnique.GetEffectTechnique());
 	}
+}
+
+CPoolRenderableObjectTechnique & CPoolRenderableObjectTechnique::operator=(CPoolRenderableObjectTechnique _PoolRenderableObjectTechnique)
+{
+	return *this;
 }

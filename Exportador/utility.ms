@@ -96,7 +96,6 @@ utility UABUtility "UABUtility" width:168 height:360
 
 	fn exportStaticMesh dir meshCheck =
 	(
-		
 		local meshToExport = #()
 		checkUserProp "render_export" &meshToExport
 		local coresToExport = #()
@@ -137,44 +136,34 @@ utility UABUtility "UABUtility" width:168 height:360
 	
 	on ExportLightsButton pressed do
 	(
-		checkForSave() 
 		exportLights (get_Dir())
-		resetMaxFile() #noPrompt
 	)
 	
 	on ExportMeshButton pressed do
-    (        
+    (
 		if $ == undefined then
 		(
 			messageBox "You must select a scene object" title:"ERROR"
 		)
 		else
 		(
-			checkForSave() 
 			exportMesh (get_Dir()) $
-			resetMaxFile() #noPrompt
 		)
     )
 	
 	on ExportCameraButton pressed do
 	(
-		checkForSave() 
 		exportCameras (get_Dir())
-		resetMaxFile() #noPrompt
 	)
 	
 	on ExportMaterialsButton pressed do
 	(
-		checkForSave() 
 		exportMaterials (get_Dir()) (ExportTexturesCheck.checked)
-		resetMaxFile() #noPrompt
 	)
 	
 	on ExportStaticMeshButton pressed do
     (
-		checkForSave() 
 		exportStaticMesh (get_Dir()) (ExportMeshCheck.checked)
-		resetMaxFile() #noPrompt
     )
 	
 	on ExportSceneButton pressed do

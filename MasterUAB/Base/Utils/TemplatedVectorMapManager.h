@@ -7,6 +7,12 @@
 #include <assert.h>
 #include "Utils.h"
 
+#include <luabind/luabind.hpp>
+#include <luabind/function.hpp>
+#include <luabind/class.hpp>
+#include <luabind/operator.hpp>
+class lua_State;
+
 template<class T>
 class CTemplatedVectorMapManager
 {
@@ -36,17 +42,17 @@ public:
 
 	bool RemoveResource(const std::string &Name)
 	{
-		CMapResouceValue l_ResourceValue = m_ResourcesMap[Name];
+		CMapResourceValue l_ResourceValue = m_ResourcesMap[Name];
 		size_t index = l_ResourceValue.m_Id;
 		delete m_ResourcesVector[index];
-		delete m_ResourcesMap[Name];
+		//delete m_ResourcesMap[Name];
 		m_ResourcesMap.erase(Name);
 		m_ResourcesVector.erase(m_ResourcesVector.begin()+index);
 		for (TMapResources::iterator l_iterator = m_ResourcesMap.begin(); l_iterator != m_ResourcesMap.end(); l_iterator++)
 		{
-			if(l_iterator->second->m_Id>index)
+			if(l_iterator->second.m_Id>index)
 			{
-				l_iterator->second->m_Id--;
+				l_iterator->second.m_Id--;
 			}
 		}
 		return true;
@@ -97,6 +103,21 @@ public:
 	TVectorResources & GetResourcesVector()
 	{
 		return m_ResourcesVector;
+	}
+
+	size_t Size()
+	{
+		return m_ResourcesVector.size();
+	}
+
+	luabind::object GetElementsArray(lua_State *L)
+	{
+		luabind::object l_ElementsVector = luabind::newtable(L);
+		for (size_t i = 0; i < m_ResourcesVector.size();i++)
+		{
+			l_ElementsVector[i] = m_ResourcesVector[i];
+		}
+		return l_ElementsVector;
 	}
 };
 

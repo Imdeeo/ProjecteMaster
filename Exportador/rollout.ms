@@ -2,9 +2,9 @@ Obj = undefined
 callbacks.removeScripts #selectionSetChanged id:#swapMode
 callbacks.addScript #selectionSetChanged "UABSetProperties.swapMode $" id:#swapMode persistent:false
 	
-rollout UABSetProperties "UABSetProperties" width:280 height:370
+rollout UABSetProperties "UABSetProperties" width:280 height:394
 (
-	GroupBox grp1 "Geometry" pos:[8,8] width:265 height:304
+	GroupBox grp1 "Geometry" pos:[8,8] width:265 height:328
 		label GeometryLabel "Nothing selected" pos:[24,32] width:232 height:24
 		GroupBox RenderGroup "Render" pos:[16,56] width:248 height:120
 			checkbox RenderExportBox "Export" pos:[24,72] width:88 height:16
@@ -12,25 +12,32 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			checkbox RenderVisibleBox "Visible" pos:[24,96] width:88 height:16 enabled:false
 			checkbox RenderLayerBox "Layer" pos:[24,120] width:88 height:16 enabled:false
 			checkbox CinematicBox "Cinematic" pos:[24,144] width:88 height:16 enabled:false 
-			dropdownList RenderLayerList "" pos:[120,112] width:136 height:21 enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles")
-			--label AnimModelLabel "Anim. Model" pos:[24,152] width:88 height:16
+			dropdownList RenderLayerList "" pos:[120,112] width:136 height:21 enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles", "skybox")
 			edittext AnimModelText "AnimModelLabel" pos:[120,144] width:136 height:24 enabled:false
-		GroupBox PhysicsGroup "Physics" pos:[16,176] width:248 height:80
+		GroupBox PhysicsGroup "Physics" pos:[16,176] width:248 height:104
 			checkbox PhysicsGenerateBox "Generate" pos:[24,200] width:88 height:16
 			dropdownList PhysicsGenerateList "" pos:[120,200] width:136 height:21 enabled:false items:#("triangle_mesh", "convex_shape", "box_shape", "sphere_shape", "plane_shape", "capsule_shape")
-			checkbox PhysicsLayerBox "Layer" pos:[24,232] width:88 height:16 enabled:false
-			dropdownList PhysicsLayerList "" pos:[120,232] width:136 height:21 enabled:false items:#("logic")
-		GroupBox LogicGroup "Logic" pos:[16,256] width:248 height:48
-			checkbox LogicGenerateBox "Generate" pos:[24,272] width:88 height:16
-			dropdownList LogicGenerateList "" pos:[120,272] width:136 height:21 items:#("stairs")
-		button GetButton "Get" pos:[24,320] width:112 height:32
-		button SetButton "Set" pos:[144,320] width:112 height:32
-	GroupBox grp2 "Lights" pos:[8,8] width:265 height:108 visible:false
-		label LightLabel "Nothing selected" pos:[24,32] width:232 height:24 visible:false
-		checkbox LightExportBox "Export" pos:[24,64] width:88 height:16 visible:false
-		checkbox LightEnabledBox "Enabled" pos:[24,84] width:88 height:16 visible:false enabled:false
-		button GetLightButton "Get" pos:[24,124] width:112 height:32 visible:false
-		button SetLightButton "Set" pos:[144,124] width:112 height:32 visible:false
+			checkbox PhysicsLayerBox "Layer" pos:[24,224] width:88 height:16 enabled:false
+			dropdownList PhysicsLayerList "" pos:[120,224] width:136 height:21 enabled:false items:#("logic")
+			edittext PhysicsMaterialText "Material" pos:[24,248] width:230 height:24 enabled:false
+		GroupBox LogicGroup "Logic" pos:[16,280] width:248 height:48
+			checkbox LogicGenerateBox "Generate" pos:[24,304] width:88 height:16
+			dropdownList LogicGenerateList "" pos:[120,304] width:136 height:21 items:#("stairs")
+		button GetButton "Get" pos:[24,348] width:112 height:32
+		button SetButton "Set" pos:[144,348] width:112 height:32
+	GroupBox grp2 "Lights" pos:[8,8] width:265 height:208 visible:false
+		GroupBox LightGroup "Light" pos:[16,24] width:248 height:100
+			label LightLabel "Nothing selected" pos:[24,42] width:232 height:24 visible:false
+			checkbox LightExportBox "Export" pos:[24,68] width:88 height:16 visible:false
+			checkbox LightEnabledBox "Enabled" pos:[24,88] width:88 height:16 visible:false enabled:false
+		GroupBox ShadowmapGroup "Shadowmap" pos:[16,126] width:248 height:80
+			checkbox ShadowmapExportBox "Export" pos:[24,144] width:88 height:16 visible:false
+			dropdownList ShadowmapLayerList "" pos:[120,144] width:136 height:21 visible:false enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles")
+			label ShadowmapWHLabel "Width and height" pos:[24,171] width:88 height:16
+			edittext ShadowmapWText pos:[117,169] width:40 height:20 visible:false enabled:false text: "1024"
+			edittext ShadowmapHText pos:[157,169] width:40 height:20 visible:false enabled:false text: "1024"
+		button GetLightButton "Get" pos:[24,224] width:112 height:32 visible:false
+		button SetLightButton "Set" pos:[144,224] width:112 height:32 visible:false
 	GroupBox grp3 "Inactive" pos:[8,8] width:265 height:61 visible:false
 		label UnsupportedLabel "Current selection is not supported." pos:[24,32] width:232 height:24 visible:false
 	GroupBox grp4 "Cameras" pos:[8,8] width:265 height:88 visible:false
@@ -50,7 +57,6 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		RenderVisibleBox.visible = bool
 		RenderLayerBox.visible = bool
 		RenderLayerList.visible = bool
-		--AnimModelLabel.visible = bool
 		CinematicBox.visible = bool
 		AnimModelText.visible = bool
 		PhysicsGroup.visible = bool
@@ -58,6 +64,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		PhysicsGenerateList.visible = bool
 		PhysicsLayerBox.visible = bool
 		PhysicsLayerList.visible = bool
+		PhysicsMaterialText.visible = bool
 		LogicGroup.visible = bool
 		LogicGenerateBox.visible = bool
 		LogicGenerateList.visible = bool
@@ -68,9 +75,16 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 	fn toggleLightsGroup bool =
 	(
 		grp2.visible = bool
+		LightGroup.visible = bool
 		LightLabel.visible = bool
 		LightExportBox.visible = bool
 		LightEnabledBox.visible = bool
+		ShadowmapGroup.visible = bool
+		ShadowmapExportBox.visible = bool
+		ShadowmapLayerList.visible = bool
+		ShadowmapWHLabel.visible = bool
+		ShadowmapWText.visible = bool
+		ShadowmapHText.visible = bool
 		GetLightButton.visible = bool
 		SetLightButton.visible = bool
 	)
@@ -106,11 +120,20 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		PhysicsGenerateList.enabled = bool
 		PhysicsLayerBox.enabled =  bool
 		PhysicsLayerList.enabled =  bool
+		PhysicsMaterialText.enabled = bool
 	)
 	
 	fn toggleLights bool =
 	(
 		LightEnabledBox.enabled = bool
+	)
+	
+	fn toggleShadowmap bool =
+	(
+		ShadowmapLayerList.enabled = bool
+		ShadowmapWHLabel.enabled = bool
+		ShadowmapWText.enabled = bool
+		ShadowmapHText.enabled = bool
 	)
 	
 	fn toggleCameras bool =
@@ -165,7 +188,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			toggleUnsupportedGroup false
 			toggleCamerasGroup false
 			LightLabel.text = textLabel
-			UABSetProperties.height = 170
+			UABSetProperties.height = 268
 		) else (
 			loadUnsupportedSelection Objs
 		)
@@ -199,7 +222,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			toggleUnsupportedGroup false
 			toggleCamerasGroup false
 			GeometryLabel.text = textLabel
-			UABSetProperties.height = 370
+			UABSetProperties.height = 394
 		)
 		else
 		(
@@ -262,13 +285,14 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			setUserProp Obj "render_export" true
 			setUserProp Obj "render_export_type" "instance_mesh"
 			setUserProp Obj "render_visible" true
-			setUserProp Obj "has_render_layer" false
+			setUserProp Obj "has_render_layer" true
 			setUserProp Obj "render_layer" "solid"
 			setUserProp Obj "anim_model_core" "undefined"
 			setUserProp Obj "physics_generate" false
 			setUserProp Obj "physics_generate_type" "triangle_mesh"
 			setUserProp Obj "has_physics_layer" false
-			setUserProp Obj "physics_layer" "logic"
+			setUserProp Obj "physics_layer" (1 as string)
+			setUserProp Obj "physics_material" ""
 			setUserProp Obj "logic_generate" false
 			setUserProp Obj "logic_generate_type" "stairs"
 			setUserProp OBj "cinematic_object" false
@@ -276,6 +300,10 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 		(
 			setUserProp Obj "light_export" true
 			setUserProp Obj "light_enabled" true
+			setUserProp Obj "shadowmap_export" false
+			setUserProp Obj "shadowmap_layer" "solid"
+			setUserProp Obj "shadowmap_w" (1024 as string)
+			setUserProp Obj "shadowmap_h" (1024 as string)
 		) else if(SuperClassOf Obj == camera) then
 		(
 			setUserProp Obj "camera_export" true
@@ -321,12 +349,12 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 						"alpha_objects": RenderLayerList.selection = 2
 						"alpha_blend_objects": RenderLayerList.selection = 3
 						"particles": RenderLayerList.selection = 4
+						"skybox": RenderLayerList.selection = 5
 					)
 			
 				AnimModelText.text = getUserProp Objs[1] "anim_model_core"
 				CinematicBox.checked = getUserProp Objs[1] "cinematic_object"
 			) else (
-				
 				toggleRender false
 				RenderVisibleBox.checked = false
 				RenderLayerBox.checked = false
@@ -352,10 +380,13 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 					(
 						"logic": PhysicsLayerList.selection = 1
 					)
+					
+				PhysicsMaterial.text = getUserProp Objs[1] "physics_material"
 			) else (
 				
 				togglePhysics false
 				PhysicsLayerBox.checked = false
+				PhysicsMaterialText.text = ""
 			)
 			
 			LogicGenerateBox.checked = getUserProp Objs[1] "logic_generate"
@@ -368,6 +399,18 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 			LightExportBox.checked = getUserProp Objs[1] "light_export"
 			toggleLights (LightExportBox.checked)
 			LightEnabledBox.checked = getUserProp Objs[1] "light_enabled"
+			ShadowmapExportBox.checked = getUserProp Objs[1] "shadowmap_export"
+			toggleShadowmap (ShadowmapExportBox.checked)
+			case getUserProp Objs[1] "shadowmap_layer" of
+				(
+					"solid": ShadowmapLayerList.selection = 1
+					"alpha_objects": ShadowmapLayerList.selection = 2
+					"alpha_blend_objects": ShadowmapLayerList.selection = 3
+					"particles": ShadowmapLayerList.selection = 4
+				)
+			ShadowmapWText.text = (getUserProp Objs[1] "shadowmap_w") as string
+			ShadowmapHText.text = (getUserProp Objs[1] "shadowmap_h") as string
+			
 		) else if(SuperClassOf Objs[1] == camera) then
 		(
 			CameraExportBox.checked = getUserProp Objs[1] "camera_export"
@@ -427,6 +470,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 						"alpha_objects": setUserProp Objs[i] "render_layer" "alpha_objects"
 						"alpha_blend_objects": setUserProp Objs[i] "render_layer" "alpha_blend_objects"
 						"particles": setUserProp Objs[i] "render_layer" "particles"
+						"skybox": setUserProp Objs[i] "render_layer" "skybox"
 					)	
 					
 				) else (
@@ -435,7 +479,6 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 				
 				if AnimModelText.text == "" then
 				(
-					--messageBox "Introduce el core para el modelo animado" title:"ERROR"
 					setUserProp Objs[i] "anim_model_core" "undefined"
 				) else (
 					setUserProp Objs[i] "anim_model_core" AnimModelText.text
@@ -465,11 +508,18 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 					
 					case PhysicsLayerList.items[PhysicsLayerList.selection] of
 					(
-						"logic": setUserProp Objs[i] "physics_layer" "logic"
+						"logic": setUserProp Objs[i] "physics_layer" (1 as string)
 					)	
 				
 				) else (
 					setUserProp Objs[i] "has_physics_layer" false
+				)
+				
+				if PhysicsMaterialText.text == "" then
+				(
+					setUserProp Objs[i] "physics_material" "undefined"
+				) else (
+					setUserProp Objs[i] "physics_material" PhysicsMaterialText.text
 				)
 				
 				if LogicGenerateBox.checked then
@@ -506,6 +556,31 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 					setUserProp Objs[i] "light_enabled" true
 				) else (
 					setUserProp Objs[i] "light_enabled" false
+				)
+				if ShadowmapExportBox.checked then
+				(
+					setUserProp Objs[i] "shadowmap_export" true
+				) else (
+					setUserProp Objs[i] "shadowmap_export" false
+				)
+				case ShadowmapLayerList.items[ShadowmapLayerList.selection] of
+					(
+						"solid": setUserProp Objs[i] "shadowmap_layer" "solid"
+						"alpha_objects": setUserProp Objs[i] "shadowmap_layer" "alpha_objects"
+						"alpha_blend_objects": setUserProp Objs[i] "shadowmap_layer" "alpha_blend_objects"
+						"particles": setUserProp Objs[i] "shadowmap_layer" "particles"
+					)
+				if ShadowmapWText.text == "" then
+				(
+					setUserProp Objs[i] "shadowmap_w" (1024 as string)
+				) else (
+					setUserProp Objs[i] "shadowmap_w" ShadowmapWText.text as string
+				)
+				if ShadowmapHText.text == "" then
+				(
+					setUserProp Objs[i] "shadowmap_h" (1024 as string)
+				) else (
+					setUserProp Objs[i] "shadowmap_h" ShadowmapHText.text as string
 				)
 			) else if(SuperClassOf Objs[i] == camera) then
 			(
@@ -554,6 +629,16 @@ rollout UABSetProperties "UABSetProperties" width:280 height:370
 	on LightExportBox changed  true do
 	(
 		toggleLights  true
+	)
+	
+	on ShadowmapExportBox changed  false do
+	(
+		toggleShadowmap  false
+	)
+	
+	on ShadowmapExportBox changed  true do
+	(
+		toggleShadowmap  true
 	)
 	
 	on CameraExportBox changed false do

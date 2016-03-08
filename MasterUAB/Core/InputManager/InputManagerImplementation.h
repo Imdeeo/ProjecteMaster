@@ -3,7 +3,6 @@
 
 #include <dinput.h>
 
-#include "Utils.h"
 
 #include "InputManager.h"
 
@@ -27,7 +26,7 @@ public:
 
 	void reload();
 private:
-
+	void AddReloadKey();
 	std::string m_FileName;
 
 	enum InputType {

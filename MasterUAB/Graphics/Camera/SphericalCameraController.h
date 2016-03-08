@@ -24,6 +24,8 @@ public:
 		AddPitch(movement.y*30.0f);
 		AddZoom(-movement.z*2.0f);
 	}
+
+	void Update(float ElapsedTime);
 };
 
 #endif

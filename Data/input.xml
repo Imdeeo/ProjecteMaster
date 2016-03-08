@@ -4,6 +4,13 @@
 	<action name="STRAFE_LEFT" type="KEYBOARD" mode="WHILE_PRESSED" key="A" triggers_axis="true" axis="STRAFE" axis_value="-1"/>
 	<action name="STRAFE_RIGHT" type="KEYBOARD" mode="WHILE_PRESSED" key="D" triggers_axis="true" axis="STRAFE" axis_value="1"/>
 	
+	<action name="MOVE_CHARACTER" type="KEYBOARD" mode="WHILE_PRESSED" key="U" triggers_axis="true" axis="MOVE_CHARACTER" axis_value="1"/>
+	<action name="MOVE_CHARACTER_BACK" type="KEYBOARD" mode="WHILE_PRESSED" key="J" triggers_axis="true" axis="MOVE_CHARACTER" axis_value="-1"/>
+	<action name="STRAFE_CHARACTER_LEFT" type="KEYBOARD" mode="WHILE_PRESSED" key="H" triggers_axis="true" axis="STRAFE_CHARACTER" axis_value="-1"/>
+	<action name="STRAFE_CHARACTER_RIGHT" type="KEYBOARD" mode="WHILE_PRESSED" key="K" triggers_axis="true" axis="STRAFE_CHARACTER" axis_value="1"/>
+	
+	<action name="JUMP" type="KEYBOARD" mode="ON_PRESS" key=" "/>
+	
 	<action name="RELOAD" type="KEYBOARD" mode="ON_PRESS" key="R"/>
 	<action name="SWITCH_RENDER_LIGHTS" type="KEYBOARD" mode="ON_PRESS" key="L"/>
 	

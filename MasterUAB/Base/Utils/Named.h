@@ -1,9 +1,10 @@
 #ifndef _NAMED_H
 #define _NAMED_H
 
-#include <string>
 
 class CXMLTreeNode;
+
+#include <string>
 
 class CNamed
 {

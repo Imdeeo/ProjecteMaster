@@ -4,6 +4,7 @@
 #include "StagedTexturedSceneRendererCommand.h"
 
 class CRenderableObjectTechnique;
+class CMaterial;
 
 class CDrawQuadRendererCommand : public CStagedTexturedSceneRendererCommand
 {

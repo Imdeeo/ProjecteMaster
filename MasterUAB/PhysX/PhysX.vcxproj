@@ -30,7 +30,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -121,7 +121,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\PhysXvs10\Include;$(SolutionDir)Base;$(SolutionDir)PhysX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\PhysX-3.3-master\Include;$(SolutionDir)Base;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\include;$(SolutionDir)3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)3rdParty\cal3d-0.11rc2\src;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;$(SolutionDir)Graphics;$(SolutionDir)Core;$(SolutionDir)PhysX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -129,17 +129,21 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib;$(SolutionDir)3rdParty\PhysX-3.3-master\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PhysX3_x86.lib;PhysX3Common_x86.lib;PhysX3Extensions.lib;PhysXProfileSDK.lib;PhysXVisualDebuggerSDK.lib;PhysX3CharacterKinematic_x86.lib;PhysX3Cooking_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\PhysX-3.3-master\Include;$(SolutionDir)Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\PhysX-3.3-master\Include;$(SolutionDir)Base;$(SolutionDir)Graphics;$(SolutionDir)Core\;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)3rdParty\cal3d-0.11rc2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\lib;$(SolutionDir)3rdParty\physx\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Base_d.lib;PhysX3DEBUG_x86.lib;PhysX3CommonDEBUG_x86.lib;PhysXProfileSDKDEBUG.lib;PhysXVisualDebuggerSDKDEBUG.lib;PhysX3GpuDEBUG_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>PhysX3DEBUG_x86.lib;PhysX3CommonDEBUG_x86.lib;PhysX3ExtensionsDEBUG.lib;PhysXProfileSDKDEBUG.lib;PhysXVisualDebuggerSDKDEBUG.lib;PhysX3CharacterKinematicDEBUG_x86.lib;PhysX3CookingDEBUG_x86.lib;Base_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PhysX3DEBUG_x86.lib;PhysX3CommonDEBUG_x86.lib;PhysX3ExtensionsDEBUG.lib;PhysXProfileSDKDEBUG.lib;PhysXVisualDebuggerSDKDEBUG.lib;PhysX3CharacterKinematicDEBUG_x86.lib;PhysX3CookingDEBUG_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\lib;$(SolutionDir)3rdParty\PhysX-3.3-master\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

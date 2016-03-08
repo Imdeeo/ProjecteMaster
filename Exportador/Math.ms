@@ -39,12 +39,12 @@ fn TransformToRH &matrix =
 
 fn GetYaw trans &yaw =
 (
-	yaw = (-(trans as eulerangles).z*PI/180)
+	yaw = ((-(trans as eulerangles).z*PI/180))
 )
 
 fn GetPitch trans &pitch =
 (
-	pitch = ((-(trans as eulerangles).y*PI/180)+(PI/2))
+	pitch = ((-(trans as eulerangles).y*PI/180))
 )
 
 fn GetRoll trans &roll =
@@ -58,7 +58,17 @@ fn getBoundingSphere vertex &BSphere =
 	if dist > BSphere[2] then BSphere[2] = dist
 )
 
-fn createVertex pos col norm textcoord1 textcoord2 &vertex =
+fn getBoundingBox vertex &BBMax &BBMin =
+(
+	if vertex.x > BBMax.x then ( BBMax.x = vertex.x )
+	if vertex.y > BBMax.y then ( BBMax.y = vertex.y )
+	if vertex.z > BBMax.z then ( BBMax.z = vertex.z )
+	if vertex.x < BBMin.x then ( BBMin.x = vertex.x )
+	if vertex.y < BBMin.y then ( BBMin.y = vertex.y )
+	if vertex.z < BBMin.z then ( BBMin.z = vertex.z )			
+)
+
+fn createVertex pos col norm textcoord1 textcoord2 binormal tangent &vertex =
 (
 	if(pos!=undefined) then
 	(
@@ -82,12 +92,26 @@ fn createVertex pos col norm textcoord1 textcoord2 &vertex =
 	if(textcoord1!=undefined)then
 	(
 		append vertex textcoord1.x
-		append vertex textcoord1.y
+		append vertex (1 - textcoord1.y)
 	)
 	if(textcoord2!=undefined)then
 	(
 		append vertex textcoord2.x
-		append vertex textcoord2.y
+		append vertex (1 - textcoord2.y)
+	)
+	if(binormal==0x0100)then
+	(
+		append vertex 0
+		append vertex 0
+		append vertex 0
+		append vertex 0
+	)
+	if(tangent==0x0200)then
+	(
+		append vertex 0
+		append vertex 0
+		append vertex 0
+		append vertex 0
 	)
 )
 
@@ -103,6 +127,18 @@ fn getIndex vertexVect vertex IdMaterial vertexsDictionary &vtxN =
 		vtxN = vertexVect[IdMaterial].count
 		vertexsDictionary.Add vtxStr vtxN
 		append vertexVect[IdMaterial] vertex
+	)
+)
+
+fn stahp uv =
+(
+	if (uv.x > 1 or uv.x < 0) then
+	( 
+		uv.x -= floor(uv.x)
+	)
+	if (uv.y > 1 or uv.y < 0) then
+	( 
+		uv.y -= floor(uv.y)
 	)
 )
 

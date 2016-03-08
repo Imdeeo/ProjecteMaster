@@ -20,6 +20,12 @@ bool CLightManager::Load(const std::string &FileName){
 		CXMLTreeNode l_Input = l_XML["lights"];
 		if (l_Input.Exists())
 		{
+			m_AmbientLight = l_Input.GetVect4fProperty("ambient_light_color", Vect4f(0.1f, 0.1f, 0.1f, 1.0f));
+			m_FogColor = l_Input.GetVect3fProperty("fog_color", Vect3f(1.0f, 1.0f, 1.0f));
+			m_FogMaxAttenuation = l_Input.GetFloatProperty("fog_max_attenuation");
+			m_FogStart = l_Input.GetFloatProperty("fog_start");
+			m_FogEnd = l_Input.GetFloatProperty("fog_end");
+			m_FogEnabled= l_Input.GetBoolProperty("fog_enabled");
 			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
 			{				
 				CXMLTreeNode l_Element = l_Input(i);
@@ -40,10 +46,6 @@ bool CLightManager::Load(const std::string &FileName){
 					default:
 						return false;
 					}
-				}
-				if (l_Element.GetName() == std::string("ambient_light"))
-				{
-					m_AmbientLight = l_Element.GetVect4fProperty("color",Vect4f(0.1f,0.1f,0.1f,1.0f));
 				}
 			}
 		}

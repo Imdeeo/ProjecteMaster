@@ -2,6 +2,8 @@
 #include "XML\XMLTreeNode.h"
 
 
+
+
 CNamed::CNamed(const CXMLTreeNode &TreeNode)
 {
 	m_Name = TreeNode.GetPszProperty("name","");

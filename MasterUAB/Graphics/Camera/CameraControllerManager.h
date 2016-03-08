@@ -15,6 +15,7 @@ private:
 	CCamera m_CurrentCamera;
 	CCameraController* m_MainCamera;
 	CCameraController* m_DebugCamera;
+	
 public:
 	CCameraControllerManager(void);
 	virtual ~CCameraControllerManager(void);
@@ -27,7 +28,7 @@ public:
 
 	CCameraController* GetMainCamera(){ return m_MainCamera; };
 	CCameraController* GetDebugCamera(){ return m_DebugCamera; };
-
+	UAB_BUILD_GET_SET(int, CurrentCameraControl)
 private:
 	void UpdateMainCamera(float _ElapsedTime);
 	void UpdateDebugCamera(float _ElapsedTime);

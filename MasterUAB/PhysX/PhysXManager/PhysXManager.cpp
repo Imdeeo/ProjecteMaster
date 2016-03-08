@@ -5,6 +5,19 @@
 #include "PhysXManager.h"
 #include "Math\Vector3.h"
 #include "Math\Quatn.h"
+#include "RenderManager\RenderManager.h"
+#include "Effects\EffectManager.h"
+#include "Math\MathTypes.h"
+#include "Engine\UABEngine.h"
+#include "ContextManager\ContextManager.h"
+#include "DebugRender.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
+
+#include "Utils\CEmptyPointerClass.h"
+
+#include "RenderableObjects\RenderableVertexs.h"
+
+#include "XML\XMLTreeNode.h"
 
 #include <assert.h>
 
@@ -69,10 +82,14 @@ private :
 #if USE_PHYSX_DEBUG		
 		if(m_PhysX->getPvdConnectionManager())
 		{
+			physx::PxVisualDebuggerConnectionFlags connectionFlags ( physx::PxVisualDebuggerExt::getAllConnectionFlags() );
+
 			m_PhysX->getVisualDebugger()->setVisualizeConstraints(true);
-			m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONTACTS,true);
-			m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONTACTS,true);
-			m_DebugConnection = physx::PxVisualDebuggerExt::createConnection(m_PhysX->getPvdConnectionManager(),PVD_HOST,5425,10);
+			//m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONSTRAINTS, true);
+			//m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONTACTS,true);		
+			m_DebugConnection = physx::PxVisualDebuggerExt::createConnection(m_PhysX->getPvdConnectionManager(), PVD_HOST, 5425, 100, connectionFlags);
+			if (m_DebugConnection)
+				m_DebugConnection->release();
 		}
 		else
 		{
@@ -82,13 +99,14 @@ private :
 		m_Dispatcher = physx::PxDefaultCpuDispatcherCreate(N_CPUS);
 
 		physx::PxSceneDesc sceneDesc(m_PhysX->getTolerancesScale());
-		sceneDesc.gravity = physx::PxVec3(0.0f,-10.f,0.0f);
+		sceneDesc.gravity = physx::PxVec3(.0f, -9.81f, .0f);
 		sceneDesc.cpuDispatcher = m_Dispatcher;
 		sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
 		sceneDesc.flags = physx::PxSceneFlag::eENABLE_ACTIVETRANSFORMS;
 		m_Scene = m_PhysX->createScene(sceneDesc);
 		assert(m_Scene);
 
+		m_Scene->setGravity(physx::PxVec3(.0f, -9.81f, .0f));
 		m_Scene->setSimulationEventCallback(this);
 
 #if PHYSX_VERSION_VS10 == PX_PHYSICS_VERSION
@@ -162,8 +180,8 @@ public:
 
 	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, int _group)
 	{
-		assert(m_CharacterControllers.find(_name)!=m_CharacterControllers.end());
-
+		assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
+		
 		physx::PxMaterial* l_Material = m_Materials[_MaterialName];
 
 		physx::PxCapsuleControllerDesc desc;
@@ -174,16 +192,18 @@ public:
 		desc.stepOffset = 0.5f;
 		desc.density = _density;
 		desc.reportCallback = this;
-		desc.position = physx::PxExtendedVec3(_position.x,_position.y+_radius + _height*0.5,_position.z);
+		desc.position = physx::PxExtendedVec3(_position.x,_position.y + _radius + _height*0.5f,_position.z);
 		desc.material = l_Material;
-		//desc.userData = (void*)index;
+		size_t l_index = m_CharacterControllers.size();
+		desc.userData = (void*)l_index;
 
 		m_CharacterControllers[_name] = m_ControllerManager->createController(desc);
 
-		physx::PxRigidDynamic* l_actor = m_CharacterControllers[_name]->getActor();
-		physx::PxShape *shape = l_actor->createShape(physx::PxBoxGeometry(_radius, _height + _radius * 2, _radius), *l_Material);
 
-		L_PutGroupToShape(shape, _group);
+		physx::PxRigidDynamic* l_actor = m_CharacterControllers[_name]->getActor();
+		/*physx::PxShape *shape = l_actor->createShape(physx::PxBoxGeometry(_radius, _height + _radius * 2, _radius), *l_Material);
+
+		L_PutGroupToShape(shape, _group);*/
 
 		AddActor(_name,_position,Quatf(0,0,0,1),l_actor);
 	}
@@ -206,6 +226,41 @@ void CPhysXManager::RegisterMaterial(const std::string &name, float staticFricti
 	assert(m_Materials.find(name)==m_Materials.end());
 	//*/
 	m_Materials[name] = m_PhysX->createMaterial(staticFriction,dynamicFriction,restitution);
+}
+
+bool CPhysXManager::LoadMaterials(const std::string &Filename)
+{
+	m_Filename = Filename;
+	std::string l_EffectName;
+	float l_StaticFriction;
+	float l_DynamicFriction;
+	float l_Restitution;
+
+	CXMLTreeNode l_XML;
+	if (l_XML.LoadFile(m_Filename.c_str()))
+	{
+		CXMLTreeNode l_Input = l_XML["physx"];
+		if (l_Input.Exists())
+		{
+			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			{
+				CXMLTreeNode l_Element = l_Input(i);
+				if (l_Element.GetName() == std::string("material"))
+				{
+					l_EffectName = l_Element.GetPszProperty("name");
+					l_StaticFriction = l_Element.GetFloatProperty("static_friction");
+					l_DynamicFriction = l_Element.GetFloatProperty("dynamic_friction");
+					l_Restitution = l_Element.GetFloatProperty("restitution");
+					RegisterMaterial(l_EffectName, l_StaticFriction, l_DynamicFriction, l_Restitution);
+				}
+			}
+		}
+	}
+	else
+	{
+		return false;
+	}
+	return true;
 }
 
 inline void CPhysXManager::AssertCoordArrays()
@@ -281,6 +336,9 @@ void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shap
 physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, physx::PxGeometry _geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
+	//physx::PxVec3 v = CastVec(Size);
+	//physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(v.x / 2, v.y / 2, v.z / 2), *l_Material);
+
 	physx::PxShape* shape = m_PhysX->createShape(_geometry, *l_Material);
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
 
@@ -291,9 +349,10 @@ physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, physx:
 
 void CPhysXManager::CreateStaticBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
+	physx::PxVec3 l_HalfSize = physx::PxVec3(_size.x / 2, _size.y / 2, _size.z / 2);
 	CreateStaticShape(
 		_name,
-		physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2),
+		physx::PxBoxGeometry(l_HalfSize),
 		_Material,
 		_position,
 		_orientation,
@@ -334,8 +393,7 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 	Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
-	physx::PxRigidStatic* groundPlane = 
-		physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z,_PlaneDistance),*l_Material);
+	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z,_PlaneDistance),*l_Material);
 	groundPlane->userData = (void*)AddActor(_name,_position,_orientation,groundPlane);
 	m_Scene->addActor(*groundPlane);
 
@@ -344,6 +402,8 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 	assert(numShapes == 1);
 
 	L_PutGroupToShape(shape, _group);
+
+	shape->userData = groundPlane->userData;
 
 }
 
@@ -373,6 +433,23 @@ void CPhysXManager::CreateDinamicSphere(const std::string _name, float _radius, 
 	CreateDinamicShape(_name,
 		physx::PxSphereGeometry(_radius),
 		_Material, _position, _orientation, _density, _group, isKinematic);
+}
+
+void CPhysXManager::CreateRigidStatic(const std::string &Name, const Vect3f Size, const Vect3f &Position, const Quatf &Orientation, const std::string &MaterialName)
+{
+	AssertCoordArrays();
+	const physx::PxMaterial* l_Material = m_Materials[MaterialName];
+	physx::PxVec3 v = CastVec(Size);
+	physx::PxShape* l_Shape = m_PhysX->createShape(physx::PxBoxGeometry(v.x/2,v.y/2,v.z/2),*l_Material);
+	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(Position),CastQuat(Orientation)));
+	
+	l_Body->attachShape(*l_Shape);
+	size_t index=m_Actors.size();
+	l_Body->userData = (void*)index;
+	m_Scene->addActor(*l_Body);
+	l_Shape->release();
+	AddActor(Name, Position, Orientation, l_Body);
+
 }
 
 physx::PxShape* CPhysXManager::CreateStaticShapeFromBody(const std::string _name, physx::PxGeometry _geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
@@ -456,9 +533,14 @@ void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement,
 
 	size_t index = (size_t)cct->getUserData();
 
-	cct->move(CastVec(_movement), _movement.Length()*0.01, _elapsedTime, filters);
+	Vect3f movemenAux = _movement;
+	Vect3f move1 = CastVec(cct->getPosition());
+	movemenAux = _elapsedTime*movemenAux;
+	cct->move(CastVec(movemenAux), movemenAux.Length()*0.01, _elapsedTime, filters);
 
+	Vect3f move2 = CastVec(cct->getPosition());
 	physx::PxRigidDynamic* actor = cct->getActor();
+	
 
 	physx::PxExtendedVec3 p = cct->getFootPosition();
 	physx::PxVec3 v = actor->getLinearVelocity();
@@ -534,4 +616,59 @@ void CPhysXManager::RemoveActor(const std::string _ActorName)
 		m_ActorIndexs.clear();
 	}
 	
+}
+
+void CPhysXManager::Render(const std::string _name, CRenderManager *RenderManager)
+{
+	if (_name == "player")
+	{
+		CEffectManager::m_SceneParameters.m_BaseColor = CColor(1, 0, 0, 1);
+	}
+	else
+	{
+		CEffectManager::m_SceneParameters.m_BaseColor = CColor(0, 0, 1, 1);
+	}
+	
+	CEffectManager::m_SceneParameters.m_BaseColor.SetAlpha(1.f);
+	Mat44f l_ScaleMatrix, l_RotationMatrix, l_TranslationMatrix;
+
+	l_ScaleMatrix.SetIdentity();
+	l_ScaleMatrix.Scale(1.0f, 1.0f, 1.0f);
+
+	l_RotationMatrix.SetIdentity();
+	l_RotationMatrix.SetPitchRollYaw(Vect3f(0, 0, 0));
+	
+	l_TranslationMatrix.SetIdentity();
+	
+	l_TranslationMatrix.SetPos(m_CharacterControllers[_name]->getPosition().x, m_CharacterControllers[_name]->getPosition().y, m_CharacterControllers[_name]->getPosition().z);
+
+	l_TranslationMatrix = l_ScaleMatrix*l_RotationMatrix*l_TranslationMatrix;
+
+	RenderManager->GetContextManager()->SetWorldMatrix(l_TranslationMatrix);
+	CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
+	CEffectManager::SetSceneConstants(l_EffectTechnique);
+	RenderManager->GetDebugRender()->GetCone()->RenderIndexed(RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+}
+
+
+Vect3f CPhysXManager::GetCharacterControllersPosition(const std::string _name)
+{
+	physx::PxController* aux = m_CharacterControllers[_name];
+	return Vect3f(aux->getPosition().x, aux->getPosition().y, aux->getPosition().z);
+}
+
+CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionX(const std::string _name)
+{
+	physx::PxController* aux = m_CharacterControllers[_name];
+	return (CEmptyPointerClass*)(&aux->getPosition().x);
+}
+CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionY(const std::string _name)
+{
+	physx::PxController* aux = m_CharacterControllers[_name];
+	return (CEmptyPointerClass*)(&aux->getPosition().y);
+}
+CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionZ(const std::string _name)
+{
+	physx::PxController* aux = m_CharacterControllers[_name];
+	return (CEmptyPointerClass*)(&aux->getPosition().z);
 }

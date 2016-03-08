@@ -1,6 +1,8 @@
 #include "LayerManager.h"
-#include "RenderableObjects\RenderableObjectsManager.h"
+#include "RenderManager\RenderManager.h"
 #include "Utils.h"
+
+#include "XML\XMLTreeNode.h"
 
 CLayerManager::CLayerManager():m_DefaultLayer(nullptr){}
 
@@ -12,11 +14,11 @@ CLayerManager::~CLayerManager()
 void CLayerManager::Destroy()
 {
 	//CHECKED_DELETE(m_DefaultLayer);
+	CTemplatedVectorMapManager::Destroy();
 }
 
 void CLayerManager::Load(const std::string &FileName)
 {
-	Destroy();
 	m_Filename = FileName;
 	CXMLTreeNode l_XML;
 	
@@ -35,6 +37,10 @@ void CLayerManager::Load(const std::string &FileName)
 				else if (l_Element.GetName() == std::string("instance_mesh"))
 				{					
 					GetLayer(l_Element)->AddMeshInstance(l_Element);
+				}
+				else if (l_Element.GetName() == std::string("animated_model_mesh"))
+				{
+					GetLayer(l_Element)->AddAnimatedInstanceModel(l_Element);
 				}
 			}
 		}
@@ -68,6 +74,11 @@ void CLayerManager::Render(CRenderManager *RenderManager, const std::string &Lay
 	GetResource(LayerName)->Render(RenderManager); 
 }
 
+void CLayerManager::RenderDebug(CRenderManager *RenderManager, const std::string &LayerName)
+{
+	GetResource(LayerName)->RenderDebug(RenderManager);
+}
+
 CRenderableObjectsManager* CLayerManager::GetLayer(CXMLTreeNode &Node)
 {
 	const char * l_layerExist = Node.GetPszProperty("layer");
@@ -89,8 +100,9 @@ CRenderableObjectsManager* CLayerManager::GetLayer()
 CRenderableObjectsManager* CLayerManager::AddLayer(CXMLTreeNode &TreeNode)
 {
 	const char * l_existDefault;
-	CRenderableObjectsManager* l_auxROM = new CRenderableObjectsManager();
-	AddResource(TreeNode.GetPszProperty("name"), l_auxROM);
+	std::string l_Name = TreeNode.GetPszProperty("name");
+	CRenderableObjectsManager* l_auxROM = new CRenderableObjectsManager(l_Name);
+	AddResource(l_Name, l_auxROM);
 	l_existDefault = TreeNode.GetPszProperty("default");
 	if (l_existDefault != NULL)
 	{

@@ -2,7 +2,9 @@
 #define TEXTURE_H
 
 #include "Utils\Named.h"
-#include <d3d11.h>
+
+class ID3D11ShaderResourceView;
+class ID3D11SamplerState;
 
 class CTexture : public CNamed
 {

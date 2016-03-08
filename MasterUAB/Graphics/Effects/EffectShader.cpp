@@ -1,13 +1,22 @@
 #include "Effects\EffectShader.h"
-#include "RenderManager\RenderManager.h"
-#include "Effects\SceneEffectParameters.h"
-#include "Effects\AnimatedModelEffectParameters.h"
-#include "Effects\LightEffectParameters.h"
+
 #include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "EffectManager.h"
+
+#include "SceneEffectParameters.h"
+#include "AnimatedModelEffectParameters.h"
+#include "LightEffectParameters.h"
+
 #include "RenderableObjects\VertexTypes.h"
 #include "Utils.h"
 
+#include "XML\XMLTreeNode.h"
+
 #include <assert.h>
+
+#include <d3dcommon.h>
+#include <d3d11.h>
 
 #include <D3Dcompiler.h>
 
@@ -26,6 +35,7 @@ CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed(TreeNode){
 
 CEffectShader::~CEffectShader(void)
 {
+	CHECKED_DELETE(m_ShaderMacros);
 }
 
 void CEffectShader::CreateShaderMacro()
@@ -91,7 +101,10 @@ bool CEffectShader::LoadShader(const std::string &Filename, const std::string
 		return false;
 	}
 	if (pErrorBlob)
+	{
+		OutputDebugStringA((char*)pErrorBlob->GetBufferPointer());
 		pErrorBlob->Release();
+	}
 	return true;
 }
 
@@ -131,6 +144,7 @@ bool CEffectShader::CreateConstantBuffer()
 	CreateConstantBuffer(SCENE_CONSTANT_BUFFER_ID, sizeof(CSceneEffectParameters));
 	CreateConstantBuffer(LIGHT_CONSTANT_BUFFER_ID, sizeof(CLightEffectParameters));
 	CreateConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID, sizeof(CAnimatedModelEffectParameters));
+	CreateConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID, sizeof(Vect4f)*MAX_RAW_DATA_ELEMENTS);
 
 	
 	/*CreateConstantBuffer( SCENE_CONSTANT_BUFFER_ID, 60*sizeof(float));
@@ -163,37 +177,41 @@ bool CEffectShader::Reload()
 
 ID3D11Buffer * CEffectShader::GetConstantBuffer(unsigned int IdBuffer)
 {
+	if(IdBuffer>=m_ConstantBuffers.size())
+		return NULL;
 	return m_ConstantBuffers[IdBuffer];
 }
 
 CEffectVertexShader::CEffectVertexShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode),
 	m_VertexShader(nullptr),
-	m_VertexLayout(nullptr)
+	m_VertexLayout(nullptr)	
 {
 	m_VertexType = TreeNode.GetPszProperty("vertex_type");
 }
 
 void CEffectVertexShader::Destroy()
 {
-	//delete m_VertexLayout;
-	//delete m_VertexShader;
-	//delete m_ConstantBuffer;
+	CHECKED_RELEASE(m_VertexLayout);
+	CHECKED_RELEASE(m_VertexShader);
+	for(int i = 0; i<m_ConstantBuffers.size(); ++i)
+	{
+		CHECKED_RELEASE(m_ConstantBuffers[i]);
+	}
+	m_ConstantBuffers.clear();
 }
 
 bool CEffectVertexShader::Load()
 {
 	CreateShaderMacro();
 	ID3DBlob *l_VSBlob = NULL;
-	bool l_Loaded = LoadShader(m_Filename, m_EntryPoint, m_ShaderModel,
-		&l_VSBlob);
+	bool l_Loaded = LoadShader(m_Filename, m_EntryPoint, m_ShaderModel, &l_VSBlob);
 	if (!l_Loaded)
 		return false;
 	/*CRenderManager &l_RenderManager = UABEngine.GetRenderManager();
 	ID3D11Device *l_Device = l_RenderManager.GetDevice();*/
 	CRenderManager* l_RenderManager = UABEngine.GetRenderManager();
 	ID3D11Device *l_Device = l_RenderManager->GetDevice();
-	HRESULT l_HR = l_Device->CreateVertexShader(l_VSBlob->GetBufferPointer(),
-		l_VSBlob->GetBufferSize(), NULL, &m_VertexShader);
+	HRESULT l_HR = l_Device->CreateVertexShader(l_VSBlob->GetBufferPointer(), l_VSBlob->GetBufferSize(), NULL, &m_VertexShader);
 	if (FAILED(l_HR))
 	{
 		l_VSBlob->Release();
@@ -226,12 +244,24 @@ bool CEffectVertexShader::Load()
 	if (m_VertexType == "MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX")
 		l_Loaded = MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else
+	if (m_VertexType == "MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX")
+		l_Loaded = MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
+	else
+		if (m_VertexType == "MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX")
+		l_Loaded = MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
+	else
 		//Info("Vertex type '%s' not recognized on CEffectVertexShader::Load", m_VertexType.c_str());
 		printf("Vertex type '%s' not recognized on CEffectVertexShader::Load", m_VertexType.c_str());
 	l_VSBlob->Release();
 	if (!l_Loaded)
 		return false;
 	return CreateConstantBuffer();
+}
+
+bool CEffectVertexShader::Reload()
+{
+	Destroy();
+	return Load();
 }
 
 void CEffectVertexShader::SetConstantBuffer(unsigned int IdBuffer, void
@@ -247,6 +277,14 @@ void CEffectVertexShader::SetConstantBuffer(unsigned int IdBuffer, void
 		l_DeviceContext->VSSetConstantBuffers(IdBuffer, 1, &l_ConstantBuffer);
 	}
 }
+ID3D11VertexShader* CEffectVertexShader::GetVertexShader()
+{
+	return m_VertexShader;
+}
+ID3D11InputLayout*  CEffectVertexShader::GetVertexLayout()
+{
+	return m_VertexLayout;
+}
 
 CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode),
 	m_PixelShader(nullptr)
@@ -255,8 +293,12 @@ CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShad
 
 void CEffectPixelShader::Destroy()
 {
-	//CHECKED_DELETE(m_PixelShader);
-	//CHECKED_DELETE(m_ConstantBuffer);
+	CHECKED_RELEASE(m_PixelShader);
+	for(int i = 0; i<m_ConstantBuffers.size(); ++i)
+	{
+		CHECKED_RELEASE(m_ConstantBuffers[i]);
+	}
+	m_ConstantBuffers.clear();
 }
 
 bool CEffectPixelShader::Load()
@@ -277,6 +319,12 @@ bool CEffectPixelShader::Load()
 	return CreateConstantBuffer();
 }
 
+bool CEffectPixelShader::Reload()
+{
+	Destroy();
+	return Load();
+}
+
 void CEffectPixelShader::SetConstantBuffer(unsigned int IdBuffer, void *ConstantBuffer)
 {
 	ID3D11DeviceContext *l_DeviceContext = UABEngine.GetRenderManager()->GetDeviceContext();
@@ -284,4 +332,9 @@ void CEffectPixelShader::SetConstantBuffer(unsigned int IdBuffer, void *Constant
 	l_DeviceContext->UpdateSubresource(l_ConstantBuffer, 0, NULL,
 		ConstantBuffer, 0, 0);
 	l_DeviceContext->PSSetConstantBuffers(IdBuffer, 1, &l_ConstantBuffer);
+}
+
+ID3D11PixelShader* CEffectPixelShader::GetPixelShader()
+{
+	return m_PixelShader;
 }

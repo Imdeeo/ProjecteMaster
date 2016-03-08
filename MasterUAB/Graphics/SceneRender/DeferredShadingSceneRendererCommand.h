@@ -1,8 +1,10 @@
 #ifndef DEFFERRED_SHADING_SCENE_RENDER_H
 #define DEFFERRED_SHADING_SCENE_RENDER_H
 
-#include "SceneRendererCommand.h"
 #include "StagedTexturedSceneRendererCommand.h"
+
+class CRenderableObjectTechnique;
+class ID3D11BlendState;
 
 class CDeferredShadingSceneRendererCommand : public
 	CStagedTexturedSceneRendererCommand

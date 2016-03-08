@@ -1,12 +1,17 @@
 #include "Effects\EffectManager.h"
 #include "XML\XMLTreeNode.h"
-#include "SceneEffectParameters.h"
-#include "AnimatedModelEffectParameters.h";
-#include "LightEffectParameters.h";
+
 #include "Lights\Light.h";
 #include "Lights\DirectionalLight.h";
 #include "Lights\SpotLight.h";
-#include "Engine\UABEngine.h"
+
+#include "Texture\DynamicTexture.h"
+
+#include "Engine\UABEngine.h";
+#include "RenderManager\RenderManager.h";
+#include "Lights\LightManager.h";
+
+#include "DebugHelper\DebugHelper.h";
 
 CEffectManager::CEffectManager(void)
 {
@@ -16,12 +21,29 @@ CEffectManager::~CEffectManager(void)
 {
 }
 
+void CEffectManager::ReloadShader()
+{
+	typedef  std::map<std::string, CEffectVertexShader*>::iterator it_type;
+	for (it_type iterator = m_VertexShaders.GetResourcesMap().begin(); iterator != m_VertexShaders.GetResourcesMap().end(); iterator++)
+	{
+		iterator->second->Reload();
+	}
+	
+	typedef  std::map<std::string, CEffectPixelShader*>::iterator it_type2;
+	for (it_type2 iterator2 = m_PixelShaders.GetResourcesMap().begin(); iterator2 != m_PixelShaders.GetResourcesMap().end(); iterator2++)
+	{
+		iterator2->second->Reload();
+	}
+}
+
 void CEffectManager::Reload()
 {
-	m_VertexShaders.Destroy();
-	m_PixelShaders.Destroy();
-	CTemplatedMapManager::Destroy();
-	Load(m_Filename);
+	ReloadShader();
+	typedef  std::map<std::string, CEffectTechnique*>::iterator it_type;
+	for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
+	{
+		iterator->second->Refresh();
+	}
 }
 
 CSceneEffectParameters CEffectManager::m_SceneParameters;
@@ -39,6 +61,7 @@ bool CEffectManager::Load(const std::string &Filename)
 		CXMLTreeNode l_Input = l_XML["effects"];
 		if (l_Input.Exists())
 		{
+
 			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
 			{
 				CXMLTreeNode l_Element = l_Input(i);
@@ -79,21 +102,24 @@ CEffectPixelShader * CEffectManager::GetPixelShader(const std::string &PixelShad
 	return m_PixelShaders[PixelShader];
 }
 
-void CEffectManager::SetSceneConstants()
+void CEffectManager::SetSceneConstants(CEffectTechnique* _EffectTechnique)
 {
-	//m_SceneParameters.m_World = UABEngine.GetRenderManager()->GetContextManager()->;
+	ID3D11DeviceContext* l_DeviceContext = UABEngine.GetRenderManager()->GetDeviceContext();
+	ID3D11Buffer *l_SceneConstantBufferVS = _EffectTechnique->GetVertexShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+	l_DeviceContext->UpdateSubresource(l_SceneConstantBufferVS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
+	ID3D11Buffer *l_SceneConstantBufferPS = _EffectTechnique->GetPixelShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+	l_DeviceContext->UpdateSubresource(l_SceneConstantBufferPS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
 }
 
 void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 {	
 	m_LightParameters.m_LightEnabled[IdLight] = Light->GetEnabled()?1:0;
 	m_LightParameters.m_LightType[IdLight] = Light->GetType();
-	m_LightParameters.m_LightPosition[IdLight] = Light->GetPosition();;	
+	m_LightParameters.m_LightPosition[IdLight] = Light->GetPosition();
 	m_LightParameters.m_LightAttenuationStartRange[IdLight] = Light->GetStartRangeAttenuation();
 	m_LightParameters.m_LightAttenuationEndRange[IdLight] = Light->GetEndRangeAttenuation();
 	m_LightParameters.m_LightIntensity[IdLight] = Light->GetIntensity();
 	m_LightParameters.m_LightColor[IdLight] = Light->GetColor();
-
 	switch (Light->GetType())
 	{	
 	case CLight::LIGHT_TYPE_SPOT:
@@ -106,6 +132,23 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 	default:
 		break;
 	}	
+
+	if (Light->GetGenerateShadowMap())
+	{
+		CDynamicTexture *l_ShadowMap = Light->GetShadowMap();
+		CTexture *l_ShadowMask = Light->GetShadowMaskTexture();
+		CEffectManager::m_LightParameters.m_UseShadowMap[IdLight] = 1.0f;
+		CEffectManager::m_LightParameters.m_UseShadowMask[IdLight] = l_ShadowMask != NULL ? 1.0f : 0.0f;
+		CEffectManager::m_LightParameters.m_LightView[IdLight] = Light->GetViewShadowMap();
+		CEffectManager::m_LightParameters.m_LightProjection[IdLight] = Light->GetProjectionShadowMap();
+		l_ShadowMap->Activate(INDEX_SHADOWMAP_TEXTURE);
+		if (l_ShadowMask != NULL)
+			l_ShadowMask->Activate(INDEX_SHADOWMAP_TEXTURE+1);
+	}
+	else
+	{
+		CEffectManager::m_LightParameters.m_UseShadowMap[IdLight] = 0.0f;
+	}
 }
 
 void CEffectManager::SetLightsConstants(unsigned int MaxLights)
@@ -118,6 +161,7 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 		{
 			CLight* dummy = new CDirectionalLight();
 			dummy->SetEnabled(false);
+			dummy->SetGenerateShadowMap(false);
 			SetLightConstants(i,dummy);
 			delete dummy;
 		}
@@ -126,4 +170,58 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 			SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
 		}
 	}
+	CEffectManager::m_LightParameters.m_FogColor = Vect4f(UABEngine.GetLightManager()->GetFogColor(),1.0f);
+	float maxAttenuation =
+		UABEngine.GetLightManager()->GetFogEnabled() ? UABEngine.GetLightManager()->GetFogMaxAttenuation() : 0.f;
+	CEffectManager::m_LightParameters.m_MaxAttenuation_StartLinearFog_EndLinearFog = 
+		Vect4f(maxAttenuation, UABEngine.GetLightManager()->GetFogStart(),
+		UABEngine.GetLightManager()->GetFogEnd(),1.0f);
+
+	std::map<std::string, CEffectTechnique*>::iterator it;
+	std::map<std::string, CEffectTechnique*>::iterator end =GetResourcesMap().end();
+	for (it = GetResourcesMap().begin(); it != end; it++)
+	{
+		ID3D11Buffer * l_LightConstantBufferVS = it->second->GetVertexShader()->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
+		ID3D11Buffer * l_LightConstantBufferPS = it->second->GetPixelShader()->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
+		if (l_LightConstantBufferVS != NULL)
+		{
+			UABEngine.GetRenderManager()->GetDeviceContext()->UpdateSubresource(l_LightConstantBufferVS, 0, NULL, &(CEffectManager::m_LightParameters), 0, 0);
+		}
+		if (l_LightConstantBufferPS != NULL)
+		{
+			UABEngine.GetRenderManager()->GetDeviceContext()->UpdateSubresource(l_LightConstantBufferPS, 0, NULL, &(CEffectManager::m_LightParameters), 0, 0);
+		}
+	}
+}
+
+int CEffectManager::m_RawDataCount = 0;
+float CEffectManager::m_RawData[MAX_RAW_DATA_ELEMENTS];
+void* CEffectManager::AddMaterialParameter(CMaterialParameter::TMaterialType _MaterialType)
+{
+	if (m_RawDataCount == MAX_RAW_DATA_ELEMENTS)
+	{
+		return nullptr;
+	}
+	void* l_Adress = &(m_RawData[m_RawDataCount]);
+	if(_MaterialType == CMaterialParameter::FLOAT)
+		m_RawDataCount = m_RawDataCount + 1;
+	if(_MaterialType == CMaterialParameter::VECT2F)
+		m_RawDataCount = m_RawDataCount + 2;
+	if(_MaterialType == CMaterialParameter::VECT3F)
+		m_RawDataCount = m_RawDataCount + 3;
+	if(_MaterialType == CMaterialParameter::VECT4F)
+		m_RawDataCount = m_RawDataCount + 4;
+	return l_Adress;
+}
+
+luabind::object CEffectManager::GetEffectsNames(lua_State *L)
+{
+	luabind::object l_ElementsVector = luabind::newtable(L);
+	typedef TMapResource::iterator it_type;
+	size_t i = 0;
+	for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
+	{
+		l_ElementsVector[i++] = iterator->second->GetName().c_str();
+	}
+	return l_ElementsVector;
 }

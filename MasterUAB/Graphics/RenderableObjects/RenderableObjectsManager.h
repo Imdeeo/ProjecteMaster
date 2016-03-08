@@ -3,20 +3,22 @@
 
 #include "Utils\TemplatedVectorMapManager.h"
 #include "RenderableObject.h"
+#include "Utils\Named.h"
 
 #include <string>
 
 class CXMLTreeNode;
 
-class CRenderableObjectsManager : public CTemplatedVectorMapManager<CRenderableObject>
+class CRenderableObjectsManager : public CTemplatedVectorMapManager<CRenderableObject>, public CNamed
 {
 private:
 	std::string m_Filename;
 public:
-	CRenderableObjectsManager();
+	CRenderableObjectsManager(std::string _Name);
 	virtual ~CRenderableObjectsManager();
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
+	void RenderDebug(CRenderManager *RM);
 	CRenderableObject * AddMeshInstance(CXMLTreeNode &TreeNode);
 	CRenderableObject * AddMeshInstance(const std::string &CoreMeshName,
 		const std::string &InstanceName, const Vect3f &Position, const float _Yaw = 0.f,
@@ -25,10 +27,6 @@ public:
 	CRenderableObject * AddAnimatedInstanceModel(CXMLTreeNode &TreeNode);
 	CRenderableObject * AddAnimatedInstanceModel(const std::string &CoreModelName,
 		const std::string &InstanceModelName, const Vect3f &Position);
-	//void CleanUp();
-	bool Reload();
-	bool Load(const std::string &FileName);
-	//CRenderableObject * GetInstance(const std::string &Name) const;
 };
 
 #endif

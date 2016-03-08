@@ -3,6 +3,7 @@
 #include "Camera\SphericalCameraController.h"
 #include "Camera\Camera.h"
 #include "Utils.h"
+#include "InputManager\InputManager.h"
 
 CSphericalCameraController::CSphericalCameraController() 
 : m_Zoom(50.f)
@@ -29,4 +30,15 @@ void CSphericalCameraController::SetCamera(CCamera *Camera) const
 
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
+}
+
+void CSphericalCameraController::Update(float ElapsedTime)
+{
+	if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
+	{
+		Vect3f cameraMovement(0, 0, 0);
+		cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 0.5f;
+		cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * 0.5f;
+		Move(cameraMovement);
+	}
 }

@@ -1,6 +1,9 @@
 #include "Texture.h"
-#include "ContextManager\ContextManager.h"
+
 #include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
+
 #include "Utils.h"
 #include <D3DX11tex.h>
 
@@ -9,7 +12,6 @@ CTexture::CTexture(): CNamed(""),
 	m_SamplerState(nullptr)
 {
 }
-
 
 CTexture::~CTexture(void)
 {
