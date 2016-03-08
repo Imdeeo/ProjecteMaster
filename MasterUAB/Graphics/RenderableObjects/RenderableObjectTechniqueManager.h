@@ -3,6 +3,7 @@
 
 #include "Utils\TemplatedMapManager.h"
 #include "RenderableObjectTechnique.h"
+#include "PoolRenderableObjectTechnique.h"
 
 #include <string>
 

@@ -6,6 +6,7 @@
 #include "Camera\CameraController.h"
 #include "Components\UABComponentManager.h"
 #include "Layers\LayerManager.h"
+#include "ScriptManager\ScriptManager.h"
 
 #include "Engine\UABEngine.h"
 #include "XML\XMLTreeNode.h"

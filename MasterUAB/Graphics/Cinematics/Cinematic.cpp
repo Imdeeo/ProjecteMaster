@@ -1,6 +1,8 @@
 #include "Cinematic.h"
 #include "Cinematics\CinematicObject.h"
 
+#include "XML\XMLTreeNode.h"
+
 CCinematic::CCinematic()
 {
 

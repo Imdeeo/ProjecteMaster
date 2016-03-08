@@ -7,11 +7,17 @@ class CSpotLight : public CDirectionalLight
 {
 protected:
 	virtual CRenderableVertexs* GetShape(CRenderManager *_RenderManager);
+
+	float m_Angle;
+	float m_FallOff;
 public:
 	CSpotLight();
 	CSpotLight(CXMLTreeNode &TreeNode);
-	UAB_BUILD_GET_SET(float, Angle);
-	UAB_BUILD_GET_SET(float, FallOff);
+
+	float GetAngle()const{ return m_Angle; }
+	float GetFallOff()const{ return m_FallOff; }
+	void SetAngle(float _Angle){ m_Angle = _Angle; }
+	void SetFallOff(float _FallOff){ m_FallOff = _FallOff; }
 
 	void Render(CRenderManager *_RenderManager);
 

@@ -4,6 +4,9 @@
 #include <d3d11.h>
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableVertexs.h"
+#include "ContextManager\ContextManager.h"
+#include "Effects\EffectTechnique.h"
+#include "Effects\EffectShader.h"
 
 template<class T>
 class CTemplatedRenderableVertexs : public CRenderableVertexs

@@ -5,6 +5,7 @@
 #include <string>
 
 class CRenderManager;
+class CRenderableObject;
 
 class CScriptedComponent : public CUABComponent
 {

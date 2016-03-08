@@ -10,8 +10,14 @@
 #include "DebugHelper\DebugHelper.h"
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObject.h"
+#include "Effects\EffectManager.h"
+#include "Layers\LayerManager.h"
+#include "Lights\LightManager.h"
+#include "PhysXManager\PhysXManager.h"
+#include "ScriptManager\ScriptManager.h"
 
 #include "Characters\CharacterManager.h"
+#include "Camera\CameraControllerManager.h"
 
 CApplication::CApplication( CContextManager *_ContextManager)
 	: m_BackgroundColor(.2f, .1f, .4f)
