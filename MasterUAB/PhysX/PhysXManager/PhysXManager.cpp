@@ -333,7 +333,7 @@ void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shap
 	RegisterActor(_name, _shape, _body, _position, _orientation, _group);
 }
 
-physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, physx::PxGeometry _geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
+physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
 	//physx::PxVec3 v = CastVec(Size);
@@ -407,7 +407,7 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 
 }
 
-void CPhysXManager::CreateDinamicShape(const std::string _name, physx::PxGeometry _geometry, const std::string _Material, Vect3f _position, Quatf _orientation,
+void CPhysXManager::CreateDinamicShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation,
 	float _density, int _group, bool _isKinematic)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
@@ -452,7 +452,7 @@ void CPhysXManager::CreateRigidStatic(const std::string &Name, const Vect3f Size
 
 }
 
-physx::PxShape* CPhysXManager::CreateStaticShapeFromBody(const std::string _name, physx::PxGeometry _geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
+physx::PxShape* CPhysXManager::CreateStaticShapeFromBody(const std::string _name, static physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
@@ -463,7 +463,7 @@ physx::PxShape* CPhysXManager::CreateStaticShapeFromBody(const std::string _name
 	return shape;
 }
 
-void CPhysXManager::CreateDinamicShapeFromBody(const std::string _name, physx::PxGeometry _geometry, const std::string _Material, Vect3f _position, Quatf _orientation,
+void CPhysXManager::CreateDinamicShapeFromBody(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation,
 	float _density, int _group, bool _isKinematic)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
