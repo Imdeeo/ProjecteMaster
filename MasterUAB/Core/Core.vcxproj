@@ -18,6 +18,7 @@
     <ClCompile Include="DebugHelper\DebugHelper.cpp" />
     <ClCompile Include="DebugHelper\DebugHelperImplementation.cpp" />
     <ClCompile Include="Engine\UABEngine.cpp" />
+    <ClCompile Include="IA\AStar.cpp" />
     <ClCompile Include="InputManager\InputManager.cpp" />
     <ClCompile Include="InputManager\InputManagerImplementation.cpp" />
     <ClCompile Include="ScriptManager\ScriptManager.cpp" />
@@ -26,6 +27,7 @@
     <ClInclude Include="DebugHelper\DebugHelper.h" />
     <ClInclude Include="DebugHelper\DebugHelperImplementation.h" />
     <ClInclude Include="Engine\UABEngine.h" />
+    <ClInclude Include="IA\AStar.h" />
     <ClInclude Include="InputManager\InputManager.h" />
     <ClInclude Include="InputManager\InputManagerImplementation.h" />
     <ClInclude Include="ScriptManager\ScriptManager.h" />
