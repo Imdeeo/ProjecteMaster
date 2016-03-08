@@ -21,9 +21,9 @@ public:
 	void RenderDebug(CRenderManager *RM);
 	CRenderableObject * AddMeshInstance(CXMLTreeNode &TreeNode);
 	CRenderableObject * AddMeshInstance(const std::string &CoreMeshName,
-		const std::string &InstanceName, const Vect3f &Position, const float _Yaw = 0.f,
-		const float _Pitch = 0.f, const float _Roll = 0.f,const float _Scale = 1.f,
-		const bool _Visible = true);
+		const std::string &InstanceName, const Vect3f &Position,
+		const Quatf _Rotation = Quatf(0.0f, 0.0f, 0.0f, 0.0f),
+		const float _Scale = 1.f, const bool _Visible = true);
 	CRenderableObject * AddAnimatedInstanceModel(CXMLTreeNode &TreeNode);
 	CRenderableObject * AddAnimatedInstanceModel(const std::string &CoreModelName,
 		const std::string &InstanceModelName, const Vect3f &Position);
