@@ -9,8 +9,15 @@
 #include "Effects\EffectManager.h"
 #include "Math\MathTypes.h"
 #include "Engine\UABEngine.h"
+#include "ContextManager\ContextManager.h"
+#include "DebugRender.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
 
 #include "Utils\CEmptyPointerClass.h"
+
+#include "RenderableObjects\RenderableVertexs.h"
+
+#include "XML\XMLTreeNode.h"
 
 #include <assert.h>
 

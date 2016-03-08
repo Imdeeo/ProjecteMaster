@@ -8,6 +8,7 @@
 #include "Math\Color.h"
 
 #include "RenderManager\RenderManager.h"
+#include "Utils.h"
 
 #include <d3d9.h>
 #include <d3d11.h>

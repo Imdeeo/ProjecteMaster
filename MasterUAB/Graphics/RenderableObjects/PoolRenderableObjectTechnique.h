@@ -27,6 +27,8 @@ public:
 	void Destroy();
 	void AddElement(const std::string &Name, const std::string &TechniqueName, CRenderableObjectTechnique *ROTOnRenderableObjectTechniqueManager);
 	void Apply();
+
+	CPoolRenderableObjectTechnique & CPoolRenderableObjectTechnique::operator=(CPoolRenderableObjectTechnique _PoolRenderableObjectTechnique);
 };
 
 #endif // H_POOLRENDERABLEOBJECTTECHNIQUE_H

@@ -4,6 +4,9 @@
 #include <luabind/class.hpp>
 #include <luabind/operator.hpp>
 #include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "ScriptManager\ScriptManager.h"
+#include "RenderableObjects\RenderableObject.h"
 
 using namespace luabind;
 
@@ -77,4 +80,10 @@ void CScriptedComponent::RenderDebug(CRenderManager &RenderManager)
 	{
 
 	}
+}
+
+CScriptedComponent * CScriptedComponent::CreateScriptedComponent(const std::string &Name, CRenderableObject *Owner, const std::string &FnOnCreate, const std::string &FnOnDestroy,
+	const std::string &FnOnUpdate, const std::string &FnOnRender, const std::string &FnOnRenderDebug)
+{
+	return new CScriptedComponent(Name, Owner, FnOnCreate, FnOnDestroy, FnOnUpdate, FnOnRender, FnOnRenderDebug);
 }
