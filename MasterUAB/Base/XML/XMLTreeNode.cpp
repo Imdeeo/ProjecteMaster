@@ -409,6 +409,28 @@ Vect4f CXMLTreeNode::GetVect4fProperty  (const char* _pszKey, const Vect4f& _Def
 }
 
 //----------------------------------------------------------------------------
+// Returns a Quatf param if found. Else a default value
+//----------------------------------------------------------------------------
+Quatf CXMLTreeNode::GetQuatfProperty(const char* _pszKey, const Quatf& _Default, bool warningDefault) const
+{
+	xmlChar* value = GetProperty(_pszKey);
+	Quatf l_Qf(0.0f, 0.0f, 0.0f, 0.0f);
+
+	if (value)
+	{
+		const char* pszValue = (const char*)value;
+		sscanf_s(pszValue, "%f %f %f %f", &l_Qf.x, &l_Qf.y, &l_Qf.z, &l_Qf.w);
+	}
+	else if (warningDefault)
+	{
+		//LOGGER->AddNewLog(ELL_WARNING, "CXMLTreeNode::GetVect3fProperty se ha utilizado el vector4f por defecto:(%f,%f,%f,%f) para el tag <%s>",_Default.x, _Default.y, _Default.z, _Default.w, _pszKey);
+	}
+
+	xmlFree(value);
+	return l_Qf;
+}
+
+//----------------------------------------------------------------------------
 // Returns an Vect2i param if found. Else a default value
 //----------------------------------------------------------------------------
 Vect2i CXMLTreeNode::GetVect2iProperty  (const char* _pszKey, const Vect2i& _Default, bool warningDefault) const

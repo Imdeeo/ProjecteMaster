@@ -452,7 +452,7 @@ void CPhysXManager::CreateRigidStatic(const std::string &Name, const Vect3f Size
 
 }
 
-physx::PxShape* CPhysXManager::CreateStaticShapeFromBody(const std::string _name, static physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
+physx::PxShape* CPhysXManager::CreateStaticShapeFromBody(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
