@@ -2,7 +2,6 @@
 #define EFFECT_TECHNIQUE_H
 
 #include "Utils\Named.h"
-#include "Utils.h"
 
 class CEffectVertexShader;
 class CEffectPixelShader;
@@ -18,8 +17,8 @@ public:
 	CEffectTechnique(CXMLTreeNode &TreeNode);
 	virtual ~CEffectTechnique();
 	
-	UAB_GET_PROPERTY(CEffectVertexShader*, VertexShader);
-	UAB_GET_PROPERTY(CEffectPixelShader*, PixelShader);
+	CEffectVertexShader* GetVertexShader();
+	CEffectPixelShader* GetPixelShader();
 	void Refresh();
 	void SetConstantBuffer(unsigned int IdBuffer, void *ConstantBuffer);
 };

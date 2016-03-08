@@ -1,7 +1,10 @@
 #include "SetPoolRenderableObjectsTechniqueSceneRendererCommand.h"
 #include "RenderManager\RenderManager.h"
 #include "Engine\UABEngine.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "RenderableObjects\PoolRenderableObjectTechnique.h"
+
+#include "XML\XMLTreeNode.h"
 
 CSetPoolRenderableObjectsTechniqueSceneRendererCommand::CSetPoolRenderableObjectsTechniqueSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
 {

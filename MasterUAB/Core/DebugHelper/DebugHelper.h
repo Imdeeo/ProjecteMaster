@@ -1,15 +1,14 @@
 #ifndef DEBUGHELPER_H
 #define DEBUGHELPER_H
 
-
-#include "Utils.h"
-#include "HelperTypes.h"
-#include "Math\Color.h"
-
-#include "Utils\CEmptyPointerClass.h"
+#include <stdint.h>
+class CColor;
+class SPositionOrientation;
+class CEmptyPointerClass;
 
 #include <map>
 #include <string>
+#include <vector>
 
 class CDebugHelper
 {

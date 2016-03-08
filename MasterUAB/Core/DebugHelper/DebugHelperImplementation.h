@@ -3,7 +3,6 @@
 
 #include <Windows.h>
 #include <unordered_map>
-#include <AntTweakBar.h>
 #include "DebugHelper.h"
 #include <string>
 #include <iostream>
@@ -11,11 +10,15 @@
 #include <stdlib.h>
 using namespace std;
 
+typedef struct CTwBar TwBar;
+typedef enum ETwType TwType;
+
 class CDebugHelperImplementation : public CDebugHelper
 {
 
 private:
 	std::vector<std::string>				m_ButtonLuaScripts;
+	std::string m_Log;
 
 public:
 	CDebugHelperImplementation(void *device);
@@ -35,8 +38,10 @@ public:
 
 	
 	std::unordered_map<std::string, TwBar*> m_Bars;
-	TwType m_PosRotType;
-	UAB_BUILD_GET_SET(std::string, Log);
+	TwType* m_PosRotType;
+	
+	void SetLog(std::string _Log){ m_Log = _Log; }
+	std::string GetLog(){ return m_Log; }
 
 	static void __stdcall RunLuaButton(void *Data);
 };

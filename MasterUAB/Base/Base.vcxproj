@@ -20,6 +20,7 @@
     <ClInclude Include="Components\UABComponent.h" />
     <ClInclude Include="Components\UABComponentManager.h" />
     <ClInclude Include="HelperTypes.h" />
+    <ClInclude Include="Math\Color.h" />
     <ClInclude Include="Math\Quatn.h" />
     <ClInclude Include="Math\MathTypes.h" />
     <ClInclude Include="Math\MathUtils.h" />
@@ -41,21 +42,17 @@
   <ItemGroup>
     <ClCompile Include="3DElement\3DElement.cpp" />
     <ClCompile Include="Components\ScriptedComponent.cpp" />
+    <ClCompile Include="Components\UABComponent.cpp" />
     <ClCompile Include="Components\UABComponentManager.cpp" />
     <ClCompile Include="Math\MathConstants.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Utils\Active.cpp" />
-    <ClCompile Include="Utils\dummy.cpp" />
     <ClCompile Include="Utils\Named.cpp" />
-    <ClCompile Include="XML\Example.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="XML\XMLTreeNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="Math\Color.inl" />
     <None Include="Math\MathUtils.inl" />
     <None Include="Math\Matrix33.inl" />
     <None Include="Math\Matrix34.inl" />

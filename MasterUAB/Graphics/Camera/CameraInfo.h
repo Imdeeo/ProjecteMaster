@@ -2,7 +2,8 @@
 #define CAMERA_INFO_H
 
 #include "Math\Vector3.h"
-#include "XML\XMLTreeNode.h"
+
+class CXMLTreeNode;
 
 class CCameraInfo
 {	

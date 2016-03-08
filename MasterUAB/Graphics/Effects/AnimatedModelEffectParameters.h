@@ -2,7 +2,6 @@
 #define ANIMATED_MODEL_EFFECT_PARAMETER_H
 
 #include "Math\Matrix44.h"
-#include "Utils.h"
 
 class CAnimatedModelEffectParameters
 {

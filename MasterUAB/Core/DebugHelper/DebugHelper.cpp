@@ -1,5 +1,11 @@
 #include "DebugHelper.h"
 
+
+#include "HelperTypes.h"
+#include "Math\Color.h"
+
+#include "Utils\CEmptyPointerClass.h"
+
 static CDebugHelper *s_CurrentDebugHelper;
 
 class CDummyDebugHelper : public CDebugHelper

@@ -5,6 +5,12 @@
 #include "Effects/EffectTechnique.h"
 #include "Materials\Material.h"
 #include "Engine\UABEngine.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
+#include "Materials\MaterialManager.h"
+
+#include "XML\XMLTreeNode.h"
+
+#include "Math\Color.h"
 
 
 CDrawQuadRendererCommand::CDrawQuadRendererCommand(CXMLTreeNode &TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
@@ -29,7 +35,7 @@ CDrawQuadRendererCommand::~CDrawQuadRendererCommand(void)
 
 void CDrawQuadRendererCommand::Execute(CRenderManager &_RenderManager)
 {
-	if (Getactive())
+	if (GetActive())
 	{
 		for (int i = 0; i < m_StagedTextures.size(); i++)
 			m_StagedTextures[i].Activate();

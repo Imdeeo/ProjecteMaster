@@ -2,6 +2,13 @@
 
 #include "RenderManager\RenderManager.h"
 #include "Engine\UABEngine.h"
+#include "ContextManager\ContextManager.h"
+
+#include "XML\XMLTreeNode.h"
+
+#include <d3d11.h>
+
+#include <assert.h>
 
 CEnableAlphaBlendSceneRendererCommand::CEnableAlphaBlendSceneRendererCommand(CXMLTreeNode &TreeNode) :CSceneRendererCommand(TreeNode),
 	m_SrcBlend(TreeNode, "src"),

@@ -6,6 +6,9 @@
 #include "Camera\3PersonCameraController.h"
 #include "XML\XMLTreeNode.h"
 
+#include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
+
 #include "Engine\UABEngine.h"
 
 CCameraControllerManager::CCameraControllerManager():

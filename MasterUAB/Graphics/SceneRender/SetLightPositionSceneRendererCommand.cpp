@@ -1,6 +1,11 @@
 #include "SetLightPositionSceneRendererCommand.h"
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "Lights\LightManager.h"
+#include "Materials\MaterialManager.h"
+
+#include "Materials\MaterialParameter.h"
 
 CSetLightPositionSceneRendererCommand::CSetLightPositionSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
 {

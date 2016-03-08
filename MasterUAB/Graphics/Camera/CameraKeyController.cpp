@@ -6,6 +6,8 @@
 #include "Utils.h"
 #include <sstream>
 
+#include "XML\XMLTreeNode.h"
+
 CCameraKeyController::CCameraKeyController(CXMLTreeNode &XMLTreeNode)
 {
 	ResetTime();

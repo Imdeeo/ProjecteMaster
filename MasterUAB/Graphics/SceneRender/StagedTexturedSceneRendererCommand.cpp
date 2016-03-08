@@ -1,8 +1,17 @@
 #include "StagedTexturedSceneRendererCommand.h"
+
 #include "Engine\UABEngine.h"
+#include "Materials\MaterialManager.h"
+#include "Texture\TextureManager.h"
+
 #include "Texture\DynamicTextureManager.h"
 #include "Texture\DynamicTexture.h"
 #include "Texture\CapturedFrameBufferTexture.h"
+#include "Texture\Texture.h"
+
+#include "XML\XMLTreeNode.h"
+
+#include <d3d11.h>
 
 CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(CXMLTreeNode & TreeNode):CSceneRendererCommand(TreeNode)
 {
@@ -80,4 +89,15 @@ void CStagedTexturedSceneRendererCommand::CreateRenderTargetViewVector()
 	{
 		m_RenderTargetViews.push_back(m_DynamicTextures[i]->GetTexture()->GetRenderTargetView());
 	}
+}
+
+//StagedTexture
+CStagedTexturedSceneRendererCommand::CStagedTexture::CStagedTexture(unsigned int _StageId, CTexture *_Texture)
+{
+	m_StageId = _StageId;
+	m_Texture = _Texture;
+}
+void CStagedTexturedSceneRendererCommand::CStagedTexture::Activate()
+{
+	m_Texture->Activate(m_StageId);
 }

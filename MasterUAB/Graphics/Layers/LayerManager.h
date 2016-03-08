@@ -2,11 +2,11 @@
 #define H_LAYER_MANAGER_H
 
 #include "Utils\TemplatedVectorMapManager.h"
-#include "RenderManager\RenderManager.h"
+#include "RenderableObjects\RenderableObjectsManager.h"
 
 #include <string>
 
-class CRenderableObjectsManager;
+class CRenderManager;
 class CXMLTreeNode;
 
 class CLayerManager : public CTemplatedVectorMapManager<CRenderableObjectsManager>

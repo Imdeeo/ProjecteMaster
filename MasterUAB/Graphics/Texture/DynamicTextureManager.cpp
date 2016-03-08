@@ -16,3 +16,12 @@ void CDynamicTextureManager::Destroy()
 	/*CHECKED_RELEASE(m_Texture);
 	CHECKED_RELEASE(m_Material);*/
 }
+
+CDynamicTexture* CDynamicTextureManager::GetTexture()
+{
+	return m_Texture;
+}
+CMaterial* CDynamicTextureManager::GetMaterial()
+{
+	return m_Material;
+}

@@ -28,12 +28,12 @@ public:
 	bool Load(const std::string &FileName);
 	bool Render(CRenderManager *RenderManager);
 	bool Reload();
-	UAB_GET_PROPERTY(Vect4f,AmbientLight);
-	UAB_GET_PROPERTY(float, FogMaxAttenuation);
-	UAB_GET_PROPERTY(float, FogStart);
-	UAB_GET_PROPERTY(float, FogEnd);
-	UAB_GET_PROPERTY(Vect3f, FogColor);
-	UAB_GET_PROPERTY(bool, FogEnabled);
+	Vect4f GetAmbientLight(){ return m_AmbientLight; }
+	float  GetFogMaxAttenuation(){return m_FogMaxAttenuation; }
+	float  GetFogStart(){ return m_FogStart; }
+	float  GetFogEnd(){ return m_FogEnd; }
+	Vect3f GetFogColor(){ return m_FogColor; }
+	bool   GetFogEnabled(){ return m_FogEnabled; }
 	void GetRenderLights(bool _RenderLights){ m_RenderLights = _RenderLights; }
 	bool IsRenderLights(){ return m_RenderLights; }
 	bool SwitchRenderLights(){ m_RenderLights = !m_RenderLights; return m_RenderLights; }

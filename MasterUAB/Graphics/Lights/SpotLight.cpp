@@ -2,6 +2,11 @@
 
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
+#include "Effects\EffectManager.h"
+#include "RenderManager\RenderManager.h"
+#include "DebugRender.h"
+
+#include "Texture\DynamicTexture.h"
 
 CSpotLight::CSpotLight():CDirectionalLight(),m_Angle(0.0f),m_FallOff(0.0f){}
 

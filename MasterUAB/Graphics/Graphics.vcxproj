@@ -47,6 +47,7 @@
     <ClCompile Include="Materials\MaterialManager.cpp" />
     <ClCompile Include="Materials\MaterialParameter.cpp" />
     <ClCompile Include="RenderableObjects\PoolRenderableObjectTechnique.cpp" />
+    <ClCompile Include="RenderableObjects\RenderableObject.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectsManager.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectTechnique.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp" />

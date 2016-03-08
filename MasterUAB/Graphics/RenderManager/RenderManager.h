@@ -1,17 +1,25 @@
 #ifndef RENDER_MANAGER_H
 #define RENDER_MANAGER_H
 
-#include "DebugRender.h"
 #include "Camera\Frustum.h"
-#include "Utils.h"
-#include "ContextManager\ContextManager.h"
+#include "Camera\Camera.h"
 
 class CEffectTechnique;
 class CTexture;
+class CColor;
 
 class CMaterialManager;
 
 class CDebugRender;
+class CContextManager;
+
+class ID3D11BlendState;
+class ID3D11Device;
+class ID3D11DeviceContext;
+class IDXGISwapChain;
+
+class ID3D11RenderTargetView;
+class ID3D11DepthStencilView;
 
 class CRenderManager
 {
@@ -44,9 +52,19 @@ public:
 	void DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture *_Texture, float x, float y, float _Width, float _Height, const CColor &Color);
 
 	//funcion para sacar posicion en pantalla de la luz desde la camara
-	Vect2f GetScreenPosFrom3D(const Vect3f &Position) const { return m_CurrentCamera.GetPositionInScreenCoordinates(Position); }
+	Vect2f GetScreenPosFrom3D(const Vect3f &Position) const;
 
 	//void Init();
+	CDebugRender* GetDebugRender()const;
+
+	CContextManager* GetContextManager()const;
+	void SetContextManager(CContextManager* _ContextManager);
+
+	ID3D11Device* GetDevice();
+	ID3D11DeviceContext* GetDeviceContext();
+	IDXGISwapChain*	GetSwapChain();
+
+
 private:
 
 	CCamera							m_CurrentCamera;
@@ -62,25 +80,7 @@ private:
 
 	size_t							m_CurrentRenderlistLength;
 	
-	UAB_GET_PROPERTY(CDebugRender*, DebugRender)
-	UAB_BUILD_GET_SET(CContextManager*,ContextManager)
-
-
-
-	ID3D11Device* GetDevice ()
-	{
-		return m_ContextManager->GetDevice();
-	}
-
-	ID3D11DeviceContext* GetDeviceContext ()
-	{
-		return m_ContextManager->GetDeviceContext();
-	}
-
-	IDXGISwapChain*	GetSwapChain()
-	{
-		return m_ContextManager->GetSwapChain();
-	}
+	CContextManager*				m_ContextManager;
 
 };
 

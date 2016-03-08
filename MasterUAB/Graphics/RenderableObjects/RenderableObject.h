@@ -7,35 +7,28 @@
 #include "3DElement\3DElement.h"
 #include "Components\UABComponentManager.h"
 
+class CUABComponentManager;
 class CXMLTreeNode;
 class CRenderManager;
 
 class CRenderableObject : public C3DElement, public CNamed
 {
+private:
+	CUABComponentManager* m_ComponentManager;
+	bool m_DebugRender;
 public:
-	CRenderableObject():CNamed("") {
-		m_ComponentManager = new CUABComponentManager();
-		m_DebugRender = true;
-	};
-	CRenderableObject(const CXMLTreeNode &TreeNode):C3DElement(TreeNode),CNamed(TreeNode){
-		m_ComponentManager = new CUABComponentManager();
-		m_DebugRender = true;
-	};
-	virtual ~CRenderableObject() { CHECKED_DELETE(m_ComponentManager);}
-	virtual void Update(float ElapsedTime) 
-	{
-		m_ComponentManager->Update(ElapsedTime);
-	}
-	virtual void Render(CRenderManager *RM)
-	{
-		m_ComponentManager->Render(*RM);
-	}
-	virtual void RenderDebug(CRenderManager *RM)
-	{
-		m_ComponentManager->RenderDebug(*RM);
-	}
-	UAB_BUILD_GET_SET(CUABComponentManager*, ComponentManager)
-	UAB_BUILD_GET_SET(bool, DebugRender)
+	CRenderableObject();
+	CRenderableObject(const CXMLTreeNode &TreeNode);
+	virtual ~CRenderableObject();
+	virtual void Update(float ElapsedTime);
+	virtual void Render(CRenderManager *RM);
+	virtual void RenderDebug(CRenderManager *RM);
+
+	void SetComponentManager(CUABComponentManager* _ComponentManager);
+	CUABComponentManager* GetComponentManager()const;
+
+	void SetDebugRender(bool _DebugRender){ m_DebugRender = _DebugRender;}
+	bool GetDebugRender(){ return m_DebugRender; }
 };
 
 #endif //RENDERABLE_OBJECT_H

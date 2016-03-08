@@ -1,6 +1,9 @@
 #include <Windows.h>
 #include <Xinput.h>
 
+
+#include "Utils.h"
+
 #include "InputManagerImplementation.h"
 
 #include "XML\XMLTreeNode.h"

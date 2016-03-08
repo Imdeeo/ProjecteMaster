@@ -1,7 +1,17 @@
-#include "StaticMesh\InstanceMesh.h"
+#include "InstanceMesh.h"
 #include "Engine\UABEngine.h"
+#include "Effects\EffectManager.h"
+#include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
+#include "DebugRender.h"
+#include "StaticMeshManager.h"
+
+#include "StaticMesh.h"
+#include "RenderableObjects\RenderableVertexs.h"
+
 #include "XML\XMLTreeNode.h"
 #include "PhysXManager\PhysXManager.h"
+
 #include <d3d11.h>
 #include "Math\Matrix44.h"
 #include "Utils.h"
@@ -55,7 +65,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 			aux.x = abs(aux.x);
 			aux.y = abs(aux.y);
 			aux.y = 0.05;
-			l_Pos = l_Pos - 0.05*0.5;
+			l_Pos.y = l_Pos.y - 0.05*0.5;
 
 			aux.z = abs(aux.z);
 			//Vect3f l_Pos = (l_BBMax + l_BBMin) / 2;
@@ -70,7 +80,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 			if (aux.y == 0)
 			{
 				aux.y = 0.05;
-				l_Pos = l_Pos - 0.05*0.5;
+				l_Pos.y = l_Pos.y - 0.05*0.5;
 			}
 			
 			aux.z = abs(aux.z);

@@ -15,7 +15,7 @@ private:
 public:
 	CBlend(const CXMLTreeNode &TreeNode, const std::string _name);
 	virtual ~CBlend() { Destroy(); }
-	UAB_GET_PROPERTY(int, Blend);
+	int GetBlend(){ return m_Blend; }
 };
 
 class CBlendOp : public CNamed
@@ -28,7 +28,7 @@ private:
 public:
 	CBlendOp(const CXMLTreeNode &TreeNode, const std::string _name);
 	virtual ~CBlendOp() { Destroy(); }
-	UAB_GET_PROPERTY(int, BlendOp);
+	int GetBlendOp(){ return m_BlendOp; }
 };
 
 class CEnableAlphaBlendSceneRendererCommand : public CSceneRendererCommand

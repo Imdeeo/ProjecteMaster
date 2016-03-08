@@ -1,15 +1,31 @@
 #ifndef CONTEXTMANAGER_H
 #define CONTEXTMANAGER_H
 
-#include "Effects\Effect.h"
-#include "Camera\Camera.h"
-#include "Effects\EffectParameters.h"
-#include "Effects\EffectManager.h"
+#include "Math\MathTypes.h"
+#include "Math\Color.h"
 
+typedef struct HWND__ *HWND;
+typedef _Return_type_success_(return >= 0) long HRESULT;
 
-#define MAX_RENDER_TARGETS 4
+class ID3D11Device;
+class ID3D11DeviceContext;
+class ID3D11Debug;
+class IDXGISwapChain;
+class ID3D11RenderTargetView;
+class ID3D11Texture2D;
+class ID3D11DepthStencilView;
+class ID3D11RenderTargetView;
+class ID3D11RasterizerState;
+class ID3D11DepthStencilState;
+class ID3D11BlendState;
+class D3D11_VIEWPORT;
+class ID3D11DepthStencilView;
 
 class CRenderableVertexs;
+class CCamera;
+class CColor;
+
+#define MAX_RENDER_TARGETS 4
 
 class CContextManager
 {
@@ -72,9 +88,9 @@ public:
 	ID3D11DeviceContext* GetDeviceContext() const { return m_DeviceContext; }
 
 	//void SetBaseColor(const CColor& _Color) { CEffectManager::m_LightParameters.m_LightColor = _Color; }
-	void SetWorldMatrix(const Mat44f& _Model) { CEffectManager::m_SceneParameters.m_World = _Model; }
-	void SetCamera(const Mat44f& _View, const Mat44f& _Projection) { CEffectManager::m_SceneParameters.m_View = _View; CEffectManager::m_SceneParameters.m_Projection = _Projection; }
-	void SetCamera(const CCamera& _Camera) { CEffectManager::m_SceneParameters.m_View = _Camera.GetView(); CEffectManager::m_SceneParameters.m_Projection = _Camera.GetProjection(); CEffectManager::m_SceneParameters.m_CameraPosition = _Camera.GetPosition(); CEffectManager::m_SceneParameters.m_CameraProjectionInfo = Vect4f(_Camera.GetZNear(), _Camera.GetZFar(), _Camera.GetFOV(), _Camera.GetAspectRatio()); }
+	void SetWorldMatrix(const Mat44f& _Model);
+	void SetCamera(const CCamera& _Camera);
+	void CContextManager::SetCamera(const Mat44f& _View, const Mat44f& _Projection);
 	//void SetDebugSize(float _Size) { CEffectManager::m_SceneParameters.m_DebugRenderScale = _Size; }
 
 	void Present();
@@ -112,13 +128,13 @@ public:
 
 	D3D11_VIEWPORT * getViewPort(){ return m_ViewPort; }
 	void setViewPort(D3D11_VIEWPORT *ViewPort){ m_ViewPort=ViewPort; }
-	UAB_GET_PROPERTY(IDXGISwapChain*, SwapChain);
-	UAB_GET_PROPERTY(int, Width);
-	UAB_GET_PROPERTY(int, Height);
-	UAB_GET_PROPERTY(int, NumViews)
-	UAB_GET_PROPERTY(ID3D11RenderTargetView* const*, CurrentRenderTargetViews)
-	UAB_GET_PROPERTY(ID3D11DepthStencilView*, CurrentDepthStencilView)
-	UAB_GET_PROPERTY(ID3D11DepthStencilView*, DepthStencilView)
+	IDXGISwapChain* GetSwapChain();
+	int GetWidth(){ return m_Width; }
+	int GetHeight(){ return m_Height; }
+	int GetNumViews(){ return m_NumViews; }
+	ID3D11RenderTargetView* const* GetCurrentRenderTargetViews();
+	ID3D11DepthStencilView* GetCurrentDepthStencilView();
+	ID3D11DepthStencilView* GetDepthStencilView();
 	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.0f, .0f, .0f));
 	void UnsetRenderTargets();
 	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_RenderTargetViews, ID3D11DepthStencilView *_DepthStencilView);

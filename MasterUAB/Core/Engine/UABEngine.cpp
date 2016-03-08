@@ -1,6 +1,24 @@
 #include "Engine\UABEngine.h"
 #include "XML\XMLTreeNode.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
+
+#include "Utils.h"
+
+#include "Effects\EffectManager.h"
+#include "Materials\MaterialManager.h"
+#include "Texture\TextureManager.h"
+#include "RenderManager\RenderManager.h"
+#include "StaticMesh\StaticMeshManager.h"
+#include "Lights\LightManager.h"
+#include "Layers\LayerManager.h"
+#include "AnimatedModels\AnimatedModelsManager.h"
+#include "ScriptManager\ScriptManager.h"
+#include "Camera\CameraControllerManager.h"
+#include "Cinematics\Cinematic.h"
+#include "PhysXManager\PhysXManager.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
+#include "SceneRender\SceneRendererCommandManager.h"
+
 CUABEngine::CUABEngine(void)
 {
 	m_EffectManager = new CEffectManager();
@@ -94,3 +112,18 @@ void CUABEngine::LoadLevelXML(std::string filename)
 	}
 
 }
+
+UAB_GET_PROPERTY_CPP(CUABEngine,CStaticMeshManager *, StaticMeshManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CLayerManager *, LayerManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CMaterialManager *, MaterialManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CEffectManager *, EffectManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CTextureManager *, TextureManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CLightManager *, LightManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CRenderManager *, RenderManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CAnimatedModelsManager *, AnimatedModelsManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CScriptManager *, ScriptManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CCameraControllerManager *, CameraControllerManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CCinematic *, Cinematic)
+UAB_GET_PROPERTY_CPP(CUABEngine,CPhysXManager *, PhysXManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CSceneRendererCommandManager *, SceneRendererCommandManager)

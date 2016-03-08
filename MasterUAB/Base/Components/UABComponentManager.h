@@ -2,9 +2,9 @@
 #define UAB_COMPONENT_MANAGER_H
 
 #include "Utils\TemplatedVectorMapManager.h"
+#include "UABComponent.h"
 #include <string>
 
-class CUABComponent;
 class CRenderManager;
 
 class CUABComponentManager : public CTemplatedVectorMapManager<CUABComponent>

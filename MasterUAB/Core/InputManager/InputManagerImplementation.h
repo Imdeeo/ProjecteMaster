@@ -3,7 +3,6 @@
 
 #include <dinput.h>
 
-#include "Utils.h"
 
 #include "InputManager.h"
 

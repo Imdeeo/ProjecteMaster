@@ -1,17 +1,18 @@
 #ifndef H_ACTIVE_H
 #define H_ACTIVE_H
 
-#include "Utils.h"
-
 class CXMLTreeNode;
 
 class CActive
 {
+private:
+	bool m_Active;
 public:
 	CActive(const CXMLTreeNode &TreeNode);
 	CActive(bool l_active);
 	virtual ~CActive() {}
-	UAB_BUILD_GET_SET(bool, active);
+	bool GetActive(){ return m_Active; }
+	void SetActive(bool _Active){ m_Active = _Active; }
 };
 
 #endif //H_ACTIVE_H

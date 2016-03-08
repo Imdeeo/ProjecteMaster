@@ -1,13 +1,22 @@
 #include "Effects\EffectShader.h"
-#include "RenderManager\RenderManager.h"
-#include "Effects\SceneEffectParameters.h"
-#include "Effects\AnimatedModelEffectParameters.h"
-#include "Effects\LightEffectParameters.h"
+
 #include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "EffectManager.h"
+
+#include "SceneEffectParameters.h"
+#include "AnimatedModelEffectParameters.h"
+#include "LightEffectParameters.h"
+
 #include "RenderableObjects\VertexTypes.h"
 #include "Utils.h"
 
+#include "XML\XMLTreeNode.h"
+
 #include <assert.h>
+
+#include <d3dcommon.h>
+#include <d3d11.h>
 
 #include <D3Dcompiler.h>
 
@@ -268,6 +277,14 @@ void CEffectVertexShader::SetConstantBuffer(unsigned int IdBuffer, void
 		l_DeviceContext->VSSetConstantBuffers(IdBuffer, 1, &l_ConstantBuffer);
 	}
 }
+ID3D11VertexShader* CEffectVertexShader::GetVertexShader()
+{
+	return m_VertexShader;
+}
+ID3D11InputLayout*  CEffectVertexShader::GetVertexLayout()
+{
+	return m_VertexLayout;
+}
 
 CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode),
 	m_PixelShader(nullptr)
@@ -315,4 +332,9 @@ void CEffectPixelShader::SetConstantBuffer(unsigned int IdBuffer, void *Constant
 	l_DeviceContext->UpdateSubresource(l_ConstantBuffer, 0, NULL,
 		ConstantBuffer, 0, 0);
 	l_DeviceContext->PSSetConstantBuffers(IdBuffer, 1, &l_ConstantBuffer);
+}
+
+ID3D11PixelShader* CEffectPixelShader::GetPixelShader()
+{
+	return m_PixelShader;
 }

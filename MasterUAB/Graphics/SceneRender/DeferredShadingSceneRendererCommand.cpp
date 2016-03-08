@@ -1,8 +1,14 @@
 #include "DeferredShadingSceneRendererCommand.h"
 #include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "Engine\UABEngine.h"
+#include "Lights\LightManager.h"
 #include "Effects\EffectManager.h"
+
+#include "RenderableObjects\RenderableObjectTechnique.h"
+
+#include <d3d11.h>
 
 CDeferredShadingSceneRendererCommand::CDeferredShadingSceneRendererCommand(CXMLTreeNode &TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
 {

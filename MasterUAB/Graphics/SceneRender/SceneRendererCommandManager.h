@@ -3,8 +3,8 @@
 
 #include <string>
 #include "Utils\TemplatedVectorMapManager.h"
+#include "SceneRendererCommand.h"
 
-class CSceneRendererCommand;
 class CRenderManager;
 
 class CSceneRendererCommandManager : public	CTemplatedVectorMapManager<CSceneRendererCommand>
