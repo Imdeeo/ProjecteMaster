@@ -31,6 +31,7 @@ CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(const std::string &_Nam
 
 CCapturedFrameBufferTexture::~CCapturedFrameBufferTexture()
 {
+	Unload();
 }
 
 void CCapturedFrameBufferTexture::Init(const std::string &_Name, unsigned int _Width, unsigned int _Height)

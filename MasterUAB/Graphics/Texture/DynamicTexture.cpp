@@ -5,6 +5,7 @@
 #include "ContextManager\ContextManager.h"
 
 #include "XML\XMLTreeNode.h"
+#include "Utils\Named.h"
 
 #include <d3d11.h>
 
@@ -17,7 +18,7 @@ m_Width(Width), m_Height(Height), m_CreateDepthStencilBuffer(CreateDepthStencilB
 	Init();
 }
 
-CDynamicTexture::CDynamicTexture(const CXMLTreeNode &TreeNode) :m_DepthStencilBuffer(nullptr), m_DepthStencilView(nullptr)
+CDynamicTexture::CDynamicTexture(const CXMLTreeNode &TreeNode) : m_DepthStencilBuffer(nullptr), m_DepthStencilView(nullptr)
 {
 	//<dynamic_texture name = "DepthMapTexture" texture_width_as_frame_buffer = "true" format_type = "R32F" / >
 	
