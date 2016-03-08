@@ -49,7 +49,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 			Vect3f l_Pos = Vect3f(0.f,0.f,0.f);
 			Vect3f l_Normal = Vect3f(.0f, 1.0f, .0f);
 			float l_Distance = 100.0f;
-			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, l_Distance, l_PxMaterial, l_Pos, qfIDENTITY, l_PxGroup);
+			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, l_Distance, l_PxMaterial, l_Pos, l_Q, l_PxGroup);
 		}
 		else
 		{
@@ -65,7 +65,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 			
 			aux.z = abs(aux.z);
 			//Vect3f l_Pos = (l_BBMax + l_BBMin) / 2;
-			l_PhysXManager->CreateRigidStatic(l_Name, aux, GetPosition(), qfIDENTITY, "FisicasAux");
+			l_PhysXManager->CreateRigidStatic(l_Name, aux, GetPosition(), l_Q, "FisicasAux");
 		}
 	}
 	else
