@@ -18,6 +18,7 @@
 #include "PhysXManager\PhysXManager.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "SceneRender\SceneRendererCommandManager.h"
+#include "Particles\ParticleManager.h"
 
 CUABEngine::CUABEngine(void)
 {
@@ -25,6 +26,7 @@ CUABEngine::CUABEngine(void)
 	m_MaterialManager = new CMaterialManager();
 	m_TextureManager = new CTextureManager();
 	m_RenderManager = new CRenderManager();
+	m_ParticleManager = new CParticleManager();
 	m_StaticMeshManager = new CStaticMeshManager();
 	m_LightManager = new CLightManager();
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
@@ -50,6 +52,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_StaticMeshManager);
 	CHECKED_DELETE(m_LayerManager);
 	CHECKED_DELETE(m_RenderManager);
+	CHECKED_DELETE(m_ParticleManager);
 	CHECKED_DELETE(m_MaterialManager);
 	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
 	CHECKED_DELETE(m_EffectManager);	
@@ -75,8 +78,9 @@ void CUABEngine::Init()
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_MaterialManager->Load("Data\\level_" + m_LevelLoaded + "\\materials.xml");
+	m_ParticleManager->Load("Data\\level_" + m_LevelLoaded + "\\particles.xml");
 	m_StaticMeshManager->Load("Data\\level_" + m_LevelLoaded + "\\static_meshes.xml");
-	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
+	m_AnimatedModelsManager->Load("Data\\animated_models.xml");	
 	m_LayerManager->Load("Data\\level_" + m_LevelLoaded + "\\renderable_objects.xml");	
 	m_LightManager->Load("Data\\level_"+m_LevelLoaded+"\\lights.xml");	
 	m_Cinematic->LoadXML("Data\\level_"+m_LevelLoaded+"\\cinematic.xml");
@@ -98,7 +102,6 @@ void CUABEngine::Destroy()
 
 void CUABEngine::LoadLevelXML(std::string filename)
 {
-
 	CXMLTreeNode l_XML;
 	bool isLoading = l_XML.LoadFile(filename.c_str());
 
@@ -110,7 +113,6 @@ void CUABEngine::LoadLevelXML(std::string filename)
 			m_LevelLoaded = l_Input.GetPszProperty("level_to_load");
 		}
 	}
-
 }
 
 UAB_GET_PROPERTY_CPP(CUABEngine,CStaticMeshManager *, StaticMeshManager)
@@ -127,3 +129,4 @@ UAB_GET_PROPERTY_CPP(CUABEngine,CCinematic *, Cinematic)
 UAB_GET_PROPERTY_CPP(CUABEngine,CPhysXManager *, PhysXManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,CSceneRendererCommandManager *, SceneRendererCommandManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
