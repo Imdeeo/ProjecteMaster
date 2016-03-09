@@ -60,18 +60,18 @@ function AddParameterVariable(parameter,material_name)
 		utils_log("float")
 		local addres = parameter:get_value_address()
 		DebugHelper:add_variable(material_name.." - "..parameter.name,CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group='"..material_name.."' ")
-	--[[
+
 	elseif(parameter:get_material_type()==CMaterialParameter.vect2f)then
 
 		utils_log("vect2f")
-		DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--"" group="..parameter.name.." ")
-		DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+		DebugHelper:add_variable(material_name.." - "..parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--"" group="..parameter.name.." ")
+		DebugHelper:add_variable(material_name.." - "..parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
 		
 	elseif(parameter:get_material_type()==CMaterialParameter.vect3f)then
 	
-		DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
-		DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
-		DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+		DebugHelper:add_variable(material_name.." - "..parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
+		DebugHelper:add_variable(material_name.." - "..parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
+		DebugHelper:add_variable(material_name.." - "..parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
 		
 	elseif(parameter:get_material_type()==CMaterialParameter.vect4f)then
 	
@@ -80,7 +80,6 @@ function AddParameterVariable(parameter,material_name)
 		DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
 		DebugHelper:add_variable(parameter.name..": w",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
 		
-	]]--
 	end
 	
 end
