@@ -636,7 +636,7 @@ void CPhysXManager::Render(const std::string _name, CRenderManager *RenderManage
 	l_ScaleMatrix.Scale(1.0f, 1.0f, 1.0f);
 
 	l_RotationMatrix.SetIdentity();
-	l_RotationMatrix.SetPitchRollYaw(Vect3f(0, 0, 0));
+	l_RotationMatrix.SetRotByQuat(Quatf(0, 0, 0, 0));
 	
 	l_TranslationMatrix.SetIdentity();
 	
