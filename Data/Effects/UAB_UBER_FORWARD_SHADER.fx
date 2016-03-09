@@ -190,9 +190,12 @@ float4 applyAllLights(TVertexPS IN)
 
 float CalcAttenuation(float Depth, float StartFog, float EndFog)
 {
-	if(Depth<EndFog){
+	if(Depth<EndFog)
+	{
 		return m_MaxAttenuation*smoothstep(StartFog, EndFog, Depth);
-	} else {
+	} 
+	else 
+	{
 		return m_MaxAttenuation;
 	}
 }
@@ -235,6 +238,10 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	#ifdef HAS_LIGHTS
 		#ifdef HAS_NORMAL
 			Out = Out*applyAllLights(IN);
+			if (Out.w < 0.1)
+			{
+				clip(-1);
+			}
 		#endif
 		
 		float l_DistanceEyeToWorldPosition=length(IN.Pixelpos-m_InverseView[3].xyz);
