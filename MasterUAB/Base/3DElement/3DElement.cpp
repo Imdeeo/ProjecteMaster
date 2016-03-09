@@ -14,7 +14,7 @@ C3DElement::C3DElement(const Vect3f &Position):
 {
 }
 
-C3DElement::C3DElement(const Vect3f &Position, Quatf Rotation) :
+C3DElement::C3DElement(const Vect3f &Position, const Quatf &Rotation) :
 	m_Position(Position),
 	m_Rotation(Rotation)
 {
@@ -22,18 +22,20 @@ C3DElement::C3DElement(const Vect3f &Position, Quatf Rotation) :
 
 C3DElement::C3DElement(const Vect3f &Position, float Yaw, float Pitch, float Roll):
 	m_Position(Position),
-	m_Rotation(QuatFromYawPitchRoll(Yaw, Pitch, Roll))
+	m_Rotation(Quatf(0, 0, 0, 1))
 {
+	m_Rotation.QuatFromEuler(Vect3f(Yaw, Pitch, Roll));
 }
 
-C3DElement::C3DElement(Quatf Rotation) :
+C3DElement::C3DElement(const Quatf &Rotation) :
 	m_Rotation(Rotation)
 {
 }
 
 C3DElement::C3DElement(float Yaw, float Pitch, float Roll):
-	m_Rotation(QuatFromYawPitchRoll(Yaw, Pitch, Roll))
+	m_Rotation(Quatf(0, 0, 0, 1))
 {
+	m_Rotation.QuatFromEuler(Vect3f(Yaw, Pitch, Roll));
 }
 
 C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode)
@@ -42,22 +44,22 @@ C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode)
 	const char * existPos = l_Element.GetPszProperty("position");
 	if (existPos == NULL)
 	{
-		m_Position = l_Element.GetVect3fProperty("pos", Vect3f(0.0f, 0.0f, 0.0f), true);
+		m_Position = l_Element.GetVect3fProperty("pos", Vect3f(.0f, 0.0f, .0f), true);
 	}
 	else
 	{
-		m_Position = l_Element.GetVect3fProperty("position", Vect3f(0.0f, 0.0f, 0.0f), true);
+		m_Position = l_Element.GetVect3fProperty("position", Vect3f(.0f, .0f, .0f), true);
 	}
 	const char * existRotation = l_Element.GetPszProperty("rotation");
 	if (existRotation == NULL)
 	{
 		m_Rotation = QuatFromYawPitchRoll(
-			l_Element.GetFloatProperty("yaw", 0.f, true),
-			l_Element.GetFloatProperty("pitch", 0.f, true),
-			l_Element.GetFloatProperty("roll", 0.f, true));
+			l_Element.GetFloatProperty("yaw", .0f, true),
+			l_Element.GetFloatProperty("pitch", .0f, true),
+			l_Element.GetFloatProperty("roll", .0f, true));
 	} else
 	{ 
-		m_Rotation = l_Element.GetQuatfProperty("rotation", Quatf(0, 0, 0, 0), true);
+		m_Rotation = l_Element.GetQuatfProperty("rotation", Quatf(.0f, .0f, .0f, 1.f), true);
 	}
 	
 	const char * existScale = l_Element.GetPszProperty("scale");
