@@ -1,6 +1,11 @@
 #include "Samplers.fxh"
 #include "Lights.fxh"
 
+float m_Active = m_RawDataArray[0];
+float m_Exposure = m_RawDataArray[1];
+float m_SpecularPower = m_RawDataArray[2];
+float m_SpecularFactor = m_RawDataArray[3];
+
 #ifndef HAS_UV
 	#ifndef HAS_COLOR
 		#define HAS_COLOR
@@ -183,7 +188,7 @@ float4 applyAllLights(TVertexPS IN)
 	
 	for(int i = 0;i<MAX_LIGHTS_BY_SHADER;i++)
 	{
-		lightContrib += applyLights(IN.Pixelpos,Nn,l_Out,i);
+		lightContrib += applyLights(IN.Pixelpos,Nn,l_Out,i, m_SpecularPower, m_SpecularFactor);
 	}
 	return saturate(float4(lightContrib.xyz, l_Out.w));
 }
