@@ -1,6 +1,7 @@
 #ifndef PARTICLE_SYSTEM_TYPE_H
 #define PARTICLE_SYSTEM_TYPE_H
 
+#include "Utils\Named.h"
 #include "Utils.h"
 #include "Math\Matrix44.h"
 #include "Math\Color.h"
@@ -10,10 +11,9 @@
 class CMaterial;
 class CXMLTreeNode;
 
-class CParticleSystemType
+class CParticleSystemType : public CNamed
 {
 private:
-	CMaterial *m_Material;
 	int m_NumFrames;	
 	float m_TimePerFrame;
 	bool m_LoopFrames;
@@ -29,6 +29,7 @@ private:
 public:
 	CParticleSystemType(CXMLTreeNode &TreeNode);
 	virtual ~CParticleSystemType(void);
+	void Destroy();
 
 	UAB_BUILD_GET_SET(CMaterial *, Material);
 	UAB_GET_PROPERTY(int, NumFrames);
@@ -50,7 +51,7 @@ public:
 	UAB_GET_PROPERTY(Vect3f, StartingAcceleration1);
 	UAB_GET_PROPERTY(Vect3f, StartingAcceleration2);
 	UAB_GET_PROPERTY(CColor, Color1);
-	UAB_GET_PROPERTY(CColor, Color1);	
+	UAB_GET_PROPERTY(CColor, Color2);	
 };
 
 #endif //PARTICLE_SYSTEM_TYPE_H

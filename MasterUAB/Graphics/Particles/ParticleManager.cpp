@@ -20,7 +20,8 @@ void CParticleManager::Load(const std::string &Filename)
 		for (int i = 0; i < l_Meshes.GetNumChildren(); ++i)
 		{
 			CParticleSystemType *l_ParticleSystemType = new CParticleSystemType(l_Meshes(i));
-			if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType, "CParticleManager"))
+			//if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType, "CParticleManager"))
+			if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType))
 			{
 				CHECKED_DELETE(l_ParticleSystemType);
 			}
