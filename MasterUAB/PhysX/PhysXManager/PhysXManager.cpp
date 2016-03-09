@@ -188,7 +188,7 @@ public:
 		desc.height = _height;
 		desc.radius = _radius;
 		desc.climbingMode = physx::PxCapsuleClimbingMode::eEASY;
-		desc.slopeLimit = cosf(3.1415f / 6); //30º
+		desc.slopeLimit = cosf(FLOAT_PI_VALUE / 6); //30º
 		desc.stepOffset = 0.5f;
 		desc.density = _density;
 		desc.reportCallback = this;
