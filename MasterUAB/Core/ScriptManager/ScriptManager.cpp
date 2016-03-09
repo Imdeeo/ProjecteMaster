@@ -979,6 +979,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("apply", &CMaterialParameter::Apply)
 			.def("get_material_type", &CMaterialParameter::getMaterialType)
 			.def("get_value_address", &CMaterialParameter::GetValueLuaAddress)
+			.def("get_description", &CMaterialParameter::GetDescription)
 			.scope[
 				def("get_type_from_string",&CMaterialParameter::GetTypeFromString)
 			]

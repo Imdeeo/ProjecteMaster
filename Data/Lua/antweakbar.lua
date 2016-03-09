@@ -49,38 +49,53 @@ function ReloadEffectTechnique(EffectTechniqueName)
 
 end
 
-function AddParameterVariable(parameter,material_name)
+function RegisterParametersVariables(material_name)
 
 	
 	local UABEngine = CUABEngine.get_instance()
 	local DebugHelper = CDebugHelper.get_debug_helper()
+	local MaterialsManager = UABEngine:get_material_manager()
 	
-	if(parameter:get_material_type()==CMaterialParameter.float)then
+	local bar_name = "Material: "..material_name
 	
-		utils_log("float")
-		local addres = parameter:get_value_address()
-		DebugHelper:add_variable(material_name.." - "..parameter.name,CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group='"..material_name.."' ")
+	DebugHelper:remove_bar("Materials")
+	DebugHelper:start_register_bar(bar_name)
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\""..bar_name.."\");RegisterMaterialsBar()","");
+	
+	local Material = MaterialsManager:get_resource(material_name)
+	local MaterialParameters = Material:get_parameters()
+	
+	for parameter in MaterialParameters do
+		if(parameter:get_material_type()==CMaterialParameter.float)then
+		
+			utils_log("float")
+			local addres = parameter:get_value_address()
+			DebugHelper:add_variable(parameter.name,CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),parameter:get_description())--" group='"..material_name.."' ")
 
-	elseif(parameter:get_material_type()==CMaterialParameter.vect2f)then
+		elseif(parameter:get_material_type()==CMaterialParameter.vect2f)then
 
-		utils_log("vect2f")
-		DebugHelper:add_variable(material_name.." - "..parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--"" group="..parameter.name.." ")
-		DebugHelper:add_variable(material_name.." - "..parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+			utils_log("vect2f")
+			DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),get_description())--"" group="..parameter.name.." ")
+			DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),get_description())--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+			
+		elseif(parameter:get_material_type()==CMaterialParameter.vect3f)then
 		
-	elseif(parameter:get_material_type()==CMaterialParameter.vect3f)then
-	
-		DebugHelper:add_variable(material_name.." - "..parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
-		DebugHelper:add_variable(material_name.." - "..parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
-		DebugHelper:add_variable(material_name.." - "..parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+			DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),get_description())--" group="..parameter.name.." ")
+			DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),get_description())--" group="..parameter.name.." ")
+			DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),get_description())--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+			
+		elseif(parameter:get_material_type()==CMaterialParameter.vect4f)then
 		
-	elseif(parameter:get_material_type()==CMaterialParameter.vect4f)then
-	
-		DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
-		DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
-		DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
-		DebugHelper:add_variable(parameter.name..": w",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
-		
+			DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),get_description())--" group="..parameter.name.." ")
+			DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),get_description())--" group="..parameter.name.." ")
+			DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),get_description())--" group="..parameter.name.." ")
+			DebugHelper:add_variable(parameter.name..": w",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),get_description())--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+			
+		end
 	end
+	
+	DebugHelper:register_bar()
 	
 end
 
@@ -98,11 +113,7 @@ function RegisterMaterialsBar()
 	local MaterialsManager = UABEngine:get_material_manager()
 	local Materials = MaterialsManager:get_elements_array()
 	for i = 0,MaterialsManager:size()-1 do
-		DebugHelper:add_lua_button(Materials[i].name,"ReloadMaterial(\""..Materials[i].name.."\")","");
-		local MaterialParameters = Materials[i]:get_parameters()
-		for parameter in MaterialParameters do
-			AddParameterVariable(parameter,Materials[i].name)
-		end
+		DebugHelper:add_lua_button(Materials[i].name,"RegisterParametersVariables(\""..Materials[i].name.."\")","");
 	end
 	DebugHelper:register_bar()
 	
