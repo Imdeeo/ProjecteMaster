@@ -1,6 +1,7 @@
 #include "RenderableObjectsManager.h"
 #include "StaticMesh\InstanceMesh.h"
 #include "AnimatedModels\AnimatedInstanceModel.h"
+#include "Particles\ParticleSystemInstance.h"
 
 CRenderableObjectsManager::CRenderableObjectsManager(std::string _Name):CNamed(_Name) {}
 CRenderableObjectsManager::~CRenderableObjectsManager()
@@ -67,6 +68,15 @@ CRenderableObject * CRenderableObjectsManager::AddAnimatedInstanceModel(CXMLTree
 
 CRenderableObject * CRenderableObjectsManager::AddAnimatedInstanceModel(const std::string &CoreModelName, const std::string &InstanceModelName, const Vect3f &Position)
 {
-	assert(!"this methon must not be called");
+	assert(!"this method must not be called");
 	return nullptr;
+}
+
+CRenderableObject * CRenderableObjectsManager::AddParticleSystemInstance(CXMLTreeNode &TreeNode)
+{
+	CParticleSystemInstance* l_ParticleSystemInstance = new CParticleSystemInstance(TreeNode);
+	if (AddResource(l_ParticleSystemInstance->GetName(), l_ParticleSystemInstance))
+		return l_ParticleSystemInstance;
+	else
+		return nullptr;
 }

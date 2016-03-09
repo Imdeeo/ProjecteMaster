@@ -27,6 +27,7 @@ public:
 	CRenderableObject * AddAnimatedInstanceModel(CXMLTreeNode &TreeNode);
 	CRenderableObject * AddAnimatedInstanceModel(const std::string &CoreModelName,
 		const std::string &InstanceModelName, const Vect3f &Position);
+	CRenderableObject * AddParticleSystemInstance(CXMLTreeNode &TreeNode);
 };
 
 #endif

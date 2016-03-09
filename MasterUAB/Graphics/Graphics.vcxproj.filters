@@ -221,6 +221,9 @@
     <ClCompile Include="Particles\ParticleSystemType.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
+    <ClCompile Include="Particles\ParticleSystemInstance.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -519,6 +522,9 @@
       <Filter>Particles</Filter>
     </ClInclude>
     <ClInclude Include="Particles\ParticleSystemType.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Particles\ParticleSystemInstance.h">
       <Filter>Particles</Filter>
     </ClInclude>
   </ItemGroup>
