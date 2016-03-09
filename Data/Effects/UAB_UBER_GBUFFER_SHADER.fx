@@ -117,6 +117,10 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	
 	float4 l_Ambient = m_LightAmbient;
 	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
+	if (l_Albedo.w < 0.1)
+	{
+		clip(-1);
+	}
 	float3 Nn = IN.Normal;
 	#ifdef HAS_REFLECTION
 		float3 l_EyeToWorldPosition = normalize(IN.HPos-m_CameraPosition.xyz);
