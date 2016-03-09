@@ -31,7 +31,6 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		//Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
 		Vect3f l_BBMin = m_StaticMesh->GetBoundingBoxMax();
 		Vect3f l_BBMax = m_StaticMesh->GetBoundingBoxMin();
-		Quatf l_Q = QuatFromYawPitchRoll(m_Yaw, m_Pitch, m_Roll);
 
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
 		/*if (l_PxType == "triangle_mesh")
@@ -69,7 +68,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 
 			aux.z = abs(aux.z);
 			//Vect3f l_Pos = (l_BBMax + l_BBMin) / 2;
-			l_PhysXManager->CreateRigidStatic(l_Name, aux, l_Pos, l_Q, "FisicasAux");
+			l_PhysXManager->CreateRigidStatic(l_Name, aux, l_Pos, m_Rotation, "FisicasAux");
 		}
 		else
 		{
@@ -85,7 +84,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 			
 			aux.z = abs(aux.z);
 			//Vect3f l_Pos = (l_BBMax + l_BBMin) / 2;
-			l_PhysXManager->CreateRigidStatic(l_Name, aux, l_Pos, l_Q, "FisicasAux");
+			l_PhysXManager->CreateRigidStatic(l_Name, aux, l_Pos, m_Rotation, "FisicasAux");
 		}
 	}
 	else
