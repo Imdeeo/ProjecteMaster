@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<scene_renderer_commands>
+	<set_light_constants/>
+	<set_depth_stencil_state enable_z_test="true" write_z_buffer="true"/>
+	<set_matrices/>
+	
+	<!-- FORWARD -->
+	<clear render_target="true" depth_stencil="true"/>
+	<set_pool_renderable_objects_technique pool="forward_shading"/>
+	<render_layer layer="solid" active="true"/>
+	<render_layer layer="alpha_objects" active="true"/>
+	
+	<!-- SKYBOX 
+	<set_depth_stencil_state enable_z_test="true" write_z_buffer="false"/>
+	<set_pool_renderable_objects_technique pool="skybox_pool"/>
+	<render_layer layer="skybox" active="true"/>-->
+	
+	
+	<render_debug_lights/>
+	<!--<render_debug_grid/>-->
+	<set_ant_tweak_bar/>	
+	<present/>
+</scene_renderer_commands>
+
