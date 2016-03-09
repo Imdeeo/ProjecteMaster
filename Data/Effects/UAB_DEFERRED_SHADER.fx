@@ -1,5 +1,11 @@
 #include "Lights.fxh"
 
+float m_Active = m_RawDataArray[0];
+float m_Exposure = m_RawDataArray[1];
+float m_SpecularPower = m_RawDataArray[2];
+float m_SpecularFactor = m_RawDataArray[3];
+
+
 struct VS_INPUT
 {
 	float4 Pos : POSITION;
@@ -53,5 +59,5 @@ float4 mainPS(PS_INPUT IN) : SV_Target
 	float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
 	float3 Nn=Texture2Normal(T2Texture.Sample(S2Sampler, IN.UV).xyz);
 	float4 l_albedo =T0Texture.Sample(S0Sampler, IN.UV);
-	return applyLights(l_WorldPosition, Nn, l_albedo, 0)*shadowMapCalc(l_WorldPosition);
+	return applyLights(l_WorldPosition, Nn, l_albedo, 0, m_SpecularPower, m_SpecularFactor)*shadowMapCalc(l_WorldPosition);
 }

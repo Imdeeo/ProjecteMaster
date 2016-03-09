@@ -27,7 +27,7 @@ float4 shadowMapCalc(float3 l_WorldPosition)
 }
 
 
-float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex)
+float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex, float _SpecularPower, float _SpecularFactor)
 {	
 	// Factors in the final multiplication.	
 	float l_DiffuseContrib;
@@ -62,7 +62,7 @@ float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	return saturate(outLight);
 }
 
-float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex)
+float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex, float _SpecularPower, float _SpecularFactor)
 {
 	float P = 50;
 	float4 SpecularColor = float4(1, 1, 1, 1);
@@ -80,7 +80,7 @@ float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int 
 	return saturate(outLight);
 }
 
-float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex)
+float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex, float _SpecularPower, float _SpecularFactor)
 {
 	float P = 50;
 	float4 SpecularColor = float4(1, 1, 1, 1);
@@ -101,21 +101,21 @@ float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	return saturate(outLight);	
 }
 
-float4 applyLights(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex)
+float4 applyLights(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex, float _SpecularPower, float _SpecularFactor)
 {
 	if(m_LightEnabledArray[lightIndex]==1)
 	{	
 		if(m_LightTypeArray[lightIndex] == 0) //OMNI
 		{
-			return omniLight(l_WorldPosition, Nn, l_albedo, lightIndex);
+			return omniLight(l_WorldPosition, Nn, l_albedo, lightIndex, _SpecularPower, _SpecularFactor);
 		}
 		if(m_LightTypeArray[lightIndex] == 1) //DIRECTIONAL
 		{
-			return directionalLight(l_WorldPosition, Nn, l_albedo, lightIndex);
+			return directionalLight(l_WorldPosition, Nn, l_albedo, lightIndex, _SpecularPower, _SpecularFactor);
 		}
 		if(m_LightTypeArray[lightIndex] == 2) //SPOT
 		{					
-			return spotLight(l_WorldPosition, Nn, l_albedo, lightIndex);
+			return spotLight(l_WorldPosition, Nn, l_albedo, lightIndex, _SpecularPower, _SpecularFactor);
 		}
 	}
 	return float4(0,0,0,1);
