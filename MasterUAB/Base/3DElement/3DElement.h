@@ -26,9 +26,9 @@ protected:
 public:
 	C3DElement();
 	C3DElement(const Vect3f &Position);
-	C3DElement(const Vect3f &Position, Quatf Rotation);
+	C3DElement(const Vect3f &Position, const Quatf &Rotation);
 	C3DElement(const Vect3f &Position, float Yaw, float Pitch, float Roll);
-	C3DElement(Quatf Rotation);
+	C3DElement(const Quatf &Rotation);
 	C3DElement(float Yaw, float Pitch, float Roll);
 	C3DElement(const CXMLTreeNode &XMLTreeNode);
 	virtual ~C3DElement(void);

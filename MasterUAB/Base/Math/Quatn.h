@@ -3,6 +3,9 @@
 
 #include "Math\MathTypes.h"
 #include "Math\MathUtils.h"
+#include "Math\Matrix33.h"
+#include "Math\Matrix34.h"
+#include "Math\Matrix44.h"
 #include <assert.h>
 
 template<typename T>
@@ -92,6 +95,11 @@ public:
 	Quatn operator*(double s) const {
 		return Quatn(GetComplex()*s, GetReal()*s);
 	}
+
+	/**
+	* @brief Global operator allowing left-multiply by scalar.
+	*/
+	//Quatn operator*(double s, const Quatn& q);
 
 	/**
 	* @brief Produces the sum of this quaternion and rhs.
@@ -201,44 +209,41 @@ public:
 	* @brief Returns the scaled-axis representation of this
 	* quaternion rotation.
 	*/
-	/*Vect3f GetScaledAxis(void) const {
-		// Euclideanspace.com code
+	Vect3f GetScaledAxis(void) const {
 		Vect3f ret;
-		if (w > 1)
-			norm();
-		angle = 2 * acos(w);
+		double angle = 2 * acos(w);
 		double s = sqrt(1 - w*w); // assuming quaternion normalised then w is less than 1, so term always positive.
 		if (s < 0.001) { // test to avoid divide by zero, s is always positive due to sqrt
 			// if s close to zero then direction of axis not important
-			ret.x = x; // if it is important that axis is normalised then replace with x=1; y=z=0;
+			ret.x = x;
 			ret.y = y;
 			ret.z = z;
 		}
 		else
 		{
-			ret.x = x / s; // normalise axis
-			ret.y = y / s;
-			ret.z = z / s;
+			ret.x = x * angle / s;
+			ret.y = y * angle / s;
+			ret.z = z * angle / s;
 		}
 		return ret;
 
 		// Stanford code (need HeliMath)
-		double w[3];
+		/*double w[3];
 		HeliMath::scaled_axis_from_quaternion(w, mData);
-		return Vect3f(w);
-	}*/
+		return Vect3f(w);*/
+	}
 
 	/**
 	* @brief Sets quaternion to be same as rotation by scaled axis w.
 	*/
-	void SetScaledAxis(const Vect3f& w) {
-		double theta = w.Normalize();
+	void SetFromScaledAxis(const Vect3f& scaledAxis) {
+		double theta = scaledAxis.Length();
 		if (theta > 0.0001) {
 			double s = sin(theta / 2.0);
-			Vect3f W(w / theta * s);
-			x = W[0];
-			y = W[1];
-			z = W[2];
+			Vect3f Axis(scaledAxis * s / theta);
+			x = Axis[0];
+			y = Axis[1];
+			z = Axis[2];
 			w = cos(theta / 2.0);
 		}
 		else {
@@ -322,20 +327,20 @@ public:
 	* The decoupled representation is two rotations, Qxy and Qz,
 	* so that Q = Qxy * Qz.
 	*/
-	/*void decoupleZ(Quatn* Qxy, Quatn* Qz) const {
+	void decoupleZ(Quatn* Qxy, Quatn* Qz) const {
 		Vect3f ztt(0, 0, 1);
 		Vect3f zbt = this->rotatedVector(ztt);
 		Vect3f axis_xy = ztt^zbt;
-		double axis_norm = axis_xy.Normalize();
+		double axis_norm = axis_xy.Length();
 		
 		double axis_theta = acos(mathUtils::Clamp(zbt.z, -1, +1));
 		if (axis_norm > 0.00001) {
 			axis_xy = axis_xy * (axis_theta / axis_norm); // limit is *1
 		}
 
-		Qxy->GetScaledAxis(axis_xy);
+		Qxy->SetFromScaledAxis(axis_xy);
 		*Qz = (Qxy->conjugate() * (*this));
-	}*/
+	}
 
 	/**
 	* @brief Returns the quaternion slerped between this and q1 by fraction 0 <= t <= 1.
@@ -376,11 +381,6 @@ public:
 	//double* row(uint32_t i) { return mData + i; }
 	// Const version of the above.
 	//const double* row(uint32_t i) const { return mData + i; }
-
-	/**
-	* @brief Global operator allowing left-multiply by scalar.
-	*/
-	Quatn operator*(double s, const Quatn& q);
 };
 
 typedef Quatn<float> Quatf;
