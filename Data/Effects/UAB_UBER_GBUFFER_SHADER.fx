@@ -1,6 +1,11 @@
 #include "globals.fxh"
 #include "samplers.fxh"
 
+static float m_Active = m_RawDataArray[0];
+static float m_Exposure = m_RawDataArray[1];
+static float m_SpecularPower = m_RawDataArray[2];
+static float m_SpecularFactor = m_RawDataArray[3];
+
 struct VS_INPUT
 {
 	float3 Pos : POSITION;
@@ -112,8 +117,6 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	
 	float l_Depth = IN.HPos.z / IN.HPos.w;
 	
-	float m_SpecularPower = 1.0f;
-	float m_SpecularFactor = 1.0f;
 	
 	float4 l_Ambient = m_LightAmbient;
 	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
@@ -141,8 +144,11 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		l_Ambient = T1Texture.Sample(S1Sampler,IN.UV2);
 	#endif
 
+	
+	//l_Out.Target1 = float4(l_Albedo.xyz*l_Ambient.xyz, 1.0f);	
 	l_Out.Target0 = float4(l_Albedo.xyz, m_SpecularFactor);
-	l_Out.Target1 = float4(l_Albedo.xyz*l_Ambient.xyz, m_SpecularPower);
+	float l_specularPower = 0.25;
+	l_Out.Target1 = float4(l_Albedo.xyz*l_Ambient.xyz, l_specularPower);
 	l_Out.Target2 = float4(Normal2Texture(Nn), 1.0);
 	l_Out.Target3 = float4(l_Depth,l_Depth,l_Depth, 1.0f);
 

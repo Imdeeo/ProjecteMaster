@@ -1,10 +1,10 @@
 #include "Samplers.fxh"
 #include "Lights.fxh"
 
-float m_Active = m_RawDataArray[0];
-float m_Exposure = m_RawDataArray[1];
-float m_SpecularPower = m_RawDataArray[2];
-float m_SpecularFactor = m_RawDataArray[3];
+static float m_Active = m_RawDataArray[0];
+static float m_Exposure = m_RawDataArray[1];
+static float m_SpecularPower = m_RawDataArray[2];
+static float m_SpecularFactor = m_RawDataArray[3];
 
 #ifndef HAS_UV
 	#ifndef HAS_COLOR
