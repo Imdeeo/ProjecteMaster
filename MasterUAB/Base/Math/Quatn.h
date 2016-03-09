@@ -287,7 +287,7 @@ public:
 	*/
 	Vect3f EulerFromQuat(void) const {
 		Vect3f euler;
-		const static double PI_OVER_2 = M_PI * 0.5;
+		const static double PI_OVER_2 = DOUBLE_PI_VALUE * 0.5;
 		const static double EPSILON = 1e-10;
 		double sqw, sqx, sqy, sqz;
 
@@ -310,7 +310,7 @@ public:
 
 			// If facing down, reverse yaw
 			if (euler.y < 0)
-				euler.z = M_PI - euler.z;
+				euler.z = DOUBLE_PI_VALUE - euler.z;
 		}
 		return euler;
 	}

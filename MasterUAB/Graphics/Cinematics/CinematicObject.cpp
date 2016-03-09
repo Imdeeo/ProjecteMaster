@@ -76,7 +76,7 @@ void CCinematicObject::Update(float _ElapsedTime)
 			
 			m_RenderableObject->SetPosition((((l_pF - l_pI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pI);	
 
-			m_RenderableObject->SetRotation(Quatf(0.0f, 0.0f, 0.0f, 0.0f));	//needs slerp
+			m_RenderableObject->SetRotation(l_RI.slerp(l_RF, ((m_CurrentTime - l_tI) / (l_tF - l_tI))));
 
 			m_RenderableObject->SetScale((((l_scaleF - l_scaleI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_scaleI);		
 		}
