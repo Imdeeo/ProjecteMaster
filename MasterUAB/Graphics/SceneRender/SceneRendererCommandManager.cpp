@@ -301,6 +301,9 @@ void CSceneRendererCommandManager::Execute(CRenderManager *RenderManager)
 {
 	for(size_t i=0;i<m_ResourcesVector.size();++i)
 	{
-		m_ResourcesVector[i]->Execute(*RenderManager);
+		if (m_ResourcesVector[i]->GetActive())
+		{
+			m_ResourcesVector[i]->Execute(*RenderManager);
+		}
 	}
 }

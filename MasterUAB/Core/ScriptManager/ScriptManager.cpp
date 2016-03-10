@@ -234,7 +234,7 @@ void RegisterTemplatedMapManager(lua_State* _LS)
 			.def("add_resource", &CTemplatedMapManager<T>::AddResource)
 			.def("destroy", &CTemplatedMapManager<T>::Destroy)
 			.def("size", &CTemplatedMapManager<T>::Size)
-			.def("get_map", &CTemplatedMapManager<T>::GetResourcesMap)
+			.def("get_map", &CTemplatedMapManager<T>::GetResourcesMap, luabind::return_stl_iterator)
 			.def("get_elements_array", &CTemplatedMapManager<T>::GetElementsArray)
 	];
 }
@@ -250,8 +250,8 @@ void RegisterTemplatedVectorMapManager(lua_State* _LS)
 			.def("add_resource", &CTemplatedVectorMapManager<T>::AddResource)
 			.def("destroy", &CTemplatedVectorMapManager<T>::Destroy)
 			.def("size", &CTemplatedVectorMapManager<T>::Size)
-			.def("get_map", &CTemplatedVectorMapManager<T>::GetResourcesMap)
-			.def("get_vector", &CTemplatedVectorMapManager<T>::GetResourcesVector)
+			.def("get_map", &CTemplatedVectorMapManager<T>::GetResourcesMap, luabind::return_stl_iterator)
+			.def("get_vector", &CTemplatedVectorMapManager<T>::GetResourcesVector, luabind::return_stl_iterator)
 			.def("get_elements_array", &CTemplatedVectorMapManager<T>::GetElementsArray)
 	];
 }
@@ -283,7 +283,8 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CActive>("CActive")
 			.def(constructor<const CXMLTreeNode&>())
 			.def(constructor<bool>())
-			.property("active",&CActive::GetActive,&CActive::SetActive)
+			.property("active", &CActive::GetActive, &CActive::SetActive)
+			.def("get_address", &CActive::GetLuaAdress)
 	];
 
 
