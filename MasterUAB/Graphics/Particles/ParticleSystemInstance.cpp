@@ -2,6 +2,14 @@
 #include "ParticleManager.h"
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
+#include "Effects\EffectTechnique.h"
+#include "RenderableObjects\RenderableObjectTechnique.h"
+#include "Materials\Material.h"
+#include "RenderableObjects\RenderableVertexs.h"
+#include "RenderableObjects\TemplatedRenderableVertexs.h"
+#include "Effects\EffectManager.h"
 
 CParticleSystemInstance::CParticleSystemInstance(CXMLTreeNode &TreeNode) : 
 	CRenderableObject(TreeNode), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
@@ -107,6 +115,8 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 		particle->TimeToNextFrame -= ElapsedTime;
 		particle->LifeTime += ElapsedTime;
 
+		m_ParticleRenderableData[i] = (MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX*)malloc(sizeof(MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX));		
+
 		while (particle->TimeToNextFrame < 0 && (m_Type->GetLoopFrames() || particle->CurrentFrame < m_Type->GetNumFrames() - 1))
 		{
 			particle->CurrentFrame - (particle->CurrentFrame + 1) % m_Type->GetNumFrames();
@@ -120,11 +130,19 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 			--i;
 		}
 	}
+
+	m_RenderableVertex = new CUABTrianglesStripRenderableVertexs<MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData[0],1,1);
 }
 
 void CParticleSystemInstance::Render(CRenderManager *RM)
 {
-
+	CRenderableObject::Render(RM);
+	RM->GetContextManager()->SetWorldMatrix(GetTransform());
+	CMaterial* l_Material = m_Type->GetMaterial();
+	l_Material->Apply();
+	CEffectTechnique* l_EffectTechnique = l_Material->GetRenderableObjectTechnique()->GetEffectTechnique();
+	CEffectManager::SetSceneConstants(l_EffectTechnique);
+	m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData());
 }
 
 //void CParticleSystemInstance::RenderDebug(CRenderManager *RM)
