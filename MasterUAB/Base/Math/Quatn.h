@@ -265,7 +265,25 @@ public:
 		return (((*this) * Quatn(v, 0)) * conjugate()).GetComplex();
 	}
 
-
+	/**
+	* @brief Computes the quaternion from a yaw, pitch, and roll.
+	*/
+	void QuatFromYawPitchRoll(float yaw, float pitch, float roll)
+	{
+		float num = roll * 0.5f;
+		float num2 = (float)sin((double)num);
+		float num3 = (float)cos((double)num);
+		float num4 = pitch * 0.5f;
+		float num5 = (float)sin((double)num4);
+		float num6 = (float)cos((double)num4);
+		float num7 = yaw * 0.5f;
+		float num8 = (float)sin((double)num7);
+		float num9 = (float)cos((double)num7);
+		x = num9 * num5 * num3 + num8 * num6 * num2;
+		y = num8 * num6 * num3 - num9 * num5 * num2;
+		z = num9 * num6 * num2 - num8 * num5 * num3;
+		w = num9 * num6 * num3 + num8 * num5 * num2;
+	}
 
 	/**
 	* @brief Computes the quaternion that is equivalent to a given

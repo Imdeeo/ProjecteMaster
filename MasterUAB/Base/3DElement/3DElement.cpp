@@ -1,7 +1,6 @@
 #include "3DElement\3DElement.h"
 #include "XML\XMLTreeNode.h"
 #include "Utils\CEmptyPointerClass.h"
-#include "Utils.h"
 #include <assert.h>
 
 
@@ -60,10 +59,12 @@ C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode):
 	const char * existRotation = l_Element.GetPszProperty("rotation");
 	if (existRotation == NULL)
 	{
-		m_Rotation = QuatFromYawPitchRoll(
+		
+		m_Rotation.QuatFromYawPitchRoll(
 			l_Element.GetFloatProperty("yaw", .0f, true),
 			l_Element.GetFloatProperty("pitch", .0f, true),
 			l_Element.GetFloatProperty("roll", .0f, true));
+
 	} else
 	{
 		m_Rotation = l_Element.GetQuatfProperty("rotation", Quatf(.0f, .0f, .0f, 1.f), true);
