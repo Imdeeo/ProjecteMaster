@@ -51,14 +51,16 @@ end
 
 function AddParameterVariable(parameter,material_name)
 
+	
 	local UABEngine = CUABEngine.get_instance()
 	local DebugHelper = CDebugHelper.get_debug_helper()
 	
 	if(parameter:get_material_type()==CMaterialParameter.float)then
 	
 		utils_log("float")
-		DebugHelper:add_variable(parameter.name,CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group='"..material_name.."' ")
-		
+		local addres = parameter:get_value_address()
+		DebugHelper:add_variable(material_name.." - "..parameter.name,CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group='"..material_name.."' ")
+	--[[
 	elseif(parameter:get_material_type()==CMaterialParameter.vect2f)then
 
 		utils_log("vect2f")
@@ -78,8 +80,8 @@ function AddParameterVariable(parameter,material_name)
 		DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." ")
 		DebugHelper:add_variable(parameter.name..": w",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),"")--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
 		
+	]]--
 	end
-	
 	
 end
 
@@ -87,6 +89,7 @@ function RegisterMaterialsBar()
 	
 	local UABEngine = CUABEngine.get_instance()
 	local DebugHelper = CDebugHelper.get_debug_helper()
+	
 	
 	DebugHelper:remove_bar("MainBar")
 	DebugHelper:start_register_bar("Materials")
@@ -102,7 +105,6 @@ function RegisterMaterialsBar()
 			AddParameterVariable(parameter,Materials[i].name)
 		end
 	end
-	
 	DebugHelper:register_bar()
 	
 end
