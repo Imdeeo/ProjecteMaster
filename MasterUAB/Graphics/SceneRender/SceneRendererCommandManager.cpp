@@ -23,6 +23,7 @@
 #include "RenderAxisSceneRenderCommand.h"
 #include "SetLightPositionSceneRendererCommand.h"
 #include "RenderDebugLayerSceneRendererCommand.h"
+#include "RenderDebugShadowMapsSceneRendererCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -155,8 +156,10 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				{
 					AddResource(l_Name, new CSetLightPositionSceneRendererCommand(l_Element));
 				}
-
-				
+				else if (l_Element.GetName() == std::string("render_debug_shadowmap"))
+				{
+					AddResource(l_Name, new CRenderDebugShadowMapsSceneRendererCommand(l_Element));
+				}				
 			}
 		}
 	}

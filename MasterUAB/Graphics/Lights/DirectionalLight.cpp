@@ -26,27 +26,11 @@ void CDirectionalLight::Render(CRenderManager *RenderManager)
 {
 	CLight::Render(RenderManager);
 	CRenderableVertexs* l_Line = RenderManager->GetDebugRender()->GetLine(m_Position, m_Position + (GetDirection() * GetEndRangeAttenuation()));
-	RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
+	RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
 	CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
 	CEffectManager::SetSceneConstants(l_EffectTechnique);
 	l_Line->Render(RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 	delete l_Line;
-}
-
-const Mat44f & CDirectionalLight::GetTransform()
-{
-	m_ScaleMatrix.SetIdentity();
-	m_ScaleMatrix.Scale(GetIntensity(), GetIntensity(), GetIntensity());
-
-	m_RotationMatrix.SetIdentity();
-	m_RotationMatrix.SetFromLookAt(m_Position,m_Position+m_Direction);
-
-	m_TranslationMatrix.SetIdentity();
-	m_TranslationMatrix.SetPos(m_Position.x, m_Position.y, m_Position.z);
-
-	m_TransformMatrix = m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
-
-	return m_TransformMatrix;
 }
 
 void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
@@ -73,7 +57,3 @@ void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 	RenderManager.SetRenderTargets(1, l_RenderTargetViews, m_ShadowMap->GetDepthStencilView());
 }
 
-CRenderableVertexs* CDirectionalLight::GetShape(CRenderManager *_RenderManager)
-{
-	return CLight::GetShape(_RenderManager);
-}
