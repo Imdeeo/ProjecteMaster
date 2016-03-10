@@ -5,7 +5,6 @@
 #include "CameraKey.h"
 #include "Utils.h"
 #include <sstream>
-
 #include "XML\XMLTreeNode.h"
 
 CCameraKeyController::CCameraKeyController(CXMLTreeNode &XMLTreeNode)
@@ -212,4 +211,11 @@ void CCameraKeyController::SetCamera(CCamera *Camera) const
 	Camera->SetLookAt(m_LookAt);
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
+}
+
+
+Vect3f CCameraKeyController::GetDirection() const
+{
+	Vect3f l_Direction(cos(m_Yaw)*cos(m_Pitch), sin(m_Pitch), sin(m_Yaw)*cos(m_Pitch));
+	return l_Direction;
 }
