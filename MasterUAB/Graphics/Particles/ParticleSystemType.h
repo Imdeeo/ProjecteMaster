@@ -30,7 +30,7 @@ public:
 	CParticleSystemType(CXMLTreeNode &TreeNode);
 	virtual ~CParticleSystemType(void);
 
-	UAB_BUILD_GET_SET(CMaterial *, Material);
+	//UAB_BUILD_GET_SET(CMaterial *, Material);
 	UAB_GET_PROPERTY(int, NumFrames);
 	UAB_GET_PROPERTY(float, TimePerFrame);
 	UAB_GET_PROPERTY(bool, LoopFrames);
@@ -50,7 +50,7 @@ public:
 	UAB_GET_PROPERTY(Vect3f, StartingAcceleration1);
 	UAB_GET_PROPERTY(Vect3f, StartingAcceleration2);
 	UAB_GET_PROPERTY(CColor, Color1);
-	UAB_GET_PROPERTY(CColor, Color1);	
+	UAB_GET_PROPERTY(CColor, Color2);	
 };
 
 #endif //PARTICLE_SYSTEM_TYPE_H
