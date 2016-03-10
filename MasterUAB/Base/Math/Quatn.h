@@ -357,7 +357,7 @@ public:
 			q0.y * q1.y +
 			q0.z * q1.z +
 			q0.w * q1.w,
-			-1, 1));
+			-1.f, 1.f));
 		if (fabs(omega) < 1e-10) {
 			omega = 1e-10;
 		}
