@@ -14,7 +14,6 @@
 
 #include <d3d11.h>
 #include "Math\Matrix44.h"
-#include "Utils.h"
 
 
 CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
