@@ -63,6 +63,10 @@ public:
 	Vect3f GetRandomValue(Vect3f min, Vect3f max);
 	CColor GetRandomValue(CColor min, CColor max);
 	float GetRandomValue(Vect2f value);
+	float ComputeTimeToNextParticle();
+	void Update(float ElapsedTime);
+	void Render(CRenderManager *RM);
+	//void RenderDebug(CRenderManager *RM);
 };
 
 #endif //PARTICLE_SYSTEM_INSTANCE_H

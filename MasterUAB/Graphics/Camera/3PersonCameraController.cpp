@@ -75,7 +75,7 @@ void C3PersonCameraController::Update(float ElapsedTime)
 		int i = 1;
 	}
 	//cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * 0.5f;
-	m_angle = m_angle + cameraMovement.x*ElapsedTime;
+	m_angle = m_angle + cameraMovement.x;
 	while (m_angle > M_PI)
 	{
 		m_angle = m_angle - M_PI * 2;
