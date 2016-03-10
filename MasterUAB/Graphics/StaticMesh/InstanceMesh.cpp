@@ -28,9 +28,8 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		std::string l_PxMaterial = TreeNode.GetPszProperty("physics_material");
 		int l_PxGroup = TreeNode.GetIntProperty("physics_group");
 		Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
-		l_BB.x = abs(l_BB.x);
-		l_BB.y = abs(l_BB.y);
-		l_BB.z = abs(l_BB.z);
+		l_BB = Vect3f(abs(l_BB.x), abs(l_BB.y), abs(l_BB.z));
+		Quatf l_Rotation = Quatf(-m_Rotation.x, m_Rotation.y, -m_Rotation.z, -m_Rotation.w);
 
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
 		if (l_PxType == "triangle_mesh")
@@ -50,7 +49,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		}
 		else
 		{
-			l_PhysXManager->CreateStaticBox(GetName(), l_BB, l_PxMaterial, GetPosition(), m_Rotation, l_PxGroup);
+			l_PhysXManager->CreateStaticBox(GetName(), l_BB, l_PxMaterial, GetPosition(), l_Rotation, l_PxGroup);
 		}
 	}
 }
