@@ -10,8 +10,9 @@
 
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
-
+#include "Camera\CameraControllerManager.h"
 #include "Texture\DynamicTexture.h"
+#include "Math\Vector3.h"
 
 CDirectionalLight::CDirectionalLight() : CLight(), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
 {
@@ -20,6 +21,10 @@ CDirectionalLight::CDirectionalLight() : CLight(), m_Direction(Vect3f(0.0f, 0.0f
 CDirectionalLight::CDirectionalLight(CXMLTreeNode &TreeNode) : CLight(TreeNode)
 {
 	m_Direction = TreeNode.GetVect3fProperty("dir",Vect3f(0.0,0.0,0.0));
+	if (m_GenerateShadowMap)
+	{
+		m_OrthoShadowMapSize = TreeNode.GetVect2fProperty("ortho_size", Vect2f(50, 50), true);
+	}
 }
 
 void CDirectionalLight::Render(CRenderManager *RenderManager)
@@ -36,6 +41,8 @@ void CDirectionalLight::Render(CRenderManager *RenderManager)
 void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 {
 	m_ViewShadowMap.SetIdentity();
+	CCameraController* l_auxCameraController = UABEngine.GetCameraControllerManager()->GetMainCamera();
+	m_Position = l_auxCameraController->GetPosition() + l_auxCameraController->GetDirection() - GetDirection();
 	Vect3f up = Vect3f(m_Direction.z, m_Direction.y, m_Direction.x);
 	up = ((up) ^ (m_Direction));
 	m_ViewShadowMap.SetFromLookAt(m_Position, m_Position + m_Direction, up.y < 0 ? (up * -1) : up);
