@@ -15,6 +15,7 @@ function RegisterMainBar()
 	DebugHelper:add_lua_button("Materials","RegisterMaterialsBar()","");
 	DebugHelper:add_lua_button("Reload","RegisterReloadBar()","");
 	DebugHelper:add_lua_button("Player","RegisterPlayerBar()","");
+	DebugHelper:add_lua_button("Render Commands","RegisterSceneRendererCommands()","");
 	DebugHelper:register_bar()
 end
 
@@ -28,6 +29,7 @@ function RegisterShadersBar()
 	DebugHelper:start_register_bar("Shaders")
 	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Shaders\");RegisterMainBar()","");
+	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_effect_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Shaders\");RegisterShadersBar()","");
 	
 	local EffectManager = UABEngine:get_effect_manager()
 	local EffecTechniques = EffectManager:get_elements_array()
@@ -69,13 +71,10 @@ function RegisterParametersVariables(material_name)
 	for parameter in MaterialParameters do
 		if(parameter:get_material_type()==CMaterialParameter.float)then
 		
-			utils_log("float")
-			local addres = parameter:get_value_address()
 			DebugHelper:add_variable(parameter.name,CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),parameter:get_description())--" group='"..material_name.."' ")
 
 		elseif(parameter:get_material_type()==CMaterialParameter.vect2f)then
 
-			utils_log("vect2f")
 			DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),get_description())--"" group="..parameter.name.." ")
 			DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),get_description())--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
 			
@@ -109,6 +108,7 @@ function RegisterMaterialsBar()
 	DebugHelper:start_register_bar("Materials")
 	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Materials\");RegisterMainBar()","");
+	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_material_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Materials\");RegisterMaterialsBar()","");
 	
 	local MaterialsManager = UABEngine:get_material_manager()
 	local Materials = MaterialsManager:get_elements_array()
@@ -142,6 +142,28 @@ function RegisterReloadBar()
 	DebugHelper:add_lua_button("Effect Manager","CUABEngine.get_instance():get_effect_manager():reload()","");
 	--DebugHelper:add_lua_button("Layer Manager","CUABEngine.get_instance():get_layer_manager():reload();CUABEngine.get_instance():get_scene_command_manager():reload()","");
 	DebugHelper:add_lua_button("Camera Controllers","CUABEngine.get_instance():get_camera_controller_manager():reload();","");
+	
+	DebugHelper:register_bar()
+end
+
+function RegisterSceneRendererCommands()
+	local UABEngine = CUABEngine.get_instance()
+	local DebugHelper = CDebugHelper.get_debug_helper()
+	
+	DebugHelper:remove_bar("MainBar")
+	DebugHelper:start_register_bar("Scene Renderer Commands")
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Scene Renderer Commands\");RegisterMainBar()","");
+	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_scene_command_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Scene Renderer Commands\");RegisterSceneRendererCommands()","");
+	
+	local SceneRendererCommandsManager = UABEngine:get_scene_command_manager()
+	local RendererCommands = SceneRendererCommandsManager:get_vector() --get_address
+	
+	for command in RendererCommands do
+		
+		DebugHelper:add_variable(command.name,CDebugHelper.bool,CDebugHelper.read_write,command:get_address(),"")--" group='"..material_name.."' ")
+		
+	end
 	
 	DebugHelper:register_bar()
 end

@@ -2,6 +2,7 @@
 #define H_ACTIVE_H
 
 class CXMLTreeNode;
+class CEmptyPointerClass;
 
 class CActive
 {
@@ -13,6 +14,8 @@ public:
 	virtual ~CActive() {}
 	bool GetActive(){ return m_Active; }
 	void SetActive(bool _Active){ m_Active = _Active; }
+
+	CEmptyPointerClass* GetLuaAdress();
 };
 
 #endif //H_ACTIVE_H
