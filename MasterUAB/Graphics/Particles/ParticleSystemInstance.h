@@ -4,15 +4,18 @@
 #include "RenderableObjects\RenderableObject.h"
 #include "Utils.h"
 #include "Math\Color.h"
+#include "RenderableObjects\VertexTypes.h"
 
 #include <random>
 
 class CParticleSystemType;
 class CXMLTreeNode;
+class CRenderableVertexs;
 
 class CParticleSystemInstance : public CRenderableObject
 {
 private:
+	unsigned short l_IndexType = 16;
 	float m_NextParticleEmission;
 	bool m_Awake;
 	float m_AwakeTimer;
@@ -37,8 +40,8 @@ private:
 	std::uniform_real_distribution<float> m_UnitDistribution;
 	std::random_device rnd;
 
-	/*PARTICLE_VERTEX m_ParticleRenderableData[MAX_PARTICLE_PER_INSTANCE];
-	CRendableVertexs *m_Vertices;*/
+	MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX *m_ParticleRenderableData[MAX_PARTICLE_PER_INSTANCE];
+	CRenderableVertexs *m_RenderableVertex;
 public:
 	CParticleSystemInstance(){};
 	CParticleSystemInstance(CXMLTreeNode &TreeNode);

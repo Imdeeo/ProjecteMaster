@@ -21,6 +21,7 @@ public:
 	: m_VertexsCount(VtxsCount)
 	, m_PrimitiveTopology(PrimitiveTopology)
 	, m_PrimitiveCount(PrimitiveCount)
+	, m_VertexBuffer(0)
 	{
 		D3D11_BUFFER_DESC l_BufferDescription;
 		ZeroMemory(&l_BufferDescription, sizeof(l_BufferDescription));
@@ -34,8 +35,7 @@ public:
 		ZeroMemory( &InitData, sizeof(InitData) );
 		InitData.pSysMem = Vtxs;
 		ID3D11Device *l_Device=UABEngine.GetRenderManager()->GetDevice();
-		HRESULT l_HR=l_Device->CreateBuffer(&l_BufferDescription, &InitData,
-		&m_VertexBuffer);
+		HRESULT l_HR=l_Device->CreateBuffer(&l_BufferDescription, &InitData, &m_VertexBuffer);
 		if(FAILED(l_HR))
 			return;
 	}
