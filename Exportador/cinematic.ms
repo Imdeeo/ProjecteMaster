@@ -63,6 +63,7 @@ fn createCinematicObjects dir filename Objs =
 					TranslationToRH &pos
 					
 					rot = tform.rotation
+					QuatToRH &rot
 					
                     format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" rotation=\"% % % %\" scale=\"% % %\"/>\n" key pos.x pos.y pos.z rot.x rot.y rot.z rot.w scl.x scl.y scl.z to:file
 				)

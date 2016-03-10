@@ -65,7 +65,7 @@ C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode):
 			l_Element.GetFloatProperty("pitch", .0f, true),
 			l_Element.GetFloatProperty("roll", .0f, true));
 	} else
-	{ 
+	{
 		m_Rotation = l_Element.GetQuatfProperty("rotation", Quatf(.0f, .0f, .0f, 1.f), true);
 	}
 	

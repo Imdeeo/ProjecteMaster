@@ -24,9 +24,11 @@ fn createInstanceMesh dir filename Objs=
 				TranslationToRH &pos
 				
 				rot = Objs[i].rotation
+				QuatToRH &rot
+				
 				if (getUserProp Objs[i] "physics_generate") then
 				(
-					format "\t<instance_mesh name=\"%\" layer =\"%\" core_name=\"%\" position=\"% % %\" rotation=\"% % % %\" create_physics=\"true\" physics_type=\"%\" physics_group=\"%\" visible=\"%\"/>\n" Objs[i].name (getUserProp Objs[i] "render_layer") (getUserProp Objs[i] "core_name") pos[1] pos[2] pos[3] rot.x rot.y rot.z rot.w (getUserProp Objs[i] "physics_generate_type") (getUserProp Objs[i] "physics_material") (getUserProp Objs[i] "physics_layer") true to:file
+					format "\t<instance_mesh name=\"%\" layer =\"%\" core_name=\"%\" position=\"% % %\" rotation=\"% % % %\" create_physics=\"true\" physics_type=\"%\" physics_material=\"%\" physics_group=\"%\" visible=\"%\"/>\n" Objs[i].name (getUserProp Objs[i] "render_layer") (getUserProp Objs[i] "core_name") pos[1] pos[2] pos[3] rot.x rot.y rot.z rot.w (getUserProp Objs[i] "physics_generate_type") (getUserProp Objs[i] "physics_material") (getUserProp Objs[i] "physics_layer") true to:file
 				) else (
 					format "\t<instance_mesh name=\"%\" layer =\"%\" core_name=\"%\" position=\"% % %\" rotation=\"% % % %\" create_physics=\"false\" visible=\"%\"/>\n" Objs[i].name (getUserProp Objs[i] "render_layer") (getUserProp Objs[i] "core_name") pos[1] pos[2] pos[3] rot.x rot.y rot.z rot.w true to:file
 				)
