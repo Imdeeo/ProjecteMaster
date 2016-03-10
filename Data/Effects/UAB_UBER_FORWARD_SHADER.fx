@@ -134,11 +134,11 @@ TVertexPS mainVS(TVertexVS IN)
 	l_Out.Pos = mul(l_Out.Pos, m_Projection);
 
 	#ifdef HAS_NORMAL
-		#ifdef HAS_WEIGHT_INDICES
-			l_Out.Normal = l_Normal;
-		#else
+		//#ifdef HAS_WEIGHT_INDICES
+		//	l_Out.Normal = l_Normal;
+		//#else
 			l_Out.Normal = normalize(mul(IN.Normal, (float3x3)m_World));
-		#endif
+		//#endif
 	#endif
 
 	#ifdef HAS_UV
@@ -165,7 +165,7 @@ TVertexPS mainVS(TVertexVS IN)
 float4 applyAllLights(TVertexPS IN)
 {
 	float3 Nn = IN.Normal;
-	
+	float l_specularFactor=m_SpecularFactor;
 	#ifdef HAS_UV2
 		float4 lightContrib = LightMapTexture.Sample(LinearSampler2, IN.UV2);
 	#else
@@ -181,14 +181,16 @@ float4 applyAllLights(TVertexPS IN)
 		
 		float3 Tn=normalize(IN.WorldTangent);
 		float3 Bn=normalize(IN.WorldBinormal);
-		float3 bump=g_Bump*((T2Texture.Sample(S2Sampler,IN.UV).rgb) - float3(0.5,0.5,0.5));
+		float4 auxNormal = T2Texture.Sample(S2Sampler,IN.UV);
+		float3 bump=g_Bump*((auxNormal.xyz) - float3(0.5,0.5,0.5));		
 		Nn = Nn + bump.x*Tn + bump.y*Bn;
 		Nn = normalize(Nn);
+		l_specularFactor *= auxNormal;
 	#endif
 	
 	for(int i = 0;i<MAX_LIGHTS_BY_SHADER;i++)
 	{
-		lightContrib += applyLights(IN.Pixelpos,Nn,l_Out,i, m_SpecularPower, m_SpecularFactor);
+		lightContrib += applyLights(IN.Pixelpos,Nn,l_Out,i, m_SpecularPower, l_specularFactor);
 	}
 	return saturate(float4(lightContrib.xyz, l_Out.w));
 }

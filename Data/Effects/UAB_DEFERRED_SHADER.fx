@@ -55,7 +55,7 @@ float4 mainPS(PS_INPUT IN) : SV_Target
 	float4 l_albedo = T0Texture.Sample(S0Sampler, IN.UV);
 	float4 lightmap = T1Texture.Sample(S1Sampler, IN.UV);
 	float l_SpecularFactor = l_albedo.w;
-	float l_SpecularPower = 50;
+	float l_SpecularPower = lightmap.w*100;
 	float4 l_Out = applyLights(l_WorldPosition, Nn, l_albedo, 0, l_SpecularPower, l_SpecularFactor);
 	return l_Out * shadowMapCalc(l_WorldPosition);
 }
