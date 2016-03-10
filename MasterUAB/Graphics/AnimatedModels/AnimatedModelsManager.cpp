@@ -1,15 +1,15 @@
 #include "AnimatedModelsManager.h"
 #include "XML\XMLTreeNode.h"
+#include <cal3d\loader.h>
 
 CAnimatedModelsManager::CAnimatedModelsManager(void)
 {
-	//CalLoader::setLoadingMode(LOADER_ROTATE_X_AXIS /*| LOADER_INVERT_V_COORD*/);
+	CalLoader::setLoadingMode(LOADER_ROTATE_X_AXIS); // | LOADER_INVERT_V_COORD
 }
 
 CAnimatedModelsManager::~CAnimatedModelsManager(void)
 {
 }
-
 
 bool CAnimatedModelsManager::Load(const std::string &Filename)
 {
