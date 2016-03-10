@@ -19,7 +19,8 @@ protected:
 	bool m_RotationUpdate;
 	bool m_ScaleUpdate;
 	Mat44f m_TransformMatrix;
-	Mat44f m_TranslationRotationMatrix;
+	Mat44f m_RotationMatrix;
+	Mat44f m_TranslationMatrix;
 	Mat44f m_ScaleMatrix;
 	Vect3f m_Scale;
 	bool m_Visible;

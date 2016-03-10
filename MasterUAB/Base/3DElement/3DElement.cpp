@@ -5,12 +5,15 @@
 #include <assert.h>
 
 
-C3DElement::C3DElement(void)
+C3DElement::C3DElement(void):
+	m_Position(Vect3f(0, 0, 0)),
+	m_Rotation(Quatf(0, 0, 0, 1))
 {
 }
 
 C3DElement::C3DElement(const Vect3f &Position):
-	m_Position(Position)
+	m_Position(Position),
+	m_Rotation(Quatf(0, 0, 0, 1))
 {
 }
 
@@ -28,17 +31,21 @@ C3DElement::C3DElement(const Vect3f &Position, float Yaw, float Pitch, float Rol
 }
 
 C3DElement::C3DElement(const Quatf &Rotation) :
+	m_Position(Vect3f(0, 0, 0)),
 	m_Rotation(Rotation)
 {
 }
 
 C3DElement::C3DElement(float Yaw, float Pitch, float Roll):
+	m_Position(Vect3f(0, 0, 0)),
 	m_Rotation(Quatf(0, 0, 0, 1))
 {
 	m_Rotation.QuatFromEuler(Vect3f(Yaw, Pitch, Roll));
 }
 
-C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode)
+C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode):
+	m_Position(Vect3f(0, 0, 0)),
+	m_Rotation(Quatf(0, 0, 0, 1))
 {
 	CXMLTreeNode l_Element = XMLTreeNode; 
 	const char * existPos = l_Element.GetPszProperty("position");
@@ -90,35 +97,14 @@ const Mat44f & C3DElement::GetTransform()
 	m_ScaleMatrix.SetIdentity();
 	m_ScaleMatrix.Scale(m_Scale.x, m_Scale.y, m_Scale.z);
 
-	// For Quat
-	m_TranslationRotationMatrix.SetIdentity();
-	m_TranslationRotationMatrix.SetFromQuatPos(m_Rotation, Vect3f(m_Position.x, m_Position.y, m_Position.z));
-
-	m_TransformMatrix = m_TranslationRotationMatrix*m_ScaleMatrix;
-	
-	// For YawPitchRoll
-	/*
 	m_RotationMatrix.SetIdentity();
-
-	Using m_RotationMatrix.SetPitchRollYaw has problems with
-	multiplication order,so it's better to do rotations separately.
-	Mat44f l_RotX;
-	l_RotX.SetIdentity();
-	l_RotX.RotByAngleX(m_Roll);
-	Mat44f l_RotY;
-	l_RotY.SetIdentity();
-	l_RotY.RotByAngleY(m_Yaw);
-	Mat44f l_RotZ;
-	l_RotZ.SetIdentity();
-	l_RotZ.RotByAngleZ(m_Pitch);
-
-	m_RotationMatrix=l_RotX*l_RotZ*l_RotY;
+	m_RotationMatrix = m_Rotation.rotationMatrix();
 
 	m_TranslationMatrix.SetIdentity();
 	m_TranslationMatrix.SetPos(m_Position.x, m_Position.y, m_Position.z);
 
-	m_TransformMatrix=m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
-	*/
+	m_TransformMatrix = m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
+
 	return m_TransformMatrix;
 }
 
