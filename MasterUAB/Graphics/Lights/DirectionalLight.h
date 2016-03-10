@@ -7,7 +7,7 @@ class CDirectionalLight : public CLight
 {
 protected:
 	Vect2f m_OrthoShadowMapSize;
-	virtual CRenderableVertexs* GetShape(CRenderManager *_RenderManager);
+	
 
 	Vect3f m_Direction;
 public:
@@ -18,7 +18,6 @@ public:
 	void SetDirection(Vect3f _Direction) { m_Direction = _Direction; }
 
 	virtual void Render(CRenderManager *RenderManager);
-	virtual const Mat44f & GetTransform();
 	void SetShadowMap(CRenderManager &RenderManager);
 };
 

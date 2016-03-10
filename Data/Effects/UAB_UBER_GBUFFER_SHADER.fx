@@ -147,11 +147,11 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	#ifdef HAS_UV2
 		l_Ambient = T1Texture.Sample(S1Sampler,IN.UV2);
 	#endif
-
+	
 	float l_SpecularPower = m_SpecularPower/100;
-	//l_Out.Target1 = float4(l_Albedo.xyz*l_Ambient.xyz, 1.0f);	
+	l_specularFactor = l_specularFactor;
 	l_Out.Target0 = float4(l_Albedo.xyz, l_specularFactor);
-	l_Out.Target1 = float4(l_Albedo.xyz*l_Ambient.xyz, m_SpecularPower);
+	l_Out.Target1 = float4(l_Albedo.xyz*l_Ambient.xyz, l_SpecularPower);
 	l_Out.Target2 = float4(Normal2Texture(Nn), 1.0);
 	l_Out.Target3 = float4(l_Depth,l_Depth,l_Depth, 1.0f);
 	
