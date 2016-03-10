@@ -17,17 +17,19 @@ private:
 	unsigned int m_VertexsCount;
 	unsigned int m_PrimitiveCount;
 public:
-	CTemplatedRenderableVertexs(void *Vtxs, unsigned int VtxsCount,	D3D11_PRIMITIVE_TOPOLOGY PrimitiveTopology, unsigned int PrimitiveCount)
+	CTemplatedRenderableVertexs(void *Vtxs, unsigned int VtxsCount,	D3D11_PRIMITIVE_TOPOLOGY PrimitiveTopology, unsigned int PrimitiveCount, bool Dynamic = false)
 	: m_VertexsCount(VtxsCount)
 	, m_PrimitiveTopology(PrimitiveTopology)
 	, m_PrimitiveCount(PrimitiveCount)
 	{
 		D3D11_BUFFER_DESC l_BufferDescription;
 		ZeroMemory(&l_BufferDescription, sizeof(l_BufferDescription));
-		l_BufferDescription.Usage=D3D11_USAGE_DEFAULT;
+		//l_BufferDescription.Usage=D3D11_USAGE_DEFAULT;
+		l_BufferDescription.Usage = Dynamic ? D3D11_USAGE_DYNAMIC : D3D11_USAGE_DEFAULT;
 		l_BufferDescription.ByteWidth=sizeof(T)*m_VertexsCount;
 		l_BufferDescription.BindFlags=D3D11_BIND_VERTEX_BUFFER;
-		l_BufferDescription.CPUAccessFlags=0;
+		//l_BufferDescription.CPUAccessFlags=0;
+		l_BufferDescription.CPUAccessFlags = Dynamic ? D3D11_CPU_ACCESS_WRITE : 0;
 		D3D11_SUBRESOURCE_DATA InitData;
 		ZeroMemory( &InitData, sizeof(InitData) );
 		InitData.pSysMem = Vtxs;
@@ -86,6 +88,23 @@ public:
 		l_DeviceContext->PSSetConstantBuffers(0, 4, PSBuffers);
 
 		l_DeviceContext->Draw(m_VertexsCount, 0);
+		return true;
+	}
+
+	bool UpdateVertexs(void *Vtxs, unsigned int VtxsCount)
+	{
+		D3D11_MAPPED_SUBRESOURCE mappedResource;
+		ZeroMemory(&mappedResource, sizeof(mappedResource));
+
+		ID3D11DeviceContext * l_DeviceContext = UABEngine.GetInstance()->GetRenderManager()->GetDeviceContext();
+		HRESULT l_HR = l_DeviceContext->Map(m_VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &nappedResource);
+		if (FAILED(l_HR))
+			return false;
+
+		memcpy(mappedResource.pData, Vtxs, sizeof(T) * VtxsCount);
+
+		l_DeviceContext->Unmap(m_VertexBuffer, 0);
+
 		return true;
 	}
 };
