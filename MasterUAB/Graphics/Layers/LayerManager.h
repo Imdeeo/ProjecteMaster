@@ -16,7 +16,7 @@ private:
 	CRenderableObjectsManager *m_DefaultLayer;
 	
 	
-	CRenderableObjectsManager * AddLayer(CXMLTreeNode &TreeNode);
+	CRenderableObjectsManager * AddLayer(CXMLTreeNode &TreeNode, bool _Update = false);
 public:
 	CLayerManager();
 	virtual ~CLayerManager();

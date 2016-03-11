@@ -140,7 +140,7 @@ function RegisterReloadBar()
 	--DebugHelper:add_lua_button("Textures","ReloadMaterial","");
 	DebugHelper:add_lua_button("SceneComamands","CUABEngine.get_instance():get_scene_command_manager():reload()","");
 	DebugHelper:add_lua_button("Effect Manager","CUABEngine.get_instance():get_effect_manager():reload()","");
-	--DebugHelper:add_lua_button("Layer Manager","CUABEngine.get_instance():get_layer_manager():reload();CUABEngine.get_instance():get_scene_command_manager():reload()","");
+	DebugHelper:add_lua_button("Layer Manager","CUABEngine.get_instance():get_layer_manager():reload();","");
 	DebugHelper:add_lua_button("Camera Controllers","CUABEngine.get_instance():get_camera_controller_manager():reload();","");
 	
 	DebugHelper:register_bar()

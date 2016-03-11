@@ -132,6 +132,19 @@ public:
 		}
 		return l_ElementsVector;
 	}
+	virtual CTemplatedMapManager<T>& CTemplatedMapManager<T>::operator=(CTemplatedMapManager<T>& _TemplatedMapManager)
+	{
+		TMapResource::iterator l_iterator = m_Resources.begin();
+		for (; l_iterator != m_Resources.end(); l_iterator++)
+		{
+			if (_TemplatedMapManager.m_Resources.find(l_iterator->first) != _TemplatedMapManager.m_Resources.end())
+			{
+				*(l_iterator->second) = *(_TemplatedMapManager.m_Resources[l_iterator->first]);
+			}
+		}
+		return *this;
+	}
+
 };
 
 #endif //TEMPLATED_MAP_MANAGER_H

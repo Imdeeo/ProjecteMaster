@@ -49,8 +49,31 @@ void CLayerManager::Load(const std::string &FileName)
 
 void CLayerManager::Reload()
 {
-	Destroy();
-	Load(m_Filename);
+	CXMLTreeNode l_XML;
+
+	if (l_XML.LoadFile(m_Filename.c_str()))
+	{
+		CXMLTreeNode l_Input = l_XML["renderable_objects"];
+		if (l_Input.Exists())
+		{
+			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			{
+				CXMLTreeNode l_Element = l_Input(i);
+				if (l_Element.GetName() == std::string("layer"))
+				{
+					AddLayer(l_Element, true);
+				}
+				else if (l_Element.GetName() == std::string("instance_mesh"))
+				{
+					GetLayer(l_Element)->AddMeshInstance(l_Element, true);
+				}
+				else if (l_Element.GetName() == std::string("animated_model_mesh"))
+				{
+					GetLayer(l_Element)->AddAnimatedInstanceModel(l_Element, true);
+				}
+			}
+		}
+	}
 }
 
 void CLayerManager::Update(float ElapsedTime)
@@ -97,12 +120,12 @@ CRenderableObjectsManager* CLayerManager::GetLayer()
 	return m_DefaultLayer;
 }
 
-CRenderableObjectsManager* CLayerManager::AddLayer(CXMLTreeNode &TreeNode)
+CRenderableObjectsManager* CLayerManager::AddLayer(CXMLTreeNode &TreeNode, bool _Update)
 {
 	const char * l_existDefault;
 	std::string l_Name = TreeNode.GetPszProperty("name");
 	CRenderableObjectsManager* l_auxROM = new CRenderableObjectsManager(l_Name);
-	AddResource(l_Name, l_auxROM);
+	_Update ? AddUpdateResource(l_Name, l_auxROM) : AddResource(l_Name, l_auxROM);
 	l_existDefault = TreeNode.GetPszProperty("default");
 	if (l_existDefault != NULL)
 	{

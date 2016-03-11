@@ -44,5 +44,7 @@ public:
 	int	 GetActualCycleAnimation()const{return m_ActualCycleAnimation;}
 	int	 GetActualActionAnimation()const{return m_ActualActionAnimation;}
 	void RenderDebug(CRenderManager *RenderManager);
+
+	CAnimatedInstanceModel & CAnimatedInstanceModel::operator=(CAnimatedInstanceModel&);
 };
 #endif //ANIMATED_INSTANCE_MODEL_H

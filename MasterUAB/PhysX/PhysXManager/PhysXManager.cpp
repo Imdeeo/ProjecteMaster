@@ -437,6 +437,10 @@ void CPhysXManager::CreateDinamicSphere(const std::string _name, float _radius, 
 
 void CPhysXManager::CreateRigidStatic(const std::string &Name, const Vect3f Size, const Vect3f &Position, const Quatf &Orientation, const std::string &MaterialName)
 {
+	if (m_ActorIndexs.find(Name) != m_ActorIndexs.end())
+	{
+		RemoveActor(Name);
+	}
 	AssertCoordArrays();
 	const physx::PxMaterial* l_Material = m_Materials[MaterialName];
 	physx::PxVec3 v = CastVec(Size);
@@ -605,6 +609,7 @@ void CPhysXManager::RemoveActor(const std::string _ActorName)
 		m_ActorOrientations.resize(m_Actors.size());
 
 		m_ActorIndexs[m_ActorNames[l_index]] = l_index;
+		m_ActorIndexs.erase(m_ActorIndexs.find(_ActorName));
 		m_Actors[l_index]->userData = (void *)l_index;
 	}
 	else
