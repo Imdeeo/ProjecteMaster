@@ -3,17 +3,19 @@
 
 #include "Math\Matrix44.h"
 #include "Math\Vector3.h"
+#include "Utils\Named.h"
 
 class CCamera;
+class CXMLTreeNode;
 
-class CCameraController
+class CCameraController : public CNamed
 {
 protected:
 	Vect3f m_Position;
 	float m_Yaw;
 	float m_Pitch;
 public:
-	CCameraController();
+	CCameraController(const CXMLTreeNode &);
 	virtual ~CCameraController();
 	virtual void SetCamera(CCamera *Camera) const = 0;
 	virtual Vect3f GetDirection() const =0;

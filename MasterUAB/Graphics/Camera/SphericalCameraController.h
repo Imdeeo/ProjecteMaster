@@ -9,7 +9,7 @@ private:
 	float						m_Zoom;
 	float						m_ZoomSpeed;
 public:
-	CSphericalCameraController();
+	CSphericalCameraController(const CXMLTreeNode & _TreeNode);
 	virtual ~CSphericalCameraController();
 
 	void AddZoom(float Zoom) {m_Zoom+=Zoom;}
