@@ -28,5 +28,5 @@ float4 mainPS(PS_INPUT IN) : SV_Target
 {
 	//return float4(0.2,0,0.2,1);
 	float4 aux = T0Texture.Sample(S0Sampler,IN.UV);
-	return float4(aux.rgb,4);
+	return float4(aux.rgb,1);
 }
