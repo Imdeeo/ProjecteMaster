@@ -6,7 +6,6 @@
 
 class CCameraKey;
 class CXMLTreeNode;
-
 class CCameraKeyController : public CCameraController
 {	
 private:
@@ -21,9 +20,8 @@ private:
 public:
 	CCameraKeyController(CXMLTreeNode &XMLTreeNode);
 	virtual ~CCameraKeyController();
-	
+	Vect3f GetDirection() const;
 	void Update(float ElapsedTime);
-
 	void SetCurrentTime(float CurrentTime);
 	void ResetTime();
 	float GetTotalTime();
