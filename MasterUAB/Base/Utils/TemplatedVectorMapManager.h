@@ -137,6 +137,20 @@ public:
 		}
 		return l_ElementsVector;
 	}
+
+	virtual CTemplatedVectorMapManager<T>& CTemplatedVectorMapManager<T>::operator=(CTemplatedVectorMapManager<T>& _TemplatedVectorMapManager)
+	{
+		TMapResources::iterator l_iterator = m_ResourcesMap.begin();
+		for (; l_iterator != m_ResourcesMap.end(); l_iterator++)
+		{
+			if (_TemplatedVectorMapManager.m_ResourcesMap.find(l_iterator->first) != _TemplatedVectorMapManager.m_ResourcesMap.end())
+			{
+				*(l_iterator->second.m_Value) = *(_TemplatedVectorMapManager.m_ResourcesMap[l_iterator->first].m_Value);
+			}
+		}
+		return *this;
+	}
+
 };
 
 #endif
