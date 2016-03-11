@@ -15,7 +15,8 @@ function RegisterMainBar()
 	DebugHelper:add_lua_button("Materials","RegisterMaterialsBar()","");
 	DebugHelper:add_lua_button("Reload","RegisterReloadBar()","");
 	DebugHelper:add_lua_button("Player","RegisterPlayerBar()","");
-	DebugHelper:add_lua_button("Render Commands","RegisterSceneRendererCommands()","");
+	DebugHelper:add_lua_button("Render Commands","RegisterSceneRendererCommandsBar()","");
+	DebugHelper:add_lua_button("Cameras","RegisterCamerasBar()","");
 	DebugHelper:register_bar()
 end
 
@@ -146,7 +147,7 @@ function RegisterReloadBar()
 	DebugHelper:register_bar()
 end
 
-function RegisterSceneRendererCommands()
+function RegisterSceneRendererCommandsBar()
 	local UABEngine = CUABEngine.get_instance()
 	local DebugHelper = CDebugHelper.get_debug_helper()
 	
@@ -154,7 +155,7 @@ function RegisterSceneRendererCommands()
 	DebugHelper:start_register_bar("Scene Renderer Commands")
 	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Scene Renderer Commands\");RegisterMainBar()","");
-	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_scene_command_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Scene Renderer Commands\");RegisterSceneRendererCommands()","");
+	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_scene_command_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Scene Renderer Commands\");RegisterSceneRendererCommandsBar()","");
 	
 	local SceneRendererCommandsManager = UABEngine:get_scene_command_manager()
 	local RendererCommands = SceneRendererCommandsManager:get_vector() --get_address
@@ -162,6 +163,45 @@ function RegisterSceneRendererCommands()
 	for command in RendererCommands do
 		
 		DebugHelper:add_variable(command.name,CDebugHelper.bool,CDebugHelper.read_write,command:get_address(),"")--" group='"..material_name.."' ")
+		
+	end
+	
+	DebugHelper:register_bar()
+end
+
+function RegisterCamerasBar()
+	local UABEngine = CUABEngine.get_instance()
+	local DebugHelper = CDebugHelper.get_debug_helper()
+	
+	DebugHelper:remove_bar("MainBar")
+	DebugHelper:start_register_bar("Cameras")
+	
+	utils_log("cosis1")
+	local CameraControllerManager = UABEngine:get_camera_controller_manager()
+	
+	utils_log("cosis2")
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Cameras\");RegisterMainBar()","");
+	utils_log("cosis3")
+	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_camera_controller_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Cameras\");RegisterCamerasBar()","");
+	utils_log("cosis4")
+	
+	local Cameras = CameraControllerManager:get_elements_array() --get_address
+	local DebugCamera = CameraControllerManager:get_debug_camera()
+	local MainCamera = CameraControllerManager:get_main_camera()
+	
+	utils_log("cosis5")
+	
+	DebugHelper:add_variable("Debug Camera: ",CDebugHelper.string,CDebugHelper.read,DebugCamera:get_name_address(),"")
+	utils_log("cosis6")
+	DebugHelper:add_variable("Main Camera: ",CDebugHelper.string,CDebugHelper.read,MainCamera:get_name_address(),"")
+	utils_log("cosis7")
+	DebugHelper:add_lua_button("-------------------------------------","","")
+	for i = 0,CameraControllerManager:size()-1 do
+		
+		local camera = Cameras[i]
+		DebugHelper:add_lua_button("Set "..camera.name.." Debug Camera","CUABEngine.get_instance():get_camera_controller_manager():choose_debug_camera(\""..camera.name.."\")","")
+		DebugHelper:add_lua_button("Set "..camera.name.." Main Camera","CUABEngine.get_instance():get_camera_controller_manager():choose_main_camera(\""..camera.name.."\")","")
 		
 	end
 	

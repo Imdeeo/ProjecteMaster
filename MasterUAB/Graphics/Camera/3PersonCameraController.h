@@ -19,7 +19,7 @@ private:
 	float						m_angle;
 	float						m_distance;
 public:
-	C3PersonCameraController(CXMLTreeNode &node);
+	C3PersonCameraController( const CXMLTreeNode &node);
 	virtual ~C3PersonCameraController();
 	
 	void Move(Vect3f _newPos, float ElapsedTime);

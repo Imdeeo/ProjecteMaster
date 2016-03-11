@@ -277,6 +277,7 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CNamed>("CNamed")
 			.def(constructor<const CXMLTreeNode&>())
 			.def(constructor<const std::string&>())
+			.def("get_name_address",&CNamed::GetLuaNameAddress)
 			.property("name", &CNamed::GetName, &CNamed::SetName)	];
 
 	module(m_LS)[
@@ -660,7 +661,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<CCameraController>("CCameraController")
+		class_<CCameraController,CNamed>("CCameraController")
 			//.def(constructor<>())
 			.def("set_camera", &CCameraController::SetCamera)
 			.def("add_yaw", &CCameraController::AddYaw)
@@ -710,7 +711,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCameraKeyController, CCameraController>("CCameraKeyController")
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<const CXMLTreeNode&>())
 			.def("update", &CCameraKeyController::Update)
 			.def("set_current_time", &CCameraKeyController::SetCurrentTime)
 			.def("reset_time", &CCameraKeyController::ResetTime)
@@ -724,13 +725,13 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<C3PersonCameraController, CCameraController>("C3PersonCameraController")
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<const CXMLTreeNode&>())
 			.def("get_direction",&C3PersonCameraController::GetDirection)
 	];
 
 	module(m_LS) [
 		class_<CFPSCameraController, CCameraController>("CFPSCameraController")
-			.def(constructor<>())
+			.def(constructor<const CXMLTreeNode&>())
 			.def("move", &CFPSCameraController::Move)
 			.def("set_camera", &CFPSCameraController::SetCamera)
 			.def("add_yaw", &CFPSCameraController::AddYaw)
@@ -747,7 +748,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS) [
 		class_<CSphericalCameraController, CCameraController>("CSphericalCameraController")
-			.def(constructor<>())
+			.def(constructor<const CXMLTreeNode&>())
 			.def("add_zoom", &CSphericalCameraController::AddZoom)
 			.def("set_zoom", &CSphericalCameraController::SetZoom)
 			.def("set_camera", &CSphericalCameraController::SetCamera)

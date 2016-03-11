@@ -13,7 +13,7 @@ private:
 	float						m_Speed;
 	float						m_FastSpeed;
 public:
-	CFPSCameraController();
+	CFPSCameraController(const CXMLTreeNode & _TreeNode);
 	virtual ~CFPSCameraController();
 	
 	void Move(float Strafe, float Forward, bool Speed, float ElapsedTime);

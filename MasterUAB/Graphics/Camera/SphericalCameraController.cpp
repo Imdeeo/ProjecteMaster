@@ -4,9 +4,10 @@
 #include "Camera\Camera.h"
 #include "Utils.h"
 #include "InputManager\InputManager.h"
+#include "XML\XMLTreeNode.h"
 
-CSphericalCameraController::CSphericalCameraController() 
-: m_Zoom(50.f)
+CSphericalCameraController::CSphericalCameraController(const CXMLTreeNode & _TreeNode) : CCameraController(_TreeNode)
+, m_Zoom(50.f)
 , m_ZoomSpeed(2.f)
 {
 }
