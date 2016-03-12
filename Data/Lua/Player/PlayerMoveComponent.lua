@@ -54,14 +54,14 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	end
 	
 	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
-
+	
 	local player_camera_direction = l_Player:get_camera_controller():get_direction():get_normalized(1)
 	
 	local player_camera_direction_xz = Vect2f(Forward*player_camera_direction.x,Forward*player_camera_direction.z)
 	local player_camera_direction_xz_ort = Vect2f(-player_camera_direction.z*Strafe,Strafe*player_camera_direction.x)
 	
 	local final_direction = Vect2f(player_camera_direction_xz.x + player_camera_direction_xz_ort.x,player_camera_direction_xz.y + player_camera_direction_xz_ort.y)
-			
+		
 	local l_velocity = 10
 	local l_AddPos = Vect3f(final_direction.x*l_velocity,cct_velocity.y+gravity * _ElapsedTime,final_direction.y*l_velocity)
 	--cct_velocity = cct_velocity + 
@@ -78,12 +78,17 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	cct_velocity = l_desplacamiento/_ElapsedTime
 	--utils_log("Position x: "..l_PosCharacterController.x..",y: "..l_PosCharacterController.y..",z: "..l_PosCharacterController.z)
 	
+	local rotation = _owner:get_rotation()
+	local final_rotation = Quatf()
+	final_rotation:quat_from_yaw_pitch_roll(final_direction.x, 0, final_direction.y)
+	rotation.slerp(final_rotation, _ElapsedTime*l_velocity)
+	_owner:set_rotation(final_rotation)
 	
-	local yaw = _owner:get_yaw()
-	local dir = Vect3f(math.cos(yaw),0,math.sin(yaw));
-	local dot_result = final_direction.x*dir.x + final_direction.y*dir.z
-	local y_cross = dir.z*final_direction.x-dir.x*final_direction.y
-	_owner:set_yaw(yaw -(dot_result*_ElapsedTime*l_velocity))
+	--local yaw = _owner:get_yaw()
+	--local dir = Vect3f(math.cos(yaw),0,math.sin(yaw));
+	--local dot_result = final_direction.x*dir.x + final_direction.y*dir.z
+	--local y_cross = dir.z*final_direction.x-dir.x*final_direction.y
+	--_owner:set_yaw(yaw -(dot_result*_ElapsedTime*l_velocity))
 
 	
 	local x = l_desplacamiento.x*l_desplacamiento.x
