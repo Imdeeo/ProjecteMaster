@@ -563,17 +563,10 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<std::string>())
 			.def("update", &CRenderableObjectsManager::Update)
 			.def("render", &CRenderableObjectsManager::Render)
-<<<<<<< HEAD
-			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&))&CRenderableObjectsManager::AddMeshInstance)
-			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string &, const std::string&, const Vect3f&, const Quatf, const float, const bool))&CRenderableObjectsManager::AddMeshInstance)
-			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
-			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
-=======
 			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&, bool))&CRenderableObjectsManager::AddMeshInstance)
-			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string &, const std::string&, const Vect3f&, const float, const float, const float, const float, const bool, bool))&CRenderableObjectsManager::AddMeshInstance)
+			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&, const Quatf, const float, const bool, bool))&CRenderableObjectsManager::AddMeshInstance)
 			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&, bool))&CRenderableObjectsManager::AddAnimatedInstanceModel)
 			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&, bool))&CRenderableObjectsManager::AddAnimatedInstanceModel)
->>>>>>> develop
 			.def("get_resource", &CRenderableObjectsManager::GetResource)
 			//.def("clean_up", &CRenderableObjectsManager::CleanUp)
 			//.def("get_instance", &CRenderableObjectsManager::GetInstance)

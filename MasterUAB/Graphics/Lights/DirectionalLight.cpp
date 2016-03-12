@@ -21,14 +21,11 @@ CDirectionalLight::CDirectionalLight() : CLight(), m_Direction(Vect3f(0.0f, 0.0f
 CDirectionalLight::CDirectionalLight(CXMLTreeNode &TreeNode) : CLight(TreeNode)
 {
 	m_Direction = TreeNode.GetVect3fProperty("dir",Vect3f(0.0,0.0,0.0));
-<<<<<<< HEAD
 	m_Rotation.SetFromScaledAxis(m_Direction);
-=======
 	if (m_GenerateShadowMap)
 	{
 		m_OrthoShadowMapSize = TreeNode.GetVect2fProperty("ortho_size", Vect2f(50, 50), true);
 	}
->>>>>>> develop
 }
 
 void CDirectionalLight::Render(CRenderManager *RenderManager)
@@ -42,7 +39,6 @@ void CDirectionalLight::Render(CRenderManager *RenderManager)
 	delete l_Line;
 }
 
-<<<<<<< HEAD
 const Mat44f & CDirectionalLight::GetTransform()
 {
 	m_ScaleMatrix.SetIdentity();
@@ -59,8 +55,6 @@ const Mat44f & CDirectionalLight::GetTransform()
 	return m_TransformMatrix;
 }
 
-=======
->>>>>>> develop
 void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 {
 	m_ViewShadowMap.SetIdentity();
