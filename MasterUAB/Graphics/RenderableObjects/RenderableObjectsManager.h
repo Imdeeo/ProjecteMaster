@@ -19,14 +19,23 @@ public:
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
 	void RenderDebug(CRenderManager *RM);
-	CRenderableObject * AddMeshInstance(CXMLTreeNode &TreeNode);
+	CRenderableObject * AddMeshInstance(CXMLTreeNode &TreeNode, bool _Update = false);
 	CRenderableObject * AddMeshInstance(const std::string &CoreMeshName,
+<<<<<<< HEAD
 		const std::string &InstanceName, const Vect3f &Position,
 		const Quatf _Rotation = Quatf(0.0f, 0.0f, 0.0f, 0.0f),
 		const float _Scale = 1.f, const bool _Visible = true);
 	CRenderableObject * AddAnimatedInstanceModel(CXMLTreeNode &TreeNode);
+=======
+		const std::string &InstanceName, const Vect3f &Position, const float _Yaw = 0.f,
+		const float _Pitch = 0.f, const float _Roll = 0.f,const float _Scale = 1.f,
+		const bool _Visible = true, bool _Update = false);
+	CRenderableObject * AddAnimatedInstanceModel(CXMLTreeNode &TreeNode, bool _Update = false);
+>>>>>>> develop
 	CRenderableObject * AddAnimatedInstanceModel(const std::string &CoreModelName,
-		const std::string &InstanceModelName, const Vect3f &Position);
+		const std::string &InstanceModelName, const Vect3f &Position, bool _Update = false);
+
+	CRenderableObjectsManager & CRenderableObjectsManager::operator=(CRenderableObjectsManager&);
 };
 
 #endif

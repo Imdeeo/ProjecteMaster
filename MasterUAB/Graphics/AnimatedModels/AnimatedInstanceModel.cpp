@@ -174,3 +174,19 @@ void CAnimatedInstanceModel::RenderDebug(CRenderManager *RenderManager)
 {
 	CRenderableObject::RenderDebug(RenderManager);
 }
+
+CAnimatedInstanceModel & CAnimatedInstanceModel::operator=(CAnimatedInstanceModel& _AnimatedInstanceModel)
+{
+	*((CRenderableObject*)this) = (CRenderableObject)_AnimatedInstanceModel;
+	m_ActualActionAnimation = _AnimatedInstanceModel.m_ActualActionAnimation;
+	m_ActualCycleAnimation = _AnimatedInstanceModel.m_ActualCycleAnimation;
+	m_ActualActionAnimation = _AnimatedInstanceModel.m_ActualActionAnimation;
+	m_CalHardwareModel = _AnimatedInstanceModel.m_CalHardwareModel;
+	m_CalModel = _AnimatedInstanceModel.m_CalModel;
+	m_Materials = _AnimatedInstanceModel.m_Materials;
+	m_Name = _AnimatedInstanceModel.m_Name;
+	m_NumFaces = _AnimatedInstanceModel.m_NumFaces;
+	m_NumVertices = _AnimatedInstanceModel.m_NumVertices;
+	m_RenderableVertexs = _AnimatedInstanceModel.m_RenderableVertexs;
+	return *(this);
+}

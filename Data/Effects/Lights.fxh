@@ -27,14 +27,12 @@ float4 shadowMapCalc(float3 l_WorldPosition)
 }
 
 
-float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex)
+float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex, float _SpecularPower, float _SpecularFactor)
 {	
 	// Factors in the final multiplication.	
 	float l_DiffuseContrib;
 	float l_DistanceAttenuation;
 	float l_SpotAttenuation;
-	float P = 50;
-	float4 SpecularColor = float4(1, 1, 1, 1);
 	
 	// Intermediate values
 	float3 l_RayDirection = normalize(l_WorldPosition - m_LightPosition[lightIndex]);
@@ -54,18 +52,17 @@ float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	// Specular
 	float3 cameraToVertex = normalize(m_CameraPosition.xyz - l_WorldPosition);
 	float3 H = normalize(cameraToVertex - m_LightDirection[lightIndex]);
-	float3 specular = saturate(SpecularColor*m_LightColor[lightIndex]*pow(dot(Nn, H), P));
+	float3 specular = saturate(_SpecularFactor*m_LightColor[lightIndex]*pow(dot(Nn, H), _SpecularPower));
 	specular *= l_SpotAttenuation;
+	specular *= l_DistanceAttenuation;
 	
 	float4 outLight = float4((l_albedo*l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular).xyz,1);
 		
 	return saturate(outLight);
 }
 
-float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex)
+float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex, float _SpecularPower, float _SpecularFactor)
 {
-	float P = 50;
-	float4 SpecularColor = float4(1, 1, 1, 1);
 	float l_DiffuseContrib;	
 	l_DiffuseContrib = dot(Nn, (-m_LightDirection[lightIndex]));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
@@ -74,16 +71,14 @@ float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int 
 	float3 cameraToVertex = normalize(m_CameraPosition.xyz - l_WorldPosition);
 	float3 H = normalize(cameraToVertex -m_LightDirection[lightIndex]);
 	float aux = dot(cameraToVertex, - m_LightDirection[lightIndex]);
-	float4 specular = saturate(SpecularColor * m_LightColor[lightIndex] * pow(dot(Nn, H), P));
+	float4 specular = saturate(_SpecularFactor* m_LightColor[lightIndex] * pow(dot(Nn, H), _SpecularPower));
 	float4 outLight = float4((l_albedo*l_DiffuseContrib*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular).xyz,1);
 	
 	return saturate(outLight);
 }
 
-float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex)
+float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex, float _SpecularPower, float _SpecularFactor)
 {
-	float P = 50;
-	float4 SpecularColor = float4(1, 1, 1, 1);
 	float l_DiffuseContrib;	
 	
 	l_DiffuseContrib = dot(Nn, normalize(m_LightPosition[lightIndex]-l_WorldPosition));
@@ -93,7 +88,7 @@ float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	float3 cameraToVertex = normalize(m_CameraPosition.xyz - l_WorldPosition);
 	float3 lightToVertex = normalize(m_LightPosition[lightIndex].xyz - l_WorldPosition);
 	float3 H = normalize(cameraToVertex + lightToVertex);
-	float3 specular = saturate(SpecularColor*m_LightColor[lightIndex]*pow(dot(Nn, H), P));
+	float3 specular = saturate(_SpecularFactor*m_LightColor[lightIndex]*pow(dot(Nn, H), _SpecularPower));
 	//specular *= l_SpotAttenuation;
 	
 	float4 outLight = float4((l_albedo*l_DiffuseContrib*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular).xyz,1);
@@ -101,21 +96,21 @@ float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	return saturate(outLight);	
 }
 
-float4 applyLights(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex)
+float4 applyLights(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex, float l_SpecularPower, float l_SpecularFactor)
 {
 	if(m_LightEnabledArray[lightIndex]==1)
 	{	
 		if(m_LightTypeArray[lightIndex] == 0) //OMNI
 		{
-			return omniLight(l_WorldPosition, Nn, l_albedo, lightIndex);
+			return omniLight(l_WorldPosition, Nn, l_albedo, lightIndex, l_SpecularPower, l_SpecularFactor);
 		}
 		if(m_LightTypeArray[lightIndex] == 1) //DIRECTIONAL
 		{
-			return directionalLight(l_WorldPosition, Nn, l_albedo, lightIndex);
+			return directionalLight(l_WorldPosition, Nn, l_albedo, lightIndex, l_SpecularPower, l_SpecularFactor);
 		}
 		if(m_LightTypeArray[lightIndex] == 2) //SPOT
 		{					
-			return spotLight(l_WorldPosition, Nn, l_albedo, lightIndex);
+			return spotLight(l_WorldPosition, Nn, l_albedo, lightIndex, l_SpecularPower, l_SpecularFactor);
 		}
 	}
 	return float4(0,0,0,1);

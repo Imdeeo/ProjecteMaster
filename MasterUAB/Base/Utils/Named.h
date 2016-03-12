@@ -3,6 +3,7 @@
 
 
 class CXMLTreeNode;
+class CEmptyPointerClass;
 
 #include <string>
 
@@ -15,6 +16,8 @@ public:
 	CNamed(const std::string &Name);
 	virtual void SetName(const std::string &Name);
 	virtual const std::string &GetName();
+
+	CEmptyPointerClass* GetLuaNameAddress();
 };
 
 #endif //_NAMED_H

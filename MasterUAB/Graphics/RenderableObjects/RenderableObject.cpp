@@ -39,3 +39,13 @@ CUABComponentManager* CRenderableObject::GetComponentManager()const
 {
 	return m_ComponentManager;
 }
+
+CRenderableObject & CRenderableObject::operator=(CRenderableObject & _RenderableObject)
+{
+	*((C3DElement*)this) = (C3DElement)_RenderableObject;
+	*(m_ComponentManager) = *(_RenderableObject.m_ComponentManager);
+	m_DebugRender = _RenderableObject.m_DebugRender;
+	m_Name = _RenderableObject.m_Name;
+	m_DebugRender = _RenderableObject.m_DebugRender;
+	return *this;
+}

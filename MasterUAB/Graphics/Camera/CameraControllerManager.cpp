@@ -55,10 +55,10 @@ bool CCameraControllerManager::Load(const std::string &FileName)
 					switch(l_Type)
 					{
 					case CCamera::CAMERA_TYPE_SPHERICAL:
-						AddResource(l_Element.GetPszProperty("name"), new CSphericalCameraController());
+						AddResource(l_Element.GetPszProperty("name"), new CSphericalCameraController(l_Element));
 						break;
 					case CCamera::CAMERA_TYPE_FPS:
-						AddResource(l_Element.GetPszProperty("name"), new CFPSCameraController());
+						AddResource(l_Element.GetPszProperty("name"), new CFPSCameraController(l_Element));
 						break;
 					case CCamera::CAMERA_TYPE_3PS:
 						AddResource(l_Element.GetPszProperty("name"), new C3PersonCameraController(l_Element));

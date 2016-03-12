@@ -95,3 +95,11 @@ void CInstanceMesh::RenderDebug(CRenderManager *RM)
 		RM->GetDebugRender()->GetAxis()->Render(RM, l_ET, CEffectManager::GetRawData());
 	}
 }
+
+CInstanceMesh & CInstanceMesh::operator=(CInstanceMesh & _InstanceMesh)
+{
+
+	*((CRenderableObject*)this) = (CRenderableObject)_InstanceMesh;
+	m_Name = _InstanceMesh.m_Name;
+	return *(this);
+}

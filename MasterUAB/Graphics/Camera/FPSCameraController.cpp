@@ -1,9 +1,10 @@
 #include "Camera\FPSCameraController.h"
 #include "Camera\Camera.h"
 #include "InputManager\InputManager.h"
+#include "XML\XMLTreeNode.h"
 
-CFPSCameraController::CFPSCameraController()
-: m_YawSpeed(100.f)
+CFPSCameraController::CFPSCameraController(const CXMLTreeNode & _TreeNode) :CCameraController(_TreeNode)
+, m_YawSpeed(100.f)
 , m_PitchSpeed(60.f)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)

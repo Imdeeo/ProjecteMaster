@@ -14,14 +14,14 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-C3PersonCameraController::C3PersonCameraController(CXMLTreeNode &node)
-: m_YawSpeed(100.f)
+C3PersonCameraController::C3PersonCameraController(const CXMLTreeNode & _TreeNode) : CCameraController(_TreeNode)
+, m_YawSpeed(100.f)
 , m_PitchSpeed(60.f)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
 {
-	m_offset = node.GetVect3fProperty("offset", Vect3f(0.0f, 0.0f, 0.0f), true);
-	m_Target = UABEngine.GetLayerManager()->GetResource(node.GetPszProperty("layer"))->GetResource(node.GetPszProperty("target"));
+	m_offset = _TreeNode.GetVect3fProperty("offset", Vect3f(0.0f, 0.0f, 0.0f), true);
+	m_Target = UABEngine.GetLayerManager()->GetResource(_TreeNode.GetPszProperty("layer"))->GetResource(_TreeNode.GetPszProperty("target"));
 	m_Position = m_Target->GetPosition() - m_offset;
 	Vect2f zero = Vect2f(1, 0);
 	Vect2f offset = Vect2f(m_offset.x, m_offset.z);
@@ -69,13 +69,13 @@ Vect3f C3PersonCameraController::GetDirection() const
 void C3PersonCameraController::Update(float ElapsedTime)
 {
 	Vect3f cameraMovement(0, 0, 0);
-	cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 20.f;
+	cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 1.f;
 	if (cameraMovement.x > 0)
 	{
 		int i = 1;
 	}
 	//cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * 0.5f;
-	m_angle = m_angle + cameraMovement.x*ElapsedTime;
+	m_angle = m_angle + cameraMovement.x;
 	while (m_angle > M_PI)
 	{
 		m_angle = m_angle - M_PI * 2;
