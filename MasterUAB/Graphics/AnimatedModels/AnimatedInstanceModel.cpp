@@ -145,7 +145,6 @@ void CAnimatedInstanceModel::ExecuteAction(int Id, float DelayIn, float DelayOut
 {
 	m_ActualActionAnimation = Id;
 	m_CalModel->getMixer()->executeAction(Id,DelayIn,DelayOut,WeightTarget,AutoLock);
-	
 }
 void CAnimatedInstanceModel::BlendCycle(int Id, float Weight, float DelayIn)
 {

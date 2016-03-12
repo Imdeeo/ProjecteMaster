@@ -29,27 +29,30 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		int l_PxGroup = TreeNode.GetIntProperty("physics_group");
 		Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
 		l_BB = Vect3f(abs(l_BB.x), abs(l_BB.y), abs(l_BB.z));
+		Vect3f l_Position = GetPosition();
 		Quatf l_Rotation = Quatf(-m_Rotation.x, m_Rotation.y, -m_Rotation.z, -m_Rotation.w);
 
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
 		if (l_PxType == "triangle_mesh")
 		{
 			std::vector<Vect3f> l_Vertexs;
-			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, l_PxMaterial, GetPosition(), m_Rotation, l_PxGroup);
+			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, l_PxMaterial, l_Position, m_Rotation, l_PxGroup);
 		}else if (l_PxType == "sphere_shape")
 		{
-			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), l_PxMaterial, GetPosition(), m_Rotation, l_PxGroup);
+			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), l_PxMaterial, l_Position, m_Rotation, l_PxGroup);
 		}
 		else if (l_PxType == "plane_shape")
 		{
 			Vect3f l_Normal = Vect3f(.0f, 1.0f, .0f);
-			float l_Distance = sqrt(l_BB.x*l_BB.x + l_BB.y*l_BB.y + l_BB.z*l_BB.z);
-
-			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, l_Distance, l_PxMaterial, GetPosition(), m_Rotation, l_PxGroup);
+			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, 0, l_PxMaterial, l_Position, m_Rotation, l_PxGroup);
+		}
+		else if (l_PxType == "box_trigger")
+		{
+			l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
 		}
 		else
 		{
-			l_PhysXManager->CreateStaticBox(GetName(), l_BB, l_PxMaterial, GetPosition(), l_Rotation, l_PxGroup);
+			l_PhysXManager->CreateStaticBox(GetName(), l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
 		}
 	}
 }

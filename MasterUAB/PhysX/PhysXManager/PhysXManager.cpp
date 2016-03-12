@@ -128,7 +128,7 @@ private :
 		physx::PxProfileZoneManager* profileZoneManager = m_PhysX->getProfileZoneManager();
 
 #if USE_PHYSX_DEBUG
-		CHECKED_RELEASE(m_DebugConnection);
+		//CHECKED_RELEASE(m_DebugConnection);
 #endif
 
 		CHECKED_RELEASE(m_Cooking);
@@ -336,8 +336,6 @@ void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shap
 physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
-	//physx::PxVec3 v = CastVec(Size);
-	//physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(v.x / 2, v.y / 2, v.z / 2), *l_Material);
 
 	physx::PxShape* shape = m_PhysX->createShape(_geometry, *l_Material);
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
@@ -368,7 +366,6 @@ void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, c
 		_position,
 		_orientation,
 		_group)->release();
-
 }
 
 
@@ -389,22 +386,21 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 
 }
 
-void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance, const std::string _Material,
-	Vect3f _position, Quatf _orientation, int _group)
+void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneOffset, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
-	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z,_PlaneDistance),*l_Material);
-	groundPlane->userData = (void*)AddActor(_name,_position,_orientation,groundPlane);
-	m_Scene->addActor(*groundPlane);
-
+	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z, _PlaneOffset), *l_Material);
 	physx::PxShape* shape;
+
 	size_t numShapes = groundPlane->getShapes(&shape,1);
 	assert(numShapes == 1);
 
 	L_PutGroupToShape(shape, _group);
-
+	groundPlane->attachShape(*shape);
+	groundPlane->userData = (void*)AddActor(_name, _position, _orientation, groundPlane);
 	shape->userData = groundPlane->userData;
 
+	m_Scene->addActor(*groundPlane);
 }
 
 void CPhysXManager::CreateDinamicShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation,
