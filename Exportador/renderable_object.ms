@@ -5,6 +5,7 @@ fn createInstanceMesh dir filename Objs=
 (	
 	local pos
 	local rot
+	local core
 	
 	file=createfile (dir+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
@@ -18,20 +19,24 @@ fn createInstanceMesh dir filename Objs=
 	(
 		for i=1 to Objs.count do
 		(
-			if Objs[i].material != undefined then
+			pos = Objs[i].transform.translation
+			TranslationToRH &pos
+			
+			rot = Objs[i].rotation
+			QuatToRH &rot
+			
+			if((getUserProp Objs[i] "render_export_type") == "animated_instance_mesh") then
 			(
-				pos = Objs[i].transform.translation
-				TranslationToRH &pos
-				
-				rot = Objs[i].rotation
-				QuatToRH &rot
-				
-				if (getUserProp Objs[i] "physics_generate") then
-				(
-					format "\t<instance_mesh name=\"%\" layer =\"%\" core_name=\"%\" position=\"% % %\" rotation=\"% % % %\" create_physics=\"true\" physics_type=\"%\" physics_material=\"%\" physics_group=\"%\" visible=\"%\"/>\n" Objs[i].name (getUserProp Objs[i] "render_layer") (getUserProp Objs[i] "core_name") pos[1] pos[2] pos[3] rot.x rot.y rot.z rot.w (getUserProp Objs[i] "physics_generate_type") (getUserProp Objs[i] "physics_material") (getUserProp Objs[i] "physics_layer") true to:file
-				) else (
-					format "\t<instance_mesh name=\"%\" layer =\"%\" core_name=\"%\" position=\"% % %\" rotation=\"% % % %\" create_physics=\"false\" visible=\"%\"/>\n" Objs[i].name (getUserProp Objs[i] "render_layer") (getUserProp Objs[i] "core_name") pos[1] pos[2] pos[3] rot.x rot.y rot.z rot.w true to:file
-				)
+				core = (getUserProp Objs[i] "anim_model_core")
+			) else (
+				core = (getUserProp Objs[i] "core_name")
+			)
+			
+			if (getUserProp Objs[i] "physics_generate") then
+			(
+				format "\t<% name=\"%\" layer =\"%\" core_name=\"%\" position=\"% % %\" rotation=\"% % % %\" create_physics=\"true\" physics_type=\"%\" physics_material=\"%\" physics_group=\"%\" visible=\"%\"/>\n" (getUserProp Objs[i] "render_export_type") Objs[i].name (getUserProp Objs[i] "render_layer") core pos[1] pos[2] pos[3] rot.x rot.y rot.z rot.w (getUserProp Objs[i] "physics_generate_type") (getUserProp Objs[i] "physics_material") (getUserProp Objs[i] "physics_layer") true to:file
+			) else (
+				format "\t<% name=\"%\" layer =\"%\" core_name=\"%\" position=\"% % %\" rotation=\"% % % %\" create_physics=\"false\" visible=\"%\"/>\n" (getUserProp Objs[i] "render_export_type") Objs[i].name (getUserProp Objs[i] "render_layer") core pos[1] pos[2] pos[3] rot.x rot.y rot.z rot.w true to:file
 			)
 		)
 	)
