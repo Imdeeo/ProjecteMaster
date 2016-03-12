@@ -16,6 +16,8 @@ public:
 	~CInstanceMesh();
 	void Render(CRenderManager *RM);
 	void RenderDebug(CRenderManager *RM);
+
+	CInstanceMesh & CInstanceMesh::operator=(CInstanceMesh &);
 };
 
 #endif //INSTANCE_MESH_H

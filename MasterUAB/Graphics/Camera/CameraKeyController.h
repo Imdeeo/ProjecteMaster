@@ -6,7 +6,6 @@
 
 class CCameraKey;
 class CXMLTreeNode;
-
 class CCameraKeyController : public CCameraController
 {	
 private:
@@ -19,11 +18,10 @@ private:
 	bool LoadXML(const std::string &FileName);
 	void GetCurrentKey();
 public:
-	CCameraKeyController(CXMLTreeNode &XMLTreeNode);
+	CCameraKeyController(const CXMLTreeNode &XMLTreeNode);
 	virtual ~CCameraKeyController();
-	
+	Vect3f GetDirection() const;
 	void Update(float ElapsedTime);
-
 	void SetCurrentTime(float CurrentTime);
 	void ResetTime();
 	float GetTotalTime();

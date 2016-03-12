@@ -31,6 +31,8 @@ public:
 	}
 
 	static TMaterialType GetTypeFromString(std::string _SType);
+
+	virtual const char* GetDescription() const = 0;
 };
 
 #endif //MATERIAL_PARAMETER_H

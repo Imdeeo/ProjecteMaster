@@ -29,6 +29,8 @@ public:
 
 	void SetDebugRender(bool _DebugRender){ m_DebugRender = _DebugRender;}
 	bool GetDebugRender(){ return m_DebugRender; }
+
+	virtual CRenderableObject& CRenderableObject::operator=(CRenderableObject&);
 };
 
 #endif //RENDERABLE_OBJECT_H

@@ -4,8 +4,10 @@
 
 #include "Utils.h"
 
-CCameraController::CCameraController()
-: m_Yaw(0.0f)
+#include "XML\XMLTreeNode.h"
+
+CCameraController::CCameraController(const CXMLTreeNode & _TreeNode) : CNamed(_TreeNode)
+, m_Yaw(0.0f)
 , m_Pitch(0.0f)
 , m_Position(0,0,0)
 {

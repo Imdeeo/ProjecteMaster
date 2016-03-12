@@ -234,7 +234,7 @@ void RegisterTemplatedMapManager(lua_State* _LS)
 			.def("add_resource", &CTemplatedMapManager<T>::AddResource)
 			.def("destroy", &CTemplatedMapManager<T>::Destroy)
 			.def("size", &CTemplatedMapManager<T>::Size)
-			.def("get_map", &CTemplatedMapManager<T>::GetResourcesMap)
+			.def("get_map", &CTemplatedMapManager<T>::GetResourcesMap, luabind::return_stl_iterator)
 			.def("get_elements_array", &CTemplatedMapManager<T>::GetElementsArray)
 	];
 }
@@ -250,8 +250,8 @@ void RegisterTemplatedVectorMapManager(lua_State* _LS)
 			.def("add_resource", &CTemplatedVectorMapManager<T>::AddResource)
 			.def("destroy", &CTemplatedVectorMapManager<T>::Destroy)
 			.def("size", &CTemplatedVectorMapManager<T>::Size)
-			.def("get_map", &CTemplatedVectorMapManager<T>::GetResourcesMap)
-			.def("get_vector", &CTemplatedVectorMapManager<T>::GetResourcesVector)
+			.def("get_map", &CTemplatedVectorMapManager<T>::GetResourcesMap, luabind::return_stl_iterator)
+			.def("get_vector", &CTemplatedVectorMapManager<T>::GetResourcesVector, luabind::return_stl_iterator)
 			.def("get_elements_array", &CTemplatedVectorMapManager<T>::GetElementsArray)
 	];
 }
@@ -277,13 +277,15 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CNamed>("CNamed")
 			.def(constructor<const CXMLTreeNode&>())
 			.def(constructor<const std::string&>())
+			.def("get_name_address",&CNamed::GetLuaNameAddress)
 			.property("name", &CNamed::GetName, &CNamed::SetName)	];
 
 	module(m_LS)[
 		class_<CActive>("CActive")
 			.def(constructor<const CXMLTreeNode&>())
 			.def(constructor<bool>())
-			.property("active",&CActive::GetActive,&CActive::SetActive)
+			.property("active", &CActive::GetActive, &CActive::SetActive)
+			.def("get_address", &CActive::GetLuaAdress)
 	];
 
 
@@ -561,10 +563,17 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<std::string>())
 			.def("update", &CRenderableObjectsManager::Update)
 			.def("render", &CRenderableObjectsManager::Render)
+<<<<<<< HEAD
 			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&))&CRenderableObjectsManager::AddMeshInstance)
 			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string &, const std::string&, const Vect3f&, const Quatf, const float, const bool))&CRenderableObjectsManager::AddMeshInstance)
 			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
 			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&))&CRenderableObjectsManager::AddAnimatedInstanceModel)
+=======
+			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&, bool))&CRenderableObjectsManager::AddMeshInstance)
+			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string &, const std::string&, const Vect3f&, const float, const float, const float, const float, const bool, bool))&CRenderableObjectsManager::AddMeshInstance)
+			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&, bool))&CRenderableObjectsManager::AddAnimatedInstanceModel)
+			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&, bool))&CRenderableObjectsManager::AddAnimatedInstanceModel)
+>>>>>>> develop
 			.def("get_resource", &CRenderableObjectsManager::GetResource)
 			//.def("clean_up", &CRenderableObjectsManager::CleanUp)
 			//.def("get_instance", &CRenderableObjectsManager::GetInstance)
@@ -656,7 +665,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<CCameraController>("CCameraController")
+		class_<CCameraController,CNamed>("CCameraController")
 			//.def(constructor<>())
 			.def("set_camera", &CCameraController::SetCamera)
 			.def("add_yaw", &CCameraController::AddYaw)
@@ -706,7 +715,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCameraKeyController, CCameraController>("CCameraKeyController")
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<const CXMLTreeNode&>())
 			.def("update", &CCameraKeyController::Update)
 			.def("set_current_time", &CCameraKeyController::SetCurrentTime)
 			.def("reset_time", &CCameraKeyController::ResetTime)
@@ -720,13 +729,13 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<C3PersonCameraController, CCameraController>("C3PersonCameraController")
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<const CXMLTreeNode&>())
 			.def("get_direction",&C3PersonCameraController::GetDirection)
 	];
 
 	module(m_LS) [
 		class_<CFPSCameraController, CCameraController>("CFPSCameraController")
-			.def(constructor<>())
+			.def(constructor<const CXMLTreeNode&>())
 			.def("move", &CFPSCameraController::Move)
 			.def("set_camera", &CFPSCameraController::SetCamera)
 			.def("add_yaw", &CFPSCameraController::AddYaw)
@@ -743,7 +752,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS) [
 		class_<CSphericalCameraController, CCameraController>("CSphericalCameraController")
-			.def(constructor<>())
+			.def(constructor<const CXMLTreeNode&>())
 			.def("add_zoom", &CSphericalCameraController::AddZoom)
 			.def("set_zoom", &CSphericalCameraController::SetZoom)
 			.def("set_camera", &CSphericalCameraController::SetCamera)
@@ -976,6 +985,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("apply", &CMaterialParameter::Apply)
 			.def("get_material_type", &CMaterialParameter::getMaterialType)
 			.def("get_value_address", &CMaterialParameter::GetValueLuaAddress)
+			.def("get_description", &CMaterialParameter::GetDescription)
 			.scope[
 				def("get_type_from_string",&CMaterialParameter::GetTypeFromString)
 			]

@@ -15,6 +15,7 @@
 
 CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(CXMLTreeNode & TreeNode):CSceneRendererCommand(TreeNode)
 {
+	m_CapturedFrameBufferTexture = nullptr;
 	CXMLTreeNode l_Input = TreeNode;
 	for (int i = 0; i < l_Input.GetNumChildren(); i++)
 	{
@@ -50,8 +51,10 @@ CStagedTexturedSceneRendererCommand::~CStagedTexturedSceneRendererCommand(void)
 
 	m_DynamicTextures.clear();
 
-	//CHECKED_DELETE(m_CapturedFrameBufferTexture);
-	
+	if (m_CapturedFrameBufferTexture != nullptr)
+	{
+		UABEngine.GetTextureManager()->RemoveResource(m_CapturedFrameBufferTexture->GetName());
+	}
 }
 
 void CStagedTexturedSceneRendererCommand::ActivateTextures()

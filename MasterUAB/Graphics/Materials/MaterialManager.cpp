@@ -54,5 +54,5 @@ void CMaterialManager::Reload()
 			}
 		}
 	}
-	RemoveAllBut(l_MaterialNames);
+	//RemoveAllBut(l_MaterialNames);
 }

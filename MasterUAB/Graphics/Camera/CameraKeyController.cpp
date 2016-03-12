@@ -5,18 +5,17 @@
 #include "CameraKey.h"
 #include "Utils.h"
 #include <sstream>
-
 #include "XML\XMLTreeNode.h"
 
-CCameraKeyController::CCameraKeyController(CXMLTreeNode &XMLTreeNode)
+CCameraKeyController::CCameraKeyController(const CXMLTreeNode & _TreeNode) : CCameraController(_TreeNode)
 {
 	ResetTime();
-	m_TotalTime = XMLTreeNode.GetFloatProperty("total_time", 0,true);
+	m_TotalTime = _TreeNode.GetFloatProperty("total_time", 0, true);
 	std::string l_Filename;
-	l_Filename = XMLTreeNode.GetPszProperty("filename");
+	l_Filename = _TreeNode.GetPszProperty("filename");
 	LoadXML(l_Filename);
 
-	m_Reverse = XMLTreeNode.GetBoolProperty("reverse");
+	m_Reverse = _TreeNode.GetBoolProperty("reverse");
 	m_ReverseDirection = 1;
 	m_Cycle = !m_Reverse;//*XMLTreeNode.GetPszProperty("cycle");
 }
@@ -212,4 +211,11 @@ void CCameraKeyController::SetCamera(CCamera *Camera) const
 	Camera->SetLookAt(m_LookAt);
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
+}
+
+
+Vect3f CCameraKeyController::GetDirection() const
+{
+	Vect3f l_Direction(cos(m_Yaw)*cos(m_Pitch), sin(m_Pitch), sin(m_Yaw)*cos(m_Pitch));
+	return l_Direction;
 }

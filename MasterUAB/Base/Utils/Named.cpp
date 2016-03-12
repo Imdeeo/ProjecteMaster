@@ -1,7 +1,7 @@
 #include "Utils\Named.h"
 #include "XML\XMLTreeNode.h"
 
-
+#include "CEmptyPointerClass.h"
 
 
 CNamed::CNamed(const CXMLTreeNode &TreeNode)
@@ -20,4 +20,9 @@ void CNamed::SetName(const std::string &Name)
 const std::string& CNamed::GetName()
 {
 	return m_Name;
+}
+
+CEmptyPointerClass* CNamed::GetLuaNameAddress()
+{
+	return (CEmptyPointerClass*)&m_Name;
 }

@@ -1,5 +1,10 @@
 #include "globals.fxh"
 #include "samplers.fxh"
+ 
+static float m_Active = m_RawDataArray[0];
+static float m_Exposure = m_RawDataArray[1];
+static float m_SpecularPower = m_RawDataArray[2];
+static float m_SpecularFactor = m_RawDataArray[3];
 
 struct VS_INPUT
 {
@@ -87,11 +92,13 @@ PS_INPUT mainVS(VS_INPUT IN)
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
 	l_Output.HPos = l_Output.Pos ;
 	
-	#ifdef HAS_WEIGHT_INDICES
-		l_Output.Normal = l_Normal;
-	#else
+	//#ifdef HAS_WEIGHT_INDICES
+	//	l_Output.Normal = l_Normal;
+	//#else
 		l_Output.Normal = normalize(mul(IN.Normal, (float3x3)m_World));
-	#endif
+	//#endif
+	
+	
 	
 	l_Output.UV = IN.UV;
 	
@@ -109,14 +116,16 @@ PS_INPUT mainVS(VS_INPUT IN)
 PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 {
 	PS_OUTPUT l_Out = (PS_OUTPUT)0;
-	
+	float l_specularFactor=m_SpecularFactor;
 	float l_Depth = IN.HPos.z / IN.HPos.w;
 	
-	float m_SpecularPower = 1.0f;
-	float m_SpecularFactor = 1.0f;
 	
 	float4 l_Ambient = m_LightAmbient;
 	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
+	if (l_Albedo.w < 0.1)
+	{
+		clip(-1);
+	}
 	float3 Nn = IN.Normal;
 	#ifdef HAS_REFLECTION
 		float3 l_EyeToWorldPosition = normalize(IN.HPos-m_CameraPosition.xyz);
@@ -129,19 +138,22 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		
 		float3 Tn=normalize(IN.WorldTangent);
 		float3 Bn=normalize(IN.WorldBinormal);
-		float3 bump=g_Bump*((T2Texture.Sample(S2Sampler,IN.UV).rgb) - float3(0.5,0.5,0.5));		
+		float4 auxNormal = T2Texture.Sample(S2Sampler,IN.UV);
+		float3 bump=g_Bump*((auxNormal.xyz) - float3(0.5,0.5,0.5));		
 		Nn = Nn + bump.x*Tn + bump.y*Bn;
 		Nn = normalize(Nn);
+		l_specularFactor *= auxNormal.w;
 	#endif
 	#ifdef HAS_UV2
 		l_Ambient = T1Texture.Sample(S1Sampler,IN.UV2);
 	#endif
-
-	l_Out.Target0 = float4(l_Albedo.xyz, m_SpecularFactor);
-	l_Out.Target1 = float4(l_Albedo.xyz*l_Ambient.xyz, m_SpecularPower);
+	
+	float l_SpecularPower = m_SpecularPower/100;
+	l_specularFactor = l_specularFactor;
+	l_Out.Target0 = float4(l_Albedo.xyz, l_specularFactor);
+	l_Out.Target1 = float4(l_Albedo.xyz*l_Ambient.xyz, l_SpecularPower);
 	l_Out.Target2 = float4(Normal2Texture(Nn), 1.0);
 	l_Out.Target3 = float4(l_Depth,l_Depth,l_Depth, 1.0f);
-
 	
 	return l_Out;
 }
