@@ -41,11 +41,7 @@ CRenderableObject * CRenderableObjectsManager::AddMeshInstance(CXMLTreeNode &Tre
 		return nullptr;
 }
 
-<<<<<<< HEAD
-CRenderableObject * CRenderableObjectsManager::AddMeshInstance(const std::string &CoreMeshName, const std::string &InstanceName, const Vect3f &Position, const Quatf _Rotation, const float _Scale, const bool _Visible)
-=======
-CRenderableObject * CRenderableObjectsManager::AddMeshInstance(const std::string &CoreMeshName, const std::string &InstanceName, const Vect3f &Position, const float _Yaw, const float _Pitch, const float _Roll, const float _Scale, const bool _Visible, bool _Update)
->>>>>>> develop
+CRenderableObject * CRenderableObjectsManager::AddMeshInstance(const std::string &CoreMeshName, const std::string &InstanceName, const Vect3f &Position, const Quatf _Rotation, const float _Scale, const bool _Visible, bool _Update)
 {
 	CInstanceMesh* instanceMesh = new CInstanceMesh(InstanceName, CoreMeshName);
 	instanceMesh->SetPosition(Position);
