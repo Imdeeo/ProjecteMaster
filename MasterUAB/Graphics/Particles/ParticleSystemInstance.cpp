@@ -131,7 +131,7 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 		}
 	}
 
-	m_RenderableVertex = new CUABTrianglesStripRenderableVertexs<MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData[0],1,1);
+	m_RenderableVertex = new CUABTrianglesStripRenderableVertexs<MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData[0],1,1,true);
 }
 
 void CParticleSystemInstance::Render(CRenderManager *RM)

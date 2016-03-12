@@ -114,14 +114,14 @@ template<class T> \
 class ClassName : public CTemplatedRenderableVertexs<T> \
 { \
 public: \
-ClassName(void *Vtxs, unsigned int VtxsCount, unsigned int PrimitiveCount) \
-: CTemplatedRenderableVertexs(Vtxs, VtxsCount, TopologyType, PrimitiveCount)\
+ClassName(void *Vtxs, unsigned int VtxsCount, unsigned int PrimitiveCount, bool Dynamic = false) \
+: CTemplatedRenderableVertexs(Vtxs, VtxsCount, TopologyType, PrimitiveCount, Dynamic)\
 { \
 } \
 };
 
-CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABLinesListRenderableVertexs,D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
-CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABTrianglesListRenderableVertexs,D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABTrianglesStripRenderableVertexs,D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABLinesListRenderableVertexs, D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABTrianglesListRenderableVertexs, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABTrianglesStripRenderableVertexs, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 #endif TEMPLATED_RENDERABLE_VERTEX_H
