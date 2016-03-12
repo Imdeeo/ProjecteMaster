@@ -318,7 +318,27 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set", &Vect2f::Set)
 	];
 
-
+	module(m_LS)[
+		class_<Quatf>("Quatf")
+			.def(constructor<>())
+			.def(constructor<float, float, float, float>())
+			.def(constructor<Vect3f, float>())
+			.def_readwrite("x", &Quatf::x)
+			.def_readwrite("y", &Quatf::y)
+			.def_readwrite("z", &Quatf::z)
+			.def_readwrite("w", &Quatf::w)
+			.def(const_self + const_self)
+			.def(const_self - const_self)
+			.def(const_self * other<const double>())
+			.def(const_self / other<const double>())
+			.def("get_scaled_axis", &Quatf::GetScaledAxis)
+			.def("set_from_scaled_axis", &Quatf::SetFromScaledAxis)
+			.def("quat_from_yaw_pitch_roll", &Quatf::QuatFromYawPitchRoll)
+			.def("slerp", (Quatf(Quatf::*)(const Quatf&, double))&Quatf::slerp)
+			/*.scope[
+				def("slerp", (Quatf(Quatf::*)(const Quatf&, const Quatf&, double))&Quatf::slerp)
+			] OJOCUIDAO */
+	];
 	
 	
 // BASE------------------------------------------------------------------------------------------------
