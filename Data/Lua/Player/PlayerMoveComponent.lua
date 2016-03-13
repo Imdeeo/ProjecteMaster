@@ -78,11 +78,8 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	cct_velocity = l_desplacamiento/_ElapsedTime
 	--utils_log("Position x: "..l_PosCharacterController.x..",y: "..l_PosCharacterController.y..",z: "..l_PosCharacterController.z)
 	
-	local rotation = _owner:get_rotation()
-	local final_rotation = Quatf()
-	final_rotation:quat_from_yaw_pitch_roll(final_direction.x, 0, final_direction.y)
-	rotation.slerp(final_rotation, _ElapsedTime*l_velocity)
-	_owner:set_rotation(final_rotation)
+	local final_rotation = Quatf(0,0,0,1)
+	--_owner:set_rotation(final_rotation:set_from_scaled_axis(player_camera_direction))
 	
 	--local yaw = _owner:get_yaw()
 	--local dir = Vect3f(math.cos(yaw),0,math.sin(yaw));

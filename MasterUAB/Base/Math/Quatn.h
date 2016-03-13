@@ -234,7 +234,7 @@ public:
 	}
 
 	/**
-	* @brief Sets quaternion to be same as rotation by scaled axis w.
+	* @brief Sets quaternion to be same as rotation by scaled axis.
 	*/
 	void SetFromScaledAxis(const Vect3f& scaledAxis) {
 		double theta = scaledAxis.Length();
@@ -390,15 +390,6 @@ public:
 			q0.w * st0 + q1.w * st1
 			);
 	}
-
-	/**
-	* @brief Returns pointer to the internal array.
-	*
-	* Array is in order x,y,z,w.
-	*/
-	//double* row(uint32_t i) { return mData + i; }
-	// Const version of the above.
-	//const double* row(uint32_t i) const { return mData + i; }
 };
 
 typedef Quatn<float> Quatf;
