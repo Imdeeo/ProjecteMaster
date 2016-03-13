@@ -129,8 +129,8 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 		}		
 		else
 		{
-			m_ParticleRenderableData[i] = (MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX*)malloc(sizeof(MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX));
-			m_RenderableVertex = new CUABLinesListRenderableVertexs<MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData[i], 1, 1, true);
+			m_ParticleRenderableData[i] = (MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX*)malloc(sizeof(MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX));
+			m_RenderableVertex = new CUABLinesListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData[i], 1, 1, true);
 		}
 	}
 }

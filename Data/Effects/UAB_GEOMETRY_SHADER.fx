@@ -1,10 +1,10 @@
 #include "Globals.fxh"
 #include "Samplers.fxh"
 
-static float sprite_sheet_width = m_RawDataValues[0];
-static float sprite_sheet_height = m_RawDataValues[1];
-static float lerp_sprite = m_RawDataValues[2];
-static float ratio_y = m_RawDataValues[2];
+static float sprite_sheet_width = m_RawDataArray[0];
+static float sprite_sheet_height = m_RawDataArray[1];
+static float lerp_sprite = m_RawDataArray[2];
+static float ratio_y = m_RawDataArray[2];
 static float du = 1.0 / sprite_sheet_width;
 static float dv = 1.0 / sprite_sheet_height;
 
@@ -32,7 +32,7 @@ struct PS_INPUT
 	float4 Color : COLOR0;
 	float2 UV : TEXCOORD0;
 	float2 UV2 : TEXCOORD1;
-	float1 TextureBlendFactor : TEXCOORD2;
+	float TextureBlendFactor : TEXCOORD2;
 };
 
 //---------------------------------------------------------------------------------
@@ -89,8 +89,8 @@ void mainGS( point GS_INPUT input[1], inout TriangleStream<PS_INPUT> OutputStrea
 //---------------------------------------------------------------------------------
 //Geometry Shader
 //---------------------------------------------------------------------------------
-[maxvertexcount(4)]
-/*void mainGS( point GS_INPUT input[1], inout TriangleStream<PS_INPUT> OutputStream )
+/*[maxvertexcount(4)]
+void mainGS( point GS_INPUT input[1], inout TriangleStream<PS_INPUT> OutputStream )
 {
 	PS_INPUT l_Output = (PS_INPUT)0;
 	

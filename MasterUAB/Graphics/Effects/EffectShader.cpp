@@ -211,6 +211,8 @@ bool CEffectVertexShader::Load()
 		l_Loaded = MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else if (m_VertexType == "MV_POSITION4_COLOR_TEXTURE_VERTEX")
 		l_Loaded = MV_POSITION4_COLOR_TEXTURE_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
+	else if (m_VertexType == "MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX")
+		l_Loaded = MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else if (m_VertexType == "MV_POSITION_COLOR_VERTEX")
 		l_Loaded = MV_POSITION_COLOR_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else if (m_VertexType == "MV_POSITION_TEXTURE_VERTEX")
