@@ -13,13 +13,9 @@
 
 #include "DebugHelper\DebugHelper.h";
 
-CEffectManager::CEffectManager(void)
-{
-}
+CEffectManager::CEffectManager(void){}
 
-CEffectManager::~CEffectManager(void)
-{
-}
+CEffectManager::~CEffectManager(void){}
 
 void CEffectManager::ReloadShader()
 {
@@ -77,7 +73,15 @@ bool CEffectManager::Load(const std::string &Filename)
 					CEffectPixelShader *l_EffectPixelShader = new CEffectPixelShader(l_Element);
 					l_EffectPixelShader->Load();
 					m_PixelShaders.AddResource(l_EffectName, l_EffectPixelShader);
-				} else if (l_Element.GetName() == std::string("effect_technique"))
+				}
+				else if (l_Element.GetName() == std::string("geometry_shader"))
+				{
+					l_EffectName = l_Element.GetPszProperty("name");
+					CEffectGeometryShader *l_EffectGeometryShader = new CEffectGeometryShader(l_Element);
+					l_EffectGeometryShader->Load();
+					m_GeometryShaders.AddResource(l_EffectName, l_EffectGeometryShader);
+				}
+				else if (l_Element.GetName() == std::string("effect_technique"))
 				{
 					l_EffectName = l_Element.GetPszProperty("name");
 					CEffectTechnique *l_EffectTechnique = new CEffectTechnique(l_Element);
@@ -100,6 +104,11 @@ CEffectVertexShader * CEffectManager::GetVertexShader(const std::string &VertexS
 CEffectPixelShader * CEffectManager::GetPixelShader(const std::string &PixelShader)
 {
 	return m_PixelShaders[PixelShader];
+}
+
+CEffectGeometryShader * CEffectManager::GetGeometryShader(const std::string &GeometryShader)
+{
+	return m_GeometryShaders[GeometryShader];
 }
 
 void CEffectManager::SetSceneConstants(CEffectTechnique* _EffectTechnique)
