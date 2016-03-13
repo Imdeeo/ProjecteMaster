@@ -21,10 +21,12 @@ void CFPSCameraController::Move(float Strafe, float Forward, bool Speed, float E
 	
 	
 	Vect3f l_AddPos;
-	
-	l_AddPos.y = Forward*(sin(m_Pitch));
-	l_AddPos.x=Forward*(cos(m_Yaw))+Strafe*(cos(m_Yaw+3.14159f*0.5f));
-	l_AddPos.z=Forward*(sin(m_Yaw))+Strafe*(sin(m_Yaw+3.14159f*0.5f));
+	float l_Yaw = m_Rotation.GetYaw();
+	float l_Pitch = m_Rotation.GetPitch();
+
+	l_AddPos.y = Forward*(sin(l_Pitch));
+	l_AddPos.x = Forward*(cos(l_Yaw)) + Strafe*(cos(l_Yaw + FLOAT_PI_VALUE*0.5f));
+	l_AddPos.z = Forward*(sin(l_Yaw)) + Strafe*(sin(l_Yaw + FLOAT_PI_VALUE*0.5f));
 	
 	float l_ConstantSpeed=ElapsedTime*m_Speed;
 	if(Speed)
@@ -57,12 +59,6 @@ void CFPSCameraController::SetCamera(CCamera *Camera) const
 	Camera->SetLookAt(m_Position+l_Direction);
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
-}
-
-Vect3f CFPSCameraController::GetDirection() const
-{
-	Vect3f l_Direction(cos(m_Yaw)*cos(m_Pitch), sin(m_Pitch), sin(m_Yaw)*cos(m_Pitch));
-	return l_Direction;
 }
 
 void CFPSCameraController::Update(float ElapsedTime)

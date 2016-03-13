@@ -76,13 +76,13 @@ void C3PersonCameraController::Update(float ElapsedTime)
 	}
 	//cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * 0.5f;
 	m_angle = m_angle + cameraMovement.x;
-	while (m_angle > M_PI)
+	while (m_angle > FLOAT_PI_VALUE)
 	{
-		m_angle = m_angle - M_PI * 2;
+		m_angle = m_angle - FLOAT_PI_VALUE * 2;
 	}
-	while (m_angle < -M_PI)
+	while (m_angle < -FLOAT_PI_VALUE)
 	{
-		m_angle = m_angle + M_PI * 2;
+		m_angle = m_angle + FLOAT_PI_VALUE * 2;
 	}
 	Vect2f l_2Doffset = Vect2f(cos(m_angle),sin(m_angle));
 	l_2Doffset = l_2Doffset*m_distance;
