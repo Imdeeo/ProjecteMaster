@@ -35,6 +35,7 @@ void CCameraController::AddYaw(float Radians)
 	else if(m_Yaw<-2*DEG2RAD(180.0f))
 		m_Yaw+=2*DEG2RAD(180.0f);
 }
+
 void CCameraController::AddPitch(float Radians)
 {
 	if(((m_Pitch-Radians)<(DEG2RAD(180.0f)*0.5) && (m_Pitch-Radians)>-(DEG2RAD(180.0f)*0.5)))
