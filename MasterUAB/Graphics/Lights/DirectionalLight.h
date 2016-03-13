@@ -17,7 +17,10 @@ public:
 	const Vect3f & GetDirection() const { return m_Direction; }
 	void SetDirection(Vect3f _Direction) { m_Direction = _Direction; }
 
+#ifdef _DEBUG
 	virtual void Render(CRenderManager *RenderManager);
+#endif
+
 	void SetShadowMap(CRenderManager &RenderManager);
 };
 

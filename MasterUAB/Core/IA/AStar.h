@@ -1,3 +1,6 @@
+//OJUCUIDAO!
+#ifdef _DEBUG
+
 #ifndef INC_A_STAR_H_
 #define INC_A_STAR_H_
 
@@ -55,3 +58,5 @@ public:
 };
 
 #endif // INC_A_STAR_H_
+
+#endif

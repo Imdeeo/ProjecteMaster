@@ -52,6 +52,7 @@ CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)
 
 CLight::~CLight(){}
 
+#ifdef _DEBUG
 void CLight::Render(CRenderManager *_RenderManager)
 {
 	if (m_Enabled)
@@ -64,6 +65,7 @@ void CLight::Render(CRenderManager *_RenderManager)
 		GetShape(_RenderManager)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 	}
 }
+#endif
 
 CLight::TLightType CLight::GetLightTypeByName(const std::string &StrLightType)
 {
@@ -92,10 +94,12 @@ const Mat44f & CLight::GetTransform()
 	return m_TransformMatrix;
 }
 
+#ifdef _DEBUG
 CRenderableVertexs* CLight::GetShape(CRenderManager *_RenderManager)
 {
 	return _RenderManager->GetDebugRender()->GetSPhere10();
 }
+#endif
 
 CDynamicTexture* CLight::GetShadowMap()
 {

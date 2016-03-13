@@ -10,7 +10,12 @@ class CColor;
 
 class CMaterialManager;
 
+#ifdef _DEBUG
 class CDebugRender;
+#else
+class CRenderHelper;
+#endif
+
 class CContextManager;
 
 class ID3D11BlendState;
@@ -55,7 +60,11 @@ public:
 	Vect2f GetScreenPosFrom3D(const Vect3f &Position) const;
 
 	//void Init();
+#ifdef _DEBUG
 	CDebugRender* GetDebugRender()const;
+#else
+	CRenderHelper* GetRenderHelper()const;
+#endif
 
 	CContextManager* GetContextManager()const;
 	void SetContextManager(CContextManager* _ContextManager);
@@ -72,7 +81,11 @@ private:
 	CCamera							m_DebugCamera;
 	bool							m_UseDebugCamera;
 
+#ifdef _DEBUG
 	CDebugRender*					m_DebugRender;
+#else
+	CRenderHelper*					m_RenderHelper;
+#endif
 
 	//ID3D11RenderTargetView* const	m_RenderTargetView;
 	//ID3D11DepthStencilView*			m_DepthStencilView;

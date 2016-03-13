@@ -6,7 +6,10 @@
 class CSpotLight : public CDirectionalLight
 {
 protected:
+
+#ifdef _DEBUG
 	virtual CRenderableVertexs* GetShape(CRenderManager *_RenderManager);
+#endif
 
 	float m_Angle;
 	float m_FallOff;
@@ -19,7 +22,9 @@ public:
 	void SetAngle(float _Angle){ m_Angle = _Angle; }
 	void SetFallOff(float _FallOff){ m_FallOff = _FallOff; }
 
+#ifdef _DEBUG
 	void Render(CRenderManager *_RenderManager);
+#endif
 
 	virtual const Mat44f & GetTransform();
 

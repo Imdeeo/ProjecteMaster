@@ -121,6 +121,7 @@ void CInstanceMesh::Render(CRenderManager *RM)
 	}
 }
 
+#ifdef _DEBUG
 void CInstanceMesh::RenderDebug(CRenderManager *RM)
 {
 	if (GetDebugRender())
@@ -132,6 +133,7 @@ void CInstanceMesh::RenderDebug(CRenderManager *RM)
 		RM->GetDebugRender()->GetAxis()->Render(RM, l_ET, CEffectManager::GetRawData());
 	}
 }
+#endif
 
 CInstanceMesh & CInstanceMesh::operator=(CInstanceMesh & _InstanceMesh)
 {

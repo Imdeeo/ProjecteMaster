@@ -497,6 +497,7 @@ void CScriptManager::RegisterLUAFunctions()
 	
 
 // GRAPHICS-----------------------------------------------------------------------------------------
+#ifdef _DEBUG
 	module(m_LS)[
 		class_<CDebugRender>("CDebugRender")
 			.def(constructor<ID3D11Device*>())
@@ -521,7 +522,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_simple_cube_bb_max", &CDebugRender::GetSimpleCubeBBMax)
 			.def("get_axis_bb_max", &CDebugRender::GetAxisBBMax)
 	];
-
+#endif
 
 	// SceneRendererCommand
 
@@ -938,7 +939,9 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CLightManager, CTemplatedVectorMapManager<CLight>>("CLightManager")
 			.def(constructor<>())
 			.def("load", &CLightManager::Load)
+#ifdef _DEBUG
 			.def("render", &CLightManager::Render)
+#endif
 			.def("reload", &CLightManager::Reload)
 			.def("get_ambient_light", &CLightManager::GetAmbientLight)
 	];
