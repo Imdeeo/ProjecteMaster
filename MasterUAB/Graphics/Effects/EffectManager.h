@@ -27,6 +27,7 @@ class CEffectManager : public CTemplatedMapManager<CEffectTechnique>
 private:
 	CTemplatedMapManager<CEffectVertexShader> m_VertexShaders;
 	CTemplatedMapManager<CEffectPixelShader> m_PixelShaders;
+	CTemplatedMapManager<CEffectGeometryShader> m_GeometryShaders;
 	std::string m_Filename;
 
 	static float m_RawData[MAX_RAW_DATA_ELEMENTS];
@@ -38,7 +39,6 @@ public:
 
 	static void* GetRawData(){ return m_RawData; }
 	static void* AddMaterialParameter(CMaterialParameter::TMaterialType _MaterialType);
-	//static CEffectParameters m_Parameters;
 
 	static int m_RawDataCount;
 
@@ -51,6 +51,7 @@ public:
 	bool Load(const std::string &Filename);
 	CEffectVertexShader * GetVertexShader(const std::string &VertexShader);
 	CEffectPixelShader * GetPixelShader(const std::string &PixelShader);
+	CEffectGeometryShader * GetGeometryShader(const std::string &GeometryShader);
 
 	static void SetSceneConstants(CEffectTechnique* _EffectTechnique);
 	void SetLightConstants(unsigned int IdLight, CLight *Light);

@@ -39,19 +39,25 @@ public:
 		if(FAILED(l_HR))
 			return;
 	}
+
 	virtual ~CTemplatedRenderableVertexs()
 	{
 		CHECKED_RELEASE(m_VertexBuffer);
 	}
+
 	bool Render(CRenderManager *RenderManager, CEffectTechnique	*EffectTechnique, void *_Parameters)
 	{
-		CEffectVertexShader *l_EffectVertexShader=EffectTechnique->GetVertexShader();
-		CEffectPixelShader *l_EffectPixelShader=EffectTechnique->GetPixelShader();
+		CEffectVertexShader *l_EffectVertexShader = EffectTechnique->GetVertexShader();
+		CEffectPixelShader *l_EffectPixelShader = EffectTechnique->GetPixelShader();
+		CEffectGeometryShader *l_EffectGeometryShader = EffectTechnique->GetGeometryShader();
+
 		if(l_EffectPixelShader==NULL || l_EffectVertexShader==NULL)
 			return false;
+
 		ID3D11DeviceContext *l_DeviceContext=RenderManager->GetDeviceContext();
 		UINT stride=sizeof(T);
 		UINT offset=0;
+		
 		l_DeviceContext->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
 		l_DeviceContext->IASetPrimitiveTopology(m_PrimitiveTopology);
 		l_DeviceContext->IASetInputLayout(l_EffectVertexShader->GetVertexLayout());
@@ -62,20 +68,24 @@ public:
 		ID3D11Buffer *l_AnimationConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_MaterialParametersConstantBufferVS = l_EffectVertexShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
 
-		/*OJUCUIDAO*/
-		/*CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
-		l_DeviceContext->RSSetState(l_ContextManager->GetRasterizerState(CContextManager::RS_SOLID_BACK_CULL));
-		l_DeviceContext->OMSetDepthStencilState(l_ContextManager->GetDepthStencilState(CContextManager::DSS_DEPTH_ON), 0);
-		Vect4f v(1, 1, 1, 1);
-		l_DeviceContext->OMSetBlendState(l_ContextManager->GetBlendState(CContextManager::BLEND_CLASSIC), &v.x, 0xffffffff);*/
-				
 		CEffectManager* l_EffectManagerInstance = UABEngine.GetEffectManager();
 
 		l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferVS, 0, NULL, _Parameters, 0, 0);
 		ID3D11Buffer* VSBuffers[4] = { l_SceneConstantBufferVS, l_LightConstantBufferVS, l_AnimationConstantBufferVS, l_MaterialParametersConstantBufferVS };
 		l_DeviceContext->VSSetConstantBuffers(0, 4,VSBuffers);
 
-		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
+		if (l_EffectGeometryShader)
+		{
+			ID3D11Buffer *l_ConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(0);
+
+			l_DeviceContext->UpdateSubresource(l_ConstantBufferGS, 0, NULL, _Parameters, 0, 0);
+			l_DeviceContext->GSSetConstantBuffers(0, 1, &l_ConstantBufferGS);
+			l_DeviceContext->GSSetShader(l_EffectGeometryShader->GetGeometryShader(), NULL, 0);
+		}
+		else
+		{
+			l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
+		}
 		
 		ID3D11Buffer *l_SceneConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_LightConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
