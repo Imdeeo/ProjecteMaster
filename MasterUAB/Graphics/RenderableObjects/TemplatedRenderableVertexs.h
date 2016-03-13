@@ -107,7 +107,7 @@ public:
 		ZeroMemory(&mappedResource, sizeof(mappedResource));
 
 		ID3D11DeviceContext * l_DeviceContext = UABEngine.GetInstance()->GetRenderManager()->GetDeviceContext();
-		HRESULT l_HR = l_DeviceContext->Map(m_VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &nappedResource);
+		HRESULT l_HR = l_DeviceContext->Map(m_VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 		if (FAILED(l_HR))
 			return false;
 

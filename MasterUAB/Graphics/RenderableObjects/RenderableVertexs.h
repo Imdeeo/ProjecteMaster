@@ -21,6 +21,12 @@ public:
 		assert(!"This method mustn't be called");
 		return false;
 	}
+
+	virtual bool UpdateVertexs(void *Vtxs, unsigned int VtxsCount)
+	{
+		assert(!"This method mustn't be called");
+		return false;
+	}
 };
 
 

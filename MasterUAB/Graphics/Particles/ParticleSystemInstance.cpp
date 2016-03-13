@@ -137,11 +137,26 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 void CParticleSystemInstance::Render(CRenderManager *RM)
 {
 	CRenderableObject::Render(RM);
-	RM->GetContextManager()->SetWorldMatrix(GetTransform());
+
+	for (int i = 0; i < m_ActiveParticles; ++i)
+	{
+		ParticleData *particle = &m_ParticleData[i];
+
+		m_ParticleRenderableData[i]->Position = particle->Position;
+		/*m_ParticleRenderableData[i]->Color = particle->LastColor.Lerp(particle->NextColor, ColorControlAlpha);
+		m_ParticleRenderableData[i]->UV.x = mathUtils::Lerp<float>(particle->LastSize, particle->NextSize, SizeControlAlpha);*/
+		m_ParticleRenderableData[i]->Color = particle->Color;
+		m_ParticleRenderableData[i]->UV.x = particle->Size;
+		m_ParticleRenderableData[i]->UV.y = particle->Angle;
+		m_ParticleRenderableData[i]->UV2.x = (float)particle->CurrentFrame;
+		m_ParticleRenderableData[i]->UV2.y = 0;
+	}
+
 	CMaterial* l_Material = m_Type->GetMaterial();
 	l_Material->Apply();
 	CEffectTechnique* l_EffectTechnique = l_Material->GetRenderableObjectTechnique()->GetEffectTechnique();
 	CEffectManager::SetSceneConstants(l_EffectTechnique);
+	m_RenderableVertex->UpdateVertexs(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE);
 	m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData());
 }
 
