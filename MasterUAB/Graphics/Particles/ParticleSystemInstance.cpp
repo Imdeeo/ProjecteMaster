@@ -113,9 +113,7 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 		particle->Position += particle->Velocity * ElapsedTime + 0.5f * ElapsedTime * ElapsedTime * particle->Acceleration;
 		particle->Velocity += particle->Acceleration * ElapsedTime;
 		particle->TimeToNextFrame -= ElapsedTime;
-		particle->LifeTime += ElapsedTime;
-
-		m_ParticleRenderableData[i] = (MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX*)malloc(sizeof(MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX));		
+		particle->LifeTime += ElapsedTime;			
 
 		while (particle->TimeToNextFrame < 0 && (m_Type->GetLoopFrames() || particle->CurrentFrame < m_Type->GetNumFrames() - 1))
 		{
@@ -128,10 +126,13 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 			--m_ActiveParticles;
 			m_ParticleData[i] = m_ParticleData[m_ActiveParticles];
 			--i;
+		}		
+		else
+		{
+			m_ParticleRenderableData[i] = (MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX*)malloc(sizeof(MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX));
+			m_RenderableVertex = new CUABLinesListRenderableVertexs<MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData[i], 1, 1, true);
 		}
 	}
-
-	m_RenderableVertex = new CUABLinesListRenderableVertexs<MV_POSITION_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData[0], 1, 1, true);
 }
 
 void CParticleSystemInstance::Render(CRenderManager *RM)
