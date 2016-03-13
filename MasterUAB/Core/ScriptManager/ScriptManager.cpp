@@ -334,12 +334,11 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_scaled_axis", &Quatf::GetScaledAxis)
 			.def("set_from_scaled_axis", &Quatf::SetFromScaledAxis)
 			.def("quat_from_yaw_pitch_roll", &Quatf::QuatFromYawPitchRoll)
-			.def("slerp", (Quatf(Quatf::*)(const Quatf&, double))&Quatf::slerp)
-			/*.scope[
-				def("slerp", (Quatf(Quatf::*)(const Quatf&, const Quatf&, double))&Quatf::slerp)
-			] OJOCUIDAO */
+			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,double))&Quatf::slerp)
+			.scope[
+				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, double))&Quatn<float>::slerp)
+			] 
 	];
-	
 	
 // BASE------------------------------------------------------------------------------------------------
 
