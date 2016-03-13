@@ -16,7 +16,6 @@ public:
 	void SetZoom(float Zoom) {m_Zoom=Zoom;}
 	
 	void SetCamera(CCamera *Camera) const;
-	Vect3f GetDirection() const;
 	
 	void Move(Vect3f movement)
 	{

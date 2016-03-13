@@ -4,6 +4,7 @@
 #include "Math\Matrix44.h"
 #include "Math\Vector3.h"
 #include "Utils\Named.h"
+#include "Math\Quatn.h"
 
 class CCamera;
 class CXMLTreeNode;
@@ -12,22 +13,21 @@ class CCameraController : public CNamed
 {
 protected:
 	Vect3f m_Position;
-	float m_Yaw;
-	float m_Pitch;
+	Quatf m_Rotation;
 public:
 	CCameraController(const CXMLTreeNode &);
 	virtual ~CCameraController();
 	virtual void SetCamera(CCamera *Camera) const = 0;
-	virtual Vect3f GetDirection() const =0;
+	Vect3f GetDirection() const;
 	virtual void AddYaw(float Radians);
 	virtual void AddPitch(float Radians);
-	void SetYaw(float Yaw) {m_Yaw=Yaw;}
-	float GetYaw() const {return m_Yaw;}
-	void SetPitch(float Pitch) {m_Pitch=Pitch;}
-	float GetPitch() const {return m_Pitch;}
+	
+	void SetRotation(Quatf Rotation) { m_Rotation = Rotation; }
+	Quatf GetRotation() const { return m_Rotation; }
 	
 	Vect3f GetRight() const;
 	Vect3f GetUp() const;
+
 	const Vect3f & GetPosition() const { return m_Position; }
 	void SetPosition(const Vect3f &Position) { m_Position = Position; }
 

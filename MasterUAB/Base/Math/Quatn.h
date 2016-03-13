@@ -206,6 +206,60 @@ public:
 	}
 
 	/**
+	* @brief Returns the local up vector of the quaternion.
+	*/
+	Vect3f GetUpVector() const {
+		return Vect3f(
+			2*x*y - 2*z*w,
+			1 - 2*x*x - 2*z*z,
+			2*y*z + 2*x*w
+			);
+	}
+
+	/**
+	* @brief Returns the local right vector of the quaternion.
+	*/
+	Vect3f GetRightVector() const {
+		return Vect3f(
+			1 - 2*y*y -2*z*z,
+			2*x*y - 2*z*w,
+			2*x*z + 2*y*w
+			);
+	}
+
+	/**
+	* @brief Returns the local forward vector of the quaternion.
+	*/
+	Vect3f GetForwardVector() const {
+		return Vect3f(
+			2*x*z - 2*y*w,
+			2*y*z + 2*x*w,
+			1 - 2*x*x - 2*y*y
+			);
+	}
+
+	/**
+	* @brief Returns the corresponding yaw of the quaternion.
+	*/
+	float GetYaw() const {
+		return (atan2(2 * y*w - 2 * x*z, 1 - 2 * y*y - 2 * z*z));
+	}
+
+	/**
+	* @brief Returns the corresponding pitch of the quaternion.
+	*/
+	float GetPitch() const {
+		return (asin(2 * x*y + 2 * z*w));
+	}
+
+	/**
+	* @brief Returns the corresponding roll of the quaternion.
+	*/
+	float GetRoll() const {
+		return atan2(2*x*w - 2*y*z, 1 - 2*x*x - 2*z*z);
+	}
+
+	/**
 	* @brief Returns the scaled-axis representation of this
 	* quaternion rotation.
 	*/
@@ -226,11 +280,36 @@ public:
 			ret.z = z * angle / s;
 		}
 		return ret;
+	}
 
-		// Stanford code (need HeliMath)
-		/*double w[3];
-		HeliMath::scaled_axis_from_quaternion(w, mData);
-		return Vect3f(w);*/
+	/**
+	* @brief Returns the axis representation of this
+	* quaternion rotation.
+	*/
+	Vect3f GetAxis(void) const {
+		Vect3f ret;
+		double s = sqrt(1 - w*w); // assuming quaternion normalised then w is less than 1, so term always positive.
+		if (s < 0.001) { // test to avoid divide by zero, s is always positive due to sqrt
+			// if s close to zero then direction of axis not important
+			ret.x = x;
+			ret.y = y;
+			ret.z = z;
+		}
+		else
+		{
+			ret.x = x / s;
+			ret.y = y / s;
+			ret.z = z / s;
+		}
+		return ret;
+	}
+
+	/**
+	* @brief Returns the angle of the axis representation of this
+	* quaternion rotation.
+	*/
+	double GetAxisAngle(void) const {
+		return (2 * acos(w));
 	}
 
 	/**
@@ -241,6 +320,23 @@ public:
 		if (theta > 0.0001) {
 			double s = sin(theta / 2.0);
 			Vect3f Axis(scaledAxis * s / theta);
+			x = Axis[0];
+			y = Axis[1];
+			z = Axis[2];
+			w = cos(theta / 2.0);
+		}
+		else {
+			x = y = z = 0;
+			w = 1.0;
+		}
+	}
+
+	/**
+	* @brief Sets quaternion to be same as rotation by angle axis.
+	*/
+	void SetFromAngleAxis(const Vect3f& axis, float theta) {
+		if (theta > 0.0001) {
+			Vect3f Axis(axis * sin(theta / 2.0));
 			x = Axis[0];
 			y = Axis[1];
 			z = Axis[2];
