@@ -221,6 +221,9 @@
     <ClCompile Include="Particles\ParticleSystemType.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
+    <ClCompile Include="RenderHelper\RenderHelper.cpp">
+      <Filter>RenderHelper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -264,6 +267,9 @@
     </Filter>
     <Filter Include="Particles">
       <UniqueIdentifier>{60ebdd8f-8f9b-4458-86f3-1f6b978676ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderHelper">
+      <UniqueIdentifier>{e7e1695e-d493-4cd9-832c-2eda093522a9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -520,6 +526,9 @@
     </ClInclude>
     <ClInclude Include="Particles\ParticleSystemType.h">
       <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderHelper\RenderHelper.h">
+      <Filter>RenderHelper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

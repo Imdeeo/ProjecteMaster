@@ -26,7 +26,11 @@ public:
 	CLightManager();
 	virtual ~CLightManager();
 	bool Load(const std::string &FileName);
+
+#ifdef _DEBUG
 	bool Render(CRenderManager *RenderManager);
+#endif
+
 	bool Reload();
 	Vect4f GetAmbientLight(){ return m_AmbientLight; }
 	float  GetFogMaxAttenuation(){return m_FogMaxAttenuation; }

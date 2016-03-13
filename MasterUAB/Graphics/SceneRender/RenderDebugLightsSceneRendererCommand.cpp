@@ -7,5 +7,7 @@ CRenderDebugLightsSceneRendererCommand::CRenderDebugLightsSceneRendererCommand(C
 
 void CRenderDebugLightsSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
+#ifdef _DEBUG
 	UABEngine.GetLightManager()->Render(&RenderManager);
+#endif
 }

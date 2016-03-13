@@ -19,5 +19,7 @@ CRenderDebugLayerSceneRendererCommand::~CRenderDebugLayerSceneRendererCommand()
 
 void CRenderDebugLayerSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
+#ifdef _DEBUG
 	m_Layer->RenderDebug(&RenderManager);
+#endif
 }

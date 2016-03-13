@@ -62,6 +62,7 @@ bool CLightManager::Reload(){
 	return Load(m_FileName);
 }
 
+#ifdef _DEBUG
 bool CLightManager::Render(CRenderManager *_RenderManager){
 	if (m_RenderLights)
 	{
@@ -72,3 +73,4 @@ bool CLightManager::Render(CRenderManager *_RenderManager){
 	}
 	return true;
 }
+#endif

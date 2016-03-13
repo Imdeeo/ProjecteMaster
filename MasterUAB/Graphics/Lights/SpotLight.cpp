@@ -16,6 +16,7 @@ CSpotLight::CSpotLight(CXMLTreeNode &TreeNode) : CDirectionalLight(TreeNode)
 	m_FallOff = TreeNode.GetFloatProperty("fall_off", 1.2f);
 }
 
+#ifdef _DEBUG
 void CSpotLight::Render(CRenderManager *_RenderManager)
 {
 	if (GetEnabled())
@@ -23,6 +24,7 @@ void CSpotLight::Render(CRenderManager *_RenderManager)
 		CDirectionalLight::Render(_RenderManager);
 	}
 }
+#endif
 
 
 void getYawPitch(Vect3f v1, double &_Yaw, double &_Pitch, double &_Roll)
@@ -105,7 +107,9 @@ void CSpotLight::SetShadowMap(CRenderManager &RenderManager)
 	RenderManager.SetRenderTargets(1, l_RenderTargetViews, m_ShadowMap->GetDepthStencilView());
 }
 
+#ifdef _DEBUG
 CRenderableVertexs* CSpotLight::GetShape(CRenderManager *_RenderManager)
 {
 	return _RenderManager->GetDebugRender()->GetCone();
 }
+#endif

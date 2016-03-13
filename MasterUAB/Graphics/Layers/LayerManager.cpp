@@ -97,10 +97,12 @@ void CLayerManager::Render(CRenderManager *RenderManager, const std::string &Lay
 	GetResource(LayerName)->Render(RenderManager); 
 }
 
+#ifdef _DEBUG
 void CLayerManager::RenderDebug(CRenderManager *RenderManager, const std::string &LayerName)
 {
 	GetResource(LayerName)->RenderDebug(RenderManager);
 }
+#endif
 
 CRenderableObjectsManager* CLayerManager::GetLayer(CXMLTreeNode &Node)
 {
