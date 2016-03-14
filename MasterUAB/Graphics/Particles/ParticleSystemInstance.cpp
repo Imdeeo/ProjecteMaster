@@ -23,6 +23,11 @@ CParticleSystemInstance::CParticleSystemInstance(CXMLTreeNode &TreeNode) :
 	m_EmissionVolume = m_EmissionBoxHalfSize.x * m_EmissionBoxHalfSize.y * m_EmissionBoxHalfSize.z * 8;
 	m_EmissionScaler = m_Type->GetEmitAbsolute() ? 1 : 1.0f / m_EmissionVolume;
 	m_ActiveParticles = 0;
+
+	for (size_t i = 0; i < MAX_PARTICLE_PER_INSTANCE; ++i)
+	{
+		m_ParticleData[i].Position = Vect3f(0, 0, 0);
+	}
 }
 
 CParticleSystemInstance::~CParticleSystemInstance(void)
@@ -130,7 +135,7 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 		else
 		{
 			m_ParticleRenderableData[i] = (MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX*)malloc(sizeof(MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX));
-			m_RenderableVertex = new CUABLinesListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData[i], 1, 1, true);
+			m_RenderableVertex = new CUABTrianglesStripRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData[i], 1, 1, true);
 		}
 	}
 }
@@ -153,12 +158,15 @@ void CParticleSystemInstance::Render(CRenderManager *RM)
 		m_ParticleRenderableData[i]->UV2.y = 0;
 	}
 
-	CMaterial* l_Material = m_Type->GetMaterial();
-	l_Material->Apply();
-	CEffectTechnique* l_EffectTechnique = l_Material->GetRenderableObjectTechnique()->GetEffectTechnique();
-	CEffectManager::SetSceneConstants(l_EffectTechnique);
-	m_RenderableVertex->UpdateVertexs(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE);
-	m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData());
+	if (m_ActiveParticles > 0)
+	{
+		CMaterial* l_Material = m_Type->GetMaterial();
+		l_Material->Apply();
+		CEffectTechnique* l_EffectTechnique = l_Material->GetRenderableObjectTechnique()->GetEffectTechnique();
+		CEffectManager::SetSceneConstants(l_EffectTechnique);
+		m_RenderableVertex->UpdateVertexs(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE);
+		m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData());
+	}
 }
 
 //void CParticleSystemInstance::RenderDebug(CRenderManager *RM)

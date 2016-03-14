@@ -76,16 +76,25 @@ public:
 
 		if (l_EffectGeometryShader)
 		{
-			ID3D11Buffer *l_ConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(0);
-
-			l_DeviceContext->UpdateSubresource(l_ConstantBufferGS, 0, NULL, _Parameters, 0, 0);
-			l_DeviceContext->GSSetConstantBuffers(0, 1, &l_ConstantBufferGS);
 			l_DeviceContext->GSSetShader(l_EffectGeometryShader->GetGeometryShader(), NULL, 0);
+
+			ID3D11Buffer *l_SceneConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+			ID3D11Buffer *l_LightConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
+			ID3D11Buffer *l_AnimationConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
+			ID3D11Buffer *l_MaterialParametersConstantBufferGS = l_EffectVertexShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
+			ID3D11Buffer* GSBuffers[4] = { l_SceneConstantBufferVS, l_LightConstantBufferVS, l_AnimationConstantBufferVS, l_MaterialParametersConstantBufferVS };
+			//ID3D11Buffer *l_ConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(0);
+
+			l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferGS, 0, NULL, _Parameters, 0, 0);
+			//l_DeviceContext->GSSetConstantBuffers(0, 1, &l_ConstantBufferGS);
+			l_DeviceContext->GSSetConstantBuffers(0, 4, GSBuffers);
 		}
 		else
 		{
-			l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
+			l_DeviceContext->GSSetShader(NULL, NULL, 0);
 		}
+		
+		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
 		
 		ID3D11Buffer *l_SceneConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_LightConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
