@@ -69,7 +69,7 @@ Vect3f C3PersonCameraController::GetDirection() const
 void C3PersonCameraController::Update(float ElapsedTime)
 {
 	Vect3f cameraMovement(0, 0, 0);
-	cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 1.f;
+	cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 5.f;
 	if (cameraMovement.x > 0)
 	{
 		int i = 1;
