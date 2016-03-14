@@ -45,11 +45,13 @@ public:
 		CHECKED_RELEASE(m_VertexBuffer);
 	}
 
-	bool Render(CRenderManager *RenderManager, CEffectTechnique	*EffectTechnique, void *_Parameters)
+	bool Render(CRenderManager *RenderManager, CEffectTechnique	*EffectTechnique, void *_Parameters, int vertexsToRender)
 	{
 		CEffectVertexShader *l_EffectVertexShader = EffectTechnique->GetVertexShader();
 		CEffectPixelShader *l_EffectPixelShader = EffectTechnique->GetPixelShader();
 		CEffectGeometryShader *l_EffectGeometryShader = EffectTechnique->GetGeometryShader();
+
+		int l_VertexsToRender = (vertexsToRender >= 0) ? vertexsToRender : m_VertexsCount;
 
 		if(l_EffectPixelShader==NULL || l_EffectVertexShader==NULL)
 			return false;
@@ -81,10 +83,10 @@ public:
 			ID3D11Buffer *l_SceneConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 			ID3D11Buffer *l_LightConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
 			ID3D11Buffer *l_AnimationConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
-			ID3D11Buffer *l_MaterialParametersConstantBufferGS = l_EffectVertexShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
-			ID3D11Buffer* GSBuffers[4] = { l_SceneConstantBufferVS, l_LightConstantBufferVS, l_AnimationConstantBufferVS, l_MaterialParametersConstantBufferVS };
+			ID3D11Buffer *l_MaterialParametersConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
+			ID3D11Buffer* GSBuffers[4] = { l_SceneConstantBufferGS, l_LightConstantBufferGS, l_AnimationConstantBufferGS, l_MaterialParametersConstantBufferGS };
 			//ID3D11Buffer *l_ConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(0);
-
+			
 			l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferGS, 0, NULL, _Parameters, 0, 0);
 			//l_DeviceContext->GSSetConstantBuffers(0, 1, &l_ConstantBufferGS);
 			l_DeviceContext->GSSetConstantBuffers(0, 4, GSBuffers);
@@ -99,14 +101,14 @@ public:
 		ID3D11Buffer *l_SceneConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_LightConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_AnimationConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
-		ID3D11Buffer *l_MaterialParametersConstantBufferPS = l_EffectVertexShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
+		ID3D11Buffer *l_MaterialParametersConstantBufferPS = l_EffectPixelShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
 
 		l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferPS, 0, NULL, _Parameters, 0, 0);
 
 		ID3D11Buffer* PSBuffers[4] = { l_SceneConstantBufferPS, l_LightConstantBufferPS, l_AnimationConstantBufferPS, l_MaterialParametersConstantBufferPS };
 		l_DeviceContext->PSSetConstantBuffers(0, 4, PSBuffers);
 
-		l_DeviceContext->Draw(m_VertexsCount, 0);
+		l_DeviceContext->Draw(l_VertexsToRender, 0);
 		return true;
 	}
 
@@ -139,6 +141,7 @@ ClassName(void *Vtxs, unsigned int VtxsCount, unsigned int PrimitiveCount, bool 
 } \
 };
 
+CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABPointsListRenderableVertexs, D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
 CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABLinesListRenderableVertexs, D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABTrianglesListRenderableVertexs, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(CUABTrianglesStripRenderableVertexs, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);

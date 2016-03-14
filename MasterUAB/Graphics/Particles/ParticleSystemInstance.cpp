@@ -28,6 +28,9 @@ CParticleSystemInstance::CParticleSystemInstance(CXMLTreeNode &TreeNode) :
 	{
 		m_ParticleData[i].Position = Vect3f(0, 0, 0);
 	}
+
+	m_RenderableVertex = new CUABPointsListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE, MAX_PARTICLE_PER_INSTANCE, true);
+	//m_RenderableVertex = new CUABTrianglesListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE, MAX_PARTICLE_PER_INSTANCE, true);
 }
 
 CParticleSystemInstance::~CParticleSystemInstance(void)
@@ -131,42 +134,51 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 			--m_ActiveParticles;
 			m_ParticleData[i] = m_ParticleData[m_ActiveParticles];
 			--i;
-		}		
-		else
-		{
-			m_ParticleRenderableData[i] = (MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX*)malloc(sizeof(MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX));
-			m_RenderableVertex = new CUABTrianglesStripRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData[i], 1, 1, true);
 		}
 	}
 }
 
 void CParticleSystemInstance::Render(CRenderManager *RM)
 {
+	RM->GetContextManager()->SetWorldMatrix(GetTransform());
 	CRenderableObject::Render(RM);
 
 	for (int i = 0; i < m_ActiveParticles; ++i)
 	{
 		ParticleData *particle = &m_ParticleData[i];
 
-		m_ParticleRenderableData[i]->Position = particle->Position;
-		/*m_ParticleRenderableData[i]->Color = particle->LastColor.Lerp(particle->NextColor, ColorControlAlpha);
-		m_ParticleRenderableData[i]->UV.x = mathUtils::Lerp<float>(particle->LastSize, particle->NextSize, SizeControlAlpha);*/
-		m_ParticleRenderableData[i]->Color = particle->Color;
-		m_ParticleRenderableData[i]->UV.x = particle->Size;
-		m_ParticleRenderableData[i]->UV.y = particle->Angle;
-		m_ParticleRenderableData[i]->UV2.x = (float)particle->CurrentFrame;
-		m_ParticleRenderableData[i]->UV2.y = 0;
+		m_ParticleRenderableData[i].Position = particle->Position;
+	    /*m_ParticleRenderableData[i].Color = particle->LastColor.Lerp(particle->NextColor, ColorControlAlpha);
+		m_ParticleRenderableData[i].UV.x = mathUtils::Lerp<float>(particle->LastSize, particle->NextSize, SizeControlAlpha);*/
+		m_ParticleRenderableData[i].Color = particle->Color;
+		m_ParticleRenderableData[i].UV.x = particle->Size;
+		m_ParticleRenderableData[i].UV.y = particle->Angle;
+		m_ParticleRenderableData[i].UV2.x = (float)particle->CurrentFrame;
+		m_ParticleRenderableData[i].UV2.y = 0;
 	}
 
 	if (m_ActiveParticles > 0)
 	{
 		CMaterial* l_Material = m_Type->GetMaterial();
-		l_Material->Apply();
+ 		l_Material->Apply();
 		CEffectTechnique* l_EffectTechnique = l_Material->GetRenderableObjectTechnique()->GetEffectTechnique();
 		CEffectManager::SetSceneConstants(l_EffectTechnique);
 		m_RenderableVertex->UpdateVertexs(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE);
-		m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData());
+		m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData(), m_ActiveParticles);
 	}
+
+	/*
+	m_ParticleRenderableData[0].Position = Vect3f(0, 0, 0);
+	m_ParticleRenderableData[1].Position = Vect3f(1, 0, 0);
+	m_ParticleRenderableData[2].Position = Vect3f(0, 1, 0);
+
+	CMaterial* l_Material = m_Type->GetMaterial();
+	l_Material->Apply();
+	CEffectTechnique* l_EffectTechnique = l_Material->GetRenderableObjectTechnique()->GetEffectTechnique();
+	CEffectManager::SetSceneConstants(l_EffectTechnique);
+	m_RenderableVertex->UpdateVertexs(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE);
+	m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData(), 3);
+	*/
 }
 
 //void CParticleSystemInstance::RenderDebug(CRenderManager *RM)

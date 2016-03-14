@@ -860,10 +860,21 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
+		class_<CEffectGeometryShader, CEffectShader>("CEffectGeometryShader")
+			.def(constructor<const CXMLTreeNode&>())
+			.def("reload", &CEffectGeometryShader::Reload)
+			.def("load", &CEffectGeometryShader::Load)
+			.def("set_constant_buffer", &CEffectGeometryShader::SetConstantBuffer)
+			.def("get_geometry_shader", &CEffectGeometryShader::GetGeometryShader)
+			//.def("get_constant_buffer", &CEffectPixelShader::GetConstantBuffer)
+	];
+
+	module(m_LS)[
 		class_<CEffectTechnique, CNamed>("CEffectTechnique")
 			.def(constructor<CXMLTreeNode&>())
 			.def("get_vertex_shader", &CEffectTechnique::GetVertexShader)
 			.def("get_pixel_shader", &CEffectTechnique::GetPixelShader)
+			.def("get_geometry_shader", &CEffectTechnique::GetGeometryShader)
 			.def("refresh", &CEffectTechnique::Refresh)
 			.def("set_constant_buffer", &CEffectTechnique::SetConstantBuffer)
 	];
@@ -887,6 +898,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("load", &CEffectManager::Load)
 			.def("get_vertex_shader", &CEffectManager::GetVertexShader)
 			.def("get_pixel_shader", &CEffectManager::GetPixelShader)
+			.def("get_geometry_shader", &CEffectManager::GetGeometryShader)
 			.def("set_scene_constants", &CEffectManager::SetSceneConstants)
 			.def("set_light_constants", &CEffectManager::SetLightConstants)
 			.def("set_lights_constants", &CEffectManager::SetLightsConstants)
