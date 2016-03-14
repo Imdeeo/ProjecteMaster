@@ -24,5 +24,5 @@ const std::string& CNamed::GetName()
 
 CEmptyPointerClass* CNamed::GetLuaNameAddress()
 {
-	return (CEmptyPointerClass*)&m_Name;
+	return (CEmptyPointerClass*)&m_Name.c_str()[0];
 }

@@ -1,3 +1,6 @@
+//OJUCUIDAO!
+#ifdef _DEBUG
+
 #include "AStar.h"
 #include "DebugRender.h"
 #include "XML\XMLTreeNode.h"
@@ -268,3 +271,6 @@ VPoints3 CAStar::SearchPath( const D3DXVECTOR3 &pointA, const D3DXVECTOR3 &point
 	}
 	return points;
 }
+
+
+#endif

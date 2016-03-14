@@ -48,6 +48,7 @@
     <ClCompile Include="Materials\MaterialParameter.cpp" />
     <ClCompile Include="Particles\ParticleManager.cpp" />
     <ClCompile Include="Particles\ParticleSystemType.cpp" />
+    <ClCompile Include="RenderHelper\RenderHelper.cpp" />
     <ClCompile Include="RenderableObjects\PoolRenderableObjectTechnique.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObject.cpp" />
     <ClCompile Include="RenderableObjects\RenderableObjectsManager.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="Effects\EffectTechnique.h" />
     <ClInclude Include="Effects\LightEffectParameters.h" />
     <ClInclude Include="Effects\SceneEffectParameters.h" />
+    <ClInclude Include="RenderHelper\RenderHelper.h" />
     <ClInclude Include="Layers\LayerManager.h" />
     <ClInclude Include="Lights\DirectionalLight.h" />
     <ClInclude Include="Lights\Light.h" />
