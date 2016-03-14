@@ -40,7 +40,7 @@ private:
 	std::uniform_real_distribution<float> m_UnitDistribution;
 	std::random_device rnd;
 
-	MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX *m_ParticleRenderableData[MAX_PARTICLE_PER_INSTANCE];
+	MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX m_ParticleRenderableData[MAX_PARTICLE_PER_INSTANCE];
 	CRenderableVertexs *m_RenderableVertex;
 public:
 	CParticleSystemInstance(){};

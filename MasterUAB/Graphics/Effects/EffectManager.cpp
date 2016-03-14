@@ -118,6 +118,11 @@ void CEffectManager::SetSceneConstants(CEffectTechnique* _EffectTechnique)
 	l_DeviceContext->UpdateSubresource(l_SceneConstantBufferVS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
 	ID3D11Buffer *l_SceneConstantBufferPS = _EffectTechnique->GetPixelShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 	l_DeviceContext->UpdateSubresource(l_SceneConstantBufferPS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
+	if (_EffectTechnique->GetGeometryShader() != nullptr)
+	{
+		ID3D11Buffer *l_SceneConstantBufferGS = _EffectTechnique->GetGeometryShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+		l_DeviceContext->UpdateSubresource(l_SceneConstantBufferGS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
+	}
 }
 
 void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
