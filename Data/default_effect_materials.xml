@@ -26,8 +26,8 @@
 		<parameter name ="BlurScale" type="float" value="2.0"/>
 	</material>
 	<material name="BloomCombineMaterial" renderable_object_technique="bloom_combine">
-		<parameter name ="m_BloomActive" type="float" value="1.0"/>
-		<parameter name ="m_BloomIntensity" type="float" value="0.1"/>
+		<parameter name ="m_BloomActive" type="float" value="0.0"/>
+		<parameter name ="m_BloomIntensity" type="float" value="0.001"/>
 		<parameter name ="m_OriginalIntensity" type="float" value="1.0"/>
 		<parameter name ="m_BloomSaturation" type="float" value="2.0"/>
 		<parameter name ="m_OriginalSaturation" type="float" value="1.5"/>
@@ -54,7 +54,7 @@
 		<parameter name ="BrightnessColorGrading" type="float" value="0.05"/>
 	</material>
 	<material name="FogMaterial" renderable_object_technique="fog">
-		<parameter name ="MaxAttenuation_StartLinearFog_EndLinearFog" type="float3" value="0.5 5 10"/>
-		<parameter name ="FogColor" type="float3" value="0.2 1 0.2"/>
+		<parameter name ="MaxAttenuation_StartLinearFog_EndLinearFog" type="float3" value="0.5 50 100"/>
+		<parameter name ="FogColor" type="float3" value="1 1 1"/>
 	</material>
 </materials>
