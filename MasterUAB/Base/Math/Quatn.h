@@ -209,33 +209,21 @@ public:
 	* @brief Returns the local up vector of the quaternion.
 	*/
 	Vect3f GetUpVector() const {
-		return Vect3f(
-			2*x*y - 2*z*w,
-			1 - 2*x*x - 2*z*z,
-			2*y*z + 2*x*w
-			);
+		return Vect3f(2 * x*y + 2 * z*w, 1 - 2 * x*x - 2 * z*z, 2 * y*z - 2 * x*w);
 	}
 
 	/**
 	* @brief Returns the local right vector of the quaternion.
 	*/
 	Vect3f GetRightVector() const {
-		return Vect3f(
-			1 - 2*y*y -2*z*z,
-			2*x*y - 2*z*w,
-			2*x*z + 2*y*w
-			);
+		return Vect3f(1 - 2 * y*y - 2 * z*z, 2 * x*y - 2 * z*w, 2 * x*z + 2 * y*w);
 	}
 
 	/**
 	* @brief Returns the local forward vector of the quaternion.
 	*/
 	Vect3f GetForwardVector() const {
-		return Vect3f(
-			2*x*z - 2*y*w,
-			2*y*z + 2*x*w,
-			1 - 2*x*x - 2*y*y
-			);
+		return Vect3f(2 * x*z - 2 * y*w, 2 * y*z + 2 * x*w, 1 - 2 * x*x - 2 * y*y);
 	}
 
 	/**

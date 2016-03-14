@@ -27,6 +27,7 @@ public:
 	
 	Vect3f GetRight() const;
 	Vect3f GetUp() const;
+	Vect3f GetForward() const;
 
 	const Vect3f & GetPosition() const { return m_Position; }
 	void SetPosition(const Vect3f &Position) { m_Position = Position; }
