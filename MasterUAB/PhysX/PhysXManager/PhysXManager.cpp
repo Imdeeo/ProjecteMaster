@@ -649,10 +649,12 @@ void CPhysXManager::Render(const std::string _name, CRenderManager *RenderManage
 
 	l_TranslationMatrix = l_ScaleMatrix*l_RotationMatrix*l_TranslationMatrix;
 
+#ifdef _DEBUG
 	RenderManager->GetContextManager()->SetWorldMatrix(l_TranslationMatrix);
 	CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
 	CEffectManager::SetSceneConstants(l_EffectTechnique);
 	RenderManager->GetDebugRender()->GetCone()->RenderIndexed(RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+#endif
 }
 
 

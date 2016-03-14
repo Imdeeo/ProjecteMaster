@@ -14,14 +14,22 @@
 #include "Effects\EffectTechnique.h"
 #include "Texture\Texture.h";
 
+#ifdef _DEBUG
 #include "DebugRender.h"
+#else
+#include "RenderHelper\RenderHelper.h"
+#endif
 
 #define SCREEN_DEPTH 20.f
 
 CRenderManager::CRenderManager()
 	: m_UseDebugCamera(false)
-	, m_CurrentRenderlistLength(0),
-	m_DebugRender(nullptr)
+	, m_CurrentRenderlistLength(0)
+#ifdef _DEBUG
+	,m_DebugRender(nullptr)
+#else
+	,m_RenderHelper(nullptr)
+#endif
 	/*m_RenderTargetView(nullptr),
 	m_DepthStencilView(nullptr)	*/
 {
@@ -29,12 +37,20 @@ CRenderManager::CRenderManager()
 
 CRenderManager::~CRenderManager()
 {
+#ifdef _DEBUG
 	CHECKED_DELETE(m_DebugRender);
+#else
+	CHECKED_DELETE(m_RenderHelper);
+#endif
 }
 
 void CRenderManager::Init()
 {
+#ifdef _DEBUG
 	m_DebugRender = new CDebugRender(m_ContextManager->GetDevice());
+#else
+	m_RenderHelper = new CRenderHelper(m_ContextManager->GetDevice());
+#endif
 }
 
 void CRenderManager::SetCurrentCamera(const CCamera& _CurrentCamera)
@@ -160,7 +176,11 @@ void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture
 
 	CEffectManager::SetSceneConstants(_EffectTechnique);
 
+#ifdef _DEBUG
 	m_DebugRender->GetQuadRV()->Render(this, _EffectTechnique,	CEffectManager::GetRawData());
+#else
+	m_RenderHelper->GetQuadRV()->Render(this, _EffectTechnique, CEffectManager::GetRawData());
+#endif
 	m_ContextManager->GetDeviceContext()->RSSetViewports(1, l_CurrentViewport);
 }
 
@@ -206,7 +226,14 @@ IDXGISwapChain*	CRenderManager::GetSwapChain()
 	return m_ContextManager->GetSwapChain();
 }
 
+#ifdef _DEBUG
 CDebugRender* CRenderManager::GetDebugRender()const
 {
 	return m_DebugRender;
 }
+#else
+CRenderHelper* CRenderManager::GetRenderHelper()const
+{
+	return m_RenderHelper;
+}
+#endif

@@ -32,7 +32,10 @@ protected:
 	CDynamicTexture *m_ShadowMap;
 	CTexture *m_ShadowMaskTexture;
 	std::vector<CRenderableObjectsManager *> m_Layers;
+
+#ifdef _DEBUG
 	virtual CRenderableVertexs* GetShape(CRenderManager *_RenderManager);
+#endif
 
 	float m_Intensity;
 	float m_StartRangeAttenuation;
@@ -69,7 +72,9 @@ public:
 	void SetEnabled(bool _Enabled) { m_Enabled = _Enabled; }
 	void SetType(TLightType _Type) { m_Type = _Type; }
 
+#ifdef _DEBUG
 	virtual void Render(CRenderManager *RenderManager);
+#endif
 	static TLightType GetLightTypeByName(const std::string &StrLightType);
 
 	virtual const Mat44f & GetTransform();

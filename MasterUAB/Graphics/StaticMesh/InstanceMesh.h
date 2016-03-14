@@ -15,7 +15,10 @@ public:
 	CInstanceMesh(const std::string &Name, const std::string &CoreName);
 	~CInstanceMesh();
 	void Render(CRenderManager *RM);
+
+#ifdef _DEBUG
 	void RenderDebug(CRenderManager *RM);
+#endif
 
 	CInstanceMesh & CInstanceMesh::operator=(CInstanceMesh &);
 };

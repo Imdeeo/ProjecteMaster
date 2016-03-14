@@ -1,3 +1,4 @@
+#ifdef _DEBUG
 #include "DebugRender.h"
 
 #include "Engine\UABEngine.h"
@@ -462,3 +463,5 @@ CEffectTechnique *	CDebugRender::GetDebugTechnique() const
 {
 	return m_EffectTechnique->GetEffectTechnique();
 }
+
+#endif
