@@ -32,66 +32,30 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		Vect3f l_BBMin = m_StaticMesh->GetBoundingBoxMax();
 		Vect3f l_BBMax = m_StaticMesh->GetBoundingBoxMin();
 		Quatf l_Q = QuatFromYawPitchRoll(m_Yaw, m_Pitch, m_Roll);
+		Vect3f l_Pos = GetPosition();
 
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
-		/*if (l_PxType == "triangle_mesh")
+		if (l_PxType == "triangle_mesh")
 		{
 			std::vector<Vect3f> l_Vertexs;
-			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, l_PxMaterial, l_Pos, qfIDENTITY, l_PxGroup);
-		}else if (l_PxType == "sphere_shape")
+			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, l_PxMaterial, l_Pos, l_Q, l_PxGroup);
+		}
+		else if (l_PxType == "sphere_shape")
 		{
-			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), l_PxMaterial, l_Pos, qfIDENTITY, l_PxGroup);
+			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), l_PxMaterial, m_StaticMesh->GetBoundingSphereCenter()+l_Pos, l_Q, l_PxGroup);
 		}
 		else if (l_PxType == "plane_shape")
 		{
 			Vect3f l_Normal = Vect3f(.0f, 1.0f, .0f);
-			float l_Distance = 100.0f;
-
-			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, l_Distance, l_PxMaterial, l_Pos, qfIDENTITY, l_PxGroup);
+			float l_Distance = 0.0f;			
+			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, l_Distance, l_PxMaterial, l_Pos, l_Q, l_PxGroup);
 		}
-		else
+		else if (l_PxType == "box_shape")
 		{
-			//l_PhysXManager->CreateDinamicBox(GetName(), l_BB, l_PxMaterial, GetPosition(), qfIDENTITY, 1.0f, l_PxGroup);
-			l_PhysXManager->CreateStaticBox(GetName(), Vect3f(20.f,5.f,20.f), l_PxMaterial, GetPosition(), qfIDENTITY, l_PxGroup);
-		}*/
-		if (l_PxType == "plane_shape")
-		{
-			/*Vect3f l_Pos = Vect3f(0.f,0.f,0.f);
-			Vect3f l_Normal = Vect3f(.0f, 1.0f, .0f);
-			float l_Distance = 100.0f;
-			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, l_Distance, l_PxMaterial, l_Pos, l_Q, l_PxGroup);*/
-			Vect3f l_Pos = GetPosition();
-			Vect3f aux = l_BBMax - l_BBMin;
-			aux.x = abs(aux.x);
-			aux.y = abs(aux.y);
-			aux.y = 0.05;
-			l_Pos.y = l_Pos.y - 0.05*0.5;
-
-			aux.z = abs(aux.z);
-			//Vect3f l_Pos = (l_BBMax + l_BBMin) / 2;
-			l_PhysXManager->CreateRigidStatic(l_Name, aux, l_Pos, l_Q, "FisicasAux");
-		}
-		else
-		{
-			Vect3f l_Pos = GetPosition();
-			Vect3f aux = l_BBMax - l_BBMin;
-			aux.x = abs(aux.x);
-			aux.y = abs(aux.y);
-			if (aux.y == 0)
-			{
-				aux.y = 0.05;
-				l_Pos.y = l_Pos.y - 0.05*0.5;
-			}
-			
-			aux.z = abs(aux.z);
-			//Vect3f l_Pos = (l_BBMax + l_BBMin) / 2;
-			l_PhysXManager->CreateRigidStatic(l_Name, aux, l_Pos, l_Q, "FisicasAux");
+			l_PhysXManager->CreateStaticBox(GetName(), Vect3f(20.f, 5.f, 20.f), l_PxMaterial, m_StaticMesh->GetBoundingSphereCenter() + l_Pos, l_Q, l_PxGroup);
 		}
 	}
-	else
-	{
-		float aux = 3;
-	}
+	
 }
 
 CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreName) :CRenderableObject()
