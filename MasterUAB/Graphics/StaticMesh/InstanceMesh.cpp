@@ -52,7 +52,12 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		}
 		else if (l_PxType == "box_shape")
 		{
-			l_PhysXManager->CreateStaticBox(GetName(), Vect3f(20.f, 5.f, 20.f), l_PxMaterial, m_StaticMesh->GetBoundingSphereCenter() + l_Pos, l_Q, l_PxGroup);
+			Vect3f size = l_BBMax - l_BBMin;
+			size.x = abs(size.x);
+			size.y = abs(size.y);
+			size.z = abs(size.z);
+
+			l_PhysXManager->CreateStaticBox(GetName(), size, l_PxMaterial, m_StaticMesh->GetBoundingSphereCenter() + l_Pos, l_Q, l_PxGroup);
 		}
 	}
 	
