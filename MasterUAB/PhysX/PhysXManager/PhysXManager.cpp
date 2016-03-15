@@ -19,6 +19,7 @@
 
 #include "XML\XMLTreeNode.h"
 
+#include <iostream>
 #include <assert.h>
 
 #define N_CPUS 2
@@ -155,7 +156,17 @@ public:
 	void onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count){}
 	void onWake(physx::PxActor** actors, physx::PxU32 count){}
 	void onSleep(physx::PxActor** actors, physx::PxU32 count){}
-	void onContact(const physx::PxContactPairHeader& pairHeader,const physx::PxContactPair* pairs, physx::PxU32 nbPairs){}
+	void onContact(const physx::PxContactPairHeader& pairHeader,const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
+	{
+		size_t l_firstActorIndex = (size_t)pairs->shapes[0]->getActor()->userData;
+		size_t l_secondActorIndex = (size_t)pairs->shapes[0]->getActor()->userData;
+
+		std::string l_firstActorName = m_ActorNames[l_firstActorIndex];
+		std::string l_secondActorName = m_ActorNames[l_secondActorIndex];
+
+		printf("Contact \"%s\" with \"%s\"", l_firstActorName.c_str(), l_secondActorName.c_str());
+
+	}
 	void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 	{
 		for(physx::PxU32 i = 0; i < count; i++)
@@ -174,9 +185,18 @@ public:
 		}
 	}
 
-	void onShapeHit(const physx::PxControllerShapeHit& hit){}
-	void onControllerHit(const physx::PxControllersHit& hit){}
-	void onObstacleHit(const physx::PxControllerObstacleHit& hit){}
+	void onShapeHit(const physx::PxControllerShapeHit& hit)
+	{
+		std::cout << "Shape hit!\n";
+	}
+	void onControllerHit(const physx::PxControllersHit& hit)
+	{
+		printf("Controller hit!");
+	}
+	void onObstacleHit(const physx::PxControllerObstacleHit& hit)
+	{
+		printf("Obstacle hit!");
+	}
 
 	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, int _group)
 	{
@@ -203,7 +223,9 @@ public:
 		physx::PxRigidDynamic* l_actor = m_CharacterControllers[_name]->getActor();
 		/*physx::PxShape *shape = l_actor->createShape(physx::PxBoxGeometry(_radius, _height + _radius * 2, _radius), *l_Material);
 
-		L_PutGroupToShape(shape, _group);*/
+		L_PutGroupToShape(shape, _group);
+
+		shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);*/
 
 		AddActor(_name,_position,Quatf(0,0,0,1),l_actor);
 	}
