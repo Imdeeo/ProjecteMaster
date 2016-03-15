@@ -288,7 +288,10 @@ bool CSceneRendererCommandManager::Reload()
 				{
 					AddUpdateResource(l_Name, new CSetLightPositionSceneRendererCommand(l_Element));
 				}
-
+				else if (l_Element.GetName() == std::string("render_debug_shadowmap"))
+				{
+					AddUpdateResource(l_Name, new CRenderDebugShadowMapsSceneRendererCommand(l_Element));
+				}
 
 			}
 		}
