@@ -47,7 +47,12 @@ void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 {
 	m_ViewShadowMap.SetIdentity();
 	CCameraController* l_auxCameraController = UABEngine.GetCameraControllerManager()->GetMainCamera();
-	m_Position = l_auxCameraController->GetPosition() + l_auxCameraController->GetDirection()*2 - GetDirection();
+	Vect3f myDirection = GetDirection();
+	Vect3f l_CameraDirection = l_auxCameraController->GetDirection();
+
+	Vect3f l_CameraPosition = l_auxCameraController->GetPosition();
+	m_Position = l_CameraPosition + l_CameraDirection * 2 - myDirection;
+	m_Position.y = l_CameraPosition.y + 10;
 	Vect3f up = Vect3f(m_Direction.z, m_Direction.y, m_Direction.x);
 	up = ((up) ^ (m_Direction));
 	m_ViewShadowMap.SetFromLookAt(m_Position, m_Position + m_Direction, up.y < 0 ? (up * -1) : up);
