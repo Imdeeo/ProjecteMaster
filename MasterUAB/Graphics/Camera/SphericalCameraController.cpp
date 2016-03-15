@@ -9,7 +9,7 @@
 CSphericalCameraController::CSphericalCameraController(const CXMLTreeNode & _TreeNode) : CCameraController(_TreeNode)
 , m_Zoom(50.f)
 , m_ZoomSpeed(2.f)
-, m_Offset(_TreeNode.GetVect3fProperty("offset", Vect3f(-15.f, -15.f, -15.f)))
+, m_Offset(_TreeNode.GetFloatProperty("offset", 15.f))
 , m_CameraPosition(m_Position - m_Offset)
 {
 	m_Rotation.SetFromAngleAxis(m_Offset, 0);
@@ -33,11 +33,12 @@ void CSphericalCameraController::Update(float ElapsedTime)
 {
 	if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
 	{
-		m_CameraPosition = m_Position - (GetDirection()*m_Offset);
 
 		Vect3f cameraMovement(0, 0, 0);
 		cameraMovement.x = CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 0.5f;
 		cameraMovement.y = CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * 0.5f;
 		Move(cameraMovement);
+
+		m_CameraPosition = m_Position - (GetDirection()*m_Offset);
 	}
 }
