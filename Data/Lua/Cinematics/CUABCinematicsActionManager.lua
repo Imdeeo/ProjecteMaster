@@ -1,3 +1,6 @@
+dofile("Data\\Lua\\Cinematics\\CUABCinematicsAction.lua")
+dofile("Data\\Lua\\Cinematics\\CUABCinematicsActionSetCamera.lua")
+
 class 'CUABCinematicsActionManager'
 	function CUABCinematicsActionManager:__init()
 		self.m_Actions={}
@@ -34,16 +37,16 @@ class 'CUABCinematicsActionManager'
 		self.m_CurrentExecutedAction=1
 		
 		local l_XMLTreeNode=CXMLTreeNode()
-		local l_Loaded=l_XMLTreeNode:LoadFile(Filename)
+		local l_Loaded=l_XMLTreeNode:load_file("Data\\level_2\\cinematic_manager.xml")
 		
 		if l_Loaded then
-			for i=0, l_XMLTreeNode:GetNumChildren() do
-				local l_Atts=l_XMLTreeNode:GetChild(i)
-				local l_ElemName=l_Atts:GetName()
+			for i=0, l_XMLTreeNode:get_num_children() do
+				local l_Atts=l_XMLTreeNode:get_child(i)
+				local l_ElemName=l_Atts:get_name()
 				
 				if l_ElemName=="on" or
 					l_ElemName=="after_last_action" then
-					local l_ActionName=l_Atts:GetPszProperty("action", "")
+					local l_ActionName=l_Atts:get_psz_property("action", "",false)
 					local l_Action=nil
 					
 					if l_ActionName=="set_camera" then
@@ -68,7 +71,7 @@ class 'CUABCinematicsActionManager'
 				end
 			end
 		else
-			print("File '"..Filename.."'not correctly loaded")
+			utils_log("File '"..Filename.."'not correctly loaded")
 		end
 	end
 --end
