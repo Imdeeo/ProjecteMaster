@@ -750,7 +750,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_camera", &CFPSCameraController::SetCamera)
 			.def("add_yaw", &CFPSCameraController::AddYaw)
 			.def("add_pitch",&CFPSCameraController::AddPitch)
-			.def("get_direction", &CFPSCameraController::GetDirection)
+			.def("get_forward", &CFPSCameraController::GetForward)
 	];
 
 	module(m_LS) [
@@ -766,7 +766,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("add_zoom", &CSphericalCameraController::AddZoom)
 			.def("set_zoom", &CSphericalCameraController::SetZoom)
 			.def("set_camera", &CSphericalCameraController::SetCamera)
-			.def("get_direction", &CSphericalCameraController::GetDirection)
 			.def("move", &CSphericalCameraController::Move)
 	];
 
