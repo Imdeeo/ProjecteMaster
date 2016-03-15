@@ -13,7 +13,7 @@
 
 CCameraControllerManager::CCameraControllerManager():
 	m_CurrentCamera(),
-	m_CurrentCameraControl(0)
+	m_CurrentCameraControl(1)
 {
 
 }
@@ -26,13 +26,15 @@ CCameraControllerManager::~CCameraControllerManager()
 void CCameraControllerManager::ChooseMainCamera(std::string _CurrentCamera)
 {
 	m_MainCamera = GetResource(_CurrentCamera);
+	m_MainCamera->SetCamera(&m_CurrentCamera);
+	UABEngine.GetRenderManager()->SetCurrentCamera(m_CurrentCamera);
 }
 
 void CCameraControllerManager::ChooseDebugCamera(std::string _CurrentCamera)
 {
-	GetResource(_CurrentCamera)->SetCamera(&m_CurrentCamera);
-	UABEngine.GetRenderManager()->SetCurrentCamera(m_CurrentCamera);
 	m_DebugCamera = GetResource(_CurrentCamera);
+	m_DebugCamera->SetCamera(&m_CurrentCamera);
+	UABEngine.GetRenderManager()->SetCurrentCamera(m_CurrentCamera);
 }
 
 
