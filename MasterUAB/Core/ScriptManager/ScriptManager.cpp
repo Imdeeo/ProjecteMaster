@@ -373,6 +373,18 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CEmptyPointerClass>("CEmptyPointerClass")
 	];
+
+	module(m_LS)[
+		class_<CXMLTreeNode>("CXMLTreeNode")
+			.def(constructor<>())
+			.def("LoadFile", &CXMLTreeNode::LoadFile)
+			.def("GetNumChildren", &CXMLTreeNode::GetNumChildren)
+			.def(const_self())
+			.def("GetName", &CXMLTreeNode::GetName)
+			.def("GetPszProperty", &CXMLTreeNode::GetPszProperty)
+			.def("GetFloatProperty", &CXMLTreeNode::GetFloatProperty)
+	];
+
 // CORE---------------------------------------------------------------------------------------------
 
 	module(m_LS)[
