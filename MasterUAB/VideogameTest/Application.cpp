@@ -138,6 +138,7 @@ void CApplication::Update(float _ElapsedTime)
 	UABEngine.GetCameraControllerManager()->Update(_ElapsedTime);
 	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 	UABEngine.GetLayerManager()->Update(_ElapsedTime);
+	UABEngine.GetScriptManager()->RunCode("luaUpdate(" + std::to_string(_ElapsedTime) + ")");
 }
 
 void CApplication::Render()
