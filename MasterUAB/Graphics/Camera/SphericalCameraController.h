@@ -8,7 +8,7 @@ class CSphericalCameraController : public CCameraController
 private:
 	float						m_Zoom;
 	float						m_ZoomSpeed;
-	float						m_Offset;
+	float						m_Distance;
 	Vect3f						m_CameraPosition;
 public:
 	CSphericalCameraController(const CXMLTreeNode & _TreeNode);

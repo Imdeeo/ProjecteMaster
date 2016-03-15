@@ -18,7 +18,6 @@ public:
 	CCameraController(const CXMLTreeNode &);
 	virtual ~CCameraController();
 	virtual void SetCamera(CCamera *Camera) const = 0;
-	Vect3f GetDirection() const;
 	virtual void AddYaw(float Radians);
 	virtual void AddPitch(float Radians);
 	

@@ -52,7 +52,7 @@ void CFPSCameraController::AddPitch(float Radians)
 
 void CFPSCameraController::SetCamera(CCamera *Camera) const
 {
-	Vect3f l_Direction = GetDirection();
+	Vect3f l_Direction = GetForward();
 	Camera->SetFOV(1.13446f);
 	Camera->SetAspectRatio(16.0f/9.0f);
 	Camera->SetPosition(m_Position);
