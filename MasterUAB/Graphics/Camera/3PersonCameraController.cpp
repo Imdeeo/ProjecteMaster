@@ -50,7 +50,6 @@ void C3PersonCameraController::AddPitch(float Radians)
 
 void C3PersonCameraController::SetCamera(CCamera *Camera) const
 {
-	Vect3f l_Direction = GetDirection();
 	Camera->SetFOV(0.87266f);
 	Camera->SetAspectRatio(16.0f/9.0f);
 	Camera->SetPosition(m_Position);
@@ -85,4 +84,7 @@ void C3PersonCameraController::Update(float ElapsedTime)
 	Vect3f l_offset = Vect3f(l_2Doffset.x, m_Offset.y, l_2Doffset.y);
 	Vect3f l_NewPos = m_Target->GetPosition() - l_offset;
 	Move(l_NewPos-m_Position, ElapsedTime);
+
+	//Vect3f l_Direction = GetDirection();
+	//m_Rotation.SetFromScaledAxis(l_Direction);
 }
