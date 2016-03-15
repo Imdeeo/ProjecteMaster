@@ -216,7 +216,7 @@ public:
 	* @brief Returns the local right vector of the quaternion.
 	*/
 	Vect3f GetRightVector() const {
-		return Vect3f(1 - 2 * y*y - 2 * z*z, 2 * x*y - 2 * z*w, 2 * x*z + 2 * y*w);
+		return -Vect3f(1 - 2 * y*y - 2 * z*z, 2 * x*y - 2 * z*w, 2 * x*z + 2 * y*w);
 	}
 
 	/**

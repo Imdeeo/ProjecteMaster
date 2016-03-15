@@ -20,11 +20,11 @@ C3PersonCameraController::C3PersonCameraController(const CXMLTreeNode & _TreeNod
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
 {
-	m_offset = _TreeNode.GetVect3fProperty("offset", Vect3f(0.0f, 0.0f, 0.0f), true);
+	m_Offset = _TreeNode.GetVect3fProperty("offset", Vect3f(0.0f, 0.0f, 0.0f), true);
 	m_Target = UABEngine.GetLayerManager()->GetResource(_TreeNode.GetPszProperty("layer"))->GetResource(_TreeNode.GetPszProperty("target"));
-	m_Position = m_Target->GetPosition() - m_offset;
+	m_Position = m_Target->GetPosition() - m_Offset;
 	Vect2f zero = Vect2f(1, 0);
-	Vect2f offset = Vect2f(m_offset.x, m_offset.z);
+	Vect2f offset = Vect2f(m_Offset.x, m_Offset.z);
 	m_distance = sqrtf(offset.x*offset.x + offset.y*offset.y);
 	m_angle = acosf(zero*offset.GetNormalized());
 }
@@ -86,7 +86,7 @@ void C3PersonCameraController::Update(float ElapsedTime)
 	}
 	Vect2f l_2Doffset = Vect2f(cos(m_angle),sin(m_angle));
 	l_2Doffset = l_2Doffset*m_distance;
-	Vect3f l_offset = Vect3f(l_2Doffset.x, m_offset.y, l_2Doffset.y);
+	Vect3f l_offset = Vect3f(l_2Doffset.x, m_Offset.y, l_2Doffset.y);
 	Vect3f l_NewPos = m_Target->GetPosition() - l_offset;
 	Move(l_NewPos-m_Position, ElapsedTime);
 }

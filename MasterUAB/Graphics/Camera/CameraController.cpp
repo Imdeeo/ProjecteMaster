@@ -25,11 +25,6 @@ Vect3f CCameraController::GetUp() const
 	return m_Rotation.GetUpVector();
 }
 
-Vect3f CCameraController::GetForward() const
-{
-	return m_Rotation.GetForwardVector();
-}
-
 void CCameraController::AddYaw(float Radians)
 {
 	Quatf l_YawRotation = Quatf(0, 0, 0, 1);
@@ -46,5 +41,5 @@ void CCameraController::AddPitch(float Radians)
 
 Vect3f CCameraController::GetDirection() const
 {
-	return m_Rotation.GetScaledAxis();
+	return m_Rotation.GetForwardVector();
 }
