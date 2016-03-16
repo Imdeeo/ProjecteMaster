@@ -41,7 +41,7 @@ void C3PersonCameraController::SetCamera(CCamera *Camera) const
 	Camera->SetFOV(0.87266f);
 	Camera->SetAspectRatio(16.0f/9.0f);
 
-	Camera->SetLookAt(m_Target->GetPosition() + m_LookAtOffset);
+	Camera->SetLookAt(m_Position + GetForward());
 	Camera->SetPosition(m_Position);
 	
 	Camera->SetUp(GetUp());
@@ -56,12 +56,11 @@ Vect3f C3PersonCameraController::GetDirection() const
 void C3PersonCameraController::Update(float ElapsedTime)
 {
 	if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
-
 	{
 		float l_Yaw = CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 2.f;
 		float l_Pitch = CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * -0.5f;
 		AddYaw(l_Yaw*m_YawSpeed);
 		AddPitch(l_Pitch*m_PitchSpeed);
 	}
-	m_Position = m_Target->GetPosition() - (GetForward()*m_Offset.x);
+	m_Position = m_Target->GetPosition() - (GetForward()*m_Offset.x) + (GetUp()*m_Offset.y) + (GetRight()*m_Offset.z);
 }
