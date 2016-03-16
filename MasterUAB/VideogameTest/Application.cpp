@@ -21,7 +21,7 @@
 
 CApplication::CApplication( CContextManager *_ContextManager)
 	: m_BackgroundColor(.2f, .1f, .4f)
-	, m_CurrentCamera_vision(0)
+	, m_CurrentCamera_vision(1)
 	, m_RenderCameraCube(false)
 	, m_Timer(0)
 {
@@ -138,6 +138,7 @@ void CApplication::Update(float _ElapsedTime)
 	UABEngine.GetCameraControllerManager()->Update(_ElapsedTime);
 	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 	UABEngine.GetLayerManager()->Update(_ElapsedTime);
+	UABEngine.GetScriptManager()->RunCode("luaUpdate(" + std::to_string(_ElapsedTime) + ")");
 }
 
 void CApplication::Render()
@@ -157,9 +158,10 @@ void CApplication::Init()
 	{
 		m_MainCameraName = "FPSCamera";
 	}
-	m_DebugCameraName = "SphericalCamera";
-	UABEngine.GetCameraControllerManager()->ChooseMainCamera(m_MainCameraName);
+	m_DebugCameraName = "SphericalCamera";	
 	UABEngine.GetCameraControllerManager()->ChooseDebugCamera(m_DebugCameraName);
+	UABEngine.GetCameraControllerManager()->ChooseMainCamera(m_MainCameraName);
+
 
 	CCharacterManager::GetInstance()->Load("Data\\level_"+UABEngine.GetLevelLoaded()+"\\characters.xml");
 }
