@@ -16,6 +16,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dummy.cpp" />
+    <ClCompile Include="GUIManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GUIManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{143D2636-2E2A-469A-97F5-878EFC7A2A26}</ProjectGuid>
