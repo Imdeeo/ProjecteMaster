@@ -83,7 +83,7 @@ void CUABEngine::Init()
 	m_LayerManager->GetLayer()->AddResource("Cinematic",m_Cinematic);
 	m_ScriptManager->Initialize();
 	m_CameraControllerManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
-	m_Cinematic->Play("true");
+	m_Cinematic->Play();
 	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
 	m_RenderManager->Init();
 

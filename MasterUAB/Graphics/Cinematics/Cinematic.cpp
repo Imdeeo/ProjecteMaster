@@ -30,8 +30,9 @@ void CCinematic::LoadXML(const std::string &FileName)
 		CXMLTreeNode l_Input = l_XML["cinematic"];
 		if (l_Input.Exists())
 		{
-			m_Name=l_Input.GetPszProperty("name");
-			m_Duration=l_Input.GetFloatProperty("duration", 0);
+			m_Name = l_Input.GetPszProperty("name");
+			m_Duration = l_Input.GetFloatProperty("duration", 0);
+			m_Cycle = l_Input.GetBoolProperty("cycle", false);
 			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
 			{
 				CXMLTreeNode l_Element = l_Input(i);
@@ -75,12 +76,12 @@ void CCinematic::Update(float _ElapsedTime)
 	}
 }
 
-void CCinematic::Play(bool _cycle)
+void CCinematic::Play()
 {
 	m_Playing=true;
 	for (size_t i = 0; i<m_CinematicObjects.size(); ++i)
 	{
-		m_CinematicObjects[i]->Play(_cycle);
+		m_CinematicObjects[i]->Play(m_Cycle);
 	}
 }
 
