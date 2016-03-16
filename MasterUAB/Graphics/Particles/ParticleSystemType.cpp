@@ -25,8 +25,8 @@ CParticleSystemType::CParticleSystemType(CXMLTreeNode &TreeNode) : CNamed(TreeNo
 	m_StartingSpeed2 = l_Element.GetVect3fProperty("start_speed_2", Vect3f(0.0, 0.0, 0.0));
 	m_StartingAcceleration1 = l_Element.GetVect3fProperty("start_acc_1", Vect3f(0.0, 0.0, 0.0));
 	m_StartingAcceleration2 = l_Element.GetVect3fProperty("start_acc_2", Vect3f(0.0, 0.0, 0.0));
-	m_Color1 = CColor(TreeNode.GetVect4fProperty("color_1", Vect4f(255.0f, 255.0f, 255.0f, 1.0f)));
-	m_Color2 = CColor(TreeNode.GetVect4fProperty("color_2", Vect4f(255.0f, 255.0f, 255.0f, 1.0f)));
+	m_Color1 = CColor(TreeNode.GetVect4fProperty("color_1", Vect4f(1.0, 1.0f, 1.0f, 1.0f)));
+	m_Color2 = CColor(TreeNode.GetVect4fProperty("color_2", Vect4f(1.0f, 1.0f, 1.0f, 1.0f)));
 }
 
 CParticleSystemType::~CParticleSystemType(void)
