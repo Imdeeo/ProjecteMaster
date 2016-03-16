@@ -2,5 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dummy.cpp" />
+    <ClCompile Include="GUIManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GUIManager.h" />
   </ItemGroup>
 </Project>
