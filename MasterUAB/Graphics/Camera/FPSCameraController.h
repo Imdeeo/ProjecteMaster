@@ -20,7 +20,6 @@ public:
 	void SetCamera(CCamera *Camera) const;
 	void AddYaw(float Radians);
 	void AddPitch(float Radians);
-	Vect3f GetDirection() const;
 	void Update(float ElapsedTime);
 };
 

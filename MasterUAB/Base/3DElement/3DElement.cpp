@@ -4,41 +4,72 @@
 #include <assert.h>
 
 
-C3DElement::C3DElement(void)
+C3DElement::C3DElement(void):
+	m_Position(Vect3f(0, 0, 0)),
+	m_Rotation(Quatf(0, 0, 0, 1))
 {
 }
 
 C3DElement::C3DElement(const Vect3f &Position):
-	m_Position(Position)
+	m_Position(Position),
+	m_Rotation(Quatf(0, 0, 0, 1))
 {
 }
+
+C3DElement::C3DElement(const Vect3f &Position, const Quatf &Rotation) :
+	m_Position(Position),
+	m_Rotation(Rotation)
+{
+}
+
 C3DElement::C3DElement(const Vect3f &Position, float Yaw, float Pitch, float Roll):
 	m_Position(Position),
-	m_Yaw(Yaw),
-	m_Pitch(Pitch),
-	m_Roll(Roll)
+	m_Rotation(Quatf(0, 0, 0, 1))
+{
+	m_Rotation.QuatFromEuler(Vect3f(Yaw, Pitch, Roll));
+}
+
+C3DElement::C3DElement(const Quatf &Rotation) :
+	m_Position(Vect3f(0, 0, 0)),
+	m_Rotation(Rotation)
 {
 }
+
 C3DElement::C3DElement(float Yaw, float Pitch, float Roll):
-	m_Yaw(Yaw),
-	m_Pitch(Pitch),
-	m_Roll(Roll)
-{}
-C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode)
+	m_Position(Vect3f(0, 0, 0)),
+	m_Rotation(Quatf(0, 0, 0, 1))
+{
+	m_Rotation.QuatFromEuler(Vect3f(Yaw, Pitch, Roll));
+}
+
+C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode):
+	m_Position(Vect3f(0, 0, 0)),
+	m_Rotation(Quatf(0, 0, 0, 1))
 {
 	CXMLTreeNode l_Element = XMLTreeNode; 
 	const char * existPos = l_Element.GetPszProperty("position");
 	if (existPos == NULL)
 	{
-		m_Position = l_Element.GetVect3fProperty("pos", Vect3f(0.0f, 0.0f, 0.0f), true);
+		m_Position = l_Element.GetVect3fProperty("pos", Vect3f(.0f, 0.0f, .0f), true);
 	}
 	else
 	{
-		m_Position = l_Element.GetVect3fProperty("position", Vect3f(0.0f, 0.0f, 0.0f), true);
+		m_Position = l_Element.GetVect3fProperty("position", Vect3f(.0f, .0f, .0f), true);
 	}
-	m_Yaw = l_Element.GetFloatProperty("yaw",0.f,true);
-	m_Pitch = l_Element.GetFloatProperty("pitch",0.f,true);
-	m_Roll = l_Element.GetFloatProperty("roll",0.f,true);
+	const char * existRotation = l_Element.GetPszProperty("rotation");
+	if (existRotation == NULL)
+	{
+		
+		m_Rotation.QuatFromYawPitchRoll(
+			l_Element.GetFloatProperty("yaw", .0f, true),
+			l_Element.GetFloatProperty("pitch", .0f, true),
+			l_Element.GetFloatProperty("roll", .0f, true));
+
+	} else
+	{
+		m_Rotation = l_Element.GetQuatfProperty("rotation", Quatf(.0f, .0f, .0f, 1.f), true);
+	}
+	
 	const char * existScale = l_Element.GetPszProperty("scale");
 	if (existScale == NULL)
 	{
@@ -66,28 +97,15 @@ const Mat44f & C3DElement::GetTransform()
 {
 	m_ScaleMatrix.SetIdentity();
 	m_ScaleMatrix.Scale(m_Scale.x, m_Scale.y, m_Scale.z);
-	
+
 	m_RotationMatrix.SetIdentity();
-
-	/* Using m_RotationMatrix.SetPitchRollYaw has problems with
-	multiplication order,so it's better to do rotations separately. */
-	Mat44f l_RotX;
-	l_RotX.SetIdentity();
-	l_RotX.RotByAngleX(m_Roll);
-	Mat44f l_RotY;
-	l_RotY.SetIdentity();
-	l_RotY.RotByAngleY(m_Yaw);
-	Mat44f l_RotZ;
-	l_RotZ.SetIdentity();
-	l_RotZ.RotByAngleZ(m_Pitch);
-
-	m_RotationMatrix=l_RotX*l_RotZ*l_RotY;
+	m_RotationMatrix = m_Rotation.rotationMatrix();
 
 	m_TranslationMatrix.SetIdentity();
 	m_TranslationMatrix.SetPos(m_Position.x, m_Position.y, m_Position.z);
 
-	m_TransformMatrix=m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
-	
+	m_TransformMatrix = m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
+
 	return m_TransformMatrix;
 }
 
@@ -96,36 +114,7 @@ void C3DElement::SetPosition(const Vect3f &Position)
 	m_PrevPos = m_Position;
 	m_Position = Position;
 }
-float C3DElement::GetYaw() const
-{
-	return m_Yaw;
-}
-float C3DElement::GetPitch() const
-{
-	return m_Pitch;
-}
-float C3DElement::GetRoll() const
-{
-	return m_Roll;
-}
-void C3DElement::SetYaw(float Yaw)
-{
-	m_Yaw = Yaw;
-}
-void C3DElement::SetPitch(float Pitch)
-{
-	m_Pitch = Pitch;
-}
-void C3DElement::SetRoll(float Roll)
-{
-	m_Roll = Roll;
-}
-void C3DElement::SetYawPitchRoll(float Yaw, float Pitch, float Roll)
-{
-	m_Yaw = Yaw;
-	m_Pitch = Pitch;
-	m_Roll = Roll;
-}
+
 void C3DElement::SetScale(const Vect3f &Scale)
 {
 	m_Scale = Scale;

@@ -14,6 +14,7 @@ CSpotLight::CSpotLight(CXMLTreeNode &TreeNode) : CDirectionalLight(TreeNode)
 {
 	m_Angle = TreeNode.GetFloatProperty("angle",1.f);
 	m_FallOff = TreeNode.GetFloatProperty("fall_off", 1.2f);
+	m_Rotation.SetFromScaledAxis(m_Direction);
 }
 
 #ifdef _DEBUG
@@ -55,22 +56,9 @@ const Mat44f & CSpotLight::GetTransform()
 	{
 		m_ScaleMatrix.Scale(l_factor*l_Intensity, l_Intensity, l_factor*l_Intensity);
 	}
-	
 
 	m_RotationMatrix.SetIdentity();
-	Vect3f l_dir = GetDirection();
-	double l_Yaw,l_Pitch,l_Roll;
-	getYawPitch(l_dir, l_Yaw, l_Pitch, l_Roll);
-
-	Mat44f l_PitchRotMat, l_YawRotMat;
-	l_PitchRotMat.SetIdentity();
-	l_YawRotMat.SetIdentity();
-	l_PitchRotMat.SetPitchRollYaw(Vect3f(0,-l_Pitch, 0));
-	l_YawRotMat.SetPitchRollYaw(Vect3f(l_Yaw, 0, 0));
-
-	//m_RotationMatrix = l_YawRotMat*l_PitchRotMat;
-	//m_RotationMatrix.SetRotByAnglesYXZ(l_Pitch, l_Roll, l_Yaw);
-	m_RotationMatrix.SetPitchRollYaw(Vect3f(l_Pitch, l_Roll, l_Yaw));
+	m_RotationMatrix = m_Rotation.rotationMatrix();
 
 	m_TranslationMatrix.SetIdentity();
 	m_TranslationMatrix.SetPos(m_Position.x, m_Position.y, m_Position.z);

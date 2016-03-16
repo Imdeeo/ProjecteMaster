@@ -15,17 +15,15 @@ private:
 	float						m_Speed;
 	float						m_FastSpeed;
 	CRenderableObject*			m_Target;
-	Vect3f						m_offset;
-	float						m_angle;
-	float						m_distance;
+	float						m_Angle;
+	Vect3f						m_Offset;
+	Vect3f						m_LookAtOffset;
 public:
 	C3PersonCameraController( const CXMLTreeNode &node);
 	virtual ~C3PersonCameraController();
 	
 	void Move(Vect3f _newPos, float ElapsedTime);
 	void SetCamera(CCamera *Camera) const;
-	void AddYaw(float Radians);
-	void AddPitch(float Radians);
 	Vect3f GetDirection() const;
 	void Update(float ElapsedTime);
 };
