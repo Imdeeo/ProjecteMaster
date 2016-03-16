@@ -63,5 +63,5 @@ void C3PersonCameraController::Update(float ElapsedTime)
 		AddYaw(l_Yaw*m_YawSpeed);
 		AddPitch(l_Pitch*m_PitchSpeed);
 	}
-	m_Position = m_Target->GetPosition() - (GetForward()*m_Offset.x) + (GetRight()*m_Offset.z) + (GetUp()*m_Offset.y);
+	m_Position = m_Target->GetPosition() - (GetForward()*m_Offset.x);
 }
