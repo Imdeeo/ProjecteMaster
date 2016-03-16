@@ -7,27 +7,22 @@
 #include "XML\XMLTreeNode.h"
 
 CSphericalCameraController::CSphericalCameraController(const CXMLTreeNode & _TreeNode) : CCameraController(_TreeNode)
-, m_Zoom(50.f)
+, m_Zoom(_TreeNode.GetFloatProperty("zoom", 50.f))
 , m_ZoomSpeed(2.f)
+, m_CameraPosition(m_Position - m_Zoom)
 {
+	m_Rotation.SetFromAngleAxis(m_Zoom, 0);
 }
 
 CSphericalCameraController::~CSphericalCameraController()
 {	
 }
 
-Vect3f CSphericalCameraController::GetDirection() const
-{
-	return Vect3f(m_Zoom*cos(m_Yaw)*cos(m_Pitch), m_Zoom*sin(m_Pitch), m_Zoom*sin(m_Yaw)*cos(m_Pitch));
-}
-
 void CSphericalCameraController::SetCamera(CCamera *Camera) const
 {
-	Vect3f l_Direction = GetDirection();
-
 	Camera->SetLookAt(m_Position);
 
-	Camera->SetPosition(m_Position-l_Direction);
+	Camera->SetPosition(m_CameraPosition);
 
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
@@ -38,8 +33,10 @@ void CSphericalCameraController::Update(float ElapsedTime)
 	if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
 	{
 		Vect3f cameraMovement(0, 0, 0);
-		cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 0.5f;
-		cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * 0.5f;
-		Move(cameraMovement);
+		cameraMovement.x = CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * .5f;
+		cameraMovement.y = CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * -.5f;
+		Rotate(cameraMovement);
 	}
+	m_Zoom -= CInputManager::GetInputManager()->GetAxis("ZOOM")*2.f;
+	m_CameraPosition = m_Position - (GetForward()*m_Zoom);
 }

@@ -19,6 +19,7 @@
 
 #include "XML\XMLTreeNode.h"
 
+#include <iostream>
 #include <assert.h>
 
 #define N_CPUS 2
@@ -128,7 +129,11 @@ private :
 		physx::PxProfileZoneManager* profileZoneManager = m_PhysX->getProfileZoneManager();
 
 #if USE_PHYSX_DEBUG
+<<<<<<< HEAD
 	//	CHECKED_RELEASE(m_DebugConnection); CREO Q SE ASE SOLO
+=======
+		//CHECKED_RELEASE(m_DebugConnection);
+>>>>>>> quats
 #endif
 
 		CHECKED_RELEASE(m_Cooking);
@@ -155,7 +160,17 @@ public:
 	void onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count){}
 	void onWake(physx::PxActor** actors, physx::PxU32 count){}
 	void onSleep(physx::PxActor** actors, physx::PxU32 count){}
-	void onContact(const physx::PxContactPairHeader& pairHeader,const physx::PxContactPair* pairs, physx::PxU32 nbPairs){}
+	void onContact(const physx::PxContactPairHeader& pairHeader,const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
+	{
+		size_t l_firstActorIndex = (size_t)pairs->shapes[0]->getActor()->userData;
+		size_t l_secondActorIndex = (size_t)pairs->shapes[0]->getActor()->userData;
+
+		std::string l_firstActorName = m_ActorNames[l_firstActorIndex];
+		std::string l_secondActorName = m_ActorNames[l_secondActorIndex];
+
+		printf("Contact \"%s\" with \"%s\"", l_firstActorName.c_str(), l_secondActorName.c_str());
+
+	}
 	void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 	{
 		for(physx::PxU32 i = 0; i < count; i++)
@@ -174,9 +189,18 @@ public:
 		}
 	}
 
-	void onShapeHit(const physx::PxControllerShapeHit& hit){}
-	void onControllerHit(const physx::PxControllersHit& hit){}
-	void onObstacleHit(const physx::PxControllerObstacleHit& hit){}
+	void onShapeHit(const physx::PxControllerShapeHit& hit)
+	{
+		std::cout << "onShapeHit!\n";
+	}
+	void onControllerHit(const physx::PxControllersHit& hit)
+	{
+		std::cout << "onControllerHit!\n";
+	}
+	void onObstacleHit(const physx::PxControllerObstacleHit& hit)
+	{
+		std::cout << "onObstacleHit!\n";
+	}
 
 	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, int _group)
 	{
@@ -188,7 +212,7 @@ public:
 		desc.height = _height;
 		desc.radius = _radius;
 		desc.climbingMode = physx::PxCapsuleClimbingMode::eEASY;
-		desc.slopeLimit = cosf(3.1415f / 6); //30º
+		desc.slopeLimit = cosf(FLOAT_PI_VALUE / 6); //30º
 		desc.stepOffset = 0.5f;
 		desc.density = _density;
 		desc.reportCallback = this;
@@ -203,7 +227,9 @@ public:
 		physx::PxRigidDynamic* l_actor = m_CharacterControllers[_name]->getActor();
 		/*physx::PxShape *shape = l_actor->createShape(physx::PxBoxGeometry(_radius, _height + _radius * 2, _radius), *l_Material);
 
-		L_PutGroupToShape(shape, _group);*/
+		L_PutGroupToShape(shape, _group);
+
+		shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);*/
 
 		AddActor(_name,_position,Quatf(0,0,0,1),l_actor);
 	}
@@ -336,8 +362,6 @@ void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shap
 physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
-	//physx::PxVec3 v = CastVec(Size);
-	//physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(v.x / 2, v.y / 2, v.z / 2), *l_Material);
 
 	physx::PxShape* shape = m_PhysX->createShape(_geometry, *l_Material);
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
@@ -368,7 +392,6 @@ void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, c
 		_position,
 		_orientation,
 		_group)->release();
-
 }
 
 
@@ -389,22 +412,21 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 
 }
 
-void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance, const std::string _Material,
-	Vect3f _position, Quatf _orientation, int _group)
+void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneOffset, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
-	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z,_PlaneDistance),*l_Material);
-	groundPlane->userData = (void*)AddActor(_name,_position,_orientation,groundPlane);
-	m_Scene->addActor(*groundPlane);
-
+	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z, _PlaneOffset), *l_Material);
 	physx::PxShape* shape;
+
 	size_t numShapes = groundPlane->getShapes(&shape,1);
 	assert(numShapes == 1);
 
 	L_PutGroupToShape(shape, _group);
-
+	groundPlane->attachShape(*shape);
+	groundPlane->userData = (void*)AddActor(_name, _position, _orientation, groundPlane);
 	shape->userData = groundPlane->userData;
 
+	m_Scene->addActor(*groundPlane);
 }
 
 void CPhysXManager::CreateDinamicShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation,
@@ -641,7 +663,7 @@ void CPhysXManager::Render(const std::string _name, CRenderManager *RenderManage
 	l_ScaleMatrix.Scale(1.0f, 1.0f, 1.0f);
 
 	l_RotationMatrix.SetIdentity();
-	l_RotationMatrix.SetPitchRollYaw(Vect3f(0, 0, 0));
+	l_RotationMatrix.SetRotByQuat(Quatf(0, 0, 0, 0));
 	
 	l_TranslationMatrix.SetIdentity();
 	

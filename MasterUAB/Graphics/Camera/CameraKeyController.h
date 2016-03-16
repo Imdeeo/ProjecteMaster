@@ -20,7 +20,6 @@ private:
 public:
 	CCameraKeyController(const CXMLTreeNode &XMLTreeNode);
 	virtual ~CCameraKeyController();
-	Vect3f GetDirection() const;
 	void Update(float ElapsedTime);
 	void SetCurrentTime(float CurrentTime);
 	void ResetTime();

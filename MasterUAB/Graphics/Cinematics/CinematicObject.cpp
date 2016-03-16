@@ -68,28 +68,15 @@ void CCinematicObject::Update(float _ElapsedTime)
 			float l_tI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetKeyFrameTime();
 			float l_tF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetKeyFrameTime();
 
-			float l_yawI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetYaw();
-			float l_yawF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetYaw();
-			l_yawF = calculateBestAngle(l_yawI, l_yawF);
-
-			float l_pitchI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetPitch();
-			float l_pitchF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetPitch();
-			l_pitchF = calculateBestAngle(l_pitchI, l_pitchF);
-
-			float l_rollI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetRoll();
-			float l_rollF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetRoll();
-			l_rollF = calculateBestAngle(l_rollI, l_rollF);
+			Quatf l_RI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetRotation();
+			Quatf l_RF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame + 1]->GetRotation();
 
 			Vect3f l_scaleI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetScale();
 			Vect3f l_scaleF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetScale();
 			
 			m_RenderableObject->SetPosition((((l_pF - l_pI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pI);	
 
-			m_RenderableObject->SetYaw((((l_yawF - l_yawI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_yawI);	
-
-			m_RenderableObject->SetPitch((((l_pitchF - l_pitchI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pitchI);	
-
-			m_RenderableObject->SetRoll((((l_rollF - l_rollI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_rollI);
+			m_RenderableObject->SetRotation(l_RI.slerp(l_RF, ((m_CurrentTime - l_tI) / (l_tF - l_tI))));
 
 			m_RenderableObject->SetScale((((l_scaleF - l_scaleI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_scaleI);		
 		}

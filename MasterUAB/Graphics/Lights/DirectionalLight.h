@@ -16,6 +16,7 @@ public:
 
 	const Vect3f & GetDirection() const { return m_Direction; }
 	void SetDirection(Vect3f _Direction) { m_Direction = _Direction; }
+	const Mat44f & CDirectionalLight::GetTransform();
 
 #ifdef _DEBUG
 	virtual void Render(CRenderManager *RenderManager);

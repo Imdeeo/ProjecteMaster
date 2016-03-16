@@ -7,8 +7,7 @@
 #include "XML\XMLTreeNode.h"
 
 CCameraController::CCameraController(const CXMLTreeNode & _TreeNode) : CNamed(_TreeNode)
-, m_Yaw(0.0f)
-, m_Pitch(0.0f)
+, m_Rotation(Quatf(0, 0, 0, 1))
 , m_Position(0,0,0)
 {
 }
@@ -18,27 +17,29 @@ CCameraController::~CCameraController()
 
 Vect3f CCameraController::GetRight() const
 {
-	return Vect3f(cos(m_Yaw-(FLOAT_PI_VALUE * 0.5f)), 0.0f, sin(m_Yaw-(FLOAT_PI_VALUE * 0.5f)));
+	return m_Rotation.GetRightVector();
 }
 
 Vect3f CCameraController::GetUp() const
 {
-	Vect3f l_Up(-cos(m_Yaw)*sin(m_Pitch), cos(m_Pitch), -sin(m_Yaw)*sin(m_Pitch));
-	return l_Up;
+	return m_Rotation.GetUpVector();
+}
+
+Vect3f CCameraController::GetForward() const
+{
+	return m_Rotation.GetForwardVector();
 }
 
 void CCameraController::AddYaw(float Radians)
 {
-	m_Yaw+=Radians;
-	if(m_Yaw>2*DEG2RAD(180.0f))
-		m_Yaw-=2*DEG2RAD(180.0f);
-	else if(m_Yaw<-2*DEG2RAD(180.0f))
-		m_Yaw+=2*DEG2RAD(180.0f);
+	Quatf l_YawRotation = Quatf(0, 0, 0, 1);
+	l_YawRotation.SetFromScaledAxis(Vect3f(0, Radians, 0));
+	m_Rotation = m_Rotation*l_YawRotation;
 }
+
 void CCameraController::AddPitch(float Radians)
 {
-	if(((m_Pitch-Radians)<(DEG2RAD(180.0f)*0.5) && (m_Pitch-Radians)>-(DEG2RAD(180.0f)*0.5)))
-	{	
-		m_Pitch-=Radians;
-	}
+	Quatf l_PitchRotation = Quatf(0, 0, 0, 1);
+	l_PitchRotation.SetFromScaledAxis(Vect3f(Radians, 0, 0));
+	m_Rotation = l_PitchRotation*m_Rotation;
 }

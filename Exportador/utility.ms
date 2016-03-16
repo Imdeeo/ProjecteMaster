@@ -164,6 +164,7 @@ utility UABUtility "UABUtility" width:168 height:360
 	on ExportStaticMeshButton pressed do
     (
 		exportStaticMesh (get_Dir()) (ExportMeshCheck.checked)
+		exportRenderableObject (get_Dir())
     )
 	
 	on ExportSceneButton pressed do

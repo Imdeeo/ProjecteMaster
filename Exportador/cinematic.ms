@@ -10,9 +10,7 @@ fn createCinematicObjects dir filename Objs =
 		local obj_time
 		local max_time=0
 		local tform
-		local yaw
-		local pitch
-		local roll
+		local rot
 
 		for l_Obj in Objs do
 		(
@@ -64,11 +62,10 @@ fn createCinematicObjects dir filename Objs =
 					scl = tform.scale
 					TranslationToRH &pos
 					
-					GetYaw tform &yaw
-					GetPitch tform &pitch
-					GetRoll tform &roll
-
-					format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" yaw=\"%\" pitch=\"%\" roll=\"%\" scale=\"% % %\"/>\n" key pos.x pos.y pos.z yaw pitch roll scl.x scl.y scl.z to:file
+					rot = tform.rotation
+					QuatToRH &rot
+					
+                    format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" rotation=\"% % % %\" scale=\"% % %\"/>\n" key pos.x pos.y pos.z rot.x rot.y rot.z rot.w scl.x scl.y scl.z to:file
 				)
 				format "\t</cinematic_object>\n" to:file			
 			)

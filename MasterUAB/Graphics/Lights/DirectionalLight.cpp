@@ -21,6 +21,7 @@ CDirectionalLight::CDirectionalLight() : CLight(), m_Direction(Vect3f(0.0f, 0.0f
 CDirectionalLight::CDirectionalLight(CXMLTreeNode &TreeNode) : CLight(TreeNode)
 {
 	m_Direction = TreeNode.GetVect3fProperty("dir",Vect3f(0.0,0.0,0.0));
+	m_Rotation.SetFromScaledAxis(m_Direction);
 	if (m_GenerateShadowMap)
 	{
 		m_OrthoShadowMapSize = TreeNode.GetVect2fProperty("ortho_size", Vect2f(50, 50), true);
@@ -43,16 +44,36 @@ void CDirectionalLight::Render(CRenderManager *RenderManager)
 }
 #endif
 
+const Mat44f & CDirectionalLight::GetTransform()
+{
+	m_ScaleMatrix.SetIdentity();
+	m_ScaleMatrix.Scale(GetIntensity(), GetIntensity(), GetIntensity());
+
+	m_RotationMatrix.SetIdentity();
+	m_RotationMatrix = m_Rotation.rotationMatrix();
+
+	m_TranslationMatrix.SetIdentity();
+	m_TranslationMatrix.SetPos(m_Position.x, m_Position.y, m_Position.z);
+
+	m_TransformMatrix = m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
+
+	return m_TransformMatrix;
+}
+
 void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 {
 	m_ViewShadowMap.SetIdentity();
 	CCameraController* l_auxCameraController = UABEngine.GetCameraControllerManager()->GetMainCamera();
+<<<<<<< HEAD
 	Vect3f myDirection = GetDirection();
 	Vect3f l_CameraDirection = l_auxCameraController->GetDirection();
 
 	Vect3f l_CameraPosition = l_auxCameraController->GetPosition();
 	m_Position = l_CameraPosition;
 	m_Position.y = l_CameraPosition.y + 10;
+=======
+	m_Position = l_auxCameraController->GetPosition() + l_auxCameraController->GetForward() - GetDirection();
+>>>>>>> quats
 	Vect3f up = Vect3f(m_Direction.z, m_Direction.y, m_Direction.x);
 	up = ((up) ^ (m_Direction));
 	m_ViewShadowMap.SetFromLookAt(m_Position, m_Position + m_Direction, up.y < 0 ? (up * -1) : up);

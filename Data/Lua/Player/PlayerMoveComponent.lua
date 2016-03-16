@@ -25,9 +25,7 @@ function FnOnDestroyController ()
 	
 end
 
---gravity = Vect3f(0,-9.81,0)
 gravity = -9.81
---gravity = 0
 is_jumping = false
 is_ascending = false
 
@@ -54,21 +52,19 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	end
 	
 	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
-
-	local player_camera_direction = l_Player:get_camera_controller():get_direction():get_normalized(1)
+	
+	local player_camera_direction = l_Player:get_camera_controller():get_forward():get_normalized(1)
 	
 	local player_camera_direction_xz = Vect2f(Forward*player_camera_direction.x,Forward*player_camera_direction.z)
 	local player_camera_direction_xz_ort = Vect2f(-player_camera_direction.z*Strafe,Strafe*player_camera_direction.x)
 	
 	local final_direction = Vect2f(player_camera_direction_xz.x + player_camera_direction_xz_ort.x,player_camera_direction_xz.y + player_camera_direction_xz_ort.y)
-			
+		
 	local l_velocity = 10
 	local l_AddPos = Vect3f(final_direction.x*l_velocity,cct_velocity.y+gravity * _ElapsedTime,final_direction.y*l_velocity)
-	--cct_velocity = cct_velocity + 
 	
 	local l_velocity = 5
 	
-	--utils_log("Position x: "..l_AddPos.x..",y: "..l_AddPos.y..",z: "..l_AddPos.z)
 	
 	local l_PrevPosCharacterController = l_physXManager:get_character_controler_pos("player")
 	l_physXManager:character_controller_move("player", l_AddPos, _ElapsedTime)
@@ -78,14 +74,12 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	cct_velocity = l_desplacamiento/_ElapsedTime
 	--utils_log("Position x: "..l_PosCharacterController.x..",y: "..l_PosCharacterController.y..",z: "..l_PosCharacterController.z)
 	
-	
-	local yaw = _owner:get_yaw()
-	local dir = Vect3f(math.cos(yaw),0,math.sin(yaw));
-	local dot_result = final_direction.x*dir.x + final_direction.y*dir.z
-	local y_cross = dir.z*final_direction.x-dir.x*final_direction.y
-	_owner:set_yaw(yaw -(dot_result*_ElapsedTime*l_velocity))
-
-	
+	rot_xz = Quatf()
+	rot_y = Quatf()
+	rot = l_Player:get_camera_controller():get_rotation()
+	rot:decouple_y(rot_xz, rot_y)
+	_owner:set_rotation(rot_y)
+		
 	local x = l_desplacamiento.x*l_desplacamiento.x
 	--local y = l_desplacamiento.y*l_desplacamiento.y
 	local y = 0

@@ -27,6 +27,11 @@ fn mat4xvect3 mat vect w =
     return res
 )
 
+fn QuatToRH &q =
+(
+	q = [-q.x, q.z, -q.y, -q.w]
+)
+
 fn TranslationToRH &translation =
 (
 	translation = [-translation.x, translation.z, translation.y]

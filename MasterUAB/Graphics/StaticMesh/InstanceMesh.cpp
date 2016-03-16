@@ -14,7 +14,6 @@
 
 #include <d3d11.h>
 #include "Math\Matrix44.h"
-#include "Utils.h"
 
 
 CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
@@ -28,25 +27,40 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		std::string l_PxType = TreeNode.GetPszProperty("physics_type");
 		std::string l_PxMaterial = TreeNode.GetPszProperty("physics_material");
 		int l_PxGroup = TreeNode.GetIntProperty("physics_group");
+<<<<<<< HEAD
 		//Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
 		Vect3f l_BBMin = m_StaticMesh->GetBoundingBoxMax();
 		Vect3f l_BBMax = m_StaticMesh->GetBoundingBoxMin();
 		Quatf l_Q = QuatFromYawPitchRoll(m_Yaw, m_Pitch, m_Roll);
 		Vect3f l_Pos = GetPosition();
+=======
+		Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
+		l_BB = Vect3f(abs(l_BB.x), abs(l_BB.y), abs(l_BB.z));
+		Vect3f l_Position = GetPosition();
+		Quatf l_Rotation = Quatf(-m_Rotation.x, m_Rotation.y, -m_Rotation.z, -m_Rotation.w);
+>>>>>>> quats
 
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
 		if (l_PxType == "triangle_mesh")
 		{
 			std::vector<Vect3f> l_Vertexs;
+<<<<<<< HEAD
 			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, l_PxMaterial, l_Pos, l_Q, l_PxGroup);
 		}
 		else if (l_PxType == "sphere_shape")
 		{
 			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), l_PxMaterial, m_StaticMesh->GetBoundingSphereCenter()+l_Pos, l_Q, l_PxGroup);
+=======
+			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, l_PxMaterial, l_Position, m_Rotation, l_PxGroup);
+		}else if (l_PxType == "sphere_shape")
+		{
+			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), l_PxMaterial, l_Position, m_Rotation, l_PxGroup);
+>>>>>>> quats
 		}
 		else if (l_PxType == "plane_shape")
 		{
 			Vect3f l_Normal = Vect3f(.0f, 1.0f, .0f);
+<<<<<<< HEAD
 			float l_Distance = 0.0f;			
 			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, l_Distance, l_PxMaterial, l_Pos, l_Q, l_PxGroup);
 		}
@@ -61,6 +75,19 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		}
 	}
 	
+=======
+			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, 0, l_PxMaterial, l_Position, m_Rotation, l_PxGroup);
+		}
+		else if (l_PxType == "box_trigger")
+		{
+			l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
+		}
+		else
+		{
+			l_PhysXManager->CreateStaticBox(GetName(), l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
+		}
+	}
+>>>>>>> quats
 }
 
 CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreName) :CRenderableObject()
