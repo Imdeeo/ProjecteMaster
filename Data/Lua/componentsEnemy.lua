@@ -3,7 +3,7 @@ dofile("Data\\Lua\\EnemyStateMachine.lua")
 function InitEnemyMove()
 
 	local UABEngine = CUABEngine.get_instance()
-	local l_Box=UABEngine:get_layer_manager():get_resource("solid"):get_resource("Int")
+	local l_Box=UABEngine:get_layer_manager():get_resource("solid"):get_resource("Guardia")
 	local l_Component=l_Box:get_component_manager():get_resource("ScriptedComponentEnemy")
 	
 	if l_Component==nil then

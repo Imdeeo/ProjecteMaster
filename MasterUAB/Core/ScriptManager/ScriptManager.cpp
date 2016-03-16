@@ -331,6 +331,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(const_self - const_self)
 			.def(const_self * other<const double>())
 			.def(const_self / other<const double>())
+			.def("decouple_x", &Quatf::decoupleX)
+			.def("decouple_y", &Quatf::decoupleY)
+			.def("decouple_z", &Quatf::decoupleZ)
 			.def("get_scaled_axis", &Quatf::GetScaledAxis)
 			.def("set_from_scaled_axis", &Quatf::SetFromScaledAxis)
 			.def("quat_from_yaw_pitch_roll", &Quatf::QuatFromYawPitchRoll)
@@ -767,7 +770,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("add_zoom", &CSphericalCameraController::AddZoom)
 			.def("set_zoom", &CSphericalCameraController::SetZoom)
 			.def("set_camera", &CSphericalCameraController::SetCamera)
-			.def("move", &CSphericalCameraController::Move)
+			.def("rotate", &CSphericalCameraController::Rotate)
 	];
 
 	// Cinematics -----------------------------------------------------------------------------------
