@@ -55,23 +55,8 @@ Vect3f C3PersonCameraController::GetDirection() const
 
 void C3PersonCameraController::Update(float ElapsedTime)
 {
-<<<<<<< HEAD
-	Vect3f cameraMovement(0, 0, 0);
-	cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 5.f;
-	if (cameraMovement.x > 0)
-	{
-		int i = 1;
-	}
-	//cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * 0.5f;
-	m_angle = m_angle + cameraMovement.x;
-	while (m_angle > M_PI)
-	{
-		m_angle = m_angle - M_PI * 2;
-	}
-	while (m_angle < -M_PI)
-=======
 	if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
->>>>>>> quats
+
 	{
 		float l_Yaw = CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 2.f;
 		float l_Pitch = CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * -0.5f;

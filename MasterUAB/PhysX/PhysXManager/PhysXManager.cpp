@@ -129,11 +129,7 @@ private :
 		physx::PxProfileZoneManager* profileZoneManager = m_PhysX->getProfileZoneManager();
 
 #if USE_PHYSX_DEBUG
-<<<<<<< HEAD
-	//	CHECKED_RELEASE(m_DebugConnection); CREO Q SE ASE SOLO
-=======
 		//CHECKED_RELEASE(m_DebugConnection);
->>>>>>> quats
 #endif
 
 		CHECKED_RELEASE(m_Cooking);
