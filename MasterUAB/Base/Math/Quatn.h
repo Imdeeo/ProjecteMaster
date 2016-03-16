@@ -423,6 +423,50 @@ public:
 	}
 
 	/**
+	* @brief Computes a special representation that decouples the X
+	* rotation.
+	*
+	* The decoupled representation is two rotations, Qyz and Qx,
+	* so that Q = Qxy * Qz.
+	*/
+	void decoupleX(Quatn* Qyz, Quatn* Qx) const {
+		Vect3f xtt(1, 0, 0);
+		Vect3f xbt = this->rotatedVector(xtt);
+		Vect3f axis_yz = xtt^xbt;
+		double axis_norm = axis_yz.Length();
+
+		double axis_theta = acos(mathUtils::Clamp(xbt.z, -1.f, +1.f));
+		if (axis_norm > 0.00001) {
+			axis_yz = axis_yz * (axis_theta / axis_norm); // limit is *1
+		}
+
+		Qyz->SetFromScaledAxis(axis_yz);
+		*Qx = (Qyz->conjugate() * (*this));
+	}
+
+	/**
+	* @brief Computes a special representation that decouples the Y
+	* rotation.
+	*
+	* The decoupled representation is two rotations, Qxz and Qy,
+	* so that Q = Qxy * Qz.
+	*/
+	void decoupleY(Quatn* Qxz, Quatn* Qy) const {
+		Vect3f ytt(0, 1, 0);
+		Vect3f ybt = this->rotatedVector(ytt);
+		Vect3f axis_xz = ytt^ybt;
+		double axis_norm = axis_xz.Length();
+
+		double axis_theta = acos(mathUtils::Clamp(ybt.y, -1.f, +1.f));
+		if (axis_norm > 0.00001) {
+			axis_xz = axis_xz * (axis_theta / axis_norm); // limit is *1
+		}
+
+		Qxz->SetFromScaledAxis(axis_xz);
+		*Qy = (Qxz->conjugate() * (*this));
+	}
+
+	/**
 	* @brief Computes a special representation that decouples the Z
 	* rotation.
 	*
@@ -434,8 +478,8 @@ public:
 		Vect3f zbt = this->rotatedVector(ztt);
 		Vect3f axis_xy = ztt^zbt;
 		double axis_norm = axis_xy.Length();
-		
-		double axis_theta = acos(mathUtils::Clamp(zbt.z, -1, +1));
+
+		double axis_theta = acos(mathUtils::Clamp(zbt.z, -1.f, +1.f));
 		if (axis_norm > 0.00001) {
 			axis_xy = axis_xy * (axis_theta / axis_norm); // limit is *1
 		}

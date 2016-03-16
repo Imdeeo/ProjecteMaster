@@ -3,5 +3,5 @@ dofile("Data\\Lua\\componentsEnemy.lua")
 dofile("Data\\Lua\\antweakbar.lua")
 function mainLua()
 	InitAntweakBar()
-	InitEnemyMove()
+	--InitEnemyMove()
 end

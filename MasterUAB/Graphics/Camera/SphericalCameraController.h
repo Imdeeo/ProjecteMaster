@@ -8,7 +8,6 @@ class CSphericalCameraController : public CCameraController
 private:
 	float						m_Zoom;
 	float						m_ZoomSpeed;
-	float						m_Distance;
 	Vect3f						m_CameraPosition;
 public:
 	CSphericalCameraController(const CXMLTreeNode & _TreeNode);
@@ -19,7 +18,7 @@ public:
 	
 	void SetCamera(CCamera *Camera) const;
 	
-	void Move(Vect3f movement)
+	void Rotate(Vect3f movement)
 	{
 		AddPitch(movement.y*10.0f);
 		AddYaw(movement.x*10.0f);

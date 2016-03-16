@@ -187,15 +187,15 @@ public:
 
 	void onShapeHit(const physx::PxControllerShapeHit& hit)
 	{
-		std::cout << "Shape hit!\n";
+		std::cout << "onShapeHit!\n";
 	}
 	void onControllerHit(const physx::PxControllersHit& hit)
 	{
-		printf("Controller hit!");
+		std::cout << "onControllerHit!\n";
 	}
 	void onObstacleHit(const physx::PxControllerObstacleHit& hit)
 	{
-		printf("Obstacle hit!");
+		std::cout << "onObstacleHit!\n";
 	}
 
 	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, int _group)
