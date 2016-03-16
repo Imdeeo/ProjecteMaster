@@ -8,13 +8,9 @@ static float m_HDAOActive=m_RawDataArray[0];
 static bool m_HDAOShowNormals=m_RawDataArray[1]==1.0;
 static bool m_HDAOShowAO=m_RawDataArray[2]==1.0;
 static bool m_HDAOUseNormals=m_RawDataArray[3]==1.0;
-//static float m_RTSize1=m_RawDataArray[4];
-//static float m_RTSize2=m_RawDataArray[5];
 static float2 m_RTSize=float2((float)m_RawDataArray[4], (float)m_RawDataArray[5]);
 static float m_AcceptAngle=m_RawDataArray[6];
 static float m_HDAOIntensity=m_RawDataArray[7];
-//static float g_fQTimesZNearKK=m_RawDataArray[];
-//static float g_fQKK=m_RawDataArray[9];
 static float m_NormalScale=m_RawDataArray[8];
 static float m_HDAORejectRadius=m_RawDataArray[9];
 static float m_HDAOAcceptRadius=m_RawDataArray[10];
@@ -270,7 +266,6 @@ float4 PSHDAO(PS_INPUT IN) : SV_Target
 	}
 
 	// Finally calculate the HDAO occlusion value
-	m_HDAOUseNormals=true;
 	if( m_HDAOUseNormals )
 	{
 		fOcclusion = ( ( f4Occlusion.x + f4Occlusion.y + f4Occlusion.z + f4Occlusion.w ) / ( 3.0f *	m_RingWeightsTotal[iNumRings - 1] ) );
