@@ -16,12 +16,14 @@
 		<renderable_object_technique name="lights" technique="gBuffer_technique"/>
 		<renderable_object_technique name="reflection" technique="reflection_technique"/>
 		<renderable_object_technique name="bump" technique="bump_deferred_technique"/>
+		<renderable_object_technique name="bump_env" technique="bump_env_deferred_technique"/>
 		<renderable_object_technique name="animated" technique="animated_gbuffer_diffuse_technique"/>
-		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
+		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_deferred_technique"/>
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="generate_shadowmap_pool">
 		<renderable_object_technique name="lights" technique="generate_shadowmap_technique"/>
 		<renderable_object_technique name="bump" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="bump_env" technique="generate_shadowmap_bump_technique"/>
 		<renderable_object_technique name="animated" technique="generate_shadowmap_animated_technique"/>
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="deferred_shading">
@@ -54,5 +56,8 @@
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="skybox_pool">
 		<renderable_object_technique name="skybox" technique="skybox_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="particles_pool">
+		<renderable_object_technique name="fire" technique="fire_particle_technique"/>
 	</pool_renderable_object_technique>
 </renderable_object_techniques>
