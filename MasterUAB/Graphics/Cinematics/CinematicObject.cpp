@@ -11,7 +11,7 @@ CCinematicObject::CCinematicObject(CXMLTreeNode &TreeNode):m_RenderableObject(nu
 {
 	m_RenderableObject=UABEngine.GetLayerManager()->GetLayer(TreeNode)->GetResource(TreeNode.GetPszProperty("resource"));
 	for (int i = 0; i < TreeNode.GetNumChildren(); ++i)
-	{		
+	{
 		CXMLTreeNode l_Element = TreeNode(i);
 		if (l_Element.GetName() == std::string("cinematic_object_key_frame"))
 		{
