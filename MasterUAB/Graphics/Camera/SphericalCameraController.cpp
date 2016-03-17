@@ -37,6 +37,7 @@ void CSphericalCameraController::Update(float ElapsedTime)
 		cameraMovement.y = CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * -.5f;
 		Rotate(cameraMovement);
 	}
-	m_Zoom -= CInputManager::GetInputManager()->GetAxis("ZOOM")*2.f;
+	m_Zoom -= CInputManager::GetInputManager()->GetAxis("ZOOM")*.5f;
+	if (m_Zoom < 1){ m_Zoom = 1; }
 	m_CameraPosition = m_Position - (GetForward()*m_Zoom);
 }
