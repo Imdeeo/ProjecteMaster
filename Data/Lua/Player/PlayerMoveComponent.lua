@@ -18,7 +18,7 @@ function FnOnCreateController (_owner)
 	local l_physXManager = UABEngine:get_physX_manager()
 	local l_Player = CCharacterManager.get_instance():get_resource("player")
 	l_physXManager:register_material("controllerMaterial", 0.5,0.5,1)
-	l_physXManager:create_character_controller(l_Player.name, 1.5, 0.3, 0.5, _owner:get_position(),"controllerMaterial", 1)
+	l_physXManager:create_character_controller(l_Player.name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", 1)
 end
 
 function FnOnDestroyController ()
@@ -67,8 +67,10 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	
 	
 	local l_PrevPosCharacterController = l_physXManager:get_character_controler_pos("player")
+	l_PrevPosCharacterController.y = l_PrevPosCharacterController.y - 0.9
 	l_physXManager:character_controller_move("player", l_AddPos, _ElapsedTime)
 	local l_PostPosCharacterController = l_physXManager:get_character_controler_pos("player")
+	l_PostPosCharacterController.y = l_PostPosCharacterController.y - 0.9
 	_owner:set_position(l_PostPosCharacterController)
 	local l_desplacamiento = l_PostPosCharacterController-l_PrevPosCharacterController
 	cct_velocity = l_desplacamiento/_ElapsedTime

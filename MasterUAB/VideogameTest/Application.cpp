@@ -149,20 +149,7 @@ void CApplication::Render()
 
 void CApplication::Init()
 {
-	UABEngine.Init();
-	if (UABEngine.GetLevelLoaded() == "1" || UABEngine.GetLevelLoaded() == "3")
-	{
-		m_MainCameraName = "Camera001";
-	}
-	else
-	{
-		m_MainCameraName = "FPSCamera";
-	}
-	m_DebugCameraName = "SphericalCamera";	
-	UABEngine.GetCameraControllerManager()->ChooseDebugCamera(m_DebugCameraName);
-	UABEngine.GetCameraControllerManager()->ChooseMainCamera(m_MainCameraName);
-
-
+	UABEngine.Init();	
 	CCharacterManager::GetInstance()->Load("Data\\level_"+UABEngine.GetLevelLoaded()+"\\characters.xml");
 }
 
