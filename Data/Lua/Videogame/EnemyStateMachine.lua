@@ -1,5 +1,5 @@
-dofile("Data\\Lua\\state_machine.lua")
-dofile("Data\\Lua\\EnemyUtils.lua")
+dofile("Data\\Lua\\Utils\\state_machine.lua")
+dofile("Data\\Lua\\Utils\\EnemyUtils.lua")
 
 EnemyStateMachine = StateMachine.create()
 

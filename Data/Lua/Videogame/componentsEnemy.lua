@@ -1,4 +1,4 @@
-dofile("Data\\Lua\\EnemyStateMachine.lua")
+dofile("Data\\Lua\\Videogame\\EnemyStateMachine.lua")
 
 function InitEnemyMove()
 
