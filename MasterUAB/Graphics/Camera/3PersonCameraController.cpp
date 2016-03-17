@@ -21,7 +21,6 @@ C3PersonCameraController::C3PersonCameraController(const CXMLTreeNode & _TreeNod
 , m_FastSpeed(10.0f)
 , m_Target(UABEngine.GetLayerManager()->GetResource(_TreeNode.GetPszProperty("layer"))->GetResource(_TreeNode.GetPszProperty("target")))
 , m_Offset(_TreeNode.GetVect3fProperty("offset", Vect3f(5.f, .0f, .0f), true))
-, m_LookAtOffset(_TreeNode.GetVect3fProperty("lookat_offset", Vect3f(.0f, 3.f, .0f), true))
 {
 	m_Rotation.SetFromAngleAxis(m_Offset, 0);
 	m_Position = m_Target->GetPosition() - (GetForward()*m_Offset.x) + (GetRight()*m_Offset.z) + (GetUp()*m_Offset.y);
