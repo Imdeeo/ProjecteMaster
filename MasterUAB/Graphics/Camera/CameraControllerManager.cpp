@@ -65,12 +65,9 @@ bool CCameraControllerManager::Load(const std::string &FileName)
 					case CCamera::CAMERA_TYPE_3PS:
 						AddResource(l_Element.GetPszProperty("name"), new C3PersonCameraController(l_Element));
 						break;
-					case CCamera::CAMERA_TYPE_CYCLE:
+					case CCamera::CAMERA_TYPE_KEY:
 						AddResource(l_Element.GetPszProperty("name"), new CCameraKeyController(l_Element));
-						break;
-					case CCamera::CAMERA_TYPE_REVERSE:
-						AddResource(l_Element.GetPszProperty("name"), new CCameraKeyController(l_Element));
-						break;
+						break;				
 					default:
 						return false;
 					}
@@ -82,25 +79,20 @@ bool CCameraControllerManager::Load(const std::string &FileName)
 	{
 		return false;
 	}
-	
+	Init();
 	return true;
+}
+
+void CCameraControllerManager::Init()
+{
+	UABEngine.GetCameraControllerManager()->ChooseMainCamera("MainCamera");
+	UABEngine.GetCameraControllerManager()->ChooseDebugCamera("DebugCamera");
 }
 
 bool CCameraControllerManager::Reload()
 {
 	Destroy();
 	bool l_loadResult = Load(m_Filename);
-	std::string l_CameraControllerStr;
-	if (UABEngine.GetLevelLoaded() == "1")
-	{
-		l_CameraControllerStr = "Camera001";
-	}
-	else
-	{
-		l_CameraControllerStr = "FPSCamera";
-	}
-	UABEngine.GetCameraControllerManager()->ChooseMainCamera(l_CameraControllerStr);
-	UABEngine.GetCameraControllerManager()->ChooseDebugCamera("SphericalCamera");
 	return l_loadResult;
 }
 
