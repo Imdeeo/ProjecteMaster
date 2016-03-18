@@ -7,8 +7,7 @@ fn createLights dir filename Objs =
 	local lightDir
 	file=createfile (dir+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
-	format "<lights>\n" to:file
-	format "\t<ambient_light color=\"0.1 0.1 0.1 1.0\"/>\n" to:file
+	format "<lights ambient_light_color=\"0.3 0.3 0.3 1.0\" fog_color=\"1.0 1.0 1.0\" fog_max_attenuation=\"0.5\" fog_start=\"50.0\" fog_end=\"100.0\" fog_enabled=\"true\">\n" to:file
 	
 	for i=1 to Objs.count do
 	(
