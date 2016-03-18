@@ -39,7 +39,7 @@ void CCameraController::AddYaw(float Radians)
 
 void CCameraController::AddPitch(float Radians)
 {
-	//Quatf l_PitchRotation = Quatf(0, 0, 0, 1);
-	//l_PitchRotation.SetFromScaledAxis(Vect3f(Radians, 0, 0));
-	//m_Rotation = l_PitchRotation*m_Rotation;
+	Quatf l_PitchRotation = Quatf(0, 0, 0, 1);
+	l_PitchRotation.SetFromScaledAxis(Vect3f(Radians, 0, 0));
+	m_Rotation = l_PitchRotation*m_Rotation;
 }
