@@ -381,7 +381,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:394
 						"logic": PhysicsLayerList.selection = 1
 					)
 					
-				PhysicsMaterial.text = getUserProp Objs[1] "physics_material"
+				PhysicsMaterialText.text = getUserProp Objs[1] "physics_material"
 			) else (
 				
 				togglePhysics false
