@@ -395,20 +395,59 @@ void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, c
 
 void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
-	physx::PxShape* shape = CreateStaticShape(
+	/*physx::PxShape* shape = CreateStaticShape(
 		_name,
 		physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2),
 		_Material,
 		_position,
 		_orientation,
 		_group);
+		
+	shape->release();*/
 
-	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE,false);
-	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE,true);
+	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2), *m_Materials[_Material],true);
+	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+	l_Body->attachShape(*shape);
+
+	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
+	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+
+	size_t index = m_Actors.size();
+	l_Body->userData = (void*)index;
+	m_Scene->addActor(*l_Body);
 
 	shape->release();
-
 }
+
+//void CPhysXManager::CreateConvexMesh(std::vector<Vect3f> Vertices, const std::string &MeshName, const Vect3f &Position, const Quatf &Orientation, const std::string &MaterialName)
+//{
+//
+//	physx::PxConvexMeshDesc l_ConvexDesc;
+//	l_ConvexDesc.points.count = Vertices.size();
+//	l_ConvexDesc.points.stride = sizeof(Vect3f);
+//	l_ConvexDesc.points.data = &Vertices[0];
+//	l_ConvexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
+//
+//	physx::PxDefaultMemoryOutputStream l_Buffer;
+//	physx::PxConvexMeshCookingResult::Enum l_Result;
+//	bool success = m_Cooking->cookConvexMesh(l_ConvexDesc, l_Buffer, &l_Result);
+//	assert(success);
+//	physx::PxDefaultMemoryInputData l_Input(l_Buffer.getData(), l_Buffer.getSize());
+//	physx::PxConvexMesh* l_ConvexMesh = m_PhysX->createConvexMesh(l_Input);
+//
+//	physx::PxMaterial* l_Material = GetMaterial(MaterialName);
+//
+//	physx::PxRigidDynamic* l_Body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(Position), CastQuat(Orientation)));
+//	physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *l_Material);
+//
+//	l_Body->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+//
+//	size_t index = m_Actors.size();
+//	l_Body->userData = (void*)index;
+//	m_Scene->addActor(*l_Body);
+//	//l_Shape->release();
+//
+//}
 
 void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneOffset, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
@@ -564,7 +603,8 @@ void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement,
 
 	Vect3f move2 = CastVec(cct->getPosition());
 	physx::PxRigidDynamic* actor = cct->getActor();
-	
+	Vect3f aux = Vect3f(cct->getPosition().x, cct->getPosition().y, cct->getPosition().z);
+	actor->setGlobalPose(physx::PxTransform(CastVec(aux)));
 
 	physx::PxExtendedVec3 p = cct->getFootPosition();
 	physx::PxVec3 v = actor->getLinearVelocity();
@@ -689,11 +729,13 @@ CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionX(const std::s
 	physx::PxController* aux = m_CharacterControllers[_name];
 	return (CEmptyPointerClass*)(&aux->getPosition().x);
 }
+
 CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionY(const std::string _name)
 {
 	physx::PxController* aux = m_CharacterControllers[_name];
 	return (CEmptyPointerClass*)(&aux->getPosition().y);
 }
+
 CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionZ(const std::string _name)
 {
 	physx::PxController* aux = m_CharacterControllers[_name];
