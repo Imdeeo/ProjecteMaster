@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <scene_renderer_commands>
-	<set_light_constants name="set light constants"/>
+	<set_light_constants name="set_light_constants"/>
 	
+	<set_depth_stencil_state name="set_depth_stencil_TT1" enable_z_test="true" write_z_buffer="true"/>
 	<set_pool_renderable_objects_technique name="set pool generate shadowmap" pool="generate_shadowmap_pool"/>
 	<generate_shadow_maps name="generate shadowmap"/>
 	
-	<set_depth_stencil_state name="set depth stencil TT1" enable_z_test="true" write_z_buffer="true"/>
+
 	<set_matrices name="set matrices"/>
 	
 	<!-- DEFERRED -->
@@ -28,7 +29,7 @@
 		<texture stage_id="0" file="LightMapTexture" load_file="false"/>
 	</render_draw_quad>
 
-	<set_pool_renderable_objects_technique name="set pool defferred shading lighting" pool="deferred_shading_lighting"/>
+	<set_pool_renderable_objects_technique name="set_pool_defferred_shading_lighting" pool="deferred_shading_lighting"/>
 	
 	<render_deferred_shading name="render defferred shading">
 		<texture stage_id="0" file="DiffuseMapTexture" load_file="false"/>
@@ -64,9 +65,9 @@
 		<dynamic_texture name="ZBlur" material="BlurMaterial" height="512" width="512"/>
 	</apply_filters>
 
-	<unset_render_target name="unset render target ZBLur" active="false"/>
+	<unset_render_target name="unset_render_target_ZBLur" active="false"/>
 
-	<set_pool_renderable_objects_technique name="set pool zblur_pool" pool="zblur_pool" active="false"/>
+	<set_pool_renderable_objects_technique name="set_pool_zblur_pool" pool="zblur_pool" active="false"/>
 	
 	<render_draw_quad name="draw quad ZBLUR" material="ZBlurMaterial" active="false">
 		<texture load_file="false" file="CapturedZBlurTexture" stage_id="0"/>
@@ -75,11 +76,11 @@
 	</render_draw_quad>
 	
 	<!-- BLOOM -->
-	<capture_frame_buffer name="capture frame BLOOM" active="false">
+	<capture_frame_buffer name="capture_frame_BLOOM" active="false">
 		<capture_texture name="CapturedBloomTexture" texture_width_as_frame_buffer="true"/>
 	</capture_frame_buffer>
 	
-	<set_pool_renderable_objects_technique name="set pool bloom_pool" pool="bloom_pool" active="false"/>
+	<set_pool_renderable_objects_technique name="set_pool_bloom_pool" pool="bloom_pool" active="false"/>
 
 	<apply_filters name="aplly filters Bloom" active="false">
 		<texture file="CapturedBloomTexture" stage_id="0"/>
