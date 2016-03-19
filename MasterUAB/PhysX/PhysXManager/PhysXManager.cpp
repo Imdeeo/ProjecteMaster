@@ -239,7 +239,8 @@ public:
 
 	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, int _group)
 	{
-		assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
+		//PROPIA
+		/*assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
 
 		physx::PxMaterial* l_Material = m_Materials[_MaterialName];
 		size_t l_index = m_CharacterControllers.size();
@@ -265,11 +266,53 @@ public:
 		l_actor->setLinearDamping(0.15f);
 		l_actor->setAngularDamping(15.0f);
 
-		/*physx::PxShape *shape = l_actor->createShape(physx::PxBoxGeometry(_radius, _height + _radius * 2, _radius), *l_Material);
-		shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
-		L_PutGroupToShape(shape, _group);*/
+		//physx::PxShape *shape = l_actor->createShape(physx::PxBoxGeometry(_radius, _height + _radius * 2, _radius), *l_Material);
+		//shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
+		//L_PutGroupToShape(shape, _group);
 
-		AddActor(_name,_position,Quatf(0,0,0,1),l_actor);
+		AddActor(_name,_position,Quatf(0,0,0,1),l_actor);*/
+
+		//SACADA DE SAMPLES
+		assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
+
+		physx::PxMaterial* l_Material = m_Materials[_MaterialName];
+		size_t l_index = m_CharacterControllers.size();
+
+		physx::PxCapsuleControllerDesc capsuleDesc;
+		capsuleDesc.height = _height;
+		capsuleDesc.radius = _radius;
+		capsuleDesc.climbingMode = physx::PxCapsuleClimbingMode::eCONSTRAINED;
+
+		physx::PxControllerDesc* cDesc;
+		cDesc = &capsuleDesc;
+		cDesc->density = _density;
+		cDesc->scaleCoeff = 0.8f;
+		cDesc->material = l_Material;
+		cDesc->position = physx::PxExtendedVec3(_position.x, _position.y, _position.z);
+		cDesc->slopeLimit = SLOPE_LIMIT;
+		cDesc->contactOffset = CONTACT_OFFSET;
+		cDesc->stepOffset = STEP_OFFSET;
+		cDesc->invisibleWallHeight = INVISIBLE_WALLS_HEIGHT;
+		cDesc->maxJumpHeight = MAX_JUMP_HEIGHT;
+		//	cDesc->nonWalkableMode		= physx::PxControllerNonWalkableMode::ePREVENT_CLIMBING_AND_FORCE_SLIDING;
+		cDesc->reportCallback = this;
+		cDesc->behaviorCallback = this;
+		cDesc->volumeGrowth = 1.5f;
+
+		m_CharacterControllers[_name] = m_ControllerManager->createController(*cDesc);
+		physx::PxRigidDynamic* l_actor = m_CharacterControllers[_name]->getActor()->is<physx::PxRigidDynamic>();
+		l_actor->setLinearDamping(0.15f);
+		l_actor->setAngularDamping(15.0f);
+		l_actor->setActorFlag(physx::PxActorFlag::eSEND_SLEEP_NOTIFIES, true);
+		l_actor->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
+
+		physx::PxShape* shape;
+		l_actor->getShapes(&shape, 1);
+		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
+		shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
+		L_PutGroupToShape(shape, _group);
+
+		AddActor(_name, _position, Quatf(0, 0, 0, 1), l_actor);
 	}
 };
 
