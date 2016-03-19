@@ -294,7 +294,7 @@ public:
 		cDesc->stepOffset = STEP_OFFSET;
 		cDesc->invisibleWallHeight = INVISIBLE_WALLS_HEIGHT;
 		cDesc->maxJumpHeight = MAX_JUMP_HEIGHT;
-		//	cDesc->nonWalkableMode		= physx::PxControllerNonWalkableMode::ePREVENT_CLIMBING_AND_FORCE_SLIDING;
+		cDesc->nonWalkableMode = physx::PxControllerNonWalkableMode::ePREVENT_CLIMBING_AND_FORCE_SLIDING;
 		cDesc->reportCallback = this;
 		cDesc->behaviorCallback = this;
 		cDesc->volumeGrowth = 1.5f;
@@ -305,14 +305,19 @@ public:
 		l_actor->setAngularDamping(15.0f);
 		l_actor->setActorFlag(physx::PxActorFlag::eSEND_SLEEP_NOTIFIES, true);
 		l_actor->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
+		l_actor->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, false);
+		l_actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+		l_actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eENABLE_CCD, true);
 
 		physx::PxShape* shape;
 		l_actor->getShapes(&shape, 1);
 		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
 		shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
 		L_PutGroupToShape(shape, _group);
+		l_actor->attachShape(*shape);
 
 		AddActor(_name, _position, Quatf(0, 0, 0, 1), l_actor);
+		m_Scene->addActor(*l_actor);
 	}
 };
 
@@ -483,10 +488,10 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
 	physx::PxRigidDynamic* l_Body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
-	l_Body->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
 	l_Body->setAngularDamping(0.5f);
-	l_Body->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, false);
+	l_Body->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
 	l_Body->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
+	l_Body->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, false);
 	l_Body->attachShape(*shape);
 
 	AddActor(_name, _position, _orientation, l_Body);
@@ -646,7 +651,7 @@ void CPhysXManager::CreateComplexStaticShape(const std::string _name, std::vecto
 void CPhysXManager::Update(float _dt)
 {
 	m_LeftoverSeconds = m_LeftoverSeconds + _dt;
-	if(m_LeftoverSeconds >= PHYSX_UPDATE_STEP )
+	if(m_LeftoverSeconds >= PHYSX_UPDATE_STEP)
 	{
 		m_Scene->simulate(PHYSX_UPDATE_STEP);
 		m_Scene->fetchResults(true);

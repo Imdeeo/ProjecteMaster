@@ -119,7 +119,7 @@ protected:
 	std::vector<Quatf>				m_ActorOrientations;
 	std::vector<physx::PxActor*>	m_Actors;
 
-	float							m_LeftoverSeconds;
+	float							m_LeftoverSeconds = .0f;
 	
 	size_t AddActor(std::string _actorName, Vect3f _position, Quatf _orientation, physx::PxActor*);
 
