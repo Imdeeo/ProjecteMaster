@@ -152,12 +152,3 @@ void CApplication::Init()
 	UABEngine.Init();	
 	CCharacterManager::GetInstance()->Load("Data\\level_"+UABEngine.GetLevelLoaded()+"\\characters.xml");
 }
-
-void CApplication::ActualizarEnemigo(CRenderableObject* owner, float _ElapsedTime)
-{
-	Vect3f playerPos = UABEngine.GetPhysXManager()->GetCharacterControllersPosition("player");
-	Vect3f enemyPos = UABEngine.GetPhysXManager()->GetCharacterControllersPosition("enemy");
-	Vect3f move = playerPos - enemyPos;
-	if (move.GetModule() > 1)
-		UABEngine.GetPhysXManager()->CharacterControllerMove("enemy", move.GetNormalized()*0.5, _ElapsedTime);
-}
