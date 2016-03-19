@@ -5,7 +5,8 @@ dofile("Data\\Lua\\Antwakbar\\antweakbar.lua")
 
 
 m_cinematicManager = CUABCinematicsActionManager()
-
+m_triggerActivo1= true
+m_triggerActivo2= true
 function mainLua(level)
 	InitAntweakBar()
 	m_cinematicManager:LoadXML("Data\\level_"..level.."\\cinematic_manager.xml")
@@ -18,21 +19,22 @@ end
 
 function onTriggerActivarMolinoBox(actor)
 	if actor == "player" then
-		--activarMolino()
+		if m_triggerActivo1 then
+			m_triggerActivo1 = false
+			activarMolino()
+		end
 	end
 end
 
 function onTriggerActivarMolinoSphere(actor)
 	if actor == "player" then
-		--activarMolino()
+		if m_triggerActivo2 then
+			m_triggerActivo2 = false
+			activarMolino()
+		end
 	end
 end
 
 function activarMolino()
-	if m_cinematicManager.m_Play then
-		utils_log("true")
-	else
-		utils_log("false")
-	end
 	m_cinematicManager.m_Play = true
 end
