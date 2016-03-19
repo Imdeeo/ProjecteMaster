@@ -14,32 +14,27 @@ class 'CUABCinematicsActionManager'
 	function CUABCinematicsActionManager:Update(ElapsedTime)
 		if self.m_Play then
 			self.m_CurrentTime=self.m_CurrentTime+ElapsedTime
+	
+			local l_CurrentActionId=self.m_CurrentAction
+			if l_CurrentActionId>#(self.m_Actions) then
+				return
+			end
+
+			while self.m_CurrentExecutedAction<=(#self.m_Actions) and self.m_Actions[self.m_CurrentExecutedAction]:GetTime()<=self.m_CurrentTime do
+				self.m_Actions[self.m_CurrentExecutedAction]:Execute()
+				self.m_CurrentExecutedAction=self.m_CurrentExecutedAction+1
+			end
+
+			for i=1, (#self.m_Actions) do
+				if self.m_Actions[i]:IsActive() or self.m_Actions[i]:MustUpdate() then
+					self.m_Actions[i]:Update(ElapsedTime)
+				end
+			end
+
 			if self.m_CurrentTime >= self.m_MaxTime then
 				self.m_CurrentTime = 0
 				self.m_Play = false
-				
-				for i=1, (#self.m_Actions) do
-					if self.m_Actions[i]:IsActive() or self.m_Actions[i]:MustUpdate() then
-						self.m_Actions[i]:Update(ElapsedTime)
-					end
-				end
-			else
-				
-				local l_CurrentActionId=self.m_CurrentAction
-				if l_CurrentActionId>#(self.m_Actions) then
-					return
-				end
-
-				while self.m_CurrentExecutedAction<=(#self.m_Actions) and self.m_Actions[self.m_CurrentExecutedAction]:GetTime()<=self.m_CurrentTime do
-					self.m_Actions[self.m_CurrentExecutedAction]:Execute()
-					self.m_CurrentExecutedAction=self.m_CurrentExecutedAction+1
-				end
-
-				for i=1, (#self.m_Actions) do
-					if self.m_Actions[i]:IsActive() or self.m_Actions[i]:MustUpdate() then
-						self.m_Actions[i]:Update(ElapsedTime)
-					end
-				end
+				self.m_CurrentAction=1				
 			end
 		end
 	end
