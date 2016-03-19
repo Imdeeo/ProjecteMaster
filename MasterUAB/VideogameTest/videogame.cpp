@@ -98,11 +98,12 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 	//----------
 
 	// Register the window class
+	// Register the window class
 	WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, APPLICATION_NAME, NULL };
 
 	RegisterClassEx(&wc);
 
-#ifndef _DEBUG
+#ifdef _DEBUG
 	RECT desktop;
 	// Get a handle to the desktop window
 	const HWND hDesktop = GetDesktopWindow();
@@ -136,22 +137,24 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 	s_Context.CreateBackBuffer(hWnd, desktop.right, desktop.bottom);
 #else
-	RECT desktop = {
+	// Calcular el tamano de nuestra ventana
+	RECT rc = {
 		0, 0, 1280, 720
 	};
-
-	AdjustWindowRect(&desktop, WS_OVERLAPPED, FALSE);
+	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
 	// Create the application's window
-	HWND hWnd = CreateWindow(APPLICATION_NAME, APPLICATION_NAME, WS_OVERLAPPEDWINDOW, 100, 100, desktop.right - desktop.left, desktop.bottom - desktop.top, NULL, NULL, wc.hInstance, NULL);
-	
+	HWND hWnd = CreateWindow(APPLICATION_NAME, APPLICATION_NAME, WS_OVERLAPPEDWINDOW, 100, 100, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, wc.hInstance, NULL);
+
+	// Añadir aquí el Init de la applicacioón
+
 	s_Context.CreateContext(hWnd, 1280, 720);
+
 
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
 
 	s_Context.CreateBackBuffer(hWnd, 1280, 720);
 #endif
-
 
 	s_Context.InitStates();
 	{
