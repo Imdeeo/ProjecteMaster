@@ -102,24 +102,57 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 	RegisterClassEx(&wc);
 
-
-	// Calcular el tamano de nuestra ventana
-	RECT rc = {
-		0, 0, 1280, 720
-	};
-	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+#ifndef _DEBUG
+	RECT desktop;
+	// Get a handle to the desktop window
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the variable desktop
+	GetWindowRect(hDesktop, &desktop);
 
 	// Create the application's window
-	HWND hWnd = CreateWindow(APPLICATION_NAME, APPLICATION_NAME, WS_OVERLAPPEDWINDOW, 100, 100, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, wc.hInstance, NULL);
+	HWND hWnd = CreateWindow(APPLICATION_NAME, APPLICATION_NAME, WS_OVERLAPPEDWINDOW, desktop.left, desktop.top, desktop.right, desktop.bottom, NULL, NULL, wc.hInstance, NULL);
 
-	// Añadir aquí el Init de la applicacioón
+	DEVMODE fullscreenSettings;
+	bool isChangeSuccessful;
+	RECT windowBoundary;
 
+	EnumDisplaySettings(NULL, 0, &fullscreenSettings);
+	fullscreenSettings.dmPelsWidth = desktop.right;
+	fullscreenSettings.dmPelsHeight = desktop.bottom;
+	/*fullscreenSettings.dmBitsPerPel = colourBits;
+	fullscreenSettings.dmDisplayFrequency = refreshRate;*/
+	fullscreenSettings.dmFields = DM_PELSWIDTH |
+		DM_PELSHEIGHT |
+		DM_BITSPERPEL |
+		DM_DISPLAYFREQUENCY;
+
+	SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_APPWINDOW | WS_EX_TOPMOST);
+	SetWindowLongPtr(hWnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
+	SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, desktop.right, desktop.bottom, SWP_SHOWWINDOW);
+	isChangeSuccessful = ChangeDisplaySettings(&fullscreenSettings, CDS_FULLSCREEN) == DISP_CHANGE_SUCCESSFUL;
+	ShowWindow(hWnd, SW_MAXIMIZE);
+
+	s_Context.CreateContext(hWnd, desktop.right, desktop.bottom);
+
+	s_Context.CreateBackBuffer(hWnd, desktop.right, desktop.bottom);
+#else
+	RECT desktop = {
+		0, 0, 1280, 720
+	};
+
+	AdjustWindowRect(&desktop, WS_OVERLAPPED, FALSE);
+
+	// Create the application's window
+	HWND hWnd = CreateWindow(APPLICATION_NAME, APPLICATION_NAME, WS_OVERLAPPEDWINDOW, 100, 100, desktop.right - desktop.left, desktop.bottom - desktop.top, NULL, NULL, wc.hInstance, NULL);
+	
 	s_Context.CreateContext(hWnd, 1280, 720);
-
 
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
 
 	s_Context.CreateBackBuffer(hWnd, 1280, 720);
+#endif
+
+
 	s_Context.InitStates();
 	{
 		//CDebugRender debugRender(s_Context.GetDevice());
