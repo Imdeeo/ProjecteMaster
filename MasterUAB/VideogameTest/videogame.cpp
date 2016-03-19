@@ -103,7 +103,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 	RegisterClassEx(&wc);
 
-#ifdef _DEBUG
+#ifndef _DEBUG
 	RECT desktop;
 	// Get a handle to the desktop window
 	const HWND hDesktop = GetDesktopWindow();
