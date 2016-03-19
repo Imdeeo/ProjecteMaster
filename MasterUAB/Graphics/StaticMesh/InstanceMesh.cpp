@@ -54,7 +54,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		}
 		else if (l_PxType == "sphere_trigger")
 		{
-			l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
+			l_PhysXManager->CreateSphereTrigger(l_Name, l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
 		}
 		else if (l_PxType == "box_shape")
 		{

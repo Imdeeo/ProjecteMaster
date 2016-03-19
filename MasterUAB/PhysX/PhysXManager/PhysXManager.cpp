@@ -202,8 +202,8 @@ public:
 			std::string l_actorName = m_ActorNames[l_indexActor];
 			//CRenderableObject* l_ro = UABEngine.GetLayerManager()->GetResource("Triggers")->GetResource(l_triggerName);
 			//l_ro->GetComponentManager()->onTrigger(l_actorName);
-			UABEngine.GetInstance()->GetScriptManager()->RunCode("onTrigger" + l_triggerName + "(" + l_actorName + ")");
-			printf("Trigger \"%s\" fired with \"%s\"", l_triggerName.c_str(),l_actorName.c_str());
+			UABEngine.GetInstance()->GetScriptManager()->RunCode("onTrigger" + l_triggerName + "(\"" + l_actorName + "\")");
+			//printf("Trigger \"%s\" fired with \"%s\"", l_triggerName.c_str(), l_actorName.c_str());
 			//lo suyo seria llamar a una funcion lua que gestionara la activacion del trigger
 		}
 	}
