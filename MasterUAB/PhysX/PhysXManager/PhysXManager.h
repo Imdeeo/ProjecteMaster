@@ -79,8 +79,8 @@ public:
 	void CreateComplexDinamicShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, int _group, bool _isKinematic = false);
 	void CreateComplexStaticShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, int _group);
 
-	void CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group);
-	void CreateSphereTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group);
+	void CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group, std::string _OnTriggerLuaFunction, std::vector<std::string> _ActiveActors);
+	void CreateSphereTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group, std::string _OnTriggerLuaFunction, std::vector<std::string> _ActiveActors);
 	virtual void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, int _group) = 0;
 
 	void CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime);
@@ -118,6 +118,9 @@ protected:
 	std::vector<Vect3f>				m_ActorPositions;
 	std::vector<Quatf>				m_ActorOrientations;
 	std::vector<physx::PxActor*>	m_Actors;
+
+	std::map<size_t, std::string>	m_OnTriggerLuaFunctions;
+	std::map<size_t, std::vector<std::string>>	m_ActiveActors;
 
 	float							m_LeftoverSeconds = .0f;
 	
