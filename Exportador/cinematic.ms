@@ -32,7 +32,7 @@ fn createCinematicObjects dir filename Objs =
 		key = (key as float)/30
 			
 		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
-		format "<cinematic name=\"%\" duration=\"%\">\n" maxFileName key to:file
+		format "<cinematic name=\"%\" duration=\"%\" cycle=\"true\">\n" maxFileName key to:file
 
 		for l_Obj in Objs do
 		(

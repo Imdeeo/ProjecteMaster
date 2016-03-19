@@ -86,8 +86,8 @@ private :
 			physx::PxVisualDebuggerConnectionFlags connectionFlags ( physx::PxVisualDebuggerExt::getAllConnectionFlags() );
 
 			m_PhysX->getVisualDebugger()->setVisualizeConstraints(true);
-			//m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONSTRAINTS, true);
-			//m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONTACTS,true);		
+			m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONSTRAINTS, true);
+			m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONTACTS,true);		
 			m_DebugConnection = physx::PxVisualDebuggerExt::createConnection(m_PhysX->getPvdConnectionManager(), PVD_HOST, 5425, 100, connectionFlags);
 			if (m_DebugConnection)
 				m_DebugConnection->release();
@@ -203,7 +203,7 @@ public:
 	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, int _group)
 	{
 		assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
-		
+
 		physx::PxMaterial* l_Material = m_Materials[_MaterialName];
 
 		physx::PxCapsuleControllerDesc desc;
@@ -220,14 +220,13 @@ public:
 		desc.userData = (void*)l_index;
 
 		m_CharacterControllers[_name] = m_ControllerManager->createController(desc);
-
-
 		physx::PxRigidDynamic* l_actor = m_CharacterControllers[_name]->getActor();
+		l_actor->setLinearDamping(0.15f);
+		l_actor->setAngularDamping(15.0f);
+
 		/*physx::PxShape *shape = l_actor->createShape(physx::PxBoxGeometry(_radius, _height + _radius * 2, _radius), *l_Material);
-
-		L_PutGroupToShape(shape, _group);
-
-		shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);*/
+		shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
+		L_PutGroupToShape(shape, _group);*/
 
 		AddActor(_name,_position,Quatf(0,0,0,1),l_actor);
 	}
@@ -394,26 +393,20 @@ void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, c
 
 
 void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
-{
-	/*physx::PxShape* shape = CreateStaticShape(
-		_name,
-		physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2),
-		_Material,
-		_position,
-		_orientation,
-		_group);
-		
-	shape->release();*/
-
-	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2), *m_Materials[_Material],true);
-	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
-	l_Body->attachShape(*shape);
-
+{	
+	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2), *m_Materials[_Material], true);
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
+	physx::PxRigidDynamic* l_Body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+	l_Body->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
+	l_Body->setAngularDamping(0.5f);
+	l_Body->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, false);
+	l_Body->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
 	size_t index = m_Actors.size();
 	l_Body->userData = (void*)index;
+	l_Body->attachShape(*shape);
+
 	m_Scene->addActor(*l_Body);
 
 	shape->release();

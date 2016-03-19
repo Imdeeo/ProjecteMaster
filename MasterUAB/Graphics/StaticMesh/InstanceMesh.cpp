@@ -44,8 +44,9 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		}
 		else if (l_PxType == "plane_shape")
 		{
-			Vect3f l_Normal = Vect3f(.0f, 1.0f, .0f);
-			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, 0, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
+			Vect3f l_Normal = TreeNode.GetVect3fProperty("physics_normal", Vect3f(.0f, 1.f, .0f), true);
+			float l_Offset = TreeNode.GetFloatProperty("physics_offset", .0f, true);
+			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, l_Offset, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
 		}
 		else if (l_PxType == "box_trigger")
 		{
