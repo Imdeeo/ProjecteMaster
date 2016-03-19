@@ -500,6 +500,26 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 	shape->release();
 }
 
+
+void CPhysXManager::CreateSphereTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
+{
+	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2), *m_Materials[_Material], true);
+	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
+	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+
+	physx::PxRigidDynamic* l_Body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+	l_Body->setAngularDamping(0.5f);
+	l_Body->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
+	l_Body->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
+	l_Body->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, false);
+	l_Body->attachShape(*shape);
+
+	AddActor(_name, _position, _orientation, l_Body);
+	m_Scene->addActor(*l_Body);
+
+	shape->release();
+}
+
 //void CPhysXManager::CreateConvexMesh(std::vector<Vect3f> Vertices, const std::string &MeshName, const Vect3f &Position, const Quatf &Orientation, const std::string &MaterialName)
 //{
 //
