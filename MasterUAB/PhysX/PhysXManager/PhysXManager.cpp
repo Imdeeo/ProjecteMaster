@@ -704,8 +704,6 @@ void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement,
 
 	Vect3f move2 = CastVec(cct->getPosition());
 	physx::PxRigidDynamic* actor = cct->getActor();
-	Vect3f aux = Vect3f(cct->getPosition().x, cct->getPosition().y, cct->getPosition().z);
-	actor->setGlobalPose(physx::PxTransform(CastVec(aux)));
 
 	physx::PxExtendedVec3 p = cct->getFootPosition();
 	physx::PxVec3 v = actor->getLinearVelocity();
