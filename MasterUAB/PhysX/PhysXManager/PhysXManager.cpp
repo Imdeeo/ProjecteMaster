@@ -261,7 +261,7 @@ public:
 		desc.userData = (void*)l_index;
 
 		m_CharacterControllers[_name] = m_ControllerManager->createController(desc);
-		physx::PxRigidDynamic* l_actor = m_CharacterControllers[_name]->getActor();
+		physx::PxRigidDynamic* l_actor = m_CharacterControllers[_name]->getActor()->is<physx::PxRigidDynamic>();
 		l_actor->setLinearDamping(0.15f);
 		l_actor->setAngularDamping(15.0f);
 
