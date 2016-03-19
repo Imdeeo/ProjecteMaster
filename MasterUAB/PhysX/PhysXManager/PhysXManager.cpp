@@ -27,6 +27,25 @@
 
 #include <PxPhysicsAPI.h>
 
+#define CONTACT_OFFSET			0.01f
+//	#define CONTACT_OFFSET			0.1f
+//	#define STEP_OFFSET				0.01f
+#define STEP_OFFSET				0.05f
+//	#define STEP_OFFSET				0.1f
+//	#define STEP_OFFSET				0.2f
+
+//	#define SLOPE_LIMIT				0.8f
+#define SLOPE_LIMIT				0.0f
+//	#define INVISIBLE_WALLS_HEIGHT	6.0f
+#define INVISIBLE_WALLS_HEIGHT	0.0f
+//	#define MAX_JUMP_HEIGHT			4.0f
+#define MAX_JUMP_HEIGHT			0.0f
+
+static const float gScaleFactor = 1.5f;
+static const float gStandingSize = 1.0f * gScaleFactor;
+static const float gCrouchingSize = 0.25f * gScaleFactor;
+static const float gControllerRadius = 0.3f * gScaleFactor;
+
 static physx::PxDefaultErrorCallback gDefaultErrorCallback;
 static physx::PxDefaultAllocator gDefaultAllocatorCallback;
 
@@ -63,7 +82,8 @@ inline void L_PutGroupToShape(physx::PxShape* shape, int _group)
 class CPhysXManagerImplementation:
 	public CPhysXManager,
 	public physx::PxSimulationEventCallback, 
-	public physx::PxUserControllerHitReport
+	public physx::PxUserControllerHitReport,
+	public physx::PxControllerBehaviorCallback
 {
 private :
 	void Init()
@@ -88,6 +108,7 @@ private :
 			m_PhysX->getVisualDebugger()->setVisualizeConstraints(true);
 			m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONSTRAINTS, true);
 			m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_CONTACTS,true);		
+			m_PhysX->getVisualDebugger()->setVisualDebuggerFlag(physx::PxVisualDebuggerFlag::eTRANSMIT_SCENEQUERIES, true);
 			m_DebugConnection = physx::PxVisualDebuggerExt::createConnection(m_PhysX->getPvdConnectionManager(), PVD_HOST, 5425, 100, connectionFlags);
 			if (m_DebugConnection)
 				m_DebugConnection->release();
@@ -189,15 +210,31 @@ public:
 
 	void onShapeHit(const physx::PxControllerShapeHit& hit)
 	{
-		std::cout << "onShapeHit!\n";
+		
 	}
 	void onControllerHit(const physx::PxControllersHit& hit)
 	{
-		std::cout << "onControllerHit!\n";
+		
 	}
 	void onObstacleHit(const physx::PxControllerObstacleHit& hit)
 	{
-		std::cout << "onObstacleHit!\n";
+		
+	}
+
+	physx::PxControllerBehaviorFlags getBehaviorFlags(const physx::PxShape& shape, const physx::PxActor& actor)
+	{
+		std::cout << "getBehaviorFlags (shape n' actor)!\n";
+		return physx::PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
+	}
+	physx::PxControllerBehaviorFlags getBehaviorFlags(const physx::PxController& controller)
+	{
+		std::cout << "getBehaviorFlags (controller)!\n";
+		return physx::PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
+	}
+	physx::PxControllerBehaviorFlags getBehaviorFlags(const physx::PxObstacle& obstacle)
+	{
+		std::cout << "getBehaviorFlags (obstacle)!\n";
+		return physx::PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
 	}
 
 	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, int _group)
@@ -205,18 +242,22 @@ public:
 		assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
 
 		physx::PxMaterial* l_Material = m_Materials[_MaterialName];
+		size_t l_index = m_CharacterControllers.size();
 
 		physx::PxCapsuleControllerDesc desc;
-		desc.height = _height;
+		desc.position = physx::PxExtendedVec3(_position.x, _position.y + _radius + _height*0.5f, _position.z);
+		desc.slopeLimit = SLOPE_LIMIT;
+		desc.contactOffset = CONTACT_OFFSET;
+		desc.stepOffset = STEP_OFFSET;
+		desc.invisibleWallHeight = INVISIBLE_WALLS_HEIGHT;
+		desc.maxJumpHeight = MAX_JUMP_HEIGHT;
 		desc.radius = _radius;
+		desc.height = _height;
 		desc.climbingMode = physx::PxCapsuleClimbingMode::eEASY;
-		desc.slopeLimit = cosf(FLOAT_PI_VALUE / 6); //30º
-		desc.stepOffset = 0.5f;
 		desc.density = _density;
 		desc.reportCallback = this;
-		desc.position = physx::PxExtendedVec3(_position.x,_position.y + _radius + _height*0.5f,_position.z);
+		desc.behaviorCallback = this;
 		desc.material = l_Material;
-		size_t l_index = m_CharacterControllers.size();
 		desc.userData = (void*)l_index;
 
 		m_CharacterControllers[_name] = m_ControllerManager->createController(desc);
@@ -403,10 +444,9 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 	l_Body->setAngularDamping(0.5f);
 	l_Body->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, false);
 	l_Body->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
-	size_t index = m_Actors.size();
-	l_Body->userData = (void*)index;
 	l_Body->attachShape(*shape);
 
+	AddActor(_name, _position, _orientation, l_Body);
 	m_Scene->addActor(*l_Body);
 
 	shape->release();
