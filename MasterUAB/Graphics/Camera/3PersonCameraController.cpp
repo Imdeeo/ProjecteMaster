@@ -15,7 +15,7 @@
 #include <math.h>
 
 C3PersonCameraController::C3PersonCameraController(const CXMLTreeNode & _TreeNode) : CCameraController(_TreeNode)
-, m_YawSpeed(10.f)
+, m_YawSpeed(5.f)
 , m_PitchSpeed(10.f)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
