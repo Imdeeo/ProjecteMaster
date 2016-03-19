@@ -52,7 +52,11 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		{
 			l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
 		}
-		else
+		else if (l_PxType == "sphere_trigger")
+		{
+			l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
+		}
+		else if (l_PxType == "box_shape")
 		{
 			l_PhysXManager->CreateStaticBox(GetName(), l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
 		}
@@ -69,7 +73,7 @@ CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreNam
 CInstanceMesh::~CInstanceMesh(void)
 {
 	CRenderableObject::~CRenderableObject();
-}
+} 
 
 void CInstanceMesh::Render(CRenderManager *RM)
 {
