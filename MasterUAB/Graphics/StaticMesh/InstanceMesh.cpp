@@ -58,6 +58,18 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		}
 		else if (l_PxType == "box_shape")
 		{
+			if (l_BB.x <= 0)
+			{
+				l_BB.x = 0.001;
+			}
+			if (l_BB.y <= 0)
+			{
+				l_BB.y = 0.001;
+			}
+			if (l_BB.z <= 0)
+			{
+				l_BB.z = 0.001;
+			}
 			l_PhysXManager->CreateStaticBox(GetName(), l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
 		}
 	}
