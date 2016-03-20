@@ -40,9 +40,9 @@
 	</render_deferred_shading>
 	
 	<!-- TRIGGERS -->
-	<set_depth_stencil_state name="set depth stencil TF triggers" enable_z_test="true" write_z_buffer="true" active="true"/>
-	<set_pool_renderable_objects_technique name="set pool triggers" pool="triggers_pool" active="true"/>
-	<render_layer name="render layer triggers" layer="triggers" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF triggers" enable_z_test="true" write_z_buffer="true" active="false"/>
+	<set_pool_renderable_objects_technique name="set pool triggers" pool="triggers_pool" active="false"/>
+	<render_layer name="render layer triggers" layer="triggers" active="false"/>
 	
 	
 	<!-- FOG -->
