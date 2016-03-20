@@ -487,11 +487,9 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
-	physx::PxRigidDynamic* l_Body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
-	l_Body->setAngularDamping(0.5f);
+	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
 	l_Body->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
 	l_Body->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
-	l_Body->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, false);
 	l_Body->attachShape(*shape);
 
 	AddActor(_name, _position, _orientation, l_Body);
@@ -507,11 +505,9 @@ void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, 
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
-	physx::PxRigidDynamic* l_Body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
-	l_Body->setAngularDamping(0.5f);
+	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
 	l_Body->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
 	l_Body->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
-	l_Body->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, false);
 	l_Body->attachShape(*shape);
 
 	AddActor(_name, _position, _orientation, l_Body);
