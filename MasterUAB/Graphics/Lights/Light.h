@@ -64,6 +64,26 @@ public:
 	bool  GetEnabled()const { return m_Enabled; }
 	TLightType GetType()const { return m_Type; }
 
+	CEmptyPointerClass* GetIntensityLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_Intensity;
+	}
+
+	CEmptyPointerClass* GetStartRangeAttenuationLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_StartRangeAttenuation;
+	}
+
+	CEmptyPointerClass* GetEndRangeAttenuattionLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_EndRangeAttenuation;
+	}
+
+	CEmptyPointerClass* GetColorLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_Color;
+	}
+
 	void SetColor(CColor _Color) { m_Color = _Color; }
 
 	void SetIntensity(float _Intensity) { m_Intensity = _Intensity; }
