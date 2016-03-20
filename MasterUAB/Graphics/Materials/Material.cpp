@@ -38,6 +38,7 @@ CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_Current
 			{
 				m_ReflectionStageId = i;
 			}
+			m_Textures[m_Textures.size()-1]->SetType(l_TextureType);
 		}
 		if (l_Child.GetName() == std::string("parameter"))
 		{
@@ -150,4 +151,20 @@ void CMaterial::operator=(CMaterial &b)
 CRenderableObjectTechnique* CMaterial::GetRenderableObjectTechnique()
 {
 	return m_RenderableObjectTechnique;
+}
+
+void CMaterial::Save(FILE* _File)
+{
+	fprintf_s(_File, "\t<material name=\"%s\" renderable_object_technique=\"%s\">\n",m_Name.c_str(),m_RenderableObjectTechnique->GetName().c_str());
+
+	for (size_t i = 0; i < m_Textures.size(); i++)
+	{
+		m_Textures[i]->Save(_File, 2);
+	}
+	for (size_t i = 0; i < m_Parameters.size(); i++)
+	{
+		m_Parameters[i]->Save(_File, 2);
+	}
+
+	fprintf_s(_File, "\t</material>\n");
 }

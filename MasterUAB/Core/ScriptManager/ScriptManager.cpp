@@ -1045,6 +1045,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<>())
 			.def("load", &CMaterialManager::Load)
 			.def("reload", &CMaterialManager::Reload)
+			.def("save", &CMaterialManager::Save)
 	];
 
 
