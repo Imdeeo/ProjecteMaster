@@ -27,6 +27,8 @@ public:
 	void * GetNextParameterAddress(unsigned int NumBytes);
 	const std::vector<CMaterialParameter *> & GetParameters(){ return m_Parameters;}
 	void CMaterial::operator=(CMaterial &b);
+
+	void Save(FILE* _File);
 };
 
 #endif //MATERIAL_H
