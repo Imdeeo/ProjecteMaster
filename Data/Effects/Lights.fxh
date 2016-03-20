@@ -13,7 +13,7 @@ float4 shadowMapCalc(float3 l_WorldPosition)
 		float2 l_ProjectedLightCoords=float2(((l_LightViewPosition.x/l_LightViewPosition.w)/2.0f)+0.5f, ((-l_LightViewPosition.y/l_LightViewPosition.w)/2.0f)+0.5f);
 		float l_DepthShadowMap=T6Texture.Sample(S6Sampler, l_ProjectedLightCoords).r;
 		float l_LightDepth=l_LightViewPosition.z/l_LightViewPosition.w;
-		float m_ShadowMapBias = 0.00003f;
+		float m_ShadowMapBias = 0.001f;
 		l_DepthShadowMap=l_DepthShadowMap+m_ShadowMapBias;
 		if((saturate(l_ProjectedLightCoords.x)==l_ProjectedLightCoords.x) && (saturate(l_ProjectedLightCoords.y)==l_ProjectedLightCoords.y))
 		{
