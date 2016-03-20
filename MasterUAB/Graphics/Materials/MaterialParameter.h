@@ -31,6 +31,9 @@ public:
 	}
 
 	static TMaterialType GetTypeFromString(std::string _SType);
+	static std::string GetStringFromType(TMaterialType _Type);
+
+	virtual void Save(FILE* _File, size_t _NTabs = 0);
 
 	virtual const char* GetDescription() const = 0;
 };

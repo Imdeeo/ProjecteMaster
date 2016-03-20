@@ -110,6 +110,7 @@ function RegisterMaterialsBar()
 	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Materials\");RegisterMainBar()","");
 	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_material_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Materials\");RegisterMaterialsBar()","");
+	DebugHelper:add_lua_button("Save","CUABEngine.get_instance():get_material_manager():save()","");
 	
 	local MaterialsManager = UABEngine:get_material_manager()
 	local Materials = MaterialsManager:get_elements_array()
