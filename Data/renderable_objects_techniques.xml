@@ -57,4 +57,7 @@
 	<pool_renderable_object_technique name="skybox_pool">
 		<renderable_object_technique name="skybox" technique="skybox_technique"/>
 	</pool_renderable_object_technique>
+		<pool_renderable_object_technique name="triggers_pool">
+		<renderable_object_technique name="trigger" technique="trigger_technique"/>
+	</pool_renderable_object_technique>
 </renderable_object_techniques>

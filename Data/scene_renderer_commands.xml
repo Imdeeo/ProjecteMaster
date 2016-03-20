@@ -20,6 +20,7 @@
 	<clear name="clear FT defferred" render_target="false" depth_stencil="true"/>
 	<set_pool_renderable_objects_technique name="set pool gBuffer" pool="gBuffer"/>
 	<render_layer name="render layer solid" layer="solid" active="true"/>
+	<render_layer name="render layer alpha_objects" layer="alpha_objects" active="true"/>
 	
 	<unset_render_target name="unset render target"/>
 	
@@ -38,12 +39,19 @@
 		<texture stage_id="3" file="DepthMapTexture" load_file="false"/>
 	</render_deferred_shading>
 	
+	<!-- TRIGGERS -->
+	<set_depth_stencil_state name="set depth stencil TF triggers" enable_z_test="true" write_z_buffer="true" active="true"/>
+	<set_pool_renderable_objects_technique name="set pool triggers" pool="triggers_pool" active="true"/>
+	<render_layer name="render layer triggers" layer="triggers" active="true"/>
+	
+	
 	<!-- FOG -->
 	<enable_alpha_blend name="enable alpha blend AAZZOO Fog" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="false"/>
 	<render_draw_quad name="draw quad Fog" material="FogMaterial" active="false">
 		<texture stage_id="0" file="DepthMapTexture" load_file="false"/>
 	</render_draw_quad>
 	<disable_alpha_blend name="disable alpha blend Fog" active="false"/>
+	
 	
 	<!-- SKYBOX -->
 	<set_depth_stencil_state name="set depth stencil TF Skybox" enable_z_test="true" write_z_buffer="false" active="true"/>

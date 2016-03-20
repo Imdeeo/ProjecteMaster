@@ -17,9 +17,11 @@ function RegisterMainBar()
 	DebugHelper:add_lua_button("Player","RegisterPlayerBar()","");
 	DebugHelper:add_lua_button("Render Commands","RegisterSceneRendererCommandsBar()","");
 	DebugHelper:add_lua_button("Cameras","RegisterCamerasBar()","");
+	DebugHelper:add_lua_button("Lights","RegisterLightsBar()","");
+	
 	DebugHelper:register_bar()
+	
 end
-
 
 function RegisterShadersBar()
 	
@@ -53,7 +55,6 @@ function ReloadEffectTechnique(EffectTechniqueName)
 end
 
 function RegisterParametersVariables(material_name)
-
 	
 	local UABEngine = CUABEngine.get_instance()
 	local DebugHelper = CDebugHelper.get_debug_helper()
@@ -117,6 +118,7 @@ function RegisterMaterialsBar()
 	for i = 0,MaterialsManager:size()-1 do
 		DebugHelper:add_lua_button(Materials[i].name,"RegisterParametersVariables(\""..Materials[i].name.."\")","");
 	end
+	
 	DebugHelper:register_bar()
 	
 end
@@ -130,6 +132,7 @@ function ReloadMaterial(MaterialName)
 end
 
 function RegisterReloadBar()
+
 	local UABEngine = CUABEngine.get_instance()
 	local DebugHelper = CDebugHelper.get_debug_helper()
 	
@@ -144,11 +147,14 @@ function RegisterReloadBar()
 	DebugHelper:add_lua_button("Effect Manager","CUABEngine.get_instance():get_effect_manager():reload()","");
 	DebugHelper:add_lua_button("Layer Manager","CUABEngine.get_instance():get_layer_manager():reload();","");
 	DebugHelper:add_lua_button("Camera Controllers","CUABEngine.get_instance():get_camera_controller_manager():reload();","");
+	DebugHelper:add_lua_button("Light Controllers","CUABEngine.get_instance():get_light_manager():reload();","");
 	
 	DebugHelper:register_bar()
+	
 end
 
 function RegisterSceneRendererCommandsBar()
+
 	local UABEngine = CUABEngine.get_instance()
 	local DebugHelper = CDebugHelper.get_debug_helper()
 	
@@ -168,9 +174,11 @@ function RegisterSceneRendererCommandsBar()
 	end
 	
 	DebugHelper:register_bar()
+	
 end
 
 function RegisterCamerasBar()
+
 	local UABEngine = CUABEngine.get_instance()
 	local DebugHelper = CDebugHelper.get_debug_helper()
 	
@@ -207,4 +215,69 @@ function RegisterCamerasBar()
 	end
 	
 	DebugHelper:register_bar()
+	
+end
+
+function RegisterLightsBar()
+
+	local UABEngine = CUABEngine.get_instance()
+	local DebugHelper = CDebugHelper.get_debug_helper()
+	
+	DebugHelper:remove_bar("MainBar")
+	DebugHelper:start_register_bar("Lights")
+	
+	utils_log("lights1")
+	local LightControllerManager = UABEngine:get_light_manager()
+	
+	utils_log("lights2")
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Lights\");RegisterMainBar()","");
+	utils_log("lights3")
+	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_light_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Lights\");RegisterLightsBar()","");
+	utils_log("lights4")
+	
+	local Lights = LightControllerManager:get_elements_array() --get_address
+	
+	for i = 0,LightControllerManager:size()-1 do
+		DebugHelper:add_lua_button(Lights[i].name,"RegisterLightParameters(\""..Lights[i].name.."\")","");
+	end
+	
+	utils_log("lights5")
+	
+	DebugHelper:register_bar()
+	
+end
+
+function RegisterLightParameters(light_name)
+	
+	local UABEngine = CUABEngine.get_instance()
+	local DebugHelper = CDebugHelper.get_debug_helper()
+	local LightsManager = UABEngine:get_light_manager()
+	
+	local bar_name = "Light: "..light_name
+	
+	DebugHelper:remove_bar("Lights")
+	DebugHelper:start_register_bar(bar_name)
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\""..bar_name.."\");RegisterLightsBar()","");
+	
+	local Light = LightsManager:get_resource(light_name)
+
+	DebugHelper:add_variable("Intensity",CDebugHelper.float,CDebugHelper.read_write,Light:get_intensity_lua_address(),"min=0.0 max=1.0 step=0.1")--" group='"..material_name.."' ")	
+	DebugHelper:add_variable("Start Range Attenuation",CDebugHelper.float,CDebugHelper.read_write,Light:get_start_range_attenuation_lua_address(),"min=0.0 max=500.0 step=1.0")--" group='"..material_name.."' ")
+	DebugHelper:add_variable("End Range Attenuation",CDebugHelper.float,CDebugHelper.read_write,Light:get_end_range_attenuation_lua_address(),"min=0.0 max=500.0 step=1.0")--" group='"..material_name.."' ")
+	DebugHelper:add_variable("Color",CDebugHelper.color,CDebugHelper.read_write,Light:get_color_lua_address(),"")--" group='"..material_name.."' ")
+
+	if(Light:get_type()==0)then
+		-- OMNI
+		
+	elseif(Light:get_type()==1)then
+		-- DIRECTIONAL		
+
+	elseif(Light:get_type()==2)then
+		-- SPOT
+	end
+	
+	DebugHelper:register_bar()
+	
 end

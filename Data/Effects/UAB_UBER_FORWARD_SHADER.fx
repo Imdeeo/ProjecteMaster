@@ -262,6 +262,8 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		float4 l_ReflectColor = T8Texture.Sample(S8Sampler, l_ReflectVector);
 		Out = Out*0.7 + l_ReflectColor*0.3;
 	#endif
-
+	#ifdef HAS_TRIGGER
+		return float4(0,1,0,1);
+	#endif
 	return Out;
 }
