@@ -32,9 +32,10 @@ class 'CUABCinematicsActionManager'
 			end
 
 			if self.m_CurrentTime >= self.m_MaxTime then
-				self.m_CurrentTime = 0
-				self.m_Play = false
-				self.m_CurrentAction=1				
+				self.m_CurrentTime=0.0
+				self.m_CurrentAction=1
+				self.m_CurrentExecutedAction=1
+				self.m_Play = false				
 			end
 		end
 	end
