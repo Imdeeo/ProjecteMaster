@@ -106,10 +106,10 @@ float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, floa
 
 float4 GUIPS(PS_INPUT IN) : SV_Target
 {
-	float4 l_Color=T1Texture.Sample(S1Sampler, IN.UV);
+	float4 l_Color=T0Texture.Sample(S0Sampler, IN.UV);
 	if(m_Enabled) //Tendremos que utilizar algún tipo de máscara para hacer sólo reflejo de los píxeles que nos interesen
 	{
-		float3 Nn=normalize(T3Texture.Sample(S3Sampler, IN.UV.xy).xyz * 2 - 1.);
+		float3 Nn=normalize(T1Texture.Sample(S1Sampler, IN.UV.xy).xyz * 2 - 1.);
 		float l_Depth=T2Texture.Sample(S2Sampler, IN.UV.xy).x;
 		float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
 		float4x4 l_ViewProjection=mul(m_View, m_Projection);
