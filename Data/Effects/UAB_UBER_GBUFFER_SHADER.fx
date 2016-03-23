@@ -21,7 +21,7 @@ struct VS_INPUT
 		float2 UV2 : TEXCOORD1;
 	#endif
 	#ifdef HAS_TANGENT
-		float4 Tangent : TEXCOORD3;
+		float4 Tangent : TEXCOORD3;		
 	#endif
 };
 
@@ -36,6 +36,7 @@ struct PS_INPUT
 	#ifdef HAS_TANGENT
 		float3 WorldBinormal: TEXCOORD2;
 		float3 WorldTangent: TEXCOORD3;
+		float3 WorldNormal: TEXCOORD4;
 	#endif
 	float4 HPos : TEXCOORD5;
 };
@@ -98,19 +99,42 @@ PS_INPUT mainVS(VS_INPUT IN)
 		l_Output.Normal = normalize(mul(IN.Normal, (float3x3)m_World));
 	//#endif
 	
-	
-	
 	l_Output.UV = IN.UV;
 	
 	#ifdef HAS_TANGENT
 		l_Output.WorldTangent = mul(IN.Tangent.xyz,(float3x3)m_World);
 		l_Output.WorldBinormal = mul(cross(IN.Tangent.xyz,IN.Normal),(float3x3)m_World);
+		l_Output.WorldNormal = mul(IN.Normal.xyz,(float3x3)m_World);
 	#endif
+	
 	#ifdef HAS_UV2
 		l_Output.UV2 = IN.UV2;
 	#endif
 	
 	return l_Output;
+}
+
+float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, SamplerState
+	LightmapXSampler, Texture2D LightmapYTexture, SamplerState LightmapYSampler, Texture2D
+	LightmapZTexture, SamplerState LightmapZSampler)
+{
+	float3 l_LightmapX=LightmapXTexture.Sample(LightmapXSampler, UV)*2;
+	float3 l_LightmapY=LightmapYTexture.Sample(LightmapYSampler, UV)*2;
+	float3 l_LightmapZ=LightmapZTexture.Sample(LightmapZSampler, UV)*2;
+	float3 l_BumpBasisX=normalize(float3(0.816496580927726, 0.5773502691896258, 0 ));
+	float3 l_BumpBasisY=normalize(float3(-0.408248290463863, 0.5773502691896258, 0.7071067811865475 ));
+	float3 l_BumpBasisZ=normalize(float3(-0.408248290463863, 0.5773502691896258, -0.7071067811865475));
+	float3 l_RNMLighting=saturate(dot(Nn, l_BumpBasisX)) * l_LightmapX+saturate(dot(Nn, l_BumpBasisY)) * l_LightmapY + saturate(dot(Nn, l_BumpBasisZ)) * l_LightmapZ;
+							
+	return l_RNMLighting;
+}
+
+float3 CalcNormalMap(float3 Normal, float3 Tangent, float3 Binormal, float4 NormalMap)
+{
+	float g_Bump = 2.4;
+	float3 bump=g_Bump*((NormalMap.xyz) - float3(0.5,0.5,0.5));		
+	float3 Nn = Normal + bump.x*Tangent + bump.y*Binormal;
+	return normalize(Nn);
 }
 
 PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
@@ -119,7 +143,6 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	float l_specularFactor=m_SpecularFactor;
 	float l_Depth = IN.HPos.z / IN.HPos.w;
 	
-	
 	float4 l_Ambient = m_LightAmbient;
 	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
 	if (l_Albedo.w < 0.1)
@@ -127,25 +150,31 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		clip(-1);
 	}
 	float3 Nn = IN.Normal;
+	
 	#ifdef HAS_REFLECTION
 		float3 l_EyeToWorldPosition = normalize(IN.HPos-m_CameraPosition.xyz);
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
 		float4 l_ReflectColor = T8Texture.Sample(S8Sampler, l_ReflectVector);
 		l_Albedo = l_Albedo*0.7+l_ReflectColor*0.3;
 	#endif
-	#ifdef HAS_TANGENT
-		float g_Bump = 2.4;
-		
+	
+	#ifdef HAS_TANGENT		
+		Nn=normalize(IN.WorldNormal);
 		float3 Tn=normalize(IN.WorldTangent);
 		float3 Bn=normalize(IN.WorldBinormal);
-		float4 auxNormal = T2Texture.Sample(S2Sampler,IN.UV);
-		float3 bump=g_Bump*((auxNormal.xyz) - float3(0.5,0.5,0.5));		
-		Nn = Nn + bump.x*Tn + bump.y*Bn;
-		Nn = normalize(Nn);
-		l_specularFactor *= auxNormal.w;
+		float4 l_NormalMap = T2Texture.Sample(S2Sampler,IN.UV);
+		
+		Nn=CalcNormalMap(Nn, Tn, Bn, l_NormalMap);	
+		
+		l_specularFactor *= l_NormalMap.w;
 	#endif
+	
 	#ifdef HAS_UV2
-		l_Ambient = T1Texture.Sample(S1Sampler,IN.UV2);
+		#ifdef HAS_RNM
+			l_Ambient=GetRadiosityNormalMap(Nn, IN.UV2, T1Texture, S1Sampler, T4Texture, S4Sampler, T3Texture, S3Sampler);
+		#else
+			l_Ambient = T1Texture.Sample(S1Sampler,IN.UV2);
+		#endif
 	#endif
 	
 	float l_SpecularPower = m_SpecularPower/100;
