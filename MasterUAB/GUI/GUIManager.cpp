@@ -1,4 +1,9 @@
 #include "GUIManager.h"
+#include "Materials\Material.h"
+#include "SpriteMap.h"
+#include "Sprite.h"
+#include "Buton.h"
+#include "Slider.h"
 
 void CGUIManager::SetActive(const std::string& id)
 {
