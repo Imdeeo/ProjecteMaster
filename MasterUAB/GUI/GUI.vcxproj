@@ -15,11 +15,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Buton.cpp" />
     <ClCompile Include="dummy.cpp" />
     <ClCompile Include="GUIManager.cpp" />
+    <ClCompile Include="Slider.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Buton.h" />
     <ClInclude Include="GUIManager.h" />
+    <ClInclude Include="Slider.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteMap.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{143D2636-2E2A-469A-97F5-878EFC7A2A26}</ProjectGuid>
@@ -93,6 +101,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Graphics;$(SolutionDir)Core;$(SolutionDir)Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
