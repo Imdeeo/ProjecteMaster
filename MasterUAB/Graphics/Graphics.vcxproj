@@ -47,6 +47,7 @@
     <ClCompile Include="Materials\MaterialManager.cpp" />
     <ClCompile Include="Materials\MaterialParameter.cpp" />
     <ClCompile Include="Particles\ParticleManager.cpp" />
+    <ClCompile Include="Particles\ParticleSystemInstance.cpp" />
     <ClCompile Include="Particles\ParticleSystemType.cpp" />
     <ClCompile Include="RenderHelper\RenderHelper.cpp" />
     <ClCompile Include="RenderableObjects\PoolRenderableObjectTechnique.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="Materials\MaterialManager.h" />
     <ClInclude Include="Materials\MaterialParameter.h" />
     <ClInclude Include="Particles\ParticleManager.h" />
+    <ClInclude Include="Particles\ParticleSystemInstance.h" />
     <ClInclude Include="Particles\ParticleSystemType.h" />
     <ClInclude Include="RenderableObjects\PoolRenderableObjectTechnique.h" />
     <ClInclude Include="RenderableObjects\RenderableObject.h" />
