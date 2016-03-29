@@ -23,12 +23,6 @@ CParticleSystemInstance::CParticleSystemInstance(CXMLTreeNode &TreeNode) :
 	m_EmissionVolume = m_EmissionBoxHalfSize.x * m_EmissionBoxHalfSize.y * m_EmissionBoxHalfSize.z * 8;
 	m_EmissionScaler = m_Type->GetEmitAbsolute() ? 1 : 1.0f / m_EmissionVolume;
 	m_ActiveParticles = 0;
-
-	for (size_t i = 0; i < MAX_PARTICLE_PER_INSTANCE; ++i)
-	{
-		m_ParticleData[i].Position = Vect3f(0, 0, 0);
-	}
-
 	m_RenderableVertex = new CUABPointsListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE, MAX_PARTICLE_PER_INSTANCE, true);
 	//m_RenderableVertex = new CUABTrianglesListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE, MAX_PARTICLE_PER_INSTANCE, true);
 }
@@ -57,8 +51,8 @@ Vect3f CParticleSystemInstance::GetRandomValue(Vect3f min, Vect3f max)
 	float a3 = m_UnitDistribution(m_RandomEngine);
 	Vect3f value;
 	value.x = mathUtils::Lerp(min.x, max.x, a1);
-	value.y = mathUtils::Lerp(min.y, max.y, a1);
-	value.z = mathUtils::Lerp(min.z, max.z, a1);
+	value.y = mathUtils::Lerp(min.y, max.y, a2);
+	value.z = mathUtils::Lerp(min.z, max.z, a3);
 	return value;
 }
 
@@ -167,8 +161,8 @@ void CParticleSystemInstance::Render(CRenderManager *RM)
 		m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData(), m_ActiveParticles);
 	}
 
-	/*
-	m_ParticleRenderableData[0].Position = Vect3f(0, 0, 0);
+	
+	/*m_ParticleRenderableData[0].Position = Vect3f(0, 0, 0);
 	m_ParticleRenderableData[1].Position = Vect3f(1, 0, 0);
 	m_ParticleRenderableData[2].Position = Vect3f(0, 1, 0);
 
@@ -177,8 +171,7 @@ void CParticleSystemInstance::Render(CRenderManager *RM)
 	CEffectTechnique* l_EffectTechnique = l_Material->GetRenderableObjectTechnique()->GetEffectTechnique();
 	CEffectManager::SetSceneConstants(l_EffectTechnique);
 	m_RenderableVertex->UpdateVertexs(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE);
-	m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData(), 3);
-	*/
+	m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData(), 3);*/
 }
 
 //void CParticleSystemInstance::RenderDebug(CRenderManager *RM)
