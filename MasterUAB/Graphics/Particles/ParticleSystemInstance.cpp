@@ -95,7 +95,10 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 				particle.Velocity = GetRandomValue(m_Type->GetStartingSpeed1(), m_Type->GetStartingSpeed2());
 				particle.Acceleration = GetRandomValue(m_Type->GetStartingAcceleration1(), m_Type->GetStartingAcceleration2());
 
-				particle.CurrentFrame = 0 ;
+				particle.Size = GetRandomValue(m_Type->GetSize().x, m_Type->GetSize().y);
+				particle.Angle = GetRandomValue(m_Type->GetStartingAngle().x, m_Type->GetStartingAngle().y);
+
+				particle.CurrentFrame = 0;
 				particle.TimeToNextFrame = m_Type->GetTimePerFrame();
 
 				particle.LifeTime = 0;
@@ -119,7 +122,7 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 
 		while (particle->TimeToNextFrame < 0 && (m_Type->GetLoopFrames() || particle->CurrentFrame < m_Type->GetNumFrames() - 1))
 		{
-			particle->CurrentFrame - (particle->CurrentFrame + 1) % m_Type->GetNumFrames();
+			particle->CurrentFrame = (particle->CurrentFrame + 1) % m_Type->GetNumFrames();
 			particle->TimeToNextFrame += m_Type->GetTimePerFrame();
 		}
 
@@ -148,7 +151,7 @@ void CParticleSystemInstance::Render(CRenderManager *RM)
 		m_ParticleRenderableData[i].UV.x = particle->Size;
 		m_ParticleRenderableData[i].UV.y = particle->Angle;
 		m_ParticleRenderableData[i].UV2.x = (float)particle->CurrentFrame;
-		m_ParticleRenderableData[i].UV2.y = 0;
+		m_ParticleRenderableData[i].UV2.y = (float)m_Type->GetNumFrames();
 	}
 
 	if (m_ActiveParticles > 0)
@@ -163,6 +166,7 @@ void CParticleSystemInstance::Render(CRenderManager *RM)
 
 	
 	/*m_ParticleRenderableData[0].Position = Vect3f(0, 0, 0);
+	m_ParticleRenderableData[0].UV = Vect2f(1, 0.5);
 	m_ParticleRenderableData[1].Position = Vect3f(1, 0, 0);
 	m_ParticleRenderableData[2].Position = Vect3f(0, 1, 0);
 
