@@ -10,6 +10,7 @@
 #include <assert.h>
 #include "RenderableObjects\RenderableVertexs.h"
 #include "InputManager\InputManager.h"
+#include "ContextManager\ContextManager.h"
 
 CGUIManager::CGUIManager()
 {
@@ -121,7 +122,7 @@ bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID
 		l_sprite,
 		position.x, position.y, position.x + position.width, position.y + position.height,
 		0, 0, 1, 1,
-		Vect4f(1, 1, 1, 1) };
+		CColor(1, 1, 1, 1) };
 	m_Commands.push_back(command);
 	return l_result;
 }
@@ -136,19 +137,19 @@ bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID
 
 void CGUIManager::Render(CRenderManager *RenderManager)
 {
-	MV_POSITION4_COLOR_TEXTURE_VERTEX currentBufferData[MAS_VERTICES_PER_CALL];
+	MV_POSITION4_COLOR_TEXTURE_VERTEX currentBufferData[MAX_VERTICES_PER_CALL];
 	int currentVertex = 0;
 	SpriteMapInfo *currentSpriteMap = nullptr;
-	for (int i = 0; i < commandsExecutionOrder.size(); ++i)
+	for (int i = 0; i < m_Commands.size(); ++i)  //commandsExecutionOrder.size()
 	{
-		GUICommand &command = m_Commands[commandsExecutionOrder[i]];
+		GUICommand &command = m_Commands[i];
 		assert(command.x1 <= command.x2);
 		assert(command.y2 <= command.y2);
 
 		SpriteInfo *commandSprite = command.sprite;
 		SpriteMapInfo *commandSpriteMap = commandSprite->SpriteMap;
 
-		if (currentSpriteMap != commandSpriteMap || currentVertex == s_MaxverticesPerCall)
+		if (currentSpriteMap != commandSpriteMap || currentVertex == MAX_VERTICES_PER_CALL)
 		{
 			if (currentVertex > 0)
 			{
@@ -156,17 +157,18 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 				//TODO draw all c urrent vertex in the currentBuffer
 				CRenderableObjectTechnique* l_technique = m_Materials[currentSpriteMap->MaterialIndex]->GetRenderableObjectTechnique();
 				m_Materials[currentSpriteMap->MaterialIndex]->Apply(l_technique);
-
 				m_VertexBuffers[currentSpriteMap->MaterialIndex]->UpdateVertexs(currentBufferData, currentVertex);
-				m_VertexBuffers[currentSpriteMap->MaterialIndex]->Render(RenderManager, technique, &CEffectManager::m_SceneParameters, currentVertex);
+				m_VertexBuffers[currentSpriteMap->MaterialIndex]->Render(RenderManager, l_technique->GetEffectTechnique(), &CEffectManager::m_SceneParameters, currentVertex);
 			}
 			currentVertex = 0;
 			currentSpriteMap = commandSpriteMap;
 		}
-		float x1 = (command.x1 / (screenWidth * 0.5f)) - 1.0f;
-		float x2 = (command.x2 / (screenWidth * 0.5f)) - 1.0f;
-		float y1 = 1.0f - (command.y1 / (screenHeight * 0.5f));
-		float y2 = 1.0f - (command.y2 / (screenHeight * 0.5f));
+		int l_Height = RenderManager->GetContextManager()->GetHeight();
+		int l_Width = RenderManager->GetContextManager()->GetWidth();
+		float x1 = (command.x1 / (l_Height * 0.5f)) - 1.0f;
+		float x2 = (command.x2 / (l_Width * 0.5f)) - 1.0f;
+		float y1 = 1.0f - (command.y1 / (l_Height * 0.5f));
+		float y2 = 1.0f - (command.y2 / (l_Width * 0.5f));
 
 		float u1 = commandSprite->u1 * (1.0f - command.u1) + commandSprite->u2 * command.u1;
 		float u2 = commandSprite->u1 * (1.0f - command.u2) + commandSprite->u2 * command.u2;
@@ -185,9 +187,8 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 	{
 		CRenderableObjectTechnique* l_technique = m_Materials[currentSpriteMap->MaterialIndex]->GetRenderableObjectTechnique();
 		m_Materials[currentSpriteMap->MaterialIndex]->Apply(l_technique);
-
 		m_VertexBuffers[currentSpriteMap->MaterialIndex]->UpdateVertexs(currentBufferData, currentVertex);
-		m_VertexBuffers[currentSpriteMap->MaterialIndex]->Render(RenderManager, technique, &CEffectManager::m_SceneParameters, currentVertex);
+		m_VertexBuffers[currentSpriteMap->MaterialIndex]->Render(RenderManager, l_technique->GetEffectTechnique(), &CEffectManager::m_SceneParameters, currentVertex);
 	}
 	m_Commands.clear();
 	m_InputUpToDate = false;
