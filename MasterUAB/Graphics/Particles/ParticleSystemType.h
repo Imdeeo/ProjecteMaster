@@ -14,6 +14,7 @@ class CXMLTreeNode;
 class CParticleSystemType : public CNamed
 {
 private:
+	//CMaterial *m_Material;
 	int m_NumFrames;	
 	float m_TimePerFrame;
 	bool m_LoopFrames;
@@ -31,7 +32,7 @@ public:
 	virtual ~CParticleSystemType(void);
 	void Destroy();
 
-	//UAB_BUILD_GET_SET(CMaterial *, Material);
+	UAB_BUILD_GET_SET(CMaterial *, Material);
 	UAB_GET_PROPERTY(int, NumFrames);
 	UAB_GET_PROPERTY(float, TimePerFrame);
 	UAB_GET_PROPERTY(bool, LoopFrames);
