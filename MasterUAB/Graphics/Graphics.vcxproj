@@ -120,6 +120,7 @@
     <ClInclude Include="Effects\EffectTechnique.h" />
     <ClInclude Include="Effects\LightEffectParameters.h" />
     <ClInclude Include="Effects\SceneEffectParameters.h" />
+    <ClInclude Include="Particles\ParticleSystemInstance.h" />
     <ClInclude Include="RenderHelper\RenderHelper.h" />
     <ClInclude Include="Layers\LayerManager.h" />
     <ClInclude Include="Lights\DirectionalLight.h" />
@@ -132,7 +133,6 @@
     <ClInclude Include="Materials\MaterialManager.h" />
     <ClInclude Include="Materials\MaterialParameter.h" />
     <ClInclude Include="Particles\ParticleManager.h" />
-    <ClInclude Include="Particles\ParticleSystemInstance.h" />
     <ClInclude Include="Particles\ParticleSystemType.h" />
     <ClInclude Include="RenderableObjects\PoolRenderableObjectTechnique.h" />
     <ClInclude Include="RenderableObjects\RenderableObject.h" />
