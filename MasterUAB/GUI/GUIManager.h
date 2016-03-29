@@ -7,12 +7,12 @@
 #include <vector>
 #include <map>
 #include "Utils.h"
+#include "Math\Color.h"
 
 class CButon;
 class CSlider;
 class CMaterial;
 class CRenderableVertexs;
-class CColor;
 class CRenderManager;
 class CXMLTreeNode;
 
@@ -33,7 +33,7 @@ struct GUICommand
 	SpriteInfo *sprite;
 	int x1, y1, x2, y2; //top left is 0,0
 	float u1, v1, u2, v2;
-	Vect4f color;
+	CColor color;
 };
 
 
