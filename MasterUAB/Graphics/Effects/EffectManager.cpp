@@ -13,13 +13,9 @@
 
 #include "DebugHelper\DebugHelper.h";
 
-CEffectManager::CEffectManager(void)
-{
-}
+CEffectManager::CEffectManager(void){}
 
-CEffectManager::~CEffectManager(void)
-{
-}
+CEffectManager::~CEffectManager(void){}
 
 void CEffectManager::ReloadShader()
 {
@@ -77,7 +73,15 @@ bool CEffectManager::Load(const std::string &Filename)
 					CEffectPixelShader *l_EffectPixelShader = new CEffectPixelShader(l_Element);
 					l_EffectPixelShader->Load();
 					m_PixelShaders.AddResource(l_EffectName, l_EffectPixelShader);
-				} else if (l_Element.GetName() == std::string("effect_technique"))
+				}
+				else if (l_Element.GetName() == std::string("geometry_shader"))
+				{
+					l_EffectName = l_Element.GetPszProperty("name");
+					CEffectGeometryShader *l_EffectGeometryShader = new CEffectGeometryShader(l_Element);
+					l_EffectGeometryShader->Load();
+					m_GeometryShaders.AddResource(l_EffectName, l_EffectGeometryShader);
+				}
+				else if (l_Element.GetName() == std::string("effect_technique"))
 				{
 					l_EffectName = l_Element.GetPszProperty("name");
 					CEffectTechnique *l_EffectTechnique = new CEffectTechnique(l_Element);
@@ -102,6 +106,11 @@ CEffectPixelShader * CEffectManager::GetPixelShader(const std::string &PixelShad
 	return m_PixelShaders[PixelShader];
 }
 
+CEffectGeometryShader * CEffectManager::GetGeometryShader(const std::string &GeometryShader)
+{
+	return m_GeometryShaders[GeometryShader];
+}
+
 void CEffectManager::SetSceneConstants(CEffectTechnique* _EffectTechnique)
 {
 	ID3D11DeviceContext* l_DeviceContext = UABEngine.GetRenderManager()->GetDeviceContext();
@@ -109,6 +118,11 @@ void CEffectManager::SetSceneConstants(CEffectTechnique* _EffectTechnique)
 	l_DeviceContext->UpdateSubresource(l_SceneConstantBufferVS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
 	ID3D11Buffer *l_SceneConstantBufferPS = _EffectTechnique->GetPixelShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 	l_DeviceContext->UpdateSubresource(l_SceneConstantBufferPS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
+	if (_EffectTechnique->GetGeometryShader() != nullptr)
+	{
+		ID3D11Buffer *l_SceneConstantBufferGS = _EffectTechnique->GetGeometryShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+		l_DeviceContext->UpdateSubresource(l_SceneConstantBufferGS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
+	}
 }
 
 void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
@@ -120,18 +134,19 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 	m_LightParameters.m_LightAttenuationEndRange[IdLight] = Light->GetEndRangeAttenuation();
 	m_LightParameters.m_LightIntensity[IdLight] = Light->GetIntensity();
 	m_LightParameters.m_LightColor[IdLight] = Light->GetColor();
+	
 	switch (Light->GetType())
 	{	
-	case CLight::LIGHT_TYPE_SPOT:
-		m_LightParameters.m_LightAngle[IdLight] = dynamic_cast<CSpotLight*>(Light)->GetAngle();
-		m_LightParameters.m_LightFallOffAngle[IdLight] = dynamic_cast<CSpotLight*>(Light)->GetFallOff();
-	case CLight::LIGHT_TYPE_DIRECTIONAL:
-		m_LightParameters.m_LightDirection[IdLight] = dynamic_cast<CDirectionalLight*>(Light)->GetDirection();
-		break;
-	case CLight::LIGHT_TYPE_OMNI:
-	default:
-		break;
-	}	
+		case CLight::LIGHT_TYPE_SPOT:
+			m_LightParameters.m_LightAngle[IdLight] = dynamic_cast<CSpotLight*>(Light)->GetAngle();
+			m_LightParameters.m_LightFallOffAngle[IdLight] = dynamic_cast<CSpotLight*>(Light)->GetFallOff();
+		case CLight::LIGHT_TYPE_DIRECTIONAL:
+			m_LightParameters.m_LightDirection[IdLight] = dynamic_cast<CDirectionalLight*>(Light)->GetDirection();
+			break;
+		case CLight::LIGHT_TYPE_OMNI:
+		default:
+			break;
+	}
 
 	if (Light->GetGenerateShadowMap())
 	{

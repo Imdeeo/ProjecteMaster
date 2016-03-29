@@ -42,6 +42,10 @@ void CLayerManager::Load(const std::string &FileName)
 				{
 					GetLayer(l_Element)->AddAnimatedInstanceModel(l_Element);
 				}
+				else if (l_Element.GetName() == std::string("particle_instance"))
+				{
+					GetLayer(l_Element)->AddParticleSystemInstance(l_Element);
+				}
 			}
 		}
 	}
