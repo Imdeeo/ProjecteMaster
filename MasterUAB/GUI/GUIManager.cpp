@@ -3,17 +3,21 @@
 #include "Buton.h"
 #include "Slider.h"
 #include "RenderManager\RenderManager.h"
+#include "RenderableObjects\RenderableObjectTechnique.h"
 #include "RenderableObjects\VertexTypes.h"
 #include "Materials\Material.h"
 #include "Effects\EffectManager.h"
 #include <assert.h>
 #include "RenderableObjects\RenderableVertexs.h"
+#include "InputManager\InputManager.h"
 
 CGUIManager::CGUIManager()
 {
 	m_ActiveItem = "";
 	m_HotItem = "";
-
+	m_InputUpToDate = false;
+	m_MouseWentPressed = false;
+	m_MouseWentReleased = false;
 }
 
 CGUIManager::~CGUIManager()
@@ -26,7 +30,7 @@ void CGUIManager::SetActive(const std::string& id)
 	m_ActiveItem = id;
 }
 
-void CGUIManager::SetNotActive(const std::string& id)
+void CGUIManager::SetNotActive()
 {
 	m_ActiveItem = "";
 }
@@ -49,29 +53,90 @@ void CGUIManager::SetNotHot(const std::string& id)
 
 bool CGUIManager::Load(CXMLTreeNode *TreeNode)
 {
+	return true;
+}
 
+void CGUIManager::CheckInput()
+{
+	if (!m_InputUpToDate)
+	{
+		CInputManager* l_InputManager = CInputManager::GetInputManager();
+		m_MouseX = l_InputManager->GetCursor().x;
+		m_MouseY = l_InputManager->GetCursor().y;
+
+		m_MouseWentPressed = m_MouseX = l_InputManager->IsActionActive("MOUSE_CLICK_LEFT");
+		m_MouseWentReleased = !m_MouseWentPressed;
+
+		m_InputUpToDate = true;
+	}
+}
+
+bool IsMouseInside(int _mouseX, int _mouseY, int x, int y, int width, int height)
+{
+	if (_mouseX >= x && _mouseX <= x + width)
+	{
+		if (_mouseY >= y && _mouseY <= x + height)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID, const GUIPosition& position)
 {
+	bool l_result = false;
+	SpriteInfo* l_sprite = l_sprite = m_Buttons[buttonID]->GetNormal();
+	if (m_ActiveItem == guiID)
+	{
+		if (m_MouseWentReleased)
+		{
+			if (m_HotItem == guiID)
+			{
+				l_result = true;
+			}
+			SetNotActive();
+		}	
+	}
+	else if (m_HotItem == guiID)
+	{
+		if (m_MouseWentPressed)
+		{
+			SetActive(guiID);
+			l_sprite = m_Buttons[buttonID]->GetPressed();
+		}
+	}
+
+	if (IsMouseInside(m_MouseX, m_MouseY, position.x, position.y, position.width, position.height))
+	{
+		SetHot(guiID);
+		l_sprite = m_Buttons[buttonID]->GetHighlight();
+	}
+	else
+	{
+		SetNotHot(guiID);
+	}
+
 	GUICommand command = { 
-		m_Buttons[buttonID]->GetNormal(),
+		l_sprite,
 		position.x, position.y, position.x + position.width, position.y + position.height,
 		0, 0, 1, 1,
 		Vect4f(1, 1, 1, 1) };
 	m_Commands.push_back(command);
+	return l_result;
 }
 
-SliderResult CGUIManager::DoSlider(const std::string& guiID, const std::string& sliderID, const GUIPosition& position, float minValue, float maxValue, float currentValue)
+
+
+/*SliderResult CGUIManager::DoSlider(const std::string& guiID, const std::string& sliderID, const GUIPosition& position, float minValue, float maxValue, float currentValue)
 {
 
-}
-
+}*/
 
 
 void CGUIManager::Render(CRenderManager *RenderManager)
 {
-	MV_POSITION4_COLOR_TEXTURE_VERTEX currentBufferData[s_MaxVerticesPerCall];
+	MV_POSITION4_COLOR_TEXTURE_VERTEX currentBufferData[MAS_VERTICES_PER_CALL];
 	int currentVertex = 0;
 	SpriteMapInfo *currentSpriteMap = nullptr;
 	for (int i = 0; i < commandsExecutionOrder.size(); ++i)
@@ -89,10 +154,11 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 			{
 				//TODO log a warning if we get here by "currentVertex == s_MaxVerticesPerCall"
 				//TODO draw all c urrent vertex in the currentBuffer
-				m_Materials[currentSpriteMap->MaterialIndex]->Apply(technique);
+				CRenderableObjectTechnique* l_technique = m_Materials[currentSpriteMap->MaterialIndex]->GetRenderableObjectTechnique();
+				m_Materials[currentSpriteMap->MaterialIndex]->Apply(l_technique);
 
 				m_VertexBuffers[currentSpriteMap->MaterialIndex]->UpdateVertexs(currentBufferData, currentVertex);
-				m_VertexBuffers[currentSpriteMap->MaterialIndex]->Render(&RenderManager, technique, &CEffectManager::m_SceneParameters, currentVertex);
+				m_VertexBuffers[currentSpriteMap->MaterialIndex]->Render(RenderManager, technique, &CEffectManager::m_SceneParameters, currentVertex);
 			}
 			currentVertex = 0;
 			currentSpriteMap = commandSpriteMap;
@@ -117,9 +183,12 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 	}
 	if (currentVertex > 0)
 	{
-		m_Materials[currentSpriteMap->MaterialIndex]->Apply(technique);
+		CRenderableObjectTechnique* l_technique = m_Materials[currentSpriteMap->MaterialIndex]->GetRenderableObjectTechnique();
+		m_Materials[currentSpriteMap->MaterialIndex]->Apply(l_technique);
 
 		m_VertexBuffers[currentSpriteMap->MaterialIndex]->UpdateVertexs(currentBufferData, currentVertex);
-		m_VertexBuffers[currentSpriteMap->MaterialIndex]->Render(&RenderManager, technique, &CEffectManager::m_SceneParameters, currentVertex);
+		m_VertexBuffers[currentSpriteMap->MaterialIndex]->Render(RenderManager, technique, &CEffectManager::m_SceneParameters, currentVertex);
 	}
+	m_Commands.clear();
+	m_InputUpToDate = false;
 }

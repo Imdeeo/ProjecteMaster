@@ -6,6 +6,7 @@
 #include <d3d11.h>
 #include <vector>
 #include <map>
+#include "Utils.h"
 
 class CButon;
 class CSlider;
@@ -69,14 +70,20 @@ private:
 public:
 	CGUIManager();
 	virtual ~CGUIManager();
-	bool CGUIManager::Load(CXMLTreeNode *TreeNode);
+	void CheckInput();
+	bool Load(CXMLTreeNode *TreeNode);
 	void SetActive(const std::string& id);
-	void SetNotActive(const std::string& id);
+	void SetNotActive();
 	void SetHot(const std::string& id);
 	void SetNotHot(const std::string& id);
 	void Render(CRenderManager *RenderManager);
 	bool DoButton(const std::string& guiID, const std::string& buttonID, const GUIPosition& position);
-	SliderResult DoSlider(const std::string& guiID, const std::string& sliderID, const GUIPosition& position, float minValue, float maxValue, float currentValue);
+	//SliderResult DoSlider(const std::string& guiID, const std::string& sliderID, const GUIPosition& position, float minValue, float maxValue, float currentValue);
+	UAB_BUILD_GET_SET(bool, InputUpToDate)
+	UAB_BUILD_GET_SET(int, MouseX)
+	UAB_BUILD_GET_SET(int, MouseY)
+	UAB_BUILD_GET_SET(bool, MouseWentPressed)
+	UAB_BUILD_GET_SET(bool, MouseWentReleased)
 };
 
 #endif //H_GUI_MANAGER_H
