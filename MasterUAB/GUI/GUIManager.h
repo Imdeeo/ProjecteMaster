@@ -10,9 +10,10 @@
 class CButon;
 class CSlider;
 class CMaterial;
-class CRenderableVertex;
+class CRenderableVertexs;
 class CColor;
 class CRenderManager;
+class CXMLTreeNode;
 
 struct SpriteMapInfo
 {
@@ -34,27 +35,48 @@ struct GUICommand
 	Vect4f color;
 };
 
+
+struct SliderResult
+{
+	float real;
+	float temp;
+};
+
+
+struct GUIPosition
+{
+	int x;
+	int y;
+	int width;
+	int height;
+};
+
 class CGUIManager 
 {
 private:
 	std::string m_ActiveItem;
 	std::string m_HotItem;
-	std::vector<CRenderableVertex> m_VertexBuffers;
-	std::vector<CMaterial> m_Materials;
-	std::vector<GUICommand> m_Commands;	
-	std::map<std::string, SpriteMapInfo> m_SpriteMaps; 
-	std::map<std::string, SpriteInfo> m_Sprites;
-	std::map<std::string, CButon> m_Buttons;
-	std::map<std::string, CSlider> m_Sliders;
+	std::vector<CRenderableVertexs*> m_VertexBuffers;
+	std::vector<CMaterial*> m_Materials;
+	std::map<std::string, SpriteMapInfo*> m_SpriteMaps; 
+	std::map<std::string, SpriteInfo*> m_Sprites;
+	std::map<std::string, CButon*> m_Buttons;
+	std::map<std::string, CSlider*> m_Sliders;
+	std::vector<GUICommand> m_Commands;
+
 	
 
 public:
-
+	CGUIManager();
+	virtual ~CGUIManager();
+	bool CGUIManager::Load(CXMLTreeNode *TreeNode);
 	void SetActive(const std::string& id);
 	void SetNotActive(const std::string& id);
 	void SetHot(const std::string& id);
 	void SetNotHot(const std::string& id);
 	void Render(CRenderManager *RenderManager);
+	bool DoButton(const std::string& guiID, const std::string& buttonID, const GUIPosition& position);
+	SliderResult DoSlider(const std::string& guiID, const std::string& sliderID, const GUIPosition& position, float minValue, float maxValue, float currentValue);
 };
 
 #endif //H_GUI_MANAGER_H
