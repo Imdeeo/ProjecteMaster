@@ -14,6 +14,11 @@ end
 
 function luaUpdate(_ElapsedTime)
 	m_cinematicManager:Update(_ElapsedTime)
+	local a = false
+	local gui_manager = CUABEngine.get_instance():get_gui_manager()
+	utils_log("debug")
+	a = gui_manager:do_button("boton1", "teula_button", {10,10,50,50})
+	utils_log(""..a)
 end
 
 

@@ -8,6 +8,8 @@ class CSlider
 {
 private:
 public:
+	CSlider(CXMLTreeNode);
+	~CSlider();
 	UAB_BUILD_GET_SET(SpriteInfo*, Base)
 	UAB_BUILD_GET_SET(SpriteInfo*, Top)
 	UAB_BUILD_GET_SET(SpriteInfo*, Handle)

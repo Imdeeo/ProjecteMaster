@@ -19,6 +19,7 @@
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "SceneRender\SceneRendererCommandManager.h"
 #include "Particles\ParticleManager.h"
+#include "GUIManager.h"
 
 CUABEngine::CUABEngine(void)
 {
@@ -37,6 +38,7 @@ CUABEngine::CUABEngine(void)
 	m_PhysXManager = CPhysXManager::CreatePhysXManager();
 	m_RenderableObjectTechniqueManager = new CRenderableObjectTechniqueManager();
 	m_SceneRendererCommandManager = new CSceneRendererCommandManager();
+	m_GUIManager = new CGUIManager();
 }
 
 CUABEngine::~CUABEngine(void)
@@ -58,6 +60,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_EffectManager);	
 	CHECKED_DELETE(m_PhysXManager);
 	CHECKED_DELETE(m_ScriptManager);
+	CHECKED_DELETE(m_GUIManager)
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -85,6 +88,7 @@ void CUABEngine::Init()
 	m_LightManager->Load("Data\\level_"+m_LevelLoaded+"\\lights.xml");	
 	m_Cinematic->LoadXML("Data\\level_"+m_LevelLoaded+"\\cinematic.xml");
 	m_LayerManager->GetLayer()->AddResource("Cinematic",m_Cinematic);
+	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
 	m_CameraControllerManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
 	m_Cinematic->Play();
@@ -130,3 +134,4 @@ UAB_GET_PROPERTY_CPP(CUABEngine,CPhysXManager *, PhysXManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,CSceneRendererCommandManager *, SceneRendererCommandManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
