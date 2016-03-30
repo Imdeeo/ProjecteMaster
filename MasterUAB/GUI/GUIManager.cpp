@@ -138,8 +138,9 @@ bool IsMouseInside(int _mouseX, int _mouseY, int x, int y, int width, int height
 	return false;
 }
 
-bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID, const GUIPosition& position)
+bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID/*, const GUIPosition& position*/)
 {
+	GUIPosition position = { 10, 10, 50, 50 };
 	CheckInput();
 	bool l_result = false;
 	SpriteInfo* l_sprite = l_sprite = m_Buttons[buttonID]->GetNormal();

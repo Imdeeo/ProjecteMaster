@@ -76,7 +76,7 @@ public:
 	void SetHot(const std::string& id);
 	void SetNotHot(const std::string& id);
 	void Render(CRenderManager *RenderManager);
-	bool DoButton(const std::string& guiID, const std::string& buttonID, const GUIPosition& position);
+	bool DoButton(const std::string& guiID, const std::string& buttonID/*, const GUIPosition& position*/);
 	//SliderResult DoSlider(const std::string& guiID, const std::string& sliderID, const GUIPosition& position, float minValue, float maxValue, float currentValue);
 	UAB_BUILD_GET_SET(bool, InputUpToDate)
 	UAB_BUILD_GET_SET(int, MouseX)
