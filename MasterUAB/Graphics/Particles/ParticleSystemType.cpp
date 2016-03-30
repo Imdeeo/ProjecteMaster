@@ -27,6 +27,25 @@ CParticleSystemType::CParticleSystemType(CXMLTreeNode &TreeNode) : CNamed(TreeNo
 	m_StartingAcceleration2 = l_Element.GetVect3fProperty("start_acc_2", Vect3f(0.0, 0.0, 0.0));
 	m_Color1 = CColor(TreeNode.GetVect4fProperty("color_1", Vect4f(1.0, 1.0f, 1.0f, 1.0f)));
 	m_Color2 = CColor(TreeNode.GetVect4fProperty("color_2", Vect4f(1.0f, 1.0f, 1.0f, 1.0f)));
+
+	for (int i = 0; i < l_Element.GetNumChildren(); ++i)
+	{
+		if (l_Element(i).GetPszProperty("type") == std::string("size"))
+		{
+			ControlPointSize aux;
+			aux.m_Size = l_Element(i).GetVect2fProperty("size", Vect2f(0.0, 0.0));
+			aux.m_Time = l_Element(i).GetVect2fProperty("time", Vect2f(0.0, 0.0));
+			m_ControlPointSizes.push_back(aux);
+		}
+		else if (l_Element(i).GetPszProperty("type") == std::string("color"))
+		{
+			ControlPointColor aux;
+			aux.m_Color1 = CColor(l_Element(i).GetVect4fProperty("color1", Vect4f(0.0, 0.0, 0.0, 1.0)));
+			aux.m_Color2 = CColor(l_Element(i).GetVect4fProperty("color2", Vect4f(0.0, 0.0, 0.0, 1.0)));
+			aux.m_Time = l_Element(i).GetVect2fProperty("time", Vect2f(0.0, 0.0));
+			m_ControlPointColors.push_back(aux);
+		}
+	}
 }
 
 CParticleSystemType::~CParticleSystemType(void)

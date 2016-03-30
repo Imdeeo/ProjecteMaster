@@ -132,3 +132,110 @@ inline CColor& CColor::operator *= (float escalar)
 
 	return (*this);
 }
+
+inline CColor CColor::HsvToRgb(HsvColor hsv)
+{
+	CColor rgb;
+	unsigned char region, remainder, p, q, t;
+
+	if (hsv.s == 0)
+	{
+		rgb.SetRed(hsv.v);
+		rgb.SetGreen(hsv.v);
+		rgb.SetBlue(hsv.v);
+		return rgb;
+	}
+
+	region = hsv.h / 43;
+	remainder = (hsv.h - (region * 43)) * 6;
+
+	p = (hsv.v * (255 - hsv.s)) >> 8;
+	q = (hsv.v * (255 - ((hsv.s * remainder) >> 8))) >> 8;
+	t = (hsv.v * (255 - ((hsv.s * (255 - remainder)) >> 8))) >> 8;
+
+	switch (region)
+	{
+	case 0:
+		rgb.SetRed(hsv.v);
+		rgb.SetGreen(t);
+		rgb.SetBlue(p);
+		break;
+	case 1:
+		rgb.SetRed(q);
+		rgb.SetGreen(hsv.v);
+		rgb.SetBlue(p);
+		break;
+	case 2:
+		rgb.SetRed(p);
+		rgb.SetGreen(hsv.v);
+		rgb.SetBlue(t);
+		break;
+	case 3:
+		rgb.SetRed(p);
+		rgb.SetGreen(q);
+		rgb.SetBlue(hsv.v);
+		break;
+	case 4:
+		rgb.SetRed(t);
+		rgb.SetGreen(p);
+		rgb.SetBlue(hsv.v);
+		break;
+	default:
+		rgb.SetRed(hsv.v);
+		rgb.SetGreen(p);
+		rgb.SetBlue(q);
+		break;
+	}
+	return rgb;
+}
+
+inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
+{
+	HsvColor hsv;
+	unsigned char rgbMin, rgbMax;
+
+	rgbMin = rgb.GetRed() < rgb.GetGreen() ? (rgb.GetRed() < rgb.GetBlue() ? rgb.GetRed() : rgb.GetBlue()) : (rgb.GetGreen() < rgb.GetBlue() ? rgb.GetGreen() : rgb.GetBlue());
+	rgbMax = rgb.GetRed() > rgb.GetGreen() ? (rgb.GetRed() > rgb.GetBlue() ? rgb.GetRed() : rgb.GetBlue()) : (rgb.GetGreen() > rgb.GetBlue() ? rgb.GetGreen() : rgb.GetBlue());
+
+	hsv.v = rgbMax;
+	if (hsv.v == 0)
+	{
+		hsv.h = 0;
+		hsv.s = 0;
+		return hsv;
+	}
+
+	hsv.s = 255 * long(rgbMax - rgbMin) / hsv.v;
+	if (hsv.s == 0)
+	{
+		hsv.h = 0;
+		return hsv;
+	}
+
+	if (rgbMax == rgb.GetRed())
+		hsv.h = 0 + 43 * (rgb.GetGreen() - rgb.GetBlue()) / (rgbMax - rgbMin);
+	else if (rgbMax == rgb.GetGreen())
+		hsv.h = 85 + 43 * (rgb.GetBlue() - rgb.GetRed()) / (rgbMax - rgbMin);
+	else
+		hsv.h = 171 + 43 * (rgb.GetRed() - rgb.GetGreen()) / (rgbMax - rgbMin);
+
+	return hsv;
+}
+
+inline CColor CColor::interpolate(CColor a, CColor b, float t)
+{
+	HsvColor ca = RgbToHsv(a);
+	HsvColor cb = RgbToHsv(b);
+	HsvColor final;
+
+	final.h = linear(ca.h, cb.h, t);
+	final.s = linear(ca.s, cb.s, t);
+	final.v = linear(ca.v, cb.v, t);
+
+	return HsvToRgb(final);
+}
+
+inline int CColor::linear(int a, int b, float t)
+{
+	return a * (1 - t) + b * t;
+}

@@ -95,7 +95,19 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 				particle.Velocity = GetRandomValue(m_Type->GetStartingSpeed1(), m_Type->GetStartingSpeed2());
 				particle.Acceleration = GetRandomValue(m_Type->GetStartingAcceleration1(), m_Type->GetStartingAcceleration2());
 
-				particle.Size = GetRandomValue(m_Type->GetSize().x, m_Type->GetSize().y);
+				//particle.Size = GetRandomValue(m_Type->GetSize().x, m_Type->GetSize().y);
+				particle.SizeControlPoint = 0;
+				particle.LastSizeControlTime = 0;
+				particle.LastSize = GetRandomValue(m_Type->m_ControlPointSizes[0].m_Size);
+				particle.NextSizeControlTime = m_Type->m_ControlPointSizes.size() < 2 ? particle.TotalLife : GetRandomValue(m_Type->m_ControlPointSizes[1].m_Time);
+				particle.NextSize = m_Type->m_ControlPointSizes.size() < 2 ? particle.LastSize : GetRandomValue(m_Type->m_ControlPointSizes[1].m_Size);
+
+				particle.ColorControlPoint = 0;
+				particle.LastColorControlTime = 0;
+				particle.LastColor = GetRandomValue(m_Type->m_ControlPointColors[0].m_Color1, m_Type->m_ControlPointColors[0].m_Color2);
+				particle.NextColorControlTime = m_Type->m_ControlPointColors.size() < 2 ? particle.TotalLife : GetRandomValue(m_Type->m_ControlPointColors[1].m_Time);
+				particle.NextColor = m_Type->m_ControlPointColors.size() < 2 ? particle.LastColor : GetRandomValue(m_Type->m_ControlPointColors[1].m_Color1, m_Type->m_ControlPointColors[1].m_Color2);
+				
 				particle.Angle = GetRandomValue(m_Type->GetStartingAngle().x, m_Type->GetStartingAngle().y);
 
 				particle.CurrentFrame = 0;
@@ -126,6 +138,43 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 			particle->TimeToNextFrame += m_Type->GetTimePerFrame();
 		}
 
+		while (particle->LifeTime > particle->NextSizeControlTime && particle->LifeTime < particle->TotalLife)
+		{
+			++particle->SizeControlPoint;
+			
+			particle->LastSize = particle->NextSize;
+			particle->LastSizeControlTime = particle->NextSizeControlTime;
+
+			if (particle->SizeControlPoint + 1 < m_Type->m_ControlPointSizes.size())
+			{
+				particle->NextSize = GetRandomValue(m_Type->m_ControlPointSizes[particle->SizeControlPoint + 1].m_Size);
+				particle->NextSizeControlTime = GetRandomValue(m_Type->m_ControlPointSizes[particle->SizeControlPoint + 1].m_Time);
+			}
+			else
+			{
+				particle->NextSizeControlTime = particle->TotalLife;
+			}
+		}
+
+		while (particle->LifeTime > particle->NextColorControlTime && particle->LifeTime < particle->TotalLife)
+		{
+			++particle->ColorControlPoint;
+
+			particle->LastColor = particle->NextColor;
+			particle->LastColorControlTime = particle->NextColorControlTime;
+
+			if (particle->ColorControlPoint + 1 < m_Type->m_ControlPointColors.size())
+			{
+				particle->NextColor = GetRandomValue(m_Type->m_ControlPointColors[particle->ColorControlPoint + 1].m_Color1, 
+					m_Type->m_ControlPointColors[particle->ColorControlPoint + 1].m_Color2);
+				particle->NextColorControlTime = GetRandomValue(m_Type->m_ControlPointColors[particle->ColorControlPoint + 1].m_Time);
+			}
+			else
+			{
+				particle->NextColorControlTime = particle->TotalLife;
+			}
+		}
+
 		if (m_ParticleData[i].LifeTime > m_ParticleData[i].TotalLife)
 		{
 			--m_ActiveParticles;
@@ -145,10 +194,17 @@ void CParticleSystemInstance::Render(CRenderManager *RM)
 		ParticleData *particle = &m_ParticleData[i];
 
 		m_ParticleRenderableData[i].Position = particle->Position;
-	    /*m_ParticleRenderableData[i].Color = particle->LastColor.Lerp(particle->NextColor, ColorControlAlpha);
-		m_ParticleRenderableData[i].UV.x = mathUtils::Lerp<float>(particle->LastSize, particle->NextSize, SizeControlAlpha);*/
-		m_ParticleRenderableData[i].Color = particle->Color;
-		m_ParticleRenderableData[i].UV.x = particle->Size;
+
+		CColor ColorControlAlpha = particle->LastColor.interpolate(particle->LastColor, particle->NextColor, 0.5f);
+			(particle->LastColor, particle->NextColor, 0.5f);
+		m_ParticleRenderableData[i].Color = ColorControlAlpha;
+	    //m_ParticleRenderableData[i].Color = particle->LastColor.Lerp(particle->NextColor, ColorControlAlpha);
+		
+		float SizeControlAlpha = (particle->LifeTime < particle->NextSizeControlTime) ?
+			(particle->LifeTime - particle->LastSizeControlTime) / (particle->NextSizeControlTime - particle->LastSizeControlTime) :
+			1.0f;
+
+		m_ParticleRenderableData[i].UV.x = mathUtils::Lerp<float>(particle->LastSize, particle->NextSize, SizeControlAlpha);
 		m_ParticleRenderableData[i].UV.y = particle->Angle;
 		m_ParticleRenderableData[i].UV2.x = (float)particle->CurrentFrame;
 		m_ParticleRenderableData[i].UV2.y = (float)m_Type->GetNumFrames();
@@ -163,7 +219,6 @@ void CParticleSystemInstance::Render(CRenderManager *RM)
 		m_RenderableVertex->UpdateVertexs(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE);
 		m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData(), m_ActiveParticles);
 	}
-
 	
 	/*m_ParticleRenderableData[0].Position = Vect3f(0, 0, 0);
 	m_ParticleRenderableData[0].UV = Vect2f(1, 0.5);
@@ -177,8 +232,3 @@ void CParticleSystemInstance::Render(CRenderManager *RM)
 	m_RenderableVertex->UpdateVertexs(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE);
 	m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData(), 3);*/
 }
-
-//void CParticleSystemInstance::RenderDebug(CRenderManager *RM)
-//{
-//
-//}
