@@ -59,19 +59,18 @@ private:
 	std::string m_HotItem;
 	std::vector<CRenderableVertexs*> m_VertexBuffers;
 	std::vector<CMaterial*> m_Materials;
-	std::map<std::string, SpriteMapInfo*> m_SpriteMaps; 
-	std::map<std::string, SpriteInfo*> m_Sprites;
+	std::map<std::string, SpriteMapInfo> m_SpriteMaps; 
+	std::map<std::string, SpriteInfo> m_Sprites;
 	std::map<std::string, CButon*> m_Buttons;
 	std::map<std::string, CSlider*> m_Sliders;
 	std::vector<GUICommand> m_Commands;
-
-	
+	std::string m_FileName;
 
 public:
 	CGUIManager();
 	virtual ~CGUIManager();
 	void CheckInput();
-	bool Load(CXMLTreeNode *TreeNode);
+	bool Load(std::string _FileName);
 	void SetActive(const std::string& id);
 	void SetNotActive();
 	void SetHot(const std::string& id);

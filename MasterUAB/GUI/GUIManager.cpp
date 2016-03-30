@@ -11,6 +11,7 @@
 #include "RenderableObjects\RenderableVertexs.h"
 #include "InputManager\InputManager.h"
 #include "ContextManager\ContextManager.h"
+#include "XML\XMLTreeNode.h"
 
 CGUIManager::CGUIManager()
 {
@@ -52,8 +53,61 @@ void CGUIManager::SetNotHot(const std::string& id)
 	}
 }
 
-bool CGUIManager::Load(CXMLTreeNode *TreeNode)
+bool CGUIManager::Load(std::string _FileName)
 {
+	m_FileName = _FileName;
+	SpriteMapInfo l_spriteMapinfo;
+	SpriteInfo l_sprite;
+	CXMLTreeNode l_XML;
+	int u1, u2, v1, v2;
+	if (l_XML.LoadFile(_FileName.c_str()))
+	{
+		CXMLTreeNode l_Input = l_XML["gui_elements"];
+		if (l_Input.Exists())
+		{
+			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			{
+				CXMLTreeNode l_Element = l_Input(i);
+				if (l_Element.GetName() == std::string("gui_spritemap"))
+				{
+					std::string l_sprtieMapinfoname = l_Element.GetPszProperty("name");
+					l_spriteMapinfo = { m_Materials.size(), l_Element.GetIntProperty("width"), l_Element.GetIntProperty("height") };
+					m_SpriteMaps[l_sprtieMapinfoname] = l_spriteMapinfo;
+					for (int i = 0; i < l_Element.GetNumChildren(); ++i)
+					{
+						CXMLTreeNode l_aux = l_Element(i);
+						if (l_aux.GetName() == std::string("material"))
+						{
+							m_Materials.push_back(new CMaterial(l_aux));
+						}
+						else if (l_aux.GetName() == std::string("sprite"))
+						{
+							u1 = l_aux.GetIntProperty("x");
+							u2 = u1 + l_aux.GetIntProperty("w");
+							v1 = l_aux.GetIntProperty("y");
+							v2 = u1 + l_aux.GetIntProperty("h");
+							l_sprite = { &m_SpriteMaps[l_sprtieMapinfoname], u1, u2, v1, v2 };
+						
+							m_Sprites[l_aux.GetPszProperty("name")] = l_sprite;
+						}
+					}
+				
+				}
+				else if (l_Element.GetName() == std::string("button"))
+				{
+					m_Buttons[l_Element.GetPszProperty("name")] = new CButon(&m_Sprites[l_Element.GetPszProperty("normal")], &m_Sprites[l_Element.GetPszProperty("highlight")], &m_Sprites[l_Element.GetPszProperty("pressed")]);
+				}
+				else if (l_Element.GetName() == std::string("slider"))
+				{
+					
+				}
+			}
+		}
+	}
+	else
+	{
+		return false;
+	}
 	return true;
 }
 
@@ -86,6 +140,7 @@ bool IsMouseInside(int _mouseX, int _mouseY, int x, int y, int width, int height
 
 bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID, const GUIPosition& position)
 {
+	CheckInput();
 	bool l_result = false;
 	SpriteInfo* l_sprite = l_sprite = m_Buttons[buttonID]->GetNormal();
 	if (m_ActiveItem == guiID)
