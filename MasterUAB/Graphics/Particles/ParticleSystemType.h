@@ -7,6 +7,7 @@
 #include "Math\Color.h"
 
 #include <string>
+#include <vector>
 
 class CMaterial;
 class CXMLTreeNode;
@@ -14,7 +15,6 @@ class CXMLTreeNode;
 class CParticleSystemType : public CNamed
 {
 private:
-	//CMaterial *m_Material;
 	int m_NumFrames;	
 	float m_TimePerFrame;
 	bool m_LoopFrames;
@@ -27,6 +27,16 @@ private:
 	Vect3f m_StartingAcceleration1, m_StartingAcceleration2;
 	CColor m_Color1, m_Color2;
 
+	struct ControlPointColor
+	{
+		Vect2f m_Time;
+		CColor m_Color1, m_Color2;
+	};
+
+	struct ControlPointSize
+	{
+		Vect2f m_Time, m_Size;
+	};	
 public:
 	CParticleSystemType(CXMLTreeNode &TreeNode);
 	virtual ~CParticleSystemType(void);
@@ -52,7 +62,10 @@ public:
 	UAB_GET_PROPERTY(Vect3f, StartingAcceleration1);
 	UAB_GET_PROPERTY(Vect3f, StartingAcceleration2);
 	UAB_GET_PROPERTY(CColor, Color1);
-	UAB_GET_PROPERTY(CColor, Color2);	
+	UAB_GET_PROPERTY(CColor, Color2);
+
+	std::vector<ControlPointColor> m_ControlPointColors;
+	std::vector<ControlPointSize> m_ControlPointSizes;
 };
 
 #endif //PARTICLE_SYSTEM_TYPE_H
