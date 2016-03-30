@@ -8,6 +8,7 @@
 #include <map>
 #include "Utils.h"
 #include "Math\Color.h"
+#include "RenderableObjects\VertexTypes.h"
 
 class CButon;
 class CSlider;
@@ -15,6 +16,7 @@ class CMaterial;
 class CRenderableVertexs;
 class CRenderManager;
 class CXMLTreeNode;
+
 
 struct SpriteMapInfo
 {
@@ -55,6 +57,7 @@ struct GUIPosition
 class CGUIManager 
 {
 private:
+	MV_POSITION4_COLOR_TEXTURE_VERTEX m_CurrentBufferData[MAX_VERTICES_PER_CALL];
 	std::string m_ActiveItem;
 	std::string m_HotItem;
 	std::vector<CRenderableVertexs*> m_VertexBuffers;
