@@ -29,8 +29,14 @@ private:
 		float TimeToNextFrame;
 		float LifeTime, TotalLife;
 		float Angle, AngularSpeed, AngularAcceleration;
-		CColor Color;
-		float Size;
+
+		int ColorControlPoint, SizeControlPoint;
+
+		float LastColorControlTime, NextColorControlTime;
+		float LastSizeControlTime, NextSizeControlTime;
+
+		CColor LastColor, NextColor;
+		float LastSize, NextSize;
 	};
 
 	int m_ActiveParticles;

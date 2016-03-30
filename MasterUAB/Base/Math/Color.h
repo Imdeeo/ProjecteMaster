@@ -14,38 +14,38 @@ class CColor : public Vect4f
 {
 
 public:
-  // ------------
-  // Construcci??n
-  // ------------
-  explicit CColor()															:Vect4f(1.0f, 1.0f, 1.0f, 1.0f)  {}
-  explicit CColor (const Vect4f& vect)										:Vect4f(vect)                    {}
-  explicit CColor(float red, float green, float blue, float alpha = 1.0f)	:Vect4f(red, green, blue, alpha) {}
+	// ------------
+	// Construcci??n
+	// ------------
+	explicit CColor()															:Vect4f(1.0f, 1.0f, 1.0f, 1.0f)  {}
+	explicit CColor (const Vect4f& vect)										:Vect4f(vect)                    {}
+	explicit CColor(float red, float green, float blue, float alpha = 1.0f)	:Vect4f(red, green, blue, alpha) {}
 	//inline   CColor (uint32 argb);
 
-  // --------------------
-  // Acceso a componentes
-  // --------------------
+	// --------------------
+	// Acceso a componentes
+	// --------------------
 
-  inline float         GetRed         ()                   const { return x; }
-  inline void          SetRed         (float red)                { x = red; }
+	inline float         GetRed         ()                   const { return x; }
+	inline void          SetRed         (float red)                { x = red; }
 
-  inline float         GetGreen       ()                   const { return y; }
-  inline void          SetGreen       (float green)              { y = green; }
+	inline float         GetGreen       ()                   const { return y; }
+	inline void          SetGreen       (float green)              { y = green; }
 
-  inline float         GetBlue        ()                   const { return z; }
-  inline void          SetBlue        (float blue)               { z = blue; }
+	inline float         GetBlue        ()                   const { return z; }
+	inline void          SetBlue        (float blue)               { z = blue; }
 
-  inline float         GetAlpha       ()                   const { return w; }
-  inline void          SetAlpha       (float alpha)              { w = alpha; }
+	inline float         GetAlpha       ()                   const { return w; }
+	inline void          SetAlpha       (float alpha)              { w = alpha; }
 
-  inline const Vect4f& GetArgb        ()                   const { return *this; }
-  inline void          SetArgb(const Vect4f& argb)       { *this = (CColor)argb; }
+	inline const Vect4f& GetArgb        ()                   const { return *this; }
+	inline void          SetArgb(const Vect4f& argb)       { *this = (CColor)argb; }
 
-  inline uint32_t        GetUint32Abgr()										const;
-  inline uint32_t        GetUint32Argb()										const;
+	inline uint32_t        GetUint32Abgr()										const;
+	inline uint32_t        GetUint32Argb()										const;
 
-  inline void          SetUint32Argb(int32_t argb);
-  inline void          SetUint32Abgr(int32_t argb);
+	inline void          SetUint32Argb(int32_t argb);
+	inline void          SetUint32Abgr(int32_t argb);
 
 	inline CColor&			 Clamp();
 
@@ -62,6 +62,18 @@ public:
 	inline CColor& operator -= (const CColor& otro);
 	inline CColor& operator *= (const CColor& otro);
 	inline CColor& operator *= (float escalar);
+
+	typedef struct SHsvColor
+	{
+		unsigned char h;
+		unsigned char s;
+		unsigned char v;
+	} HsvColor;
+
+	inline CColor HsvToRgb(HsvColor hsv);
+	inline HsvColor RgbToHsv(CColor rgb);
+	inline CColor interpolate(CColor a, CColor b, float t);
+	inline int linear(int a, int b, float t);
 
 private:
 	inline uint8_t FloatToByte(float fValue) const;
