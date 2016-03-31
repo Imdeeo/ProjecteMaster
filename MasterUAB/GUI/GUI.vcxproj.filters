@@ -5,10 +5,12 @@
     <ClCompile Include="GUIManager.cpp" />
     <ClCompile Include="Buton.cpp" />
     <ClCompile Include="Slider.cpp" />
+    <ClCompile Include="GUIPosition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIManager.h" />
     <ClInclude Include="Buton.h" />
     <ClInclude Include="Slider.h" />
+    <ClInclude Include="GUIPosition.h" />
   </ItemGroup>
 </Project>
