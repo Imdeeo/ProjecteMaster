@@ -68,6 +68,7 @@ public:
 		unsigned char h;
 		unsigned char s;
 		unsigned char v;
+		unsigned char alpha;
 	} HsvColor;
 
 	inline CColor HsvToRgb(HsvColor hsv);

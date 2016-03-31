@@ -94,6 +94,8 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 				particle.Position = GetRandomValue(-m_EmissionBoxHalfSize, m_EmissionBoxHalfSize);
 				particle.Velocity = GetRandomValue(m_Type->GetStartingSpeed1(), m_Type->GetStartingSpeed2());
 				particle.Acceleration = GetRandomValue(m_Type->GetStartingAcceleration1(), m_Type->GetStartingAcceleration2());
+				particle.AngularSpeed = GetRandomValue(m_Type->GetStartingAngularSpeed()[0], m_Type->GetStartingAngularSpeed()[1]);
+				particle.AngularAcceleration = GetRandomValue(m_Type->GetAngularAcceleration()[0], m_Type->GetAngularAcceleration()[1]);
 
 				//particle.Size = GetRandomValue(m_Type->GetSize().x, m_Type->GetSize().y);
 				particle.SizeControlPoint = 0;
@@ -129,6 +131,7 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 		ParticleData *particle = &m_ParticleData[i];
 		particle->Position += particle->Velocity * ElapsedTime + 0.5f * ElapsedTime * ElapsedTime * particle->Acceleration;
 		particle->Velocity += particle->Acceleration * ElapsedTime;
+		particle->Angle += particle->AngularSpeed * ElapsedTime + 0.5f * ElapsedTime * ElapsedTime * particle->AngularAcceleration;
 		particle->TimeToNextFrame -= ElapsedTime;
 		particle->LifeTime += ElapsedTime;			
 
