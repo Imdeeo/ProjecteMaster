@@ -12,6 +12,7 @@
 #include "ContextManager\ContextManager.h"
 #include "XML\XMLTreeNode.h"
 #include "RenderableObjects\TemplatedRenderableVertexs.h"
+#include "GUIPosition.h"
 
 
 CGUIManager::CGUIManager()
@@ -60,7 +61,7 @@ bool CGUIManager::Load(std::string _FileName)
 	SpriteMapInfo l_spriteMapinfo;
 	SpriteInfo l_sprite;
 	CXMLTreeNode l_XML;
-	int u1, u2, v1, v2;
+	float u1, u2, v1, v2, w, h;
 	if (l_XML.LoadFile(_FileName.c_str()))
 	{
 		CXMLTreeNode l_Input = l_XML["gui_elements"];
@@ -84,11 +85,13 @@ bool CGUIManager::Load(std::string _FileName)
 						}
 						else if (l_aux.GetName() == std::string("sprite"))
 						{
+							w = l_aux.GetIntProperty("w");
+							h = l_aux.GetIntProperty("h");
 							u1 = l_aux.GetIntProperty("x");
-							u2 = u1 + l_aux.GetIntProperty("w");
+							u2 = u1 + w;
 							v1 = l_aux.GetIntProperty("y");
-							v2 = u1 + l_aux.GetIntProperty("h");
-							l_sprite = { &m_SpriteMaps[l_sprtieMapinfoname], u1, u2, v1, v2 };
+							v2 = u1 + h;
+							l_sprite = { &m_SpriteMaps[l_sprtieMapinfoname], u1 / l_spriteMapinfo.w, u2 / l_spriteMapinfo.w, v1 / l_spriteMapinfo.h, v2 / l_spriteMapinfo.h };
 						
 							m_Sprites[l_aux.GetPszProperty("name")] = l_sprite;
 						}
@@ -121,8 +124,16 @@ void CGUIManager::CheckInput()
 		m_MouseX = l_InputManager->GetCursor().x;
 		m_MouseY = l_InputManager->GetCursor().y;
 
-		m_MouseWentPressed = m_MouseX = l_InputManager->IsActionActive("MOUSE_CLICK_LEFT");
-		m_MouseWentReleased = !m_MouseWentPressed;
+		if (m_MouseWentPressed && !l_InputManager->IsActionActive("MOUSE_CLICK_LEFT"))
+		{
+			m_MouseWentReleased = true;
+		}
+		else
+		{
+			m_MouseWentReleased = false;
+		}
+		m_MouseWentPressed = l_InputManager->IsActionActive("MOUSE_CLICK_LEFT");
+		
 
 		m_InputUpToDate = true;
 	}
@@ -132,7 +143,7 @@ bool IsMouseInside(int _mouseX, int _mouseY, int x, int y, int width, int height
 {
 	if (_mouseX >= x && _mouseX <= x + width)
 	{
-		if (_mouseY >= y && _mouseY <= x + height)
+		if (_mouseY >= y && _mouseY <= y + height)
 		{
 			return true;
 		}
@@ -140,14 +151,15 @@ bool IsMouseInside(int _mouseX, int _mouseY, int x, int y, int width, int height
 	return false;
 }
 
-bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID/*, const GUIPosition& position*/)
+bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID, const CGUIPosition& position)
 {
-	GUIPosition position = { 10, 10, 50, 50 };
+	SpriteInfo* l_sprite;
 	CheckInput();
 	bool l_result = false;
-	SpriteInfo* l_sprite = l_sprite = m_Buttons[buttonID]->GetNormal();
+
 	if (m_ActiveItem == guiID)
 	{
+		
 		if (m_MouseWentReleased)
 		{
 			if (m_HotItem == guiID)
@@ -162,23 +174,37 @@ bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID
 		if (m_MouseWentPressed)
 		{
 			SetActive(guiID);
-			l_sprite = m_Buttons[buttonID]->GetPressed();
 		}
 	}
 
-	if (IsMouseInside(m_MouseX, m_MouseY, position.x, position.y, position.width, position.height))
+	if (IsMouseInside(m_MouseX, m_MouseY, position.Getx(), position.Gety(), position.Getwidth(), position.Getheight()))
 	{
-		SetHot(guiID);
-		l_sprite = m_Buttons[buttonID]->GetHighlight();
+		SetHot(guiID);		
 	}
 	else
 	{
 		SetNotHot(guiID);
 	}
 
+	if (m_ActiveItem == guiID && m_HotItem == guiID)
+	{
+		l_sprite = m_Buttons[buttonID]->GetPressed();
+	}
+	else
+	{
+		if (m_HotItem == guiID)
+		{
+			l_sprite = m_Buttons[buttonID]->GetHighlight();
+		}
+		else
+		{
+			l_sprite = m_Buttons[buttonID]->GetNormal();
+		}
+	}
+
 	GUICommand command = { 
 		l_sprite,
-		position.x, position.y, position.x + position.width, position.y + position.height,
+		position.Getx(), position.Gety(), position.Getx() + position.Getwidth(), position.Gety() + position.Getheight(),
 		0, 0, 1, 1,
 		CColor(1, 1, 1, 1) };
 	m_Commands.push_back(command);
@@ -224,10 +250,10 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 		}
 		int l_Height = RenderManager->GetContextManager()->GetHeight();
 		int l_Width = RenderManager->GetContextManager()->GetWidth();
-		float x1 = (command.x1 / (l_Height * 0.5f)) - 1.0f;
+		float x1 = (command.x1 / (l_Width * 0.5f)) - 1.0f;
 		float x2 = (command.x2 / (l_Width * 0.5f)) - 1.0f;
 		float y1 = 1.0f - (command.y1 / (l_Height * 0.5f));
-		float y2 = 1.0f - (command.y2 / (l_Width * 0.5f));
+		float y2 = 1.0f - (command.y2 / (l_Height * 0.5f));
 
 		float u1 = commandSprite->u1 * (1.0f - command.u1) + commandSprite->u2 * command.u1;
 		float u2 = commandSprite->u1 * (1.0f - command.u2) + commandSprite->u2 * command.u2;
