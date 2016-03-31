@@ -766,7 +766,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS) [
 		class_<CFPSCameraController, CCameraController>("CFPSCameraController")
 			.def(constructor<const CXMLTreeNode&>())
-			.def("move", &CFPSCameraController::Move)
+			//.def("move", &CFPSCameraController::Move)
 			.def("set_camera", &CFPSCameraController::SetCamera)
 			.def("add_yaw", &CFPSCameraController::AddYaw)
 			.def("add_pitch",&CFPSCameraController::AddPitch)
