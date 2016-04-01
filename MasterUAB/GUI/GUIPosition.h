@@ -12,9 +12,9 @@ class CGUIPosition
 private:
 public:
 	CGUIPosition(float _x, float _y, float _w, float _h, 
-		GUIAnchor _anchor = GUIAnchor::TOP_LEFT,
-		GUICoordType _anchorCoordsType = GUICoordType::GUI_ABSOLUTE,
-		GUICoordType _sizeCorrdsType = GUICoordType::GUI_ABSOLUTE);
+		CGUIManager::GUIAnchor _anchor = CGUIManager::GUIAnchor::TOP_LEFT,
+		CGUIManager::GUICoordType _anchorCoordsType = CGUIManager::GUICoordType::GUI_ABSOLUTE,
+		CGUIManager::GUICoordType _sizeCorrdsType = CGUIManager::GUICoordType::GUI_ABSOLUTE);
 	virtual ~CGUIPosition();
 	
 	UAB_BUILD_GET_SET(int, x)

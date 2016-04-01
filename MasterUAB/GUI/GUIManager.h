@@ -18,35 +18,6 @@ class CRenderManager;
 class CXMLTreeNode;
 class CGUIPosition;
 
-enum class GUICoordType
-{
-	GUI_ABSOLUTE,
-	GUI_RELATIVE,
-	GUI_RELATIVE_WIDTH,
-	GUI_RELATIVE_HEIGHT
-};
-
-enum class GUIAnchor
-{
-	TOP = 0x1,
-	MID = 0x2,
-	BOTTOM = 0x4,
-
-	LEFT = 0x10,
-	CENTER = 0x20,
-	RIGHT = 0x40,
-
-	TOP_LEFT = TOP | LEFT,
-	TOP_CENTER = TOP | CENTER,
-	TOP_RIGHT = TOP | RIGHT,
-	MID_LEFT = MID | LEFT,
-	MID_CENTER = MID | CENTER,
-	MID_RIGHT = MID | RIGHT,
-	BOTTOM_LEFT = BOTTOM | LEFT,
-	BOTTOM_CENTER = BOTTOM | CENTER,
-	BOTTOM_RIGHT = BOTTOM | RIGHT,
-};
-
 struct SpriteMapInfo
 {
 	int MaterialIndex;
@@ -90,6 +61,35 @@ private:
 	std::string m_FileName;
 
 public:
+	enum GUICoordType
+	{
+		GUI_ABSOLUTE,
+		GUI_RELATIVE,
+		GUI_RELATIVE_WIDTH,
+		GUI_RELATIVE_HEIGHT
+	};
+
+	enum GUIAnchor
+	{
+		TOP = 0x1,
+		MID = 0x2,
+		BOTTOM = 0x4,
+
+		LEFT = 0x10,
+		CENTER = 0x20,
+		RIGHT = 0x40,
+
+		TOP_LEFT = TOP | LEFT,
+		TOP_CENTER = TOP | CENTER,
+		TOP_RIGHT = TOP | RIGHT,
+		MID_LEFT = MID | LEFT,
+		MID_CENTER = MID | CENTER,
+		MID_RIGHT = MID | RIGHT,
+		BOTTOM_LEFT = BOTTOM | LEFT,
+		BOTTOM_CENTER = BOTTOM | CENTER,
+		BOTTOM_RIGHT = BOTTOM | RIGHT,
+	};
+
 	CGUIManager();
 	virtual ~CGUIManager();
 	void CheckInput();
