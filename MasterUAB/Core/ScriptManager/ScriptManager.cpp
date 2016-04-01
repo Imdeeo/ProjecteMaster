@@ -87,6 +87,7 @@
 #include "Texture\TextureManager.h"
 
 #include "GUIManager.h"
+#include "GUIPosition.h"
 
 #include "DebugRender.h"
 
@@ -1123,6 +1124,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("destroy", &CTemplatedMapManager<CTexture>::Destroy)
 	];*/
 
+
 	module(m_LS)[
 		class_<CTextureManager, CTemplatedMapManager<CTexture>>("CTextureManager")
 			.def(constructor<>())
@@ -1133,9 +1135,41 @@ void CScriptManager::RegisterLUAFunctions()
 
 // GUI----------------------------------------------------------------------------------------------
 	
+	
+
 	module(m_LS)[
+		
 		class_<CGUIManager>("CGUIManager")
 			.def("do_button", &CGUIManager::DoButton)
+			.enum_("gui_anchor")[
+				value("top", CGUIManager::GUIAnchor::TOP),
+				value("mid", CGUIManager::GUIAnchor::MID),
+				value("bottom", CGUIManager::GUIAnchor::BOTTOM),
+				value("left", CGUIManager::GUIAnchor::LEFT),
+				value("center", CGUIManager::GUIAnchor::CENTER),
+				value("right", CGUIManager::GUIAnchor::RIGHT),
+
+				value("top_left", CGUIManager::GUIAnchor::TOP_LEFT),
+				value("top_center", CGUIManager::GUIAnchor::TOP_CENTER),
+				value("top_right", CGUIManager::GUIAnchor::TOP_RIGHT),
+				value("mid_left", CGUIManager::GUIAnchor::MID_LEFT),
+				value("mid_center", CGUIManager::GUIAnchor::MID_CENTER),
+				value("mid_right", CGUIManager::GUIAnchor::MID_RIGHT),
+				value("bottom_left", CGUIManager::GUIAnchor::BOTTOM_LEFT),
+				value("bottom_center", CGUIManager::GUIAnchor::BOTTOM_CENTER),
+				value("bottom_right", CGUIManager::GUIAnchor::BOTTOM_RIGHT)
+			]
+			.enum_("gui_coord_type")[
+				value("gui_absolute", CGUIManager::GUICoordType::GUI_ABSOLUTE),
+				value("gui_relative", CGUIManager::GUICoordType::GUI_RELATIVE),
+				value("gui_relative_width", CGUIManager::GUICoordType::GUI_RELATIVE_WIDTH),
+				value("gui_relative_height", CGUIManager::GUICoordType::GUI_RELATIVE_HEIGHT)
+			]
+	];
+
+	module(m_LS)[
+		class_<CGUIPosition>("CGUIPosition")
+			.def(constructor<float, float, float, float, CGUIManager::GUIAnchor, CGUIManager::GUICoordType, CGUIManager::GUICoordType>())
 	];
 
 	
