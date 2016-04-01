@@ -153,6 +153,8 @@ inline CColor CColor::HsvToRgb(HsvColor hsv)
 	q = (hsv.v * (255 - ((hsv.s * remainder) >> 8))) >> 8;
 	t = (hsv.v * (255 - ((hsv.s * (255 - remainder)) >> 8))) >> 8;
 
+	rgb.SetAlpha(hsv.alpha);
+
 	switch (region)
 	{
 	case 0:
@@ -186,6 +188,12 @@ inline CColor CColor::HsvToRgb(HsvColor hsv)
 		rgb.SetBlue(q);
 		break;
 	}
+
+	rgb.SetRed(rgb.GetRed() > 0 ? rgb.GetRed() / 255 : 0.0);
+	rgb.SetGreen(rgb.GetGreen() > 0 ? rgb.GetGreen() / 255 : 0.0);
+	rgb.SetBlue(rgb.GetBlue() > 0 ? rgb.GetBlue() / 255 : 0.0);
+	rgb.SetAlpha(rgb.GetAlpha() > 0 ? rgb.GetAlpha() / 255 : 0.0);
+
 	return rgb;
 }
 
@@ -194,8 +202,13 @@ inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
 	HsvColor hsv;
 	unsigned char rgbMin, rgbMax;
 
-	rgbMin = rgb.GetRed() < rgb.GetGreen() ? (rgb.GetRed() < rgb.GetBlue() ? rgb.GetRed() : rgb.GetBlue()) : (rgb.GetGreen() < rgb.GetBlue() ? rgb.GetGreen() : rgb.GetBlue());
-	rgbMax = rgb.GetRed() > rgb.GetGreen() ? (rgb.GetRed() > rgb.GetBlue() ? rgb.GetRed() : rgb.GetBlue()) : (rgb.GetGreen() > rgb.GetBlue() ? rgb.GetGreen() : rgb.GetBlue());
+	int l_R = rgb.GetRed() * 255;
+	int l_G = rgb.GetGreen() * 255;
+	int l_B = rgb.GetBlue() * 255;
+	int l_Alpha = rgb.GetAlpha() * 255;
+
+	rgbMin = l_R < l_G ? (l_R < l_B ? l_R : l_B) : (l_G < l_B ? l_G : l_B);
+	rgbMax = l_R > l_G ? (l_R > l_B ? l_R : l_B) : (l_G > l_B ? l_G : l_B);
 
 	hsv.v = rgbMax;
 	if (hsv.v == 0)
@@ -212,12 +225,14 @@ inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
 		return hsv;
 	}
 
-	if (rgbMax == rgb.GetRed())
-		hsv.h = 0 + 43 * (rgb.GetGreen() - rgb.GetBlue()) / (rgbMax - rgbMin);
-	else if (rgbMax == rgb.GetGreen())
-		hsv.h = 85 + 43 * (rgb.GetBlue() - rgb.GetRed()) / (rgbMax - rgbMin);
+	if (rgbMax == l_R)
+		hsv.h = 0 + 43 * (l_G - l_B) / (rgbMax - rgbMin);
+	else if (rgbMax == l_G)
+		hsv.h = 85 + 43 * (l_B - l_R) / (rgbMax - rgbMin);
 	else
-		hsv.h = 171 + 43 * (rgb.GetRed() - rgb.GetGreen()) / (rgbMax - rgbMin);
+		hsv.h = 171 + 43 * (l_R - l_G) / (rgbMax - rgbMin);
+
+	hsv.alpha = l_Alpha;
 
 	return hsv;
 }

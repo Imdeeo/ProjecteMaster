@@ -1,25 +1,30 @@
 #include "Camera\FPSCameraController.h"
 #include "Camera\Camera.h"
+
+#include "Engine\UABEngine.h"
+
 #include "InputManager\InputManager.h"
 #include "XML\XMLTreeNode.h"
 
+#include "Layers\LayerManager.h"
+
 CFPSCameraController::CFPSCameraController(const CXMLTreeNode & _TreeNode) :CCameraController(_TreeNode)
-, m_YawSpeed(100.f)
-, m_PitchSpeed(60.f)
+, m_YawSpeed(2.5f)
+, m_PitchSpeed(2.f)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
+, m_Target(UABEngine.GetLayerManager()->GetResource(_TreeNode.GetPszProperty("layer"))->GetResource(_TreeNode.GetPszProperty("target")))
+, m_Offset(_TreeNode.GetVect3fProperty("offset", Vect3f(.0f, .0f, .0f), true))
 {
-	m_Position=Vect3f(0.0f, 2.0f, 0.0f);
+	m_Position = m_Target->GetPosition() - (GetForward()*m_Offset.x) + (GetRight()*m_Offset.z) + (GetUp()*m_Offset.y);
 }
 
 CFPSCameraController::~CFPSCameraController()
 {	
 }
 
-void CFPSCameraController::Move(float Strafe, float Forward, bool Speed, float ElapsedTime)
+/*void CFPSCameraController::Move(float Strafe, float Forward, bool Speed, float ElapsedTime)
 {
-	
-	
 	Vect3f l_AddPos;
 	float l_Yaw = m_Rotation.GetYaw();
 	float l_Pitch = m_Rotation.GetPitch();
@@ -38,16 +43,16 @@ void CFPSCameraController::Move(float Strafe, float Forward, bool Speed, float E
 		l_AddPos *= l_ConstantSpeed;
 		m_Position += l_AddPos;
 	}
-}
+}*/
 
 void CFPSCameraController::AddYaw(float Radians)
 {
-	CCameraController::AddYaw(-Radians*m_YawSpeed);
+	CCameraController::AddYaw(Radians*m_YawSpeed);
 }
 
 void CFPSCameraController::AddPitch(float Radians)
 {
-	CCameraController::AddPitch(Radians*m_PitchSpeed);
+	CCameraController::AddPitch(-Radians*m_PitchSpeed);
 }
 
 void CFPSCameraController::SetCamera(CCamera *Camera) const
@@ -63,7 +68,8 @@ void CFPSCameraController::SetCamera(CCamera *Camera) const
 
 void CFPSCameraController::Update(float ElapsedTime)
 {
-	AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 0.05f);
-	AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * 0.5f);
-	Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, ElapsedTime);
+	AddYaw(CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime);
+	AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime);
+	m_Position = m_Target->GetPosition() - (GetForward()*m_Offset.x) + (GetUp()*m_Offset.y) + (GetRight()*m_Offset.z);
+	//Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, ElapsedTime);
 }
