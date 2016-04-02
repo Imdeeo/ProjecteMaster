@@ -332,17 +332,17 @@ void CScriptManager::RegisterLUAFunctions()
 			.def_readwrite("w", &Quatf::w)
 			.def(const_self + const_self)
 			.def(const_self - const_self)
-			.def(const_self * other<const double>())
-			.def(const_self / other<const double>())
+			.def(const_self * other<const float>())
+			.def(const_self / other<const float>())
 			.def("decouple_x", &Quatf::decoupleX)
 			.def("decouple_y", &Quatf::decoupleY)
 			.def("decouple_z", &Quatf::decoupleZ)
 			.def("get_scaled_axis", &Quatf::GetScaledAxis)
 			.def("set_from_scaled_axis", &Quatf::SetFromScaledAxis)
 			.def("quat_from_yaw_pitch_roll", &Quatf::QuatFromYawPitchRoll)
-			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,double))&Quatf::slerp)
+			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,float))&Quatf::slerp)
 			.scope[
-				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, double))&Quatn<float>::slerp)
+				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
 			] 
 	];
 	

@@ -254,7 +254,7 @@ public:
 	Vector3<T> GetScaledAxis(void) const {
 		Vector3<T> ret;
 		T angle = 2 * (T)acos(w);
-		Vector3<T> s = (T)sqrt(1 - w*w); // assuming quaternion normalised then w is less than 1, so term always positive.
+		T s = (T)sqrt(1 - w*w); // assuming quaternion normalised then w is less than 1, so term always positive.
 		if (s < 0.001) { // test to avoid divide by zero, s is always positive due to sqrt
 			// if s close to zero then direction of axis not important
 			ret.x = x;
@@ -263,9 +263,9 @@ public:
 		}
 		else
 		{
-			ret.x = x * angle / s;
-			ret.y = y * angle / s;
-			ret.z = z * angle / s;
+			ret.x = (x * angle / s);
+			ret.y = (y * angle / s);
+			ret.z = (z * angle / s);
 		}
 		return ret;
 	}
@@ -324,7 +324,7 @@ public:
 	*/
 	void SetFromAngleAxis(const Vector3<T>& axis, T theta) {
 		if (theta > 0.0001) {
-			Vector3<T> Axis(axis * sin(theta / 2.0));
+			Vector3<T> Axis(axis * (T)sin(theta / 2.0));
 			x = Axis[0];
 			y = Axis[1];
 			z = Axis[2];
@@ -491,21 +491,21 @@ public:
 	/**
 	* @brief Returns the quaternion slerped between this and q1 by fraction 0 <= t <= 1.
 	*/
-	Quatn slerp(const Quatn& q1, double t) {
+	Quatn slerp(const Quatn& q1, T t) {
 		return slerp(*this, q1, t);
 	}
 
 	/// Returns quaternion that is slerped by fraction 't' between q0 and q1.
-	static Quatn slerp(const Quatn& q0, const Quatn& q1, double t) {
+	static Quatn slerp(const Quatn& q0, const Quatn& q1, T t) {
 
-		T omega = acos(mathUtils::Clamp(
+		T omega = (T)acos(mathUtils::Clamp(
 			q0.x * q1.x +
 			q0.y * q1.y +
 			q0.z * q1.z +
 			q0.w * q1.w,
 			-1.f, 1.f));
 		if (fabs(omega) < 1e-10) {
-			omega = 1e-10;
+			omega = (T)1e-10;
 		}
 		T som = (T)sin(omega);
 		T st0 = (T)sin((1 - t) * omega) / som;
