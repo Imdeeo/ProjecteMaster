@@ -189,10 +189,10 @@ inline CColor CColor::HsvToRgb(HsvColor hsv)
 		break;
 	}
 
-	rgb.SetRed(rgb.GetRed() > 0 ? rgb.GetRed() / 255 : 0.0);
-	rgb.SetGreen(rgb.GetGreen() > 0 ? rgb.GetGreen() / 255 : 0.0);
-	rgb.SetBlue(rgb.GetBlue() > 0 ? rgb.GetBlue() / 255 : 0.0);
-	rgb.SetAlpha(rgb.GetAlpha() > 0 ? rgb.GetAlpha() / 255 : 0.0);
+	rgb.SetRed(rgb.GetRed() > 0 ? rgb.GetRed() / 255 : 0);
+	rgb.SetGreen(rgb.GetGreen() > 0 ? rgb.GetGreen() / 255 : 0);
+	rgb.SetBlue(rgb.GetBlue() > 0 ? rgb.GetBlue() / 255 : 0);
+	rgb.SetAlpha(rgb.GetAlpha() > 0 ? rgb.GetAlpha() / 255 : 0);
 
 	return rgb;
 }
@@ -202,10 +202,10 @@ inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
 	HsvColor hsv;
 	unsigned char rgbMin, rgbMax;
 
-	int l_R = rgb.GetRed() * 255;
-	int l_G = rgb.GetGreen() * 255;
-	int l_B = rgb.GetBlue() * 255;
-	int l_Alpha = rgb.GetAlpha() * 255;
+	int l_R = (int)rgb.GetRed() * 255;
+	int l_G = (int)rgb.GetGreen() * 255;
+	int l_B = (int)rgb.GetBlue() * 255;
+	int l_Alpha = (int)rgb.GetAlpha() * 255;
 
 	rgbMin = l_R < l_G ? (l_R < l_B ? l_R : l_B) : (l_G < l_B ? l_G : l_B);
 	rgbMax = l_R > l_G ? (l_R > l_B ? l_R : l_B) : (l_G > l_B ? l_G : l_B);
@@ -252,5 +252,5 @@ inline CColor CColor::interpolate(CColor a, CColor b, float t)
 
 inline int CColor::linear(int a, int b, float t)
 {
-	return a * (1 - t) + b * t;
+	return (int)(a * (1 - t) + b * t);
 }
