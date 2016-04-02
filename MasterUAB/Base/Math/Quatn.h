@@ -20,15 +20,15 @@ public:
 public:
 	Quatn(){}
 	Quatn(T qx, T qy,T qz,T qw) : x(qx), y(qy), z(qz), w(qw){}
-	Quatn(Vect3f c, T r) : x(c.x), y(c.y), z(c.z), w(r){}
+	Quatn(Vector3<T> c, T r) : x(c.x), y(c.y), z(c.z), w(r){}
 
 	//------------------------------------------------------------------------------------------------------------
 	// Agregada adaptación de la librería quaternion.h de la Stanford's University Computing Science.
 	//------------------------------------------------------------------------------------------------------------
-	Vect3f GetComplex() const { return Vect3f(x, y, z); }
-	void SetComplex(const Vect3f& c) { x = c.x; y = c.y; z = c.z; }
+	Vector3<T> GetComplex() const { return Vector3<T>(x, y, z); }
+	void SetComplex(const Vector3<T>& c) { x = c.x; y = c.y; z = c.z; }
 
-	double GetReal() const { return w; }
+	T GetReal() const { return w; }
 	void SetReal(double r) { w = r; }
 
 	Quatn conjugate(void) const {
@@ -92,7 +92,7 @@ public:
 	* of this quaternion.
 	* @return The quaternion (*this) * s.
 	*/
-	Quatn operator*(double s) const {
+	Quatn operator*(T s) const {
 		return Quatn(GetComplex()*s, GetReal()*s);
 	}
 
@@ -128,7 +128,7 @@ public:
 	* of this quaternion.
 	* @return The quaternion (*this) / s.
 	*/
-	Quatn operator/(double s) const {
+	Quatn operator/(T s) const {
 		assert(s == 0);
 		return Quatn(GetComplex() / s, GetReal() / s);
 	}
@@ -144,8 +144,8 @@ public:
 	* Note that this is @e NOT the rotation matrix that may be
 	* represented by a unit quaternion.
 	*/
-	Mat44f matrix() const {
-		return Mat44f(
+	Matrix44<T> matrix() const {
+		return Matrix44<T>(
 			w, -z, y, x,
 			z, w, -x, y,
 			-y, x, w, z,
@@ -165,8 +165,8 @@ public:
 	* Note that this is @e NOT the rotation matrix that may be
 	* represented by a unit quaternion.
 	*/
-	Mat44f rightMatrix() const {
-		return Mat44f(
+	Matrix44<T> rightMatrix() const {
+		return Matrix44<T>(
 			+w, -z, y, -x,
 			+z, w, -x, -y,
 			-y, x, w, -z,
@@ -179,14 +179,14 @@ public:
 	*
 	* This is simply the vector [x y z w]<sup>T</sup>
 	*/
-	Vect4f vector() const { return Vect4f(x, y, z, w); }
+	Vector4<T> vector() const { return Vector4<T>(x, y, z, w); }
 
 	/**
 	* @brief Returns the norm ("magnitude") of the quaternion.
 	* @return The 2-norm of [ w(), x(), y(), z() ]<sup>T</sup>.
 	*/
-	double norm() const {
-		return sqrt(x*x + y*y + z*z + w*w);
+	T norm() const {
+		return (T)sqrt(x*x + y*y + z*z + w*w);
 	}
 
 	/**
@@ -197,8 +197,8 @@ public:
 	* It formulaically returns the matrix, which will not be a
 	* rotation if the quaternion is non-unit.
 	*/
-	Mat33f rotationMatrix() const {
-		return Mat33f(
+	Matrix33<T> rotationMatrix() const {
+		return Matrix33<T>(
 			1 - 2 * y*y - 2 * z*z, 2 * x*y - 2 * z*w, 2 * x*z + 2 * y*w,
 			2 * x*y + 2 * z*w, 1 - 2 * x*x - 2 * z*z, 2 * y*z - 2 * x*w,
 			2 * x*z - 2 * y*w, 2 * y*z + 2 * x*w, 1 - 2 * x*x - 2 * y*y
@@ -208,53 +208,53 @@ public:
 	/**
 	* @brief Returns the local up vector of the quaternion.
 	*/
-	Vect3f GetUpVector() const {
-		return Vect3f(2 * x*y + 2 * z*w, 1 - 2 * x*x - 2 * z*z, 2 * y*z - 2 * x*w);
+	Vector3<T> GetUpVector() const {
+		return Vector3<T>(2 * x*y + 2 * z*w, 1 - 2 * x*x - 2 * z*z, 2 * y*z - 2 * x*w);
 	}
 
 	/**
 	* @brief Returns the local right vector of the quaternion.
 	*/
-	Vect3f GetRightVector() const {
-		return -Vect3f(1 - 2 * y*y - 2 * z*z, 2 * x*y - 2 * z*w, 2 * x*z + 2 * y*w);
+	Vector3<T> GetRightVector() const {
+		return -Vector3<T>(1 - 2 * y*y - 2 * z*z, 2 * x*y - 2 * z*w, 2 * x*z + 2 * y*w);
 	}
 
 	/**
 	* @brief Returns the local forward vector of the quaternion.
 	*/
-	Vect3f GetForwardVector() const {
-		return Vect3f(2 * x*z - 2 * y*w, 2 * y*z + 2 * x*w, 1 - 2 * x*x - 2 * y*y);
+	Vector3<T> GetForwardVector() const {
+		return Vector3<T>(2 * x*z - 2 * y*w, 2 * y*z + 2 * x*w, 1 - 2 * x*x - 2 * y*y);
 	}
 
 	/**
 	* @brief Returns the corresponding yaw of the quaternion.
 	*/
-	float GetYaw() const {
-		return (atan2(2 * y*w - 2 * x*z, 1 - 2 * y*y - 2 * z*z));
+	T GetYaw() const {
+		return ((T)atan2(2 * y*w - 2 * x*z, 1 - 2 * y*y - 2 * z*z));
 	}
 
 	/**
 	* @brief Returns the corresponding pitch of the quaternion.
 	*/
-	float GetPitch() const {
-		return (asin(2 * x*y + 2 * z*w));
+	T GetPitch() const {
+		return ((T)asin(2 * x*y + 2 * z*w));
 	}
 
 	/**
 	* @brief Returns the corresponding roll of the quaternion.
 	*/
-	float GetRoll() const {
-		return atan2(2*x*w - 2*y*z, 1 - 2*x*x - 2*z*z);
+	T GetRoll() const {
+		return (T)atan2(2*x*w - 2*y*z, 1 - 2*x*x - 2*z*z);
 	}
 
 	/**
 	* @brief Returns the scaled-axis representation of this
 	* quaternion rotation.
 	*/
-	Vect3f GetScaledAxis(void) const {
-		Vect3f ret;
-		double angle = 2 * acos(w);
-		double s = sqrt(1 - w*w); // assuming quaternion normalised then w is less than 1, so term always positive.
+	Vector3<T> GetScaledAxis(void) const {
+		Vector3<T> ret;
+		T angle = 2 * (T)acos(w);
+		Vector3<T> s = (T)sqrt(1 - w*w); // assuming quaternion normalised then w is less than 1, so term always positive.
 		if (s < 0.001) { // test to avoid divide by zero, s is always positive due to sqrt
 			// if s close to zero then direction of axis not important
 			ret.x = x;
@@ -274,9 +274,9 @@ public:
 	* @brief Returns the axis representation of this
 	* quaternion rotation.
 	*/
-	Vect3f GetAxis(void) const {
-		Vect3f ret;
-		double s = sqrt(1 - w*w); // assuming quaternion normalised then w is less than 1, so term always positive.
+	Vector3<T> GetAxis(void) const {
+		Vector3<T> ret;
+		T s = (T)sqrt(1 - w*w); // assuming quaternion normalised then w is less than 1, so term always positive.
 		if (s < 0.001) { // test to avoid divide by zero, s is always positive due to sqrt
 			// if s close to zero then direction of axis not important
 			ret.x = x;
@@ -296,22 +296,22 @@ public:
 	* @brief Returns the angle of the axis representation of this
 	* quaternion rotation.
 	*/
-	double GetAxisAngle(void) const {
-		return (2 * acos(w));
+	T GetAxisAngle(void) const {
+		return (2 * (T)acos(w));
 	}
 
 	/**
 	* @brief Sets quaternion to be same as rotation by scaled axis.
 	*/
-	void SetFromScaledAxis(const Vect3f& scaledAxis) {
-		double theta = scaledAxis.Length();
+	void SetFromScaledAxis(const Vector3<T>& scaledAxis) {
+		T theta = scaledAxis.Length();
 		if (theta > 0.0001) {
-			double s = sin(theta / 2.0);
-			Vect3f Axis(scaledAxis * s / theta);
+			T s = (T)sin(theta / 2.0);
+			Vector3<T> Axis(scaledAxis * s / theta);
 			x = Axis[0];
 			y = Axis[1];
 			z = Axis[2];
-			w = cos(theta / 2.0);
+			w = (T)cos(theta / 2.0);
 		}
 		else {
 			x = y = z = 0;
@@ -322,13 +322,13 @@ public:
 	/**
 	* @brief Sets quaternion to be same as rotation by angle axis.
 	*/
-	void SetFromAngleAxis(const Vect3f& axis, float theta) {
+	void SetFromAngleAxis(const Vector3<T>& axis, T theta) {
 		if (theta > 0.0001) {
-			Vect3f Axis(axis * sin(theta / 2.0));
+			Vector3<T> Axis(axis * sin(theta / 2.0));
 			x = Axis[0];
 			y = Axis[1];
 			z = Axis[2];
-			w = cos(theta / 2.0);
+			w = (T)cos(theta / 2.0);
 		}
 		else {
 			x = y = z = 0;
@@ -345,24 +345,24 @@ public:
 	* @warning conjugate() is used instead of inverse() for better
 	* performance, when this quaternion must be normalized.
 	*/
-	Vect3f rotatedVector(const Vect3f& v) const {
+	Vect3f rotatedVector(const Vector3<T>& v) const {
 		return (((*this) * Quatn(v, 0)) * conjugate()).GetComplex();
 	}
 
 	/**
 	* @brief Computes the quaternion from a yaw, pitch, and roll.
 	*/
-	void QuatFromYawPitchRoll(float yaw, float pitch, float roll)
+	void QuatFromYawPitchRoll(T yaw, T pitch, T roll)
 	{
-		float num = roll * 0.5f;
-		float num2 = (float)sin((double)num);
-		float num3 = (float)cos((double)num);
-		float num4 = pitch * 0.5f;
-		float num5 = (float)sin((double)num4);
-		float num6 = (float)cos((double)num4);
-		float num7 = yaw * 0.5f;
-		float num8 = (float)sin((double)num7);
-		float num9 = (float)cos((double)num7);
+		T num = roll * 0.5f;
+		T num2 = (T)sin(num);
+		T num3 = (T)cos(num);
+		T num4 = pitch * 0.5f;
+		T num5 = (T)sin(num4);
+		T num6 = (T)cos(num4);
+		T num7 = yaw * 0.5f;
+		T num8 = (T)sin(num7);
+		T num9 = (T)cos(num7);
 		x = num9 * num5 * num3 + num8 * num6 * num2;
 		y = num8 * num6 * num3 - num9 * num5 * num2;
 		z = num9 * num6 * num2 - num8 * num5 * num3;
@@ -374,13 +374,13 @@ public:
 	* euler angle rotation.
 	* @param euler A 3-vector in order:  roll-pitch-yaw.
 	*/
-	void QuatFromEuler(const Vect3f& euler) {
-		double c1 = cos(euler.z * 0.5);
-		double c2 = cos(euler.y * 0.5);
-		double c3 = cos(euler.x * 0.5);
-		double s1 = sin(euler.z * 0.5);
-		double s2 = sin(euler.y * 0.5);
-		double s3 = sin(euler.x * 0.5);
+	void QuatFromEuler(const Vector3<T>& euler) {
+		T c1 = (T)cos(euler.z * 0.5);
+		T c2 = (T)cos(euler.y * 0.5);
+		T c3 = (T)cos(euler.x * 0.5);
+		T s1 = (T)sin(euler.z * 0.5);
+		T s2 = (T)sin(euler.y * 0.5);
+		T s3 = (T)sin(euler.x * 0.5);
 
 		x = c1*c2*s3 - s1*s2*c3;
 		y = c1*s2*c3 + s1*c2*s3;
@@ -392,11 +392,11 @@ public:
 	* this quaternion.
 	* @return Euler angles in roll-pitch-yaw order.
 	*/
-	Vect3f EulerFromQuat(void) const {
-		Vect3f euler;
+	Vector3<T> EulerFromQuat(void) const {
+		Vector3<T> euler;
 		const static double PI_OVER_2 = DOUBLE_PI_VALUE * 0.5;
 		const static double EPSILON = 1e-10;
-		double sqw, sqx, sqy, sqz;
+		T sqw, sqx, sqy, sqz;
 
 		// quick conversion to Euler angles to give tilt to user
 		sqx = x*x;
@@ -404,20 +404,20 @@ public:
 		sqz = z*z;
 		sqw = w*w;
 
-		euler.y = asin(2.0 * (w * y - x * z));
+		euler.y = (T)asin(2.0 * (w * y - x * z));
 		if (PI_OVER_2 - fabs(euler.y) > EPSILON) {
-			euler.z = atan2(2.0 * (x * y + w * z), sqx - sqy - sqz + sqw);
-			euler.x = atan2(2.0 * (w * x + y * z), sqw - sqx - sqy + sqz);
+			euler.z = (T)atan2(2.0 * (x * y + w * z), sqx - sqy - sqz + sqw);
+			euler.x = (T)atan2(2.0 * (w * x + y * z), sqw - sqx - sqy + sqz);
 		}
 		else
 		{
 			// compute heading from local 'down' vector
-			euler.z = atan2(2 * y * z - 2 * x * w, 2 * x * z + 2 *y * w);
+			euler.z = (T)atan2(2 * y * z - 2 * x * w, 2 * x * z + 2 * y * w);
 			euler.x = 0.0;
 
 			// If facing down, reverse yaw
 			if (euler.y < 0)
-				euler.z = DOUBLE_PI_VALUE - euler.z;
+				euler.z = (T)(DOUBLE_PI_VALUE - euler.z);
 		}
 		return euler;
 	}
@@ -430,12 +430,12 @@ public:
 	* so that Q = Qxy * Qz.
 	*/
 	void decoupleX(Quatn* Qyz, Quatn* Qx) const {
-		Vect3f xtt(1, 0, 0);
-		Vect3f xbt = this->rotatedVector(xtt);
-		Vect3f axis_yz = xtt^xbt;
-		double axis_norm = axis_yz.Length();
+		Vector3<T> xtt(1, 0, 0);
+		Vector3<T> xbt = this->rotatedVector(xtt);
+		Vector3<T> axis_yz = xtt^xbt;
+		T axis_norm = axis_yz.Length();
 
-		double axis_theta = acos(mathUtils::Clamp(xbt.z, -1.f, +1.f));
+		T axis_theta = acos(mathUtils::Clamp(xbt.z, -1.f, +1.f));
 		if (axis_norm > 0.00001) {
 			axis_yz = axis_yz * (axis_theta / axis_norm); // limit is *1
 		}
@@ -452,12 +452,12 @@ public:
 	* so that Q = Qxy * Qz.
 	*/
 	void decoupleY(Quatn* Qxz, Quatn* Qy) const {
-		Vect3f ytt(0, 1, 0);
-		Vect3f ybt = this->rotatedVector(ytt);
-		Vect3f axis_xz = ytt^ybt;
-		double axis_norm = axis_xz.Length();
+		Vector3<T> ytt(0, 1, 0);
+		Vector3<T> ybt = this->rotatedVector(ytt);
+		Vector3<T> axis_xz = ytt^ybt;
+		T axis_norm = axis_xz.Length();
 
-		double axis_theta = acos(mathUtils::Clamp(ybt.y, -1.f, +1.f));
+		T axis_theta = acos(mathUtils::Clamp(ybt.y, -1.f, +1.f));
 		if (axis_norm > 0.00001) {
 			axis_xz = axis_xz * (axis_theta / axis_norm); // limit is *1
 		}
@@ -474,12 +474,12 @@ public:
 	* so that Q = Qxy * Qz.
 	*/
 	void decoupleZ(Quatn* Qxy, Quatn* Qz) const {
-		Vect3f ztt(0, 0, 1);
-		Vect3f zbt = this->rotatedVector(ztt);
-		Vect3f axis_xy = ztt^zbt;
-		double axis_norm = axis_xy.Length();
+		Vector3<T> ztt(0, 0, 1);
+		Vector3<T> zbt = this->rotatedVector(ztt);
+		Vector3<T> axis_xy = ztt^zbt;
+		T axis_norm = axis_xy.Length();
 
-		double axis_theta = acos(mathUtils::Clamp(zbt.z, -1.f, +1.f));
+		T axis_theta = acos(mathUtils::Clamp(zbt.z, -1.f, +1.f));
 		if (axis_norm > 0.00001) {
 			axis_xy = axis_xy * (axis_theta / axis_norm); // limit is *1
 		}
@@ -498,7 +498,7 @@ public:
 	/// Returns quaternion that is slerped by fraction 't' between q0 and q1.
 	static Quatn slerp(const Quatn& q0, const Quatn& q1, double t) {
 
-		double omega = acos(mathUtils::Clamp(
+		T omega = acos(mathUtils::Clamp(
 			q0.x * q1.x +
 			q0.y * q1.y +
 			q0.z * q1.z +
@@ -507,9 +507,9 @@ public:
 		if (fabs(omega) < 1e-10) {
 			omega = 1e-10;
 		}
-		double som = sin(omega);
-		double st0 = sin((1 - t) * omega) / som;
-		double st1 = sin(t * omega) / som;
+		T som = (T)sin(omega);
+		T st0 = (T)sin((1 - t) * omega) / som;
+		T st1 = (T)sin(t * omega) / som;
 
 		return Quatn(
 			q0.x * st0 + q1.x * st1,
