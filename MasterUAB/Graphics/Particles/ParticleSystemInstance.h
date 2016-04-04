@@ -29,6 +29,7 @@ private:
 		float TimeToNextFrame;
 		float LifeTime, TotalLife;
 		float Angle, AngularSpeed, AngularAcceleration;
+		float DistanceToCamera;
 
 		int ColorControlPoint, SizeControlPoint;
 
@@ -68,6 +69,7 @@ public:
 		return PARTICLE_EMITER;
 	}*/
 
+	float GetDistanceToCamera(ParticleData *particle);
 	float GetRandomValue(float min, float max);
 	Vect3f GetRandomValue(Vect3f min, Vect3f max);
 	CColor GetRandomValue(CColor min, CColor max);
@@ -76,6 +78,7 @@ public:
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
 	//void RenderDebug(CRenderManager *RM);
+	void InsertSort(ParticleData arr[], int length);
 };
 
 #endif //PARTICLE_SYSTEM_INSTANCE_H
