@@ -13,6 +13,7 @@ protected:
 	std::string m_Type;
 	ID3D11ShaderResourceView *m_Texture;
 	ID3D11SamplerState *m_SamplerState;
+	size_t m_iMaxIndex;
 	virtual bool LoadFile();
 	void Unload();
 public:
