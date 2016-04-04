@@ -3,9 +3,9 @@
 #include "ContextManager\ContextManager.h"
 
 CGUIPosition::CGUIPosition(float _x, float _y, float _w, float _h,
-	GUIAnchor _anchor,
-	GUICoordType _anchorCoordsType,
-	GUICoordType _sizeCorrdsType)
+	CGUIManager::GUIAnchor _anchor,
+	CGUIManager::GUICoordType _anchorCoordsType,
+	CGUIManager::GUICoordType _sizeCorrdsType)
 {
 	int l_Width = UABEngine.GetRenderManager()->GetContextManager()->GetWidth();
 	int l_Height = UABEngine.GetRenderManager()->GetContextManager()->GetHeight();
@@ -15,20 +15,20 @@ CGUIPosition::CGUIPosition(float _x, float _y, float _w, float _h,
 	{
 	default:
 		assert(false);
-	case GUICoordType::GUI_ABSOLUTE:
+	case CGUIManager::GUICoordType::GUI_ABSOLUTE:
 		m_width = _w;
 		m_height = _h;
 		break;
-	case GUICoordType::GUI_RELATIVE:
+	case CGUIManager::GUICoordType::GUI_RELATIVE:
 
 		m_width = (int)(_w * l_Width);
 		m_height = (int)(_h * l_Height);
 		break;
-	case GUICoordType::GUI_RELATIVE_WIDTH:
+	case CGUIManager::GUICoordType::GUI_RELATIVE_WIDTH:
 		m_width = (int)(_w * l_Width);
 		m_height = (int)(_h * l_Width);
 		break;
-	case GUICoordType::GUI_RELATIVE_HEIGHT:
+	case CGUIManager::GUICoordType::GUI_RELATIVE_HEIGHT:
 		m_width = (int)(_w * l_Height);
 		m_height = (int)(_h * l_Height);
 		break;
@@ -40,51 +40,65 @@ CGUIPosition::CGUIPosition(float _x, float _y, float _w, float _h,
 	{
 	default:
 		assert(false);
-	case GUICoordType::GUI_ABSOLUTE:
+	case CGUIManager::GUICoordType::GUI_ABSOLUTE:
 		unitPixelSizeX = 1;
 		unitPixelSizeY = 1;
 		break;
-	case GUICoordType::GUI_RELATIVE:
+	case CGUIManager::GUICoordType::GUI_RELATIVE:
 		unitPixelSizeX = l_Width;
 		unitPixelSizeY = l_Height;
-	case GUICoordType::GUI_RELATIVE_WIDTH:
+	case CGUIManager::GUICoordType::GUI_RELATIVE_WIDTH:
 		unitPixelSizeX = l_Width;
 		unitPixelSizeY = l_Width;
 		break;
-	case GUICoordType::GUI_RELATIVE_HEIGHT:
+	case CGUIManager::GUICoordType::GUI_RELATIVE_HEIGHT:
 		unitPixelSizeX = l_Height;
 		unitPixelSizeY = l_Height;
 		break;
 	}
-
+	float l_x, l_y;
 	if (_x < 0)
 	{
-		_x = 1.0f + _x;
+		l_x = 1.0f + _x;
+	}
+	else
+	{
+		l_x = _x;
 	}
 
-	if ((int)_anchor & (int)GUIAnchor::LEFT)
+	if (_y < 0)
 	{
-		m_x = (int)(_x * unitPixelSizeX);
+		l_y = 1.0f + _y;
 	}
-	else if ((int)_anchor & (int)GUIAnchor::CENTER)
+	else
 	{
-		m_x = (int)(_x * unitPixelSizeX - m_width * 0.5f);
+		l_y = _y;
 	}
-	else if ((int)_anchor & (int)GUIAnchor::RIGHT)
+
+
+	if ((int)_anchor & (int)CGUIManager::GUIAnchor::LEFT)
 	{
-		m_x = (int)(_x*unitPixelSizeX - m_width);
+		m_x = (int)(l_x * unitPixelSizeX);
+	}
+	else if ((int)_anchor & (int)CGUIManager::GUIAnchor::CENTER)
+	{
+		m_x = (int)(l_x * unitPixelSizeX - m_width * 0.5f);
+	}
+	else if ((int)_anchor & (int)CGUIManager::GUIAnchor::RIGHT)
+	{
+		m_x = (int)(l_x*unitPixelSizeX - m_width);
 	}
 
 	
-	if ((int)_anchor & (int)GUIAnchor::TOP)
+	if ((int)_anchor & (int)CGUIManager::GUIAnchor::TOP)
 	{
 		m_y = (int)(_y * unitPixelSizeY);
 	}
-	else if ((int)_anchor & (int)GUIAnchor::CENTER)
+	else if ((int)_anchor & (int)CGUIManager::GUIAnchor::CENTER)
 	{
 		m_y = (int)(_y * unitPixelSizeY - m_height * 0.5f);
 	}
-	else if ((int)_anchor & (int)GUIAnchor::BOTTOM)
+	else if ((int)_anchor & (int)CGUIManager::GUIAnchor::BOTTOM)
 	{
 		m_y = (int)(_y*unitPixelSizeY - m_height);
 	}
