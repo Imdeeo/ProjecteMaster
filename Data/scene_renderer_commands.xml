@@ -136,10 +136,16 @@
 	</render_draw_quad>
 	<disable_alpha_blend name="disable alpha blend N and V" active="false"/>
 	
+	<!-- DEBUG -->
 	<render_debug_lights name="render debug lights"/>
 	<render_debug_grid name="render grid"/>
+	
+	<!-- GUI -->
 	<render_gui name="render gui"/>
-	<set_ant_tweak_bar name="render ATB"/>	
+	
+	<!-- ATB -->
+	<set_ant_tweak_bar name="render ATB"/>
+	
 	<present name="present"/>
 </scene_renderer_commands>
 

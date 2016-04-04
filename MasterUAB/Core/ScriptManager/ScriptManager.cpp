@@ -87,6 +87,7 @@
 #include "Texture\TextureManager.h"
 
 #include "GUIManager.h"
+#include "GUIPosition.h"
 
 #include "DebugRender.h"
 
@@ -331,17 +332,17 @@ void CScriptManager::RegisterLUAFunctions()
 			.def_readwrite("w", &Quatf::w)
 			.def(const_self + const_self)
 			.def(const_self - const_self)
-			.def(const_self * other<const double>())
-			.def(const_self / other<const double>())
+			.def(const_self * other<const float>())
+			.def(const_self / other<const float>())
 			.def("decouple_x", &Quatf::decoupleX)
 			.def("decouple_y", &Quatf::decoupleY)
 			.def("decouple_z", &Quatf::decoupleZ)
 			.def("get_scaled_axis", &Quatf::GetScaledAxis)
 			.def("set_from_scaled_axis", &Quatf::SetFromScaledAxis)
 			.def("quat_from_yaw_pitch_roll", &Quatf::QuatFromYawPitchRoll)
-			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,double))&Quatf::slerp)
+			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,float))&Quatf::slerp)
 			.scope[
-				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, double))&Quatn<float>::slerp)
+				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
 			] 
 	];
 	
@@ -766,7 +767,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS) [
 		class_<CFPSCameraController, CCameraController>("CFPSCameraController")
 			.def(constructor<const CXMLTreeNode&>())
-			.def("move", &CFPSCameraController::Move)
+			//.def("move", &CFPSCameraController::Move)
 			.def("set_camera", &CFPSCameraController::SetCamera)
 			.def("add_yaw", &CFPSCameraController::AddYaw)
 			.def("add_pitch",&CFPSCameraController::AddPitch)
@@ -1123,6 +1124,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("destroy", &CTemplatedMapManager<CTexture>::Destroy)
 	];*/
 
+
 	module(m_LS)[
 		class_<CTextureManager, CTemplatedMapManager<CTexture>>("CTextureManager")
 			.def(constructor<>())
@@ -1133,9 +1135,41 @@ void CScriptManager::RegisterLUAFunctions()
 
 // GUI----------------------------------------------------------------------------------------------
 	
+	
+
 	module(m_LS)[
+		
 		class_<CGUIManager>("CGUIManager")
 			.def("do_button", &CGUIManager::DoButton)
+			.enum_("gui_anchor")[
+				value("top", CGUIManager::GUIAnchor::TOP),
+				value("mid", CGUIManager::GUIAnchor::MID),
+				value("bottom", CGUIManager::GUIAnchor::BOTTOM),
+				value("left", CGUIManager::GUIAnchor::LEFT),
+				value("center", CGUIManager::GUIAnchor::CENTER),
+				value("right", CGUIManager::GUIAnchor::RIGHT),
+
+				value("top_left", CGUIManager::GUIAnchor::TOP_LEFT),
+				value("top_center", CGUIManager::GUIAnchor::TOP_CENTER),
+				value("top_right", CGUIManager::GUIAnchor::TOP_RIGHT),
+				value("mid_left", CGUIManager::GUIAnchor::MID_LEFT),
+				value("mid_center", CGUIManager::GUIAnchor::MID_CENTER),
+				value("mid_right", CGUIManager::GUIAnchor::MID_RIGHT),
+				value("bottom_left", CGUIManager::GUIAnchor::BOTTOM_LEFT),
+				value("bottom_center", CGUIManager::GUIAnchor::BOTTOM_CENTER),
+				value("bottom_right", CGUIManager::GUIAnchor::BOTTOM_RIGHT)
+			]
+			.enum_("gui_coord_type")[
+				value("gui_absolute", CGUIManager::GUICoordType::GUI_ABSOLUTE),
+				value("gui_relative", CGUIManager::GUICoordType::GUI_RELATIVE),
+				value("gui_relative_width", CGUIManager::GUICoordType::GUI_RELATIVE_WIDTH),
+				value("gui_relative_height", CGUIManager::GUICoordType::GUI_RELATIVE_HEIGHT)
+			]
+	];
+
+	module(m_LS)[
+		class_<CGUIPosition>("CGUIPosition")
+			.def(constructor<float, float, float, float, CGUIManager::GUIAnchor, CGUIManager::GUICoordType, CGUIManager::GUICoordType>())
 	];
 
 	
