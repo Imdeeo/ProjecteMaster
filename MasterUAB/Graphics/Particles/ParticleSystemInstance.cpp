@@ -10,6 +10,8 @@
 #include "RenderableObjects\RenderableVertexs.h"
 #include "RenderableObjects\TemplatedRenderableVertexs.h"
 #include "Effects\EffectManager.h"
+#include "Camera\CameraControllerManager.h"
+#include "Math\MathUtils.h"
 
 CParticleSystemInstance::CParticleSystemInstance(CXMLTreeNode &TreeNode) : 
 	CRenderableObject(TreeNode), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
@@ -35,6 +37,15 @@ CParticleSystemInstance::~CParticleSystemInstance(void)
 void CParticleSystemInstance::Destroy()
 {
 	//CHECKED_RELEASE(m_Type);
+}
+
+float CParticleSystemInstance::GetDistanceToCamera(ParticleData *particle)
+{
+	CCameraController* aux = UABEngine.GetCameraControllerManager()->GetMainCamera();
+	
+	Vect3f P = particle->Position - aux->GetPosition();
+
+	return P * aux->GetForward();
 }
 
 float CParticleSystemInstance::GetRandomValue(float min, float max)
@@ -91,7 +102,7 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 			if (m_ActiveParticles < MAX_PARTICLE_PER_INSTANCE)
 			{
 				ParticleData particle = {};
-				particle.Position = GetRandomValue(-m_EmissionBoxHalfSize, m_EmissionBoxHalfSize);
+				particle.Position = GetRandomValue(-m_EmissionBoxHalfSize, m_EmissionBoxHalfSize)+m_Position;
 				particle.Velocity = GetRandomValue(m_Type->GetStartingSpeed1(), m_Type->GetStartingSpeed2());
 				particle.Acceleration = GetRandomValue(m_Type->GetStartingAcceleration1(), m_Type->GetStartingAcceleration2());
 				particle.AngularSpeed = GetRandomValue(m_Type->GetStartingAngularSpeed()[0], m_Type->GetStartingAngularSpeed()[1]);
@@ -133,7 +144,8 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 		particle->Velocity += particle->Acceleration * ElapsedTime;
 		particle->Angle += particle->AngularSpeed * ElapsedTime + 0.5f * ElapsedTime * ElapsedTime * particle->AngularAcceleration;
 		particle->TimeToNextFrame -= ElapsedTime;
-		particle->LifeTime += ElapsedTime;			
+		particle->LifeTime += ElapsedTime;		
+		particle->DistanceToCamera = GetDistanceToCamera(particle);
 
 		while (particle->TimeToNextFrame < 0 && (m_Type->GetLoopFrames() || particle->CurrentFrame < m_Type->GetNumFrames() - 1))
 		{
@@ -183,8 +195,11 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 			--m_ActiveParticles;
 			m_ParticleData[i] = m_ParticleData[m_ActiveParticles];
 			--i;
-		}
+		}		
 	}
+
+	if (m_ActiveParticles > 1)
+		InsertSort(m_ParticleData, m_ActiveParticles);
 }
 
 void CParticleSystemInstance::Render(CRenderManager *RM)
@@ -198,8 +213,8 @@ void CParticleSystemInstance::Render(CRenderManager *RM)
 
 		m_ParticleRenderableData[i].Position = particle->Position;
 
-		CColor ColorControlAlpha = particle->LastColor.interpolate(particle->LastColor, particle->NextColor, 0.5f);
-			(particle->LastColor, particle->NextColor, 0.5f);
+		CColor ColorControlAlpha = particle->LastColor.interpolate(particle->LastColor, particle->NextColor, (particle->LifeTime-particle->LastColorControlTime)/(particle->NextColorControlTime-particle->LastColorControlTime));
+			(particle->LastColor, particle->NextColor, 0.5f);			
 		m_ParticleRenderableData[i].Color = ColorControlAlpha;
 	    //m_ParticleRenderableData[i].Color = particle->LastColor.Lerp(particle->NextColor, ColorControlAlpha);
 		
@@ -234,4 +249,18 @@ void CParticleSystemInstance::Render(CRenderManager *RM)
 	CEffectManager::SetSceneConstants(l_EffectTechnique);
 	m_RenderableVertex->UpdateVertexs(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE);
 	m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData(), 3);*/
+}
+
+void CParticleSystemInstance::InsertSort(ParticleData arr[], int length) {
+	int i, j;
+	ParticleData tmp;
+	for (i = 1; i < length; ++i) {
+		j = i;
+		while (j > 0 && arr[j - 1].DistanceToCamera < arr[j].DistanceToCamera) {
+			tmp = arr[j];
+			arr[j] = arr[j - 1];
+			arr[j - 1] = tmp;
+			--j;
+		}
+	}
 }
