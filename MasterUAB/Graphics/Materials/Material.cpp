@@ -9,36 +9,45 @@
 #include "RenderableObjects\RenderableObjectTechnique.h"
 #include "TemplatedMaterialParameter.h"
 
+#define INDEX_DIFFUSE_TEXTURE 0
 #define INDEX_LIGHTMAP_TEXTURE 1
 #define INDEX_NORMAL_TEXTURE 2
 #define INDEX_CUBEMAP_TEXTURE 8
 
-CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0), m_ReflectionStageId(99)
+CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0)
 {
 	std::string l_RenderableObjectTechnique = TreeNode.GetPszProperty("renderable_object_technique","");
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_RenderableObjectTechnique);
 	CXMLTreeNode material = TreeNode;
 	CEffectManager::m_RawDataCount = 0;
+	for (size_t i = 0; i < MAX_TEXTURES; i++)
+	{
+		m_Textures[i] = nullptr;
+	}
 	for (int i = 0; i < material.GetNumChildren(); ++i)
 	{
 		CXMLTreeNode l_Child = TreeNode(i);
 		if (l_Child.GetName() == std::string("texture"))
 		{
-			m_Textures.push_back(CUABEngine::GetInstance()->GetTextureManager()->GetTexture(l_Child.GetPszProperty("filename")));
+			CTexture* l_texture = CUABEngine::GetInstance()->GetTextureManager()->GetTexture(l_Child.GetPszProperty("filename"));
 			std::string l_TextureType = l_Child.GetPszProperty("type");
+			l_texture->SetType(l_TextureType);
 			if (l_TextureType == "lightmap")
 			{
-				m_LightmapStageId = i;
+				m_Textures[INDEX_LIGHTMAP_TEXTURE] = l_texture;
 			}
 			if (l_TextureType == "normal")
 			{
-				m_NormalStageId = i;
+				m_Textures[INDEX_NORMAL_TEXTURE] = l_texture;
 			}
 			if (l_TextureType == "reflection")
 			{
-				m_ReflectionStageId = i;
+				m_Textures[INDEX_CUBEMAP_TEXTURE] = l_texture;
 			}
-			m_Textures[m_Textures.size()-1]->SetType(l_TextureType);
+			if (l_TextureType == "diffuse")
+			{
+				m_Textures[INDEX_DIFFUSE_TEXTURE] = l_texture;
+			}
 		}
 		if (l_Child.GetName() == std::string("parameter"))
 		{
@@ -99,15 +108,10 @@ void * CMaterial::GetNextParameterAddress(unsigned int NumBytes)
 
 void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 {
-	for (int i = 0; i < m_Textures.size(); i++)
+	for (int i = 0; i <MAX_TEXTURES; i++)
 	{
-		if (i == m_LightmapStageId){
-			m_Textures[i]->Activate(INDEX_LIGHTMAP_TEXTURE);
-		} else if (i == m_NormalStageId) {
-			m_Textures[i]->Activate(INDEX_NORMAL_TEXTURE);
-		} else if (i == m_ReflectionStageId) {
-			m_Textures[i]->Activate(INDEX_CUBEMAP_TEXTURE);
-		} else {
+		if (m_Textures[i] != nullptr)
+		{
 			m_Textures[i]->Activate(i);
 		}
 	}
@@ -121,10 +125,12 @@ void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 void CMaterial::operator=(CMaterial &b)
 {
 	Destroy();
-	m_Textures = b.m_Textures;
+	for (size_t i = 0; i < MAX_TEXTURES; i++)
+	{
+		m_Textures[i] = b.m_Textures[i];
+	}
 	m_RenderableObjectTechnique = b.m_RenderableObjectTechnique;
 	m_CurrentParameterData = b.m_CurrentParameterData;
-	m_ReflectionStageId = b.m_ReflectionStageId;
 	for (int i = 0; i < b.GetParameters().size(); i++)
 	{
 		CMaterialParameter* l_MaterialParameter = b.GetParameters()[i];
@@ -157,9 +163,12 @@ void CMaterial::Save(FILE* _File)
 {
 	fprintf_s(_File, "\t<material name=\"%s\" renderable_object_technique=\"%s\">\n",m_Name.c_str(),m_RenderableObjectTechnique->GetName().c_str());
 
-	for (size_t i = 0; i < m_Textures.size(); i++)
+	for (size_t i = 0; i < MAX_TEXTURES; i++)
 	{
-		m_Textures[i]->Save(_File, 2);
+		if (m_Textures[i]!=nullptr)
+		{
+			m_Textures[i]->Save(_File, 2);
+		}
 	}
 	for (size_t i = 0; i < m_Parameters.size(); i++)
 	{

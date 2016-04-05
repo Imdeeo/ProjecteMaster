@@ -103,7 +103,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 	RegisterClassEx(&wc);
 #define OJUCUIDAO
-#ifndef OJUCUIDAO//_DEBUG
+#ifndef /*OJUCUIDAO*/_DEBUG
 	RECT desktop;
 	// Get a handle to the desktop window
 	const HWND hDesktop = GetDesktopWindow();
