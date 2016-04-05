@@ -8,24 +8,35 @@ class 'CUABCinematicsActionManager'
 		self.m_CurrentTime=0.0
 		self.m_CurrentAction=1
 		self.m_CurrentExecutedAction=1
+		self.m_Play = false
 	end
 
 	function CUABCinematicsActionManager:Update(ElapsedTime)
-		self.m_CurrentTime=self.m_CurrentTime+ElapsedTime
-		local l_CurrentActionId=self.m_CurrentAction
-		if l_CurrentActionId>#(self.m_Actions) then
-			return
-		end
+		if self.m_Play then
+			self.m_CurrentTime=self.m_CurrentTime+ElapsedTime
+	
+			local l_CurrentActionId=self.m_CurrentAction
+			if l_CurrentActionId>#(self.m_Actions) then
+				return
+			end
 
-		while self.m_CurrentExecutedAction<=(#self.m_Actions) and self.m_Actions[self.m_CurrentExecutedAction]:GetTime()<=self.m_CurrentTime do
-			self.m_Actions[self.m_CurrentExecutedAction]:Execute()
-			self.m_CurrentExecutedAction=self.m_CurrentExecutedAction+1
-		end
+			while self.m_CurrentExecutedAction<=(#self.m_Actions) and self.m_Actions[self.m_CurrentExecutedAction]:GetTime()<=self.m_CurrentTime do
+				self.m_Actions[self.m_CurrentExecutedAction]:Execute()
+				self.m_CurrentExecutedAction=self.m_CurrentExecutedAction+1
+			end
 
-		for i=1, (#self.m_Actions) do
-		if self.m_Actions[i]:IsActive() or self.m_Actions[i]:MustUpdate() then
-			self.m_Actions[i]:Update(ElapsedTime)
-		end
+			for i=1, (#self.m_Actions) do
+				if self.m_Actions[i]:IsActive() or self.m_Actions[i]:MustUpdate() then
+					self.m_Actions[i]:Update(ElapsedTime)
+				end
+			end
+
+			if self.m_CurrentTime >= self.m_MaxTime then
+				self.m_CurrentTime=0.0
+				self.m_CurrentAction=1
+				self.m_CurrentExecutedAction=1
+				self.m_Play = false				
+			end
 		end
 	end
 
@@ -35,9 +46,8 @@ class 'CUABCinematicsActionManager'
 		self.m_Actions={}
 		self.m_CurrentAction=1
 		self.m_CurrentExecutedAction=1
-		
 		local l_XMLTreeNode=CXMLTreeNode()
-		local l_Loaded=l_XMLTreeNode:load_file("Data\\level_2\\cinematic_manager.xml")
+		local l_Loaded=l_XMLTreeNode:load_file(Filename)
 		
 		if l_Loaded then
 			for i=0, l_XMLTreeNode:get_num_children() do

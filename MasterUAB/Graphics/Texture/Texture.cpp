@@ -56,3 +56,12 @@ bool CTexture::Reload()
 	Unload();
 	return LoadFile();
 }
+
+void CTexture::Save(FILE* _File, size_t _NTabs)
+{
+	for (int i = 0; i < _NTabs; i++)
+	{
+		fprintf_s(_File, "\t");
+	}
+	fprintf_s(_File,"<texture type=\"%s\" filename=\"%s\"/>\n",m_Type.c_str(),m_Name.c_str());
+}

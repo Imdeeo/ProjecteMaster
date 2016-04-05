@@ -8,16 +8,15 @@ class CTexture;
 class CMaterialParameter;
 class CRenderableObjectTechnique;
 
+#define MAX_TEXTURES 10
+
 class CMaterial : public CNamed
 {
 private:
-	std::vector<CTexture *> m_Textures;
+	CTexture* m_Textures[MAX_TEXTURES];
 	std::vector<CMaterialParameter *> m_Parameters;
 	CRenderableObjectTechnique *m_RenderableObjectTechnique;
 	unsigned int m_CurrentParameterData;
-	unsigned int m_LightmapStageId;
-	unsigned int m_NormalStageId;
-	unsigned int m_ReflectionStageId;
 	void Destroy();
 public:
 	CMaterial(const CXMLTreeNode &TreeNode);
@@ -27,6 +26,8 @@ public:
 	void * GetNextParameterAddress(unsigned int NumBytes);
 	const std::vector<CMaterialParameter *> & GetParameters(){ return m_Parameters;}
 	void CMaterial::operator=(CMaterial &b);
+
+	void Save(FILE* _File);
 };
 
 #endif //MATERIAL_H

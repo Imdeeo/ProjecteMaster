@@ -16,6 +16,7 @@ public:
 	virtual ~CMaterialManager();
 	void Load(const std::string &Filename, const std::string &DefaultsFileName="");
 	void Reload();
+	void Save();
 };
 
 #endif //MATERIAL_MANAGER_H

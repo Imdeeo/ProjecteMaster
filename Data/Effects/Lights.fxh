@@ -13,7 +13,7 @@ float4 shadowMapCalc(float3 l_WorldPosition)
 		float2 l_ProjectedLightCoords=float2(((l_LightViewPosition.x/l_LightViewPosition.w)/2.0f)+0.5f, ((-l_LightViewPosition.y/l_LightViewPosition.w)/2.0f)+0.5f);
 		float l_DepthShadowMap=T6Texture.Sample(S6Sampler, l_ProjectedLightCoords).r;
 		float l_LightDepth=l_LightViewPosition.z/l_LightViewPosition.w;
-		float m_ShadowMapBias = 0.00003f;
+		float m_ShadowMapBias = 0.001f;
 		l_DepthShadowMap=l_DepthShadowMap+m_ShadowMapBias;
 		if((saturate(l_ProjectedLightCoords.x)==l_ProjectedLightCoords.x) && (saturate(l_ProjectedLightCoords.y)==l_ProjectedLightCoords.y))
 		{
@@ -56,7 +56,7 @@ float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	specular *= l_SpotAttenuation;
 	specular *= l_DistanceAttenuation;
 	
-	float4 outLight = float4((l_albedo*l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular).xyz,1);
+	float4 outLight = float4((l_albedo*l_DiffuseContrib*l_DistanceAttenuation*l_SpotAttenuation*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular*m_LightIntensityArray[lightIndex]).xyz,1);
 		
 	return saturate(outLight);
 }
@@ -72,7 +72,7 @@ float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int 
 	float3 H = normalize(cameraToVertex -m_LightDirection[lightIndex]);
 	float aux = dot(cameraToVertex, - m_LightDirection[lightIndex]);
 	float4 specular = saturate(_SpecularFactor* m_LightColor[lightIndex] * pow(dot(Nn, H), _SpecularPower));
-	float4 outLight = float4((l_albedo*l_DiffuseContrib*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular).xyz,1);
+	float4 outLight = float4((l_albedo*l_DiffuseContrib*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular*m_LightIntensityArray[lightIndex]).xyz,1);
 	
 	return saturate(outLight);
 }
@@ -91,7 +91,7 @@ float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	float3 specular = saturate(_SpecularFactor*m_LightColor[lightIndex]*pow(dot(Nn, H), _SpecularPower));
 	//specular *= l_SpotAttenuation;
 	
-	float4 outLight = float4((l_albedo*l_DiffuseContrib*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular).xyz,1);
+	float4 outLight = float4((l_albedo*l_DiffuseContrib*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular*m_LightIntensityArray[lightIndex]).xyz,1);
 	
 	return saturate(outLight);	
 }

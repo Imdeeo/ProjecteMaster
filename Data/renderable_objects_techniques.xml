@@ -33,6 +33,9 @@
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="deff_technique"/>	
 		<renderable_object_technique name="fog" technique="fog_technique"/>
 	</pool_renderable_object_technique>	
+	<pool_renderable_object_technique name="ssr_pool">
+		<renderable_object_technique name="gui_ssr_renderable_object_technique" technique="ssr_technique"/>
+	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="zblur_pool">
 		<renderable_object_technique name="zblur" technique="zblur_technique"/>
 	</pool_renderable_object_technique>	
@@ -56,5 +59,8 @@
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="skybox_pool">
 		<renderable_object_technique name="skybox" technique="skybox_technique"/>
+	</pool_renderable_object_technique>
+		<pool_renderable_object_technique name="triggers_pool">
+		<renderable_object_technique name="trigger" technique="trigger_technique"/>
 	</pool_renderable_object_technique>
 </renderable_object_techniques>

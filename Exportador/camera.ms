@@ -3,6 +3,9 @@ fileIn "utils.ms"
 
 fn createCameras dir Objs =
 (
+	file=createfile (dir+"cameras.xml")
+	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
+	format "<cameras>\n" to:file
 	if Objs != undefined then
 	(
 		local cameraFileDir
@@ -15,9 +18,6 @@ fn createCameras dir Objs =
 		local key
 		local cameraType
 		
-		file=createfile (dir+"cameras.xml")
-		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
-		format "<cameras>\n" to:file
 		for i=1 to Objs.count do
 		(
 			select Objs[i]
@@ -51,6 +51,7 @@ fn createCameras dir Objs =
 						cameraLookAt = at time j Objs[i].target.pos
 					) else (
 						mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
+						swapYZ &cameraLookAt
 						cameraLookAt += cameraTranslation
 					)
 					TranslationToRH &cameraUp
@@ -68,6 +69,7 @@ fn createCameras dir Objs =
 					cameraLookAt = Objs[i].target.pos
 				) else (
 					mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
+					swapYZ &cameraLookAt
 					cameraLookAt += cameraTranslation
 				)
 				cameraType = getUserProp Objs[i] "camera_export_type"
@@ -78,15 +80,13 @@ fn createCameras dir Objs =
 			)
 			max select none
 		)
-		format "\t<camera name=\"SphericalCamera\" type=\"spherical\"/>\n" to: file
+		format "\t<camera name=\"MainCamera\" type=\"fps\"/>\n" to: file
+		format "\t<camera name=\"DebugCamera\" type=\"spherical\"/>\n" to: file
 		format "</cameras>\n" to:file
 		close file
 	) else (
-		file=createfile (dir+"cameras.xml")
-		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
-		format "<cameras>\n" to:file
-		format "\t<camera name=\"FPSCamera\" type=\"fps\"/>\n" to: file
-		format "\t<camera name=\"SphericalCamera\" type=\"spherical\"/>\n" to: file
+		format "\t<camera name=\"MainCamera\" type=\"fps\"/>\n" to: file
+		format "\t<camera name=\"DebugCamera\" type=\"spherical\"/>\n" to: file
 		format "</cameras>\n" to:file
 	)
 )

@@ -49,7 +49,7 @@ typedef struct SRaycastData
 
 #define USE_PHYSX_DEBUG 1
 
-#define PHYSX_UPDATE_STEP 1
+#define PHYSX_UPDATE_STEP 0.05
 
 class CPhysXManager
 {

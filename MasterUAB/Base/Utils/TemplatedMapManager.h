@@ -38,7 +38,7 @@ public:
 	{
 		if(m_Resources.find(Name)==m_Resources.end())
 		{
-			printf("CMapManager error: El recurs %s no existeix al MapManager\n",Name.c_str());
+			UtilsLog("CMapManager error: El recurs " + Name + " no existeix al MapManager");
 			return nullptr;
 		}
 		return m_Resources[Name];

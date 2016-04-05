@@ -27,6 +27,13 @@ fn mat4xvect3 mat vect w =
     return res
 )
 
+fn swapYZ &vect =
+(
+	local aux = vect.y
+	vect.y = vect.z
+	vect.z = aux
+)
+
 fn QuatToRH &q =
 (
 	q = [-q.x, q.z, -q.y, -q.w]
