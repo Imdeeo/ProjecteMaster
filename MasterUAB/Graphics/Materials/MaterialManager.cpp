@@ -1,5 +1,6 @@
 #include "Materials\MaterialManager.h"
 #include "XML\XMLTreeNode.h"
+#include <stdio.h>
 
 CMaterialManager::CMaterialManager()
 {
@@ -16,12 +17,9 @@ void CMaterialManager::Load(const std::string &LevelMaterialsFilename, const std
 
 	Destroy();
 
-
+	LoadMaterialsFromFile(LevelMaterialsFilename);
 	if (DefaultMaterialsFilename != "")
-	{
 		LoadMaterialsFromFile(DefaultMaterialsFilename);
-	}
-	LoadMaterialsFromFile(LevelMaterialsFilename, true);
 }
 
 void CMaterialManager::Reload()
@@ -63,5 +61,24 @@ void CMaterialManager::LoadMaterialsFromFile(const std::string &Filename, bool U
 				}
 			}
 		}
+	}
+}
+
+void CMaterialManager::Save()
+{
+	FILE* l_File;
+	if (!fopen_s(&l_File, m_LevelMaterialsFilename.c_str(),"w"))
+	{
+		fprintf_s(l_File, "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+		fprintf_s(l_File, "<materials>\n");
+
+		typedef TMapResource::iterator it_type;
+		for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
+		{
+			iterator->second->Save(l_File);
+		}
+
+		fprintf_s(l_File, "</materials>\n");
+		fclose(l_File);
 	}
 }

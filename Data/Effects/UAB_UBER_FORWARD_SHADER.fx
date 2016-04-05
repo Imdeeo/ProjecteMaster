@@ -12,21 +12,6 @@ static float m_SpecularFactor = m_RawDataArray[3];
 	#endif
 #endif
 
-#ifdef HAS_UV
-	Texture2D DiffuseTexture : register( t0 );
-	SamplerState LinearSampler : register( s0 );
-#endif
-
-#ifdef HAS_UV2
-	#ifdef HAS_UV
-		Texture2D LightMapTexture : register( t1 );
-		SamplerState LinearSampler2 : register( s1 );
-	#else
-		Texture2D LightMapTexture : register( t0 );
-		SamplerState LinearSampler2 : register( s0 );
-	#endif
-#endif
-
 struct TVertexVS
 {
 	#ifdef HAS_POSITION4
@@ -167,11 +152,11 @@ float4 applyAllLights(TVertexPS IN)
 	float3 Nn = IN.Normal;
 	float l_specularFactor=m_SpecularFactor;
 	#ifdef HAS_UV2
-		float4 lightContrib = LightMapTexture.Sample(LinearSampler2, IN.UV2);
+		float4 lightContrib = T1Texture.Sample(S1Sampler, IN.UV2);
 	#else
 		float4 l_Out = float4(1,1,1,1);
 		#ifdef HAS_UV
-			l_Out = DiffuseTexture.Sample(LinearSampler, IN.UV);
+			l_Out = T0Texture.Sample(S0Sampler, IN.UV);
 		#endif
 		float4 lightContrib = m_LightAmbient*l_Out;
 	#endif
@@ -262,6 +247,8 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		float4 l_ReflectColor = T8Texture.Sample(S8Sampler, l_ReflectVector);
 		Out = Out*0.7 + l_ReflectColor*0.3;
 	#endif
-
+	#ifdef HAS_TRIGGER
+		return float4(0,1,0,1);
+	#endif
 	return Out;
 }
