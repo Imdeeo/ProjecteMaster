@@ -1212,12 +1212,12 @@ void CScriptManager::RegisterLUAFunctions()
 
 	RegisterTemplatedVectorMapManager<CParticleSystemType>(m_LS);
 
-	module(m_LS)[
+	/*module(m_LS)[
 	class_<CParticleManager, CTemplatedMapManager<CParticleSystemType>>("CParticleManager")
 		.def(constructor<>())
 		.def("load", &CParticleManager::Load)
 		.def("reload", &CParticleManager::Reload)
-	];
+	];*/
 
 	module(m_LS)[
 	class_<CParticleSystemInstance, CRenderableObject>("CParticleSystemInstance")
