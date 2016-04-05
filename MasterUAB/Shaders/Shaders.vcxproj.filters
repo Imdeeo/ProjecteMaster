@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Compiled">
+      <UniqueIdentifier>{e85255c3-8633-43f8-a178-4b160b8acd17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Raw">
+      <UniqueIdentifier>{49c5660f-e025-469b-92ce-1e9c560581d5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CompileShaders.cmd" />
+  </ItemGroup>
+</Project>
