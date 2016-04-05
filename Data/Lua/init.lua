@@ -21,9 +21,7 @@ function luaUpdate(_ElapsedTime)
 	local gui_manager = CUABEngine.get_instance():get_gui_manager()
 	
 	local guiPosition = CGUIPosition(100,0,200,50, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-	if m_activeA == false then
-		a = gui_manager:do_button("boton1", "teula_button", guiPosition)
-	end
+	a = gui_manager:do_button("boton1", "teula_button", guiPosition)
 	local guiPosition = CGUIPosition(100,300,200,50, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 	b = gui_manager:do_button("boton1", "teula_button", guiPosition)
 
@@ -31,8 +29,8 @@ function luaUpdate(_ElapsedTime)
 		m_activeA = true
 	end
 	local color = CColor(1,1,1,1)
-	local coord = Vect2f(500,500)
-	gui_manager:do_text("fontTest", "trololololo", coord, CGUIManager.bottom_left, color)
+	local coord = Vect2f(400,50)
+	gui_manager:do_text("fontTest", "tenemos texto!!", coord, CGUIManager.bottom_left, color)
 	
 	
 end
