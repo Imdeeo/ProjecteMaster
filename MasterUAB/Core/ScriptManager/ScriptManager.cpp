@@ -86,6 +86,10 @@
 #include "Texture\Texture.h"
 #include "Texture\TextureManager.h"
 
+#include "Particles\ParticleManager.h"
+#include "Particles\ParticleSystemType.h"
+#include "Particles\ParticleSystemInstance.h"
+
 #include "GUIManager.h"
 #include "GUIPosition.h"
 
@@ -1130,6 +1134,118 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<>())
 			.def("get_texture", &CTextureManager::GetTexture)
 			.def("reload", &CTextureManager::Reload)
+	];
+
+
+	// Particles-----------------------------------------------------------------------------------------
+
+	module(m_LS)[
+	class_<CParticleSystemType, CNamed>("CParticleSystemType")
+		.def("get_angular_acceleration", &CParticleSystemType::GetAngularAcceleration)
+		.def("set_angular_acceleration", &CParticleSystemType::SetAngularAcceleration)
+		.def("get_awake_time", &CParticleSystemType::GetAwakeTime)
+		.def("set_awake_time", &CParticleSystemType::SetAwakeTime)
+		.def("get_color1", &CParticleSystemType::GetColor1)
+		.def("set_color1", &CParticleSystemType::SetColor1)
+		.def("get_color2", &CParticleSystemType::GetColor2)
+		.def("set_color2", &CParticleSystemType::SetColor2)
+		.def("get_emit_absolute", &CParticleSystemType::GetEmitAbsolute)
+		.def("set_emit_absolute", &CParticleSystemType::SetEmitAbsolute)
+		.def("get_emit_rate", &CParticleSystemType::GetEmitRate)
+		.def("set_emit_rate", &CParticleSystemType::SetEmitRate)
+		.def("get_life", &CParticleSystemType::GetLife)
+		.def("set_life", &CParticleSystemType::SetLife)
+		.def("get_loop_frames", &CParticleSystemType::GetLoopFrames)
+		.def("set_loop_frames", &CParticleSystemType::SetLoopFrames)
+		.def("get_material", &CParticleSystemType::GetMaterial)
+		.def("set_material", &CParticleSystemType::SetMaterial)
+		.def("get_name", &CParticleSystemType::GetName)
+		.def("set_name", &CParticleSystemType::SetName)
+		.def("get_num_frames", &CParticleSystemType::GetNumFrames)
+		.def("set_num_frames", &CParticleSystemType::SetNumFrames)
+		.def("get_size", &CParticleSystemType::GetSize)
+		.def("set_size", &CParticleSystemType::SetSize)
+		.def("get_sleep_time", &CParticleSystemType::GetSleepTime)
+		.def("set_sleep_time", &CParticleSystemType::SetSleepTime)
+		.def("get_starting_acceleration1", &CParticleSystemType::GetStartingAcceleration1)
+		.def("set_starting_acceleration1", &CParticleSystemType::SetStartingAcceleration1)
+		.def("get_starting_acceleration2", &CParticleSystemType::GetStartingAcceleration2)
+		.def("set_starting_acceleration2", &CParticleSystemType::SetStartingAcceleration2)
+		.def("get_starting_acceleration_angle", &CParticleSystemType::GetStartingAccelerationAngle)
+		.def("set_starting_acceleration_angle", &CParticleSystemType::SetStartingAccelerationAngle)
+		.def("get_starting_angle", &CParticleSystemType::GetStartingAngle)
+		.def("set_starting_angle", &CParticleSystemType::SetStartingAngle)
+		.def("get_starting_angular_speed", &CParticleSystemType::GetStartingAngularSpeed)
+		.def("set_starting_angular_speed", &CParticleSystemType::SetStartingAngularSpeed)
+		.def("get_starting_direction_angle", &CParticleSystemType::GetStartingDirectionAngle)
+		.def("set_starting_direction_angle", &CParticleSystemType::SetStartingDirectionAngle)
+		.def("get_starting_speed1", &CParticleSystemType::GetStartingSpeed1)
+		.def("set_starting_speed1", &CParticleSystemType::SetStartingSpeed1)
+		.def("get_starting_speed2", &CParticleSystemType::GetStartingSpeed2)
+		.def("set_starting_speed2", &CParticleSystemType::SetStartingSpeed2)
+		.def("get_time_per_frame", &CParticleSystemType::GetTimePerFrame)
+		.def("set_time_per_frame", &CParticleSystemType::SetTimePerFrame)
+		.def("get_material", &CParticleSystemType::GetMaterial)
+		.def("set_material", &CParticleSystemType::SetMaterial)
+		.def("get_lua_angular_acceleration",  &CParticleSystemType::GetLuaAngularAcceleration)
+		.def("get_lua_awake_time", &CParticleSystemType::GetLuaAwakeTime)
+		.def("get_lua_color1", &CParticleSystemType::GetLuaColor1)
+		.def("get_lua_color2", &CParticleSystemType::GetLuaColor2)
+		.def("get_emit_absolute", &CParticleSystemType::GetLuaEmitAbsolute)
+		.def("get_emit_rate", &CParticleSystemType::GetLuaEmitRate)
+		.def("get_lua_loop_frames", &CParticleSystemType::GetLuaLoopFrames)
+		.def("get_lua_name_address", &CParticleSystemType::GetLuaNameAddress)
+		.def("get_lua_num_frames", &CParticleSystemType::GetLuaNumFrames)
+		.def("get_lua_size", &CParticleSystemType::GetLuaSize)
+		.def("get_lua_sleep_time", &CParticleSystemType::GetLuaSleepTime)
+		.def("get_lua_starting_acceleration1", &CParticleSystemType::GetLuaStartingAcceleration1)
+		.def("get_lua_starting_acceleration2", &CParticleSystemType::GetLuaStartingAcceleration2)
+		.def("get_lua_starting_acceleration_angle", &CParticleSystemType::GetLuaStartingAccelerationAngle)
+		.def("get_lua_starting_angle", &CParticleSystemType::GetLuaStartingAngle)
+		.def("get_lua_starting_angular_speed", &CParticleSystemType::GetLuaStartingAngularSpeed)
+		.def("get_lua_starting_direction_angle", &CParticleSystemType::GetLuaStartingDirectionAngle)
+		.def("get_lua_starting_speed1", &CParticleSystemType::GetLuaStartingSpeed1)
+		.def("get_lua_starting_speed2", &CParticleSystemType::GetLuaStartingSpeed2)
+		.def("get_lua_time_per_frame", &CParticleSystemType::GetLuaTimePerFrame)
+		.def("get_lua_life", &CParticleSystemType::GetLuaLife)
+	];
+
+	RegisterTemplatedVectorMapManager<CParticleSystemType>(m_LS);
+
+	module(m_LS)[
+	class_<CParticleManager, CTemplatedMapManager<CParticleSystemType>>("CParticleManager")
+		.def(constructor<>())
+		.def("load", &CParticleManager::Load)
+		.def("reload", &CParticleManager::Reload)
+	];
+
+	module(m_LS)[
+	class_<CParticleSystemInstance, CRenderableObject>("CParticleSystemInstance")
+		.def(constructor<>())
+		.def(constructor<CXMLTreeNode&>())
+		.def("get_awake", &CParticleSystemInstance::GetAwake)
+		.def("set_awake", &CParticleSystemInstance::SetAwake)
+		.def("get_awake_timer", &CParticleSystemInstance::GetAwakeTimer)
+		.def("set_awake_timer", &CParticleSystemInstance::SetAwakeTimer)
+		.def("get_emission_box_half_size", &CParticleSystemInstance::GetEmissionBoxHalfSize)
+		.def("set_emission_box_half_size", &CParticleSystemInstance::SetEmissionBoxHalfSize)
+		.def("get_emission_scaler", &CParticleSystemInstance::GetEmissionScaler)
+		.def("set_emission_scaler", &CParticleSystemInstance::SetEmissionScaler)
+		.def("get_emission_volume", &CParticleSystemInstance::GetEmissionVolume)
+		.def("set_emission_volume", &CParticleSystemInstance::SetEmissionVolume)
+		.def("get_name", &CParticleSystemInstance::GetName)
+		.def("set_name", &CParticleSystemInstance::SetName)
+		.def("get_position", &CParticleSystemInstance::GetPosition)
+		.def("set_position", &CParticleSystemInstance::SetPosition)
+		.def("get_rotation", &CParticleSystemInstance::GetRotation)
+		.def("set_rotation", &CParticleSystemInstance::SetRotation)
+		.def("get_scale", &CParticleSystemInstance::GetScale)
+		.def("set_scale", &CParticleSystemInstance::SetScale)
+		.def("get_type", &CParticleSystemInstance::GetType)
+		.def("set_type", &CParticleSystemInstance::SetType)
+		.def("get_visible", &CParticleSystemInstance::GetVisible)
+		.def("set_visible", &CParticleSystemInstance::SetVisible)
+		.def("insert_sort", &CParticleSystemInstance::InsertSort)
 	];
 
 
