@@ -18,6 +18,7 @@ function RegisterMainBar()
 	DebugHelper:add_lua_button("Render Commands","RegisterSceneRendererCommandsBar()","");
 	DebugHelper:add_lua_button("Cameras","RegisterCamerasBar()","");
 	DebugHelper:add_lua_button("Lights","RegisterLightsBar()","");
+	DebugHelper:add_lua_button("Particles","RegisterParticlesBar()","");
 	
 	DebugHelper:register_bar()
 	
@@ -280,4 +281,47 @@ function RegisterLightParameters(light_name)
 	
 	DebugHelper:register_bar()
 	
+end
+
+function RegisterParticlesBar()
+
+	local UABEngine = CUABEngine.get_instance()
+	local DebugHelper = CDebugHelper.get_debug_helper()
+	
+	DebugHelper:remove_bar("MainBar")
+	DebugHelper:start_register_bar("Particles")
+	
+	utils_log("particles1")
+	local ParticleControllerManager = UABEngine:get_particle_manager()
+	
+	utils_log("particles2")
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Particles\");RegisterMainBar()","");
+	utils_log("particles3")
+	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_particle_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Particles\");RegisterParticlesBar()","");
+	utils_log("particles4")
+	
+	local Particles = ParticleControllerManager:get_elements_array() --get_address
+	
+	for i = 0,ParticleControllerManager:size()-1 do
+		DebugHelper:add_lua_button(Particles[i].name,"RegisterParticleParameters(\""..Particles[i].name.."\")","");
+	end
+	
+	utils_log("particles5")
+	
+	DebugHelper:register_bar()
+	
+end
+
+function RegisterParticleParameters(particle_name)
+	local UABEngine = CUABEngine.get_instance()
+	local DebugHelper = CDebugHelper.get_debug_helper()
+	local ParticlesManager = UABEngine:get_particle_manager()
+	
+	local bar_name = "Particle: "..particle_name
+	
+	DebugHelper:remove_bar("Particles")
+	DebugHelper:start_register_bar(bar_name)
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\""..bar_name.."\");RegisterParticlesBar()","");
 end
