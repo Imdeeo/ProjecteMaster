@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <gui_elements>
-	<gui_spritemap name="gui1" width="1024" height="1024">
-		<material name="gui1" renderable_object_technique="MV_POSITION4_COLOR_TEXTURE_VERTEX"> 		<!-- vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" ???! -->
-			<texture filename="Data\\GUI\\textures\\demo.jpg"/>
-		</material>
-		<sprite name="teula" x="17" y="16" w="545" h="170" />
-		<sprite name="teula2" x="17" y="200" w="545" h="170" />
-		<sprite name="teula3" x="656" y="16" w="250" h="425" />
 
-		<sprite name="slider_base" x="17" y="16" w="545" h="20" />
-		<sprite name="slider_top" x="17" y="200" w="545" h="20" />
-		<sprite name="slider_handle" x="762" y="115" w="30" h="60" />
-		<sprite name="slider_pressed_handle" x="762" y="280" w="30" h="60" />
+	<gui_spritemap name="gui1" width="512" height="512">
+		<material name="gui1" renderable_object_technique="MV_POSITION4_NORMAL_TEXTURE_VERTEX">
+			<texture filename="Data\\GUI\\textures\\spritemap.png"/>
+		</material>
+		<sprite name="button_idle" x="0" y="60" w="200" h="60" pX="0.5" pY="0.5"/>
+		<sprite name="button_over" x="0" y="0" w="200" h="60" pX="0.5" pY="0.5"/>
+		<sprite name="button_pressed" x="200" y="0" w="200" h="60" pX="0.5" pY="0.5"/>
+	
+		<sprite name="slider_on" x="0" y="120" w="400" h="80" pX="0.5" pY="0.5"/>
+		<sprite name="slider_off" x="0" y="200" w="400" h="80" pX="0.5" pY="0.5"/>
+		<sprite name="slider_idle" x="400" y="200" w="33" h="100" pX="0.5" pY="0.5"/>
+		<sprite name="slider_over" x="433" y="200" w="33" h="100" pX="0.5" pY="0.5"/>
+		<sprite name="slider_pressed" x="466" y="200" w="33" h="100" pX="0.5" pY="0.5"/>
+	</gui_spritemap>
+
+	<gui_spritemap name="fontTest" width="256" height="256" >
+		<material name="fontTest" renderable_object_technique="MV_POSITION4_NORMAL_TEXTURE_VERTEX">
+			<texture filename="Data\\Fonts\\fontTest_0.png"/>
+		</material>
+		
+		<sprite name="fontTest_0.png" x="0" y="0" w="256" h="256" />
 	</gui_spritemap>
 	
-	<button name="teula_button" normal="teula" highlight="teula2" pressed="teula3"/>
-	<slider name="teula_slider" base="slider_base" top="slider_top" handle="slider_handle" pressed_handle="slider_pressed_handle"/>
+	<button name="teula_button" normal="button_idle" highlight="button_over" pressed="button_pressed"/>
+	<font name="fontTest" path="Data\\Fonts\\fontTest.fnt" />
+	<!--<slider name="teula_slider" base="slider_base" top="slider_top" handle="slider_handle" pressed_handle="slider_pressed_handle"/>-->
 	
 </gui_elements>
 		
