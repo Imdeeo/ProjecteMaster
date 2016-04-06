@@ -13,6 +13,7 @@
 #include "XML\XMLTreeNode.h"
 #include "RenderableObjects\TemplatedRenderableVertexs.h"
 #include "GUIPosition.h"
+#include <assert.h>
 
 
 CGUIManager::CGUIManager()
@@ -75,9 +76,9 @@ bool CGUIManager::Load(std::string _FileName)
 					std::string l_sprtieMapinfoname = l_Element.GetPszProperty("name");
 					l_spriteMapinfo = { m_Materials.size(), l_Element.GetIntProperty("width"), l_Element.GetIntProperty("height") };
 					m_SpriteMaps[l_sprtieMapinfoname] = l_spriteMapinfo;
-					for (int i = 0; i < l_Element.GetNumChildren(); ++i)
+					for (int j = 0; j < l_Element.GetNumChildren(); ++j)
 					{
-						CXMLTreeNode l_aux = l_Element(i);
+						CXMLTreeNode l_aux = l_Element(j);
 						if (l_aux.GetName() == std::string("material"))
 						{
 							m_Materials.push_back(new CMaterial(l_aux));
@@ -90,11 +91,11 @@ bool CGUIManager::Load(std::string _FileName)
 							u1 = l_aux.GetIntProperty("x");
 							u2 = u1 + w;
 							v1 = l_aux.GetIntProperty("y");
-							v2 = u1 + h;
+							v2 = v1 + h;
 							l_sprite = { &m_SpriteMaps[l_sprtieMapinfoname], u1 / l_spriteMapinfo.w, u2 / l_spriteMapinfo.w, v1 / l_spriteMapinfo.h, v2 / l_spriteMapinfo.h };
 						
 							m_Sprites[l_aux.GetPszProperty("name")] = l_sprite;
-						}
+						}						
 					}
 				
 				}
@@ -105,6 +106,64 @@ bool CGUIManager::Load(std::string _FileName)
 				else if (l_Element.GetName() == std::string("slider"))
 				{
 					
+				}
+				else if (l_Element.GetName() == std::string("font"))
+				{
+					CXMLTreeNode l_XMLfont;
+					std::string l_FontName = l_Element.GetPszProperty("name");
+					std::string l_FileName = l_Element.GetPszProperty("path");
+					if (l_XMLfont.LoadFile(l_FileName.c_str()))
+					{
+						CXMLTreeNode l_InputFile = l_XMLfont["font"];
+						if (l_InputFile.Exists())
+						{
+							for (int k = 0; k < l_InputFile.GetNumChildren(); ++k)
+							{
+								CXMLTreeNode l_ElementFile = l_InputFile(k);
+								if (l_ElementFile.GetName() == std::string("common"))
+								{
+									m_LineHeightPerFont[l_FontName] = l_ElementFile.GetIntProperty("lineHeight");
+									m_BasePerFont[l_FontName] = l_ElementFile.GetIntProperty("base");
+								}
+								else if (l_ElementFile.GetName() == std::string("pages"))
+								{
+									for (int l = 0; l < l_ElementFile.GetNumChildren(); ++l)
+									{
+										CXMLTreeNode l_PagesFile = l_ElementFile(l);
+										if (l_PagesFile.GetName() == std::string("page"))
+										{
+											m_TexturePerFont[l_FontName].push_back(&m_Sprites[l_PagesFile.GetPszProperty("file")]);
+										}										
+									}
+								}
+								else if (l_ElementFile.GetName() == std::string("chars"))
+								{
+									for (int l = 0; l < l_ElementFile.GetNumChildren(); ++l)
+									{
+										CXMLTreeNode l_CharFile = l_ElementFile(l);
+										if (l_CharFile.GetName() == std::string("char"))
+										{
+											FontChar l_FontChar = { l_CharFile.GetIntProperty("x"), l_CharFile.GetIntProperty("y"), l_CharFile.GetIntProperty("width"), l_CharFile.GetIntProperty("height"),
+												l_CharFile.GetIntProperty("xoffset"), l_CharFile.GetIntProperty("yoffset"), l_CharFile.GetIntProperty("xadvance"), l_CharFile.GetIntProperty("page"), l_CharFile.GetIntProperty("chnl") };
+											m_CharactersPerFont[l_FontName][l_CharFile.GetIntProperty("id")] = l_FontChar;
+										}
+									}
+								}
+								else if (l_ElementFile.GetName() == std::string("kernings"))
+								{
+									for (int l = 0; l < l_ElementFile.GetNumChildren(); ++l)
+									{
+										CXMLTreeNode l_KerningFile = l_ElementFile(l);
+										if (l_KerningFile.GetName() == std::string("kerning"))
+										{
+											m_KerningsPerFont[l_FontName][l_KerningFile.GetIntProperty("first")][l_KerningFile.GetIntProperty("second")] = l_KerningFile.GetIntProperty("second");
+										}
+									}
+								}
+							}
+
+						}
+					}
 				}
 			}
 		}
@@ -218,6 +277,124 @@ bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID
 {
 
 }*/
+
+int CGUIManager::FillCommandQueueWithTextAux(const std::string& _font, const std::string& _text, const CColor& _color, Vect4f *textBox_)
+{
+	Vect4f dummy;
+	if (textBox_ == nullptr) textBox_ = &dummy;
+
+	*textBox_ = Vect4f(0, 0, 0, 0);
+
+	assert(m_LineHeightPerFont.find(_font) != m_LineHeightPerFont.end());
+	assert(m_BasePerFont.find(_font) != m_BasePerFont.end());
+	assert(m_CharactersPerFont.find(_font) != m_CharactersPerFont.end());
+	assert(m_KerningsPerFont.find(_font) != m_KerningsPerFont.end());
+	assert(m_TexturePerFont.find(_font) != m_TexturePerFont.end());
+	
+	int lineHeight = m_LineHeightPerFont[_font];
+	int base = m_BasePerFont[_font];
+	const std::unordered_map< wchar_t, FontChar > &l_CharacterMap = m_CharactersPerFont[_font];
+	const std::unordered_map< wchar_t, std::unordered_map< wchar_t, int>> &l_Kernings = m_KerningsPerFont[_font];
+	const std::vector<SpriteInfo*> &l_TextureArray = m_TexturePerFont[_font];
+
+	wchar_t last = 0;
+
+	int cursorX = 0, cursorY = 0;
+
+	float spritewidth = l_TextureArray[0]->SpriteMap->w;
+	float spriteHeight = l_TextureArray[0]->SpriteMap->h;
+
+	int addedCommands = 0;
+
+	for (char c : _text)
+	{
+		if (c == '\n')
+		{
+			cursorY += lineHeight;
+			cursorX = 0;
+			last = 0;
+		}
+		else
+		{
+			auto it = l_CharacterMap.find((wchar_t)c);
+			if (it != l_CharacterMap.end())
+			{
+				const FontChar &fontChar = it->second;
+				auto it1 = l_Kernings.find(last);
+				if (it1 != l_Kernings.end())
+				{
+					auto it2 = it1->second.find(c);
+					if (it2 != it1->second.end())
+					{
+						int kerning = it2->second;
+						cursorX += kerning;
+					}
+				}
+				GUICommand command = {};
+				command.sprite = l_TextureArray[fontChar.page];
+				command.x1 = cursorX + fontChar.xoffset;
+				command.x2 = command.x1 + fontChar.width;
+				command.y1 = cursorY - base + fontChar.yoffset;
+				command.y2 = command.y1 + fontChar.height;
+
+				command.u1 = (float)fontChar.x / spritewidth;
+				command.u2 = (float)(fontChar.x + fontChar.width) / spritewidth;
+				command.v1 = (float)fontChar.y / spriteHeight;
+				command.v2 = (float)(fontChar.y + fontChar.height) / spriteHeight;
+
+				command.color = _color;
+
+				m_Commands.push_back(command);
+				++addedCommands;
+
+				last = c;
+				cursorX += fontChar.xadvance;
+
+				if (command.x1 < textBox_->x) textBox_->x = command.x1;
+				if (command.y1 < textBox_->y) textBox_->y = command.y1;
+				if (command.x2 < textBox_->z) textBox_->z = command.x2;
+				if (command.y2 < textBox_->w) textBox_->w = command.y2;
+			}
+		}
+	}
+
+	return addedCommands;
+}
+
+void CGUIManager::FillCommandQueueWithText(const std::string& _font, const std::string& _text,
+	Vect2f _coord, GUIAnchor _anchor, const CColor& _color)
+{
+	Vect4f textSizes;
+	
+	int numCommands = FillCommandQueueWithTextAux(_font, _text, _color, &textSizes);
+
+	Vect2f adjustment = _coord;
+
+	if ((int)_anchor & (int)GUIAnchor::TOP)
+	{
+		adjustment.y -= textSizes.y;
+	}
+	else if ((int)_anchor & (int)GUIAnchor::MID)
+	{
+		adjustment.y -= (textSizes.y + textSizes.w) * 0.5f;
+	}
+	else if ((int)_anchor & (int)GUIAnchor::BOTTOM)
+	{
+		adjustment.y -= textSizes.w;
+	}
+	else
+	{
+		assert(false);
+	}
+
+	for (int i = m_Commands.size() - numCommands; i < m_Commands.size(); ++i)
+	{
+		m_Commands[i].x1 += adjustment.x;
+		m_Commands[i].x2 += adjustment.x;
+		m_Commands[i].y1 += adjustment.y;
+		m_Commands[i].y2 += adjustment.y;
+	}
+}
 
 
 void CGUIManager::Render(CRenderManager *RenderManager)

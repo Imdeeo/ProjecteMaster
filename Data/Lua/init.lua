@@ -30,6 +30,9 @@ function luaUpdate(_ElapsedTime)
 	if a then
 		m_activeA = true
 	end
+	local color = CColor(1,1,1,1)
+	local coord = Vect2f(500,500)
+	gui_manager:do_text("fontTest", "trololololo", coord, CGUIManager.bottom_left, color)
 	
 	
 end

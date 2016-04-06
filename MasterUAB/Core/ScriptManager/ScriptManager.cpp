@@ -346,6 +346,10 @@ void CScriptManager::RegisterLUAFunctions()
 			] 
 	];
 	
+	module(m_LS)[
+		class_<CColor>("CColor")
+			.def(constructor<float, float, float, float>())
+	];
 // BASE------------------------------------------------------------------------------------------------
 
 	// 3DElement---------------------------------------------------------------------------------------
@@ -1141,6 +1145,7 @@ void CScriptManager::RegisterLUAFunctions()
 		
 		class_<CGUIManager>("CGUIManager")
 			.def("do_button", &CGUIManager::DoButton)
+			.def("do_text", &CGUIManager::FillCommandQueueWithText)
 			.enum_("gui_anchor")[
 				value("top", CGUIManager::GUIAnchor::TOP),
 				value("mid", CGUIManager::GUIAnchor::MID),
