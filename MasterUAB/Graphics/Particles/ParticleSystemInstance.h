@@ -16,11 +16,6 @@ class CParticleSystemInstance : public CRenderableObject
 {
 private:
 	unsigned short l_IndexType = 16;
-	float m_NextParticleEmission;
-	bool m_Awake;
-	float m_AwakeTimer;
-	Vect3f m_EmissionBoxHalfSize;
-	float m_EmissionVolume, m_EmissionScaler;	
 
 	struct ParticleData
 	{
@@ -56,12 +51,12 @@ public:
 	void Destroy();
 
 	UAB_BUILD_GET_SET(CParticleSystemType *, Type);
-	UAB_GET_PROPERTY(float, NextParticleEmission);
-	UAB_GET_PROPERTY(bool, Awake);
-	UAB_GET_PROPERTY(float, AwakeTimer);
-	UAB_GET_PROPERTY(Vect3f, EmissionBoxHalfSize);
-	UAB_GET_PROPERTY(float, EmissionVolume);
-	UAB_GET_PROPERTY(float, EmissionScaler);
+	UAB_BUILD_GET_SET(float, NextParticleEmission);
+	UAB_BUILD_GET_SET(bool, Awake);
+	UAB_BUILD_GET_SET(float, AwakeTimer);
+	UAB_BUILD_GET_SET(Vect3f, EmissionBoxHalfSize);
+	UAB_BUILD_GET_SET(float, EmissionVolume);
+	UAB_BUILD_GET_SET(float, EmissionScaler);
 
 	TRenderableObjectType GetClassType() { return PARTICLE_EMITER; }
 	
