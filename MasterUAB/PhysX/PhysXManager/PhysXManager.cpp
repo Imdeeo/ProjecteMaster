@@ -200,10 +200,7 @@ public:
 
 			std::string l_triggerName = m_ActorNames[l_indexTrigger];
 			std::string l_actorName = m_ActorNames[l_indexActor];
-			//CRenderableObject* l_ro = UABEngine.GetLayerManager()->GetResource("Triggers")->GetResource(l_triggerName);
-			//l_ro->GetComponentManager()->onTrigger(l_actorName);
 			UABEngine.GetInstance()->GetScriptManager()->RunCode("onTrigger" + l_triggerName + "(\"" + l_actorName + "\")");
-			//printf("Trigger \"%s\" fired with \"%s\"", l_triggerName.c_str(), l_actorName.c_str());
 			//lo suyo seria llamar a una funcion lua que gestionara la activacion del trigger
 		}
 	}
@@ -239,39 +236,6 @@ public:
 
 	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, int _group)
 	{
-		//PROPIA
-		/*assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
-
-		physx::PxMaterial* l_Material = m_Materials[_MaterialName];
-		size_t l_index = m_CharacterControllers.size();
-
-		physx::PxCapsuleControllerDesc desc;
-		desc.position = physx::PxExtendedVec3(_position.x, _position.y + _radius + _height*0.5f, _position.z);
-		desc.slopeLimit = SLOPE_LIMIT;
-		desc.contactOffset = CONTACT_OFFSET;
-		desc.stepOffset = STEP_OFFSET;
-		desc.invisibleWallHeight = INVISIBLE_WALLS_HEIGHT;
-		desc.maxJumpHeight = MAX_JUMP_HEIGHT;
-		desc.radius = _radius;
-		desc.height = _height;
-		desc.climbingMode = physx::PxCapsuleClimbingMode::eEASY;
-		desc.density = _density;
-		desc.reportCallback = this;
-		desc.behaviorCallback = this;
-		desc.material = l_Material;
-		desc.userData = (void*)l_index;
-
-		m_CharacterControllers[_name] = m_ControllerManager->createController(desc);
-		physx::PxRigidDynamic* l_actor = m_CharacterControllers[_name]->getActor()->is<physx::PxRigidDynamic>();
-		l_actor->setLinearDamping(0.15f);
-		l_actor->setAngularDamping(15.0f);
-
-		//physx::PxShape *shape = l_actor->createShape(physx::PxBoxGeometry(_radius, _height + _radius * 2, _radius), *l_Material);
-		//shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
-		//L_PutGroupToShape(shape, _group);
-
-		AddActor(_name,_position,Quatf(0,0,0,1),l_actor);*/
-
 		//SACADA DE SAMPLES
 		assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
 
@@ -307,17 +271,15 @@ public:
 		l_actor->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
 		l_actor->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, false);
 		l_actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
-		l_actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eENABLE_CCD, true);
+		l_actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eENABLE_CCD, false);
 
 		physx::PxShape* shape;
 		l_actor->getShapes(&shape, 1);
 		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
 		shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
 		L_PutGroupToShape(shape, _group);
-		l_actor->attachShape(*shape);
 
 		AddActor(_name, _position, Quatf(0, 0, 0, 1), l_actor);
-		m_Scene->addActor(*l_actor);
 	}
 };
 
@@ -328,15 +290,7 @@ CPhysXManager* CPhysXManager::CreatePhysXManager()
 
 void CPhysXManager::RegisterMaterial(const std::string &name, float staticFriction, float dynamicFriction, float restitution)
 {
-	/*
-	auto it = m_Materials.find(name);
-	if (it != m_Materials.end())
-	{
-		it->second->release(); // if a material with that name exist, we remove it
-	}
-	/*/
 	assert(m_Materials.find(name)==m_Materials.end());
-	//*/
 	m_Materials[name] = m_PhysX->createMaterial(staticFriction,dynamicFriction,restitution);
 }
 
@@ -498,7 +452,6 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 	shape->release();
 }
 
-
 void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxSphereGeometry(_radius), *m_Materials[_Material], true);
@@ -516,36 +469,6 @@ void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, 
 	shape->release();
 }
 
-//void CPhysXManager::CreateConvexMesh(std::vector<Vect3f> Vertices, const std::string &MeshName, const Vect3f &Position, const Quatf &Orientation, const std::string &MaterialName)
-//{
-//
-//	physx::PxConvexMeshDesc l_ConvexDesc;
-//	l_ConvexDesc.points.count = Vertices.size();
-//	l_ConvexDesc.points.stride = sizeof(Vect3f);
-//	l_ConvexDesc.points.data = &Vertices[0];
-//	l_ConvexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
-//
-//	physx::PxDefaultMemoryOutputStream l_Buffer;
-//	physx::PxConvexMeshCookingResult::Enum l_Result;
-//	bool success = m_Cooking->cookConvexMesh(l_ConvexDesc, l_Buffer, &l_Result);
-//	assert(success);
-//	physx::PxDefaultMemoryInputData l_Input(l_Buffer.getData(), l_Buffer.getSize());
-//	physx::PxConvexMesh* l_ConvexMesh = m_PhysX->createConvexMesh(l_Input);
-//
-//	physx::PxMaterial* l_Material = GetMaterial(MaterialName);
-//
-//	physx::PxRigidDynamic* l_Body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(Position), CastQuat(Orientation)));
-//	physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *l_Material);
-//
-//	l_Body->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
-//
-//	size_t index = m_Actors.size();
-//	l_Body->userData = (void*)index;
-//	m_Scene->addActor(*l_Body);
-//	//l_Shape->release();
-//
-//}
-
 void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneOffset, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
@@ -556,7 +479,6 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 	assert(numShapes == 1);
 
 	L_PutGroupToShape(shape, _group);
-	groundPlane->attachShape(*shape);
 	groundPlane->userData = (void*)AddActor(_name, _position, _orientation, groundPlane);
 	shape->userData = groundPlane->userData;
 
@@ -811,7 +733,6 @@ void CPhysXManager::Render(const std::string _name, CRenderManager *RenderManage
 	RenderManager->GetDebugRender()->GetCone()->RenderIndexed(RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 #endif
 }
-
 
 Vect3f CPhysXManager::GetCharacterControllersPosition(const std::string _name)
 {
