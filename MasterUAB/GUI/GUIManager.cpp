@@ -33,6 +33,7 @@ CGUIManager::~CGUIManager()
 void CGUIManager::SetActive(const std::string& id)
 {
 	m_ActiveItem = id;
+	m_SelectedItem = "";
 }
 
 void CGUIManager::SetNotActive()
@@ -54,6 +55,17 @@ void CGUIManager::SetNotHot(const std::string& id)
 	{
 		m_HotItem = "";
 	}
+}
+
+void CGUIManager::SetSelected(const std::string& id)
+{
+	m_SelectedItem = id;
+}
+
+void CGUIManager::SetNotSelected(const std::string& id)
+{
+	if (m_SelectedItem == id)
+		m_SelectedItem = "";
 }
 
 bool CGUIManager::Load(std::string _FileName)
@@ -396,6 +408,46 @@ void CGUIManager::FillCommandQueueWithText(const std::string& _font, const std::
 	}
 }
 
+std::string CGUIManager::DoTextBox(const std::string& guiID, const std::string& _font, const std::string& currentText, CGUIPosition position)
+{
+	if (m_ActiveItem == guiID)
+	{
+		if (m_MouseWentReleased)
+		{
+			if (m_HotItem == guiID)
+			{
+				SetSelected(guiID);
+			}
+			SetNotActive();
+		}
+	}
+
+	std::string displayText;
+	std::string activeText = currentText;
+
+	if (guiID == m_SelectedItem)
+	{
+		CKeyboardInput* keyboard = CInputManager::GetInputManager()->GetKeyboard();
+		wchar_t lastChar = keyboard->ConsumeLastChar();
+		if (lastChar >= 0x20 && lastChar < 255)
+		{
+			activeText += (char)lastChar;
+		}
+		else if (lastChar == '\r')
+		{
+			activeText += '\n';
+		}
+		else if (lastChar == '\b')
+		{
+			activeText = activeText.substr(0, activeText.length() - 1);
+		}
+	}
+
+	FillCommandQueueWithText(_font, displayText, Vect2f(position.Getx() + position.Getwidth() * 0.05f,
+		position.Gety() + position.Getheight() * 0.75f));
+	return activeText;
+}
+
 
 void CGUIManager::Render(CRenderManager *RenderManager)
 {
@@ -455,3 +507,4 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 	m_Commands.clear();
 	m_InputUpToDate = false;
 }
+
