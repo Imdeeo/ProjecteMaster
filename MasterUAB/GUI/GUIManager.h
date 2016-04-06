@@ -59,6 +59,7 @@ private:
 	MV_POSITION4_COLOR_TEXTURE_VERTEX m_CurrentBufferData[MAX_VERTICES_PER_CALL];
 	std::string m_ActiveItem;
 	std::string m_HotItem;
+	std::string m_SelectedItem;
 	std::vector<CRenderableVertexs*> m_VertexBuffers;
 	std::vector<CMaterial*> m_Materials;
 	std::map<std::string, SpriteMapInfo> m_SpriteMaps; 
@@ -111,13 +112,20 @@ public:
 	void SetNotActive();
 	void SetHot(const std::string& id);
 	void SetNotHot(const std::string& id);
+	void SetSelected(const std::string& id);
+	void SetNotSelected(const std::string& id);
+	
 	void Render(CRenderManager *RenderManager);
+
 	bool DoButton(const std::string& guiID, const std::string& buttonID, const CGUIPosition& position);
 	//SliderResult DoSlider(const std::string& guiID, const std::string& sliderID, const GUIPosition& position, float minValue, float maxValue, float currentValue);
 	int FillCommandQueueWithTextAux(const std::string& _font, const std::string& _text, 
 		const CColor& _color = CColor(1, 1, 1, 1), Vect4f *textBox_ = nullptr);
 	void FillCommandQueueWithText(const std::string& _font, const std::string& _text,
 		Vect2f coord, GUIAnchor anchor = GUIAnchor::BOTTOM_LEFT, const CColor& _color = CColor(1, 1, 1, 1));
+	std::string DoTextBox(const std::string& guiID, const std::string& _font, const std::string& currentText, CGUIPosition position);
+
+
 	UAB_BUILD_GET_SET(bool, InputUpToDate)
 	UAB_BUILD_GET_SET(int, MouseX)
 	UAB_BUILD_GET_SET(int, MouseY)
