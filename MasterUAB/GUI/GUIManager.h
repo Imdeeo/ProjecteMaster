@@ -6,6 +6,7 @@
 #include <d3d11.h>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include "Utils.h"
 #include "Math\Color.h"
 #include "RenderableObjects\VertexTypes.h"
@@ -38,6 +39,13 @@ struct GUICommand
 	CColor color;
 };
 
+struct FontChar
+{
+	uint16 x, y, width, height;
+	int16 xoffset, yoffset, xadvance;
+	uint8 page, chnl;
+};
+
 
 struct SliderResult
 {
@@ -59,6 +67,11 @@ private:
 	std::map<std::string, CSlider*> m_Sliders;
 	std::vector<GUICommand> m_Commands;
 	std::string m_FileName;
+	std::unordered_map< std::string, int16 > m_LineHeightPerFont;
+	std::unordered_map< std::string, int16 > m_BasePerFont;
+	std::unordered_map< std::string, std::unordered_map< wchar_t, FontChar > > m_CharactersPerFont;
+	std::unordered_map< std::string, std::unordered_map< wchar_t, std::unordered_map< wchar_t, int > > > m_KerningsPerFont;
+	std::unordered_map< std::string, std::vector<SpriteInfo*> > m_TexturePerFont;
 
 public:
 	enum GUICoordType
@@ -101,6 +114,10 @@ public:
 	void Render(CRenderManager *RenderManager);
 	bool DoButton(const std::string& guiID, const std::string& buttonID, const CGUIPosition& position);
 	//SliderResult DoSlider(const std::string& guiID, const std::string& sliderID, const GUIPosition& position, float minValue, float maxValue, float currentValue);
+	int FillCommandQueueWithTextAux(const std::string& _font, const std::string& _text, 
+		const CColor& _color = CColor(1, 1, 1, 1), Vect4f *textBox_ = nullptr);
+	void FillCommandQueueWithText(const std::string& _font, const std::string& _text,
+		Vect2f coord, GUIAnchor anchor = GUIAnchor::BOTTOM_LEFT, const CColor& _color = CColor(1, 1, 1, 1));
 	UAB_BUILD_GET_SET(bool, InputUpToDate)
 	UAB_BUILD_GET_SET(int, MouseX)
 	UAB_BUILD_GET_SET(int, MouseY)
