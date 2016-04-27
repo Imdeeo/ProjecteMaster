@@ -20,12 +20,6 @@
 
 #include <D3Dcompiler.h>
 
-#define USE_D3DX
-#ifdef USE_D3DX
-#include <D3DX11async.h>
-
-#endif
-
 CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed(TreeNode){
 	m_Filename = TreeNode.GetPszProperty("file");
 	m_ShaderModel = TreeNode.GetPszProperty("shader_model");
@@ -83,27 +77,28 @@ void CEffectShader::CreateShaderMacro()
 bool CEffectShader::LoadShader(const std::string &Filename, const std::string &EntryPoint, const std::string &ShaderModel, ID3DBlob **BlobOut)
 {
 	// D3D11
-	UINT flags = D3DCOMPILE_ENABLE_STRICTNESS;
+	UINT dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined( DEBUG ) || defined( _DEBUG )
-	flags |= D3DCOMPILE_DEBUG;
+	dwShaderFlags |= D3DCOMPILE_DEBUG;
 #endif
 	ID3D11Device *l_Device = UABEngine.GetRenderManager()->GetDevice();
-	// Prefer higher CS shader profile when possible as CS 5.0 provides better performance on 11-class hardware.
-	/*LPCSTR profile = (l_Device->GetFeatureLevel() >= D3D_FEATURE_LEVEL_11_0) ? "cs_5_0" : "cs_4_0";
+	LPCSTR profile = (l_Device->GetFeatureLevel() >= D3D_FEATURE_LEVEL_11_0) ? "cs_5_0" : "cs_4_0";
 	const D3D_SHADER_MACRO defines[] =	{ "EXAMPLE_DEFINE", "1",	NULL, NULL };
-	ID3DBlob* shaderBlob = nullptr;
-	ID3DBlob* errorBlob = nullptr;
-	HRESULT hr = D3DCompileFromFile(srcFile, defines, D3D_COMPILE_STANDARD_FILE_INCLUDE, entryPoint, profile, flags, 0, &shaderBlob, &errorBlob);
-	*/
+	ID3DBlob* pShaderBlob = nullptr;
+	ID3DBlob* pErrorBlob = nullptr;
+	wchar_t* wFilename = new wchar_t[4096];
+	MultiByteToWideChar(CP_ACP, 0, Filename.c_str(), -1, wFilename, 4096);
+	HRESULT hr = D3DCompileFromFile(wFilename, m_ShaderMacros, D3D_COMPILE_STANDARD_FILE_INCLUDE, EntryPoint.c_str(), profile, dwShaderFlags, 0, &pShaderBlob, &pErrorBlob);
+	
 	// D3DX
-	HRESULT hr = S_OK;
+	/*HRESULT hr = S_OK;
 	DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined( DEBUG ) || defined( _DEBUG )
 	dwShaderFlags |= D3DCOMPILE_DEBUG;
 #endif
 	ID3DBlob* pErrorBlob;
 	hr = D3DX11CompileFromFile(Filename.c_str(), m_ShaderMacros, NULL, EntryPoint.c_str(), ShaderModel.c_str(), dwShaderFlags, 0, NULL, BlobOut, &pErrorBlob, NULL);
-
+	*/
 	if (FAILED(hr))
 	{
 		if (pErrorBlob != NULL)

@@ -233,8 +233,8 @@
     <OutDir>$(SolutionDir)\bin\lib\</OutDir>
     <IntDir>$(SolutionDir)\bin\Intermediate\$(ProjectName)$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
-    <ReferencePath>$(ReferencePath)</ReferencePath>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <ReferencePath>$(VC_ReferencesPath_x86);</ReferencePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)\bin\lib\</OutDir>
@@ -301,7 +301,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_VS13;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\AntTweakBar\include;$(SolutionDir)PhysX;$(SolutionDir)Base;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)Core;$(SolutionDir)Graphics;$(SolutionDir)3rdParty\cal3d-0.11rc2\src;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;$(SolutionDir)GUI;$(SolutionDir)3rdParty\DirectXTK\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\AntTweakBar\include;$(SolutionDir)PhysX;$(SolutionDir)Base;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)Core;$(SolutionDir)Graphics;$(SolutionDir)3rdParty\cal3d-0.11rc2\src;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;$(SolutionDir)GUI;$(SolutionDir)3rdParty\DirectXTK\Inc;(WindowsSdkDir_80)\Include\um</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -309,7 +309,7 @@
     </Link>
     <Lib />
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib;$(WindowsSdkDir_80)Redist\D3D\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <FxCompile>
       <ShaderType>Effect</ShaderType>
