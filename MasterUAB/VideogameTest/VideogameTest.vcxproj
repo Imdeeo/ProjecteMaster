@@ -64,7 +64,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin\Intermediate\</IntDir>
-    <TargetName>$(ProjectName)_d</TargetName>
+    <TargetName>$(ProjectName)_d\</TargetName>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
@@ -121,8 +121,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName)_d.pdb</ProgramDatabaseFile>
-      <AdditionalDependencies>D3DX11.lib;Graphics_d.lib;Base_d.lib;PhysX_d.lib;Core_d.lib;AntTweakBarDebug.lib;LuaDebug.lib;luabindDebug.lib;iconv.lib;libxml2.lib;cal3d_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(DXSDK_DIR)\lib\x86;$(SolutionDir)bin\lib\;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\lib;$(SolutionDir)3rdParty\iconv-1.9.2.win32\lib;$(SolutionDir)\3rdParty\cal3d-0.11rc2\bin\Debug;$(SolutionDir)\3rdParty\PhysX-3.3-master\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Graphics_d.lib;Base_d.lib;PhysX_d.lib;Core_d.lib;AntTweakBarDebug.lib;LuaDebug.lib;luabindDebug.lib;iconv.lib;libxml2.lib;cal3d_d.lib;d3d11.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\lib;$(SolutionDir)3rdParty\iconv-1.9.2.win32\lib;$(SolutionDir)3rdParty\cal3d-0.11rc2\bin\Debug;$(SolutionDir)3rdParty\PhysX-3.3-master\lib;$(WindowsSdkDir)Lib\winv6.3\um\x86</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

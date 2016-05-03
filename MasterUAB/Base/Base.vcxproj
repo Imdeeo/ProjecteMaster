@@ -111,7 +111,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
     <OutDir>$(SolutionDir)\bin\lib\</OutDir>
     <IntDir>$(SolutionDir)\bin\Intermediate\$(ProjectName)$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)_d</TargetName>
+    <TargetName>$(ProjectName)_d\</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
