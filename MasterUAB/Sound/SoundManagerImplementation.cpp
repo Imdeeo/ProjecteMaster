@@ -4,6 +4,7 @@
 #include "XML\XMLTreeNode.h"
 #include "3DElement\3DElement.h"
 
+
 // Custom alloc/free functions. These are declared as "extern" in AkMemoryMgr.h
 // and MUST	be defined by the game developer.
 namespace AK
@@ -88,6 +89,7 @@ bool CSoundManagerImplementation::Init() {
 		return false;
 	}
 
+	m_LastGameObjectID = -1;
 	m_DefaultSpeakerId = GenerateObjectID();
 	AK::SoundEngine::RegisterGameObj(m_DefaultSpeakerId);
 
@@ -191,6 +193,7 @@ bool CSoundManagerImplementation::LoadSoundBank(const std::string &bank)
 	AKRESULT retValue;
 
 	retValue = AK::SoundEngine::LoadBank(bank.c_str(), AK_DEFAULT_POOL_ID, bankID);
+
 	if (retValue != AK_Success)
 	{
 		return false;
@@ -219,12 +222,12 @@ bool CSoundManagerImplementation::LoadSoundBanksXML()
 	CXMLTreeNode l_XML;
 	if (l_XML.LoadFile((m_Path + m_SoundBanksFilename).c_str()))
 	{
-		CXMLTreeNode l_Speakers = l_XML["SoundBanks"];
-		if (l_Speakers.Exists())
+		CXMLTreeNode l_SoundBanks = l_XML["SoundBanks"];
+		if (l_SoundBanks.Exists())
 		{
-			for (int i = 0; i < l_Speakers.GetNumChildren(); ++i)
+			for (int i = 0; i < l_SoundBanks.GetNumChildren(); ++i)
 			{
-				std::string l_Name = l_Speakers(i).GetPszProperty("name", "");
+				std::string l_Name = l_SoundBanks(i).GetPszProperty("name", "");
 				LoadSoundBank(l_Name);
 			}
 		}
@@ -239,7 +242,7 @@ bool CSoundManagerImplementation::LoadSoundBanksXML()
 bool CSoundManagerImplementation::LoadSpeakersXML()
 {
 	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile((m_Path + m_SoundBanksFilename).c_str()))
+	if (l_XML.LoadFile((m_Path + m_SpeakersFilename).c_str()))
 	{
 		CXMLTreeNode l_Speakers = l_XML["Speakers"];
 		if (l_Speakers.Exists())
