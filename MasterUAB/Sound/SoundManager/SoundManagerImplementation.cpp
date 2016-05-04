@@ -42,6 +42,20 @@ namespace AK
 #endif
 }
 
+CSoundManagerImplementation::CSoundManagerImplementation()
+:m_LastGameObjectID(0)
+{
+
+}
+
+CSoundManagerImplementation::~CSoundManagerImplementation()
+{
+	Terminate();
+	m_FreeObjectsIDs.clear();
+	m_NamedSpeakers.clear();
+	m_GameObjectSpeakers.clear();
+}
+
 bool CSoundManagerImplementation::Init() {
 	// Initialize audio engine
 	// Memory.
@@ -89,7 +103,6 @@ bool CSoundManagerImplementation::Init() {
 		return false;
 	}
 
-	m_LastGameObjectID = -1;
 	m_DefaultSpeakerId = GenerateObjectID();
 	AK::SoundEngine::RegisterGameObj(m_DefaultSpeakerId);
 
@@ -165,8 +178,13 @@ bool CSoundManagerImplementation::Load(const std::string &soundbanks_filename, c
 
 bool CSoundManagerImplementation::Reload()
 {
-	// TODO: implement reload
-	return false;
+	Clean();
+
+	bool l_IsOk = true;
+	l_IsOk = LoadSoundBanksXML();
+	l_IsOk &= LoadSpeakersXML();
+
+	return l_IsOk;
 }
 
 bool CSoundManagerImplementation::InitBanks()
@@ -203,8 +221,7 @@ bool CSoundManagerImplementation::LoadSoundBank(const std::string &bank)
 
 bool CSoundManagerImplementation::UnloadSoundBank(const std::string &bank)
 {
-	// TODO: unused variable bankID, code missing?
-	AkBankID bankID;
+	//AkBankID bankID;
 	AKRESULT retValue;
 
 	retValue = AK::SoundEngine::UnloadBank(bank.c_str(), nullptr);
