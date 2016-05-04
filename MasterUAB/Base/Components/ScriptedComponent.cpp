@@ -24,7 +24,7 @@ CScriptedComponent::CScriptedComponent(const std::string &Name, CRenderableObjec
 		if (!m_FnOnCreate.empty())
 			luabind::call_function<void>(UABEngine.GetScriptManager()->GetLuaState(), m_FnOnCreate.c_str(), GetOwner());
 	}
-	catch (const luabind::error &e)
+	catch (const luabind::error e)
 	{
 		
 	}
@@ -37,7 +37,7 @@ CScriptedComponent::~CScriptedComponent()
 		if (!m_FnOnDestroy.empty())
 			luabind::call_function<void>(UABEngine.GetScriptManager()->GetLuaState(), m_FnOnDestroy.c_str(), GetOwner());
 	}
-	catch (const luabind::error &e)
+	catch (const luabind::error e)
 	{
 
 	}
@@ -50,7 +50,7 @@ void CScriptedComponent::Update(float ElapsedTime)
 		if(!m_FnOnUpdate.empty())
 			luabind::call_function<void>(UABEngine.GetScriptManager()->GetLuaState(),m_FnOnUpdate.c_str(), GetOwner(), ElapsedTime);
 	}
-	catch(const luabind::error &e)
+	catch(const luabind::error e)
 	{
 		
 	}
@@ -63,7 +63,7 @@ void CScriptedComponent::Render(CRenderManager &RenderManager)
 		if (!m_FnOnRender.empty())
 			luabind::call_function<void>(UABEngine.GetScriptManager()->GetLuaState(), m_FnOnRender.c_str(), GetOwner(), &RenderManager);
 	}
-	catch (const luabind::error &e)
+	catch (const luabind::error e)
 	{
 
 	}
@@ -76,7 +76,7 @@ void CScriptedComponent::RenderDebug(CRenderManager &RenderManager)
 		if (!m_FnOnRenderDebug.empty())
 			luabind::call_function<void>(UABEngine.GetScriptManager()->GetLuaState(), m_FnOnRenderDebug.c_str(), GetOwner(), &RenderManager);
 	}
-	catch (const luabind::error &e)
+	catch (const luabind::error e)
 	{
 
 	}

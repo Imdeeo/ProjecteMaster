@@ -132,3 +132,126 @@ inline CColor& CColor::operator *= (float escalar)
 
 	return (*this);
 }
+
+inline CColor CColor::HsvToRgb(HsvColor hsv)
+{
+	CColor rgb;
+	unsigned char region, remainder, p, q, t;
+
+	if (hsv.s == 0)
+	{
+		rgb.SetRed(hsv.v / 255);
+		rgb.SetGreen(hsv.v / 255);
+		rgb.SetBlue(hsv.v / 255);
+		return rgb;
+	}
+
+	region = hsv.h / 43;
+	remainder = (hsv.h - (region * 43)) * 6;
+
+	p = (hsv.v * (255 - hsv.s)) >> 8;
+	q = (hsv.v * (255 - ((hsv.s * remainder) >> 8))) >> 8;
+	t = (hsv.v * (255 - ((hsv.s * (255 - remainder)) >> 8))) >> 8;
+
+	rgb.SetAlpha(hsv.alpha);
+
+	switch (region)
+	{
+	case 0:
+		rgb.SetRed(hsv.v);
+		rgb.SetGreen(t);
+		rgb.SetBlue(p);
+		break;
+	case 1:
+		rgb.SetRed(q);
+		rgb.SetGreen(hsv.v);
+		rgb.SetBlue(p);
+		break;
+	case 2:
+		rgb.SetRed(p);
+		rgb.SetGreen(hsv.v);
+		rgb.SetBlue(t);
+		break;
+	case 3:
+		rgb.SetRed(p);
+		rgb.SetGreen(q);
+		rgb.SetBlue(hsv.v);
+		break;
+	case 4:
+		rgb.SetRed(t);
+		rgb.SetGreen(p);
+		rgb.SetBlue(hsv.v);
+		break;
+	default:
+		rgb.SetRed(hsv.v);
+		rgb.SetGreen(p);
+		rgb.SetBlue(q);
+		break;
+	}
+
+	rgb.SetRed(rgb.GetRed() > 0 ? rgb.GetRed() / 255 : 0);
+	rgb.SetGreen(rgb.GetGreen() > 0 ? rgb.GetGreen() / 255 : 0);
+	rgb.SetBlue(rgb.GetBlue() > 0 ? rgb.GetBlue() / 255 : 0);
+	rgb.SetAlpha(rgb.GetAlpha() > 0 ? rgb.GetAlpha() / 255 : 0);
+
+	return rgb;
+}
+
+inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
+{
+	HsvColor hsv;
+	unsigned char rgbMin, rgbMax;
+
+	int l_R = (int)rgb.GetRed() * 255;
+	int l_G = (int)rgb.GetGreen() * 255;
+	int l_B = (int)rgb.GetBlue() * 255;
+	int l_Alpha = (int)rgb.GetAlpha() * 255;
+
+	rgbMin = l_R < l_G ? (l_R < l_B ? l_R : l_B) : (l_G < l_B ? l_G : l_B);
+	rgbMax = l_R > l_G ? (l_R > l_B ? l_R : l_B) : (l_G > l_B ? l_G : l_B);
+
+	hsv.v = rgbMax;
+	if (hsv.v == 0)
+	{
+		hsv.h = 0;
+		hsv.s = 0;
+		return hsv;
+	}
+
+	hsv.s = 255 * long(rgbMax - rgbMin) / hsv.v;
+	if (hsv.s == 0)
+	{
+		hsv.h = 0;
+		return hsv;
+	}
+
+	if (rgbMax == l_R)
+		hsv.h = 0 + 43 * (l_G - l_B) / (rgbMax - rgbMin);
+	else if (rgbMax == l_G)
+		hsv.h = 85 + 43 * (l_B - l_R) / (rgbMax - rgbMin);
+	else
+		hsv.h = 171 + 43 * (l_R - l_G) / (rgbMax - rgbMin);
+
+	hsv.alpha = l_Alpha;
+
+	return hsv;
+}
+
+inline CColor CColor::interpolate(CColor a, CColor b, float t)
+{
+	HsvColor ca = RgbToHsv(a);
+	HsvColor cb = RgbToHsv(b);
+	HsvColor final;
+
+	final.h = linear(ca.h, cb.h, t);
+	final.s = linear(ca.s, cb.s, t);
+	final.v = linear(ca.v, cb.v, t);
+	final.alpha = linear(ca.alpha, cb.alpha, t);
+
+	return HsvToRgb(final);
+}
+
+inline int CColor::linear(int a, int b, float t)
+{
+	return (int)(a * (1 - t) + b * t);
+}
