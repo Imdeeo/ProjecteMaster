@@ -55,6 +55,10 @@
 	<vertex_shader name="hdao_vs" file="Data/Effects/UAB_HDAO.fx" shader_model="vs_4_1" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="hdao_ps" file="Data/Effects/UAB_HDAO.fx" shader_model="ps_4_1" entry_point="PSHDAO" preprocessor=""/>
 	<effect_technique name="hdao_technique" vertex_shader="hdao_vs" pixel_shader="hdao_ps"/>
+	
+	<vertex_shader name="ssr_vs" file="Data/Effects/UAB_SSR.fx" shader_model="vs_4_1" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="ssr_ps" file="Data/Effects/UAB_SSR.fx" shader_model="ps_4_1" entry_point="SSRPS" preprocessor=""/>
+	<effect_technique name="ssr_technique" vertex_shader="ssr_vs" pixel_shader="ssr_ps"/>
 			
 	<!-- FORWARD --> 	
 	<vertex_shader name="skybox_vs" file="Data/Effects/UAB_SKYBOX.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor=""/>

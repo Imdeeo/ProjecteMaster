@@ -104,7 +104,7 @@ float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, floa
 	return l_Color;
 }
 
-float4 GUIPS(PS_INPUT IN) : SV_Target
+float4 SSRPS(PS_INPUT IN) : SV_Target
 {
 	float4 l_Color=T0Texture.Sample(S0Sampler, IN.UV);
 	if(m_Enabled) //Tendremos que utilizar algún tipo de máscara para hacer sólo reflejo de los píxeles que nos interesen

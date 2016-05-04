@@ -47,7 +47,10 @@
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="hdao_pool">
 		<renderable_object_technique name="hdao" technique="hdao_technique"/>
-	</pool_renderable_object_technique>	
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="ssr_pool">
+		<renderable_object_technique name="ssr" technique="ssr_technique"/>
+	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="NoiseAndvignetting">
 		<default_technique technique="noise_and_vignetting" vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX"/>
 	</pool_renderable_object_technique>
