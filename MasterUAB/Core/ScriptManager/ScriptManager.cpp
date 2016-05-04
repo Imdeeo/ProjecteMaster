@@ -86,6 +86,13 @@
 #include "Texture\Texture.h"
 #include "Texture\TextureManager.h"
 
+#include "Particles\ParticleManager.h"
+#include "Particles\ParticleSystemType.h"
+#include "Particles\ParticleSystemInstance.h"
+
+#include "GUIManager.h"
+#include "GUIPosition.h"
+
 #include "DebugRender.h"
 
 #include "PhysXManager\PhysXManager.h"
@@ -329,20 +336,24 @@ void CScriptManager::RegisterLUAFunctions()
 			.def_readwrite("w", &Quatf::w)
 			.def(const_self + const_self)
 			.def(const_self - const_self)
-			.def(const_self * other<const double>())
-			.def(const_self / other<const double>())
+			.def(const_self * other<const float>())
+			.def(const_self / other<const float>())
 			.def("decouple_x", &Quatf::decoupleX)
 			.def("decouple_y", &Quatf::decoupleY)
 			.def("decouple_z", &Quatf::decoupleZ)
 			.def("get_scaled_axis", &Quatf::GetScaledAxis)
 			.def("set_from_scaled_axis", &Quatf::SetFromScaledAxis)
 			.def("quat_from_yaw_pitch_roll", &Quatf::QuatFromYawPitchRoll)
-			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,double))&Quatf::slerp)
+			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,float))&Quatf::slerp)
 			.scope[
-				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, double))&Quatn<float>::slerp)
+				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
 			] 
 	];
 	
+	module(m_LS)[
+		class_<CColor>("CColor")
+			.def(constructor<float, float, float, float>())
+	];
 // BASE------------------------------------------------------------------------------------------------
 
 	// 3DElement---------------------------------------------------------------------------------------
@@ -490,6 +501,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
 			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
 			.def("load_level_xml", &CUABEngine::LoadLevelXML)
+			.def("get_gui_manager", &CUABEngine::GetGUIManager)
 			.scope[
 				def("get_instance", &CUABEngine::GetInstance)
 			]
@@ -763,7 +775,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS) [
 		class_<CFPSCameraController, CCameraController>("CFPSCameraController")
 			.def(constructor<const CXMLTreeNode&>())
-			.def("move", &CFPSCameraController::Move)
+			//.def("move", &CFPSCameraController::Move)
 			.def("set_camera", &CFPSCameraController::SetCamera)
 			.def("add_yaw", &CFPSCameraController::AddYaw)
 			.def("add_pitch",&CFPSCameraController::AddPitch)
@@ -892,10 +904,21 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
+		class_<CEffectGeometryShader, CEffectShader>("CEffectGeometryShader")
+			.def(constructor<const CXMLTreeNode&>())
+			.def("reload", &CEffectGeometryShader::Reload)
+			.def("load", &CEffectGeometryShader::Load)
+			.def("set_constant_buffer", &CEffectGeometryShader::SetConstantBuffer)
+			.def("get_geometry_shader", &CEffectGeometryShader::GetGeometryShader)
+			//.def("get_constant_buffer", &CEffectPixelShader::GetConstantBuffer)
+	];
+
+	module(m_LS)[
 		class_<CEffectTechnique, CNamed>("CEffectTechnique")
 			.def(constructor<CXMLTreeNode&>())
 			.def("get_vertex_shader", &CEffectTechnique::GetVertexShader)
 			.def("get_pixel_shader", &CEffectTechnique::GetPixelShader)
+			.def("get_geometry_shader", &CEffectTechnique::GetGeometryShader)
 			.def("refresh", &CEffectTechnique::Refresh)
 			.def("set_constant_buffer", &CEffectTechnique::SetConstantBuffer)
 	];
@@ -919,6 +942,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("load", &CEffectManager::Load)
 			.def("get_vertex_shader", &CEffectManager::GetVertexShader)
 			.def("get_pixel_shader", &CEffectManager::GetPixelShader)
+			.def("get_geometry_shader", &CEffectManager::GetGeometryShader)
 			.def("set_scene_constants", &CEffectManager::SetSceneConstants)
 			.def("set_light_constants", &CEffectManager::SetLightConstants)
 			.def("set_lights_constants", &CEffectManager::SetLightsConstants)
@@ -944,6 +968,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_color_lua_address", &CLight::GetColorLuaAdress)
 			.def("set_color", &CLight::SetColor)
 			.def("get_intensity", &CLight::GetIntensity)
+			.def("get_enable_lua_address", &CLight::GetEnableLuaAdress)
 			.def("get_intensity_lua_address", &CLight::GetIntensityLuaAdress)
 			.def("set_intensity", &CLight::SetIntensity)
 			.def("get_start_range_attenuation", &CLight::GetStartRangeAttenuation)
@@ -1108,6 +1133,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("destroy", &CTemplatedMapManager<CTexture>::Destroy)
 	];*/
 
+
 	module(m_LS)[
 		class_<CTextureManager, CTemplatedMapManager<CTexture>>("CTextureManager")
 			.def(constructor<>())
@@ -1116,8 +1142,158 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 
+	// Particles-----------------------------------------------------------------------------------------
+
+	module(m_LS)[
+	class_<CParticleSystemType, CNamed>("CParticleSystemType")
+		.def("get_angular_acceleration", &CParticleSystemType::GetAngularAcceleration)
+		.def("set_angular_acceleration", &CParticleSystemType::SetAngularAcceleration)
+		.def("get_awake_time", &CParticleSystemType::GetAwakeTime)
+		.def("set_awake_time", &CParticleSystemType::SetAwakeTime)
+		.def("get_color1", &CParticleSystemType::GetColor1)
+		.def("set_color1", &CParticleSystemType::SetColor1)
+		.def("get_color2", &CParticleSystemType::GetColor2)
+		.def("set_color2", &CParticleSystemType::SetColor2)
+		.def("get_emit_absolute", &CParticleSystemType::GetEmitAbsolute)
+		.def("set_emit_absolute", &CParticleSystemType::SetEmitAbsolute)
+		.def("get_emit_rate", &CParticleSystemType::GetEmitRate)
+		.def("set_emit_rate", &CParticleSystemType::SetEmitRate)
+		.def("get_life", &CParticleSystemType::GetLife)
+		.def("set_life", &CParticleSystemType::SetLife)
+		.def("get_loop_frames", &CParticleSystemType::GetLoopFrames)
+		.def("set_loop_frames", &CParticleSystemType::SetLoopFrames)
+		.def("get_material", &CParticleSystemType::GetMaterial)
+		.def("set_material", &CParticleSystemType::SetMaterial)
+		.def("get_name", &CParticleSystemType::GetName)
+		.def("set_name", &CParticleSystemType::SetName)
+		.def("get_num_frames", &CParticleSystemType::GetNumFrames)
+		.def("set_num_frames", &CParticleSystemType::SetNumFrames)
+		.def("get_size", &CParticleSystemType::GetSize)
+		.def("set_size", &CParticleSystemType::SetSize)
+		.def("get_sleep_time", &CParticleSystemType::GetSleepTime)
+		.def("set_sleep_time", &CParticleSystemType::SetSleepTime)
+		.def("get_starting_acceleration1", &CParticleSystemType::GetStartingAcceleration1)
+		.def("set_starting_acceleration1", &CParticleSystemType::SetStartingAcceleration1)
+		.def("get_starting_acceleration2", &CParticleSystemType::GetStartingAcceleration2)
+		.def("set_starting_acceleration2", &CParticleSystemType::SetStartingAcceleration2)
+		.def("get_starting_acceleration_angle", &CParticleSystemType::GetStartingAccelerationAngle)
+		.def("set_starting_acceleration_angle", &CParticleSystemType::SetStartingAccelerationAngle)
+		.def("get_starting_angle", &CParticleSystemType::GetStartingAngle)
+		.def("set_starting_angle", &CParticleSystemType::SetStartingAngle)
+		.def("get_starting_angular_speed", &CParticleSystemType::GetStartingAngularSpeed)
+		.def("set_starting_angular_speed", &CParticleSystemType::SetStartingAngularSpeed)
+		.def("get_starting_direction_angle", &CParticleSystemType::GetStartingDirectionAngle)
+		.def("set_starting_direction_angle", &CParticleSystemType::SetStartingDirectionAngle)
+		.def("get_starting_speed1", &CParticleSystemType::GetStartingSpeed1)
+		.def("set_starting_speed1", &CParticleSystemType::SetStartingSpeed1)
+		.def("get_starting_speed2", &CParticleSystemType::GetStartingSpeed2)
+		.def("set_starting_speed2", &CParticleSystemType::SetStartingSpeed2)
+		.def("get_time_per_frame", &CParticleSystemType::GetTimePerFrame)
+		.def("set_time_per_frame", &CParticleSystemType::SetTimePerFrame)
+		.def("get_material", &CParticleSystemType::GetMaterial)
+		.def("set_material", &CParticleSystemType::SetMaterial)
+		.def("get_lua_angular_acceleration",  &CParticleSystemType::GetLuaAngularAcceleration)
+		.def("get_lua_awake_time", &CParticleSystemType::GetLuaAwakeTime)
+		.def("get_lua_color1", &CParticleSystemType::GetLuaColor1)
+		.def("get_lua_color2", &CParticleSystemType::GetLuaColor2)
+		.def("get_emit_absolute", &CParticleSystemType::GetLuaEmitAbsolute)
+		.def("get_emit_rate", &CParticleSystemType::GetLuaEmitRate)
+		.def("get_lua_loop_frames", &CParticleSystemType::GetLuaLoopFrames)
+		.def("get_lua_name_address", &CParticleSystemType::GetLuaNameAddress)
+		.def("get_lua_num_frames", &CParticleSystemType::GetLuaNumFrames)
+		.def("get_lua_size", &CParticleSystemType::GetLuaSize)
+		.def("get_lua_sleep_time", &CParticleSystemType::GetLuaSleepTime)
+		.def("get_lua_starting_acceleration1", &CParticleSystemType::GetLuaStartingAcceleration1)
+		.def("get_lua_starting_acceleration2", &CParticleSystemType::GetLuaStartingAcceleration2)
+		.def("get_lua_starting_acceleration_angle", &CParticleSystemType::GetLuaStartingAccelerationAngle)
+		.def("get_lua_starting_angle", &CParticleSystemType::GetLuaStartingAngle)
+		.def("get_lua_starting_angular_speed", &CParticleSystemType::GetLuaStartingAngularSpeed)
+		.def("get_lua_starting_direction_angle", &CParticleSystemType::GetLuaStartingDirectionAngle)
+		.def("get_lua_starting_speed1", &CParticleSystemType::GetLuaStartingSpeed1)
+		.def("get_lua_starting_speed2", &CParticleSystemType::GetLuaStartingSpeed2)
+		.def("get_lua_time_per_frame", &CParticleSystemType::GetLuaTimePerFrame)
+		.def("get_lua_life", &CParticleSystemType::GetLuaLife)
+	];
+
+	RegisterTemplatedVectorMapManager<CParticleSystemType>(m_LS);
+
+	/*module(m_LS)[
+	class_<CParticleManager, CTemplatedMapManager<CParticleSystemType>>("CParticleManager")
+		.def(constructor<>())
+		.def("load", &CParticleManager::Load)
+		.def("reload", &CParticleManager::Reload)
+	];*/
+
+	module(m_LS)[
+	class_<CParticleSystemInstance, CRenderableObject>("CParticleSystemInstance")
+		.def(constructor<>())
+		.def(constructor<CXMLTreeNode&>())
+		.def("get_awake", &CParticleSystemInstance::GetAwake)
+		.def("set_awake", &CParticleSystemInstance::SetAwake)
+		.def("get_awake_timer", &CParticleSystemInstance::GetAwakeTimer)
+		.def("set_awake_timer", &CParticleSystemInstance::SetAwakeTimer)
+		.def("get_emission_box_half_size", &CParticleSystemInstance::GetEmissionBoxHalfSize)
+		.def("set_emission_box_half_size", &CParticleSystemInstance::SetEmissionBoxHalfSize)
+		.def("get_emission_scaler", &CParticleSystemInstance::GetEmissionScaler)
+		.def("set_emission_scaler", &CParticleSystemInstance::SetEmissionScaler)
+		.def("get_emission_volume", &CParticleSystemInstance::GetEmissionVolume)
+		.def("set_emission_volume", &CParticleSystemInstance::SetEmissionVolume)
+		.def("get_name", &CParticleSystemInstance::GetName)
+		.def("set_name", &CParticleSystemInstance::SetName)
+		.def("get_position", &CParticleSystemInstance::GetPosition)
+		.def("set_position", &CParticleSystemInstance::SetPosition)
+		.def("get_rotation", &CParticleSystemInstance::GetRotation)
+		.def("set_rotation", &CParticleSystemInstance::SetRotation)
+		.def("get_scale", &CParticleSystemInstance::GetScale)
+		.def("set_scale", &CParticleSystemInstance::SetScale)
+		.def("get_type", &CParticleSystemInstance::GetType)
+		.def("set_type", &CParticleSystemInstance::SetType)
+		.def("get_visible", &CParticleSystemInstance::GetVisible)
+		.def("set_visible", &CParticleSystemInstance::SetVisible)
+		.def("insert_sort", &CParticleSystemInstance::InsertSort)
+	];
+
+
 // GUI----------------------------------------------------------------------------------------------
 	
+	
+
+	module(m_LS)[
+		
+		class_<CGUIManager>("CGUIManager")
+			.def("do_button", &CGUIManager::DoButton)
+			.def("do_text", &CGUIManager::FillCommandQueueWithText)
+			.enum_("gui_anchor")[
+				value("top", CGUIManager::GUIAnchor::TOP),
+				value("mid", CGUIManager::GUIAnchor::MID),
+				value("bottom", CGUIManager::GUIAnchor::BOTTOM),
+				value("left", CGUIManager::GUIAnchor::LEFT),
+				value("center", CGUIManager::GUIAnchor::CENTER),
+				value("right", CGUIManager::GUIAnchor::RIGHT),
+
+				value("top_left", CGUIManager::GUIAnchor::TOP_LEFT),
+				value("top_center", CGUIManager::GUIAnchor::TOP_CENTER),
+				value("top_right", CGUIManager::GUIAnchor::TOP_RIGHT),
+				value("mid_left", CGUIManager::GUIAnchor::MID_LEFT),
+				value("mid_center", CGUIManager::GUIAnchor::MID_CENTER),
+				value("mid_right", CGUIManager::GUIAnchor::MID_RIGHT),
+				value("bottom_left", CGUIManager::GUIAnchor::BOTTOM_LEFT),
+				value("bottom_center", CGUIManager::GUIAnchor::BOTTOM_CENTER),
+				value("bottom_right", CGUIManager::GUIAnchor::BOTTOM_RIGHT)
+			]
+			.enum_("gui_coord_type")[
+				value("gui_absolute", CGUIManager::GUICoordType::GUI_ABSOLUTE),
+				value("gui_relative", CGUIManager::GUICoordType::GUI_RELATIVE),
+				value("gui_relative_width", CGUIManager::GUICoordType::GUI_RELATIVE_WIDTH),
+				value("gui_relative_height", CGUIManager::GUICoordType::GUI_RELATIVE_HEIGHT)
+			]
+	];
+
+	module(m_LS)[
+		class_<CGUIPosition>("CGUIPosition")
+			.def(constructor<float, float, float, float, CGUIManager::GUIAnchor, CGUIManager::GUICoordType, CGUIManager::GUICoordType>())
+	];
+
 	
 // NETWORK------------------------------------------------------------------------------------------
 	

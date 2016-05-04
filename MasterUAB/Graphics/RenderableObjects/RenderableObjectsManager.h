@@ -29,6 +29,7 @@ public:
 		const std::string &InstanceModelName, const Vect3f &Position, bool _Update = false);
 
 	CRenderableObjectsManager & CRenderableObjectsManager::operator=(CRenderableObjectsManager&);
+	CRenderableObject * AddParticleSystemInstance(CXMLTreeNode &TreeNode);
 };
 
 #endif

@@ -37,7 +37,8 @@ void CApplyFiltersSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 
 		m_DynamicTextures[i]->GetMaterial()->Apply();		
 		l_ContextManager->SetRenderTargets(1, &m_RenderTargetViews[i], nullptr);
-		_RenderManager.DrawScreenQuad(m_DynamicTextures[i]->GetMaterial()->GetRenderableObjectTechnique()->GetEffectTechnique(), i==0 ? m_StagedTextures[0].m_Texture : m_DynamicTextures[i-1]->GetTexture(), 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
+		_RenderManager.DrawScreenQuad(m_DynamicTextures[i]->GetMaterial()->GetRenderableObjectTechnique()->GetEffectTechnique(),
+			i==0 ? m_StagedTextures[0].m_Texture : m_DynamicTextures[i-1]->GetTexture(), 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	}
 	_RenderManager.GetContextManager()->setViewPort(l_CurrentViewport);
 }

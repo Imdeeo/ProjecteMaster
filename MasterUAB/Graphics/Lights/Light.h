@@ -64,6 +64,11 @@ public:
 	bool  GetEnabled()const { return m_Enabled; }
 	TLightType GetType()const { return m_Type; }
 
+	CEmptyPointerClass* GetEnableLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_Enabled;
+	}
+
 	CEmptyPointerClass* GetIntensityLuaAdress()
 	{
 		return (CEmptyPointerClass*)&m_Intensity;

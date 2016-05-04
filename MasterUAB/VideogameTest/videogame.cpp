@@ -21,6 +21,7 @@
 #include "Effects\Effect.h"
 #include "Camera\Camera.h"
 
+
 #pragma comment(lib, "Winmm.lib")
 
 #define APPLICATION_NAME	"VIDEOGAME"
@@ -261,6 +262,9 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 							TranslateMessage(&msg);
 							DispatchMessage(&msg);
 						}
+						break;
+					case WM_CHAR:
+						//inputManager.GetKeyboard()->SetLastChar(msg.wParam);
 						break;
 					default:
 						TranslateMessage(&msg);
