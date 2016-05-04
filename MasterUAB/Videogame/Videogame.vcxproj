@@ -63,6 +63,9 @@
     <OutDir>$(SolutionDir)\bin\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin\Intermediate\$(ProjectName)$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_d\</TargetName>
+    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
+    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86</LibraryPath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -95,6 +98,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName)_d.pdb</ProgramDatabaseFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\;$(SolutionDir)3rdParty\libxml2-2.7.2.win32\lib;$(SolutionDir)3rdParty\iconv-1.9.2.win32\lib;$(SolutionDir)3rdParty\cal3d-0.11rc2\bin\Debug;$(SolutionDir)3rdParty\PhysX-3.3-master\lib;$(DXSDK_DIR)\lib\x86</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

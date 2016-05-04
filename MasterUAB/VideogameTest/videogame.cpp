@@ -1,6 +1,8 @@
 #include <Windows.h>
 #include <Windowsx.h>
 
+#include "no_sillywarnings_please.h"
+
 #include <d3d11.h>
 
 #include <cassert>

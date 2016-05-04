@@ -3,6 +3,7 @@
 
 #include "Math\Color.h"
 #include "Math\Vector3.h"
+#include "no_sillywarnings_please.h"
 
 struct SPositionOrientation
 {
