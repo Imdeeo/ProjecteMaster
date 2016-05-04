@@ -264,19 +264,27 @@ function RegisterLightParameters(light_name)
 	
 	local Light = LightsManager:get_resource(light_name)
 
-	DebugHelper:add_variable("Intensity",CDebugHelper.float,CDebugHelper.read_write,Light:get_intensity_lua_address(),"min=0.0 max=1.0 step=0.1")--" group='"..material_name.."' ")	
-	DebugHelper:add_variable("Start Range Attenuation",CDebugHelper.float,CDebugHelper.read_write,Light:get_start_range_attenuation_lua_address(),"min=0.0 max=500.0 step=1.0")--" group='"..material_name.."' ")
-	DebugHelper:add_variable("End Range Attenuation",CDebugHelper.float,CDebugHelper.read_write,Light:get_end_range_attenuation_lua_address(),"min=0.0 max=500.0 step=1.0")--" group='"..material_name.."' ")
-	DebugHelper:add_variable("Color",CDebugHelper.color,CDebugHelper.read_write,Light:get_color_lua_address(),"")--" group='"..material_name.."' ")
+	DebugHelper:add_variable("Enable",CDebugHelper.bool,CDebugHelper.read_write,Light:get_enable_lua_address(),"")
+	DebugHelper:add_variable("Intensity",CDebugHelper.float,CDebugHelper.read_write,Light:get_intensity_lua_address(),"min=0.0 max=1.0 step=0.1")
+	DebugHelper:add_variable("Start Range Attenuation",CDebugHelper.float,CDebugHelper.read_write,Light:get_start_range_attenuation_lua_address(),"min=0.0 max=500.0 step=1.0")
+	DebugHelper:add_variable("End Range Attenuation",CDebugHelper.float,CDebugHelper.read_write,Light:get_end_range_attenuation_lua_address(),"min=0.0 max=500.0 step=1.0")
+	DebugHelper:add_variable("Color",CDebugHelper.color,CDebugHelper.read_write,Light:get_color_lua_address(),"")
+	DebugHelper:add_variable("Shadow Map",CDebugHelper.bool,CDebugHelper.read_write,Light:get_generate_shadowmap_lua_address(),"")
 
-	if(Light:get_type()==0)then
-		-- OMNI
-		
-	elseif(Light:get_type()==1)then
-		-- DIRECTIONAL		
-
+	if(Light:get_type()==1)then
+		-- DIRECTIONAL
+		local Directional = LightsManager:get_resource(light_name)
+		DebugHelper:add_variable("Direction x:",CDebugHelper.float,CDebugHelper.read_write,Directional:get_direction_lua_address(),"")
+		DebugHelper:add_variable("Direction y:",CDebugHelper.float,CDebugHelper.read_write,Directional:get_direction_lua_address(),"")
+		DebugHelper:add_variable("Direction z:",CDebugHelper.float,CDebugHelper.read_write,Directional:get_direction_lua_address(),"")
 	elseif(Light:get_type()==2)then
 		-- SPOT
+		local Spot = LightsManager:get_resource(light_name)
+		DebugHelper:add_variable("Direction x:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_direction_lua_address(),"")
+		DebugHelper:add_variable("Direction y:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_direction_lua_address(),"")
+		DebugHelper:add_variable("Direction z:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_direction_lua_address(),"")
+		DebugHelper:add_variable("Angle:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_angle_lua_address(),"")
+		DebugHelper:add_variable("FallOff:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_falloff_lua_address(),"")
 	end
 	
 	DebugHelper:register_bar()
@@ -324,4 +332,15 @@ function RegisterParticleParameters(particle_name)
 	DebugHelper:start_register_bar(bar_name)
 	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\""..bar_name.."\");RegisterParticlesBar()","");
+	
+	local Particle = ParticlesManager:get_resource(particle_name)
+
+	--[[DebugHelper:add_variable("Angular Acc Min",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_angular_acceleration().x,"min=0.0 max=100.0 step=0.1")
+	DebugHelper:add_variable("Angular Acc Max",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_angular_acceleration().y,"min=0.0 max=100.0 step=0.1")
+	DebugHelper:add_variable("Awake Time Min",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_awake_time().x,"min=0.0 max=100.0 step=0.1")
+	DebugHelper:add_variable("Awake Time Max",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_awake_time().y,"min=0.0 max=100.0 step=0.1")]]--
+	DebugHelper:add_variable("Color 1",CDebugHelper.color,CDebugHelper.read_write,Particle:get_lua_color1(),"")
+	DebugHelper:add_variable("Color 2",CDebugHelper.color,CDebugHelper.read_write,Particle:get_lua_color2(),"")
+	
+	DebugHelper:register_bar()
 end
