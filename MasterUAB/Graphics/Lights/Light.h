@@ -89,6 +89,11 @@ public:
 		return (CEmptyPointerClass*)&m_Color;
 	}
 
+	CEmptyPointerClass* GetGenerateShadowMapLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_GenerateShadowMap;
+	}
+
 	void SetColor(CColor _Color) { m_Color = _Color; }
 
 	void SetIntensity(float _Intensity) { m_Intensity = _Intensity; }
@@ -107,7 +112,6 @@ public:
 	// Shadowmap
 	void SetGenerateShadowMap(bool _GenerateShadowMap){ m_GenerateShadowMap = _GenerateShadowMap; }
 	bool GetGenerateShadowMap()const{ return m_GenerateShadowMap; }
-	bool GetGenerateShadowMapAddress()const{ return &m_GenerateShadowMap; }
 
 	CDynamicTexture* GetShadowMap();
 	CTexture* GetShadowMaskTexture();
