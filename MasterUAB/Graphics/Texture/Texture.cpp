@@ -24,18 +24,19 @@ CTexture::~CTexture(void)
 bool CTexture::LoadFile()
 {
 	ID3D11Device *l_Device=UABEngine.GetRenderManager()->GetDevice();
-	wchar_t* wName = new wchar_t[4096];
-	MultiByteToWideChar(CP_ACP, 0, m_Name.c_str(), -1, wName, 4096);
+	std::wstring wName;
+	wName.assign(m_Name.begin(), m_Name.end());
 
 	// DirectXTK
-	HRESULT l_HR = DirectX::CreateDDSTextureFromFile(l_Device, wName, nullptr, &m_Texture);
+	HRESULT l_HR = DirectX::CreateDDSTextureFromFile(l_Device, wName.c_str(), nullptr, &m_Texture);
 	if (FAILED(l_HR))
 	{
-		l_HR = DirectX::CreateWICTextureFromFile(l_Device, wName, nullptr, &m_Texture);
+		l_HR = DirectX::CreateWICTextureFromFile(l_Device, wName.c_str(), nullptr, &m_Texture);
 		if (FAILED(l_HR))
 		{
-			MessageBox(NULL, "Failed to load texture file!", "ERROR", MB_OK | MB_ICONEXCLAMATION);
+			InfoMessage("Error loading file %s of type %d", m_Name, l_HR);
 			return 0;
+
 		}
 	}
 

@@ -77,4 +77,20 @@ std::vector<std::string> &SplitString(const std::string &s, char delim, std::vec
 
 std::vector<std::string> SplitString(const std::string &s, char delim);
 
+static void InfoMessage(const char * format, ...)
+{
+	va_list args;
+	char* buffer;
+
+	va_start(args, format);
+	int len = _vscprintf(format, args) + 1;
+
+	buffer = (char*)malloc(len*sizeof(char));
+	vsprintf(buffer, format, args);
+
+	::MessageBox(NULL, buffer, "ATTENTION", MB_OK);
+
+	free(buffer);
+}
+
 #endif //_UTILS_H
