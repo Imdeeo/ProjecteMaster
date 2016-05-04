@@ -98,7 +98,6 @@
 #include "PhysXManager\PhysXManager.h"
 
 #include "Application.h"
-#include "DebugHelper\DebugHelper.h"
 
 #include "Characters\Character.h"
 #include "Characters\CharacterManager.h"
@@ -492,6 +491,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)
 			.def("get_effect_manager", &CUABEngine::GetEffectManager)
 			.def("get_light_manager", &CUABEngine::GetLightManager)
+			.def("get_particle_manager", &CUABEngine::GetParticleManager)
 			.def("get_render_manager", &CUABEngine::GetRenderManager)
 			.def("get_animated_models_manager", &CUABEngine::GetAnimatedModelsManager)
 			.def("get_script_manager", &CUABEngine::GetScriptManager)
@@ -958,8 +958,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	// Lights-----------------------------------------------------------------------------------------
-
-
+	
 	module(m_LS)[
 		class_<CLight, CNamed>("CLight")
 			.def("get_position", &CLight::GetPosition)
@@ -983,6 +982,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_type", &CLight::SetType)
 			.def("render", &CLight::Render)
 			.def("get_light_type_by_name", &CLight::GetLightTypeByName)
+			.def("get_generate_shadowmap_lua_address", &CLight::GetGenerateShadowMapLuaAdress)
 	];
 
 	RegisterTemplatedVectorMapManager<CLight>(m_LS);
@@ -1016,6 +1016,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<CXMLTreeNode&>())
 			.def("get_direction", &CDirectionalLight::GetDirection)
 			.def("set_direction", &CDirectionalLight::SetDirection)
+			.def("get_direction_lua_address", &CDirectionalLight::GetDirectionLuaAdress)
 			.def("render", &CDirectionalLight::Render)
 	];
 
@@ -1027,6 +1028,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_angle", &CSpotLight::SetAngle)
 			.def("get_fall_off", &CSpotLight::GetFallOff)
 			.def("set_fall_off", &CSpotLight::SetFallOff)
+			.def("get_angle_lua_address",&CSpotLight::GetAngleLuaAdress)
+			.def("get_falloff_lua_address",&CSpotLight::GetFallOffLuaAdress)
 	];
 
 	// Materials--------------------------------------------------------------------------------------
@@ -1215,14 +1218,14 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("get_lua_life", &CParticleSystemType::GetLuaLife)
 	];
 
-	RegisterTemplatedVectorMapManager<CParticleSystemType>(m_LS);
+	RegisterTemplatedMapManager<CParticleSystemType>(m_LS);
 
-	/*module(m_LS)[
+	module(m_LS)[
 	class_<CParticleManager, CTemplatedMapManager<CParticleSystemType>>("CParticleManager")
 		.def(constructor<>())
 		.def("load", &CParticleManager::Load)
 		.def("reload", &CParticleManager::Reload)
-	];*/
+	];
 
 	module(m_LS)[
 	class_<CParticleSystemInstance, CRenderableObject>("CParticleSystemInstance")
