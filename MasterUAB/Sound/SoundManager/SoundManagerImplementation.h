@@ -51,6 +51,8 @@ private:
 	void SetRTPCValue(const SoundRTPC &_rtpc, float value, const AkGameObjectID &id);
 
 public:
+	CSoundManagerImplementation();
+	virtual ~CSoundManagerImplementation();
 	bool Init();
 	void RegisterSpeaker(const C3DElement* _speaker);
 	void UnregisterSpeaker(const C3DElement* _speaker);
