@@ -6,7 +6,6 @@
 	<set_pool_renderable_objects_technique name="set pool generate shadowmap" pool="generate_shadowmap_pool"/>
 	<generate_shadow_maps name="generate shadowmap"/>
 	
-
 	<set_matrices name="set matrices"/>
 	
 	<!-- DEFERRED -->
@@ -17,7 +16,7 @@
 		<dynamic_texture name="DepthMapTexture" texture_width_as_frame_buffer="true"/>
 	</set_render_target>
 	
-	<clear name="clear FT defferred" render_target="false" depth_stencil="true"/>
+	<clear name="clear FT defferred" render_target="true" depth_stencil="true"/>
 	<set_pool_renderable_objects_technique name="set pool gBuffer" pool="gBuffer"/>
 	<render_layer name="render layer solid" layer="solid" active="true"/>
 	<render_layer name="render layer alpha_objects" layer="alpha_objects" active="true"/>
@@ -103,15 +102,27 @@
 		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
 	</render_draw_quad>
 	
+	<!-- SSR -->
+	<capture_frame_buffer name="capture frame SSR" active="true">
+		<capture_texture name="CapturedTextureSSR" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
+
+	<set_pool_renderable_objects_technique name="set pool ssr_pool" pool="ssr_pool" active="true"/>
+	<render_draw_quad name="draw quad SSR" material="SSRMaterial" active="true">
+		<texture load_file="false" file="CapturedTextureSSR" stage_id="0"/>
+		<texture load_file="false" file="NormalMapTexture" stage_id="1"/>
+		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
+	</render_draw_quad>
+	
 	<!-- SKYBOX -->
 	<set_depth_stencil_state name="set depth stencil TF Skybox" enable_z_test="true" write_z_buffer="false" active="true"/>
 	<set_pool_renderable_objects_technique name="set pool skybox" pool="skybox_pool" active="true"/>
 	<render_layer name="render layer skybox" layer="skybox" active="true"/>
 	
 	<!-- Particles -->
-	<set_depth_stencil_state name="set depth stencil TF Particles" write_z_buffer="true" enable_z_test="true" active="true"/>
-	<enable_alpha_blend name="enable alpha blend AAZZOO Particles" active="true" dest_alpha="one" src_alpha="one" dest="zero" src="zero" operation_alpha="add" operation="add"/>
-	<render_layer name="render layer particles" active="true" layer="particles"/>
+	<set_depth_stencil_state name="set depth stencil TF Particles" enable_z_test="true" write_z_buffer="true" active="true"/>
+	<enable_alpha_blend name="enable alpha blend AAZZOO Particles" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<render_layer name="render layer particles" layer="particles" active="true"/>
 	<disable_alpha_blend name="disable alpha blend Particles" active="true"/>
 	
 	<!-- TRIGGERS -->
@@ -142,21 +153,9 @@
 	</render_draw_quad>
 	<disable_alpha_blend name="disable alpha blend N and V" active="false"/>
 	
-	<!-- DEBUG -->
 	<render_debug_lights name="render debug lights"/>
 	<render_debug_grid name="render grid"/>
-	
-	<!-- GUI -->
-	<set_pool_renderable_objects_technique name="set pool GUI" pool="forward_shading" active="true"/>
-	<enable_alpha_blend name="enable alpha blend GUI" active="true" dest_alpha="one" src_alpha="one" dest="zero" src="zero" operation_alpha="add" operation="add"/>
-	<render_gui name="render GUI"/>
-	<disable_alpha_blend name="disable alpha blend GUI" active="true"/>
-	
-	
-	
-	<!-- ATB -->
-	<set_ant_tweak_bar name="render ATB"/>
-	
+	<set_ant_tweak_bar name="render ATB"/>	
 	<present name="present"/>
 </scene_renderer_commands>
 
