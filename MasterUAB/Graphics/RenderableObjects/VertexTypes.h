@@ -12,6 +12,7 @@
 
 #include <d3d9.h>
 #include <d3d11.h>
+
 #include <d3dCommon.h>
 
 #define MV_VERTEX_TYPE_POSITION				0x0001

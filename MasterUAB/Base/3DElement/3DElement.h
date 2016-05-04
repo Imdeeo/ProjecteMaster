@@ -3,6 +3,7 @@
 
 #include "Math\Matrix44.h"
 #include "Math\Quatn.h"
+#include "no_sillywarnings_please.h"
 #include <d3d11.h>
 
 class CXMLTreeNode;

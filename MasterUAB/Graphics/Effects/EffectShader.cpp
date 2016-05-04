@@ -16,6 +16,11 @@
 #include <assert.h>
 
 #include <d3dcommon.h>
+
+#ifdef WIN7
+#include <D3DX11async.h>
+#endif
+
 #include <d3d11.h>
 
 #include <D3Dcompiler.h>

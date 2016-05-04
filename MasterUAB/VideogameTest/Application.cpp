@@ -19,6 +19,8 @@
 #include "Characters\CharacterManager.h"
 #include "Camera\CameraControllerManager.h"
 
+#include "no_sillywarnings_please.h"
+
 CApplication::CApplication( CContextManager *_ContextManager)
 	: m_BackgroundColor(.2f, .1f, .4f)
 	, m_CurrentCamera_vision(1)
