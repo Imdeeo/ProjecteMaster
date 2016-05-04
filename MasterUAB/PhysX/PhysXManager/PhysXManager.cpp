@@ -202,14 +202,14 @@ public:
 			std::string l_actorName = m_ActorNames[l_indexActor];
 			//CRenderableObject* l_ro = UABEngine.GetLayerManager()->GetResource("Triggers")->GetResource(l_triggerName);
 			//l_ro->GetComponentManager()->onTrigger(l_actorName);
-			std::vector<std::string> l_ActiveActors = m_ActiveActors[l_indexTrigger];
-			for (int i = 0; i < l_ActiveActors.size(); i++)
-			{
-				if (l_ActiveActors[i] == l_actorName)
-				{
+		//	std::vector<std::string> l_ActiveActors = m_ActiveActors[l_indexTrigger];
+			//for (int i = 0; i < l_ActiveActors.size(); i++)
+			//{
+			//	if (l_ActiveActors[i] == l_actorName)
+			//	{
 					UABEngine.GetInstance()->GetScriptManager()->RunCode(m_OnTriggerLuaFunctions[l_indexTrigger]);
-				}
-			}
+			//	}
+			//}
 			printf("Trigger \"%s\" fired with \"%s\"", l_triggerName.c_str(),l_actorName.c_str());
 			//lo suyo seria llamar a una funcion lua que gestionara la activacion del trigger
 		}
@@ -488,11 +488,13 @@ void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, c
 }
 
 
-void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group, std::string _OnTriggerLuaFunction, std::vector<std::string> _ActiveActors)
+void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group, std::string _OnTriggerLuaFunction/*, std::vector<std::string> _ActiveActors*/)
 {	
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2), *m_Materials[_Material], true);
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+
+	L_PutGroupToShape(shape,_group);
 
 	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
 	l_Body->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
@@ -502,7 +504,7 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 	AddActor(_name, _position, _orientation, l_Body);
 
 	m_OnTriggerLuaFunctions[m_ActorIndexs[_name]] = _OnTriggerLuaFunction;
-	m_ActiveActors[m_ActorIndexs[_name]] = _ActiveActors;
+	//m_ActiveActors[m_ActorIndexs[_name]] = _ActiveActors;
 
 	m_Scene->addActor(*l_Body);
 
@@ -510,12 +512,14 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 }
 
 
-void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, int _group, std::string _OnTriggerLuaFunction, std::vector<std::string> _ActiveActors)
+void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, int _group, std::string _OnTriggerLuaFunction/*, std::vector<std::string> _ActiveActors*/)
 
 {
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxSphereGeometry(_radius), *m_Materials[_Material], true);
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+
+	L_PutGroupToShape(shape, _group);
 
 	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
 	l_Body->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
@@ -525,7 +529,7 @@ void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, 
 	AddActor(_name, _position, _orientation, l_Body);
 
 	m_OnTriggerLuaFunctions[m_ActorIndexs[_name]] = _OnTriggerLuaFunction;
-	m_ActiveActors[m_ActorIndexs[_name]] = _ActiveActors;
+	/*m_ActiveActors[m_ActorIndexs[_name]] = _ActiveActors;*/
 
 	m_Scene->addActor(*l_Body);
 
