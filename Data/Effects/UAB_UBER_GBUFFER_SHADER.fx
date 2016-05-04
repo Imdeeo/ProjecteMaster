@@ -1,10 +1,20 @@
 #include "globals.fxh"
 #include "samplers.fxh"
- 
-static float m_Active = m_RawDataArray[0];
-static float m_Exposure = m_RawDataArray[1];
-static float m_SpecularPower = m_RawDataArray[2];
-static float m_SpecularFactor = m_RawDataArray[3];
+
+#ifdef HAS_WEIGHT_INDICES
+	static float m_SpecularFactor = m_RawDataArray[0];
+	static float m_SpecularPower = m_RawDataArray[1];
+	static float m_Bump = m_RawDataArray[2];
+	static float m_EnvironmentFactor = m_RawDataArray[3];
+	static float m_CutOutFactor = m_RawDataArray[4];
+	static float m_ReflectionFactor = m_RawDataArray[5];
+#else
+	static float m_Active = m_RawDataArray[0];
+	static float m_Exposure = m_RawDataArray[1];
+	static float m_SpecularPower = m_RawDataArray[2];
+	static float m_SpecularFactor = m_RawDataArray[3];
+	static float m_ReflectionFactor = m_RawDataArray[4];
+#endif
 
 struct VS_INPUT
 {
@@ -181,7 +191,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	l_specularFactor = l_specularFactor;
 	l_Out.Target0 = float4(l_Albedo.xyz, l_specularFactor);
 	l_Out.Target1 = float4(l_Albedo.xyz*l_Ambient.xyz, l_SpecularPower);
-	l_Out.Target2 = float4(Normal2Texture(Nn), 1.0);
+	l_Out.Target2 = float4(Normal2Texture(Nn), m_ReflectionFactor);
 	l_Out.Target3 = float4(l_Depth,l_Depth,l_Depth, 1.0f);
 	
 	return l_Out;
