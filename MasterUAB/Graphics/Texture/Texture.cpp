@@ -34,7 +34,7 @@ bool CTexture::LoadFile()
 		l_HR = DirectX::CreateWICTextureFromFile(l_Device, wName.c_str(), nullptr, &m_Texture);
 		if (FAILED(l_HR))
 		{
-			InfoMessage("Error loading file %s of type %d", m_Name, l_HR);
+			InfoMessage("Error loading file %s of type %d", m_Name.c_str(), l_HR);
 			return 0;
 
 		}

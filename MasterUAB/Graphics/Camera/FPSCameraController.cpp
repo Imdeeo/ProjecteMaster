@@ -14,9 +14,10 @@ CFPSCameraController::CFPSCameraController(const CXMLTreeNode & _TreeNode) :CCam
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
 , m_Target(UABEngine.GetLayerManager()->GetResource(_TreeNode.GetPszProperty("layer"))->GetResource(_TreeNode.GetPszProperty("target")))
-, m_Offset(_TreeNode.GetVect3fProperty("offset", Vect3f(.0f, .0f, .0f), true))
+, m_Offset(Vect3f(.0f, _TreeNode.GetFloatProperty("offset", .0f, true), .0f))
 {
-	m_Position = m_Target->GetPosition() - (GetForward()*m_Offset.x) + (GetRight()*m_Offset.z) + (GetUp()*m_Offset.y);
+	m_Rotation.SetFromAngleAxis(m_Offset, 0);
+	m_Position = m_Target->GetPosition() + m_Offset;
 }
 
 CFPSCameraController::~CFPSCameraController()
@@ -68,8 +69,8 @@ void CFPSCameraController::SetCamera(CCamera *Camera) const
 
 void CFPSCameraController::Update(float ElapsedTime)
 {
+	m_Position = m_Target->GetPosition() + m_Offset;
 	AddYaw(CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime);
 	AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime);
-	m_Position = m_Target->GetPosition() - (GetForward()*m_Offset.x) + (GetUp()*m_Offset.y) + (GetRight()*m_Offset.z);
 	//Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, ElapsedTime);
 }
