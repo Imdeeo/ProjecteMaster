@@ -49,7 +49,7 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 	return mul(float4(l_PositionView,1.0), InverseView).xyz;
 }
 
-float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, float3 WorldPosition, float3 Nn)
+float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, float3 WorldPosition, float3 Nn, float ReflectionFactor)
 {
 	float4 l_Color=float4(0, 0, 0, 0);
 	float3 l_CameraToWorldPosition=WorldPosition-m_InverseView[3].xyz;
@@ -85,7 +85,7 @@ float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, floa
 			break;
 	} while(l_RayDistance<l_CurrentWorldDistance);
 	
-	l_Color=T1Texture.Sample(S1Sampler, l_ScreenPosition.xy);
+	l_Color=T0Texture.Sample(S0Sampler, l_ScreenPosition.xy);
 	float l_SSRContrib=0.0;
 	
 	if(l_ScreenPosition.x>1 || l_ScreenPosition.x<0 || l_ScreenPosition.y>1 || l_ScreenPosition.y<0)
@@ -99,22 +99,27 @@ float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, floa
 		l_SSRContrib=max(l_SSRContribX, l_SSRContrib);
 		l_SSRContrib=max(l_SSRContribY, l_SSRContrib);
 	}
-	l_Color=SourceColor*l_SSRContrib+l_Color*(1-l_SSRContrib);
-	
+	//l_Color=SourceColor * l_SSRContrib + l_Color * (1 - (ReflectionFactor*l_SSRContrib)*ReflectionFactor);
+	l_Color=(1.0f-((1.0-l_SSRContrib)*ReflectionFactor))*SourceColor+l_Color*(1.0-l_SSRContrib)*ReflectionFactor;
+	//return SourceColor;
+	//return float4(ReflectionFactor,0,0,1);
 	return l_Color;
 }
 
-float4 GUIPS(PS_INPUT IN) : SV_Target
+float4 SSRPS(PS_INPUT IN) : SV_Target
 {
 	float4 l_Color=T0Texture.Sample(S0Sampler, IN.UV);
-	if(m_Enabled) //Tendremos que utilizar algún tipo de máscara para hacer sólo reflejo de los píxeles que nos interesen
+	float l_ReflectionFactor = T1Texture.Sample(S1Sampler, IN.UV).w;
+
+	if(m_Enabled && l_ReflectionFactor > 0.0f)
 	{
 		float3 Nn=normalize(T1Texture.Sample(S1Sampler, IN.UV.xy).xyz * 2 - 1.);
 		float l_Depth=T2Texture.Sample(S2Sampler, IN.UV.xy).x;
 		float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
 		float4x4 l_ViewProjection=mul(m_View, m_Projection);
-		return float4(CalcSSRColor(IN.UV.xy, l_ViewProjection, l_Color, l_WorldPosition, Nn).xyz, m_SSROpacity);
+		return float4(CalcSSRColor(IN.UV.xy, l_ViewProjection, l_Color, l_WorldPosition, Nn, l_ReflectionFactor).xyz, m_SSROpacity);
 	}
+
 	clip(-1);
 	return l_Color;
 }

@@ -7,6 +7,8 @@ dofile("Data\\Lua\\Antwakbar\\antweakbar.lua")
 m_cinematicManager = CUABCinematicsActionManager()
 m_triggerActivo1= true
 m_triggerActivo2= true
+m_activeA = false
+
 function mainLua(level)
 	InitAntweakBar()
 	m_cinematicManager:LoadXML("Data\\level_"..level.."\\cinematic_manager.xml")
@@ -17,15 +19,18 @@ function luaUpdate(_ElapsedTime)
 	local a = false
 	local b = false
 	local gui_manager = CUABEngine.get_instance():get_gui_manager()
---	b = gui_manager:do_button("boton2", "teula_button", 300,200,100,50)
 	
-	local guiPosition = CGUIPosition(200,200,200,50, CGUIManager.top_right, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-	--utils_log("debug")
+	local guiPosition = CGUIPosition(100,0,200,50, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 	a = gui_manager:do_button("boton1", "teula_button", guiPosition)
-	--utils_log("debug2")
-	--if a then
-	--	utils_log("boton")
-	--end
+	local guiPosition = CGUIPosition(100,300,200,50, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+	b = gui_manager:do_button("boton1", "teula_button", guiPosition)
+
+	if a then
+		m_activeA = true
+	end
+	local color = CColor(1,1,1,1)
+	local coord = Vect2f(400,50)
+	gui_manager:do_text("fontTest", "tenemos texto!!", coord, CGUIManager.bottom_left, color)
 	
 	
 end
