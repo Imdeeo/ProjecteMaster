@@ -90,6 +90,8 @@
 
 #include "PhysXManager\PhysXManager.h"
 
+#include "SoundManager\SoundManager.h"
+
 #include "Application.h"
 #include "DebugHelper\DebugHelper.h"
 
@@ -486,6 +488,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_script_manager", &CUABEngine::GetScriptManager)
 			.def("get_camera_controller_manager", &CUABEngine::GetCameraControllerManager)
 			.def("get_physX_manager", &CUABEngine::GetPhysXManager)
+			.def("get_sound_manager", &CUABEngine::GetSoundManager)
 			.def("get_cinematic", &CUABEngine::GetCinematic)
 			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
 			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
@@ -1141,7 +1144,70 @@ void CScriptManager::RegisterLUAFunctions()
 
 	
 // SOUND--------------------------------------------------------------------------------------------
-	
+	module(m_LS)[
+		class_<SoundEvent>("SoundEvent")
+			.def(constructor<>())
+			.def_readwrite("event_name", &SoundEvent::eventName)
+	];
+
+	module(m_LS)[
+		class_<SoundSwitch>("SoundSwitch")
+			.def(constructor<>())
+			.def_readwrite("switch_name", &SoundSwitch::switchName)
+	];
+
+	module(m_LS)[
+		class_<SoundSwitchValue>("SoundSwitchValue")
+			.def(constructor<>())
+			.def_readwrite("sound_switch", &SoundSwitchValue::soundSwitch)
+			.def_readwrite("value_name", &SoundSwitchValue::valueName)
+	];
+
+	module(m_LS)[
+		class_<SoundRTPC>("SoundRTPC")
+			.def(constructor<>())
+			.def_readwrite("rtpc_name", &SoundRTPC::RTPCName)
+	];
+
+	module(m_LS)[
+		class_<SoundState>("SoundState")
+			.def(constructor<>())
+			.def_readwrite("state_name", &SoundState::stateName)
+	];
+
+	module(m_LS)[
+		class_<SoundStateValue>("SoundStateValue")
+			.def(constructor<>())
+			.def_readwrite("sound_state", &SoundStateValue::soundState)
+			.def_readwrite("value_name", &SoundStateValue::valueName)
+	];
+
+	module(m_LS)[
+		class_<ISoundManager>("ISoundManager")
+			.scope[
+				def("instantiate_sound_manager", &ISoundManager::InstantiateSoundManager)
+			]
+			.def("set_path", &ISoundManager::SetPath)
+			.def("update", &ISoundManager::Update)
+			.def("load", &ISoundManager::Load)
+			.def("reload", &ISoundManager::Reload)
+			.def("load_sound_bank", &ISoundManager::LoadSoundBank)
+			.def("unload_sound_bank", &ISoundManager::UnloadSoundBank)
+			.def("load_sound_bank", &ISoundManager::LoadSoundBank)
+			.def("register_speaker", &ISoundManager::RegisterSpeaker)
+			.def("unregister_speaker", &ISoundManager::UnregisterSpeaker)
+			.def("play_event", (void(ISoundManager::*)(const SoundEvent&)) &ISoundManager::PlayEvent)
+			.def("play_event", (void(ISoundManager::*)(const SoundEvent&, const std::string&)) &ISoundManager::PlayEvent)
+			.def("play_event", (void(ISoundManager::*)(const SoundEvent&, const C3DElement*)) &ISoundManager::PlayEvent)
+			.def("set_switch", (void(ISoundManager::*)(const SoundSwitchValue&)) &ISoundManager::SetSwitch)
+			.def("set_switch", (void(ISoundManager::*)(const SoundSwitchValue&, const std::string&)) &ISoundManager::SetSwitch)
+			.def("set_switch", (void(ISoundManager::*)(const SoundSwitchValue&, const C3DElement*)) &ISoundManager::SetSwitch)
+			.def("broadcast_rtpc_value", (void(ISoundManager::*)(const SoundRTPC&, float)) &ISoundManager::BroadcastRTPCValue)
+			.def("set_rtpc_value", (void(ISoundManager::*)(const SoundRTPC&, float)) &ISoundManager::SetRTPCValue)
+			.def("set_rtpc_value", (void(ISoundManager::*)(const SoundRTPC&, float, const std::string&)) &ISoundManager::SetRTPCValue)
+			.def("set_rtpc_value", (void(ISoundManager::*)(const SoundRTPC&, float, const C3DElement*)) &ISoundManager::SetRTPCValue)
+			.def("broadcast_state", &ISoundManager::BroadcastState)
+	];
 	
 // VIDEOGAME----------------------------------------------------------------------------------------
 	module(m_LS)[

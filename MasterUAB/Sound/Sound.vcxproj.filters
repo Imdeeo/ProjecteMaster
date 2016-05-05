@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dummy.cpp" />
-    <ClCompile Include="SoundManagerImplementation.cpp">
+    <ClCompile Include="SoundManager\SoundManager.cpp">
       <Filter>SoundManager</Filter>
     </ClCompile>
-    <ClCompile Include="SoundManager.cpp">
+    <ClCompile Include="SoundManager\SoundManagerImplementation.cpp">
       <Filter>SoundManager</Filter>
     </ClCompile>
   </ItemGroup>
@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SoundManager.h">
+    <ClInclude Include="SoundManager\SoundManager.h">
       <Filter>SoundManager</Filter>
     </ClInclude>
-    <ClInclude Include="SoundManagerImplementation.h">
+    <ClInclude Include="SoundManager\SoundManagerImplementation.h">
       <Filter>SoundManager</Filter>
     </ClInclude>
   </ItemGroup>
