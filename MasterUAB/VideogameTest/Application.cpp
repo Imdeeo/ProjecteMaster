@@ -15,6 +15,7 @@
 #include "Lights\LightManager.h"
 #include "PhysXManager\PhysXManager.h"
 #include "ScriptManager\ScriptManager.h"
+#include "SoundManager\SoundManager.h"
 
 #include "Characters\CharacterManager.h"
 #include "Camera\CameraControllerManager.h"
@@ -139,6 +140,8 @@ void CApplication::Update(float _ElapsedTime)
 	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 	UABEngine.GetLayerManager()->Update(_ElapsedTime);
 	UABEngine.GetScriptManager()->RunCode("luaUpdate(" + std::to_string(_ElapsedTime) + ")");
+	const CCamera *l_CurrentCamera = UABEngine.GetRenderManager()->GetCurrentCamera();
+	UABEngine.GetSoundManager()->Update(l_CurrentCamera);
 }
 
 void CApplication::Render()

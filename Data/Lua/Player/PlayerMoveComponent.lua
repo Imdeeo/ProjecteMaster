@@ -11,6 +11,8 @@ function InitPlayerMove()
 		local l_Component=create_scripted_component("ScriptedComponent", l_Box, "FnOnCreateController","FnOnDestroyController", "FnOnUpdateController", "FnOnRenderController", "FnOnDebugRender")
 		l_Box:get_component_manager():add_resource("ScriptedComponent", l_Component)
 	end
+	local l_SoundManager = UABEngine:get_sound_manager()
+	l_SoundManager:register_speaker(l_Box)
 end
 
 function FnOnCreateController (_owner)
@@ -29,6 +31,9 @@ gravity = -9.81
 is_jumping = false
 is_ascending = false
 
+jump_event = SoundEvent()
+jump_event.event_name = "jump"
+
 function FnOnUpdateController (_owner, _ElapsedTime)
 	
 	local l_Player = CCharacterManager.get_instance():get_resource("player")
@@ -41,6 +46,9 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 		cct_velocity.y = 10
 		is_jumping =  true
 		is_ascending = true
+		local UABEngine = CUABEngine.get_instance()
+		local l_SoundManager = UABEngine:get_sound_manager()
+		l_SoundManager:play_event(jump_event, l_Player:get_renderable_object())
 	end
 	
 	if(is_ascending==true and cct_velocity.y<0) then

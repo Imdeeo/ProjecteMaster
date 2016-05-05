@@ -35,6 +35,7 @@ public:
 	void Init();
 
 	void SetCurrentCamera(const CCamera& _CurrentCamera);
+	const CCamera *GetCurrentCamera();
 	void SetDebugCamera(const CCamera& _DebugCamera) { m_DebugCamera = _DebugCamera; }
 
 	void SetUseDebugCamera(bool _use) { m_UseDebugCamera = _use; }

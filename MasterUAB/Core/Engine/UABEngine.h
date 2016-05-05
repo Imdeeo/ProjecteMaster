@@ -17,6 +17,7 @@ class CCinematic;
 class CPhysXManager;
 class CRenderableObjectTechniqueManager;
 class CSceneRendererCommandManager;
+class ISoundManager;
 
 
 #include <string>
@@ -42,6 +43,7 @@ private:
 	CPhysXManager * m_PhysXManager;
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
 	CSceneRendererCommandManager* m_SceneRendererCommandManager;
+	ISoundManager* m_SoundManager;
 
 	std::string m_LevelLoaded;
 	
@@ -60,6 +62,7 @@ public:
 	CPhysXManager * GetPhysXManager()const;
 	CRenderableObjectTechniqueManager * GetRenderableObjectTechniqueManager()const;
 	CSceneRendererCommandManager * GetSceneRendererCommandManager()const;
+	ISoundManager * GetSoundManager()const;
 
 	std::string GetLevelLoaded()const{return m_LevelLoaded;}
 	
