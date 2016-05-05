@@ -16,11 +16,6 @@ class CParticleSystemInstance : public CRenderableObject
 {
 private:
 	unsigned short l_IndexType = 16;
-	float m_NextParticleEmission;
-	bool m_Awake;
-	float m_AwakeTimer;
-	Vect3f m_EmissionBoxHalfSize;
-	float m_EmissionVolume, m_EmissionScaler;	
 
 	struct ParticleData
 	{
@@ -29,6 +24,7 @@ private:
 		float TimeToNextFrame;
 		float LifeTime, TotalLife;
 		float Angle, AngularSpeed, AngularAcceleration;
+		float DistanceToCamera;
 
 		int ColorControlPoint, SizeControlPoint;
 
@@ -55,12 +51,12 @@ public:
 	void Destroy();
 
 	UAB_BUILD_GET_SET(CParticleSystemType *, Type);
-	UAB_GET_PROPERTY(float, NextParticleEmission);
-	UAB_GET_PROPERTY(bool, Awake);
-	UAB_GET_PROPERTY(float, AwakeTimer);
-	UAB_GET_PROPERTY(Vect3f, EmissionBoxHalfSize);
-	UAB_GET_PROPERTY(float, EmissionVolume);
-	UAB_GET_PROPERTY(float, EmissionScaler);
+	UAB_BUILD_GET_SET(float, NextParticleEmission);
+	UAB_BUILD_GET_SET(bool, Awake);
+	UAB_BUILD_GET_SET(float, AwakeTimer);
+	UAB_BUILD_GET_SET(Vect3f, EmissionBoxHalfSize);
+	UAB_BUILD_GET_SET(float, EmissionVolume);
+	UAB_BUILD_GET_SET(float, EmissionScaler);
 
 	TRenderableObjectType GetClassType() { return PARTICLE_EMITER; }
 	
@@ -68,6 +64,7 @@ public:
 		return PARTICLE_EMITER;
 	}*/
 
+	float GetDistanceToCamera(ParticleData *particle);
 	float GetRandomValue(float min, float max);
 	Vect3f GetRandomValue(Vect3f min, Vect3f max);
 	CColor GetRandomValue(CColor min, CColor max);
@@ -76,6 +73,7 @@ public:
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
 	//void RenderDebug(CRenderManager *RM);
+	void InsertSort(ParticleData arr[], int length);
 };
 
 #endif //PARTICLE_SYSTEM_INSTANCE_H

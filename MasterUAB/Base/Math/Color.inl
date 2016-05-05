@@ -140,9 +140,9 @@ inline CColor CColor::HsvToRgb(HsvColor hsv)
 
 	if (hsv.s == 0)
 	{
-		rgb.SetRed(hsv.v);
-		rgb.SetGreen(hsv.v);
-		rgb.SetBlue(hsv.v);
+		rgb.SetRed(hsv.v / 255);
+		rgb.SetGreen(hsv.v / 255);
+		rgb.SetBlue(hsv.v / 255);
 		return rgb;
 	}
 
@@ -246,6 +246,7 @@ inline CColor CColor::interpolate(CColor a, CColor b, float t)
 	final.h = linear(ca.h, cb.h, t);
 	final.s = linear(ca.s, cb.s, t);
 	final.v = linear(ca.v, cb.v, t);
+	final.alpha = linear(ca.alpha, cb.alpha, t);
 
 	return HsvToRgb(final);
 }

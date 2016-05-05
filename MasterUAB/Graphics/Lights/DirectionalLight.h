@@ -18,6 +18,11 @@ public:
 	void SetDirection(Vect3f _Direction) { m_Direction = _Direction; }
 	const Mat44f & CDirectionalLight::GetTransform();
 
+	CEmptyPointerClass* GetDirectionLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_Direction;
+	}
+
 #ifdef _DEBUG
 	virtual void Render(CRenderManager *RenderManager);
 #endif
