@@ -71,11 +71,25 @@ inline physx::PxQuat CastQuat(const Quatf& q)
 inline Quatf CastQuat(const physx::PxQuat& q)
 { return Quatf(q.x,q.y,q.z,q.w);}
 
+struct FilterGroup
+{
+	enum Enum
+	{
+		eOTHER = (1 << 0),
+		eTRIGGER = (1 << 1),
+		ePLAYER = (1 << 2)
+	};
+
+};
+
+static std::map<physx::PxU32, physx::PxU32> st_CollisionGroups;
+
 inline void L_PutGroupToShape(physx::PxShape* shape, int _group)
 {
 	physx::PxFilterData filterData;
 	filterData.setToDefault();
 	filterData.word0 = _group;
+	filterData.word1 = st_CollisionGroups[_group];
 	shape->setQueryFilterData(filterData);
 }
 
@@ -138,6 +152,10 @@ private :
 #endif
 		m_ControllerManager->setOverlapRecoveryModule(true);
 
+		st_CollisionGroups[FilterGroup::ePLAYER] =  FilterGroup::eOTHER;
+		st_CollisionGroups[FilterGroup::eTRIGGER] = FilterGroup::ePLAYER;
+		st_CollisionGroups[FilterGroup::eOTHER] = FilterGroup::ePLAYER;
+
 	}
 
 	void Destroy()
@@ -171,6 +189,7 @@ private :
 	}
 
 public:
+
 	CPhysXManagerImplementation(){Init();}
 	virtual ~CPhysXManagerImplementation(){Destroy();}
 
