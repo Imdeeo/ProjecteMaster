@@ -264,7 +264,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 						}
 						break;
 					case WM_CHAR:
-						//inputManager.GetKeyboard()->SetLastChar(msg.wParam);
+						inputManager.GetKeyboard()->SetLastChar(msg.wParam);
 						break;
 					default:
 						TranslateMessage(&msg);
