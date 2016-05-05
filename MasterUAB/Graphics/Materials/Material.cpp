@@ -30,7 +30,7 @@ CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_Current
 		if (l_Child.GetName() == std::string("texture"))
 		{
 			CTexture* l_texture = CUABEngine::GetInstance()->GetTextureManager()->GetTexture(l_Child.GetPszProperty("filename"));
-			std::string l_TextureType = l_Child.GetPszProperty("type");
+			std::string l_TextureType = l_Child.GetPszProperty("type", "diffuse", true);
 			l_texture->SetType(l_TextureType);
 
 			if (l_TextureType == "lightmap")
