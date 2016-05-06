@@ -24,7 +24,7 @@ void CSetLightPositionSceneRendererCommand::Execute(CRenderManager &RenderManage
 	{
 		if (l_Parameters[i]->GetName() == "light_position")
 		{
-			memcpy(l_Parameters[i]->GetValueLuaAddress(), &l_2DPos, sizeof(Vect2f));
+			memcpy(l_Parameters[i]->GetValueAddress(), &l_2DPos, sizeof(Vect2f));
 		}
 	}
 }
