@@ -71,7 +71,8 @@ public:
 		ID3D11Buffer *l_MaterialParametersConstantBufferVS = l_EffectVertexShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
 
 		CEffectManager* l_EffectManagerInstance = UABEngine.GetEffectManager();
-
+		if (l_MaterialParametersConstantBufferVS == NULL)
+			return false;
 		l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferVS, 0, NULL, _Parameters, 0, 0);
 		ID3D11Buffer* VSBuffers[4] = { l_SceneConstantBufferVS, l_LightConstantBufferVS, l_AnimationConstantBufferVS, l_MaterialParametersConstantBufferVS };
 		l_DeviceContext->VSSetConstantBuffers(0, 4,VSBuffers);

@@ -113,10 +113,16 @@ CEffectGeometryShader * CEffectManager::GetGeometryShader(const std::string &Geo
 
 void CEffectManager::SetSceneConstants(CEffectTechnique* _EffectTechnique)
 {
+	if (_EffectTechnique->GetVertexShader() == NULL || _EffectTechnique->GetPixelShader() == NULL)
+		return;
 	ID3D11DeviceContext* l_DeviceContext = UABEngine.GetRenderManager()->GetDeviceContext();
 	ID3D11Buffer *l_SceneConstantBufferVS = _EffectTechnique->GetVertexShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+	if (l_SceneConstantBufferVS == NULL)
+		return;
 	l_DeviceContext->UpdateSubresource(l_SceneConstantBufferVS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
 	ID3D11Buffer *l_SceneConstantBufferPS = _EffectTechnique->GetPixelShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+	if (l_SceneConstantBufferPS == NULL)
+		return;
 	l_DeviceContext->UpdateSubresource(l_SceneConstantBufferPS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
 	if (_EffectTechnique->GetGeometryShader() != nullptr)
 	{

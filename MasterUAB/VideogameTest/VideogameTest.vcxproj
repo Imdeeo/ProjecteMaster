@@ -64,7 +64,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)\bin\Intermediate\</IntDir>
-    <TargetName>$(ProjectName)_d\</TargetName>
+    <TargetName>$(ProjectName)_d</TargetName>
     <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86</LibraryPath>
     <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
