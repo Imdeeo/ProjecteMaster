@@ -46,6 +46,7 @@ CInputManagerImplementation::CInputManagerImplementation(HWND hWnd)
 		m_PadButtensPrevious[i] = 0;
 	}
 
+	m_Keyboard = new CKeyboardInput();
 
 	// mouse input
 	HRESULT l_HR;
