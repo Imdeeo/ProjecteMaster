@@ -26,8 +26,8 @@ utils_log("set player state machine")
 	DeadState:set_do_first_function(DeadFirst)
 	DeadState:set_do_end_function(DeadEnd)
 	
-	EnemyStateMachine:add_state("Idle", IdleState)
-	EnemyStateMachine:add_state("Moving", MovingState)
-	EnemyStateMachine:add_state("Interacting", InteractingState)
-	EnemyStateMachine:add_state("Dead", DeadState)
+	PlayerStateMachine:add_state("Idle", IdleState)
+	PlayerStateMachine:add_state("Moving", MovingState)
+	PlayerStateMachine:add_state("Interacting", InteractingState)
+	PlayerStateMachine:add_state("Dead", DeadState)
 end
