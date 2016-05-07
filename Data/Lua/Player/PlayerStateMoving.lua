@@ -1,35 +1,9 @@
-g_Velocity = Vect3f(0,0,0)
-g_Gravity = -9.81
-g_Speed = 10
-g_IsJumping = false
-g_IsAscending = false
-
-function InitPlayerMove()
-	local UABEngine = CUABEngine.get_instance()
-
-	local l_Player = CCharacterManager.get_instance():get_resource("player")
-	local l_Box=l_Player:get_renderable_object()
-	local l_Component=l_Box:get_component_manager():get_resource("ScriptedComponent")
-	
-	if l_Component==nil then
-		local l_Component=create_scripted_component("ScriptedComponent", l_Box, "FnOnCreateController","FnOnDestroyController", "FnOnUpdateController", "FnOnRenderController", "FnOnDebugRender")
-		l_Box:get_component_manager():add_resource("ScriptedComponent", l_Component)
-	end
+function MovingFirst(args)
+	utils_log("Moving State")
 end
 
-function FnOnCreateController (_owner)
-	local UABEngine = CUABEngine.get_instance()
-	local l_PhysXManager = UABEngine:get_physX_manager()
-	local l_Player = CCharacterManager.get_instance():get_resource("player")
-	l_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
-	l_PhysXManager:create_character_controller(l_Player.name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", 1)
-end
-
-function FnOnDestroyController ()
-	
-end
-
-function FnOnUpdateController (_owner, _ElapsedTime)
+function MovingUpdate(args, _ElapsedTime)
+	local l_Owner = args["owner"]
 	local l_Player = CCharacterManager.get_instance():get_resource("player")
 	local l_InputManager = CInputManager.get_input_manager()
 	local l_PhysXManager = CUABEngine.get_instance():get_physX_manager()
@@ -66,7 +40,7 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_PhysXManager:get_character_controler_pos("player")
 	l_NewControllerPosition.y = l_NewControllerPosition.y - 0.9
-	_owner:set_position(l_NewControllerPosition)
+	l_Owner:set_position(l_NewControllerPosition)
 	
 	--// Save speed in last update so we can create acceleration
 	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
@@ -77,7 +51,7 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	l_RotationY = Quatf()
 	l_Rotation = l_Player:get_camera_controller():get_rotation()
 	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
-	_owner:set_rotation(l_RotationY)
+	l_Owner:set_rotation(l_RotationY)
 	
 	--// Check if player had displacement, to animate it or not
 	local l_X = l_Displacement.x*l_Displacement.x
@@ -87,19 +61,21 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	local l_DisplacementModule = math.sqrt(l_X + l_Y + l_Z)
 	
 	--// Animate player
-	_owner:clear_cycle(_owner:get_actual_cycle_animation(),0.1);
-	if l_DisplacementModule == 0 then
-		_owner:blend_cycle(1,1.0,0.1);
+	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1);
+	if l_DisplacementModule == 0 then		
+		l_Owner:blend_cycle(1,1.0,0.1);
 	else
-		_owner:blend_cycle(0,1.,0.1);
+		l_Owner:blend_cycle(0,1.,0.1);
 	end	
 end
 
-function FnOnRenderController(_owner, _rm)
-
+function MovingEnd(args)
+	
 end
 
-function FnOnDebugRender(_owner, _rm)
-	local l_PhysXManager = CUABEngine.get_instance():get_physX_manager()
-	--l_PhysXManager:render("player", _rm)
+function MovingToIdleCondition()
+	local l_physXManager = CUABEngine.get_instance():get_physX_manager()	
+		local l_InputManager = CInputManager.get_input_manager()
+	return not (l_InputManager:is_action_active("MOVE_FWD") or l_InputManager:is_action_active("MOVE_BACK") or l_InputManager:is_action_active("STRAFE_LEFT") or l_InputManager:is_action_active("STRAFE_RIGHT"))
+
 end
