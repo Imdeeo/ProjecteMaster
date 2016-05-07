@@ -1,4 +1,11 @@
 dofile("Data\\Lua\\Player\\PlayerStateMachine.lua")
+
+g_Velocity = Vect3f(0,0,0)
+g_Gravity = -9.81
+g_Speed = 10
+g_IsJumping = false
+g_IsAscending = false
+
 function InitPlayer()
 utils_log("init player")
 	local UABEngine = CUABEngine.get_instance()

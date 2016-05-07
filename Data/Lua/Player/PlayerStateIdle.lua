@@ -1,9 +1,11 @@
 function IdleFirst(args)
-	utils_log("Idle State")
+	
 end
 
 function IdleUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
+	local l_Player = CCharacterManager.get_instance():get_resource("player")
+	
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
 	l_RotationY = Quatf()
