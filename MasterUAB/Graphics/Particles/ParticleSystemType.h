@@ -85,64 +85,64 @@ public:
 		return (CEmptyPointerClass*)&m_StartingAccelerationAngle;
 	}
 
-	CEmptyPointerClass* GetLuaSize()
+	CEmptyPointerClass* GetLuaSize(int index = 0)
 	{
-		return (CEmptyPointerClass*)&m_Size;
+		return (CEmptyPointerClass*)&m_Size[index];
 	}
 
-	CEmptyPointerClass* GetLuaEmitRate()
+	CEmptyPointerClass* GetLuaEmitRate(int index = 0)
 	{
-		return (CEmptyPointerClass*)&m_EmitRate;
+		return (CEmptyPointerClass*)&m_EmitRate[index];
 	}
 
-	CEmptyPointerClass* GetLuaAwakeTime()
+	CEmptyPointerClass* GetLuaAwakeTime(int index = 0)
 	{
-		return (CEmptyPointerClass*)&m_AwakeTime;
+		return (CEmptyPointerClass*)&m_AwakeTime[index];
 	}
 
-	CEmptyPointerClass* GetLuaSleepTime()
+	CEmptyPointerClass* GetLuaSleepTime(int index = 0)
 	{
-		return (CEmptyPointerClass*)&m_SleepTime;
+		return (CEmptyPointerClass*)&m_SleepTime[index];
 	}
 
-	CEmptyPointerClass* GetLuaLife()
+	CEmptyPointerClass* GetLuaLife(int index = 0)
 	{
-		return (CEmptyPointerClass*)&m_Life;
+		return (CEmptyPointerClass*)&m_Life[index];
 	}
 	
-	CEmptyPointerClass* GetLuaStartingAngle()
+	CEmptyPointerClass* GetLuaStartingAngle(int index = 0)
 	{
-		return (CEmptyPointerClass*)&m_StartingAngle;
+		return (CEmptyPointerClass*)&m_StartingAngle[index];
 	}
 
-	CEmptyPointerClass* GetLuaStartingAngularSpeed()
+	CEmptyPointerClass* GetLuaStartingAngularSpeed(int index = 0)
 	{
-		return (CEmptyPointerClass*)&m_StartingAngularSpeed;
+		return (CEmptyPointerClass*)&m_StartingAngularSpeed[index];
 	}
 
-	CEmptyPointerClass* GetLuaAngularAcceleration()
+	CEmptyPointerClass* GetLuaAngularAcceleration(int index = 0)
 	{
-		return (CEmptyPointerClass*)&m_AngularAcceleration;
+		return (CEmptyPointerClass*)&m_AngularAcceleration[index];
 	}
 
-	CEmptyPointerClass* GetLuaStartingSpeed1()
+	CEmptyPointerClass* GetLuaStartingSpeed1(int index = 0)
 	{
-		return (CEmptyPointerClass*)&m_StartingSpeed1;
+		return (CEmptyPointerClass*)&m_StartingSpeed1[index];
 	}
 
-	CEmptyPointerClass* GetLuaStartingSpeed2()
+	CEmptyPointerClass* GetLuaStartingSpeed2(int index = 0)
 	{
-		return (CEmptyPointerClass*)&m_StartingSpeed2;
+		return (CEmptyPointerClass*)&m_StartingSpeed2[index];
 	}
 
-	CEmptyPointerClass* GetLuaStartingAcceleration1()
+	CEmptyPointerClass* GetLuaStartingAcceleration1(int index = 0)
 	{
-		return (CEmptyPointerClass*)&m_StartingAcceleration1;
+		return (CEmptyPointerClass*)&m_StartingAcceleration1[index];
 	}
 
-	CEmptyPointerClass* GetLuaStartingAcceleration2()
+	CEmptyPointerClass* GetLuaStartingAcceleration2(int index = 0)
 	{
-		return (CEmptyPointerClass*)&m_StartingAcceleration2;
+		return (CEmptyPointerClass*)&m_StartingAcceleration2[index];
 	}
 	
 	CEmptyPointerClass* GetLuaColor1()

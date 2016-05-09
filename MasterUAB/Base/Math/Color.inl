@@ -140,9 +140,9 @@ inline CColor CColor::HsvToRgb(HsvColor hsv)
 
 	if (hsv.s == 0)
 	{
-		rgb.SetRed(hsv.v / 255);
-		rgb.SetGreen(hsv.v / 255);
-		rgb.SetBlue(hsv.v / 255);
+		rgb.SetRed(hsv.v / 255.0f);
+		rgb.SetGreen(hsv.v / 255.0f);
+		rgb.SetBlue(hsv.v / 255.0f);
 		return rgb;
 	}
 
