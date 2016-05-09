@@ -1,16 +1,10 @@
-g_Velocity = Vect3f(0,0,0)
-g_Gravity = -9.81
-g_Speed = 10
-g_IsJumping = false
-g_IsAscending = false
+cct_velocity = Vect3f(0,0,0)
 
 function InitPlayerMove()
 	local UABEngine = CUABEngine.get_instance()
-
-	local l_Player = CCharacterManager.get_instance():get_resource("player")
-	local l_Box=l_Player:get_renderable_object()
+	local l_Player = m_CharacterManager.m_Player[1]
+	local l_Box=l_Player.m_RenderableObject
 	local l_Component=l_Box:get_component_manager():get_resource("ScriptedComponent")
-	
 	if l_Component==nil then
 		local l_Component=create_scripted_component("ScriptedComponent", l_Box, "FnOnCreateController","FnOnDestroyController", "FnOnUpdateController", "FnOnRenderController", "FnOnDebugRender")
 		l_Box:get_component_manager():add_resource("ScriptedComponent", l_Component)
@@ -18,81 +12,75 @@ function InitPlayerMove()
 end
 
 function FnOnCreateController (_owner)
+	local l_Player = m_CharacterManager.m_Player[1]
 	local UABEngine = CUABEngine.get_instance()
-	local l_PhysXManager = UABEngine:get_physX_manager()
-	local l_Player = CCharacterManager.get_instance():get_resource("player")
-	l_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
-	l_PhysXManager:create_character_controller(l_Player.name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", 1)
+	local l_physXManager = UABEngine:get_physX_manager()
+	l_physXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
+	l_physXManager:create_character_controller(l_Player.m_Name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", 1)
 end
 
 function FnOnDestroyController ()
 	
 end
 
-function FnOnUpdateController (_owner, _ElapsedTime)
-	local l_Player = CCharacterManager.get_instance():get_resource("player")
+gravity = -9.81
+is_jumping = false
+is_ascending = false
+
+function FnOnUpdateController (_owner, _ElapsedTime)	
+	local l_Player = m_CharacterManager.m_Player[1]
 	local l_InputManager = CInputManager.get_input_manager()
-	local l_PhysXManager = CUABEngine.get_instance():get_physX_manager()
-	local l_ForwardMovement = l_InputManager:get_axis("MOVE_FWD")
-	local l_StrafeMovement = l_InputManager:get_axis("STRAFE")
+	local Forward = l_InputManager:get_axis("MOVE_FWD")
+	local Strafe = l_InputManager:get_axis("STRAFE")
+	if(l_InputManager:is_action_active("JUMP")==true and is_jumping==false and cct_velocity.y == 0) then
+		cct_velocity.y = 10
+		is_jumping =  true
+		is_ascending = true
+	end	
+	if(is_ascending==true and cct_velocity.y<0) then
+		is_ascending = false
+	end	
+	if( is_ascending==false and cct_velocity.y == 0)then
+		is_jumping = false
+	end	
+	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
+	local player_camera_direction = l_Player.m_CameraController:get_forward():get_normalized(1)
+	local player_camera_direction_xz = Vect2f(Forward*player_camera_direction.x,Forward*player_camera_direction.z)
+	local player_camera_direction_xz_ort = Vect2f(-player_camera_direction.z*Strafe,Strafe*player_camera_direction.x)
+	local final_direction = Vect2f(player_camera_direction_xz.x + player_camera_direction_xz_ort.x,player_camera_direction_xz.y + player_camera_direction_xz_ort.y)
+	local l_velocity = 10
+	local l_AddPos = Vect3f(final_direction.x*l_velocity,cct_velocity.y+gravity * _ElapsedTime,final_direction.y*l_velocity)
+	local l_velocity = 5
 	
-	if(l_InputManager:is_action_active("JUMP")==true and g_IsJumping==false and g_Velocity.y == 0) then
-		g_Velocity.y = 4.9
-		g_IsJumping =  true
-		g_IsAscending = true
-	end
+	local l_PrevPosCharacterController = l_physXManager:get_character_controler_pos("player")
+	l_PrevPosCharacterController.y = l_PrevPosCharacterController.y - 0.9
+	l_physXManager:character_controller_move("player", l_AddPos, _ElapsedTime)
+	local l_PostPosCharacterController = l_physXManager:get_character_controler_pos("player")
+	l_PostPosCharacterController.y = l_PostPosCharacterController.y - 0.9
+	_owner:set_position(l_PostPosCharacterController)
+	local l_desplacamiento = l_PostPosCharacterController-l_PrevPosCharacterController
+	cct_velocity = l_desplacamiento/_ElapsedTime
+	--utils_log("Position x: "..l_PosCharacterController.x..",y: "..l_PosCharacterController.y..",z: "..l_PosCharacterController.z)
 	
-	if(g_IsAscending==true and g_Velocity.y<0) then
-		g_IsAscending = false
-	end
+	rot_xz = Quatf()
+	rot_y = Quatf()
+	rot = l_Player.m_CameraController:get_rotation()
+	rot:decouple_y(rot_xz, rot_y)
+	_owner:set_rotation(rot_y)
+		
+	local x = l_desplacamiento.x*l_desplacamiento.x
+	--local y = l_desplacamiento.y*l_desplacamiento.y
+	local y = 0
+	local z = l_desplacamiento.z*l_desplacamiento.z
+	local result = math.sqrt(x+y+z)
 	
-	if( g_IsAscending==false and g_Velocity.y == 0)then
-		g_IsJumping = false
-	end
-	
-	
-	--// Move player forward and laterally
-	local l_CameraDirection = l_Player:get_camera_controller():get_forward():get_normalized(1)
-	local l_CameraXZDirection = Vect2f(l_ForwardMovement*l_CameraDirection.x,l_ForwardMovement*l_CameraDirection.z)
-	local l_CameraXZDirectionOrt = Vect2f(-l_CameraDirection.z*l_StrafeMovement,l_StrafeMovement*l_CameraDirection.x)
-	local l_NewPlayerDirection = Vect2f(l_CameraXZDirection.x + l_CameraXZDirectionOrt.x,l_CameraXZDirection.y + l_CameraXZDirectionOrt.y)
-	local l_PlayerDisplacement = Vect3f(l_NewPlayerDirection.x*g_Speed,g_Velocity.y+g_Gravity * _ElapsedTime,l_NewPlayerDirection.y*g_Speed)
-	
-	--// Move the character controller
-	local l_PreviousControllerPosition = l_PhysXManager:get_character_controler_pos("player")
-	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - 0.9
-	l_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
-	
-	--// Assign to the character the controller's position
-	local l_NewControllerPosition = l_PhysXManager:get_character_controler_pos("player")
-	l_NewControllerPosition.y = l_NewControllerPosition.y - 0.9
-	_owner:set_position(l_NewControllerPosition)
-	
-	--// Save speed in last update so we can create acceleration
-	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
-	g_Velocity = l_Displacement/_ElapsedTime
-	
-	--// Rotate player to match camera
-	l_RotationXZ = Quatf()
-	l_RotationY = Quatf()
-	l_Rotation = l_Player:get_camera_controller():get_rotation()
-	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
-	_owner:set_rotation(l_RotationY)
-	
-	--// Check if player had displacement, to animate it or not
-	local l_X = l_Displacement.x*l_Displacement.x
-	--local y = l_Displacement.y*l_Displacement.y
-	local l_Y = 0
-	local l_Z = l_Displacement.z*l_Displacement.z
-	local l_DisplacementModule = math.sqrt(l_X + l_Y + l_Z)
-	
-	--// Animate player
 	_owner:clear_cycle(_owner:get_actual_cycle_animation(),0.1);
-	if l_DisplacementModule == 0 then
+	if result == 0 then		
 		_owner:blend_cycle(1,1.0,0.1);
 	else
 		_owner:blend_cycle(0,1.,0.1);
 	end	
+	utils_log("FinUpdate")
 end
 
 function FnOnRenderController(_owner, _rm)
@@ -100,6 +88,6 @@ function FnOnRenderController(_owner, _rm)
 end
 
 function FnOnDebugRender(_owner, _rm)
-	local l_PhysXManager = CUABEngine.get_instance():get_physX_manager()
-	--l_PhysXManager:render("player", _rm)
+	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
+	--l_physXManager:render("player", _rm)
 end

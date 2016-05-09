@@ -15,8 +15,6 @@
 #include "Lights\LightManager.h"
 #include "PhysXManager\PhysXManager.h"
 #include "ScriptManager\ScriptManager.h"
-
-#include "Characters\CharacterManager.h"
 #include "Camera\CameraControllerManager.h"
 
 #include "no_sillywarnings_please.h"
@@ -152,5 +150,5 @@ void CApplication::Render()
 void CApplication::Init()
 {
 	UABEngine.Init();	
-	CCharacterManager::GetInstance()->Load("Data\\level_"+UABEngine.GetLevelLoaded()+"\\characters.xml");
+//	CCharacterManager::GetInstance()->Load("Data\\level_"+UABEngine.GetLevelLoaded()+"\\characters.xml");
 }
