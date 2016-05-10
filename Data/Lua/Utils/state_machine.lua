@@ -52,10 +52,10 @@ end
 function StateMachine:start()
 	self:start__s(self.states_vect[0])
 end
-
 function StateMachine:start__s(state_to_start)
 	self.actual_state = state_to_start
 	self.states[self.actual_state].is_first = true
+	utils_log("state: "..self.actual_state)
 end
 
 function StateMachine:update(args,elapsed_time)
@@ -70,13 +70,14 @@ function StateMachine:update(args,elapsed_time)
 
 	local change = false
 	local prev_state
-	for i = 0, state.n_conditions - 1 do
-		local cond = state.conditions[i]
+	for i=0,state.n_conditions-1 do
+		local cond = state.conditions[0]
 		if cond.condition() then
 			change = true
 			prev_state = self.actual_state
 			self.actual_state = cond.state2go
 			self.states[self.actual_state].is_first = true
+			utils_log("state: "..self.actual_state)
 		end
 	end
 	if(change)then
