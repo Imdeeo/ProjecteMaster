@@ -620,6 +620,7 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CLayerManager, CTemplatedVectorMapManager<CRenderableObjectsManager>>("CLayerManager")
 			.def(constructor<>())
 			.def("reload", &CLayerManager::Reload)
+			.def("get_layer", (CRenderableObjectsManager*(CLayerManager::*)(std::string))&CLayerManager::GetLayer)
 	];
 
 
@@ -1191,6 +1192,7 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("set_time_per_frame", &CParticleSystemType::SetTimePerFrame)
 		.def("get_material", &CParticleSystemType::GetMaterial)
 		.def("set_material", &CParticleSystemType::SetMaterial)
+		.def("get_lua_texture_name", &CParticleSystemType::GetLuaTextureName)
 		.def("get_lua_angular_acceleration",  &CParticleSystemType::GetLuaAngularAcceleration)
 		.def("get_lua_awake_time", &CParticleSystemType::GetLuaAwakeTime)
 		.def("get_lua_color1", &CParticleSystemType::GetLuaColor1)
@@ -1250,6 +1252,10 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("get_visible", &CParticleSystemInstance::GetVisible)
 		.def("set_visible", &CParticleSystemInstance::SetVisible)
 		.def("insert_sort", &CParticleSystemInstance::InsertSort)
+		.def("get_lua_awake", &CParticleSystemInstance::GetLuaAwake)
+		.def("get_lua_awake_timer", &CParticleSystemInstance::GetLuaAwakeTimer)
+		.def("get_lua_next_particle_emission", &CParticleSystemInstance::GetLuaNextParticleEmission)
+		.def("get_lua_emission_box_half_size", &CParticleSystemInstance::GetLuaEmissionBoxHalfSize)
 	];
 
 

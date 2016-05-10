@@ -1,5 +1,4 @@
 #include "ParticleSystemType.h"
-#include "Materials\MaterialManager.h"
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 

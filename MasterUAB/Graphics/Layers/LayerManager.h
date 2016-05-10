@@ -30,6 +30,7 @@ public:
 	void RenderDebug(CRenderManager *RenderManager, const std::string &LayerName);
 #endif
 	CRenderableObjectsManager * GetLayer();
+	CRenderableObjectsManager * GetLayer(std::string _layer);
 	CRenderableObjectsManager * GetLayer(CXMLTreeNode &Node);
 };
 

@@ -5,11 +5,11 @@
 #include "Utils.h"
 #include "Math\Matrix44.h"
 #include "Math\Color.h"
+#include "Materials\MaterialManager.h"
 
 #include <string>
 #include <vector>
 
-class CMaterial;
 class CXMLTreeNode;
 
 class CParticleSystemType : public CNamed
@@ -54,6 +54,11 @@ public:
 
 	std::vector<ControlPointColor> m_ControlPointColors;
 	std::vector<ControlPointSize> m_ControlPointSizes;
+
+	CEmptyPointerClass* GetLuaTextureName()
+	{
+		return (CEmptyPointerClass*)&m_Material->GetTextureName();
+	}
 
 	CEmptyPointerClass* GetLuaNumFrames()
 	{
