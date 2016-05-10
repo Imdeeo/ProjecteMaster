@@ -71,6 +71,19 @@ inline physx::PxQuat CastQuat(const Quatf& q)
 inline Quatf CastQuat(const physx::PxQuat& q)
 { return Quatf(q.x,q.y,q.z,q.w);}
 
+
+physx::PxFilterFlags PxMySimulationFilterShader(
+	physx::PxFilterObjectAttributes attributes0,
+	physx::PxFilterData filterData0,
+	physx::PxFilterObjectAttributes attributes1,
+	physx::PxFilterData filterData1,
+	physx::PxPairFlags& pairFlags,
+	const void* constantBlock,
+	physx::PxU32 constantBlockSize)
+{
+	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+	return physx::PxFilterFlag::eDEFAULT;
+}
 struct FilterGroup
 {
 	enum Enum
@@ -137,7 +150,7 @@ private :
 		physx::PxSceneDesc sceneDesc(m_PhysX->getTolerancesScale());
 		sceneDesc.gravity = physx::PxVec3(.0f, -9.81f, .0f);
 		sceneDesc.cpuDispatcher = m_Dispatcher;
-		sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+		sceneDesc.filterShader = PxMySimulationFilterShader;
 		sceneDesc.flags = physx::PxSceneFlag::eENABLE_ACTIVETRANSFORMS;
 		m_Scene = m_PhysX->createScene(sceneDesc);
 		assert(m_Scene);
@@ -152,7 +165,7 @@ private :
 #endif
 		m_ControllerManager->setOverlapRecoveryModule(true);
 
-		st_CollisionGroups[FilterGroup::ePLAYER] =  FilterGroup::eOTHER;
+		st_CollisionGroups[FilterGroup::ePLAYER] = FilterGroup::eTRIGGER;
 		st_CollisionGroups[FilterGroup::eTRIGGER] = FilterGroup::ePLAYER;
 		st_CollisionGroups[FilterGroup::eOTHER] = FilterGroup::ePLAYER;
 
@@ -207,7 +220,7 @@ public:
 		printf("Contact \"%s\" with \"%s\"", l_firstActorName.c_str(), l_secondActorName.c_str());
 
 	}
-	void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
+	void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count) 
 	{
 		for(physx::PxU32 i = 0; i < count; i++)
 		{
