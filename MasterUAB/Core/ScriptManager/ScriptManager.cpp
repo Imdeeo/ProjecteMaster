@@ -99,10 +99,6 @@
 
 #include "Application.h"
 
-#include "Characters\Character.h"
-#include "Characters\CharacterManager.h"
-#include "Characters\Player.h"
-
 #include "XML\XMLTreeNode.h"
 #include "Utils.h"
 
@@ -1331,32 +1327,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render", &CApplication::Render)
 			.def("init", &CApplication::Init)
 	];
-
-
-	module(m_LS)[
-		class_<CCharacter, CNamed>("CCharacter")
-			.def("get_renderable_object",&CCharacter::GetRenderableObject)
-			.def("refresh", &CCharacter::Refresh)
-			.def("execute_lua_command", &CCharacter::ExecuteLuaCommand)
-	];
-	
-	module(m_LS)[
-		class_<CPlayer, CCharacter>("CPlayer")
-			.def(constructor<const CXMLTreeNode&>())
-			.def("get_camera_controller", &CPlayer::GetCameraController)
-			.def("update", &CPlayer::Update)
-	];
-	RegisterTemplatedVectorMapManager<CCharacter>(m_LS);
-
-	module(m_LS)[
-		class_<CCharacterManager, CTemplatedVectorMapManager<CCharacter>>("CCharacterManager")
-			.scope[
-				def("get_instance",&CCharacterManager::GetInstance)
-			]
-			.def("load",&CCameraControllerManager::Load)
-			.def("reload", &CCameraControllerManager::Reload)
-	];
-
 }
 
 /*void OnEnterEvent(CEvent *Event)

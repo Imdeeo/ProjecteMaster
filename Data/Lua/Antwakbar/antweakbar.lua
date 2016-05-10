@@ -74,25 +74,25 @@ function RegisterParametersVariables(material_name)
 	for parameter in MaterialParameters do
 		if(parameter:get_material_type()==CMaterialParameter.float)then
 		
-			DebugHelper:add_variable(parameter.name,CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(0),parameter:get_description())--" group='"..material_name.."' ")
+			DebugHelper:add_variable(parameter.name,CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),parameter:get_description())--" group='"..material_name.."' ")
 
 		elseif(parameter:get_material_type()==CMaterialParameter.vect2f)then
 
-			DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(0),parameter:get_description())--"" group="..parameter.name.." ")
-			DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(1),parameter:get_description())--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+			DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),parameter:get_description())--"" group="..parameter.name.." ")
+			DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),parameter:get_description())--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
 			
 		elseif(parameter:get_material_type()==CMaterialParameter.vect3f)then
 		
-			DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(0),parameter:get_description())--" group="..parameter.name.." ")
-			DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(1),parameter:get_description())--" group="..parameter.name.." ")
-			DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(2),parameter:get_description())--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+			DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),parameter:get_description())--" group="..parameter.name.." ")
+			DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),parameter:get_description())--" group="..parameter.name.." ")
+			DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),parameter:get_description())--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
 			
 		elseif(parameter:get_material_type()==CMaterialParameter.vect4f)then
 		
-			DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(0),parameter:get_description())--" group="..parameter.name.." ")
-			DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(1),parameter:get_description())--" group="..parameter.name.." ")
-			DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(2),parameter:get_description())--" group="..parameter.name.." ")
-			DebugHelper:add_variable(parameter.name..": w",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(3),parameter:get_description())--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
+			DebugHelper:add_variable(parameter.name..": x",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),parameter:get_description())--" group="..parameter.name.." ")
+			DebugHelper:add_variable(parameter.name..": y",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),parameter:get_description())--" group="..parameter.name.." ")
+			DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),parameter:get_description())--" group="..parameter.name.." ")
+			DebugHelper:add_variable(parameter.name..": w",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(),parameter:get_description())--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
 			
 		end
 	end
@@ -264,27 +264,19 @@ function RegisterLightParameters(light_name)
 	
 	local Light = LightsManager:get_resource(light_name)
 
-	DebugHelper:add_variable("Enable",CDebugHelper.bool,CDebugHelper.read_write,Light:get_enable_lua_address(),"")
-	DebugHelper:add_variable("Intensity",CDebugHelper.float,CDebugHelper.read_write,Light:get_intensity_lua_address(),"min=0.0 max=1.0 step=0.1")
-	DebugHelper:add_variable("Start Range Attenuation",CDebugHelper.float,CDebugHelper.read_write,Light:get_start_range_attenuation_lua_address(),"min=0.0 max=500.0 step=1.0")
-	DebugHelper:add_variable("End Range Attenuation",CDebugHelper.float,CDebugHelper.read_write,Light:get_end_range_attenuation_lua_address(),"min=0.0 max=500.0 step=1.0")
-	DebugHelper:add_variable("Color",CDebugHelper.color,CDebugHelper.read_write,Light:get_color_lua_address(),"")
-	DebugHelper:add_variable("Shadow Map",CDebugHelper.bool,CDebugHelper.read_write,Light:get_generate_shadowmap_lua_address(),"")
+	DebugHelper:add_variable("Intensity",CDebugHelper.float,CDebugHelper.read_write,Light:get_intensity_lua_address(),"min=0.0 max=1.0 step=0.1")--" group='"..material_name.."' ")	
+	DebugHelper:add_variable("Start Range Attenuation",CDebugHelper.float,CDebugHelper.read_write,Light:get_start_range_attenuation_lua_address(),"min=0.0 max=500.0 step=1.0")--" group='"..material_name.."' ")
+	DebugHelper:add_variable("End Range Attenuation",CDebugHelper.float,CDebugHelper.read_write,Light:get_end_range_attenuation_lua_address(),"min=0.0 max=500.0 step=1.0")--" group='"..material_name.."' ")
+	DebugHelper:add_variable("Color",CDebugHelper.color,CDebugHelper.read_write,Light:get_color_lua_address(),"")--" group='"..material_name.."' ")
 
-	if(Light:get_type()==1)then
-		-- DIRECTIONAL
-		local Directional = LightsManager:get_resource(light_name)
-		DebugHelper:add_variable("Direction x:",CDebugHelper.float,CDebugHelper.read_write,Directional:get_direction_lua_address(0),"")
-		DebugHelper:add_variable("Direction y:",CDebugHelper.float,CDebugHelper.read_write,Directional:get_direction_lua_address(1),"")
-		DebugHelper:add_variable("Direction z:",CDebugHelper.float,CDebugHelper.read_write,Directional:get_direction_lua_address(2),"")
+	if(Light:get_type()==0)then
+		-- OMNI
+		
+	elseif(Light:get_type()==1)then
+		-- DIRECTIONAL		
+
 	elseif(Light:get_type()==2)then
 		-- SPOT
-		local Spot = LightsManager:get_resource(light_name)
-		DebugHelper:add_variable("Direction x:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_direction_lua_address(0),"")
-		DebugHelper:add_variable("Direction y:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_direction_lua_address(1),"")
-		DebugHelper:add_variable("Direction z:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_direction_lua_address(2),"")
-		DebugHelper:add_variable("Angle:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_angle_lua_address(),"")
-		DebugHelper:add_variable("FallOff:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_falloff_lua_address(),"")
 	end
 	
 	DebugHelper:register_bar()
@@ -332,46 +324,4 @@ function RegisterParticleParameters(particle_name)
 	DebugHelper:start_register_bar(bar_name)
 	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\""..bar_name.."\");RegisterParticlesBar()","");
-	
-	local Particle = ParticlesManager:get_resource(particle_name)
-
-	DebugHelper:add_variable("Angular Acc Min",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_angular_acceleration(0),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Angular Acc Max",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_angular_acceleration(1),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Awake Time Min",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_awake_time(0),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Awake Time Max",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_awake_time(1),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Color 1",CDebugHelper.color,CDebugHelper.read_write,Particle:get_lua_color1(),"")
-	DebugHelper:add_variable("Color 2",CDebugHelper.color,CDebugHelper.read_write,Particle:get_lua_color2(),"")
-	DebugHelper:add_variable("Emit Absolute Min",CDebugHelper.float,CDebugHelper.read_write,Particle:get_emit_absolute(0),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Emit Absolute Max",CDebugHelper.float,CDebugHelper.read_write,Particle:get_emit_absolute(1),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Emit Rate Min",CDebugHelper.float,CDebugHelper.read_write,Particle:get_emit_rate(0),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Emit Rate Max",CDebugHelper.float,CDebugHelper.read_write,Particle:get_emit_rate(1),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Loop Frames",CDebugHelper.bool,CDebugHelper.read_write,Particle:get_lua_loop_frames(),"")
-	DebugHelper:add_variable("Num Frames",CDebugHelper.int,CDebugHelper.read_write,Particle:get_lua_num_frames(),"min=0.0 max=100.0 step=1.0")
-	DebugHelper:add_variable("Size Width",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_size(0),"min=0.0 max=100.0 step=1.0")
-	DebugHelper:add_variable("Size Height",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_size(1),"min=0.0 max=100.0 step=1.0")
-	DebugHelper:add_variable("Sleep Time Min",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_sleep_time(0),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Sleep Time Max",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_sleep_time(1),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Acc1 x",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_acceleration1(0),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Acc1 y",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_acceleration1(1),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Acc1 z",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_acceleration1(2),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Acc2 x",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_acceleration2(0),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Acc2 y",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_acceleration2(1),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Acc2 z",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_acceleration2(2),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Acc Angle",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_acceleration_angle(),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Angle Min",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_angle(0),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Angle Max",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_angle(1),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Angular Speed Min",CDebugHelper.float,CDebugHelper.read_write,Particle:GetLuaStartingAngularSpeed(0),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Angular Speed Max",CDebugHelper.float,CDebugHelper.read_write,Particle:GetLuaStartingAngularSpeed(1),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Dir Angle",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_direction_angle(),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Speed1 x",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_speed1(0),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Speed1 y",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_speed1(1),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Speed1 z",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_speed1(2),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Speed2 x",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_speed2(0),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Speed2 y",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_speed2(1),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Start Speed2 z",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_starting_speed2(2),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Time Frame",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_time_per_frame(),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Life Min",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_life(0),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Life Max",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_life(1),"min=0.0 max=100.0 step=0.1")
-	
-	DebugHelper:register_bar()
 end
