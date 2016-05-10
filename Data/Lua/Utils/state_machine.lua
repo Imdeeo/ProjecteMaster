@@ -70,14 +70,13 @@ function StateMachine:update(args,elapsed_time)
 
 	local change = false
 	local prev_state
-	for i=0,state.n_conditions-1 do
-		local cond = state.conditions[0]
+	for i = 0, state.n_conditions - 1 do
+		local cond = state.conditions[i]
 		if cond.condition() then
 			change = true
 			prev_state = self.actual_state
 			self.actual_state = cond.state2go
 			self.states[self.actual_state].is_first = true
-			utils_log("state: "..self.actual_state)
 		end
 	end
 	if(change)then
