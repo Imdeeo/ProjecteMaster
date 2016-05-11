@@ -52,14 +52,13 @@ end
 function StateMachine:start()
 	self:start__s(self.states_vect[0])
 end
+
 function StateMachine:start__s(state_to_start)
 	self.actual_state = state_to_start
 	self.states[self.actual_state].is_first = true
-	utils_log("state: "..self.actual_state)
 end
 
-function StateMachine:update(args,elapsed_time)
-	
+function StateMachine:update(args, elapsed_time)
 	local state = self.states[self.actual_state]
 	if(state.is_first) then
 		state.do_first_function(args)
@@ -79,6 +78,7 @@ function StateMachine:update(args,elapsed_time)
 			self.states[self.actual_state].is_first = true
 		end
 	end
+	
 	if(change)then
 		self.states[prev_state].do_end_function(args)
 	end

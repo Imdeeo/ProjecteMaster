@@ -8,7 +8,8 @@ dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 PlayerStateMachine = StateMachine.create()
 
 function setPlayerStateMachine()
-	utils_log("set player state machine")
+	utils_log("Set PlayerStateMachine")
+	
 	IdleState = State.create(IdleUpdate)
 	IdleState:set_do_first_function(IdleFirst)
 	IdleState:set_do_end_function(IdleEnd)
