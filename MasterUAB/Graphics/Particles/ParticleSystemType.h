@@ -54,6 +54,8 @@ public:
 
 	std::vector<ControlPointColor> m_ControlPointColors;
 	std::vector<ControlPointSize> m_ControlPointSizes;
+	std::vector<ControlPointColor> GetControlPointColors() { return m_ControlPointColors; }
+	std::vector<ControlPointSize> GetControlPointSizes() { return m_ControlPointSizes; }
 
 	CEmptyPointerClass* GetLuaTextureName()
 	{
