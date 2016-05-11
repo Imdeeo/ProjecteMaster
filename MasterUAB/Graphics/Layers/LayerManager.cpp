@@ -121,6 +121,11 @@ CRenderableObjectsManager* CLayerManager::GetLayer(CXMLTreeNode &Node)
 	}	
 }
 
+CRenderableObjectsManager * CLayerManager::GetLayer(std::string _layer)
+{
+	return GetResource(_layer);
+}
+
 CRenderableObjectsManager* CLayerManager::GetLayer()
 {
 	return m_DefaultLayer;
