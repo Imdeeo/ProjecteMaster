@@ -178,3 +178,8 @@ void CMaterial::Save(FILE* _File)
 
 	fprintf_s(_File, "\t</material>\n");
 }
+
+std::string CMaterial::GetTextureName(int index)
+{
+	return m_Textures[index]->GetName();
+}

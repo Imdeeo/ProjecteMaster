@@ -74,6 +74,26 @@ public:
 	void Render(CRenderManager *RM);
 	//void RenderDebug(CRenderManager *RM);
 	void InsertSort(ParticleData arr[], int length);
+	
+	CEmptyPointerClass* GetLuaNextParticleEmission()
+	{
+		return (CEmptyPointerClass*)&m_NextParticleEmission;
+	}
+
+	CEmptyPointerClass* GetLuaAwake()
+	{
+		return (CEmptyPointerClass*)&m_Awake;
+	}
+
+	CEmptyPointerClass* GetLuaAwakeTimer()
+	{
+		return (CEmptyPointerClass*)&m_AwakeTimer;
+	}
+
+	CEmptyPointerClass* GetLuaEmissionBoxHalfSize(int index = 0)
+	{
+		return (CEmptyPointerClass*)&m_EmissionBoxHalfSize[index];
+	}
 };
 
 #endif //PARTICLE_SYSTEM_INSTANCE_H
