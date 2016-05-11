@@ -1,46 +1,46 @@
 function JumpingFirst(args)
+	g_Player.m_Velocity.y = 4.9
+	g_Player.m_IsJumping =  true
+	g_Player.m_IsAscending = true
 	utils_log("JumpingFirst")
-	g_Velocity.y = 4.9
-	g_IsJumping =  true
-	g_IsAscending = true
 end
 
 function JumpingUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	
 	--// Manage player jump	
-	if(g_IsAscending and g_Velocity.y < 0.01) then
-		g_IsAscending = false
+	if(g_Player.m_IsAscending and g_Player.m_Velocity.y < 0.01) then
+		g_Player.m_IsAscending = false
 	end
-	
-	if((not g_IsAscending) and g_Velocity.y == 0)then
-		g_IsJumping = false
+	utils_log("Jumping1")
+	if((not g_Player.m_IsAscending) and g_Player.m_Velocity.y == 0)then
+		g_Player.m_IsJumping = false
 	end
-	
+	utils_log("Jumping2")
 	--// Calculate the player speed
-	local l_PlayerDisplacement = Vect3f(g_Velocity.x * 0.985, g_Velocity.y + g_Gravity * _ElapsedTime, g_Velocity.z * 0.985)
-	
+	local l_PlayerDisplacement = Vect3f(g_Player.m_Velocity.x * 0.985, g_Player.m_Velocity.y + g_Player.m_Gravity * _ElapsedTime, g_Player.m_Velocity.z * 0.985)
+	utils_log("Jumping3")
 	--// Move the character controller
-	local l_PreviousControllerPosition = g_PhysXManager:get_character_controler_pos("player")
+	local l_PreviousControllerPosition = g_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - 0.9
-	g_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
-	
+	g_Player.m_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
+	utils_log("Jumping4")
 	--// Assign to the character the controller's position
-	local l_NewControllerPosition = g_PhysXManager:get_character_controler_pos("player")
+	local l_NewControllerPosition = g_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_NewControllerPosition.y = l_NewControllerPosition.y - 0.9
 	l_Owner:set_position(l_NewControllerPosition)
-	
+	utils_log("Jumping5")
 	--// Save speed in last update so we can create acceleration
 	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
-	g_Velocity = l_Displacement/_ElapsedTime
-	
+	g_Player.m_Velocity = l_Displacement/_ElapsedTime
+	utils_log("Jumping6")
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
 	l_RotationY = Quatf()
-	l_Rotation = g_Player:get_camera_controller():get_rotation()
+	l_Rotation = g_Player.m_CameraController:get_rotation()
 	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
 	l_Owner:set_rotation(l_RotationY)
-	
+	utils_log("Jumping7")
 	--// Animate player
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1);
 	if l_Displacement.y == 0 then		
@@ -48,6 +48,7 @@ function JumpingUpdate(args, _ElapsedTime)
 	else
 		l_Owner:blend_cycle(0,1.,0.1);
 	end	
+	utils_log("Jumping8")
 end
 
 function JumpingEnd(args)
@@ -55,5 +56,6 @@ function JumpingEnd(args)
 end
 
 function JumpingToIdleCondition()
-	return not g_IsJumping
+utils_log("jumptoidle")
+	return not m_Player.m_IsJumping
 end

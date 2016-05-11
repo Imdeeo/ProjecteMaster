@@ -1,7 +1,13 @@
 dofile("Data\\Lua\\Player\\PlayerStateMachine.lua")
 
 class 'CPlayer'
-	function CPlayer:__init(_TreeNode)
+	function CPlayer:__init()
+		
+	end
+
+	function CPlayer:InitPlayer(_TreeNode)
+		utils_log("Init player")
+		--local UABEngine = CUABEngine.get_instance()
 		local UABEngine = CUABEngine.get_instance()
 		self.m_Name = _TreeNode:get_psz_property("name", "", false)
 		self.m_CameraControllerName= _TreeNode:get_psz_property("camera_controller", "", false)
@@ -18,31 +24,23 @@ class 'CPlayer'
 		self.m_IsAscending = false
 		self.m_InputManager = CInputManager.get_input_manager()
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
-		self:InitPlayer()
-	end
-
-	function CPlayer:InitPlayer()
-		utils_log("Init player")
-		local UABEngine = CUABEngine.get_instance()
 		
-		local l_Component = g_Player.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent")
+		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent")
 		
 		if l_Component==nil then
-			local l_Component=create_scripted_component("ScriptedComponent", g_Player.m_RenderableObject, "FnOnCreateController","FnOnDestroyController", "FnOnUpdateController", "FnOnRenderController", "FnOnDebugRender")
-			g_Player.m_RenderableObject:get_component_manager():add_resource("ScriptedComponent", l_Component)
+			local l_Component=create_scripted_component("ScriptedComponent", self.m_RenderableObject, "FnOnCreateController","FnOnDestroyController", "FnOnUpdateController", "FnOnRenderController", "FnOnDebugRender")
+			self.m_RenderableObject:get_component_manager():add_resource("ScriptedComponent", l_Component)
 		end
 		
 		setPlayerStateMachine()
 		PlayerStateMachine:start()
 	end
 
-	
 --end
 
 function FnOnCreateController (_owner)
-	local UABEngine = CUABEngine.get_instance()
 	g_Player.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
-	g_Player.m_PhysXManager:create_character_controller(g_Player.name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", 1)
+	g_Player.m_PhysXManager:create_character_controller(g_Player.m_Name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", 1)
 end
 
 function FnOnDestroyController ()
