@@ -14,7 +14,8 @@ class 'CCharacterManager'
 				local l_Atts=l_XMLTreeNode:get_child(i)
 				local l_ElemName=l_Atts:get_name()
 				if l_ElemName=="player" then
-					g_Player = CPlayer(l_Atts)
+					g_Player = CPlayer()
+					g_Player:InitPlayer(l_Atts)
 					table.insert(self.m_Player, g_Player)
 				end					
 			end
