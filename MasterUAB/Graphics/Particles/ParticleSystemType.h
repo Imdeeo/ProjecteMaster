@@ -29,6 +29,7 @@ public:
 	CParticleSystemType(CXMLTreeNode &TreeNode);
 	virtual ~CParticleSystemType(void);
 	void Destroy();
+	void Save(FILE* _File);
 
 	UAB_BUILD_GET_SET(CMaterial *, Material);
 	UAB_BUILD_GET_SET(int, NumFrames);

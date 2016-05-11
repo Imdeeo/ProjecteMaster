@@ -55,3 +55,25 @@ CParticleSystemType::~CParticleSystemType(void)
 void CParticleSystemType::Destroy()
 {
 }
+
+void CParticleSystemType::Save(FILE* _File)
+{
+	fprintf_s(_File, "\t<particle name=\"%s\" material=\"%s\" frames=\"%i\" time=\"%f\" loop=\"%s\" emit_absolute=\"%s\" start_dir_angle=\"%f\" start_acc_angle=\"%f\""
+		" size=\"%f %f\" emit_rate=\"%f %f\" awake_time=\"%f %f\" sleep_time=\"%f %f\" life=\"%f %f\" start_angle=\"%f %f\" start_angular_speed=\"%f %f\""
+		" angular_acc=\"%f %f\" start_speed_1=\"%f %f %f\" start_speed_2=\"%f %f %f\" start_acc_1=\"%f %f %f\" start_acc_2=\"%f %f %f\" color_1=\"%f %f %f\" color_2=\"%f %f %f\">\n", 
+		m_Name.c_str(), GetMaterial()->GetName().c_str(), m_NumFrames, m_TimePerFrame, m_LoopFrames, m_EmitAbsolute, m_StartingDirectionAngle, m_StartingAccelerationAngle,
+		m_Size[0], m_Size[1], m_EmitRate[0], m_EmitRate[1], m_AwakeTime[0], m_AwakeTime[1], m_SleepTime[0], m_SleepTime[1], m_Life[0], m_Life[1], m_StartingAngle[0], 
+		m_StartingAngle[1], m_StartingAngularSpeed[0], m_StartingAngularSpeed[1], m_AngularAcceleration[0], m_AngularAcceleration[1], m_StartingSpeed1[0], m_StartingSpeed1[1], 
+		m_StartingSpeed1[2], m_StartingSpeed2[0], m_StartingSpeed2[1], m_StartingSpeed2[2], m_StartingAcceleration1[0], m_StartingAcceleration1[1], m_StartingAcceleration1[2],
+		m_StartingAcceleration2[0], m_StartingAcceleration2[1], m_StartingAcceleration2[2], m_Color1.GetRed(), m_Color1.GetGreen(), m_Color1.GetBlue(),
+		m_Color1.GetRed(), m_Color1.GetGreen(), m_Color1.GetBlue());	
+	/*for (size_t i = 0; i < MAX_TEXTURES; i++)
+	{
+		if (m_Textures[i] != nullptr)
+		{
+			m_Textures[i]->Save(_File, 2);
+		}
+	}*/
+
+	fprintf_s(_File, "\t</particle>\n");
+}
