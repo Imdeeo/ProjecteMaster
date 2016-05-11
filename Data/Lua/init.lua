@@ -1,4 +1,3 @@
-dofile("Data\\Lua\\Player\\PlayerMoveComponent.lua")
 dofile("Data\\Lua\\Cinematics\\CUABCinematicsActionManager.lua")
 dofile("Data\\Lua\\Videogame\\componentsEnemy.lua")
 dofile("Data\\Lua\\Antwakbar\\antweakbar.lua")
@@ -9,6 +8,7 @@ m_CharacterManager = CCharacterManager()
 m_triggerActivo1= true
 m_triggerActivo2= true
 m_activeA = false
+
 
 function mainLua(level)
 	InitAntweakBar()

@@ -1,11 +1,10 @@
-dofile("Data\\Lua\\Characters\\CPlayer.lua")
+dofile("Data\\Lua\\Player\\CPlayer.lua")
 class 'CCharacterManager'
 	function CCharacterManager:__init()
 		self.m_Enemics={}
 		self.m_Player={}
 	end
-	
-	
+		
 	function CCharacterManager:LoadXML(Filename)
 		--utils_log(Filename)
 		local l_XMLTreeNode=CXMLTreeNode()
@@ -15,9 +14,8 @@ class 'CCharacterManager'
 				local l_Atts=l_XMLTreeNode:get_child(i)
 				local l_ElemName=l_Atts:get_name()
 				if l_ElemName=="player" then
-					local l_Player = CPlayer(l_Atts)
-					table.insert(self.m_Player, l_Player)
-					l_Player:Execute_lua_command()
+					g_Player = CPlayer(l_Atts)
+					table.insert(self.m_Player, g_Player)
 				end					
 			end
 		else
