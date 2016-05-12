@@ -16,14 +16,13 @@ class 'CPlayer'
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
 		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "", false)
 		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
-		
+		self.m_InputManager = CInputManager.get_input_manager()
+		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
 		self.m_Speed = 10
 		self.m_IsJumping = false
 		self.m_IsAscending = false
-		self.m_InputManager = CInputManager.get_input_manager()
-		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
 		
 		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent")
 		
