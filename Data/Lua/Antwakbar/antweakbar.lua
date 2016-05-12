@@ -307,6 +307,7 @@ function RegisterParticlesBar()
 	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Particles\");RegisterMainBar()","");
 	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_particle_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Particles\");RegisterParticlesBar()","");
+	DebugHelper:add_lua_button("Save","SaveParticles()","");
 	
 	local ParticlesLayer = LayerParticleControllerManager:get_layer("particles") --get_address
 	
@@ -385,3 +386,8 @@ function RegisterParticleParameters(particle_name)
 		
 	DebugHelper:register_bar()
 end
+
+function SaveParticles()
+	CUABEngine.get_instance():get_particle_manager():save()
+	CUABEngine.get_instance():get_material_manager():save()
+end 
