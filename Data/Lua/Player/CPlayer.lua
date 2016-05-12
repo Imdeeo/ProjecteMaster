@@ -21,6 +21,7 @@ class 'CPlayer'
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
 		self.m_Speed = 5
+		self.m_Sanity = 100
 		
 		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent")
 		
@@ -31,6 +32,22 @@ class 'CPlayer'
 		
 		setPlayerStateMachine()
 		PlayerStateMachine:start()
+	end
+	
+	function CPlayer:SetSanity(_amount)
+		self.m_Sanity = _amount
+	end
+	
+	function CPlayer:ModifySanity(_amount)
+		self.m_Sanity = self.m_Sanity + _amount
+	end
+	
+	function CPlayer:RecoverSanity()
+		self.m_Sanity = 100
+	end
+	
+	function CPlayer:LoseSanity()
+		self.m_Sanity = self.m_Sanity - 10
 	end
 
 --end
