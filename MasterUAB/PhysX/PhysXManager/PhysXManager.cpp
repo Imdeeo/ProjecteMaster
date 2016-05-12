@@ -81,16 +81,48 @@ physx::PxFilterFlags PxMySimulationFilterShader(
 	const void* constantBlock,
 	physx::PxU32 constantBlockSize)
 {
-	pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+	
+	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+	{
+		if (physx::PxFilterObjectIsTrigger(attributes0) || physx::PxFilterObjectIsTrigger(attributes1))
+		{
+			pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
+		}
+		else
+		{
+			pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+		}
+	}
 	return physx::PxFilterFlag::eDEFAULT;
 }
+
+class MyQueryFilterCallback : physx::PxQueryFilterCallback
+{
+	physx::PxQueryHitType::Enum preFilter(
+		const physx::PxFilterData& filterData, const physx::PxShape* shape, const physx::PxRigidActor* actor, physx::PxHitFlags& queryFlags)
+	{
+		physx::PxFilterData l_filterData2 = shape->getSimulationFilterData();
+		if ((filterData.word0 & l_filterData2.word1) && (l_filterData2.word0 & filterData.word1))
+		{
+			return physx::PxQueryHitType::eBLOCK;
+		}
+		return physx::PxQueryHitType::eNONE;
+	}
+
+	physx::PxQueryHitType::Enum postFilter(const physx::PxFilterData& filterData, const physx::PxQueryHit& hit)
+	{
+		return physx::PxQueryHitType::eNONE;
+	}
+};
+
 struct FilterGroup
 {
 	enum Enum
 	{
 		eOTHER = (1 << 0),
 		eTRIGGER = (1 << 1),
-		ePLAYER = (1 << 2)
+		ePLAYER = (1 << 2),
+		eTRIGGER2 = (1 << 3)
 	};
 
 };
@@ -104,6 +136,17 @@ inline void L_PutGroupToShape(physx::PxShape* shape, int _group)
 	filterData.word0 = _group;
 	filterData.word1 = st_CollisionGroups[_group];
 	shape->setQueryFilterData(filterData);
+	shape->setSimulationFilterData(filterData);
+}
+
+inline void L_PutGroupToController(physx::PxShape* shape, int _group)
+{
+	physx::PxFilterData filterData;
+	filterData.setToDefault();
+	filterData.word0 = _group;
+	filterData.word1 = st_CollisionGroups[_group];
+	shape->setQueryFilterData(filterData);
+	shape->setSimulationFilterData(filterData);
 }
 
 class CPhysXManagerImplementation:
@@ -165,9 +208,10 @@ private :
 #endif
 		m_ControllerManager->setOverlapRecoveryModule(true);
 
-		st_CollisionGroups[FilterGroup::ePLAYER] = FilterGroup::eTRIGGER;
+		st_CollisionGroups[FilterGroup::ePLAYER] = FilterGroup::eTRIGGER2|FilterGroup::eOTHER;
 		st_CollisionGroups[FilterGroup::eTRIGGER] = FilterGroup::ePLAYER;
 		st_CollisionGroups[FilterGroup::eOTHER] = FilterGroup::ePLAYER;
+		st_CollisionGroups[FilterGroup::eTRIGGER2] = FilterGroup::ePLAYER;
 
 	}
 
@@ -738,10 +782,19 @@ void CPhysXManager::Update(float _dt)
 	}
 }
 
+
+
 void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime)
 {
+	physx::PxFilterData filterData;
+	filterData.setToDefault();
+	filterData.word0 = FilterGroup::ePLAYER;
+	filterData.word1 = FilterGroup::ePLAYER;
+
+	static MyQueryFilterCallback s_MyQueryFilterCallback;
+
 	physx::PxController* cct = m_CharacterControllers[_name];
-	const physx::PxControllerFilters filters(nullptr, nullptr, nullptr);
+	const physx::PxControllerFilters filters(&filterData, (physx::PxQueryFilterCallback*)&s_MyQueryFilterCallback, nullptr);
 
 	size_t index = (size_t)cct->getUserData();
 
