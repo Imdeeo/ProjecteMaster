@@ -20,9 +20,7 @@ class 'CPlayer'
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
-		self.m_Speed = 10
-		self.m_IsJumping = false
-		self.m_IsAscending = false
+		self.m_Speed = 5
 		
 		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent")
 		

@@ -1,22 +1,18 @@
-function MovingFirst(args)
-	utils_log("MovingFirst")
+function CrouchingFirst(args)
+	utils_log("CrouchingFirst")
 end
 
-function MovingUpdate(args, _ElapsedTime)
+function CrouchingUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_ForwardMovement = g_Player.m_InputManager:get_axis("MOVE_FWD")
 	local l_StrafeMovement = g_Player.m_InputManager:get_axis("STRAFE")
 	local l_Speed = g_Player.m_Speed
-	
-	--// Detect if player is moving backwards, walking, or running
-	if g_Player.m_InputManager:is_action_active("MOVE_BACK") and not g_Player.m_InputManager:is_action_active("RUN") then
-		l_Speed = l_Speed * 0.5
+	--// Detect if player is crouching backwards
+	if g_Player.m_InputManager:is_action_active("MOVE_BACK") then
+		l_Speed = l_Speed * 0.15
+	else
+		l_Speed = l_Speed * 0.3
 	end
-	
-	if g_Player.m_InputManager:is_action_active("RUN") then
-		l_Speed = l_Speed * 2
-	end
-	
 	
 	--// Move player forward and laterally
 	local l_CameraDirection = g_Player.m_CameraController:get_forward():get_normalized(1)
@@ -48,7 +44,7 @@ function MovingUpdate(args, _ElapsedTime)
 	
 	--// Check if player had displacement, to animate it or not
 	local l_X = l_Displacement.x*l_Displacement.x
-	--local y = l_Displacement.y*l_Displacement.y
+	--local l_Y = l_Displacement.y*l_Displacement.y
 	local l_Y = 0
 	local l_Z = l_Displacement.z*l_Displacement.z
 	local l_DisplacementModule = math.sqrt(l_X + l_Y + l_Z)
@@ -62,18 +58,10 @@ function MovingUpdate(args, _ElapsedTime)
 	end	
 end
 
-function MovingEnd(args)
-	utils_log("MovingEnd")
+function CrouchingEnd(args)
+	utils_log("CrouchingEnd")
 end
 
-function MovingToIdleCondition()
-	return not (g_Player.m_InputManager:is_action_active("MOVE_FWD") or g_Player.m_InputManager:is_action_active("MOVE_BACK") or g_Player.m_InputManager:is_action_active("STRAFE_LEFT") or g_Player.m_InputManager:is_action_active("STRAFE_RIGHT"))
-end
-
-function MovingToCrouchingCondition()
-	return g_Player.m_InputManager:is_action_active("CROUCH")
-end
-
-function MovingToJumpingCondition()
-	return g_Player.m_InputManager:is_action_active("JUMP")
+function CrouchingToIdleCondition()
+	return not (g_Player.m_InputManager:is_action_active("CROUCH"))
 end

@@ -10,6 +10,9 @@
 	<action name="STRAFE_CHARACTER_RIGHT" type="KEYBOARD" mode="WHILE_PRESSED" key="K" triggers_axis="true" axis="STRAFE_CHARACTER" axis_value="1"/>
 	
 	<action name="JUMP" type="KEYBOARD" mode="ON_PRESS" key=" "/>
+	<action name="CROUCH" type="KEYBOARD" mode="WHILE_PRESSED" key="Q"/>
+	<action name="RUN" type="KEYBOARD" mode="WHILE_PRESSED" key="E"/>
+	<action name="INTERACT" type="KEYBOARD" mode="ON_PRESS" key="F"/>
 	
 	<action name="RELOAD" type="KEYBOARD" mode="ON_PRESS" key="R"/>
 	<action name="SWITCH_RENDER_LIGHTS" type="KEYBOARD" mode="ON_PRESS" key="L"/>

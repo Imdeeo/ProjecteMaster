@@ -1,21 +1,9 @@
-function JumpingFirst(args)
-	g_Player.m_Velocity.y = 4.9
-	g_Player.m_IsJumping = true
-	g_Player.m_IsAscending = true
-	utils_log("JumpingFirst")
+function FallingFirst(args)
+	utils_log("FallingFirst")
 end
 
-function JumpingUpdate(args, _ElapsedTime)
+function FallingUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
-	
-	--// Manage player jump	
-	if(g_Player.m_IsAscending and g_Player.m_Velocity.y < 0.01) then
-		g_Player.m_IsAscending = false
-	end
-	
-	if((not g_Player.m_IsAscending) and g_Player.m_Velocity.y == 0)then
-		g_Player.m_IsJumping = false
-	end
 	
 	--// Calculate the player speed
 	local l_PlayerDisplacement = Vect3f(g_Player.m_Velocity.x * 0.985, g_Player.m_Velocity.y + g_Player.m_Gravity * _ElapsedTime, g_Player.m_Velocity.z * 0.985)
@@ -50,10 +38,14 @@ function JumpingUpdate(args, _ElapsedTime)
 	end	
 end
 
-function JumpingEnd(args)
-	utils_log("JumpingEnd")
+function FallingEnd(args)
+	utils_log("FallingEnd")
 end
 
-function JumpingToIdleCondition()
-	return not g_Player.m_IsJumping
+function ANYToFallingCondition()
+	return g_Player.m_Velocity.y < -0.1
+end
+
+function FallingToIdleCondition()
+	return g_Player.m_Velocity.y == 0
 end
