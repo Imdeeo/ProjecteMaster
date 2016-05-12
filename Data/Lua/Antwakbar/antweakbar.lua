@@ -335,16 +335,18 @@ function RegisterParticleParameters(particle_name)
 	
 	local Particle = LayerParticlesManager:get_layer("particles"):get_resource(particle_name)
 	local ParticleType = Particle:get_type()
-
-	DebugHelper:add_variable("Texture Name",CDebugHelper.string,CDebugHelper.read_write,ParticleType:get_lua_texture_name(),"")	
+	local Material = ParticleType:get_material()
+	local Texture = Material:get_texture(0)
+	
+	DebugHelper:add_variable("Texture Name",CDebugHelper.string,CDebugHelper.read_write,Texture:get_name_address(),"")
+	DebugHelper:add_lua_button("Reload Texture","ReloadParticle(\""..Texture.name:gsub("\\","+").."\")","")
 	DebugHelper:add_variable("Loop Frames",CDebugHelper.bool,CDebugHelper.read_write,ParticleType:get_lua_loop_frames(),"")
 	DebugHelper:add_variable("Emit Absolute Max",CDebugHelper.bool,CDebugHelper.read_write,ParticleType:get_emit_absolute(),"")
 	DebugHelper:add_variable("Num Frames",CDebugHelper.int,CDebugHelper.read_write,ParticleType:get_lua_num_frames(),"min=0.0 max=100.0 step=1.0")
 	DebugHelper:add_variable("Start Acc Angle",CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_starting_acceleration_angle(),"min=0.0 max=100.0 step=0.1")
 	DebugHelper:add_variable("Start Dir Angle",CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_starting_direction_angle(),"min=0.0 max=100.0 step=0.1")
-	DebugHelper:add_variable("Time Frame",CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_time_per_frame(),"min=0.0 max=100.0 step=0.1")
+	DebugHelper:add_variable("Time Frame",CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_time_per_frame(),"min=0.0 max=100.0 step=0.1")	
 	
-	local Material = ParticleType:get_material()
 	ShowMaterialParameters(DebugHelper, UABEngine, Material.name)
 	
 	DebugHelper:add_variable("Pos X",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_emission_box_position(0),"min=0.0 max=100.0 step=0.1 group=\"Emission Box Position\"")
@@ -383,7 +385,7 @@ function RegisterParticleParameters(particle_name)
 	DebugHelper:add_variable("Start Speed2 z",CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_starting_speed2(2),"min=0.0 max=100.0 step=0.1 group=\"Starting Speed 2\"")
 	DebugHelper:add_variable("Life Min",CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_life(0),"min=0.0 max=100.0 step=0.1 group=\"Life\"")
 	DebugHelper:add_variable("Life Max",CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_life(1),"min=0.0 max=100.0 step=0.1 group=\"Life\"")
-		
+	
 	DebugHelper:register_bar()
 end
 
@@ -391,3 +393,8 @@ function SaveParticles()
 	CUABEngine.get_instance():get_particle_manager():save()
 	CUABEngine.get_instance():get_material_manager():save()
 end 
+
+function ReloadParticle(_textureName)
+	local stringa = _textureName:gsub("+","\\")
+	local cono = CUABEngine.get_instance():get_texture_manager():get_resource(stringa):reload()
+end

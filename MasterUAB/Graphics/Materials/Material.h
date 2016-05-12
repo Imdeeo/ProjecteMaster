@@ -26,7 +26,7 @@ public:
 	void * GetNextParameterAddress(unsigned int NumBytes);
 	const std::vector<CMaterialParameter *> & GetParameters(){ return m_Parameters;}
 	void CMaterial::operator=(CMaterial &b);
-	std::string GetTextureName(int index = 0);
+	CTexture * GetTexture(int index = 0);
 
 	void Save(FILE* _File);
 };

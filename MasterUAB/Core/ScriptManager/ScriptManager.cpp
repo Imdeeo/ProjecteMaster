@@ -485,6 +485,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_static_mesh_manager", &CUABEngine::GetStaticMeshManager)
 			.def("get_layer_manager", &CUABEngine::GetLayerManager)
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)
+			.def("get_texture_manager", &CUABEngine::GetTextureManager)
 			.def("get_effect_manager", &CUABEngine::GetEffectManager)
 			.def("get_light_manager", &CUABEngine::GetLightManager)
 			.def("get_particle_manager", &CUABEngine::GetParticleManager)
@@ -1055,6 +1056,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_next_parameter_adress", &CMaterial::GetNextParameterAddress)
 			.def("get_parameters", &CMaterial::GetParameters, luabind::return_stl_iterator)
 			.def("get_renderable_object_technique", &CMaterial::GetRenderableObjectTechnique)
+			.def("get_texture", &CMaterial::GetTexture)
 	];
 
 	RegisterTemplatedMapManager<CMaterial>(m_LS);
@@ -1133,7 +1135,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("destroy", &CTemplatedMapManager<CTexture>::Destroy)
 	];*/
 
-
 	module(m_LS)[
 		class_<CTextureManager, CTemplatedMapManager<CTexture>>("CTextureManager")
 			.def(constructor<>())
@@ -1192,7 +1193,6 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("set_material", &CParticleSystemType::SetMaterial)
 		/*.def("get_control_points_color", &CParticleSystemType::getControlPointColors)
 		.def("get_control_points_size", &CParticleSystemType::getControlPointSizes)*/
-		.def("get_lua_texture_name", &CParticleSystemType::GetLuaTextureName)
 		.def("get_lua_angular_acceleration",  &CParticleSystemType::GetLuaAngularAcceleration)
 		.def("get_lua_awake_time", &CParticleSystemType::GetLuaAwakeTime)
 		.def("get_lua_color1", &CParticleSystemType::GetLuaColor1)
