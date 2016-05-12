@@ -1223,6 +1223,7 @@ void CScriptManager::RegisterLUAFunctions()
 		.def(constructor<>())
 		.def("load", &CParticleManager::Load)
 		.def("reload", &CParticleManager::Reload)
+		.def("save", &CParticleManager::Save)
 	];
 
 	module(m_LS)[
