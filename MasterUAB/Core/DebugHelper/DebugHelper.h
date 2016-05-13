@@ -27,10 +27,7 @@ public:
 
 		// other data types
 		POSITION_ORIENTATION
-
-
 	};
-
 
 	enum Mode
 	{

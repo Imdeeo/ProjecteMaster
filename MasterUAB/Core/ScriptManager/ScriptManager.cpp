@@ -301,11 +301,15 @@ void CScriptManager::RegisterLUAFunctions()
 			.def_readwrite("z", &Vect3f::z)
 			.def(const_self + const_self)
 			.def(const_self - const_self)
+			.def(const_self * const_self)
+			.def(const_self ^ const_self)
 			.def(const_self * other<const float>())
 			.def(const_self / other<const float>())
 			.def("set", &Vect3f::Set)
 			.def("normalize", &Vector3<float>::Normalize)
 			.def("get_normalized", &Vector3<float>::GetNormalized)
+			.def("distance", &Vect3f::Distance)
+			.def("length", &Vect3f::Length)
 	];
 
 	module(m_LS)[
@@ -331,6 +335,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def_readwrite("w", &Quatf::w)
 			.def(const_self + const_self)
 			.def(const_self - const_self)
+			.def(const_self * const_self)
 			.def(const_self * other<const float>())
 			.def(const_self / other<const float>())
 			.def("decouple_x", &Quatf::decoupleX)
@@ -339,6 +344,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_scaled_axis", &Quatf::GetScaledAxis)
 			.def("set_from_scaled_axis", &Quatf::SetFromScaledAxis)
 			.def("quat_from_yaw_pitch_roll", &Quatf::QuatFromYawPitchRoll)
+			.def("get_forward_vector", &Quatf::GetForwardVector)
 			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,float))&Quatf::slerp)
 			.scope[
 				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
@@ -485,6 +491,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_static_mesh_manager", &CUABEngine::GetStaticMeshManager)
 			.def("get_layer_manager", &CUABEngine::GetLayerManager)
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)
+			.def("get_texture_manager", &CUABEngine::GetTextureManager)
 			.def("get_effect_manager", &CUABEngine::GetEffectManager)
 			.def("get_light_manager", &CUABEngine::GetLightManager)
 			.def("get_particle_manager", &CUABEngine::GetParticleManager)
@@ -1055,6 +1062,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_next_parameter_adress", &CMaterial::GetNextParameterAddress)
 			.def("get_parameters", &CMaterial::GetParameters, luabind::return_stl_iterator)
 			.def("get_renderable_object_technique", &CMaterial::GetRenderableObjectTechnique)
+			.def("get_texture", &CMaterial::GetTexture)
 	];
 
 	RegisterTemplatedMapManager<CMaterial>(m_LS);
@@ -1133,7 +1141,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("destroy", &CTemplatedMapManager<CTexture>::Destroy)
 	];*/
 
-
 	module(m_LS)[
 		class_<CTextureManager, CTemplatedMapManager<CTexture>>("CTextureManager")
 			.def(constructor<>())
@@ -1192,7 +1199,6 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("set_material", &CParticleSystemType::SetMaterial)
 		/*.def("get_control_points_color", &CParticleSystemType::getControlPointColors)
 		.def("get_control_points_size", &CParticleSystemType::getControlPointSizes)*/
-		.def("get_lua_texture_name", &CParticleSystemType::GetLuaTextureName)
 		.def("get_lua_angular_acceleration",  &CParticleSystemType::GetLuaAngularAcceleration)
 		.def("get_lua_awake_time", &CParticleSystemType::GetLuaAwakeTime)
 		.def("get_lua_color1", &CParticleSystemType::GetLuaColor1)
