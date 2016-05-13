@@ -66,7 +66,14 @@ fn createMaterials dir filename Objs copyTexture =
 							(
 								format "\t<material name=\"%\" renderable_object_technique=\"reflection\">\n" mat[j].name to:file
 							)else(
-								format "\t<material name=\"%\" renderable_object_technique=\"lights\">\n" mat[j].name to:file
+								if (classof mat[j].bumpMap == Bitmaptexture) then
+								(
+									format "\t<material name=\"%\" renderable_object_technique=\"bump\">\n" mat[j].name to:file
+								)
+								else
+								(
+									format "\t<material name=\"%\" renderable_object_technique=\"lights\">\n" mat[j].name to:file
+								)
 							)
 						)
 						materialsDictionary.Add mat[j].name "defined"
