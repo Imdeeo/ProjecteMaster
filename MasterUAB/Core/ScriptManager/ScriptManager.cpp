@@ -628,6 +628,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<>())
 			.def("reload", &CLayerManager::Reload)
 			.def("get_layer", (CRenderableObjectsManager*(CLayerManager::*)(std::string))&CLayerManager::GetLayer)
+			.def("save", &CLayerManager::Save)
 	];
 
 

@@ -392,6 +392,7 @@ end
 function SaveParticles()
 	CUABEngine.get_instance():get_particle_manager():save()
 	CUABEngine.get_instance():get_material_manager():save()
+	CUABEngine.get_instance():get_layer_manager():save()
 end 
 
 function ReloadParticle(_textureName)

@@ -20,7 +20,7 @@ protected:
 	Vect3f m_BoundingBoxMin;
 	Vect3f m_BoundingSphereCenter;
 	float  m_BoundingSphereRadius;
-
+	std::string m_FileName;
 public:
 	CStaticMesh();
 	virtual ~CStaticMesh();

@@ -30,6 +30,7 @@ public:
 	virtual void Update(float ElapsedTime);
 	virtual void Render(CRenderManager *RM);
 	virtual void RenderDebug(CRenderManager *RM);
+	virtual void Save(FILE* _File, std::string _layer){}
 
 	void SetComponentManager(CUABComponentManager* _ComponentManager);
 	CUABComponentManager* GetComponentManager()const;
