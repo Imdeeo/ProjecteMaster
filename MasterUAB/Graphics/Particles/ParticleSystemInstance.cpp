@@ -264,3 +264,12 @@ void CParticleSystemInstance::InsertSort(ParticleData arr[], int length) {
 		}
 	}
 }
+
+void CParticleSystemInstance::Save(FILE* _File, std::string _layer)
+{
+		fprintf_s(_File, "\t\t<particle_instance name=\"%s\" layer=\"%s\" type=\"%s\" position=\"%f %f %f\" "
+			"next_particle_emission=\"%f\" awake=\"%s\" awake_timer=\"%f\" emission_box_half_size=\"%f %f %f\" visible=\"%s\"/>\n",
+		m_Name.c_str(), _layer.c_str(), m_Type->GetName().c_str(), m_Position.x, m_Position.y, m_Position.z, 
+		m_NextParticleEmission, m_Awake ? "true" : "false", m_AwakeTimer, m_EmissionBoxHalfSize.x, m_EmissionBoxHalfSize.y, m_EmissionBoxHalfSize.z,
+		m_Visible ? "true" : "false");
+}

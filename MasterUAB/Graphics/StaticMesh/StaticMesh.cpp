@@ -33,9 +33,9 @@ CStaticMesh::~CStaticMesh(void)
 
 bool CStaticMesh::Load(const std::string &FileName)
 {
-	m_Name = FileName;
+	m_FileName = FileName;
 
-	std::fstream l_File(m_Name, std::ios::binary | std::ios::in);
+	std::fstream l_File(m_FileName, std::ios::binary | std::ios::in);
 	if (!l_File.is_open())
 	{
 		return false;
@@ -313,10 +313,10 @@ bool CStaticMesh::Load(const std::string &FileName)
 
 bool CStaticMesh::Reload()
 {
-	if(m_Name!="")
+	if (m_FileName != "")
 	{
 		Destroy();
-		return Load(m_Name);
+		return Load(m_FileName);
 	}
 	else
 	{

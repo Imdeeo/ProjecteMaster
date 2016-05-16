@@ -74,6 +74,7 @@ public:
 	void Render(CRenderManager *RM);
 	//void RenderDebug(CRenderManager *RM);
 	void InsertSort(ParticleData arr[], int length);
+	void Save(FILE* _File, std::string _layer);
 	
 	CEmptyPointerClass* GetLuaEmissionBoxPosition(int index = 0)
 	{

@@ -144,3 +144,29 @@ CRenderableObjectsManager* CLayerManager::AddLayer(CXMLTreeNode &TreeNode, bool 
 	}
 	return l_auxROM;
 }
+
+void CLayerManager::Save()
+{
+	FILE* l_File;
+	if (!fopen_s(&l_File, m_Filename.c_str(), "w"))
+	{
+		fprintf_s(l_File, "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+		fprintf_s(l_File, "<renderable_objects>\n");
+
+		for (size_t i = 0; i < m_ResourcesVector.size(); ++i)
+		{
+			fprintf_s(l_File, "\t<layer name=\"%s\"/>\n",m_ResourcesVector[i]->GetName().c_str());
+		}
+
+		for (size_t i = 0; i < m_ResourcesVector.size(); ++i)
+		{
+			for (size_t j = 0; j < m_ResourcesVector[i]->GetResourcesVector().size(); ++j)
+			{
+				m_ResourcesVector[i]->GetResourcesVector()[j]->Save(l_File, m_ResourcesVector[i]->GetName());
+			}
+		}
+
+		fprintf_s(l_File, "</renderable_objects>\n");
+		fclose(l_File);
+	}
+}

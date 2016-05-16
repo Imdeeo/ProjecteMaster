@@ -32,6 +32,7 @@ bool CStaticMeshManager::Load(const std::string &FileName)
 					l_MeshFileName = l_Element.GetPszProperty("filename");
 
 					CStaticMesh *l_StaticMesh = new CStaticMesh;
+					l_StaticMesh->SetName(l_MeshName);
 					l_StaticMesh->Load(l_MeshFileName);
 
 					AddResource(l_MeshName, l_StaticMesh);
