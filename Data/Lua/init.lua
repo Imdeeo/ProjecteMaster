@@ -13,6 +13,9 @@ m_activeA = false
 function mainLua(level)
 	InitAntweakBar()
 	m_CharacterManager:LoadXML("Data\\level_"..level.."\\characters.xml")
+	local l_SoundEvent = SoundEvent()
+	l_SoundEvent.event_name = "water"
+	CUABEngine.get_instance():get_sound_manager():play_event(l_SoundEvent, "Test")
 end
 
 function luaUpdate(_ElapsedTime)

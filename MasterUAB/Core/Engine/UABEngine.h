@@ -19,6 +19,7 @@ class CRenderableObjectTechniqueManager;
 class CSceneRendererCommandManager;
 class CParticleManager;
 class CGUIManager;
+class ISoundManager;
 
 #include <string>
 
@@ -45,6 +46,7 @@ private:
 	CSceneRendererCommandManager* m_SceneRendererCommandManager;
 	CParticleManager* m_ParticleManager;
 	CGUIManager* m_GUIManager;
+	ISoundManager* m_SoundManager;
 
 	std::string m_LevelLoaded;
 	
@@ -65,6 +67,7 @@ public:
 	CSceneRendererCommandManager * GetSceneRendererCommandManager()const;
 	CParticleManager * GetParticleManager()const;
 	CGUIManager * GetGUIManager() const;
+	ISoundManager * GetSoundManager()const;
 
 	std::string GetLevelLoaded()const{return m_LevelLoaded;}
 	

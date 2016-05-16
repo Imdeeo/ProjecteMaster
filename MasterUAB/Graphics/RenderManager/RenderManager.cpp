@@ -66,6 +66,14 @@ void CRenderManager::SetCurrentCamera(const CCamera& _CurrentCamera)
 	m_CullFrustum.Update(viewProj);
 }
 
+const CCamera *CRenderManager::GetCurrentCamera()
+{
+	if (m_UseDebugCamera)
+		return &m_DebugCamera;
+	else
+		return &m_CurrentCamera;
+}
+
 //bool CRenderManager::AddRenderableObjectToRenderList(const CRenderableObject* _RenderableObject)
 //{
 //	// Alguien se atrebe a arreglar el frustum?
