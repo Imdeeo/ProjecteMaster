@@ -18,6 +18,10 @@ class 'CPlayer'
 		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
 		self.m_InputManager = CInputManager.get_input_manager()
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
+		self.m_SoundManager = CUABEngine.get_instance():get_sound_manager()
+		self.m_SoundManager:register_speaker(self.m_RenderableObject)
+		self.m_JumpSoundEvent = SoundEvent()
+		self.m_JumpSoundEvent.event_name = "Jump"
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
 		self.m_Speed = 5

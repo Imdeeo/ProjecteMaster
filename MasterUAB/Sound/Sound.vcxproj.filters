@@ -2,5 +2,24 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dummy.cpp" />
+    <ClCompile Include="SoundManager\SoundManager.cpp">
+      <Filter>SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager\SoundManagerImplementation.cpp">
+      <Filter>SoundManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="SoundManager">
+      <UniqueIdentifier>{4a5a5505-2a76-4e66-b6c9-d8b3a7c4f94a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SoundManager\SoundManager.h">
+      <Filter>SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager\SoundManagerImplementation.h">
+      <Filter>SoundManager</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

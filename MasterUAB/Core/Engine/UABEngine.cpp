@@ -20,6 +20,7 @@
 #include "SceneRender\SceneRendererCommandManager.h"
 #include "Particles\ParticleManager.h"
 #include "GUIManager.h"
+#include "SoundManager\SoundManager.h"
 
 CUABEngine::CUABEngine(void)
 {
@@ -39,6 +40,7 @@ CUABEngine::CUABEngine(void)
 	m_RenderableObjectTechniqueManager = new CRenderableObjectTechniqueManager();
 	m_SceneRendererCommandManager = new CSceneRendererCommandManager();
 	m_GUIManager = new CGUIManager();
+	m_SoundManager = ISoundManager::InstantiateSoundManager();
 }
 
 CUABEngine::~CUABEngine(void)
@@ -61,6 +63,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_PhysXManager);
 	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_GUIManager)
+	CHECKED_DELETE(m_SoundManager);
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -94,6 +97,9 @@ void CUABEngine::Init()
 	m_Cinematic->Play();
 	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
 	m_RenderManager->Init();
+	m_SoundManager->SetPath("Data\\Sounds\\");
+	m_SoundManager->Init();
+	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
 
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	m_ScriptManager->RunCode("mainLua(\""+m_LevelLoaded+"\")");
@@ -135,3 +141,4 @@ UAB_GET_PROPERTY_CPP(CUABEngine,CRenderableObjectTechniqueManager *, RenderableO
 UAB_GET_PROPERTY_CPP(CUABEngine,CSceneRendererCommandManager *, SceneRendererCommandManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,ISoundManager *, SoundManager)
