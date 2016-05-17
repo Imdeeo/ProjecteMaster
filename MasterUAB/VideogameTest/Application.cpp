@@ -134,14 +134,16 @@ void CApplication::Update(float _ElapsedTime)
 		}
 	}*/	
 
-	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
-	UABEngine.GetPhysXManager()->Update(_ElapsedTime);
-	UABEngine.GetCameraControllerManager()->Update(_ElapsedTime);
-	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
-	UABEngine.GetLayerManager()->Update(_ElapsedTime);
-	UABEngine.GetScriptManager()->RunCode("luaUpdate(" + std::to_string(_ElapsedTime) + ")");
-	const CCamera *l_CurrentCamera = UABEngine.GetRenderManager()->GetCurrentCamera();
-	UABEngine.GetSoundManager()->Update(l_CurrentCamera);
+	if (_ElapsedTime > 0.0f){
+		UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
+		UABEngine.GetPhysXManager()->Update(_ElapsedTime);
+		UABEngine.GetCameraControllerManager()->Update(_ElapsedTime);
+		UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
+		UABEngine.GetLayerManager()->Update(_ElapsedTime);
+		UABEngine.GetScriptManager()->RunCode("luaUpdate(" + std::to_string(_ElapsedTime) + ")");
+		const CCamera *l_CurrentCamera = UABEngine.GetRenderManager()->GetCurrentCamera();
+		UABEngine.GetSoundManager()->Update(l_CurrentCamera);
+	}
 }
 
 void CApplication::Render()

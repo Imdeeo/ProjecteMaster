@@ -56,8 +56,8 @@ public:
 
 	std::vector<ControlPointColor> m_ControlPointColors;
 	std::vector<ControlPointSize> m_ControlPointSizes;
-	std::vector<ControlPointColor> GetControlPointColors() { return m_ControlPointColors; }
-	std::vector<ControlPointSize> GetControlPointSizes() { return m_ControlPointSizes; }
+	int GetColorsControlPointSize() { return m_ControlPointColors.size(); }
+	int GetSizesControlPointSize() { return m_ControlPointSizes.size(); }
 
 	CEmptyPointerClass* GetLuaNumFrames()
 	{
@@ -157,6 +157,31 @@ public:
 	CEmptyPointerClass* GetLuaColor2()
 	{
 		return (CEmptyPointerClass*)&m_Color2;
+	}
+
+	CEmptyPointerClass* GetLuaCPSize(int index = 0, int index2 = 0)
+	{
+		return (CEmptyPointerClass*)&(m_ControlPointSizes[index].m_Size[index2]);
+	}
+	
+	CEmptyPointerClass* GetLuaCPSizeTime(int index = 0, int index2 = 0)
+	{
+		return (CEmptyPointerClass*)&(m_ControlPointSizes[index].m_Time[index2]);
+	}
+
+	CEmptyPointerClass* GetLuaCPColor1(int index = 0)
+	{
+		return (CEmptyPointerClass*)&(m_ControlPointColors[index].m_Color1);
+	}
+
+	CEmptyPointerClass* GetLuaCPColor2(int index = 0)
+	{
+		return (CEmptyPointerClass*)&(m_ControlPointColors[index].m_Color2);
+	}
+
+	CEmptyPointerClass* GetLuaCPColorTime(int index = 0, int index2 = 0)
+	{
+		return (CEmptyPointerClass*)&(m_ControlPointColors[index].m_Time[index2]);
 	}
 };
 
