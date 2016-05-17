@@ -14,7 +14,7 @@
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "ScriptManager\ScriptManager.h"
 #include "Utils\CEmptyPointerClass.h"
-
+	
 #include "RenderableObjects\RenderableVertexs.h"
 
 #include "XML\XMLTreeNode.h"
@@ -756,4 +756,10 @@ CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionZ(const std::s
 {
 	physx::PxController* aux = m_CharacterControllers[_name];
 	return (CEmptyPointerClass*)(&aux->getPosition().z);
+}
+
+void CPhysXManager::SetCharacterControllersHeight(const std::string _name, float _value)
+{
+	physx::PxController* aux = m_CharacterControllers[_name];
+	aux->resize((physx::PxReal)_value);
 }
