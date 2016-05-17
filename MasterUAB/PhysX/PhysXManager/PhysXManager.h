@@ -95,6 +95,8 @@ public:
 	CEmptyPointerClass* GetCharacterControllersPositionX(const std::string _name);
 	CEmptyPointerClass* GetCharacterControllersPositionY(const std::string _name);
 	CEmptyPointerClass* GetCharacterControllersPositionZ(const std::string _name);
+	void CPhysXManager::SetCharacterControllersHeight(const std::string _name, float _value);
+
 protected:
 	std::string						m_Filename;
 
