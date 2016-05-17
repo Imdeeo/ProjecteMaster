@@ -26,7 +26,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		std::string l_Name = GetName();
 		std::string l_PxType = TreeNode.GetPszProperty("physics_type");
 		std::string l_PxMaterial = TreeNode.GetPszProperty("physics_material");
-		int l_PxGroup = TreeNode.GetIntProperty("physics_group");
+		std::string l_PxGroup = TreeNode.GetPszProperty("physics_group");
 
 		Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
 		l_BB = Vect3f(abs(l_BB.x), abs(l_BB.y), abs(l_BB.z));

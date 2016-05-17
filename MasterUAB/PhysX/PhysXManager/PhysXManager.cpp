@@ -139,15 +139,6 @@ inline void L_PutGroupToShape(physx::PxShape* shape, int _group)
 	shape->setSimulationFilterData(filterData);
 }
 
-inline void L_PutGroupToController(physx::PxShape* shape, int _group)
-{
-	physx::PxFilterData filterData;
-	filterData.setToDefault();
-	filterData.word0 = _group;
-	filterData.word1 = st_CollisionGroups[_group];
-	shape->setQueryFilterData(filterData);
-	shape->setSimulationFilterData(filterData);
-}
 
 class CPhysXManagerImplementation:
 	public CPhysXManager,
@@ -156,6 +147,7 @@ class CPhysXManagerImplementation:
 	public physx::PxControllerBehaviorCallback
 {
 private :
+
 	void Init()
 	{
 		m_Foundation = PxCreateFoundation(PX_PHYSICS_VERSION, gDefaultAllocatorCallback, gDefaultErrorCallback);
@@ -208,11 +200,6 @@ private :
 #endif
 		m_ControllerManager->setOverlapRecoveryModule(true);
 
-		st_CollisionGroups[FilterGroup::ePLAYER] = FilterGroup::eTRIGGER2|FilterGroup::eOTHER;
-		st_CollisionGroups[FilterGroup::eTRIGGER] = FilterGroup::ePLAYER;
-		st_CollisionGroups[FilterGroup::eOTHER] = FilterGroup::ePLAYER;
-		st_CollisionGroups[FilterGroup::eTRIGGER2] = FilterGroup::ePLAYER;
-
 	}
 
 	void Destroy()
@@ -245,6 +232,83 @@ private :
 		m_CharacterControllers.clear();
 	}
 
+	bool LoadMaterials(const CXMLTreeNode _TreeNode){
+
+		std::string l_EffectName;
+		float l_StaticFriction;
+		float l_DynamicFriction;
+		float l_Restitution;
+
+		CXMLTreeNode l_Input = _TreeNode;
+		if (l_Input.Exists())
+		{
+			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			{
+				CXMLTreeNode l_Element = l_Input(i);
+				if (l_Element.GetName() == std::string("material"))
+				{
+					l_EffectName = l_Element.GetPszProperty("name");
+					l_StaticFriction = l_Element.GetFloatProperty("static_friction");
+					l_DynamicFriction = l_Element.GetFloatProperty("dynamic_friction");
+					l_Restitution = l_Element.GetFloatProperty("restitution");
+					RegisterMaterial(l_EffectName, l_StaticFriction, l_DynamicFriction, l_Restitution);
+				}
+			}
+		}
+		return true;
+	}
+	bool LoadCollisionGroups(const CXMLTreeNode _TreeNode){
+
+		std::string l_GroupName;
+		m_Groups.clear();
+		
+		CXMLTreeNode l_Input = _TreeNode;
+		if (l_Input.Exists())
+		{
+			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			{
+				CXMLTreeNode l_Element = l_Input(i);
+				if (l_Element.GetName() == std::string("collision_group"))
+				{
+					l_GroupName = l_Element.GetPszProperty("name");
+					m_Groups[l_GroupName] = (1 << m_Groups.size());
+				}
+			}
+		}
+		return true;
+	}
+	bool LoadGroupsRelations(const CXMLTreeNode _TreeNode){
+
+		std::string l_GroupName;
+		physx::PxU32 l_Group;
+
+		CXMLTreeNode l_Input = _TreeNode;
+		if (l_Input.Exists())
+		{
+			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			{
+				CXMLTreeNode l_Element = l_Input(i);
+				if (l_Element.GetName() == std::string("group"))
+				{
+					l_GroupName = l_Element.GetPszProperty("name");
+					l_Group = m_Groups[l_GroupName];
+					st_CollisionGroups[l_Group] = 0;
+					for (int i = 0; i < l_Element.GetNumChildren(); ++i)
+					{
+						CXMLTreeNode l_SubElement = l_Element(i);
+						std::string l_Collision;
+						if (l_SubElement.GetName() == std::string("collides"))
+						{
+							l_Collision = l_SubElement.GetPszProperty("name");
+							st_CollisionGroups[l_Group] |= m_Groups[l_Collision];
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
 public:
 
 	CPhysXManagerImplementation(){Init();}
@@ -320,7 +384,7 @@ public:
 		return physx::PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
 	}
 
-	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, int _group)
+	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, std::string _group)
 	{
 		//PROPIA
 		/*assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
@@ -396,11 +460,46 @@ public:
 		l_actor->getShapes(&shape, 1);
 		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
 		shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
-		L_PutGroupToShape(shape, _group);
+		L_PutGroupToShape(shape, m_Groups[_group]);
 		l_actor->attachShape(*shape);
 
 		AddActor(_name, _position, Quatf(0, 0, 0, 1), l_actor);
 		m_Scene->addActor(*l_actor);
+	}
+	bool LoadPhysx(const std::string &Filename)
+	{
+		m_Filename = Filename;
+		
+
+		CXMLTreeNode l_XML;
+		if (l_XML.LoadFile(m_Filename.c_str()))
+		{
+			CXMLTreeNode l_Input = l_XML["physx"];
+			if (l_Input.Exists())
+			{
+				for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+				{
+					CXMLTreeNode l_Element = l_Input(i);
+					if (l_Element.GetName() == std::string("materials"))
+					{
+						LoadMaterials(l_Element);
+					}
+					if (l_Element.GetName() == std::string("collision_groups"))
+					{
+						LoadCollisionGroups(l_Element);
+					}
+					if (l_Element.GetName() == std::string("groups_relations"))
+					{
+						LoadGroupsRelations(l_Element);
+					}
+				}
+			}
+		}
+		else
+		{
+			return false;
+		}
+		return true;
 	}
 };
 
@@ -423,40 +522,7 @@ void CPhysXManager::RegisterMaterial(const std::string &name, float staticFricti
 	m_Materials[name] = m_PhysX->createMaterial(staticFriction,dynamicFriction,restitution);
 }
 
-bool CPhysXManager::LoadMaterials(const std::string &Filename)
-{
-	m_Filename = Filename;
-	std::string l_EffectName;
-	float l_StaticFriction;
-	float l_DynamicFriction;
-	float l_Restitution;
 
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(m_Filename.c_str()))
-	{
-		CXMLTreeNode l_Input = l_XML["physx"];
-		if (l_Input.Exists())
-		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
-			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("material"))
-				{
-					l_EffectName = l_Element.GetPszProperty("name");
-					l_StaticFriction = l_Element.GetFloatProperty("static_friction");
-					l_DynamicFriction = l_Element.GetFloatProperty("dynamic_friction");
-					l_Restitution = l_Element.GetFloatProperty("restitution");
-					RegisterMaterial(l_EffectName, l_StaticFriction, l_DynamicFriction, l_Restitution);
-				}
-			}
-		}
-	}
-	else
-	{
-		return false;
-	}
-	return true;
-}
 
 inline void CPhysXManager::AssertCoordArrays()
 {
@@ -510,9 +576,9 @@ void CPhysXManager::GetActorTransform(const std::string& _actorName, Vect3f* Pos
 	Orienation_ = &(m_ActorOrientations[l_index]);
 }
 
-void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shape, physx::PxRigidActor* _body, Vect3f _position, Quatf _orientation, int _group)
+void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shape, physx::PxRigidActor* _body, Vect3f _position, Quatf _orientation, std::string _group)
 {
-	L_PutGroupToShape(_shape, _group);
+	L_PutGroupToShape(_shape, m_Groups[_group]);
 
 	_body->attachShape(*_shape);
 
@@ -520,7 +586,7 @@ void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shap
 	m_Scene->addActor(*_body);
 }
 
-void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shape, physx::PxRigidBody* _body, Vect3f _position, Quatf _orientation, float _density, int _group, bool _isKinematic)
+void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shape, physx::PxRigidBody* _body, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic)
 {
 	_body->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, _isKinematic);
 
@@ -528,7 +594,7 @@ void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shap
 	RegisterActor(_name, _shape, _body, _position, _orientation, _group);
 }
 
-physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
+physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
 
@@ -540,7 +606,7 @@ physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, const 
 	return shape;
 }
 
-void CPhysXManager::CreateStaticBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
+void CPhysXManager::CreateStaticBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
 	physx::PxVec3 l_HalfSize = physx::PxVec3(_size.x / 2, _size.y / 2, _size.z / 2);
 	CreateStaticShape(
@@ -552,7 +618,7 @@ void CPhysXManager::CreateStaticBox(const std::string _name, Vect3f _size, const
 		_group)->release();
 }
 
-void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
+void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
 	CreateStaticShape(
 		_name,
@@ -564,13 +630,13 @@ void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, c
 }
 
 
-void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group, std::string _OnTriggerLuaFunction/*, std::vector<std::string> _ActiveActors*/)
+void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerLuaFunction/*, std::vector<std::string> _ActiveActors*/)
 {	
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2), *m_Materials[_Material], true);
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
-	L_PutGroupToShape(shape,_group);
+	L_PutGroupToShape(shape, m_Groups[_group]);
 
 	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
 	l_Body->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
@@ -588,14 +654,14 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 }
 
 
-void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, int _group, std::string _OnTriggerLuaFunction/*, std::vector<std::string> _ActiveActors*/)
+void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerLuaFunction/*, std::vector<std::string> _ActiveActors*/)
 
 {
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxSphereGeometry(_radius), *m_Materials[_Material], true);
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
-	L_PutGroupToShape(shape, _group);
+	L_PutGroupToShape(shape, m_Groups[_group]);
 
 	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
 	l_Body->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
@@ -642,7 +708,7 @@ void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, 
 //
 //}
 
-void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneOffset, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
+void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneOffset, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
 	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z, _PlaneOffset), *l_Material);
@@ -651,7 +717,7 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 	size_t numShapes = groundPlane->getShapes(&shape,1);
 	assert(numShapes == 1);
 
-	L_PutGroupToShape(shape, _group);
+	L_PutGroupToShape(shape, m_Groups[_group]);
 	groundPlane->attachShape(*shape);
 	groundPlane->userData = (void*)AddActor(_name, _position, _orientation, groundPlane);
 	shape->userData = groundPlane->userData;
@@ -660,7 +726,7 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 }
 
 void CPhysXManager::CreateDinamicShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation,
-	float _density, int _group, bool _isKinematic)
+	float _density, std::string _group, bool _isKinematic)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
 	physx::PxShape* shape = m_PhysX->createShape(_geometry, *l_Material);
@@ -672,7 +738,7 @@ void CPhysXManager::CreateDinamicShape(const std::string _name, const physx::PxG
 }
 
 void CPhysXManager::CreateDinamicBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation,
-	float _density, int _group, bool isKinematic)
+	float _density, std::string _group, bool isKinematic)
 {
 	CreateDinamicShape(_name,
 		physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2),
@@ -680,7 +746,7 @@ void CPhysXManager::CreateDinamicBox(const std::string _name, Vect3f _size, cons
 }
 
 void CPhysXManager::CreateDinamicSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation,
-	float _density, int _group, bool isKinematic)
+	float _density, std::string _group, bool isKinematic)
 {
 	CreateDinamicShape(_name,
 		physx::PxSphereGeometry(_radius),
@@ -708,7 +774,7 @@ void CPhysXManager::CreateRigidStatic(const std::string &Name, const Vect3f Size
 
 }
 
-physx::PxShape* CPhysXManager::CreateStaticShapeFromBody(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
+physx::PxShape* CPhysXManager::CreateStaticShapeFromBody(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
@@ -720,7 +786,7 @@ physx::PxShape* CPhysXManager::CreateStaticShapeFromBody(const std::string _name
 }
 
 void CPhysXManager::CreateDinamicShapeFromBody(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation,
-	float _density, int _group, bool _isKinematic)
+	float _density, std::string _group, bool _isKinematic)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
 	physx::PxRigidDynamic* body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
@@ -748,13 +814,13 @@ physx::PxConvexMesh* L_CreateConvexMesh(std::vector<Vect3f> _vertices, physx::Px
 }
 
 void CPhysXManager::CreateComplexDinamicShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation,
-	float _density, int _group, bool _isKinematic)
+	float _density, std::string _group, bool _isKinematic)
 {
 	physx::PxConvexMesh* convexMesh = L_CreateConvexMesh(_vertices, m_Cooking, m_PhysX);
 	CreateDinamicShapeFromBody(_name, physx::PxConvexMeshGeometry(convexMesh), _Material, _position, _orientation, _density, _group, _isKinematic);
 }
 
-void CPhysXManager::CreateComplexStaticShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
+void CPhysXManager::CreateComplexStaticShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
 	physx::PxConvexMesh* convexMesh = L_CreateConvexMesh(_vertices, m_Cooking, m_PhysX);
 	CreateStaticShapeFromBody(_name, physx::PxConvexMeshGeometry(convexMesh), _Material, _position, _orientation, _group)->release();
@@ -810,11 +876,11 @@ void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement,
 	physx::PxVec3 v = actor->getLinearVelocity();
 }
 
-bool CPhysXManager::Raycast(const Vect3f _origin, const Vect3f _end, int GROUPS,RaycastData* result_)
+bool CPhysXManager::Raycast(const Vect3f _origin, const Vect3f _end, int _GROUPS,RaycastData* result_)
 {
 	physx::PxFilterData l_filterData;
 	l_filterData.setToDefault();
-	l_filterData.word0 = GROUPS;  // GROUP1 | GROUP2;
+	l_filterData.word0 = _GROUPS;  // GROUP1 | GROUP2;
 	physx::PxRaycastBuffer l_hit;
 	bool didHit = m_Scene->raycast(
 		CastVec(_origin),
