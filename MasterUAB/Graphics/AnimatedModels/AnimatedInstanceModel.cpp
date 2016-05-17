@@ -193,7 +193,7 @@ CAnimatedInstanceModel & CAnimatedInstanceModel::operator=(CAnimatedInstanceMode
 
 void CAnimatedInstanceModel::Save(FILE* _File, std::string _layer)
 {
-	fprintf_s(_File, "\t\t<animated_instance_mesh name=\"%s\" layer=\"%s\" core_name=\"%s\" position=\"%f %f %f\" "
+	fprintf_s(_File, "\t<animated_instance_mesh name=\"%s\" layer=\"%s\" core_name=\"%s\" position=\"%f %f %f\" "
 		"rotation=\"%f %f %f %f\" create_physics=\"false\" visible=\"false\"/>\n",
 		m_Name.c_str(), _layer.c_str(), m_AnimatedCoreModel->GetName().c_str(), m_Position.x, m_Position.y, m_Position.z, 
 		m_Rotation.x, m_Rotation.y, m_Rotation.z, m_Rotation.w, m_Visible ? "true" : "false");

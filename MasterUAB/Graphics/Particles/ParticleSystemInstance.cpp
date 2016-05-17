@@ -26,7 +26,6 @@ CParticleSystemInstance::CParticleSystemInstance(CXMLTreeNode &TreeNode) :
 	m_EmissionScaler = m_Type->GetEmitAbsolute() ? 1 : 1.0f / m_EmissionVolume;
 	m_ActiveParticles = 0;
 	m_RenderableVertex = new CUABPointsListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE, MAX_PARTICLE_PER_INSTANCE, true);
-	//m_RenderableVertex = new CUABTrianglesListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE, MAX_PARTICLE_PER_INSTANCE, true);
 }
 
 CParticleSystemInstance::~CParticleSystemInstance(void)
@@ -237,18 +236,6 @@ void CParticleSystemInstance::Render(CRenderManager *RM)
 		m_RenderableVertex->UpdateVertexs(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE);
 		m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData(), m_ActiveParticles);
 	}
-	
-	/*m_ParticleRenderableData[0].Position = Vect3f(0, 0, 0);
-	m_ParticleRenderableData[0].UV = Vect2f(1, 0.5);
-	m_ParticleRenderableData[1].Position = Vect3f(1, 0, 0);
-	m_ParticleRenderableData[2].Position = Vect3f(0, 1, 0);
-
-	CMaterial* l_Material = m_Type->GetMaterial();
-	l_Material->Apply();
-	CEffectTechnique* l_EffectTechnique = l_Material->GetRenderableObjectTechnique()->GetEffectTechnique();
-	CEffectManager::SetSceneConstants(l_EffectTechnique);
-	m_RenderableVertex->UpdateVertexs(m_ParticleRenderableData, MAX_PARTICLE_PER_INSTANCE);
-	m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData(), 3);*/
 }
 
 void CParticleSystemInstance::InsertSort(ParticleData arr[], int length) {
@@ -267,7 +254,7 @@ void CParticleSystemInstance::InsertSort(ParticleData arr[], int length) {
 
 void CParticleSystemInstance::Save(FILE* _File, std::string _layer)
 {
-		fprintf_s(_File, "\t\t<particle_instance name=\"%s\" layer=\"%s\" type=\"%s\" position=\"%f %f %f\" "
+		fprintf_s(_File, "\t<particle_instance name=\"%s\" layer=\"%s\" type=\"%s\" position=\"%f %f %f\" "
 			"next_particle_emission=\"%f\" awake=\"%s\" awake_timer=\"%f\" emission_box_half_size=\"%f %f %f\" visible=\"%s\"/>\n",
 		m_Name.c_str(), _layer.c_str(), m_Type->GetName().c_str(), m_Position.x, m_Position.y, m_Position.z, 
 		m_NextParticleEmission, m_Awake ? "true" : "false", m_AwakeTimer, m_EmissionBoxHalfSize.x, m_EmissionBoxHalfSize.y, m_EmissionBoxHalfSize.z,

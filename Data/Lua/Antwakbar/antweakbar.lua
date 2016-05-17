@@ -385,6 +385,22 @@ function RegisterParticleParameters(particle_name)
 	DebugHelper:add_variable("Start Speed2 z",CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_starting_speed2(2),"min=0.0 max=100.0 step=0.1 group=\"Starting Speed 2\"")
 	DebugHelper:add_variable("Life Min",CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_life(0),"min=0.0 max=100.0 step=0.1 group=\"Life\"")
 	DebugHelper:add_variable("Life Max",CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_life(1),"min=0.0 max=100.0 step=0.1 group=\"Life\"")
+
+	local index = ParticleType:get_sizes_control_points_size()
+	for i = 0,index-1 do
+		DebugHelper:add_variable("Size Width"..(i+1),CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_control_point_size(i,0),"min=0.0 max=100.0 step=0.1 group=\"Control Point Size "..(i+1).."\"")
+		DebugHelper:add_variable("Size Height"..(i+1),CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_control_point_size(i,1),"min=0.0 max=100.0 step=0.1 group=\"Control Point Size "..(i+1).."\"")
+		DebugHelper:add_variable("STime Min"..(i+1),CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_control_point_size_time(i,0),"min=0.0 max=100.0 step=0.1 group=\"Control Point Size "..(i+1).."\"")
+		DebugHelper:add_variable("STime Max"..(i+1),CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_control_point_size_time(i,1),"min=0.0 max=100.0 step=0.1 group=\"Control Point Size "..(i+1).."\"")
+	end
+	
+	local index2 = ParticleType:get_colors_control_points_size()
+	for i = 0,index2-1 do
+		DebugHelper:add_variable("First Color"..(i+1),CDebugHelper.color,CDebugHelper.read_write,ParticleType:get_lua_control_point_color1(i),"group=\"Control Point Color "..(i+1).."\"")
+		DebugHelper:add_variable("Second Color"..(i+1),CDebugHelper.color,CDebugHelper.read_write,ParticleType:get_lua_control_point_color2(i),"group=\"Control Point Color "..(i+1).."\"")
+		DebugHelper:add_variable("CTime Min"..(i+1),CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_control_point_color_time(i,0),"min=0.0 max=100.0 step=0.1 group=\"Control Point Color "..(i+1).."\"")
+		DebugHelper:add_variable("CTime Max"..(i+1),CDebugHelper.float,CDebugHelper.read_write,ParticleType:get_lua_control_point_color_time(i,1),"min=0.0 max=100.0 step=0.1 group=\"Control Point Color "..(i+1).."\"")
+	end
 	
 	DebugHelper:register_bar()
 end

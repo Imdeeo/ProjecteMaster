@@ -1201,8 +1201,8 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("set_time_per_frame", &CParticleSystemType::SetTimePerFrame)
 		.def("get_material", &CParticleSystemType::GetMaterial)
 		.def("set_material", &CParticleSystemType::SetMaterial)
-		/*.def("get_control_points_color", &CParticleSystemType::getControlPointColors)
-		.def("get_control_points_size", &CParticleSystemType::getControlPointSizes)*/
+		.def("get_sizes_control_points_size", &CParticleSystemType::GetSizesControlPointSize)
+		.def("get_colors_control_points_size", &CParticleSystemType::GetColorsControlPointSize)
 		.def("get_lua_angular_acceleration",  &CParticleSystemType::GetLuaAngularAcceleration)
 		.def("get_lua_awake_time", &CParticleSystemType::GetLuaAwakeTime)
 		.def("get_lua_color1", &CParticleSystemType::GetLuaColor1)
@@ -1224,6 +1224,11 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("get_lua_starting_speed2", &CParticleSystemType::GetLuaStartingSpeed2)
 		.def("get_lua_time_per_frame", &CParticleSystemType::GetLuaTimePerFrame)
 		.def("get_lua_life", &CParticleSystemType::GetLuaLife)
+		.def("get_lua_control_point_size", &CParticleSystemType::GetLuaCPSize)
+		.def("get_lua_control_point_size_time", &CParticleSystemType::GetLuaCPSizeTime)
+		.def("get_lua_control_point_color1", &CParticleSystemType::GetLuaCPColor1)
+		.def("get_lua_control_point_color2", &CParticleSystemType::GetLuaCPColor2)
+		.def("get_lua_control_point_color_time", &CParticleSystemType::GetLuaCPColorTime)
 	];
 
 	RegisterTemplatedMapManager<CParticleSystemType>(m_LS);
