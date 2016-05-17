@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <physx>
-	<material name="FisicasAux" static_friction="0.5" dynamic_friction="0.5" restitution="0.1"/>
+	<materials>
+		<material name="FisicasAux" static_friction="0.5" dynamic_friction="0.5" restitution="0.1"/>
+	</materials>
+	<collision_groups>
+		<collision_group name="Plane"/>
+		<collision_group name="Objects"/>
+		<collision_group name="Triggers"/>
+		<collision_group name="Player"/>
+	</collision_groups>
+	<groups_relations>
+		<group name="Plane">
+			<collides name="Player"/>
+		</group>
+		<group name="Objects">
+			<collides name="Player"/>
+		</group>
+		<group name="Triggers">
+			<collides name="Player"/>
+		</group>
+		<group name="Player">
+			<collides name="Plane"/>
+			<collides name="Objects"/>
+			<collides name="Triggers"/>
+		</group>
+	</groups_relations>
 </physx>

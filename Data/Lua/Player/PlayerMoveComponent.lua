@@ -18,7 +18,7 @@ function FnOnCreateController (_owner)
 	local l_physXManager = UABEngine:get_physX_manager()
 	local l_Player = CCharacterManager.get_instance():get_resource("player")
 	l_physXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
-	l_physXManager:create_character_controller(l_Player.name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", 1)
+	l_physXManager:create_character_controller(l_Player.name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", "Player")
 end
 
 function FnOnDestroyController ()

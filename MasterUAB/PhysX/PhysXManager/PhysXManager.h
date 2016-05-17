@@ -37,6 +37,7 @@ namespace physx
 	}
 
 	typedef debugger::comm::PvdConnection PxVisualDebuggerConnection;
+	typedef unsigned int PxU32;
 }
 
 typedef struct SRaycastData
@@ -60,7 +61,7 @@ public:
 	virtual ~CPhysXManager(){ Destroy(); }
 
 	void RegisterMaterial(const std::string &name, float staticFriction, float dynamicFriction, float restitution);
-	bool LoadMaterials(const std::string &Filename);
+	virtual bool LoadPhysx(const std::string &Filename)=0;
 	inline void AssertCoordArrays();
 	inline size_t GetActorIndexFromName(const std::string& _actorName);
 
@@ -69,19 +70,19 @@ public:
 
 	void GetActorTransform(const std::string& _actorName,Vect3f* Pos_, Quatf* Orienation_);
 
-	void CreateStaticBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group);
-	void CreateStaticSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, int _group);
-	void CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance, const std::string _Material, Vect3f _position, Quatf _orientation, int _group);
+	void CreateStaticBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
+	void CreateStaticSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
+	void CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
 	void CreateRigidStatic(const std::string &Name, const Vect3f Size, const Vect3f &Position, const Quatf &Orientation, const std::string &MaterialName);
-	void CreateDinamicBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, int _group, bool _isKinematic = false);
-	void CreateDinamicSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, int _group, bool _isKinematic = false);
+	void CreateDinamicBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
+	void CreateDinamicSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
 
-	void CreateComplexDinamicShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, int _group, bool _isKinematic = false);
-	void CreateComplexStaticShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, int _group);
+	void CreateComplexDinamicShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
+	void CreateComplexStaticShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
 
-	void CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, int _group, std::string _OnTriggerLuaFunction/*, std::vector<std::string> _ActiveActors*/);
-	void CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, int _group, std::string _OnTriggerLuaFunction/*, std::vector<std::string> _ActiveActors*/);
-	virtual void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, int _group) = 0;
+	void CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerLuaFunction/*, std::vector<std::string> _ActiveActors*/);
+	void CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerLuaFunction/*, std::vector<std::string> _ActiveActors*/);
+	virtual void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, std::string _group) = 0;
 
 	void CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime);
 
@@ -100,6 +101,8 @@ protected:
 
 	physx::PxFoundation				*m_Foundation;
 	physx::PxPhysics				*m_PhysX;
+
+	std::map<std::string, physx::PxU32> m_Groups;
 
 #if USE_PHYSX_DEBUG
 	physx::PxVisualDebuggerConnection *m_DebugConnection;
@@ -126,13 +129,13 @@ protected:
 	
 	size_t AddActor(std::string _actorName, Vect3f _position, Quatf _orientation, physx::PxActor*);
 
-	physx::PxShape* CreateStaticShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group);
-	physx::PxShape* CreateStaticShapeFromBody(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, int _group);
-	void CreateDinamicShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, int _group, bool _isKinematic = false);
-	void CreateDinamicShapeFromBody(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, int _group, bool _isKinematic = false);
+	physx::PxShape* CreateStaticShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
+	physx::PxShape* CreateStaticShapeFromBody(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
+	void CreateDinamicShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
+	void CreateDinamicShapeFromBody(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
 
-	void RegisterActor(const std::string _name, physx::PxShape* _shape, physx::PxRigidActor* _body, Vect3f _position, Quatf _orientation, int _group);
-	void RegisterActor(const std::string _name, physx::PxShape* _shape, physx::PxRigidBody* _body, Vect3f _position, Quatf _orientation, float _density, int _group, bool _isKinematic = false);
+	void RegisterActor(const std::string _name, physx::PxShape* _shape, physx::PxRigidActor* _body, Vect3f _position, Quatf _orientation, std::string _group);
+	void RegisterActor(const std::string _name, physx::PxShape* _shape, physx::PxRigidBody* _body, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
 
 	void Destroy()
 	{
