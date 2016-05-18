@@ -8,7 +8,7 @@ function ClimbingUpdate(args, _ElapsedTime)
 	local l_Speed = g_Player.m_Speed
 	
 	--// Move player vertically
-	local l_PlayerDisplacement = Vect3f(0, l_ForwardMovement * _ElapsedTime, 0)
+	local l_PlayerDisplacement = Vect3f(0, l_Speed * l_ForwardMovement * _ElapsedTime, 0)
 	
 	--// Move the character controller
 	local l_PreviousControllerPosition = g_Player.m_PhysXManager:get_character_controler_pos("player")
