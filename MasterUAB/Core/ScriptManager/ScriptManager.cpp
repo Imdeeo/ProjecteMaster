@@ -99,6 +99,8 @@
 
 #include "SoundManager\SoundManager.h"
 
+#include "IA\AStar.h"
+
 #include "Application.h"
 
 #include "XML\XMLTreeNode.h"
@@ -1404,6 +1406,14 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_rtpc_value", (void(ISoundManager::*)(const SoundRTPC&, float, const std::string&)) &ISoundManager::SetRTPCValue)
 			.def("set_rtpc_value", (void(ISoundManager::*)(const SoundRTPC&, float, const C3DElement*)) &ISoundManager::SetRTPCValue)
 			.def("broadcast_state", &ISoundManager::BroadcastState)
+	];
+
+// ARTIFICIAL INTELLIGENCE--------------------------------------------------------------------------------------------
+	module(m_LS)[
+		class_<CAStar>("CAStar")
+			.def(constructor<CXMLTreeNode&>())
+			.def("load_map", &CAStar::LoadMap)
+			.def("destroy_map", &CAStar::DestroyMap)
 	];
 	
 // VIDEOGAME----------------------------------------------------------------------------------------

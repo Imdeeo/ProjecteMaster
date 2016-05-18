@@ -22,6 +22,9 @@
     <ClCompile Include="InputManager\KeyboardInput.cpp">
       <Filter>InputManager</Filter>
     </ClCompile>
+    <ClCompile Include="IA\AStar.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\UABEngine.h">
@@ -45,6 +48,9 @@
     <ClInclude Include="InputManager\KeyboardInput.h">
       <Filter>InputManager</Filter>
     </ClInclude>
+    <ClInclude Include="IA\AStar.h">
+      <Filter>AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -58,6 +64,9 @@
     </Filter>
     <Filter Include="DebugHelper">
       <UniqueIdentifier>{5327097c-2cd6-4b2b-bf3f-f3b1fd5d53d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{d41f5a47-d204-4c4e-9a55-2938cd452ca0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
