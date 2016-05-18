@@ -328,7 +328,6 @@ public:
 
 			std::string l_triggerName = m_ActorNames[l_indexTrigger];
 			std::string l_actorName = m_ActorNames[l_indexActor];
-<<<<<<< HEAD
 			//CRenderableObject* l_ro = UABEngine.GetLayerManager()->GetResource("Triggers")->GetResource(l_triggerName);
 			//l_ro->GetComponentManager()->onTrigger(l_actorName);
 			std::vector<std::string> l_ActiveActors = m_ActiveActors[l_indexTrigger];
@@ -340,9 +339,6 @@ public:
 				}
 			}
 			printf("Trigger \"%s\" fired with \"%s\"", l_triggerName.c_str(),l_actorName.c_str());
-=======
-			UABEngine.GetInstance()->GetScriptManager()->RunCode("onTrigger" + l_triggerName + "(\"" + l_actorName + "\")");
->>>>>>> develop
 			//lo suyo seria llamar a una funcion lua que gestionara la activacion del trigger
 		}
 	}
@@ -419,12 +415,8 @@ public:
 		l_actor->getShapes(&shape, 1);
 		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
 		shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
-<<<<<<< HEAD
 		L_PutGroupToShape(shape, m_Groups[_group]);
 		l_actor->attachShape(*shape);
-=======
-		L_PutGroupToShape(shape, _group);
->>>>>>> develop
 
 		AddActor(_name, _position, Quatf(0, 0, 0, 1), l_actor);
 	}
@@ -607,13 +599,7 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 	shape->release();
 }
 
-<<<<<<< HEAD
-
 void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerLuaFunction, std::vector<std::string> _ActiveActors)
-
-=======
-void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
->>>>>>> develop
 {
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxSphereGeometry(_radius), *m_Materials[_Material], true);
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
@@ -636,41 +622,8 @@ void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, 
 	shape->release();
 }
 
-<<<<<<< HEAD
-//void CPhysXManager::CreateConvexMesh(std::vector<Vect3f> Vertices, const std::string &MeshName, const Vect3f &Position, const Quatf &Orientation, const std::string &MaterialName)
-//{
-//
-//	physx::PxConvexMeshDesc l_ConvexDesc;
-//	l_ConvexDesc.points.count = Vertices.size();
-//	l_ConvexDesc.points.stride = sizeof(Vect3f);
-//	l_ConvexDesc.points.data = &Vertices[0];
-//	l_ConvexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
-//
-//	physx::PxDefaultMemoryOutputStream l_Buffer;
-//	physx::PxConvexMeshCookingResult::Enum l_Result;
-//	bool success = m_Cooking->cookConvexMesh(l_ConvexDesc, l_Buffer, &l_Result);
-//	assert(success);
-//	physx::PxDefaultMemoryInputData l_Input(l_Buffer.getData(), l_Buffer.getSize());
-//	physx::PxConvexMesh* l_ConvexMesh = m_PhysX->createConvexMesh(l_Input);
-//
-//	physx::PxMaterial* l_Material = GetMaterial(MaterialName);
-//
-//	physx::PxRigidDynamic* l_Body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(Position), CastQuat(Orientation)));
-//	physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *l_Material);
-//
-//	l_Body->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
-//
-//	size_t index = m_Actors.size();
-//	l_Body->userData = (void*)index;
-//	m_Scene->addActor(*l_Body);
-//	//l_Shape->release();
-//
-//}
 
 void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneOffset, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
-=======
-void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneOffset, const std::string _Material, Vect3f _position, Quatf _orientation, int _group)
->>>>>>> develop
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
 	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z, _PlaneOffset), *l_Material);
@@ -679,12 +632,8 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 	size_t numShapes = groundPlane->getShapes(&shape,1);
 	assert(numShapes == 1);
 
-<<<<<<< HEAD
 	L_PutGroupToShape(shape, m_Groups[_group]);
 	groundPlane->attachShape(*shape);
-=======
-	L_PutGroupToShape(shape, _group);
->>>>>>> develop
 	groundPlane->userData = (void*)AddActor(_name, _position, _orientation, groundPlane);
 	shape->userData = groundPlane->userData;
 

@@ -24,17 +24,14 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 	if (m_GeneratePhysx)
 	{
 		std::string l_Name = GetName();
-<<<<<<< HEAD
-		std::string l_PxType = TreeNode.GetPszProperty("physics_type");
-		std::string l_PxMaterial = TreeNode.GetPszProperty("physics_material");
-		std::string l_PxGroup = TreeNode.GetPszProperty("physics_group");
-=======
+		//std::string l_PxType = TreeNode.GetPszProperty("physics_type");
+		//std::string l_PxMaterial = TreeNode.GetPszProperty("physics_material");
+		//std::string l_PxGroup = TreeNode.GetPszProperty("physics_group");
 		m_PxType = TreeNode.GetPszProperty("physics_type");
 		m_PxMaterial = TreeNode.GetPszProperty("physics_material");
-		m_PxGroup = TreeNode.GetIntProperty("physics_group");
+		m_PxGroup = TreeNode.GetPszProperty("physics_group");
 		m_PxOffset = 0.0f;
 		m_PxNormals = Vect3f(0.0f, 0.0f, 0.0f);
->>>>>>> develop
 
 		Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
 		l_BB = Vect3f(abs(l_BB.x), abs(l_BB.y), abs(l_BB.z));
@@ -56,8 +53,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 			m_PxOffset = TreeNode.GetFloatProperty("physics_offset", .0f, true);
 			l_PhysXManager->CreateStaticPlane(l_Name, m_PxNormals, m_PxOffset, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
-<<<<<<< HEAD
-		else if (l_PxType == "box_trigger" || l_PxType == "sphere_trigger")
+		else if (m_PxType == "box_trigger" || m_PxType == "sphere_trigger")
 		{
 			std::string l_OnTriggerLuaFunction = TreeNode.GetPszProperty("on_trigger");
 			std::vector<std::string> l_ActivateActors;
@@ -70,19 +66,10 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 					l_ActivateActors.push_back(l_Element.GetPszProperty("actor_name"));
 				}
 			}
-			if (l_PxType == "box_trigger")
-				l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup, l_OnTriggerLuaFunction, l_ActivateActors);
+			if (m_PxType == "box_trigger")
+				l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerLuaFunction, l_ActivateActors);
 			else
-				l_PhysXManager->CreateSphereTrigger(l_Name, m_StaticMesh->GetBoundingSphereRadius(), l_PxMaterial, l_Position, l_Rotation, l_PxGroup, l_OnTriggerLuaFunction, l_ActivateActors);
-=======
-		else if (m_PxType == "box_trigger")
-		{
-			l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
-		}
-		else if (m_PxType == "sphere_trigger")
-		{
-			l_PhysXManager->CreateSphereTrigger(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
->>>>>>> develop
+				l_PhysXManager->CreateSphereTrigger(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerLuaFunction, l_ActivateActors);
 		}
 		else if (m_PxType == "box_shape")
 		{

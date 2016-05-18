@@ -47,3 +47,7 @@ function luaGui()
 	
 	end 	 
 end
+
+function mipene(a,b)
+	utils_log("pene: "..a.."\npene2: "..b)
+end

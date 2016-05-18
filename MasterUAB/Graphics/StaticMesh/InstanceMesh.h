@@ -13,7 +13,7 @@ private:
 	bool m_GeneratePhysx;
 	std::string m_PxType;
 	std::string m_PxMaterial;
-	int m_PxGroup;
+	std::string m_PxGroup;
 	float m_PxOffset;
 	Vect3f m_PxNormals;
 public:

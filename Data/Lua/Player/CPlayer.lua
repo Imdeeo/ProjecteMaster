@@ -75,7 +75,7 @@ class 'CPlayer'
 
 function FnOnCreateController (_owner)
 	g_Player.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
-	g_Player.m_PhysXManager:create_character_controller(g_Player.m_Name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", 1)
+	g_Player.m_PhysXManager:create_character_controller(g_Player.m_Name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", "Player")
 end
 
 function FnOnDestroyController ()
