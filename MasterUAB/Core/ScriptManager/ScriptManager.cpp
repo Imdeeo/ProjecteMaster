@@ -1406,7 +1406,6 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CApplication>("CApplication")
 			.def(constructor<CContextManager*>())
-			.def("switch_camera", &CApplication::SwitchCamera)
 			.def("update", &CApplication::Update)
 			.def("render", &CApplication::Render)
 			.def("init", &CApplication::Init)
