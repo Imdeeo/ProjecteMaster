@@ -14,6 +14,9 @@
 	<action name="RUN" type="KEYBOARD" mode="WHILE_PRESSED" key="E"/>
 	<action name="INTERACT" type="KEYBOARD" mode="ON_PRESS" key="F"/>
 	
+	<action name="SPEEDUP" type="KEYBOARD" mode="ON_PRESS" key="M"/>
+	<action name="SPEEDDOWN" type="KEYBOARD" mode="ON_PRESS" key="N"/>
+	
 	<action name="RELOAD" type="KEYBOARD" mode="ON_PRESS" key="R"/>
 	<action name="SWITCH_RENDER_LIGHTS" type="KEYBOARD" mode="ON_PRESS" key="L"/>
 	

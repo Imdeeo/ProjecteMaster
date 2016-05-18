@@ -26,6 +26,7 @@ CUABEngine::CUABEngine(void)
 {
 	m_TimeScale = 1;
 	m_CurrentCamera_vision = 1;
+	m_Pause = false; //Iniciara en false
 	m_EffectManager = new CEffectManager();
 	m_MaterialManager = new CMaterialManager();
 	m_TextureManager = new CTextureManager();
@@ -78,22 +79,26 @@ CUABEngine* CUABEngine::GetInstance()
 	}
 	return m_Instance;
 }
-
 void CUABEngine::Update(float _ElapsedTime)
 {
 	float l_ElapsedTime = _ElapsedTime * m_TimeScale;
-	m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
-	m_PhysXManager->Update(l_ElapsedTime);
-	m_CameraControllerManager->Update(l_ElapsedTime);
-	m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
-	m_LayerManager->Update(l_ElapsedTime);
-	m_ScriptManager->RunCode("luaUpdate(" + std::to_string(l_ElapsedTime) + ")");
-	m_ScriptManager->RunCode("luaGui()");
-	const CCamera *l_CurrentCamera = m_RenderManager->GetCurrentCamera();
-	GetSoundManager()->Update(l_CurrentCamera);
+	if (l_ElapsedTime > 0.0f && !m_Pause)
+	{
+		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
+		m_PhysXManager->Update(l_ElapsedTime);
+		m_CameraControllerManager->Update(l_ElapsedTime);
+		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
+		m_LayerManager->Update(l_ElapsedTime);
+		m_ScriptManager->RunCode("luaUpdate(" + std::to_string(l_ElapsedTime) + ")");
+		const CCamera *l_CurrentCamera = m_RenderManager->GetCurrentCamera();
+		GetSoundManager()->Update(l_CurrentCamera);
+		m_ScriptManager->RunCode("luaGui()");
+	}
+	else
+	{
+		m_ScriptManager->RunCode("luaGui()");
+	}
 }
-
-
 void CUABEngine::Init()
 {
 	LoadLevelXML("Data\\level.xml");
@@ -121,12 +126,10 @@ void CUABEngine::Init()
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	m_ScriptManager->RunCode("mainLua(\""+m_LevelLoaded+"\")");
 }
-
 void CUABEngine::Destroy()
 {
 	CHECKED_DELETE(m_Instance);
 }
-
 void CUABEngine::LoadLevelXML(std::string filename)
 {
 	CXMLTreeNode l_XML;
@@ -141,20 +144,17 @@ void CUABEngine::LoadLevelXML(std::string filename)
 		}
 	}
 }
-
 void CUABEngine::SwitchCamera()
 {
 	m_CurrentCamera_vision++;
 	m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
 	UABEngine.GetCameraControllerManager()->SetCurrentCameraControl(m_CurrentCamera_vision);
 }
-
 void CUABEngine::ChangeCameraVision()
 {
 	m_CurrentCamera_vision++;
 	m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
 }
-
 UAB_GET_PROPERTY_CPP(CUABEngine,CStaticMeshManager *, StaticMeshManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,CLayerManager *, LayerManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,CMaterialManager *, MaterialManager)
