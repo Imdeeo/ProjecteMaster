@@ -22,6 +22,16 @@ public:
 	void SetAngle(float _Angle){ m_Angle = _Angle; }
 	void SetFallOff(float _FallOff){ m_FallOff = _FallOff; }
 
+	CEmptyPointerClass* GetAngleLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_Angle;
+	}
+
+	CEmptyPointerClass* GetFallOffLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_FallOff;
+	}
+
 #ifdef _DEBUG
 	void Render(CRenderManager *_RenderManager);
 #endif

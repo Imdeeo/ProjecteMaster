@@ -10,8 +10,9 @@
 #define MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID	3
 
 class ID3D11VertexShader;
-class ID3D11InputLayout;
 class ID3D11PixelShader;
+class ID3D11GeometryShader;
+class ID3D11InputLayout;
 class ID3D11Buffer;
 
 typedef struct _D3D_SHADER_MACRO D3D_SHADER_MACRO;
@@ -34,7 +35,7 @@ protected:
 	virtual void Destroy();
 	void CreateShaderMacro();
 	bool LoadShader(const std::string &Filename, const std::string &EntryPoint,	const std::string &ShaderModel, ID3DBlob **BlobOut);
-	bool CreateConstantBuffer(int IdBuffer, unsigned int BufferSize);
+	bool CreateConstantBuffer(int IdBuffer, unsigned int BufferSize, bool Dynamic);
 	bool CreateConstantBuffer();
 public:
 	CEffectShader(const CXMLTreeNode &TreeNode);
@@ -62,7 +63,6 @@ public:
 	bool Reload();
 	ID3D11VertexShader* GetVertexShader();
 	ID3D11InputLayout*  GetVertexLayout();
-	//UAB_GET_PROPERTY(ID3D11Buffer*, ConstantBuffer);
 };
 
 class CEffectPixelShader : public CEffectShader
@@ -79,7 +79,22 @@ public:
 	void SetConstantBuffer(unsigned int IdBuffer, void *ConstantBuffer);
 
 	ID3D11PixelShader* GetPixelShader();
-	//UAB_GET_PROPERTY(ID3D11Buffer*, ConstantBuffer);
+};
+
+class CEffectGeometryShader : public CEffectShader
+{
+protected:
+	ID3D11GeometryShader *m_GeometryShader;
+
+	void Destroy();
+public:
+	CEffectGeometryShader(const CXMLTreeNode &TreeNode);
+	virtual ~CEffectGeometryShader(){ Destroy(); }
+	bool Reload();
+	bool Load();
+	void SetConstantBuffer(unsigned int IdBuffer, void *ConstantBuffer);
+
+	ID3D11GeometryShader* GetGeometryShader();
 };
 
 #endif //EFFECT_SHADER_H

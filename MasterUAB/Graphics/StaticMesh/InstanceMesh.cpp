@@ -20,13 +20,21 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 {
 	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(TreeNode.GetPszProperty("core_name"));
 
-	bool l_GeneratePhysx = TreeNode.GetBoolProperty("create_physics");
-	if (l_GeneratePhysx)
+	m_GeneratePhysx = TreeNode.GetBoolProperty("create_physics");
+	if (m_GeneratePhysx)
 	{
 		std::string l_Name = GetName();
+<<<<<<< HEAD
 		std::string l_PxType = TreeNode.GetPszProperty("physics_type");
 		std::string l_PxMaterial = TreeNode.GetPszProperty("physics_material");
 		std::string l_PxGroup = TreeNode.GetPszProperty("physics_group");
+=======
+		m_PxType = TreeNode.GetPszProperty("physics_type");
+		m_PxMaterial = TreeNode.GetPszProperty("physics_material");
+		m_PxGroup = TreeNode.GetIntProperty("physics_group");
+		m_PxOffset = 0.0f;
+		m_PxNormals = Vect3f(0.0f, 0.0f, 0.0f);
+>>>>>>> develop
 
 		Vect3f l_BB = m_StaticMesh->GetBoundingBoxMax() - m_StaticMesh->GetBoundingBoxMin();
 		l_BB = Vect3f(abs(l_BB.x), abs(l_BB.y), abs(l_BB.z));
@@ -34,20 +42,21 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		Quatf l_Rotation = Quatf(-m_Rotation.x, m_Rotation.y, -m_Rotation.z, -m_Rotation.w);
 
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
-		if (l_PxType == "triangle_mesh")
+		if (m_PxType == "triangle_mesh")
 		{
 			std::vector<Vect3f> l_Vertexs;
-			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
-		}else if (l_PxType == "sphere_shape")
+			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+		}else if (m_PxType == "sphere_shape")
 		{
-			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
+			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
-		else if (l_PxType == "plane_shape")
+		else if (m_PxType == "plane_shape")
 		{
-			Vect3f l_Normal = TreeNode.GetVect3fProperty("physics_normal", Vect3f(.0f, 1.f, .0f), true);
-			float l_Offset = TreeNode.GetFloatProperty("physics_offset", .0f, true);
-			l_PhysXManager->CreateStaticPlane(l_Name, l_Normal, l_Offset, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
+			m_PxNormals = TreeNode.GetVect3fProperty("physics_normal", Vect3f(.0f, 1.f, .0f), true);
+			m_PxOffset = TreeNode.GetFloatProperty("physics_offset", .0f, true);
+			l_PhysXManager->CreateStaticPlane(l_Name, m_PxNormals, m_PxOffset, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
+<<<<<<< HEAD
 		else if (l_PxType == "box_trigger" || l_PxType == "sphere_trigger")
 		{
 			std::string l_OnTriggerLuaFunction = TreeNode.GetPszProperty("on_trigger");
@@ -65,8 +74,17 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 				l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup, l_OnTriggerLuaFunction, l_ActivateActors);
 			else
 				l_PhysXManager->CreateSphereTrigger(l_Name, m_StaticMesh->GetBoundingSphereRadius(), l_PxMaterial, l_Position, l_Rotation, l_PxGroup, l_OnTriggerLuaFunction, l_ActivateActors);
+=======
+		else if (m_PxType == "box_trigger")
+		{
+			l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
-		else if (l_PxType == "box_shape")
+		else if (m_PxType == "sphere_trigger")
+		{
+			l_PhysXManager->CreateSphereTrigger(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+>>>>>>> develop
+		}
+		else if (m_PxType == "box_shape")
 		{
 			if (l_BB.x <= 0)
 			{
@@ -80,7 +98,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 			{
 				l_BB.z = 0.001;
 			}
-			l_PhysXManager->CreateStaticBox(GetName(), l_BB, l_PxMaterial, l_Position, l_Rotation, l_PxGroup);
+			l_PhysXManager->CreateStaticBox(GetName(), l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
 	}
 }
@@ -132,4 +150,24 @@ CInstanceMesh & CInstanceMesh::operator=(CInstanceMesh & _InstanceMesh)
 	*((CRenderableObject*)this) = (CRenderableObject)_InstanceMesh;
 	m_Name = _InstanceMesh.m_Name;
 	return *(this);
+}
+
+void CInstanceMesh::Save(FILE* _File, std::string _layer)
+{
+	if (m_GeneratePhysx)
+	{
+		fprintf_s(_File, "\t<instance_mesh name=\"%s\" layer=\"%s\" core_name=\"%s\" position=\"%f %f %f\" rotation=\"%f %f %f %f\" "
+			"create_physics=\"true\" physics_type=\"%s\" physics_offset=\"%f\" physics_normal=\"%f %f %f\" physics_material=\"%s\" "
+			"visible=\"%s\"/>\n",
+			m_Name.c_str(), _layer.c_str(), m_StaticMesh->GetName().c_str(), m_Position.x, m_Position.y, m_Position.z,
+			m_Rotation.x, m_Rotation.y, m_Rotation.z, m_Rotation.w, m_PxType.c_str(), m_PxOffset,
+			m_PxNormals.x, m_PxNormals.y, m_PxNormals.z, m_PxMaterial.c_str(), m_Visible ? "true" : "false");
+	}
+	else
+	{
+		fprintf_s(_File, "\t<instance_mesh name=\"%s\" layer=\"%s\" core_name=\"%s\" position=\"%f %f %f\" "
+			"rotation=\"%f %f %f %f\" create_physics=\"false\" visible=\"%s\"/>\n",
+			m_Name.c_str(), _layer.c_str(), m_StaticMesh->GetName().c_str(), m_Position.x, m_Position.y, m_Position.z,
+			m_Rotation.x, m_Rotation.y, m_Rotation.z, m_Rotation.w, m_Visible ? "true" : "false");		
+	}
 }

@@ -98,6 +98,7 @@ public:
 
 		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
 
+		l_DeviceContext->GSSetShader(NULL, NULL, 0);
 
 		ID3D11Buffer *l_SceneConstantBufferPS = l_EffectVertexShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_LightConstantBufferPS = l_EffectVertexShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);

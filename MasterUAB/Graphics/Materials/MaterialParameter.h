@@ -24,10 +24,10 @@ public:
 	CMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode, CMaterialParameter::TMaterialType MaterialType) :CNamed(TreeNode),m_MaterialType(MaterialType){}
 	virtual ~CMaterialParameter(){}
 	virtual void Apply() = 0;
-	virtual void * GetValueAddress() const = 0;
+	virtual void * GetValueAddress(int index = 0) const = 0;
 	TMaterialType getMaterialType()const{ return m_MaterialType;}
-	virtual CEmptyPointerClass * GetValueLuaAddress() const {
-		return (CEmptyPointerClass *)GetValueAddress();
+	virtual CEmptyPointerClass * GetValueLuaAddress(int index = 0) const {
+		return (CEmptyPointerClass *)GetValueAddress(index);
 	}
 
 	static TMaterialType GetTypeFromString(std::string _SType);

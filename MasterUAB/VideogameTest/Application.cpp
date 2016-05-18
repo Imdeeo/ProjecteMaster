@@ -15,18 +15,17 @@
 #include "Lights\LightManager.h"
 #include "PhysXManager\PhysXManager.h"
 #include "ScriptManager\ScriptManager.h"
-
-#include "Characters\CharacterManager.h"
+#include "SoundManager\SoundManager.h"
 #include "Camera\CameraControllerManager.h"
+
+#include "no_sillywarnings_please.h"
 
 CApplication::CApplication( CContextManager *_ContextManager)
 	: m_BackgroundColor(.2f, .1f, .4f)
-	, m_CurrentCamera_vision(1)
 	, m_RenderCameraCube(false)
 	, m_Timer(0)
 {
 	CDebugHelper::GetDebugHelper()->Log("CApplication::CApplication");
-
 	UABEngine.GetRenderManager()->SetContextManager(_ContextManager);
 }
 
@@ -37,13 +36,6 @@ CApplication::~CApplication()
 	UABEngine.Destroy();
 }
 
-
-void CApplication::SwitchCamera()
-{
-	m_CurrentCamera_vision++;
-	m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
-	UABEngine.GetCameraControllerManager()->SetCurrentCameraControl(m_CurrentCamera_vision);
-}
 
 void CApplication::Update(float _ElapsedTime)
 {	
@@ -62,12 +54,11 @@ void CApplication::Update(float _ElapsedTime)
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_BOTH"))
 	{
-		SwitchCamera();
+		UABEngine.SwitchCamera();
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_VISION"))
 	{
-		m_CurrentCamera_vision++;
-		m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
+		UABEngine.ChangeCameraVision();
 	}
 	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_CONTROL"))
 	{
@@ -133,12 +124,19 @@ void CApplication::Update(float _ElapsedTime)
 		}
 	}*/	
 
-	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
-	UABEngine.GetPhysXManager()->Update(_ElapsedTime);
-	UABEngine.GetCameraControllerManager()->Update(_ElapsedTime);
-	UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
-	UABEngine.GetLayerManager()->Update(_ElapsedTime);
-	UABEngine.GetScriptManager()->RunCode("luaUpdate(" + std::to_string(_ElapsedTime) + ")");
+	// ANTIGUO UPDATE
+	/*if (_ElapsedTime > 0.0f){
+		UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
+		UABEngine.GetPhysXManager()->Update(_ElapsedTime);
+		UABEngine.GetCameraControllerManager()->Update(_ElapsedTime);
+		UABEngine.GetRenderManager()->SetUseDebugCamera(m_CurrentCamera_vision == 0);
+		UABEngine.GetLayerManager()->Update(_ElapsedTime);
+		UABEngine.GetScriptManager()->RunCode("luaUpdate(" + std::to_string(_ElapsedTime) + ")");
+		const CCamera *l_CurrentCamera = UABEngine.GetRenderManager()->GetCurrentCamera();
+		UABEngine.GetSoundManager()->Update(l_CurrentCamera);
+	}*/
+
+	UABEngine.Update(_ElapsedTime);
 }
 
 void CApplication::Render()
@@ -149,6 +147,6 @@ void CApplication::Render()
 
 void CApplication::Init()
 {
-	UABEngine.Init();	
-	CCharacterManager::GetInstance()->Load("Data\\level_"+UABEngine.GetLevelLoaded()+"\\characters.xml");
+	UABEngine.Init();
+//	CCharacterManager::GetInstance()->Load("Data\\level_"+UABEngine.GetLevelLoaded()+"\\characters.xml");
 }

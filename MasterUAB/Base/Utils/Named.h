@@ -6,6 +6,7 @@ class CXMLTreeNode;
 class CEmptyPointerClass;
 
 #include <string>
+#include "no_sillywarnings_please.h"
 
 class CNamed
 {

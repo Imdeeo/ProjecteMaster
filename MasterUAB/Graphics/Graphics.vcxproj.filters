@@ -224,6 +224,9 @@
     <ClCompile Include="RenderHelper\RenderHelper.cpp">
       <Filter>RenderHelper</Filter>
     </ClCompile>
+    <ClCompile Include="Particles\ParticleSystemInstance.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -529,6 +532,9 @@
     </ClInclude>
     <ClInclude Include="RenderHelper\RenderHelper.h">
       <Filter>RenderHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="Particles\ParticleSystemInstance.h">
+      <Filter>Particles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,8 @@
 #include <Windows.h>
 #include <Windowsx.h>
 
+#include "no_sillywarnings_please.h"
+
 #include <d3d11.h>
 
 #include <cassert>
@@ -20,6 +22,7 @@
 #include "DebugRender.h"
 #include "Effects\Effect.h"
 #include "Camera\Camera.h"
+
 
 #pragma comment(lib, "Winmm.lib")
 
@@ -261,6 +264,9 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 							TranslateMessage(&msg);
 							DispatchMessage(&msg);
 						}
+						break;
+					case WM_CHAR:
+						inputManager.GetKeyboard()->SetLastChar(msg.wParam);
 						break;
 					default:
 						TranslateMessage(&msg);

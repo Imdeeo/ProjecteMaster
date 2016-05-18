@@ -42,6 +42,10 @@ void CLayerManager::Load(const std::string &FileName)
 				{
 					GetLayer(l_Element)->AddAnimatedInstanceModel(l_Element);
 				}
+				else if (l_Element.GetName() == std::string("particle_instance"))
+				{
+					GetLayer(l_Element)->AddParticleSystemInstance(l_Element);
+				}
 			}
 		}
 	}
@@ -117,6 +121,11 @@ CRenderableObjectsManager* CLayerManager::GetLayer(CXMLTreeNode &Node)
 	}	
 }
 
+CRenderableObjectsManager * CLayerManager::GetLayer(std::string _layer)
+{
+	return GetResource(_layer);
+}
+
 CRenderableObjectsManager* CLayerManager::GetLayer()
 {
 	return m_DefaultLayer;
@@ -134,4 +143,33 @@ CRenderableObjectsManager* CLayerManager::AddLayer(CXMLTreeNode &TreeNode, bool 
 		m_DefaultLayer = l_auxROM;
 	}
 	return l_auxROM;
+}
+
+void CLayerManager::Save()
+{
+	FILE* l_File;
+	if (!fopen_s(&l_File, m_Filename.c_str(), "w"))
+	{
+		fprintf_s(l_File, "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+		fprintf_s(l_File, "<renderable_objects>\n");
+
+		for (size_t i = 0; i < m_ResourcesVector.size(); ++i)
+		{
+			if (m_DefaultLayer == m_ResourcesVector[i])
+				fprintf_s(l_File, "\t<layer name=\"%s\" default=\"true\"/>\n",m_ResourcesVector[i]->GetName().c_str());
+			else
+				fprintf_s(l_File, "\t<layer name=\"%s\"/>\n", m_ResourcesVector[i]->GetName().c_str());
+		}
+
+		for (size_t i = 0; i < m_ResourcesVector.size(); ++i)
+		{
+			for (size_t j = 0; j < m_ResourcesVector[i]->GetResourcesVector().size(); ++j)
+			{
+				m_ResourcesVector[i]->GetResourcesVector()[j]->Save(l_File, m_ResourcesVector[i]->GetName());
+			}
+		}
+
+		fprintf_s(l_File, "</renderable_objects>\n");
+		fclose(l_File);
+	}
 }

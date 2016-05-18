@@ -5,11 +5,15 @@
 #include "ContextManager\ContextManager.h"
 
 #include "Utils.h"
-#include <D3DX11tex.h>
+
+#include <directxmath.h>
+#include <DDSTextureLoader.h>
+#include <WICTextureLoader.h>
 
 CTexture::CTexture(): CNamed(""),
 	m_Texture(nullptr),
-	m_SamplerState(nullptr)
+	m_SamplerState(nullptr),
+	m_iMaxIndex(1)
 {
 }
 
@@ -20,7 +24,22 @@ CTexture::~CTexture(void)
 bool CTexture::LoadFile()
 {
 	ID3D11Device *l_Device=UABEngine.GetRenderManager()->GetDevice();
-	HRESULT l_HR=D3DX11CreateShaderResourceViewFromFile(l_Device,m_Name.c_str(), NULL, NULL, &m_Texture, NULL );
+	std::wstring wName;
+	wName.assign(m_Name.begin(), m_Name.end());
+
+	// DirectXTK
+	HRESULT l_HR = DirectX::CreateDDSTextureFromFile(l_Device, wName.c_str(), nullptr, &m_Texture);
+	if (FAILED(l_HR))
+	{
+		l_HR = DirectX::CreateWICTextureFromFile(l_Device, wName.c_str(), nullptr, &m_Texture);
+		if (FAILED(l_HR))
+		{
+			InfoMessage("Error loading file %s of type %d", m_Name.c_str(), l_HR);
+			return 0;
+
+		}
+	}
+
 	D3D11_SAMPLER_DESC l_SampDesc;
 	ZeroMemory(&l_SampDesc, sizeof(l_SampDesc));
 	l_SampDesc.Filter=D3D11_FILTER_MIN_MAG_MIP_LINEAR;

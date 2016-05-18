@@ -13,6 +13,13 @@ class CRenderManager;
 
 class CRenderableObject : public C3DElement, public CNamed
 {
+public:
+	enum TRenderableObjectType
+	{
+		STATIC_MODEL = 0,
+		ANIMATED_MODEL,
+		PARTICLE_EMITER
+	};
 private:
 	CUABComponentManager* m_ComponentManager;
 	bool m_DebugRender;
@@ -23,6 +30,7 @@ public:
 	virtual void Update(float ElapsedTime);
 	virtual void Render(CRenderManager *RM);
 	virtual void RenderDebug(CRenderManager *RM);
+	virtual void Save(FILE* _File, std::string _layer){}
 
 	void SetComponentManager(CUABComponentManager* _ComponentManager);
 	CUABComponentManager* GetComponentManager()const;

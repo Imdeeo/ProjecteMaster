@@ -16,7 +16,8 @@ private:
 	float						m_FastSpeed;
 	CRenderableObject*			m_Target;
 	float						m_Angle;
-	Vect3f						m_Offset;
+	Vect3f						m_PositionOffset;
+	Vect3f						m_RotationOffset;
 public:
 	C3PersonCameraController( const CXMLTreeNode &node);
 	virtual ~C3PersonCameraController();
