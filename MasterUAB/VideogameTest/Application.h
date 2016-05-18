@@ -17,8 +17,6 @@ public:
 	CApplication(CContextManager *_ContextManager);
 	~CApplication();
 
-	void SwitchCamera();
-
 	void Update(float _ElapsedTime);
 	void Render();
 
@@ -30,8 +28,6 @@ private:
 
 	CSphericalCameraController* m_SphericalCamera;
 	CFPSCameraController* m_FPSCamera;
-
-	int m_CurrentCamera_vision;
 
 	bool m_RenderCameraCube;
 
