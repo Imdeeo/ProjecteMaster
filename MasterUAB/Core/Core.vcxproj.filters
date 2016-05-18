@@ -19,8 +19,8 @@
     <ClCompile Include="DebugHelper\DebugHelperImplementation.cpp">
       <Filter>DebugHelper</Filter>
     </ClCompile>
-    <ClCompile Include="IA\AStar.cpp">
-      <Filter>IA</Filter>
+    <ClCompile Include="InputManager\KeyboardInput.cpp">
+      <Filter>InputManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -42,8 +42,8 @@
     <ClInclude Include="DebugHelper\DebugHelper.h">
       <Filter>DebugHelper</Filter>
     </ClInclude>
-    <ClInclude Include="IA\AStar.h">
-      <Filter>IA</Filter>
+    <ClInclude Include="InputManager\KeyboardInput.h">
+      <Filter>InputManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -58,9 +58,6 @@
     </Filter>
     <Filter Include="DebugHelper">
       <UniqueIdentifier>{5327097c-2cd6-4b2b-bf3f-f3b1fd5d53d1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="IA">
-      <UniqueIdentifier>{520379ca-a962-48e1-9742-5de43c0097ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

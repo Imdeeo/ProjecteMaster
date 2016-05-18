@@ -8,10 +8,13 @@
 
 #include "Math\Quatn.h"
 #include "Math\MathUtils.h"
+#include "no_sillywarnings_please.h"
 
 #define MAXBONES 40
 #define MAX_LIGHTS_BY_SHADER 4
 #define UAB_ID_SHADOW_MAP 0
+#define MAX_PARTICLE_PER_INSTANCE 200
+#define MAX_VERTICES_PER_CALL 200
 
 #define UAB_PI 3.14159265359f
 
@@ -73,5 +76,21 @@ static void UtilsLog(const std::string& text)
 std::vector<std::string> &SplitString(const std::string &s, char delim, std::vector<std::string> &elems);
 
 std::vector<std::string> SplitString(const std::string &s, char delim);
+
+static void InfoMessage(const char * format, ...)
+{
+	va_list args;
+	char* buffer;
+
+	va_start(args, format);
+	int len = _vscprintf(format, args) + 1;
+
+	buffer = (char*)malloc(len*sizeof(char));
+	vsprintf(buffer, format, args);
+
+	::MessageBox(NULL, buffer, "ATTENTION", MB_OK);
+
+	free(buffer);
+}
 
 #endif //_UTILS_H

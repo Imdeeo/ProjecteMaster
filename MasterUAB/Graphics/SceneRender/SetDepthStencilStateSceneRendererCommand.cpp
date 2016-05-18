@@ -1,6 +1,6 @@
 #include "SetDepthStencilStateSceneRendererCommand.h"
 #include "RenderManager\RenderManager.h"
-#include <D3DX11.h>
+#include <d3d11.h>
 #include "Engine\UABEngine.h"
 
 #include "XML\XMLTreeNode.h"

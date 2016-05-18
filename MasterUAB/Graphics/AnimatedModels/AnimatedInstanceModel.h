@@ -44,7 +44,7 @@ public:
 	int	 GetActualCycleAnimation()const{return m_ActualCycleAnimation;}
 	int	 GetActualActionAnimation()const{return m_ActualActionAnimation;}
 	void RenderDebug(CRenderManager *RenderManager);
-
+	void Save(FILE* _File, std::string _layer);
 	CAnimatedInstanceModel & CAnimatedInstanceModel::operator=(CAnimatedInstanceModel&);
 };
 #endif //ANIMATED_INSTANCE_MODEL_H

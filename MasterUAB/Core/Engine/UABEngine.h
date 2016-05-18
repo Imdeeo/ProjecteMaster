@@ -1,6 +1,8 @@
 #ifndef UAB_ENGINE_H
 #define UAB_ENGINE_H
 
+#include "Utils.h"
+
 #define LEVEL "2"
 
 class CStaticMeshManager;
@@ -17,7 +19,9 @@ class CCinematic;
 class CPhysXManager;
 class CRenderableObjectTechniqueManager;
 class CSceneRendererCommandManager;
-
+class CParticleManager;
+class CGUIManager;
+class ISoundManager;
 
 #include <string>
 
@@ -42,8 +46,11 @@ private:
 	CPhysXManager * m_PhysXManager;
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
 	CSceneRendererCommandManager* m_SceneRendererCommandManager;
-
+	CParticleManager* m_ParticleManager;
+	CGUIManager* m_GUIManager;
+	ISoundManager* m_SoundManager;
 	std::string m_LevelLoaded;
+	int m_CurrentCamera_vision;
 	
 public:
 	CStaticMeshManager * GetStaticMeshManager()const;
@@ -60,18 +67,20 @@ public:
 	CPhysXManager * GetPhysXManager()const;
 	CRenderableObjectTechniqueManager * GetRenderableObjectTechniqueManager()const;
 	CSceneRendererCommandManager * GetSceneRendererCommandManager()const;
-
+	CParticleManager * GetParticleManager()const;
+	CGUIManager * GetGUIManager() const;
+	ISoundManager * GetSoundManager()const;
 	std::string GetLevelLoaded()const{return m_LevelLoaded;}
-	
 	void LoadLevelXML(std::string filename);
-public:
-
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
-
 	void Destroy();
 	void Init();
-
+	void Update(float _ElapsedTime);
+	void SwitchCamera();
+	void ChangeCameraVision();
+	UAB_BUILD_GET_SET(float, TimeScale);
+	UAB_BUILD_GET_SET(bool, Pause);
 };
 
 #define UABEngine (*(CUABEngine::GetInstance()))

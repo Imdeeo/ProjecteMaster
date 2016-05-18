@@ -94,6 +94,27 @@ fn processFaces arx Obj &prog=
 			)
 		)
 	)
+	else
+	(
+		for i=1 to l_Obj.material.numsubs do
+		(
+			if (classof l_Obj.material[i].bumpMap == Bitmaptexture) then
+			(
+				if (classof l_Obj.material[i].bumpMap.bitmap == Bitmap) then
+				(
+					BnmID = 0x0100
+					TngID = 0x0200
+				)
+			) else if (classof l_Obj.material[i].bumpMap == Normal_Bump) then
+			(
+				if (classof l_Obj.material[i].bumpMap.normal_map.bitmap == Bitmap) then
+				(
+					BnmID = 0x0100
+					TngID = 0x0200
+				)
+			)
+		)
+	)
 	
 	local InvTransform = inverse obj.transform
 	local NumVtxs = getNumVerts l_Obj

@@ -46,6 +46,7 @@ CInputManagerImplementation::CInputManagerImplementation(HWND hWnd)
 		m_PadButtensPrevious[i] = 0;
 	}
 
+	m_Keyboard = new CKeyboardInput();
 
 	// mouse input
 	HRESULT l_HR;
@@ -84,6 +85,8 @@ CInputManagerImplementation::CInputManagerImplementation(HWND hWnd)
 		m_Mouse->Acquire();
 	else
 		MessageBox(hWnd, "Problem with de mouse input!", "Mouse", MB_ICONERROR | MB_OK);
+
+	m_Keyboard = new CKeyboardInput();
 }
 
 CInputManagerImplementation::~CInputManagerImplementation()

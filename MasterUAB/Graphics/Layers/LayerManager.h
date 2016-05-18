@@ -24,13 +24,15 @@ public:
 	void Load(const std::string &Filename);
 	void Reload();
 	void Update(float ElapsedTime);
+	void Save();
 	void Render(CRenderManager *RenderManager);
 	void Render(CRenderManager *RenderManager, const std::string &LayerName);
 #ifdef _DEBUG
 	void RenderDebug(CRenderManager *RenderManager, const std::string &LayerName);
 #endif
 	CRenderableObjectsManager * GetLayer();
-	CRenderableObjectsManager * GetLayer(CXMLTreeNode &Node);
+	CRenderableObjectsManager * GetLayer(std::string _layer);
+	CRenderableObjectsManager * GetLayer(CXMLTreeNode &Node);	
 };
 
 #endif //H_LAYER_MANAGER_H

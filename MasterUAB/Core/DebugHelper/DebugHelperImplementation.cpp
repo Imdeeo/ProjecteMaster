@@ -106,54 +106,49 @@ void CDebugHelperImplementation::RegisterBar()
 			std::string params = m_ActualBar.variables[i].definition;
 			switch (m_ActualBar.variables[i].type)
 			{
-			case BOOL:
-				type = TW_TYPE_BOOLCPP;
-				break;
-			case FLOAT:
-				type = TW_TYPE_FLOAT;
-				break;
-			case INT:
-				type = TW_TYPE_INT32;
-				break;
-			case COLOR32:
-				type = TW_TYPE_COLOR32;
-				params = params + " coloralpha=true colororder=argb ";
-				break;
-			case COLOR:
-				type = TW_TYPE_COLOR4F;
-				break;
-			case STRING:
-				type = TW_TYPE_CSSTRING(100);
-				break;
-
-			case POSITION_ORIENTATION:
-				type = *(m_PosRotType);
-				break;
-
-			default:
-				break;
+				case BOOL:
+					type = TW_TYPE_BOOLCPP;
+					break;
+				case FLOAT:
+					type = TW_TYPE_FLOAT;
+					break;
+				case INT:
+					type = TW_TYPE_INT32;
+					break;
+				case COLOR32:
+					type = TW_TYPE_COLOR32;
+					params = params + " coloralpha=true colororder=argb ";
+					break;
+				case COLOR:
+					type = TW_TYPE_COLOR4F;
+					break;
+				case STRING:
+					type = TW_TYPE_CSSTRING(100);
+					break;
+				case POSITION_ORIENTATION:
+					type = *(m_PosRotType);
+					break;
+				default:
+					break;
 			}
 
 			switch (m_ActualBar.variables[i].mode)
 			{
-			case READ:
-				status = TwAddVarRO(twBar, m_ActualBar.variables[i].name.c_str(), type, m_ActualBar.variables[i].ptr, params.c_str());
-				assert(status);
-				break;
-
-			case READ_WRITE:
-				status = TwAddVarRW(twBar, m_ActualBar.variables[i].name.c_str(), type, m_ActualBar.variables[i].ptr, params.c_str());
-				assert(status);
-				break;
-
-			default:
-				break;
+				case READ:
+					status = TwAddVarRO(twBar, m_ActualBar.variables[i].name.c_str(), type, m_ActualBar.variables[i].ptr, params.c_str());
+					assert(status);
+					break;
+				case READ_WRITE:
+					status = TwAddVarRW(twBar, m_ActualBar.variables[i].name.c_str(), type, m_ActualBar.variables[i].ptr, params.c_str());
+					assert(status);
+					break;
+				default:
+					break;
 			}
 		}
 	}
 
 	m_Bars[m_ActualBar.name] = twBar;
-	
 }
 
 void CDebugHelperImplementation::RemoveBar(std::string _BarName)

@@ -4,6 +4,7 @@
 #include "Camera\CameraController.h"
 
 class CCamera;
+class CRenderableObject;
 
 class CFPSCameraController : public CCameraController
 {
@@ -12,11 +13,12 @@ private:
 	float						m_PitchSpeed;
 	float						m_Speed;
 	float						m_FastSpeed;
+	CRenderableObject*			m_Target;
+	Vect3f						m_Offset;
 public:
 	CFPSCameraController(const CXMLTreeNode & _TreeNode);
 	virtual ~CFPSCameraController();
 	
-	void Move(float Strafe, float Forward, bool Speed, float ElapsedTime);
 	void SetCamera(CCamera *Camera) const;
 	void AddYaw(float Radians);
 	void AddPitch(float Radians);

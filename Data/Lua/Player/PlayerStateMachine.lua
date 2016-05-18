@@ -1,0 +1,67 @@
+dofile("Data\\Lua\\Utils\\state_machine.lua")
+dofile("Data\\Lua\\Player\\PlayerStateIdle.lua")
+dofile("Data\\Lua\\Player\\PlayerStateMoving.lua")
+dofile("Data\\Lua\\Player\\PlayerStateCrouching.lua")
+dofile("Data\\Lua\\Player\\PlayerStateJumping.lua")
+dofile("Data\\Lua\\Player\\PlayerStateFalling.lua")
+dofile("Data\\Lua\\Player\\PlayerStateInteracting.lua")
+dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
+
+PlayerStateMachine = StateMachine.create()
+
+function setPlayerStateMachine()
+	utils_log("Set PlayerStateMachine")
+	
+	IdleState = State.create(IdleUpdate)
+	IdleState:set_do_first_function(IdleFirst)
+	IdleState:set_do_end_function(IdleEnd)
+	IdleState:add_condition(IdleToMovingCondition, "Moving")
+	IdleState:add_condition(IdleToCrouchingCondition, "Crouching")
+	IdleState:add_condition(IdleToJumpingCondition, "Jumping")
+	IdleState:add_condition(ANYToFallingCondition, "Falling")
+	
+	MovingState = State.create(MovingUpdate)
+	MovingState:set_do_first_function(MovingFirst)
+	MovingState:set_do_end_function(MovingEnd)
+	MovingState:add_condition(MovingToIdleCondition, "Idle")
+	MovingState:add_condition(MovingToCrouchingCondition, "Crouching")
+	MovingState:add_condition(MovingToJumpingCondition, "Jumping")
+	MovingState:add_condition(ANYToFallingCondition, "Falling")
+	
+	CrouchingState = State.create(CrouchingUpdate)
+	CrouchingState:set_do_first_function(CrouchingFirst)
+	CrouchingState:set_do_end_function(CrouchingEnd)
+	CrouchingState:add_condition(CrouchingToIdleCondition, "Idle")
+	CrouchingState:add_condition(ANYToFallingCondition, "Falling")
+	
+	ClimbingState = State.create(ClimbingUpdate)
+	ClimbingState:set_do_first_function(ClimbingFirst)
+	ClimbingState:set_do_end_function(ClimbingEnd)
+	
+	JumpingState = State.create(JumpingUpdate)
+	JumpingState:set_do_first_function(JumpingFirst)
+	JumpingState:set_do_end_function(JumpingEnd)
+	JumpingState:add_condition(ANYToFallingCondition, "Falling")
+	
+	FallingState = State.create(FallingUpdate)
+	FallingState:set_do_first_function(FallingFirst)
+	FallingState:set_do_end_function(FallingEnd)
+	FallingState:add_condition(FallingToIdleCondition, "Idle")
+	
+	InteractingState = State.create(InteractingUpdate)
+	InteractingState:set_do_first_function(InteractingFirst)
+	InteractingState:set_do_end_function(InteractingEnd)
+	
+	DeadState = State.create(DeadUpdate)
+	DeadState:set_do_first_function(DeadFirst)
+	DeadState:set_do_end_function(DeadEnd)
+	
+	PlayerStateMachine:add_state("Idle", IdleState)
+	PlayerStateMachine:add_state("Moving", MovingState)
+	PlayerStateMachine:add_state("Crouching", CrouchingState)
+	PlayerStateMachine:add_state("Climbing", ClimbingState)
+	PlayerStateMachine:add_state("Jumping", JumpingState)
+	PlayerStateMachine:add_state("Falling", FallingState)
+	PlayerStateMachine:add_state("Interacting", InteractingState)
+	PlayerStateMachine:add_state("Dead", DeadState)
+end

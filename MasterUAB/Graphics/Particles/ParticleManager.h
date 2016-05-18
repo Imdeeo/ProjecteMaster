@@ -13,6 +13,7 @@ public:
 	virtual ~CParticleManager(void);
 	void Load(const std::string &Filename);
 	void Reload();
+	void Save();
 };
 
 #endif //PARTICLE_MANAGER_H
