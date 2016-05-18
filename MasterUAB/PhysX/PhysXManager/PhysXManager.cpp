@@ -104,7 +104,7 @@ class MyQueryFilterCallback : physx::PxQueryFilterCallback
 		physx::PxFilterData l_filterData2 = shape->getSimulationFilterData();
 		if ((filterData.word0 & l_filterData2.word1) && (l_filterData2.word0 & filterData.word1))
 		{
-			return physx::PxQueryHitType::eBLOCK;
+			return physx::PxQueryHitType::eTOUCH;
 		}
 		return physx::PxQueryHitType::eNONE;
 	}
@@ -113,18 +113,6 @@ class MyQueryFilterCallback : physx::PxQueryFilterCallback
 	{
 		return physx::PxQueryHitType::eNONE;
 	}
-};
-
-struct FilterGroup
-{
-	enum Enum
-	{
-		eOTHER = (1 << 0),
-		eTRIGGER = (1 << 1),
-		ePLAYER = (1 << 2),
-		eTRIGGER2 = (1 << 3)
-	};
-
 };
 
 static std::map<physx::PxU32, physx::PxU32> st_CollisionGroups;
@@ -342,14 +330,14 @@ public:
 			std::string l_actorName = m_ActorNames[l_indexActor];
 			//CRenderableObject* l_ro = UABEngine.GetLayerManager()->GetResource("Triggers")->GetResource(l_triggerName);
 			//l_ro->GetComponentManager()->onTrigger(l_actorName);
-		//	std::vector<std::string> l_ActiveActors = m_ActiveActors[l_indexTrigger];
-			//for (int i = 0; i < l_ActiveActors.size(); i++)
-			//{
-			//	if (l_ActiveActors[i] == l_actorName)
-			//	{
-					UABEngine.GetInstance()->GetScriptManager()->RunCode(m_OnTriggerLuaFunctions[l_indexTrigger]);
-			//	}
-			//}
+			std::vector<std::string> l_ActiveActors = m_ActiveActors[l_indexTrigger];
+			for (int i = 0; i < l_ActiveActors.size(); i++)
+			{
+				if (l_ActiveActors[i] == l_actorName)
+				{
+					UABEngine.GetInstance()->GetScriptManager()->RunCode(m_OnTriggerLuaFunctions[l_indexTrigger] + "(\"" + l_triggerName + "\",\"" + l_actorName + "\")");
+				}
+			}
 			printf("Trigger \"%s\" fired with \"%s\"", l_triggerName.c_str(),l_actorName.c_str());
 			//lo suyo seria llamar a una funcion lua que gestionara la activacion del trigger
 		}
@@ -630,7 +618,7 @@ void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, c
 }
 
 
-void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerLuaFunction/*, std::vector<std::string> _ActiveActors*/)
+void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerLuaFunction, std::vector<std::string> _ActiveActors)
 {	
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2), *m_Materials[_Material], true);
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
@@ -646,7 +634,7 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 	AddActor(_name, _position, _orientation, l_Body);
 
 	m_OnTriggerLuaFunctions[m_ActorIndexs[_name]] = _OnTriggerLuaFunction;
-	//m_ActiveActors[m_ActorIndexs[_name]] = _ActiveActors;
+	m_ActiveActors[m_ActorIndexs[_name]] = _ActiveActors;
 
 	m_Scene->addActor(*l_Body);
 
@@ -654,7 +642,7 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 }
 
 
-void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerLuaFunction/*, std::vector<std::string> _ActiveActors*/)
+void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerLuaFunction, std::vector<std::string> _ActiveActors)
 
 {
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxSphereGeometry(_radius), *m_Materials[_Material], true);
@@ -671,7 +659,7 @@ void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, 
 	AddActor(_name, _position, _orientation, l_Body);
 
 	m_OnTriggerLuaFunctions[m_ActorIndexs[_name]] = _OnTriggerLuaFunction;
-	/*m_ActiveActors[m_ActorIndexs[_name]] = _ActiveActors;*/
+	m_ActiveActors[m_ActorIndexs[_name]] = _ActiveActors;
 
 	m_Scene->addActor(*l_Body);
 
@@ -848,18 +836,30 @@ void CPhysXManager::Update(float _dt)
 	}
 }
 
-
+#define MAX_SHAPES_PER_ACTOR 16
 
 void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime)
 {
-	physx::PxFilterData filterData;
-	filterData.setToDefault();
-	filterData.word0 = FilterGroup::ePLAYER;
-	filterData.word1 = FilterGroup::ePLAYER;
-
+	
 	static MyQueryFilterCallback s_MyQueryFilterCallback;
 
 	physx::PxController* cct = m_CharacterControllers[_name];
+	physx::PxRigidDynamic* actor = cct->getActor();
+
+	physx::PxFilterData filterData;
+	filterData.setToDefault();
+	filterData.word0 = 0;
+	filterData.word1 = 0;
+
+	physx::PxShape* l_CCTShapes[MAX_SHAPES_PER_ACTOR];
+	physx::PxU32 l_NShapes = actor->getShapes(l_CCTShapes, MAX_SHAPES_PER_ACTOR);
+
+	for (size_t i = 0; i < l_NShapes; i++)
+	{
+		filterData.word0 |= l_CCTShapes[i]->getSimulationFilterData().word0;
+		filterData.word1 |= l_CCTShapes[i]->getSimulationFilterData().word0 | l_CCTShapes[i]->getSimulationFilterData().word1;
+	}
+
 	const physx::PxControllerFilters filters(&filterData, (physx::PxQueryFilterCallback*)&s_MyQueryFilterCallback, nullptr);
 
 	size_t index = (size_t)cct->getUserData();
@@ -870,7 +870,6 @@ void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement,
 	cct->move(CastVec(movemenAux), movemenAux.Length()*0.01, _elapsedTime, filters);
 
 	Vect3f move2 = CastVec(cct->getPosition());
-	physx::PxRigidDynamic* actor = cct->getActor();
 
 	physx::PxExtendedVec3 p = cct->getFootPosition();
 	physx::PxVec3 v = actor->getLinearVelocity();
