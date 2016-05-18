@@ -63,4 +63,7 @@
 	<pool_renderable_object_technique name="particles_pool">
 		<renderable_object_technique name="fire" technique="fire_particle_technique"/>
 	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="triggers_pool">
+		<renderable_object_technique name="trigger" technique="trigger_technique"/>
+	</pool_renderable_object_technique>
 </renderable_object_techniques>
