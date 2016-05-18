@@ -155,7 +155,10 @@ void CLayerManager::Save()
 
 		for (size_t i = 0; i < m_ResourcesVector.size(); ++i)
 		{
-			fprintf_s(l_File, "\t<layer name=\"%s\"/>\n",m_ResourcesVector[i]->GetName().c_str());
+			if (m_DefaultLayer == m_ResourcesVector[i])
+				fprintf_s(l_File, "\t<layer name=\"%s\" default=\"true\"/>\n",m_ResourcesVector[i]->GetName().c_str());
+			else
+				fprintf_s(l_File, "\t<layer name=\"%s\"/>\n", m_ResourcesVector[i]->GetName().c_str());
 		}
 
 		for (size_t i = 0; i < m_ResourcesVector.size(); ++i)
