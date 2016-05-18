@@ -1,6 +1,3 @@
-//OJUCUIDAO!
-#ifdef _DEBUG
-
 #include "AStar.h"
 #include "DebugRender.h"
 #include "XML\XMLTreeNode.h"
@@ -8,15 +5,9 @@
 #include <map>
 #include <stdlib.h>
 
-CAStar::CAStar() {
-	LoadMap();
-}
-
 CAStar::CAStar(CXMLTreeNode &TreeNode)
 {
-	CXMLTreeNode l_XML;
 	std::map<std::string, TNode*> l_nodesMap;
-	//l_nodesMap[""]
 	TNode *l_node;
 	Vect3f posAux;
 	std::string nombreNodoActual;
@@ -25,32 +16,33 @@ CAStar::CAStar(CXMLTreeNode &TreeNode)
 	for (int i = 0; i < TreeNode.GetNumChildren(); ++i)
 	{
 		CXMLTreeNode l_Element = TreeNode(i);
-		if (l_Element.GetName() == std::string("nodo"))
+		if (l_Element.GetName() == std::string("node"))
 		{
 			l_node = new TNode();
 			posAux = TreeNode.GetVect3fProperty("pos", Vect3f(0,0,0), true);
-			l_node->position = D3DXVECTOR3(posAux.x, posAux.y, posAux.z);
+			l_node->position = Vect3f(posAux.x, posAux.y, posAux.z);
 			l_nodesMap[TreeNode.GetPszProperty("name", "", true)] = l_node;
 		}
 
-		if (l_Element.GetName() == std::string("padre"))
+		if (l_Element.GetName() == std::string("father"))
 		{
 			nombreNodoActual = l_Element.GetPszProperty("name", "", true);
 
 			for (int i = 0; i < l_Element.GetNumChildren(); ++i)
 			{
 				CXMLTreeNode l_Element2 = l_Element(i);
-				if (l_Element.GetName() == std::string("vecino"))
+				if (l_Element.GetName() == std::string("child"))
 				{
 					nombreNodoVecino = l_Element2.GetPszProperty("name");
 
-					l_nodesMap[nombreNodoActual]->neighbours.push_back((PNodeAndDistance(l_nodesMap[nombreNodoVecino], 
-						D3DXVec3Length(&(l_nodesMap[nombreNodoActual]->position - l_nodesMap[nombreNodoVecino]->position)))));
+					l_nodesMap[nombreNodoActual]->neighbours.push_back(
+						(PNodeAndDistance(l_nodesMap[nombreNodoVecino], (l_nodesMap[nombreNodoActual]->position - l_nodesMap[nombreNodoVecino]->position).Length())));
 				}
 			}
 		}
 	}
 	
+	LoadMap();
 }
 
 CAStar::~CAStar() {
@@ -59,39 +51,39 @@ CAStar::~CAStar() {
 
 void CAStar::LoadMap() {
 
-	TNode *node1 = new TNode();
-	node1->position = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
+	/*TNode *node1 = new TNode();
+	node1->position = Vect3f( 0.0f, 0.0f, 0.0f );
 
 	TNode *node2 = new TNode();
-	node2->position = D3DXVECTOR3( 10.0f, 0.0f, 10.0f );
+	node2->position = Vect3f(10.0f, 0.0f, 10.0f);
 
 	TNode *node3 = new TNode();
-	node3->position = D3DXVECTOR3( 0.0f, 0.0f, -5.0f );
+	node3->position = Vect3f(0.0f, 0.0f, -5.0f);
 
 	TNode *node4 = new TNode();
-	node4->position = D3DXVECTOR3( 10.0f, 0.0f, -10.0f );
+	node4->position = Vect3f(10.0f, 0.0f, -10.0f);
 
 	TNode *node5 = new TNode();
-	node5->position = D3DXVECTOR3( -10.0f, 0.0f, 5.0f );
+	node5->position = Vect3f(-10.0f, 0.0f, 5.0f);
 
 	// Vecinos
-	node1->neighbours.push_back( PNodeAndDistance( node2, D3DXVec3Length( &( node1->position - node2->position ) ) ) );
-	node1->neighbours.push_back( PNodeAndDistance( node3, D3DXVec3Length( &( node1->position - node3->position ) ) ) );
-	node1->neighbours.push_back( PNodeAndDistance( node5, D3DXVec3Length( &( node1->position - node5->position ) ) ) );
-	node2->neighbours.push_back( PNodeAndDistance( node1, D3DXVec3Length( &( node2->position - node1->position ) ) ) );
-	node3->neighbours.push_back( PNodeAndDistance( node1, D3DXVec3Length( &( node3->position - node1->position ) ) ) );
-	node3->neighbours.push_back( PNodeAndDistance( node4, D3DXVec3Length( &( node3->position - node4->position ) ) ) );
-	node3->neighbours.push_back( PNodeAndDistance( node5, D3DXVec3Length( &( node3->position - node5->position ) ) ) );
-	node4->neighbours.push_back( PNodeAndDistance( node3, D3DXVec3Length( &( node4->position - node3->position ) ) ) );
-	node5->neighbours.push_back( PNodeAndDistance( node1, D3DXVec3Length( &( node5->position - node1->position ) ) ) );
-	node5->neighbours.push_back( PNodeAndDistance( node3, D3DXVec3Length( &( node5->position - node3->position ) ) ) );
+	node1->neighbours.push_back(PNodeAndDistance(node2, (node1->position - node2->position).Length()));
+	node1->neighbours.push_back(PNodeAndDistance(node3, (node1->position - node3->position).Length()));
+	node1->neighbours.push_back(PNodeAndDistance(node5, (node1->position - node5->position).Length()));
+	node2->neighbours.push_back(PNodeAndDistance(node1, (node2->position - node1->position).Length()));
+	node3->neighbours.push_back(PNodeAndDistance(node1, (node3->position - node1->position).Length()));
+	node3->neighbours.push_back(PNodeAndDistance(node4, (node3->position - node4->position).Length()));
+	node3->neighbours.push_back(PNodeAndDistance(node5, (node3->position - node5->position).Length()));
+	node4->neighbours.push_back(PNodeAndDistance(node3, (node4->position - node3->position).Length()));
+	node5->neighbours.push_back(PNodeAndDistance(node1, (node5->position - node1->position).Length()));
+	node5->neighbours.push_back(PNodeAndDistance(node3, (node5->position - node3->position).Length()));
 
 	// Inserciones
 	m_map.push_back( node1 );
 	m_map.push_back( node2 );
 	m_map.push_back( node3 );
 	m_map.push_back( node4 );
-	m_map.push_back( node5 );
+	m_map.push_back( node5 );*/
 }
 
 void CAStar::DestroyMap() {
@@ -129,7 +121,6 @@ void CAStar::DestroyMap() {
 bool CAStar::TCompareNodes::operator()( const TNode *nodeA, const TNode *nodeB ) {
 	return nodeA->f < nodeB->f;
 }
-
 
 CAStar::VNodes CAStar::SearchPath( TNode* nodeA, TNode *nodeB ) {
 	// Marcamos todos los nodos como no visitados
@@ -211,7 +202,8 @@ bool CAStar::VisitNextNode( TNode *destinationNode ) {
 					} else {
 						// Asignar los valores de g, h y f
 						currentNeighbour->g = g;
-						currentNeighbour->h = D3DXVec3Length( &( currentNeighbour->position - currentNode->position ) );
+
+						currentNeighbour->h = (currentNeighbour->position - currentNode->position).Length();
 						currentNeighbour->f = currentNeighbour->g + currentNeighbour->h;
 
 						// Meterlo en la lista de abiertos
@@ -242,14 +234,14 @@ bool CAStar::VisitNextNode( TNode *destinationNode ) {
 	return false;
 }
 
-CAStar::TNode *CAStar::GetNearestNode( const D3DXVECTOR3 &point ) {
+CAStar::TNode *CAStar::GetNearestNode( const Vect3f &point ) {
 	TNode *bestNode = NULL;
 	float nearestSquaredDistance = FLT_MAX;
 
 	VNodes::const_iterator it;
 	for( it = m_map.begin(); it != m_map.end(); ++it ) {
 		TNode *currentNode = *it;
-		float currentSquaredDistance = D3DXVec3LengthSq( &( currentNode->position - point ) );
+		float currentSquaredDistance = (currentNode->position - point).SquaredLength();
 		if( currentSquaredDistance < nearestSquaredDistance ) {
 			nearestSquaredDistance = currentSquaredDistance;
 			bestNode = currentNode;
@@ -258,7 +250,7 @@ CAStar::TNode *CAStar::GetNearestNode( const D3DXVECTOR3 &point ) {
 	return bestNode;
 }
 
-VPoints3 CAStar::SearchPath( const D3DXVECTOR3 &pointA, const D3DXVECTOR3 &pointB ) {
+VPoints3 CAStar::SearchPath(const Vect3f &pointA, const Vect3f &pointB) {
 	TNode *nodeA = GetNearestNode( pointA );
 	TNode *nodeB = GetNearestNode( pointB );
 	VNodes nodes = SearchPath( nodeA, nodeB );
@@ -271,6 +263,3 @@ VPoints3 CAStar::SearchPath( const D3DXVECTOR3 &pointA, const D3DXVECTOR3 &point
 	}
 	return points;
 }
-
-
-#endif
