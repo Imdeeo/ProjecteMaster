@@ -44,11 +44,18 @@ function ClimbingEnd(args)
 	utils_log("ClimbingEnd")
 end
 
-function ClimbingStartTrigger(args)
-	l_Trigger = args["trigger"]
-	l_Collider = args["collider"]
-	if(l_Collider == g_Player and g_Player.m_InputManager:is_action_active("INTERACT")) then
-		ToggleClimbing()
+function ANYToClimbingCondition()
+	return g_IsClimbing
+end
+
+function ClimbingToFallingCondition()
+	return not g_IsClimbing
+end
+
+function ClimbingStartTrigger(_TriggerName, _ColliderName)
+	-- and g_Player.m_InputManager:is_action_active("INTERACT")
+	if _ColliderName == g_Player.m_Name then
+		g_IsClimbing = not g_IsClimbing
 	end
 end
 
