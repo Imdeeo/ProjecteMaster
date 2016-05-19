@@ -209,7 +209,7 @@ CAStar::TNode *CAStar::GetNearestNode( const Vect3f &point ) {
 	return bestNode;
 }
 
-VPoints3 CAStar::SearchPath(const Vect3f &pointA, const Vect3f &pointB) {
+VPoints3 CAStar::SearchForPath(const Vect3f &pointA, const Vect3f &pointB) {
 	TNode *nodeA = GetNearestNode( pointA );
 	TNode *nodeB = GetNearestNode( pointB );
 	VNodes nodes = SearchNodePath( nodeA, nodeB );
