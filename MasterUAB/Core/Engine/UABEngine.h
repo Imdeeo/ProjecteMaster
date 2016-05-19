@@ -80,6 +80,7 @@ public:
 	void SwitchCamera();
 	void ChangeCameraVision();
 	UAB_BUILD_GET_SET(float, TimeScale);
+	UAB_BUILD_GET_SET(bool, Pause);
 };
 
 #define UABEngine (*(CUABEngine::GetInstance()))
