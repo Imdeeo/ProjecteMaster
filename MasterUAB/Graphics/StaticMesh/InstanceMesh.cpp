@@ -145,10 +145,10 @@ void CInstanceMesh::Save(FILE* _File, std::string _layer)
 	{
 		fprintf_s(_File, "\t<instance_mesh name=\"%s\" layer=\"%s\" core_name=\"%s\" position=\"%f %f %f\" rotation=\"%f %f %f %f\" "
 			"create_physics=\"true\" physics_type=\"%s\" physics_offset=\"%f\" physics_normal=\"%f %f %f\" physics_material=\"%s\" "
-			"visible=\"%s\"/>\n",
+			"physics_group=\"%s\" visible=\"%s\"/>\n",
 			m_Name.c_str(), _layer.c_str(), m_StaticMesh->GetName().c_str(), m_Position.x, m_Position.y, m_Position.z,
 			m_Rotation.x, m_Rotation.y, m_Rotation.z, m_Rotation.w, m_PxType.c_str(), m_PxOffset,
-			m_PxNormals.x, m_PxNormals.y, m_PxNormals.z, m_PxMaterial.c_str(), m_Visible ? "true" : "false");
+			m_PxNormals.x, m_PxNormals.y, m_PxNormals.z, m_PxMaterial.c_str(), m_PxGroup.c_str(), m_Visible ? "true" : "false");
 	}
 	else
 	{
