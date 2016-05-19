@@ -378,7 +378,10 @@ rollout UABSetProperties "UABSetProperties" width:280 height:394
 				PhysicsLayerBox.checked = getUserProp Objs[1] "has_physics_layer"
 				case getUserProp Objs[1] "physics_layer" of
 					(
-						"logic": PhysicsLayerList.selection = 1
+						"plane": PhysicsLayerList.selection = 1
+						"objects": PhysicsLayerList.selection = 2
+						"triggers": PhysicsLayerList.selection = 3
+						"player": PhysicsLayerList.selection = 4
 					)
 					
 				PhysicsMaterialText.text = getUserProp Objs[1] "physics_material"
@@ -508,7 +511,10 @@ rollout UABSetProperties "UABSetProperties" width:280 height:394
 					
 					case PhysicsLayerList.items[PhysicsLayerList.selection] of
 					(
-						"logic": setUserProp Objs[i] "physics_layer" (1 as string)
+						"plane": setUserProp Objs[i] "physics_layer" "Plane"
+						"objects": setUserProp Objs[i] "physics_layer" "Objects"
+						"triggers": setUserProp Objs[i] "physics_layer" "Triggers"
+						"player": setUserProp Objs[i] "physics_layer" "Player"
 					)	
 				
 				) else (

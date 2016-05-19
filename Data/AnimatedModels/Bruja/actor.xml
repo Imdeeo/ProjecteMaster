@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<actor name="bruja" radius_bs="2.0" pos_bs="0.0 1.0 0.0">
+<actor name="Bruja" radius_bs="2.0" pos_bs="0.0 1.0 0.0">
 	<skeleton filename="brujaSkeleton.csf"/>
 	<mesh filename="brujaMesh.cmf"/>
 	<!--
