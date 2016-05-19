@@ -318,28 +318,47 @@ public:
 	}
 	void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count) 
 	{
-		for(physx::PxU32 i = 0; i < count; i++)
+		for (physx::PxU32 i = 0; i < count; i++)
 		{
-			if((pairs[i].flags & (physx::PxTriggerPairFlag::eREMOVED_SHAPE_TRIGGER| physx::PxTriggerPairFlag::eREMOVED_SHAPE_OTHER)))
+			if ((pairs[i].flags & (physx::PxTriggerPairFlag::eREMOVED_SHAPE_TRIGGER | physx::PxTriggerPairFlag::eREMOVED_SHAPE_OTHER)))
 				continue;
 
 			size_t l_indexTrigger = (size_t)pairs[i].triggerActor->userData;
-			size_t l_indexActor = (size_t)pairs[i].otherActor->userData;
-
-			std::string l_triggerName = m_ActorNames[l_indexTrigger];
-			std::string l_actorName = m_ActorNames[l_indexActor];
-			//CRenderableObject* l_ro = UABEngine.GetLayerManager()->GetResource("Triggers")->GetResource(l_triggerName);
-			//l_ro->GetComponentManager()->onTrigger(l_actorName);
-			std::vector<std::string> l_ActiveActors = m_ActiveActors[l_indexTrigger];
-			for (int i = 0; i < l_ActiveActors.size(); i++)
+			if (m_TriggerIsActive[l_indexTrigger])
 			{
-				if (l_ActiveActors[i] == l_actorName)
+
+				size_t l_indexActor = (size_t)pairs[i].otherActor->userData;
+
+				std::string l_triggerName = m_ActorNames[l_indexTrigger];
+				std::string l_actorName = m_ActorNames[l_indexActor];
+				//CRenderableObject* l_ro = UABEngine.GetLayerManager()->GetResource("Triggers")->GetResource(l_triggerName);
+				//l_ro->GetComponentManager()->onTrigger(l_actorName);
+				std::vector<std::string> l_ActiveActors = m_ActiveActors[l_indexTrigger];
+				for (int i = 0; i < l_ActiveActors.size(); i++)
 				{
-					UABEngine.GetInstance()->GetScriptManager()->RunCode(m_OnTriggerLuaFunctions[l_indexTrigger] + "(\"" + l_triggerName + "\",\"" + l_actorName + "\")");
+					if (l_ActiveActors[i] == l_actorName)
+					{
+						if (m_TriggerActivated[l_indexTrigger] ==std::string(""))
+						{
+							if (m_OnTriggerEnterLuaFunctions[l_indexTrigger] != std::string(""))
+							{
+								UABEngine.GetInstance()->GetScriptManager()->RunCode(m_OnTriggerEnterLuaFunctions[l_indexTrigger] + "(\"" + l_triggerName + "\",\"" + l_actorName + "\")");
+							}
+							m_TriggerActivated[l_indexTrigger] = l_actorName;
+						}
+						else
+						{
+							if (m_OnTriggerExitLuaFunctions[l_indexTrigger] != std::string(""))
+							{
+								UABEngine.GetInstance()->GetScriptManager()->RunCode(m_OnTriggerExitLuaFunctions[l_indexTrigger] + "(\"" + l_triggerName + "\",\"" + l_actorName + "\")");
+							}
+							m_TriggerActivated[l_indexTrigger] = "";
+						}
+					}
 				}
+				printf("Trigger \"%s\" fired with \"%s\"", l_triggerName.c_str(), l_actorName.c_str());
+				//lo suyo seria llamar a una funcion lua que gestionara la activacion del trigger
 			}
-			printf("Trigger \"%s\" fired with \"%s\"", l_triggerName.c_str(),l_actorName.c_str());
-			//lo suyo seria llamar a una funcion lua que gestionara la activacion del trigger
 		}
 	}
 
@@ -576,7 +595,7 @@ void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, c
 }
 
 
-void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerLuaFunction, std::vector<std::string> _ActiveActors)
+void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors,bool isActive)
 {	
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2), *m_Materials[_Material], true);
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
@@ -591,15 +610,20 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 
 	AddActor(_name, _position, _orientation, l_Body);
 
-	m_OnTriggerLuaFunctions[m_ActorIndexs[_name]] = _OnTriggerLuaFunction;
-	m_ActiveActors[m_ActorIndexs[_name]] = _ActiveActors;
+	size_t index = m_ActorIndexs[_name];
+	m_TriggerIsActive[index] = isActive;
+	m_TriggerActivated[index] = "";
+	m_OnTriggerEnterLuaFunctions[index] = _OnTriggerEnterLuaFunction;
+	m_OnTriggerStayLuaFunctions[index] = _OnTriggerStayLuaFunction;
+	m_OnTriggerExitLuaFunctions[index] = _OnTriggerExitLuaFunction;
+	m_ActiveActors[index] = _ActiveActors;
 
 	m_Scene->addActor(*l_Body);
 
 	shape->release();
 }
 
-void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerLuaFunction, std::vector<std::string> _ActiveActors)
+void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors, bool isActive)
 {
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxSphereGeometry(_radius), *m_Materials[_Material], true);
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
@@ -614,8 +638,13 @@ void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, 
 
 	AddActor(_name, _position, _orientation, l_Body);
 
-	m_OnTriggerLuaFunctions[m_ActorIndexs[_name]] = _OnTriggerLuaFunction;
-	m_ActiveActors[m_ActorIndexs[_name]] = _ActiveActors;
+	size_t index = m_ActorIndexs[_name];
+	m_TriggerIsActive[index] = isActive;
+	m_TriggerActivated[index] = "";
+	m_OnTriggerEnterLuaFunctions[index] = _OnTriggerEnterLuaFunction;
+	m_OnTriggerStayLuaFunctions[index] = _OnTriggerStayLuaFunction;
+	m_OnTriggerExitLuaFunctions[index] = _OnTriggerExitLuaFunction;
+	m_ActiveActors[index] = _ActiveActors;
 
 	m_Scene->addActor(*l_Body);
 
@@ -760,6 +789,20 @@ void CPhysXManager::Update(float _dt)
 		}
 
 		m_LeftoverSeconds = fmod(m_LeftoverSeconds, PHYSX_UPDATE_STEP);
+		for (std::map<size_t, bool>::iterator l_iterator = m_TriggerIsActive.begin(); l_iterator != m_TriggerIsActive.end(); l_iterator++)
+		{
+			int l_index = l_iterator->first;
+			if (l_iterator->second)
+			{
+				if (m_TriggerActivated[l_index]!=std::string(""))
+				{
+					if (m_OnTriggerStayLuaFunctions[l_index] != std::string(""))
+					{
+						UABEngine.GetInstance()->GetScriptManager()->RunCode(m_OnTriggerStayLuaFunctions[l_index] + "(\"" + m_ActorNames[l_index] + "\",\"" + m_TriggerActivated[l_index] + "\")");
+					}
+				}
+			}
+		}
 	}
 }
 
