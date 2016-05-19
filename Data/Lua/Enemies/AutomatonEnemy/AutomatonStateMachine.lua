@@ -1,0 +1,62 @@
+dofile("Data\\Lua\\Utils\\state_machine.lua")
+dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStateOff.lua")
+dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStateIdle.lua")
+dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStatePatrol.lua")
+dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStateChase.lua")
+dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStateAlert.lua")
+dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStateReturn.lua")
+dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStateAttack.lua")
+
+AutomatonStateMachine = StateMachine.create()
+
+function setAutomatonStateMachine()
+	utils_log("Set AutomatonStateMachine")
+	
+	OffState = State.create(OffUpdate)
+	OffState:set_do_first_function(OffFirst)
+	OffState:set_do_end_function(OffEnd)
+	OffState:add_condition(OffToIdleCondition, "Idle")
+	
+	IdleState = State.create(IdleUpdate)
+	IdleState:set_do_first_function(IdleFirst)
+	IdleState:set_do_end_function(IdleEnd)
+	IdleState:add_condition(IdleToPatrolCondition, "Patrol")
+	IdleState:add_condition(IdleToChaseCondition, "Chase")
+	
+	PatrolState = State.create(PatrolUpdate)
+	PatrolState:set_do_first_function(PatrolFirst)
+	PatrolState:set_do_end_function(PatrolEnd)
+	PatrolState:add_condition(PatrolToChaseCondition, "Chase")
+	PatrolState:add_condition(PatrolToAlertCondition, "Alert")
+	
+	ChaseState = State.create(ChaseUpdate)
+	ChaseState:set_do_first_function(ChaseFirst)
+	ChaseState:set_do_end_function(ChaseEnd)
+	ChaseState:add_condition(ChaseToAlertCondition, "Alert")
+	ChaseState:add_condition(ChaseToAttackCondition, "Attack")
+	
+	AlertState = State.create(AlertUpdate)
+	AlertState:set_do_first_function(AlertFirst)
+	AlertState:set_do_end_function(AlertEnd)
+	AlertState:add_condition(AlertToChaseCondition, "Chase")
+	AlertState:add_condition(AlertToReturnCondition, "Return")
+	AlertState:add_condition(AlertToPatrolCondition, "Patrol")
+	
+	ReturnState = State.create(ReturnUpdate)
+	ReturnState:set_do_first_function(ReturnFirst)
+	ReturnState:set_do_end_function(ReturnEnd)
+	ReturnState:add_condition(ReturnToIdleCondition, "Idle")
+	ReturnState:add_condition(ReturnToChaseCondition, "Chase")
+	
+	AttackState = State.create(AttackUpdate)
+	AttackState:set_do_first_function(AttackFirst)
+	AttackState:set_do_end_function(AttackEnd)
+	
+	AutomatonStateMachine:add_state("Off", OffState)
+	AutomatonStateMachine:add_state("Idle", IdleState)
+	AutomatonStateMachine:add_state("Patrol", PatrolState)
+	AutomatonStateMachine:add_state("Chase", ChaseState)
+	AutomatonStateMachine:add_state("Alert", AlertState)
+	AutomatonStateMachine:add_state("Return", ReturnState)
+	AutomatonStateMachine:add_state("Attack", AttackState)
+end
