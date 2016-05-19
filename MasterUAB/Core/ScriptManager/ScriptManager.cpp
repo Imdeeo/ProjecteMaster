@@ -1412,8 +1412,8 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CAStar>("CAStar")
 			.def(constructor<CXMLTreeNode&>())
-			.def("load_map", &CAStar::LoadMap)
 			.def("destroy_map", &CAStar::DestroyMap)
+			.def("search_for_path", &CAStar::SearchForPath)
 	];
 	
 // VIDEOGAME----------------------------------------------------------------------------------------
