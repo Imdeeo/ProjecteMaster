@@ -15,7 +15,7 @@ public:
 	CAStar(CXMLTreeNode &TreeNode);
 	~CAStar();
 	void DestroyMap();
-	VPoints3 SearchPath(const Vect3f &pointA, const Vect3f &pointB);
+	VPoints3 SearchForPath(const Vect3f &pointA, const Vect3f &pointB);
 	//void Render( LPDIRECT3DDEVICE9 device );
 private:
 	struct TNode;
