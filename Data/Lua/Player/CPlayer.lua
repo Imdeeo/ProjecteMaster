@@ -27,6 +27,7 @@ class 'CPlayer'
 		self.m_Speed = 5
 		self.m_Sanity = 100
 		self.m_MaxSanity = 100
+		self.m_IsClimbing = false
 		
 		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent")
 		

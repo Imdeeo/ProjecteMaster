@@ -45,36 +45,26 @@ function ClimbingEnd(args)
 end
 
 function ANYToClimbingCondition()
-	return g_IsClimbing
+	return g_Player.m_IsClimbing
 end
 
 function ClimbingToFallingCondition()
-	return not g_IsClimbing
+	return not g_Player.m_IsClimbing
 end
 
-function ClimbingStartTrigger(_TriggerName, _ColliderName)
-	-- and g_Player.m_InputManager:is_action_active("INTERACT")
+function ClimbingToggleTrigger(_TriggerName, _ColliderName)
+	if (_ColliderName == g_Player.m_Name and g_Player.m_InputManager:is_action_active("INTERACT")) then
+		g_Player.m_IsClimbing = not g_Player.m_IsClimbing
+	end
+end
+
+function ClimbingEndTrigger(_TriggerName, _ColliderName)
 	if _ColliderName == g_Player.m_Name then
-		g_IsClimbing = not g_IsClimbing
+		FinishClimbing()
 	end
 end
 
-function ToggleClimbing()
-	if g_Player.m_PlayerStateMachine.actual_state == "climbing" then
-		m_PlayerStateMachine.actual_state = "falling"
-	else
-		m_PlayerStateMachine.actual_State = "climbing"
-	end
-end
-
-function ClimbingEndTrigger(args)
-	l_Trigger = args["trigger"]
-	l_Collider = args["collider"]
-	if l_Collider == g_Player then
-		EndClimbing()
-	end
-end
-
-function EndClimbing()
-	
+function FinishClimbing()
+	utils_log("Finished climbing!")
+	g_Player.m_IsClimbing = false
 end
