@@ -14,8 +14,9 @@ class CAStar {
 public:	
 	CAStar(CXMLTreeNode &TreeNode);
 	~CAStar();
-	void LoadMap();
 	void DestroyMap();
+	VPoints3 SearchPath(const Vect3f &pointA, const Vect3f &pointB);
+	//void Render( LPDIRECT3DDEVICE9 device );
 private:
 	struct TNode;
 	typedef std::pair< TNode*, float > PNodeAndDistance;
@@ -31,6 +32,7 @@ private:
 		bool inOpenList;
 		bool closed;
 	};
+	
 	typedef std::vector< TNode* > VNodes;
 	VNodes m_map;
 
@@ -42,15 +44,10 @@ private:
 	void AddToOpenList( TNode *node );
 	TNode *PopFirstFromOpenList();	
 
-	VNodes SearchPath( TNode* nodeA, TNode *nodeB );
+	VNodes SearchNodePath( TNode* nodeA, TNode *nodeB );
 	bool VisitNextNode( TNode *destinationNode );
 
 	TNode *GetNearestNode( const Vect3f &point );
-
-public:
-	//void Render( LPDIRECT3DDEVICE9 device );
-	VPoints3 SearchPath( const Vect3f &pointA, const Vect3f &pointB );
-
 };
 
 #endif // INC_A_STAR_H_

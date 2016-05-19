@@ -19,8 +19,7 @@ CAStar::CAStar(CXMLTreeNode &TreeNode)
 		if (l_Element.GetName() == std::string("node"))
 		{
 			l_node = new TNode();
-			posAux = TreeNode.GetVect3fProperty("pos", Vect3f(0,0,0), true);
-			l_node->position = Vect3f(posAux.x, posAux.y, posAux.z);
+			l_node->position = TreeNode.GetVect3fProperty("pos", Vect3f(0, 0, 0), true);
 			l_nodesMap[TreeNode.GetPszProperty("name", "", true)] = l_node;
 		}
 
@@ -41,49 +40,10 @@ CAStar::CAStar(CXMLTreeNode &TreeNode)
 			}
 		}
 	}
-	
-	LoadMap();
 }
 
 CAStar::~CAStar() {
 	DestroyMap();
-}
-
-void CAStar::LoadMap() {
-
-	/*TNode *node1 = new TNode();
-	node1->position = Vect3f( 0.0f, 0.0f, 0.0f );
-
-	TNode *node2 = new TNode();
-	node2->position = Vect3f(10.0f, 0.0f, 10.0f);
-
-	TNode *node3 = new TNode();
-	node3->position = Vect3f(0.0f, 0.0f, -5.0f);
-
-	TNode *node4 = new TNode();
-	node4->position = Vect3f(10.0f, 0.0f, -10.0f);
-
-	TNode *node5 = new TNode();
-	node5->position = Vect3f(-10.0f, 0.0f, 5.0f);
-
-	// Vecinos
-	node1->neighbours.push_back(PNodeAndDistance(node2, (node1->position - node2->position).Length()));
-	node1->neighbours.push_back(PNodeAndDistance(node3, (node1->position - node3->position).Length()));
-	node1->neighbours.push_back(PNodeAndDistance(node5, (node1->position - node5->position).Length()));
-	node2->neighbours.push_back(PNodeAndDistance(node1, (node2->position - node1->position).Length()));
-	node3->neighbours.push_back(PNodeAndDistance(node1, (node3->position - node1->position).Length()));
-	node3->neighbours.push_back(PNodeAndDistance(node4, (node3->position - node4->position).Length()));
-	node3->neighbours.push_back(PNodeAndDistance(node5, (node3->position - node5->position).Length()));
-	node4->neighbours.push_back(PNodeAndDistance(node3, (node4->position - node3->position).Length()));
-	node5->neighbours.push_back(PNodeAndDistance(node1, (node5->position - node1->position).Length()));
-	node5->neighbours.push_back(PNodeAndDistance(node3, (node5->position - node3->position).Length()));
-
-	// Inserciones
-	m_map.push_back( node1 );
-	m_map.push_back( node2 );
-	m_map.push_back( node3 );
-	m_map.push_back( node4 );
-	m_map.push_back( node5 );*/
 }
 
 void CAStar::DestroyMap() {
@@ -122,7 +82,7 @@ bool CAStar::TCompareNodes::operator()( const TNode *nodeA, const TNode *nodeB )
 	return nodeA->f < nodeB->f;
 }
 
-CAStar::VNodes CAStar::SearchPath( TNode* nodeA, TNode *nodeB ) {
+CAStar::VNodes CAStar::SearchNodePath( TNode* nodeA, TNode *nodeB ) {
 	// Marcamos todos los nodos como no visitados
 	VNodes::const_iterator it;
 	for( it = m_map.begin(); it != m_map.end(); ++it ) {
@@ -209,7 +169,6 @@ bool CAStar::VisitNextNode( TNode *destinationNode ) {
 						// Meterlo en la lista de abiertos
 						AddToOpenList( currentNeighbour );
 					}
-
 				} else {
 					// Si ya estaba en la lista
 
@@ -253,7 +212,7 @@ CAStar::TNode *CAStar::GetNearestNode( const Vect3f &point ) {
 VPoints3 CAStar::SearchPath(const Vect3f &pointA, const Vect3f &pointB) {
 	TNode *nodeA = GetNearestNode( pointA );
 	TNode *nodeB = GetNearestNode( pointB );
-	VNodes nodes = SearchPath( nodeA, nodeB );
+	VNodes nodes = SearchNodePath( nodeA, nodeB );
 
 	VPoints3 points;
 	VNodes::const_iterator it;
