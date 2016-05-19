@@ -106,6 +106,8 @@ bool CSoundManagerImplementation::Init() {
 	m_DefaultSpeakerId = GenerateObjectID();
 	AK::SoundEngine::RegisterGameObj(m_DefaultSpeakerId);
 
+	m_NamedSpeakers["NO_SPEAKER"] = AK_INVALID_GAME_OBJECT;
+
 	return true;
 }
 
