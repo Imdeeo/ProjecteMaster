@@ -17,7 +17,11 @@ class 'CCharacterManager'
 					g_Player = CPlayer()
 					g_Player:InitPlayer(l_Atts)
 					table.insert(self.m_Player, g_Player)
-				end					
+				elseif l_ElemName == "enemy" then
+					local l_Enemy = CEnemy()
+					l_Enemy:InitEnemy(l_Atts)
+					table.insert(self.m_Enemics, l_Enemy)
+				end	
 			end
 		else
 			utils_log("File '"..Filename.."'not correctly loaded")
