@@ -6,6 +6,7 @@ dofile("Data\\Lua\\Characters\\CCharacterManager.lua")
 m_cinematicManager = CUABCinematicsActionManager()
 m_CharacterManager = CCharacterManager()
 m_menu = true
+m_credits = false
 
 
 function mainLua(level)
@@ -31,20 +32,44 @@ function luaUpdate(_ElapsedTime)
 end
 
 function luaGui()
+	local gui_manager = CUABEngine.get_instance():get_gui_manager()
 	if m_menu then
 		local color = CColor(1,1,1,1)
 		local coord = Vect2f(500,100)
-		local gui_manager = CUABEngine.get_instance():get_gui_manager()
 		gui_manager:do_text("fontTest", "A SIMPLE SONG", coord, CGUIManager.mid_center, color)
-		local gui_position = CGUIPosition(500, 400, 50, 30, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+		local gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 		
-		local a = gui_manager:do_button("Play", "teula_button", gui_position)
-		if a then
-			m_menu = false
-			CUABEngine.get_instance():set_pause(false)
+		if m_credits then
+			gui_position = CGUIPosition(500, 580, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local b_back = gui_manager:do_button("Back", "teula_button", gui_position)
+			if b_back then
+				m_credits = false
+			end		
+		else
+			gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local b_play = gui_manager:do_button("Play", "teula_button", gui_position)
+			if b_play then
+				m_menu = false
+				CUABEngine.get_instance():set_pause(false)
+			end 
+			
+			gui_position = CGUIPosition(500, 460, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local b_options = gui_manager:do_button("Options", "teula_button", gui_position)
+			if b_options then
+				
+			end 
+			
+			gui_position = CGUIPosition(500, 520, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			m_credits = gui_manager:do_button("Credits", "teula_button", gui_position)
+			
+			gui_position = CGUIPosition(500, 580, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local b_exit = gui_manager:do_button("Exit", "teula_button", gui_position)
+		end	
+		
+		
+		if b_exit then
+			
 		end 
-	else
-	
 	end 	 
 end
 
