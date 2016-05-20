@@ -79,10 +79,15 @@ float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int 
 
 float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIndex, float _SpecularPower, float _SpecularFactor)
 {
+	float l_DistanceAttenuation;
 	float l_DiffuseContrib;	
-	
+	float l_Distance = distance(l_WorldPosition, m_LightPosition[lightIndex]);
 	l_DiffuseContrib = dot(Nn, normalize(m_LightPosition[lightIndex]-l_WorldPosition));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
+	
+	// Distance attenuation (linear)
+	l_DistanceAttenuation = 1 - saturate((l_Distance - m_LightAttenuationStartRangeArray[lightIndex]) / (m_LightAttenuationEndRangeArray[lightIndex] - m_LightAttenuationStartRangeArray[lightIndex]));
+	//l_DistanceAttenuation = 
 	
 	// Specular
 	float3 cameraToVertex = normalize(m_CameraPosition.xyz - l_WorldPosition);
@@ -90,8 +95,9 @@ float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	float3 H = normalize(cameraToVertex + lightToVertex);
 	float3 specular = saturate(_SpecularFactor*m_LightColor[lightIndex]*pow(dot(Nn, H), _SpecularPower));
 	//specular *= l_SpotAttenuation;
+	specular *= l_DistanceAttenuation;
 	
-	float4 outLight = float4((l_albedo*l_DiffuseContrib*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular*m_LightIntensityArray[lightIndex]).xyz,1);
+	float4 outLight = float4((l_albedo*l_DiffuseContrib*l_DistanceAttenuation*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular*m_LightIntensityArray[lightIndex]).xyz,1);
 	
 	return saturate(outLight);	
 }
