@@ -4,4 +4,5 @@
 	<animated_model name="Guardia" path="Data/AnimatedModels/Guardia/"/>
 	<animated_model name="Sereno" path="Data/AnimatedModels/Sereno/"/>
 	<animated_model name="Obispo" path="Data/AnimatedModels/Obispo/"/>
+	<animated_model name="Automaton" path="Data/AnimatedModels/Automaton/"/>
 </animated_models>
