@@ -3,6 +3,7 @@ dofile("Data\\Lua\\Videogame\\componentsEnemy.lua")
 dofile("Data\\Lua\\Antwakbar\\antweakbar.lua")
 dofile("Data\\Lua\\Characters\\CCharacterManager.lua")
 dofile("Data\\Lua\\Sound\\VolumeControl.lua")
+dofile("Data\\Lua\\Enemy\\VisionTestEnemy.lua")
 
 m_cinematicManager = CUABCinematicsActionManager()
 m_CharacterManager = CCharacterManager()
@@ -23,13 +24,16 @@ function mainLua(level)
 
 	l_SoundManager:play_event(l_MainMusicEvent)
 	l_SoundManager:play_event(l_WaterSoundEvent, "Test")
-	
+
 	local l_switch = SoundSwitch()
 	l_switch.switch_name = "player_action"
 	local l_switchvalue = SoundSwitchValue()
 	l_switchvalue.sound_switch = l_switch
 	l_switchvalue.value_name = "normal"
 	g_Player.m_SoundManager:set_switch(l_switchvalue)
+
+	local vte = VisionTestEnemy()
+	vte:InitEnemy("Guardia02")
 end
 
 function luaGui()
