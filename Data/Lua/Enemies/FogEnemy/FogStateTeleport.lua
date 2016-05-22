@@ -3,7 +3,7 @@ function FogTeleportFirst(args)
 end
 
 function FogTeleportUpdate(args, _ElapsedTime)
-	utils_log("FogTeleportUpdate")
+	--utils_log("FogTeleportUpdate")
 end
 
 function FogTeleportEnd(args)
