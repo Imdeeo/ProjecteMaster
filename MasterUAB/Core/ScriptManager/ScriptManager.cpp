@@ -1318,6 +1318,15 @@ void CScriptManager::RegisterLUAFunctions()
 	
 	
 // PHYSX--------------------------------------------------------------------------------------------
+
+	module(m_LS)[
+		class_<RaycastData>("RaycastData")
+			.def(constructor<>())
+			.def_readonly("position", &RaycastData::position)
+			.def_readonly("normal", &RaycastData::normal)
+			.def_readonly("distance", &RaycastData::distance)
+			.def_readonly("actor_name", &RaycastData::actorname)
+	];
 	
 	// PhysxManager-------------------------------------------------------------------------------------
 	module(m_LS)[
@@ -1327,6 +1336,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("create_character_controller", &CPhysXManager::CreateCharacterController)
 			.def("character_controller_move", &CPhysXManager::CharacterControllerMove)		
 			.def("register_material", &CPhysXManager::RegisterMaterial)
+			.def("raycast", &CPhysXManager::Raycast)
 			.def("render", &CPhysXManager::Render)
 			.def("get_character_controler_pos", &CPhysXManager::GetCharacterControllersPosition)
 			.def("get_character_controler_lua_pos_x", &CPhysXManager::GetCharacterControllersPositionX)
