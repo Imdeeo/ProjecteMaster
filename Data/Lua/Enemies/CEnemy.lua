@@ -13,7 +13,6 @@ class 'CEnemy'
 		self.m_LuaCommand = _TreeNode:get_psz_property("lua_command", "", false)
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
 		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "", false)
-		utils_log("Layer: "..self.m_LayerName..", Name: "..self.m_RenderableObjectName)
 		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
 		self.m_PathFindig = CAStar()
@@ -25,20 +24,20 @@ class 'CEnemy'
 		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent"..self.m_Type)
 				
 		if l_Component==nil then
-			local l_Component=create_scripted_component("ScriptedComponent"..self.m_Type, self.m_RenderableObject, "FnOnCreate"..self.m_Type,"FnOnDestroy"..self.m_Type, "FnOnUpdate"..self.m_Type, "FnOnRender"..self.m_Type, "FnOnDebugRender"..self.m_Type)
+			l_Component=create_scripted_component("ScriptedComponent"..self.m_Type, self.m_RenderableObject, "FnOnCreateController"..self.m_Type,"FnOnDestroyController"..self.m_Type, "FnOnUpdateController"..self.m_Type, "FnOnRenderController"..self.m_Type, "FnOnDebugRender"..self.m_Type)
 			self.m_RenderableObject:get_component_manager():add_resource("ScriptedComponent"..self.m_Type, l_Component)
 		end
 		
-		if self.m_Type == "automaton" then
+		if self.m_Type == "Automaton" then
 			setAutomatonStateMachine()
 			AutomatonStateMachine:start()
-		elseif self.m_Type == "fog_automaton" then
+		elseif self.m_Type == "FogAutomaton" then
 			setFogAutomatonStateMachine()
 			FogAutomatonStateMachine:start()
-		elseif self.m_Type == "turret" then
+		elseif self.m_Type == "Turret" then
 			setTurretEnemyStateMachine()
 			TurretEnemyStateMachine:start()
-		elseif self.m_Type == "whisperer" then
+		elseif self.m_Type == "Whisperer" then
 			setWhispererEnemyStateMachine()
 			WhispererEnemyStateMachine:start()
 		end
