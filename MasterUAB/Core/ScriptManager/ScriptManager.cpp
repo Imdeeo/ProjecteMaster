@@ -1411,7 +1411,9 @@ void CScriptManager::RegisterLUAFunctions()
 // ARTIFICIAL INTELLIGENCE--------------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CAStar>("CAStar")
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<>())
+			.def(constructor<const std::string&>())
+			.def("load_map", &CAStar::LoadMap)
 			.def("destroy_map", &CAStar::DestroyMap)
 			.def("search_for_path", &CAStar::SearchForPath)
 	];

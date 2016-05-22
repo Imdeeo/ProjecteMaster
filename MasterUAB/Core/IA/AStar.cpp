@@ -5,8 +5,21 @@
 #include <map>
 #include <stdlib.h>
 
-CAStar::CAStar(CXMLTreeNode &TreeNode)
+CAStar::CAStar(){}
+
+CAStar::CAStar(std::string _filename){
+	LoadMap(_filename);
+}
+
+CAStar::~CAStar() {
+	DestroyMap();
+}
+
+void CAStar::LoadMap(std::string _filename)
 {
+	CXMLTreeNode TreeNode = CXMLTreeNode();
+	TreeNode.LoadFile(_filename.c_str());
+
 	std::map<std::string, TNode*> l_nodesMap;
 	TNode *l_node;
 	Vect3f posAux;
@@ -40,10 +53,6 @@ CAStar::CAStar(CXMLTreeNode &TreeNode)
 			}
 		}
 	}
-}
-
-CAStar::~CAStar() {
-	DestroyMap();
 }
 
 void CAStar::DestroyMap() {

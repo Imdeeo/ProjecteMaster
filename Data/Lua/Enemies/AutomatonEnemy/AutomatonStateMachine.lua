@@ -1,11 +1,11 @@
 dofile("Data\\Lua\\Utils\\state_machine.lua")
-dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStateOff.lua")
-dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStateIdle.lua")
-dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStatePatrol.lua")
-dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStateChase.lua")
-dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStateAlert.lua")
-dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStateReturn.lua")
-dofile("Data\\Lua\\Enemies\\Automaton\\AutomatonStateAttack.lua")
+dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateOff.lua")
+dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateIdle.lua")
+dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStatePatrol.lua")
+dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateChase.lua")
+dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateAlert.lua")
+dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateReturn.lua")
+dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateAttack.lua")
 
 AutomatonStateMachine = StateMachine.create()
 

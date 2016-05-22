@@ -4,6 +4,7 @@
 #include "Math\Matrix44.h"
 
 #include <vector>
+#include <string>
 
 typedef std::vector< Vect3f > VPoints3;
 
@@ -12,8 +13,10 @@ class CXMLTreeNode;
 class CAStar {
 
 public:	
-	CAStar(CXMLTreeNode &TreeNode);
+	CAStar();
+	CAStar(std::string _filename);
 	~CAStar();
+	void LoadMap(std::string _filename);
 	void DestroyMap();
 	VPoints3 SearchForPath(const Vect3f &pointA, const Vect3f &pointB);
 	//void Render( LPDIRECT3DDEVICE9 device );
