@@ -1,7 +1,9 @@
 dofile("Data\\Lua\\Player\\CPlayer.lua")
+dofile("Data\\Lua\\Enemies\\CEnemy.lua")
+
 class 'CCharacterManager'
 	function CCharacterManager:__init()
-		self.m_Enemics={}
+		self.m_Enemies={}
 		self.m_Player={}
 	end
 		
@@ -20,7 +22,7 @@ class 'CCharacterManager'
 				elseif l_ElemName == "enemy" then
 					local l_Enemy = CEnemy()
 					l_Enemy:InitEnemy(l_Atts)
-					table.insert(self.m_Enemics, l_Enemy)
+					table.insert(self.m_Enemies, l_Enemy)
 				end	
 			end
 		else
