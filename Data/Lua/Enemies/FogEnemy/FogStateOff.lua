@@ -3,7 +3,7 @@ function FogOffFirst(args)
 end
 
 function FogOffUpdate(args, _ElapsedTime)
-	utils_log("FogOffUpdate")
+	--utils_log("FogOffUpdate")
 end
 
 function FogOffEnd(args)

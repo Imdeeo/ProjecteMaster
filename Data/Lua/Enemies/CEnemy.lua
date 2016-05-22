@@ -3,7 +3,6 @@ dofile("Data\\Lua\\Enemies\\FogEnemy\\FogEnemy.lua")
 
 class 'CEnemy'
 	function CEnemy:__init()
-		
 	end
 
 	function CEnemy:InitEnemy(_TreeNode)

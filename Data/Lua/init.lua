@@ -2,6 +2,7 @@ dofile("Data\\Lua\\Cinematics\\CUABCinematicsActionManager.lua")
 dofile("Data\\Lua\\Videogame\\componentsEnemy.lua")
 dofile("Data\\Lua\\Antwakbar\\antweakbar.lua")
 dofile("Data\\Lua\\Characters\\CCharacterManager.lua")
+dofile("Data\\Lua\\Triggers.lua")
 
 m_cinematicManager = CUABCinematicsActionManager()
 m_CharacterManager = CCharacterManager()

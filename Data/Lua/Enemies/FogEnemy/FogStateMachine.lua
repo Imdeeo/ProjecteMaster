@@ -8,8 +8,7 @@ dofile("Data\\Lua\\Enemies\\FogEnemy\\FogStateTeleport.lua")
 FogAutomatonStateMachine = StateMachine.create()
 
 function setFogAutomatonStateMachine()
-	utils_log("SetFogStateMachine")
-	
+	--utils_log("SetFogStateMachine")	
 	OffState = State.create(FogOffUpdate)
 	OffState:set_do_first_function(FogOffFirst)
 	OffState:set_do_end_function(FogOffEnd)
