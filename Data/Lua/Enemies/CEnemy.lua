@@ -1,4 +1,5 @@
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonEnemy.lua")
+dofile("Data\\Lua\\Enemies\\FogEnemy\\FogEnemy.lua")
 
 class 'CEnemy'
 	function CEnemy:__init()
@@ -24,7 +25,7 @@ class 'CEnemy'
 		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent"..self.m_Type)
 				
 		if l_Component==nil then
-			l_Component=create_scripted_component("ScriptedComponent"..self.m_Type, self.m_RenderableObject, "FnOnCreateController"..self.m_Type,"FnOnDestroyController"..self.m_Type, "FnOnUpdateController"..self.m_Type, "FnOnRenderController"..self.m_Type, "FnOnDebugRender"..self.m_Type)
+			l_Component=create_scripted_component("ScriptedComponent"..self.m_Type, self.m_RenderableObject, "FnOnCreate"..self.m_Type,"FnOnDestroy"..self.m_Type, "FnOnUpdate"..self.m_Type, "FnOnRender"..self.m_Type, "FnOnDebugRender"..self.m_Type)
 			self.m_RenderableObject:get_component_manager():add_resource("ScriptedComponent"..self.m_Type, l_Component)
 		end
 		
