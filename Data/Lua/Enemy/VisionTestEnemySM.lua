@@ -11,7 +11,9 @@ class "VisionTestEnemySM"
     scope_state:add_condition(function ()
       return self:player_in_sight()
     end, "watch")
-    scope_state:set_do_first_function(scopeFirst)
+    scope_state:set_do_first_function(function(owner)
+      self:scopeFirst(owner)
+    end)
     --scope_state:set_do_end_function()
 
     local watch_state = State.create(function (args, _ElapsedTime)
@@ -25,9 +27,11 @@ class "VisionTestEnemySM"
 
     self.m_StateMachine:add_state("scope", scope_state)
     self.m_StateMachine:add_state("watch", watch_state)
-    self.m_MaxDistance = 10.0
+    self.m_MaxDistance = 50.0
     self.m_MaxAngle = math.pi * 0.25
     self.m_StateMachine:start()
+    self.m_LatestBlockingObjectName = nil
+    self.m_BlockingObjectName = nil
   end
 
   function VisionTestEnemySM:scope_update(args, _ElapsedTime)
@@ -38,6 +42,10 @@ class "VisionTestEnemySM"
     local target_quat = d_rot * rot
     local actual_rot = rot:slerp(target_quat, _ElapsedTime)
     owner:set_rotation(actual_rot)
+    if self.m_BlockingObjectName ~= self.m_LatestBlockingObjectName then
+      utils_log("Object blocking the view: " .. self.m_BlockingObjectName)
+      self.m_LatestBlockingObjectName = self.m_BlockingObjectName
+    end
   end
 
   function VisionTestEnemySM:watch_update(args, _ElapsedTime)
@@ -94,13 +102,24 @@ class "VisionTestEnemySM"
     if dot < math.cos(self.m_MaxAngle) then
       return false
     end
+
+    local l_RaycastHeight = Vect3f(0.0, 1.0, 0.0)
+    local l_RaycastData = RaycastData()
+    local hit = l_physXManager:raycast(ownerPos+l_RaycastHeight, playerPos+l_RaycastHeight, 15, l_RaycastData)
+    if hit and l_RaycastData.actor_name ~= "player" then
+      self.m_BlockingObjectName = l_RaycastData.actor_name
+      return false
+    end
+
+    self.m_BlockingObjectName = nil
+    self.m_LatestBlockingObjectName = nil
     return true
   end
 
-  function scopeFirst()
-    utils_log("VisionTestEnemy: scoping")
+  function VisionTestEnemySM:scopeFirst()
+    utils_log("VisionTestEnemy: looking around")
   end
 
   function watchFirst()
-    utils_log("VisionTestEnemy: watching")
+    utils_log("VisionTestEnemy: watching player")
   end
