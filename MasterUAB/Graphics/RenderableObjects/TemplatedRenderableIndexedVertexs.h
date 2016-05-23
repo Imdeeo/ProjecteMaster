@@ -18,11 +18,15 @@ private:
 	DXGI_FORMAT m_IndexType;
 	unsigned int m_VertexsCount;
 	unsigned int m_IndexsCount;
+	void *m_Vtxs;
+	void *m_Indexs;
 public:
 	CTemplatedRenderableIndexedVertexs(void *Vtxs, unsigned int VtxsCount, void	*Indices,
 		unsigned int IndexsCount, D3D11_PRIMITIVE_TOPOLOGY PrimitiveTopology,	DXGI_FORMAT IndexType)
 	: m_VertexsCount(VtxsCount)
 	, m_IndexsCount(IndexsCount)
+	, m_Vtxs(Vtxs)
+	, m_Indexs(Indices)
 	, m_PrimitiveTopology(PrimitiveTopology)
 	, m_VertexBuffer(0)
 	, m_IndexBuffer(0)
@@ -116,6 +120,11 @@ public:
 		l_DeviceContext->DrawIndexed(IndexCount==-1 ? m_IndexsCount :IndexCount, StartIndexLocation, BaseVertexLocation);
 		return true;
 	}
+
+	const void* GetVertexs()const { return m_Vtxs; }
+	const void* GetIndexs()const { return m_Indexs; }
+	const unsigned int GetNVertexs(){ return m_VertexsCount; }
+	const unsigned int GetNIndexs(){ return m_IndexsCount; }
 };
 
 #define CRENDERABLE_INDEXED_VERTEX_CLASS_TYPE_CREATOR(ClassName, TopologyType,IndexType) \
