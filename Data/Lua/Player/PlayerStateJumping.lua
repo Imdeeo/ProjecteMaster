@@ -1,6 +1,5 @@
 function JumpingFirst(args)
 	g_Player.m_Velocity.y = 4.9
-	utils_log("JumpingFirst")
 	g_Player.m_SoundManager:play_event(g_Player.m_JumpSoundEvent, g_Player.m_RenderableObject)
 end
 
@@ -41,5 +40,5 @@ function JumpingUpdate(args, _ElapsedTime)
 end
 
 function JumpingEnd(args)
-	utils_log("JumpingEnd")
+	
 end
