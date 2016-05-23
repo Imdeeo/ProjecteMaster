@@ -3,6 +3,7 @@ dofile("Data\\Lua\\Videogame\\componentsEnemy.lua")
 dofile("Data\\Lua\\Antwakbar\\antweakbar.lua")
 dofile("Data\\Lua\\Characters\\CCharacterManager.lua")
 dofile("Data\\Lua\\Triggers.lua")
+dofile("Data\\Lua\\Sound\\VolumeController.lua")
 
 m_cinematicManager = CUABCinematicsActionManager()
 m_CharacterManager = CCharacterManager()
@@ -13,23 +14,38 @@ m_credits = false
 function mainLua(level)
 	InitAntweakBar()
 	m_CharacterManager:LoadXML("Data\\level_"..level.."\\characters.xml")
-	--local l_SoundEvent = SoundEvent()
-	--l_SoundEvent.event_name = "water"
-	--CUABEngine.get_instance():get_sound_manager():play_event(l_SoundEvent, "Test")
+	local l_SoundManager = CUABEngine.get_instance():get_sound_manager()
+	local l_WaterSoundEvent = SoundEvent()
+	l_WaterSoundEvent.event_name = "water"
+	local l_MainMusicEvent = SoundEvent()
+	l_MainMusicEvent.event_name = "play_music"
+
+	l_SoundManager:play_event(l_MainMusicEvent)
+	l_SoundManager:play_event(l_WaterSoundEvent, "Test")
+
+	local l_switch = SoundSwitch()
+	l_switch.switch_name = "music_mode"
+	local l_switchvalue = SoundSwitchValue()
+	l_switchvalue.sound_switch = l_switch
+	l_switchvalue.value_name = "exploration"
+	g_Player.m_SoundManager:set_switch(l_switchvalue)
+
+	g_VolumeController = VolumeController()
 end
 
 function luaUpdate(_ElapsedTime)
 	local l_Engine = CUABEngine.get_instance()
-	if CInputManager.get_input_manager():is_action_active("SPEEDUP") then 
+	if CInputManager.get_input_manager():is_action_active("SPEEDUP") then
 		if l_Engine:get_time_scale() < 11 then
 			l_Engine:set_time_scale(l_Engine:get_time_scale()+1)
 		end
 	end
-	if CInputManager.get_input_manager():is_action_active("SPEEDDOWN") then 
+	if CInputManager.get_input_manager():is_action_active("SPEEDDOWN") then
 		if l_Engine:get_time_scale() > 1 then
 			l_Engine:set_time_scale(l_Engine:get_time_scale()-1)
 		end
 	end
+	g_VolumeController:CheckVolumeKeys()
 end
 
 function luaGui()
