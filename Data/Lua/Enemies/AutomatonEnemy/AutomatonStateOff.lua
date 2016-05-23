@@ -1,9 +1,9 @@
-function IdleFirst(args)
-	utils_log("IdleFirst")
+function OffFirst(args)
+	utils_log("OffFirst")
 end
 
-function IdleUpdate(args, _ElapsedTime)
-	local l_Owner = args["owner"]
+function OffUpdate(args, _ElapsedTime)
+	--[[local l_Owner = args["owner"]
 	
 	--// Calculate the player speed
 	local l_PlayerDisplacement = Vect3f(0, g_Player.m_Velocity.y + g_Player.m_Gravity * _ElapsedTime, 0)
@@ -27,17 +27,13 @@ function IdleUpdate(args, _ElapsedTime)
 	l_RotationY = Quatf()
 	l_Rotation = g_Player.m_CameraController:get_rotation()
 	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
-	l_Owner:set_rotation(l_RotationY)
+	l_Owner:set_rotation(l_RotationY)]]--
 end
 
-function IdleEnd(args)
-	utils_log("IdleEnd")
+function OffEnd(args)
+	utils_log("OffEnd")
 end
 
-function IdleToPatrolCondition()
-	return (g_Player.m_InputManager:is_action_active("MOVE_FWD") or g_Player.m_InputManager:is_action_active("MOVE_BACK") or g_Player.m_InputManager:is_action_active("STRAFE_LEFT") or g_Player.m_InputManager:is_action_active("STRAFE_RIGHT"))
-end
-
-function IdleToChaseCondition()
-	return g_Player.m_InputManager:is_action_active("CROUCH")
+function OffToIdleCondition()
+	--return (g_Player.m_InputManager:is_action_active("MOVE_FWD") or g_Player.m_InputManager:is_action_active("MOVE_BACK") or g_Player.m_InputManager:is_action_active("STRAFE_LEFT") or g_Player.m_InputManager:is_action_active("STRAFE_RIGHT"))
 end
