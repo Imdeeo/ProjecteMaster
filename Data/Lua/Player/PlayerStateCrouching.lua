@@ -1,5 +1,12 @@
 function CrouchingFirst(args)
 	g_Player.m_PhysXManager:set_character_controller_height("player", 1)
+
+	local l_switch = SoundSwitch()
+	l_switch.switch_name = "music_mode"
+	local l_switchvalue = SoundSwitchValue()
+	l_switchvalue.sound_switch = l_switch
+	l_switchvalue.value_name = "action"
+	g_Player.m_SoundManager:set_switch(l_switchvalue)
 end
 
 function CrouchingUpdate(args, _ElapsedTime)
@@ -60,6 +67,13 @@ end
 
 function CrouchingEnd(args)
 	g_Player.m_PhysXManager:set_character_controller_height("player", 2)
+
+	local l_switch = SoundSwitch()
+	l_switch.switch_name = "music_mode"
+	local l_switchvalue = SoundSwitchValue()
+	l_switchvalue.sound_switch = l_switch
+	l_switchvalue.value_name = "exploration"
+	g_Player.m_SoundManager:set_switch(l_switchvalue)
 end
 
 function CrouchingToIdleCondition()
