@@ -2,7 +2,7 @@ dofile("Data\\Lua\\Player\\PlayerStateMachine.lua")
 
 class 'CPlayer'
 	function CPlayer:__init()
-		
+		self.m_AlreadyInitialized = false
 	end
 
 	function CPlayer:InitPlayer(_TreeNode)
@@ -15,10 +15,14 @@ class 'CPlayer'
 		self.m_LuaCommand = _TreeNode:get_psz_property("lua_command", "", false)
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
 		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "", false)
+		self.m_SoundManager = CUABEngine.get_instance():get_sound_manager()
+		if self.m_AlreadyInitialized then
+			-- unregister old speaker before assigning new renderable object
+			self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
+		end
 		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
 		self.m_InputManager = CInputManager.get_input_manager()
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
-		self.m_SoundManager = CUABEngine.get_instance():get_sound_manager()
 		self.m_SoundManager:register_speaker(self.m_RenderableObject)
 		self.m_JumpSoundEvent = SoundEvent()
 		self.m_JumpSoundEvent.event_name = "Jump"
@@ -40,6 +44,7 @@ class 'CPlayer'
 		
 		setPlayerStateMachine()
 		PlayerStateMachine:start()
+		self.m_AlreadyInitialized = true
 	end
 	
 	function CPlayer:SetSanity(_amount, _override)
