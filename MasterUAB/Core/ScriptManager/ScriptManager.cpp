@@ -519,6 +519,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_pause", &CUABEngine::SetPause)
 			.def("get_time_scale", &CUABEngine::GetTimeScale)
 			.def("set_time_scale", &CUABEngine::SetTimeScale)
+			.def("quit", &CUABEngine::Quit)
 	];
 
 	// InputManager-------------------------------------------------------------------------------------
