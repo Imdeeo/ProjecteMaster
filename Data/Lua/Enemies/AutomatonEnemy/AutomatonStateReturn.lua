@@ -1,8 +1,8 @@
-function ReturnFirst(args)
+function ReturnFirstAutomaton(args)
 	utils_log("ReturnFirst")
 end
 
-function ReturnUpdate(args, _ElapsedTime)
+function ReturnUpdateAutomaton(args, _ElapsedTime)
 	--[[local l_Owner = args["owner"]
 	
 	--// Calculate the player speed
@@ -30,12 +30,12 @@ function ReturnUpdate(args, _ElapsedTime)
 	l_Owner:set_rotation(l_RotationY)]]--
 end
 
-function ReturnEnd(args)
+function ReturnEndAutomaton(args)
 	utils_log("ReturnEnd")
 end
 
-function ReturnToIdleCondition()
+function ReturnToIdleConditionAutomaton()
 end
 
-function ReturnToChaseCondition()
+function ReturnToChaseConditionAutomaton()
 end

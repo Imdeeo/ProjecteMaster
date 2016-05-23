@@ -1,8 +1,8 @@
-function ChaseFirst(args)
+function ChaseFirstAutomaton(args)
 	utils_log("ChaseFirst")
 end
 
-function ChaseUpdate(args, _ElapsedTime)
+function ChaseUpdateAutomaton(args, _ElapsedTime)
 	--[[local l_Owner = args["owner"]
 	
 	--// Calculate the player speed
@@ -30,12 +30,12 @@ function ChaseUpdate(args, _ElapsedTime)
 	l_Owner:set_rotation(l_RotationY)]]--
 end
 
-function ChaseEnd(args)
+function ChaseEndAutomaton(args)
 	utils_log("ChaseEnd")
 end
 
-function ChaseToAlertCondition()
+function ChaseToAlertConditionAutomaton()
 end
 
-function ChaseToAttackCondition()
+function ChaseToAttackConditionAutomaton()
 end
