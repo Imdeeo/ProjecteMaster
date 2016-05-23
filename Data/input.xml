@@ -24,7 +24,12 @@
 	<action name="CHANGE_CAMERA_VISION" type="KEYBOARD" mode="ON_PRESS" key="V"/>
 	<action name="CHANGE_CAMERA_BOTH" type="KEYBOARD" mode="ON_PRESS" key="B"/>
 	<action name="RENDER_CAMERA" type="KEYBOARD" mode="ON_PRESS" key="X"/>
-	
+
+	<action name="MUSIC_VOLUME_DOWN" type="KEYBOARD" mode="ON_PRESS" key="7"/>
+	<action name="MUSIC_VOLUME_UP" type="KEYBOARD" mode="ON_PRESS" key="8"/>
+	<action name="FX_VOLUME_DOWN" type="KEYBOARD" mode="ON_PRESS" key="9"/>
+	<action name="FX_VOLUME_UP" type="KEYBOARD" mode="ON_PRESS" key="0"/>
+
 	<action name="MONSTER_RUN" type="KEYBOARD" mode="ON_PRESS" key="1"/>
 	<action name="MONSTER_IDLE" type="KEYBOARD" mode="ON_PRESS" key="2"/>
 	<action name="MONSTER_HIT" type="KEYBOARD" mode="ON_PRESS" key="3"/>
