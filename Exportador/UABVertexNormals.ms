@@ -12,11 +12,10 @@ fn UABGetVertexNormal obj IdVertex SmoothValue FaceNormal UABVtxsNormals &Normal
 	for b=1 to 32 do 
 	( 
 		IsSmoothingGroupEnabled b SmoothValue &isSmooth
-		if(isSmooth==true) then 
-		( 
+		
 			Normal += UABVtxsNormals[IdVertex][b] 
 			HasNormal=true 
-		) 
+		
 	) 
 	if HasNormal==false then 
 	( 
