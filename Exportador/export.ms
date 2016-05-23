@@ -185,8 +185,7 @@ fn processFaces arx Obj &prog=
 		local IdxsFace = getFace l_Obj i
 		local FaceNormal = getFaceNormal l_Obj i
 		local SmoothValue = getFaceSmoothGroup l_Obj i
-		local isSmooth
-				
+		
 		Vt1=(getVert l_Obj IdxsFace.x)*InvTransform
 		Vt2=(getVert l_Obj IdxsFace.y)*InvTransform
 		Vt3=(getVert l_Obj IdxsFace.z)*InvTransform
