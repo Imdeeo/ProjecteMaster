@@ -14,6 +14,7 @@
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "ScriptManager\ScriptManager.h"
 #include "Utils\CEmptyPointerClass.h"
+#include "StaticMesh\StaticMesh.h"
 	
 #include "RenderableObjects\RenderableVertexs.h"
 
@@ -592,6 +593,19 @@ void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, c
 		_position,
 		_orientation,
 		_group)->release();
+}
+
+void CPhysXManager::CreateStaticConvexMesh(const std::string _name, CStaticMesh _Mesh , const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
+{
+	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh.GetRenderableVertexs();
+	physx::PxConvexMeshDesc l_ConvexMeshDesc;
+	l_ConvexMeshDesc.setToDefault();
+	l_ConvexMeshDesc.points.count = l_RenderableVertex.size();
+	l_ConvexMeshDesc.points.stride = l_RenderableVertex[0]->;
+	l_ConvexMeshDesc.points.data = _Data[0];*/
+
+	l_ConvexMeshDesc.indices.
+	//m_Cooking->cookConvexMesh()
 }
 
 

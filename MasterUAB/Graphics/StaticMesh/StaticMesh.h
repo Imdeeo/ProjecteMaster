@@ -37,6 +37,8 @@ public:
 	Vect3f GetBoundingSphereCenter(){ return m_BoundingSphereCenter; }
 	float GetBoundingSphereRadius(){ return m_BoundingSphereRadius; }
 
+	const std::vector<CRenderableVertexs *> &GetRenderableVertexs() const { return m_RVs; }
+
 	std::vector<CMaterial *> GetMaterials()const;
 	
 private:
