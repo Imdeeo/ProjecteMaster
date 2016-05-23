@@ -9,6 +9,7 @@
 #include "Layers\LayerManager.h"
 
 CFPSCameraController::CFPSCameraController(const CXMLTreeNode & _TreeNode) :CCameraController(_TreeNode)
+, m_Locked(false)
 , m_YawSpeed(2.5f)
 , m_PitchSpeed(2.f)
 , m_Speed(5.0f)
@@ -70,6 +71,8 @@ void CFPSCameraController::SetCamera(CCamera *Camera) const
 void CFPSCameraController::Update(float ElapsedTime)
 {
 	m_Position = m_Target->GetPosition() + m_Offset;
+	if (m_Locked)
+		return;
 	AddYaw(CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime);
 	AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime);
 	//Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, ElapsedTime);
