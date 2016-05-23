@@ -1,6 +1,5 @@
 function CrouchingFirst(args)
-	g_Player.m_PhysXManager:set_character_controller_height("player", 1)
-	utils_log("CrouchingFirst")
+	g_Player.m_PhysXManager:set_character_controller_height("player", 0.9)
 end
 
 function CrouchingUpdate(args, _ElapsedTime)
@@ -60,8 +59,7 @@ function CrouchingUpdate(args, _ElapsedTime)
 end
 
 function CrouchingEnd(args)
-	g_Player.m_PhysXManager:set_character_controller_height("player", 2)
-	utils_log("CrouchingEnd")
+	g_Player.m_PhysXManager:set_character_controller_height("player", 1.8)
 end
 
 function CrouchingToIdleCondition()

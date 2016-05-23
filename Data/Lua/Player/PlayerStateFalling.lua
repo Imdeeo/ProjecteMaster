@@ -1,5 +1,5 @@
 function FallingFirst(args)
-	utils_log("FallingFirst")
+	
 end
 
 function FallingUpdate(args, _ElapsedTime)
@@ -39,7 +39,7 @@ function FallingUpdate(args, _ElapsedTime)
 end
 
 function FallingEnd(args)
-	utils_log("FallingEnd")
+	
 end
 
 function ANYToFallingCondition()

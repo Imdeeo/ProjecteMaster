@@ -1,4 +1,5 @@
 function IdleFirst(args)
+	
 end
 
 function IdleUpdate(args, _ElapsedTime)
@@ -30,6 +31,7 @@ function IdleUpdate(args, _ElapsedTime)
 end
 
 function IdleEnd(args)
+	
 end
 
 function IdleToMovingCondition()
