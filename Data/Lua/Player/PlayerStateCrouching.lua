@@ -1,5 +1,5 @@
 function CrouchingFirst(args)
-	g_Player.m_PhysXManager:set_character_controller_height("player", 1)
+	g_Player.m_PhysXManager:set_character_controller_height("player", 0.9)
 end
 
 function CrouchingUpdate(args, _ElapsedTime)
@@ -7,7 +7,6 @@ function CrouchingUpdate(args, _ElapsedTime)
 	local l_ForwardMovement = g_Player.m_InputManager:get_axis("MOVE_FWD")
 	local l_StrafeMovement = g_Player.m_InputManager:get_axis("STRAFE")
 	local l_Speed = g_Player.m_Speed
-	
 	--// Detect if player is crouching backwards
 	if g_Player.m_InputManager:is_action_active("MOVE_BACK") then
 		l_Speed = l_Speed * 0.15
@@ -45,6 +44,7 @@ function CrouchingUpdate(args, _ElapsedTime)
 	
 	--// Check if player had displacement, to animate it or not
 	local l_X = l_Displacement.x*l_Displacement.x
+	--local l_Y = l_Displacement.y*l_Displacement.y
 	local l_Y = 0
 	local l_Z = l_Displacement.z*l_Displacement.z
 	local l_DisplacementModule = math.sqrt(l_X + l_Y + l_Z)
@@ -59,7 +59,7 @@ function CrouchingUpdate(args, _ElapsedTime)
 end
 
 function CrouchingEnd(args)
-	g_Player.m_PhysXManager:set_character_controller_height("player", 2)
+	g_Player.m_PhysXManager:set_character_controller_height("player", 1.8)
 end
 
 function CrouchingToIdleCondition()
