@@ -795,6 +795,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("add_yaw", &CFPSCameraController::AddYaw)
 			.def("add_pitch",&CFPSCameraController::AddPitch)
 			.def("get_forward", &CFPSCameraController::GetForward)
+			.def("lock", &CFPSCameraController::Lock)
+			.def("unlock", &CFPSCameraController::Unlock)
 	];
 
 	module(m_LS) [

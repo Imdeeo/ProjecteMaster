@@ -9,6 +9,7 @@ class CRenderableObject;
 class CFPSCameraController : public CCameraController
 {
 private:
+	bool						m_Locked;
 	float						m_YawSpeed;
 	float						m_PitchSpeed;
 	float						m_Speed;
@@ -23,6 +24,8 @@ public:
 	void AddYaw(float Radians);
 	void AddPitch(float Radians);
 	void Update(float ElapsedTime);
+	void Lock(){ m_Locked = true; }
+	void Unlock(){ m_Locked = false; }
 };
 
 #endif
