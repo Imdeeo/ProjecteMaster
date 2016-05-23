@@ -66,10 +66,8 @@ end
 
 function ToggleClimbingState(_TriggerName)
 	if g_Player.m_IsClimbing then
-		utils_log("toggle off")
 		g_Player.m_IsClimbing = false
 	else
-		utils_log("toggle on")
 		g_Player.m_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource(_TriggerName):get_position()
 		g_Player.m_TargetOffset = Vect3f(1, 0, 0)
 		g_Player.m_IsClimbing = true
