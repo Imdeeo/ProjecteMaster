@@ -1,8 +1,8 @@
-function AttackFirst(args)
+function AttackFirstAutomaton(args)
 	utils_log("AttackFirst")
 end
 
-function AttackUpdate(args, _ElapsedTime)
+function AttackUpdateAutomaton(args, _ElapsedTime)
 	--[[local l_Owner = args["owner"]
 	
 	--// Calculate the player speed
@@ -30,6 +30,6 @@ function AttackUpdate(args, _ElapsedTime)
 	l_Owner:set_rotation(l_RotationY)]]--
 end
 
-function AttackEnd(args)
+function AttackEndAutomaton(args)
 	utils_log("AttackEnd")
 end

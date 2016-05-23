@@ -1,8 +1,8 @@
-function PatrolFirst(args)
+function PatrolFirstAutomaton(args)
 	utils_log("PatrolFirst")
 end
 
-function PatrolUpdate(args, _ElapsedTime)
+function PatrolUpdateAutomaton(args, _ElapsedTime)
 	--[[local l_Owner = args["owner"]
 	
 	--// Calculate the player speed
@@ -30,12 +30,12 @@ function PatrolUpdate(args, _ElapsedTime)
 	l_Owner:set_rotation(l_RotationY)]]--
 end
 
-function PatrolEnd(args)
+function PatrolEndAutomaton(args)
 	utils_log("PatrolEnd")
 end
 
-function PatrolToChaseCondition()
+function PatrolToChaseConditionAutomaton()
 end
 
-function PatrolToAlertCondition()
+function PatrolToAlertConditionAutomaton()
 end
