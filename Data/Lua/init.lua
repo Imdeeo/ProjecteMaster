@@ -2,7 +2,7 @@ dofile("Data\\Lua\\Cinematics\\CUABCinematicsActionManager.lua")
 dofile("Data\\Lua\\Videogame\\componentsEnemy.lua")
 dofile("Data\\Lua\\Antwakbar\\antweakbar.lua")
 dofile("Data\\Lua\\Characters\\CCharacterManager.lua")
-dofile("Data\\Lua\\Sound\\VolumeControl.lua")
+dofile("Data\\Lua\\Sound\\VolumeController.lua")
 
 m_cinematicManager = CUABCinematicsActionManager()
 m_CharacterManager = CCharacterManager()
@@ -25,18 +25,20 @@ function mainLua(level)
 	l_SoundManager:play_event(l_WaterSoundEvent, "Test")
 	
 	local l_switch = SoundSwitch()
-	l_switch.switch_name = "player_action"
+	l_switch.switch_name = "music_mode"
 	local l_switchvalue = SoundSwitchValue()
 	l_switchvalue.sound_switch = l_switch
-	l_switchvalue.value_name = "normal"
+	l_switchvalue.value_name = "exploration"
 	g_Player.m_SoundManager:set_switch(l_switchvalue)
+
+	g_VolumeController = VolumeController()
 end
 
 function luaGui()
 end
 
 function luaUpdate(_ElapsedTime)
-	UpdateVolume()
+	g_VolumeController:CheckVolumeKeys()
 	--local color = CColor(1,1,1,1)
 	--local coord = Vect2f(400,50)
 	--gui_manager:do_text("fontTest", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", coord, CGUIManager.bottom_left, color)
