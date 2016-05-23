@@ -22,12 +22,14 @@ class 'CPlayer'
 		self.m_SoundManager:register_speaker(self.m_RenderableObject)
 		self.m_JumpSoundEvent = SoundEvent()
 		self.m_JumpSoundEvent.event_name = "Jump"
-		self.m_Velocity = Vect3f(0,0,0)
+		self.m_Velocity = Vect3f(0, 0, 0)
 		self.m_Gravity = -9.81
 		self.m_Speed = 5
 		self.m_Sanity = 100
 		self.m_MaxSanity = 100
 		self.m_IsClimbing = false
+		self.m_Target = nil
+		self.m_TargetOffset = Vect3f(0, 0, 0)
 		
 		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent")
 		

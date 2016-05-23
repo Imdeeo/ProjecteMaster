@@ -1,5 +1,5 @@
 function MovingFirst(args)
-	utils_log("MovingFirst")
+	
 end
 
 function MovingUpdate(args, _ElapsedTime)
@@ -16,7 +16,6 @@ function MovingUpdate(args, _ElapsedTime)
 	if g_Player.m_InputManager:is_action_active("RUN") then
 		l_Speed = l_Speed * 2
 	end
-	
 	
 	--// Move player forward and laterally
 	local l_CameraDirection = g_Player.m_CameraController:get_forward():get_normalized(1)
@@ -48,7 +47,6 @@ function MovingUpdate(args, _ElapsedTime)
 	
 	--// Check if player had displacement, to animate it or not
 	local l_X = l_Displacement.x*l_Displacement.x
-	--local y = l_Displacement.y*l_Displacement.y
 	local l_Y = 0
 	local l_Z = l_Displacement.z*l_Displacement.z
 	local l_DisplacementModule = math.sqrt(l_X + l_Y + l_Z)
@@ -63,7 +61,7 @@ function MovingUpdate(args, _ElapsedTime)
 end
 
 function MovingEnd(args)
-	utils_log("MovingEnd")
+	
 end
 
 function MovingToIdleCondition()
