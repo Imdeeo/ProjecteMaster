@@ -1,5 +1,5 @@
 function FogOffFirst(args)
-	utils_log("FogOffFirst")
+	utils_log("FogOffFirstTime")
 end
 
 function FogOffUpdate(args, _ElapsedTime)

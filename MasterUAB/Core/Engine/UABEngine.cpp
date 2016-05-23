@@ -155,6 +155,10 @@ void CUABEngine::ChangeCameraVision()
 	m_CurrentCamera_vision++;
 	m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
 }
+void CUABEngine::Quit()
+{
+	PostQuitMessage(0);
+}
 UAB_GET_PROPERTY_CPP(CUABEngine,CStaticMeshManager *, StaticMeshManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,CLayerManager *, LayerManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,CMaterialManager *, MaterialManager)

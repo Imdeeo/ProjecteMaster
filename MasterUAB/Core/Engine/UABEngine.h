@@ -79,6 +79,7 @@ public:
 	void Update(float _ElapsedTime);
 	void SwitchCamera();
 	void ChangeCameraVision();
+	void Quit();
 	UAB_BUILD_GET_SET(float, TimeScale);
 	UAB_BUILD_GET_SET(bool, Pause);
 };

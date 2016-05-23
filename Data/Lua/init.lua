@@ -9,6 +9,7 @@ m_cinematicManager = CUABCinematicsActionManager()
 m_CharacterManager = CCharacterManager()
 m_menu = true
 m_credits = false
+g_Engine = CUABEngine.get_instance()
 
 
 function mainLua(level)
@@ -58,35 +59,33 @@ function luaGui()
 		
 		if m_credits then
 			gui_position = CGUIPosition(500, 580, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			local b_back = gui_manager:do_button("Back", "teula_button", gui_position)
+			local b_back = gui_manager:do_button("Back", "back_button", gui_position)
 			if b_back then
 				m_credits = false
 			end		
 		else
 			gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			local b_play = gui_manager:do_button("Play", "teula_button", gui_position)
+			local b_play = gui_manager:do_button("Play", "play_button", gui_position)
 			if b_play then
 				m_menu = false
 				CUABEngine.get_instance():set_pause(false)
 			end 
 			
 			gui_position = CGUIPosition(500, 460, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			local b_options = gui_manager:do_button("Options", "teula_button", gui_position)
+			local b_options = gui_manager:do_button("Options", "options_button", gui_position)
 			if b_options then
 				
 			end 
 			
 			gui_position = CGUIPosition(500, 520, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			m_credits = gui_manager:do_button("Credits", "teula_button", gui_position)
+			m_credits = gui_manager:do_button("Credits", "credits_button", gui_position)
 			
 			gui_position = CGUIPosition(500, 580, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			local b_exit = gui_manager:do_button("Exit", "teula_button", gui_position)
+			local b_exit = gui_manager:do_button("Exit", "exit_button", gui_position)
+			if b_exit then
+				g_Engine:quit()
+			end
 		end	
-		
-		
-		if b_exit then
-			
-		end 
 	end 	 
 end
 

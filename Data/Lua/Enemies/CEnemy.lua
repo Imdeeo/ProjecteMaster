@@ -20,6 +20,7 @@ class 'CEnemy'
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
 		self.m_Speed = 2
+		self.m_off = true
 		
 		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent"..self.m_Type)
 				
