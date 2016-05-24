@@ -271,10 +271,10 @@ fn processFaces arx Obj &prog=
 		append indexs[l_IdMaterial] id2
 		append indexs[l_IdMaterial] id3
 		
-		free UABVtxsNormals
 		prog.value = 100.*i/nFaces
 	)
 	
+	free UABVtxsNormals
 	local VtxID = 0x0000
 	VtxID = PosID+ColorID+NmID+UVID+UV2ID+BnmID+TngID
 	writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere

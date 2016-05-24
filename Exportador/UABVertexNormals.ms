@@ -16,16 +16,15 @@ fn UABGetVertexNormal obj IdVertex SmoothValue FaceNormal UABVtxsNormals &Normal
 		IsSmoothingGroupEnabled b SmoothValue &isSmooth
 		if(isSmooth==true) then 
 		(
-			--format "Vertex ID: %, Iteration: %\n" IdVertex b
-			--print UABVtxsNormals[IdVertex]
-			--Normal = Normal + UABVtxsNormals[IdVertex][b] 
-			--HasNormal=true 
+			Normal = Normal + UABVtxsNormals[IdVertex][b] 
+			HasNormal=true 
 		) 
 	) 
 	if HasNormal==false then 
 	( 
 		Normal=FaceNormal 
 	) 
+	
 )
 
 fn UABCalcVertexsNormals obj NumFaces &UABVtxsNormals= 
