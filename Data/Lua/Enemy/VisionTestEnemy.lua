@@ -17,10 +17,10 @@ class "CVisionTestEnemy"
     if l_Component==nil then
       local l_Component=create_scripted_component(
         "VisionTestEnemyComponent", l_Box,
-        "FnOnCreateEnemy",
-        "FnOnDestroyEnemy",
-        "FnOnUpdateEnemy",
-        "FnOnRenderEnemy", "")
+        "FnOnCreateVTEnemy",
+        "FnOnDestroyVTEnemy",
+        "FnOnUpdateVTEnemy",
+        "FnOnRenderVTEnemy", "")
       l_Box:get_component_manager():add_resource("VisionTestEnemyComponent",
         l_Component)
     end
@@ -33,18 +33,18 @@ class "CVisionTestEnemy"
     self.m_StateMachine.m_StateMachine:update(args, _ElapsedTime)
   end
 
-function FnOnCreateEnemy(_owner)
+function FnOnCreateVTEnemy(_owner)
 
 end
 
-function FnOnDestroyEnemy()
+function FnOnDestroyVTEnemy()
 
 end
 
-function FnOnUpdateEnemy(_owner, _ElapsedTime)
+function FnOnUpdateVTEnemy(_owner, _ElapsedTime)
   g_VisionTestEnemies[_owner.name]:UpdateEnemy(_owner, _ElapsedTime)
 end
 
-function FnOnRenderEnemy(_owner, _rm)
+function FnOnRenderVTEnemy(_owner, _rm)
 
 end
