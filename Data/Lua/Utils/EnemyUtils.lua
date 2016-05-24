@@ -87,7 +87,9 @@ class "CEnemyVision"
 	function CEnemyVision:__init(_owner)
 		self.m_MaxDistance = 25.0
 		self.m_MaxAngle = 0.25 * math.pi
-		self.m_PhysXGroups = 1
+		-- TODO: get group numbers somehow
+		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
+		self.m_PhysXGroups = 2 + 8 -- objects and player
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
 		self.m_Owner = _owner
 		self.m_BlockingObjectName = nil
