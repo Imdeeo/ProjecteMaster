@@ -2,12 +2,12 @@ dofile("Data\\Lua\\Enemy\\visionTestEnemySM.lua")
 
 g_VisionTestEnemies = {}
 
-class "VisionTestEnemy"
-  function VisionTestEnemy:__init()
+class "CVisionTestEnemy"
+  function CVisionTestEnemy:__init()
 
   end
 
-  function VisionTestEnemy:InitEnemy(name)
+  function CVisionTestEnemy:InitEnemy(name)
     local UABEngine = CUABEngine.get_instance()
     local l_Box=UABEngine:get_layer_manager():get_resource("solid"):get_resource(name)
     local l_Component=l_Box:get_component_manager():get_resource("VisionTestEnemyComponent")
@@ -27,7 +27,7 @@ class "VisionTestEnemy"
     self.m_StateMachine = CVisionTestEnemySM(l_Box)
   end
 
-  function VisionTestEnemy:UpdateEnemy(_owner, _ElapsedTime)
+  function CVisionTestEnemy:UpdateEnemy(_owner, _ElapsedTime)
     local args = {}
     args["owner"] = _owner
     self.m_StateMachine.m_StateMachine:update(args, _ElapsedTime)

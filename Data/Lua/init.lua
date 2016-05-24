@@ -32,7 +32,7 @@ function mainLua(level)
 	l_switchvalue.value_name = "normal"
 	g_Player.m_SoundManager:set_switch(l_switchvalue)
 
-	local vte = VisionTestEnemy()
+	local vte = CVisionTestEnemy()
 	vte:InitEnemy("Guardia02")
 end
 
