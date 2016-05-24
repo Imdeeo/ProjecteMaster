@@ -1,4 +1,4 @@
-dofile("Data\\Lua\\Enemy\\visionTestEnemySM.lua")
+dofile("Data\\Lua\\Enemies\\VisionTestEnemy\\VisionTestEnemySM.lua")
 
 g_VisionTestEnemies = {}
 
