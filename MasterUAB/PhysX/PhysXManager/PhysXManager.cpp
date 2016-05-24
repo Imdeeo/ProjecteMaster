@@ -15,6 +15,8 @@
 #include "ScriptManager\ScriptManager.h"
 #include "Utils\CEmptyPointerClass.h"
 #include "StaticMesh\StaticMesh.h"
+
+#include "RenderableObjects\VertexTypes.h"
 	
 #include "RenderableObjects\RenderableVertexs.h"
 
@@ -595,17 +597,64 @@ void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, c
 		_group)->release();
 }
 
-void CPhysXManager::CreateStaticConvexMesh(const std::string _name, CStaticMesh _Mesh , const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
+void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const CStaticMesh* _Mesh , const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
-	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh.GetRenderableVertexs();
-	physx::PxConvexMeshDesc l_ConvexMeshDesc;
-	l_ConvexMeshDesc.setToDefault();
-	l_ConvexMeshDesc.points.count = l_RenderableVertex.size();
-	l_ConvexMeshDesc.points.stride = l_RenderableVertex[0]->;
-	l_ConvexMeshDesc.points.data = _Data[0];*/
+	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
+	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
+	{
+		std::vector<Vect3f> l_vertexos(l_RenderableVertex[i]->GetNVertexs());
 
-	l_ConvexMeshDesc.indices.
-	//m_Cooking->cookConvexMesh()
+		physx::PxConvexMeshDesc l_ConvexMeshDesc;
+		l_ConvexMeshDesc.setToDefault();
+		l_ConvexMeshDesc.points.count = l_RenderableVertex[i]->GetNVertexs();
+		l_ConvexMeshDesc.points.stride = sizeof(Vect3f);
+		l_ConvexMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
+
+		l_ConvexMeshDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
+		physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
+		physx::PxConvexMeshCookingResult::Enum l_Result;
+		bool success = m_Cooking->cookConvexMesh(l_ConvexMeshDesc, l_DefaultMemoryOutputStream, &l_Result);
+		assert(success);
+		physx::PxDefaultMemoryInputData l_DefaultMemoryInputData(l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
+		physx::PxConvexMesh* l_ConvexMesh = m_PhysX->createConvexMesh(l_DefaultMemoryInputData);
+
+		physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+		physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
+
+		char l_ActorName[256] = "";
+		sprintf_s(l_ActorName,"%s_%u",_name,i);
+
+		AddActor(l_ActorName, _position, _orientation, l_Body);
+	}
+}
+
+void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
+{
+	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
+	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
+	{
+		physx::PxConvexMeshDesc l_ConvexMeshDesc;
+		l_ConvexMeshDesc.setToDefault();
+		l_ConvexMeshDesc.points.count = l_RenderableVertex[i]->GetNVertexs();
+		l_ConvexMeshDesc.points.stride = sizeof(Vect3f);
+		l_ConvexMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
+
+		l_ConvexMeshDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
+		physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
+		physx::PxConvexMeshCookingResult::Enum l_Result;
+		bool success = m_Cooking->cookConvexMesh(l_ConvexMeshDesc, l_DefaultMemoryOutputStream, &l_Result);
+		assert(success);
+		physx::PxDefaultMemoryInputData l_DefaultMemoryInputData(l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
+		physx::PxConvexMesh* l_ConvexMesh = m_PhysX->createConvexMesh(l_DefaultMemoryInputData);
+
+		physx::PxRigidDynamic* l_Body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+		physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
+
+		char l_ActorName[256] = "";
+		sprintf_s(l_ActorName, "%s_%u", _name, i);
+
+		AddActor(l_ActorName, _position, _orientation, l_Body);
+	}
 }
 
 
@@ -695,7 +744,7 @@ void CPhysXManager::CreateDinamicShape(const std::string _name, const physx::PxG
 	shape->release();
 }
 
-void CPhysXManager::CreateDinamicBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation,
+void CPhysXManager::CreateDynamicBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation,
 	float _density, std::string _group, bool isKinematic)
 {
 	CreateDinamicShape(_name,
@@ -703,7 +752,7 @@ void CPhysXManager::CreateDinamicBox(const std::string _name, Vect3f _size, cons
 		_Material, _position, _orientation, _density, _group, isKinematic);
 }
 
-void CPhysXManager::CreateDinamicSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation,
+void CPhysXManager::CreateDynamicSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation,
 	float _density, std::string _group, bool isKinematic)
 {
 	CreateDinamicShape(_name,

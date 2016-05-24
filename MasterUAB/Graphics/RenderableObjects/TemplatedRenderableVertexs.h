@@ -16,7 +16,7 @@ private:
 	D3D11_PRIMITIVE_TOPOLOGY m_PrimitiveTopology;
 	unsigned int m_VertexsCount;
 	unsigned int m_PrimitiveCount;
-	T *m_Vtxs;
+	std::vector<Vect3f> m_Vtxs;
 public:
 	CTemplatedRenderableVertexs(void *Vtxs, unsigned int VtxsCount,	D3D11_PRIMITIVE_TOPOLOGY PrimitiveTopology, unsigned int PrimitiveCount, bool Dynamic = false)
 	: m_VertexsCount(VtxsCount)
@@ -24,7 +24,13 @@ public:
 	, m_PrimitiveCount(PrimitiveCount)
 	, m_VertexBuffer(0)
 	{
-		m_Vtxs = (T*)Vtxs;
+		m_Vtxs.resize(VtxsCount);
+		T *data = (T *)Vtxs;
+		for (int i = 0; i < VtxsCount; i++)
+		{
+			m_Vtxs[i] = *(Vect3f*)(&data[i]);
+		}
+
 		D3D11_BUFFER_DESC l_BufferDescription;
 		ZeroMemory(&l_BufferDescription, sizeof(l_BufferDescription));
 		//l_BufferDescription.Usage=D3D11_USAGE_DEFAULT;
@@ -132,8 +138,11 @@ public:
 		return true;
 	}
 
-	const void* GetVertexs()const { return m_Vtxs; }
+
+	const Vect3f* GetVertexs()const { return &m_Vtxs[0]; }
 	const unsigned int GetNVertexs(){ return m_VertexsCount; }
+
+	const unsigned int GetSizeOfVertex(){ return sizeof(T); }
 };
 
 #define CRENDERABLE_VERTEX_CLASS_TYPE_CREATOR(ClassName, TopologyType) \
