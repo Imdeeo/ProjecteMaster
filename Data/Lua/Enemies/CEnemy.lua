@@ -1,5 +1,5 @@
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonEnemy.lua")
-dofile("Data\\Lua\\Enemies\\FogEnemy\\FogEnemy.lua")
+--dofile("Data\\Lua\\Enemies\\FogEnemy\\FogEnemy.lua")
 
 class 'CEnemy'
 	function CEnemy:__init()
@@ -19,15 +19,16 @@ class 'CEnemy'
 		self.m_Type = _TreeNode:get_psz_property("type", "", false)
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
-		self.m_Speed = 2
-				
+		self.m_Speed = 0.3
+		self.m_Activate = false
+		self.m_Patrol = false
+		self.m_Chase = false
+		
 		-- FOG ENEMY
 		self.m_off = true
-		self.m_chase = false
 		self.m_time_to_teleport = 1.0
 		self.m_teleport_distance = 5.0
 		self.m_teleport_timer = 0
-		
 		
 		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent"..self.m_Type)
 				
