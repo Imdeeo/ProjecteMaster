@@ -76,6 +76,10 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 			else
 				l_PhysXManager->CreateSphereTrigger(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction, l_OnTriggerStayLuaFunction, l_OnTriggerExitLuaFunction, l_ActivateActors, l_IsTriggerActive);
 		}
+		else if (m_PxType == "convex_mesh_shape")
+		{
+			l_PhysXManager->CreateStaticConvexMesh(GetName(), m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+		}
 		else if (m_PxType == "box_shape")
 		{
 			if (l_BB.x <= 0)

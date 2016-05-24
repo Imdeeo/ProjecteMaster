@@ -18,20 +18,25 @@ private:
 	DXGI_FORMAT m_IndexType;
 	unsigned int m_VertexsCount;
 	unsigned int m_IndexsCount;
-	void *m_Vtxs;
-	void *m_Indexs;
+	std::vector<Vect3f> m_Vtxs;
 public:
 	CTemplatedRenderableIndexedVertexs(void *Vtxs, unsigned int VtxsCount, void	*Indices,
 		unsigned int IndexsCount, D3D11_PRIMITIVE_TOPOLOGY PrimitiveTopology,	DXGI_FORMAT IndexType)
 	: m_VertexsCount(VtxsCount)
 	, m_IndexsCount(IndexsCount)
-	, m_Vtxs(Vtxs)
-	, m_Indexs(Indices)
 	, m_PrimitiveTopology(PrimitiveTopology)
 	, m_VertexBuffer(0)
 	, m_IndexBuffer(0)
 	, m_IndexType(IndexType)
 	{
+		m_Vtxs.resize(VtxsCount);
+		T *data = (T *)Vtxs;
+		for (int i = 0; i < VtxsCount; i++)
+		{
+			m_Vtxs[i] = *(Vect3f*)(&data[i]);
+		}
+
+
 		D3D11_BUFFER_DESC l_VertexBufferDesc;
 		ZeroMemory(&l_VertexBufferDesc, sizeof(l_VertexBufferDesc));
 		l_VertexBufferDesc.Usage=D3D11_USAGE_DEFAULT;
@@ -121,10 +126,10 @@ public:
 		return true;
 	}
 
-	const void* GetVertexs()const { return m_Vtxs; }
-	const void* GetIndexs()const { return m_Indexs; }
+	const Vect3f* GetVertexs()const { return &m_Vtxs[0]; }
 	const unsigned int GetNVertexs(){ return m_VertexsCount; }
-	const unsigned int GetNIndexs(){ return m_IndexsCount; }
+
+	const unsigned int GetSizeOfVertex(){ return sizeof(T); }
 };
 
 #define CRENDERABLE_INDEXED_VERTEX_CLASS_TYPE_CREATOR(ClassName, TopologyType,IndexType) \

@@ -74,10 +74,11 @@ public:
 	void CreateStaticBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
 	void CreateStaticSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
 	void CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
-	void CreateStaticConvexMesh(const std::string _name, CStaticMesh _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
+	void CreateStaticConvexMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
 	void CreateRigidStatic(const std::string &Name, const Vect3f Size, const Vect3f &Position, const Quatf &Orientation, const std::string &MaterialName);
-	void CreateDinamicBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
-	void CreateDinamicSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
+	void CreateDynamicBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
+	void CreateDynamicSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
+	void CreateDynamicConvexMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
 
 	void CreateComplexDinamicShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
 	void CreateComplexStaticShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
