@@ -1,5 +1,5 @@
-dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonEnemy.lua")
---dofile("Data\\Lua\\Enemies\\FogEnemy\\FogEnemy.lua")
+--dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonEnemy.lua")
+dofile("Data\\Lua\\Enemies\\FogEnemy\\FogEnemy.lua")
 
 class 'CEnemy'
 	function CEnemy:__init()
@@ -29,6 +29,7 @@ class 'CEnemy'
 		self.m_time_to_teleport = 1.0
 		self.m_teleport_distance = 5.0
 		self.m_teleport_timer = 0
+		self.m_distance_to_kill = 1.0
 		
 		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent"..self.m_Type)
 				

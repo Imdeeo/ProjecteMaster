@@ -549,7 +549,7 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 		SpriteInfo *commandSprite = command.sprite;
 		SpriteMapInfo *commandSpriteMap = commandSprite->SpriteMap;
 
-		if (currentSpriteMap != commandSpriteMap || currentVertex == MAX_VERTICES_PER_CALL)
+		if (currentSpriteMap != commandSpriteMap || currentVertex + 6 >= MAX_VERTICES_PER_CALL)
 		{
 			if (currentVertex > 0)
 			{
@@ -575,6 +575,7 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 		float v1 = commandSprite->v1 * (1.0f - command.v1) + commandSprite->v2 * command.v1;
 		float v2 = commandSprite->v1 * (1.0f - command.v2) + commandSprite->v2 * command.v2;
 
+		assert(MAX_VERTICES_PER_CALL > currentVertex + 6);
 		m_CurrentBufferData[currentVertex++] = { Vect4f(x1, y2, 0.f, 1.f), command.color, Vect2f(u1, v2) };
 		m_CurrentBufferData[currentVertex++] = { Vect4f(x2, y2, 0.f, 1.f), command.color, Vect2f(u2, v2) };
 		m_CurrentBufferData[currentVertex++] = { Vect4f(x1, y1, 0.f, 1.f), command.color, Vect2f(u1, v1) };
