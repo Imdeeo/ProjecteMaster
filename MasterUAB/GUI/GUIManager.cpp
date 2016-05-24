@@ -117,7 +117,7 @@ bool CGUIManager::Load(std::string _FileName)
 				}
 				else if (l_Element.GetName() == std::string("slider"))
 				{
-					
+					m_Sliders[l_Element.GetPszProperty("name")] = new CSlider(&m_Sprites[l_Element.GetPszProperty("base")], &m_Sprites[l_Element.GetPszProperty("top")], &m_Sprites[l_Element.GetPszProperty("handle")], &m_Sprites[l_Element.GetPszProperty("pressed_handle")]);
 				}
 				else if (l_Element.GetName() == std::string("font"))
 				{
@@ -284,11 +284,97 @@ bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID
 }
 
 
-
-/*SliderResult CGUIManager::DoSlider(const std::string& guiID, const std::string& sliderID, const GUIPosition& position, float minValue, float maxValue, float currentValue)
+SliderResult CGUIManager::DoSlider(const std::string& GuiID, const std::string& SliderID, const CGUIPosition& Position, float MinValue, float MaxValue, float CurrentValue)
 {
+	CSlider* l_Slider = m_Sliders[SliderID];
+	SliderResult l_Result;
+	l_Result.real = .0f;
+	l_Result.temp = .0f;
 
-}*/
+	if (l_Slider != nullptr)
+	{
+		CheckInput();
+		bool RealResult = false;
+
+		float l_Factor = (float)(m_MouseX - Position.Getx()) / ((float)Position.Getwidth());
+		if (l_Factor < 0) l_Factor = 0;
+		else if (l_Factor > 1) l_Factor = 1;
+
+		l_Result.temp = MinValue + (MaxValue - MinValue)*l_Factor;
+
+		if (m_ActiveItem == GuiID)
+		{
+			if (m_MouseWentReleased)
+			{
+				if (m_HotItem == GuiID)
+				{
+					RealResult = true;
+				}
+				SetNotActive();
+			}
+		}
+		else if (m_HotItem == GuiID)
+		{
+			if (m_MouseWentPressed)
+			{
+				SetActive(GuiID);
+			}
+		}
+
+		if (RealResult)
+		{
+			l_Result.real = l_Result.temp;
+		}
+		else if (m_ActiveItem == GuiID)
+		{
+			l_Result.real = CurrentValue;
+		}
+		else
+		{
+			l_Result.temp = CurrentValue;
+			l_Result.real = CurrentValue;
+		}
+
+		float l_HandlePosition = Position.Getx() + Position.Getwidth() * (l_Result.temp - MinValue) / (MaxValue - MinValue);
+		float l_RealHandleWidth = l_Slider->handleRelativeWidth * Position.Getwidth();
+		float l_RealHandleHeight = l_Slider->handleRelativeHeight * Position.Getheight();
+
+		int l_RealHandleX = (int)(l_HandlePosition - l_RealHandleWidth * 0.5f);
+		int l_RealHandleY = (int)(Position.Gety() + Position.Getheight() * 0.5f - l_RealHandleHeight * 0.5);
+
+		if (IsMouseInside(m_MouseX, m_MouseY, Position.Getx(), Position.Gety(), Position.Getwidth(), Position.Getheight()))
+		{
+			SetHot(GuiID);
+		}
+		else if (IsMouseInside(m_MouseX, m_MouseY, (float)l_RealHandleX, (float)l_RealHandleY, l_RealHandleWidth, l_RealHandleHeight))
+		{
+			SetHot(GuiID);
+		}
+		else
+		{
+			SetNotHot(GuiID);
+		}
+
+		GUICommand l_Base = { l_Slider->GetBase(), (int)Position.Getx(), (int)Position.Gety(), (int)(Position.Getx() + Position.Getwidth()), (int)(Position.Gety() + Position.Getheight())
+			, 0, 0, 1, 1,
+			CColor(1.0f, 1.0f, 1.0f, 1.0f) };
+		m_Commands.push_back(l_Base);
+
+		GUICommand l_Top = { l_Slider->GetTop(), (int)Position.Getx(), (int)Position.Gety(), (int)l_HandlePosition, int(Position.Gety() + Position.Getheight()),
+			0, 0, (l_Result.temp - MinValue) / (MaxValue - MinValue), 1,
+			CColor(1.0f, 1.0f, 1.0f, 1.0f) };
+		m_Commands.push_back(l_Top);
+
+		GUICommand l_Handle = {
+			(m_ActiveItem == GuiID && m_HotItem == GuiID) ? l_Slider->GetPressedHandle() : l_Slider->GetHandle(),
+			l_RealHandleX, l_RealHandleY, l_RealHandleX + (int)l_RealHandleWidth, l_RealHandleY + (int)l_RealHandleHeight,
+			0, 0, 1, 1,
+			CColor(1.0f, 1.0f, 1.0f, 1.0f) };
+		m_Commands.push_back(l_Handle);
+	}
+
+	return l_Result;
+}
 
 int CGUIManager::FillCommandQueueWithTextAux(const std::string& _font, const std::string& _text, const CColor& _color, Vect4f *textBox_)
 {
