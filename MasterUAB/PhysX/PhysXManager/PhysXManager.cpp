@@ -435,15 +435,15 @@ public:
 		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
 		shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
 		L_PutGroupToShape(shape, m_Groups[_group]);
-		l_actor->attachShape(*shape);
+		//l_actor->attachShape(*shape);
 
 		AddActor(_name, _position, Quatf(0, 0, 0, 1), l_actor);
 	}
+
 	bool LoadPhysx(const std::string &Filename)
 	{
 		m_Filename = Filename;
 		
-
 		CXMLTreeNode l_XML;
 		if (l_XML.LoadFile(m_Filename.c_str()))
 		{
@@ -662,7 +662,7 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 	assert(numShapes == 1);
 
 	L_PutGroupToShape(shape, m_Groups[_group]);
-	groundPlane->attachShape(*shape);
+	//groundPlane->attachShape(*shape);
 	groundPlane->userData = (void*)AddActor(_name, _position, _orientation, groundPlane);
 	shape->userData = groundPlane->userData;
 
