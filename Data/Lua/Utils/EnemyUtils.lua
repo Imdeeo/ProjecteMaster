@@ -82,3 +82,50 @@ function get_next_waypoint (_actual_waypoint)
 	end
 	return next_waypoint
 end
+
+class "CEnemyVision"
+	function CEnemyVision:__init(_owner)
+		self.m_MaxDistance = 25.0
+		self.m_MaxAngle = 0.25 * math.pi
+		self.m_PhysXGroups = 1
+		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
+		self.m_Owner = _owner
+		self.m_BlockingObjectName = nil
+	end
+
+	function CEnemyVision:PlayerVisible()
+		local l_OwnerPos = self.m_Owner:get_position()
+		local l_PlayerPos = self.m_PhysXManager:get_character_controler_pos("player")
+
+		-- not visible if too far
+    local l_Dist = l_PlayerPos:distance(l_OwnerPos)
+    if l_Dist > self.m_MaxDistance then
+      return false
+    end
+
+		-- not visible if out of angle
+		local l_PlayerDirection = l_PlayerPos - l_OwnerPos
+    l_PlayerDirection:normalize(1.0)
+    local l_Forward = self.m_Owner:get_rotation():get_forward_vector()
+    local l_Dot = l_Forward * l_PlayerDirection
+    if l_Dot < math.cos(self.m_MaxAngle) then
+      return false
+    end
+
+		-- not visible if behind an obstacle
+		-- TODO: some raycasts from enemy's head to different parts of player
+    local l_RaycastData = RaycastData()
+		local l_RaycastHeight = Vect3f(0.0, 1.0, 0.0)
+    local l_Hit = self.m_PhysXManager:raycast(
+			l_OwnerPos+l_RaycastHeight, l_PlayerPos+l_RaycastHeight,
+			self.m_PhysXGroups, l_RaycastData
+		)
+    if l_Hit and l_RaycastData.actor_name ~= "player" then
+      self.m_BlockingObjectName = l_RaycastData.actor_name
+      return false
+    end
+
+		-- otherwise visible
+		self.m_BlockingObjectName = nil
+		return true
+	end
