@@ -1290,6 +1290,7 @@ void CScriptManager::RegisterLUAFunctions()
 		
 		class_<CGUIManager>("CGUIManager")
 			.def("do_button", &CGUIManager::DoButton)
+			.def("do_slider", &CGUIManager::DoSlider)
 			.def("do_text", &CGUIManager::FillCommandQueueWithText)
 			.enum_("gui_anchor")[
 				value("top", CGUIManager::GUIAnchor::TOP),
