@@ -25,7 +25,7 @@ class 'CEnemy'
 		self.m_Chase = false
 		self.m_Attack = false
 		
-		-- FOG ENEMY
+		self.m_distance_to_activate = 10.0
 		self.m_off = true
 		self.m_time_to_teleport = 1.0
 		self.m_teleport_distance = 5.0

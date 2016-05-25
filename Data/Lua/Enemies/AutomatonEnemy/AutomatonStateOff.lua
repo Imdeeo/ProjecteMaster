@@ -5,9 +5,9 @@ function OffUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Enemy = m_CharacterManager.m_Enemics[1]
 	
-	l_Distance = g_Player.m_RenderableObject:get_position():distance(l_Owner:get_position())
+	local l_Distance = g_Player.m_RenderableObject:get_position():distance(l_Owner:get_position())
 	
-	if l_Distance < 10.0 then
+	if l_Distance < l_Enemy.m_distance_to_activate then
 		l_Enemy.m_Activate = true
 	end
 end
