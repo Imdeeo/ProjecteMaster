@@ -10,8 +10,6 @@ dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateAttack.lua")
 AutomatonStateMachine = StateMachine.create()
 
 function setAutomatonStateMachine()
-	utils_log("Set AutomatonStateMachine")
-	
 	OffState = State.create(OffUpdateAutomaton)
 	OffState:set_do_first_function(OffFirstAutomaton)
 	OffState:set_do_end_function(OffEndAutomaton)

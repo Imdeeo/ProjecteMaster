@@ -20,10 +20,7 @@ class 'CEnemy'
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
 		self.m_Speed = 1.0
-		self.m_Activate = false
 		self.m_Patrol = false
-		self.m_Chase = false
-		self.m_Attack = false
 		
 		self.m_distance_to_activate = 10.0
 		self.m_off = true
