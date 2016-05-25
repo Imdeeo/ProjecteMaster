@@ -353,14 +353,14 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,float))&Quatf::slerp)
 			.scope[
 				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
-			] 
+			]
 	];
 	
 	module(m_LS)[
 		class_<CColor>("CColor")
 			.def(constructor<float, float, float, float>())
 	];
-// BASE------------------------------------------------------------------------------------------------
+	// BASE--------------------------------------------------------------------------------------------
 
 	// 3DElement---------------------------------------------------------------------------------------
 	module(m_LS)[
@@ -395,7 +395,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render", &CUABComponent::Render)
 			.def("render_debug", &CUABComponent::RenderDebug)
 	];
-
 
 	module(m_LS)[
 		class_<CUABComponentManager>("CUABComponentManager")

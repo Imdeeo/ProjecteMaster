@@ -8,6 +8,7 @@ dofile("Data\\Lua\\Enemies\\FogEnemy\\FogStateAttack.lua")
 FogAutomatonStateMachine = StateMachine.create()
 
 function setFogAutomatonStateMachine()
+	--utils_log("SetFogStateMachine")	
 	OffState = State.create(FogOffUpdate)
 	OffState:set_do_first_function(FogOffFirst)
 	OffState:set_do_end_function(FogOffEnd)
@@ -29,9 +30,6 @@ function setFogAutomatonStateMachine()
 	AttackState = State.create(FogAttackUpdate)
 	AttackState:set_do_first_function(FogAttackFirst)
 	AttackState:set_do_end_function(FogAttackEnd)
-	AttackState:add_condition(FogAttackToChaseCondition, "Chase")
-	AttackState:add_condition(FogAttackToOffCondition, "Off")
-	
 	
 	FogAutomatonStateMachine:add_state("Off", OffState)
 	FogAutomatonStateMachine:add_state("Teleport", TeleportState)

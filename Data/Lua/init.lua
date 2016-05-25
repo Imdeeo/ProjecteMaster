@@ -54,16 +54,30 @@ function luaGui()
 	if m_menu then
 		local color = CColor(1,1,1,1)
 		local coord = Vect2f(500,100)
-		gui_manager:do_text("fontTest", "A SIMPLE SONG", coord, CGUIManager.mid_center, color)
 		local gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 		
 		if m_credits then
+			coord = Vect2f(500,100)
+			gui_manager:do_text("fontTest", "Joan", coord, CGUIManager.mid_center, color)
+			coord = Vect2f(500,150)
+			gui_manager:do_text("fontTest", "Jonathan", coord, CGUIManager.mid_center, color)
+			coord = Vect2f(500,200)
+			gui_manager:do_text("fontTest", "Juho", coord, CGUIManager.mid_center, color)
+			coord = Vect2f(500,250)
+			gui_manager:do_text("fontTest", "Julien", coord, CGUIManager.mid_center, color)
+			coord = Vect2f(500,300)
+			gui_manager:do_text("fontTest", "Oriol", coord, CGUIManager.mid_center, color)
+			coord = Vect2f(500,350)
+			gui_manager:do_text("fontTest", "Paula", coord, CGUIManager.mid_center, color)
+			coord = Vect2f(500,400)
+			gui_manager:do_text("fontTest", "Roberto", coord, CGUIManager.mid_center, color)
 			gui_position = CGUIPosition(500, 580, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local b_back = gui_manager:do_button("Back", "back_button", gui_position)
 			if b_back then
 				m_credits = false
 			end		
 		else
+			gui_manager:do_text("fontTest", "A SIMPLE SONG", coord, CGUIManager.mid_center, color)
 			gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local b_play = gui_manager:do_button("Play", "play_button", gui_position)
 			if b_play then
@@ -89,6 +103,3 @@ function luaGui()
 	end 	 
 end
 
-function mipene(a,b)
-	utils_log("pene: "..a.."\npene2: "..b)
-end
