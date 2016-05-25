@@ -16,6 +16,8 @@
 	
 	<action name="SPEEDUP" type="KEYBOARD" mode="ON_PRESS" key="M"/>
 	<action name="SPEEDDOWN" type="KEYBOARD" mode="ON_PRESS" key="N"/>
+
+	<action name="PAUSE" type="KEYBOARD" mode="ON_PRESS" key="P"/>
 	
 	<action name="RELOAD" type="KEYBOARD" mode="ON_PRESS" key="R"/>
 	<action name="SWITCH_RENDER_LIGHTS" type="KEYBOARD" mode="ON_PRESS" key="L"/>
