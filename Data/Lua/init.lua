@@ -39,8 +39,10 @@ function mainLua(level)
 	g_VolumeController:SetMusicVolume(50)
 	m_timerPause = 0
 	m_iniciando = true
-	g_TestEnemy = CVisionTestEnemy()
-	g_TestEnemy:InitEnemy("automata_LOW001")
+	if CUABEngine.get_instance():get_level_loaded() == "2" then
+		g_TestEnemy = CVisionTestEnemy()
+		g_TestEnemy:InitEnemy("automata_LOW001")
+	end
 end
 
 function luaUpdate(_ElapsedTime)
