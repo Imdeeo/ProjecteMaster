@@ -106,6 +106,8 @@ bool CSoundManagerImplementation::Init() {
 	m_DefaultSpeakerId = GenerateObjectID();
 	AK::SoundEngine::RegisterGameObj(m_DefaultSpeakerId);
 
+	m_NamedSpeakers["NO_SPEAKER"] = AK_INVALID_GAME_OBJECT;
+
 	return true;
 }
 
@@ -126,27 +128,28 @@ AkGameObjectID CSoundManagerImplementation::GenerateObjectID()
 
 void CSoundManagerImplementation::RegisterSpeaker(const C3DElement* _speaker)
 {
-	assert(m_GameObjectSpeakers.find(_speaker) == m_GameObjectSpeakers.end());
+	if (m_GameObjectSpeakers.find(_speaker) == m_GameObjectSpeakers.end())
+	{
+		AkGameObjectID id = GenerateObjectID();
+		m_GameObjectSpeakers[_speaker] = id;
 
-	AkGameObjectID id = GenerateObjectID();
-	m_GameObjectSpeakers[_speaker] = id;
+		Vect3f l_Position = _speaker->GetPosition();
+		Quatf l_Rotation = _speaker->GetRotation();
+		Vect3f l_Orientation = l_Rotation.GetForwardVector();
 
-	Vect3f l_Position = _speaker->GetPosition();
-	Quatf l_Rotation = _speaker->GetRotation();
-	Vect3f l_Orientation = l_Rotation.GetForwardVector();
+		AkSoundPosition l_SoundPosition = {};
 
-	AkSoundPosition l_SoundPosition = {};
+		l_SoundPosition.Position.X = l_Position.x;
+		l_SoundPosition.Position.Y = l_Position.y;
+		l_SoundPosition.Position.Z = l_Position.z;
 
-	l_SoundPosition.Position.X = l_Position.x;
-	l_SoundPosition.Position.Y = l_Position.y;
-	l_SoundPosition.Position.Z = l_Position.z;
+		l_SoundPosition.Orientation.X = l_Orientation.x;
+		l_SoundPosition.Orientation.Y = l_Orientation.y;
+		l_SoundPosition.Orientation.Z = l_Orientation.z;
 
-	l_SoundPosition.Orientation.X = l_Orientation.x;
-	l_SoundPosition.Orientation.Y = l_Orientation.y;
-	l_SoundPosition.Orientation.Z = l_Orientation.z;
-
-	AK::SoundEngine::RegisterGameObj(id);
-	AK::SoundEngine::SetPosition(id, l_SoundPosition);
+		AK::SoundEngine::RegisterGameObj(id);
+		AK::SoundEngine::SetPosition(id, l_SoundPosition);
+	}	
 }
 
 void CSoundManagerImplementation::UnregisterSpeaker(const C3DElement* _speaker)

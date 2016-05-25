@@ -1,8 +1,8 @@
-function DeadUpdate(args, _ElapsedTime)
+function DeadFirst(args)
 	
 end
 
-function DeadFirst(args)
+function DeadUpdate(args, _ElapsedTime)
 	
 end
 

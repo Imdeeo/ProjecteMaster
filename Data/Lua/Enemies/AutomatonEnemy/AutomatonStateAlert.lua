@@ -1,8 +1,8 @@
-function AlertFirst(args)
+function AlertFirstAutomaton(args)
 	utils_log("AlertFirst")
 end
 
-function AlertUpdate(args, _ElapsedTime)
+function AlertUpdateAutomaton(args, _ElapsedTime)
 	--[[local l_Owner = args["owner"]
 	
 	--// Calculate the player speed
@@ -30,15 +30,15 @@ function AlertUpdate(args, _ElapsedTime)
 	l_Owner:set_rotation(l_RotationY)]]--
 end
 
-function AlertEnd(args)
+function AlertEndAutomaton(args)
 	utils_log("AlertEnd")
 end
 
-function AlertToChaseCondition()
+function AlertToChaseConditionAutomaton()
 end
 
-function AlertToReturnCondition()
+function AlertToReturnConditionAutomaton()
 end
 
-function AlertToPatrolCondition()
+function AlertToPatrolConditionAutomaton()
 end

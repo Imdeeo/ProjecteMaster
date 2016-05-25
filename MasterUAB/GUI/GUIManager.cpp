@@ -13,6 +13,7 @@
 #include "XML\XMLTreeNode.h"
 #include "RenderableObjects\TemplatedRenderableVertexs.h"
 #include "GUIPosition.h"
+#include "SliderResult.h"
 #include <assert.h>
 
 
@@ -117,7 +118,7 @@ bool CGUIManager::Load(std::string _FileName)
 				}
 				else if (l_Element.GetName() == std::string("slider"))
 				{
-					
+					m_Sliders[l_Element.GetPszProperty("name")] = new CSlider(&m_Sprites[l_Element.GetPszProperty("base")], &m_Sprites[l_Element.GetPszProperty("top")], &m_Sprites[l_Element.GetPszProperty("handle")], &m_Sprites[l_Element.GetPszProperty("pressed_handle")]);
 				}
 				else if (l_Element.GetName() == std::string("font"))
 				{
@@ -284,11 +285,112 @@ bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID
 }
 
 
-
-/*SliderResult CGUIManager::DoSlider(const std::string& guiID, const std::string& sliderID, const GUIPosition& position, float minValue, float maxValue, float currentValue)
+CSliderResult CGUIManager::DoSlider(const std::string& GuiID, const std::string& SliderID, const CGUIPosition& Position, float MinValue, float MaxValue, float CurrentValue, bool _Interactuable)
 {
+	CSlider* l_Slider = m_Sliders[SliderID];
+	CSliderResult l_Result = CSliderResult(.0f, .0f);
 
-}*/
+	if (l_Slider != nullptr)
+	{
+		CheckInput();
+		if (_Interactuable)
+		{
+			bool RealResult = false;
+
+			float l_Factor = (float)(m_MouseX - Position.Getx()) / ((float)Position.Getwidth());
+			if (l_Factor < 0) l_Factor = 0;
+			else if (l_Factor > 1) l_Factor = 1;
+
+			l_Result.m_Temp = MinValue + (MaxValue - MinValue)*l_Factor;
+
+			if (m_ActiveItem == GuiID)
+			{
+				if (m_MouseWentReleased)
+				{
+					if (m_HotItem == GuiID)
+					{
+						RealResult = true;
+					}
+					SetNotActive();
+				}
+			}
+			else if (m_HotItem == GuiID)
+			{
+				if (m_MouseWentPressed)
+				{
+					SetActive(GuiID);
+				}
+			}
+
+			if (RealResult)
+			{
+				l_Result.m_Real = l_Result.m_Temp;
+			}
+			else if (m_ActiveItem == GuiID)
+			{
+				l_Result.m_Real = CurrentValue;
+			}
+			else
+			{
+				l_Result.m_Temp = CurrentValue;
+				l_Result.m_Real = CurrentValue;
+			}
+
+			float l_HandlePosition = Position.Getx() + Position.Getwidth() * (l_Result.m_Temp - MinValue) / (MaxValue - MinValue);
+			float l_RealHandleWidth = l_Slider->handleRelativeWidth * Position.Getwidth();
+			float l_RealHandleHeight = l_Slider->handleRelativeHeight * Position.Getheight();
+
+			int l_RealHandleX = (int)(l_HandlePosition - l_RealHandleWidth * 0.5f);
+			int l_RealHandleY = (int)(Position.Gety() + Position.Getheight() * 0.5f - l_RealHandleHeight * 0.5);
+
+			if (IsMouseInside(m_MouseX, m_MouseY, Position.Getx(), Position.Gety(), Position.Getwidth(), Position.Getheight()))
+			{
+				SetHot(GuiID);
+			}
+			else if (IsMouseInside(m_MouseX, m_MouseY, (float)l_RealHandleX, (float)l_RealHandleY, l_RealHandleWidth, l_RealHandleHeight))
+			{
+				SetHot(GuiID);
+			}
+			else
+			{
+				SetNotHot(GuiID);
+			}
+
+			GUICommand l_Base = { l_Slider->GetBase(), (int)Position.Getx(), (int)Position.Gety(), (int)(Position.Getx() + Position.Getwidth()), (int)(Position.Gety() + Position.Getheight())
+				, 0, 0, 1, 1,
+				CColor(1.0f, 1.0f, 1.0f, 1.0f) };
+			m_Commands.push_back(l_Base);
+
+			GUICommand l_Top = { l_Slider->GetTop(), (int)Position.Getx(), (int)Position.Gety(), (int)l_HandlePosition, int(Position.Gety() + Position.Getheight()),
+				0, 0, (l_Result.m_Temp - MinValue) / (MaxValue - MinValue), 1,
+				CColor(1.0f, 1.0f, 1.0f, 1.0f) };
+			m_Commands.push_back(l_Top);
+
+			GUICommand l_Handle = {
+				(m_ActiveItem == GuiID && m_HotItem == GuiID) ? l_Slider->GetPressedHandle() : l_Slider->GetHandle(),
+				l_RealHandleX, l_RealHandleY, l_RealHandleX + (int)l_RealHandleWidth, l_RealHandleY + (int)l_RealHandleHeight,
+				0, 0, 1, 1,
+				CColor(1.0f, 1.0f, 1.0f, 1.0f) };
+			m_Commands.push_back(l_Handle);
+		}
+		else
+		{
+			float l_HandlePosition = Position.Getx() + Position.Getwidth() * (CurrentValue - MinValue) / (MaxValue - MinValue);
+			GUICommand l_Base = { l_Slider->GetBase(), (int)Position.Getx(), (int)Position.Gety(), (int)(Position.Getx() + Position.Getwidth()), (int)(Position.Gety() + Position.Getheight())
+				, 0, 0, 1, 1,
+				CColor(1.0f, 1.0f, 1.0f, 1.0f) };
+			m_Commands.push_back(l_Base);
+
+			GUICommand l_Top = { l_Slider->GetTop(), (int)Position.Getx(), (int)Position.Gety(), (int)l_HandlePosition, int(Position.Gety() + Position.Getheight()),
+				0, 0, (CurrentValue - MinValue) / (MaxValue - MinValue), 1,
+				CColor(1.0f, 1.0f, 1.0f, 1.0f) };
+			m_Commands.push_back(l_Top);
+		}
+	
+	}
+
+	return l_Result;
+}
 
 int CGUIManager::FillCommandQueueWithTextAux(const std::string& _font, const std::string& _text, const CColor& _color, Vect4f *textBox_)
 {
@@ -463,7 +565,7 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 		SpriteInfo *commandSprite = command.sprite;
 		SpriteMapInfo *commandSpriteMap = commandSprite->SpriteMap;
 
-		if (currentSpriteMap != commandSpriteMap || currentVertex == MAX_VERTICES_PER_CALL)
+		if (currentSpriteMap != commandSpriteMap || currentVertex + 6 >= MAX_VERTICES_PER_CALL)
 		{
 			if (currentVertex > 0)
 			{
@@ -489,6 +591,7 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 		float v1 = commandSprite->v1 * (1.0f - command.v1) + commandSprite->v2 * command.v1;
 		float v2 = commandSprite->v1 * (1.0f - command.v2) + commandSprite->v2 * command.v2;
 
+		assert(MAX_VERTICES_PER_CALL > currentVertex + 6);
 		m_CurrentBufferData[currentVertex++] = { Vect4f(x1, y2, 0.f, 1.f), command.color, Vect2f(u1, v2) };
 		m_CurrentBufferData[currentVertex++] = { Vect4f(x2, y2, 0.f, 1.f), command.color, Vect2f(u2, v2) };
 		m_CurrentBufferData[currentVertex++] = { Vect4f(x1, y1, 0.f, 1.f), command.color, Vect2f(u1, v1) };
