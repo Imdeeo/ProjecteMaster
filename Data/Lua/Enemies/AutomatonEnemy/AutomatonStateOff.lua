@@ -1,5 +1,4 @@
 function OffFirstAutomaton(args)
-	utils_log("OffFirst")	
 end
 
 function OffUpdateAutomaton(args, _ElapsedTime)
@@ -14,7 +13,6 @@ function OffUpdateAutomaton(args, _ElapsedTime)
 end
 
 function OffEndAutomaton(args)
-	utils_log("OffEnd")
 end
 
 function OffToIdleConditionAutomaton()	
