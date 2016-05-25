@@ -1,13 +1,12 @@
 function FogOffFirst(args)
-	utils_log("FogOffFirstTime")
+	local l_Owner = args["owner"]
+    l_Owner:clear_cycle(0,0.1)	
 end
 
 function FogOffUpdate(args, _ElapsedTime)
-	--utils_log("FogOffUpdate")
 end
 
 function FogOffEnd(args)
-	utils_log("FogOffEnd")
 end
 
 function FogOffToTeleportCondition()

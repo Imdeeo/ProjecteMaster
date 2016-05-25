@@ -92,6 +92,7 @@
 
 #include "GUIManager.h"
 #include "GUIPosition.h"
+#include "SliderResult.h"
 
 #include "DebugRender.h"
 
@@ -347,19 +348,20 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("decouple_z", &Quatf::decoupleZ)
 			.def("get_scaled_axis", &Quatf::GetScaledAxis)
 			.def("set_from_scaled_axis", &Quatf::SetFromScaledAxis)
+			.def("set_from_angle_axis", &Quatf::SetFromAngleAxis)
 			.def("quat_from_yaw_pitch_roll", &Quatf::QuatFromYawPitchRoll)
 			.def("get_forward_vector", &Quatf::GetForwardVector)
 			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,float))&Quatf::slerp)
 			.scope[
 				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
-			] 
+			]
 	];
 	
 	module(m_LS)[
 		class_<CColor>("CColor")
 			.def(constructor<float, float, float, float>())
 	];
-// BASE------------------------------------------------------------------------------------------------
+	// BASE--------------------------------------------------------------------------------------------
 
 	// 3DElement---------------------------------------------------------------------------------------
 	module(m_LS)[
@@ -394,7 +396,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render", &CUABComponent::Render)
 			.def("render_debug", &CUABComponent::RenderDebug)
 	];
-
 
 	module(m_LS)[
 		class_<CUABComponentManager>("CUABComponentManager")
@@ -795,6 +796,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("add_yaw", &CFPSCameraController::AddYaw)
 			.def("add_pitch",&CFPSCameraController::AddPitch)
 			.def("get_forward", &CFPSCameraController::GetForward)
+			.def("lock", &CFPSCameraController::Lock)
+			.def("unlock", &CFPSCameraController::Unlock)
 	];
 
 	module(m_LS) [
@@ -1288,6 +1291,7 @@ void CScriptManager::RegisterLUAFunctions()
 		
 		class_<CGUIManager>("CGUIManager")
 			.def("do_button", &CGUIManager::DoButton)
+			.def("do_slider", &CGUIManager::DoSlider)
 			.def("do_text", &CGUIManager::FillCommandQueueWithText)
 			.enum_("gui_anchor")[
 				value("top", CGUIManager::GUIAnchor::TOP),
@@ -1314,17 +1318,30 @@ void CScriptManager::RegisterLUAFunctions()
 				value("gui_relative_height", CGUIManager::GUICoordType::GUI_RELATIVE_HEIGHT)
 			]
 	];
-
 	module(m_LS)[
 		class_<CGUIPosition>("CGUIPosition")
 			.def(constructor<float, float, float, float, CGUIManager::GUIAnchor, CGUIManager::GUICoordType, CGUIManager::GUICoordType>())
 	];
+	module(m_LS)[
+		class_<CSliderResult>("CSliderResult")
+			.def(constructor<float, float>())
+			.def_readwrite("real", &CSliderResult::m_Real)
+			.def_readwrite("temp", &CSliderResult::m_Temp)
+	];
 
-	
 // NETWORK------------------------------------------------------------------------------------------
 	
 	
 // PHYSX--------------------------------------------------------------------------------------------
+
+	module(m_LS)[
+		class_<RaycastData>("RaycastData")
+			.def(constructor<>())
+			.def_readonly("position", &RaycastData::position)
+			.def_readonly("normal", &RaycastData::normal)
+			.def_readonly("distance", &RaycastData::distance)
+			.def_readonly("actor_name", &RaycastData::actorname)
+	];
 	
 	// PhysxManager-------------------------------------------------------------------------------------
 	module(m_LS)[
@@ -1334,6 +1351,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("create_character_controller", &CPhysXManager::CreateCharacterController)
 			.def("character_controller_move", &CPhysXManager::CharacterControllerMove)		
 			.def("register_material", &CPhysXManager::RegisterMaterial)
+			.def("raycast", &CPhysXManager::Raycast)
 			.def("render", &CPhysXManager::Render)
 			.def("get_character_controler_pos", &CPhysXManager::GetCharacterControllersPosition)
 			.def("get_character_controler_lua_pos_x", &CPhysXManager::GetCharacterControllersPositionX)
