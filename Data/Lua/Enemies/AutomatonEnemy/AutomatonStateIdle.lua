@@ -1,5 +1,4 @@
 function IdleFirstAutomaton(args)
-	utils_log("IdleFirst")
 end
 
 function IdleUpdateAutomaton(args, _ElapsedTime)
@@ -14,7 +13,6 @@ function IdleUpdateAutomaton(args, _ElapsedTime)
 end
 
 function IdleEndAutomaton(args)
-	utils_log("IdleEnd")
 end
 
 function IdleToPatrolConditionAutomaton()
