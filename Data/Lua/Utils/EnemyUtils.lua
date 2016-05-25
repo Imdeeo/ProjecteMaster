@@ -87,26 +87,36 @@ class "CEnemyVision"
 	function CEnemyVision:__init(_owner)
 		self.m_MaxDistance = 25.0
 		self.m_MaxAngle = 0.25 * math.pi
+		self.m_HeadOffset = Vect3f(0.0, 1.7, 0.0)
 		-- TODO: get group numbers somehow
 		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
 		self.m_PhysXGroups = 2 + 8 -- objects and player
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
 		self.m_Owner = _owner
+
 		self.m_BlockingObjectName = nil
+		--self.m_Counter = 0
 	end
 
 	function CEnemyVision:PlayerVisible()
-		local l_OwnerPos = self.m_Owner:get_position()
-		local l_PlayerPos = self.m_PhysXManager:get_character_controler_pos("player")
 
+		local l_OwnerHeadPos = self.m_Owner:get_position() + self.m_HeadOffset
+		local l_PlayerPos = self.m_PhysXManager:get_character_controler_pos("player")
+--[[
+		if self.m_Counter >= 20 then
+			utils_log("enemy head y: " .. l_OwnerHeadPos.y .. " player y: " .. l_PlayerPos.y)
+			self.m_Counter = 0
+		end
+		self.m_Counter = self.m_Counter + 1
+]]
 		-- not visible if too far
-    local l_Dist = l_PlayerPos:distance(l_OwnerPos)
+    local l_Dist = l_PlayerPos:distance(l_OwnerHeadPos)
     if l_Dist > self.m_MaxDistance then
       return false
     end
 
 		-- not visible if out of angle
-		local l_PlayerDirection = l_PlayerPos - l_OwnerPos
+		local l_PlayerDirection = l_PlayerPos - l_OwnerHeadPos
     l_PlayerDirection:normalize(1.0)
     local l_Forward = self.m_Owner:get_rotation():get_forward_vector()
     local l_Dot = l_Forward * l_PlayerDirection
@@ -117,9 +127,8 @@ class "CEnemyVision"
 		-- not visible if behind an obstacle
 		-- TODO: some raycasts from enemy's head to different parts of player
     local l_RaycastData = RaycastData()
-		local l_RaycastHeight = Vect3f(0.0, 1.0, 0.0)
     local l_Hit = self.m_PhysXManager:raycast(
-			l_OwnerPos+l_RaycastHeight, l_PlayerPos+l_RaycastHeight,
+			l_OwnerHeadPos, l_PlayerPos,
 			self.m_PhysXGroups, l_RaycastData
 		)
     if l_Hit and l_RaycastData.actor_name ~= "player" then

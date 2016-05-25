@@ -30,6 +30,7 @@ function setFogAutomatonStateMachine()
 	AttackState = State.create(FogAttackUpdate)
 	AttackState:set_do_first_function(FogAttackFirst)
 	AttackState:set_do_end_function(FogAttackEnd)
+	AttackState:add_condition(FogAttackToTeleportCondition, "Teleport")
 	
 	FogAutomatonStateMachine:add_state("Off", OffState)
 	FogAutomatonStateMachine:add_state("Teleport", TeleportState)
