@@ -9,6 +9,7 @@ m_cinematicManager = CUABCinematicsActionManager()
 m_CharacterManager = CCharacterManager()
 m_menu = true
 m_credits = false
+m_options = false
 g_Engine = CUABEngine.get_instance()
 
 
@@ -32,6 +33,7 @@ function mainLua(level)
 	g_Player.m_SoundManager:set_switch(l_switchvalue)
 
 	g_VolumeController = VolumeController()
+	g_VolumeController:SetMusicVolume(0)
 end
 
 function luaUpdate(_ElapsedTime)
@@ -75,7 +77,16 @@ function luaGui()
 			local b_back = gui_manager:do_button("Back", "back_button", gui_position)
 			if b_back then
 				m_credits = false
-			end		
+			end	
+		elseif m_options then
+			gui_position = CGUIPosition(500, 200, 500, 30, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_slider = gui_manager:do_slider("MusicSlider", "volume_slider", gui_position,0, 100, 50)
+			utils_log("do_slider")
+			gui_position = CGUIPosition(500, 580, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local b_back = gui_manager:do_button("Back", "back_button", gui_position)
+			if b_back then
+				m_options = false
+			end	
 		else
 			gui_manager:do_text("fontTest", "A SIMPLE SONG", coord, CGUIManager.mid_center, color)
 			gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
@@ -86,11 +97,8 @@ function luaGui()
 			end 
 			
 			gui_position = CGUIPosition(500, 460, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			local b_options = gui_manager:do_button("Options", "options_button", gui_position)
-			if b_options then
-				
-			end 
-			
+			m_options = gui_manager:do_button("Options", "options_button", gui_position)
+		
 			gui_position = CGUIPosition(500, 520, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			m_credits = gui_manager:do_button("Credits", "credits_button", gui_position)
 			

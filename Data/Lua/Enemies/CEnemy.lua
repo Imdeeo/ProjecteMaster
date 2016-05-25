@@ -30,7 +30,9 @@ class 'CEnemy'
 		self.m_time_to_teleport = 1.0
 		self.m_teleport_distance = 5.0
 		self.m_teleport_timer = 0
-		self.m_distance_to_kill = 1.0
+		self.m_distance_to_kill = 2.0
+		self.m_time_sin_mirar = 1.5
+		self.m_timer_to_stop = 0
 		
 		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent"..self.m_Type)
 				
