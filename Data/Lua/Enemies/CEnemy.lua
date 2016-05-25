@@ -1,4 +1,4 @@
---dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonEnemy.lua")
+dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonEnemy.lua")
 dofile("Data\\Lua\\Enemies\\FogEnemy\\FogEnemy.lua")
 
 class 'CEnemy'
@@ -19,10 +19,11 @@ class 'CEnemy'
 		self.m_Type = _TreeNode:get_psz_property("type", "", false)
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
-		self.m_Speed = 0.3
+		self.m_Speed = 1.0
 		self.m_Activate = false
 		self.m_Patrol = false
 		self.m_Chase = false
+		self.m_Attack = false
 		
 		-- FOG ENEMY
 		self.m_off = true
