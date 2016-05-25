@@ -5,8 +5,7 @@ end
 
 function ChaseUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
-	local l_Enemy = m_CharacterManager.m_Enemics[1]	
-	
+	local l_Enemy = m_CharacterManager.m_Enemics[1]		
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	local l_EnemyPos = l_Owner:get_position()
 	local l_Direction = (l_PlayerPos - l_EnemyPos):get_normalized(1)
@@ -29,6 +28,12 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
     quat_to_turn:quat_from_yaw_pitch_roll(angle_to_turn, 0.0, 0.0)
     local target_quat = l_Owner:get_rotation() * quat_to_turn
     l_Owner:set_rotation(target_quat)
+	
+	local l_Distance = l_PlayerPos:distance(l_Owner:get_position())
+	
+	if l_Distance < l_Enemy.m_distance_to_kill then
+		l_Enemy.m_Attack = true
+	end
 end
 
 function ChaseEndAutomaton(args)
@@ -39,4 +44,6 @@ function ChaseToAlertConditionAutomaton()
 end
 
 function ChaseToAttackConditionAutomaton()
+	local l_Enemy = m_CharacterManager.m_Enemics[1]
+	return l_Enemy.m_Attack
 end

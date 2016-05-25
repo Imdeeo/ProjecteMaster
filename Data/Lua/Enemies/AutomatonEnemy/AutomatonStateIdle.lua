@@ -7,7 +7,7 @@ function IdleUpdateAutomaton(args, _ElapsedTime)
 	
 	l_Distance = g_Player.m_RenderableObject:get_position():distance(l_Owner:get_position())
 	
-	if l_Distance < 10.0 then
+	if l_Distance < l_Enemy.m_distance_to_activate then
 		l_Enemy.m_Chase = true
 	end
 end
