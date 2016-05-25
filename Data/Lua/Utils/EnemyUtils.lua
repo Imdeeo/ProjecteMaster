@@ -101,7 +101,6 @@ class "CEnemyVision"
 	function CEnemyVision:PlayerVisible()
 
 		local l_OwnerHeadPos = self.m_Owner:get_position() + self.m_HeadOffset
-		--l_OwnerHeadPos.y = l_OwnerHeadPos.y + self.m_HeadHeight
 		local l_PlayerPos = self.m_PhysXManager:get_character_controler_pos("player")
 --[[
 		if self.m_Counter >= 20 then
