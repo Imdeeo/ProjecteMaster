@@ -11,7 +11,8 @@ m_menu = true
 m_credits = false
 m_options = false
 g_Engine = CUABEngine.get_instance()
-
+m_MusicSliderResult = CSliderResult(50.0, 50.0)
+m_FxSliderResult = CSliderResult(50.0, 50.0)
 
 function mainLua(level)
 	InitAntweakBar()
@@ -33,10 +34,20 @@ function mainLua(level)
 	g_Player.m_SoundManager:set_switch(l_switchvalue)
 
 	g_VolumeController = VolumeController()
-	g_VolumeController:SetMusicVolume(0)
+	g_VolumeController:SetMusicVolume(50)
+	m_timerPause = 0
+	m_iniciando = true
 end
 
 function luaUpdate(_ElapsedTime)
+	if m_iniciando then
+		m_timerPause = m_timerPause + _ElapsedTime
+		if m_timerPause >= 0.2 then
+			m_iniciando = false
+			CUABEngine.get_instance():set_pause(true)
+		end		
+	end
+	
 	local l_Engine = CUABEngine.get_instance()
 	if CInputManager.get_input_manager():is_action_active("SPEEDUP") then
 		if l_Engine:get_time_scale() < 11 then
@@ -48,7 +59,11 @@ function luaUpdate(_ElapsedTime)
 			l_Engine:set_time_scale(l_Engine:get_time_scale()-1)
 		end
 	end
-	g_VolumeController:CheckVolumeKeys()
+	if CInputManager.get_input_manager():is_action_active("PAUSE") then
+		m_menu = true
+		CUABEngine.get_instance():set_pause(true)
+	end
+	g_VolumeController:CheckVolumeKeys()	
 end
 
 function luaGui()
@@ -79,9 +94,18 @@ function luaGui()
 				m_credits = false
 			end	
 		elseif m_options then
+			coord = Vect2f(500,100)
+			gui_manager:do_text("fontTest", "Music volume", coord, CGUIManager.mid_center, color)
 			gui_position = CGUIPosition(500, 200, 500, 30, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			local l_slider = gui_manager:do_slider("MusicSlider", "volume_slider", gui_position,0, 100, 50)
-			utils_log("do_slider")
+			m_MusicSliderResult = gui_manager:do_slider("MusicSlider", "volume_slider", gui_position,0, 100, m_MusicSliderResult.real)
+			g_VolumeController:SetMusicVolume(m_MusicSliderResult.real)
+			
+			coord = Vect2f(500,300)
+			gui_manager:do_text("fontTest", "Fx volume", coord, CGUIManager.mid_center, color)
+			gui_position = CGUIPosition(500, 400, 500, 30, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			m_FxSliderResult = gui_manager:do_slider("FxSlider", "volume_slider", gui_position,0, 100, m_FxSliderResult.real)
+			g_VolumeController:SetFXVolume(m_FxSliderResult.real)
+			
 			gui_position = CGUIPosition(500, 580, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local b_back = gui_manager:do_button("Back", "back_button", gui_position)
 			if b_back then

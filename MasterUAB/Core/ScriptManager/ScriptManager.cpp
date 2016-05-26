@@ -92,6 +92,7 @@
 
 #include "GUIManager.h"
 #include "GUIPosition.h"
+#include "SliderResult.h"
 
 #include "DebugRender.h"
 
@@ -1317,13 +1318,17 @@ void CScriptManager::RegisterLUAFunctions()
 				value("gui_relative_height", CGUIManager::GUICoordType::GUI_RELATIVE_HEIGHT)
 			]
 	];
-
 	module(m_LS)[
 		class_<CGUIPosition>("CGUIPosition")
 			.def(constructor<float, float, float, float, CGUIManager::GUIAnchor, CGUIManager::GUICoordType, CGUIManager::GUICoordType>())
 	];
+	module(m_LS)[
+		class_<CSliderResult>("CSliderResult")
+			.def(constructor<float, float>())
+			.def_readwrite("real", &CSliderResult::m_Real)
+			.def_readwrite("temp", &CSliderResult::m_Temp)
+	];
 
-	
 // NETWORK------------------------------------------------------------------------------------------
 	
 	
