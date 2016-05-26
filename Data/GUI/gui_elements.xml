@@ -30,10 +30,11 @@
 		<material name="gui1" renderable_object_technique="MV_POSITION4_NORMAL_TEXTURE_VERTEX">
 			<texture filename="Data\\GUI\\textures\\Sliders.png"/>
 		</material>
-		<sprite name="slider_base" x="26" y="50" w="425" h="43" pX="0.5" pY="0.5"/>
-		<sprite name="slider_top" x="26" y="134" w="395" h="14" pX="0.5" pY="0.5"/>
-		<sprite name="slider_handle" x="26" y="232" w="28" h="44" pX="0.5" pY="0.5"/>
-		<sprite name="slider_pressed_handle" x="26" y="292" w="28" h="44" pX="0.5" pY="0.5"/>
+		<sprite name="slider_base" x="26" y="50" w="424" h="44" pX="0.5" pY="0.5"/>
+		<sprite name="slider_top" x="24" y="183" w="374" h="20" pX="0.5" pY="0.5"/>
+		<sprite name="slider_top_mad" x="24" y="131" w="374" h="20" pX="0.5" pY="0.5"/>
+		<sprite name="slider_handle" x="27" y="232" w="27" h="45" pX="0.5" pY="0.5"/>
+		<sprite name="slider_pressed_handle" x="27" y="292" w="27" h="45" pX="0.5" pY="0.5"/>
 	</gui_spritemap>
 	
 	<gui_spritemap name="fontTest" width="256" height="256" >
@@ -51,6 +52,6 @@
 	<button name="exit_button" normal="buttonExit_idle" highlight="buttonExit_over" pressed="buttonExit_pressed"/>
 	<font name="fontTest" path="Data\\Fonts\\fontTest.fnt" />
 	<slider name="volume_slider" base="slider_base" top="slider_top" handle="slider_handle" pressed_handle="slider_pressed_handle"/>
-	
+	<slider name="mad_slider" base="slider_base" top="slider_top_mad" handle="slider_handle" pressed_handle="slider_pressed_handle"/>
 </gui_elements>
 		

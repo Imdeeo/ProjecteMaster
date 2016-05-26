@@ -112,7 +112,7 @@ public:
 	void Render(CRenderManager *RenderManager);
 
 	bool DoButton(const std::string& guiID, const std::string& buttonID, const CGUIPosition& position);
-	CSliderResult DoSlider(const std::string& guiID, const std::string& sliderID, const CGUIPosition& position, float minValue, float maxValue, float currentValue);
+	CSliderResult DoSlider(const std::string& guiID, const std::string& sliderID, const CGUIPosition& position, float minValue, float maxValue, float currentValue, bool _Interactuable);
 	int FillCommandQueueWithTextAux(const std::string& _font, const std::string& _text, 
 		const CColor& _color = CColor(1, 1, 1, 1), Vect4f *textBox_ = nullptr);
 	void FillCommandQueueWithText(const std::string& _font, const std::string& _text,
