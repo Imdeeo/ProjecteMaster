@@ -1,5 +1,4 @@
 function FogTeleportFirst(args)
-	utils_log("FogTeleportFirst")
 	local l_Enemy = m_CharacterManager.m_Enemics[1]
 	l_Enemy.m_teleport_timer = 0
 	l_Enemy.m_chase = false
@@ -9,6 +8,7 @@ function FogTeleportUpdate(args, _ElapsedTime)
 	--utils_log("FogTeleportUpdate")
 	local l_Owner = args["owner"]
 	local l_Enemy = m_CharacterManager.m_Enemics[1]
+	
 	l_Enemy.m_teleport_timer = l_Enemy.m_teleport_timer+_ElapsedTime
 	if l_Enemy.m_teleport_timer > l_Enemy.m_time_to_teleport then
 		--// Assign to the character the controller's position
@@ -21,7 +21,6 @@ function FogTeleportUpdate(args, _ElapsedTime)
 end
 
 function FogTeleportEnd(args)
-	utils_log("FogTeleportEnd")
 end
 
 function FogTeleportToOffCondition()

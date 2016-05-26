@@ -1,5 +1,4 @@
 function FogChaseFirst(args)
-	utils_log("start chase")
 	local l_Owner = args["owner"]
 	l_Owner:blend_cycle(0,1.0,0.1)	
 end
@@ -10,9 +9,7 @@ function FogChaseUpdate(args, _ElapsedTime)
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	local l_EnemyPos = l_Owner:get_position()
 	local l_Direction = (l_PlayerPos - l_EnemyPos):get_normalized(1)
-	 
-	--l_Owner:set_position(l_EnemyPos + (l_Direction * l_Enemy.m_Speed * _ElapsedTime))
-	 
+	l_Owner:set_position(l_EnemyPos + (l_Direction * l_Enemy.m_Speed * _ElapsedTime))
 	local l_EnemyForward = l_Owner:get_rotation():get_forward_vector():get_normalized(1)
 	local l_Angle = l_EnemyForward * l_Direction
     if 1.0 - l_Angle < 0.01 then
@@ -31,7 +28,6 @@ function FogChaseUpdate(args, _ElapsedTime)
 end
 
 function FogChaseEnd(args)
-	utils_log("end chase")
 end
 
 function FogChaseToTeleportCondition()
@@ -41,7 +37,6 @@ function FogChaseToTeleportCondition()
 	local l_PlayerForward = g_Player.m_RenderableObject:get_rotation():get_forward_vector():get_normalized(1)
 	local l_Direction = (l_EnemyPos-l_PlayerPos):get_normalized(1)
 	local l_Angle = l_PlayerForward * l_Direction
-	--utils_log("angle: "..l_Angle)
 	if l_Angle < 0.35 then
 		return true
 	else
