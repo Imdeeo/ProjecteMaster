@@ -622,9 +622,11 @@ void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const CStati
 		physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
 
 		char l_ActorName[256] = "";
-		sprintf_s(l_ActorName,"%s_%u",_name,i);
+		sprintf_s(l_ActorName,"%s_%u",_name.c_str(),i);
 
-		AddActor(l_ActorName, _position, _orientation, l_Body);
+		RegisterActor(l_ActorName,l_Shape,l_Body, _position, _orientation, _group);
+
+		l_Shape->release();
 	}
 }
 
@@ -651,9 +653,11 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStat
 		physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
 
 		char l_ActorName[256] = "";
-		sprintf_s(l_ActorName, "%s_%u", _name, i);
+		sprintf_s(l_ActorName, "%s_%u", _name.c_str(), i);
 
-		AddActor(l_ActorName, _position, _orientation, l_Body);
+		RegisterActor(l_ActorName, l_Shape, l_Body, _position, _orientation, _group);
+
+		l_Shape->release();
 	}
 }
 
