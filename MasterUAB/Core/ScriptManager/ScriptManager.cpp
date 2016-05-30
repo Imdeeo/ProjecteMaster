@@ -1435,6 +1435,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("load_map", &CAStar::LoadMap)
 			.def("destroy_map", &CAStar::DestroyMap)
 			.def("search_for_path", &CAStar::SearchForPath)
+			.def("get_actual_pos", &CAStar::GetActualPoint)
+			.def("increment_actual_point", &CAStar::IncrementActualPoint)
 	];
 	
 // VIDEOGAME----------------------------------------------------------------------------------------

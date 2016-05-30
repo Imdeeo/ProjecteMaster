@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
 typedef std::vector< Vect3f > VPoints3;
 
@@ -18,14 +19,20 @@ public:
 	~CAStar();
 	void LoadMap(std::string _filename);
 	void DestroyMap();
-	VPoints3 SearchForPath(const Vect3f &pointA, const Vect3f &pointB);
+	void SearchForPath(const Vect3f &pointA, const Vect3f &pointB);
+	Vect3f GetActualPoint();
+	void IncrementActualPoint();
 	//void Render( LPDIRECT3DDEVICE9 device );
 private:
-	struct TNode;
+	int m_IndexPoint;
+	VPoints3 m_PathPoints;
+	
+	struct TNode;	
 	typedef std::pair< TNode*, float > PNodeAndDistance;
 	typedef std::vector< PNodeAndDistance > VNodesAndDistances;
 
 	struct TNode {
+		std::string name;
 		Vect3f position;
 		VNodesAndDistances neighbours;
 		TNode *parent;
@@ -36,12 +43,14 @@ private:
 		bool closed;
 	};
 	
-	typedef std::vector< TNode* > VNodes;
-	VNodes m_map;
+	typedef std::map<std::string, TNode*> TNodeMap;
+	TNodeMap m_map;
 
 	struct TCompareNodes {
 		bool operator ()( const TNode *nodeA, const TNode *nodeB );
 	};
+
+	typedef std::vector< TNode* > VNodes;
 	VNodes m_openList;
 
 	void AddToOpenList( TNode *node );
