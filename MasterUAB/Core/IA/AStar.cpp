@@ -171,7 +171,6 @@ bool CAStar::VisitNextNode( TNode *destinationNode ) {
 					// Si el vecino que comprobamos es el destino, ya tenemos el camino
 					if( currentNeighbour == destinationNode ) {
 						return true;
-
 					} else {
 						// Asignar los valores de g, h y f
 						currentNeighbour->g = g;
@@ -240,7 +239,7 @@ Vect3f CAStar::GetActualPoint()
 	if (m_PathPoints.size() > 0)
 		return m_PathPoints[m_IndexPoint];
 	else
-		return NULL;
+		return Vect3f(0.0f, 0.0f, 0.0f);
 }
 
 void CAStar::IncrementActualPoint()
