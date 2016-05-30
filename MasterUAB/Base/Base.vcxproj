@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DElement\3DElement.h" />
+    <ClInclude Include="Components\LUAComponent.h" />
     <ClInclude Include="Components\ScriptedComponent.h" />
     <ClInclude Include="Components\UABComponent.h" />
     <ClInclude Include="Components\UABComponentManager.h" />
@@ -46,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DElement\3DElement.cpp" />
+    <ClCompile Include="Components\LUAComponent.cpp" />
     <ClCompile Include="Components\ScriptedComponent.cpp" />
     <ClCompile Include="Components\UABComponent.cpp" />
     <ClCompile Include="Components\UABComponentManager.cpp" />
