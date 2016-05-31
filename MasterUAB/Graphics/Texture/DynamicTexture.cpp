@@ -55,6 +55,8 @@ void CDynamicTexture::Init()
 	l_textureDescription.MipLevels = 1;
 	l_textureDescription.ArraySize = 1;
 	l_textureDescription.Format = DXGI_FORMAT_R32G32B32A32_FLOAT; //??
+	//l_textureDescription.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	//l_textureDescription.Format = DXGI_FORMAT_R32_FLOAT;
 	l_textureDescription.SampleDesc.Count = 1;
 	l_textureDescription.Usage = D3D11_USAGE_DEFAULT;
 	l_textureDescription.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;

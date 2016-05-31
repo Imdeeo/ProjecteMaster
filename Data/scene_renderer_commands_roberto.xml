@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<scene_renderer_commands>
+	<set_light_constants name="set_light_constants"/>
+	
+	<set_depth_stencil_state name="set_depth_stencil_TT1" enable_z_test="true" write_z_buffer="true"/>
+	<set_pool_renderable_objects_technique name="set pool generate shadowmap" pool="generate_shadowmap_pool"/>
+	<generate_shadow_maps name="generate shadowmap"/>
+	
+	<set_matrices name="set matrices"/>
+	
+	<!-- DEFERRED -->
+	<set_render_target name="deferred_multiple_render_target">
+		<dynamic_texture name="DiffuseMapTexture" texture_width_as_frame_buffer="true" create_depth_stencil_buffer="false" format="r8g8b8a8"/>
+		<dynamic_texture name="LightMapTexture" texture_width_as_frame_buffer="true" format="r8g8b8a8"/>
+		<dynamic_texture name="NormalMapTexture" texture_width_as_frame_buffer="true" format="r8g8b8a8"/>
+		<dynamic_texture name="DepthMapTexture" texture_width_as_frame_buffer="true" format="r32f"/>
+	</set_render_target>
+	
+	<clear name="clear FT defferred" render_target="true" depth_stencil="true"/>
+	<set_pool_renderable_objects_technique name="set pool gBuffer" pool="gBuffer"/>
+	<render_layer name="render layer solid" layer="solid" active="true"/>
+	<render_layer name="render layer alpha_objects" layer="alpha_objects" active="true"/>
+	
+	<unset_render_target name="unset render target"/>
+	
+	<clear name="clear TF defferred" render_target="true" depth_stencil="false"/>
+	<set_depth_stencil_state name="set depth stencil FF defferred" enable_z_test="false" write_z_buffer="false"/>
+	<render_draw_quad name="draw quad LightMapTexture" active="true">
+		<texture stage_id="0" file="LightMapTexture" load_file="false"/>
+	</render_draw_quad>
+
+	<set_pool_renderable_objects_technique name="set_pool_defferred_shading_lighting" pool="deferred_shading_lighting"/>
+	
+	<render_deferred_shading name="render defferred shading">
+		<texture stage_id="0" file="DiffuseMapTexture" load_file="false"/>
+		<texture stage_id="1" file="LightMapTexture" load_file="false"/>
+		<texture stage_id="2" file="NormalMapTexture" load_file="false"/>
+		<texture stage_id="3" file="DepthMapTexture" load_file="false"/>
+	</render_deferred_shading>
+		
+	<!-- SKYBOX -->
+	<set_depth_stencil_state name="set depth stencil TF Skybox" enable_z_test="true" write_z_buffer="false" active="true"/>
+	<set_pool_renderable_objects_technique name="set pool skybox" pool="skybox_pool" active="true"/>
+	<render_layer name="render layer skybox" layer="skybox" active="true"/>
+	
+	<!-- Particles -->
+	<set_depth_stencil_state name="set depth stencil TF Particles" enable_z_test="true" write_z_buffer="true" active="true"/>
+	<enable_alpha_blend name="enable alpha blend AAZZOO Particles" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<render_layer name="render layer particles" layer="particles" active="true"/>
+	<disable_alpha_blend name="disable alpha blend Particles" active="true"/>
+	
+	<!-- TRIGGERS -->
+	<enable_alpha_blend name="enable alpha blend AAZZOO Triggers" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF triggers" enable_z_test="true" write_z_buffer="true" active="true"/>
+	<set_pool_renderable_objects_technique name="set pool triggers" pool="triggers_pool" active="true"/>
+	<render_layer name="render layer triggers" layer="triggers" active="true"/>
+	<disable_alpha_blend name="disable alpha blend Triggers" active="true"/>
+	
+	<!-- GUI -->
+	<enable_alpha_blend name="enable alpha blend GUI" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<set_pool_renderable_objects_technique name="set pool forward GUI" pool="forward_shading" active="true"/>
+	<render_gui name="render GUI" active="true"/>
+	<disable_alpha_blend name="disable alpha blend GUI" active="true"/>
+	
+	<render_debug_lights name="render debug lights"/>
+	<render_debug_grid name="render grid"/>
+	<set_ant_tweak_bar name="render ATB"/>	
+	<present name="present"/>
+</scene_renderer_commands>
+
