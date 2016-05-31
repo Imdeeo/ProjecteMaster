@@ -43,6 +43,21 @@ public:
 		assert(!"This method mustn't be called");
 		return false;
 	}
+	virtual const void* GetIndexs()const
+	{
+		assert(!"This method mustn't be called");
+		return nullptr;
+	}
+	virtual const unsigned int GetNIndexs()
+	{
+		assert(!"This method mustn't be called");
+		return false;
+	}
+	virtual const unsigned int GetSizeOfIndexs()
+	{
+		assert(!"This method mustn't be called");
+		return false;
+	}
 };
 
 
