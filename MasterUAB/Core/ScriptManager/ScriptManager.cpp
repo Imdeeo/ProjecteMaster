@@ -1462,6 +1462,17 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("search_for_path", &CAStar::SearchForPath)
 			.def("get_actual_pos", &CAStar::GetActualPoint)
 			.def("increment_actual_point", &CAStar::IncrementActualPoint)
+			.def("get_actual_patrol_point", &CAStar::GetActualPatrolPoint)
+			.def("increment_actual_patrol_point", &CAStar::IncrementActualPatrolPoint)
+			.scope[
+				class_<CAStar::TNode>("TNode")
+					.def_readwrite("name", &CAStar::TNode::name)
+					.def_readwrite("position", &CAStar::TNode::position),
+				class_<CAStar::TNodePatrol>("TNodePatrol")
+					.def_readwrite("node", &CAStar::TNodePatrol::node)
+					.def_readwrite("wait", &CAStar::TNodePatrol::wait)
+					.def_readwrite("time_to_wait", &CAStar::TNodePatrol::time_to_wait)
+			]
 	];
 	
 // VIDEOGAME----------------------------------------------------------------------------------------
