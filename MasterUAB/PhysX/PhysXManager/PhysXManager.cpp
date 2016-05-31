@@ -610,7 +610,7 @@ void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const CStati
 		l_ConvexMeshDesc.points.stride = sizeof(Vect3f);
 		l_ConvexMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
 
-		l_ConvexMeshDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
+		l_ConvexMeshDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX | physx::PxConvexFlag::eINFLATE_CONVEX;
 		physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
 		physx::PxConvexMeshCookingResult::Enum l_Result;
 		bool success = m_Cooking->cookConvexMesh(l_ConvexMeshDesc, l_DefaultMemoryOutputStream, &l_Result);
@@ -622,11 +622,12 @@ void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const CStati
 		physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
 
 		char l_ActorName[256] = "";
-		sprintf_s(l_ActorName,"%s_%u",_name.c_str(),i);
+		sprintf_s(l_ActorName, "%s_%u", _name.c_str(), i);
 
-		RegisterActor(l_ActorName,l_Shape,l_Body, _position, _orientation, _group);
+		L_PutGroupToShape(l_Shape, m_Groups[_group]);
 
-		l_Shape->release();
+		l_Body->userData = (void*)AddActor(l_ActorName, _position, _orientation, l_Body);
+		m_Scene->addActor(*l_Body);
 	}
 }
 
@@ -641,7 +642,7 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStat
 		l_ConvexMeshDesc.points.stride = sizeof(Vect3f);
 		l_ConvexMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
 
-		l_ConvexMeshDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
+		l_ConvexMeshDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX | physx::PxConvexFlag::eINFLATE_CONVEX;
 		physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
 		physx::PxConvexMeshCookingResult::Enum l_Result;
 		bool success = m_Cooking->cookConvexMesh(l_ConvexMeshDesc, l_DefaultMemoryOutputStream, &l_Result);
@@ -655,11 +656,58 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStat
 		char l_ActorName[256] = "";
 		sprintf_s(l_ActorName, "%s_%u", _name.c_str(), i);
 
-		RegisterActor(l_ActorName, l_Shape, l_Body, _position, _orientation, _group);
+		L_PutGroupToShape(l_Shape, m_Groups[_group]);
 
-		l_Shape->release();
+		l_Body->userData = (void*)AddActor(l_ActorName, _position, _orientation, l_Body);
+		m_Scene->addActor(*l_Body);
 	}
 }
+
+void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
+{
+	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
+	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
+	{
+		physx::PxTriangleMeshDesc l_TriangleMeshDesc;
+		l_TriangleMeshDesc.setToDefault();
+		l_TriangleMeshDesc.points.count = l_RenderableVertex[i]->GetNVertexs();
+		l_TriangleMeshDesc.points.stride = sizeof(Vect3f);
+		l_TriangleMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
+
+		//l_TriangleMeshDesc.triangles.count = l_RenderableVertex[i]->
+	}
+}
+//
+//physx::PxConvexMesh* L_CreateConvexMesh(std::vector<Vect3f> _vertices, physx::PxCooking* _Cooking, physx::PxPhysics* _PhysX)
+//{
+//	physx::PxConvexMeshDesc convexDesc;
+//	convexDesc.points.count = _vertices.size();
+//	convexDesc.points.stride = sizeof(Vect3f);
+//	convexDesc.points.data = &_vertices[0];
+//	convexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
+//
+//	physx::PxDefaultMemoryOutputStream buff;
+//	physx::PxConvexMeshCookingResult::Enum result;
+//	bool succes = _Cooking->cookConvexMesh(convexDesc, buff, &result);
+//	assert(succes);
+//	physx::PxDefaultMemoryInputData input(buff.getData(), buff.getSize());
+//	physx::PxConvexMesh* convexMesh = _PhysX->createConvexMesh(input);
+//
+//	return convexMesh;
+//}
+//
+//void CPhysXManager::CreateComplexDinamicShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation,
+//	float _density, std::string _group, bool _isKinematic)
+//{
+//	physx::PxConvexMesh* convexMesh = L_CreateConvexMesh(_vertices, m_Cooking, m_PhysX);
+//	CreateDinamicShapeFromBody(_name, physx::PxConvexMeshGeometry(convexMesh), _Material, _position, _orientation, _density, _group, _isKinematic);
+//}
+//
+//void CPhysXManager::CreateComplexStaticShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
+//{
+//	physx::PxConvexMesh* convexMesh = L_CreateConvexMesh(_vertices, m_Cooking, m_PhysX);
+//	CreateStaticShapeFromBody(_name, physx::PxConvexMeshGeometry(convexMesh), _Material, _position, _orientation, _group)->release();
+//}
 
 
 void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors,bool isActive)
@@ -804,37 +852,6 @@ void CPhysXManager::CreateDinamicShapeFromBody(const std::string _name, const ph
 	physx::PxShape* shape = body->createShape(_geometry, *l_Material);
 
 	RegisterActor(_name, shape, body, _position, _orientation, _density, _group, _isKinematic);
-}
-
-physx::PxConvexMesh* L_CreateConvexMesh(std::vector<Vect3f> _vertices, physx::PxCooking* _Cooking, physx::PxPhysics* _PhysX)
-{
-	physx::PxConvexMeshDesc convexDesc;
-	convexDesc.points.count = _vertices.size();
-	convexDesc.points.stride = sizeof(Vect3f);
-	convexDesc.points.data = &_vertices[0];
-	convexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
-
-	physx::PxDefaultMemoryOutputStream buff;
-	physx::PxConvexMeshCookingResult::Enum result;
-	bool succes = _Cooking->cookConvexMesh(convexDesc, buff, &result);
-	assert(succes);
-	physx::PxDefaultMemoryInputData input(buff.getData(), buff.getSize());
-	physx::PxConvexMesh* convexMesh = _PhysX->createConvexMesh(input);
-
-	return convexMesh;
-}
-
-void CPhysXManager::CreateComplexDinamicShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation,
-	float _density, std::string _group, bool _isKinematic)
-{
-	physx::PxConvexMesh* convexMesh = L_CreateConvexMesh(_vertices, m_Cooking, m_PhysX);
-	CreateDinamicShapeFromBody(_name, physx::PxConvexMeshGeometry(convexMesh), _Material, _position, _orientation, _density, _group, _isKinematic);
-}
-
-void CPhysXManager::CreateComplexStaticShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
-{
-	physx::PxConvexMesh* convexMesh = L_CreateConvexMesh(_vertices, m_Cooking, m_PhysX);
-	CreateStaticShapeFromBody(_name, physx::PxConvexMeshGeometry(convexMesh), _Material, _position, _orientation, _group)->release();
 }
 
 void CPhysXManager::Update(float _dt)

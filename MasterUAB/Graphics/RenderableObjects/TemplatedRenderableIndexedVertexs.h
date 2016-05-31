@@ -19,6 +19,7 @@ private:
 	unsigned int m_VertexsCount;
 	unsigned int m_IndexsCount;
 	std::vector<Vect3f> m_Vtxs;
+	void *m_Indexs;
 public:
 	CTemplatedRenderableIndexedVertexs(void *Vtxs, unsigned int VtxsCount, void	*Indices,
 		unsigned int IndexsCount, D3D11_PRIMITIVE_TOPOLOGY PrimitiveTopology,	DXGI_FORMAT IndexType)
@@ -36,6 +37,26 @@ public:
 			m_Vtxs[i] = *(Vect3f*)(&data[i]);
 		}
 
+		if (m_IndexType == DXGI_FORMAT_R16_UINT)
+		{
+			unsigned short *index_aux = (unsigned short*)malloc(sizeof(unsigned short)*IndexsCount);
+			unsigned short *index_data = (unsigned short *)Indices;
+			for (int i = 0; i < IndexsCount; i++)
+			{
+				index_aux[i] = index_data[i];
+			}
+			m_Indexs = (void*)index_aux;
+		}
+		else
+		{
+			unsigned int *index_aux = (unsigned int*)malloc(sizeof(unsigned int)*IndexsCount);
+			unsigned int *index_data = (unsigned int*)Indices;
+			for (int i = 0; i < IndexsCount; i++)
+			{
+				index_aux[i] = index_data[i];
+			}
+			m_Indexs = (void*)index_aux;
+		}
 
 		D3D11_BUFFER_DESC l_VertexBufferDesc;
 		ZeroMemory(&l_VertexBufferDesc, sizeof(l_VertexBufferDesc));
@@ -65,6 +86,7 @@ public:
 	{
 		CHECKED_RELEASE(m_VertexBuffer);
 		CHECKED_RELEASE(m_IndexBuffer);
+		CHECKED_DELETE(m_Indexs);
 	}
 	bool RenderIndexed(CRenderManager *RenderManager, CEffectTechnique*EffectTechnique,
 		void *_Parameters, unsigned int IndexCount=-1, unsigned int	StartIndexLocation=0,
@@ -130,6 +152,10 @@ public:
 	const unsigned int GetNVertexs(){ return m_VertexsCount; }
 
 	const unsigned int GetSizeOfVertex(){ return sizeof(T); }
+
+	const void* GetIndexs()const { return &m_Indexs; }
+	const unsigned int GetNIndexs()	{ return m_IndexsCount; }
+	const unsigned int GetSizeOfIndexs(){ return m_IndexType == DXGI_FORMAT_R16_UINT ? sizeof(unsigned short) : sizeof(unsigned int); }
 };
 
 #define CRENDERABLE_INDEXED_VERTEX_CLASS_TYPE_CREATOR(ClassName, TopologyType,IndexType) \

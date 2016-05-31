@@ -42,7 +42,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		if (m_PxType == "triangle_mesh")
 		{
 			std::vector<Vect3f> l_Vertexs;
-			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			//l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}else if (m_PxType == "sphere_shape")
 		{
 			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
