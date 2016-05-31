@@ -6,10 +6,7 @@ CUABComponentManager::CUABComponentManager(){}
 
 CUABComponentManager::~CUABComponentManager()
 {
-	for (int i = 0; i < m_Resources.size(); ++i)
-	{
-
-	}
+	
 }
 
 void CUABComponentManager::Update(float ElapsedTime)
@@ -17,5 +14,13 @@ void CUABComponentManager::Update(float ElapsedTime)
 	for(size_t i =0; i<m_Resources.size();++i)
 	{
 		m_Resources[i]->Update(ElapsedTime);
+	}
+}
+
+void CUABComponentManager::Destroy()
+{
+	for (int i = 0; i < m_Resources.size(); ++i)
+	{
+		CHECKED_DELETE(m_Resources[i]);
 	}
 }
