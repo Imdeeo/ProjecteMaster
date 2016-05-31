@@ -51,6 +51,23 @@ void CAStar::LoadMap(std::string _filename)
 				}
 			}
 		}
+		else if (l_Element.GetName() == std::string("path_patrol"))
+		{
+			TNodePatrol *l_nodeAux;
+			nombreNodoActual = l_Element.GetPszProperty("name", "", true);
+			std::vector<TNodePatrol*> l_Aux;
+			for (int i = 0; i < l_Element.GetNumChildren(); ++i)
+			{
+				CXMLTreeNode l_Element2 = l_Element(i);
+
+				l_nodeAux = new TNodePatrol();
+				l_nodeAux->node = m_map[l_Element2.GetPszProperty("name")];
+				l_nodeAux->wait = l_Element2.GetBoolProperty("wait");
+				l_nodeAux->time_to_wait = l_Element2.GetFloatProperty("time_to_wait");
+				l_Aux.push_back(l_nodeAux);
+			}
+			m_NodePatrolPath[nombreNodoActual] = l_Aux;
+		}
 	}
 }
 

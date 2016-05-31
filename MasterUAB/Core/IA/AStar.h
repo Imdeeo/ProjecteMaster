@@ -22,6 +22,10 @@ public:
 	void SearchForPath(const Vect3f &pointA, const Vect3f &pointB);
 	Vect3f GetActualPoint();
 	void IncrementActualPoint();
+	/*Vect3f GetActualPatrolPoint(std::string _patrolName);
+	void IncrementActualPatrolPoint(std::string _patrolName);
+	bool GetWaitActualPatrolPoint(std::string _patrolName);
+	float GetTimeToWaitActualPatrolPoint(std::string _patrolName);*/
 	//void Render( LPDIRECT3DDEVICE9 device );
 private:
 	int m_IndexPoint;
@@ -45,6 +49,16 @@ private:
 	
 	typedef std::map<std::string, TNode*> TNodeMap;
 	TNodeMap m_map;
+
+	struct TNodePatrol;
+	struct TNodePatrol {
+		TNode *node;
+		bool wait;
+		float time_to_wait;
+	};
+
+	typedef std::map<std::string, std::vector<TNodePatrol*>> TNodePatrolPath;
+	TNodePatrolPath m_NodePatrolPath;
 
 	struct TCompareNodes {
 		bool operator ()( const TNode *nodeA, const TNode *nodeB );
