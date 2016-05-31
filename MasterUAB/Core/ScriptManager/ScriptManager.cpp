@@ -416,12 +416,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render_debug", &CUABComponent::RenderDebug)
 	];
 
-	module(m_LS)[
-		class_<CUABComponentManager>("CUABComponentManager")
-			.def("get_resource", &CUABComponentManager::GetResource)
-			.def("add_resource", &CUABComponentManager::AddResource)
-	];
-
 	//module(m_LS)[
 	//	class_<CLUAComponent, CLUAComponent_wrapper>("CLUAComponent")
 	//		.def(constructor<>())
@@ -623,9 +617,7 @@ void CScriptManager::RegisterLUAFunctions()
 	// RenderableObjects------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CRenderableObject, bases<C3DElement, CNamed>>("CRenderableObject")
-			.def("update", &CRenderableObject::Update)
 			.def("render", &CRenderableObject::Render)
-			.def("get_component_manager", &CRenderableObject::GetComponentManager)
 	];
 
 	RegisterTemplatedVectorMapManager<CRenderableObject>(m_LS);

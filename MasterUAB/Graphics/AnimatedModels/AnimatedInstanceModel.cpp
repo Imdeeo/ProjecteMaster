@@ -99,7 +99,6 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 
 void CAnimatedInstanceModel::Render(CRenderManager *_RenderManager)
 {
-	CRenderableObject::Render(_RenderManager);
 	CEffectManager::m_SceneParameters.m_World=GetTransform();
 	for(int l_HardwareMeshId=0; l_HardwareMeshId<m_CalHardwareModel->getHardwareMeshCount(); ++l_HardwareMeshId)
 	{
@@ -131,7 +130,6 @@ void CAnimatedInstanceModel::Render(CRenderManager *_RenderManager)
 }
 void CAnimatedInstanceModel::Update(float ElapsedTime)
 {
-	CRenderableObject::Update(ElapsedTime);
 	m_CalModel->update(ElapsedTime);
 }
 void CAnimatedInstanceModel::Destroy()
@@ -172,7 +170,6 @@ bool CAnimatedInstanceModel::IsActionAnimationActive(int Id) const
 
 void CAnimatedInstanceModel::RenderDebug(CRenderManager *RenderManager)
 {
-	CRenderableObject::RenderDebug(RenderManager);
 }
 
 CAnimatedInstanceModel & CAnimatedInstanceModel::operator=(CAnimatedInstanceModel& _AnimatedInstanceModel)

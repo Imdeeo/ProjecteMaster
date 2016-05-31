@@ -109,7 +109,6 @@ CInstanceMesh::~CInstanceMesh(void)
 
 void CInstanceMesh::Render(CRenderManager *RM)
 {
-	CRenderableObject::Render(RM);
 	if(GetVisible())
 	{
 		/*OJUCUIDAO*/ //Exportem els vertex dels objectes en un espai real, per tant si els transformem amb pos rot i scale es lia
@@ -127,7 +126,6 @@ void CInstanceMesh::RenderDebug(CRenderManager *RM)
 {
 	if (GetDebugRender())
 	{
-		CRenderableObject::RenderDebug(RM);
 		RM->GetContextManager()->SetWorldMatrix(GetTransform());
 		CEffectTechnique * l_ET = RM->GetDebugRender()->GetDebugTechnique();
 		CEffectManager::SetSceneConstants(l_ET);
