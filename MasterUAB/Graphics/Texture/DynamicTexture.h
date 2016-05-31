@@ -16,6 +16,7 @@ class CDynamicTexture : public CTexture
 protected:
 	int m_Width;
 	int m_Height;
+	DXGI_FORMAT m_Format;
 
 	ID3D11Texture2D *m_RenderTargetTexture;
 	ID3D11RenderTargetView *m_RenderTargetView;
@@ -25,9 +26,9 @@ protected:
 	void Unload();
 	void Init();
 	virtual bool CreateSamplerState();
+	void SetFormat(const std::string &Format);
 public:
-	CDynamicTexture(const std::string &Name, int Width, int Height, bool
-		CreateDepthStencilBuffer);
+	CDynamicTexture(const std::string &Name, int Width, int Height, bool CreateDepthStencilBuffer, const std::string &Format);
 	CDynamicTexture(const CXMLTreeNode &TreeNode);
 	~CDynamicTexture();
 	bool Reload();
