@@ -5,7 +5,6 @@
 
 #include "Utils\Named.h"
 #include "3DElement\3DElement.h"
-#include "Components\UABComponentManager.h"
 
 class CUABComponentManager;
 class CXMLTreeNode;
@@ -21,20 +20,14 @@ public:
 		PARTICLE_EMITER
 	};
 private:
-	CUABComponentManager* m_ComponentManager;
 	bool m_DebugRender;
 public:
 	CRenderableObject();
 	CRenderableObject(const CXMLTreeNode &TreeNode);
 	virtual ~CRenderableObject();
-	virtual void Update(float ElapsedTime);
-	virtual void Render(CRenderManager *RM);
-	virtual void RenderDebug(CRenderManager *RM);
 	virtual void Save(FILE* _File, std::string _layer){}
-
-	void SetComponentManager(CUABComponentManager* _ComponentManager);
-	CUABComponentManager* GetComponentManager()const;
-
+	virtual void Update(float ElapsedTime){};
+	virtual void Render(CRenderManager *RM){};
 	void SetDebugRender(bool _DebugRender){ m_DebugRender = _DebugRender;}
 	bool GetDebugRender(){ return m_DebugRender; }
 

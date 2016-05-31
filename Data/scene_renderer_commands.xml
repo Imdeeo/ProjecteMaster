@@ -10,9 +10,9 @@
 	
 	<!-- DEFERRED -->
 	<set_render_target name="deferred_multiple_render_target">
-		<dynamic_texture name="DiffuseMapTexture" texture_width_as_frame_buffer="true" create_depth_stencil_buffer="false" format_type="rgb8"/>
-		<dynamic_texture name="LightMapTexture" texture_width_as_frame_buffer="true" format_type="rgb8"/>
-		<dynamic_texture name="NormalMapTexture" texture_width_as_frame_buffer="true" format_type="rgb8"/>
+		<dynamic_texture name="DiffuseMapTexture" texture_width_as_frame_buffer="true" create_depth_stencil_buffer="false" format_type="rgba8"/>
+		<dynamic_texture name="LightMapTexture" texture_width_as_frame_buffer="true" format_type="rgba8"/>
+		<dynamic_texture name="NormalMapTexture" texture_width_as_frame_buffer="true" format_type="rgba8"/>
 		<dynamic_texture name="DepthMapTexture" texture_width_as_frame_buffer="true" format_type="r32"/>
 	</set_render_target>
 	

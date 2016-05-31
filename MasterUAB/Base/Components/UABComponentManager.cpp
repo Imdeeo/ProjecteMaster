@@ -6,29 +6,16 @@ CUABComponentManager::CUABComponentManager(){}
 
 CUABComponentManager::~CUABComponentManager()
 {
-	Destroy();
+	for (int i = 0; i < m_Resources.size(); ++i)
+	{
+
+	}
 }
 
 void CUABComponentManager::Update(float ElapsedTime)
 {
-	for(size_t i =0; i<m_ResourcesVector.size();++i)
+	for(size_t i =0; i<m_Resources.size();++i)
 	{
-		m_ResourcesVector[i]->Update(ElapsedTime);
-	}
-}
-
-void CUABComponentManager::Render(CRenderManager &RenderManager)
-{
-	for(size_t i =0; i<m_ResourcesVector.size();++i)
-	{
-		m_ResourcesVector[i]->Render(RenderManager);
-	}
-}
-
-void CUABComponentManager::RenderDebug(CRenderManager &RenderManager)
-{
-	for(size_t i =0; i<m_ResourcesVector.size();++i)
-	{
-		m_ResourcesVector[i]->RenderDebug(RenderManager);
+		m_Resources[i]->Update(ElapsedTime);
 	}
 }
