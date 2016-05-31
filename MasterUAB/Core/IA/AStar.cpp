@@ -6,9 +6,9 @@
 #include <map>
 #include <stdlib.h>
 
-CAStar::CAStar() : m_IndexPoint(0){}
+CAStar::CAStar() : m_IndexPoint(0), m_IndexPathPatrolPoint(0){}
 
-CAStar::CAStar(std::string _filename) : m_IndexPoint(0){
+CAStar::CAStar(std::string _filename) : m_IndexPoint(0), m_IndexPathPatrolPoint(0){
 	LoadMap(_filename);
 }
 
@@ -237,7 +237,7 @@ CAStar::TNode *CAStar::GetNearestNode( const Vect3f &point ) {
 	return bestNode;
 }
 
-void CAStar::SearchForPath(const Vect3f &pointA, const Vect3f &pointB) {
+int CAStar::SearchForPath(const Vect3f &pointA, const Vect3f &pointB) {
 	TNode *nodeA = GetNearestNode( pointA );
 	TNode *nodeB = GetNearestNode( pointB );
 	VNodes nodes = SearchNodePath( nodeA, nodeB );
@@ -249,6 +249,8 @@ void CAStar::SearchForPath(const Vect3f &pointA, const Vect3f &pointB) {
 		TNode *currentNode = *it;
 		m_PathPoints.push_back( currentNode->position );
 	}
+
+	return m_PathPoints.size();
 }
 
 Vect3f CAStar::GetActualPoint()
@@ -263,4 +265,18 @@ void CAStar::IncrementActualPoint()
 {
 	if (m_IndexPoint < m_PathPoints.size() - 1)
 		m_IndexPoint += 1;
+}
+
+CAStar::TNodePatrol* CAStar::GetActualPatrolPoint(std::string _patrolName)
+{
+	if (m_NodePatrolPath.size() > 0)
+		return m_NodePatrolPath[_patrolName][m_IndexPathPatrolPoint];
+	else
+		return NULL;
+}
+
+void CAStar::IncrementActualPatrolPoint(std::string _patrolName)
+{
+	if (m_IndexPathPatrolPoint < m_NodePatrolPath[_patrolName].size() - 1)
+		m_IndexPathPatrolPoint += 1;
 }

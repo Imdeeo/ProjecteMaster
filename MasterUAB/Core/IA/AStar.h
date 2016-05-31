@@ -19,19 +19,10 @@ public:
 	~CAStar();
 	void LoadMap(std::string _filename);
 	void DestroyMap();
-	void SearchForPath(const Vect3f &pointA, const Vect3f &pointB);
-	Vect3f GetActualPoint();
-	void IncrementActualPoint();
-	/*Vect3f GetActualPatrolPoint(std::string _patrolName);
-	void IncrementActualPatrolPoint(std::string _patrolName);
-	bool GetWaitActualPatrolPoint(std::string _patrolName);
-	float GetTimeToWaitActualPatrolPoint(std::string _patrolName);*/
+	int SearchForPath(const Vect3f &pointA, const Vect3f &pointB);
 	//void Render( LPDIRECT3DDEVICE9 device );
-private:
-	int m_IndexPoint;
-	VPoints3 m_PathPoints;
 	
-	struct TNode;	
+	struct TNode;
 	typedef std::pair< TNode*, float > PNodeAndDistance;
 	typedef std::vector< PNodeAndDistance > VNodesAndDistances;
 
@@ -46,17 +37,25 @@ private:
 		bool inOpenList;
 		bool closed;
 	};
-	
-	typedef std::map<std::string, TNode*> TNodeMap;
-	TNodeMap m_map;
 
-	struct TNodePatrol;
 	struct TNodePatrol {
 		TNode *node;
 		bool wait;
 		float time_to_wait;
 	};
 
+	Vect3f GetActualPoint();
+	void IncrementActualPoint();
+	TNodePatrol* GetActualPatrolPoint(std::string _patrolName);
+	void IncrementActualPatrolPoint(std::string _patrolName);
+private:
+	int m_IndexPoint;
+	VPoints3 m_PathPoints;	
+	
+	typedef std::map<std::string, TNode*> TNodeMap;
+	TNodeMap m_map;	
+
+	int m_IndexPathPatrolPoint;
 	typedef std::map<std::string, std::vector<TNodePatrol*>> TNodePatrolPath;
 	TNodePatrolPath m_NodePatrolPath;
 
