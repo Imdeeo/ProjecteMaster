@@ -15,6 +15,7 @@
 #include "Components\UABComponent.h"
 #include "Components\UABComponentManager.h"
 #include "Components\ScriptedComponent.h"
+#include "Components\LUAComponent.h"
 
 #include "Engine\UABEngine.h"
 
@@ -153,6 +154,24 @@ CScriptManager::~CScriptManager()
 {
 	Destroy();
 }
+
+struct CLUAComponent_wrapper : CLUAComponent, luabind::wrap_base
+{
+	CLUAComponent_wrapper(const std::string &Name, CRenderableObject *Owner, const	std::string &FnOnCreate, const std::string &FnOnDestroy, const std::string &FnOnUpdate,
+		const std::string &FnOnRender, const std::string &FnOnRenderDebug)
+		: CLUAComponent(Name, Owner, FnOnCreate, FnOnDestroy, FnOnUpdate,FnOnRender, FnOnRenderDebug)
+	{}
+
+	/*virtual void f(int a)
+	{
+		call<void>("f", a);
+	}
+
+	static void default_f(CLUAComponent* ptr, int a)
+	{
+		return ptr->CLUAComponent::f(a);
+	}*/
+};
 
 //Código de la función Alert que se llamará al generarse algún error de LUA
 int Alert(lua_State * State)
@@ -402,6 +421,12 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_resource", &CUABComponentManager::GetResource)
 			.def("add_resource", &CUABComponentManager::AddResource)
 	];
+
+	//module(m_LS)[
+	//	class_<CLUAComponent, CLUAComponent_wrapper>("CLUAComponent")
+	//		.def(constructor<>())
+	//		.def("f", &base::f, &base_wrapper::default_f)
+	//	];
 
 	luabind::module(m_LS) [ luabind::def("create_scripted_component", &CreateScriptedComponent) ];
 
