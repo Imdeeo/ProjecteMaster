@@ -15,6 +15,7 @@ public:
 	CUABComponentManager();
 	virtual ~CUABComponentManager();
 	void Update(float ElapsedTime);
+	void Destroy();
 	
 	//void Render(CRenderManager &RenderManager);
 	//void RenderDebug(CRenderManager &RenderManager);
