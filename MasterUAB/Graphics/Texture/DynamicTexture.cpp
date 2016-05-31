@@ -55,7 +55,7 @@ void CDynamicTexture::Init()
 	l_textureDescription.Height = m_Height;
 	l_textureDescription.MipLevels = 1;
 	l_textureDescription.ArraySize = 1;
-	l_textureDescription.Format = m_Format;
+	l_textureDescription.Format = DXGI_FORMAT(m_Format);
 	l_textureDescription.SampleDesc.Count = 1;
 	l_textureDescription.Usage = D3D11_USAGE_DEFAULT;
 	l_textureDescription.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
@@ -151,19 +151,11 @@ ID3D11DepthStencilView* CDynamicTexture::GetDepthStencilView()
 void CDynamicTexture::SetFormat(const std::string &Format)
 {
 	if (Format == "rgba8")
-	{
-		m_Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	}
+		m_Format = 28; //DXGI_FORMAT_R8G8B8A8_UNORM
 	else if (Format == "r32")
-	{
-		m_Format = DXGI_FORMAT_R32_FLOAT;
-	}
+		m_Format = 41; //DXGI_FORMAT_R32_FLOAT
 	else if (Format == "rgba32")
-	{
-		m_Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	}
+		m_Format = 2; //DXGI_FORMAT_R32G32B32A32_FLOAT
 	else
-	{
 		assert(false);
-	}
 }

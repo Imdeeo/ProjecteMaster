@@ -16,7 +16,7 @@ class CDynamicTexture : public CTexture
 protected:
 	int m_Width;
 	int m_Height;
-	DXGI_FORMAT m_Format;
+	int m_Format;
 
 	ID3D11Texture2D *m_RenderTargetTexture;
 	ID3D11RenderTargetView *m_RenderTargetView;
