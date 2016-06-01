@@ -1,7 +1,17 @@
-dofile("Data\\Lua\\Player\\PlayerStateMachine.lua")
+-- STATES
+dofile("Data\\Lua\\Utils\\state_machine.lua")
+dofile("Data\\Lua\\Player\\PlayerStateIdle.lua")
+dofile("Data\\Lua\\Player\\PlayerStateMoving.lua")
+dofile("Data\\Lua\\Player\\PlayerStateCrouching.lua")
+dofile("Data\\Lua\\Player\\PlayerStateClimbing.lua")
+dofile("Data\\Lua\\Player\\PlayerStateJumping.lua")
+dofile("Data\\Lua\\Player\\PlayerStateFalling.lua")
+dofile("Data\\Lua\\Player\\PlayerStateInteracting.lua")
+dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 
 class 'CPlayer' (CLUAComponent)
 	function CPlayer:__init(_TreeNode)
+		self.m_AlreadyInitialized = false
 		local UABEngine = CUABEngine.get_instance()
 		self.m_Name = _TreeNode:get_psz_property("name", "", false)
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
@@ -9,14 +19,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
 		utils_log("name: "..self.m_RenderableObject.name)
 		CLUAComponent.__init(self,self.m_Name, self.m_RenderableObject)
-		self.m_AlreadyInitialized = false
-	end
-
-	function CPlayer:InitPlayer(_TreeNode)
-		utils_log("Init player")
-		--local UABEngine = CUABEngine.get_instance()
-		local UABEngine = CUABEngine.get_instance()
-		
+	
 		self.m_CameraControllerName= _TreeNode:get_psz_property("camera_controller", "", false)
 		self.m_CameraController = UABEngine:get_camera_controller_manager():get_resource(self.m_CameraControllerName)
 		self.m_LuaCommand = _TreeNode:get_psz_property("lua_command", "", false)
@@ -41,18 +44,17 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Target = nil
 		self.m_TargetOffset = Vect3f(0, 0, 0)
 		
-		--local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent")
-		
-		--if l_Component==nil then
-		--	local l_Component=create_scripted_component("ScriptedComponent", self.m_RenderableObject, "FnOnCreateController","FnOnDestroyController", "FnOnUpdateController", "FnOnRenderController", "FnOnDebugRender")
-		--	self.m_RenderableObject:get_component_manager():add_resource("ScriptedComponent", l_Component)
-		--end
-		
-		setPlayerStateMachine()
-		PlayerStateMachine:start()
+		self.m_StateMachine = StateMachine.create()
+	--	setPlayerStateMachine()
+		self:SetPlayerStateMachine()
+	--	PlayerStateMachine:start()
+		self.m_StateMachine:start()
+		self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
+		self.m_PhysXManager:create_character_controller(self.m_Name, 1.2, 0.3, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Player")
+
 		self.m_AlreadyInitialized = true
 	end
-	
+
 	function CPlayer:SetSanity(_amount, _override)
 		self.m_Sanity = _amount
 		if _override then
@@ -85,31 +87,73 @@ class 'CPlayer' (CLUAComponent)
 		end
 	end
 	
-	function CPlayer:Update()
-		utils_log("CPlayer:Update()")
+	function CPlayer:Update(_ElapsedTime)
+		local args = {}
+		args["owner"] = self.m_RenderableObject
+		utils_log("update")
+		self.m_StateMachine:update(args, _ElapsedTime)
+		--PlayerStateMachine:update(args, _ElapsedTime)
 	end
-
+	
+function CPlayer:SetPlayerStateMachine()
+	utils_log("Set PlayerStateMachine")
+	
+	IdleState = State.create(IdleUpdate)
+	IdleState:set_do_first_function(IdleFirst)
+	IdleState:set_do_end_function(IdleEnd)
+	IdleState:add_condition(IdleToMovingCondition, "Moving")
+	IdleState:add_condition(IdleToCrouchingCondition, "Crouching")
+	IdleState:add_condition(IdleToJumpingCondition, "Jumping")
+	IdleState:add_condition(ANYToFallingCondition, "Falling")
+	IdleState:add_condition(ANYToClimbingCondition, "Climbing")
+	
+	MovingState = State.create(MovingUpdate)
+	MovingState:set_do_first_function(MovingFirst)
+	MovingState:set_do_end_function(MovingEnd)
+	MovingState:add_condition(MovingToIdleCondition, "Idle")
+	MovingState:add_condition(MovingToCrouchingCondition, "Crouching")
+	MovingState:add_condition(MovingToJumpingCondition, "Jumping")
+	MovingState:add_condition(ANYToFallingCondition, "Falling")
+	MovingState:add_condition(ANYToClimbingCondition, "Climbing")
+	
+	CrouchingState = State.create(CrouchingUpdate)
+	CrouchingState:set_do_first_function(CrouchingFirst)
+	CrouchingState:set_do_end_function(CrouchingEnd)
+	CrouchingState:add_condition(CrouchingToIdleCondition, "Idle")
+	CrouchingState:add_condition(ANYToFallingCondition, "Falling")
+	CrouchingState:add_condition(ANYToClimbingCondition, "Climbing")
+	
+	ClimbingState = State.create(ClimbingUpdate)
+	ClimbingState:set_do_first_function(ClimbingFirst)
+	ClimbingState:set_do_end_function(ClimbingEnd)
+	ClimbingState:add_condition(ClimbingToFallingCondition, "Falling")
+	
+	JumpingState = State.create(JumpingUpdate)
+	JumpingState:set_do_first_function(JumpingFirst)
+	JumpingState:set_do_end_function(JumpingEnd)
+	JumpingState:add_condition(ANYToFallingCondition, "Falling")
+	
+	FallingState = State.create(FallingUpdate)
+	FallingState:set_do_first_function(FallingFirst)
+	FallingState:set_do_end_function(FallingEnd)
+	FallingState:add_condition(FallingToIdleCondition, "Idle")
+	
+	InteractingState = State.create(InteractingUpdate)
+	InteractingState:set_do_first_function(InteractingFirst)
+	InteractingState:set_do_end_function(InteractingEnd)
+	
+	DeadState = State.create(DeadUpdate)
+	DeadState:set_do_first_function(DeadFirst)
+	DeadState:set_do_end_function(DeadEnd)
+	
+	self.m_StateMachine:add_state("Idle", IdleState)
+	self.m_StateMachine:add_state("Moving", MovingState)
+	self.m_StateMachine:add_state("Crouching", CrouchingState)
+	self.m_StateMachine:add_state("Climbing", ClimbingState)
+	self.m_StateMachine:add_state("Jumping", JumpingState)
+	self.m_StateMachine:add_state("Falling", FallingState)
+	self.m_StateMachine:add_state("Interacting", InteractingState)
+	self.m_StateMachine:add_state("Dead", DeadState)
+	utils_log("se termina")
+end
 --end
-
-function FnOnCreateController (_owner)
-	g_Player.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
-	g_Player.m_PhysXManager:create_character_controller(g_Player.m_Name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", "Player")
-end
-
-function FnOnDestroyController ()
-		
-end
-
-function FnOnUpdateController (_owner, _ElapsedTime)
-	local args = {}
-	args["owner"] = _owner
-	PlayerStateMachine:update(args, _ElapsedTime)
-end
-
-function FnOnRenderController(_owner, _rm)
-
-end
-
-function FnOnDebugRender(_owner, _rm)
-	--g_PhysXManager:render("player", _rm)
-end

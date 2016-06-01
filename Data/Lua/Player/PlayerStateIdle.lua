@@ -1,5 +1,4 @@
 function IdleFirst(args)
-	
 end
 
 function IdleUpdate(args, _ElapsedTime)
@@ -14,9 +13,9 @@ function IdleUpdate(args, _ElapsedTime)
 	g_Player.m_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
 	
 	--// Assign to the character the controller's position
-	local l_NewControllerPosition = g_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_NewControllerPosition.y = l_NewControllerPosition.y - 0.9
-	l_Owner:set_position(l_NewControllerPosition)
+	--local l_NewControllerPosition = g_Player.m_PhysXManager:get_character_controler_pos("player")
+	--l_NewControllerPosition.y = l_NewControllerPosition.y - 0.9
+	--l_Owner:set_position(l_NewControllerPosition)
 	
 	--// Save speed in last update so we can create acceleration
 	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
@@ -31,7 +30,6 @@ function IdleUpdate(args, _ElapsedTime)
 end
 
 function IdleEnd(args)
-	
 end
 
 function IdleToMovingCondition()

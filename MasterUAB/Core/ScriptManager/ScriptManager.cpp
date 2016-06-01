@@ -162,15 +162,15 @@ struct CLUAComponent_wrapper : CLUAComponent, luabind::wrap_base
 		: CLUAComponent(Name, Owner)
 	{}
 
-	/*virtual void f(int a)
+	virtual void Update(float _ElapsedTime)
 	{
-		call<void>("f", a);
+		call<void>("Update", _ElapsedTime);
 	}
 
-	static void default_f(CLUAComponent* ptr, int a)
+	static void default_Update(CLUAComponent* ptr, float _ElapsedTime)
 	{
-		return ptr->CLUAComponent::f(a);
-	}*/
+		return ptr->CLUAComponent::Update(_ElapsedTime);
+	}
 };
 
 //Código de la función Alert que se llamará al generarse algún error de LUA
@@ -419,6 +419,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CLUAComponent, CLUAComponent_wrapper>("CLUAComponent")
 			.def(constructor<const std::string &, CRenderableObject *>())
+			.def("Update", &CLUAComponent::Update, &CLUAComponent_wrapper::default_Update)
 		];
 
 	luabind::module(m_LS) [ luabind::def("create_scripted_component", &CreateScriptedComponent) ];

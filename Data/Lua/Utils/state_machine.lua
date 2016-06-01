@@ -59,16 +59,21 @@ function StateMachine:start__s(state_to_start)
 end
 
 function StateMachine:update(args, elapsed_time)
+	utils_log("updateStateMachine")
 	local state = self.states[self.actual_state]
+	utils_log("updateStateMachine2")
 	if(state.is_first) then
 		state.do_first_function(args)
 		self.states[self.actual_state].is_first = false
+		utils_log("updateStateMachine2.5")
 	end
-	
+	utils_log("updateStateMachine3")
+	utils_log("actual_state: "..self.actual_state)
 	state.update_function(args,elapsed_time)
 
 	local change = false
 	local prev_state
+	utils_log("updateStateMachine4")
 	for i = 0, state.n_conditions - 1 do
 		local cond = state.conditions[i]
 		if cond.condition() then
@@ -78,8 +83,9 @@ function StateMachine:update(args, elapsed_time)
 			self.states[self.actual_state].is_first = true
 		end
 	end
-	
+	utils_log("updateStateMachine5")
 	if(change)then
 		self.states[prev_state].do_end_function(args)
 	end
+	utils_log("updateStateMachine6")
 end
