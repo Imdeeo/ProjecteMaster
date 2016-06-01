@@ -10,6 +10,7 @@ class CInstanceMesh : public CRenderableObject
 {
 private:
 	CStaticMesh *m_StaticMesh;
+	const CFrustum *m_Frustum;
 	bool m_GeneratePhysx;
 	std::string m_PxType;
 	std::string m_PxMaterial;
@@ -22,6 +23,7 @@ public:
 	~CInstanceMesh();
 	void Render(CRenderManager *RM);
 	void Save(FILE* _File, std::string _layer);
+	bool GetInsideFrustum();
 
 #ifdef _DEBUG
 	void RenderDebug(CRenderManager *RM);
