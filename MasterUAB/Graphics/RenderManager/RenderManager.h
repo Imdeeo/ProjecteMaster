@@ -26,6 +26,8 @@ class IDXGISwapChain;
 class ID3D11RenderTargetView;
 class ID3D11DepthStencilView;
 
+class CEmptyPointerClass;
+
 class CRenderManager
 {
 public:
@@ -74,6 +76,8 @@ public:
 	ID3D11DeviceContext* GetDeviceContext();
 	IDXGISwapChain*	GetSwapChain();
 
+	CEmptyPointerClass *GetFrameRateAddress();
+
 
 private:
 
@@ -96,6 +100,9 @@ private:
 	
 	CContextManager*				m_ContextManager;
 
+	float m_FrameRate;
+	unsigned int m_FrameCounter;
+	float m_LastFPSMeasurementTime;
 };
 
 #endif //RENDER_MANAGER_H
