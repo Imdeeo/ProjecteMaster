@@ -1,8 +1,8 @@
 function ChaseFirstAutomaton(args)
 	local l_Owner = args["owner"]
-	l_Owner:blend_cycle(0,1.0,0.1)
+	l_Owner:clear_cycle(0,0.5)
+	l_Owner:blend_cycle(1,1.0,0.5)
 	local l_Enemy = m_CharacterManager.m_Enemics[1]	
-	utils_log("LEVEL: "..g_Engine:get_level_loaded())
 	l_Enemy.m_PathFindig:load_map("Data\\level_"..g_Engine:get_level_loaded().."\\pathfinding.xml")
 end
 
@@ -23,7 +23,7 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 		-- Actualizamos la posicion del enemigo
 		local l_PointPos = l_Enemy.m_PathFindig:get_actual_pos()
 		l_Direction = (l_PointPos - l_EnemyPos):get_normalized(1)
-		l_Owner:set_position(l_EnemyPos + (l_Direction * l_Enemy.m_Speed * _ElapsedTime))	
+		l_Owner:set_position(l_EnemyPos + (l_Direction * l_Enemy.m_RunSpeed * _ElapsedTime))	
 		utils_log("Nueva Posicion")
 		
 		-- Si la distancia entre el enemy y el punto es menor de 1 pasamos al siguiente punto
@@ -36,7 +36,7 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 		utils_log("No hay nodos. A por EEEEELLLLL!!!")
 		local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 		l_Direction = (l_PlayerPos - l_EnemyPos):get_normalized(1)	
-		l_Owner:set_position(l_EnemyPos + (l_Direction * l_Enemy.m_Speed * _ElapsedTime))
+		l_Owner:set_position(l_EnemyPos + (l_Direction * l_Enemy.m_RunSpeed * _ElapsedTime))
 	end
 	
 	-- Orientamos al enemy hacia el punto al que se dirige
