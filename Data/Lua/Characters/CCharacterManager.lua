@@ -8,6 +8,7 @@ class 'CCharacterManager'
 		
 	function CCharacterManager:LoadXML(Filename)
 		--utils_log(Filename)
+		utils_log("load")
 		local l_XMLTreeNode=CXMLTreeNode()
 		local l_Loaded=l_XMLTreeNode:load_file(Filename)
 		local UABEngine = CUABEngine.get_instance()
@@ -17,11 +18,8 @@ class 'CCharacterManager'
 				local l_ElemName=l_Atts:get_name()
 				if l_ElemName=="player" then
 					g_Player = CPlayer(l_Atts)
-					utils_log("asd1")
 					UABEngine:get_game_play_manager():add_component(g_Player)
-					utils_log("asd2")
-					--g_Player:InitPlayer(l_Atts)
-					--table.insert(self.m_Player, g_Player)
+					table.insert(self.m_Player, g_Player)
 				elseif l_ElemName == "enemy" then
 					--local l_Enemy = CEnemy()					
 					--table.insert(self.m_Enemics, l_Enemy)
