@@ -1,7 +1,14 @@
 dofile("Data\\Lua\\Player\\PlayerStateMachine.lua")
 
-class 'CPlayer'
-	function CPlayer:__init()
+class 'CPlayer' (CLUAComponent)
+	function CPlayer:__init(_TreeNode)
+		local UABEngine = CUABEngine.get_instance()
+		self.m_Name = _TreeNode:get_psz_property("name", "", false)
+		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
+		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "", false)
+		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
+		utils_log("name: "..self.m_RenderableObject.name)
+		CLUAComponent.__init(self,self.m_Name, self.m_RenderableObject)
 		self.m_AlreadyInitialized = false
 	end
 
@@ -9,18 +16,17 @@ class 'CPlayer'
 		utils_log("Init player")
 		--local UABEngine = CUABEngine.get_instance()
 		local UABEngine = CUABEngine.get_instance()
-		self.m_Name = _TreeNode:get_psz_property("name", "", false)
+		
 		self.m_CameraControllerName= _TreeNode:get_psz_property("camera_controller", "", false)
 		self.m_CameraController = UABEngine:get_camera_controller_manager():get_resource(self.m_CameraControllerName)
 		self.m_LuaCommand = _TreeNode:get_psz_property("lua_command", "", false)
-		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
-		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "", false)
+		
 		self.m_SoundManager = CUABEngine.get_instance():get_sound_manager()
 		if self.m_AlreadyInitialized then
 			-- unregister old speaker before assigning new renderable object
 			self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
 		end
-		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
+		
 		self.m_InputManager = CInputManager.get_input_manager()
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
 		self.m_SoundManager:register_speaker(self.m_RenderableObject)
@@ -35,12 +41,12 @@ class 'CPlayer'
 		self.m_Target = nil
 		self.m_TargetOffset = Vect3f(0, 0, 0)
 		
-		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent")
+		--local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent")
 		
-		if l_Component==nil then
-			local l_Component=create_scripted_component("ScriptedComponent", self.m_RenderableObject, "FnOnCreateController","FnOnDestroyController", "FnOnUpdateController", "FnOnRenderController", "FnOnDebugRender")
-			self.m_RenderableObject:get_component_manager():add_resource("ScriptedComponent", l_Component)
-		end
+		--if l_Component==nil then
+		--	local l_Component=create_scripted_component("ScriptedComponent", self.m_RenderableObject, "FnOnCreateController","FnOnDestroyController", "FnOnUpdateController", "FnOnRenderController", "FnOnDebugRender")
+		--	self.m_RenderableObject:get_component_manager():add_resource("ScriptedComponent", l_Component)
+		--end
 		
 		setPlayerStateMachine()
 		PlayerStateMachine:start()
@@ -77,6 +83,10 @@ class 'CPlayer'
 		if self.m_Sanity < 0 then
 			self.m_Sanity = 0
 		end
+	end
+	
+	function CPlayer:Update()
+		utils_log("CPlayer:Update()")
 	end
 
 --end

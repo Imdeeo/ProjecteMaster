@@ -22,6 +22,7 @@ class CSceneRendererCommandManager;
 class CParticleManager;
 class CGUIManager;
 class ISoundManager;
+class CGamePlayManager;
 
 #include <string>
 
@@ -49,6 +50,7 @@ private:
 	CParticleManager* m_ParticleManager;
 	CGUIManager* m_GUIManager;
 	ISoundManager* m_SoundManager;
+	CGamePlayManager* m_GamePlayManager;
 	std::string m_LevelLoaded;
 	int m_CurrentCamera_vision;
 	
@@ -70,6 +72,7 @@ public:
 	CParticleManager * GetParticleManager()const;
 	CGUIManager * GetGUIManager() const;
 	ISoundManager * GetSoundManager()const;
+	CGamePlayManager * GetGamePlayManager()const;
 	std::string GetLevelLoaded()const{return m_LevelLoaded;}
 	void LoadLevelXML(std::string filename);
 	static CUABEngine * GetInstance();

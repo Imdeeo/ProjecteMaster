@@ -21,6 +21,7 @@
 #include "Particles\ParticleManager.h"
 #include "GUIManager.h"
 #include "SoundManager\SoundManager.h"
+#include "GamePlayManager.h"
 
 CUABEngine::CUABEngine(void)
 {
@@ -44,6 +45,7 @@ CUABEngine::CUABEngine(void)
 	m_SceneRendererCommandManager = new CSceneRendererCommandManager();
 	m_GUIManager = new CGUIManager();
 	m_SoundManager = ISoundManager::InstantiateSoundManager();
+	m_GamePlayManager = new CGamePlayManager();
 }
 
 CUABEngine::~CUABEngine(void)
@@ -90,6 +92,7 @@ void CUABEngine::Update(float _ElapsedTime)
 		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 		m_LayerManager->Update(l_ElapsedTime);
 		m_ScriptManager->RunCode("luaUpdate(" + std::to_string(l_ElapsedTime) + ")");
+		m_GamePlayManager->Update(l_ElapsedTime);
 	}
 	const CCamera *l_CurrentCamera = m_RenderManager->GetCurrentCamera();
 	GetSoundManager()->Update(l_CurrentCamera);
@@ -169,6 +172,7 @@ UAB_GET_PROPERTY_CPP(CUABEngine,CCinematic *, Cinematic)
 UAB_GET_PROPERTY_CPP(CUABEngine,CPhysXManager *, PhysXManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,CSceneRendererCommandManager *, SceneRendererCommandManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CParticleManager*, ParticleManager)
+UAB_GET_PROPERTY_CPP(CUABEngine,CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,ISoundManager *, SoundManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager*, GamePlayManager)
