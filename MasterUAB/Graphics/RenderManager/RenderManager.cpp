@@ -77,6 +77,11 @@ const CCamera *CRenderManager::GetCurrentCamera()
 		return &m_CurrentCamera;
 }
 
+const CFrustum* CRenderManager::GetFrustum()
+{
+	return &m_CullFrustum;
+}
+
 //bool CRenderManager::AddRenderableObjectToRenderList(const CRenderableObject* _RenderableObject)
 //{
 //	// Alguien se atrebe a arreglar el frustum?

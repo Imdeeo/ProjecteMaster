@@ -19,7 +19,7 @@
 CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
 {
 	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(TreeNode.GetPszProperty("core_name"));
-
+	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 	m_GeneratePhysx = TreeNode.GetBoolProperty("create_physics");
 	if (m_GeneratePhysx)
 	{
@@ -110,7 +110,7 @@ CInstanceMesh::~CInstanceMesh(void)
 void CInstanceMesh::Render(CRenderManager *RM)
 {
 	CRenderableObject::Render(RM);
-	if(GetVisible())
+	if(GetVisible() && GetInsideFrustum())
 	{
 		/*OJUCUIDAO*/ //Exportem els vertex dels objectes en un espai real, per tant si els transformem amb pos rot i scale es lia
 					  //Exportamos los vertices de los objetos en espacio real, asi que al aplicarles la transformada con pos rot y scale, se lia parda
@@ -162,4 +162,9 @@ void CInstanceMesh::Save(FILE* _File, std::string _layer)
 			m_Name.c_str(), _layer.c_str(), m_StaticMesh->GetName().c_str(), m_Position.x, m_Position.y, m_Position.z,
 			m_Rotation.x, m_Rotation.y, m_Rotation.z, m_Rotation.w, m_Visible ? "true" : "false");		
 	}
+}
+
+bool CInstanceMesh::GetInsideFrustum()
+{
+	return m_Frustum->SphereVisible(m_Position, m_StaticMesh->GetBoundingSphereRadius);
 }
