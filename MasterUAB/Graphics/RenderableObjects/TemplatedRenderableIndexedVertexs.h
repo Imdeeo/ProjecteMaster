@@ -153,7 +153,7 @@ public:
 
 	const unsigned int GetSizeOfVertex(){ return sizeof(T); }
 
-	const void* GetIndexs()const { return &m_Indexs; }
+	const void* GetIndexs()const { return m_Indexs; }
 	const unsigned int GetNIndexs()	{ return m_IndexsCount; }
 	const unsigned int GetSizeOfIndexs(){ return m_IndexType == DXGI_FORMAT_R16_UINT ? sizeof(unsigned short) : sizeof(unsigned int); }
 };
