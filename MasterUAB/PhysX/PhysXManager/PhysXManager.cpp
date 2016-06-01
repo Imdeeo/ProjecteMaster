@@ -663,7 +663,7 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStat
 	}
 }
 
-void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
+void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, bool _FlipNormals)
 {
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
@@ -673,8 +673,34 @@ void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CSta
 		l_TriangleMeshDesc.points.count = l_RenderableVertex[i]->GetNVertexs();
 		l_TriangleMeshDesc.points.stride = sizeof(Vect3f);
 		l_TriangleMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
+		
+		l_TriangleMeshDesc.triangles.count = l_RenderableVertex[i]->GetNIndexs()/3;
+		l_TriangleMeshDesc.triangles.stride = 3*l_RenderableVertex[i]->GetSizeOfIndexs();
+		l_TriangleMeshDesc.triangles.data = l_RenderableVertex[i]->GetIndexs();
 
-		//l_TriangleMeshDesc.triangles.count = l_RenderableVertex[i]->
+		if (l_TriangleMeshDesc.triangles.stride == sizeof(unsigned short)*3)
+			l_TriangleMeshDesc.flags |= physx::PxMeshFlag::e16_BIT_INDICES;
+		if (_FlipNormals)
+			l_TriangleMeshDesc.flags |= physx::PxMeshFlag::eFLIPNORMALS;
+
+		physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
+		bool success = m_Cooking->cookTriangleMesh(l_TriangleMeshDesc, l_DefaultMemoryOutputStream);
+		if (success){
+
+			physx::PxDefaultMemoryInputData l_InputStream(l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
+			physx::PxTriangleMesh* l_TriangleMesh = m_PhysX->createTriangleMesh(l_InputStream);
+
+			physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+			physx::PxShape* l_Shape = l_Body->createShape(physx::PxTriangleMeshGeometry(l_TriangleMesh), *m_Materials[_Material]);
+
+			char l_ActorName[256] = "";
+			sprintf_s(l_ActorName, "%s_%u", _name.c_str(), i);
+
+			L_PutGroupToShape(l_Shape, m_Groups[_group]);
+
+			l_Body->userData = (void*)AddActor(l_ActorName, _position, _orientation, l_Body);
+			m_Scene->addActor(*l_Body);
+		}
 	}
 }
 //
