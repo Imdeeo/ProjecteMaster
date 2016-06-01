@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="MeshLoader">
+      <UniqueIdentifier>{12f19426-2b4e-43d4-baff-8df0b4094c88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{e222a361-3592-492f-9143-0c1c7f09daaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Math">
+      <UniqueIdentifier>{36e1c0a1-7504-4806-9bb7-e810d49676af}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="StaticMesh\StaticMesh.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMesh\StaticMeshManager.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Utils.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\XML\XMLTreeNode.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Utils\Active.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Utils\Named.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Math\MathConstants.cpp">
+      <Filter>Base\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\3DElement\3DElement.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StaticMesh\StaticMesh.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMesh\StaticMeshManager.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\HelperTypes.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Utils.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\XML\XMLTreeNode.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Utils\Active.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Utils\CEmptyPointerClass.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Utils\Named.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Utils\TemplatedMapManager.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Utils\TemplatedVectorMapManager.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Utils\Types.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Math\Color.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Math\MathTypes.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Math\MathUtils.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Math\Matrix33.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Math\Matrix34.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Math\Matrix44.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Math\Quatn.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Math\Vector2.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Math\Vector3.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Math\Vector4.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\3DElement\3DElement.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Base\Math\Color.inl">
+      <Filter>Base\Math</Filter>
+    </None>
+    <None Include="Base\Math\MathUtils.inl">
+      <Filter>Base\Math</Filter>
+    </None>
+    <None Include="Base\Math\Matrix33.inl">
+      <Filter>Base\Math</Filter>
+    </None>
+    <None Include="Base\Math\Matrix34.inl">
+      <Filter>Base\Math</Filter>
+    </None>
+    <None Include="Base\Math\Matrix44.inl">
+      <Filter>Base\Math</Filter>
+    </None>
+    <None Include="Base\Math\Vector2.inl">
+      <Filter>Base\Math</Filter>
+    </None>
+    <None Include="Base\Math\Vector3.inl">
+      <Filter>Base\Math</Filter>
+    </None>
+    <None Include="Base\Math\Vector4.inl">
+      <Filter>Base\Math</Filter>
+    </None>
+  </ItemGroup>
+</Project>
