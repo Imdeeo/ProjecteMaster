@@ -31,8 +31,8 @@ class 'CEnemy'
 		self.m_time_sin_mirar = 1.5
 		self.m_timer_to_stop = 0
 		
-		local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent"..self.m_Type)
-				
+		--[[local l_Component = self.m_RenderableObject:get_component_manager():get_resource("ScriptedComponent"..self.m_Type)
+			
 		if l_Component==nil then
 			l_Component=create_scripted_component("ScriptedComponent"..self.m_Type, self.m_RenderableObject, "FnOnCreate"..self.m_Type,"FnOnDestroy"..self.m_Type, "FnOnUpdate"..self.m_Type, "FnOnRender"..self.m_Type, "FnOnDebugRender"..self.m_Type)
 			self.m_RenderableObject:get_component_manager():add_resource("ScriptedComponent"..self.m_Type, l_Component)
@@ -50,6 +50,6 @@ class 'CEnemy'
 		elseif self.m_Type == "Whisperer" then
 			setWhispererEnemyStateMachine()
 			WhispererEnemyStateMachine:start()
-		end
+		end ]]--
 	end
 --end

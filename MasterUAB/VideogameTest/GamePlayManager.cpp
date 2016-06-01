@@ -1,4 +1,6 @@
 #include "GamePlayManager.h"
+#include "Components\LUAComponent.h"
+#include "Utils.h"
 
 CGamePlayManager::CGamePlayManager()
 {
@@ -11,3 +13,23 @@ CGamePlayManager::~CGamePlayManager()
 }
 
 
+void CGamePlayManager::Update(float ElapsedTime)
+{
+	for (size_t i = 0; i<m_Resources.size(); ++i)
+	{
+		m_Resources[i]->Update(ElapsedTime);
+	}
+}
+
+void CGamePlayManager::Destroy()
+{
+	for (int i = 0; i < m_Resources.size(); ++i)
+	{
+		CHECKED_DELETE(m_Resources[i]);
+	}
+}
+
+void CGamePlayManager::AddComponent(CLUAComponent* _LUAComponent)
+{
+	m_Resources.push_back(_LUAComponent);
+}

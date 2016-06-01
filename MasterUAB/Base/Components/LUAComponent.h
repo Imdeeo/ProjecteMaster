@@ -8,15 +8,15 @@
 class CRenderableObject;
 class CRenderManager;
 
-class CLUAComponent : public CScriptedComponent
+class CLUAComponent 
 {
 	private:
+		std::string m_Name;
+		CRenderableObject* m_Owner;
 	public:
-		CLUAComponent(const std::string &Name, CRenderableObject *Owner, const	std::string &FnOnCreate, const std::string &FnOnDestroy, const std::string &FnOnUpdate,
-			const std::string &FnOnRender, const std::string &FnOnRenderDebug);
+		CLUAComponent(const std::string &Name, CRenderableObject *Owner);
 		virtual ~CLUAComponent() {}
-		static CLUAComponent * CreateLUAComponent(const std::string &Name, CRenderableObject *Owner, const std::string &FnOnCreate, const std::string &FnOnDestroy,
-		const std::string &FnOnUpdate, const std::string &FnOnRender, const std::string &FnOnRenderDebug);
+		virtual void Update(float _ElapsedTime);
 };
 
 #endif //H_LUA_COMPONENT_H
