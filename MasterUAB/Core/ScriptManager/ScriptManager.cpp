@@ -1130,6 +1130,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_use_debug_camera", &CRenderManager::SetUseDebugCamera)
 			//.def("add_renderable_object_to_render_list", &CRenderManager::AddRenderableObjectToRenderList)
 			.def("render", &CRenderManager::Render)
+			.def("get_frame_rate_address", &CRenderManager::GetFrameRateAddress)
 	];
 
 	// StaticMesh-------------------------------------------------------------------------------------
