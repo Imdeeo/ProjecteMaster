@@ -251,6 +251,10 @@ IDXGISwapChain*	CRenderManager::GetSwapChain()
 	return m_ContextManager->GetSwapChain();
 }
 
+float CRenderManager::GetFrameRate() {
+	return m_FrameRate;
+}
+
 CEmptyPointerClass *CRenderManager::GetFrameRateAddress() {
 	return (CEmptyPointerClass *) &m_FrameRate;
 }
