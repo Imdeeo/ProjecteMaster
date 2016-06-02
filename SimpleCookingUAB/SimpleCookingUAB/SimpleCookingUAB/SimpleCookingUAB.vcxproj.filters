@@ -10,6 +10,9 @@
     <Filter Include="Base\Math">
       <UniqueIdentifier>{36e1c0a1-7504-4806-9bb7-e810d49676af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PhysxManager">
+      <UniqueIdentifier>{b8fc6516-c288-46fa-b2a4-774001add336}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StaticMesh\StaticMesh.cpp">
@@ -36,6 +39,7 @@
     <ClCompile Include="Base\3DElement\3DElement.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StaticMesh\StaticMesh.h">
@@ -103,6 +107,18 @@
     </ClInclude>
     <ClInclude Include="Base\3DElement\3DElement.h">
       <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMesh\RenderableVertexs.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMesh\TemplatedRenderableIndexedVertexs.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMesh\TemplatedRenderableVertexs.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMesh\VertexTypes.h">
+      <Filter>MeshLoader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

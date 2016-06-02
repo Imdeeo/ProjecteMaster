@@ -1,11 +1,11 @@
 #ifndef QUATN_H
 #define QUATN_H
 
-#include "Math\MathTypes.h"
-#include "Math\MathUtils.h"
-#include "Math\Matrix33.h"
-#include "Math\Matrix34.h"
-#include "Math\Matrix44.h"
+#include "Base\Math\MathTypes.h"
+#include "Base\Math\MathUtils.h"
+#include "Base\Math\Matrix33.h"
+#include "Base\Math\Matrix34.h"
+#include "Base\Math\Matrix44.h"
 #include <assert.h>
 
 template<typename T>

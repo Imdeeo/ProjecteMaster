@@ -264,3 +264,8 @@ bool CStaticMesh::Load(const std::string &FileName)
 		}
 	}
 }
+
+bool CStaticMesh::Destroy()
+{
+	return true;
+}

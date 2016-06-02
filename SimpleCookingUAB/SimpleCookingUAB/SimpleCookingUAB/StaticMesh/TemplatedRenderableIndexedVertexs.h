@@ -2,11 +2,7 @@
 #define TEMPLATED_RENDERABLE_INDEXED_VERTEX_H
 
 #include <d3d11.h>
-#include "Engine\UABEngine.h"
-#include "RenderableObjects\RenderableVertexs.h"
-#include "ContextManager\ContextManager.h"
-#include "Effects\EffectTechnique.h"
-#include "Effects\EffectShader.h"
+#include "RenderableVertexs.h"
 
 template<class T>
 class CTemplatedRenderableIndexedVertexs : public CRenderableVertexs
@@ -58,94 +54,12 @@ public:
 			m_Indexs = (void*)index_aux;
 		}
 
-		D3D11_BUFFER_DESC l_VertexBufferDesc;
-		ZeroMemory(&l_VertexBufferDesc, sizeof(l_VertexBufferDesc));
-		l_VertexBufferDesc.Usage=D3D11_USAGE_DEFAULT;
-		l_VertexBufferDesc.ByteWidth=sizeof(T)*m_VertexsCount;
-		l_VertexBufferDesc.BindFlags=D3D11_BIND_VERTEX_BUFFER;
-		l_VertexBufferDesc.CPUAccessFlags=0;
-		D3D11_SUBRESOURCE_DATA InitData;
-		ZeroMemory(&InitData, sizeof(InitData));
-		InitData.pSysMem=Vtxs;
-		ID3D11Device *l_Device=UABEngine.GetRenderManager()->GetDevice();
-		HRESULT hr=l_Device->CreateBuffer(&l_VertexBufferDesc, &InitData,&m_VertexBuffer);
-		if(FAILED(hr))
-			return;
-		D3D11_BUFFER_DESC l_IndexBuffer;
-		ZeroMemory(&l_IndexBuffer, sizeof(l_IndexBuffer));
-		l_IndexBuffer.Usage=D3D11_USAGE_DEFAULT;
-		l_IndexBuffer.ByteWidth=(m_IndexType==DXGI_FORMAT_R16_UINT ? sizeof(WORD) : sizeof(unsigned int))*m_IndexsCount;
-		l_IndexBuffer.BindFlags=D3D11_BIND_INDEX_BUFFER;
-		l_IndexBuffer.CPUAccessFlags=0;
-		InitData.pSysMem=Indices;
-		hr=l_Device->CreateBuffer(&l_IndexBuffer, &InitData, &m_IndexBuffer);
-		if(FAILED(hr))
-			return;
 	}
 	virtual ~CTemplatedRenderableIndexedVertexs()
 	{
 		CHECKED_RELEASE(m_VertexBuffer);
 		CHECKED_RELEASE(m_IndexBuffer);
 		CHECKED_DELETE(m_Indexs);
-	}
-	bool RenderIndexed(CRenderManager *RenderManager, CEffectTechnique*EffectTechnique,
-		void *_Parameters, unsigned int IndexCount=-1, unsigned int	StartIndexLocation=0,
-		unsigned int BaseVertexLocation=0)
-	{
-		if(EffectTechnique==NULL)
-			return false;
-		CEffectVertexShader *l_EffectVertexShader=EffectTechnique->GetVertexShader();
-		CEffectPixelShader *l_EffectPixelShader=EffectTechnique->GetPixelShader();
-
-		if(l_EffectPixelShader==NULL || l_EffectVertexShader==NULL)
-			return false;
-		ID3D11DeviceContext *l_DeviceContext;
-		RenderManager->GetDevice()->GetImmediateContext(&l_DeviceContext);
-		UINT stride=sizeof(T);
-		UINT offset=0;
-		l_DeviceContext->IASetIndexBuffer(m_IndexBuffer, m_IndexType, 0);
-		l_DeviceContext->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride,	&offset);
-		l_DeviceContext->IASetPrimitiveTopology(m_PrimitiveTopology);
-		l_DeviceContext->IASetInputLayout(l_EffectVertexShader->GetVertexLayout());
-		l_DeviceContext->VSSetShader(l_EffectVertexShader->GetVertexShader(), NULL, 0);
-
-		CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
-		l_DeviceContext->RSSetState(l_ContextManager->GetRasterizerState(CContextManager::RS_SOLID_BACK_CULL));
-		//l_DeviceContext->OMSetDepthStencilState(l_ContextManager->GetDepthStencilState(CContextManager::DSS_DEPTH_ON), 0);
-		/*Vect4f v(1, 1, 1, 1);
-		l_DeviceContext->OMSetBlendState(l_ContextManager->GetBlendState(CContextManager::BLEND_CLASSIC), &v.x, 0xffffffff);*/
-
-		CEffectManager* l_EffectManagerInstance = UABEngine.GetEffectManager();
-
-		ID3D11Buffer *l_SceneConstantBufferVS = l_EffectVertexShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
-		ID3D11Buffer *l_LightConstantBufferVS = l_EffectVertexShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
-		ID3D11Buffer *l_AnimationConstantBufferVS = l_EffectVertexShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
-		ID3D11Buffer *l_MaterialParametersConstantBufferVS = l_EffectVertexShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
-
-		l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferVS, 0, NULL, _Parameters, 0, 0);
-
-		ID3D11Buffer* VSBuffers[4] = { l_SceneConstantBufferVS, l_LightConstantBufferVS, l_AnimationConstantBufferVS, l_MaterialParametersConstantBufferVS };
-		l_DeviceContext->VSSetConstantBuffers(0, 4,VSBuffers);
-
-		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
-
-		l_DeviceContext->GSSetShader(NULL, NULL, 0);
-
-		ID3D11Buffer *l_SceneConstantBufferPS = l_EffectVertexShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
-		ID3D11Buffer *l_LightConstantBufferPS = l_EffectVertexShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
-		ID3D11Buffer *l_AnimationConstantBufferPS = l_EffectVertexShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
-		ID3D11Buffer *l_MaterialParametersConstantBufferPS = l_EffectVertexShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
-
-		l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferPS, 0, NULL,_Parameters, 0, 0);
-
-		ID3D11Buffer* PSBuffers[4] = {l_SceneConstantBufferPS,l_LightConstantBufferPS,l_AnimationConstantBufferPS,l_MaterialParametersConstantBufferPS};
-		l_DeviceContext->PSSetConstantBuffers(0, 4, PSBuffers);
-		/*l_DeviceContext->PSSetConstantBuffers(0, 1, &l_SceneConstantBufferPS);
-		l_DeviceContext->PSSetConstantBuffers(1, 1, &l_LightConstantBufferPS);
-		l_DeviceContext->PSSetConstantBuffers(2, 1, &l_AnimationConstantBufferPS);*/
-
-		l_DeviceContext->DrawIndexed(IndexCount==-1 ? m_IndexsCount :IndexCount, StartIndexLocation, BaseVertexLocation);
-		return true;
 	}
 
 	const Vect3f* GetVertexs()const { return &m_Vtxs[0]; }

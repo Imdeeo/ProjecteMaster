@@ -1,8 +1,8 @@
-#include "Math/Matrix33.h"
-#include "Math/Matrix34.h"
-#include "Math/Matrix44.h"
+#include "Base/Math/Matrix33.h"
+#include "Base/Math/Matrix34.h"
+#include "Base/Math/Matrix44.h"
 
-#include "Math/Quatn.h"
+#include "Base/Math/Quatn.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
