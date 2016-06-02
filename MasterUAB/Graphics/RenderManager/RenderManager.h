@@ -77,6 +77,7 @@ public:
 	ID3D11DeviceContext* GetDeviceContext();
 	IDXGISwapChain*	GetSwapChain();
 
+	float GetFrameRate();
 	CEmptyPointerClass *GetFrameRateAddress();
 
 
