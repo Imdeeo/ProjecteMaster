@@ -9,6 +9,6 @@ end
 function FogAttackEnd(args)
 end
 
-function FogAttackToTeleportCondition()
+function FogAttackToTeleportCondition(args)
 	return true
 end

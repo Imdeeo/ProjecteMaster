@@ -1,8 +1,13 @@
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateMachine.lua")
-
+mec = true
 function FnOnCreateAutomaton (_owner)
 	local l_Enemy = m_CharacterManager.m_Enemics[1]
-	l_Enemy.m_PhysXManager:create_character_controller(l_Enemy.m_Name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", "Enemy")
+	if mec then
+		l_Enemy.m_PhysXManager:create_character_controller(l_Enemy.m_Name, 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", "Enemy"..l_Enemy.m_Name)
+		mec = false
+	else 
+		l_Enemy.m_PhysXManager:create_character_controller("pene", 1.2, 0.3, 0.5, _owner:get_position(),"controllerMaterial", "Enemypene")
+	end
 end
 
 function FnOnDestroyAutomaton ()
