@@ -5,7 +5,7 @@ end
 
 function FogChaseUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
-	local l_Enemy = m_CharacterManager.m_Enemics[1]
+	local l_Enemy = args["self"]
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	local l_EnemyPos = l_Owner:get_position()
 	local l_Direction = (l_PlayerPos - l_EnemyPos):get_normalized(1)
@@ -30,8 +30,8 @@ end
 function FogChaseEnd(args)
 end
 
-function FogChaseToTeleportCondition()
-	local l_Enemy = m_CharacterManager.m_Enemics[1]
+function FogChaseToTeleportCondition(args)
+	local l_Enemy = args["self"]
 	local l_EnemyPos = l_Enemy.m_RenderableObject:get_position()
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	local l_PlayerForward = g_Player.m_RenderableObject:get_rotation():get_forward_vector():get_normalized(1)
@@ -44,8 +44,8 @@ function FogChaseToTeleportCondition()
 	end
 end
 
-function FogChaseToAttackCondition()
-	local l_Enemy = m_CharacterManager.m_Enemics[1]
+function FogChaseToAttackCondition(args)
+	local l_Enemy = args["self"]
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	local l_Distance = l_PlayerPos:distance(l_Enemy.m_RenderableObject:get_position())
 	if l_Distance < l_Enemy.m_distance_to_kill then
@@ -55,7 +55,8 @@ function FogChaseToAttackCondition()
 	end
 end
 
-function FogChaseToOffCondition()
-	return m_CharacterManager.m_Enemics[1].m_off == true
+function FogChaseToOffCondition(args)
+	local l_Enemy = args["self"]
+	return l_Enemy.m_off == true
 end
 

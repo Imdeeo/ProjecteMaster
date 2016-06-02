@@ -1,19 +1,21 @@
 function InteractingFirst(args)
-	g_Player.m_CameraController:lock()
+	local l_Player = args["self"]
+	l_Player.m_CameraController:lock()
 end
 
 function InteractingUpdate(args, _ElapsedTime)
+	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	
 	--// Force the player face the target
-	if not (g_Player.m_Target == nil) then
+	if not (l_Player.m_Target == nil) then
 		ForcePlayerFaceTarget(_ElapsedTime)
 	end
 	
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
 	l_RotationY = Quatf()
-	l_Rotation = g_Player.m_CameraController:get_rotation()
+	l_Rotation = l_Player.m_CameraController:get_rotation()
 	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
 	l_Owner:set_rotation(l_RotationY)
 		
@@ -27,6 +29,7 @@ function InteractingUpdate(args, _ElapsedTime)
 end
 
 function InteractingEnd(args)
-	g_Player.m_Target = nil
-	g_Player.m_CameraController:unlock()
+	local l_Player = args["self"]
+	l_Player.m_Target = nil
+	l_Player.m_CameraController:unlock()
 end
