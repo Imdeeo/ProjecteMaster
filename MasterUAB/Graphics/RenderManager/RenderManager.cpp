@@ -77,7 +77,7 @@ const CCamera *CRenderManager::GetCurrentCamera()
 		return &m_CurrentCamera;
 }
 
-const CFrustum* CRenderManager::GetFrustum()
+CFrustum* CRenderManager::GetFrustum()
 {
 	return &m_CullFrustum;
 }

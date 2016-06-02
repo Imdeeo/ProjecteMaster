@@ -5,12 +5,13 @@
 
 class CXMLTreeNode;
 class CStaticMesh;
+class CFrustum;
 
 class CInstanceMesh : public CRenderableObject
 {
 private:
 	CStaticMesh *m_StaticMesh;
-	const CFrustum *m_Frustum;
+	CFrustum *m_Frustum;
 	bool m_GeneratePhysx;
 	std::string m_PxType;
 	std::string m_PxMaterial;

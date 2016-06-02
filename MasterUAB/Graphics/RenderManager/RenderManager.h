@@ -38,7 +38,7 @@ public:
 
 	void SetCurrentCamera(const CCamera& _CurrentCamera);
 	const CCamera *GetCurrentCamera();
-	const CFrustum* GetFrustum();
+	CFrustum* GetFrustum();
 	void SetDebugCamera(const CCamera& _DebugCamera) { m_DebugCamera = _DebugCamera; }
 
 	void SetUseDebugCamera(bool _use) { m_UseDebugCamera = _use; }
