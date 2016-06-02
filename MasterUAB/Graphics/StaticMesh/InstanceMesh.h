@@ -16,6 +16,7 @@ private:
 	std::string m_PxType;
 	std::string m_PxMaterial;
 	std::string m_PxGroup;
+	std::string m_Layer;
 	float m_PxOffset;
 	Vect3f m_PxNormals;
 public:

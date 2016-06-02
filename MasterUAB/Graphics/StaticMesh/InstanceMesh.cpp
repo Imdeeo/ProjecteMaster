@@ -20,13 +20,11 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 {
 	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(TreeNode.GetPszProperty("core_name"));
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
+	m_Layer = TreeNode.GetPszProperty("layer");
 	m_GeneratePhysx = TreeNode.GetBoolProperty("create_physics");
 	if (m_GeneratePhysx)
 	{
 		std::string l_Name = GetName();
-		//std::string l_PxType = TreeNode.GetPszProperty("physics_type");
-		//std::string l_PxMaterial = TreeNode.GetPszProperty("physics_material");
-		//std::string l_PxGroup = TreeNode.GetPszProperty("physics_group");
 		m_PxType = TreeNode.GetPszProperty("physics_type");
 		m_PxMaterial = TreeNode.GetPszProperty("physics_material");
 		m_PxGroup = TreeNode.GetPszProperty("physics_group");
@@ -167,5 +165,8 @@ void CInstanceMesh::Save(FILE* _File, std::string _layer)
 
 bool CInstanceMesh::GetInsideFrustum()
 {
-	return m_Frustum->SphereVisible(m_Position, m_StaticMesh->GetBoundingSphereRadius());
+	if (m_Layer == "skybox")
+		return true;
+	Vect3f l_TransformedPosition = m_TransformMatrix * m_Position;
+	return m_Frustum->SphereVisible(l_TransformedPosition, m_StaticMesh->GetBoundingSphereRadius());
 }
