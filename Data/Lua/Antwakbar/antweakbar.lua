@@ -19,7 +19,7 @@ function RegisterMainBar()
 	DebugHelper:add_lua_button("Cameras","RegisterCamerasBar()","");
 	DebugHelper:add_lua_button("Lights","RegisterLightsBar()","");
 	DebugHelper:add_lua_button("Particles","RegisterParticlesBar()","");
-	DebugHelper:add_variable("Frame rate", CDebugHelper.float, CDebugHelper.read, UABEngine:get_render_manager():get_frame_rate_address(), "")
+	--DebugHelper:add_variable("Frame rate", CDebugHelper.float, CDebugHelper.read, UABEngine:get_render_manager():get_frame_rate_address(), "")
 
 	DebugHelper:register_bar()
 	
