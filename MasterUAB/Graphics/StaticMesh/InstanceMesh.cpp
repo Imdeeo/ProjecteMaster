@@ -80,15 +80,15 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		{
 			if (l_BB.x <= 0)
 			{
-				l_BB.x = 0.001;
+				l_BB.x = 0.001f;
 			}
 			if (l_BB.y <= 0)
 			{
-				l_BB.y = 0.001;
+				l_BB.y = 0.001f;
 			}
 			if (l_BB.z <= 0)
 			{
-				l_BB.z = 0.001;
+				l_BB.z = 0.001f;
 			}
 			l_PhysXManager->CreateStaticBox(GetName(), l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
@@ -99,6 +99,7 @@ CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreNam
 {
 	SetName(Name);
 	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(CoreName);
+	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 }
 
 
@@ -166,5 +167,5 @@ void CInstanceMesh::Save(FILE* _File, std::string _layer)
 
 bool CInstanceMesh::GetInsideFrustum()
 {
-	return m_Frustum->SphereVisible(m_Position, m_StaticMesh->GetBoundingSphereRadius);
+	return m_Frustum->SphereVisible(m_Position, m_StaticMesh->GetBoundingSphereRadius());
 }
