@@ -1,5 +1,5 @@
 #include "Active.h"
-#include "XML\XMLTreeNode.h"
+#include "Base\XML\XMLTreeNode.h"
 #include "CEmptyPointerClass.h"
 
 CActive::CActive(const CXMLTreeNode &TreeNode)

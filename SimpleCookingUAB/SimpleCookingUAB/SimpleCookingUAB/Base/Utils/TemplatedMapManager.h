@@ -4,12 +4,7 @@
 #include <stdio.h>
 #include <string>
 #include <map>
-#include "Utils.h"
-
-#include <luabind/luabind.hpp>
-#include <luabind/function.hpp>
-#include <luabind/class.hpp>
-#include <luabind/operator.hpp>
+#include "Base\Utils.h"
 
 template<class T>
 class CTemplatedMapManager
@@ -121,17 +116,6 @@ public:
 		return true;
 	}
 
-	luabind::object GetElementsArray(lua_State *L)
-	{
-		luabind::object l_ElementsVector = luabind::newtable(L);
-		typedef TMapResource::iterator it_type;
-		size_t i = 0;
-		for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
-		{
-			l_ElementsVector[i++] = iterator->second;
-		}
-		return l_ElementsVector;
-	}
 	virtual CTemplatedMapManager<T>& CTemplatedMapManager<T>::operator=(CTemplatedMapManager<T>& _TemplatedMapManager)
 	{
 		TMapResource::iterator l_iterator = m_Resources.begin();

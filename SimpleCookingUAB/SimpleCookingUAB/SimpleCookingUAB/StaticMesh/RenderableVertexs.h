@@ -9,25 +9,6 @@ class CRenderManager;
 class CRenderableVertexs
 {
 public:
-	virtual bool Render(CRenderManager *RenderManager, CEffectTechnique	*EffectTechnique, void *Parameters, int vertexsToRender = -1)
-	{
-		assert(!"This method mustn't be called");
-		return false;
-	}
-	virtual bool RenderIndexed(CRenderManager *RenderManager, CEffectTechnique *EffectTechnique,
-			void *Parameters, unsigned int IndexCount=-1, unsigned int StartIndexLocation=0,
-			unsigned int BaseVertexLocation=0)
-	{
-		assert(!"This method mustn't be called");
-		return false;
-	}
-
-	virtual bool UpdateVertexs(void *Vtxs, unsigned int VtxsCount)
-	{
-		assert(!"This method mustn't be called");
-		return false;
-	}
-
 	virtual const Vect3f* GetVertexs()const
 	{
 		assert(!"This method mustn't be called");

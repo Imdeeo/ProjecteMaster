@@ -1,9 +1,9 @@
 #ifndef C3D_ELEMENT_H
 #define C3D_ELEMENT_H
 
-#include "Math\Matrix44.h"
-#include "Math\Quatn.h"
-#include "no_sillywarnings_please.h"
+#include "Base\Math\Matrix44.h"
+#include "Base\Math\Quatn.h"
+#include "Base\no_sillywarnings_please.h"
 #include <d3d11.h>
 
 class CXMLTreeNode;

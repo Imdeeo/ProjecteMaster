@@ -10,11 +10,11 @@
 #define XMLTREENODE_H
 
 // Includes
-#include "libxml/parser.h"
-#include "libxml/xmlwriter.h"
+#include "3rdParty\libxml2-2.7.2.win32\include\libxml\parser.h"
+#include "3rdParty\libxml2-2.7.2.win32\include\libxml\xmlwriter.h"
 #include <string>
-#include "Math/Vector4.h"
-#include "Math/Quatn.h"
+#include "Base/Math/Vector4.h"
+#include "Base/Math/Quatn.h"
 
 //Class
 class CXMLTreeNode

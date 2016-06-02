@@ -1,5 +1,5 @@
 #include "StaticMeshManager.h"
-#include "XML\XMLTreeNode.h"
+#include "Base\XML\XMLTreeNode.h"
 
 CStaticMeshManager::CStaticMeshManager(void)
 {
@@ -45,14 +45,4 @@ bool CStaticMeshManager::Load(const std::string &FileName)
 		return false;
 	}
 	return true;
-}
-
-bool CStaticMeshManager::Reload()
-{
-	typedef TMapResource::iterator it_type;
-	for(it_type iterator = m_Resources.begin();iterator != m_Resources.end();iterator++)
-	{
-		iterator->second->Reload();
-	}
-	return false;
 }

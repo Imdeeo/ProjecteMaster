@@ -1,5 +1,5 @@
-#include "Utils\Named.h"
-#include "XML\XMLTreeNode.h"
+#include "Base\Utils\Named.h"
+#include "Base\XML\XMLTreeNode.h"
 
 #include "CEmptyPointerClass.h"
 

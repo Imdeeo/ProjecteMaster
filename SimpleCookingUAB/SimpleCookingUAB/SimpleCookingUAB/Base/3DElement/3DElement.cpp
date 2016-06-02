@@ -1,6 +1,6 @@
-#include "3DElement\3DElement.h"
-#include "XML\XMLTreeNode.h"
-#include "Utils\CEmptyPointerClass.h"
+#include "Base\3DElement\3DElement.h"
+#include "Base\XML\XMLTreeNode.h"
+#include "Base\Utils\CEmptyPointerClass.h"
 #include <assert.h>
 
 
