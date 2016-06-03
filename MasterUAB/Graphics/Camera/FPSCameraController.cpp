@@ -54,7 +54,10 @@ void CFPSCameraController::AddYaw(float Radians)
 
 void CFPSCameraController::AddPitch(float Radians)
 {
-	CCameraController::AddPitch(-Radians*m_PitchSpeed);
+	float l_Pitch = m_Rotation.EulerFromQuat().x;
+	UtilsLog(std::to_string(l_Pitch));
+	if (((l_Pitch < 1.39626f || l_Pitch > 1.74533f) && Radians < .0f) || ((l_Pitch > -0.785398f || l_Pitch < -2.356194f) && Radians > .0f))
+		CCameraController::AddPitch(-Radians*m_PitchSpeed);
 }
 
 void CFPSCameraController::SetCamera(CCamera *Camera) const
@@ -73,7 +76,7 @@ void CFPSCameraController::Update(float ElapsedTime)
 	m_Position = m_Target->GetPosition() + m_Offset;
 	if (m_Locked)
 		return;
-	AddYaw(CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime);
 	AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime);
+	AddYaw(CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime);
 	//Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, ElapsedTime);
 }
