@@ -1010,14 +1010,10 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_color_lua_address", &CLight::GetColorLuaAdress)
 			.def("set_color", &CLight::SetColor)
 			.def("get_intensity", &CLight::GetIntensity)
-			.def("get_enable_lua_address", &CLight::GetEnableLuaAdress)
-			.def("get_intensity_lua_address", &CLight::GetIntensityLuaAdress)
 			.def("set_intensity", &CLight::SetIntensity)
 			.def("get_start_range_attenuation", &CLight::GetStartRangeAttenuation)
-			.def("get_start_range_attenuation_lua_address", &CLight::GetStartRangeAttenuationLuaAdress)
 			.def("set_start_range_attenuation", &CLight::SetStartRangeAttenuation)
 			.def("get_end_range_attenuation", &CLight::GetEndRangeAttenuation)
-			.def("get_end_range_attenuation_lua_address", &CLight::GetEndRangeAttenuattionLuaAdress)
 			.def("set_end_range_attenuation", &CLight::SetEndRangeAttenuation)
 			.def("get_enabled", &CLight::GetEnabled)
 			.def("set_enabled", &CLight::SetEnabled)
@@ -1026,6 +1022,11 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render", &CLight::Render)
 			.def("get_light_type_by_name", &CLight::GetLightTypeByName)
 			.def("get_generate_shadowmap_lua_address", &CLight::GetGenerateShadowMapLuaAdress)
+			.def("get_enable_lua_address", &CLight::GetEnableLuaAdress)
+			.def("get_intensity_lua_address", &CLight::GetIntensityLuaAdress)
+			.def("get_position_lua_address", &CLight::GetPositionLuaAddress)
+			.def("get_start_range_attenuation_lua_address", &CLight::GetStartRangeAttenuationLuaAdress)
+			.def("get_end_range_attenuation_lua_address", &CLight::GetEndRangeAttenuattionLuaAdress)
 	];
 
 	RegisterTemplatedVectorMapManager<CLight>(m_LS);
@@ -1045,6 +1046,7 @@ void CScriptManager::RegisterLUAFunctions()
 #endif
 			.def("reload", &CLightManager::Reload)
 			.def("get_ambient_light", &CLightManager::GetAmbientLight)
+			.def("save", &CLightManager::Save)
 	];
 
 	module(m_LS)[

@@ -41,6 +41,7 @@ public:
 	void GetRenderLights(bool _RenderLights){ m_RenderLights = _RenderLights; }
 	bool IsRenderLights(){ return m_RenderLights; }
 	bool SwitchRenderLights(){ m_RenderLights = !m_RenderLights; return m_RenderLights; }
+	void Save();
 };
 
 #endif //LIGHT_MANAGER_H

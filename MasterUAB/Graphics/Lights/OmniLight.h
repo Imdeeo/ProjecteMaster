@@ -9,6 +9,7 @@ public:
 	COmniLight();
 	COmniLight(CXMLTreeNode &TreeNode);
 	void SetShadowMap(CRenderManager &RenderManager);
+	void Save(FILE* _File);
 };
 
 #endif //OMNI_LIGHT_H
