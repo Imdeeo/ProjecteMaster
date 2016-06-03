@@ -64,6 +64,11 @@ public:
 	bool  GetEnabled()const { return m_Enabled; }
 	TLightType GetType()const { return m_Type; }
 
+	CEmptyPointerClass* GetPositionLuaAddress(int index = 0)
+	{
+		return (CEmptyPointerClass*)&m_Position[index];
+	}
+
 	CEmptyPointerClass* GetEnableLuaAdress()
 	{
 		return (CEmptyPointerClass*)&m_Enabled;
@@ -119,6 +124,7 @@ public:
 	const Mat44f & GetProjectionShadowMap()const{ return m_ProjectionShadowMap; }
 	std::vector<CRenderableObjectsManager *> & GetLayers() {return m_Layers;}
 	virtual void SetShadowMap(CRenderManager &RenderManager) = 0;
+	virtual void Save(FILE* _File) = 0;
 };
 
 #endif //LIGHT_H
