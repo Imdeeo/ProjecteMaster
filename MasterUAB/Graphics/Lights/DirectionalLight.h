@@ -28,6 +28,7 @@ public:
 #endif
 
 	void SetShadowMap(CRenderManager &RenderManager);
+	void Save(FILE* _File);
 };
 
 #endif //DIRECTIONAL_LIGHT_H

@@ -3,6 +3,8 @@
 
 #include "Texture.h"
 
+#include <string>
+
 class ID3D11RenderTargetView;
 class ID3D11DepthStencilView;
 class ID3D11Texture2D;	  
@@ -25,8 +27,7 @@ protected:
 	bool m_CreateDepthStencilBuffer;
 	void Unload();
 	void Init();
-	virtual bool CreateSamplerState();
-	void SetFormat(const std::string &Format);
+	virtual bool CreateSamplerState();	
 public:
 	CDynamicTexture(const std::string &Name, int Width, int Height, bool CreateDepthStencilBuffer, const std::string &Format);
 	CDynamicTexture(const CXMLTreeNode &TreeNode);
@@ -36,6 +37,8 @@ public:
 	ID3D11DepthStencilView* GetDepthStencilView();
 	int GetWidth (){return m_Width;}
 	int GetHeight(){return m_Height;}
+	void SetFormat(const std::string &Format);
+	std::string GetFormat();
 };
 
 #endif

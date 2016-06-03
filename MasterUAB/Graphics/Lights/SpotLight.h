@@ -39,6 +39,7 @@ public:
 	virtual const Mat44f & GetTransform();
 
 	void SetShadowMap(CRenderManager &RenderManager);
+	void Save(FILE* _File);
 };
 
 #endif //SPOT_LIGHT_H
