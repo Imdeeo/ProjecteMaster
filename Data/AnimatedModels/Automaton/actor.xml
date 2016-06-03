@@ -27,4 +27,5 @@
 		<parameter type="float" name="cutout_factor" value="1.0"/>
 	</material>
 	<animation name="patrol" filename="AutomatonPatrol.CAF" />
+	<animation name="chase" filename="AutomatonChase.CAF" />
 </actor>

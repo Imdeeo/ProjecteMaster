@@ -5,9 +5,10 @@
 #include "ContextManager\ContextManager.h"
 #include "Effects\EffectManager.h"
 #include "DebugRender.h"
+#include "RenderableObjects\RenderableObjectsManager.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
-
+#include "StaticMesh\InstanceMesh.h"
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "Camera\CameraControllerManager.h"
@@ -85,5 +86,29 @@ void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 	m_viewport.TopLeftY = 0.0f;
 	RenderManager.GetDeviceContext()->RSSetViewports(1, &m_viewport);
 	RenderManager.SetRenderTargets(1, l_RenderTargetViews, m_ShadowMap->GetDepthStencilView());
+}
+
+void CDirectionalLight::Save(FILE* _File)
+{
+	if (m_GenerateShadowMap)
+	{
+		fprintf_s(_File, "\t<light name=\"%s\" enabled=\"%s\" type=\"directional\" pos=\"%f %f %f\" dir=\"%f %f %f\" color=\"%f %f %f %f\" att_start_range=\"%f\" att_end_range=\"%f\" intensity=\"%f\" "
+			"ortho_size=\"%f %f\" generate_shadow_map=\"true\" shadow_map_width=\"%i\" shadow_map_height=\"%i\" shadow_map_format=\"%s\" shadow_texture_mask=\"%s\">\n",
+			m_Name.c_str(), m_Enabled ? "true" : "false", m_Position.x, m_Position.y, m_Position.z, m_Direction.x, m_Direction.y, m_Direction.z, m_Color.GetRed(), m_Color.GetGreen(), m_Color.GetBlue(), m_Color.GetAlpha(),
+			m_StartRangeAttenuation, m_EndRangeAttenuation, m_Intensity, m_OrthoShadowMapSize.x, m_OrthoShadowMapSize.y, m_ShadowMap->GetWidth(), m_ShadowMap->GetHeight(), m_ShadowMap->GetFormat().c_str(), 
+			m_ShadowMaskTexture != NULL ? m_ShadowMaskTexture->GetName().c_str() : "");
+	}
+	else
+	{
+		fprintf_s(_File, "\t<light name=\"%s\" enabled=\"%s\" type=\"directional\" pos=\"%f %f %f\" dir=\"%f %f %f\" color=\"%f %f %f %f\" att_start_range=\"%f\" "
+			"att_end_range=\"%f\" intensity=\"%f\" ortho_size=\"%f %f\" generate_shadow_map=\"false\">\n",
+			m_Name.c_str(), m_Enabled ? "true" : "false", m_Position.x, m_Position.y, m_Position.z, m_Direction.x, m_Direction.y, m_Direction.z, 
+			m_Color.GetRed(), m_Color.GetGreen(), m_Color.GetBlue(), m_Color.GetAlpha(), m_StartRangeAttenuation, m_EndRangeAttenuation, m_Intensity, 
+			m_OrthoShadowMapSize.x, m_OrthoShadowMapSize.y);		
+	}
+
+	for (size_t i = 0; i < m_Layers.size(); ++i)
+		fprintf_s(_File, "\t\t<layer layer=\"%s\"/>\n", m_Layers[i]->GetName().c_str());
+	fprintf_s(_File, "\t</light>\n");
 }
 

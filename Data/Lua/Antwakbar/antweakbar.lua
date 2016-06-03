@@ -19,8 +19,7 @@ function RegisterMainBar()
 	DebugHelper:add_lua_button("Cameras","RegisterCamerasBar()","");
 	DebugHelper:add_lua_button("Lights","RegisterLightsBar()","");
 	DebugHelper:add_lua_button("Particles","RegisterParticlesBar()","");
-	--DebugHelper:add_variable("Frame rate", CDebugHelper.float, CDebugHelper.read, UABEngine:get_render_manager():get_frame_rate_address(), "")
-
+	
 	DebugHelper:register_bar()
 	
 end
@@ -232,23 +231,17 @@ function RegisterLightsBar()
 	DebugHelper:remove_bar("MainBar")
 	DebugHelper:start_register_bar("Lights")
 	
-	utils_log("lights1")
 	local LightControllerManager = UABEngine:get_light_manager()
 	
-	utils_log("lights2")
-	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Lights\");RegisterMainBar()","");
-	utils_log("lights3")
 	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_light_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Lights\");RegisterLightsBar()","");
-	utils_log("lights4")
+	DebugHelper:add_lua_button("Save","CUABEngine.get_instance():get_light_manager():save()","");
 	
 	local Lights = LightControllerManager:get_elements_array() --get_address
 	
 	for i = 0,LightControllerManager:size()-1 do
 		DebugHelper:add_lua_button(Lights[i].name,"RegisterLightParameters(\""..Lights[i].name.."\")","");
 	end
-	
-	utils_log("lights5")
 	
 	DebugHelper:register_bar()
 	
@@ -275,6 +268,9 @@ function RegisterLightParameters(light_name)
 	DebugHelper:add_variable("Color",CDebugHelper.color,CDebugHelper.read_write,Light:get_color_lua_address(),"")
 	DebugHelper:add_variable("Start",CDebugHelper.float,CDebugHelper.read_write,Light:get_start_range_attenuation_lua_address(),"min=0.0 max=500.0 step=1.0 group=\"Range Attenuation\"")
 	DebugHelper:add_variable("End",CDebugHelper.float,CDebugHelper.read_write,Light:get_end_range_attenuation_lua_address(),"min=0.0 max=500.0 step=1.0 group=\"Range Attenuation\"")
+	DebugHelper:add_variable("Pos X:",CDebugHelper.float,CDebugHelper.read_write,Light:get_position_lua_address(0),"min=-250.0 max=250.0 step=1.0 group=\"Position\"")
+	DebugHelper:add_variable("Pos Y:",CDebugHelper.float,CDebugHelper.read_write,Light:get_position_lua_address(1),"min=-250.0 max=250.0 step=1.0 group=\"Position\"")
+	DebugHelper:add_variable("Pos Z:",CDebugHelper.float,CDebugHelper.read_write,Light:get_position_lua_address(2),"min=-250.0 max=250.0 step=1.0 group=\"Position\"")
 
 	if(Light:get_type()==1)then
 		-- DIRECTIONAL

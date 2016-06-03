@@ -74,3 +74,23 @@ bool CLightManager::Render(CRenderManager *_RenderManager){
 	return true;
 }
 #endif
+
+void CLightManager::Save()
+{
+	FILE* l_File;
+	if (!fopen_s(&l_File, m_FileName.c_str(), "w"))
+	{
+		fprintf_s(l_File, "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+		fprintf_s(l_File, "<lights ambient_light_color=\"%f %f %f %f\" fog_color=\"%f %f %f\" fog_max_attenuation=\"%f\" fog_start=\"%f\" fog_end=\"%f\" fog_enabled=\"%s\">\n",
+			m_AmbientLight.x, m_AmbientLight.y, m_AmbientLight.z, m_AmbientLight.w, m_FogColor.x, m_FogColor.y, m_FogColor.z, m_FogMaxAttenuation, m_FogStart, m_FogEnd, m_FogEnabled ? "true" : "false");
+
+		typedef TMapResources::iterator it_type;		
+		for (it_type iterator = m_ResourcesMap.begin(); iterator != m_ResourcesMap.end(); iterator++)
+		{
+			iterator->second.m_Value->Save(l_File);
+		}
+
+		fprintf_s(l_File, "</lights>\n");
+		fclose(l_File);
+	}
+}
