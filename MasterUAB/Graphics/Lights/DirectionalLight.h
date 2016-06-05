@@ -12,6 +12,7 @@ protected:
 	Vect3f m_Direction;
 public:
 	CDirectionalLight();
+	CDirectionalLight(std::string _name);
 	CDirectionalLight(CXMLTreeNode &TreeNode);
 
 	const Vect3f & GetDirection() const { return m_Direction; }

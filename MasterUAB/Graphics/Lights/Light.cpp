@@ -16,8 +16,12 @@
 #include "XML\XMLTreeNode.h"
 //#include "RenderManager\RenderManager.h"
 
-CLight::CLight() : CNamed(""), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false)
+CLight::CLight() : CNamed(""), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false), m_GenerateShadowMap(false)
 {
+}
+
+CLight::CLight(std::string _name) : CNamed(_name), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false), m_GenerateShadowMap(false)
+{	
 }
 
 CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)

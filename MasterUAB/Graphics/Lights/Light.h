@@ -53,6 +53,7 @@ protected:
 public:
 
 	CLight(CXMLTreeNode &TreeNode);
+	CLight(std::string _name);
 	CLight();
 	virtual ~CLight();
 	//UAB_BUILD_GET_SET_BY_REFERENCE(Vect3f, Position);

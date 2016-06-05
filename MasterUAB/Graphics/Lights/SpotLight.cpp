@@ -10,6 +10,13 @@
 
 CSpotLight::CSpotLight():CDirectionalLight(),m_Angle(0.0f),m_FallOff(0.0f){}
 
+CSpotLight::CSpotLight(std::string _name) : CDirectionalLight(_name), m_Angle(0.0f), m_FallOff(0.0f)
+{
+	m_Type = GetLightTypeByName("spot");
+	m_ShadowMap = new CDynamicTexture("shadowmap", 512, 512, true, "r32");
+	m_ShadowMaskTexture = nullptr;
+}
+
 CSpotLight::CSpotLight(CXMLTreeNode &TreeNode) : CDirectionalLight(TreeNode)
 {
 	m_Angle = TreeNode.GetFloatProperty("angle",1.f);

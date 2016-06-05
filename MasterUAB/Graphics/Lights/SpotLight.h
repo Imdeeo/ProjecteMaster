@@ -15,6 +15,7 @@ protected:
 	float m_FallOff;
 public:
 	CSpotLight();
+	CSpotLight(std::string _name);
 	CSpotLight(CXMLTreeNode &TreeNode);
 
 	float GetAngle()const{ return m_Angle; }
