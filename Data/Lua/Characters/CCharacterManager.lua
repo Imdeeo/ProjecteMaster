@@ -10,7 +10,6 @@ class 'CCharacterManager'
 		
 	function CCharacterManager:LoadXML(Filename)
 		--utils_log(Filename)
-		utils_log("load")
 		local l_XMLTreeNode=CXMLTreeNode()
 		local l_Loaded=l_XMLTreeNode:load_file(Filename)
 		local UABEngine = CUABEngine.get_instance()
@@ -29,7 +28,6 @@ class 'CCharacterManager'
 						utils_log("other")
 					elseif l_Type == "FogAutomaton" then
 						local l_Enemy = CFogEnemy(l_Atts)
-						utils_log("FOG")
 						UABEngine:get_game_play_manager():add_component(l_Enemy)
 						table.insert(self.m_Enemics, l_Enemy)			
 					elseif l_Type == "Turret" then
