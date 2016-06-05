@@ -19,6 +19,12 @@ CFPSCameraController::CFPSCameraController(const CXMLTreeNode & _TreeNode) :CCam
 {
 	m_Rotation.SetFromAngleAxis(m_Offset, 0);
 	m_Position = m_Target->GetPosition() + m_Offset;
+	Quatf l_RotationXZ;
+	Quatf l_RotationY;
+	Quatf l_InitialRotation;
+	l_InitialRotation = m_Target->GetRotation();
+	l_InitialRotation.decoupleY(&l_RotationXZ, &l_RotationY);
+	m_Rotation = l_RotationY;
 }
 
 CFPSCameraController::~CFPSCameraController()
