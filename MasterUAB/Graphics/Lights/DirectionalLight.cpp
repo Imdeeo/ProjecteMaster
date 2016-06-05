@@ -19,6 +19,13 @@ CDirectionalLight::CDirectionalLight() : CLight(), m_Direction(Vect3f(0.0f, 0.0f
 {
 }
 
+CDirectionalLight::CDirectionalLight(std::string _name) : CLight(_name), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
+{
+	m_Type = GetLightTypeByName("directional");
+	m_ShadowMap = new CDynamicTexture("shadowmap", 512, 512, true, "r32");
+	m_ShadowMaskTexture = nullptr;
+}
+
 CDirectionalLight::CDirectionalLight(CXMLTreeNode &TreeNode) : CLight(TreeNode)
 {
 	m_Direction = TreeNode.GetVect3fProperty("dir",Vect3f(0.0,0.0,0.0));
