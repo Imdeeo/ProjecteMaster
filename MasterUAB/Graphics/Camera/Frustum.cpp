@@ -1,80 +1,92 @@
 #include "Camera\Frustum.h"
 
+#include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "ContextManager\ContextManager.h"
+#include "DebugRender.h"
+
+#include "Layers\LayerManager.h"
+#include "Effects\EffectManager.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
+#include "RenderableObjects\RenderableVertexs.h"
+
 void CFrustum::Update(const Mat44f &ViewProjection)
 {
-	////right plane
-	//m_Frustum[0][0] = ViewProjection.m30 + ViewProjection.m00;
-	//m_Frustum[0][1] = ViewProjection.m31 + ViewProjection.m01;
-	//m_Frustum[0][2] = ViewProjection.m32 + ViewProjection.m02;
-	//m_Frustum[0][3] = ViewProjection.m33 + ViewProjection.m03;
+	/*
+	//Right plane
+	m_Frustum[0][0] = ViewProjection.m30 + ViewProjection.m00;
+	m_Frustum[0][1] = ViewProjection.m31 + ViewProjection.m01;
+	m_Frustum[0][2] = ViewProjection.m32 + ViewProjection.m02;
+	m_Frustum[0][3] = ViewProjection.m33 + ViewProjection.m03;
 
-	//float t = 1.0f / sqrtf((m_Frustum[0][0] * m_Frustum[0][0]) + (m_Frustum[0][1] * m_Frustum[0][1]) + (m_Frustum[0][2] * m_Frustum[0][2]));
-	//m_Frustum[0][0] *= t;
-	//m_Frustum[0][1] *= t;
-	//m_Frustum[0][2] *= t;
-	//m_Frustum[0][3] *= t;
+	float t = 1.0f / sqrtf((m_Frustum[0][0] * m_Frustum[0][0]) + (m_Frustum[0][1] * m_Frustum[0][1]) + (m_Frustum[0][2] * m_Frustum[0][2]));
+	m_Frustum[0][0] *= t;
+	m_Frustum[0][1] *= t;
+	m_Frustum[0][2] *= t;
+	m_Frustum[0][3] *= t;
 
-	////Left plane
-	//m_Frustum[1][0] = ViewProjection.m30 - ViewProjection.m00;
-	//m_Frustum[1][1] = ViewProjection.m31 - ViewProjection.m01;
-	//m_Frustum[1][2] = ViewProjection.m32 - ViewProjection.m02;
-	//m_Frustum[1][3] = ViewProjection.m33 - ViewProjection.m03;
+	//Left plane
+	m_Frustum[1][0] = ViewProjection.m30 - ViewProjection.m00;
+	m_Frustum[1][1] = ViewProjection.m31 - ViewProjection.m01;
+	m_Frustum[1][2] = ViewProjection.m32 - ViewProjection.m02;
+	m_Frustum[1][3] = ViewProjection.m33 - ViewProjection.m03;
 
-	//t = 1.0f / sqrtf((m_Frustum[1][0] * m_Frustum[1][0]) + (m_Frustum[1][1] * m_Frustum[1][1]) + (m_Frustum[1][2] * m_Frustum[1][2]));
-	//m_Frustum[1][0] *= t;
-	//m_Frustum[1][1] *= t;
-	//m_Frustum[1][2] *= t;
-	//m_Frustum[1][3] *= t;
+	t = 1.0f / sqrtf((m_Frustum[1][0] * m_Frustum[1][0]) + (m_Frustum[1][1] * m_Frustum[1][1]) + (m_Frustum[1][2] * m_Frustum[1][2]));
+	m_Frustum[1][0] *= t;
+	m_Frustum[1][1] *= t;
+	m_Frustum[1][2] *= t;
+	m_Frustum[1][3] *= t;
 
-	////Bottom Plane
-	//m_Frustum[2][0] = ViewProjection.m30 + ViewProjection.m10;
-	//m_Frustum[2][1] = ViewProjection.m31 + ViewProjection.m11;
-	//m_Frustum[2][2] = ViewProjection.m32 + ViewProjection.m12;
-	//m_Frustum[2][3] = ViewProjection.m33 + ViewProjection.m13;
+	//Bottom Plane
+	m_Frustum[2][0] = ViewProjection.m30 + ViewProjection.m10;
+	m_Frustum[2][1] = ViewProjection.m31 + ViewProjection.m11;
+	m_Frustum[2][2] = ViewProjection.m32 + ViewProjection.m12;
+	m_Frustum[2][3] = ViewProjection.m33 + ViewProjection.m13;
 
-	//t = 1.0f / sqrtf((m_Frustum[2][0] * m_Frustum[2][0]) + (m_Frustum[2][1] * m_Frustum[2][1]) + (m_Frustum[2][2] * m_Frustum[2][2]));
-	//m_Frustum[2][0] *= t;
-	//m_Frustum[2][1] *= t;
-	//m_Frustum[2][2] *= t;
-	//m_Frustum[2][3] *= t;
+	t = 1.0f / sqrtf((m_Frustum[2][0] * m_Frustum[2][0]) + (m_Frustum[2][1] * m_Frustum[2][1]) + (m_Frustum[2][2] * m_Frustum[2][2]));
+	m_Frustum[2][0] *= t;
+	m_Frustum[2][1] *= t;
+	m_Frustum[2][2] *= t;
+	m_Frustum[2][3] *= t;
 
-	////Top Plane
-	//m_Frustum[3][0] = ViewProjection.m30 - ViewProjection.m10;
-	//m_Frustum[3][1] = ViewProjection.m31 - ViewProjection.m11;
-	//m_Frustum[3][2] = ViewProjection.m32 - ViewProjection.m12;
-	//m_Frustum[3][3] = ViewProjection.m33 - ViewProjection.m13;
+	//Top Plane
+	m_Frustum[3][0] = ViewProjection.m30 - ViewProjection.m10;
+	m_Frustum[3][1] = ViewProjection.m31 - ViewProjection.m11;
+	m_Frustum[3][2] = ViewProjection.m32 - ViewProjection.m12;
+	m_Frustum[3][3] = ViewProjection.m33 - ViewProjection.m13;
 
-	//t = 1.0f / sqrtf((m_Frustum[3][0] * m_Frustum[3][0]) + (m_Frustum[3][1] * m_Frustum[3][1]) + (m_Frustum[3][2] * m_Frustum[3][2]));
-	//m_Frustum[3][0] *= t;
-	//m_Frustum[3][1] *= t;
-	//m_Frustum[3][2] *= t;
-	//m_Frustum[3][3] *= t;
+	t = 1.0f / sqrtf((m_Frustum[3][0] * m_Frustum[3][0]) + (m_Frustum[3][1] * m_Frustum[3][1]) + (m_Frustum[3][2] * m_Frustum[3][2]));
+	m_Frustum[3][0] *= t;
+	m_Frustum[3][1] *= t;
+	m_Frustum[3][2] *= t;
+	m_Frustum[3][3] *= t;
 
-	////Far Plane
-	//m_Frustum[4][0] = ViewProjection.m30 - ViewProjection.m20;
-	//m_Frustum[4][1] = ViewProjection.m31 - ViewProjection.m21;
-	//m_Frustum[4][2] = ViewProjection.m32 - ViewProjection.m22;
-	//m_Frustum[4][3] = ViewProjection.m33 - ViewProjection.m23;
+	//Far Plane
+	m_Frustum[4][0] = ViewProjection.m30 - ViewProjection.m20;
+	m_Frustum[4][1] = ViewProjection.m31 - ViewProjection.m21;
+	m_Frustum[4][2] = ViewProjection.m32 - ViewProjection.m22;
+	m_Frustum[4][3] = ViewProjection.m33 - ViewProjection.m23;
 
-	//t = 1.0f / sqrtf((m_Frustum[4][0] * m_Frustum[4][0]) + (m_Frustum[4][1] * m_Frustum[4][1]) + (m_Frustum[4][2] * m_Frustum[4][2]));
-	//m_Frustum[4][0] *= t;
-	//m_Frustum[4][1] *= t;
-	//m_Frustum[4][2] *= t;
-	//m_Frustum[4][3] *= t;
+	t = 1.0f / sqrtf((m_Frustum[4][0] * m_Frustum[4][0]) + (m_Frustum[4][1] * m_Frustum[4][1]) + (m_Frustum[4][2] * m_Frustum[4][2]));
+	m_Frustum[4][0] *= t;
+	m_Frustum[4][1] *= t;
+	m_Frustum[4][2] *= t;
+	m_Frustum[4][3] *= t;
 
-	//m_Frustum[5][0] = ViewProjection.m30 +  ViewProjection.m20;
-	//m_Frustum[5][1] = ViewProjection.m31 +  ViewProjection.m21;
-	//m_Frustum[5][2] = ViewProjection.m32 +  ViewProjection.m22;
-	//m_Frustum[5][3] = ViewProjection.m33 +  ViewProjection.m23;
+	//Near Plane
+	m_Frustum[5][0] = ViewProjection.m30 +  ViewProjection.m20;
+	m_Frustum[5][1] = ViewProjection.m31 +  ViewProjection.m21;
+	m_Frustum[5][2] = ViewProjection.m32 +  ViewProjection.m22;
+	m_Frustum[5][3] = ViewProjection.m33 +  ViewProjection.m23;
 
-	//t = 1.0f / sqrtf((m_Frustum[5][0] * m_Frustum[5][0]) + (m_Frustum[5][1] * m_Frustum[5][1]) + (m_Frustum[5][2] * m_Frustum[5][2]));
-	//m_Frustum[5][0] *= t;
-	//m_Frustum[5][1] *= t;
-	//m_Frustum[5][2] *= t;
-	//m_Frustum[5][3] *= t;
-
-
-	//left plane frustum
+	t = 1.0f / sqrtf((m_Frustum[5][0] * m_Frustum[5][0]) + (m_Frustum[5][1] * m_Frustum[5][1]) + (m_Frustum[5][2] * m_Frustum[5][2]));
+	m_Frustum[5][0] *= t;
+	m_Frustum[5][1] *= t;
+	m_Frustum[5][2] *= t;
+	m_Frustum[5][3] *= t;
+	*/
+	
+	//Left Plane
 	m_Frustum[0][0] = ViewProjection.m03 - ViewProjection.m00;
 	m_Frustum[0][1] = ViewProjection.m13 - ViewProjection.m10;
 	m_Frustum[0][2] = ViewProjection.m23 - ViewProjection.m20;
@@ -86,7 +98,7 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	m_Frustum[0][2] *= t;
 	m_Frustum[0][3] *= t;
 	
-	//right plane frustum
+	//Right Plane
 	m_Frustum[1][0] = ViewProjection.m03 + ViewProjection.m00;
 	m_Frustum[1][1] = ViewProjection.m13 + ViewProjection.m10;
 	m_Frustum[1][2] = ViewProjection.m23 + ViewProjection.m20;
@@ -98,7 +110,7 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	m_Frustum[1][2] *= t;
 	m_Frustum[1][3] *= t;
 
-	//bottom plane frustum
+	//Bottom Plane
 	m_Frustum[2][0] = ViewProjection.m03 + ViewProjection.m01;
 	m_Frustum[2][1] = ViewProjection.m13 + ViewProjection.m11;
 	m_Frustum[2][2] = ViewProjection.m23 + ViewProjection.m21;
@@ -110,7 +122,7 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	m_Frustum[2][2] *= t;
 	m_Frustum[2][3] *= t;
 
-	//top plane frustum
+	//Top Plane
 	m_Frustum[3][0] = ViewProjection.m03 - ViewProjection.m01;
 	m_Frustum[3][1] = ViewProjection.m13 - ViewProjection.m11;
 	m_Frustum[3][2] = ViewProjection.m23 - ViewProjection.m21;
@@ -122,7 +134,7 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	m_Frustum[3][2] *= t;
 	m_Frustum[3][3] *= t;
 
-	//far plane frustum
+	//Far Plane
 	m_Frustum[4][0] = ViewProjection.m03 - ViewProjection.m02;
 	m_Frustum[4][1] = ViewProjection.m13 - ViewProjection.m12;
 	m_Frustum[4][2] = ViewProjection.m23 - ViewProjection.m22;
@@ -134,7 +146,7 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	m_Frustum[4][2] *= t;
 	m_Frustum[4][3] *= t;
 
-	//near plane frustum
+	//Near Plane
 	m_Frustum[5][0] = ViewProjection.m03 + ViewProjection.m02;
 	m_Frustum[5][1] = ViewProjection.m13 + ViewProjection.m12;
 	m_Frustum[5][2] = ViewProjection.m23 + ViewProjection.m22;
@@ -145,6 +157,7 @@ void CFrustum::Update(const Mat44f &ViewProjection)
 	m_Frustum[5][1] *= t;
 	m_Frustum[5][2] *= t;
 	m_Frustum[5][3] *= t;
+	
 }
 
 bool CFrustum::SphereVisible(const Vect3f &Center, float Radius) const
@@ -207,3 +220,64 @@ bool CFrustum::BoxVisible(const Vect3f &Max, const Vect3f &Min) const
 	}
 	return true;
 }
+
+#ifdef _DEBUG
+bool CFrustum::Render(CRenderManager *_RenderManager){
+	CColor l_Color = CColor(.0f, 1.f, .0f, 1.f);
+	CEffectManager::m_SceneParameters.m_BaseColor = l_Color;
+	//_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
+	CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
+	CEffectManager::SetSceneConstants(l_EffectTechnique);
+
+	//Planes
+	Vect4f l_Plane1 = Vect4f(m_Frustum[0][0], m_Frustum[0][1], m_Frustum[0][2], m_Frustum[0][3]);
+	Vect4f l_Plane2 = Vect4f(m_Frustum[1][0], m_Frustum[1][1], m_Frustum[1][2], m_Frustum[1][3]);
+	Vect4f l_Plane3 = Vect4f(m_Frustum[2][0], m_Frustum[2][1], m_Frustum[2][2], m_Frustum[2][3]);
+	Vect4f l_Plane4 = Vect4f(m_Frustum[3][0], m_Frustum[3][1], m_Frustum[3][2], m_Frustum[3][3]);
+	Vect4f l_Plane5 = Vect4f(m_Frustum[4][0], m_Frustum[4][1], m_Frustum[4][2], m_Frustum[4][3]);
+	Vect4f l_Plane6 = Vect4f(m_Frustum[5][0], m_Frustum[5][1], m_Frustum[5][2], m_Frustum[5][3]);
+
+	//Top Vertexes
+	Vect3f l_Point1;
+	Vect3f l_Point2;
+	Vect3f l_Point3;
+	Vect3f l_Point4;
+
+	l_Point1.SetFromTriPlane(l_Plane1, l_Plane4, l_Plane6);
+	l_Point2.SetFromTriPlane(l_Plane1, l_Plane4, l_Plane5);
+	l_Point3.SetFromTriPlane(l_Plane2, l_Plane4, l_Plane6);
+	l_Point4.SetFromTriPlane(l_Plane2, l_Plane4, l_Plane5);
+
+	//Bottom Vertexes
+	Vect3f l_Point5;
+	Vect3f l_Point6;
+	Vect3f l_Point7;
+	Vect3f l_Point8;
+
+	l_Point5.SetFromTriPlane(l_Plane1, l_Plane3, l_Plane6);
+	l_Point6.SetFromTriPlane(l_Plane1, l_Plane3, l_Plane5);
+	l_Point7.SetFromTriPlane(l_Plane2, l_Plane3, l_Plane6);
+	l_Point8.SetFromTriPlane(l_Plane2, l_Plane3, l_Plane5);
+	
+	//Top Lines
+	_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point2)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point3)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point2, l_Point4)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point3, l_Point4)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+
+	//Vertical Lines
+	_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point5)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point2, l_Point6)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point3, l_Point7)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point4, l_Point8)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+
+	//Bottom Lines
+	_RenderManager->GetDebugRender()->GetLine(l_Point5, l_Point6)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point5, l_Point7)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point6, l_Point8)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point7, l_Point8)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+
+	return true;
+}
+
+#endif

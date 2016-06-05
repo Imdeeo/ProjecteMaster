@@ -227,6 +227,9 @@
     <ClCompile Include="Particles\ParticleSystemInstance.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRender\RenderDebugFrustumSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -535,6 +538,9 @@
     </ClInclude>
     <ClInclude Include="Particles\ParticleSystemInstance.h">
       <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\RenderDebugFrustumSceneRendererCommand.h">
+      <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
