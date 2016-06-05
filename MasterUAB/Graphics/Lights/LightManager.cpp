@@ -62,6 +62,25 @@ bool CLightManager::Reload(){
 	return Load(m_FileName);
 }
 
+bool CLightManager::CreateNewLight(std::string _name, std::string _type)
+{
+	CLight::TLightType type = CLight::GetLightTypeByName(_type);
+	switch (type)
+	{
+	case CLight::LIGHT_TYPE_OMNI:
+		AddResource(_name, new COmniLight(_name));
+		break;
+	case CLight::LIGHT_TYPE_DIRECTIONAL:
+		AddResource(_name, new CDirectionalLight(_name));
+		break;
+	case CLight::LIGHT_TYPE_SPOT:
+		AddResource(_name, new CSpotLight(_name));
+		break;
+	default:
+		return false;
+	}
+}
+
 #ifdef _DEBUG
 bool CLightManager::Render(CRenderManager *_RenderManager){
 	if (m_RenderLights)

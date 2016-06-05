@@ -26,7 +26,7 @@ public:
 	CLightManager();
 	virtual ~CLightManager();
 	bool Load(const std::string &FileName);
-
+	bool CreateNewLight(std::string _name, std::string _type);
 #ifdef _DEBUG
 	bool Render(CRenderManager *RenderManager);
 #endif
