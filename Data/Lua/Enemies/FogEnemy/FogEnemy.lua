@@ -6,10 +6,7 @@ dofile("Data\\Lua\\Enemies\\FogEnemy\\FogStateAttack.lua")
 
 class 'CFogEnemy' (CEnemy)
 	function CFogEnemy:__init(_TreeNode)
-		utils_log("CFogEnemy_Init")
 		CEnemy.__init(self,_TreeNode)
-		
-		
 		self:SetFogAutomatonStateMachine()
 		self.m_StateMachine:start()
 	end

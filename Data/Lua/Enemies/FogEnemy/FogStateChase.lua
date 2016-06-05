@@ -9,7 +9,7 @@ function FogChaseUpdate(args, _ElapsedTime)
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	local l_EnemyPos = l_Owner:get_position()
 	local l_Direction = (l_PlayerPos - l_EnemyPos):get_normalized(1)
-	l_Owner:set_position(l_EnemyPos + (l_Direction * l_Enemy.m_Speed * _ElapsedTime))
+	l_Owner:set_position(l_EnemyPos + (l_Direction * l_Enemy.m_RunSpeed * _ElapsedTime))
 	local l_EnemyForward = l_Owner:get_rotation():get_forward_vector():get_normalized(1)
 	local l_Angle = l_EnemyForward * l_Direction
     if 1.0 - l_Angle < 0.01 then
@@ -48,6 +48,7 @@ function FogChaseToAttackCondition(args)
 	local l_Enemy = args["self"]
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	local l_Distance = l_PlayerPos:distance(l_Enemy.m_RenderableObject:get_position())
+	utils_log("ChaseCondition2")
 	if l_Distance < l_Enemy.m_distance_to_kill then
 		return true
 	else
@@ -56,6 +57,7 @@ function FogChaseToAttackCondition(args)
 end
 
 function FogChaseToOffCondition(args)
+	utils_log("chaseCondition3")
 	local l_Enemy = args["self"]
 	return l_Enemy.m_off == true
 end
