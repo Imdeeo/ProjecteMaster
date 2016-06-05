@@ -841,6 +841,113 @@ inline Vector3<T> Vector3<T>::GetLerp (const Vector3<T>& otro, const T t) const
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Obtención del máximo común divisor entre todos los elementos del vector.
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline Vector3<int>& Vector3<int>::Simplify()
+{
+	int gcd;
+	int aux;
+
+	gcd = mathUtils::GCD((*this)[0], (*this)[1]);
+	aux = mathUtils::GCD((*this)[0], (*this)[2]);
+	if (aux < gcd){ gcd = aux; }
+	aux = mathUtils::GCD((*this)[1], (*this)[2]);
+	if (aux < gcd){ gcd = aux; }
+
+	x /= gcd;
+	y /= gcd;
+	z /= gcd;
+
+	return (*this);
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Obtención de un punto (Vector3) a partir de tres planos (Vector4).
+/// Se presupone que ambos determinantes de M y M' son 3.
+/// Se presupone que los planos están en forma Ax + By + Cz = D
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline Vector3<T> Vector3<T>::SetFromTriPlane(const Vector4<T> plane1, const Vector4<T> plane2, const Vector4<T> plane3)
+{
+	T gdc;
+	Vector4<T> aux1;
+	Vector4<T> aux2;
+	Vector3<T> aux3;
+	Vector3<T> aux4;
+	Vector3<T> aux12;
+	Vector3<T> aux23;
+	//Vector2<T> aux123;
+	
+	// plane1 x plane2
+	aux1.x = plane1.x * plane2.x;
+	aux1.y = plane1.y * plane2.x;
+	aux1.z = plane1.z * plane2.x;
+	aux1.w = plane1.w * plane2.x;
+
+	aux2.x = plane2.x * plane1.x;
+	aux2.y = plane2.y * plane1.x;
+	aux2.z = plane2.z * plane1.x;
+	aux2.w = plane2.w * plane1.x;
+
+	if (aux1.x + aux2.x == (T)0)
+		aux1 += aux2;
+	else
+		aux1 -= aux2;
+
+	aux12.x = aux1.y;
+	aux12.y = aux1.z;
+	aux12.z = aux1.w;
+	//aux12.Simplify();
+
+	// plane2 x plane3
+	aux1.x = plane2.x * plane3.x;
+	aux1.y = plane2.y * plane3.x;
+	aux1.z = plane2.z * plane3.x;
+	aux1.w = plane2.w * plane3.x;
+
+	aux2.x = plane3.x * plane2.x;
+	aux2.y = plane3.y * plane2.x;
+	aux2.z = plane3.z * plane2.x;
+	aux2.w = plane3.w * plane2.x;
+
+	if (aux1.x + aux2.x == (T)0)
+		aux1 += aux2;
+	else
+		aux1 -= aux2;
+
+	aux23.x = aux1.y;
+	aux23.y = aux1.z;
+	aux23.z = aux1.w;
+	//aux23.Simplify();
+
+	// aux12 x aux23
+	aux3.x = aux12.x * aux23.x;
+	aux3.y = aux12.y * aux23.x;
+	aux3.z = aux12.z * aux23.x;
+
+	aux4.x = aux23.x * aux12.x;
+	aux4.y = aux23.y * aux12.x;
+	aux4.z = aux23.z * aux12.x;
+
+	if (aux3.x + aux4.x == (T)0)
+		aux3 += aux4;
+	else
+		aux3 -= aux4;
+
+	//aux123.x = aux3.y;
+	//aux123.y = aux3.z;
+	//aux123.Simplify();
+	
+	z = aux3.z / aux3.y;
+	y = (aux12.z - (aux12.y*z)) / aux12.x;
+	x = (plane1.w - (plane1.z*z) - (plane1.y*y)) / plane1.x;
+
+	return (*this);
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Función externa: Devuelve un vector con las componentes mínimas de
 /// los pasados en los parámetros
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

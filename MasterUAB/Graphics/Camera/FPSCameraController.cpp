@@ -61,7 +61,6 @@ void CFPSCameraController::AddYaw(float Radians)
 void CFPSCameraController::AddPitch(float Radians)
 {
 	float l_Pitch = m_Rotation.EulerFromQuat().x;
-	UtilsLog(std::to_string(l_Pitch));
 	if (((l_Pitch < 1.39626f || l_Pitch > 1.74533f) && Radians < .0f) || ((l_Pitch > -0.785398f || l_Pitch < -2.356194f) && Radians > .0f))
 		CCameraController::AddPitch(-Radians*m_PitchSpeed);
 }
