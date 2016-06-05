@@ -1047,6 +1047,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("reload", &CLightManager::Reload)
 			.def("get_ambient_light", &CLightManager::GetAmbientLight)
 			.def("save", &CLightManager::Save)
+			.def("create_new_light", &CLightManager::CreateNewLight)
 	];
 
 	module(m_LS)[

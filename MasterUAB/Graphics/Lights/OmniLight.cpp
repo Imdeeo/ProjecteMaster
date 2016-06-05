@@ -5,6 +5,11 @@
 
 COmniLight::COmniLight():CLight(){}
 
+COmniLight::COmniLight(std::string _name) : CLight(_name)
+{
+	m_Type = GetLightTypeByName("omni");
+}
+
 COmniLight::COmniLight(CXMLTreeNode &TreeNode) : CLight(TreeNode){}
 
 void COmniLight::SetShadowMap(CRenderManager &RenderManager)
