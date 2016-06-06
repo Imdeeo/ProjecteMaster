@@ -20,6 +20,9 @@
 #include <cstring>
 #include <assert.h>
 
+#define HEADER 51966
+#define FOOTER 65226
+
 #define N_CPUS 2
 #define PHYSX_VERSION_VS10 ((3<<24) + (3<<16) + (3<<8) + 0)
 
@@ -175,6 +178,23 @@ CPhysXManager* CPhysXManager::CreatePhysXManager()
 }
 
 
+void WriteMeshFile(std::string _Filename, physx::PxU8* _Data, physx::PxU32 _Size)
+{
+	std::fstream l_File(_Filename, std::ios::binary | std::ios::out);
+	if (l_File.is_open())
+	{
+		unsigned short l_BufferUnsignedShort = HEADER;
+		l_File.write((char*)&l_BufferUnsignedShort, sizeof(unsigned short));
+
+		l_File.write((char*)&_Size, sizeof(physx::PxU32));
+		l_File.write((char*)_Data, _Size);
+
+		l_BufferUnsignedShort = FOOTER;
+		l_File.write((char*)&l_BufferUnsignedShort, sizeof(unsigned short));
+		l_File.close();
+	}
+}
+
 void CPhysXManager::CreateConvexMesh(const std::string _name, const CStaticMesh* _Mesh)
 {
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
@@ -192,11 +212,11 @@ void CPhysXManager::CreateConvexMesh(const std::string _name, const CStaticMesh*
 		physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
 		physx::PxConvexMeshCookingResult::Enum l_Result;
 		bool success = m_Cooking->cookConvexMesh(l_ConvexMeshDesc, l_DefaultMemoryOutputStream, &l_Result);
-		assert(success);
-		physx::PxDefaultMemoryInputData l_DefaultMemoryInputData(l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
-		physx::PxConvexMesh* l_ConvexMesh = m_PhysX->createConvexMesh(l_DefaultMemoryInputData);
 
-		
+		char l_FileName[256] = "";
+		sprintf_s(l_FileName, "Data\\PhysXMeshes\\%s_%u.cmesh", _name.c_str(), i);
+
+		WriteMeshFile(l_FileName, l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
 	}
 }
 
@@ -222,6 +242,11 @@ void CPhysXManager::CreateTriangleMesh(const std::string _name, const CStaticMes
 
 		physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
 		bool success = m_Cooking->cookTriangleMesh(l_TriangleMeshDesc, l_DefaultMemoryOutputStream);
-		
+
+		char l_FileName[256] = "";
+		sprintf_s(l_FileName, "Data\\PhysXMeshes\\%s_%u.cmesh", _name.c_str(), i);
+
+		WriteMeshFile(l_FileName, l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
+
 	}
 }
