@@ -7,7 +7,7 @@ end
 
 function AlertUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
-	local l_Enemy = m_CharacterManager.m_Enemics[1]		
+	local l_Enemy = args["self"]
 	local l_NodePoint = l_Enemy.m_PathFindig:get_actual_patrol_point("path1")
 	
 	l_Enemy.m_alert_timer = l_Enemy.m_alert_timer+_ElapsedTime	
@@ -17,14 +17,14 @@ function AlertEndAutomaton(args)
 	utils_log("AlertEnd")
 end
 
-function AlertToChaseConditionAutomaton()
+function AlertToChaseConditionAutomaton(args)
 end
 
-function AlertToReturnConditionAutomaton()
+function AlertToReturnConditionAutomaton(args)
 end
 
-function AlertToPatrolConditionAutomaton()
-	local l_Enemy = m_CharacterManager.m_Enemics[1]		
+function AlertToPatrolConditionAutomaton(args)
+	local l_Enemy = args["self"]
 	local l_NodePoint = l_Enemy.m_PathFindig:get_actual_patrol_point("path1")
 	
 	if l_Enemy.m_alert_timer > l_NodePoint.time_to_wait then

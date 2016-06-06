@@ -1,6 +1,7 @@
 dofile("Data\\Lua\\Player\\CPlayer.lua")
 dofile("Data\\Lua\\Enemies\\CEnemy.lua")
 dofile("Data\\Lua\\Enemies\\FogEnemy\\FogEnemy.lua")
+dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonEnemy.lua")
 
 class 'CCharacterManager'
 	function CCharacterManager:__init()
@@ -9,7 +10,7 @@ class 'CCharacterManager'
 	end
 		
 	function CCharacterManager:LoadXML(Filename)
-		--utils_log(Filename)
+		utils_log(Filename)
 		local l_XMLTreeNode=CXMLTreeNode()
 		local l_Loaded=l_XMLTreeNode:load_file(Filename)
 		local UABEngine = CUABEngine.get_instance()
@@ -25,7 +26,9 @@ class 'CCharacterManager'
 					local l_Type = l_Atts:get_psz_property("type", "", false)
 					
 					if l_Type == "Automaton" then
-						utils_log("other")
+						local l_Enemy = CAutomatonEnemy(l_Atts)
+						UABEngine:get_game_play_manager():add_component(l_Enemy)
+						table.insert(self.m_Enemics, l_Enemy)			
 					elseif l_Type == "FogAutomaton" then
 						local l_Enemy = CFogEnemy(l_Atts)
 						UABEngine:get_game_play_manager():add_component(l_Enemy)
