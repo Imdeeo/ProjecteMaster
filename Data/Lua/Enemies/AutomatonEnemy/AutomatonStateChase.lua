@@ -2,13 +2,20 @@ function ChaseFirstAutomaton(args)
 	local l_Owner = args["owner"]
 	l_Owner:clear_cycle(0,0.5)
 	l_Owner:blend_cycle(1,1.0,0.5)
-	local l_Enemy = m_CharacterManager.m_Enemics[1]	
+	local l_Enemy = args["self"]
 	l_Enemy.m_PathFindig:load_map("Data\\level_"..g_Engine:get_level_loaded().."\\pathfinding.xml")
 end
 
 function ChaseUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
-	local l_Enemy = m_CharacterManager.m_Enemics[1]		
+	local l_Enemy = args["self"]
+	if l_Enemy:PlayerVisible(l_Owner) then
+		utils_log("TE HE VISTO!!!!")
+	else
+		utils_log("TODO DESPEJADO!!!!")
+	end
+	
+	--[[
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	local l_EnemyPos = l_Owner:get_position()
 	local l_Direction = 0.0
@@ -56,17 +63,18 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
     quat_to_turn:quat_from_yaw_pitch_roll(angle_to_turn, 0.0, 0.0)
     local target_quat = l_Owner:get_rotation() * quat_to_turn
     l_Owner:set_rotation(target_quat)
+	]]--
 end
 
 function ChaseEndAutomaton(args)
 	utils_log("ChaseEnd")
 end
 
-function ChaseToAlertConditionAutomaton()
+function ChaseToAlertConditionAutomaton(args)
 end
 
-function ChaseToAttackConditionAutomaton()
-	local l_Enemy = m_CharacterManager.m_Enemics[1]	
+function ChaseToAttackConditionAutomaton(args)
+	local l_Enemy = args["self"]
 	local l_Distance = g_Player.m_RenderableObject:get_position():distance(l_Enemy.m_RenderableObject:get_position())
 	
 	return l_Distance < l_Enemy.m_distance_to_kill

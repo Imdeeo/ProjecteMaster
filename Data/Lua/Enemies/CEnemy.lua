@@ -5,7 +5,6 @@ class 'CEnemy' (CLUAComponent)
 	function CEnemy:__init(_TreeNode)
 		local UABEngine = CUABEngine.get_instance()
 		self.m_Name = _TreeNode:get_psz_property("name", "", false)
-		self.m_LuaCommand = _TreeNode:get_psz_property("lua_command", "", false)
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
 		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "", false)
 		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
@@ -16,7 +15,19 @@ class 'CEnemy' (CLUAComponent)
 		self.m_Gravity = -9.81
 		self.m_WalkSpeed = 0.5
 		self.m_RunSpeed = 2.5
-		self.m_Patrol = _TreeNode:get_psz_property("patrol", "", false)
+		--self.m_Patrol = _TreeNode:get_psz_property("patrol", "", false)
+		self.m_Patrol = false
+		if self.m_Patrol then
+			utils_log("PATRULLATOR")
+		end
+		
+		-- TODO: get group numbers somehow
+		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
+		self.m_PhysXGroups = 2 + 8 -- objects and player
+		self.m_MaxDistance = 25.0
+		self.m_MaxAngle = 0.25 * math.pi
+		self.m_HeadOffset = Vect3f(0.0, 1.7, 0.0)
+		self.m_BlockingObjectName = nil
 		
 		self.m_distance_to_activate = 10.0
 		self.m_off = true
