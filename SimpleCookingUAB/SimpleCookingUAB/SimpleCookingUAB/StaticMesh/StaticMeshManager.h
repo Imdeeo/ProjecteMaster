@@ -5,6 +5,8 @@
 #include "StaticMesh\StaticMesh.h"
 #include <string>
 
+class CPhysXManager;
+
 class CStaticMeshManager :	public CTemplatedMapManager<CStaticMesh>
 {
 private:
@@ -13,6 +15,8 @@ public:
 	CStaticMeshManager(void);
 	virtual ~CStaticMeshManager(void);
 	bool Load(const std::string &FileName);
+
+	void CreatePhysXMeshes(CPhysXManager*);
 };
 
 #endif // STATIC_MESH_MANAGER_H

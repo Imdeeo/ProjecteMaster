@@ -1,5 +1,8 @@
 #include "StaticMeshManager.h"
+#include "PhyxManager\PhysXManager.h"
 #include "Base\XML\XMLTreeNode.h"
+
+#include <map>
 
 CStaticMeshManager::CStaticMeshManager(void)
 {
@@ -45,4 +48,15 @@ bool CStaticMeshManager::Load(const std::string &FileName)
 		return false;
 	}
 	return true;
+}
+
+void CStaticMeshManager::CreatePhysXMeshes(CPhysXManager* _PhysXManager)
+{
+	CStaticMeshManager::TMapResource l_MeshMap = GetResourcesMap();
+	CStaticMeshManager::TMapResource::iterator it;
+	for (it = l_MeshMap.begin(); it != l_MeshMap.end(); it++)
+	{
+		_PhysXManager->CreateConvexMesh(it->second->GetName(), it->second);
+		_PhysXManager->CreateTriangleMesh(it->second->GetName(), it->second);
+	}
 }
