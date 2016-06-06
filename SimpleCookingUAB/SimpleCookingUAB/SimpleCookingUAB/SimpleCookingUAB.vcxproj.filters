@@ -40,6 +40,9 @@
       <Filter>Base</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PhyxManager\PhysXManager.cpp">
+      <Filter>PhysxManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StaticMesh\StaticMesh.h">
@@ -119,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="StaticMesh\VertexTypes.h">
       <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="PhyxManager\PhysXManager.h">
+      <Filter>PhysxManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
