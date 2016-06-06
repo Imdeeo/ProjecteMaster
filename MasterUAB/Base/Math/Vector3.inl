@@ -877,7 +877,6 @@ inline Vector3<T> Vector3<T>::SetFromTriPlane(const Vector4<T> plane1, const Vec
 	Vector3<T> aux4;
 	Vector3<T> aux12;
 	Vector3<T> aux23;
-	//Vector2<T> aux123;
 	
 	// plane1 x plane2
 	aux1.x = plane1.x * plane2.x;
@@ -898,7 +897,6 @@ inline Vector3<T> Vector3<T>::SetFromTriPlane(const Vector4<T> plane1, const Vec
 	aux12.x = aux1.y;
 	aux12.y = aux1.z;
 	aux12.z = aux1.w;
-	//aux12.Simplify();
 
 	// plane2 x plane3
 	aux1.x = plane2.x * plane3.x;
@@ -919,7 +917,6 @@ inline Vector3<T> Vector3<T>::SetFromTriPlane(const Vector4<T> plane1, const Vec
 	aux23.x = aux1.y;
 	aux23.y = aux1.z;
 	aux23.z = aux1.w;
-	//aux23.Simplify();
 
 	// aux12 x aux23
 	aux3.x = aux12.x * aux23.x;
@@ -934,10 +931,6 @@ inline Vector3<T> Vector3<T>::SetFromTriPlane(const Vector4<T> plane1, const Vec
 		aux3 += aux4;
 	else
 		aux3 -= aux4;
-
-	//aux123.x = aux3.y;
-	//aux123.y = aux3.z;
-	//aux123.Simplify();
 	
 	z = aux3.z / aux3.y;
 	y = (aux12.z - (aux12.y*z)) / aux12.x;

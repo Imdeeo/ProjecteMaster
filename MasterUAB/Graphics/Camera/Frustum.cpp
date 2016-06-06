@@ -259,23 +259,23 @@ bool CFrustum::Render(CRenderManager *_RenderManager){
 	l_Point7.SetFromTriPlane(l_Plane2, l_Plane3, l_Plane6);
 	l_Point8.SetFromTriPlane(l_Plane2, l_Plane3, l_Plane5);
 	
-	//Top Lines
-	_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point2)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point3)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	_RenderManager->GetDebugRender()->GetLine(l_Point2, l_Point4)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	_RenderManager->GetDebugRender()->GetLine(l_Point3, l_Point4)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	////Top Lines
+	//_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point2)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	//_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point3)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	//_RenderManager->GetDebugRender()->GetLine(l_Point2, l_Point4)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	//_RenderManager->GetDebugRender()->GetLine(l_Point3, l_Point4)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 
-	//Vertical Lines
-	_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point5)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	_RenderManager->GetDebugRender()->GetLine(l_Point2, l_Point6)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	_RenderManager->GetDebugRender()->GetLine(l_Point3, l_Point7)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	_RenderManager->GetDebugRender()->GetLine(l_Point4, l_Point8)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	////Vertical Lines
+	//_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point5)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	//_RenderManager->GetDebugRender()->GetLine(l_Point2, l_Point6)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	//_RenderManager->GetDebugRender()->GetLine(l_Point3, l_Point7)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	//_RenderManager->GetDebugRender()->GetLine(l_Point4, l_Point8)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 
-	//Bottom Lines
-	_RenderManager->GetDebugRender()->GetLine(l_Point5, l_Point6)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	_RenderManager->GetDebugRender()->GetLine(l_Point5, l_Point7)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	_RenderManager->GetDebugRender()->GetLine(l_Point6, l_Point8)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	_RenderManager->GetDebugRender()->GetLine(l_Point7, l_Point8)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	////Bottom Lines
+	//_RenderManager->GetDebugRender()->GetLine(l_Point5, l_Point6)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	//_RenderManager->GetDebugRender()->GetLine(l_Point5, l_Point7)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	//_RenderManager->GetDebugRender()->GetLine(l_Point6, l_Point8)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	//_RenderManager->GetDebugRender()->GetLine(l_Point7, l_Point8)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 
 	return true;
 }
