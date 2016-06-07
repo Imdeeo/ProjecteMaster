@@ -44,6 +44,7 @@ CUABEngine::CUABEngine(void)
 	m_SceneRendererCommandManager = new CSceneRendererCommandManager();
 	m_GUIManager = new CGUIManager();
 	m_SoundManager = ISoundManager::InstantiateSoundManager();
+	m_FrustumActive = true;
 }
 
 CUABEngine::~CUABEngine(void)

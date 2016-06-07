@@ -109,7 +109,7 @@ CInstanceMesh::~CInstanceMesh(void)
 void CInstanceMesh::Render(CRenderManager *RM)
 {
 	CRenderableObject::Render(RM);
-	if(GetVisible() && GetInsideFrustum())
+	if(GetVisible() && (GetInsideFrustum() || !UABEngine.GetFrustumActive()))
 	{
 		/*OJUCUIDAO*/ //Exportem els vertex dels objectes en un espai real, per tant si els transformem amb pos rot i scale es lia
 					  //Exportamos los vertices de los objetos en espacio real, asi que al aplicarles la transformada con pos rot y scale, se lia parda

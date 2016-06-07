@@ -70,6 +70,9 @@ function luaUpdate(_ElapsedTime)
 		m_menu = true
 		CUABEngine.get_instance():set_pause(true)
 	end
+	if CInputManager.get_input_manager():is_action_active("FRUSTUM") then
+		l_Engine:set_frustum_active(not l_Engine:get_frustum_active())
+	end
 	g_VolumeController:CheckVolumeKeys()	
 end
 

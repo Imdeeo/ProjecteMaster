@@ -546,6 +546,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_time_scale", &CUABEngine::GetTimeScale)
 			.def("set_time_scale", &CUABEngine::SetTimeScale)
 			.def("quit", &CUABEngine::Quit)
+			.def("get_frustum_active", &CUABEngine::GetFrustumActive)
+			.def("set_frustum_active", &CUABEngine::SetFrustumActive)
 	];
 
 	// InputManager-------------------------------------------------------------------------------------
