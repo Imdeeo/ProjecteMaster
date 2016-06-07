@@ -77,6 +77,8 @@ int CBlend::CheckBlendType(const std::string _type)
 	if (_type == "inv_src1_color"){ return D3D11_BLEND_INV_SRC1_COLOR; }
 	if (_type == "src1_alpha"){ return D3D11_BLEND_SRC1_ALPHA; }
 	if (_type == "inv_src1_alpha"){ return D3D11_BLEND_INV_SRC1_ALPHA; }
+	assert(!"This should not happen");
+	return 0;
 }
 
 
@@ -100,4 +102,6 @@ int CBlendOp::CheckBlendOpType(const std::string _type)
 	if (_type == "rev_substract"){ return D3D11_BLEND_OP_REV_SUBTRACT; }
 	if (_type == "min"){ return D3D11_BLEND_OP_MIN; }
 	if (_type == "max"){ return D3D11_BLEND_OP_MAX; }
+	assert(!"This should not happen");
+	return 0;
 }

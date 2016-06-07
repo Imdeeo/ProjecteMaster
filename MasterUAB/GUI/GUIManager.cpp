@@ -33,7 +33,7 @@ CGUIManager::~CGUIManager()
 
 void CGUIManager::Destroy()
 {
-	for (int i = 0; i < m_Materials.size(); i++)
+	for (size_t i = 0; i < m_Materials.size(); i++)
 	{
 		CHECKED_DELETE(m_Materials[i]);
 	}
@@ -109,11 +109,11 @@ bool CGUIManager::Load(std::string _FileName)
 						}
 						else if (l_aux.GetName() == std::string("sprite"))
 						{
-							w = l_aux.GetIntProperty("w");
-							h = l_aux.GetIntProperty("h");
-							u1 = l_aux.GetIntProperty("x");
+							w = (float)l_aux.GetIntProperty("w");
+							h = (float)l_aux.GetIntProperty("h");
+							u1 = (float)l_aux.GetIntProperty("x");
 							u2 = u1 + w;
-							v1 = l_aux.GetIntProperty("y");
+							v1 = (float)l_aux.GetIntProperty("y");
 							v2 = v1 + h;
 							l_sprite = { &m_SpriteMaps[l_sprtieMapinfoname], u1 / l_spriteMapinfo.w, u2 / l_spriteMapinfo.w, v1 / l_spriteMapinfo.h, v2 / l_spriteMapinfo.h };
 						
@@ -357,7 +357,7 @@ CSliderResult CGUIManager::DoSlider(const std::string& GuiID, const std::string&
 			{
 				SetHot(GuiID);
 			}
-			else if (IsMouseInside(m_MouseX, m_MouseY, (float)l_RealHandleX, (float)l_RealHandleY, l_RealHandleWidth, l_RealHandleHeight))
+			else if (IsMouseInside(m_MouseX, m_MouseY, l_RealHandleX, l_RealHandleY, (int)l_RealHandleWidth, (int)l_RealHandleHeight))
 			{
 				SetHot(GuiID);
 			}
@@ -425,8 +425,8 @@ int CGUIManager::FillCommandQueueWithTextAux(const std::string& _font, const std
 
 	int cursorX = 0, cursorY = 0;
 
-	float spritewidth = l_TextureArray[0]->SpriteMap->w;
-	float spriteHeight = l_TextureArray[0]->SpriteMap->h;
+	float spritewidth = (float)l_TextureArray[0]->SpriteMap->w;
+	float spriteHeight = (float)l_TextureArray[0]->SpriteMap->h;
 
 	int addedCommands = 0;
 
@@ -474,10 +474,10 @@ int CGUIManager::FillCommandQueueWithTextAux(const std::string& _font, const std
 				last = c;
 				cursorX += fontChar.xadvance;
 
-				if (command.x1 < textBox_->x) textBox_->x = command.x1;
-				if (command.y1 < textBox_->y) textBox_->y = command.y1;
-				if (command.x2 < textBox_->z) textBox_->z = command.x2;
-				if (command.y2 < textBox_->w) textBox_->w = command.y2;
+				if (command.x1 < textBox_->x) textBox_->x = (float)command.x1;
+				if (command.y1 < textBox_->y) textBox_->y = (float)command.y1;
+				if (command.x2 < textBox_->z) textBox_->z = (float)command.x2;
+				if (command.y2 < textBox_->w) textBox_->w = (float)command.y2;
 			}
 		}
 	}
@@ -511,12 +511,12 @@ void CGUIManager::FillCommandQueueWithText(const std::string& _font, const std::
 		assert(false);
 	}
 
-	for (int i = m_Commands.size() - numCommands; i < m_Commands.size(); ++i)
+	for (size_t i = m_Commands.size() - numCommands; i < m_Commands.size(); ++i)
 	{
-		m_Commands[i].x1 += adjustment.x;
-		m_Commands[i].x2 += adjustment.x;
-		m_Commands[i].y1 += adjustment.y;
-		m_Commands[i].y2 += adjustment.y;
+		m_Commands[i].x1 += (int)adjustment.x;
+		m_Commands[i].x2 += (int)adjustment.x;
+		m_Commands[i].y1 += (int)adjustment.y;
+		m_Commands[i].y2 += (int)adjustment.y;
 	}
 }
 
@@ -566,7 +566,7 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 	
 	int currentVertex = 0;
 	SpriteMapInfo *currentSpriteMap = nullptr;
-	for (int i = 0; i < m_Commands.size(); ++i)  //commandsExecutionOrder.size()
+	for (size_t i = 0; i < m_Commands.size(); ++i)  //commandsExecutionOrder.size()
 	{
 		GUICommand &command = m_Commands[i];
 		assert(command.x1 <= command.x2);

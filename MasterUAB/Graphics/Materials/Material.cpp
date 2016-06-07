@@ -95,7 +95,7 @@ CMaterial::~CMaterial()
 
 void CMaterial::Destroy()
 {
-	for (int i = 0; i < m_Parameters.size(); i++)
+	for (size_t i = 0; i < m_Parameters.size(); i++)
 	{
 		CHECKED_DELETE(m_Parameters[i]);
 	}
@@ -116,7 +116,7 @@ void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 			m_Textures[i]->Activate(i);
 		}
 	}
-	for (int i = 0; i < m_Parameters.size(); i++)
+	for (size_t i = 0; i < m_Parameters.size(); i++)
 	{
 		m_Parameters[i]->Apply();
 	}
@@ -132,7 +132,7 @@ void CMaterial::operator=(CMaterial &b)
 	}
 	m_RenderableObjectTechnique = b.m_RenderableObjectTechnique;
 	m_CurrentParameterData = b.m_CurrentParameterData;
-	for (int i = 0; i < b.GetParameters().size(); i++)
+	for (size_t i = 0; i < b.GetParameters().size(); i++)
 	{
 		CMaterialParameter* l_MaterialParameter = b.GetParameters()[i];
 		CMaterialParameter::TMaterialType l_type = l_MaterialParameter->getMaterialType();
