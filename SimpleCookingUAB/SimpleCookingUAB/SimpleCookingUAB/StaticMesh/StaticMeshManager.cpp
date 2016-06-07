@@ -14,14 +14,14 @@ CStaticMeshManager::~CStaticMeshManager(void)
 	Destroy();
 }
 
-bool CStaticMeshManager::Load(const std::string &FileName)
+bool CStaticMeshManager::Load(const std::string &_DirName,const std::string &FileName)
 {
-	m_Filename = FileName;
+	m_DirName = _DirName;
 	std::string l_MeshName;
 	std::string l_MeshFileName;
 
 	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(FileName.c_str()))
+	if (l_XML.LoadFile((_DirName+"\\"+FileName).c_str()))
 	{
 		CXMLTreeNode l_Input = l_XML["static_meshes"];
 		if (l_Input.Exists())
@@ -50,13 +50,13 @@ bool CStaticMeshManager::Load(const std::string &FileName)
 	return true;
 }
 
-void CStaticMeshManager::CreatePhysXMeshes(CPhysXManager* _PhysXManager)
+void CStaticMeshManager::CreatePhysXMeshes(const std::string &_DirName, CPhysXManager* _PhysXManager)
 {
 	CStaticMeshManager::TMapResource l_MeshMap = GetResourcesMap();
 	CStaticMeshManager::TMapResource::iterator it;
 	for (it = l_MeshMap.begin(); it != l_MeshMap.end(); it++)
 	{
-		_PhysXManager->CreateConvexMesh(it->second->GetName(), it->second);
-		_PhysXManager->CreateTriangleMesh(it->second->GetName(), it->second);
+		_PhysXManager->CreateConvexMesh(it->second->GetName(), _DirName, it->second);
+		_PhysXManager->CreateTriangleMesh(it->second->GetName(), _DirName, it->second);
 	}
 }
