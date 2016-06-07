@@ -19,6 +19,7 @@
 #include <fstream>
 #include <cstring>
 #include <assert.h>
+#include <direct.h>
 
 #define HEADER 51966
 #define FOOTER 65226
@@ -180,7 +181,8 @@ CPhysXManager* CPhysXManager::CreatePhysXManager()
 
 void WriteMeshFile(std::string _Filename, physx::PxU8* _Data, physx::PxU32 _Size)
 {
-	std::fstream l_File(_Filename, std::ios::binary | std::ios::out);
+	printf_s("Writing file: %s\n", _Filename.c_str());
+	std::fstream l_File(_Filename, std::ios::binary | std::ios::out );
 	if (l_File.is_open())
 	{
 		unsigned short l_BufferUnsignedShort = HEADER;
@@ -193,10 +195,16 @@ void WriteMeshFile(std::string _Filename, physx::PxU8* _Data, physx::PxU32 _Size
 		l_File.write((char*)&l_BufferUnsignedShort, sizeof(unsigned short));
 		l_File.close();
 	}
+	else
+	{
+		printf_s("Cannot open file: %s\n", _Filename.c_str());
+	}
 }
 
-void CPhysXManager::CreateConvexMesh(const std::string _name, const CStaticMesh* _Mesh)
+void CPhysXManager::CreateConvexMesh(const std::string &_name, const std::string &_DirName, const CStaticMesh* _Mesh)
 {
+	printf_s("Creating Convex Mesh: %s\n", _name.c_str());
+	mkdir((_DirName + "\\PhysXMeshes").c_str());
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
 	{
@@ -213,15 +221,24 @@ void CPhysXManager::CreateConvexMesh(const std::string _name, const CStaticMesh*
 		physx::PxConvexMeshCookingResult::Enum l_Result;
 		bool success = m_Cooking->cookConvexMesh(l_ConvexMeshDesc, l_DefaultMemoryOutputStream, &l_Result);
 
-		char l_FileName[256] = "";
-		sprintf_s(l_FileName, "Data\\PhysXMeshes\\%s_%u.cmesh", _name.c_str(), i);
+		if (success)
+		{
+			char l_FileName[256] = "";
+			sprintf_s(l_FileName, (_DirName + std::string("\\PhysXMeshes\\%s_%u.cmesh")).c_str(), _name.c_str(), i);
 
-		WriteMeshFile(l_FileName, l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
+			WriteMeshFile(l_FileName, l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
+		}
+		else
+		{
+			printf_s("Cannot Create Convex Mesh: %s\n", _name.c_str());
+		}
 	}
 }
 
-void CPhysXManager::CreateTriangleMesh(const std::string _name, const CStaticMesh* _Mesh, bool _FlipNormals)
+void CPhysXManager::CreateTriangleMesh(const std::string &_name, const std::string &_DirName, const CStaticMesh* _Mesh, bool _FlipNormals)
 {
+	printf_s("Creating Triangle Mesh: %s\n",_name.c_str());
+	mkdir((_DirName + "\\PhysXMeshes").c_str());
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
 	{
@@ -243,10 +260,17 @@ void CPhysXManager::CreateTriangleMesh(const std::string _name, const CStaticMes
 		physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
 		bool success = m_Cooking->cookTriangleMesh(l_TriangleMeshDesc, l_DefaultMemoryOutputStream);
 
-		char l_FileName[256] = "";
-		sprintf_s(l_FileName, "Data\\PhysXMeshes\\%s_%u.cmesh", _name.c_str(), i);
+		if (success)
+		{
+			char l_FileName[256] = "";
+			sprintf_s(l_FileName, (_DirName + std::string("\\PhysXMeshes\\%s_%u.tmesh")).c_str(), _name.c_str(), i);
 
-		WriteMeshFile(l_FileName, l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
+			WriteMeshFile(l_FileName, l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
+		}
+		else
+		{
+			printf_s("Cannot Create Triangle Mesh: %s\n", _name.c_str());
+		}
 
 	}
 }
