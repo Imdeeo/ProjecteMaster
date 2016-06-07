@@ -870,7 +870,6 @@ inline Vector3<int>& Vector3<int>::Simplify()
 template<typename T>
 inline Vector3<T> Vector3<T>::SetFromTriPlane(const Vector4<T> plane1, const Vector4<T> plane2, const Vector4<T> plane3)
 {
-	T gdc;
 	Vector4<T> aux1;
 	Vector4<T> aux2;
 	Vector3<T> aux3;

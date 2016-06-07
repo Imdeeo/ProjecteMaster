@@ -69,13 +69,13 @@ bool CLightManager::CreateNewLight(std::string _name, std::string _type)
 	{
 	case CLight::LIGHT_TYPE_OMNI:
 		AddResource(_name, new COmniLight(_name));
-		break;
+		return true;
 	case CLight::LIGHT_TYPE_DIRECTIONAL:
 		AddResource(_name, new CDirectionalLight(_name));
-		break;
+		return true;
 	case CLight::LIGHT_TYPE_SPOT:
 		AddResource(_name, new CSpotLight(_name));
-		break;
+		return true;
 	default:
 		return false;
 	}
@@ -85,7 +85,7 @@ bool CLightManager::CreateNewLight(std::string _name, std::string _type)
 bool CLightManager::Render(CRenderManager *_RenderManager){
 	if (m_RenderLights)
 	{
-		for (int i = 0; i < GetResourcesVector().size(); i++)
+		for (size_t i = 0; i < GetResourcesVector().size(); i++)
 		{
 			GetResourcesVector()[i]->Render(_RenderManager);
 		}

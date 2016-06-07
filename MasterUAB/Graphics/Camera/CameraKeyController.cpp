@@ -106,7 +106,7 @@ void CCameraKeyController::GetCurrentKey()
 		m_NextKey = m_CurrentKey+1;
 		if(m_NextKey >= m_Keys.size()){ m_NextKey = 0; }
 	}
-	m_NextKey = m_CurrentKey + m_ReverseDirection * 1;
+	m_NextKey = (size_t)((float)m_CurrentKey + m_ReverseDirection * 1);
 
 }
 

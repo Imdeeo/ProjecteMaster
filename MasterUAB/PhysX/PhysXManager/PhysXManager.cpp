@@ -334,7 +334,7 @@ public:
 				//CRenderableObject* l_ro = UABEngine.GetLayerManager()->GetResource("Triggers")->GetResource(l_triggerName);
 				//l_ro->GetComponentManager()->onTrigger(l_actorName);
 				std::vector<std::string> l_ActiveActors = m_ActiveActors[l_indexTrigger];
-				for (int i = 0; i < l_ActiveActors.size(); i++)
+				for (size_t i = 0; i < l_ActiveActors.size(); i++)
 				{
 					if (l_ActiveActors[i] == l_actorName)
 					{
@@ -775,7 +775,7 @@ void CPhysXManager::Update(float _dt)
 	m_LeftoverSeconds = m_LeftoverSeconds + _dt;
 	if(m_LeftoverSeconds >= PHYSX_UPDATE_STEP)
 	{
-		m_Scene->simulate(PHYSX_UPDATE_STEP);
+		m_Scene->simulate((physx::PxReal)PHYSX_UPDATE_STEP);
 		m_Scene->fetchResults(true);
 
 		physx::PxU32 numActiveTransform;
@@ -788,7 +788,7 @@ void CPhysXManager::Update(float _dt)
 			m_ActorOrientations[index] = CastQuat(activeTransforms[i].actor2World.q);
 		}
 
-		m_LeftoverSeconds = fmod(m_LeftoverSeconds, PHYSX_UPDATE_STEP);
+		m_LeftoverSeconds = (float)fmod(m_LeftoverSeconds, PHYSX_UPDATE_STEP);
 		for (std::map<size_t, bool>::iterator l_iterator = m_TriggerIsActive.begin(); l_iterator != m_TriggerIsActive.end(); l_iterator++)
 		{
 			int l_index = l_iterator->first;
@@ -837,7 +837,7 @@ void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement,
 	Vect3f movemenAux = _movement;
 	Vect3f move1 = CastVec(cct->getPosition());
 	movemenAux = _elapsedTime*movemenAux;
-	cct->move(CastVec(movemenAux), movemenAux.Length()*0.01, _elapsedTime, filters);
+	cct->move(CastVec(movemenAux), movemenAux.Length()*0.01f, (physx::PxF32)_elapsedTime, filters);
 
 	Vect3f move2 = CastVec(cct->getPosition());
 
@@ -940,7 +940,7 @@ void CPhysXManager::Render(const std::string _name, CRenderManager *RenderManage
 	
 	l_TranslationMatrix.SetIdentity();
 	
-	l_TranslationMatrix.SetPos(m_CharacterControllers[_name]->getPosition().x, m_CharacterControllers[_name]->getPosition().y, m_CharacterControllers[_name]->getPosition().z);
+	l_TranslationMatrix.SetPos((float)m_CharacterControllers[_name]->getPosition().x, (float)m_CharacterControllers[_name]->getPosition().y, (float)m_CharacterControllers[_name]->getPosition().z);
 
 	l_TranslationMatrix = l_ScaleMatrix*l_RotationMatrix*l_TranslationMatrix;
 
@@ -955,7 +955,7 @@ void CPhysXManager::Render(const std::string _name, CRenderManager *RenderManage
 Vect3f CPhysXManager::GetCharacterControllersPosition(const std::string _name)
 {
 	physx::PxController* aux = m_CharacterControllers[_name];
-	return Vect3f(aux->getPosition().x, aux->getPosition().y, aux->getPosition().z);
+	return Vect3f((float)aux->getPosition().x, (float)aux->getPosition().y, (float)aux->getPosition().z);
 }
 
 CEmptyPointerClass* CPhysXManager::GetCharacterControllersPositionX(const std::string _name)

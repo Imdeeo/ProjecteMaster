@@ -43,7 +43,7 @@ CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)
 		}
 	}
 	if (m_GenerateShadowMap){
-		m_ShadowMap = new CDynamicTexture("shadowmap", TreeNode.GetFloatProperty("shadow_map_width"), TreeNode.GetFloatProperty("shadow_map_height"), true, TreeNode.GetPszProperty("shadow_map_format"));
+		m_ShadowMap = new CDynamicTexture("shadowmap", (int)TreeNode.GetFloatProperty("shadow_map_width"), (int)TreeNode.GetFloatProperty("shadow_map_height"), true, TreeNode.GetPszProperty("shadow_map_format"));
 		//m_ShadowMaskTexture = new CTexture();
 		m_ShadowMaskTexture = nullptr;
 	}

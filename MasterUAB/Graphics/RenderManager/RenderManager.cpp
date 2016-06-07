@@ -12,7 +12,7 @@
 #include "Effects\EffectManager.h"
 
 #include "Effects\EffectTechnique.h"
-#include "Texture\Texture.h";
+#include "Texture\Texture.h"
 
 #ifdef _DEBUG
 #include "DebugRender.h"
@@ -35,7 +35,7 @@ CRenderManager::CRenderManager()
 	/*m_RenderTargetView(nullptr),
 	m_DepthStencilView(nullptr)	*/
 {
-	m_LastFPSMeasurementTime = timeGetTime();
+	m_LastFPSMeasurementTime = (float)timeGetTime();
 }
 
 CRenderManager::~CRenderManager()
@@ -116,7 +116,7 @@ struct BlendedSubmesh
 void CRenderManager::Render()
 {
 	m_FrameCounter++;
-	float l_TimeNow = timeGetTime();
+	float l_TimeNow = (float)timeGetTime();
 	float l_TimeSinceLastTime = l_TimeNow - m_LastFPSMeasurementTime;
 	if (l_TimeSinceLastTime >= 1000.0) {
 		m_FrameRate = m_FrameCounter * 1000 / l_TimeSinceLastTime;
