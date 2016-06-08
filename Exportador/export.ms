@@ -239,9 +239,9 @@ fn processFaces arx Obj &prog=
 			(
 				UV2ID = 0x0040
 				local IdxsMap = meshop.getMapFace l_Obj 2 i
-				T2UVMap1= meshop.getMapVert l_Obj 2 IdxsMap.x
-				T2UVMap2= meshop.getMapVert l_Obj 2 IdxsMap.y
-				T2UVMap3= meshop.getMapVert l_Obj 2 IdxsMap.z
+				T2UVMap1= meshop.getMapVert l_Obj 2 IdxsMap[1]
+				T2UVMap2= meshop.getMapVert l_Obj 2 IdxsMap[2]
+				T2UVMap3= meshop.getMapVert l_Obj 2 IdxsMap[3]
 			)
 			
 		) else (
