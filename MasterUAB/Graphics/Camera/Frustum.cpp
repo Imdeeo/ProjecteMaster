@@ -1,8 +1,10 @@
 #include "Camera\Frustum.h"
 
 #include "Engine\UABEngine.h"
+#include "Camera\CameraControllerManager.h"
 #include "RenderManager\RenderManager.h"
 #include "ContextManager\ContextManager.h"
+#include "Layers\LayerManager.h"
 #include "DebugRender.h"
 
 #include "Layers\LayerManager.h"
@@ -221,11 +223,33 @@ bool CFrustum::BoxVisible(const Vect3f &Max, const Vect3f &Min) const
 	return true;
 }
 
+const Mat44f & CFrustum::GetTransform() const
+{
+	Vect3f l_Scale;
+	Mat44f l_ScaleMatrix;
+	Mat44f l_RotationMatrix;
+	Mat44f l_TranslationMatrix;
+	Mat44f l_TransformMatrix;
+
+	l_Scale = UABEngine.GetLayerManager()->GetLayer("solid")->GetResource("Bruja")->GetScale();
+	l_ScaleMatrix.SetIdentity();
+	l_ScaleMatrix.Scale(l_Scale.x, l_Scale.y, l_Scale.z);
+
+	l_RotationMatrix.SetIdentity();
+	l_RotationMatrix = UABEngine.GetCameraControllerManager()->GetMainCamera()->GetRotation().rotationMatrix();
+
+	Vect3f l_Pos = UABEngine.GetLayerManager()->GetLayer("solid")->GetResource("Bruja")->GetPosition();
+	l_TranslationMatrix.SetIdentity();
+	l_TranslationMatrix.SetPos(l_Pos.x, l_Pos.y, l_Pos.z);
+
+	l_TransformMatrix = l_ScaleMatrix*l_RotationMatrix*l_TranslationMatrix;
+
+	return l_TransformMatrix;
+}
+
 #ifdef _DEBUG
 bool CFrustum::Render(CRenderManager *_RenderManager){
-	CColor l_Color = CColor(.0f, 1.f, .0f, 1.f);
-	CEffectManager::m_SceneParameters.m_BaseColor = l_Color;
-	//_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
+	_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
 	CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
 	CEffectManager::SetSceneConstants(l_EffectTechnique);
 
@@ -259,23 +283,23 @@ bool CFrustum::Render(CRenderManager *_RenderManager){
 	l_Point7.SetFromTriPlane(l_Plane2, l_Plane3, l_Plane6);
 	l_Point8.SetFromTriPlane(l_Plane2, l_Plane3, l_Plane5);
 	
-	////Top Lines
-	//_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point2)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	//_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point3)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	//_RenderManager->GetDebugRender()->GetLine(l_Point2, l_Point4)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	//_RenderManager->GetDebugRender()->GetLine(l_Point3, l_Point4)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	//Top Lines
+	_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point2)->Render(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point3)->Render(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point2, l_Point4)->Render(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point3, l_Point4)->Render(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 
-	////Vertical Lines
-	//_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point5)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	//_RenderManager->GetDebugRender()->GetLine(l_Point2, l_Point6)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	//_RenderManager->GetDebugRender()->GetLine(l_Point3, l_Point7)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	//_RenderManager->GetDebugRender()->GetLine(l_Point4, l_Point8)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	//Vertical Lines
+	_RenderManager->GetDebugRender()->GetLine(l_Point1, l_Point5)->Render(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point2, l_Point6)->Render(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point3, l_Point7)->Render(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point4, l_Point8)->Render(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 
-	////Bottom Lines
-	//_RenderManager->GetDebugRender()->GetLine(l_Point5, l_Point6)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	//_RenderManager->GetDebugRender()->GetLine(l_Point5, l_Point7)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	//_RenderManager->GetDebugRender()->GetLine(l_Point6, l_Point8)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-	//_RenderManager->GetDebugRender()->GetLine(l_Point7, l_Point8)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	//Bottom Lines
+	_RenderManager->GetDebugRender()->GetLine(l_Point5, l_Point6)->Render(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point5, l_Point7)->Render(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point6, l_Point8)->Render(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	_RenderManager->GetDebugRender()->GetLine(l_Point7, l_Point8)->Render(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 
 	return true;
 }
