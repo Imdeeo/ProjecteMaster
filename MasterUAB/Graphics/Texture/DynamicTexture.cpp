@@ -11,10 +11,11 @@
 
 #include <assert.h>
 
-CDynamicTexture::CDynamicTexture(const std::string &Name, int Width, int Height, bool CreateDepthStencilBuffer):
+CDynamicTexture::CDynamicTexture(const std::string &Name, int Width, int Height, bool CreateDepthStencilBuffer, const std::string &Format):
 m_Width(Width), m_Height(Height), m_CreateDepthStencilBuffer(CreateDepthStencilBuffer), m_DepthStencilBuffer(nullptr), m_DepthStencilView(nullptr)
 {
 	SetName(Name);
+	SetFormat(Format);
 	Init();
 }
 
@@ -23,7 +24,9 @@ CDynamicTexture::CDynamicTexture(const CXMLTreeNode &TreeNode) : m_DepthStencilB
 	//<dynamic_texture name = "DepthMapTexture" texture_width_as_frame_buffer = "true" format_type = "R32F" / >
 	
 	std::string l_name = TreeNode.GetPszProperty("name");
+	std::string l_format = TreeNode.GetPszProperty("format_type");
 	SetName(l_name);
+	SetFormat(l_format);
 	if (TreeNode.GetBoolProperty("texture_width_as_frame_buffer"))
 	{
 		m_Width = UABEngine.GetRenderManager()->GetContextManager()->GetWidth();
@@ -34,11 +37,9 @@ CDynamicTexture::CDynamicTexture(const CXMLTreeNode &TreeNode) : m_DepthStencilB
 		m_Width = TreeNode.GetIntProperty("width");
 		m_Height = TreeNode.GetIntProperty("height");		
 	}
-	m_CreateDepthStencilBuffer = TreeNode.GetBoolProperty("create_depth_stencil_buffer",false);	
+	m_CreateDepthStencilBuffer = TreeNode.GetBoolProperty("create_depth_stencil_buffer",false);
 	Init();
 }
-
-
 
 CDynamicTexture::~CDynamicTexture()
 {
@@ -54,7 +55,7 @@ void CDynamicTexture::Init()
 	l_textureDescription.Height = m_Height;
 	l_textureDescription.MipLevels = 1;
 	l_textureDescription.ArraySize = 1;
-	l_textureDescription.Format = DXGI_FORMAT_R32G32B32A32_FLOAT; //??
+	l_textureDescription.Format = DXGI_FORMAT(m_Format);
 	l_textureDescription.SampleDesc.Count = 1;
 	l_textureDescription.Usage = D3D11_USAGE_DEFAULT;
 	l_textureDescription.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
@@ -141,7 +142,30 @@ ID3D11RenderTargetView* CDynamicTexture::GetRenderTargetView()
 {
 	return m_RenderTargetView;
 }
+
 ID3D11DepthStencilView* CDynamicTexture::GetDepthStencilView()
 {
 	return m_DepthStencilView;
+}
+
+void CDynamicTexture::SetFormat(const std::string &Format)
+{
+	if (Format == "rgba8")
+		m_Format = 28; //DXGI_FORMAT_R8G8B8A8_UNORM
+	else if (Format == "r32")
+		m_Format = 41; //DXGI_FORMAT_R32_FLOAT
+	else if (Format == "rgba32")
+		m_Format = 2; //DXGI_FORMAT_R32G32B32A32_FLOAT
+	else
+		assert(false);
+}
+
+std::string CDynamicTexture::GetFormat()
+{
+	if (m_Format == 41)
+		return "r32";
+	else if (m_Format == 2)
+		return "rgba32";
+	else
+		return "rgba8";
 }

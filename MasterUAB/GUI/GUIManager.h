@@ -68,6 +68,8 @@ private:
 	std::unordered_map< std::string, std::unordered_map< wchar_t, std::unordered_map< wchar_t, int > > > m_KerningsPerFont;
 	std::unordered_map< std::string, std::vector<SpriteInfo*> > m_TexturePerFont;
 
+	void Destroy();
+
 public:
 	enum GUICoordType
 	{

@@ -12,7 +12,7 @@
 #include "Effects\EffectManager.h"
 
 #include "Effects\EffectTechnique.h"
-#include "Texture\Texture.h";
+#include "Texture\Texture.h"
 
 #ifdef _DEBUG
 #include "DebugRender.h"
@@ -25,6 +25,8 @@
 CRenderManager::CRenderManager()
 	: m_UseDebugCamera(false)
 	, m_CurrentRenderlistLength(0)
+	, m_FrameCounter(0)
+	, m_FrameRate(0.0)
 #ifdef _DEBUG
 	,m_DebugRender(nullptr)
 #else
@@ -33,6 +35,7 @@ CRenderManager::CRenderManager()
 	/*m_RenderTargetView(nullptr),
 	m_DepthStencilView(nullptr)	*/
 {
+	m_LastFPSMeasurementTime = (float)timeGetTime();
 }
 
 CRenderManager::~CRenderManager()
@@ -74,6 +77,11 @@ const CCamera *CRenderManager::GetCurrentCamera()
 		return &m_CurrentCamera;
 }
 
+CFrustum* CRenderManager::GetFrustum()
+{
+	return &m_CullFrustum;
+}
+
 //bool CRenderManager::AddRenderableObjectToRenderList(const CRenderableObject* _RenderableObject)
 //{
 //	// Alguien se atrebe a arreglar el frustum?
@@ -107,6 +115,15 @@ struct BlendedSubmesh
 
 void CRenderManager::Render()
 {
+	m_FrameCounter++;
+	float l_TimeNow = (float)timeGetTime();
+	float l_TimeSinceLastTime = l_TimeNow - m_LastFPSMeasurementTime;
+	if (l_TimeSinceLastTime >= 1000.0) {
+		m_FrameRate = m_FrameCounter * 1000 / l_TimeSinceLastTime;
+		m_FrameCounter = 0;
+		m_LastFPSMeasurementTime = l_TimeNow;
+	}
+
 	m_ContextManager->BeginRender();
 
 	UABEngine.GetSceneRendererCommandManager()->Execute(this);
@@ -232,6 +249,14 @@ ID3D11DeviceContext* CRenderManager::GetDeviceContext()
 IDXGISwapChain*	CRenderManager::GetSwapChain()
 {
 	return m_ContextManager->GetSwapChain();
+}
+
+float CRenderManager::GetFrameRate() {
+	return m_FrameRate;
+}
+
+CEmptyPointerClass *CRenderManager::GetFrameRateAddress() {
+	return (CEmptyPointerClass *) &m_FrameRate;
 }
 
 #ifdef _DEBUG

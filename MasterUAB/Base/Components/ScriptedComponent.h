@@ -9,7 +9,7 @@ class CRenderableObject;
 
 class CScriptedComponent : public CUABComponent
 {
-private:
+protected:
 	std::string m_FnOnCreate;
 	std::string m_FnOnDestroy;
 	std::string m_FnOnUpdate;

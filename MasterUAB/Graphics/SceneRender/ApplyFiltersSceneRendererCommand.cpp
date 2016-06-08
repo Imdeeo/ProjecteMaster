@@ -31,8 +31,8 @@ void CApplyFiltersSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 		l_Viewport.TopLeftY=0.0f;
 		l_Viewport.MinDepth=0.0f;
 		l_Viewport.MaxDepth=1.0f;
-		l_Viewport.Width=m_DynamicTextures[i]->GetTexture()->GetWidth();
-		l_Viewport.Height=m_DynamicTextures[i]->GetTexture()->GetHeight();
+		l_Viewport.Width=(FLOAT)m_DynamicTextures[i]->GetTexture()->GetWidth();
+		l_Viewport.Height=(FLOAT)m_DynamicTextures[i]->GetTexture()->GetHeight();
 		_RenderManager.GetContextManager()->setViewPort(&l_Viewport);
 
 		m_DynamicTextures[i]->GetMaterial()->Apply();		

@@ -67,6 +67,9 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="no_sillywarnings_please.h" />
+    <ClInclude Include="Components\LUAComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -109,6 +112,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Components\UABComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\LUAComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

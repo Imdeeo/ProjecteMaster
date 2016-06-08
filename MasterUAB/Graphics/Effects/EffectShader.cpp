@@ -34,6 +34,11 @@ CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed(TreeNode){
 
 CEffectShader::~CEffectShader(void)
 {
+	for (int i = 0; i < m_ConstantBuffers.size(); i++)
+	{
+		CHECKED_DELETE(m_ConstantBuffers[i]);
+	}
+	m_ConstantBuffers.clear();
 	CHECKED_DELETE(m_ShaderMacros);
 }
 
@@ -192,7 +197,7 @@ void CEffectVertexShader::Destroy()
 {
 	CHECKED_RELEASE(m_VertexLayout);
 	CHECKED_RELEASE(m_VertexShader);
-	for(int i = 0; i<m_ConstantBuffers.size(); ++i)
+	for(size_t i = 0; i<m_ConstantBuffers.size(); ++i)
 	{
 		CHECKED_RELEASE(m_ConstantBuffers[i]);
 	}
@@ -287,7 +292,7 @@ CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShad
 void CEffectPixelShader::Destroy()
 {
 	CHECKED_RELEASE(m_PixelShader);
-	for(int i = 0; i<m_ConstantBuffers.size(); ++i)
+	for(size_t i = 0; i<m_ConstantBuffers.size(); ++i)
 	{
 		CHECKED_RELEASE(m_ConstantBuffers[i]);
 	}
@@ -341,7 +346,7 @@ m_GeometryShader(nullptr)
 void CEffectGeometryShader::Destroy()
 {
 	CHECKED_RELEASE(m_GeometryShader);
-	for (int i = 0; i<m_ConstantBuffers.size(); ++i)
+	for (size_t i = 0; i<m_ConstantBuffers.size(); ++i)
 	{
 		CHECKED_RELEASE(m_ConstantBuffers[i]);
 	}

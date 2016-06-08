@@ -19,6 +19,12 @@ CFPSCameraController::CFPSCameraController(const CXMLTreeNode & _TreeNode) :CCam
 {
 	m_Rotation.SetFromAngleAxis(m_Offset, 0);
 	m_Position = m_Target->GetPosition() + m_Offset;
+	Quatf l_RotationXZ;
+	Quatf l_RotationY;
+	Quatf l_InitialRotation;
+	l_InitialRotation = m_Target->GetRotation();
+	l_InitialRotation.decoupleY(&l_RotationXZ, &l_RotationY);
+	m_Rotation = l_RotationY;
 }
 
 CFPSCameraController::~CFPSCameraController()
@@ -54,7 +60,9 @@ void CFPSCameraController::AddYaw(float Radians)
 
 void CFPSCameraController::AddPitch(float Radians)
 {
-	CCameraController::AddPitch(-Radians*m_PitchSpeed);
+	float l_Pitch = m_Rotation.EulerFromQuat().x;
+	if (((l_Pitch < 1.39626f || l_Pitch > 1.74533f) && Radians < .0f) || ((l_Pitch > -0.785398f || l_Pitch < -2.356194f) && Radians > .0f))
+		CCameraController::AddPitch(-Radians*m_PitchSpeed);
 }
 
 void CFPSCameraController::SetCamera(CCamera *Camera) const
@@ -73,7 +81,7 @@ void CFPSCameraController::Update(float ElapsedTime)
 	m_Position = m_Target->GetPosition() + m_Offset;
 	if (m_Locked)
 		return;
-	AddYaw(CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime);
 	AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime);
+	AddYaw(CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime);
 	//Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, ElapsedTime);
 }

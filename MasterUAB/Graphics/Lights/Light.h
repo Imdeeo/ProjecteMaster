@@ -49,10 +49,12 @@ protected:
 	Mat44f m_ProjectionShadowMap;
 
 	CColor m_Color;
+	void Destroy();
 
 public:
 
 	CLight(CXMLTreeNode &TreeNode);
+	CLight(std::string _name);
 	CLight();
 	virtual ~CLight();
 	//UAB_BUILD_GET_SET_BY_REFERENCE(Vect3f, Position);
@@ -63,6 +65,11 @@ public:
 	float GetEndRangeAttenuation()const { return m_EndRangeAttenuation; }
 	bool  GetEnabled()const { return m_Enabled; }
 	TLightType GetType()const { return m_Type; }
+
+	CEmptyPointerClass* GetPositionLuaAddress(int index = 0)
+	{
+		return (CEmptyPointerClass*)&m_Position[index];
+	}
 
 	CEmptyPointerClass* GetEnableLuaAdress()
 	{
@@ -112,13 +119,14 @@ public:
 	// Shadowmap
 	void SetGenerateShadowMap(bool _GenerateShadowMap){ m_GenerateShadowMap = _GenerateShadowMap; }
 	bool GetGenerateShadowMap()const{ return m_GenerateShadowMap; }
-
+	void CreateShadowMap(CDynamicTexture *_ShadowMap){ m_ShadowMap = _ShadowMap; m_ShadowMaskTexture = nullptr; };
 	CDynamicTexture* GetShadowMap();
 	CTexture* GetShadowMaskTexture();
 	const Mat44f & GetViewShadowMap()const{ return m_ViewShadowMap; }
 	const Mat44f & GetProjectionShadowMap()const{ return m_ProjectionShadowMap; }
 	std::vector<CRenderableObjectsManager *> & GetLayers() {return m_Layers;}
 	virtual void SetShadowMap(CRenderManager &RenderManager) = 0;
+	virtual void Save(FILE* _File) = 0;
 };
 
 #endif //LIGHT_H

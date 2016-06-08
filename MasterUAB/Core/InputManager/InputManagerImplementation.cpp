@@ -85,8 +85,6 @@ CInputManagerImplementation::CInputManagerImplementation(HWND hWnd)
 		m_Mouse->Acquire();
 	else
 		MessageBox(hWnd, "Problem with de mouse input!", "Mouse", MB_ICONERROR | MB_OK);
-
-	m_Keyboard = new CKeyboardInput();
 }
 
 CInputManagerImplementation::~CInputManagerImplementation()
@@ -95,7 +93,10 @@ CInputManagerImplementation::~CInputManagerImplementation()
 		m_Mouse->Unacquire();
 
 	CHECKED_RELEASE(m_Mouse);
+	CHECKED_DELETE(m_Keyboard);
 	CHECKED_RELEASE(m_DI);
+	m_Axis.clear();
+	m_Actions.clear();
 }
 
 void CInputManagerImplementation::AddReloadKey()

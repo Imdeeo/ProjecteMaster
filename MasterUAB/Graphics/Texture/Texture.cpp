@@ -78,7 +78,7 @@ bool CTexture::Reload()
 
 void CTexture::Save(FILE* _File, size_t _NTabs)
 {
-	for (int i = 0; i < _NTabs; i++)
+	for (size_t i = 0; i < _NTabs; i++)
 	{
 		fprintf_s(_File, "\t");
 	}

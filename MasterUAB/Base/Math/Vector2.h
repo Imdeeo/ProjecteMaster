@@ -97,6 +97,9 @@ public:
   // Interpolación lineal
   inline Vector2<T>& Lerp    (const Vector2<T>& otro, const T t);
   inline Vector2<T>  GetLerp (const Vector2<T>& otro, const T t) const;
+
+  // Simplificación del vector
+  inline Vector2<int>& Simplify();
 };
 
 //--------------------------------------------------------------------------
