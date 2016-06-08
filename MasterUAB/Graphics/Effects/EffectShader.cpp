@@ -238,6 +238,8 @@ bool CEffectVertexShader::Load()
 		l_Loaded = MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else if (m_VertexType == "MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX")
 		l_Loaded = MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
+	else if (m_VertexType == "MV_POSITION_NORMAL_TEXTURE_TEXTURE2_TANGENT_VERTEX")
+		l_Loaded = MV_POSITION_NORMAL_TEXTURE_TEXTURE2_TANGENT_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else if (m_VertexType == "MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX")
 		l_Loaded = MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX::CreateInputLayout(l_RenderManager, l_VSBlob, &m_VertexLayout);
 	else
