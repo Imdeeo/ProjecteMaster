@@ -18,6 +18,7 @@ public:
 	void Update(const Mat44f &ViewProj);
 	bool SphereVisible(const Vect3f &Center, float Radius) const;
 	bool BoxVisible(const Vect3f &Max, const Vect3f &Min) const;
+	const Mat44f & GetTransform() const;
 #ifdef _DEBUG
 	bool Render(CRenderManager *RenderManager);
 #endif

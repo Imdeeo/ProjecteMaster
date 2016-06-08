@@ -931,9 +931,6 @@ inline Vector3<T> Vector3<T>::SetFromTriPlane(const Vector4<T> plane1, const Vec
 	else
 		aux3 -= aux4;
 	
-	T l_Z = ((((plane1.w*plane2.x) - (plane1.x*plane2.w))*((plane1.y*plane3.x) - (plane1.x*plane3.y))) - (((plane1.y*plane2.x) - (plane1.x*plane2.y))*((plane1.w*plane3.x) - (plane1.x*plane3.w))) / (((plane1.z*plane2.x) - (plane1.x*plane2.z))*((plane1.y*plane3.x) - (plane1.x*plane3.y))) - (((plane1.y*plane2.x) - (plane1.x*plane2.y))*((plane1.z*plane3.x) - (plane1.x*plane3.z))));
-	T l_Y = (((plane1.w*plane2.x) - (plane1.x*plane2.w) - ((plane1.z*plane2.x) - (plane1.x*plane2.z))*l_Z) / ((plane1.y*plane2.x) - (plane1.x*plane2.y)));
-	T l_X = (plane1.w - (plane1.z*l_Z) - (plane1.y*l_Y)) / plane1.x;
 	z = aux3.z / aux3.y;
 	y = (aux12.z - (aux12.y*z)) / aux12.x;
 	x = (plane1.w - (plane1.z*z) - (plane1.y*y)) / plane1.x;
