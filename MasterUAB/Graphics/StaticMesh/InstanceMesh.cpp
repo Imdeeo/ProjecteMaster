@@ -37,10 +37,10 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		Quatf l_Rotation = Quatf(-m_Rotation.x, m_Rotation.y, -m_Rotation.z, -m_Rotation.w);
 
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
-		if (m_PxType == "triangle_mesh")
+		if (m_PxType == "triangle_mesh_shape")
 		{
-			std::vector<Vect3f> l_Vertexs;
-			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			bool l_FlipNormals = TreeNode.GetBoolProperty("physics_flip_normals");
+			l_PhysXManager->CreateStaticTriangleMesh(GetName(), m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}else if (m_PxType == "sphere_shape")
 		{
 			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
@@ -73,6 +73,10 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 				l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction,l_OnTriggerStayLuaFunction,l_OnTriggerExitLuaFunction, l_ActivateActors,l_IsTriggerActive);
 			else
 				l_PhysXManager->CreateSphereTrigger(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction, l_OnTriggerStayLuaFunction, l_OnTriggerExitLuaFunction, l_ActivateActors, l_IsTriggerActive);
+		}
+		else if (m_PxType == "convex_mesh_shape")
+		{
+			l_PhysXManager->CreateStaticConvexMesh(GetName(), m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
 		else if (m_PxType == "box_shape")
 		{
