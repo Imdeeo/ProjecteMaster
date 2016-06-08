@@ -4,7 +4,6 @@
 #include "Camera\CameraControllerManager.h"
 #include "RenderManager\RenderManager.h"
 #include "ContextManager\ContextManager.h"
-#include "Layers\LayerManager.h"
 #include "DebugRender.h"
 
 #include "Layers\LayerManager.h"
@@ -225,26 +224,18 @@ bool CFrustum::BoxVisible(const Vect3f &Max, const Vect3f &Min) const
 
 const Mat44f & CFrustum::GetTransform() const
 {
-	Vect3f l_Scale;
-	Mat44f l_ScaleMatrix;
+	Vect3f l_Pos;
 	Mat44f l_RotationMatrix;
 	Mat44f l_TranslationMatrix;
-	Mat44f l_TransformMatrix;
-
-	l_Scale = UABEngine.GetLayerManager()->GetLayer("solid")->GetResource("Bruja")->GetScale();
-	l_ScaleMatrix.SetIdentity();
-	l_ScaleMatrix.Scale(l_Scale.x, l_Scale.y, l_Scale.z);
 
 	l_RotationMatrix.SetIdentity();
 	l_RotationMatrix = UABEngine.GetCameraControllerManager()->GetMainCamera()->GetRotation().rotationMatrix();
 
-	Vect3f l_Pos = UABEngine.GetLayerManager()->GetLayer("solid")->GetResource("Bruja")->GetPosition();
+	l_Pos = UABEngine.GetCameraControllerManager()->GetMainCamera()->GetPosition();
 	l_TranslationMatrix.SetIdentity();
 	l_TranslationMatrix.SetPos(l_Pos.x, l_Pos.y, l_Pos.z);
 
-	l_TransformMatrix = l_ScaleMatrix*l_RotationMatrix*l_TranslationMatrix;
-
-	return l_TransformMatrix;
+	return l_RotationMatrix*l_TranslationMatrix;
 }
 
 #ifdef _DEBUG
