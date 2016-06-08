@@ -10,6 +10,10 @@
 CCinematicObject::CCinematicObject(CXMLTreeNode &TreeNode):m_RenderableObject(nullptr)
 {
 	m_RenderableObject=UABEngine.GetLayerManager()->GetLayer(TreeNode)->GetResource(TreeNode.GetPszProperty("resource"));
+
+	m_PivotPosition = m_RenderableObject->GetPosition();
+	m_PivotRotation = m_RenderableObject->GetRotation();
+
 	for (int i = 0; i < TreeNode.GetNumChildren(); ++i)
 	{
 		CXMLTreeNode l_Element = TreeNode(i);

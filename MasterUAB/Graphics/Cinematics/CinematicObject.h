@@ -16,6 +16,9 @@ private:
 	size_t m_CurrentKeyFrame;
 	CRenderableObject *m_RenderableObject;
 
+	Vect3f m_PivotPosition;
+	Quatf  m_PivotRotation;
+
 	float calculateBestAngle(float _Current, float _Next);
 public:
 	CCinematicObject(CXMLTreeNode &TreeNode);
