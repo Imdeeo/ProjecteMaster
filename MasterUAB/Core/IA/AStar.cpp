@@ -1,13 +1,14 @@
 #include "AStar.h"
 #include "DebugRender.h"
 #include "XML\XMLTreeNode.h"
+#include "Utils.h"
 #include <algorithm>
 #include <map>
 #include <stdlib.h>
 
-CAStar::CAStar(){}
+CAStar::CAStar() : m_IndexPoint(0), m_IndexPathPatrolPoint(0){}
 
-CAStar::CAStar(std::string _filename){
+CAStar::CAStar(std::string _filename) : m_IndexPoint(0), m_IndexPathPatrolPoint(0){
 	LoadMap(_filename);
 }
 
@@ -20,9 +21,7 @@ void CAStar::LoadMap(std::string _filename)
 	CXMLTreeNode TreeNode = CXMLTreeNode();
 	TreeNode.LoadFile(_filename.c_str());
 
-	std::map<std::string, TNode*> l_nodesMap;
 	TNode *l_node;
-	Vect3f posAux;
 	std::string nombreNodoActual;
 	std::string nombreNodoVecino;
 
@@ -32,35 +31,53 @@ void CAStar::LoadMap(std::string _filename)
 		if (l_Element.GetName() == std::string("node"))
 		{
 			l_node = new TNode();
-			l_node->position = TreeNode.GetVect3fProperty("pos", Vect3f(0, 0, 0), true);
-			l_nodesMap[TreeNode.GetPszProperty("name", "", true)] = l_node;
+			l_node->name = l_Element.GetPszProperty("name", "", true);
+			l_node->position = l_Element.GetVect3fProperty("pos", Vect3f(0, 0, 0), true);
+			m_map[l_node->name] = l_node;
 		}
-
-		if (l_Element.GetName() == std::string("father"))
+		else if (l_Element.GetName() == std::string("father"))
 		{
 			nombreNodoActual = l_Element.GetPszProperty("name", "", true);
 
 			for (int i = 0; i < l_Element.GetNumChildren(); ++i)
 			{
 				CXMLTreeNode l_Element2 = l_Element(i);
-				if (l_Element.GetName() == std::string("child"))
+				if (l_Element2.GetName() == std::string("child"))
 				{
 					nombreNodoVecino = l_Element2.GetPszProperty("name");
 
-					l_nodesMap[nombreNodoActual]->neighbours.push_back(
-						(PNodeAndDistance(l_nodesMap[nombreNodoVecino], (l_nodesMap[nombreNodoActual]->position - l_nodesMap[nombreNodoVecino]->position).Length())));
+					m_map[nombreNodoActual]->neighbours.push_back(
+						(PNodeAndDistance(m_map[nombreNodoVecino], (m_map[nombreNodoActual]->position - m_map[nombreNodoVecino]->position).Length())));
 				}
 			}
+		}
+		else if (l_Element.GetName() == std::string("path_patrol"))
+		{
+			TNodePatrol *l_nodeAux;
+			nombreNodoActual = l_Element.GetPszProperty("name", "", true);
+			std::vector<TNodePatrol*> l_Aux;
+			for (int i = 0; i < l_Element.GetNumChildren(); ++i)
+			{
+				CXMLTreeNode l_Element2 = l_Element(i);
+
+				l_nodeAux = new TNodePatrol();
+				l_nodeAux->node = m_map[l_Element2.GetPszProperty("name")];
+				l_nodeAux->wait = l_Element2.GetBoolProperty("wait");
+				l_nodeAux->time_to_wait = l_Element2.GetFloatProperty("time_to_wait");
+				l_Aux.push_back(l_nodeAux);
+			}
+			m_NodePatrolPath[nombreNodoActual] = l_Aux;
 		}
 	}
 }
 
 void CAStar::DestroyMap() {
-	VNodes::const_iterator it;
-	for( it = m_map.begin(); it != m_map.end(); ++it ) {
-		delete *it;
+	for (TNodeMap::iterator l_iterator = m_map.begin(); l_iterator != m_map.end(); l_iterator++)
+	{
+		delete l_iterator->second;
 	}
 	m_map.clear();
+	m_openList.clear();
 }
 
 //void CAStar::Render( LPDIRECT3DDEVICE9 device ) {
@@ -93,9 +110,8 @@ bool CAStar::TCompareNodes::operator()( const TNode *nodeA, const TNode *nodeB )
 
 CAStar::VNodes CAStar::SearchNodePath( TNode* nodeA, TNode *nodeB ) {
 	// Marcamos todos los nodos como no visitados
-	VNodes::const_iterator it;
-	for( it = m_map.begin(); it != m_map.end(); ++it ) {
-		TNode *node = *it;
+	for (TNodeMap::iterator l_iterator = m_map.begin(); l_iterator != m_map.end(); l_iterator++) {
+		TNode *node = l_iterator->second;
 		node->f = 0.0f;
 		node->g = 0.0f;
 		node->h = 0.0f;
@@ -167,7 +183,6 @@ bool CAStar::VisitNextNode( TNode *destinationNode ) {
 					// Si el vecino que comprobamos es el destino, ya tenemos el camino
 					if( currentNeighbour == destinationNode ) {
 						return true;
-
 					} else {
 						// Asignar los valores de g, h y f
 						currentNeighbour->g = g;
@@ -206,9 +221,8 @@ CAStar::TNode *CAStar::GetNearestNode( const Vect3f &point ) {
 	TNode *bestNode = NULL;
 	float nearestSquaredDistance = FLT_MAX;
 
-	VNodes::const_iterator it;
-	for( it = m_map.begin(); it != m_map.end(); ++it ) {
-		TNode *currentNode = *it;
+	for (TNodeMap::iterator l_iterator = m_map.begin(); l_iterator != m_map.end(); l_iterator++) {
+		TNode *currentNode = l_iterator->second;
 		float currentSquaredDistance = (currentNode->position - point).SquaredLength();
 		if( currentSquaredDistance < nearestSquaredDistance ) {
 			nearestSquaredDistance = currentSquaredDistance;
@@ -218,16 +232,48 @@ CAStar::TNode *CAStar::GetNearestNode( const Vect3f &point ) {
 	return bestNode;
 }
 
-VPoints3 CAStar::SearchForPath(const Vect3f &pointA, const Vect3f &pointB) {
+int CAStar::SearchForPath(const Vect3f &pointA, const Vect3f &pointB) {
 	TNode *nodeA = GetNearestNode( pointA );
 	TNode *nodeB = GetNearestNode( pointB );
 	VNodes nodes = SearchNodePath( nodeA, nodeB );
 
-	VPoints3 points;
+	m_PathPoints.clear();
+
 	VNodes::const_iterator it;
 	for( it = nodes.begin(); it != nodes.end(); ++it ) {
 		TNode *currentNode = *it;
-		points.push_back( currentNode->position );
+		m_PathPoints.push_back( currentNode->position );
 	}
-	return points;
+
+	return m_PathPoints.size();
+}
+
+Vect3f CAStar::GetActualPoint()
+{
+	if (m_PathPoints.size() > 0 && m_IndexPoint < (int)m_PathPoints.size())
+		return m_PathPoints[m_IndexPoint];
+	else
+		return Vect3f(0.0f, 0.0f, 0.0f);
+}
+
+void CAStar::IncrementActualPoint()
+{
+	if (m_IndexPoint < (int)m_PathPoints.size() - 1)
+		m_IndexPoint += 1;
+}
+
+CAStar::TNodePatrol* CAStar::GetActualPatrolPoint(std::string _patrolName)
+{
+	if (m_NodePatrolPath.size() > 0)
+		return m_NodePatrolPath[_patrolName][m_IndexPathPatrolPoint];
+	else
+		return NULL;
+}
+
+void CAStar::IncrementActualPatrolPoint(std::string _patrolName)
+{
+	if (m_IndexPathPatrolPoint < (int)m_NodePatrolPath[_patrolName].size() - 1)
+		m_IndexPathPatrolPoint += 1;
+	else
+		m_IndexPathPatrolPoint = 0;
 }

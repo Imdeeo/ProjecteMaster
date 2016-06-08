@@ -15,6 +15,7 @@ protected:
 	float m_FallOff;
 public:
 	CSpotLight();
+	CSpotLight(std::string _name);
 	CSpotLight(CXMLTreeNode &TreeNode);
 
 	float GetAngle()const{ return m_Angle; }
@@ -39,6 +40,7 @@ public:
 	virtual const Mat44f & GetTransform();
 
 	void SetShadowMap(CRenderManager &RenderManager);
+	void Save(FILE* _File);
 };
 
 #endif //SPOT_LIGHT_H

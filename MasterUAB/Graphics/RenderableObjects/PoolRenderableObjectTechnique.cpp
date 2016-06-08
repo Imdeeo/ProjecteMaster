@@ -31,7 +31,7 @@ CPoolRenderableObjectTechnique::~CPoolRenderableObjectTechnique()
 
 void CPoolRenderableObjectTechnique::Destroy()
 {
-	for(int i = 0; i<m_RenderableObjectTechniqueElements.size(); i++)
+	for(size_t i = 0; i<m_RenderableObjectTechniqueElements.size(); i++)
 	{
 		delete m_RenderableObjectTechniqueElements[i];
 	}
@@ -45,7 +45,7 @@ void CPoolRenderableObjectTechnique::AddElement(const std::string &Name, const s
 	
 void CPoolRenderableObjectTechnique::Apply()
 {
-	for(int i = 0; i<m_RenderableObjectTechniqueElements.size(); i++)
+	for(size_t i = 0; i<m_RenderableObjectTechniqueElements.size(); i++)
 	{
 		m_RenderableObjectTechniqueElements[i]->m_OnRenderableObjectTechniqueManager->SetEffectTechnique(m_RenderableObjectTechniqueElements[i]->m_RenderableObjectTechnique.GetEffectTechnique());
 	}

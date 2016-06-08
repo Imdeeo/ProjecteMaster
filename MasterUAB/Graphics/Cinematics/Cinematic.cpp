@@ -12,7 +12,7 @@ CCinematic::~CCinematic()
 {
 	if(!m_CinematicObjects.empty())
 	{
-		for(int i=0; i<m_CinematicObjects.size();i++)
+		for(size_t i=0; i<m_CinematicObjects.size();i++)
 		{
 			delete m_CinematicObjects[i];
 		}

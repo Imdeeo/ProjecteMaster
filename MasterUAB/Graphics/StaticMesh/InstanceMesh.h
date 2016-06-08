@@ -5,15 +5,18 @@
 
 class CXMLTreeNode;
 class CStaticMesh;
+class CFrustum;
 
 class CInstanceMesh : public CRenderableObject
 {
 private:
 	CStaticMesh *m_StaticMesh;
+	CFrustum *m_Frustum;
 	bool m_GeneratePhysx;
 	std::string m_PxType;
 	std::string m_PxMaterial;
 	std::string m_PxGroup;
+	std::string m_Layer;
 	float m_PxOffset;
 	Vect3f m_PxNormals;
 public:
@@ -22,6 +25,7 @@ public:
 	~CInstanceMesh();
 	void Render(CRenderManager *RM);
 	void Save(FILE* _File, std::string _layer);
+	bool GetInsideFrustum();
 
 #ifdef _DEBUG
 	void RenderDebug(CRenderManager *RM);

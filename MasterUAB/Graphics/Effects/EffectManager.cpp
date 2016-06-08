@@ -1,17 +1,17 @@
 #include "Effects\EffectManager.h"
 #include "XML\XMLTreeNode.h"
 
-#include "Lights\Light.h";
-#include "Lights\DirectionalLight.h";
-#include "Lights\SpotLight.h";
+#include "Lights\Light.h"
+#include "Lights\DirectionalLight.h"
+#include "Lights\SpotLight.h"
 
 #include "Texture\DynamicTexture.h"
 
-#include "Engine\UABEngine.h";
-#include "RenderManager\RenderManager.h";
-#include "Lights\LightManager.h";
+#include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "Lights\LightManager.h"
 
-#include "DebugHelper\DebugHelper.h";
+#include "DebugHelper\DebugHelper.h"
 
 CEffectManager::CEffectManager(void){}
 
@@ -133,8 +133,8 @@ void CEffectManager::SetSceneConstants(CEffectTechnique* _EffectTechnique)
 
 void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 {	
-	m_LightParameters.m_LightEnabled[IdLight] = Light->GetEnabled()?1:0;
-	m_LightParameters.m_LightType[IdLight] = Light->GetType();
+	m_LightParameters.m_LightEnabled[IdLight] = Light->GetEnabled()?1.0f:0.0f;
+	m_LightParameters.m_LightType[IdLight] = (float)Light->GetType();
 	m_LightParameters.m_LightPosition[IdLight] = Light->GetPosition();
 	m_LightParameters.m_LightAttenuationStartRange[IdLight] = Light->GetStartRangeAttenuation();
 	m_LightParameters.m_LightAttenuationEndRange[IdLight] = Light->GetEndRangeAttenuation();
@@ -162,7 +162,16 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 		CEffectManager::m_LightParameters.m_UseShadowMask[IdLight] = l_ShadowMask != NULL ? 1.0f : 0.0f;
 		CEffectManager::m_LightParameters.m_LightView[IdLight] = Light->GetViewShadowMap();
 		CEffectManager::m_LightParameters.m_LightProjection[IdLight] = Light->GetProjectionShadowMap();
-		l_ShadowMap->Activate(INDEX_SHADOWMAP_TEXTURE);
+		if (l_ShadowMap != NULL)
+		{
+			l_ShadowMap->Activate(INDEX_SHADOWMAP_TEXTURE);
+		}
+		else
+		{
+			Light->CreateShadowMap( new CDynamicTexture("shadowmap", 1024, 1024, true, "r32"));
+			l_ShadowMap = Light->GetShadowMap();
+			l_ShadowMap->Activate(INDEX_SHADOWMAP_TEXTURE);
+		}
 		if (l_ShadowMask != NULL)
 			l_ShadowMask->Activate(INDEX_SHADOWMAP_TEXTURE+1);
 	}
@@ -178,7 +187,7 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 	m_LightParameters.m_LightAmbient = UABEngine.GetLightManager()->GetAmbientLight();
 	for (size_t i = 0; i < MaxLights; i++)
 	{
-		if(n_lights<=i)
+		if((size_t)n_lights<=i)
 		{
 			CLight* dummy = new CDirectionalLight();
 			dummy->SetEnabled(false);

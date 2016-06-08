@@ -159,7 +159,7 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 			particle->LastSize = particle->NextSize;
 			particle->LastSizeControlTime = particle->NextSizeControlTime;
 
-			if (particle->SizeControlPoint + 1 < m_Type->m_ControlPointSizes.size())
+			if (particle->SizeControlPoint + 1 < (int)m_Type->m_ControlPointSizes.size())
 			{
 				particle->NextSize = GetRandomValue(m_Type->m_ControlPointSizes[particle->SizeControlPoint + 1].m_Size);
 				particle->NextSizeControlTime = GetRandomValue(m_Type->m_ControlPointSizes[particle->SizeControlPoint + 1].m_Time);
@@ -177,7 +177,7 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 			particle->LastColor = particle->NextColor;
 			particle->LastColorControlTime = particle->NextColorControlTime;
 
-			if (particle->ColorControlPoint + 1 < m_Type->m_ControlPointColors.size())
+			if (particle->ColorControlPoint + 1 < (int)m_Type->m_ControlPointColors.size())
 			{
 				particle->NextColor = GetRandomValue(m_Type->m_ControlPointColors[particle->ColorControlPoint + 1].m_Color1, 
 					m_Type->m_ControlPointColors[particle->ColorControlPoint + 1].m_Color2);
