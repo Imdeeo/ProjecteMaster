@@ -34,6 +34,11 @@ CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed(TreeNode){
 
 CEffectShader::~CEffectShader(void)
 {
+	for (int i = 0; i < m_ConstantBuffers.size(); i++)
+	{
+		CHECKED_DELETE(m_ConstantBuffers[i]);
+	}
+	m_ConstantBuffers.clear();
 	CHECKED_DELETE(m_ShaderMacros);
 }
 

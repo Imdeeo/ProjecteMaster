@@ -38,7 +38,31 @@ void CGUIManager::Destroy()
 		CHECKED_DELETE(m_Materials[i]);
 	}
 	m_Materials.clear();
+	for (int i = 0; i < m_VertexBuffers.size(); i++)
+	{
+		CHECKED_DELETE(m_VertexBuffers[i]);
+	}
+	m_VertexBuffers.clear();
+	for (auto it = m_Buttons.begin(); it != m_Buttons.end(); it++)
+	{
+		CHECKED_DELETE(it->second);
+	}
+	m_Buttons.clear();
+	for (auto it = m_Sliders.begin(); it != m_Sliders.end(); it++)
+	{
+		CHECKED_DELETE(it->second);
+	}
+	m_Sliders.clear();
+	for (auto it = m_TexturePerFont.begin(); it != m_TexturePerFont.end(); it++)
+	{
+		it->second.clear();
+	}
+	m_TexturePerFont.clear();
+	m_LineHeightPerFont.clear();
+	m_BasePerFont.clear();
 	m_SpriteMaps.clear();
+	m_Sprites.clear();
+	m_Commands.clear();
 }
 
 void CGUIManager::SetActive(const std::string& id)
