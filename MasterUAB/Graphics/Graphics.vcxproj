@@ -413,6 +413,7 @@
     <Lib />
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\lib;$(DXSDK_DIR)\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <TargetMachine>MachineX86</TargetMachine>
     </Lib>
     <FxCompile>
       <ShaderType>Effect</ShaderType>

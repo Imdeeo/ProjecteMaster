@@ -1,17 +1,17 @@
 #include "Effects\EffectManager.h"
 #include "XML\XMLTreeNode.h"
 
-#include "Lights\Light.h";
-#include "Lights\DirectionalLight.h";
-#include "Lights\SpotLight.h";
+#include "Lights\Light.h"
+#include "Lights\DirectionalLight.h"
+#include "Lights\SpotLight.h"
 
 #include "Texture\DynamicTexture.h"
 
-#include "Engine\UABEngine.h";
-#include "RenderManager\RenderManager.h";
-#include "Lights\LightManager.h";
+#include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "Lights\LightManager.h"
 
-#include "DebugHelper\DebugHelper.h";
+#include "DebugHelper\DebugHelper.h"
 
 CEffectManager::CEffectManager(void){}
 
@@ -133,8 +133,8 @@ void CEffectManager::SetSceneConstants(CEffectTechnique* _EffectTechnique)
 
 void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 {	
-	m_LightParameters.m_LightEnabled[IdLight] = Light->GetEnabled()?1:0;
-	m_LightParameters.m_LightType[IdLight] = Light->GetType();
+	m_LightParameters.m_LightEnabled[IdLight] = Light->GetEnabled()?1.0f:0.0f;
+	m_LightParameters.m_LightType[IdLight] = (float)Light->GetType();
 	m_LightParameters.m_LightPosition[IdLight] = Light->GetPosition();
 	m_LightParameters.m_LightAttenuationStartRange[IdLight] = Light->GetStartRangeAttenuation();
 	m_LightParameters.m_LightAttenuationEndRange[IdLight] = Light->GetEndRangeAttenuation();
@@ -187,7 +187,7 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 	m_LightParameters.m_LightAmbient = UABEngine.GetLightManager()->GetAmbientLight();
 	for (size_t i = 0; i < MaxLights; i++)
 	{
-		if(n_lights<=i)
+		if((size_t)n_lights<=i)
 		{
 			CLight* dummy = new CDirectionalLight();
 			dummy->SetEnabled(false);

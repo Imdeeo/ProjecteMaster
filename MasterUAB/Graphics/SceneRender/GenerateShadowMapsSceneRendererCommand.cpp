@@ -20,7 +20,7 @@ void CGenerateShadowMapsSceneRendererCommand::Execute(CRenderManager &_RenderMan
 {
 	CLightManager *l_LightManager=UABEngine.GetLightManager();
 	int n_lights = l_LightManager->GetResourcesVector().size();
-	for (size_t i = 0; i < n_lights; i++)
+	for (int i = 0; i < n_lights; i++)
 	{
 		CLight *l_Light=l_LightManager->GetResourceById(i);
 		if(l_Light->GetEnabled() && l_Light->GetGenerateShadowMap()){

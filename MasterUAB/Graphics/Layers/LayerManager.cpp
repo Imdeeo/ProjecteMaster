@@ -82,7 +82,7 @@ void CLayerManager::Reload()
 
 void CLayerManager::Update(float ElapsedTime)
 {	
-	for (int i = 0; i < m_ResourcesVector.size(); ++i)
+	for (size_t i = 0; i < m_ResourcesVector.size(); ++i)
 	{
 		m_ResourcesVector[i]->Update(ElapsedTime);
 	}
@@ -90,7 +90,7 @@ void CLayerManager::Update(float ElapsedTime)
 
 void CLayerManager::Render(CRenderManager *RenderManager)
 {
-	for (int i = 0; i < m_ResourcesVector.size(); ++i)
+	for (size_t i = 0; i < m_ResourcesVector.size(); ++i)
 	{
 		m_ResourcesVector[i]->Render(RenderManager);
 	}
