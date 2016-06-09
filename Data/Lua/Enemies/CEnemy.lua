@@ -15,11 +15,9 @@ class 'CEnemy' (CLUAComponent)
 		self.m_Gravity = -9.81
 		self.m_WalkSpeed = 0.5
 		self.m_RunSpeed = 2.5
-		--self.m_Patrol = _TreeNode:get_psz_property("patrol", "", false)
-		self.m_Patrol = false
-		if self.m_Patrol then
-			utils_log("PATRULLATOR")
-		end
+		self.m_AngularSpeed = 1000.0
+		self.m_TimerRotation = 0.0
+		self.m_Patrol = _TreeNode:get_bool_property("patrol", false, false)
 		
 		-- TODO: get group numbers somehow
 		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player

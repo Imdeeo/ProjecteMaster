@@ -1,4 +1,5 @@
 function OffFirstAutomaton(args)
+	utils_log("OffFirst")
 end
 
 function OffUpdateAutomaton(args, _ElapsedTime)

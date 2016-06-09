@@ -279,4 +279,6 @@ void CAStar::IncrementActualPatrolPoint(std::string _patrolName)
 {
 	if (m_IndexPathPatrolPoint < m_NodePatrolPath[_patrolName].size() - 1)
 		m_IndexPathPatrolPoint += 1;
+	else
+		m_IndexPathPatrolPoint = 0;
 }

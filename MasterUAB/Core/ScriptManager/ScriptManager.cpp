@@ -438,6 +438,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_name", &CXMLTreeNode::GetName)
 			.def("get_psz_property", &CXMLTreeNode::GetPszProperty)
 			.def("get_float_property", &CXMLTreeNode::GetFloatProperty)
+			.def("get_bool_property", &CXMLTreeNode::GetBoolProperty)
 	];
 
 // CORE---------------------------------------------------------------------------------------------
