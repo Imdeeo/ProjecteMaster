@@ -2,9 +2,9 @@ Obj = undefined
 callbacks.removeScripts #selectionSetChanged id:#swapMode
 callbacks.addScript #selectionSetChanged "UABSetProperties.swapMode $" id:#swapMode persistent:false
 	
-rollout UABSetProperties "UABSetProperties" width:280 height:434
+rollout UABSetProperties "UABSetProperties" width:280 height:494
 (
-	GroupBox grp1 "Geometry" pos:[8,8] width:265 height:368
+	GroupBox grp1 "Geometry" pos:[8,8] width:265 height:428
 		label GeometryLabel "Nothing selected" pos:[24,32] width:232 height:24
 		GroupBox RenderGroup "Render" pos:[16,56] width:248 height:120
 			checkbox RenderExportBox "Export" pos:[24,72] width:88 height:16
@@ -14,27 +14,30 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 			checkbox CinematicBox "Cinematic" pos:[24,144] width:88 height:16 enabled:false 
 			dropdownList RenderLayerList "" pos:[120,112] width:136 height:21 enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles", "skybox", "triggers")
 			edittext AnimModelText "AnimModelLabel" pos:[120,144] width:136 height:24 enabled:false
-		GroupBox PhysicsGroup "Physics" pos:[16,176] width:248 height:144
+		GroupBox PhysicsGroup "Physics" pos:[16,176] width:248 height:204
 			checkbox PhysicsGenerateBox "Generate" pos:[24,200] width:88 height:16
 			dropdownList PhysicsGenerateList "" pos:[120,200] width:136 height:21 enabled:false items:#("triangle_mesh", "convex_shape", "box_shape", "sphere_shape", "plane_shape", "capsule_shape")
 			label PhysicsGroupLabel "Group" pos:[24,224] width:88 height:16 enabled:false
 			dropdownList PhysicsLayerList "" pos:[120,224] width:136 height:21 enabled:false items:#("plane", "objects", "triggers", "player")
 			edittext PhysicsMaterialText "Material" pos:[24,248] width:230 height:24 enabled:false
-			--GroupBox TriggerGroup "Trigger" pos:[24,268] width:232 height:44
-				--edittext PhysicsTriggerEnter "Enter" pos:[32,284] width:72 height:24 enabled:true
-				--edittext PhysicsTriggerExit "Exit" pos:[108,284] width:66 height:24 enabled:true
-				--edittext PhysicsTriggerStay "Stay" pos:[178,284] width:72 height:24 enabled:true
-			GroupBox PLaneGroup "Trigger" pos:[24,268] width:232 height:44
-				edittext PlaneOffset "Offset" pos:[32,284] width:82 height:24 enabled:true
-				label PlaneNormal "Normal" pos:[118,284] width:88 height:16 enabled:true
-				edittext PlaneX pos:[158,284] width:32 height:24 enabled:true
-				edittext PlaneY pos:[188,284] width:32 height:24 enabled:true
-				edittext PlaneZ pos:[218,284] width:32 height:24 enabled:true
-		GroupBox LogicGroup "Logic" pos:[16,320] width:248 height:48
-			checkbox LogicGenerateBox "Generate" pos:[24,344] width:88 height:16
-			dropdownList LogicGenerateList "" pos:[120,344] width:136 height:21 items:#("stairs")
-		button GetButton "Get" pos:[24,388] width:112 height:32
-		button SetButton "Set" pos:[144,388] width:112 height:32
+			GroupBox TriggerGroup "Trigger" pos:[24,278] width:232 height:44 enabled:false 
+				edittext PhysicsTriggerEnter "Enter" pos:[32,294] width:72 height:24 enabled:false 
+				edittext PhysicsTriggerExit "Exit" pos:[108,294] width:66 height:24 enabled:false 
+				edittext PhysicsTriggerStay "Stay" pos:[178,294] width:72 height:24 enabled:false 
+			GroupBox PlaneGroup "Plane" pos:[24,328] width:232 height:44 enabled:false
+				spinner PlaneOffset "Off:" pos:[46,350] width:48 range:[-1000,1000,0] type:#float scale:0.01 enabled:false
+				label PlaneNormal "Nm" pos:[100,350] width:20 height:16 enabled:false 
+				spinner PlaneX pos:[120,350] width:42 range:[-1000,1000,0] type:#float scale:0.01 enabled:false
+				spinner PlaneY pos:[165,350] width:42 range:[-1000,1000,0] type:#float scale:0.01 enabled:false
+				spinner PlaneZ pos:[210,350] width:42 range:[-1000,1000,0] type:#float scale:0.01 enabled:false
+				label LabelX "x" pos:[135,336] width:8 height:12 enabled:false
+				label LabelY "y" pos:[180,336] width:8 height:12 enabled:false
+				label LabelZ "z" pos:[225,336] width:8 height:12 enabled:false
+		GroupBox LogicGroup "Logic" pos:[16,380] width:248 height:48
+			checkbox LogicGenerateBox "Generate" pos:[24,404] width:88 height:16
+			dropdownList LogicGenerateList "" pos:[120,404] width:136 height:21 items:#("stairs")
+		button GetButton "Get" pos:[24,448] width:112 height:32
+		button SetButton "Set" pos:[144,448] width:112 height:32
 	GroupBox grp2 "Lights" pos:[8,8] width:265 height:208 visible:false
 		GroupBox LightGroup "Light" pos:[16,24] width:248 height:100
 			label LightLabel "Nothing selected" pos:[24,42] width:232 height:24 visible:false
@@ -56,7 +59,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 		dropdownList CameraExportList "" pos:[120,62] width:136 height:21 enabled:false items:#("fps", "spherical", "cycle", "reverse")
 		button GetCameraButton "Get" pos:[24,104] width:112 height:32 visible:false
 		button SetCameraButton "Set" pos:[144,104] width:112 height:32 visible:false
-	--http://docs.autodesk.com/3DSMAX/16/ENU/MAXScript-Help/index.html?url=files/GUID-172DE6D6-796F-419B-936E-4FD64AD24CB9.htm,topicNumber=d30e634716
+	
 	fn toggleGeometryGroup bool =
 	(
 		grp1.visible = bool
@@ -80,6 +83,19 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 		LogicGenerateList.visible = bool
 		GetButton.visible = bool
 		SetButton.visible = bool
+		TriggerGroup.visible = bool
+		PhysicsTriggerEnter.visible = bool
+		PhysicsTriggerExit.visible = bool
+		PhysicsTriggerStay.visible = bool
+		PlaneGroup.visible = bool
+		PlaneOffset.visible = bool
+		PlaneNormal.visible = bool
+		PlaneX.visible = bool
+		PlaneY.visible = bool
+		PlaneZ.visible = bool
+		LabelX.visible = bool
+		LabelY.visible = bool
+		LabelZ.visible = bool
 	)
 	
 	fn toggleLightsGroup bool =
@@ -135,20 +151,23 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 	
 	fn toggleTriggers bool =
 	(
-		TriggerGroup.visible = bool
-		PhysicsTriggerEnter.visible = bool
-		PhysicsTriggerExit.visible = bool
-		PhysicsTriggerStay.visible = bool
+		TriggerGroup.enabled = bool
+		PhysicsTriggerEnter.enabled = bool
+		PhysicsTriggerExit.enabled = bool
+		PhysicsTriggerStay.enabled = bool
 	)
 	
 	fn togglePlane bool =
 	(
-		PlaneGroup.visible = bool
-		PlaneOffset.visible = bool
-		PlaneLabel.visible = bool
-		PlaneX.visible = bool
-		PlaneY.visible = bool
-		PlaneZ.visible = bool
+		PlaneGroup.enabled = bool
+		PlaneOffset.enabled = bool
+		PlaneNormal.enabled = bool
+		PlaneX.enabled = bool
+		PlaneY.enabled = bool
+		PlaneZ.enabled = bool
+		LabelX.enabled = bool
+		LabelY.enabled = bool
+		LabelZ.enabled = bool
 	)
 	
 	fn toggleLights bool =
@@ -250,7 +269,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 			toggleUnsupportedGroup false
 			toggleCamerasGroup false
 			GeometryLabel.text = textLabel
-			UABSetProperties.height = 434
+			UABSetProperties.height = 494
 		)
 		else
 		(
@@ -327,6 +346,10 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 			setUserProp Obj "on_trigger_enter" ("OnEnter"+Obj.name)
 			setUserProp Obj "on_trigger_exit" ("OnExit"+Obj.name)
 			setUserProp Obj "on_trigger_stay" ("OnStay"+Obj.name)
+			setUserProp Obj "plane_offset" 0
+			setUserProp Obj "plane_normal_x" 0
+			setUserProp Obj "plane_normal_y" 1
+			setUserProp Obj "plane_normal_z" 0
 		) else if(SuperClassOf Obj == light) then
 		(
 			setUserProp Obj "light_export" true
@@ -374,14 +397,19 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 				RenderVisibleBox.checked = getUserProp Objs[1] "render_visible"
 				
 				case getUserProp Objs[1] "render_layer" of
-					(
-						"solid": RenderLayerList.selection = 1
-						"alpha_objects": RenderLayerList.selection = 2
-						"alpha_blend_objects": RenderLayerList.selection = 3
-						"particles": RenderLayerList.selection = 4
-						"skybox": RenderLayerList.selection = 5
-						"triggers": RenderLayerList.selection = 6
-					)
+				(
+					"solid": RenderLayerList.selection = 1
+					"alpha_objects": RenderLayerList.selection = 2
+					"alpha_blend_objects": RenderLayerList.selection = 3
+					"particles": RenderLayerList.selection = 4
+					"skybox": RenderLayerList.selection = 5
+					"triggers": RenderLayerList.selection = 6
+				)
+				
+				if getUserProp Objs[1] "render_layer" == "triggers" then
+					toggleTriggers true
+				else
+					toggleTriggers false
 			
 				AnimModelText.text = getUserProp Objs[1] "anim_model_core"
 				CinematicBox.checked = getUserProp Objs[1] "cinematic_object"
@@ -396,27 +424,38 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 			(
 				togglePhysics true
 				case getUserProp Objs[1] "physics_generate_type" of
-					(
-						"triangle_mesh": PhysicsGenerateList.selection = 1
-						"convex_shape": PhysicsGenerateList.selection = 2
-						"box_shape": PhysicsGenerateList.selection = 3
-						"sphere_shape": PhysicsGenerateList.selection = 4
-						"plane_shape": PhysicsGenerateList.selection = 5
-						"capsule_shape": PhysicsGenerateList.selection = 6
-					)
-			
+				(
+					"triangle_mesh": PhysicsGenerateList.selection = 1
+					"convex_shape": PhysicsGenerateList.selection = 2
+					"box_shape": PhysicsGenerateList.selection = 3
+					"sphere_shape": PhysicsGenerateList.selection = 4
+					"plane_shape": PhysicsGenerateList.selection = 5
+					"capsule_shape": PhysicsGenerateList.selection = 6
+				)
+				
+				if getUserProp Objs[1] "physics_generate_type" == "plane_shape" then
+					togglePlane true
+				else
+					togglePlane false
+				
 				case getUserProp Objs[1] "physics_layer" of
-					(
-						"plane": PhysicsLayerList.selection = 1
-						"objects": PhysicsLayerList.selection = 2
-						"triggers": PhysicsLayerList.selection = 3
-						"player": PhysicsLayerList.selection = 4
-					)
+				(
+					"plane": PhysicsLayerList.selection = 1
+					"objects": PhysicsLayerList.selection = 2
+					"triggers": PhysicsLayerList.selection = 3
+					"player": PhysicsLayerList.selection = 4
+				)
 					
 				PhysicsMaterialText.text = getUserProp Objs[1] "physics_material"
 				PhysicsTriggerEnter.text = getUserProp Objs[1] "on_trigger_enter"
 				PhysicsTriggerExit.text = getUserProp Objs[1] "on_trigger_exit"
 				PhysicsTriggerStay.text = getUserProp Objs[1] "on_trigger_stay"
+				
+				PlaneOffset.value = getUserProp Objs[1] "plane_offset"
+				PlaneX.value = getUserProp Objs[1] "plane_normal_x"
+				PlaneY.value = getUserProp Objs[1] "plane_normal_y"
+				PlaneZ.value = getUserProp Objs[1] "plane_normal_z"
+				
 			) else (
 				togglePhysics false
 				PhysicsMaterialText.text = ""
@@ -427,9 +466,9 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 			
 			LogicGenerateBox.checked = getUserProp Objs[1] "logic_generate"
 			case getUserProp Objs[1] "logic_generate_type" of
-				(
-					"stairs": LogicGenerateList.selection = 1
-				)
+			(
+				"stairs": LogicGenerateList.selection = 1
+			)
 		) else if(SuperClassOf Objs[1] == light) then
 		(
 			LightExportBox.checked = getUserProp Objs[1] "light_export"
@@ -562,6 +601,11 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 					) else (
 						setUserProp Objs[i] "on_trigger_stay" PhysicsTriggerStay.text
 					)
+					
+					setUserProp Objs[i] "plane_offset" PlaneOffset.value
+					setUserProp Objs[i] "plane_normal_x" PlaneX.value
+					setUserProp Objs[i] "plane_normal_y" PlaneY.value
+					setUserProp Objs[i] "plane_normal_z" PlaneZ.value
 				
 				) else (
 					setUserProp Objs[i] "physics_generate" false
@@ -659,11 +703,17 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 	on PhysicsGenerateBox changed false do
 	(
 		togglePhysics false
+		toggleTriggers false
+		togglePlane false
 	)
 	
 	on PhysicsGenerateBox changed true do
 	(
 		togglePhysics true
+		if PhysicsGenerateList.selection == 5 then
+			togglePlane true
+		if RenderLayerList.selection == 6 then
+			toggleTriggers true
 	)
 	
 	on LightExportBox changed false do
@@ -794,7 +844,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 				setProperties Obj
 				
 			) else (
-				
+					
 				if queryBox "Hacer Set a una cámara diferente al del Get?" title:"ATENCIÓN!" beep:true then
 				(
 					Obj = $
@@ -805,6 +855,22 @@ rollout UABSetProperties "UABSetProperties" width:280 height:434
 				)
 			)
 		)
+	)
+	
+	on RenderLayerList selected itm do
+	(
+		if itm == 6 and PhysicsGenerateBox.checked then
+			toggleTriggers true
+		else
+			toggleTriggers false
+	)
+	
+	on PhysicsGenerateList selected itm do
+	(
+		if itm == 5 and PhysicsGenerateBox.checked then
+			togglePlane true
+		else
+			togglePlane false
 	)
 	
 	on UABSetProperties open do
