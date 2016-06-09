@@ -13,6 +13,7 @@ CCinematicObject::CCinematicObject(CXMLTreeNode &TreeNode):m_RenderableObject(nu
 
 	m_PivotPosition = m_RenderableObject->GetPosition();
 	m_PivotRotation = m_RenderableObject->GetRotation();
+	m_PivotScale = m_RenderableObject->GetScale();
 
 	for (int i = 0; i < TreeNode.GetNumChildren(); ++i)
 	{
@@ -77,12 +78,19 @@ void CCinematicObject::Update(float _ElapsedTime)
 
 			Vect3f l_scaleI = m_CinematicObjectKeyFrames[m_CurrentKeyFrame]->GetScale();
 			Vect3f l_scaleF = m_CinematicObjectKeyFrames[m_CurrentKeyFrame+1]->GetScale();
+
+
+			Vect3f l_RelPos = (((l_pF - l_pI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pI;
+			Quatf l_RelRot = l_RI.slerp(l_RF, ((m_CurrentTime - l_tI) / (l_tF - l_tI)));
+			Vect3f l_RelSca = (((l_scaleF - l_scaleI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_scaleI;
 			
-			m_RenderableObject->SetPosition((((l_pF - l_pI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pI);	
 
-			m_RenderableObject->SetRotation(l_RI.slerp(l_RF, ((m_CurrentTime - l_tI) / (l_tF - l_tI))));
+			m_RenderableObject->SetPosition(m_PivotPosition+l_RelPos);	
 
-			m_RenderableObject->SetScale((((l_scaleF - l_scaleI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_scaleI);		
+
+			m_RenderableObject->SetRotation(l_RelRot*m_PivotRotation);
+
+			m_RenderableObject->SetScale(Vect3f(m_PivotScale.x*l_RelSca.x, m_PivotScale.y*l_RelSca.y, m_PivotScale.z*l_RelSca.z));
 		}
 	}
 

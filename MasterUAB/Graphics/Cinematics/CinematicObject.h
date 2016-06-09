@@ -1,6 +1,8 @@
 #ifndef H_CINEMATIC_OBJECT_H
 #define H_CINEMATIC_OBJECT_H
 
+#include "Math\Vector3.h"
+#include "Math\Quatn.h"
 #include "Cinematics\CinematicPlayer.h"
 #include <stdlib.h>
 #include <vector>
@@ -18,6 +20,7 @@ private:
 
 	Vect3f m_PivotPosition;
 	Quatf  m_PivotRotation;
+	Vect3f m_PivotScale;
 
 	float calculateBestAngle(float _Current, float _Next);
 public:
