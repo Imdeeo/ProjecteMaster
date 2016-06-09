@@ -118,7 +118,7 @@ public:
 	// Shadowmap
 	void SetGenerateShadowMap(bool _GenerateShadowMap){ m_GenerateShadowMap = _GenerateShadowMap; }
 	bool GetGenerateShadowMap()const{ return m_GenerateShadowMap; }
-
+	void CreateShadowMap(CDynamicTexture *_ShadowMap){ m_ShadowMap = _ShadowMap; m_ShadowMaskTexture = nullptr; };
 	CDynamicTexture* GetShadowMap();
 	CTexture* GetShadowMaskTexture();
 	const Mat44f & GetViewShadowMap()const{ return m_ViewShadowMap; }
