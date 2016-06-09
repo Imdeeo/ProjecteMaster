@@ -250,7 +250,7 @@ int CAStar::SearchForPath(const Vect3f &pointA, const Vect3f &pointB) {
 
 Vect3f CAStar::GetActualPoint()
 {
-	if (m_PathPoints.size() > 0 && m_IndexPoint < m_PathPoints.size())
+	if (m_PathPoints.size() > 0 && m_IndexPoint < (int)m_PathPoints.size())
 		return m_PathPoints[m_IndexPoint];
 	else
 		return Vect3f(0.0f, 0.0f, 0.0f);
@@ -258,7 +258,7 @@ Vect3f CAStar::GetActualPoint()
 
 void CAStar::IncrementActualPoint()
 {
-	if (m_IndexPoint < m_PathPoints.size() - 1)
+	if (m_IndexPoint < (int)m_PathPoints.size() - 1)
 		m_IndexPoint += 1;
 }
 
@@ -272,7 +272,7 @@ CAStar::TNodePatrol* CAStar::GetActualPatrolPoint(std::string _patrolName)
 
 void CAStar::IncrementActualPatrolPoint(std::string _patrolName)
 {
-	if (m_IndexPathPatrolPoint < m_NodePatrolPath[_patrolName].size() - 1)
+	if (m_IndexPathPatrolPoint < (int)m_NodePatrolPath[_patrolName].size() - 1)
 		m_IndexPathPatrolPoint += 1;
 	else
 		m_IndexPathPatrolPoint = 0;

@@ -49,6 +49,7 @@ protected:
 	Mat44f m_ProjectionShadowMap;
 
 	CColor m_Color;
+	void Destroy();
 
 public:
 

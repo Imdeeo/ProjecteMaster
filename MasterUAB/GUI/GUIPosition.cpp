@@ -16,8 +16,8 @@ CGUIPosition::CGUIPosition(float _x, float _y, float _w, float _h,
 	default:
 		assert(false);
 	case CGUIManager::GUICoordType::GUI_ABSOLUTE:
-		m_width = _w;
-		m_height = _h;
+		m_width = (int)_w;
+		m_height = (int)_h;
 		break;
 	case CGUIManager::GUICoordType::GUI_RELATIVE:
 
@@ -45,15 +45,15 @@ CGUIPosition::CGUIPosition(float _x, float _y, float _w, float _h,
 		unitPixelSizeY = 1;
 		break;
 	case CGUIManager::GUICoordType::GUI_RELATIVE:
-		unitPixelSizeX = l_Width;
-		unitPixelSizeY = l_Height;
+		unitPixelSizeX = (float)l_Width;
+		unitPixelSizeY = (float)l_Height;
 	case CGUIManager::GUICoordType::GUI_RELATIVE_WIDTH:
-		unitPixelSizeX = l_Width;
-		unitPixelSizeY = l_Width;
+		unitPixelSizeX = (float)l_Width;
+		unitPixelSizeY = (float)l_Width;
 		break;
 	case CGUIManager::GUICoordType::GUI_RELATIVE_HEIGHT:
-		unitPixelSizeX = l_Height;
-		unitPixelSizeY = l_Height;
+		unitPixelSizeX = (float)l_Height;
+		unitPixelSizeY = (float)l_Height;
 		break;
 	}
 	float l_x, l_y;
