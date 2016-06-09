@@ -245,12 +245,12 @@ bool CFrustum::Render(CRenderManager *_RenderManager){
 	CEffectManager::SetSceneConstants(l_EffectTechnique);
 
 	//Planes
-	Vect4f l_Plane1 = Vect4f(m_Frustum[0][0], m_Frustum[0][1], m_Frustum[0][2], m_Frustum[0][3]);
-	Vect4f l_Plane2 = Vect4f(m_Frustum[1][0], m_Frustum[1][1], m_Frustum[1][2], m_Frustum[1][3]);
-	Vect4f l_Plane3 = Vect4f(m_Frustum[2][0], m_Frustum[2][1], m_Frustum[2][2], m_Frustum[2][3]);
-	Vect4f l_Plane4 = Vect4f(m_Frustum[3][0], m_Frustum[3][1], m_Frustum[3][2], m_Frustum[3][3]);
-	Vect4f l_Plane5 = Vect4f(m_Frustum[4][0], m_Frustum[4][1], m_Frustum[4][2], m_Frustum[4][3]);
-	Vect4f l_Plane6 = Vect4f(m_Frustum[5][0], m_Frustum[5][1], m_Frustum[5][2], m_Frustum[5][3]);
+	Vect4f l_Plane1 = Vect4f(m_Frustum[0][0], m_Frustum[0][1], m_Frustum[0][2], -m_Frustum[0][3]);
+	Vect4f l_Plane2 = Vect4f(m_Frustum[1][0], m_Frustum[1][1], m_Frustum[1][2], -m_Frustum[1][3]);
+	Vect4f l_Plane3 = Vect4f(m_Frustum[2][0], m_Frustum[2][1], m_Frustum[2][2], -m_Frustum[2][3]);
+	Vect4f l_Plane4 = Vect4f(m_Frustum[3][0], m_Frustum[3][1], m_Frustum[3][2], -m_Frustum[3][3]);
+	Vect4f l_Plane5 = Vect4f(m_Frustum[4][0], m_Frustum[4][1], m_Frustum[4][2], -m_Frustum[4][3]);
+	Vect4f l_Plane6 = Vect4f(m_Frustum[5][0], m_Frustum[5][1], m_Frustum[5][2], -m_Frustum[5][3]);
 
 	//Top Vertexes
 	Vect3f l_Point1;
