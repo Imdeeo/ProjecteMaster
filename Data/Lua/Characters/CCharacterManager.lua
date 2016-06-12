@@ -2,6 +2,7 @@ dofile("Data\\Lua\\Player\\CPlayer.lua")
 dofile("Data\\Lua\\Enemies\\CEnemy.lua")
 dofile("Data\\Lua\\Enemies\\FogEnemy\\FogEnemy.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonEnemy.lua")
+dofile("Data\\Lua\\Enemies\\TurretEnemy\\TurretEnemy.lua")
 
 class 'CCharacterManager'
 	function CCharacterManager:__init()
@@ -32,9 +33,11 @@ class 'CCharacterManager'
 					elseif l_Type == "FogAutomaton" then
 						local l_Enemy = CFogEnemy(l_Atts)
 						UABEngine:get_game_play_manager():add_component(l_Enemy)
-						table.insert(self.m_Enemics, l_Enemy)			
+						table.insert(self.m_Enemics, l_Enemy)	
 					elseif l_Type == "Turret" then
-						utils_log("other")
+						local l_Enemy = CTurretEnemy(l_Atts)
+						UABEngine:get_game_play_manager():add_component(l_Enemy)
+						table.insert(self.m_Enemics, l_Enemy)
 					elseif l_Type == "Whisperer" then
 						utils_log("other")
 					end
