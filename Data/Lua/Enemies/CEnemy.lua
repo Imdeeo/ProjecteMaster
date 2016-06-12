@@ -15,9 +15,12 @@ class 'CEnemy' (CLUAComponent)
 		self.m_Gravity = -9.81
 		self.m_WalkSpeed = 0.5
 		self.m_RunSpeed = 2.5
-		self.m_AngularSpeed = 1000.0
+		self.m_AngularWalkSpeed = 1000.0
+		self.m_AngularRunSpeed = 250.0
 		self.m_TimerRotation = 0.0
+		self.m_DefaultPosition = self.m_RenderableObject:get_position()
 		self.m_Patrol = _TreeNode:get_bool_property("patrol", false, false)
+		self.m_State = "off"
 		
 		-- TODO: get group numbers somehow
 		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
@@ -43,5 +46,68 @@ class 'CEnemy' (CLUAComponent)
 	
 	function CEnemy:Update(_ElapsedTime)
 		utils_log("CEnemy:Update")
+	end
+	
+	function CEnemy:PlayerVisible(_Owner)
+		local l_OwnerHeadPos = _Owner:get_position() + self.m_HeadOffset
+		local l_PlayerPos = self.m_PhysXManager:get_character_controler_pos("player")
+		
+		-- not visible if too far
+		local l_Dist = l_PlayerPos:distance(l_OwnerHeadPos)
+		if l_Dist > self.m_MaxDistance then
+			return false
+		end
+
+		-- not visible if out of angle
+		local l_PlayerDirection = l_PlayerPos - l_OwnerHeadPos
+		l_PlayerDirection:normalize(1.0)
+		local l_Forward = _Owner:get_rotation():get_forward_vector()
+		local l_Dot = l_Forward * l_PlayerDirection
+		if l_Dot < math.cos(self.m_MaxAngle) then
+		  return false
+		end
+
+		-- not visible if behind an obstacle
+		-- TODO: some raycasts from enemy's head to different parts of player
+		local l_RaycastData = RaycastData()
+		local l_Hit = self.m_PhysXManager:raycast(
+			l_OwnerHeadPos, l_PlayerPos,
+			self.m_PhysXGroups, l_RaycastData
+		)
+		
+		if l_Hit and l_RaycastData.actor_name ~= "player" then
+		  self.m_BlockingObjectName = l_RaycastData.actor_name
+		  return false
+		end
+
+		-- otherwise visible
+		self.m_BlockingObjectName = nil
+		return true
+	end
+		
+	function CEnemy:EnemyWalk(_Owner, _DesiredPos, _MoveSpeed, _PercentRotation, _ElapsedTime)
+		-- enemy always walks in forward direction
+		local l_EnemyForward = _Owner:get_rotation():get_forward_vector():get_normalized(1)
+		local l_EnemyPos = _Owner:get_position()
+		_Owner:set_position(l_EnemyPos + (l_EnemyForward * _MoveSpeed * _ElapsedTime))	
+
+		-- with the rotation, the enemy chases to the player
+		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)	
+		local l_Angle = l_EnemyForward * l_Direction
+		if 1.0 - l_Angle < 0.01 then
+		  return
+		end
+		
+		local angle_to_turn = math.acos(l_Angle)
+		local cross = l_Direction ^ l_EnemyForward
+		if cross.y < 0.0 then
+		  angle_to_turn = -angle_to_turn
+		end
+		
+		local quat_to_turn = Quatf()
+		quat_to_turn:quat_from_yaw_pitch_roll(angle_to_turn, 0.0, 0.0)		
+		
+		local target_quat = _Owner:get_rotation():slerp(_Owner:get_rotation() * quat_to_turn, _PercentRotation)
+		_Owner:set_rotation(target_quat)
 	end
 --end
