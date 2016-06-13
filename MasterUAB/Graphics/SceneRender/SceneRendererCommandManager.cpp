@@ -9,6 +9,7 @@
 #include "RenderLayerSceneRendererCommand.h"
 #include "PresentSceneRendererCommand.h"
 #include "RenderDebugLightsSceneRendererCommand.h"
+#include "RenderDebugFrustumSceneRendererCommand.h"
 #include "RenderAntTweakBarSceneRendereCommand.h"
 #include "RenderGridSceneRendererCommand.h"
 #include "DrawQuadRendererCommand.h"
@@ -108,6 +109,10 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				else if (l_Element.GetName() == std::string("render_debug_lights"))
 				{
 					AddResource(l_Name, new CRenderDebugLightsSceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("render_debug_frustum"))
+				{
+					AddResource(l_Name, new CRenderDebugFrustumSceneRendererCommand(l_Element));
 				}
 				else if (l_Element.GetName() == std::string("render_debug_layer"))
 				{

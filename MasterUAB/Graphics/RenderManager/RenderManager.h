@@ -26,6 +26,8 @@ class IDXGISwapChain;
 class ID3D11RenderTargetView;
 class ID3D11DepthStencilView;
 
+class CEmptyPointerClass;
+
 class CRenderManager
 {
 public:
@@ -36,6 +38,7 @@ public:
 
 	void SetCurrentCamera(const CCamera& _CurrentCamera);
 	const CCamera *GetCurrentCamera();
+	CFrustum* GetFrustum();
 	void SetDebugCamera(const CCamera& _DebugCamera) { m_DebugCamera = _DebugCamera; }
 
 	void SetUseDebugCamera(bool _use) { m_UseDebugCamera = _use; }
@@ -74,6 +77,9 @@ public:
 	ID3D11DeviceContext* GetDeviceContext();
 	IDXGISwapChain*	GetSwapChain();
 
+	float GetFrameRate();
+	CEmptyPointerClass *GetFrameRateAddress();
+
 
 private:
 
@@ -96,6 +102,9 @@ private:
 	
 	CContextManager*				m_ContextManager;
 
+	float m_FrameRate;
+	unsigned int m_FrameCounter;
+	float m_LastFPSMeasurementTime;
 };
 
 #endif //RENDER_MANAGER_H

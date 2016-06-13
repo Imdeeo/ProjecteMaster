@@ -26,7 +26,7 @@ public:
 	CLightManager();
 	virtual ~CLightManager();
 	bool Load(const std::string &FileName);
-
+	bool CreateNewLight(std::string _name, std::string _type);
 #ifdef _DEBUG
 	bool Render(CRenderManager *RenderManager);
 #endif
@@ -41,6 +41,7 @@ public:
 	void GetRenderLights(bool _RenderLights){ m_RenderLights = _RenderLights; }
 	bool IsRenderLights(){ return m_RenderLights; }
 	bool SwitchRenderLights(){ m_RenderLights = !m_RenderLights; return m_RenderLights; }
+	void Save();
 };
 
 #endif //LIGHT_MANAGER_H

@@ -72,17 +72,12 @@ void CAStar::LoadMap(std::string _filename)
 }
 
 void CAStar::DestroyMap() {
-	for (size_t i = 0; i<m_openList.size(); i++)
-	{
-		CHECKED_DELETE(m_openList[i]);
-	}
-	m_openList.clear();
-
 	for (TNodeMap::iterator l_iterator = m_map.begin(); l_iterator != m_map.end(); l_iterator++)
 	{
 		delete l_iterator->second;
 	}
 	m_map.clear();
+	m_openList.clear();
 }
 
 //void CAStar::Render( LPDIRECT3DDEVICE9 device ) {
@@ -255,7 +250,7 @@ int CAStar::SearchForPath(const Vect3f &pointA, const Vect3f &pointB) {
 
 Vect3f CAStar::GetActualPoint()
 {
-	if (m_PathPoints.size() > 0)
+	if (m_PathPoints.size() > 0 && m_IndexPoint < (int)m_PathPoints.size())
 		return m_PathPoints[m_IndexPoint];
 	else
 		return Vect3f(0.0f, 0.0f, 0.0f);
@@ -263,7 +258,7 @@ Vect3f CAStar::GetActualPoint()
 
 void CAStar::IncrementActualPoint()
 {
-	if (m_IndexPoint < m_PathPoints.size() - 1)
+	if (m_IndexPoint < (int)m_PathPoints.size() - 1)
 		m_IndexPoint += 1;
 }
 
@@ -277,7 +272,7 @@ CAStar::TNodePatrol* CAStar::GetActualPatrolPoint(std::string _patrolName)
 
 void CAStar::IncrementActualPatrolPoint(std::string _patrolName)
 {
-	if (m_IndexPathPatrolPoint < m_NodePatrolPath[_patrolName].size() - 1)
+	if (m_IndexPathPatrolPoint < (int)m_NodePatrolPath[_patrolName].size() - 1)
 		m_IndexPathPatrolPoint += 1;
 	else
 		m_IndexPathPatrolPoint = 0;

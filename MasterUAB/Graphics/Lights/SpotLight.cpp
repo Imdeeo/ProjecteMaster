@@ -10,6 +10,13 @@
 
 CSpotLight::CSpotLight():CDirectionalLight(),m_Angle(0.0f),m_FallOff(0.0f){}
 
+CSpotLight::CSpotLight(std::string _name) : CDirectionalLight(_name), m_Angle(0.0f), m_FallOff(0.0f)
+{
+	m_Type = GetLightTypeByName("spot");
+	m_ShadowMap = new CDynamicTexture("shadowmap", 512, 512, true, "r32");
+	m_ShadowMaskTexture = nullptr;
+}
+
 CSpotLight::CSpotLight(CXMLTreeNode &TreeNode) : CDirectionalLight(TreeNode)
 {
 	m_Angle = TreeNode.GetFloatProperty("angle",1.f);
@@ -101,3 +108,22 @@ CRenderableVertexs* CSpotLight::GetShape(CRenderManager *_RenderManager)
 	return _RenderManager->GetDebugRender()->GetCone();
 }
 #endif
+
+void CSpotLight::Save(FILE* _File)
+{
+	if (m_GenerateShadowMap)
+	{ 
+		fprintf_s(_File, "\t<light name=\"%s\" enabled=\"%s\" type=\"spot\" pos=\"%f %f %f\" dir=\"%f %f %f\" color=\"%f %f %f %f\" angle=\"%f\" fall_off=\"%f\" att_start_range=\"%f\" "
+			"att_end_range=\"%f\" intensity=\"%f\" generate_shadow_map=\"true\" shadow_map_width=\"%i\" shadow_map_height=\"%i\" shadow_map_format=\"%s\" shadow_texture_mask=\"%s\"/>\n",
+			m_Name.c_str(), m_Enabled ? "true" : "false", m_Position.x, m_Position.y, m_Position.z, m_Direction.x, m_Direction.y, m_Direction.z, m_Color.GetRed(), m_Color.GetGreen(), m_Color.GetBlue(), m_Color.GetAlpha(),
+			m_Angle, m_FallOff, m_StartRangeAttenuation, m_EndRangeAttenuation, m_Intensity, m_ShadowMap->GetWidth(), m_ShadowMap->GetHeight(), m_ShadowMap->GetFormat().c_str(), 
+			m_ShadowMaskTexture != NULL ? m_ShadowMaskTexture->GetName().c_str() : "");
+	}
+	else
+	{
+		fprintf_s(_File, "\t<light name=\"%s\" enabled=\"%s\" type=\"spot\" pos=\"%f %f %f\" dir=\"%f %f %f\" color=\"%f %f %f %f\" angle=\"%f\" fall_off=\"%f\" "
+			"att_start_range=\"%f\" att_end_range=\"%f\" intensity=\"%f\" generate_shadow_map=\"false\"/>\n",
+			m_Name.c_str(), m_Enabled ? "true" : "false", m_Position.x, m_Position.y, m_Position.z, m_Direction.x, m_Direction.y, m_Direction.z, m_Color.GetRed(), 
+			m_Color.GetGreen(), m_Color.GetBlue(), m_Color.GetAlpha(), m_Angle, m_FallOff, m_StartRangeAttenuation, m_EndRangeAttenuation, m_Intensity);
+	}
+}

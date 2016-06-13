@@ -104,7 +104,6 @@
 #include "IA\AStar.h"
 
 #include "Application.h"
-#include "GamePlayManager.h"
 
 #include "XML\XMLTreeNode.h"
 #include "Utils.h"
@@ -158,19 +157,20 @@ CScriptManager::~CScriptManager()
 
 struct CLUAComponent_wrapper : CLUAComponent, luabind::wrap_base
 {
-	CLUAComponent_wrapper(const std::string &Name, CRenderableObject *Owner)
-		: CLUAComponent(Name, Owner)
+	CLUAComponent_wrapper(const std::string &Name, CRenderableObject *Owner, const	std::string &FnOnCreate, const std::string &FnOnDestroy, const std::string &FnOnUpdate,
+		const std::string &FnOnRender, const std::string &FnOnRenderDebug)
+		: CLUAComponent(Name, Owner, FnOnCreate, FnOnDestroy, FnOnUpdate,FnOnRender, FnOnRenderDebug)
 	{}
 
-	virtual void Update(float _ElapsedTime)
+	/*virtual void f(int a)
 	{
-		call<void>("Update", _ElapsedTime);
+		call<void>("f", a);
 	}
 
-	static void default_Update(CLUAComponent* ptr, float _ElapsedTime)
+	static void default_f(CLUAComponent* ptr, int a)
 	{
-		return ptr->CLUAComponent::Update(_ElapsedTime);
-	}
+		return ptr->CLUAComponent::f(a);
+	}*/
 };
 
 //Código de la función Alert que se llamará al generarse algún error de LUA
@@ -417,10 +417,16 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<CLUAComponent, CLUAComponent_wrapper>("CLUAComponent")
-			.def(constructor<const std::string &, CRenderableObject *>())
-			.def("Update", &CLUAComponent::Update, &CLUAComponent_wrapper::default_Update)
-		];
+		class_<CUABComponentManager>("CUABComponentManager")
+			.def("get_resource", &CUABComponentManager::GetResource)
+			.def("add_resource", &CUABComponentManager::AddResource)
+	];
+
+	//module(m_LS)[
+	//	class_<CLUAComponent, CLUAComponent_wrapper>("CLUAComponent")
+	//		.def(constructor<>())
+	//		.def("f", &base::f, &base_wrapper::default_f)
+	//	];
 
 	luabind::module(m_LS) [ luabind::def("create_scripted_component", &CreateScriptedComponent) ];
 
@@ -438,7 +444,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_name", &CXMLTreeNode::GetName)
 			.def("get_psz_property", &CXMLTreeNode::GetPszProperty)
 			.def("get_float_property", &CXMLTreeNode::GetFloatProperty)
-			.def("get_bool_property", &CXMLTreeNode::GetBoolProperty)
 	];
 
 // CORE---------------------------------------------------------------------------------------------
@@ -541,7 +546,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_time_scale", &CUABEngine::GetTimeScale)
 			.def("set_time_scale", &CUABEngine::SetTimeScale)
 			.def("quit", &CUABEngine::Quit)
-			.def("get_game_play_manager", &CUABEngine::GetGamePlayManager)
+			.def("get_frustum_active", &CUABEngine::GetFrustumActive)
+			.def("set_frustum_active", &CUABEngine::SetFrustumActive)
 	];
 
 	// InputManager-------------------------------------------------------------------------------------
@@ -619,7 +625,9 @@ void CScriptManager::RegisterLUAFunctions()
 	// RenderableObjects------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CRenderableObject, bases<C3DElement, CNamed>>("CRenderableObject")
+			.def("update", &CRenderableObject::Update)
 			.def("render", &CRenderableObject::Render)
+			.def("get_component_manager", &CRenderableObject::GetComponentManager)
 	];
 
 	RegisterTemplatedVectorMapManager<CRenderableObject>(m_LS);
@@ -1004,14 +1012,10 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_color_lua_address", &CLight::GetColorLuaAdress)
 			.def("set_color", &CLight::SetColor)
 			.def("get_intensity", &CLight::GetIntensity)
-			.def("get_enable_lua_address", &CLight::GetEnableLuaAdress)
-			.def("get_intensity_lua_address", &CLight::GetIntensityLuaAdress)
 			.def("set_intensity", &CLight::SetIntensity)
 			.def("get_start_range_attenuation", &CLight::GetStartRangeAttenuation)
-			.def("get_start_range_attenuation_lua_address", &CLight::GetStartRangeAttenuationLuaAdress)
 			.def("set_start_range_attenuation", &CLight::SetStartRangeAttenuation)
 			.def("get_end_range_attenuation", &CLight::GetEndRangeAttenuation)
-			.def("get_end_range_attenuation_lua_address", &CLight::GetEndRangeAttenuattionLuaAdress)
 			.def("set_end_range_attenuation", &CLight::SetEndRangeAttenuation)
 			.def("get_enabled", &CLight::GetEnabled)
 			.def("set_enabled", &CLight::SetEnabled)
@@ -1020,6 +1024,11 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render", &CLight::Render)
 			.def("get_light_type_by_name", &CLight::GetLightTypeByName)
 			.def("get_generate_shadowmap_lua_address", &CLight::GetGenerateShadowMapLuaAdress)
+			.def("get_enable_lua_address", &CLight::GetEnableLuaAdress)
+			.def("get_intensity_lua_address", &CLight::GetIntensityLuaAdress)
+			.def("get_position_lua_address", &CLight::GetPositionLuaAddress)
+			.def("get_start_range_attenuation_lua_address", &CLight::GetStartRangeAttenuationLuaAdress)
+			.def("get_end_range_attenuation_lua_address", &CLight::GetEndRangeAttenuattionLuaAdress)
 	];
 
 	RegisterTemplatedVectorMapManager<CLight>(m_LS);
@@ -1039,6 +1048,8 @@ void CScriptManager::RegisterLUAFunctions()
 #endif
 			.def("reload", &CLightManager::Reload)
 			.def("get_ambient_light", &CLightManager::GetAmbientLight)
+			.def("save", &CLightManager::Save)
+			.def("create_new_light", &CLightManager::CreateNewLight)
 	];
 
 	module(m_LS)[
@@ -1124,6 +1135,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_use_debug_camera", &CRenderManager::SetUseDebugCamera)
 			//.def("add_renderable_object_to_render_list", &CRenderManager::AddRenderableObjectToRenderList)
 			.def("render", &CRenderManager::Render)
+			.def("get_frame_rate", &CRenderManager::GetFrameRate)
+			.def("get_frame_rate_address", &CRenderManager::GetFrameRateAddress)
 	];
 
 	// StaticMesh-------------------------------------------------------------------------------------
@@ -1476,11 +1489,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update", &CApplication::Update)
 			.def("render", &CApplication::Render)
 			.def("init", &CApplication::Init)
-	];
-
-	module(m_LS)[
-		class_<CGamePlayManager>("CGamePlayManager")
-			.def("add_component", &CGamePlayManager::AddComponent)
 	];
 }
 

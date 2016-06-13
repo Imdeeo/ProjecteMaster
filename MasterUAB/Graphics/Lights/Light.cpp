@@ -16,8 +16,12 @@
 #include "XML\XMLTreeNode.h"
 //#include "RenderManager\RenderManager.h"
 
-CLight::CLight() : CNamed(""), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false)
+CLight::CLight() : CNamed(""), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false), m_GenerateShadowMap(false), m_ShadowMap(nullptr)
 {
+}
+
+CLight::CLight(std::string _name) : CNamed(_name), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false), m_GenerateShadowMap(false), m_ShadowMap(nullptr)
+{	
 }
 
 CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)
@@ -39,7 +43,7 @@ CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)
 		}
 	}
 	if (m_GenerateShadowMap){
-		m_ShadowMap = new CDynamicTexture("shadowmap", TreeNode.GetFloatProperty("shadow_map_width"), TreeNode.GetFloatProperty("shadow_map_height"), true, TreeNode.GetPszProperty("shadow_map_format"));
+		m_ShadowMap = new CDynamicTexture("shadowmap", (int)TreeNode.GetFloatProperty("shadow_map_width"), (int)TreeNode.GetFloatProperty("shadow_map_height"), true, TreeNode.GetPszProperty("shadow_map_format"));
 		//m_ShadowMaskTexture = new CTexture();
 		m_ShadowMaskTexture = nullptr;
 	}
@@ -50,7 +54,13 @@ CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)
 	}
 }
 
-CLight::~CLight(){}
+CLight::~CLight(){
+	Destroy();
+}
+
+void CLight::Destroy() {
+	CHECKED_DELETE(m_ShadowMap);
+}
 
 #ifdef _DEBUG
 void CLight::Render(CRenderManager *_RenderManager)

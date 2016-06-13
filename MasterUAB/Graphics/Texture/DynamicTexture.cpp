@@ -159,3 +159,13 @@ void CDynamicTexture::SetFormat(const std::string &Format)
 	else
 		assert(false);
 }
+
+std::string CDynamicTexture::GetFormat()
+{
+	if (m_Format == 41)
+		return "r32";
+	else if (m_Format == 2)
+		return "rgba32";
+	else
+		return "rgba8";
+}
