@@ -39,6 +39,11 @@ fn QuatToRH &q =
 	q = [-q.x, q.z, -q.y, -q.w]
 )
 
+fn InverseQuat &q =
+(
+	q.w = -q.w
+)
+
 fn TranslationToRH &translation =
 (
 	translation = [-translation.x, translation.z, translation.y]

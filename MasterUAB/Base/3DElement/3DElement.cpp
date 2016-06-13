@@ -6,45 +6,52 @@
 
 C3DElement::C3DElement(void):
 	m_Position(Vect3f(0, 0, 0)),
-	m_Rotation(Quatf(0, 0, 0, 1))
+	m_Rotation(Quatf(0, 0, 0, 1)),
+	m_IsCinematic(false)
 {
 }
 
 C3DElement::C3DElement(const Vect3f &Position):
 	m_Position(Position),
-	m_Rotation(Quatf(0, 0, 0, 1))
+	m_Rotation(Quatf(0, 0, 0, 1)),
+	m_IsCinematic(false)
 {
 }
 
 C3DElement::C3DElement(const Vect3f &Position, const Quatf &Rotation) :
 	m_Position(Position),
-	m_Rotation(Rotation)
+	m_Rotation(Rotation),
+	m_IsCinematic(false)
 {
 }
 
 C3DElement::C3DElement(const Vect3f &Position, float Yaw, float Pitch, float Roll):
 	m_Position(Position),
-	m_Rotation(Quatf(0, 0, 0, 1))
+	m_Rotation(Quatf(0, 0, 0, 1)),
+	m_IsCinematic(false)
 {
 	m_Rotation.QuatFromEuler(Vect3f(Yaw, Pitch, Roll));
 }
 
 C3DElement::C3DElement(const Quatf &Rotation) :
 	m_Position(Vect3f(0, 0, 0)),
-	m_Rotation(Rotation)
+	m_Rotation(Rotation),
+	m_IsCinematic(false)
 {
 }
 
 C3DElement::C3DElement(float Yaw, float Pitch, float Roll):
 	m_Position(Vect3f(0, 0, 0)),
-	m_Rotation(Quatf(0, 0, 0, 1))
+	m_Rotation(Quatf(0, 0, 0, 1)),
+	m_IsCinematic(false)
 {
 	m_Rotation.QuatFromEuler(Vect3f(Yaw, Pitch, Roll));
 }
 
 C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode):
 	m_Position(Vect3f(0, 0, 0)),
-	m_Rotation(Quatf(0, 0, 0, 1))
+	m_Rotation(Quatf(0, 0, 0, 1)),
+	m_IsCinematic(false)
 {
 	CXMLTreeNode l_Element = XMLTreeNode; 
 	const char * existPos = l_Element.GetPszProperty("position");
@@ -106,6 +113,20 @@ const Mat44f & C3DElement::GetTransform()
 
 	m_TransformMatrix = m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
 
+	if (m_IsCinematic)
+	{
+		m_AnimatedScaleMatrix.SetIdentity();
+		m_AnimatedScaleMatrix.Scale(m_AnimatedScale.x, m_AnimatedScale.y, m_AnimatedScale.z);
+
+		m_AnimatedRotationMatrix.SetIdentity();
+		m_AnimatedRotationMatrix = m_AnimatedRotation.rotationMatrix();
+		
+		m_AnimatedTranslationMatrix.SetIdentity();
+		m_AnimatedTranslationMatrix.SetPos(m_AnimatedPosition.x, m_AnimatedPosition.y, m_AnimatedPosition.z);
+
+		m_TransformMatrix = m_TransformMatrix * m_AnimatedScaleMatrix * m_AnimatedRotationMatrix * m_AnimatedTranslationMatrix;
+	}
+
 	return m_TransformMatrix;
 }
 
@@ -118,6 +139,16 @@ void C3DElement::SetPosition(const Vect3f &Position)
 void C3DElement::SetScale(const Vect3f &Scale)
 {
 	m_Scale = Scale;
+}
+
+void C3DElement::SetAnimatedPosition(const Vect3f &Position)
+{
+	m_AnimatedPosition = Position;
+}
+
+void C3DElement::SetAnimatedScale(const Vect3f &Scale)
+{
+	m_AnimatedScale = Scale;
 }
 
 float C3DElement::GetVisible() const

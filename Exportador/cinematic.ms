@@ -11,6 +11,7 @@ fn createCinematicObjects dir filename Objs =
 		local max_time=0
 		local tform
 		local rot
+		local inversrot;
 
 		for l_Obj in Objs do
 		(
@@ -59,10 +60,19 @@ fn createCinematicObjects dir filename Objs =
 				
 					tform = at time l_key l_Obj.transform
 					pos = tform.translation
+					pos.x = pos.x-l_Obj.transform.translation.x
+					pos.y = pos.y-l_Obj.transform.translation.y
+					pos.z = pos.z-l_Obj.transform.translation.z
 					scl = tform.scale
+					scl.x = scl.x/l_Obj.transform.scale.x
+					scl.y = scl.y/l_Obj.transform.scale.y
+					scl.z = scl.z/l_Obj.transform.scale.z
 					TranslationToRH &pos
 					
 					rot = tform.rotation
+					inversrot = l_Obj.transform.rotation
+					InverseQuat &inversrot
+					rot = rot * inversrot
 					QuatToRH &rot
 					
                     format "\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" rotation=\"% % % %\" scale=\"% % %\"/>\n" key pos.x pos.y pos.z rot.x rot.y rot.z rot.w scl.x scl.y scl.z to:file
