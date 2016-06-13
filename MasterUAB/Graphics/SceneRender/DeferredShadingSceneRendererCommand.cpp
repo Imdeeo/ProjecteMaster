@@ -28,10 +28,10 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
 	
 	_RenderManager.GetDeviceContext()->OMSetBlendState(m_EnabledAlphaBlendState, NULL, 0xffffffff);
 
-	for (int i = 0; i < m_StagedTextures.size(); ++i)
+	for (size_t i = 0; i < m_StagedTextures.size(); ++i)
 				m_StagedTextures[i].Activate();
 
-	for (int j = 0; j < UABEngine.GetLightManager()->GetResourcesVector().size(); ++j)
+	for (size_t j = 0; j < UABEngine.GetLightManager()->GetResourcesVector().size(); ++j)
 	{
 		CLight *l_Light = UABEngine.GetLightManager()->GetResourceById(j);
 		if (!l_Light->GetEnabled()) {

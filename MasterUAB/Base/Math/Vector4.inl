@@ -662,3 +662,31 @@ inline Vector4<T> Vector4<T>::GetLerp(const Vector4<T>& otro, const T t) const
 {
 	return Vector4<T>(*this).Lerp(otro, t);
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Obtención del máximo común divisor entre todos los elementos del vector.
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline Vector4<int>& Vector4<int>::Simplify()
+{
+	int gcd;
+	int aux;
+
+	gcd = mathUtils::GCD((*this)[0], (*this)[1]);
+	aux = mathUtils::GCD((*this)[0], (*this)[2]);
+	if (aux < gcd){ gcd = aux; }
+	aux = mathUtils::GCD((*this)[0], (*this)[3]);
+	if (aux < gcd){ gcd = aux; }
+	aux = mathUtils::GCD((*this)[1], (*this)[2]);
+	if (aux < gcd){ gcd = aux; }
+	aux = mathUtils::GCD((*this)[1], (*this)[3]);
+	if (aux < gcd){ gcd = aux; }
+	aux = mathUtils::GCD((*this)[2], (*this)[3]);
+	if (aux < gcd){ gcd = aux; }
+
+	x /= gcd;
+	y /= gcd;
+	z /= gcd;
+	w /= gcd;
+
+	return (*this);
+}

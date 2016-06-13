@@ -11,6 +11,7 @@ m_CharacterManager = CCharacterManager()
 m_menu = true
 m_credits = false
 m_options = false
+m_fps = true
 g_Engine = CUABEngine.get_instance()
 m_MusicSliderResult = CSliderResult(50.0, 50.0)
 m_FxSliderResult = CSliderResult(50.0, 50.0)
@@ -69,6 +70,9 @@ function luaUpdate(_ElapsedTime)
 		m_menu = true
 		CUABEngine.get_instance():set_pause(true)
 	end
+	if CInputManager.get_input_manager():is_action_active("FRUSTUM") then
+		l_Engine:set_frustum_active(not l_Engine:get_frustum_active())
+	end
 	g_VolumeController:CheckVolumeKeys()	
 end
 
@@ -77,6 +81,13 @@ function luaGui()
 	gui_position = CGUIPosition(580, 50, 500, 30, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 	m_Cordura = gui_manager:do_slider("Cordura", "mad_slider", gui_position,0, 100, 100, false)
 			
+	if m_fps then
+		local color = CColor(1,0.2,0.2,1)
+		local coord = Vect2f(1000, 10)
+		local l_FPSText = string.format("%.1f fps", g_Engine:get_render_manager():get_frame_rate())
+		gui_manager:do_text("fontTest", l_FPSText, coord, CGUIManager.top, color)
+	end
+
 	if m_menu then
 		local color = CColor(1,1,1,1)
 		local coord = Vect2f(500,100)

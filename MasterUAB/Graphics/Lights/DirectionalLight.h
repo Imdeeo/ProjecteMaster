@@ -12,6 +12,7 @@ protected:
 	Vect3f m_Direction;
 public:
 	CDirectionalLight();
+	CDirectionalLight(std::string _name);
 	CDirectionalLight(CXMLTreeNode &TreeNode);
 
 	const Vect3f & GetDirection() const { return m_Direction; }
@@ -28,6 +29,7 @@ public:
 #endif
 
 	void SetShadowMap(CRenderManager &RenderManager);
+	void Save(FILE* _File);
 };
 
 #endif //DIRECTIONAL_LIGHT_H

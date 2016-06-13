@@ -37,7 +37,7 @@ void CDrawQuadRendererCommand::Execute(CRenderManager &_RenderManager)
 {
 	if (GetActive())
 	{
-		for (int i = 0; i < m_StagedTextures.size(); i++)
+		for (size_t i = 0; i < m_StagedTextures.size(); i++)
 			m_StagedTextures[i].Activate();
 
 		if (m_Material != nullptr)

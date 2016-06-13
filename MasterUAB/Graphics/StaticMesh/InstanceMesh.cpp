@@ -19,14 +19,12 @@
 CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
 {
 	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(TreeNode.GetPszProperty("core_name"));
-
+	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
+	m_Layer = TreeNode.GetPszProperty("layer");
 	m_GeneratePhysx = TreeNode.GetBoolProperty("create_physics");
 	if (m_GeneratePhysx)
 	{
 		std::string l_Name = GetName();
-		//std::string l_PxType = TreeNode.GetPszProperty("physics_type");
-		//std::string l_PxMaterial = TreeNode.GetPszProperty("physics_material");
-		//std::string l_PxGroup = TreeNode.GetPszProperty("physics_group");
 		m_PxType = TreeNode.GetPszProperty("physics_type");
 		m_PxMaterial = TreeNode.GetPszProperty("physics_material");
 		m_PxGroup = TreeNode.GetPszProperty("physics_group");
@@ -39,10 +37,10 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		Quatf l_Rotation = Quatf(-m_Rotation.x, m_Rotation.y, -m_Rotation.z, -m_Rotation.w);
 
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
-		if (m_PxType == "triangle_mesh")
+		if (m_PxType == "triangle_mesh_shape")
 		{
-			std::vector<Vect3f> l_Vertexs;
-			l_PhysXManager->CreateComplexStaticShape(l_Name, l_Vertexs, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			bool l_FlipNormals = TreeNode.GetBoolProperty("physics_flip_normals");
+			l_PhysXManager->CreateStaticTriangleMesh(GetName(), m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}else if (m_PxType == "sphere_shape")
 		{
 			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
@@ -76,19 +74,23 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 			else
 				l_PhysXManager->CreateSphereTrigger(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction, l_OnTriggerStayLuaFunction, l_OnTriggerExitLuaFunction, l_ActivateActors, l_IsTriggerActive);
 		}
+		else if (m_PxType == "convex_mesh_shape")
+		{
+			l_PhysXManager->CreateStaticConvexMesh(GetName(), m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+		}
 		else if (m_PxType == "box_shape")
 		{
 			if (l_BB.x <= 0)
 			{
-				l_BB.x = 0.001;
+				l_BB.x = 0.001f;
 			}
 			if (l_BB.y <= 0)
 			{
-				l_BB.y = 0.001;
+				l_BB.y = 0.001f;
 			}
 			if (l_BB.z <= 0)
 			{
-				l_BB.z = 0.001;
+				l_BB.z = 0.001f;
 			}
 			l_PhysXManager->CreateStaticBox(GetName(), l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
@@ -99,6 +101,7 @@ CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreNam
 {
 	SetName(Name);
 	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(CoreName);
+	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 }
 
 
@@ -109,7 +112,8 @@ CInstanceMesh::~CInstanceMesh(void)
 
 void CInstanceMesh::Render(CRenderManager *RM)
 {
-	if(GetVisible())
+	CRenderableObject::Render(RM);
+	if(GetVisible() && (GetInsideFrustum() || !UABEngine.GetFrustumActive()))
 	{
 		/*OJUCUIDAO*/ //Exportem els vertex dels objectes en un espai real, per tant si els transformem amb pos rot i scale es lia
 					  //Exportamos los vertices de los objetos en espacio real, asi que al aplicarles la transformada con pos rot y scale, se lia parda
@@ -126,6 +130,7 @@ void CInstanceMesh::RenderDebug(CRenderManager *RM)
 {
 	if (GetDebugRender())
 	{
+		CRenderableObject::RenderDebug(RM);
 		RM->GetContextManager()->SetWorldMatrix(GetTransform());
 		CEffectTechnique * l_ET = RM->GetDebugRender()->GetDebugTechnique();
 		CEffectManager::SetSceneConstants(l_ET);
@@ -160,4 +165,12 @@ void CInstanceMesh::Save(FILE* _File, std::string _layer)
 			m_Name.c_str(), _layer.c_str(), m_StaticMesh->GetName().c_str(), m_Position.x, m_Position.y, m_Position.z,
 			m_Rotation.x, m_Rotation.y, m_Rotation.z, m_Rotation.w, m_Visible ? "true" : "false");		
 	}
+}
+
+bool CInstanceMesh::GetInsideFrustum()
+{
+	if (m_Layer == "skybox")
+		return true;
+	Vect3f l_TransformedPosition = C3DElement::GetTransform() * m_Position;
+	return m_Frustum->SphereVisible(l_TransformedPosition, m_StaticMesh->GetBoundingSphereRadius());
 }
