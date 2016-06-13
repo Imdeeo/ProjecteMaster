@@ -62,6 +62,7 @@ void CCinematicObject::Update(float _ElapsedTime)
 		if(IsFinished())
 		{
 			m_Playing = false;
+			m_RenderableObject->SetIsCinematic(false);
 		}
 		else
 		{
@@ -84,13 +85,19 @@ void CCinematicObject::Update(float _ElapsedTime)
 			Quatf l_RelRot = l_RI.slerp(l_RF, ((m_CurrentTime - l_tI) / (l_tF - l_tI)));
 			Vect3f l_RelSca = (((l_scaleF - l_scaleI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_scaleI;
 			
+			m_RenderableObject->SetIsCinematic(true);
 
-			m_RenderableObject->SetPosition(m_PivotPosition+l_RelPos);	
+			m_RenderableObject->SetAnimatedPosition(l_RelPos);
+			m_RenderableObject->SetAnimatedScale(l_RelSca);
+			m_RenderableObject->SetAnimatedRotation(l_RelRot);
 
 
-			m_RenderableObject->SetRotation(l_RelRot*m_PivotRotation);
+			//m_RenderableObject->SetPosition(m_PivotPosition+l_RelPos);	
 
-			m_RenderableObject->SetScale(Vect3f(m_PivotScale.x*l_RelSca.x, m_PivotScale.y*l_RelSca.y, m_PivotScale.z*l_RelSca.z));
+
+			//m_RenderableObject->SetRotation(l_RelRot*m_PivotRotation);
+
+			//m_RenderableObject->SetScale(Vect3f(m_PivotScale.x*l_RelSca.x, m_PivotScale.y*l_RelSca.y, m_PivotScale.z*l_RelSca.z));
 		}
 	}
 
