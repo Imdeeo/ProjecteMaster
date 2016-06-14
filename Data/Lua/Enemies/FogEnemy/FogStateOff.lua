@@ -9,6 +9,7 @@ end
 function FogOffEnd(args)
 end
 
-function FogOffToTeleportCondition()
+function FogOffToTeleportCondition(args)
+	local l_Enemy = args["self"]
 	return m_CharacterManager.m_Enemics[1].m_off == false
 end

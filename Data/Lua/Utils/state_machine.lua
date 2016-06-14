@@ -64,21 +64,19 @@ function StateMachine:update(args, elapsed_time)
 		state.do_first_function(args)
 		self.states[self.actual_state].is_first = false
 	end
-	
 	state.update_function(args,elapsed_time)
 
 	local change = false
 	local prev_state
 	for i = 0, state.n_conditions - 1 do
 		local cond = state.conditions[i]
-		if cond.condition() then
+		if cond.condition(args) then
 			change = true
 			prev_state = self.actual_state
 			self.actual_state = cond.state2go
 			self.states[self.actual_state].is_first = true
 		end
 	end
-	
 	if(change)then
 		self.states[prev_state].do_end_function(args)
 	end

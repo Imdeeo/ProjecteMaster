@@ -9,6 +9,7 @@ class CRenderManager;
 class CRenderableVertexs
 {
 public:
+	virtual ~CRenderableVertexs() {}
 	virtual bool Render(CRenderManager *RenderManager, CEffectTechnique	*EffectTechnique, void *Parameters, int vertexsToRender = -1)
 	{
 		assert(!"This method mustn't be called");

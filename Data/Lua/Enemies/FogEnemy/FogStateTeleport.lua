@@ -1,13 +1,12 @@
 function FogTeleportFirst(args)
-	local l_Enemy = m_CharacterManager.m_Enemics[1]
+	local l_Enemy = args["self"]
 	l_Enemy.m_teleport_timer = 0
 	l_Enemy.m_chase = false
 end
 
 function FogTeleportUpdate(args, _ElapsedTime)
-	--utils_log("FogTeleportUpdate")
 	local l_Owner = args["owner"]
-	local l_Enemy = m_CharacterManager.m_Enemics[1]
+	local l_Enemy = args["self"]
 	
 	l_Enemy.m_teleport_timer = l_Enemy.m_teleport_timer+_ElapsedTime
 	if l_Enemy.m_teleport_timer > l_Enemy.m_time_to_teleport then
@@ -23,11 +22,13 @@ end
 function FogTeleportEnd(args)
 end
 
-function FogTeleportToOffCondition()
-	return m_CharacterManager.m_Enemics[1].m_off == true
+function FogTeleportToOffCondition(args)
+	local l_Enemy = args["self"]
+	return l_Enemy.m_off == true
 end
 
-function FogTeleportToChaseCondition()
-	return m_CharacterManager.m_Enemics[1].m_chase == true
+function FogTeleportToChaseCondition(args)
+	local l_Enemy = args["self"]
+	return l_Enemy.m_chase == true
 end
 

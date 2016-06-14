@@ -6,6 +6,8 @@ fn createCameras dir Objs =
 	file=createfile (dir+"cameras.xml")
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<cameras>\n" to:file
+	format "\t<camera name=\"MainCamera\" type=\"fps\" target=\"Bruja\" layer=\"solid\" offset=\"1.8\"/>\n" to: file
+	format "\t<camera name=\"DebugCamera\" type=\"spherical\" distance=\"50\"/>\n" to: file
 	if Objs != undefined then
 	(
 		local cameraFileDir
@@ -79,14 +81,8 @@ fn createCameras dir Objs =
 				format "\t<camera name=\"%\" type=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" Objs[i].name cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
 			)
 			max select none
-		)
-		format "\t<camera name=\"MainCamera\" type=\"fps\"/>\n" to: file
-		format "\t<camera name=\"DebugCamera\" type=\"spherical\"/>\n" to: file
-		format "</cameras>\n" to:file
-		close file
-	) else (
-		format "\t<camera name=\"MainCamera\" type=\"fps\"/>\n" to: file
-		format "\t<camera name=\"DebugCamera\" type=\"spherical\"/>\n" to: file
-		format "</cameras>\n" to:file
+		)		
 	)
+	format "</cameras>\n" to:file
+	close file
 )

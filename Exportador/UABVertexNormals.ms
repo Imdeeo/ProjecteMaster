@@ -2,7 +2,6 @@ fn IsSmoothingGroupEnabled IdGroup SmoothValue &ret=
 (
 	local ValueMask = 2^(IdGroup-1)
 	ret = (bit.and SmoothValue ValueMask) == ValueMask
-	--ret = ((bit.and SmoothValue (2^(IdGroup-1) ))==ValueMask)
 )
 
 
