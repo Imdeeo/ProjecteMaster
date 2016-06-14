@@ -173,3 +173,4 @@ UAB_GET_PROPERTY_CPP(CUABEngine,CSceneRendererCommandManager *, SceneRendererCom
 UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,ISoundManager *, SoundManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager *, GamePlayManager)
