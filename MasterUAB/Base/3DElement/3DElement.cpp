@@ -124,7 +124,7 @@ const Mat44f & C3DElement::GetTransform()
 		m_AnimatedTranslationMatrix.SetIdentity();
 		m_AnimatedTranslationMatrix.SetPos(m_AnimatedPosition.x, m_AnimatedPosition.y, m_AnimatedPosition.z);
 
-		m_TransformMatrix = m_TransformMatrix * m_AnimatedScaleMatrix * m_AnimatedRotationMatrix * m_AnimatedTranslationMatrix;
+		m_TransformMatrix = m_AnimatedScaleMatrix * m_AnimatedRotationMatrix * m_AnimatedTranslationMatrix * m_TransformMatrix;
 	}
 
 	return m_TransformMatrix;
