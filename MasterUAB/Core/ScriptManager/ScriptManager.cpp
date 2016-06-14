@@ -875,6 +875,12 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update", &CCinematicObject::Update)
 			.def("on_restart_cycle", &CCinematicObject::OnRestartCycle)
 			.def("get_current_key", &CCinematicObject::GetCurrentKey)
+			.def("get_pivot_position", &CCinematicObject::GetPivotPosition)
+			.def("set_pivot_position", &CCinematicObject::SetPivotPosition)
+			.def("get_pivot_rotation", &CCinematicObject::GetPivotRotation)
+			.def("set_pivot_rotation", &CCinematicObject::SetPivotRotation)
+			.def("get_pivot_scale", &CCinematicObject::GetPivotScale)
+			.def("set_pivot_scale", &CCinematicObject::SetPivotScale)
 	];
 
 	module(m_LS)[
