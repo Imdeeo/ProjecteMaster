@@ -21,6 +21,7 @@
 #include "Particles\ParticleManager.h"
 #include "GUIManager.h"
 #include "SoundManager\SoundManager.h"
+#include "GamePlayManager.h"
 
 CUABEngine::CUABEngine(void)
 {
@@ -45,6 +46,7 @@ CUABEngine::CUABEngine(void)
 	m_GUIManager = new CGUIManager();
 	m_SoundManager = ISoundManager::InstantiateSoundManager();
 	m_FrustumActive = true;
+	m_GamePlayManager = new CGamePlayManager();
 }
 
 CUABEngine::~CUABEngine(void)
@@ -91,6 +93,7 @@ void CUABEngine::Update(float _ElapsedTime)
 		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 		m_LayerManager->Update(l_ElapsedTime);
 		m_ScriptManager->RunCode("luaUpdate(" + std::to_string(l_ElapsedTime) + ")");
+		m_GamePlayManager->Update(l_ElapsedTime);
 	}
 	const CCamera *l_CurrentCamera = m_RenderManager->GetCurrentCamera();
 	GetSoundManager()->Update(l_CurrentCamera);
