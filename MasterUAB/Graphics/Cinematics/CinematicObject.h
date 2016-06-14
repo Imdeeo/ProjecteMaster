@@ -31,6 +31,14 @@ public:
 	void Update(float _ElapsedTime);
 	void OnRestartCycle();
 	void GetCurrentKey();
+
+	void SetPivotPosition(Vect3f _PivotPosition);
+	void SetPivotRotation(Quatf _PivotRotation);
+	void SetPivotScale(Vect3f _PivotScale);
+
+	Vect3f GetPivotPosition();
+	Quatf GetPivotRotation();
+	Vect3f GetPivotScale();
 };
 
 #endif H_CINEMATIC_OBJECT_H

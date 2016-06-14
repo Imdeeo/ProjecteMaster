@@ -151,3 +151,29 @@ void CCinematicObject::GetCurrentKey()
 		}
 	}	
 }
+
+void CCinematicObject::SetPivotPosition(Vect3f _PivotPosition)
+{
+	m_PivotPosition = _PivotPosition;
+}
+void CCinematicObject::SetPivotRotation(Quatf _PivotRotation)
+{
+	m_PivotRotation = _PivotRotation;
+}
+void CCinematicObject::SetPivotScale(Vect3f _PivotScale)
+{
+	m_PivotScale = _PivotScale;
+}
+
+Vect3f CCinematicObject::GetPivotPosition()
+{
+	return m_PivotPosition;
+}
+Quatf CCinematicObject::GetPivotRotation()
+{
+	return m_PivotRotation;
+}
+Vect3f CCinematicObject::GetPivotScale()
+{
+	return m_PivotScale;
+}
