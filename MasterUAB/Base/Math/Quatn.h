@@ -6,6 +6,7 @@
 #include "Math\Matrix33.h"
 #include "Math\Matrix34.h"
 #include "Math\Matrix44.h"
+#include "Math\Vector3.h"
 #include <assert.h>
 
 template<typename T>
@@ -517,6 +518,24 @@ public:
 			q0.z * st0 + q1.z * st1,
 			q0.w * st0 + q1.w * st1
 			);
+	}
+
+	static Vector3<T> rotate_vector_by_quaternion(const Vector3<T>& v, const Quatn& q)
+	{
+		Vector3<T> vprime;
+
+		// Extract the vector part of the quaternion
+		Vector3<T> u(q.x, q.y, q.z);
+
+		// Extract the scalar part of the quaternion
+		T s = q.w;
+
+		// Do the math
+		vprime = 2.0f * (u * v) * u
+			+ (s*s - (u * u)) * v
+			+ 2.0f * s * (u ^ v);
+
+		return vprime;
 	}
 };
 
