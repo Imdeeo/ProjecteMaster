@@ -142,6 +142,9 @@ public:
   // Operaciones polinómicas
   inline Vector3<int>& Simplify        ();
   inline Vector3<T>    SetFromTriPlane (const Vector4<T> plane1, const Vector4<T> plane2, const Vector4<T> plane3);
+
+  // Operaciones angulares
+  inline T GetAngleWith(const Vector3<T>& otro);
 };
 
 //////////////////////////////////////////////

@@ -19,7 +19,7 @@ void CUABComponentManager::Update(float ElapsedTime)
 
 void CUABComponentManager::Destroy()
 {
-	for (int i = 0; i < m_Resources.size(); ++i)
+	for (size_t i = 0; i < m_Resources.size(); ++i)
 	{
 		CHECKED_DELETE(m_Resources[i]);
 	}

@@ -334,6 +334,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_normalized", &Vector3<float>::GetNormalized)
 			.def("distance", &Vect3f::Distance)
 			.def("length", &Vect3f::Length)
+			.def("get_angle_with", &Vect3f::GetAngleWith)
 	];
 
 	module(m_LS)[

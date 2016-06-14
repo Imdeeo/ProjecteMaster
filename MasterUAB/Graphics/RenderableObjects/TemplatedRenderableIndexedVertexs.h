@@ -32,7 +32,7 @@ public:
 	{
 		m_Vtxs.resize(VtxsCount);
 		T *data = (T *)Vtxs;
-		for (int i = 0; i < VtxsCount; i++)
+		for (size_t i = 0; i < VtxsCount; i++)
 		{
 			m_Vtxs[i] = *(Vect3f*)(&data[i]);
 		}
@@ -41,7 +41,7 @@ public:
 		{
 			unsigned short *index_aux = (unsigned short*)malloc(sizeof(unsigned short)*IndexsCount);
 			unsigned short *index_data = (unsigned short *)Indices;
-			for (int i = 0; i < IndexsCount; i++)
+			for (size_t i = 0; i < IndexsCount; i++)
 			{
 				index_aux[i] = index_data[i];
 			}
@@ -51,7 +51,7 @@ public:
 		{
 			unsigned int *index_aux = (unsigned int*)malloc(sizeof(unsigned int)*IndexsCount);
 			unsigned int *index_data = (unsigned int*)Indices;
-			for (int i = 0; i < IndexsCount; i++)
+			for (size_t i = 0; i < IndexsCount; i++)
 			{
 				index_aux[i] = index_data[i];
 			}

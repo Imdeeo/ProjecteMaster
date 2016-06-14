@@ -14,7 +14,13 @@ function ClimbingUpdate(args, _ElapsedTime)
 	
 	--// Force the player face the target
 	if not (l_Player.m_Target == nil) then
-		ForcePlayerFaceTarget(_ElapsedTime)
+		local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
+		utils_log("l_Pos "..l_Pos.x.." "..l_Pos.y.." "..l_Pos.z);
+		local l_Target = l_Player.m_Target
+		utils_log("l_Target "..l_Target.x.." "..l_Target.y.." "..l_Target.z);
+		local l_Angleishon = l_Target:get_angle_with(l_Pos)
+		utils_log("l_Angleishon "..l_Angleishon);
+		ForcePlayerFaceTarget(l_Player, _ElapsedTime)
 	end
 	
 	--// Move the character controller
@@ -64,12 +70,14 @@ function ClimbingToFallingCondition(args)
 end
 
 function ClimbingToggleTrigger(_TriggerName, _ColliderName)
+	local l_Player = m_CharacterManager.m_Player[1]
 	if (_ColliderName == l_Player.m_Name and l_Player.m_InputManager:is_action_active("INTERACT")) then
 		ToggleClimbingState(_TriggerName)
 	end
 end
 
 function ToggleClimbingState(_TriggerName)
+	local l_Player = m_CharacterManager.m_Player[1]
 	if l_Player.m_IsClimbing then
 		l_Player.m_IsClimbing = false
 	else
@@ -80,32 +88,34 @@ function ToggleClimbingState(_TriggerName)
 end
 
 function ClimbingEndTrigger(_TriggerName, _ColliderName)
+	local l_Player = m_CharacterManager.m_Player[1]
 	if _ColliderName == l_Player.m_Name then
 		FinishClimbing()
 	end
 end
 
 function FinishClimbing()
+	local l_Player = m_CharacterManager.m_Player[1]
 	l_Player.m_IsClimbing = false
 end
 
-function ForcePlayerFaceTarget(_ElapsedTime)
+function ForcePlayerFaceTarget(_Player, _ElapsedTime)
 	--// Movement
-	local l_FaceTargetDisplacement =  l_Player.m_Target - l_Player.m_PhysXManager:get_character_controler_pos("player") + l_Player.m_TargetOffset
+	local l_FaceTargetDisplacement =  _Player.m_Target - _Player.m_PhysXManager:get_character_controler_pos("player") + _Player.m_TargetOffset
 	l_FaceTargetDisplacement.y = 0
-	l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
+	_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
 	
 	--// Rotation
-	local l_CameraDirection = l_Player.m_CameraController:get_forward()
+	local l_CameraDirection = _Player.m_CameraController:get_forward()
 	l_CameraDirection.y = 0
-	local l_Off = l_Player.m_TargetOffset:get_normalized(1)
+	local l_Off = _Player.m_TargetOffset:get_normalized(1)
 	l_Off.x = -l_Off.x
 	l_Off.y = -l_Off.y
 	l_Off.z = -l_Off.z
 	local l_Yaw = math.acos(l_CameraDirection:get_normalized(1) * l_Off)
-	l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
+	_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
 	
 	if l_FaceTargetDisplacement:length() <= 0.1 and l_Yaw <= 0.01 and l_Yaw >= -0.01 then
-		l_Player.m_Target = nil
+		_Player.m_Target = nil
 	end
 end
