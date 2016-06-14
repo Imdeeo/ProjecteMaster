@@ -104,6 +104,7 @@
 #include "IA\AStar.h"
 
 #include "Application.h"
+#include "GamePlayManager.h"
 
 #include "XML\XMLTreeNode.h"
 #include "Utils.h"
@@ -415,11 +416,11 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render_debug", &CUABComponent::RenderDebug)
 	];
 	
-	//module(m_LS)[
-	//	class_<CLUAComponent, CLUAComponent_wrapper>("CLUAComponent")
-	//		.def(constructor<>())
-	//		.def("f", &base::f, &base_wrapper::default_f)
-	//	];
+	module(m_LS)[
+		class_<CLUAComponent, CLUAComponent_wrapper>("CLUAComponent")
+			.def(constructor<const std::string &, CRenderableObject *>())
+			.def("Update", &CLUAComponent::Update, &CLUAComponent_wrapper::default_Update)
+	];
 
 	luabind::module(m_LS) [ luabind::def("create_scripted_component", &CreateScriptedComponent) ];
 
@@ -539,6 +540,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_time_scale", &CUABEngine::GetTimeScale)
 			.def("set_time_scale", &CUABEngine::SetTimeScale)
 			.def("quit", &CUABEngine::Quit)
+			.def("get_game_play_manager", &CUABEngine::GetGamePlayManager)
 			.def("get_frustum_active", &CUABEngine::GetFrustumActive)
 			.def("set_frustum_active", &CUABEngine::SetFrustumActive)
 	];
@@ -1481,6 +1483,11 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update", &CApplication::Update)
 			.def("render", &CApplication::Render)
 			.def("init", &CApplication::Init)
+	];
+
+	module(m_LS)[
+		class_<CGamePlayManager>("CGamePlayManager")
+			.def("add_component", &CGamePlayManager::AddComponent)
 	];
 }
 
