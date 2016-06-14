@@ -157,20 +157,19 @@ CScriptManager::~CScriptManager()
 
 struct CLUAComponent_wrapper : CLUAComponent, luabind::wrap_base
 {
-	CLUAComponent_wrapper(const std::string &Name, CRenderableObject *Owner, const	std::string &FnOnCreate, const std::string &FnOnDestroy, const std::string &FnOnUpdate,
-		const std::string &FnOnRender, const std::string &FnOnRenderDebug)
-		: CLUAComponent(Name, Owner, FnOnCreate, FnOnDestroy, FnOnUpdate,FnOnRender, FnOnRenderDebug)
+	CLUAComponent_wrapper(const std::string &Name, CRenderableObject *Owner)
+		: CLUAComponent(Name, Owner)
 	{}
 
-	/*virtual void f(int a)
+	virtual void Update(float _ElapsedTime)
 	{
-		call<void>("f", a);
+		call<void>("Update", _ElapsedTime);
 	}
 
-	static void default_f(CLUAComponent* ptr, int a)
+	static void default_Update(CLUAComponent* ptr, float _ElapsedTime)
 	{
-		return ptr->CLUAComponent::f(a);
-	}*/
+		return ptr->CLUAComponent::Update(_ElapsedTime);
+	}
 };
 
 //Código de la función Alert que se llamará al generarse algún error de LUA
@@ -415,13 +414,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render", &CUABComponent::Render)
 			.def("render_debug", &CUABComponent::RenderDebug)
 	];
-
-	module(m_LS)[
-		class_<CUABComponentManager>("CUABComponentManager")
-			.def("get_resource", &CUABComponentManager::GetResource)
-			.def("add_resource", &CUABComponentManager::AddResource)
-	];
-
+	
 	//module(m_LS)[
 	//	class_<CLUAComponent, CLUAComponent_wrapper>("CLUAComponent")
 	//		.def(constructor<>())
@@ -627,7 +620,6 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CRenderableObject, bases<C3DElement, CNamed>>("CRenderableObject")
 			.def("update", &CRenderableObject::Update)
 			.def("render", &CRenderableObject::Render)
-			.def("get_component_manager", &CRenderableObject::GetComponentManager)
 	];
 
 	RegisterTemplatedVectorMapManager<CRenderableObject>(m_LS);
