@@ -47,6 +47,7 @@ CStagedTexturedSceneRendererCommand::~CStagedTexturedSceneRendererCommand(void)
 	for(size_t i=0; i<m_DynamicTextures.size(); ++i)
 	{
 		UABEngine.GetTextureManager()->RemoveResource(m_DynamicTextures[i]->GetTexture()->GetName());
+		CHECKED_DELETE(m_DynamicTextures[i]);
 	}
 
 	m_DynamicTextures.clear();

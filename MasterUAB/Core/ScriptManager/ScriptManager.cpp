@@ -104,6 +104,7 @@
 #include "IA\AStar.h"
 
 #include "Application.h"
+#include "GamePlayManager.h"
 
 #include "XML\XMLTreeNode.h"
 #include "Utils.h"
@@ -157,20 +158,19 @@ CScriptManager::~CScriptManager()
 
 struct CLUAComponent_wrapper : CLUAComponent, luabind::wrap_base
 {
-	CLUAComponent_wrapper(const std::string &Name, CRenderableObject *Owner, const	std::string &FnOnCreate, const std::string &FnOnDestroy, const std::string &FnOnUpdate,
-		const std::string &FnOnRender, const std::string &FnOnRenderDebug)
-		: CLUAComponent(Name, Owner, FnOnCreate, FnOnDestroy, FnOnUpdate,FnOnRender, FnOnRenderDebug)
+	CLUAComponent_wrapper(const std::string &Name, CRenderableObject *Owner)
+		: CLUAComponent(Name, Owner)
 	{}
 
-	/*virtual void f(int a)
+	virtual void Update(float _ElapsedTime)
 	{
-		call<void>("f", a);
+		call<void>("Update", _ElapsedTime);
 	}
 
-	static void default_f(CLUAComponent* ptr, int a)
+	static void default_Update(CLUAComponent* ptr, float _ElapsedTime)
 	{
-		return ptr->CLUAComponent::f(a);
-	}*/
+		return ptr->CLUAComponent::Update(_ElapsedTime);
+	}
 };
 
 //Código de la función Alert que se llamará al generarse algún error de LUA
@@ -415,18 +415,12 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render", &CUABComponent::Render)
 			.def("render_debug", &CUABComponent::RenderDebug)
 	];
-
+	
 	module(m_LS)[
-		class_<CUABComponentManager>("CUABComponentManager")
-			.def("get_resource", &CUABComponentManager::GetResource)
-			.def("add_resource", &CUABComponentManager::AddResource)
+		class_<CLUAComponent, CLUAComponent_wrapper>("CLUAComponent")
+			.def(constructor<const std::string &, CRenderableObject *>())
+			.def("Update", &CLUAComponent::Update, &CLUAComponent_wrapper::default_Update)
 	];
-
-	//module(m_LS)[
-	//	class_<CLUAComponent, CLUAComponent_wrapper>("CLUAComponent")
-	//		.def(constructor<>())
-	//		.def("f", &base::f, &base_wrapper::default_f)
-	//	];
 
 	luabind::module(m_LS) [ luabind::def("create_scripted_component", &CreateScriptedComponent) ];
 
@@ -444,6 +438,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_name", &CXMLTreeNode::GetName)
 			.def("get_psz_property", &CXMLTreeNode::GetPszProperty)
 			.def("get_float_property", &CXMLTreeNode::GetFloatProperty)
+			.def("get_bool_property", &CXMLTreeNode::GetBoolProperty)
 	];
 
 // CORE---------------------------------------------------------------------------------------------
@@ -546,6 +541,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_time_scale", &CUABEngine::GetTimeScale)
 			.def("set_time_scale", &CUABEngine::SetTimeScale)
 			.def("quit", &CUABEngine::Quit)
+			.def("get_game_play_manager", &CUABEngine::GetGamePlayManager)
 			.def("get_frustum_active", &CUABEngine::GetFrustumActive)
 			.def("set_frustum_active", &CUABEngine::SetFrustumActive)
 	];
@@ -627,7 +623,6 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CRenderableObject, bases<C3DElement, CNamed>>("CRenderableObject")
 			.def("update", &CRenderableObject::Update)
 			.def("render", &CRenderableObject::Render)
-			.def("get_component_manager", &CRenderableObject::GetComponentManager)
 	];
 
 	RegisterTemplatedVectorMapManager<CRenderableObject>(m_LS);
@@ -1495,6 +1490,11 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update", &CApplication::Update)
 			.def("render", &CApplication::Render)
 			.def("init", &CApplication::Init)
+	];
+
+	module(m_LS)[
+		class_<CGamePlayManager>("CGamePlayManager")
+			.def("add_component", &CGamePlayManager::AddComponent)
 	];
 }
 

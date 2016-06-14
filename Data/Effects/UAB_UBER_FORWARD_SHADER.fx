@@ -74,8 +74,8 @@ struct TVertexPS
 	#endif
 	
 	#ifdef HAS_TANGENT
-		float3 WorldTangent: TEXCOORD1;
-		float3 WorldBinormal: TEXCOORD2;
+		float3 WorldTangent: TEXCOORD2;
+		float3 WorldBinormal: TEXCOORD3;
 	#endif
 };
 
@@ -151,13 +151,14 @@ float4 applyAllLights(TVertexPS IN)
 {
 	float3 Nn = IN.Normal;
 	float l_specularFactor=m_SpecularFactor;
+	float4 l_Out = float4(1,1,1,1);
+	#ifdef HAS_UV
+		l_Out = T0Texture.Sample(S0Sampler, IN.UV);
+	#endif
+	
 	#ifdef HAS_UV2
 		float4 lightContrib = T1Texture.Sample(S1Sampler, IN.UV2);
-	#else
-		float4 l_Out = float4(1,1,1,1);
-		#ifdef HAS_UV
-			l_Out = T0Texture.Sample(S0Sampler, IN.UV);
-		#endif
+	#else		
 		float4 lightContrib = m_LightAmbient*l_Out;
 	#endif
 	
