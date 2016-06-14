@@ -38,7 +38,7 @@ void CGUIManager::Destroy()
 		CHECKED_DELETE(m_Materials[i]);
 	}
 	m_Materials.clear();
-	for (int i = 0; i < m_VertexBuffers.size(); i++)
+	for (size_t i = 0; i < m_VertexBuffers.size(); i++)
 	{
 		CHECKED_DELETE(m_VertexBuffers[i]);
 	}

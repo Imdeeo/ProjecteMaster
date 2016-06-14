@@ -26,7 +26,7 @@ public:
 	{
 		m_Vtxs.resize(VtxsCount);
 		T *data = (T *)Vtxs;
-		for (int i = 0; i < VtxsCount; i++)
+		for (size_t i = 0; i < VtxsCount; i++)
 		{
 			m_Vtxs[i] = *(Vect3f*)(&data[i]);
 		}
