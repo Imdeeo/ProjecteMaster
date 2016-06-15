@@ -25,7 +25,7 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 		end
 		
 		if l_Enemy.m_BlockingObjectName == nil then			
-			--l_Enemy:EnemyWalk(l_Enemy.m_DefaultPosition, l_Enemy.m_WalkSpeed, l_PercentRotation, _ElapsedTime)
+			l_Enemy:EnemyWalk(l_Enemy.m_DefaultPosition, l_Enemy.m_WalkSpeed, l_PercentRotation, _ElapsedTime)
 			
 			-- Si la distancia entre el enemy y el punto es menor de un valor predeterminado pasamos al siguiente punto
 			local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_Enemy.m_DefaultPosition)	
@@ -46,7 +46,7 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 				-- Actualizamos la posicion del enemigo
 				local l_PointPos = l_Enemy.m_PathFindig:get_actual_pos()				
 				
-				l_Enemy:EnemyWalk(l_PointPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
+				l_Enemy:EnemyWalk(l_PointPos, l_Enemy.m_WalkSpeed, l_PercentRotation, _ElapsedTime)
 				
 				-- Si la distancia entre el enemy y el punto es menor de un valor predeterminado pasamos al siguiente punto
 				local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	
@@ -54,11 +54,7 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 					l_Enemy.m_PathFindig:increment_actual_point()
 				end
 			else
-				if l_Enemy.m_Patrol  then
-					l_Enemy.m_State = "patrol"
-				else
-					l_Enemy.m_State = "idle"
-				end
+				l_Enemy.m_State = "idle"
 			end			
 		end
 	end
