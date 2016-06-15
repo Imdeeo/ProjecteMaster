@@ -3,6 +3,7 @@ function ChaseFirstAutomaton(args)
 	l_Owner:clear_cycle(0,0.5)
 	l_Owner:clear_cycle(1,0.5)
 	l_Owner:blend_cycle(2,1.0,0.5)
+	
 	local l_Enemy = args["self"]
 	l_Enemy.m_TimerRotation = 0.0
 	l_Enemy.m_PathFindig:load_map("Data\\level_"..g_Engine:get_level_loaded().."\\pathfinding.xml")
@@ -24,7 +25,7 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 			l_Enemy.m_TimerRotation = 0.0
 		end 
 		
-		l_Enemy:EnemyWalk(l_Owner, l_PlayerPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
+		l_Enemy:EnemyWalk(l_PlayerPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
 		
 		-- Si la distancia entre el enemy y el player es menor a lo establecido pasamos a attack
 		local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PlayerPos)	
@@ -57,7 +58,7 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 					l_Enemy.m_TimerRotation = 0.0
 				end 
 				
-				l_Enemy:EnemyWalk(l_Owner, l_PointPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
+				l_Enemy:EnemyWalk(l_PointPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
 				
 				-- Si la distancia entre el enemy y el punto es menor de 1 pasamos al siguiente punto
 				local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	

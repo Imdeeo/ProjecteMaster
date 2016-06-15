@@ -4,6 +4,7 @@ function PatrolFirstAutomaton(args)
 	l_Owner:clear_cycle(0,0.5)
 	l_Owner:clear_cycle(2,0.5)
 	l_Owner:blend_cycle(1,1.0,0.5)
+	
 	local l_Enemy = args["self"]
 	l_Enemy.m_PathFindig:load_map("Data\\level_"..g_Engine:get_level_loaded().."\\pathfinding.xml")
 	l_Enemy.m_TimerRotation = 0.0
@@ -14,6 +15,7 @@ function PatrolUpdateAutomaton(args, _ElapsedTime)
 	local l_Enemy = args["self"]
 	
 	if l_Enemy:PlayerVisible(l_Owner) then
+		l_Enemy.m_DefaultPosition = l_Owner:get_position()
 		l_Enemy.m_State = "chase"
 		l_Enemy.m_TimerRotation = 0.0
 	else
@@ -37,7 +39,7 @@ function PatrolUpdateAutomaton(args, _ElapsedTime)
 			l_Enemy.m_TimerRotation = 0.0
 		end 
 		
-		l_Enemy:EnemyWalk(l_Owner, l_PointPos, l_Enemy.m_WalkSpeed, l_PercentRotation, _ElapsedTime)
+		l_Enemy:EnemyWalk(l_PointPos, l_Enemy.m_WalkSpeed, l_PercentRotation, _ElapsedTime)
 	end
 end
 

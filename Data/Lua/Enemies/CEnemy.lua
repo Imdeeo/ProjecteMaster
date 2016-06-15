@@ -85,11 +85,14 @@ class 'CEnemy' (CLUAComponent)
 		return true
 	end
 		
-	function CEnemy:EnemyWalk(_Owner, _DesiredPos, _MoveSpeed, _PercentRotation, _ElapsedTime)
+	function CEnemy:EnemyWalk(_DesiredPos, _MoveSpeed, _PercentRotation, _ElapsedTime)
 		-- enemy always walks in forward direction
-		local l_EnemyForward = _Owner:get_rotation():get_forward_vector():get_normalized(1)
-		local l_EnemyPos = _Owner:get_position()
-		_Owner:set_position(l_EnemyPos + (l_EnemyForward * _MoveSpeed * _ElapsedTime))	
+		local l_Owner = self.m_RenderableObject;
+		local l_EnemyForward = l_Owner:get_rotation():get_forward_vector():get_normalized(1)
+		local l_EnemyPos = l_Owner:get_position()
+		local l_NewPos = l_EnemyForward * _MoveSpeed
+		self.m_PhysXManager:character_controller_move(self.m_Name, l_NewPos, _ElapsedTime)
+		l_Owner:set_position(l_EnemyPos + l_NewPos * _ElapsedTime)
 
 		-- with the rotation, the enemy chases to the player
 		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)	
@@ -107,7 +110,7 @@ class 'CEnemy' (CLUAComponent)
 		local quat_to_turn = Quatf()
 		quat_to_turn:quat_from_yaw_pitch_roll(angle_to_turn, 0.0, 0.0)		
 		
-		local target_quat = _Owner:get_rotation():slerp(_Owner:get_rotation() * quat_to_turn, _PercentRotation)
-		_Owner:set_rotation(target_quat)
+		local target_quat = l_Owner:get_rotation():slerp(l_Owner:get_rotation() * quat_to_turn, _PercentRotation)
+		l_Owner:set_rotation(target_quat)
 	end
 --end
