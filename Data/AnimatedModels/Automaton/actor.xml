@@ -26,6 +26,7 @@
 		<parameter type="float" name="environment_factor" value="0.4"/>
 		<parameter type="float" name="cutout_factor" value="1.0"/>
 	</material>
+	<animation name="patrol" filename="AutomatonIdle.CAF" />
 	<animation name="patrol" filename="AutomatonPatrol.CAF" />
 	<animation name="chase" filename="AutomatonChase.CAF" />
 </actor>
