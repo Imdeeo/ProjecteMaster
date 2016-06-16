@@ -944,7 +944,7 @@ inline Vector3<T> Vector3<T>::SetFromTriPlane(const Vector4<T> plane1, const Vec
 template<typename T>
 inline T Vector3<T>::GetAngleWith(const Vector3<T>& otro)
 {
-	return atan2(((*this)^otro).Length(), (*this)*otro);
+	return (T)atan2((double)(((*this) ^ otro).Length()), (double)((*this) * otro));
 }
 
 
