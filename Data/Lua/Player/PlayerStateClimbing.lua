@@ -14,12 +14,16 @@ function ClimbingUpdate(args, _ElapsedTime)
 	
 	--// Force the player face the target
 	if not (l_Player.m_Target == nil) then
-		local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
-		utils_log("l_Pos "..l_Pos.x.." "..l_Pos.y.." "..l_Pos.z);
-		local l_Target = l_Player.m_Target
-		utils_log("l_Target "..l_Target.x.." "..l_Target.y.." "..l_Target.z);
-		local l_Angleishon = l_Target:get_angle_with(l_Pos)
-		utils_log("l_Angleishon "..l_Angleishon);
+		--local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
+		--local l_Target = l_Player.m_Target
+		--local l_Dot = l_Target*l_Pos
+		--utils_log("l_Dot="..l_Dot)
+		--local l_Cross = l_Target^l_Pos
+		--utils_log("l_Cross="..l_Cross.x.." "..l_Cross.y.." "..l_Cross.z)
+		--local l_Lenghth = l_Cross:length()
+		--utils_log("l_Lenghth="..l_Lenghth)
+		--local l_Angle = atan2(l_CrossLength, l_Dot)
+		--utils_log("l_Angleishon "..l_Angle);
 		ForcePlayerFaceTarget(l_Player, _ElapsedTime)
 	end
 	
