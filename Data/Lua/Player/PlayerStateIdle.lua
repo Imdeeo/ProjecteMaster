@@ -1,5 +1,5 @@
 function IdleFirst(args)
-	utils_log("IdleFirst")
+	
 end
 
 function IdleUpdate(args, _ElapsedTime)

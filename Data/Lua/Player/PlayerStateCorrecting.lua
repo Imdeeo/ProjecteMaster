@@ -23,11 +23,17 @@ function CorrectingUpdate(args, _ElapsedTime)
 	l_Off.z = -l_Off.z
 	local l_Yaw = math.acos(l_CameraDirection:get_normalized(1) * l_Off)
 	l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
-
+	
+	utils_log("CorrectingUpdate1")
+	utils_log("Yaw: "..l_Yaw)
+	utils_log("CorrectingUpdate2")
+	utils_log("Length: "..l_FaceTargetDisplacement:length())
 	if l_FaceTargetDisplacement:length() <= 0.1 and l_Yaw <= 0.01 and l_Yaw >= -0.01 then
+	utils_log("CorrectingUpdate3")
 		CheckClimbingOrInteracting(l_Player)
 	end
 	--//
+	utils_log("CorrectingUpdate5")
 
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
@@ -42,10 +48,12 @@ function CorrectingEnd(args)
 end
 
 function CheckClimbingOrInteracting(_Player)
-	if(_Player.m_IsInteracting) then
+	if (_Player.m_IsInteracting) then
 		_Player.m_IsClimbing = true
+		utils_log("CorrectingUpdate4a")
 	else
 		_Player.m_IsClimbing = false
+		utils_log("CorrectingUpdate4b")
 	end
 end
 

@@ -1,5 +1,5 @@
 function FallingFirst(args)
-	utils_log("FallingFirst")
+	
 end
 
 function FallingUpdate(args, _ElapsedTime)

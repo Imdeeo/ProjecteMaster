@@ -1,5 +1,4 @@
 function JumpingFirst(args)
-	utils_log("JumpingFirst")
 	local l_Player = args["self"]
 	l_Player.m_Velocity.y = 4.9
 	l_Player.m_SoundManager:play_event(l_Player.m_JumpSoundEvent, l_Player.m_RenderableObject)
