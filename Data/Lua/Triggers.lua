@@ -40,9 +40,6 @@ end
 
 function OnStayCorrecting(_TriggerName, _ColliderName)
 	local l_Player = m_CharacterManager.m_Player[1]
-	--utils_log("Direction: "..l_Player.m_CameraController:get_forward():get_normalized(1):get_angle_with(l_Player.m_Offset))
-	--local l_Pos = (l_Player.m_PhysXManager:get_character_controler_pos("player") - CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource(_TriggerName):get_position()):get_normalized(1)
-	--utils_log("Position: "..l_Pos:get_angle_with(l_Player.m_Offset))
 	if (_ColliderName == l_Player.m_Name and l_Player.m_InputManager:is_action_active("INTERACT") and not l_Player.m_IsCorrecting) then
 		CheckIfFacing(l_Player, _TriggerName)
 	end
