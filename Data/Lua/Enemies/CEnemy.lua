@@ -39,7 +39,9 @@ class 'CEnemy' (CLUAComponent)
 		self.m_distance_to_kill = 1.0
 		
 		self.m_StateMachine = StateMachine.create()
-		self.m_PhysXManager:create_character_controller(self.m_Name, 1.2, 0.3, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Enemy")
+		if(not UABEngine:get_lua_reloaded())then
+			self.m_PhysXManager:create_character_controller(self.m_Name, 1.2, 0.3, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Enemy")
+		end
 	end
 	
 	function CEnemy:Update(_ElapsedTime)
