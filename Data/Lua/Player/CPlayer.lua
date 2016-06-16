@@ -157,7 +157,7 @@ class 'CPlayer' (CLUAComponent)
 		InteractingState = State.create(InteractingUpdate)
 		InteractingState:set_do_first_function(InteractingFirst)
 		InteractingState:set_do_end_function(InteractingEnd)
-		ClimbingState:add_condition(InteractingToFallingCondition, "Falling")
+		InteractingState:add_condition(InteractingToFallingCondition, "Falling")
 		
 		DeadState = State.create(DeadUpdate)
 		DeadState:set_do_first_function(DeadFirst)

@@ -11,29 +11,27 @@ function CorrectingUpdate(args, _ElapsedTime)
 	--// Force the player face the target
 		--// Movement
 	local l_FaceTargetDisplacement =  l_Player.m_Target - l_Player.m_PhysXManager:get_character_controler_pos("player") + l_Player.m_TargetOffset
-	l_FaceTargetDisplacement.y = 0
+	l_FaceTargetDisplacement.y = 0.0
 	l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
 
 		--// Rotation
 	local l_CameraDirection = l_Player.m_CameraController:get_forward()
-	l_CameraDirection.y = 0
-	local l_Off = l_Player.m_TargetOffset:get_normalized(1)
-	l_Off.x = -l_Off.x
-	l_Off.y = -l_Off.y
-	l_Off.z = -l_Off.z
-	local l_Yaw = math.acos(l_CameraDirection:get_normalized(1) * l_Off)
+	l_CameraDirection.y = 0.0
+	local l_Off = l_Player.m_TargetOffset
+	l_Off = l_Off * (-1.0)
+	l_Off.y = 0.0
+	local l_Yaw1 = math.atan2(-l_CameraDirection:get_normalized(1).z, l_CameraDirection:get_normalized(1).x)
+	local l_Yaw2 = math.atan2(-l_Off:get_normalized(1).z, l_Off:get_normalized(1).x)
+	local l_Yaw = l_CameraDirection:get_normalized(1):get_angle_with(l_Off:get_normalized(1))
+	utils_log("LookYaw: "..l_Yaw1)
+	utils_log("OffsYaw: "..l_Yaw2)
+	utils_log("TotaYaw: "..l_Yaw)
 	l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
 	
-	utils_log("CorrectingUpdate1")
-	utils_log("Yaw: "..l_Yaw)
-	utils_log("CorrectingUpdate2")
-	utils_log("Length: "..l_FaceTargetDisplacement:length())
 	if l_FaceTargetDisplacement:length() <= 0.1 and l_Yaw <= 0.01 and l_Yaw >= -0.01 then
-	utils_log("CorrectingUpdate3")
 		CheckClimbingOrInteracting(l_Player)
 	end
 	--//
-	utils_log("CorrectingUpdate5")
 
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
@@ -50,10 +48,8 @@ end
 function CheckClimbingOrInteracting(_Player)
 	if (_Player.m_IsInteracting) then
 		_Player.m_IsClimbing = true
-		utils_log("CorrectingUpdate4a")
 	else
 		_Player.m_IsClimbing = false
-		utils_log("CorrectingUpdate4b")
 	end
 end
 
