@@ -1,6 +1,3 @@
---dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonEnemy.lua")
-
-
 class 'CEnemy' (CLUAComponent)
 	function CEnemy:__init(_TreeNode)
 		local UABEngine = CUABEngine.get_instance()
@@ -18,7 +15,7 @@ class 'CEnemy' (CLUAComponent)
 		self.m_AngularWalkSpeed = 1000.0
 		self.m_AngularRunSpeed = 250.0
 		self.m_TimerRotation = 0.0
-		self.m_DefaultPosition = self.m_RenderableObject:get_position()
+		self.m_DefaultPosition = Vect3f(self.m_RenderableObject:get_position().x, self.m_RenderableObject:get_position().y, self.m_RenderableObject:get_position().z)
 		self.m_Patrol = _TreeNode:get_bool_property("patrol", false, false)
 		self.m_State = "off"
 		
@@ -29,6 +26,7 @@ class 'CEnemy' (CLUAComponent)
 		self.m_MaxAngle = 0.25 * math.pi
 		self.m_HeadOffset = Vect3f(0.0, 1.7, 0.0)
 		self.m_BlockingObjectName = nil
+		self.m_StandardAlertTime = 3.0
 		
 		self.m_distance_to_activate = 10.0
 		self.m_off = true
