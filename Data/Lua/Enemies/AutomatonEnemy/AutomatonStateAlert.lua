@@ -15,18 +15,19 @@ function AlertUpdateAutomaton(args, _ElapsedTime)
 		l_Enemy.m_alert_timer = 0.0
 	else
 		local l_NodePoint = l_Enemy.m_PathFindig:get_actual_patrol_point("path1")
+		local l_Timer = 0
+		
+		if l_Enemy.m_Patrol then
+			l_Timer = l_NodePoint.time_to_wait
+		else
+			l_Timer = l_Enemy.m_StandardAlertTime
+		end
+		
+		l_Enemy.m_alert_timer = l_Enemy.m_alert_timer + _ElapsedTime
 	
-		l_Enemy.m_alert_timer = l_Enemy.m_alert_timer+_ElapsedTime
-	
-		if l_Enemy.m_alert_timer > l_NodePoint.time_to_wait then
-			l_Enemy.m_alert_timer = 0.0
-			
-			--if l_Enemy.m_Patrol then
-				--l_Enemy.m_PathFindig:increment_actual_patrol_point("path1")
-				--l_Enemy.m_State = "patrol"
-			--else
-				l_Enemy.m_State = "return"
-			--end
+		if l_Enemy.m_alert_timer > l_Timer then
+			l_Enemy.m_alert_timer = 0.0			
+			l_Enemy.m_State = "return"
 		end
 	end
 end
