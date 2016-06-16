@@ -1,5 +1,5 @@
 function MovingFirst(args)
-	
+	utils_log("MovingFirst")
 end
 
 function MovingUpdate(args, _ElapsedTime)

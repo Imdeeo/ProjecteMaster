@@ -2,6 +2,7 @@
 dofile("Data\\Lua\\Utils\\state_machine.lua")
 dofile("Data\\Lua\\Player\\PlayerStateIdle.lua")
 dofile("Data\\Lua\\Player\\PlayerStateMoving.lua")
+dofile("Data\\Lua\\Player\\PlayerStateCorrecting.lua")
 dofile("Data\\Lua\\Player\\PlayerStateCrouching.lua")
 dofile("Data\\Lua\\Player\\PlayerStateClimbing.lua")
 dofile("Data\\Lua\\Player\\PlayerStateJumping.lua")
@@ -40,7 +41,10 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Speed = 5
 		self.m_Sanity = 100
 		self.m_MaxSanity = 100
+		
+		self.m_IsCorrecting = false
 		self.m_IsClimbing = false
+		self.m_IsInteracting = false
 		self.m_Target = nil
 		self.m_TargetOffset = Vect3f(0, 0, 0)
 		
@@ -94,7 +98,7 @@ class 'CPlayer' (CLUAComponent)
 	end
 	
 	function CPlayer:SetPlayerStateMachine()
-		utils_log("Set PlayerStateMachine")
+		utils_log("Start Set PlayerStateMachine")
 		
 		IdleState = State.create(IdleUpdate)
 		IdleState:set_do_first_function(IdleFirst)
@@ -103,7 +107,7 @@ class 'CPlayer' (CLUAComponent)
 		IdleState:add_condition(IdleToCrouchingCondition, "Crouching")
 		IdleState:add_condition(IdleToJumpingCondition, "Jumping")
 		IdleState:add_condition(ANYToFallingCondition, "Falling")
-		IdleState:add_condition(ANYToClimbingCondition, "Climbing")
+		IdleState:add_condition(ANYToCorrectingCondition, "Correcting")
 		
 		MovingState = State.create(MovingUpdate)
 		MovingState:set_do_first_function(MovingFirst)
@@ -112,14 +116,20 @@ class 'CPlayer' (CLUAComponent)
 		MovingState:add_condition(MovingToCrouchingCondition, "Crouching")
 		MovingState:add_condition(MovingToJumpingCondition, "Jumping")
 		MovingState:add_condition(ANYToFallingCondition, "Falling")
-		MovingState:add_condition(ANYToClimbingCondition, "Climbing")
+		MovingState:add_condition(ANYToCorrectingCondition, "Correcting")
 		
+		CorrectingState = State.create(CorrectingUpdate)
+		CorrectingState:set_do_first_function(CorrectingFirst)
+		CorrectingState:set_do_end_function(CorrectingEnd)
+		CorrectingState:add_condition(CorrectingToClimbingCondition, "Climbing")
+		CorrectingState:add_condition(CorrectingToInteractingCondition, "Interacting")
+
 		CrouchingState = State.create(CrouchingUpdate)
 		CrouchingState:set_do_first_function(CrouchingFirst)
 		CrouchingState:set_do_end_function(CrouchingEnd)
 		CrouchingState:add_condition(CrouchingToIdleCondition, "Idle")
 		CrouchingState:add_condition(ANYToFallingCondition, "Falling")
-		CrouchingState:add_condition(ANYToClimbingCondition, "Climbing")
+		CrouchingState:add_condition(ANYToCorrectingCondition, "Correcting")
 		
 		ClimbingState = State.create(ClimbingUpdate)
 		ClimbingState:set_do_first_function(ClimbingFirst)
@@ -139,6 +149,7 @@ class 'CPlayer' (CLUAComponent)
 		InteractingState = State.create(InteractingUpdate)
 		InteractingState:set_do_first_function(InteractingFirst)
 		InteractingState:set_do_end_function(InteractingEnd)
+		ClimbingState:add_condition(InteractingToFallingCondition, "Falling")
 		
 		DeadState = State.create(DeadUpdate)
 		DeadState:set_do_first_function(DeadFirst)
@@ -146,11 +157,14 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_StateMachine:add_state("Idle", IdleState)
 		self.m_StateMachine:add_state("Moving", MovingState)
+		self.m_StateMachine:add_state("Correcting", CorrectingState)
 		self.m_StateMachine:add_state("Crouching", CrouchingState)
 		self.m_StateMachine:add_state("Climbing", ClimbingState)
 		self.m_StateMachine:add_state("Jumping", JumpingState)
 		self.m_StateMachine:add_state("Falling", FallingState)
 		self.m_StateMachine:add_state("Interacting", InteractingState)
 		self.m_StateMachine:add_state("Dead", DeadState)
+		
+		utils_log("End Set PlayerStateMachine")
 	end	
 --end
