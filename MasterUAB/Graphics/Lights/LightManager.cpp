@@ -21,7 +21,7 @@ bool CLightManager::Load(const std::string &FileName){
 		if (l_Input.Exists())
 		{
 			m_AmbientLight = l_Input.GetVect4fProperty("ambient_light_color", Vect4f(0.1f, 0.1f, 0.1f, 1.0f));
-			m_FogColor = l_Input.GetVect3fProperty("fog_color", Vect3f(1.0f, 1.0f, 1.0f));
+			m_FogColor = l_Input.GetVect4fProperty("fog_color", Vect4f(1.0f, 0.0f, 1.0f, 1.0));
 			m_FogMaxAttenuation = l_Input.GetFloatProperty("fog_max_attenuation");
 			m_FogStart = l_Input.GetFloatProperty("fog_start");
 			m_FogEnd = l_Input.GetFloatProperty("fog_end");
