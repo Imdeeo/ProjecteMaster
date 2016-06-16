@@ -10,10 +10,10 @@
 	
 	<!-- DEFERRED -->
 	<set_render_target name="deferred_multiple_render_target">
-		<dynamic_texture name="DiffuseMapTexture" texture_width_as_frame_buffer="true" create_depth_stencil_buffer="false"/>
-		<dynamic_texture name="LightMapTexture" texture_width_as_frame_buffer="true"/>
-		<dynamic_texture name="NormalMapTexture" texture_width_as_frame_buffer="true"/>
-		<dynamic_texture name="DepthMapTexture" texture_width_as_frame_buffer="true"/>
+		<dynamic_texture name="DiffuseMapTexture" texture_width_as_frame_buffer="true" create_depth_stencil_buffer="false" format_type="rgba8"/>
+		<dynamic_texture name="LightMapTexture" texture_width_as_frame_buffer="true" format_type="rgba8"/>
+		<dynamic_texture name="NormalMapTexture" texture_width_as_frame_buffer="true" format_type="rgba8"/>
+		<dynamic_texture name="DepthMapTexture" texture_width_as_frame_buffer="true" format_type="r32"/>
 	</set_render_target>
 	
 	<clear name="clear FT defferred" render_target="true" depth_stencil="true"/>
@@ -53,11 +53,11 @@
 	<set_pool_renderable_objects_technique name="set pool blur_pool" pool="blur_pool"/>
 	<apply_filters name="apply filters ZBlur" active="false">
 		<texture file="CapturedZBlurTexture" stage_id="0"/>
-		<dynamic_texture name="StartZBlur" material="GUIMaterial" height="512" width="512"/>
-		<dynamic_texture name="ZBlur3" material="BlurMaterial" height="512" width="512"/>
-		<dynamic_texture name="ZBlur2" material="BlurMaterial" height="512" width="512"/>
-		<dynamic_texture name="ZBlur1" material="BlurMaterial" height="512" width="512"/>
-		<dynamic_texture name="ZBlur" material="BlurMaterial" height="512" width="512"/>
+		<dynamic_texture name="StartZBlur" material="GUIMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="ZBlur3" material="BlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="ZBlur2" material="BlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="ZBlur1" material="BlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="ZBlur" material="BlurMaterial" height="512" width="512" format_type="rgba8"/>
 	</apply_filters>
 
 	<unset_render_target name="unset_render_target_ZBLur" active="false"/>
@@ -79,8 +79,8 @@
 
 	<apply_filters name="aplly filters Bloom" active="false">
 		<texture file="CapturedBloomTexture" stage_id="0"/>
-		<dynamic_texture name="BloomTexture" material="BloomMaterial" height="600" width="800"/>
-		<dynamic_texture name="BloomBlurTexture" material="BloomBlurMaterial" height="600" width="800"/>
+		<dynamic_texture name="BloomTexture" material="BloomMaterial" height="600" width="800" format_type="rgba8"/>
+		<dynamic_texture name="BloomBlurTexture" material="BloomBlurMaterial" height="600" width="800" format_type="rgba8"/>
 	</apply_filters>
 
 	<unset_render_target name="unset render target Bloom" active="false"/>
@@ -129,6 +129,12 @@
 	<set_depth_stencil_state name="set depth stencil TF triggers" enable_z_test="true" write_z_buffer="true" active="false"/>
 	<set_pool_renderable_objects_technique name="set pool triggers" pool="triggers_pool" active="false"/>
 	<render_layer name="render layer triggers" layer="triggers" active="false"/>
+	
+	<!-- GUI -->
+	<enable_alpha_blend name="enable alpha blend GUI" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<set_pool_renderable_objects_technique name="set pool forward GUI" pool="forward_shading" active="true"/>
+	<render_gui name="render GUI" active="true"/>
+	<disable_alpha_blend name="disable alpha blend GUI" active="true"/>
 	
 	<!-- COLOR GRADING -->	
 	<capture_frame_buffer name="capture frame ColorGrading" active="false">

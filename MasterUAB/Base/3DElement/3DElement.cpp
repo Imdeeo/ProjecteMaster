@@ -65,8 +65,7 @@ C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode):
 	}
 	const char * existRotation = l_Element.GetPszProperty("rotation");
 	if (existRotation == NULL)
-	{
-		
+	{		
 		m_Rotation.QuatFromYawPitchRoll(
 			l_Element.GetFloatProperty("yaw", .0f, true),
 			l_Element.GetFloatProperty("pitch", .0f, true),
@@ -76,6 +75,7 @@ C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode):
 	{
 		m_Rotation = l_Element.GetQuatfProperty("rotation", Quatf(.0f, .0f, .0f, 1.f), true);
 	}
+	m_Rotation.normalize();
 	
 	const char * existScale = l_Element.GetPszProperty("scale");
 	if (existScale == NULL)

@@ -33,7 +33,9 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_InputManager = CInputManager.get_input_manager()
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
-		self.m_SoundManager:register_speaker(self.m_RenderableObject)
+		if(not UABEngine:get_lua_reloaded())then
+			self.m_SoundManager:register_speaker(self.m_RenderableObject)
+		end
 		self.m_JumpSoundEvent = SoundEvent()
 		self.m_JumpSoundEvent.event_name = "Jump"
 		self.m_Velocity = Vect3f(0, 0, 0)
@@ -51,8 +53,10 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine = StateMachine.create()
 		self:SetPlayerStateMachine()
 		self.m_StateMachine:start()
-		self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
-		self.m_PhysXManager:create_character_controller(self.m_Name, 1.2, 0.3, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Player")
+		if(not UABEngine:get_lua_reloaded())then
+			self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
+			self.m_PhysXManager:create_character_controller(self.m_Name, 1.2, 0.3, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Player")
+		end
 
 		self.m_AlreadyInitialized = true
 	end

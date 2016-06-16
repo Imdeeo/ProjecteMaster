@@ -55,6 +55,7 @@ bool CAnimatedInstanceModel::LoadVertexBuffer()
 	m_CalHardwareModel->setMatrixIndexBuffer(((char*)l_Vertexs) + 40,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));	
 	m_CalHardwareModel->setTextureCoordNum(1);
 	m_CalHardwareModel->setTextureCoordBuffer(0,((char*)l_Vertexs)+56,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
+	//m_CalHardwareModel->setTangentSpaceBuffer(0, ((char*)l_Vertexs) + 64, sizeof());
 	m_CalHardwareModel->setIndexBuffer(l_Faces);
 	m_CalHardwareModel->load( 0, 0, MAXBONES);
 	m_NumFaces=m_CalHardwareModel->getTotalFaceCount();
