@@ -19,7 +19,7 @@ private:
 	float 		m_FogMaxAttenuation;
 	float 		m_FogStart;
 	float 		m_FogEnd;
-	Vect3f		m_FogColor;
+	Vect4f		m_FogColor;
 	bool  		m_FogEnabled;
 
 public:
@@ -36,7 +36,7 @@ public:
 	float  GetFogMaxAttenuation(){return m_FogMaxAttenuation; }
 	float  GetFogStart(){ return m_FogStart; }
 	float  GetFogEnd(){ return m_FogEnd; }
-	Vect3f GetFogColor(){ return m_FogColor; }
+	Vect4f GetFogColor(){ return m_FogColor; }
 	bool   GetFogEnabled(){ return m_FogEnabled; }
 	void GetRenderLights(bool _RenderLights){ m_RenderLights = _RenderLights; }
 	bool IsRenderLights(){ return m_RenderLights; }
