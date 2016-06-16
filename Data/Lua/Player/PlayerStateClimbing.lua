@@ -1,5 +1,5 @@
 function ClimbingFirst(args)
-utils_log("ClimbingFirst")
+	utils_log("ClimbingFirst")
 	local l_Player = args["self"]
 	l_Player.m_IsClimbing = true
 end
@@ -37,7 +37,7 @@ function ClimbingUpdate(args, _ElapsedTime)
 	l_Rotation = l_Player.m_CameraController:get_rotation()
 	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
 	l_Owner:set_rotation(l_RotationY)
-		
+	
 	--// Animate player
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
 	if l_Displacement.y == 0 then		
