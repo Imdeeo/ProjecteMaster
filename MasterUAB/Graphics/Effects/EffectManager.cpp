@@ -140,6 +140,7 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 	m_LightParameters.m_LightAttenuationEndRange[IdLight] = Light->GetEndRangeAttenuation();
 	m_LightParameters.m_LightIntensity[IdLight] = Light->GetIntensity();
 	m_LightParameters.m_LightColor[IdLight] = Light->GetColor();
+
 	
 	switch (Light->GetType())
 	{	
@@ -179,6 +180,7 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 	{
 		CEffectManager::m_LightParameters.m_UseShadowMap[IdLight] = 0.0f;
 	}
+	//CEffectManager::m_LightParameters.m_FogColor = UABEngine.GetMaterialManager()->
 }
 
 void CEffectManager::SetLightsConstants(unsigned int MaxLights)
@@ -200,7 +202,7 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 			SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
 		}
 	}
-	CEffectManager::m_LightParameters.m_FogColor = Vect4f(UABEngine.GetLightManager()->GetFogColor(),1.0f);
+	CEffectManager::m_LightParameters.m_FogColor = UABEngine.GetLightManager()->GetFogColor();
 	float maxAttenuation =
 		UABEngine.GetLightManager()->GetFogEnabled() ? UABEngine.GetLightManager()->GetFogMaxAttenuation() : 0.f;
 	CEffectManager::m_LightParameters.m_MaxAttenuation_StartLinearFog_EndLinearFog = 
