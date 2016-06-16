@@ -1,4 +1,5 @@
 function CrouchingFirst(args)
+	utils_log("CrouchingFirst")
 	local l_Player = args["self"]
 	l_Player.m_PhysXManager:set_character_controller_height("player", 0.9)
 end
