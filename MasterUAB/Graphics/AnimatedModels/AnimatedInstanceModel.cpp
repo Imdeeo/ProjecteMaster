@@ -93,7 +93,7 @@ void CAnimatedInstanceModel::Initialize(CAnimatedCoreModel *AnimatedCoreModel)
 	LoadVertexBuffer();
 	LoadMaterials();
 
-	BlendCycle(1, 1.0f, 0.0f);
+	//BlendCycle(1, 1.0f, 0.0f);
 	Update(0.0f);
 }
 
