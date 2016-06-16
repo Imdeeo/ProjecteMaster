@@ -23,7 +23,7 @@ void CGamePlayManager::Update(float ElapsedTime)
 
 void CGamePlayManager::Destroy()
 {
-	for (int i = 0; i < m_Resources.size(); ++i)
+	for (size_t i = 0; i < m_Resources.size(); ++i)
 	{
 		CHECKED_DELETE(m_Resources[i]);
 	}

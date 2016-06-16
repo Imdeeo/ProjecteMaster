@@ -31,8 +31,7 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 		local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PlayerPos)	
 		if l_Distance < l_Enemy.m_distance_to_kill then
 			l_Enemy.m_State = "attack"
-		end
-		
+		end		
 	else
 		if l_Enemy.m_BlockingObjectName == nil then
 			utils_log("TODO DESPEJADO!!!!")

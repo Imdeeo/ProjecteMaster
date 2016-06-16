@@ -1,6 +1,7 @@
 function ClimbingFirst(args)
+utils_log("ClimbingFirst")
 	local l_Player = args["self"]
-	l_Player.m_CameraController:lock()
+	l_Player.m_IsClimbing = true
 end
 
 function ClimbingUpdate(args, _ElapsedTime)
@@ -9,19 +10,12 @@ function ClimbingUpdate(args, _ElapsedTime)
 	local l_ForwardMovement = l_Player.m_InputManager:get_axis("MOVE_FWD")
 	local l_Speed = l_Player.m_Speed * 20
 	
+	if l_Player.m_InputManager:is_action_active("INTERACT") then
+		l_Player.m_IsClimbing = false
+	end
+	
 	--// Move player vertically
 	local l_PlayerDisplacement = Vect3f(0, l_Speed * l_ForwardMovement * _ElapsedTime, 0)
-	
-	--// Force the player face the target
-	if not (l_Player.m_Target == nil) then
-		local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
-		utils_log("l_Pos "..l_Pos.x.." "..l_Pos.y.." "..l_Pos.z);
-		local l_Target = l_Player.m_Target
-		utils_log("l_Target "..l_Target.x.." "..l_Target.y.." "..l_Target.z);
-		local l_Angleishon = l_Target:get_angle_with(l_Pos)
-		utils_log("l_Angleishon "..l_Angleishon);
-		ForcePlayerFaceTarget(l_Player, _ElapsedTime)
-	end
 	
 	--// Move the character controller
 	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
@@ -56,66 +50,11 @@ end
 function ClimbingEnd(args)
 	local l_Player = args["self"]
 	l_Player.m_Target = nil
+	l_Player.m_IsCorrecting = false
 	l_Player.m_CameraController:unlock()
-end
-
-function ANYToClimbingCondition(args)
-	local l_Player = args["self"]
-	return l_Player.m_IsClimbing
 end
 
 function ClimbingToFallingCondition(args)
 	local l_Player = args["self"]
 	return not l_Player.m_IsClimbing
-end
-
-function ClimbingToggleTrigger(_TriggerName, _ColliderName)
-	local l_Player = m_CharacterManager.m_Player[1]
-	if (_ColliderName == l_Player.m_Name and l_Player.m_InputManager:is_action_active("INTERACT")) then
-		ToggleClimbingState(_TriggerName)
-	end
-end
-
-function ToggleClimbingState(_TriggerName)
-	local l_Player = m_CharacterManager.m_Player[1]
-	if l_Player.m_IsClimbing then
-		l_Player.m_IsClimbing = false
-	else
-		l_Player.m_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource(_TriggerName):get_position()
-		l_Player.m_TargetOffset = Vect3f(1, 0, 0)
-		l_Player.m_IsClimbing = true
-	end
-end
-
-function ClimbingEndTrigger(_TriggerName, _ColliderName)
-	local l_Player = m_CharacterManager.m_Player[1]
-	if _ColliderName == l_Player.m_Name then
-		FinishClimbing()
-	end
-end
-
-function FinishClimbing()
-	local l_Player = m_CharacterManager.m_Player[1]
-	l_Player.m_IsClimbing = false
-end
-
-function ForcePlayerFaceTarget(_Player, _ElapsedTime)
-	--// Movement
-	local l_FaceTargetDisplacement =  _Player.m_Target - _Player.m_PhysXManager:get_character_controler_pos("player") + _Player.m_TargetOffset
-	l_FaceTargetDisplacement.y = 0
-	_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
-	
-	--// Rotation
-	local l_CameraDirection = _Player.m_CameraController:get_forward()
-	l_CameraDirection.y = 0
-	local l_Off = _Player.m_TargetOffset:get_normalized(1)
-	l_Off.x = -l_Off.x
-	l_Off.y = -l_Off.y
-	l_Off.z = -l_Off.z
-	local l_Yaw = math.acos(l_CameraDirection:get_normalized(1) * l_Off)
-	_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
-	
-	if l_FaceTargetDisplacement:length() <= 0.1 and l_Yaw <= 0.01 and l_Yaw >= -0.01 then
-		_Player.m_Target = nil
-	end
 end

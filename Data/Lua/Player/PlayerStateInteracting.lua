@@ -1,16 +1,14 @@
 function InteractingFirst(args)
+	utils_log("InteractingFirst")
 	local l_Player = args["self"]
-	l_Player.m_CameraController:lock()
+	l_Player.m_IsClimbing = false
 end
 
 function InteractingUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	
-	--// Force the player face the target
-	if not (l_Player.m_Target == nil) then
-		ForcePlayerFaceTarget(_ElapsedTime)
-	end
+	
 	
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
@@ -31,5 +29,11 @@ end
 function InteractingEnd(args)
 	local l_Player = args["self"]
 	l_Player.m_Target = nil
+	l_Player.m_IsCorrecting = false
 	l_Player.m_CameraController:unlock()
+end
+
+function InteractingToFallingCondition(args)
+	local l_Player = args["self"]
+	return not l_Player.m_IsInteracting
 end
