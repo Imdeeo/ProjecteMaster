@@ -757,13 +757,8 @@ void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CSta
 //	CreateStaticShapeFromBody(_name, physx::PxConvexMeshGeometry(convexMesh), _Material, _position, _orientation, _group)->release();
 //}
 
-
-void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors,bool isActive)
-{	
-	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2), *m_Materials[_Material], true);
-	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
-	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
-
+void CPhysXManager::CreateTrigger(const std::string _name, physx::PxShape* shape, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors, bool isActive)
+{
 	L_PutGroupToShape(shape, m_Groups[_group]);
 
 	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
@@ -781,9 +776,20 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 	m_OnTriggerExitLuaFunctions[index] = _OnTriggerExitLuaFunction;
 	m_ActiveActors[index] = _ActiveActors;
 
+	
+
 	m_Scene->addActor(*l_Body);
 
 	shape->release();
+}
+
+void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors,bool isActive)
+{	
+	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2), *m_Materials[_Material], true);
+	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
+	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+
+	CreateTrigger(_name, shape, _position, _orientation, _group, _OnTriggerEnterLuaFunction, _OnTriggerStayLuaFunction, _OnTriggerExitLuaFunction, _ActiveActors, isActive);
 }
 
 void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors, bool isActive)
@@ -792,26 +798,7 @@ void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, 
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
-	L_PutGroupToShape(shape, m_Groups[_group]);
-
-	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
-	l_Body->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
-	l_Body->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
-	l_Body->attachShape(*shape);
-
-	AddActor(_name, _position, _orientation, l_Body);
-
-	size_t index = m_ActorIndexs[_name];
-	m_TriggerIsActive[index] = isActive;
-	m_TriggerActivated[index] = "";
-	m_OnTriggerEnterLuaFunctions[index] = _OnTriggerEnterLuaFunction;
-	m_OnTriggerStayLuaFunctions[index] = _OnTriggerStayLuaFunction;
-	m_OnTriggerExitLuaFunctions[index] = _OnTriggerExitLuaFunction;
-	m_ActiveActors[index] = _ActiveActors;
-
-	m_Scene->addActor(*l_Body);
-
-	shape->release();
+	CreateTrigger(_name, shape, _position, _orientation, _group, _OnTriggerEnterLuaFunction, _OnTriggerStayLuaFunction, _OnTriggerExitLuaFunction, _ActiveActors, isActive);
 }
 
 
@@ -1112,4 +1099,23 @@ void CPhysXManager::SetCharacterControllersHeight(const std::string _name, float
 {
 	physx::PxController* aux = m_CharacterControllers[_name];
 	aux->resize((physx::PxReal)_value);
+}
+
+
+CorrectTransform CPhysXManager::GetCorrectTransform(size_t _TriggerIndex)
+{
+	return m_TriggerCorrectTransform[_TriggerIndex];
+}
+CorrectTransform CPhysXManager::GetCorrectTransform(std::string _TriggerName)
+{
+	return GetCorrectTransform(m_ActorIndexs[_TriggerName]);
+}
+bool CPhysXManager::SetCorrectTransform(size_t _TriggerIndex, CorrectTransform _CorrectTransform)
+{
+	m_TriggerCorrectTransform[_TriggerIndex] = _CorrectTransform;
+	return true;
+}
+bool CPhysXManager::SetCorrectTransform(std::string _TriggerName, CorrectTransform _CorrectTransform)
+{
+	return SetCorrectTransform(m_ActorIndexs[_TriggerName], _CorrectTransform);
 }

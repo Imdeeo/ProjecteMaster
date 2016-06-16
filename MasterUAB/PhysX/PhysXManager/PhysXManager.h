@@ -49,6 +49,14 @@ typedef struct SRaycastData
 	std::string actorname;
 } RaycastData;
 
+typedef struct SCorrectTransform
+{
+	Vect3f position;
+	Quatf rotation;
+	float angle;
+	float time;
+} CorrectTransform;
+
 #define USE_PHYSX_DEBUG 1
 
 #define PHYSX_UPDATE_STEP 0.05
@@ -86,6 +94,7 @@ public:
 
 	void CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors, bool isActive = true);
 	void CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors, bool isActive = true);
+	
 	virtual void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, std::string _group) = 0;
 
 	void CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime);
@@ -102,7 +111,14 @@ public:
 	CEmptyPointerClass* GetCharacterControllersPositionZ(const std::string _name);
 	void CPhysXManager::SetCharacterControllersHeight(const std::string _name, float _value);
 
+	CorrectTransform GetCorrectTransform(size_t _TriggerIndex);
+	CorrectTransform GetCorrectTransform(std::string _TriggerName);
+
+	bool SetCorrectTransform(size_t _TriggerIndex, CorrectTransform _CorrectTransform);
+	bool SetCorrectTransform(std::string _TriggerName, CorrectTransform _CorrectTransform);
+
 protected:
+
 	std::string						m_Filename;
 
 	physx::PxFoundation				*m_Foundation;
@@ -135,14 +151,18 @@ protected:
 	std::map<size_t, std::string>	m_OnTriggerExitLuaFunctions;
 	std::map<size_t, std::vector<std::string>>	m_ActiveActors;
 
+	std::map<size_t, CorrectTransform>	m_TriggerCorrectTransform;
+
 	float							m_LeftoverSeconds = .0f;
-	
+
 	size_t AddActor(std::string _actorName, Vect3f _position, Quatf _orientation, physx::PxActor*);
 
 	physx::PxShape* CreateStaticShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
 	physx::PxShape* CreateStaticShapeFromBody(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
 	void CreateDinamicShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
 	void CreateDinamicShapeFromBody(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
+
+	void CreateTrigger(const std::string _name, physx::PxShape* shape, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors, bool isActive);
 
 	void RegisterActor(const std::string _name, physx::PxShape* _shape, physx::PxRigidActor* _body, Vect3f _position, Quatf _orientation, std::string _group);
 	void RegisterActor(const std::string _name, physx::PxShape* _shape, physx::PxRigidBody* _body, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
