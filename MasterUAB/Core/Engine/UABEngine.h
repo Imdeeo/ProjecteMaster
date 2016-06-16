@@ -29,6 +29,7 @@ class CGamePlayManager;
 class CUABEngine
 {
 private:
+	bool m_LuaReloaded = false;
 
 	static CUABEngine * m_Instance;
 	CUABEngine(void);
@@ -86,6 +87,9 @@ public:
 	UAB_BUILD_GET_SET(bool, FrustumActive);
 	UAB_BUILD_GET_SET(float, TimeScale);
 	UAB_BUILD_GET_SET(bool, Pause);
+
+	bool GetLuaReloaded(){ return m_LuaReloaded; }
+	void LuaIsReloaded(){ m_LuaReloaded = true; }
 };
 
 #define UABEngine (*(CUABEngine::GetInstance()))

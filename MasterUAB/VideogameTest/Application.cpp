@@ -44,6 +44,7 @@ void CApplication::Update(float _ElapsedTime)
 
 	if(CInputManager::GetInputManager()->IsActionActive("RELOAD_LUA"))
 	{
+		UABEngine.LuaIsReloaded();
 		UABEngine.GetScriptManager()->RunFile("Data\\Lua\\init.lua");
 		UtilsLog("Reloading Lua");
 		UABEngine.GetScriptManager()->RunCode("mainLua(\"" + UABEngine.GetLevelLoaded() + "\")");
