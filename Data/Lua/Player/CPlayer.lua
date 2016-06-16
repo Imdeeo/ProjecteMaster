@@ -60,15 +60,23 @@ class 'CPlayer' (CLUAComponent)
 		end
 	end
 	
-	function CPlayer:ModifySanity(_amount, _override)
-		self.m_Sanity = self.m_Sanity + _amount
-		if _override and self.m_Sanity > self.m_MaxSanity then
-			self.m_MaxSanity = self.m_Sanity
-		end
+	function CPlayer:SetMaxSanity(_amount)
+		self.m_MaxSanity = _amount
+	end
+	
+	function CPlayer:ModifySanity(_amount)
+		self.m_Sanity = math.max(math.min(self.m_Sanity + _amount, self.m_MaxSanity),0)
 	end
 	
 	function CPlayer:RecoverSanity()
 		self.m_Sanity = self.m_MaxSanity
+	end
+	
+	--[[function CPlayer:ModifySanity(_amount, _override)
+		self.m_Sanity = self.m_Sanity + _amount
+		if _override and self.m_Sanity > self.m_MaxSanity then
+			self.m_MaxSanity = self.m_Sanity
+		else
 	end
 	
 	function CPlayer:GainSanity()
@@ -83,7 +91,7 @@ class 'CPlayer' (CLUAComponent)
 		if self.m_Sanity < 0 then
 			self.m_Sanity = 0
 		end
-	end
+	end]]
 	
 	function CPlayer:Update(_ElapsedTime)
 		local args = {}
