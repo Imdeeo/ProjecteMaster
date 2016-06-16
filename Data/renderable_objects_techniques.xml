@@ -3,7 +3,8 @@
 	<pool_renderable_object_technique name="forward_shading">		
 		<renderable_object_technique name="debug_lights" technique="render_lights_technique"/>
 		<renderable_object_technique name="debug_grid" technique="debug_render_technique"/>		
-		<renderable_object_technique name="animated" technique="animated_diffuse_technique"/>
+		<renderable_object_technique name="animated" technique="animated_technique"/>
+		<renderable_object_technique name="animated_bump" technique="animated_bump_technique"/>
 		<renderable_object_technique name="lights" technique="lights_technique"/>
 		<renderable_object_technique name="bump" technique="bump_technique"/>
 		<renderable_object_technique name="bump_env" technique="bump_env_technique"/>
@@ -21,7 +22,8 @@
 		<renderable_object_technique name="bump_env" technique="bump_env_deferred_technique"/>
 		<renderable_object_technique name="lightmap" technique="lightmap_deferred_technique"/>
 		<renderable_object_technique name="lightmap_bump" technique="lightmap_bump_deferred_technique"/>
-		<renderable_object_technique name="animated" technique="animated_gbuffer_diffuse_technique"/>
+		<renderable_object_technique name="animated" technique="animated_def_technique"/>
+		<renderable_object_technique name="animated_bump" technique="animated_bump_def_technique"/>
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_deferred_technique"/>
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="generate_shadowmap_pool">

@@ -191,6 +191,18 @@ public:
 	}
 
 	/**
+	* @brief Returns the norm ("magnitude") of the quaternion.
+	* @return The 2-norm of [ w(), x(), y(), z() ]<sup>T</sup>.
+	*/
+	void normalize() {
+		T norm = (T)sqrt(x*x + y*y + z*z + w*w);
+		x = x / norm;
+		y = y / norm;
+		z = z / norm;
+		w = w / norm;
+	}
+
+	/**
 	* @brief Computes the rotation matrix represented by a unit
 	* quaternion.
 	*
