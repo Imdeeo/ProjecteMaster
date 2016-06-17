@@ -70,6 +70,9 @@
     <ClInclude Include="Components\LUAComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Components\TriggerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -115,6 +118,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Components\LUAComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\TriggerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
