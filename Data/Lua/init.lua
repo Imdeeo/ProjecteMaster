@@ -66,6 +66,14 @@ function luaUpdate(_ElapsedTime)
 			l_Engine:set_time_scale(l_Engine:get_time_scale()-1)
 		end
 	end
+	if CInputManager.get_input_manager():is_action_active("SANITYDUP") then
+		utils_log("SANITYDUP")
+		m_CharacterManager.m_Player[1]:ModifySanity(10)
+	end
+	if CInputManager.get_input_manager():is_action_active("SANITYDOWN") then
+		utils_log("SANITYDOWN")
+		m_CharacterManager.m_Player[1]:ModifySanity(-10)
+	end
 	if CInputManager.get_input_manager():is_action_active("PAUSE") then
 		m_menu = true
 		CUABEngine.get_instance():set_pause(true)
@@ -79,7 +87,7 @@ end
 function luaGui()
 	local gui_manager = CUABEngine.get_instance():get_gui_manager()
 	gui_position = CGUIPosition(580, 50, 500, 30, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-	m_Cordura = gui_manager:do_slider("Cordura", "mad_slider", gui_position,0, 100, 100, false)
+	m_Cordura = gui_manager:do_slider("Cordura", "mad_slider", gui_position,0, m_CharacterManager.m_Player[1].m_MaxSanity, m_CharacterManager.m_Player[1].m_Sanity, false)
 			
 	if m_fps then
 		local color = CColor(1,0.2,0.2,1)

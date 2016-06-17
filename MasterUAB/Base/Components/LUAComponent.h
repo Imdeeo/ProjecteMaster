@@ -3,7 +3,6 @@
 
 #include "Utils\Named.h"
 #include <string>
-#include "ScriptedComponent.h"
 
 class CRenderableObject;
 class CRenderManager;
