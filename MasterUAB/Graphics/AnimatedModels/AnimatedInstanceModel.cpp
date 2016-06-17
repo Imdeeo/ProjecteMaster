@@ -45,25 +45,26 @@ bool CAnimatedInstanceModel::LoadVertexBuffer()
 			m_NumFaces+=l_CalCoreSubmesh->getFaceCount();
 		}
 	}
-	MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX* l_Vertexs=
-		(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX*)malloc
-		(m_NumFaces*3*sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
-	CalIndex *l_Faces=(CalIndex *)malloc(m_NumFaces*3*sizeof(CalIndex));
-	m_CalHardwareModel->setVertexBuffer((char*)l_Vertexs,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
-	m_CalHardwareModel->setNormalBuffer(((char*)l_Vertexs) + 12, sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
-	m_CalHardwareModel->setWeightBuffer(((char*)l_Vertexs) + 24,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
-	m_CalHardwareModel->setMatrixIndexBuffer(((char*)l_Vertexs) + 40,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));	
+
+	MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX* l_Vertexs =
+		(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX*)malloc
+		(m_NumFaces * 3 * sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX));
+	CalIndex *l_Faces = (CalIndex *)malloc(m_NumFaces * 3 * sizeof(CalIndex));
+	m_CalHardwareModel->setVertexBuffer((char*)l_Vertexs, sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX));
+	m_CalHardwareModel->setNormalBuffer(((char*)l_Vertexs) + 12, sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX));
+	m_CalHardwareModel->setWeightBuffer(((char*)l_Vertexs) + 24, sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX));
+	m_CalHardwareModel->setMatrixIndexBuffer(((char*)l_Vertexs) + 40, sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX));
 	m_CalHardwareModel->setTextureCoordNum(1);
-	m_CalHardwareModel->setTextureCoordBuffer(0,((char*)l_Vertexs)+56,sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX));
-	//m_CalHardwareModel->setTangentSpaceBuffer(0, ((char*)l_Vertexs) + 64, sizeof());
+	m_CalHardwareModel->setTextureCoordBuffer(0, ((char*)l_Vertexs) + 56, sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX));
+	m_CalHardwareModel->setTangentSpaceBuffer(1, ((char*)l_Vertexs) + 64, sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX));
 	m_CalHardwareModel->setIndexBuffer(l_Faces);
 	m_CalHardwareModel->load( 0, 0, MAXBONES);
 	m_NumFaces=m_CalHardwareModel->getTotalFaceCount();
 	m_NumVertices=m_CalHardwareModel->getTotalVertexCount();
 	if(sizeof(CalIndex)==2)
-		m_RenderableVertexs=new	CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX>(l_Vertexs, m_NumVertices, l_Faces, m_NumFaces*3);
+		m_RenderableVertexs = new	CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX>(l_Vertexs, m_NumVertices, l_Faces, m_NumFaces * 3);
 	else
-		m_RenderableVertexs=new	CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX>(l_Vertexs, m_NumVertices, l_Faces, m_NumFaces*3);
+		m_RenderableVertexs = new	CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX>(l_Vertexs, m_NumVertices, l_Faces, m_NumFaces * 3);
 	free(l_Vertexs);
 	free(l_Faces);
 	return true;
@@ -166,7 +167,14 @@ bool CAnimatedInstanceModel::IsCycleAnimationActive(int Id) const
 }
 bool CAnimatedInstanceModel::IsActionAnimationActive(int Id) const
 {
-	return m_ActualActionAnimation==Id;
+	std::vector<CalAnimation*> l_Vector = m_CalModel->getMixer()->getAnimationVector();
+	CalAnimation* l_Animation = l_Vector.at(Id);
+
+	if (NULL == l_Animation || l_Animation->getType() == CalAnimation::TYPE_ACTION &&
+		l_Animation->getState() == CalAnimation::STATE_IN)
+		return true;
+	else
+		return false;
 }
 
 void CAnimatedInstanceModel::RenderDebug(CRenderManager *RenderManager)
