@@ -38,17 +38,17 @@ class 'CPlayer' (CLUAComponent)
 		end
 		self.m_JumpSoundEvent = SoundEvent()
 		self.m_JumpSoundEvent.event_name = "Jump"
-		self.m_Velocity = Vect3f(0, 0, 0)
+		self.m_Velocity = Vect3f(0.0, 0.0, 0.0)
 		self.m_Gravity = -9.81
-		self.m_Speed = 5
-		self.m_Sanity = 100
-		self.m_MaxSanity = 100
+		self.m_Speed = 5.0
+		self.m_Sanity = 100.0
+		self.m_MaxSanity = 100.0
 		
 		self.m_IsCorrecting = false
 		self.m_IsClimbing = false
 		self.m_IsInteracting = false
 		self.m_Target = nil
-		self.m_TargetOffset = Vect3f(0, 0, 0)
+		self.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
 		
 		self.m_StateMachine = StateMachine.create()
 		self:SetPlayerStateMachine()
