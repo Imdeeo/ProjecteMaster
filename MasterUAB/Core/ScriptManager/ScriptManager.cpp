@@ -1052,6 +1052,10 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_ambient_light", &CLightManager::GetAmbientLight)
 			.def("save", &CLightManager::Save)
 			.def("create_new_light", &CLightManager::CreateNewLight)
+			.def("get_fog_color_lua_address", &CLightManager::GetFogColorLuaAdress)
+			.def("get_fog_start_lua_address", &CLightManager::GetFogStartRangeAttenuattionLuaAdress)
+			.def("get_fog_end_lua_address", &CLightManager::GetFogEndRangeAttenuattionLuaAdress)
+			.def("get_fog_max_attenuattion_lua_address", &CLightManager::GetFogMaxAttenuattionLuaAdress)
 	];
 
 	module(m_LS)[

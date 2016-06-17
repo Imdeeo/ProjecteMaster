@@ -42,6 +42,24 @@ public:
 	bool IsRenderLights(){ return m_RenderLights; }
 	bool SwitchRenderLights(){ m_RenderLights = !m_RenderLights; return m_RenderLights; }
 	void Save();
+	CEmptyPointerClass* GetFogColorLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_FogColor;
+	}
+	CEmptyPointerClass* GetFogStartRangeAttenuattionLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_FogStart;
+	}
+
+	CEmptyPointerClass* GetFogEndRangeAttenuattionLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_FogEnd;
+	}
+	CEmptyPointerClass* GetFogMaxAttenuattionLuaAdress()
+	{
+		return (CEmptyPointerClass*)&m_FogMaxAttenuation;
+	}
+
 };
 
 #endif //LIGHT_MANAGER_H
