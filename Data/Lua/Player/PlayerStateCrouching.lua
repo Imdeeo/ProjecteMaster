@@ -1,6 +1,15 @@
 function CrouchingFirst(args)
+	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_PhysXManager:set_character_controller_height("player", 0.9)
+	if l_Player.m_CurrentAnimation == "crouch_move" then
+		l_Owner:blend_cycle(3,1.0,0.1)
+	elseif l_Player.m_CurrentAnimation == "crouch_idle" then
+		l_Owner:blend_cycle(4,1.0,0.1)
+	else
+		l_Owner:blend_cycle(4,1.0,0.1)
+		l_Player.m_CurrentAnimation = "crouch_idle"
+	end
 end
 
 function CrouchingUpdate(args, _ElapsedTime)
@@ -45,19 +54,15 @@ function CrouchingUpdate(args, _ElapsedTime)
 	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
 	l_Owner:set_rotation(l_RotationY)
 	
-	--// Check if player had displacement, to animate it or not
-	local l_X = l_Displacement.x*l_Displacement.x
-	--local l_Y = l_Displacement.y*l_Displacement.y
-	local l_Y = 0
-	local l_Z = l_Displacement.z*l_Displacement.z
-	local l_DisplacementModule = math.sqrt(l_X + l_Y + l_Z)
+	--// Check if player had displacement, detect if animation should change
+	local l_DisplacementAmount = l_Displacement.x + l_Displacement.z
 	
-	--// Animate player
-	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
-	if l_DisplacementModule == 0 then		
-		l_Owner:blend_cycle(4,1.0,0.1);
+	--// Set player animation state
+	l_Player.m_LastAnimation = l_Player.m_CurrentAnimation
+	if l_DisplacementAmount == 0 then
+		l_Player.m_CurrentAnimation = "crouch_idle"
 	else
-		l_Owner:blend_cycle(3,1.0,0.1);
+		l_Player.m_CurrentAnimation = "crouch_move"
 	end	
 end
 

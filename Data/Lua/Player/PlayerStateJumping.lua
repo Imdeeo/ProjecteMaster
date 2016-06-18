@@ -1,5 +1,7 @@
 function JumpingFirst(args)
 	local l_Player = args["self"]
+	local l_Owner = args["owner"]
+	l_Owner:blend_cycle(5,1.0,0.1)
 	l_Player.m_Velocity.y = 4.9
 	l_Player.m_SoundManager:play_event(l_Player.m_JumpSoundEvent, l_Player.m_RenderableObject)
 end
@@ -41,5 +43,6 @@ function JumpingUpdate(args, _ElapsedTime)
 end
 
 function JumpingEnd(args)
-	
+	local l_Owner = args["owner"]
+	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
 end
