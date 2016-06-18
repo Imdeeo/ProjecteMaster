@@ -1,10 +1,12 @@
 function FallingFirst(args)
-	utils_log("fallingfirst")
+	local l_Owner = args["owner"]
+	l_Owner:blend_cycle(7,1.0,0.1)
 end
 
 function FallingUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
+	
 	--// Calculate the player speed
 	local l_PlayerDisplacement = Vect3f(l_Player.m_Velocity.x * 0.985, l_Player.m_Velocity.y + l_Player.m_Gravity * _ElapsedTime, l_Player.m_Velocity.z * 0.985)
 	
@@ -28,23 +30,16 @@ function FallingUpdate(args, _ElapsedTime)
 	l_Rotation = l_Player.m_CameraController:get_rotation()
 	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
 	l_Owner:set_rotation(l_RotationY)
-	
-	--// Animate player
-	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1);
-	if l_Displacement.y == 0 then		
-		l_Owner:blend_cycle(1,1.0,0.1);
-	else
-		l_Owner:blend_cycle(0,1.,0.1);
-	end	
 end
 
 function FallingEnd(args)
-	
+	local l_Owner = args["owner"]
+	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
 end
 
 function ANYToFallingCondition(args)
 	local l_Player = args["self"]
-	return l_Player.m_Velocity.y < -0.1
+	return l_Player.m_Velocity.y < -0.25
 end
 
 function FallingToIdleCondition(args)
