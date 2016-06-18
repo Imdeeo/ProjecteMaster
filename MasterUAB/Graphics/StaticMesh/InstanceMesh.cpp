@@ -180,6 +180,6 @@ bool CInstanceMesh::GetInsideFrustum()
 {
 	if (m_Layer == "skybox")
 		return true;
-	Vect3f l_TransformedPosition = C3DElement::GetTransform() * m_Position;
-	return m_Frustum->SphereVisible(l_TransformedPosition, m_StaticMesh->GetBoundingSphereRadius());
+	//Vect3f l_TransformedPosition = C3DElement::GetTransform() * m_Position; //Se carga las posiciones de las instancias.
+	return m_Frustum->SphereVisible(m_Position, m_StaticMesh->GetBoundingSphereRadius());
 }
