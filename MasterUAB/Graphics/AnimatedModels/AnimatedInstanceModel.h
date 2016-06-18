@@ -46,5 +46,8 @@ public:
 	void RenderDebug(CRenderManager *RenderManager);
 	void Save(FILE* _File, std::string _layer);
 	CAnimatedInstanceModel & CAnimatedInstanceModel::operator=(CAnimatedInstanceModel&);
+	void CalcTangentsAndBinormals(void *VtxsData, unsigned short *IdxsData, size_t
+		VtxCount, size_t IdxCount, size_t VertexStride, size_t GeometryStride, size_t
+		NormalStride, size_t TangentStride, size_t BiNormalStride, size_t TextureCoordsStride);
 };
 #endif //ANIMATED_INSTANCE_MODEL_H
