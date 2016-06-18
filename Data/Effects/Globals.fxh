@@ -2,7 +2,7 @@
 #ifndef GLOBALS_FXH
 #define GLOBALS_FXH
 
-#define MAXBONES 40
+#define MAXBONES 150
 #define MAX_LIGHTS_BY_SHADER 4
 
 cbuffer SceneConstantBuffer : register( b0 )

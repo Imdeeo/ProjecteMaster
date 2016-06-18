@@ -10,22 +10,6 @@
 		<parameter type="float" name="environment_factor" value="0.4"/>
 		<parameter type="float" name="cutout_factor" value="1.0"/>
 	</material>
-	<material name="automaton_material_2" renderable_object_technique="animated">
-		<texture type="diffuse" filename="Data/AnimatedModels/Automaton/automata_textuunwrapnuevo5.jpg"/>
-		<parameter type="float" name="specular" value="1.0"/>
-		<parameter type="float" name="gloss" value="10.0"/>
-		<parameter type="float" name="bump" value="2.0"/>
-		<parameter type="float" name="environment_factor" value="0.4"/>
-		<parameter type="float" name="cutout_factor" value="1.0"/>
-	</material>
-	<material name="automaton_material_3" renderable_object_technique="animated">
-		<texture type="diffuse" filename="Data/AnimatedModels/Automaton/automata_textuunwrapnuevo5.jpg"/>
-		<parameter type="float" name="specular" value="1.0"/>
-		<parameter type="float" name="gloss" value="10.0"/>
-		<parameter type="float" name="bump" value="2.0"/>
-		<parameter type="float" name="environment_factor" value="0.4"/>
-		<parameter type="float" name="cutout_factor" value="1.0"/>
-	</material>
 	<animation name="idle" filename="AutomatonIdle.CAF" />
 	<animation name="patrol" filename="AutomatonPatrol.CAF" />
 	<animation name="chase" filename="AutomatonChase.CAF" />

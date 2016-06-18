@@ -2,25 +2,7 @@
 <actor name="Automaton" radius_bs="2.0" pos_bs="0.0 1.0 0.0">
 	<skeleton filename="CagedAutomatonSkeleton.CSF"/>
 	<mesh filename="CagedAutomatonMesh.CMF"/>
-	<material name="caged_automaton_material_1" renderable_object_technique="animated">
-		<texture type="diffuse" filename="Data/AnimatedModels/CagedAutomaton/automata.dds"/>
-		<texture type="normal" filename="Data/AnimatedModels/CagedAutomaton/automata_NRM.dds"/>
-		<parameter type="float" name="specular" value="1.0"/>
-		<parameter type="float" name="gloss" value="10.0"/>
-		<parameter type="float" name="bump" value="2.0"/>
-		<parameter type="float" name="environment_factor" value="0.4"/>
-		<parameter type="float" name="cutout_factor" value="1.0"/>
-	</material>
-	<material name="caged_automaton_material_2" renderable_object_technique="animated">
-		<texture type="diffuse" filename="Data/AnimatedModels/CagedAutomaton/automata.dds"/>
-		<texture type="normal" filename="Data/AnimatedModels/CagedAutomaton/automata_NRM.dds"/>
-		<parameter type="float" name="specular" value="1.0"/>
-		<parameter type="float" name="gloss" value="10.0"/>
-		<parameter type="float" name="bump" value="2.0"/>
-		<parameter type="float" name="environment_factor" value="0.4"/>
-		<parameter type="float" name="cutout_factor" value="1.0"/>
-	</material>
-	<material name="caged_automaton_material_3" renderable_object_technique="animated">
+	<material name="caged_automaton_material_1" renderable_object_technique="animated_bump">
 		<texture type="diffuse" filename="Data/AnimatedModels/CagedAutomaton/automata.dds"/>
 		<texture type="normal" filename="Data/AnimatedModels/CagedAutomaton/automata_NRM.dds"/>
 		<parameter type="float" name="specular" value="1.0"/>
