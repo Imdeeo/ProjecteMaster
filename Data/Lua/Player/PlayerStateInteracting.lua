@@ -19,10 +19,11 @@ function InteractingUpdate(args, _ElapsedTime)
 		
 	--// Animate player
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
-	if l_Displacement.y == 0 then		
+	if l_Displacement.y == 0 then
 		l_Owner:blend_cycle(1,1.0,0.1);
+		--blend_cycle(animacion, weight, fade(s))
 	else
-		l_Owner:blend_cycle(0,1.,0.1);
+		l_Owner:blend_cycle(0,1.0,0.1);
 	end	
 end
 

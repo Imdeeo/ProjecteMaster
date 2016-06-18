@@ -1,5 +1,6 @@
 function IdleFirst(args)
-	
+	local l_Owner = args["owner"]
+	l_Owner:blend_cycle(1,1.0,0.1)
 end
 
 function IdleUpdate(args, _ElapsedTime)
@@ -32,6 +33,8 @@ function IdleUpdate(args, _ElapsedTime)
 end
 
 function IdleEnd(args)
+	local l_Owner = args["owner"]
+	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
 end
 
 function IdleToMovingCondition(args)
