@@ -1,20 +1,11 @@
 #include "globals.fxh"
 #include "samplers.fxh"
 
-#ifdef HAS_WEIGHT_INDICES
-	static float m_SpecularFactor = m_RawDataArray[0];
-	static float m_SpecularPower = m_RawDataArray[1];
-	static float m_Bump = m_RawDataArray[2];
-	static float m_EnvironmentFactor = m_RawDataArray[3];
-	static float m_CutOutFactor = m_RawDataArray[4];
-	static float m_ReflectionFactor = m_RawDataArray[5];
-#else
-	static float m_Active = m_RawDataArray[0];
-	static float m_Exposure = m_RawDataArray[1];
-	static float m_SpecularPower = m_RawDataArray[2];
-	static float m_SpecularFactor = m_RawDataArray[3];
-	static float m_ReflectionFactor = m_RawDataArray[4];
-#endif
+static float m_Active = m_RawDataArray[0];
+static float m_Exposure = m_RawDataArray[1];
+static float m_SpecularPower = m_RawDataArray[2];
+static float m_SpecularFactor = m_RawDataArray[3];
+static float m_ReflectionFactor = m_RawDataArray[4];
 
 struct VS_INPUT
 {

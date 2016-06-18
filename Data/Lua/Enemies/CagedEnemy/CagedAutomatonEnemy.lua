@@ -5,6 +5,7 @@ dofile("Data\\Lua\\Enemies\\CagedEnemy\\CagedAutomatonStateIdle.lua")
 class 'CCagedAutomatonEnemy' (CEnemy)
 	function CCagedAutomatonEnemy:__init(_TreeNode)
 		CEnemy.__init(self,_TreeNode)
+		self.m_Break = _TreeNode:get_bool_property("break", false, false)
 		self:SetCagedAutomatonStateMachine()
 		self.m_StateMachine:start()
 	end
