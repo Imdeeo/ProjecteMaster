@@ -134,14 +134,12 @@ void CManchasSystemInstance::Render(CRenderManager *RM)
 	{
 		ManchaData *mancha = &m_ManchaData[i];
 
-		//m_ManchasRenderableData[i].Position = mancha->Position;
+		//m_ManchasRenderableData[i].Position // = mancha->Position;
 
 		m_ManchasRenderableData[i].Color = mancha->Color;
 		
 		
 
-		//m_ParticleRenderableData[i].UV.x = mathUtils::Lerp<float>(particle->LastSize, particle->NextSize, SizeControlAlpha);
-		//m_ParticleRenderableData[i].UV.y = particle->Angle;
 		m_ManchasRenderableData[i].UV.x = mancha->Opacity;
 		m_ManchasRenderableData[i].UV.y = mancha->Size;
 	}
