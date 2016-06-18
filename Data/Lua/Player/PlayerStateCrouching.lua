@@ -9,6 +9,7 @@ function CrouchingUpdate(args, _ElapsedTime)
 	local l_ForwardMovement = l_Player.m_InputManager:get_axis("MOVE_FWD")
 	local l_StrafeMovement = l_Player.m_InputManager:get_axis("STRAFE")
 	local l_Speed = l_Player.m_Speed
+	
 	--// Detect if player is crouching backwards
 	if l_Player.m_InputManager:is_action_active("MOVE_BACK") then
 		l_Speed = l_Speed * 0.15
@@ -54,15 +55,17 @@ function CrouchingUpdate(args, _ElapsedTime)
 	--// Animate player
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
 	if l_DisplacementModule == 0 then		
-		l_Owner:blend_cycle(1,1.0,0.1);
+		l_Owner:blend_cycle(4,1.0,0.1);
 	else
-		l_Owner:blend_cycle(0,1.,0.1);
+		l_Owner:blend_cycle(3,1.0,0.1);
 	end	
 end
 
 function CrouchingEnd(args)
 	local l_Player = args["self"]
+	local l_Owner = args["owner"]
 	l_Player.m_PhysXManager:set_character_controller_height("player", 1.8)
+	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
 end
 
 function CrouchingToIdleCondition(args)

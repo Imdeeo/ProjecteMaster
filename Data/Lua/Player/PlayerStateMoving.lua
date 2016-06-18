@@ -1,5 +1,6 @@
 function MovingFirst(args)
-	
+	local l_Owner = args["owner"]
+	l_Owner:blend_cycle(0,1.0,0.1)
 end
 
 function MovingUpdate(args, _ElapsedTime)
@@ -9,13 +10,17 @@ function MovingUpdate(args, _ElapsedTime)
 	local l_StrafeMovement = l_Player.m_InputManager:get_axis("STRAFE")
 	local l_Speed = l_Player.m_Speed
 	
-	--// Detect if player is moving backwards, walking, or running
+	--// Detect if player is moving backwards, walking, or running, then animate it.
 	if l_Player.m_InputManager:is_action_active("MOVE_BACK") and not l_Player.m_InputManager:is_action_active("RUN") then
 		l_Speed = l_Speed * 0.5
 	end
 	
+	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
 	if l_Player.m_InputManager:is_action_active("RUN") then
 		l_Speed = l_Speed * 2
+		l_Owner:blend_cycle(2,1.0,0.1);
+	else
+		l_Owner:blend_cycle(0,1.0,0.1);
 	end
 	
 	--// Move player forward and laterally
@@ -45,25 +50,11 @@ function MovingUpdate(args, _ElapsedTime)
 	l_Rotation = l_Player.m_CameraController:get_rotation()
 	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
 	l_Owner:set_rotation(l_RotationY)
-	
-	--// Check if player had displacement, to animate it or not
-	local l_X = l_Displacement.x*l_Displacement.x
-	--local y = l_Displacement.y*l_Displacement.y
-	local l_Y = 0
-	local l_Z = l_Displacement.z*l_Displacement.z
-	local l_DisplacementModule = math.sqrt(l_X + l_Y + l_Z)
-	
-	--// Animate player
-	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
-	if l_DisplacementModule == 0 then		
-		l_Owner:blend_cycle(1,1.0,0.1);
-	else
-		l_Owner:blend_cycle(0,1.,0.1);
-	end	
 end
 
 function MovingEnd(args)
-	
+	local l_Owner = args["owner"]
+	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
 end
 
 function MovingToIdleCondition(args)
