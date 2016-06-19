@@ -137,8 +137,6 @@ protected:
 	std::map<size_t, std::string>	m_OnTriggerExitLuaFunctions;
 	std::map<size_t, std::vector<std::string>>	m_ActiveActors;
 
-	std::map<size_t, CorrectTransform>	m_TriggerCorrectTransform;
-
 	float							m_LeftoverSeconds = .0f;
 
 	size_t AddActor(std::string _actorName, Vect3f _position, Quatf _orientation, physx::PxActor*);
