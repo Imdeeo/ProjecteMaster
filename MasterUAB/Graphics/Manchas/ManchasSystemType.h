@@ -22,6 +22,7 @@ public:
 	//void Save(FILE* _File);
 
 	UAB_BUILD_GET_SET(CMaterial *, Material);
+	UAB_BUILD_GET_SET(int, Frames);
 	UAB_BUILD_GET_SET(Vect2f, EmitTime);
 	UAB_BUILD_GET_SET(Vect2f, Life);
 	UAB_BUILD_GET_SET(Vect2f, Opacity);

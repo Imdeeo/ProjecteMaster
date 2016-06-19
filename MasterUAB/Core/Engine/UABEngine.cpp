@@ -22,6 +22,7 @@
 #include "GUIManager.h"
 #include "SoundManager\SoundManager.h"
 #include "GamePlayManager.h"
+#include "Manchas\ManchasManager.h"
 
 CUABEngine::CUABEngine(void)
 {
@@ -47,6 +48,7 @@ CUABEngine::CUABEngine(void)
 	m_SoundManager = ISoundManager::InstantiateSoundManager();
 	m_FrustumActive = true;
 	m_GamePlayManager = new CGamePlayManager();
+	m_ManchasManager = new CManchasManager();
 }
 
 CUABEngine::~CUABEngine(void)
@@ -70,6 +72,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_GUIManager)
 	CHECKED_DELETE(m_SoundManager);
+	CHECKED_DELETE(m_ManchasManager);
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -107,6 +110,7 @@ void CUABEngine::Init()
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_MaterialManager->Load("Data\\level_" + m_LevelLoaded + "\\materials.xml", "Data\\default_effect_materials.xml");
 	m_ParticleManager->Load("Data\\level_" + m_LevelLoaded + "\\particles.xml");
+	m_ManchasManager->Load("Data\\level_" + m_LevelLoaded + "\\cordura.xml");
 	m_StaticMeshManager->Load("Data\\level_" + m_LevelLoaded + "\\static_meshes.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");	
 	m_LayerManager->Load("Data\\level_" + m_LevelLoaded + "\\renderable_objects.xml");	
@@ -177,3 +181,4 @@ UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine,ISoundManager *, SoundManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager *, GamePlayManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CManchasManager *, ManchasManager)
