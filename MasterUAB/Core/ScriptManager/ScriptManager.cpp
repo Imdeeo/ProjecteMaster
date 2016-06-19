@@ -91,6 +91,10 @@
 #include "Particles\ParticleSystemType.h"
 #include "Particles\ParticleSystemInstance.h"
 
+#include "Manchas\ManchasManager.h"
+#include "Manchas\ManchasSystemType.h"
+#include "Manchas\ManchasSystemInstance.h"
+
 #include "GUIManager.h"
 #include "GUIPosition.h"
 #include "SliderResult.h"
@@ -521,6 +525,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_effect_manager", &CUABEngine::GetEffectManager)
 			.def("get_light_manager", &CUABEngine::GetLightManager)
 			.def("get_particle_manager", &CUABEngine::GetParticleManager)
+			.def("get_manchas_manager", &CUABEngine::GetManchasManager)
 			.def("get_render_manager", &CUABEngine::GetRenderManager)
 			.def("get_animated_models_manager", &CUABEngine::GetAnimatedModelsManager)
 			.def("get_script_manager", &CUABEngine::GetScriptManager)
@@ -1321,13 +1326,42 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("get_lua_emission_box_half_size", &CParticleSystemInstance::GetLuaEmissionBoxHalfSize)
 	];
 
+	// Manchas-----------------------------------------------------------------------------------------
+	module(m_LS)[
+	class_<CManchasSystemType, CNamed>("CManchasSystemType")
+		.def("get_lua_frames", &CManchasSystemType::GetLuaFrames)
+		.def("get_lua_emit_time", &CManchasSystemType::GetLuaEmitTime)
+		.def("get_lua_life_time", &CManchasSystemType::GetLuaLife)
+		.def("get_lua_opacity", &CManchasSystemType::GetLuaOpacity)
+		.def("get_lua_size", &CManchasSystemType::GetLuaSize)
+		.def("get_lua_size_speed", &CManchasSystemType::GetLuaSizeSpeed)
+		.def("get_lua_color1", &CManchasSystemType::GetLuaColor1)
+		.def("get_lua_color2", &CManchasSystemType::GetLuaColor2)
+	];
 
-// GUI----------------------------------------------------------------------------------------------
-	
-	
+	RegisterTemplatedMapManager<CManchasSystemType>(m_LS);
 
 	module(m_LS)[
-		
+		class_<CManchasManager, CTemplatedMapManager<CManchasSystemType>>("CManchasManager")
+			.def(constructor<>())
+			.def("load", &CManchasManager::Load)
+			.def("reload", &CManchasManager::Reload)
+			//.def("save", &CManchasManager::Save)
+	];
+
+	module(m_LS)[
+		class_<CManchasSystemInstance, CRenderableObject>("CManchasSystemInstance")
+			.def(constructor<CXMLTreeNode&>())
+			.def("get_type", &CManchasSystemInstance::GetType)
+			.def("get_awake", &CManchasSystemInstance::GetAwake)
+			.def("set_awake", &CManchasSystemInstance::SetAwake)
+			.def("get_lua_awake", &CManchasSystemInstance::GetLuaAwake)
+	];
+
+
+
+// GUI----------------------------------------------------------------------------------------------
+	module(m_LS)[	
 		class_<CGUIManager>("CGUIManager")
 			.def("do_button", &CGUIManager::DoButton)
 			.def("do_slider", &CGUIManager::DoSlider)

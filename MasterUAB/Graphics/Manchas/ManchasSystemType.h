@@ -31,26 +31,39 @@ public:
 	UAB_BUILD_GET_SET(CColor, Color1);
 	UAB_BUILD_GET_SET(CColor, Color2);
 
-	/*CEmptyPointerClass* GetLuaSize1(int index = 0)
+	CEmptyPointerClass* GetLuaFrames()
 	{
-		return (CEmptyPointerClass*)&m_Size1[index];
+		return (CEmptyPointerClass*)&m_Frames;
 	}
-
-	CEmptyPointerClass* GetLuaSize2(int index = 0)
-	{
-		return (CEmptyPointerClass*)&m_Size2[index];
-	}
-
-	CEmptyPointerClass* GetLuaEmitRate(int index = 0)
+	CEmptyPointerClass* GetLuaEmitTime(int index = 0)
 	{
 		return (CEmptyPointerClass*)&m_EmitTime[index];
 	}
-	
 	CEmptyPointerClass* GetLuaLife(int index = 0)
 	{
 		return (CEmptyPointerClass*)&m_Life[index];
-	}*/
-		
+	}
+	CEmptyPointerClass* GetLuaOpacity(int index = 0)
+	{
+		return (CEmptyPointerClass*)&m_Opacity[index];
+	}
+	CEmptyPointerClass* GetLuaSize(int index = 0)
+	{
+		return (CEmptyPointerClass*)&m_Size[index];
+	}
+	CEmptyPointerClass* GetLuaSizeSpeed(int index = 0)
+	{
+		return (CEmptyPointerClass*)&m_SizeSpeed[index];
+	}
+	CEmptyPointerClass* GetLuaColor1()
+	{
+		return (CEmptyPointerClass*)&m_Color1;
+	}
+
+	CEmptyPointerClass* GetLuaColor2()
+	{
+		return (CEmptyPointerClass*)&m_Color2;
+	}
 };
 
 #endif //MANCHAS_SYSTEM_TYPE_H
