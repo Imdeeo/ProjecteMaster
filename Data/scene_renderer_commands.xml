@@ -56,6 +56,13 @@
 	<render_layer name="render layer triggers" layer="triggers" active="true"/>
 	<disable_alpha_blend name="disable alpha blend Triggers" active="true"/>
 	
+	<!-- MANCHAS -->
+	<enable_alpha_blend name="enable alpha blend AAZZOO Manchas" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF Manchas" enable_z_test="true" write_z_buffer="true" active="true"/>
+	<set_pool_renderable_objects_technique name="set pool Manchas" pool="manchas_pool" active="true"/>
+	<render_layer name="render layer Manchas" layer="manchas" active="true"/>
+	<disable_alpha_blend name="disable alpha blend Manchas" active="true"/>
+	
 	<!-- GUI -->
 	<enable_alpha_blend name="enable alpha blend GUI" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
 	<set_pool_renderable_objects_technique name="set pool forward GUI" pool="forward_shading" active="true"/>

@@ -13,12 +13,14 @@
 #include "Camera\CameraControllerManager.h"
 #include "Math\MathUtils.h"
 
-CManchasSystemInstance::CManchasSystemInstance() : CRenderableObject(), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
+CManchasSystemInstance::CManchasSystemInstance(CXMLTreeNode &TreeNode) : CRenderableObject(), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
 {
-	m_Awake = false;
+	m_Awake = TreeNode.GetBoolProperty("active");
 	m_ActiveManchas = 0;
+	m_Type = UABEngine.GetInstance()->GetManchasManager()->GetResource(TreeNode.GetPszProperty("type"));
 	m_RenderableVertex = new CUABPointsListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(m_ManchasRenderableData, MAX_MANCHAS, MAX_MANCHAS, true);
 	m_NextParticleEmission = ComputeTimeToNextMancha();
+	m_Name = TreeNode.GetPszProperty("name");
 }
 
 CManchasSystemInstance::~CManchasSystemInstance(void)
@@ -134,13 +136,12 @@ void CManchasSystemInstance::Render(CRenderManager *RM)
 	{
 		ManchaData *mancha = &m_ManchaData[i];
 
-		//m_ManchasRenderableData[i].Position // = mancha->Position;
+		m_ManchasRenderableData[i].Position = Vect4f(50, 50, 0.5, 0.5);
 
 		m_ManchasRenderableData[i].Color = mancha->Color;
-		
-		
+		m_ManchasRenderableData[i].Color.w = mancha->Opacity;
 
-		m_ManchasRenderableData[i].UV.x = mancha->Opacity;
+		m_ManchasRenderableData[i].UV.x = mancha->Frame;			
 		m_ManchasRenderableData[i].UV.y = mancha->Size;
 	}
 

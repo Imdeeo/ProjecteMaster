@@ -6,7 +6,9 @@ CManchasSystemType::CManchasSystemType(CXMLTreeNode &TreeNode) : CNamed(TreeNode
 {
 	CXMLTreeNode l_Element = TreeNode;
 	m_Material = UABEngine.GetInstance()->GetMaterialManager()->GetResource(l_Element.GetPszProperty("material"));
+	m_Frames = l_Element.GetIntProperty("frames", 1);
 	m_Size = l_Element.GetVect2fProperty("size",Vect2f(0.0, 0.0));
+	m_SizeSpeed = l_Element.GetVect2fProperty("size_speed", Vect2f(0.0, 0.0));
 	m_EmitTime = l_Element.GetVect2fProperty("emit_time", Vect2f(0.0, 0.0));
 	m_Life = l_Element.GetVect2fProperty("life", Vect2f(0.0, 0.0));
 	m_Opacity = l_Element.GetVect2fProperty("opacity", Vect2f(0.0, 0.0));

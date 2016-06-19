@@ -46,13 +46,12 @@ function RegisterShadersBar()
 end
 
 function ReloadEffectTechnique(EffectTechniqueName)
-
 	local UABEngine = CUABEngine.get_instance()
 	local EffectManager = UABEngine:get_effect_manager()
 	local EffectTechnique = EffectManager:get_resource(EffectTechniqueName)
 	EffectTechnique:get_vertex_shader():reload()
 	EffectTechnique:get_pixel_shader():reload()
-
+	EffectTechnique:get_geometry_shader():reload()
 end
 
 function RegisterParametersVariables(material_name)
