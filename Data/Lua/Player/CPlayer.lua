@@ -49,8 +49,10 @@ class 'CPlayer' (CLUAComponent)
 		self.m_IsInteracting = false
 		self.m_Target = nil
 		self.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
+		
 		self.m_CurrentAnimation = "none"
 		self.m_LastAnimation = "none"
+		self.m_InteractingAnimation = 0
 		
 		self.m_StateMachine = StateMachine.create()
 		self:SetPlayerStateMachine()
