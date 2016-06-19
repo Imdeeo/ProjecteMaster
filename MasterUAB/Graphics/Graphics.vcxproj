@@ -46,6 +46,9 @@
     <ClCompile Include="Lights\LightManager.cpp" />
     <ClCompile Include="Lights\OmniLight.cpp" />
     <ClCompile Include="Lights\SpotLight.cpp" />
+    <ClCompile Include="Manchas\ManchasManager.cpp" />
+    <ClCompile Include="Manchas\ManchasSystemInstance.cpp" />
+    <ClCompile Include="Manchas\ManchasSystemType.cpp" />
     <ClCompile Include="Materials\TemplatedMaterialParameter.cpp" />
     <ClCompile Include="Materials\Material.cpp" />
     <ClCompile Include="Materials\MaterialManager.cpp" />
@@ -125,6 +128,9 @@
     <ClInclude Include="Effects\EffectTechnique.h" />
     <ClInclude Include="Effects\LightEffectParameters.h" />
     <ClInclude Include="Effects\SceneEffectParameters.h" />
+    <ClInclude Include="Manchas\ManchasManager.h" />
+    <ClInclude Include="Manchas\ManchasSystemInstance.h" />
+    <ClInclude Include="Manchas\ManchasSystemType.h" />
     <ClInclude Include="Particles\ParticleSystemInstance.h" />
     <ClInclude Include="RenderHelper\RenderHelper.h" />
     <ClInclude Include="Layers\LayerManager.h" />

@@ -230,6 +230,15 @@
     <ClCompile Include="SceneRender\RenderDebugFrustumSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
+    <ClCompile Include="Manchas\ManchasManager.cpp">
+      <Filter>Manchas</Filter>
+    </ClCompile>
+    <ClCompile Include="Manchas\ManchasSystemType.cpp">
+      <Filter>Manchas</Filter>
+    </ClCompile>
+    <ClCompile Include="Manchas\ManchasSystemInstance.cpp">
+      <Filter>Manchas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -276,6 +285,9 @@
     </Filter>
     <Filter Include="RenderHelper">
       <UniqueIdentifier>{e7e1695e-d493-4cd9-832c-2eda093522a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manchas">
+      <UniqueIdentifier>{0629ac20-b5c5-48f5-826d-28b18b69002a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -541,6 +553,15 @@
     </ClInclude>
     <ClInclude Include="SceneRender\RenderDebugFrustumSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="Manchas\ManchasManager.h">
+      <Filter>Manchas</Filter>
+    </ClInclude>
+    <ClInclude Include="Manchas\ManchasSystemType.h">
+      <Filter>Manchas</Filter>
+    </ClInclude>
+    <ClInclude Include="Manchas\ManchasSystemInstance.h">
+      <Filter>Manchas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

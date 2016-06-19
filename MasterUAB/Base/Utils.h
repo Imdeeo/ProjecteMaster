@@ -10,10 +10,11 @@
 #include "Math\MathUtils.h"
 #include "no_sillywarnings_please.h"
 
-#define MAXBONES 40
+#define MAXBONES 150
 #define MAX_LIGHTS_BY_SHADER 4
 #define UAB_ID_SHADOW_MAP 0
 #define MAX_PARTICLE_PER_INSTANCE 200
+#define MAX_MANCHAS 10
 #define MAX_VERTICES_PER_CALL 200
 
 #define UAB_PI 3.14159265359f

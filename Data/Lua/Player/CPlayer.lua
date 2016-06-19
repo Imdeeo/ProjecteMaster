@@ -49,6 +49,8 @@ class 'CPlayer' (CLUAComponent)
 		self.m_IsInteracting = false
 		self.m_Target = nil
 		self.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
+		self.m_CurrentAnimation = "none"
+		self.m_LastAnimation = "none"
 		
 		self.m_StateMachine = StateMachine.create()
 		self:SetPlayerStateMachine()
@@ -106,7 +108,6 @@ class 'CPlayer' (CLUAComponent)
 		args["owner"] = self.m_RenderableObject
 		args["self"] = self
 		self.m_StateMachine:update(args, _ElapsedTime)
-		--PlayerStateMachine:update(args, _ElapsedTime)
 	end
 	
 	function CPlayer:SetPlayerStateMachine()
@@ -125,6 +126,7 @@ class 'CPlayer' (CLUAComponent)
 		MovingState:set_do_first_function(MovingFirst)
 		MovingState:set_do_end_function(MovingEnd)
 		MovingState:add_condition(MovingToIdleCondition, "Idle")
+		MovingState:add_condition(ANYToItselfCondition, "Moving")
 		MovingState:add_condition(MovingToCrouchingCondition, "Crouching")
 		MovingState:add_condition(MovingToJumpingCondition, "Jumping")
 		MovingState:add_condition(ANYToFallingCondition, "Falling")
@@ -140,6 +142,7 @@ class 'CPlayer' (CLUAComponent)
 		CrouchingState:set_do_first_function(CrouchingFirst)
 		CrouchingState:set_do_end_function(CrouchingEnd)
 		CrouchingState:add_condition(CrouchingToIdleCondition, "Idle")
+		CrouchingState:add_condition(ANYToItselfCondition, "Crouching")
 		CrouchingState:add_condition(ANYToFallingCondition, "Falling")
 		CrouchingState:add_condition(ANYToCorrectingCondition, "Correcting")
 		
@@ -180,3 +183,8 @@ class 'CPlayer' (CLUAComponent)
 		utils_log("End Set PlayerStateMachine")
 	end	
 --end
+
+function ANYToItselfCondition(args)
+	local l_Player = args["self"]
+	return not (l_Player.m_LastAnimation == l_Player.m_CurrentAnimation)
+end

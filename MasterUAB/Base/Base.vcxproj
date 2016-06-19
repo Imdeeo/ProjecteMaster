@@ -22,6 +22,7 @@
     <ClInclude Include="3DElement\3DElement.h" />
     <ClInclude Include="Components\LUAComponent.h" />
     <ClInclude Include="Components\ScriptedComponent.h" />
+    <ClInclude Include="Components\TriggerComponent.h" />
     <ClInclude Include="Components\UABComponent.h" />
     <ClInclude Include="Components\UABComponentManager.h" />
     <ClInclude Include="HelperTypes.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="3DElement\3DElement.cpp" />
     <ClCompile Include="Components\LUAComponent.cpp" />
     <ClCompile Include="Components\ScriptedComponent.cpp" />
+    <ClCompile Include="Components\TriggerComponent.cpp" />
     <ClCompile Include="Components\UABComponent.cpp" />
     <ClCompile Include="Components\UABComponentManager.cpp" />
     <ClCompile Include="Math\MathConstants.cpp" />
