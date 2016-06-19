@@ -26,7 +26,7 @@ function IdleUpdateTurret(args, _ElapsedTime)
 				l_Enemy.m_TimerRotation = 0.0
 			end 
 			
-			l_Enemy:EnemyWalk(l_Owner, l_Owner:get_position(), l_Enemy.m_WalkSpeed, l_PercentRotation, _ElapsedTime)
+			l_Enemy:EnemyRotation(l_PlayerPos, l_Enemy.m_WalkSpeed, l_PercentRotation, _ElapsedTime)
 		end
 	end
 end
