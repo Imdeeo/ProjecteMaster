@@ -495,8 +495,6 @@ void CPhysXManager::RegisterMaterial(const std::string &name, float staticFricti
 	m_Materials[name] = m_PhysX->createMaterial(staticFriction,dynamicFriction,restitution);
 }
 
-
-
 inline void CPhysXManager::AssertCoordArrays()
 {
 	assert(m_Actors.size()==m_ActorNames.size()); // AOS sync fail
@@ -725,7 +723,7 @@ void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CSta
 		}
 	}
 }
-//
+
 //physx::PxConvexMesh* L_CreateConvexMesh(std::vector<Vect3f> _vertices, physx::PxCooking* _Cooking, physx::PxPhysics* _PhysX)
 //{
 //	physx::PxConvexMeshDesc convexDesc;
@@ -776,8 +774,6 @@ void CPhysXManager::CreateTrigger(const std::string _name, physx::PxShape* shape
 	m_OnTriggerExitLuaFunctions[index] = _OnTriggerExitLuaFunction;
 	m_ActiveActors[index] = _ActiveActors;
 
-	
-
 	m_Scene->addActor(*l_Body);
 
 	shape->release();
@@ -812,7 +808,6 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 	assert(numShapes == 1);
 
 	L_PutGroupToShape(shape, m_Groups[_group]);
-	//groundPlane->attachShape(*shape);
 	groundPlane->userData = (void*)AddActor(_name, _position, _orientation, groundPlane);
 	shape->userData = groundPlane->userData;
 
@@ -1099,23 +1094,4 @@ void CPhysXManager::SetCharacterControllersHeight(const std::string _name, float
 {
 	physx::PxController* aux = m_CharacterControllers[_name];
 	aux->resize((physx::PxReal)_value);
-}
-
-
-CorrectTransform CPhysXManager::GetCorrectTransform(size_t _TriggerIndex)
-{
-	return m_TriggerCorrectTransform[_TriggerIndex];
-}
-CorrectTransform CPhysXManager::GetCorrectTransform(std::string _TriggerName)
-{
-	return GetCorrectTransform(m_ActorIndexs[_TriggerName]);
-}
-bool CPhysXManager::SetCorrectTransform(size_t _TriggerIndex, CorrectTransform _CorrectTransform)
-{
-	m_TriggerCorrectTransform[_TriggerIndex] = _CorrectTransform;
-	return true;
-}
-bool CPhysXManager::SetCorrectTransform(std::string _TriggerName, CorrectTransform _CorrectTransform)
-{
-	return SetCorrectTransform(m_ActorIndexs[_TriggerName], _CorrectTransform);
 }

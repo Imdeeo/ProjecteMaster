@@ -73,16 +73,6 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 				l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction,l_OnTriggerStayLuaFunction,l_OnTriggerExitLuaFunction, l_ActivateActors,l_IsTriggerActive);
 			else
 				l_PhysXManager->CreateSphereTrigger(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction, l_OnTriggerStayLuaFunction, l_OnTriggerExitLuaFunction, l_ActivateActors, l_IsTriggerActive);
-			bool l_HasCorrectTransform = TreeNode.GetBoolProperty("has_correct_transform", false);
-			if (l_HasCorrectTransform)
-			{
-				CorrectTransform l_CorrectTransform;
-				l_CorrectTransform.time = TreeNode.GetFloatProperty("transition_time");
-				l_CorrectTransform.position = TreeNode.GetVect3fProperty("correct_position",Vect3f(0.f,0.f,0.f));
-				l_CorrectTransform.rotation = TreeNode.GetQuatfProperty("correct_rotation", Quatf(0.f, 0.f, 0.f,1.f));
-				l_CorrectTransform.angle = TreeNode.GetFloatProperty("acceptation_angle");
-				l_PhysXManager->SetCorrectTransform(l_Name, l_CorrectTransform);
-			}
 		}
 		else if (m_PxType == "convex_mesh_shape")
 		{
