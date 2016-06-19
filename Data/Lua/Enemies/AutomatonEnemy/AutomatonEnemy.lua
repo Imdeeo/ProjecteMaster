@@ -75,4 +75,33 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_StateMachine:add_state("Return", ReturnState)
 		self.m_StateMachine:add_state("Attack", AttackState)
 	end
+	
+	function CAutomatonEnemy:EnemyWalk(_DesiredPos, _MoveSpeed, _PercentRotation, _ElapsedTime)
+		-- enemy always walks in forward direction
+		local l_Owner = self.m_RenderableObject;
+		local l_EnemyForward = l_Owner:get_rotation():get_forward_vector():get_normalized(1)
+		local l_EnemyPos = l_Owner:get_position()
+		local l_NewPos = l_EnemyForward * _MoveSpeed
+		self.m_PhysXManager:character_controller_move(self.m_Name, l_NewPos, _ElapsedTime)
+		l_Owner:set_position(l_EnemyPos + l_NewPos * _ElapsedTime)
+
+		-- with the rotation, the enemy chases to the player
+		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)	
+		local l_Angle = l_EnemyForward * l_Direction
+		if 1.0 - l_Angle < 0.01 then
+		  return
+		end
+		
+		local angle_to_turn = math.acos(l_Angle)
+		local cross = l_Direction ^ l_EnemyForward
+		if cross.y < 0.0 then
+		  angle_to_turn = -angle_to_turn
+		end
+		
+		local quat_to_turn = Quatf()
+		quat_to_turn:quat_from_yaw_pitch_roll(angle_to_turn, 0.0, 0.0)		
+		
+		local target_quat = l_Owner:get_rotation():slerp(l_Owner:get_rotation() * quat_to_turn, _PercentRotation)
+		l_Owner:set_rotation(target_quat)
+	end
 --end
