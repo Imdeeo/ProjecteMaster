@@ -8,16 +8,16 @@ end
 
 function AlertUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
-	local l_Enemy = args["self"]	
+	local l_Enemy = args["self"]
 	
 	if l_Enemy:PlayerVisible(l_Owner) then
 		l_Enemy.m_State = "chase"
 		l_Enemy.m_alert_timer = 0.0
 	else
-		local l_NodePoint = l_Enemy.m_PathFindig:get_actual_patrol_point("path1")
 		local l_Timer = 0
 		
-		if l_Enemy.m_Patrol then
+		if l_Enemy.m_Patrol and l_Enemy.m_IsChasing == false then			
+			local l_NodePoint = l_Enemy.m_PathFindig:get_actual_patrol_point(l_Enemy.m_PatrolName)
 			l_Timer = l_NodePoint.time_to_wait
 		else
 			l_Timer = l_Enemy.m_StandardAlertTime
@@ -26,8 +26,13 @@ function AlertUpdateAutomaton(args, _ElapsedTime)
 		l_Enemy.m_alert_timer = l_Enemy.m_alert_timer + _ElapsedTime
 	
 		if l_Enemy.m_alert_timer > l_Timer then
-			l_Enemy.m_alert_timer = 0.0			
-			l_Enemy.m_State = "return"
+			l_Enemy.m_alert_timer = 0.0
+			if l_Enemy.m_Patrol and l_Enemy.m_IsChasing == false then
+				l_Enemy.m_PathFindig:increment_actual_patrol_point(l_Enemy.m_PatrolName)
+				l_Enemy.m_State = "patrol"
+			else
+				l_Enemy.m_State = "return"
+			end
 		end
 	end
 end
