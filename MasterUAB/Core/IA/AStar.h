@@ -45,7 +45,7 @@ public:
 	};
 
 	Vect3f GetActualPoint();
-	void IncrementActualPoint();
+	bool IncrementActualPoint();
 	TNodePatrol* GetActualPatrolPoint(std::string _patrolName);
 	void IncrementActualPatrolPoint(std::string _patrolName);
 private:

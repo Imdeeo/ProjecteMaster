@@ -256,10 +256,15 @@ Vect3f CAStar::GetActualPoint()
 		return Vect3f(0.0f, 0.0f, 0.0f);
 }
 
-void CAStar::IncrementActualPoint()
+bool CAStar::IncrementActualPoint()
 {
 	if (m_IndexPoint < (int)m_PathPoints.size() - 1)
+	{
 		m_IndexPoint += 1;
+		return true;
+	}
+	else
+		return false;
 }
 
 CAStar::TNodePatrol* CAStar::GetActualPatrolPoint(std::string _patrolName)
