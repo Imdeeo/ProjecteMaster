@@ -49,14 +49,6 @@ typedef struct SRaycastData
 	std::string actorname;
 } RaycastData;
 
-typedef struct SCorrectTransform
-{
-	Vect3f position;
-	Quatf rotation;
-	float angle;
-	float time;
-} CorrectTransform;
-
 #define USE_PHYSX_DEBUG 1
 
 #define PHYSX_UPDATE_STEP 0.05
@@ -111,12 +103,6 @@ public:
 	CEmptyPointerClass* GetCharacterControllersPositionZ(const std::string _name);
 	void CPhysXManager::SetCharacterControllersHeight(const std::string _name, float _value);
 
-	CorrectTransform GetCorrectTransform(size_t _TriggerIndex);
-	CorrectTransform GetCorrectTransform(std::string _TriggerName);
-
-	bool SetCorrectTransform(size_t _TriggerIndex, CorrectTransform _CorrectTransform);
-	bool SetCorrectTransform(std::string _TriggerName, CorrectTransform _CorrectTransform);
-
 protected:
 
 	std::string						m_Filename;
@@ -150,8 +136,6 @@ protected:
 	std::map<size_t, std::string>	m_OnTriggerEnterLuaFunctions;
 	std::map<size_t, std::string>	m_OnTriggerExitLuaFunctions;
 	std::map<size_t, std::vector<std::string>>	m_ActiveActors;
-
-	std::map<size_t, CorrectTransform>	m_TriggerCorrectTransform;
 
 	float							m_LeftoverSeconds = .0f;
 
