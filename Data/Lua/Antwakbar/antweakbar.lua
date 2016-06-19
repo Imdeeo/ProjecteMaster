@@ -231,8 +231,11 @@ function RegisterLightsBar()
 	DebugHelper:add_lua_button("Add New Omni","CreateNewLight(1)","")
 	DebugHelper:add_lua_button("Add New Spot","CreateNewLight(2)","")
 	DebugHelper:add_lua_button("Add New Directional","CreateNewLight(3)","")
+	DebugHelper:add_variable("FogStart",CDebugHelper.float,CDebugHelper.read_write,LightControllerManager:get_fog_start_lua_address(),"min=0.0 max=100.0 step=0.05")
+	DebugHelper:add_variable("FogEnd",CDebugHelper.float,CDebugHelper.read_write,LightControllerManager:get_fog_end_lua_address(),"min=0.0 max=100.0 step=0.05")
+	DebugHelper:add_variable("FogMax",CDebugHelper.float,CDebugHelper.read_write,LightControllerManager:get_fog_max_attenuattion_lua_address(),"min=0.0 max=1.0 step=0.05")
+	DebugHelper:add_variable("FogColor",CDebugHelper.color,CDebugHelper.read_write,LightControllerManager:get_fog_color_lua_address(),"")
 	DebugHelper:add_lua_button("---------------------------------------","","")
-	
 	local Lights = LightControllerManager:get_elements_array() --get_address
 	
 	for i = 0,LightControllerManager:size()-1 do
