@@ -1,7 +1,9 @@
 function InteractingFirst(args)
 	utils_log("InteractingFirst")
+	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_IsClimbing = false
+	l_Owner:blend_cycle(l_Player.m_InteractingAnimation,1.0,0.1)
 end
 
 function InteractingUpdate(args, _ElapsedTime)
@@ -16,15 +18,6 @@ function InteractingUpdate(args, _ElapsedTime)
 	l_Rotation = l_Player.m_CameraController:get_rotation()
 	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
 	l_Owner:set_rotation(l_RotationY)
-		
-	--// Animate player
-	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
-	if l_Displacement.y == 0 then
-		l_Owner:blend_cycle(1,1.0,0.1);
-		--blend_cycle(animacion, weight, fade(s))
-	else
-		l_Owner:blend_cycle(0,1.0,0.1);
-	end	
 end
 
 function InteractingEnd(args)
@@ -32,6 +25,7 @@ function InteractingEnd(args)
 	l_Player.m_Target = nil
 	l_Player.m_IsCorrecting = false
 	l_Player.m_CameraController:unlock()
+	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
 end
 
 function InteractingToFallingCondition(args)

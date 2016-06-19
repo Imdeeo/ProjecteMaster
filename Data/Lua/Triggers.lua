@@ -10,6 +10,14 @@ function OnChapelStay(a, b)
 
 end
 
+function OnEnterOpenShelf(_TriggerName, _ColliderName)
+	local l_Player = m_CharacterManager.m_Player[1]
+	self.m_InteractingAnimation = 6
+	l_Player.m_IsInteracting = true
+	l_Player.m_IsClimbing = false
+	l_Player.m_IsCorrecting = false
+end
+
 function OnEnterInteracting(_TriggerName, _ColliderName)
 	local l_Player = m_CharacterManager.m_Player[1]
 	l_Player.m_IsInteracting = true
