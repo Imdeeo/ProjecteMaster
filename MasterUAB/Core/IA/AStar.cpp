@@ -2,6 +2,19 @@
 #include "DebugRender.h"
 #include "XML\XMLTreeNode.h"
 #include "Utils.h"
+
+#ifdef _DEBUG
+#include "RenderManager\RenderManager.h"
+#include "Effects\EffectManager.h"
+#include "Math\Color.h"
+#include "Engine\UABEngine.h"
+#include "ContextManager\ContextManager.h"
+#include "Effects\EffectTechnique.h"
+#include "RenderableObjects\RenderableObjectTechniqueManager.h"
+#include "RenderableObjects\RenderableVertexs.h"
+#include "Math\Matrix44.h"
+#endif
+
 #include <algorithm>
 #include <map>
 #include <stdlib.h>
@@ -79,6 +92,47 @@ void CAStar::DestroyMap() {
 	m_map.clear();
 	m_openList.clear();
 }
+
+#ifdef _DEBUG
+void CAStar::Render(CRenderManager *_RenderManager)
+{
+	CEffectManager::m_SceneParameters.m_BaseColor = CColor(1,1,1,1);
+	CEffectManager::m_SceneParameters.m_BaseColor.SetAlpha(1.f);
+
+	for (TNodeMap::iterator l_iterator = m_map.begin(); l_iterator != m_map.end(); l_iterator++) {
+		TNode *currentNode = l_iterator->second;
+		_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform(currentNode->position));
+		CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_pathfinding")->GetEffectTechnique();
+		CEffectManager::SetSceneConstants(l_EffectTechnique);
+		GetShape(_RenderManager)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	}
+}
+
+CRenderableVertexs* CAStar::GetShape(CRenderManager *_RenderManager)
+{
+	return _RenderManager->GetDebugRender()->GetSPhere10();
+}
+
+const Mat44f & CAStar::GetTransform(Vect3f _Position)
+{
+	Mat44f l_ScaleMatrix;
+	l_ScaleMatrix.SetIdentity();
+	l_ScaleMatrix.Scale(1.0, 1.0, 1.0);
+
+	Mat44f l_RotationMatrix;
+	l_RotationMatrix.SetIdentity();
+	//m_RotationMatrix = m_Rotation.rotationMatrix();
+
+	Mat44f l_TranslationMatrix;
+	l_TranslationMatrix.SetIdentity();
+	l_TranslationMatrix.SetPos(_Position.x, _Position.y, _Position.z);
+
+	Mat44f l_TransformMatrix;
+	l_TransformMatrix = l_ScaleMatrix*l_RotationMatrix*l_TransformMatrix;
+
+	return l_TransformMatrix;
+}
+#endif
 
 //void CAStar::Render( LPDIRECT3DDEVICE9 device ) {
 //	D3DXMATRIX translation;

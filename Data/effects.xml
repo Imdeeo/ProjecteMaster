@@ -83,6 +83,10 @@
 	<pixel_shader name="lights_ps"	file="Data/Effects/UAB_UBER_FORWARD_SHADER.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS"/>
 	<effect_technique name="lights_technique" vertex_shader="lights_vs" pixel_shader="lights_ps"/>
 	
+	<vertex_shader name="texture_vs" file="Data/Effects/UAB_UBER_FORWARD_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV"/>
+	<pixel_shader name="texture_ps"	file="Data/Effects/UAB_UBER_FORWARD_SHADER.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV"/>
+	<effect_technique name="texture_technique" vertex_shader="texture_vs" pixel_shader="texture_ps"/>
+		
 	<vertex_shader name="lights_lm_vs" file="Data/Effects/UAB_UBER_FORWARD_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_LIGHTS"/>
 	<pixel_shader name="lights_lm_ps"	file="Data/Effects/UAB_UBER_FORWARD_SHADER.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_LIGHTS"/>
 	<effect_technique name="lights_lm_technique" vertex_shader="lights_lm_vs" pixel_shader="lights_lm_ps"/>

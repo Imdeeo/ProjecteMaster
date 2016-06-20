@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <materials>
+	<material name="ms_manchas1" renderable_object_technique="manchas">
+		<texture filename="Data\Particles\manchasNegras.png" type="diffuse"/>
+		<parameter name="sprite_size" type="float2" value="2 2"/>
+	</material>
 	<material name="SSRMaterial" renderable_object_technique="ssr">
 		<parameter type="float" name="enabled" value="1.0"/>
 		<parameter type="float" name="ssr_quality" value="1.5"/>
