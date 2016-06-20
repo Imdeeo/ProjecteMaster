@@ -9,6 +9,9 @@
 		<parameter type="vect2f" name="screen_resolution" value="960 540"/>
 	</material>
 	<material name="NoiseAndVignettingMaterial" renderable_object_technique="noise_and_vignetting">
+		<parameter type="float" name="m_NoisePct" value="1" description="min=0.0 max=50.0 step=0.05"/>
+		<parameter type="float" name="m_VignettingPct" value="1" description="min=0.0 max=1.0 step=0.05"/>
+		<parameter type="float" name="m_NoiseAmount" value="1" description="min=0.0 max=1.0 step=0.05"/>
 		<texture type="diffuse" filename="Data\GUI\Textures\noise.dds"/>
 		<texture type="diffuse" filename="Data\GUI\Textures\vignetting.dds"/>
 	</material>
