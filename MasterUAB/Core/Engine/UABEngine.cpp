@@ -111,6 +111,7 @@ void CUABEngine::Init()
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
 	m_LevelManager->LoadLevel("Recibidor");
+	m_LevelManager->LoadLevel("Biblioteca");
 	m_LayerManager->GetLayer()->AddResource("Cinematic", m_Cinematic);
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
