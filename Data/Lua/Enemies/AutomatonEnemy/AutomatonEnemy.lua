@@ -10,11 +10,13 @@ dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateAttack.lua")
 class 'CAutomatonEnemy' (CEnemy)
 	function CAutomatonEnemy:__init(_TreeNode)
 		CEnemy.__init(self,_TreeNode)
+		
 		self.m_PathFindig:load_map("Data\\level_"..g_Engine:get_level_loaded().."\\pathfinding.xml")
 		self.m_PatrolName = _TreeNode:get_psz_property("patrol_name", "", false)
 		self.m_LastPositionPlayer = nil
 		self.m_TotalNodes = 0
-		self.m_IsChasing = false
+		self.m_IsChasing = false		
+		
 		self:SetAutomatonStateMachine()
 		self.m_StateMachine:start()
 	end
