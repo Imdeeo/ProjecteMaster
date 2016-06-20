@@ -1,5 +1,4 @@
 function CorrectingFirst(args)
-utils_log("CorrectingFirst")
 	local l_Player = args["self"]
 	l_Player.m_CameraController:lock()
 end
@@ -22,7 +21,10 @@ function CorrectingUpdate(args, _ElapsedTime)
 	l_Off.y = 0.0
 	local l_OriginYaw = math.atan2(l_CameraDirection:get_normalized(1).z, l_CameraDirection:get_normalized(1).x)
 	local l_Yaw = l_CameraDirection:get_normalized(1):get_angle_with(l_Off:get_normalized(1))
-	if (l_OriginYaw < 0) then
+	if (l_OriginYaw > 0) then
+		l_Yaw = -l_Yaw
+	end
+	if (l_Off.x < 0) then
 		l_Yaw = -l_Yaw
 	end
 	l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)

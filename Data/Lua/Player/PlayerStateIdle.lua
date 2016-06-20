@@ -1,6 +1,6 @@
 function IdleFirst(args)
 	local l_Owner = args["owner"]
-	l_Owner:blend_cycle(1,1.0,0.1)
+	l_Owner:blend_cycle(0,1.0,0.1)
 end
 
 function IdleUpdate(args, _ElapsedTime)

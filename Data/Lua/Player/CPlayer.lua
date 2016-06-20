@@ -15,11 +15,14 @@ class 'CPlayer' (CLUAComponent)
 		self.m_AlreadyInitialized = false
 		local UABEngine = CUABEngine.get_instance()
 		self.m_Name = _TreeNode:get_psz_property("name", "", false)
+		utils_log("m_Name: "..self.m_Name)
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
+		utils_log("m_LayerName: "..self.m_LayerName)
 		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "", false)
+		utils_log("m_RenderableObjectName: "..self.m_RenderableObjectName)
 		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
-		utils_log("name: "..self.m_RenderableObject.name)
-		CLUAComponent.__init(self,self.m_Name, self.m_RenderableObject)
+		utils_log("m_RenderableObject.name: "..self.m_RenderableObject.name)
+		CLUAComponent.__init(self, self.m_Name, self.m_RenderableObject)
 	
 		self.m_CameraControllerName= _TreeNode:get_psz_property("camera_controller", "", false)
 		self.m_CameraController = UABEngine:get_camera_controller_manager():get_resource(self.m_CameraControllerName)
@@ -53,6 +56,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_CurrentAnimation = "none"
 		self.m_LastAnimation = "none"
 		self.m_InteractingAnimation = 0
+		self.m_InteractingCinematic = nil
 		
 		self.m_StateMachine = StateMachine.create()
 		self:SetPlayerStateMachine()
