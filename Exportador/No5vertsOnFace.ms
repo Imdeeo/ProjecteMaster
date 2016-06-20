@@ -1,3 +1,27 @@
+function Revisar tPoly = 
+(
+	faces = #()
+	local count= 0
+	for i = 1 to (polyOp.getNumFaces tPoly) do
+	(
+		numVerts = polyOp.getFaceDeg tPoly i
+		if (numVerts > 4) then
+		(
+			count = count + 1
+			append faces i
+		)		
+	)
+	if (count > 0) then
+	(
+		messageBox "Ale, a revisar" title:"Meeeeeeeeec"
+		polyOp.setFaceSelection tPoly faces
+	)
+	else
+	(
+		messageBox "OH YEAAAAAAAAAAAAAAH" title:"Felicidades"
+	)
+)
+
 utility ReviseMeshUtility "ReviseMeshUtility" width:168 height:150
 (
 	button ReviseButton "Revise" pos:[15,89] width:136 height:32
@@ -21,29 +45,8 @@ utility ReviseMeshUtility "ReviseMeshUtility" width:168 height:150
 		)
 	)
 	
-	fn Revisar tPoly = 
-	(
-		faces = #()
-		local count= 0
-		for i = 1 to (polyOp.getNumFaces) tPoly do
-		(
-			numVerts = polyOp.getFaceDeg tPoly i
-			if (numVerts > 4) then
-			(
-				count = count + 1
-				append faces i
-			)		
-		)
-		if (count > 0) then
-		(
-			messageBox "Ale, a revisar" title:"Meeeeeeeeec"
-			polyOp.setFaceSelection tPoly faces
-		)
-		else
-		(
-			messageBox "OH YEAAAAAAAAAAAAAAH" title:"Felicidades"
-		)
-	)
-
+	
 )
+
+
 
