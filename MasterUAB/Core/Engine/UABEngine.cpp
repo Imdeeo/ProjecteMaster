@@ -22,7 +22,11 @@
 #include "GUIManager.h"
 #include "SoundManager\SoundManager.h"
 #include "GamePlayManager.h"
+<<<<<<< HEAD
 #include "LevelManager\LevelManager.h"
+=======
+#include "Manchas\ManchasManager.h"
+>>>>>>> develop
 
 CUABEngine::CUABEngine(void)
 {
@@ -48,7 +52,11 @@ CUABEngine::CUABEngine(void)
 	m_SoundManager = ISoundManager::InstantiateSoundManager();
 	m_FrustumActive = true;
 	m_GamePlayManager = new CGamePlayManager();
+<<<<<<< HEAD
 	m_LevelManager = new CLevelManager();
+=======
+	m_ManchasManager = new CManchasManager();
+>>>>>>> develop
 }
 
 CUABEngine::~CUABEngine(void)
@@ -72,7 +80,11 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_GUIManager)
 	CHECKED_DELETE(m_SoundManager);
+<<<<<<< HEAD
 	CHECKED_DELETE(m_LevelManager);
+=======
+	CHECKED_DELETE(m_ManchasManager);
+>>>>>>> develop
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -131,6 +143,7 @@ void CUABEngine::Init()
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_MaterialManager->Load("Data\\level_" + m_LevelLoaded + "\\materials.xml", "Data\\default_effect_materials.xml");
 	m_ParticleManager->Load("Data\\level_" + m_LevelLoaded + "\\particles.xml");
+	m_ManchasManager->Load("Data\\level_" + m_LevelLoaded + "\\cordura.xml");
 	m_StaticMeshManager->Load("Data\\level_" + m_LevelLoaded + "\\static_meshes.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");	
 	m_LayerManager->Load("Data\\level_" + m_LevelLoaded + "\\renderable_objects.xml");	
@@ -140,7 +153,6 @@ void CUABEngine::Init()
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
 	m_CameraControllerManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
-	m_Cinematic->Play();
 	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
 	m_RenderManager->Init();
 	m_SoundManager->SetPath("Data\\Sounds\\");
@@ -183,22 +195,26 @@ void CUABEngine::Quit()
 {
 	PostQuitMessage(0);
 }
-UAB_GET_PROPERTY_CPP(CUABEngine,CStaticMeshManager *, StaticMeshManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,CLayerManager *, LayerManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,CMaterialManager *, MaterialManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,CEffectManager *, EffectManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,CTextureManager *, TextureManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,CLightManager *, LightManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,CRenderManager *, RenderManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,CAnimatedModelsManager *, AnimatedModelsManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,CScriptManager *, ScriptManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,CCameraControllerManager *, CameraControllerManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,CCinematic *, Cinematic)
-UAB_GET_PROPERTY_CPP(CUABEngine,CPhysXManager *, PhysXManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,CSceneRendererCommandManager *, SceneRendererCommandManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CStaticMeshManager *, StaticMeshManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CLayerManager *, LayerManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CMaterialManager *, MaterialManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CEffectManager *, EffectManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CTextureManager *, TextureManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CLightManager *, LightManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CRenderManager *, RenderManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CAnimatedModelsManager *, AnimatedModelsManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CScriptManager *, ScriptManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CCameraControllerManager *, CameraControllerManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CCinematic *, Cinematic)
+UAB_GET_PROPERTY_CPP(CUABEngine, CPhysXManager *, PhysXManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CSceneRendererCommandManager *, SceneRendererCommandManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
-UAB_GET_PROPERTY_CPP(CUABEngine,ISoundManager *, SoundManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, ISoundManager *, SoundManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager *, GamePlayManager)
+<<<<<<< HEAD
 UAB_GET_PROPERTY_CPP(CUABEngine, CLevelManager *, LevelManager)
+=======
+UAB_GET_PROPERTY_CPP(CUABEngine, CManchasManager *, ManchasManager)
+>>>>>>> develop

@@ -38,7 +38,7 @@ private:
 	MV_POSITION4_COLOR_TEXTURE_VERTEX m_ManchasRenderableData[MAX_MANCHAS];
 	CRenderableVertexs *m_RenderableVertex;
 public:
-	CManchasSystemInstance();
+	CManchasSystemInstance(CXMLTreeNode &TreeNode);
 	virtual ~CManchasSystemInstance(void);
 	void Destroy();
 
@@ -61,6 +61,10 @@ public:
 	void Render(CRenderManager *RM);
 	//void RenderDebug(CRenderManager *RM);
 	//void Save(FILE* _File, std::string _layer);
+	CEmptyPointerClass* GetLuaAwake()
+	{
+		return (CEmptyPointerClass*)&m_Awake;
+	}
 };
 
 #endif //MANCHAS_SYSTEM_INSTANCE_H

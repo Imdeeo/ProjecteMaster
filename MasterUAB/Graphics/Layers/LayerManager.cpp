@@ -55,6 +55,10 @@ void CLayerManager::Load(const std::string &FileName)
 				{
 					GetLayer(l_Element)->AddParticleSystemInstance(l_Element);
 				}
+				else if (l_Element.GetName() == std::string("manchas_instance"))
+				{
+					GetLayer(l_Element)->AddManchasSystemInstance(l_Element);
+				}
 			}
 		}
 	}

@@ -13,12 +13,14 @@
 #include "Camera\CameraControllerManager.h"
 #include "Math\MathUtils.h"
 
-CManchasSystemInstance::CManchasSystemInstance() : CRenderableObject(), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
+CManchasSystemInstance::CManchasSystemInstance(CXMLTreeNode &TreeNode) : CRenderableObject(), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
 {
-	m_Awake = false;
+	m_Awake = TreeNode.GetBoolProperty("active");
 	m_ActiveManchas = 0;
+	m_Type = UABEngine.GetInstance()->GetManchasManager()->GetResource(TreeNode.GetPszProperty("type"));
 	m_RenderableVertex = new CUABPointsListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(m_ManchasRenderableData, MAX_MANCHAS, MAX_MANCHAS, true);
 	m_NextParticleEmission = ComputeTimeToNextMancha();
+	m_Name = TreeNode.GetPszProperty("name");
 }
 
 CManchasSystemInstance::~CManchasSystemInstance(void)
@@ -79,8 +81,8 @@ void CManchasSystemInstance::Update(float ElapsedTime)
 			if (m_ActiveManchas < MAX_MANCHAS)
 			{
 				ManchaData manchas = {};
-				manchas.Position.x = GetRandomValue(Vect2f(0,1));
-				manchas.Position.y = GetRandomValue(Vect2f(0, 1)); 
+				manchas.Position.x = GetRandomValue(Vect2f(-1,1));
+				manchas.Position.y = GetRandomValue(Vect2f(-1, 1)); 
 
 				manchas.LifeTime = 0;
 				manchas.TotalLife = GetRandomValue(m_Type->GetLife());
@@ -114,11 +116,11 @@ void CManchasSystemInstance::Update(float ElapsedTime)
 		{
 			if (mancha->LifeTime < mancha->TotalLife / 2)
 			{
-				mancha->Opacity = mancha->MaxOpacity*(mancha->LifeTime / mancha->TotalLife / 2);
+				mancha->Opacity = mancha->MaxOpacity*(mancha->LifeTime / (mancha->TotalLife / 2));
 			}
 			else
 			{
-				mancha->Opacity = mancha->MaxOpacity - mancha->MaxOpacity*((mancha->LifeTime - mancha->TotalLife / 2) / mancha->TotalLife / 2);
+				mancha->Opacity = mancha->MaxOpacity - mancha->MaxOpacity*((mancha->LifeTime - (mancha->TotalLife / 2)) / (mancha->TotalLife / 2));
 			}
 			mancha->Size += mancha->SizeSpeed*ElapsedTime;
 		}
@@ -134,13 +136,12 @@ void CManchasSystemInstance::Render(CRenderManager *RM)
 	{
 		ManchaData *mancha = &m_ManchaData[i];
 
-		//m_ManchasRenderableData[i].Position // = mancha->Position;
+		m_ManchasRenderableData[i].Position = Vect4f(mancha->Position.x, mancha->Position.y, 0.9, 1);
 
 		m_ManchasRenderableData[i].Color = mancha->Color;
-		
-		
+		m_ManchasRenderableData[i].Color.w = mancha->Opacity;
 
-		m_ManchasRenderableData[i].UV.x = mancha->Opacity;
+		m_ManchasRenderableData[i].UV.x = mancha->Frame;			
 		m_ManchasRenderableData[i].UV.y = mancha->Size;
 	}
 

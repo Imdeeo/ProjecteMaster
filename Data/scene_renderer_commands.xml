@@ -38,10 +38,93 @@
 		<texture stage_id="3" file="DepthMapTexture" load_file="false"/>
 	</render_deferred_shading>
 		
+	<!-- FOG -->
+	<enable_alpha_blend name="enable alpha blend AAZZOO Fog" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<render_draw_quad name="draw quad Fog" material="FogMaterial" active="true">
+		<texture stage_id="0" file="DepthMapTexture" load_file="false"/>
+	</render_draw_quad>
+	<disable_alpha_blend name="disable alpha blend Fog" active="true"/>
+	
+	<!-- ZBLUR -->
+	<capture_frame_buffer name="capture frame ZBlur" active="false">
+		<capture_texture name="CapturedZBlurTexture" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
+	
+	<set_pool_renderable_objects_technique name="set pool blur_pool" pool="blur_pool" active="false"/>
+	<apply_filters name="apply filters ZBlur" active="false">
+		<texture file="CapturedZBlurTexture" stage_id="0"/>
+		<dynamic_texture name="StartZBlur" material="GUIMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="ZBlur3" material="BlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="ZBlur2" material="BlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="ZBlur1" material="BlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="ZBlur" material="BlurMaterial" height="512" width="512" format_type="rgba8"/>
+	</apply_filters>
+
+	<unset_render_target name="unset_render_target_ZBLur" active="false"/>
+
+	<set_pool_renderable_objects_technique name="set_pool_zblur_pool" pool="zblur_pool" active="false"/>
+	
+	<render_draw_quad name="draw quad ZBLUR" material="ZBlurMaterial" active="false">
+		<texture load_file="false" file="CapturedZBlurTexture" stage_id="0"/>
+		<texture load_file="false" file="ZBlur" stage_id="1"/>
+		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
+	</render_draw_quad>
+	
+	<!-- BLOOM -->
+	<capture_frame_buffer name="capture_frame_BLOOM" active="true">
+		<capture_texture name="CapturedBloomTexture" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
+	
+	<set_pool_renderable_objects_technique name="set_pool_bloom_pool" pool="bloom_pool" active="true"/>
+
+	<apply_filters name="aplly filters Bloom" active="true">
+		<texture file="CapturedBloomTexture" stage_id="0"/>
+		<dynamic_texture name="BloomTexture" material="BloomMaterial" height="600" width="800" format_type="rgba8"/>
+		<dynamic_texture name="BloomBlurTexture" material="BloomBlurMaterial" height="600" width="800" format_type="rgba8"/>
+	</apply_filters>
+
+	<unset_render_target name="unset render target Bloom" active="true"/>
+
+	<render_draw_quad name="draw quad bloom" material="BloomCombineMaterial" active="true">
+		<texture load_file="false" file="CapturedBloomTexture" stage_id="0"/>
+		<texture load_file="false" file="BloomBlurTexture" stage_id="1"/>
+	</render_draw_quad>
+	
+	<!-- HDAO -->
+	<capture_frame_buffer name="capture frame HDAO" active="true">
+		<capture_texture name="CapturedTexture" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
+
+	<set_pool_renderable_objects_technique name="set pool hdao_pool" pool="hdao_pool" active="true"/>
+	<render_draw_quad name="draw quad HDAO" material="HDAOMaterial" active="true">
+		<texture load_file="false" file="CapturedTexture" stage_id="0"/>
+		<texture load_file="false" file="NormalMapTexture" stage_id="1"/>
+		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
+	</render_draw_quad>
+	
+	<!-- SSR -->
+	<capture_frame_buffer name="capture frame SSR" active="false">
+		<capture_texture name="CapturedTextureSSR" texture_width_as_frame_buffer="false"/>
+	</capture_frame_buffer>
+
+	<set_pool_renderable_objects_technique name="set pool ssr_pool" pool="ssr_pool" active="false"/>
+	<render_draw_quad name="draw quad SSR" material="SSRMaterial" active="false">
+		<texture load_file="false" file="CapturedTextureSSR" stage_id="0"/>
+		<texture load_file="false" file="NormalMapTexture" stage_id="1"/>
+		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
+	</render_draw_quad>
+	
 	<!-- SKYBOX -->
-	<set_depth_stencil_state name="set depth stencil TF Skybox" enable_z_test="true" write_z_buffer="false" active="true"/>
-	<set_pool_renderable_objects_technique name="set pool skybox" pool="skybox_pool" active="true"/>
-	<render_layer name="render layer skybox" layer="skybox" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF Skybox" enable_z_test="true" write_z_buffer="false" active="false"/>
+	<set_pool_renderable_objects_technique name="set pool skybox" pool="skybox_pool" active="false"/>
+	<render_layer name="render layer skybox" layer="skybox" active="false"/>
+	
+	<!-- MANCHAS -->
+	<enable_alpha_blend name="enable alpha blend AAZZOO Alpha Blend" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF Alpha Blend" enable_z_test="true" write_z_buffer="false" active="true"/>
+	<set_pool_renderable_objects_technique name="set pool Alpha Blend" pool="forward_shading" active="true"/>
+	<render_layer name="render layer Alpha Blend" layer="alpha_blend_objects" active="true"/>
+	<disable_alpha_blend name="disable alpha blend Alpha Blend" active="true"/>
 	
 	<!-- Particles -->
 	<set_depth_stencil_state name="set depth stencil TF Particles" enable_z_test="true" write_z_buffer="true" active="true"/>
@@ -50,17 +133,45 @@
 	<disable_alpha_blend name="disable alpha blend Particles" active="true"/>
 	
 	<!-- TRIGGERS -->
-	<enable_alpha_blend name="enable alpha blend AAZZOO Triggers" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
-	<set_depth_stencil_state name="set depth stencil TF triggers" enable_z_test="true" write_z_buffer="true" active="true"/>
-	<set_pool_renderable_objects_technique name="set pool triggers" pool="triggers_pool" active="true"/>
-	<render_layer name="render layer triggers" layer="triggers" active="true"/>
-	<disable_alpha_blend name="disable alpha blend Triggers" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF triggers" enable_z_test="true" write_z_buffer="true" active="false"/>
+	<set_pool_renderable_objects_technique name="set pool triggers" pool="triggers_pool" active="false"/>
+	<render_layer name="render layer triggers" layer="triggers" active="false"/>
 	
 	<!-- GUI -->
 	<enable_alpha_blend name="enable alpha blend GUI" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
 	<set_pool_renderable_objects_technique name="set pool forward GUI" pool="forward_shading" active="true"/>
 	<render_gui name="render GUI" active="true"/>
 	<disable_alpha_blend name="disable alpha blend GUI" active="true"/>
+	
+	<!-- COLOR GRADING -->	
+	<capture_frame_buffer name="capture frame ColorGrading" active="false">
+		<capture_texture name="CapturedCGTexture" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
+	
+	<set_pool_renderable_objects_technique name="set pool colol_grading" pool="color_grading" active="false"/>
+	<render_draw_quad name="draw quad ColorGrading 1" material="ColorGradingMaterial" active="false">
+		<texture load_file="false" file="CapturedCGTexture" stage_id="0"/>
+	</render_draw_quad>
+	
+	<render_draw_quad name="draw quad ColorGrading 2" material="ColorGradingMaterial" active="false">
+		<texture load_file="false" file="CapturedCGTexture" stage_id="0"/>
+	</render_draw_quad>
+	
+	<!-- MANCHAS -->
+	<enable_alpha_blend name="enable alpha blend AAZZOO Manchas" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF Manchas" enable_z_test="true" write_z_buffer="true" active="true"/>
+	<set_pool_renderable_objects_technique name="set pool Manchas" pool="manchas_pool" active="true"/>
+	<render_layer name="render layer Manchas" layer="manchas" active="true"/>
+	<disable_alpha_blend name="disable alpha blend Manchas" active="true"/>
+	
+	<!-- NOISE AND VIGNETTING -->
+	<enable_alpha_blend name="enable alpha blend AAZZOO N and V" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="false"/>
+	<set_pool_renderable_objects_technique name="set pool forward N and V" pool="forward_shading" active="false"/>
+	<render_draw_quad name="render quad N and V" material="NoiseAndVignettingMaterial" active="false">
+		<texture stage_id="0" file="Data/GUI/textures/noise.dds" load_file="true"/>
+		<texture stage_id="1" file="Data/GUI/textures/vignetting.dds" load_file="true"/>
+	</render_draw_quad>
+	<disable_alpha_blend name="disable alpha blend N and V" active="false"/>
 	
 	<render_debug_lights name="render debug lights"/>
 	<render_debug_grid name="render grid"/>
