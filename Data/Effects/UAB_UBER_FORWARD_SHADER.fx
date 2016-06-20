@@ -67,6 +67,14 @@ struct TVertexPS
 		#else
 			float3 Pixelpos : COLOR0;
 		#endif
+	#else
+		#if HAS_REFLECTION
+			#if HAS_COLOR
+				float3 Pixelpos : TEXCOORD0;
+			#else
+				float3 Pixelpos : COLOR0;
+			#endif
+		#endif
 	#endif
 	
 	#ifdef HAS_UV2
@@ -113,6 +121,10 @@ TVertexPS mainVS(TVertexVS IN)
 
 	#ifdef HAS_LIGHTS
 		l_Out.Pixelpos = l_Out.Pos.xyz;
+	#else
+		#ifdef HAS_REFLECTION
+			l_Out.Pixelpos = l_Out.Pos.xyz;
+		#endif
 	#endif
 
 	l_Out.Pos = mul(l_Out.Pos, m_View);
@@ -246,7 +258,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		Out = float4(Out.xyz+l_FogColor.xyz*l_FogColor.a,Out.a);		
 	#else
 		#ifdef HAS_UV
-			return T0Texture.Sample(S0Sampler, IN.UV);
+			Out = T0Texture.Sample(S0Sampler, IN.UV).xyzw;
 		#endif
 	#endif
 	
@@ -254,7 +266,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		float3 l_EyeToWorldPosition = normalize(IN.Pixelpos-m_InverseView[3].xyz);
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
 		float4 l_ReflectColor = T8Texture.Sample(S8Sampler, l_ReflectVector);
-		Out = Out*0.7 + l_ReflectColor*0.3;
+		Out = Out*0.9 + l_ReflectColor*0.10;
 	#endif
 	#ifdef HAS_TRIGGER
 		return float4(0,1,0,0.5);
