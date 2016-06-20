@@ -714,6 +714,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("clear_cycle", &CAnimatedInstanceModel::ClearCycle)
 			.def("is_cycle_animation_active", &CAnimatedInstanceModel::IsCycleAnimationActive)
 			.def("is_action_animation_active", &CAnimatedInstanceModel::IsActionAnimationActive)
+			.def("is_action_animation_ended", &CAnimatedInstanceModel::IsActionAnimationEnded)
 			.def("get_actual_cycle_animation", &CAnimatedInstanceModel::GetActualCycleAnimation)
 			.def("get_actual_action_animation", &CAnimatedInstanceModel::GetActualActionAnimation)
 	];

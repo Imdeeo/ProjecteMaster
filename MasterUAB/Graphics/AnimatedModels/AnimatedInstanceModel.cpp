@@ -253,6 +253,18 @@ bool CAnimatedInstanceModel::IsActionAnimationActive(int Id) const
 		return false;
 }
 
+bool CAnimatedInstanceModel::IsActionAnimationEnded(int Id) const
+{
+	std::vector<CalAnimation*> l_Vector = m_CalModel->getMixer()->getAnimationVector();
+	CalAnimation* l_Animation = l_Vector.at(Id);
+
+	if (NULL != l_Animation && l_Animation->getType() == CalAnimation::TYPE_ACTION &&
+		m_CalModel->getMixer()->getAnimationTime() == m_CalModel->getMixer()->getAnimationDuration())
+		return true;
+	else
+		return false;
+}
+
 void CAnimatedInstanceModel::RenderDebug(CRenderManager *RenderManager)
 {
 }
