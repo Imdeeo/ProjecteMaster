@@ -41,6 +41,7 @@ public:
 	void ClearCycle(int Id, float DelayOut);
 	bool IsCycleAnimationActive(int Id) const;
 	bool IsActionAnimationActive(int Id) const;
+	bool IsActionAnimationEnded(int Id) const;
 	int	 GetActualCycleAnimation()const{return m_ActualCycleAnimation;}
 	int	 GetActualActionAnimation()const{return m_ActualActionAnimation;}
 	void RenderDebug(CRenderManager *RenderManager);
