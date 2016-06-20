@@ -70,7 +70,7 @@ void CCinematic::Update(float _ElapsedTime)
 			}
 			else
 			{
-				m_Playing=false;
+				Stop();
 			}
 		}
 	}

@@ -17,7 +17,7 @@ function MovingUpdate(args, _ElapsedTime)
 	local l_ForwardMovement = l_Player.m_InputManager:get_axis("MOVE_FWD")
 	local l_StrafeMovement = l_Player.m_InputManager:get_axis("STRAFE")
 	local l_Speed = l_Player.m_Speed
-	
+
 	--// Detect if player is moving backwards, walking, or running, then assign animation accordingly.
 	if l_Player.m_InputManager:is_action_active("MOVE_BACK") and not l_Player.m_InputManager:is_action_active("RUN") then
 		l_Speed = l_Speed * 0.5
