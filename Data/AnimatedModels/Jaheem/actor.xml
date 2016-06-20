@@ -18,7 +18,7 @@
 		<parameter type="float" name="reflection" value="0.0"/>-->
 	</material>
 	<animation name="idle" filename="JaheemIdle.CAF" />
-	<animation name="open_bureau" filename="JaheemCloseBureau.CAF" />
+	<animation name="draw_key" filename="JaheemDrawKey.CAF" />
+	<animation name="hold_key" filename="JaheemHoldKey.CAF" />
 	<animation name="pick_key" filename="JaheemPickKeyFromBureau.CAF" />
-	<animation name="open_bureau" filename="JaheemOpenBureau.CAF" />
 </actor>
