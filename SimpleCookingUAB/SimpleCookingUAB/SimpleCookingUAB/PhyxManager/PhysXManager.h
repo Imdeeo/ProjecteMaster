@@ -52,8 +52,8 @@ public:
 	static CPhysXManager* CreatePhysXManager();
 	virtual ~CPhysXManager(){ Destroy(); }
 
-	void CreateConvexMesh(const std::string &_name, const std::string &_DirName, const CStaticMesh* _Mesh);
-	void CreateTriangleMesh(const std::string &_name, const std::string &_DirName, const CStaticMesh* _Mesh, bool _FlipNormals = false);
+	void CreateConvexMesh(const std::string &_name, const CStaticMesh* _Mesh);
+	void CreateTriangleMesh(const std::string &_name, const CStaticMesh* _Mesh, bool _FlipNormals = false);
 
 protected:
 	

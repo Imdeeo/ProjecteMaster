@@ -39,9 +39,10 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 				if (l_Element.GetName() == std::string("level"))
 				{
 					std::string l_LevelName = l_Element.GetPszProperty("name");
-					std::string l_LevelDirectory = l_Element.GetPszProperty("directory");
-
-					m_LevelDirectories[l_LevelName] = l_LevelName;
+					TLevelInfo l_LevelInfo;
+					l_LevelInfo.m_Loaded = false;
+					l_LevelInfo.m_Directory = l_Element.GetPszProperty("directory");
+					m_LevelsInfo[l_LevelName] = l_LevelInfo;
 				}
 			}
 		}
@@ -50,7 +51,7 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 
 void CLevelManager::LoadLevel(const std::string &_LevelName)
 {
-	std::string l_LevelDirectory = m_LevelDirectories[_LevelName];
+	std::string l_LevelDirectory = m_LevelsInfo[_LevelName].m_Directory;
 	UABEngine.GetMaterialManager()->Load(l_LevelDirectory + "\\materials.xml", "Data\\default_effect_materials.xml");
 	UABEngine.GetParticleManager()->Load(l_LevelDirectory + "\\particles.xml");
 	UABEngine.GetStaticMeshManager()->Load(l_LevelDirectory + "\\static_meshes.xml");
@@ -58,7 +59,8 @@ void CLevelManager::LoadLevel(const std::string &_LevelName)
 	UABEngine.GetLightManager()->Load(l_LevelDirectory + "\\lights.xml");
 	UABEngine.GetCinematic()->LoadXML(l_LevelDirectory + "\\cinematic.xml");
 	UABEngine.GetCameraControllerManager()->Load(l_LevelDirectory + "\\cameras.xml");
-	UABEngine.GetScriptManager()->RunCode("mainLua(\"" + l_LevelDirectory + "\")");
+	//UABEngine.GetScriptManager()->RunCode("mainLua(\"" + l_LevelDirectory + "\")");
+	m_LevelsInfo[_LevelName].m_Loaded = true;
 }
 
 void CLevelManager::ReloadLevel(const std::string &_LevelName)
@@ -68,4 +70,16 @@ void CLevelManager::ReloadLevel(const std::string &_LevelName)
 void CLevelManager::UnloadLevel(const std::string &_LevelName)
 {
 
+}
+
+void CLevelManager::ReloadAllLua()
+{
+	std::map<std::string, TLevelInfo>::iterator l_iterator;
+	for (l_iterator = m_LevelsInfo.begin(); l_iterator != m_LevelsInfo.end(); l_iterator++)
+	{
+		if (l_iterator->second.m_Loaded)
+		{
+			UABEngine.GetScriptManager()->RunCode("mainLua(\"" + l_iterator->second.m_Directory + "\")");
+		}
+	}
 }

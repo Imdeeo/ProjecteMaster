@@ -201,10 +201,10 @@ void WriteMeshFile(std::string _Filename, physx::PxU8* _Data, physx::PxU32 _Size
 	}
 }
 
-void CPhysXManager::CreateConvexMesh(const std::string &_name, const std::string &_DirName, const CStaticMesh* _Mesh)
+void CPhysXManager::CreateConvexMesh(const std::string &_name, const CStaticMesh* _Mesh)
 {
 	printf_s("Creating Convex Mesh: %s\n", _name.c_str());
-	mkdir((_DirName + "\\PhysXMeshes").c_str());
+	mkdir(_Mesh->GetPhysxMeshesDirectory().c_str());
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
 	{
@@ -224,7 +224,7 @@ void CPhysXManager::CreateConvexMesh(const std::string &_name, const std::string
 		if (success)
 		{
 			char l_FileName[256] = "";
-			sprintf_s(l_FileName, (_DirName + std::string("\\PhysXMeshes\\%s_%u.cmesh")).c_str(), _name.c_str(), i);
+			sprintf_s(l_FileName, (_Mesh->GetPhysxMeshesDirectory() + std::string("\\%s_%u.cmesh")).c_str(), _name.c_str(), i);
 
 			WriteMeshFile(l_FileName, l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
 		}
@@ -235,10 +235,10 @@ void CPhysXManager::CreateConvexMesh(const std::string &_name, const std::string
 	}
 }
 
-void CPhysXManager::CreateTriangleMesh(const std::string &_name, const std::string &_DirName, const CStaticMesh* _Mesh, bool _FlipNormals)
+void CPhysXManager::CreateTriangleMesh(const std::string &_name, const CStaticMesh* _Mesh, bool _FlipNormals)
 {
 	printf_s("Creating Triangle Mesh: %s\n",_name.c_str());
-	mkdir((_DirName + "\\PhysXMeshes").c_str());
+	mkdir(_Mesh->GetPhysxMeshesDirectory().c_str());
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
 	{
@@ -263,7 +263,7 @@ void CPhysXManager::CreateTriangleMesh(const std::string &_name, const std::stri
 		if (success)
 		{
 			char l_FileName[256] = "";
-			sprintf_s(l_FileName, (_DirName + std::string("\\PhysXMeshes\\%s_%u.tmesh")).c_str(), _name.c_str(), i);
+			sprintf_s(l_FileName, (_Mesh->GetPhysxMeshesDirectory() + std::string("\\%s_%u.tmesh")).c_str(), _name.c_str(), i);
 
 			WriteMeshFile(l_FileName, l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
 		}
