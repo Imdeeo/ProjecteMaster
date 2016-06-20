@@ -21,6 +21,12 @@ function IdleUpdateCagedAutomaton(args, _ElapsedTime)
 		l_Owner:remove_action(0)
 		l_Owner:blend_cycle(2,1.0,0.5)
 	end
+	
+	-- Si la distancia entre el enemy y el player es menor a lo establecido pasamos a attack
+	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
+	local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PlayerPos)
+	l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
+	l_Enemy:LoseSanity(l_Distance)
 end
 
 function IdleEndCagedAutomaton(args)

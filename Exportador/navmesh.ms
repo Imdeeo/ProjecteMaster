@@ -1,3 +1,8 @@
+fn TranslationToRH &translation =
+(
+	translation = [-translation.x, translation.z, translation.y]
+)
+
 fn exportNavMesh dir tpoly =
 (
 	local filename = "pathfinding.xml"
@@ -36,7 +41,7 @@ fn exportNavMesh dir tpoly =
 	for vert in allverts do(
 		count = count +1
 		local auxPos = polyOp.getVert tpoly count
-		format "\t<node name=\"node%\" pos=\"% % %\"/>\n" count auxPos[1] auxPos[2] auxPos[3] to:file
+		format "\t<node name=\"node%\" pos=\"% % %\"/>\n" count auxPos[1] auxPos[3] auxPos[2] to:file
 	)
 	local count = 0
 	--escriure dades
