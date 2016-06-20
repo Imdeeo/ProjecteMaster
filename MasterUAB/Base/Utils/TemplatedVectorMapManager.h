@@ -146,7 +146,7 @@ public:
 		{
 			CMapResourceValue value(i->second.m_Value, i->second.m_Id);
 			m_ResourcesMap.erase(i);
-			m_ResourcesMap[_new] = value;
+			m_ResourcesMap.insert(std::pair<std::string, CMapResourceValue>(_new, CMapResourceValue(value.m_Value, value.m_Id)));
 		}
 	}
 
