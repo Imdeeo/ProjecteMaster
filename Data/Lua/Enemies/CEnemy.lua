@@ -15,9 +15,17 @@ class 'CEnemy' (CLUAComponent)
 		self.m_AngularWalkSpeed = 1000.0
 		self.m_AngularRunSpeed = 250.0
 		self.m_TimerRotation = 0.0
+		self.m_Timer = 0
 		self.m_DefaultPosition = Vect3f(self.m_RenderableObject:get_position().x, self.m_RenderableObject:get_position().y, self.m_RenderableObject:get_position().z)
 		self.m_Patrol = _TreeNode:get_bool_property("patrol", false, false)
 		self.m_State = "off"
+		
+		-- distance, time, sanity amount
+		self.m_LoseSanity = {}
+		for i = 0, _TreeNode:get_num_children()-1 do
+			local l_Param = _TreeNode:get_child(i)
+			table.insert(self.m_LoseSanity, Vect3f(l_Param:get_float_property("distance",0.0,false), l_Param:get_float_property("time",0.0,false), l_Param:get_float_property("sanity_amount",0.0,false)))
+		end
 		
 		-- TODO: get group numbers somehow
 		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
@@ -83,5 +91,15 @@ class 'CEnemy' (CLUAComponent)
 		-- otherwise visible
 		self.m_BlockingObjectName = nil
 		return true
+	end
+	
+	function CEnemy:LoseSanity(_Distance)
+		for i=1, table.maxn(self.m_LoseSanity)-1 do
+			if _Distance <= self.m_LoseSanity[i].x and _Distance > self.m_LoseSanity[i+1].x and self.m_Timer >= self.m_LoseSanity[i].y then
+				g_Player:ModifySanity(self.m_LoseSanity[i].z)
+				self.m_Timer = 0
+				break
+			end
+		end
 	end
 --end

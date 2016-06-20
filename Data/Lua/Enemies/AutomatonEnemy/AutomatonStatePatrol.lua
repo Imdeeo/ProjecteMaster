@@ -5,7 +5,7 @@ function PatrolFirstAutomaton(args)
 	l_Owner:clear_cycle(2,0.5)
 	l_Owner:blend_cycle(1,1.0,0.5)
 	
-	local l_Enemy = args["self"]	
+	local l_Enemy = args["self"]
 	l_Enemy.m_TimerRotation = 0.0
 	l_Enemy.m_IsChasing = false
 end

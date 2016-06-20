@@ -8,7 +8,7 @@ utility NavMeshUtility "NavMeshUtility" width:168 height:150(
 	fn get_Dir =
 	(
 		local dir = ""+PathLabel.text+"\\" 
-		dirExist dir	
+		--dirExist dir	
 		dir
 	)
 		
