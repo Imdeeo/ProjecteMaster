@@ -10,6 +10,8 @@
 typedef std::vector< Vect3f > VPoints3;
 
 class CXMLTreeNode;
+class CRenderManager;
+class CRenderableVertexs;
 
 class CAStar {
 
@@ -20,8 +22,13 @@ public:
 	void LoadMap(std::string _filename);
 	void DestroyMap();
 	int SearchForPath(const Vect3f &pointA, const Vect3f &pointB);
-	//void Render( LPDIRECT3DDEVICE9 device );
-	
+
+#ifdef _DEBUG
+	void Render(CRenderManager *_RenderManager);
+	CRenderableVertexs* CAStar::GetShape(CRenderManager *_RenderManager);
+	const Mat44f &GetTransform(Vect3f _Position);
+#endif
+
 	struct TNode;
 	typedef std::pair< TNode*, float > PNodeAndDistance;
 	typedef std::vector< PNodeAndDistance > VNodesAndDistances;
@@ -45,7 +52,7 @@ public:
 	};
 
 	Vect3f GetActualPoint();
-	void IncrementActualPoint();
+	bool IncrementActualPoint();
 	TNodePatrol* GetActualPatrolPoint(std::string _patrolName);
 	void IncrementActualPatrolPoint(std::string _patrolName);
 private:

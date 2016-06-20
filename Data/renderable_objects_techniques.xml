@@ -13,6 +13,8 @@
 		<renderable_object_technique name="noise_and_vignetting" technique="noise_and_vignetting"/>
 		<renderable_object_technique name="zblur" technique="zblur_technique"/>
 		<renderable_object_technique name="electric" technique="fire_particle_technique"/>
+		<renderable_object_technique name="alpha_blend" technique="texture_technique"/>		
+		<renderable_object_technique name="alpha_blend_env" technique="texture_env_technique"/>		
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="gBuffer">

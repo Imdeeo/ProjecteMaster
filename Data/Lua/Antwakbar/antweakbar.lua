@@ -19,6 +19,7 @@ function RegisterMainBar()
 	DebugHelper:add_lua_button("Cameras","RegisterCamerasBar()","");
 	DebugHelper:add_lua_button("Lights","RegisterLightsBar()","");
 	DebugHelper:add_lua_button("Particles","RegisterParticlesBar()","");
+	DebugHelper:add_lua_button("Manchas","RegisterManchasBar()","");
 	
 	DebugHelper:register_bar()
 	
@@ -46,13 +47,12 @@ function RegisterShadersBar()
 end
 
 function ReloadEffectTechnique(EffectTechniqueName)
-
 	local UABEngine = CUABEngine.get_instance()
 	local EffectManager = UABEngine:get_effect_manager()
 	local EffectTechnique = EffectManager:get_resource(EffectTechniqueName)
 	EffectTechnique:get_vertex_shader():reload()
 	EffectTechnique:get_pixel_shader():reload()
-
+	EffectTechnique:get_geometry_shader():reload()
 end
 
 function RegisterParametersVariables(material_name)
@@ -231,8 +231,11 @@ function RegisterLightsBar()
 	DebugHelper:add_lua_button("Add New Omni","CreateNewLight(1)","")
 	DebugHelper:add_lua_button("Add New Spot","CreateNewLight(2)","")
 	DebugHelper:add_lua_button("Add New Directional","CreateNewLight(3)","")
+	DebugHelper:add_variable("FogStart",CDebugHelper.float,CDebugHelper.read_write,LightControllerManager:get_fog_start_lua_address(),"min=0.0 max=100.0 step=0.05")
+	DebugHelper:add_variable("FogEnd",CDebugHelper.float,CDebugHelper.read_write,LightControllerManager:get_fog_end_lua_address(),"min=0.0 max=100.0 step=0.05")
+	DebugHelper:add_variable("FogMax",CDebugHelper.float,CDebugHelper.read_write,LightControllerManager:get_fog_max_attenuattion_lua_address(),"min=0.0 max=1.0 step=0.05")
+	DebugHelper:add_variable("FogColor",CDebugHelper.color,CDebugHelper.read_write,LightControllerManager:get_fog_color_lua_address(),"")
 	DebugHelper:add_lua_button("---------------------------------------","","")
-	
 	local Lights = LightControllerManager:get_elements_array() --get_address
 	
 	for i = 0,LightControllerManager:size()-1 do
@@ -428,4 +431,63 @@ end
 function ReloadParticle(_textureName)
 	local stringa = _textureName:gsub("+","\\")
 	local cono = CUABEngine.get_instance():get_texture_manager():get_resource(stringa):reload()
+end
+
+function RegisterManchasBar()
+
+	local UABEngine = CUABEngine.get_instance()
+	local DebugHelper = CDebugHelper.get_debug_helper()
+	
+	DebugHelper:remove_bar("MainBar")
+	DebugHelper:start_register_bar("Manchas")
+	
+	local LayerManchasControllerManager = UABEngine:get_layer_manager()
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Manchas\");RegisterMainBar()","");
+	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_manchas_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Manchas\");RegisterManchasBar()","");
+	--DebugHelper:add_lua_button("Save","SaveManchas()","");
+	
+	local ManchasLayer = LayerManchasControllerManager:get_layer("manchas") --get_address
+	
+	local Manchas = ManchasLayer:get_elements_array()
+	
+	for i = 0,ManchasLayer:size()-1 do
+		DebugHelper:add_lua_button(Manchas[i].name,"RegisterManchasParameters(\""..Manchas[i].name.."\")","");
+	end
+	
+	DebugHelper:register_bar()
+end
+
+function RegisterManchasParameters(manchas_name)
+	local UABEngine = CUABEngine.get_instance()
+	local DebugHelper = CDebugHelper.get_debug_helper()
+	local LayerManchasControllerManager = UABEngine:get_layer_manager()
+	
+	local bar_name = "Mancha: "..manchas_name
+	
+	DebugHelper:remove_bar("Manchas")
+	DebugHelper:start_register_bar(bar_name)
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\""..bar_name.."\");RegisterManchasBar()","");
+	
+	local Manchas = LayerManchasControllerManager:get_layer("manchas"):get_resource(manchas_name)
+	local ManchasType = Manchas:get_type()
+	--local Material = ManchasType:get_material()
+	--local Texture = Material:get_texture(0)
+			
+	DebugHelper:add_variable("Frames",CDebugHelper.int,CDebugHelper.read_write,ManchasType:get_lua_frames(),"min=1.0 max=100.0 step=1.0")
+	DebugHelper:add_variable("Emit Time Min",CDebugHelper.float,CDebugHelper.read_write,ManchasType:get_lua_emit_time(0),"min=0.1 max=100.0 step=0.1")
+	DebugHelper:add_variable("Emit Time Max",CDebugHelper.float,CDebugHelper.read_write,ManchasType:get_lua_emit_time(1),"min=0.1 max=100.0 step=0.1")
+	DebugHelper:add_variable("Life Time Min",CDebugHelper.float,CDebugHelper.read_write,ManchasType:get_lua_life_time(0),"min=0.1 max=100.0 step=0.1")
+	DebugHelper:add_variable("Life Time Max",CDebugHelper.float,CDebugHelper.read_write,ManchasType:get_lua_life_time(1),"min=0.1 max=100.0 step=0.1")
+	DebugHelper:add_variable("Opacity Max 1",CDebugHelper.float,CDebugHelper.read_write,ManchasType:get_lua_opacity(0),"min=0.0 max=10.0 step=0.05")
+	DebugHelper:add_variable("Opacity Max 2",CDebugHelper.float,CDebugHelper.read_write,ManchasType:get_lua_opacity(1),"min=0.0 max=10.0 step=0.05")
+	DebugHelper:add_variable("Size Min",CDebugHelper.float,CDebugHelper.read_write,ManchasType:get_lua_size(0),"min=0.1 max=100.0 step=0.1")
+	DebugHelper:add_variable("Size Max",CDebugHelper.float,CDebugHelper.read_write,ManchasType:get_lua_size(1),"min=0.1 max=100.0 step=0.1")
+	DebugHelper:add_variable("Size Speed Min",CDebugHelper.float,CDebugHelper.read_write,ManchasType:get_lua_size_speed(0),"min=0.0 max=10.0 step=0.1")
+	DebugHelper:add_variable("Size Speed Max",CDebugHelper.float,CDebugHelper.read_write,ManchasType:get_lua_size_speed(1),"min=0.0 max=10.0 step=0.1")
+	DebugHelper:add_variable("Color 1",CDebugHelper.color,CDebugHelper.read_write,ManchasType:get_lua_color1(),"")
+	DebugHelper:add_variable("Color 2",CDebugHelper.color,CDebugHelper.read_write,ManchasType:get_lua_color2(),"")
+
+	DebugHelper:register_bar()
 end

@@ -15,9 +15,17 @@ class 'CEnemy' (CLUAComponent)
 		self.m_AngularWalkSpeed = 1000.0
 		self.m_AngularRunSpeed = 250.0
 		self.m_TimerRotation = 0.0
+		self.m_Timer = 0
 		self.m_DefaultPosition = Vect3f(self.m_RenderableObject:get_position().x, self.m_RenderableObject:get_position().y, self.m_RenderableObject:get_position().z)
 		self.m_Patrol = _TreeNode:get_bool_property("patrol", false, false)
 		self.m_State = "off"
+		
+		-- distance, time, sanity amount
+		self.m_LoseSanity = {}
+		for i = 0, _TreeNode:get_num_children()-1 do
+			local l_Param = _TreeNode:get_child(i)
+			table.insert(self.m_LoseSanity, Vect3f(l_Param:get_float_property("distance",0.0,false), l_Param:get_float_property("time",0.0,false), l_Param:get_float_property("sanity_amount",0.0,false)))
+		end
 		
 		-- TODO: get group numbers somehow
 		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
@@ -84,33 +92,14 @@ class 'CEnemy' (CLUAComponent)
 		self.m_BlockingObjectName = nil
 		return true
 	end
-		
-	function CEnemy:EnemyWalk(_DesiredPos, _MoveSpeed, _PercentRotation, _ElapsedTime)
-		-- enemy always walks in forward direction
-		local l_Owner = self.m_RenderableObject;
-		local l_EnemyForward = l_Owner:get_rotation():get_forward_vector():get_normalized(1)
-		local l_EnemyPos = l_Owner:get_position()
-		local l_NewPos = l_EnemyForward * _MoveSpeed
-		self.m_PhysXManager:character_controller_move(self.m_Name, l_NewPos, _ElapsedTime)
-		l_Owner:set_position(l_EnemyPos + l_NewPos * _ElapsedTime)
-
-		-- with the rotation, the enemy chases to the player
-		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)	
-		local l_Angle = l_EnemyForward * l_Direction
-		if 1.0 - l_Angle < 0.01 then
-		  return
+	
+	function CEnemy:LoseSanity(_Distance)
+		for i=1, table.maxn(self.m_LoseSanity)-1 do
+			if _Distance <= self.m_LoseSanity[i].x and _Distance > self.m_LoseSanity[i+1].x and self.m_Timer >= self.m_LoseSanity[i].y then
+				g_Player:ModifySanity(self.m_LoseSanity[i].z)
+				self.m_Timer = 0
+				break
+			end
 		end
-		
-		local angle_to_turn = math.acos(l_Angle)
-		local cross = l_Direction ^ l_EnemyForward
-		if cross.y < 0.0 then
-		  angle_to_turn = -angle_to_turn
-		end
-		
-		local quat_to_turn = Quatf()
-		quat_to_turn:quat_from_yaw_pitch_roll(angle_to_turn, 0.0, 0.0)		
-		
-		local target_quat = l_Owner:get_rotation():slerp(l_Owner:get_rotation() * quat_to_turn, _PercentRotation)
-		l_Owner:set_rotation(target_quat)
 	end
 --end

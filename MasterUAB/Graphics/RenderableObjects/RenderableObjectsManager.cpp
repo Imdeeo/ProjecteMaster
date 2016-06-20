@@ -2,6 +2,7 @@
 #include "StaticMesh\InstanceMesh.h"
 #include "AnimatedModels\AnimatedInstanceModel.h"
 #include "Particles\ParticleSystemInstance.h"
+#include "Manchas\ManchasSystemInstance.h"
 
 CRenderableObjectsManager::CRenderableObjectsManager(std::string _Name):CNamed(_Name) {}
 CRenderableObjectsManager::~CRenderableObjectsManager()
@@ -79,6 +80,15 @@ CRenderableObject * CRenderableObjectsManager::AddParticleSystemInstance(CXMLTre
 	CParticleSystemInstance* l_ParticleSystemInstance = new CParticleSystemInstance(TreeNode);
 	if (AddResource(l_ParticleSystemInstance->GetName(), l_ParticleSystemInstance))
 		return l_ParticleSystemInstance;
+	else
+		return nullptr;
+}
+
+CRenderableObject * CRenderableObjectsManager::AddManchasSystemInstance(CXMLTreeNode &TreeNode)
+{
+	CManchasSystemInstance* l_ManchasSystemInstance = new CManchasSystemInstance(TreeNode);
+	if (AddResource(l_ManchasSystemInstance->GetName(), l_ManchasSystemInstance))
+		return l_ManchasSystemInstance;
 	else
 		return nullptr;
 }

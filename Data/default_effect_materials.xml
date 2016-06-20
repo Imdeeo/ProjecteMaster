@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <materials>
+	<material name="ms_manchas1" renderable_object_technique="manchas">
+		<texture filename="Data\Particles\manchasNegras.png" type="diffuse"/>
+		<parameter name="sprite_size" type="float2" value="2 2"/>
+	</material>
 	<material name="SSRMaterial" renderable_object_technique="ssr">
 		<parameter type="float" name="enabled" value="1.0"/>
 		<parameter type="float" name="ssr_quality" value="1.5"/>
@@ -9,6 +13,9 @@
 		<parameter type="vect2f" name="screen_resolution" value="960 540"/>
 	</material>
 	<material name="NoiseAndVignettingMaterial" renderable_object_technique="noise_and_vignetting">
+		<parameter type="float" name="m_NoisePct" value="1" description="min=0.0 max=50.0 step=0.05"/>
+		<parameter type="float" name="m_VignettingPct" value="1" description="min=0.0 max=1.0 step=0.05"/>
+		<parameter type="float" name="m_NoiseAmount" value="1" description="min=0.0 max=1.0 step=0.05"/>
 		<texture type="diffuse" filename="Data\GUI\Textures\noise.dds"/>
 		<texture type="diffuse" filename="Data\GUI\Textures\vignetting.dds"/>
 	</material>
@@ -54,13 +61,13 @@
 	</material>
 	<material name="ColorGradingMaterial" renderable_object_technique="colorgrading">
 		<parameter name ="ColorGradingActive" type="float" value="1.0"/>
-		<parameter name ="BrownSepiaColorGrading" type="float" value="0.1"/>
-		<parameter name ="GreenSepiaColorGrading" type="float" value="0.1"/>
-		<parameter name ="BlueSepiaColorGrading" type="float" value="1.0"/>
-		<parameter name ="MonochromeColorGrading" type="float" value="0.5"/>
-		<parameter name ="ColorColorGrading" type="float" value="1.0"/>
-		<parameter name ="ContrastColorGrading" type="float" value="0.4"/>
-		<parameter name ="BrightnessColorGrading" type="float" value="0.05"/>
+		<parameter name ="BrownSepiaColorGrading" type="float" value="0.1" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter name ="GreenSepiaColorGrading" type="float" value="0.1" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter name ="BlueSepiaColorGrading" type="float" value="1.0" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter name ="MonochromeColorGrading" type="float" value="0.5" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter name ="ColorColorGrading" type="float" value="1.0" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter name ="ContrastColorGrading" type="float" value="0.4" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter name ="BrightnessColorGrading" type="float" value="0.05" description="min=0.0 max=1.0 step=0.05"/>
 	</material>
 	<material name="FogMaterial" renderable_object_technique="fog">
 		<parameter name ="MaxAttenuation_StartLinearFog_EndLinearFog" type="float3" value="0.5 50 100"/>

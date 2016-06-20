@@ -12,7 +12,10 @@
 		
 	<action name="SPEEDUP" type="KEYBOARD" mode="ON_PRESS" key="M"/>
 	<action name="SPEEDDOWN" type="KEYBOARD" mode="ON_PRESS" key="N"/>
-
+	
+	<action name="SANITYDUP" type="KEYBOARD" mode="ON_PRESS" key="J"/>
+	<action name="SANITYDOWN" type="KEYBOARD" mode="ON_PRESS" key="H"/>
+	
 	<action name="PAUSE" type="KEYBOARD" mode="ON_PRESS" key="P"/>
 	
 	<action name="RELOAD" type="KEYBOARD" mode="ON_PRESS" key="R"/>

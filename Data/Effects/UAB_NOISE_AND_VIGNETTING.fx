@@ -1,9 +1,12 @@
 #include "globals.fxh"
 #include "samplers.fxh"
 
-static float m_NoisePct=0.5;
-static float m_VignettingPct=1.0;
-static float m_NoiseAmount=1.0;
+//static float m_NoisePct = 1;
+static float m_NoisePct = m_RawDataArray[0];
+//static float m_VignettingPct=1.0;
+static float m_VignettingPct=m_RawDataArray[1];
+//static float m_NoiseAmount=1.0;
+static float m_NoiseAmount=m_RawDataArray[2];
 
 struct VS_INPUT
 {

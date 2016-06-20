@@ -9,6 +9,7 @@ end
 function JumpingUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
+	
 	--// Calculate the player speed
 	local l_PlayerDisplacement = Vect3f(l_Player.m_Velocity.x * 0.985, l_Player.m_Velocity.y + l_Player.m_Gravity * _ElapsedTime, l_Player.m_Velocity.z * 0.985)
 	

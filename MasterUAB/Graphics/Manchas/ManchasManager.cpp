@@ -16,15 +16,14 @@ void CManchasManager::Load(const std::string &Filename)
 
 	if (l_File.LoadFile(m_Filename.c_str()))
 	{
-		CXMLTreeNode l_Meshes = l_File["particle_systems"];
+		CXMLTreeNode l_Meshes = l_File["manchas"];
 		for (int i = 0; i < l_Meshes.GetNumChildren(); ++i)
 		{
-			//CParticleSystemType *l_ParticleSystemType = new CParticleSystemType(l_Meshes(i));
-			//if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType, "CParticleManager"))
-			/*if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType))
+			CManchasSystemType *l_ManchasSystemType = new CManchasSystemType(l_Meshes(i));
+			if (!AddResource(l_ManchasSystemType->GetName(), l_ManchasSystemType))
 			{
-				CHECKED_DELETE(l_ParticleSystemType);
-			}*/
+				CHECKED_DELETE(l_ManchasSystemType);
+			}
 		}
 	}
 }

@@ -30,6 +30,7 @@ public:
 
 	CRenderableObjectsManager & CRenderableObjectsManager::operator=(CRenderableObjectsManager&);
 	CRenderableObject * AddParticleSystemInstance(CXMLTreeNode &TreeNode);
+	CRenderableObject * AddManchasSystemInstance(CXMLTreeNode &TreeNode);
 };
 
 #endif
