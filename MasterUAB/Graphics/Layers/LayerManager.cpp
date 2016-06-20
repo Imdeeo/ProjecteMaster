@@ -4,7 +4,16 @@
 
 #include "XML\XMLTreeNode.h"
 
-CLayerManager::CLayerManager():m_DefaultLayer(nullptr){}
+#define DEFAULT_LAYER_INITIAL_NAME "default"
+
+CLayerManager::CLayerManager():m_DefaultLayer(nullptr)
+{
+	const char * l_existDefault;
+	std::string l_Name = DEFAULT_LAYER_INITIAL_NAME;
+	CRenderableObjectsManager* l_auxROM = new CRenderableObjectsManager(l_Name);
+	AddResource(l_Name, l_auxROM);
+	m_DefaultLayer = l_auxROM;
+}
 
 CLayerManager::~CLayerManager()
 {
@@ -135,12 +144,18 @@ CRenderableObjectsManager* CLayerManager::AddLayer(CXMLTreeNode &TreeNode, bool 
 {
 	const char * l_existDefault;
 	std::string l_Name = TreeNode.GetPszProperty("name");
-	CRenderableObjectsManager* l_auxROM = new CRenderableObjectsManager(l_Name);
-	_Update ? AddUpdateResource(l_Name, l_auxROM) : AddResource(l_Name, l_auxROM);
 	l_existDefault = TreeNode.GetPszProperty("default");
+	CRenderableObjectsManager* l_auxROM;
 	if (l_existDefault != NULL)
 	{
-		m_DefaultLayer = l_auxROM;
+		ChageKeyName(m_DefaultLayer->GetName(), l_Name);
+		m_DefaultLayer->SetName(l_Name);
+		l_auxROM = m_DefaultLayer;
+	}
+	else
+	{
+		l_auxROM = new CRenderableObjectsManager(l_Name);
+		_Update ? AddUpdateResource(l_Name, l_auxROM) : AddResource(l_Name, l_auxROM);
 	}
 	return l_auxROM;
 }
