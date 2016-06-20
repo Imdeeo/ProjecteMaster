@@ -144,7 +144,7 @@ public:
 
 		if (i != m_ResourcesMap.end())
 		{
-			CMapResourceValue value(i->second.m_Value, i->second.Id);
+			CMapResourceValue value(i->second.m_Value, i->second.m_Id);
 			m_ResourcesMap.erase(i);
 			m_ResourcesMap[_new] = value;
 		}
