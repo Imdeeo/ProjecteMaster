@@ -28,14 +28,14 @@ class 'CPlayer' (CLUAComponent)
 		self.m_CameraController = UABEngine:get_camera_controller_manager():get_resource(self.m_CameraControllerName)
 		self.m_LuaCommand = _TreeNode:get_psz_property("lua_command", "", false)
 		
-		self.m_SoundManager = CUABEngine.get_instance():get_sound_manager()
+		self.m_SoundManager = UABEngine:get_sound_manager()
 		if self.m_AlreadyInitialized then
 			-- unregister old speaker before assigning new renderable object
 			self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
 		end
 		
 		self.m_InputManager = CInputManager.get_input_manager()
-		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
+		self.m_PhysXManager = UABEngine:get_physX_manager()
 		if(not UABEngine:get_lua_reloaded())then
 			self.m_SoundManager:register_speaker(self.m_RenderableObject)
 		end
