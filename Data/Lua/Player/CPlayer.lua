@@ -10,18 +10,54 @@ dofile("Data\\Lua\\Player\\PlayerStateFalling.lua")
 dofile("Data\\Lua\\Player\\PlayerStateInteracting.lua")
 dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 
+--Bone ID: 0. Name: CATRigHub001
+--Bone ID: 1. Name: CATRigLArm1
+--Bone ID: 2. Name: CATRigLArm2
+--Bone ID: 3. Name: CATRigLArmPalm
+--Bone ID: 4. Name: CATRigLArmDigit11
+--Bone ID: 5. Name: CATRigLArmDigit12
+--Bone ID: 6. Name: CATRigLArmDigit13
+--Bone ID: 7. Name: CATRigLArmDigit21
+--Bone ID: 8. Name: CATRigLArmDigit22
+--Bone ID: 9. Name: CATRigLArmDigit23
+--Bone ID: 10. Name: CATRigLArmDigit31
+--Bone ID: 11. Name: CATRigLArmDigit32
+--Bone ID: 12. Name: CATRigLArmDigit33
+--Bone ID: 13. Name: CATRigLArmDigit41
+--Bone ID: 14. Name: CATRigLArmDigit42
+--Bone ID: 15. Name: CATRigLArmDigit43
+--Bone ID: 16. Name: CATRigLArmDigit51
+--Bone ID: 17. Name: CATRigLArmDigit52
+--Bone ID: 18. Name: CATRigLArmDigit53
+--Bone ID: 19. Name: CATRigObjeto
+--Bone ID: 20. Name: CATRigRArm1
+--Bone ID: 21. Name: CATRigRArm2
+--Bone ID: 22. Name: CATRigRArmPalm
+--Bone ID: 23. Name: CATRigRArmDigit11
+--Bone ID: 24. Name: CATRigRArmDigit12
+--Bone ID: 25. Name: CATRigRArmDigit13
+--Bone ID: 26. Name: CATRigRArmDigit21
+--Bone ID: 27. Name: CATRigRArmDigit22
+--Bone ID: 28. Name: CATRigRArmDigit23
+--Bone ID: 29. Name: CATRigRArmDigit31
+--Bone ID: 30. Name: CATRigRArmDigit32
+--Bone ID: 31. Name: CATRigRArmDigit33
+--Bone ID: 32. Name: CATRigRArmDigit41
+--Bone ID: 33. Name: CATRigRArmDigit42
+--Bone ID: 34. Name: CATRigRArmDigit43
+--Bone ID: 35. Name: CATRigRArmDigit51
+--Bone ID: 36. Name: CATRigRArmDigit52
+--Bone ID: 37. Name: CATRigRArmDigit53
+--Bone ID: 38. Name: CATRigObjeto
+
 class 'CPlayer' (CLUAComponent)
 	function CPlayer:__init(_TreeNode)
 		self.m_AlreadyInitialized = false
 		local UABEngine = CUABEngine.get_instance()
 		self.m_Name = _TreeNode:get_psz_property("name", "", false)
-		utils_log("m_Name: "..self.m_Name)
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
-		utils_log("m_LayerName: "..self.m_LayerName)
 		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "", false)
-		utils_log("m_RenderableObjectName: "..self.m_RenderableObjectName)
 		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
-		utils_log("m_RenderableObject.name: "..self.m_RenderableObject.name)
 		CLUAComponent.__init(self, self.m_Name, self.m_RenderableObject)
 	
 		self.m_CameraControllerName= _TreeNode:get_psz_property("camera_controller", "", false)
@@ -52,6 +88,9 @@ class 'CPlayer' (CLUAComponent)
 		self.m_IsInteracting = false
 		self.m_Target = nil
 		self.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
+		
+		self.m_Item = nil
+		self.m_ItemName = nil
 		
 		self.m_CurrentAnimation = "none"
 		self.m_LastAnimation = "none"

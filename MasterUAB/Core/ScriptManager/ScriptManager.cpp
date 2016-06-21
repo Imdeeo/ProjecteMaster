@@ -717,6 +717,10 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("is_action_animation_ended", &CAnimatedInstanceModel::IsActionAnimationEnded)
 			.def("get_actual_cycle_animation", &CAnimatedInstanceModel::GetActualCycleAnimation)
 			.def("get_actual_action_animation", &CAnimatedInstanceModel::GetActualActionAnimation)
+			.def("get_right_object_position", &CAnimatedInstanceModel::GetRightObjectPosition)
+			.def("get_left_object_position", &CAnimatedInstanceModel::GetLeftObjectPosition)
+			.def("get_right_object_rotation", &CAnimatedInstanceModel::GetRightObjectRotation)
+			.def("get_left_object_rotation", &CAnimatedInstanceModel::GetLeftObjectRotation)
 	];
 
 	module(m_LS) [

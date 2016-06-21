@@ -2,6 +2,7 @@
 
 #include "Math/Matrix44.h"
 #include "Math/Quatn.h"
+#include "Utils.h"
 
 #include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
@@ -243,6 +244,7 @@ bool CAnimatedInstanceModel::IsCycleAnimationActive(int Id) const
 }
 bool CAnimatedInstanceModel::IsActionAnimationActive(int Id) const
 {
+	
 	std::vector<CalAnimation*> l_Vector = m_CalModel->getMixer()->getAnimationVector();
 	CalAnimation* l_Animation = l_Vector.at(Id);
 
@@ -291,4 +293,28 @@ void CAnimatedInstanceModel::Save(FILE* _File, std::string _layer)
 		"rotation=\"%f %f %f %f\" create_physics=\"false\" visible=\"%s\"/>\n",
 		m_Name.c_str(), _layer.c_str(), m_AnimatedCoreModel->GetName().c_str(), m_Position.x, m_Position.y, m_Position.z, 
 		m_Rotation.x, m_Rotation.y, m_Rotation.z, m_Rotation.w, m_Visible ? "true" : "false");
+}
+
+Vect3f CAnimatedInstanceModel::GetRightObjectPosition()
+{
+	CalVector l_BonePos = m_CalModel->getSkeleton()->getBone(RIGHT_OBJECT_BONE_ID)->getTranslationAbsolute();
+	return Vect3f(l_BonePos.x, l_BonePos.y, l_BonePos.z);
+}
+
+Vect3f CAnimatedInstanceModel::GetLeftObjectPosition()
+{
+	CalVector l_BonePos = m_CalModel->getSkeleton()->getBone(LEFT_OBJECT_BONE_ID)->getTranslationAbsolute();
+	return Vect3f(l_BonePos.x, l_BonePos.y, l_BonePos.z);
+}
+
+Quatf CAnimatedInstanceModel::GetRightObjectRotation()
+{
+	CalQuaternion l_BonePos = m_CalModel->getSkeleton()->getBone(RIGHT_OBJECT_BONE_ID)->getRotationAbsolute();
+	return Quatf(l_BonePos.x, l_BonePos.y, l_BonePos.z, l_BonePos.w);
+}
+
+Quatf CAnimatedInstanceModel::GetLeftObjectRotation()
+{
+	CalQuaternion l_BonePos = m_CalModel->getSkeleton()->getBone(LEFT_OBJECT_BONE_ID)->getRotationAbsolute();
+	return Quatf(l_BonePos.x, l_BonePos.y, l_BonePos.z, l_BonePos.w);
 }
