@@ -386,6 +386,7 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CColor>("CColor")
 			.def(constructor<float, float, float, float>())
 	];
+
 	// BASE--------------------------------------------------------------------------------------------
 
 	// 3DElement---------------------------------------------------------------------------------------
