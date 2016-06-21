@@ -18,7 +18,9 @@ m_FxSliderResult = CSliderResult(50.0, 50.0)
 m_Cordura = CSliderResult(50.0, 50.0)
 
 function mainLua(level)
+	level = string.gsub(level,"\/","\\");
 	InitAntweakBar()
+	utils_log(level.."\\characters.xml")
 	m_CharacterManager:LoadXML(level.."\\characters.xml")
 	local l_SoundManager = CUABEngine.get_instance():get_sound_manager()
 	local l_WaterSoundEvent = SoundEvent()

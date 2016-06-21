@@ -79,7 +79,9 @@ void CLevelManager::ReloadAllLua()
 	{
 		if (l_iterator->second.m_Loaded)
 		{
-			UABEngine.GetScriptManager()->RunCode("mainLua(\"" + l_iterator->second.m_Directory + "\")");
+			std::string l_Directory = l_iterator->second.m_Directory;
+			std::replace(l_Directory.begin(), l_Directory.end(), '\\', '\/');
+			UABEngine.GetScriptManager()->RunCode("mainLua(\"" + l_Directory + "\")");
 		}
 	}
 }
