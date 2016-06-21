@@ -22,11 +22,8 @@
 #include "GUIManager.h"
 #include "SoundManager\SoundManager.h"
 #include "GamePlayManager.h"
-<<<<<<< HEAD
 #include "LevelManager\LevelManager.h"
-=======
 #include "Manchas\ManchasManager.h"
->>>>>>> develop
 
 CUABEngine::CUABEngine(void)
 {
@@ -52,11 +49,8 @@ CUABEngine::CUABEngine(void)
 	m_SoundManager = ISoundManager::InstantiateSoundManager();
 	m_FrustumActive = true;
 	m_GamePlayManager = new CGamePlayManager();
-<<<<<<< HEAD
 	m_LevelManager = new CLevelManager();
-=======
 	m_ManchasManager = new CManchasManager();
->>>>>>> develop
 }
 
 CUABEngine::~CUABEngine(void)
@@ -80,11 +74,8 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_GUIManager)
 	CHECKED_DELETE(m_SoundManager);
-<<<<<<< HEAD
 	CHECKED_DELETE(m_LevelManager);
-=======
 	CHECKED_DELETE(m_ManchasManager);
->>>>>>> develop
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -166,20 +157,6 @@ void CUABEngine::Destroy()
 {
 	CHECKED_DELETE(m_Instance);
 }
-void CUABEngine::LoadLevelXML(std::string filename)
-{
-	CXMLTreeNode l_XML;
-	bool isLoading = l_XML.LoadFile(filename.c_str());
-
-	if (isLoading)
-	{
-		CXMLTreeNode l_Input = l_XML["level"];
-		if (l_Input.Exists())
-		{
-			m_LevelLoaded = l_Input.GetPszProperty("level_to_load");
-		}
-	}
-}
 void CUABEngine::SwitchCamera()
 {
 	m_CurrentCamera_vision++;
@@ -213,8 +190,5 @@ UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, ISoundManager *, SoundManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager *, GamePlayManager)
-<<<<<<< HEAD
 UAB_GET_PROPERTY_CPP(CUABEngine, CLevelManager *, LevelManager)
-=======
 UAB_GET_PROPERTY_CPP(CUABEngine, CManchasManager *, ManchasManager)
->>>>>>> develop

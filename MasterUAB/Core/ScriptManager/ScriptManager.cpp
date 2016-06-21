@@ -534,7 +534,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_sound_manager", &CUABEngine::GetSoundManager)
 			.def("get_cinematic", &CUABEngine::GetCinematic)
 			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
-			.def("load_level_xml", &CUABEngine::LoadLevelXML)
 			.def("get_gui_manager", &CUABEngine::GetGUIManager)
 			.scope[
 				def("get_instance", &CUABEngine::GetInstance)
