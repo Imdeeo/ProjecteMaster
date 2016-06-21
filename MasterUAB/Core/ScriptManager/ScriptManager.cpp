@@ -721,6 +721,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_left_object_position", &CAnimatedInstanceModel::GetLeftObjectPosition)
 			.def("get_right_object_rotation", &CAnimatedInstanceModel::GetRightObjectRotation)
 			.def("get_left_object_rotation", &CAnimatedInstanceModel::GetLeftObjectRotation)
+			.def("get_right_object_transform", &CAnimatedInstanceModel::GetRightObjectTransform)
+			.def("get_left_object_transform", &CAnimatedInstanceModel::GetLeftObjectTransform)
 	];
 
 	module(m_LS) [
