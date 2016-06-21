@@ -375,6 +375,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_from_angle_axis", &Quatf::SetFromAngleAxis)
 			.def("quat_from_yaw_pitch_roll", &Quatf::QuatFromYawPitchRoll)
 			.def("get_forward_vector", &Quatf::GetForwardVector)
+			.def("rotated_vector", &Quatf::RotateVectorByQuat)
 			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,float))&Quatf::slerp)
 			.scope[
 				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
