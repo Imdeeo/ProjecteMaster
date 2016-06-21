@@ -8,6 +8,7 @@ dofile("Data\\Lua\\Player\\PlayerStateClimbing.lua")
 dofile("Data\\Lua\\Player\\PlayerStateJumping.lua")
 dofile("Data\\Lua\\Player\\PlayerStateFalling.lua")
 dofile("Data\\Lua\\Player\\PlayerStateInteracting.lua")
+dofile("Data\\Lua\\Player\\PlayerStateSinging.lua")
 dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 
 --Bone ID: 0. Name: CATRigHub001
@@ -97,6 +98,9 @@ class 'CPlayer' (CLUAComponent)
 		self.m_InteractingAnimation = 0
 		self.m_InteractingCinematic = nil
 		
+		self.m_IsSinging = false
+		self.m_IsWindedUp = false
+		
 		self.m_StateMachine = StateMachine.create()
 		self:SetPlayerStateMachine()
 		self.m_StateMachine:start()
@@ -166,6 +170,7 @@ class 'CPlayer' (CLUAComponent)
 		IdleState:add_condition(IdleToJumpingCondition, "Jumping")
 		IdleState:add_condition(ANYToFallingCondition, "Falling")
 		IdleState:add_condition(ANYToCorrectingCondition, "Correcting")
+		IdleState:add_condition(ANYToSingingCondition, "Singing")
 		
 		MovingState = State.create(MovingUpdate)
 		MovingState:set_do_first_function(MovingFirst)
@@ -176,6 +181,7 @@ class 'CPlayer' (CLUAComponent)
 		MovingState:add_condition(MovingToJumpingCondition, "Jumping")
 		MovingState:add_condition(ANYToFallingCondition, "Falling")
 		MovingState:add_condition(ANYToCorrectingCondition, "Correcting")
+		MovingState:add_condition(ANYToSingingCondition, "Singing")
 		
 		CorrectingState = State.create(CorrectingUpdate)
 		CorrectingState:set_do_first_function(CorrectingFirst)
@@ -210,6 +216,12 @@ class 'CPlayer' (CLUAComponent)
 		InteractingState:set_do_first_function(InteractingFirst)
 		InteractingState:set_do_end_function(InteractingEnd)
 		InteractingState:add_condition(InteractingToFallingCondition, "Falling")
+		
+		SingingState = State.create(SingingUpdate)
+		SingingState:set_do_first_function(SingingFirst)
+		SingingState:set_do_end_function(SingingEnd)
+		SingingState:add_condition(SingingToFallingCondition, "Falling")
+		SingingState:add_condition(SingingToItselfCondition, "Singing")
 		
 		DeadState = State.create(DeadUpdate)
 		DeadState:set_do_first_function(DeadFirst)
