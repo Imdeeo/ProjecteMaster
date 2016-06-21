@@ -123,7 +123,7 @@ fxc /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwDirect3D1
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-      <PrecompiledHeader>NDEBUG</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>TwPrecomp.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)AntTweakBar.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
@@ -300,7 +300,7 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TW_EXPORTS;_VC80_UPGRADE=0x0700;_WINDLL;_MBCS</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeader>_DEBUG</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>TwPrecomp.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)AntTweakBar.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
