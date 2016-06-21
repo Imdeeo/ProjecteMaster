@@ -318,3 +318,15 @@ Quatf CAnimatedInstanceModel::GetLeftObjectRotation()
 	CalQuaternion l_BonePos = m_CalModel->getSkeleton()->getBone(LEFT_OBJECT_BONE_ID)->getRotationAbsolute();
 	return Quatf(l_BonePos.x, l_BonePos.y, l_BonePos.z, l_BonePos.w);
 }
+
+Mat33f CAnimatedInstanceModel::GetRightObjectTransform()
+{
+	CalMatrix l_BonePos = m_CalModel->getSkeleton()->getBone(RIGHT_OBJECT_BONE_ID)->getTransformMatrix();
+	return Mat33f(l_BonePos.dxdx, l_BonePos.dydx, l_BonePos.dzdx, l_BonePos.dxdy, l_BonePos.dydy, l_BonePos.dzdy, l_BonePos.dxdz, l_BonePos.dydz, l_BonePos.dzdz);
+}
+
+Mat33f CAnimatedInstanceModel::GetLeftObjectTransform()
+{
+	CalMatrix l_BonePos = m_CalModel->getSkeleton()->getBone(LEFT_OBJECT_BONE_ID)->getTransformMatrix();
+	return Mat33f(l_BonePos.dxdx, l_BonePos.dydx, l_BonePos.dzdx, l_BonePos.dxdy, l_BonePos.dydy, l_BonePos.dzdy, l_BonePos.dxdz, l_BonePos.dydz, l_BonePos.dzdz);
+}

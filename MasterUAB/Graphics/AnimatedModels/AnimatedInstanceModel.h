@@ -54,5 +54,7 @@ public:
 	Vect3f GetLeftObjectPosition();
 	Quatf GetRightObjectRotation();
 	Quatf GetLeftObjectRotation();
+	Mat33f GetRightObjectTransform();
+	Mat33f GetLeftObjectTransform();
 };
 #endif //ANIMATED_INSTANCE_MODEL_H
