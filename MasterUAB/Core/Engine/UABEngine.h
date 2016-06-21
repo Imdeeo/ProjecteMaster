@@ -78,13 +78,8 @@ public:
 	CGUIManager * GetGUIManager() const;
 	ISoundManager * GetSoundManager()const;
 	CGamePlayManager * GetGamePlayManager()const;
-<<<<<<< HEAD
 	CLevelManager * GetLevelManager()const;
-=======
 	CManchasManager * GetManchasManager()const;
-	std::string GetLevelLoaded()const{return m_LevelLoaded;}
->>>>>>> develop
-	void LoadLevelXML(std::string filename);
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
 	void Destroy();
