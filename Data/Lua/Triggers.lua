@@ -16,7 +16,7 @@ utils_log("enter shelf")
 	l_Player.m_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource(_TriggerName):get_position()
 	l_Player.m_TargetOffset = Vect3f(-1.0, 0.0, 0.0)
 	l_Player.m_InteractingAnimation = 3
-	l_Player.m_CinematicAnimation = 1
+	l_Player.m_InteractingCinematic = 1
 	l_Player.m_ItemName = "LlaveRecibidor"
 	l_Player.m_IsInteracting = true
 	l_Player.m_IsClimbing = false
@@ -28,7 +28,7 @@ function OnEnterInteracting(_TriggerName, _ColliderName)
 	l_Player.m_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource(_TriggerName):get_position()
 	l_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
 	l_Player.m_InteractingAnimation = 1
-	l_Player.m_CinematicAnimation = 1
+	l_Player.m_InteractingCinematic = nil
 	l_Player.m_ItemName = nil
 	l_Player.m_IsInteracting = true
 	l_Player.m_IsClimbing = false
@@ -38,7 +38,7 @@ end
 function OnExitInteracting(_TriggerName, _ColliderName)
 	local l_Player = m_CharacterManager.m_Player[1]
 	l_Player.m_InteractingAnimation = 0
-	l_Player.m_CinematicAnimation = nil
+	l_Player.m_InteractingCinematic = nil
 	l_Player.m_IsInteracting = false
 	l_Player.m_IsClimbing = false
 	l_Player.m_IsCorrecting = false
