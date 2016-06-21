@@ -7,6 +7,9 @@ function InteractingFirst(args)
 		CUABEngine.get_instance():get_cinematic():play()
 	end
 	m_Timer = 0.0
+	if l_Player.m_ItemName ~= nil then
+		l_Player.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
+	end
 end
 
 function InteractingUpdate(args, _ElapsedTime)
@@ -14,6 +17,16 @@ function InteractingUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	
 	m_Timer = m_Timer + _ElapsedTime
+	
+	if m_Timer >= 1.5 and l_Player.m_Item ~= nil then
+		local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
+		l_NewControllerPosition.y = l_NewControllerPosition.y - 0.45
+		l_ObjectPosition = l_Owner:get_right_object_position()+l_NewControllerPosition
+		l_ObjectPosition.z = l_ObjectPosition.z - 0.15
+		l_Player.m_Item:set_position(l_ObjectPosition)
+		l_Player.m_Item:set_rotation(l_Owner:get_right_object_rotation())
+	end
+	
 	if m_Timer >= 2.5 then
 		l_Player.m_IsInteracting = false
 	end
