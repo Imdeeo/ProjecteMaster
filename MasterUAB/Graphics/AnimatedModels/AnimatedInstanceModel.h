@@ -50,5 +50,9 @@ public:
 	void CalcTangentsAndBinormals(void *VtxsData, unsigned short *IdxsData, size_t
 		VtxCount, size_t IdxCount, size_t VertexStride, size_t GeometryStride, size_t
 		NormalStride, size_t TangentStride, size_t BiNormalStride, size_t TextureCoordsStride);
+	Vect3f GetRightObjectPosition();
+	Vect3f GetLeftObjectPosition();
+	Quatf GetRightObjectRotation();
+	Quatf GetLeftObjectRotation();
 };
 #endif //ANIMATED_INSTANCE_MODEL_H
