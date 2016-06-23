@@ -12,6 +12,8 @@
 #define INDEX_DIFFUSE_TEXTURE 0
 #define INDEX_LIGHTMAP_TEXTURE 1
 #define INDEX_NORMAL_TEXTURE 2
+#define INDEX_LIGHTMAP_2_TEXTURE 3
+#define INDEX_LIGHTMAP_3_TEXTURE 4
 #define INDEX_CUBEMAP_TEXTURE 8
 
 CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0)
@@ -36,6 +38,14 @@ CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_Current
 			if (l_TextureType == "lightmap")
 			{
 				m_Textures[INDEX_LIGHTMAP_TEXTURE] = l_texture;
+			}
+			if (l_TextureType == "lightmap2")
+			{
+				m_Textures[INDEX_LIGHTMAP_2_TEXTURE] = l_texture;
+			}
+			if (l_TextureType == "lightmap3")
+			{
+				m_Textures[INDEX_LIGHTMAP_3_TEXTURE] = l_texture;
 			}
 			if (l_TextureType == "normal")
 			{

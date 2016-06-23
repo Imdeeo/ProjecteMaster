@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<effects>
+<effects>	
+	<vertex_shader name="rnm_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_RNM;HAS_LIGHTS"/>
+	<pixel_shader name="rnm_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_RNM;HAS_LIGHTS"/>
+	<effect_technique name="rnm_deferred_technique" vertex_shader="rnm_deferred_vs" pixel_shader="rnm_deferred_ps"/>
+	
+	<vertex_shader name="rnm_bump_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_RNM;HAS_LIGHTS"/>
+	<pixel_shader name="rnm_bump_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_RNM;HAS_LIGHTS"/>
+	<effect_technique name="rnm_bump_deferred_technique" vertex_shader="rnm_bump_deferred_vs" pixel_shader="rnm_bump_deferred_ps"/>
+	
 	<!--GEOMETRY SHADER-->
 	<vertex_shader name="manchas_particle_vs" file="./Data/Effects/UAB_MANCHAS_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<geometry_shader name="manchas_particle_gs" file="./Data/Effects/UAB_MANCHAS_SHADER.fx" shader_model="gs_4_0" entry_point="mainGS" preprocessor=""/>
@@ -150,7 +158,7 @@
 	
 	<vertex_shader name="lightmap_bump_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_LIGHTS"/>
 	<pixel_shader name="lightmap_bump_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_LIGHTS"/>
-	<effect_technique name="lightmap_bump_deferred_technique" vertex_shader="lightmap_bump_deferred_vs" pixel_shader="lightmap_bump_deferred_ps"/>
+	<effect_technique name="lightmap_bump_deferred_technique" vertex_shader="lightmap_bump_deferred_vs" pixel_shader="lightmap_bump_deferred_ps"/>	
 	
 	<!-- SHADOWMAP -->
 	<vertex_shader name="generate_shadowmap_vs" file="Data/Effects/UAB_SHADOWMAP.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV"/>
