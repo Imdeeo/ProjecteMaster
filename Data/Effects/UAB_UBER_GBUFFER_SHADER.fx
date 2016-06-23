@@ -115,9 +115,16 @@ PS_INPUT mainVS(VS_INPUT IN)
 	return l_Output;
 }
 
-float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, SamplerState
-	LightmapXSampler, Texture2D LightmapYTexture, SamplerState LightmapYSampler, Texture2D
-	LightmapZTexture, SamplerState LightmapZSampler)
+float3 CalcNormalMap(float3 Normal, float3 Tangent, float3 Binormal, float4 NormalMap)
+{
+	float g_Bump = 2.4;
+	float3 bump=g_Bump*((NormalMap.xyz) - float3(0.5,0.5,0.5));		
+	float3 Nn = Normal + bump.x*Tangent + bump.y*Binormal;
+	return normalize(Nn);
+}
+
+
+float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, SamplerState	LightmapXSampler, Texture2D LightmapYTexture, SamplerState LightmapYSampler, Texture2D LightmapZTexture, SamplerState LightmapZSampler)
 {
 	float3 l_LightmapX=LightmapXTexture.Sample(LightmapXSampler, UV)*2;
 	float3 l_LightmapY=LightmapYTexture.Sample(LightmapYSampler, UV)*2;
@@ -128,14 +135,6 @@ float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, S
 	float3 l_RNMLighting=saturate(dot(Nn, l_BumpBasisX)) * l_LightmapX+saturate(dot(Nn, l_BumpBasisY)) * l_LightmapY + saturate(dot(Nn, l_BumpBasisZ)) * l_LightmapZ;
 							
 	return l_RNMLighting;
-}
-
-float3 CalcNormalMap(float3 Normal, float3 Tangent, float3 Binormal, float4 NormalMap)
-{
-	float g_Bump = 2.4;
-	float3 bump=g_Bump*((NormalMap.xyz) - float3(0.5,0.5,0.5));		
-	float3 Nn = Normal + bump.x*Tangent + bump.y*Binormal;
-	return normalize(Nn);
 }
 
 PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
@@ -172,7 +171,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	
 	#ifdef HAS_UV2
 		#ifdef HAS_RNM
-			l_Ambient=GetRadiosityNormalMap(Nn, IN.UV2, T1Texture, S1Sampler, T4Texture, S4Sampler, T3Texture, S3Sampler);
+			l_Ambient = float4(GetRadiosityNormalMap(Nn, IN.UV2, T1Texture, S1Sampler, T1Texture, S1Sampler, T1Texture, S1Sampler),1.0);
 		#else
 			l_Ambient = T1Texture.Sample(S1Sampler,IN.UV2);
 		#endif
