@@ -1,29 +1,29 @@
-function InteractingFirst(args)
+function SingingFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	l_Player.m_IsClimbing = false
-	l_Owner:execute_action(l_Player.m_InteractingAnimation, 0.1, 0.1, 1.0, true)
-	if l_Player.m_InteractingCinematic ~= nil then
-		CUABEngine.get_instance():get_cinematic():play()
+	l_Player.m_IsSinging = true
+	if l_Player.m_IsWindedUp then
+		l_Owner:blend_cycle(1,1.0,0.1)
+	else
+		l_Owner:execute_action(2, 0.1, 0.1, 1.0, true)
 	end
 	m_Timer = 0.0
-	if l_Player.m_ItemName ~= nil then
-		l_Player.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
-	end
 end
 
-function InteractingUpdate(args, _ElapsedTime)
+function SingingUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	
 	m_Timer = m_Timer + _ElapsedTime
 	
-	if m_Timer >= 2.5 then
-		l_Player.m_IsInteracting = false
+	if m_Timer >= 2.5 and not l_Player.m_IsWindedUp then
+		l_Player.m_IsWindedUp = true
 	end
 	
-	--l_Player.m_IsInteracting = l_Owner:is_action_animation_active(l_Player.m_InteractingAnimation)
-
+	if not l_Player.m_InputManager:is_action_active("SING") then
+		l_Player.m_IsSinging = false
+	end
+	
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
 	l_RotationY = Quatf()
@@ -45,18 +45,28 @@ function InteractingUpdate(args, _ElapsedTime)
 	end
 end
 
-function InteractingEnd(args)
+function SingingEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
-	l_Player.m_Target = nil
-	l_Player.m_IsCorrecting = false
-	l_Player.m_InteractingAnimation = 0
-	l_Player.m_InteractingCinematic = nil
 	l_Player.m_CameraController:unlock()
-	l_Owner:remove_action(l_Owner:get_actual_action_animation())
+	if l_Player.m_IsSinging then
+		l_Owner:remove_action(l_Owner:get_actual_action_animation())
+	else
+		l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
+	end
 end
 
-function InteractingToFallingCondition(args)
+function SingingToFallingCondition(args)
 	local l_Player = args["self"]
-	return not l_Player.m_IsInteracting
+	return not l_Player.m_IsSinging
+end
+
+function SingingToItselfCondition(args)
+	local l_Player = args["self"]
+	return l_Player.m_IsWindedUp
+end
+
+function ANYToSingingCondition(args)
+	local l_Player = args["self"]
+	return l_Player.m_InputManager:is_action_active("SING")
 end

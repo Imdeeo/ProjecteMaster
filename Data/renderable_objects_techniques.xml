@@ -24,6 +24,8 @@
 		<renderable_object_technique name="bump_env" technique="bump_env_deferred_technique"/>
 		<renderable_object_technique name="lightmap" technique="lightmap_deferred_technique"/>
 		<renderable_object_technique name="lightmap_bump" technique="lightmap_bump_deferred_technique"/>
+		<renderable_object_technique name="radiosity" technique="rnm_deferred_technique"/>
+		<renderable_object_technique name="radiosity_bump" technique="rnm_bump_deferred_technique"/>
 		<renderable_object_technique name="animated" technique="animated_def_technique"/>
 		<renderable_object_technique name="animated_bump" technique="animated_bump_def_technique"/>
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_deferred_technique"/>

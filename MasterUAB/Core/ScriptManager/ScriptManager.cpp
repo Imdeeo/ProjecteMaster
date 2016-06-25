@@ -375,6 +375,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_from_angle_axis", &Quatf::SetFromAngleAxis)
 			.def("quat_from_yaw_pitch_roll", &Quatf::QuatFromYawPitchRoll)
 			.def("get_forward_vector", &Quatf::GetForwardVector)
+			.def("rotated_vector", &Quatf::RotateVectorByQuat)
 			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,float))&Quatf::slerp)
 			.scope[
 				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
@@ -385,6 +386,7 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CColor>("CColor")
 			.def(constructor<float, float, float, float>())
 	];
+
 	// BASE--------------------------------------------------------------------------------------------
 
 	// 3DElement---------------------------------------------------------------------------------------
@@ -719,6 +721,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_left_object_position", &CAnimatedInstanceModel::GetLeftObjectPosition)
 			.def("get_right_object_rotation", &CAnimatedInstanceModel::GetRightObjectRotation)
 			.def("get_left_object_rotation", &CAnimatedInstanceModel::GetLeftObjectRotation)
+			.def("get_right_object_transform", &CAnimatedInstanceModel::GetRightObjectTransform)
+			.def("get_left_object_transform", &CAnimatedInstanceModel::GetLeftObjectTransform)
 	];
 
 	module(m_LS) [
@@ -1331,7 +1335,23 @@ void CScriptManager::RegisterLUAFunctions()
 
 	// Manchas-----------------------------------------------------------------------------------------
 	module(m_LS)[
-	class_<CManchasSystemType, CNamed>("CManchasSystemType")
+		class_<CManchasSystemType, CNamed>("CManchasSystemType")
+		.def("get_frames", &CManchasSystemType::GetFrames)
+		.def("set_frames", &CManchasSystemType::SetFrames)
+		.def("get_emit_time", &CManchasSystemType::GetEmitTime)
+		.def("set_emit_time", &CManchasSystemType::SetEmitTime)
+		.def("get_life", &CManchasSystemType::GetLife)
+		.def("set_life", &CManchasSystemType::SetLife)
+		.def("get_opacity", &CManchasSystemType::GetOpacity)
+		.def("set_opacity", &CManchasSystemType::SetOpacity)
+		.def("get_size", &CManchasSystemType::GetSize)
+		.def("set_size", &CManchasSystemType::SetSize)
+		.def("get_size_speed", &CManchasSystemType::GetSizeSpeed)
+		.def("set_size_speed", &CManchasSystemType::SetSizeSpeed)
+		.def("get_color1", &CManchasSystemType::GetColor1)
+		.def("set_color1", &CManchasSystemType::SetColor1)
+		.def("get_color2", &CManchasSystemType::GetColor2)
+		.def("set_color2", &CManchasSystemType::SetColor2)
 		.def("get_lua_frames", &CManchasSystemType::GetLuaFrames)
 		.def("get_lua_emit_time", &CManchasSystemType::GetLuaEmitTime)
 		.def("get_lua_life_time", &CManchasSystemType::GetLuaLife)

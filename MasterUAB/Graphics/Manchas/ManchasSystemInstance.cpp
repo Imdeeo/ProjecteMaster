@@ -83,7 +83,7 @@ void CManchasSystemInstance::Update(float ElapsedTime)
 				ManchaData manchas = {};
 				manchas.Position.x = GetRandomValue(Vect2f(-1,1));
 				manchas.Position.y = GetRandomValue(Vect2f(-1, 1)); 
-
+				manchas.Frame = GetRandomValue(0, m_Type->GetFrames());
 				manchas.LifeTime = 0;
 				manchas.TotalLife = GetRandomValue(m_Type->GetLife());
 				manchas.Opacity = 0;
