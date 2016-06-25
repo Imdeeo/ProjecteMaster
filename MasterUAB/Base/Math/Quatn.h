@@ -532,6 +532,24 @@ public:
 			);
 	}
 
+	Vector3<T> RotateVectorByQuat(const Vector3<T>& v)
+	{
+		Vector3<T> vprime;
+
+		// Extract the vector part of the quaternion
+		Vector3<T> u(x, y, z);
+
+		// Extract the scalar part of the quaternion
+		T s = w;
+
+		// Do the math
+		vprime = 2.0f * (u * v) * u
+			+ (s*s - (u * u)) * v
+			+ 2.0f * s * (u ^ v);
+
+		return vprime;
+	}
+
 	static Vector3<T> rotate_vector_by_quaternion(const Vector3<T>& v, const Quatn& q)
 	{
 		Vector3<T> vprime;

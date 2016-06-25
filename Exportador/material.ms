@@ -95,7 +95,32 @@ fn createMaterials dir filename Objs copyTexture =
 								)
 							)
 						)
-						if (classof mat[j].selfIllumMap == Bitmaptexture) then
+						if (classof mat[j].selfIllumMap == Multi_Sub_Map) then
+						(
+							nomTextura1 = filenameFromPath (mat[j].selfIllumMap.id_0_color_shader.filename)
+							nomTextura2 = filenameFromPath (mat[j].selfIllumMap.id_1_color_shader.filename)
+							nomTextura3 = filenameFromPath (mat[j].selfIllumMap.id_2_color_shader.filename)
+							pathfile1 = (dir + "Textures\\" + nomTextura1)
+							pathfile2 = (dir + "Textures\\" + nomTextura2)
+							pathfile3 = (dir + "Textures\\" + nomTextura3)
+							relativePathfile1 = pathfile1
+							relativePathfile2 = pathfile2
+							relativePathfile3 = pathfile3
+							getRelativePath &relativePathFile1
+							getRelativePath &relativePathFile2
+							getRelativePath &relativePathFile3
+							format "\t\t<texture type=\"lightmap\" filename=\"%\"/>\n" relativePathfile1 to:file
+							format "\t\t<texture type=\"lightmap2\" filename=\"%\"/>\n" relativePathfile2 to:file
+							format "\t\t<texture type=\"lightmap3\" filename=\"%\"/>\n" relativePathfile3 to:file
+							if copyTexture == true then
+							(
+								dirExist (dir+"Textures")
+								copyFile mat[j].selfIllumMap.id_0_color_shader.filename pathfile1
+								copyFile mat[j].selfIllumMap.id_1_color_shader.filename pathfile2
+								copyFile mat[j].selfIllumMap.id_2_color_shader.filename pathfile3
+							)
+						)
+						else if (classof mat[j].selfIllumMap == Bitmaptexture) then
 						(
 							if (mat[j].selfIllumMap.bitmap != undefined) then
 							(
