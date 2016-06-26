@@ -32,6 +32,7 @@
     <ClCompile Include="Camera\Frustum.cpp" />
     <ClCompile Include="Camera\SphericalCameraController.cpp" />
     <ClCompile Include="Cinematics\Cinematic.cpp" />
+    <ClCompile Include="Cinematics\CinematicManager.cpp" />
     <ClCompile Include="Cinematics\CinematicObject.cpp" />
     <ClCompile Include="Cinematics\CinematicObjectKeyFrame.cpp" />
     <ClCompile Include="Cinematics\CinematicPlayer.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Camera\Frustum.h" />
     <ClInclude Include="Camera\SphericalCameraController.h" />
     <ClInclude Include="Cinematics\Cinematic.h" />
+    <ClInclude Include="Cinematics\CinematicManager.h" />
     <ClInclude Include="Cinematics\CinematicObject.h" />
     <ClInclude Include="Cinematics\CinematicObjectKeyFrame.h" />
     <ClInclude Include="Cinematics\CinematicPlayer.h" />
