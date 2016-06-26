@@ -352,6 +352,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(const_self * other<const float>())
 			.def(const_self / other<const float>())
 			.def("set", &Vect2f::Set)
+			.def("length", &Vect2f::Length)
 	];
 
 	module(m_LS)[

@@ -8,7 +8,7 @@ function FallingUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	
 	--// Calculate the player speed
-	local l_PlayerDisplacement = Vect3f(l_Player.m_Velocity.x * 0.985, l_Player.m_Velocity.y + l_Player.m_Gravity * _ElapsedTime, l_Player.m_Velocity.z * 0.985)
+	local l_PlayerDisplacement = Vect3f(l_Player.m_Velocity.x, l_Player.m_Velocity.y + l_Player.m_Gravity * _ElapsedTime, l_Player.m_Velocity.z)
 	
 	--// Move the character controller
 	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
