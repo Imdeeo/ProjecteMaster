@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <materials>
+	<material name="ps_electric_material" renderable_object_technique="electric">
+		<texture type="diffuse" filename="Data\Particles\SmokeSprite.png"/>
+		<parameter type="float2" name="sprite_size" value="6.000000 5.000000" description=""/>
+		<parameter type="float" name="lerp_sprite" value="1.000000" description=""/>
+		<parameter type="float" name="ratio_y" value="1.000000" description=""/>
+	</material>
 	<material name="ms_manchas1" renderable_object_technique="manchas">
-		<texture filename="Data\Particles\manchasNegras.png" type="diffuse"/>
-		<parameter name="sprite_size" type="float2" value="2 2"/>
+		<texture filename="Data\Particles\stains.png" type="diffuse"/>
+		<parameter name="sprite_size" type="float2" value="3 3"/>
 	</material>
 	<material name="SSRMaterial" renderable_object_technique="ssr">
 		<parameter type="float" name="enabled" value="1.0"/>
@@ -15,7 +21,7 @@
 	<material name="NoiseAndVignettingMaterial" renderable_object_technique="noise_and_vignetting">
 		<parameter type="float" name="m_NoisePct" value="1" description="min=0.0 max=50.0 step=0.05"/>
 		<parameter type="float" name="m_VignettingPct" value="1" description="min=0.0 max=1.0 step=0.05"/>
-		<parameter type="float" name="m_NoiseAmount" value="1" description="min=0.0 max=1.0 step=0.05"/>
+		<parameter type="float" name="m_NoiseAmount" value="0.10" description="min=0.0 max=1.0 step=0.05"/>
 		<texture type="diffuse" filename="Data\GUI\Textures\noise.dds"/>
 		<texture type="diffuse" filename="Data\GUI\Textures\vignetting.dds"/>
 	</material>
@@ -34,18 +40,19 @@
 		<parameter name ="ZBlurEnd" type="float" value="50.0"/>
 	</material>
 	<material name="BloomMaterial" renderable_object_technique="bloom">
-		<parameter name ="Threshold" type="float" value="0.9"/>
+		<parameter name ="Threshold" type="float" value="0.9" description="min=-10.0 max=1.0 step=0.05"/>
 	</material>
 	<material name="BloomBlurMaterial" renderable_object_technique="bloom_blur">
 		<parameter name ="TextureSize" type="float" value="1280.0"/>
 		<parameter name ="BlurScale" type="float" value="2.0"/>
 	</material>
 	<material name="BloomCombineMaterial" renderable_object_technique="bloom_combine">
-		<parameter name ="m_BloomActive" type="float" value="1.0"/>
-		<parameter name ="m_BloomIntensity" type="float" value="0.001"/>
-		<parameter name ="m_OriginalIntensity" type="float" value="1.0"/>
-		<parameter name ="m_BloomSaturation" type="float" value="2.0"/>
-		<parameter name ="m_OriginalSaturation" type="float" value="1.5"/>
+		<parameter name ="BloomActive" type="float" value="1.0" description="min=0.0 max=1.0 step=1.0" />
+		<parameter name ="BloomIntensity" type="float" value="7.65" description="min=-100 max=100 step=0.05" />
+		<parameter name ="OriginalIntensity" type="float" value="1.35" description="min=-100 max=100 step=0.05" />
+		<parameter name ="BloomSaturation" type="float" value="1.05" description="min=-100 max=100 step=0.05" />
+		<parameter name ="OriginalSaturation" type="float" value="1.20" description="min=-100 max=100 step=0.05" />
+		<parameter name ="ShowBloom" type="float" value="0.0" description="min=0.0 max=1.0 step=1.0" />
 	</material>
 	<material name="HDAOMaterial" renderable_object_technique="hdao">		
 		<parameter type="float" name="HDAOActive" value="1.0" description="min=0.0 max=1.0 step=1.0" />
@@ -53,21 +60,21 @@
 		<parameter type="float" name="HDAOShowAO" value="0.0" description="min=0.0 max=1.0 step=1.0" />
 		<parameter type="float" name="HDAOUseNormals" value="1.0" description="min=0.0 max=1.0 step=1.0" />
 		<parameter type="float2" name="RTSize" value="1280.0 720.0" description="" />
-		<parameter type="float" name="AcceptAngle" value="0.5" description="min=0.0 max=1.5 step=0.001" />
-		<parameter type="float" name="HDAOIntensity" value="2.14" description="min=0.0 max=5.0 step=0.05" />
-		<parameter type="float" name="NormalScale" value="0.4" description="min=0.0 max=1.0 step=0.001" />
-		<parameter type="float" name="HDAORejectRadius" value="0.43" description="min=0.0 max=1.0 step=0.001" />
-		<parameter type="float" name="HDAOAcceptRadius" value="0.00312" description="min=0.0 max=1.0 step=0.001" />
+		<parameter type="float" name="AcceptAngle" value="0.75" description="min=0.0 max=1.5 step=0.001" />
+		<parameter type="float" name="HDAOIntensity" value="0.75" description="min=0.0 max=5.0 step=0.001" />
+		<parameter type="float" name="NormalScale" value="0.05" description="min=0.0 max=1.0 step=0.001" />
+		<parameter type="float" name="HDAORejectRadius" value="0.75" description="min=0.0 max=1.0 step=0.001" />
+		<parameter type="float" name="HDAOAcceptRadius" value="0.003" description="min=0.0 max=1.0 step=0.001" />
 	</material>
 	<material name="ColorGradingMaterial" renderable_object_technique="colorgrading">
 		<parameter name ="ColorGradingActive" type="float" value="1.0"/>
-		<parameter name ="BrownSepiaColorGrading" type="float" value="0.1" description="min=-100.0 max=100.0 step=0.05"/>
-		<parameter name ="GreenSepiaColorGrading" type="float" value="0.1" description="min=-100.0 max=100.0 step=0.05"/>
-		<parameter name ="BlueSepiaColorGrading" type="float" value="1.0" description="min=-100.0 max=100.0 step=0.05"/>
-		<parameter name ="MonochromeColorGrading" type="float" value="0.5" description="min=-100.0 max=100.0 step=0.05"/>
-		<parameter name ="ColorColorGrading" type="float" value="1.0" description="min=-100.0 max=100.0 step=0.05"/>
-		<parameter name ="ContrastColorGrading" type="float" value="0.4" description="min=-100.0 max=100.0 step=0.05"/>
-		<parameter name ="BrightnessColorGrading" type="float" value="0.05" description="min=0.0 max=1.0 step=0.05"/>
+		<parameter name ="BrownSepiaColorGrading" type="float" value="0" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter name ="GreenSepiaColorGrading" type="float" value="0" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter name ="BlueSepiaColorGrading" type="float" value="0" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter name ="MonochromeColorGrading" type="float" value="2.35" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter name ="ColorColorGrading" type="float" value="2.80" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter name ="ContrastColorGrading" type="float" value="0.25" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter name ="BrightnessColorGrading" type="float" value="-0.10" description="min=-100 max=100 step=0.05"/>
 	</material>
 	<material name="FogMaterial" renderable_object_technique="fog">
 		<parameter name ="MaxAttenuation_StartLinearFog_EndLinearFog" type="float3" value="0.5 50 100"/>
