@@ -14,7 +14,7 @@
 #include "AnimatedModels\AnimatedModelsManager.h"
 #include "ScriptManager\ScriptManager.h"
 #include "Camera\CameraControllerManager.h"
-#include "Cinematics\Cinematic.h"
+#include "Cinematics\CinematicManager.h"
 #include "PhysXManager\PhysXManager.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "SceneRender\SceneRendererCommandManager.h"
@@ -40,7 +40,7 @@ CUABEngine::CUABEngine(void)
 	m_LayerManager = new CLayerManager();
 	m_ScriptManager = new CScriptManager();
 	m_CameraControllerManager = new CCameraControllerManager();
-	m_Cinematic= new CCinematic();
+	m_CinematicManager = new CCinematicManager();
 	m_PhysXManager = CPhysXManager::CreatePhysXManager();
 	m_RenderableObjectTechniqueManager = new CRenderableObjectTechniqueManager();
 	m_SceneRendererCommandManager = new CSceneRendererCommandManager();
@@ -67,12 +67,13 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_ParticleManager);
 	CHECKED_DELETE(m_MaterialManager);
 	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
-	CHECKED_DELETE(m_EffectManager);	
+	CHECKED_DELETE(m_EffectManager);
 	CHECKED_DELETE(m_PhysXManager);
 	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_GUIManager)
 	CHECKED_DELETE(m_SoundManager);
 	CHECKED_DELETE(m_ManchasManager);
+	//CHECKED_DELETE(m_CinematicManager);
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -115,8 +116,8 @@ void CUABEngine::Init()
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");	
 	m_LayerManager->Load("Data\\level_" + m_LevelLoaded + "\\renderable_objects.xml");	
 	m_LightManager->Load("Data\\level_"+m_LevelLoaded+"\\lights.xml");	
-	m_Cinematic->LoadXML("Data\\level_"+m_LevelLoaded+"\\cinematic.xml");
-	m_LayerManager->GetLayer()->AddResource("Cinematic",m_Cinematic);
+	m_CinematicManager->LoadXML("Data\\level_" + m_LevelLoaded + "\\cinematic.xml");
+	m_LayerManager->GetLayer()->AddResource("Cinematic", m_CinematicManager);
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
 	m_CameraControllerManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
@@ -172,7 +173,7 @@ UAB_GET_PROPERTY_CPP(CUABEngine, CRenderManager *, RenderManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CAnimatedModelsManager *, AnimatedModelsManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CScriptManager *, ScriptManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CCameraControllerManager *, CameraControllerManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CCinematic *, Cinematic)
+UAB_GET_PROPERTY_CPP(CUABEngine, CCinematicManager *, CinematicManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CPhysXManager *, PhysXManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CSceneRendererCommandManager *, SceneRendererCommandManager)

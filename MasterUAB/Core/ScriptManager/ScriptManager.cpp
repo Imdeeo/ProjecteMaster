@@ -40,6 +40,7 @@
 #include "Camera\SphericalCameraController.h"
 #include "Camera\3PersonCameraController.h"
 
+#include "Cinematics\CinematicManager.h"
 #include "Cinematics\Cinematic.h"
 #include "Cinematics\CinematicObject.h"
 #include "Cinematics\CinematicObjectKeyFrame.h"
@@ -534,7 +535,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_camera_controller_manager", &CUABEngine::GetCameraControllerManager)
 			.def("get_physX_manager", &CUABEngine::GetPhysXManager)
 			.def("get_sound_manager", &CUABEngine::GetSoundManager)
-			.def("get_cinematic", &CUABEngine::GetCinematic)
+			.def("get_cinematic_manager", &CUABEngine::GetCinematicManager)
 			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
 			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
 			.def("load_level_xml", &CUABEngine::LoadLevelXML)
@@ -871,12 +872,10 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	module(m_LS)[
-		class_<CCinematic, bases<CRenderableObject, CCinematicPlayer>>("CCinematic")
-			.def(constructor<>())
-			.def("load_xml", &CCinematic::LoadXML)
+		class_<CCinematic, bases<CNamed, CCinematicPlayer>>("CCinematic")
+			.def(constructor<CXMLTreeNode&>())
 			.def("add_cinematic_object", &CCinematic::AddCinematicObject)
 			.def("update", &CCinematic::Update)
-			.def("render", &CCinematic::Render)
 			.def("play",&CCinematic::Play)
 			.def("stop",&CCinematic::Stop)
 			.def("pause", &CCinematic::Pause)
