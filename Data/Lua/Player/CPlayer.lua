@@ -1,3 +1,5 @@
+-- RaycastData
+dofile("Data\\Lua\\Raycast.lua")
 -- STATES
 dofile("Data\\Lua\\Utils\\state_machine.lua")
 dofile("Data\\Lua\\Player\\PlayerStateIdle.lua")

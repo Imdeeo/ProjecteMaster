@@ -35,7 +35,6 @@ function InteractingUpdate(args, _ElapsedTime)
 end
 
 function InteractingEnd(args)
-utils_log("interacting end")
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):stop()
