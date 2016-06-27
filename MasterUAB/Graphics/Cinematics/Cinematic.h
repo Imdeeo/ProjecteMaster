@@ -22,6 +22,7 @@ public:
 	void Stop();
 	void Pause();
 	void OnRestartCycle();
+	bool IsFinished();
 };
 
 #endif H_CINEMATIC_H

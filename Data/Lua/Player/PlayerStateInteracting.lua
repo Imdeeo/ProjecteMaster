@@ -4,10 +4,8 @@ function InteractingFirst(args)
 	l_Player.m_IsClimbing = false
 	l_Owner:execute_action(l_Player.m_InteractingAnimation, 0.1, 0.1, 1.0, true)
 	if l_Player.m_InteractingCinematic ~= nil then
-		l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):play() --OJO! Lanzar cinemática, y asignar m_CinematicDuration.
+		l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):play()
 	end
-	m_CinematicDuration = l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):get_duration()
-	utils_log("Cinematic duration: "..m_CinematicDuration)
 	m_Timer = 0.0
 	if l_Player.m_ItemName ~= nil then
 		l_Player.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
@@ -18,14 +16,13 @@ function InteractingUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	
-	--// Ends the state after the animation duration has passed
 	m_Timer = m_Timer + _ElapsedTime
-	if m_Timer >= m_CinematicDuration then
-		l_Player.m_IsInteracting = false
-	end
-
+	
+	--// Ends the state after the animation duration has passed
+	l_Player.m_IsInteracting = not l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):is_finished()
+	
 	--// If player has an item, move it.
-	if m_Timer >= 1.5 and l_Player.m_Item ~= nil then
+	if m_Timer >= l_Player.m_ItemTime and l_Player.m_Item ~= nil then
 		local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
 		l_NewControllerPosition.y = l_NewControllerPosition.y - 0.45
 		local l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_Owner:get_right_object_position())
@@ -38,8 +35,10 @@ function InteractingUpdate(args, _ElapsedTime)
 end
 
 function InteractingEnd(args)
+utils_log("interacting end")
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
+	l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):stop()
 	l_Player.m_Target = nil
 	l_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
 	l_Player.m_InteractingAnimation = 0

@@ -11,14 +11,13 @@ protected:
 public:
 	CCinematicPlayer(){};
 	virtual ~CCinematicPlayer(){};
-	void Init(float Duration);
-	virtual void Update(float ElapsedTime);
+	void Init(float _Duration);
+	virtual void Update(float _ElapsedTime);
 	virtual void Stop();
-	virtual void Play(bool Cycle);
+	virtual void Play(bool _Cycle);
 	virtual void Pause();
-	bool IsFinished() { return m_CurrentTime >= m_Duration; }
-	float GetDuration() { return m_Duration; }
-	float GetCurrentTime() { return m_CurrentTime; }
+	float GetDuration();
+	float GetCurrentT();
 	virtual void OnRestartCycle(){};
 };
 
