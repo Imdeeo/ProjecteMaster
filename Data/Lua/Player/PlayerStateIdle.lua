@@ -23,8 +23,8 @@ function IdleUpdate(args, _ElapsedTime)
 	--// Raycast
 	l_Player.m_RaycastData = RaycastData()
 	l_Player.m_PhysXManager:raycast(l_NewControllerPosition+l_Player.m_CameraController:get_forward(), l_NewControllerPosition+(l_Player.m_CameraController:get_forward()*2), 4, l_Player.m_RaycastData)
-	if l_Player.m_RaycastData.actor_name ~= "" then
-		CheckRaycast(l_Player)
+	if l_Player.m_RaycastData.actor_name ~= "" and l_Player.m_InputManager:is_action_active("INTERACT") then
+		TriggerRaycast(l_Player)
 	end
 	
 	--// Save speed in last update so we can create acceleration
@@ -69,8 +69,16 @@ function IdleToJumpingCondition(args)
 	return l_Player.m_InputManager:is_action_active("JUMP")
 end
 
-function CheckRaycast(_Player)
-	if _Player.m_InputManager:is_action_active("INTERACT") then
-		utils_log("Raycast interacted with: ".._Player.m_RaycastData.actor_name)
+function TriggerRaycast(_Player)
+	utils_log("Raycast interacted with: ".._Player.m_RaycastData.actor_name)
+	if _Player.m_RaycastData.actor_name == "TriggerComoda" then
+		_Player.m_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerComoda"):get_position()
+		_Player.m_TargetOffset = Vect3f(-1.0, 0.0, 0.0)
+		_Player.m_InteractingAnimation = 3
+		_Player.m_InteractingCinematic = 1
+		_Player.m_ItemName = "LlaveRecibidor"
+		_Player.m_IsInteracting = true
+		_Player.m_IsClimbing = false
+		_Player.m_IsCorrecting = true
 	end
 end
