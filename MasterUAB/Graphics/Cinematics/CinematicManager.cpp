@@ -34,6 +34,6 @@ void CCinematicManager::Update(float _ElapsedTime)
 {
 	for (TMapResource::iterator iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
 	{
-		iterator->second->Update(_ElapsedTime);		
+		iterator->second->Update(_ElapsedTime);
 	}
 }

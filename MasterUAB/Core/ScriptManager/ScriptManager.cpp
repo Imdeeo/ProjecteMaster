@@ -866,9 +866,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("stop", &CCinematicPlayer::Stop)
 			.def("play", &CCinematicPlayer::Play)
 			.def("pause", &CCinematicPlayer::Pause)
-			.def("is_finished", &CCinematicPlayer::IsFinished)
 			.def("get_duration", &CCinematicPlayer::GetDuration)
-			.def("get_current_time", &CCinematicPlayer::GetTickCount)
+			.def("get_current_time", &CCinematicPlayer::GetCurrentT)
 			.def("on_restart_cycle", &CCinematicPlayer::OnRestartCycle)
 	];
 
@@ -881,6 +880,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("stop",&CCinematic::Stop)
 			.def("pause", &CCinematic::Pause)
 			.def("on_restart_cycle", &CCinematic::OnRestartCycle)
+			.def("is_finished", &CCinematic::IsFinished)
 	];
 
 	module(m_LS)[
@@ -897,6 +897,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_pivot_rotation", &CCinematicObject::SetPivotRotation)
 			.def("get_pivot_scale", &CCinematicObject::GetPivotScale)
 			.def("set_pivot_scale", &CCinematicObject::SetPivotScale)
+			.def("is_finished", &CCinematicObject::IsFinished)
 	];
 
 	module(m_LS)[
