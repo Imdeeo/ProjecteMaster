@@ -906,7 +906,15 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_key_frame_time",&CCinematicObjectKeyFrame::SetKeyFrameTime)
 	];
 
-	
+	module(m_LS)[
+		class_<CCinematicManager, CRenderableObject>("CCinematicManager")
+			.def(constructor<>())
+			.def("load_xml", &CCinematicManager::LoadXML)
+			.def("update", &CCinematicManager::Update)
+			.def("render", &CCinematicManager::Render)
+	];
+
+	RegisterTemplatedMapManager<CCinematicManager>(m_LS);
 
 	// ContextManager----------------------------------------------------------------------------------
 	module(m_LS)[
