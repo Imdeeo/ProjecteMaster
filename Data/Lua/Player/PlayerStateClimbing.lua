@@ -55,6 +55,8 @@ function ClimbingEnd(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_Target = nil
+	l_Player.m_IsInteracting = false
+	l_Player.m_IsClimbing = false
 	l_Player.m_IsCorrecting = false
 	l_Player.m_CameraController:unlock()
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
