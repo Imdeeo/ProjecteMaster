@@ -4,9 +4,10 @@ function InteractingFirst(args)
 	l_Player.m_IsClimbing = false
 	l_Owner:execute_action(l_Player.m_InteractingAnimation, 0.1, 0.1, 1.0, true)
 	if l_Player.m_InteractingCinematic ~= nil then
-		--CUABEngine.get_instance():get_cinematic_manager():play() --OJO! Lanzar cinemática, y asignar m_AnimationTime.
+		l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):play() --OJO! Lanzar cinemática, y asignar m_CinematicDuration.
 	end
-	m_AnimationTime = 2.5
+	m_CinematicDuration = l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):get_duration()
+	utils_log("Cinematic duration: "..m_CinematicDuration)
 	m_Timer = 0.0
 	if l_Player.m_ItemName ~= nil then
 		l_Player.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
@@ -19,16 +20,9 @@ function InteractingUpdate(args, _ElapsedTime)
 	
 	--// Ends the state after the animation duration has passed
 	m_Timer = m_Timer + _ElapsedTime
-	if m_Timer >= m_AnimationTime then
+	if m_Timer >= m_CinematicDuration then
 		l_Player.m_IsInteracting = false
 	end
-
-	--// Rotate player to match camera
-	l_RotationXZ = Quatf()
-	l_RotationY = Quatf()
-	l_Rotation = l_Player.m_CameraController:get_rotation()
-	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
-	l_Owner:set_rotation(l_RotationY)
 
 	--// If player has an item, move it.
 	if m_Timer >= 1.5 and l_Player.m_Item ~= nil then
