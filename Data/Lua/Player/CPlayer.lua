@@ -84,12 +84,14 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Sanity = 100.0
 		self.m_MaxSanity = 100.0
 		
+		self.m_IsSinging = false
+		self.m_IsWindedUp = false
 		self.m_IsCorrecting = false
 		self.m_IsClimbing = false
 		self.m_IsInteracting = false
+		
 		self.m_Target = nil
 		self.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
-		
 		self.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource("LlaveRecibidor")
 		self.m_ItemName = "LlaveRecibidor"
 		
@@ -98,8 +100,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_InteractingAnimation = 0
 		self.m_InteractingCinematic = nil
 		
-		self.m_IsSinging = false
-		self.m_IsWindedUp = false
+		self.m_RaycastData = RaycastData()
 		
 		self.m_StateMachine = StateMachine.create()
 		self:SetPlayerStateMachine()

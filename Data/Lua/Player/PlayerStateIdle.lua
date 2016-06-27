@@ -16,9 +16,16 @@ function IdleUpdate(args, _ElapsedTime)
 	l_Player.m_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
 	
 	--// Assign to the character the controller's position
-	local l_NewControllerPosition = g_Player.m_PhysXManager:get_character_controler_pos("player")
+	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_NewControllerPosition.y = l_NewControllerPosition.y - 0.45
 	l_Owner:set_position(l_NewControllerPosition)
+	
+	--// Raycast
+	l_Player.m_RaycastData = RaycastData()
+	l_Player.m_PhysXManager:raycast(l_NewControllerPosition+l_Player.m_CameraController:get_forward(), l_NewControllerPosition+(l_Player.m_CameraController:get_forward()*2), 4, l_Player.m_RaycastData)
+	if l_Player.m_RaycastData.actor_name ~= "" then
+		CheckRaycast(l_Player)
+	end
 	
 	--// Save speed in last update so we can create acceleration
 	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
@@ -60,4 +67,10 @@ end
 function IdleToJumpingCondition(args)
 	local l_Player = args["self"]
 	return l_Player.m_InputManager:is_action_active("JUMP")
+end
+
+function CheckRaycast(_Player)
+	if _Player.m_InputManager:is_action_active("INTERACT") then
+		utils_log("Raycast interacted with: ".._Player.m_RaycastData.actor_name)
+	end
 end
