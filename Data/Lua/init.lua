@@ -6,7 +6,7 @@ dofile("Data\\Lua\\Triggers.lua")
 dofile("Data\\Lua\\Sound\\VolumeController.lua")
 dofile("Data\\Lua\\Enemies\\VisionTestEnemy\\VisionTestEnemy.lua")
 
-m_cinematicManager = CUABCinematicsActionManager()
+m_CinematicsActionManager = CUABCinematicsActionManager()
 m_CharacterManager = CCharacterManager()
 m_menu = true
 m_credits = false
@@ -20,6 +20,7 @@ m_Cordura = CSliderResult(50.0, 50.0)
 function mainLua(level)
 	InitAntweakBar()
 	m_CharacterManager:LoadXML("Data\\level_"..level.."\\characters.xml")
+	m_CinematicsActionManager:LoadXML("Data\\cinematic_manager.xml")
 	local l_SoundManager = CUABEngine.get_instance():get_sound_manager()
 	local l_WaterSoundEvent = SoundEvent()
 	l_WaterSoundEvent.event_name = "water"
