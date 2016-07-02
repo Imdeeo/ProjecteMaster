@@ -838,6 +838,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_forward", &CFPSCameraController::GetForward)
 			.def("lock", &CFPSCameraController::Lock)
 			.def("unlock", &CFPSCameraController::Unlock)
+			.def("get_animations", &CFPSCameraController::GetAnimations)
 	];
 
 	module(m_LS) [

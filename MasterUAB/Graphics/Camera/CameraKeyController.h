@@ -19,6 +19,7 @@ private:
 	void GetCurrentKey();
 public:
 	CCameraKeyController(const CXMLTreeNode &XMLTreeNode);
+	CCameraKeyController::CCameraKeyController(const CXMLTreeNode & _TreeNode, float & _Duration);
 	virtual ~CCameraKeyController();
 	void Update(float ElapsedTime);
 	void SetCurrentTime(float CurrentTime);
