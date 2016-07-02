@@ -20,6 +20,32 @@ CCameraKeyController::CCameraKeyController(const CXMLTreeNode & _TreeNode) : CCa
 	m_Cycle = !m_Reverse;//*XMLTreeNode.GetPszProperty("cycle");
 }
 
+CCameraKeyController::CCameraKeyController(const CXMLTreeNode & _TreeNode, float & _Duration) : CCameraController(_TreeNode)
+{
+	ResetTime();
+	m_TotalTime = _Duration;
+	CXMLTreeNode l_TreeNode = _TreeNode;
+	float l_Time;
+
+	for (int i = 0; i < l_TreeNode.GetNumChildren(); ++i)
+	{
+		CXMLTreeNode l_Element = l_TreeNode(i);
+		if (l_Element.GetName() == std::string("key"))
+		{
+			l_Time = std::stof(l_Element.GetPszProperty("time"));
+
+			CCameraInfo *l_CameraInfo = new CCameraInfo(l_Element);
+			CCameraKey *l_CameraKey = new CCameraKey(*l_CameraInfo, l_Time);
+
+			m_Keys.push_back(l_CameraKey);
+		}
+	}
+
+	m_Reverse = false;
+	m_ReverseDirection = 1;
+	m_Cycle = false;
+}
+
 CCameraKeyController::~CCameraKeyController()
 {
 	for (size_t i=0; i < m_Keys.size(); ++i)
