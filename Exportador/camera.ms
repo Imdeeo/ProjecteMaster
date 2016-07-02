@@ -6,7 +6,7 @@ fn createCameras dir Objs =
 	file=createfile (dir+"cameras.xml")
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<cameras>\n" to:file
-	format "\t<camera name=\"MainCamera\" type=\"fps\" target=\"Bruja\" layer=\"solid\" offset=\"1.8\"/>\n" to: file
+	format "\t<camera name=\"MainCamera\" type=\"fps\" target=\"Jaheem\" layer=\"solid\" offset=\"1.8\"/>\n" to: file
 	format "\t<camera name=\"DebugCamera\" type=\"spherical\" distance=\"50\"/>\n" to: file
 	if Objs != undefined then
 	(
