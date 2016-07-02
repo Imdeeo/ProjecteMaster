@@ -24,6 +24,7 @@
 		<renderable_object_technique name="bump_env" technique="bump_env_deferred_technique"/>
 		<renderable_object_technique name="lightmap" technique="lightmap_deferred_technique"/>
 		<renderable_object_technique name="lightmap_bump" technique="lightmap_bump_deferred_technique"/>
+		<renderable_object_technique name="lightmap_glow" technique="lightmap_glow_deferred_technique"/>
 		<renderable_object_technique name="radiosity" technique="rnm_deferred_technique"/>
 		<renderable_object_technique name="radiosity_bump" technique="rnm_bump_deferred_technique"/>
 		<renderable_object_technique name="animated" technique="animated_def_technique"/>
@@ -54,6 +55,12 @@
 		<renderable_object_technique name="bloom" technique="bloom_technique"/>
 		<renderable_object_technique name="bloom_blur" technique="blur_bloom_technique"/>
 		<renderable_object_technique name="bloom_combine" technique="bloom_combine_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="flare_pool">
+		<renderable_object_technique name="flare_brightpass" technique="flare_brightpass_technique"/>
+		<renderable_object_technique name="flare_downsampling" technique="flare_downloading_technique"/>
+		<renderable_object_technique name="flare_blur" technique="flare_blur_technique"/>
+		<renderable_object_technique name="flare_combine" technique="flare_combine_technique"/>
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="hdao_pool">
 		<renderable_object_technique name="hdao" technique="hdao_technique"/>
