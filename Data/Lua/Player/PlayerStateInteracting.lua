@@ -10,6 +10,9 @@ function InteractingFirst(args)
 	if l_Player.m_ItemName ~= nil then
 		l_Player.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
 	end
+	if l_Player.m_CameraAnimation ~= nil then
+		CUABEngine.get_instance():get_camera_controller_manager():choose_main_camera(l_Player.m_CameraAnimation)
+	end
 end
 
 function InteractingUpdate(args, _ElapsedTime)
@@ -37,11 +40,13 @@ end
 function InteractingEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
+	CUABEngine.get_instance():get_camera_controller_manager():choose_main_camera(l_Player.m_CameraControllerName)
 	l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):stop()
 	l_Player.m_Target = nil
 	l_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
 	l_Player.m_InteractingAnimation = 0
 	l_Player.m_InteractingCinematic = nil
+	l_Player.m_CameraAnimation = nil
 	l_Player.m_IsInteracting = false
 	l_Player.m_IsClimbing = false
 	l_Player.m_IsCorrecting = false

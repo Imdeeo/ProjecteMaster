@@ -103,6 +103,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_LastAnimation = "none"
 		self.m_InteractingAnimation = 0
 		self.m_InteractingCinematic = nil
+		self.m_CameraAnimation = nil
 		
 		self.m_RaycastData = RaycastData()
 		
