@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<effects>	
-	<vertex_shader name="rnm_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_RNM;HAS_LIGHTS"/>
-	<pixel_shader name="rnm_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_RNM;HAS_LIGHTS"/>
-	<effect_technique name="rnm_deferred_technique" vertex_shader="rnm_deferred_vs" pixel_shader="rnm_deferred_ps"/>
+<effects>
+	<vertex_shader name="flare_brightpass_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BRIGHTPASS"/>
+	<pixel_shader name="flare_brightpass_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSBrightpass" preprocessor="HAS_BRIGHTPASS"/>
+	<effect_technique name="flare_brightpass_technique" vertex_shader="flare_brightpass_vs" pixel_shader="flare_brightpass_ps"/>
 	
-	<vertex_shader name="rnm_bump_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_RNM;HAS_LIGHTS"/>
-	<pixel_shader name="rnm_bump_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_RNM;HAS_LIGHTS"/>
-	<effect_technique name="rnm_bump_deferred_technique" vertex_shader="rnm_bump_deferred_vs" pixel_shader="rnm_bump_deferred_ps"/>
+	<vertex_shader name="flare_downloading_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_DOWNSAMPLING"/>
+	<pixel_shader name="flare_downloading_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSDownsampling" preprocessor="HAS_DOWNSAMPLING"/>
+	<effect_technique name="flare_downloading_technique" vertex_shader="flare_downloading_vs" pixel_shader="flare_downloading_ps"/>
+	
+	<vertex_shader name="flare_blur_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BLUR"/>
+	<pixel_shader name="flare_blur_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSBlur" preprocessor="HAS_BLUR"/>
+	<effect_technique name="flare_blur_technique" vertex_shader="flare_blur_vs" pixel_shader="flare_blur_ps"/>
+	
+	<vertex_shader name="flare_combine_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_COMBINE"/>
+	<pixel_shader name="flare_combine_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSCombine" preprocessor="HAS_COMBINE"/>
+	<effect_technique name="flare_combine_technique" vertex_shader="flare_combine_vs" pixel_shader="flare_combine_ps"/>
 	
 	<!--GEOMETRY SHADER-->
 	<vertex_shader name="manchas_particle_vs" file="./Data/Effects/UAB_MANCHAS_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
@@ -49,19 +57,7 @@
 	<vertex_shader name="2d_vs" file="Data/Effects/UAB_2D.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="2d_ps"	file="Data/Effects/UAB_2D.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor=""/>
 	<effect_technique name="2d_technique" vertex_shader="2d_vs" pixel_shader="2d_ps"/>
-	
-	<vertex_shader name="bloom_vs" file="Data/Effects/UAB_BLOOM.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BLOOM"/>
-	<pixel_shader name="bloom_ps" file="Data/Effects/UAB_BLOOM.fx" shader_model="ps_4_0" entry_point="PSBloom" preprocessor="HAS_BLOOM"/>
-	<effect_technique name="bloom_technique" vertex_shader="bloom_vs" pixel_shader="bloom_ps"/>
-	
-	<vertex_shader name="bloom_blur_vs" file="Data/Effects/UAB_BLOOM.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BLUR"/>
-	<pixel_shader name="bloom_blur_ps" file="Data/Effects/UAB_BLOOM.fx" shader_model="ps_4_0" entry_point="PSBlur" preprocessor="HAS_BLUR"/>
-	<effect_technique name="blur_bloom_technique" vertex_shader="bloom_blur_vs" pixel_shader="bloom_blur_ps"/>
-	
-	<vertex_shader name="bloom_combine_vs" file="Data/Effects/UAB_BLOOM.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_COMBINE"/>
-	<pixel_shader name="bloom_combine_ps" file="Data/Effects/UAB_BLOOM.fx" shader_model="ps_4_0" entry_point="PSBloomCombine" preprocessor="HAS_COMBINE"/>
-	<effect_technique name="bloom_combine_technique" vertex_shader="bloom_combine_vs" pixel_shader="bloom_combine_ps"/>
-	
+		
 	<vertex_shader name="zblur_vs" file="Data/Effects/UAB_ZBLUR.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="zblur_ps" file="Data/Effects/UAB_ZBLUR.fx" shader_model="ps_4_0" entry_point="PSZBlur" preprocessor=""/>
 	<effect_technique name="zblur_technique" vertex_shader="zblur_vs" pixel_shader="zblur_ps"/>
@@ -81,6 +77,18 @@
 	<vertex_shader name="ssr_vs" file="Data/Effects/UAB_SSR.fx" shader_model="vs_4_1" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="ssr_ps" file="Data/Effects/UAB_SSR.fx" shader_model="ps_4_1" entry_point="SSRPS" preprocessor=""/>
 	<effect_technique name="ssr_technique" vertex_shader="ssr_vs" pixel_shader="ssr_ps"/>
+		
+	<vertex_shader name="bloom_vs" file="Data/Effects/UAB_BLOOM.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BLOOM"/>
+	<pixel_shader name="bloom_ps" file="Data/Effects/UAB_BLOOM.fx" shader_model="ps_4_0" entry_point="PSBloom" preprocessor="HAS_BLOOM"/>
+	<effect_technique name="bloom_technique" vertex_shader="bloom_vs" pixel_shader="bloom_ps"/>
+	
+	<vertex_shader name="bloom_blur_vs" file="Data/Effects/UAB_BLOOM.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BLUR"/>
+	<pixel_shader name="bloom_blur_ps" file="Data/Effects/UAB_BLOOM.fx" shader_model="ps_4_0" entry_point="PSBlur" preprocessor="HAS_BLUR"/>
+	<effect_technique name="blur_bloom_technique" vertex_shader="bloom_blur_vs" pixel_shader="bloom_blur_ps"/>
+	
+	<vertex_shader name="bloom_combine_vs" file="Data/Effects/UAB_BLOOM.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_COMBINE"/>
+	<pixel_shader name="bloom_combine_ps" file="Data/Effects/UAB_BLOOM.fx" shader_model="ps_4_0" entry_point="PSBloomCombine" preprocessor="HAS_COMBINE"/>
+	<effect_technique name="bloom_combine_technique" vertex_shader="bloom_combine_vs" pixel_shader="bloom_combine_ps"/>
 			
 	<!-- FORWARD --> 	
 	<vertex_shader name="skybox_vs" file="Data/Effects/UAB_SKYBOX.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor=""/>
@@ -159,6 +167,18 @@
 	<vertex_shader name="lightmap_bump_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_LIGHTS"/>
 	<pixel_shader name="lightmap_bump_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_LIGHTS"/>
 	<effect_technique name="lightmap_bump_deferred_technique" vertex_shader="lightmap_bump_deferred_vs" pixel_shader="lightmap_bump_deferred_ps"/>	
+	
+	<vertex_shader name="lightmap_glow_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_GLOW;HAS_LIGHTS"/>
+	<pixel_shader name="lightmap_glow_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_GLOW;HAS_LIGHTS"/>
+	<effect_technique name="lightmap_glow_deferred_technique" vertex_shader="lightmap_glow_deferred_vs" pixel_shader="lightmap_glow_deferred_ps"/>	
+	
+	<vertex_shader name="rnm_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_RNM;HAS_LIGHTS"/>
+	<pixel_shader name="rnm_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_RNM;HAS_LIGHTS"/>
+	<effect_technique name="rnm_deferred_technique" vertex_shader="rnm_deferred_vs" pixel_shader="rnm_deferred_ps"/>
+	
+	<vertex_shader name="rnm_bump_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_RNM;HAS_LIGHTS"/>
+	<pixel_shader name="rnm_bump_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_RNM;HAS_LIGHTS"/>
+	<effect_technique name="rnm_bump_deferred_technique" vertex_shader="rnm_bump_deferred_vs" pixel_shader="rnm_bump_deferred_ps"/>
 	
 	<!-- SHADOWMAP -->
 	<vertex_shader name="generate_shadowmap_vs" file="Data/Effects/UAB_SHADOWMAP.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV"/>
