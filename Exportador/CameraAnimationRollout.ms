@@ -1,7 +1,6 @@
 fileIn "math.ms"
 fileIn "utils.ms"
 
-Obj = undefined
 callbacks.removeScripts #selectionSetChanged id:#checkCam
 callbacks.addScript #selectionSetChanged "CamAnim.checkCam $" id:#checkCam persistent:false
 global g_Path = "C:\\Users\\Public\\"
@@ -60,12 +59,17 @@ rollout CamAnim "Camera Animation" width:160 height:134
 	fn AddCameraAnimation _file =
 	(
 		local key = (CameraKeyEnd.value as float - CameraKeyStart.value as float)/30
-		format "\t<camera_animation name=\"%\" duration=\"%\">\n" CameraAnimationName.text key to:_file
 		local j = CameraKeyStart.value as time
-		local cameraTransform
-		local cameraTranslation
+		local cameraTransform = $.transform
+		local cameraTranslation = cameraTransform.translation
 		local cameraRotation
 		local cameraLookAt
+		local cameraFileDir = "cameras\\"+CameraAnimationName.text+".xml"
+		format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"% % %\" filename=\"%\"/>\n" CameraAnimationName.text key cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraFileDir to:_file
+		
+		cameraFile=createfile (g_Path+cameraFileDir)
+		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
+		format "<camera_key_controller name=\"%\">\n" CameraAnimationName.text to:cameraFile		
 		do (
 			key = j as string	
 			key = replace key key.count 1 ""
@@ -85,10 +89,11 @@ rollout CamAnim "Camera Animation" width:160 height:134
 			TranslationToRH &cameraUp
 			TranslationToRH &cameraLookAt
 			TranslationToRH &cameraTranslation
-			format "\t\t<camera_animation_key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z (at time j $.fov) (at time j $.nearrange) (at time j $.farrange) to:_file
+			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z (at time j $.fov) (at time j $.nearrange) (at time j $.farrange) to:cameraFile
 			j = at time j trackbar.getNextKeyTime()
 		) while j <= CameraKeyEnd.value
-		format "\t</camera_animation>\n" to:_file
+		format "</camera_key_controller>\n" to:cameraFile
+		close cameraFile
 	)
 	
 	on SetPathButton pressed do
@@ -112,21 +117,22 @@ rollout CamAnim "Camera Animation" width:160 height:134
 	
 	on ExportButton pressed do
 	(
+		dirExist (g_Path+"cameras\\")
 		local file
-		if existFile (g_Path+"camera_animation.xml") then
+		if existFile (g_Path+"cameras.xml") then
 		(
-			file=openFile (g_Path+"camera_animation.xml") mode:"r+"
+			file=openFile (g_Path+"cameras.xml") mode:"r+"
 			seek file #eof
-			seek file (filepos file - 22)
+			seek file (filepos file - 12)
 			AddCameraAnimation file
-			format "</camera_animations>\n" to:file
+			format "</cameras>\n" to:file
 			close file
 		) else (
-			file=createFile (g_Path+"camera_animation.xml")
+			file=createFile (g_Path+"cameras.xml")
 			format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
-			format "<camera_animations>\n" to:file
+			format "<cameras>\n" to:file
 			AddCameraAnimation file
-			format "</camera_animations>\n" to:file
+			format "</cameras>\n" to:file
 			close file
 		)
 	)
