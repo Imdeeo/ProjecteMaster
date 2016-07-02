@@ -23,6 +23,7 @@ function RaycastComoda(_Player, _Pos)
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "OpenBureau"
+		_Player.m_CameraAnimation = _Player.m_InteractingCinematic
 		_Player.m_ItemName = "LlaveRecibidor"
 		_Player.m_ItemTime = 1.5
 		_Player.m_IsInteracting = true
