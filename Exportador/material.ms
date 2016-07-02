@@ -66,13 +66,27 @@ fn createMaterials dir filename Objs copyTexture =
 							(
 								format "\t<material name=\"%\" renderable_object_technique=\"reflection\">\n" mat[j].name to:file
 							)else(
-								if (classof mat[j].bumpMap == Bitmaptexture) then
+								if (classof mat[j].bumpMap == Bitmaptexture or classof mat[j].bumpMap ==  Normal_Bump) then
 								(
-									format "\t<material name=\"%\" renderable_object_technique=\"bump\">\n" mat[j].name to:file
+									if (classof mat[j].selfIllumMap == Bitmaptexture) then
+									(
+										format "\t<material name=\"%\" renderable_object_technique=\"lightmap_bump\">\n" mat[j].name to:file
+									)
+									else
+									(
+										format "\t<material name=\"%\" renderable_object_technique=\"bump\">\n" mat[j].name to:file
+									)
 								)
 								else
 								(
-									format "\t<material name=\"%\" renderable_object_technique=\"lights\">\n" mat[j].name to:file
+									if (classof mat[j].selfIllumMap == Bitmaptexture) then
+									(
+										format "\t<material name=\"%\" renderable_object_technique=\"lightmap\">\n" mat[j].name to:file
+									)
+									else
+									(
+										format "\t<material name=\"%\" renderable_object_technique=\"lights\">\n" mat[j].name to:file
+									)
 								)
 							)
 						)
