@@ -14,7 +14,6 @@ CFPSCameraController::CFPSCameraController(const CXMLTreeNode & _TreeNode) :CCam
 , m_PitchSpeed(2.f)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
-, m_Fov(1.13446f)
 , m_Target(UABEngine.GetLayerManager()->GetResource(_TreeNode.GetPszProperty("layer"))->GetResource(_TreeNode.GetPszProperty("target")))
 , m_Offset(Vect3f(.0f, _TreeNode.GetFloatProperty("offset", .0f, true), .0f))
 {
@@ -26,39 +25,33 @@ CFPSCameraController::CFPSCameraController(const CXMLTreeNode & _TreeNode) :CCam
 	l_InitialRotation = m_Target->GetRotation();
 	l_InitialRotation.decoupleY(&l_RotationXZ, &l_RotationY);
 	m_Rotation = l_RotationY;
-	if (_TreeNode.GetPszProperty("target") == "Jaheem")
-	{
-		std::string l_AnimationName;
-		float l_AnimationDuration;
-
-		CXMLTreeNode l_XML;
-		if (l_XML.LoadFile("Data\\camera_animation.xml"))
-		{
-			CXMLTreeNode l_Input = l_XML["camera_animations"];
-			if (l_Input.Exists())
-			{
-				for (int i = 0; i < l_Input.GetNumChildren(); ++i)
-				{
-					CXMLTreeNode l_Element = l_Input(i);
-					if (l_Element.GetName() == std::string("camera_animation"))
-					{
-						l_AnimationName = l_Element.GetPszProperty("name");
-						l_AnimationDuration = l_Element.GetFloatProperty("duration");
-
-						CCameraKeyController *l_CameraKeyController = new CCameraKeyController(l_Element, l_AnimationDuration);
-						l_CameraKeyController->SetName(l_AnimationName);
-
-						m_Animations->AddResource(l_AnimationName, l_CameraKeyController);
-					}
-				}
-			}
-		}
-	}
 }
 
 CFPSCameraController::~CFPSCameraController()
 {	
 }
+
+/*void CFPSCameraController::Move(float Strafe, float Forward, bool Speed, float ElapsedTime)
+{
+	Vect3f l_AddPos;
+	float l_Yaw = m_Rotation.GetYaw();
+	float l_Pitch = m_Rotation.GetPitch();
+
+	l_AddPos.y = Forward*(sin(l_Pitch));
+	l_AddPos.x = Forward*(cos(l_Yaw)) + Strafe*(cos(l_Yaw + FLOAT_PI_VALUE*0.5f));
+	l_AddPos.z = Forward*(sin(l_Yaw)) + Strafe*(sin(l_Yaw + FLOAT_PI_VALUE*0.5f));
+	
+	float l_ConstantSpeed=ElapsedTime*m_Speed;
+	if(Speed)
+		l_ConstantSpeed*=m_FastSpeed;
+
+	if (l_AddPos.SquaredLength() > 0)
+	{
+		l_AddPos.Normalize();
+		l_AddPos *= l_ConstantSpeed;
+		m_Position += l_AddPos;
+	}
+}*/
 
 void CFPSCameraController::AddYaw(float Radians)
 {
@@ -75,7 +68,7 @@ void CFPSCameraController::AddPitch(float Radians)
 void CFPSCameraController::SetCamera(CCamera *Camera) const
 {
 	Vect3f l_Direction = GetForward();
-	Camera->SetFOV(m_Fov);
+	Camera->SetFOV(1.13446f);
 	Camera->SetAspectRatio(16.0f/9.0f);
 	Camera->SetPosition(m_Position);
 	Camera->SetLookAt(m_Position+l_Direction);
@@ -90,9 +83,5 @@ void CFPSCameraController::Update(float ElapsedTime)
 		return;
 	AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime);
 	AddYaw(CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime);
-}
-
-CTemplatedMapManager<CCameraKeyController>* CFPSCameraController::GetAnimations()
-{
-	return m_Animations;
+	//Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, ElapsedTime);
 }

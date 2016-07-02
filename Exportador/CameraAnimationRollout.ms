@@ -85,7 +85,7 @@ rollout CamAnim "Camera Animation" width:160 height:134
 			TranslationToRH &cameraUp
 			TranslationToRH &cameraLookAt
 			TranslationToRH &cameraTranslation
-			format "\t\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z (at time j $.fov) (at time j $.nearrange) (at time j $.farrange) to:_file
+			format "\t\t<camera_animation_key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z (at time j $.fov) (at time j $.nearrange) (at time j $.farrange) to:_file
 			j = at time j trackbar.getNextKeyTime()
 		) while j <= CameraKeyEnd.value
 		format "\t</camera_animation>\n" to:_file

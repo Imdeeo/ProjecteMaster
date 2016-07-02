@@ -2,8 +2,6 @@
 #define INC_CAMERAFPSHOOTER_H_
 
 #include "Camera\CameraController.h"
-#include "Utils\TemplatedMapManager.h"
-#include "Camera\CameraKeyController.h"
 
 class CCamera;
 class CRenderableObject;
@@ -11,15 +9,13 @@ class CRenderableObject;
 class CFPSCameraController : public CCameraController
 {
 private:
-	CTemplatedMapManager<CCameraKeyController>*		m_Animations;
-	bool											m_Locked;
-	float											m_YawSpeed;
-	float											m_PitchSpeed;
-	float											m_Speed;
-	float											m_FastSpeed;
-	float											m_Fov;
-	CRenderableObject*								m_Target;
-	Vect3f											m_Offset;
+	bool						m_Locked;
+	float						m_YawSpeed;
+	float						m_PitchSpeed;
+	float						m_Speed;
+	float						m_FastSpeed;
+	CRenderableObject*			m_Target;
+	Vect3f						m_Offset;
 public:
 	CFPSCameraController(const CXMLTreeNode & _TreeNode);
 	virtual ~CFPSCameraController();
@@ -30,7 +26,6 @@ public:
 	void Update(float ElapsedTime);
 	void Lock(){ m_Locked = true; }
 	void Unlock(){ m_Locked = false; }
-	CTemplatedMapManager<CCameraKeyController>* GetAnimations();
 };
 
 #endif
