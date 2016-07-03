@@ -44,7 +44,7 @@ function IdleUpdate(args, _ElapsedTime)
 		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
 		l_ObjectPosition = l_ObjectPosition+l_NewControllerPosition
 		l_Player.m_Item:set_position(l_ObjectPosition)
-		local l_ObjectRotation = l_Player.m_Item:get_rotation()*l_Owner:get_right_object_rotation()*l_Owner:get_rotation()
+		local l_ObjectRotation = l_Owner:get_right_object_rotation()*l_Owner:get_rotation()
 		l_Player.m_Item:set_rotation(l_ObjectRotation)
 	end
 end

@@ -58,9 +58,10 @@ rollout CamAnim "Camera Animation" width:160 height:134
 	
 	fn AddCameraAnimation _file =
 	(
+		local Cam = $
 		local key = (CameraKeyEnd.value as float - CameraKeyStart.value as float)/30
 		local j = CameraKeyStart.value as time
-		local cameraTransform = $.transform
+		local cameraTransform = Cam.transform
 		local cameraTranslation = cameraTransform.translation
 		local cameraRotation
 		local cameraLookAt
@@ -74,24 +75,26 @@ rollout CamAnim "Camera Animation" width:160 height:134
 			key = j as string	
 			key = replace key key.count 1 ""
 			key = ((key as float) - CameraKeyStart.value)/30
-			cameraTransform = at time j $.transform
+			cameraTransform = at time j Cam.transform
 			cameraTranslation = cameraTransform.translation
 			cameraRotation = cameraTransform as eulerangles
 			mat3xvect3 cameraTransform z_axis &cameraUp
-			if($.target != undefined) then
+			if(Cam.target != undefined) then
 			(
-				cameraLookAt = at time j $.target.pos
+				select Cam.target
+				cameraLookAt = at time j Cam.target.pos
 			) else (
 				mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
-				swapYZ &cameraLookAt
+				swapXZ &cameraLookAt
 				cameraLookAt += cameraTranslation
 			)
-			TranslationToRH &cameraUp
-			TranslationToRH &cameraLookAt
-			TranslationToRH &cameraTranslation
-			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z (at time j $.fov) (at time j $.nearrange) (at time j $.farrange) to:cameraFile
+			CustomToRH &cameraUp
+			CustomToRH &cameraLookAt
+			CustomToRH &cameraTranslation
+			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z (at time j Cam.fov) (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
 			j = at time j trackbar.getNextKeyTime()
-		) while j <= CameraKeyEnd.value
+		) while j < CameraKeyEnd.value
+		select Cam
 		format "</camera_key_controller>\n" to:cameraFile
 		close cameraFile
 	)

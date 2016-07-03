@@ -31,6 +31,8 @@ public:
 	bool IsReverse() const;
 	void SetReverse(bool Reverse);
 	void SetCamera(CCamera *Camera) const;
+
+	Vect3f m_PositionOffset;
 };
 
 #endif

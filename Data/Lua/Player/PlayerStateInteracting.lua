@@ -11,7 +11,12 @@ function InteractingFirst(args)
 		l_Player.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
 	end
 	if l_Player.m_CameraAnimation ~= nil then
-		CUABEngine.get_instance():get_camera_controller_manager():choose_main_camera(l_Player.m_CameraAnimation)
+		l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
+		l_CameraManager:choose_main_camera(l_Player.m_CameraAnimation)
+		l_AnimatedCamera = l_CameraManager:get_main_camera()
+		l_AnimatedCamera.m_PositionOffset = l_Player.m_CameraController:get_position()
+		l_AnimatedCamera.m_PositionOffset.y = 0
+		l_AnimatedCamera:reset_time()
 	end
 end
 
