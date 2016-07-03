@@ -12,6 +12,7 @@ function OffUpdateCagedAutomaton(args, _ElapsedTime)
 end
 
 function OffEndCagedAutomaton(args)
+utils_log("OffEndCagedAutomaton")
 end
 
 function OffToIdleConditionCagedAutomaton(args)	

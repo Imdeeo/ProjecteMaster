@@ -1,6 +1,7 @@
 dofile("Data\\Lua\\Utils\\state_machine.lua")
 dofile("Data\\Lua\\Enemies\\CagedEnemy\\CagedAutomatonStateOff.lua")
 dofile("Data\\Lua\\Enemies\\CagedEnemy\\CagedAutomatonStateIdle.lua")
+dofile("Data\\Lua\\Enemies\\CagedEnemy\\CagedAutomatonStateAttack.lua")
 
 class 'CCagedAutomatonEnemy' (CEnemy)
 	function CCagedAutomatonEnemy:__init(_TreeNode)
@@ -26,8 +27,14 @@ class 'CCagedAutomatonEnemy' (CEnemy)
 		IdleState = State.create(IdleUpdateCagedAutomaton)
 		IdleState:set_do_first_function(IdleFirstCagedAutomaton)
 		IdleState:set_do_end_function(IdleEndCagedAutomaton)
+		IdleState:add_condition(IdleToAttackConditionCagedAutomaton, "Attack")
+		
+		AttackState = State.create(AttackUpdateCagedAutomaton)
+		AttackState:set_do_first_function(AttackFirstCagedAutomaton)
+		AttackState:set_do_end_function(AttackEndCagedAutomaton)
 		
 		self.m_StateMachine:add_state("Off", OffState)
 		self.m_StateMachine:add_state("Idle", IdleState)
+		self.m_StateMachine:add_state("Attack", AttackState)
 	end
 --end
