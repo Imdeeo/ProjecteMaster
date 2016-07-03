@@ -10,6 +10,7 @@
 CCameraKeyController::CCameraKeyController(const CXMLTreeNode & _TreeNode) : CCameraController(_TreeNode)
 {
 	ResetTime();
+	m_PositionOffset = Vect3f(0.0f, 0.0f, 0.0f);
 	m_TotalTime = _TreeNode.GetFloatProperty("total_time", 0, true);
 	std::string l_Filename;
 	l_Filename = _TreeNode.GetPszProperty("filename");
@@ -207,8 +208,8 @@ void CCameraKeyController::SetCamera(CCamera *Camera) const
 {
 	Camera->SetFOV(m_FOV);
 	Camera->SetAspectRatio(16.0f / 9.0f);
-	Camera->SetPosition(m_Position);
-	Camera->SetLookAt(m_LookAt);
+	Camera->SetPosition(m_Position + m_PositionOffset);
+	Camera->SetLookAt(m_LookAt + m_PositionOffset);
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
 }

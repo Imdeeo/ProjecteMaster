@@ -34,6 +34,20 @@ fn swapYZ &vect =
 	vect.z = aux
 )
 
+fn swapXZ &vect =
+(
+	local aux = vect.x
+	vect.x = vect.z
+	vect.z = aux
+)
+
+fn swapXY &vect =
+(
+	local aux = vect.x
+	vect.x = vect.y
+	vect.y = aux
+)
+
 fn QuatToRH &q =
 (
 	q = [-q.x, q.z, -q.y, -q.w]
@@ -42,6 +56,11 @@ fn QuatToRH &q =
 fn InverseQuat &q =
 (
 	q.w = -q.w
+)
+
+fn CustomToRH &translation =
+(
+	translation = [-translation.y, translation.z, translation.x]
 )
 
 fn TranslationToRH &translation =
