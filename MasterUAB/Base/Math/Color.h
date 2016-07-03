@@ -65,16 +65,16 @@ public:
 
 	typedef struct SHsvColor
 	{
-		unsigned char h;
-		unsigned char s;
-		unsigned char v;
-		unsigned char alpha;
+		float h;
+		float s;
+		float v;
+		float alpha;
 	} HsvColor;
 
 	inline CColor HsvToRgb(HsvColor hsv);
 	inline HsvColor RgbToHsv(CColor rgb);
 	inline CColor interpolate(CColor a, CColor b, float t);
-	inline int linear(int a, int b, float t);
+	inline float linear(float a, float b, float t);
 
 private:
 	inline uint8_t FloatToByte(float fValue) const;
