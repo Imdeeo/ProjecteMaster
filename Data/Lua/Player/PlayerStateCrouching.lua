@@ -1,7 +1,7 @@
 function CrouchingFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	l_Player.m_PhysXManager:set_character_controller_height("player", 0.9)
+	l_Player.m_PhysXManager:set_character_controller_height("player", 0.45)
 	if l_Player.m_CurrentAnimation == "crouch_move" then
 		l_Owner:blend_cycle(2,1.0,0.1)
 	elseif l_Player.m_CurrentAnimation == "crouch_idle" then
@@ -35,12 +35,12 @@ function CrouchingUpdate(args, _ElapsedTime)
 	
 	--// Move the character controller
 	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - 0.45
+	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - 0.3
 	l_Player.m_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
 	
 	--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_NewControllerPosition.y = l_NewControllerPosition.y - 0.45
+	l_NewControllerPosition.y = l_NewControllerPosition.y - 0.3
 	l_Owner:set_position(l_NewControllerPosition)
 	
 	--// Save speed in last update so we can create acceleration

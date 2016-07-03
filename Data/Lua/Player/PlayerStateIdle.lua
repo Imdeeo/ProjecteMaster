@@ -1,6 +1,8 @@
 function IdleFirst(args)
 	local l_Owner = args["owner"]
+	local l_Player = args["self"]
 	l_Owner:blend_cycle(0,1.0,0.1)
+	l_Player.m_PhysXManager:set_character_controller_height("player", 1.8)
 end
 
 function IdleUpdate(args, _ElapsedTime)
