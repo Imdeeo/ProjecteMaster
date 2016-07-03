@@ -68,7 +68,7 @@ void CFPSCameraController::AddPitch(float Radians)
 void CFPSCameraController::SetCamera(CCamera *Camera) const
 {
 	Vect3f l_Direction = GetForward();
-	Camera->SetFOV(1.13446f);
+	Camera->SetFOV(1.13446f); //0.628319f 1.13446f
 	Camera->SetAspectRatio(16.0f/9.0f);
 	Camera->SetPosition(m_Position);
 	Camera->SetLookAt(m_Position+l_Direction);
@@ -81,7 +81,7 @@ void CFPSCameraController::Update(float ElapsedTime)
 	m_Position = m_Target->GetPosition() + m_Offset;
 	if (m_Locked)
 		return;
-	AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime);
+	//AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime);
 	AddYaw(CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime);
 	//Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, ElapsedTime);
 }
