@@ -181,7 +181,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 
 	#ifdef HAS_UV2
 		#ifdef HAS_RNM
-			l_Ambient=GetRadiosityNormalMap(Nn, IN.UV2, T1Texture, S1Sampler, T4Texture, S4Sampler, T3Texture, S3Sampler);
+			l_Ambient = float4(GetRadiosityNormalMap(Nn, IN.UV2, T1Texture, S1Sampler, T4Texture, S4Sampler, T3Texture, S3Sampler), 1.0);
 		#else
 			l_Ambient = T1Texture.Sample(S1Sampler,IN.UV2);
 		#endif
