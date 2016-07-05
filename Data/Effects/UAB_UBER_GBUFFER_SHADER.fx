@@ -90,9 +90,9 @@ PS_INPUT mainVS(VS_INPUT IN)
 		l_Output.Pos = mul( float4(IN.Pos, 1.0), m_World );
 	#endif
 		
+	l_Output.HPos = l_Output.Pos ;
 	l_Output.Pos = mul( l_Output.Pos, m_View );
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
-	l_Output.HPos = l_Output.Pos ;
 	
 	//#ifdef HAS_WEIGHT_INDICES
 	//	l_Output.Normal = l_Normal;
@@ -141,8 +141,8 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 {
 	PS_OUTPUT l_Out = (PS_OUTPUT)0;
 	float l_specularFactor=m_SpecularFactor;
-	float l_Depth = IN.HPos.z / IN.HPos.w;
-	
+	float l_Depth = IN.Pos.z / IN.Pos.w;
+
 	float4 l_Ambient = m_LightAmbient;
 	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
 	if (l_Albedo.w < 0.1)
