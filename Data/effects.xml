@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <effects>
+	<vertex_shader name="vortex_effect_vs" file="Data/Effects/UAB_VORTEX_EFFECT.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="vortex_effect_ps" file="Data/Effects/UAB_VORTEX_EFFECT.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
+	<effect_technique name="vortex_effect_technique" vertex_shader="vortex_effect_vs" pixel_shader="vortex_effect_ps"/>
+	
 	<vertex_shader name="flare_brightpass_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BRIGHTPASS"/>
 	<pixel_shader name="flare_brightpass_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSBrightpass" preprocessor="HAS_BRIGHTPASS"/>
 	<effect_technique name="flare_brightpass_technique" vertex_shader="flare_brightpass_vs" pixel_shader="flare_brightpass_ps"/>

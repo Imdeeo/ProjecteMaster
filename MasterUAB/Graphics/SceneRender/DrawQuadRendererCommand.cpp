@@ -7,6 +7,7 @@
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "Materials\MaterialManager.h"
+#include "Utils.h"
 
 #include "XML\XMLTreeNode.h"
 
