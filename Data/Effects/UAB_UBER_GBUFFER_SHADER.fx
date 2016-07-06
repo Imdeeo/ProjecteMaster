@@ -90,16 +90,10 @@ PS_INPUT mainVS(VS_INPUT IN)
 		l_Output.Pos = mul( float4(IN.Pos, 1.0), m_World );
 	#endif
 		
+	l_Output.HPos = l_Output.Pos ;
 	l_Output.Pos = mul( l_Output.Pos, m_View );
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
-	l_Output.HPos = l_Output.Pos ;
-	
-	//#ifdef HAS_WEIGHT_INDICES
-	//	l_Output.Normal = l_Normal;
-	//#else
-		l_Output.Normal = normalize(mul(IN.Normal, (float3x3)m_World));
-	//#endif
-	
+	l_Output.Normal = normalize(mul(IN.Normal, (float3x3)m_World));	
 	l_Output.UV = IN.UV;
 	
 	#ifdef HAS_TANGENT
@@ -123,8 +117,9 @@ float3 CalcNormalMap(float3 Normal, float3 Tangent, float3 Binormal, float4 Norm
 	return normalize(Nn);
 }
 
-
-float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, SamplerState	LightmapXSampler, Texture2D LightmapYTexture, SamplerState LightmapYSampler, Texture2D LightmapZTexture, SamplerState LightmapZSampler)
+float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, SamplerState	
+	LightmapXSampler, Texture2D LightmapYTexture, SamplerState LightmapYSampler, Texture2D 
+	LightmapZTexture, SamplerState LightmapZSampler)
 {
 	float3 l_LightmapX=LightmapXTexture.Sample(LightmapXSampler, UV)*2;
 	float3 l_LightmapY=LightmapYTexture.Sample(LightmapYSampler, UV)*2;
@@ -141,8 +136,8 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 {
 	PS_OUTPUT l_Out = (PS_OUTPUT)0;
 	float l_specularFactor=m_SpecularFactor;
-	float l_Depth = IN.HPos.z / IN.HPos.w;
-	
+	float l_Depth = IN.Pos.z / IN.Pos.w;
+
 	float4 l_Ambient = m_LightAmbient;
 	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
 	if (l_Albedo.w < 0.1)
@@ -155,7 +150,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		float3 l_EyeToWorldPosition = normalize(IN.HPos-m_CameraPosition.xyz);
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
 		float4 l_ReflectColor = T8Texture.Sample(S8Sampler, l_ReflectVector);
-		l_Albedo = l_Albedo*0.95+l_ReflectColor*0.05;
+		l_Albedo = l_Albedo * m_Exposure + l_ReflectColor * (1 - m_Exposure);
 	#endif
 	
 	#ifdef HAS_TANGENT		
@@ -190,3 +185,5 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	
 	return l_Out;
 }
+
+
