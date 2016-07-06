@@ -119,18 +119,21 @@
 	<set_pool_renderable_objects_technique name="set pool skybox" pool="skybox_pool" active="false"/>
 	<render_layer name="render layer skybox" layer="skybox" active="false"/>
 	
-	<!-- MANCHAS -->
-	<enable_alpha_blend name="enable alpha blend AAZZOO Alpha Blend" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
-	<set_depth_stencil_state name="set depth stencil TF Alpha Blend" enable_z_test="true" write_z_buffer="false" active="true"/>
-	<set_pool_renderable_objects_technique name="set pool Alpha Blend" pool="forward_shading" active="true"/>
-	<render_layer name="render layer Alpha Blend" layer="alpha_blend_objects" active="true"/>
-	<disable_alpha_blend name="disable alpha blend Alpha Blend" active="true"/>
-	
 	<!-- Particles -->
 	<set_depth_stencil_state name="set depth stencil TF Particles" enable_z_test="true" write_z_buffer="true" active="true"/>
 	<enable_alpha_blend name="enable alpha blend AAZZOO Particles" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
 	<render_layer name="render layer particles" layer="particles" active="true"/>
 	<disable_alpha_blend name="disable alpha blend Particles" active="true"/>
+	
+	<!-- VortexEffect -->
+	<capture_frame_buffer name="capture frame Vortex" active="false">
+		<capture_texture name="CapturedVortexTexture" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
+	
+	<set_pool_renderable_objects_technique name="set pool vortex pool" pool="vortex_pool" active="false"/>
+	<render_draw_quad name="draw quad vortex" material="VortexMaterial" active="false">
+		<texture load_file="false" file="CapturedVortexTexture" stage_id="0"/>
+	</render_draw_quad>
 	
 	<!-- TRIGGERS -->
 	<set_depth_stencil_state name="set depth stencil TF triggers" enable_z_test="true" write_z_buffer="true" active="false"/>
