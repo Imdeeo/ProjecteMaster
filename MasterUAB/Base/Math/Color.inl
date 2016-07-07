@@ -135,7 +135,7 @@ inline CColor& CColor::operator *= (float escalar)
 
 inline CColor CColor::HsvToRgb(HsvColor hsv)
 {
-	double hh, p, q, t, ff;
+	float hh, p, q, t, ff;
 	long i;
 	CColor rgb;
 
@@ -148,13 +148,13 @@ inline CColor CColor::HsvToRgb(HsvColor hsv)
 		return rgb;
 	}
 	hh = hsv.h;
-	if (hh >= 360.0) hh = 0.0;
-	hh /= 60.0;
+	if (hh >= 360.0) hh = 0.0f;
+	hh /= 60.0f;
 	i = (long)hh;
 	ff = hh - i;
-	p = hsv.v * (1.0 - hsv.s);
-	q = hsv.v * (1.0 - (hsv.s * ff));
-	t = hsv.v * (1.0 - (hsv.s * (1.0 - ff)));
+	p = hsv.v * (1.0f - hsv.s);
+	q = hsv.v * (1.0f - (hsv.s * ff));
+	t = hsv.v * (1.0f - (hsv.s * (1.0f - ff)));
 
 	switch (i) {
 	case 0:
@@ -196,7 +196,7 @@ inline CColor CColor::HsvToRgb(HsvColor hsv)
 inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
 {
 	HsvColor hsv;
-	double min, max, delta;
+	float min, max, delta;
 
 	hsv.alpha = rgb.GetAlpha();
 	
@@ -210,8 +210,8 @@ inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
 	delta = max - min;
 	if (delta < 0.00001)
 	{
-		hsv.s = 0;
-		hsv.h = 0; // undefined, maybe nan?
+		hsv.s = 0.0f;
+		hsv.h = 0.0f; // undefined, maybe nan?
 		return hsv;
 	}
 	if (max > 0.0) { // NOTE: if Max is == 0, this divide would cause a crash
@@ -220,7 +220,7 @@ inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
 	else {
 		// if max is 0, then r = g = b = 0              
 		// s = 0, v is undefined
-		hsv.s = 0.0;
+		hsv.s = 0.0f;
 		hsv.h = NAN;                            // its now undefined
 		return hsv;
 	}
@@ -228,14 +228,14 @@ inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
 		hsv.h = (rgb.GetGreen() - rgb.GetBlue()) / delta;        // between yellow & magenta
 	else
 		if (rgb.GetGreen() >= max)
-			hsv.h = 2.0 + (rgb.GetBlue() - rgb.GetRed()) / delta;  // between cyan & yellow
+			hsv.h = 2.0f + (rgb.GetBlue() - rgb.GetRed()) / delta;  // between cyan & yellow
 		else
-			hsv.h = 4.0 + (rgb.GetRed() - rgb.GetGreen()) / delta;  // between magenta & cyan
+			hsv.h = 4.0f + (rgb.GetRed() - rgb.GetGreen()) / delta;  // between magenta & cyan
 
-	hsv.h *= 60.0;                              // degrees
+	hsv.h *= 60.0f;                              // degrees
 
 	if (hsv.h < 0.0)
-		hsv.h += 360.0;
+		hsv.h += 360.0f;
 
 	return hsv;
 }
