@@ -36,5 +36,6 @@
 	<animation name="draw_key" filename="JaheemDrawKey.CAF" />
 	<animation name="hold_key" filename="JaheemHoldKey.CAF" />
 	<animation name="pick_key" filename="JaheemPickKey.CAF" />
+	<animation name="force_open" filename="JaheemForceOpenBureau.CAF" />
 	<animation name="cross_door" filename="JaheemCrossDoor.CAF" />
 </actor>
