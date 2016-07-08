@@ -2,11 +2,10 @@
 
 #define MY_ENCODING "ISO-8859-1"
 
-#ifndef XMLCheckResult
-#define XMLCheckResult(a_eResult) if (a_eResult != tinyxml2::XML_SUCCESS) { printf("Error: %i\n", a_eResult); return a_eResult; }
-#endif
-
-CXMLTreeNode::CXMLTreeNode(){}
+CXMLTreeNode::CXMLTreeNode()
+{
+	m_xmlDoc = new tinyxml2::XMLDocument();
+}
 
 CXMLTreeNode::~CXMLTreeNode()
 {	
@@ -14,14 +13,11 @@ CXMLTreeNode::~CXMLTreeNode()
 
 bool CXMLTreeNode::LoadFile (const char* _pszFileName)
 {
-	tinyxml2::XMLDocument m_xmlDoc;
-	tinyxml2::XMLError eResult = m_xmlDoc.LoadFile(_pszFileName);
-
-	XMLCheckResult(eResult);
+	tinyxml2::XMLError eResult = m_xmlDoc->LoadFile(_pszFileName);
 
 	if (eResult == tinyxml2::XML_SUCCESS)
 	{
-		m_pNode = m_xmlDoc.RootElement();
+		m_pNode = m_xmlDoc->RootElement();
 		if (m_pNode == nullptr)
 			return false;
 		else
@@ -46,11 +42,9 @@ CXMLTreeNode CXMLTreeNode::GetSubTree(const char* _pszKey) const
 
 bool CXMLTreeNode::_FindSubTree(tinyxml2::XMLElement* _pNode, const char* _pszKey, CXMLTreeNode& _TreeFound) const
 {
-	std::string l_aux1 = _pNode->Name();
-	std::string l_aux2 = _pszKey;
 	while (_pNode != NULL)
 	{
-		if (l_aux1.compare(l_aux2))
+		if (strcmp(_pNode->Name(), _pszKey) != 0)
 		{
 			if (_FindSubTree(_pNode->FirstChildElement(), _pszKey, _TreeFound))
 			{
@@ -82,12 +76,12 @@ bool CXMLTreeNode::ExistsKey(const char* _pszKey)
 //----------------------------------------------------------------------------
 const char* CXMLTreeNode::GetName ()
 {
-  if (m_pNode)
-  {
-    return (char*)m_pNode->Name();
-  }
+	if (m_pNode)
+	{
+		return (char*)m_pNode->Name();
+	}
 
-  return NULL;
+	return NULL;
 }
 
 //----------------------------------------------------------------------------
@@ -145,8 +139,8 @@ int CXMLTreeNode::GetNumChildren ()
 
 	int iCount = 0;
 
-	if (m_pNode)
-	{
+	if (m_pNode && !m_pNode->NoChildren())
+	{		
 		tinyxml2::XMLElement* pChildren = m_pNode->FirstChildElement();
 		while (pChildren != NULL)
 		{
@@ -166,7 +160,6 @@ int CXMLTreeNode::GetIntProperty (const char* _pszKey, int _iDefault, bool warni
 	int iRet;
 
 	tinyxml2::XMLError eResult = m_pNode->QueryIntAttribute(_pszKey, &iRet);
-	XMLCheckResult(eResult);
 
 	if (eResult != tinyxml2::XML_SUCCESS)
 	{
@@ -184,7 +177,6 @@ float CXMLTreeNode::GetFloatProperty (const char* _pszKey, float _fDefault, bool
 	float fRet;
 
 	tinyxml2::XMLError eResult = m_pNode->QueryFloatAttribute(_pszKey, &fRet);
-	XMLCheckResult(eResult);
 
 	if (eResult != tinyxml2::XML_SUCCESS)
 	{
@@ -202,7 +194,6 @@ bool CXMLTreeNode::GetBoolProperty (const char* _pszKey, bool _bDefault, bool wa
 	bool bRet;
 
 	tinyxml2::XMLError eResult = m_pNode->QueryBoolAttribute(_pszKey, &bRet);
-	XMLCheckResult(eResult);
 
 	if (eResult != tinyxml2::XML_SUCCESS)
 	{
