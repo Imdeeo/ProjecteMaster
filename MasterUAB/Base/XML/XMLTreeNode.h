@@ -38,7 +38,8 @@ public:
 	CXMLTreeNode operator()(int _iIndex) const;
 
 	bool IsComment() const;
-private:	
+private:
+	tinyxml2::XMLDocument* m_xmlDoc;
 	tinyxml2::XMLElement* m_pNode;
 
 	CXMLTreeNode GetSubTree(const char* _pszKey) const;
