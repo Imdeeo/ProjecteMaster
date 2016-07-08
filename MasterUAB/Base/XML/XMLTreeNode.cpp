@@ -22,7 +22,6 @@ bool CXMLTreeNode::LoadFile (const char* _pszFileName)
 	if (eResult == tinyxml2::XML_SUCCESS)
 	{
 		m_pNode = m_xmlDoc.RootElement();
-
 		if (m_pNode == nullptr)
 			return false;
 		else
@@ -39,10 +38,35 @@ CXMLTreeNode CXMLTreeNode::GetSubTree(const char* _pszKey) const
 
 	if (_pszKey && m_pNode)
 	{
-		NewTree.m_pNode = m_pNode->NextSiblingElement(_pszKey);
+		_FindSubTree(m_pNode, _pszKey, NewTree);
 	}
 
 	return NewTree;
+}
+
+bool CXMLTreeNode::_FindSubTree(tinyxml2::XMLElement* _pNode, const char* _pszKey, CXMLTreeNode& _TreeFound) const
+{
+	std::string l_aux1 = _pNode->Name();
+	std::string l_aux2 = _pszKey;
+	while (_pNode != NULL)
+	{
+		if (l_aux1.compare(l_aux2))
+		{
+			if (_FindSubTree(_pNode->FirstChildElement(), _pszKey, _TreeFound))
+			{
+				return true;
+			}
+		}
+		else
+		{
+			_TreeFound.m_pNode = _pNode;
+			return true;
+		}
+
+		_pNode = _pNode->NextSiblingElement();
+	}
+
+	return false;
 }
 
 bool CXMLTreeNode::ExistsKey(const char* _pszKey)
