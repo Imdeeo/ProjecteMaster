@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <effects>
-	<vertex_shader name="flare_brightpass_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BRIGHTPASS"/>
-	<pixel_shader name="flare_brightpass_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSBrightpass" preprocessor="HAS_BRIGHTPASS"/>
-	<effect_technique name="flare_brightpass_technique" vertex_shader="flare_brightpass_vs" pixel_shader="flare_brightpass_ps"/>
-	
-	<vertex_shader name="flare_downloading_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_DOWNSAMPLING"/>
-	<pixel_shader name="flare_downloading_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSDownsampling" preprocessor="HAS_DOWNSAMPLING"/>
-	<effect_technique name="flare_downloading_technique" vertex_shader="flare_downloading_vs" pixel_shader="flare_downloading_ps"/>
-	
-	<vertex_shader name="flare_blur_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BLUR"/>
-	<pixel_shader name="flare_blur_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSBlur" preprocessor="HAS_BLUR"/>
-	<effect_technique name="flare_blur_technique" vertex_shader="flare_blur_vs" pixel_shader="flare_blur_ps"/>
-	
-	<vertex_shader name="flare_combine_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_COMBINE"/>
-	<pixel_shader name="flare_combine_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSCombine" preprocessor="HAS_COMBINE"/>
-	<effect_technique name="flare_combine_technique" vertex_shader="flare_combine_vs" pixel_shader="flare_combine_ps"/>
-	
+	<vertex_shader name="vortex_effect_vs" file="Data/Effects/UAB_VORTEX_EFFECT.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	 <pixel_shader name="vortex_effect_ps" file="Data/Effects/UAB_VORTEX_EFFECT.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
+	 <effect_technique name="vortex_effect_technique" vertex_shader="vortex_effect_vs" pixel_shader="vortex_effect_ps"/>
+	 
 	<!--GEOMETRY SHADER-->
 	<vertex_shader name="manchas_particle_vs" file="./Data/Effects/UAB_MANCHAS_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<geometry_shader name="manchas_particle_gs" file="./Data/Effects/UAB_MANCHAS_SHADER.fx" shader_model="gs_4_0" entry_point="mainGS" preprocessor=""/>
@@ -89,7 +77,23 @@
 	<vertex_shader name="bloom_combine_vs" file="Data/Effects/UAB_BLOOM.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_COMBINE"/>
 	<pixel_shader name="bloom_combine_ps" file="Data/Effects/UAB_BLOOM.fx" shader_model="ps_4_0" entry_point="PSBloomCombine" preprocessor="HAS_COMBINE"/>
 	<effect_technique name="bloom_combine_technique" vertex_shader="bloom_combine_vs" pixel_shader="bloom_combine_ps"/>
-			
+	
+	<vertex_shader name="flare_brightpass_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BRIGHTPASS"/>
+	<pixel_shader name="flare_brightpass_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSBrightpass" preprocessor="HAS_BRIGHTPASS"/>
+	<effect_technique name="flare_brightpass_technique" vertex_shader="flare_brightpass_vs" pixel_shader="flare_brightpass_ps"/>
+	
+	<vertex_shader name="flare_downloading_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_DOWNSAMPLING"/>
+	<pixel_shader name="flare_downloading_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSDownsampling" preprocessor="HAS_DOWNSAMPLING"/>
+	<effect_technique name="flare_downloading_technique" vertex_shader="flare_downloading_vs" pixel_shader="flare_downloading_ps"/>
+	
+	<vertex_shader name="flare_blur_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_BLUR"/>
+	<pixel_shader name="flare_blur_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSBlur" preprocessor="HAS_BLUR"/>
+	<effect_technique name="flare_blur_technique" vertex_shader="flare_blur_vs" pixel_shader="flare_blur_ps"/>
+	
+	<vertex_shader name="flare_combine_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_COMBINE"/>
+	<pixel_shader name="flare_combine_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSCombine" preprocessor="HAS_COMBINE"/>
+	<effect_technique name="flare_combine_technique" vertex_shader="flare_combine_vs" pixel_shader="flare_combine_ps"/>
+				
 	<!-- FORWARD --> 	
 	<vertex_shader name="skybox_vs" file="Data/Effects/UAB_SKYBOX.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="skybox_ps"	file="Data/Effects/UAB_SKYBOX.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor=""/>
