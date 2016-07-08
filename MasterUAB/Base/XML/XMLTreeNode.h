@@ -42,5 +42,6 @@ private:
 	tinyxml2::XMLElement* m_pNode;
 
 	CXMLTreeNode GetSubTree(const char* _pszKey) const;
+	bool _FindSubTree(tinyxml2::XMLElement* _pNode, const char* _pszKey, CXMLTreeNode& _TreeFound) const;
 };
 #endif
