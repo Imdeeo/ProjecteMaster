@@ -22,6 +22,7 @@ class CSceneRendererCommandManager;
 class CParticleManager;
 class CGUIManager;
 class ISoundManager;
+class IVideoManager;
 class CGamePlayManager;
 class CManchasManager;
 
@@ -52,6 +53,7 @@ private:
 	CParticleManager* m_ParticleManager;
 	CGUIManager* m_GUIManager;
 	ISoundManager* m_SoundManager;
+	IVideoManager* m_VideoManager;
 	CGamePlayManager* m_GamePlayManager;
 	CManchasManager* m_ManchasManager;
 	std::string m_LevelLoaded;
@@ -75,6 +77,7 @@ public:
 	CParticleManager * GetParticleManager()const;
 	CGUIManager * GetGUIManager() const;
 	ISoundManager * GetSoundManager()const;
+	IVideoManager * GetVideoManager() const;
 	CGamePlayManager * GetGamePlayManager()const;
 	CManchasManager * GetManchasManager()const;
 	std::string GetLevelLoaded()const{return m_LevelLoaded;}

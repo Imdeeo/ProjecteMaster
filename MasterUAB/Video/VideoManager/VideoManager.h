@@ -4,10 +4,9 @@
 class IVideoManager
 {
 public:
-	static IVideoManager* InstantiateSoundManager();
-
+	static IVideoManager* InstantiateVideoManager();
 	virtual ~IVideoManager() {}
-
+	virtual bool Init() = 0;
 protected:
 	IVideoManager()
 	{}

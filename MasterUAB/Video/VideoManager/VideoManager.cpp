@@ -2,7 +2,7 @@
 #include "VideoManagerImplementation.h"
 
 
-IVideoManager *IVideoManager::InstantiateSoundManager()
+IVideoManager *IVideoManager::InstantiateVideoManager()
 {
 	return new CVideoManagerImplementation();
 }

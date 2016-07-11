@@ -21,6 +21,7 @@
 #include "Particles\ParticleManager.h"
 #include "GUIManager.h"
 #include "SoundManager\SoundManager.h"
+#include "VideoManager\VideoManager.h"
 #include "GamePlayManager.h"
 #include "Manchas\ManchasManager.h"
 #include "DebugHelper\DebugHelper.h"
@@ -47,6 +48,7 @@ CUABEngine::CUABEngine(void)
 	m_SceneRendererCommandManager = new CSceneRendererCommandManager();
 	m_GUIManager = new CGUIManager();
 	m_SoundManager = ISoundManager::InstantiateSoundManager();
+	m_VideoManager = IVideoManager::InstantiateVideoManager();
 	m_FrustumActive = true;
 	m_GamePlayManager = new CGamePlayManager();
 	m_ManchasManager = new CManchasManager();
@@ -73,6 +75,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_GUIManager)
 	CHECKED_DELETE(m_SoundManager);
+	CHECKED_DELETE(m_VideoManager);
 	CHECKED_DELETE(m_ManchasManager);
 	//CHECKED_DELETE(m_CinematicManager);
 }
@@ -129,7 +132,7 @@ void CUABEngine::Init()
 	m_SoundManager->SetPath("Data\\Sounds\\");
 	m_SoundManager->Init();
 	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
-
+	m_VideoManager->Init();
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	m_ScriptManager->RunCode("mainLua(\""+m_LevelLoaded+"\")");
 	// TEST LECTURA XML
@@ -190,5 +193,6 @@ UAB_GET_PROPERTY_CPP(CUABEngine, CSceneRendererCommandManager *, SceneRendererCo
 UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, ISoundManager *, SoundManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager *, GamePlayManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CManchasManager *, ManchasManager)
