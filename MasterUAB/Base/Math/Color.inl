@@ -158,36 +158,36 @@ inline CColor CColor::HsvToRgb(HsvColor hsv)
 
 	switch (i) {
 	case 0:
-		rgb.SetRed(hsv.v);
-		rgb.SetGreen(t);
-		rgb.SetBlue(p);
+		rgb.SetRed((float)hsv.v);
+		rgb.SetGreen((float)t);
+		rgb.SetBlue((float)p);
 		break;
 	case 1:
-		rgb.SetRed(q);
-		rgb.SetGreen(hsv.v);
-		rgb.SetBlue(p);
+		rgb.SetRed((float)q);
+		rgb.SetGreen((float)hsv.v);
+		rgb.SetBlue((float)p);
 		break;
 	case 2:
-		rgb.SetRed(p);
-		rgb.SetGreen(hsv.v);
-		rgb.SetBlue(t);
+		rgb.SetRed((float)p);
+		rgb.SetGreen((float)hsv.v);
+		rgb.SetBlue((float)t);
 		break;
 
 	case 3:
-		rgb.SetRed(p);
-		rgb.SetGreen(q);
-		rgb.SetBlue(hsv.v);
+		rgb.SetRed((float)p);
+		rgb.SetGreen((float)q);
+		rgb.SetBlue((float)hsv.v);
 		break;
 	case 4:
-		rgb.SetRed(t);
-		rgb.SetGreen(p);
-		rgb.SetBlue(hsv.v);
+		rgb.SetRed((float)t);
+		rgb.SetGreen((float)p);
+		rgb.SetBlue((float)hsv.v);
 		break;
 	case 5:
 	default:
-		rgb.SetRed(hsv.v);
-		rgb.SetGreen(p);
-		rgb.SetBlue(q);
+		rgb.SetRed((float)hsv.v);
+		rgb.SetGreen((float)p);
+		rgb.SetBlue((float)q);
 		break;
 	}
 	return rgb;
@@ -206,8 +206,8 @@ inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
 	max = rgb.GetRed() > rgb.GetGreen() ? rgb.GetRed() : rgb.GetGreen();
 	max = max  > rgb.GetBlue() ? max : rgb.GetBlue();
 
-	hsv.v = max;                                // v
-	delta = max - min;
+	hsv.v = (float)max;                                // v
+	delta = (float)(max - min);
 	if (delta < 0.00001)
 	{
 		hsv.s = 0;
@@ -215,7 +215,7 @@ inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
 		return hsv;
 	}
 	if (max > 0.0) { // NOTE: if Max is == 0, this divide would cause a crash
-		hsv.s = (delta / max);                  // s
+		hsv.s = (float)(delta / max);                  // s
 	}
 	else {
 		// if max is 0, then r = g = b = 0              
@@ -224,13 +224,13 @@ inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
 		hsv.h = NAN;                            // its now undefined
 		return hsv;
 	}
-	if (rgb.GetRed() >= max)                           // > is bogus, just keeps compilor happy
-		hsv.h = (rgb.GetGreen() - rgb.GetBlue()) / delta;        // between yellow & magenta
+	if (rgb.GetRed() >= (float)max)                           // > is bogus, just keeps compilor happy
+		hsv.h = (rgb.GetGreen() - rgb.GetBlue()) / (float)delta;        // between yellow & magenta
 	else
-		if (rgb.GetGreen() >= max)
-			hsv.h = 2.0 + (rgb.GetBlue() - rgb.GetRed()) / delta;  // between cyan & yellow
+	if (rgb.GetGreen() >= (float)max)
+			hsv.h = 2.0f + (rgb.GetBlue() - rgb.GetRed()) / (float)delta;  // between cyan & yellow
 		else
-			hsv.h = 4.0 + (rgb.GetRed() - rgb.GetGreen()) / delta;  // between magenta & cyan
+			hsv.h = 4.0f + (rgb.GetRed() - rgb.GetGreen()) / (float)delta;  // between magenta & cyan
 
 	hsv.h *= 60.0;                              // degrees
 
