@@ -3,6 +3,7 @@
 
 #include "VideoManager.h"
 #include "SDL.h"
+#include "theora.h"
 
 class CVideoManagerImplementation : public IVideoManager
 {	
