@@ -23,16 +23,16 @@
 #endif
 
 #include <stdio.h>
-#include <unistd.h>
+#include <io.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/time.h>
+#include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <math.h>
 #include <signal.h>
-#include "theora/theoradec.h"
+#include "theora\theoradec.h"
 #include "vorbis/codec.h"
 #include <SDL.h>
 
