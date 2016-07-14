@@ -47,10 +47,11 @@ just a little bit important */
 #include <soundcard.h>
 #define AUDIO_DEVICE "/dev/audio"
 #else
-#include <sys/soundcard.h>
+#include <winscard.h>
+#include <dsound.h>
 #define AUDIO_DEVICE "/dev/dsp"
 #endif
-#include <sys/ioctl.h>
+#include <winioctl.h>
 
 /* Helper; just grab some more compressed bitstream and sync it for
 page extraction */
@@ -142,7 +143,7 @@ double get_time(){
 	static ogg_int64_t up = 0;
 	ogg_int64_t now;
 	struct timeval tv;
-
+	
 	gettimeofday(&tv, 0);
 	now = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 
