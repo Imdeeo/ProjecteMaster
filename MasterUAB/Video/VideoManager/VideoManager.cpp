@@ -84,7 +84,7 @@ int              stateflag = 0;
 
 /* SDL Video playback structures */
 SDL_Surface *screen;
-SDL_Overlay *yuv_overlay;
+SDL_Texture *yuv_overlay;
 SDL_Rect rect;
 
 /* single frame video buffering */
@@ -192,21 +192,29 @@ static void open_video(void){
 		exit(1);
 	}
 
-	screen = SDL_SetVideoMode(w, h, 0, SDL_SWSURFACE);
-	if (screen == NULL) {
-		fprintf(stderr, "Unable to set %dx%d video: %s\n",
-			w, h, SDL_GetError());
+	SDL_Window *sdlWindow;
+	SDL_Renderer *sdlRenderer;
+	SDL_CreateWindowAndRenderer(0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP, &sdlWindow, &sdlRenderer);
+
+	if (sdlWindow == NULL) {
+		fprintf(stderr, "Unable to set %dx%d video: %s\n", w, h, SDL_GetError());
 		exit(1);
 	}
 
+	SDL_SetRenderDrawColor(sdlRenderer, 0, 0, 0, 255);
+	SDL_RenderClear(sdlRenderer);
+	SDL_RenderPresent(sdlRenderer);
+
 	if (px_fmt == TH_PF_422)
-		yuv_overlay = SDL_CreateYUVOverlay(w, h,
-		SDL_YUY2_OVERLAY,
-		screen);
+	{
+		yuv_overlay = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_YUY2, SDL_TEXTUREACCESS_STREAMING, 640, 480);
+		SDL_UpdateYUVTexture();
+	}
 	else
-		yuv_overlay = SDL_CreateYUVOverlay(w, h,
-		SDL_YV12_OVERLAY,
-		screen);
+	{
+		yuv_overlay = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_YV12, SDL_TEXTUREACCESS_STREAMING, 640, 480);
+		SDL_UpdateYUVTexture();
+	}
 
 	if (yuv_overlay == NULL) {
 		fprintf(stderr, "SDL: Couldn't create SDL_yuv_overlay: %s\n",
@@ -218,7 +226,8 @@ static void open_video(void){
 	rect.w = w;
 	rect.h = h;
 
-	SDL_DisplayYUVOverlay(yuv_overlay, &rect);
+	SDL_RenderCopy(sdlRenderer, yuv_overlay, NULL, &rect);
+	SDL_RenderPresent(sdlRenderer);
 }
 
 /* dump the theora (or vorbis) comment header */
