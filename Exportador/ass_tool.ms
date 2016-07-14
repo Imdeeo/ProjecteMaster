@@ -1,8 +1,10 @@
-fileIn "navmesh.ms"
+fileIn "animated_camera.ms"
 fileIn "camera.ms"
+fileIn "character.ms"
 fileIn "cinematic.ms"
 fileIn "export.ms"
 fileIn "light.ms"
+fileIn "navmesh.ms"
 fileIn "renderable_object.ms"
 fileIn "static_mesh.ms"
 
@@ -73,6 +75,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		label CameraLabel "Nothing selected" pos:[168,32] width:232 height:24 visible:false
 		checkbox CameraExportBox "Export" pos:[168,64] width:88 height:16 visible:false
 		dropdownList CameraExportList "" pos:[268,62] width:136 height:21 visible:false enabled:false items:#("fps", "spherical", "cycle", "reverse")
+		button ExportAnimatedCamera "Animated Camera" pos:[168,104] width:224 height:32 visible:false
 		button GetCameraButton "Get" pos:[592,144] width:112 height:32 visible:false
 		button SetCameraButton "Set" pos:[592,184] width:112 height:32 visible:false
 	progressBar prog pos:[1,396] width:718 height:8 color:green
@@ -135,6 +138,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		grp4.visible = bool
 		CameraExportBox.visible = bool
 		CameraExportList.visible = bool
+		ExportAnimatedCamera.visible = bool
 		GetCameraButton.visible = bool
 		SetCameraButton.visible = bool
 	)
@@ -980,7 +984,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		createStaticMesh dir (LevelList.items[LevelList.selection]) "static_meshes.xml" coresToExport
 		if meshCheck == true then 
 		(
-			createMeshFromObjects dir meshToExport &prog &progLabel
+			createMeshFromObjects dir coresToExport &prog &progLabel
 		)
 	)
 
@@ -999,7 +1003,8 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		local l_Path=getSavePath caption:"Select game folder" initialDir:ExportPathLabel.text
 		if l_Path!=undefined then
 		(
-			ExportPathLabel.text=l_Path
+			g_Path = l_Path
+			ExportPathLabel.text = l_Path+"\\"+LevelList.items[LevelList.selection]+"\\"
 		)
 	)
 	
@@ -1028,6 +1033,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		local dir = get_Dir()
 		exportLights dir
 		exportCameras dir
+		createCharacters dir
 		exportMaterials dir (ExportTexturesCheck.checked)
 		exportStaticMesh dir false
 		exportRenderableObject dir
@@ -1042,6 +1048,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 			local dir = get_Dir()
 			exportLights dir
 			exportCameras dir
+			createCharacters dir
 			exportMaterials dir (ExportTexturesCheck.checked)
 			exportStaticMesh dir (ExportMeshCheck.checked)
 			exportRenderableObject dir
@@ -1065,11 +1072,19 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		)
     )
 	
+	on ExportAnimatedCamera pressed do
+	(
+		callbacks.removeScripts #selectionSetChanged id:#checkCam
+		callbacks.addScript #selectionSetChanged "CamAnim.checkCam $" id:#checkCam persistent:false
+		createDialog CamAnim
+	)
+	
 	on ASSTool open do
 	(
 		ExportPathLabel.text="F:\\Game\\Data"
 		local levels=#("level_1", "level_2", "level_3", "level_4", "level_5", "level_6", "level_7", "level_8")
 		LevelList.items=levels
+		g_Path = ExportPathLabel.text+"\\"+LevelList.items[LevelList.selection]+"\\"
 		swapMode $
 	)
 	
