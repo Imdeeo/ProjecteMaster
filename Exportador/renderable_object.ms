@@ -15,7 +15,8 @@ fn createInstanceMesh dir filename Objs=
 	format "\t<layer name=\"alpha_blend_objects\"/>\n" to:file
 	format "\t<layer name=\"particles\"/>\n" to:file
 	format "\t<layer name=\"triggers\"/>\n" to:file
-	format "\t<layer name=\"\"/>\n" to:file
+	format "\t<layer name=\"manchas\"/>\n" to:file
+	format "\t<layer name=\"skybox\"/>\n" to:file
 	if Objs != undefined then
 	(
 		for i=1 to Objs.count do
