@@ -1,7 +1,7 @@
 fileIn "math.ms"
 fileIn "utils.ms"
 
-fn createCinematicObjects dir filename Objs =
+fn createCinematicObjects dir filename Objs isCal3D =
 (	
 	if Objs != undefined then
 	(
@@ -67,7 +67,11 @@ fn createCinematicObjects dir filename Objs =
 					scl.x = scl.x/l_Obj.transform.scale.x
 					scl.y = scl.y/l_Obj.transform.scale.y
 					scl.z = scl.z/l_Obj.transform.scale.z
-					TranslationToRH &pos
+					if isCal3D then(
+						CustomToRH &pos
+					)else(
+						TranslationToRH &pos
+					)
 					
 					rot = tform.rotation
 					inversrot = l_Obj.transform.rotation

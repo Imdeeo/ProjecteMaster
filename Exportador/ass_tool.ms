@@ -31,6 +31,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 			checkbox RenderVisibleBox "Visible" pos:[168,96] width:88 height:16 enabled:false
 			label RenderLayerLabel "Layer" pos:[188,120] width:88 height:16 enabled:false
 			checkbox CinematicBox "Cinematic" pos:[168,144] width:88 height:16 enabled:false
+			checkbox CinematicCalBox "Cal3D" pos:[264,144] width:88 height:16 enabled:false
 			dropdownList RenderLayerList "" pos:[264,117] width:88 height:21 enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles", "skybox", "triggers")
 			checkbox AnimatedBox "Animated Model" pos:[168,168] width:96 height:16 enabled:false 
 			edittext AnimModelText "" pos:[264,166] width:88 height:24 enabled:false
@@ -90,6 +91,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		RenderLayerLabel.visible = bool
 		RenderLayerList.visible = bool
 		CinematicBox.visible = bool
+		CinematicCalBox.visible = bool
 		AnimatedBox.visible = bool
 		AnimModelText.visible = bool
 		PhysicsGroup.visible = bool
@@ -155,11 +157,18 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		RenderLayerList.enabled = bool
 		AnimatedBox.enabled = bool
 		CinematicBox.enabled = bool
+		CinematicCalBox.enabled = bool
 		if AnimatedBox.checked == bool then
 		(
 			AnimModelText.enabled = bool
 		) else (
 			AnimModelText.enabled = false
+		)
+		if CinematicBox.checked == bool then
+		(
+			CinematicCalBox.enabled = bool
+		) else (
+			CinematicCalBox.enabled = false
 		)
 	)
 	
@@ -735,6 +744,16 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 			toggleTriggers true
 	)
 	
+	on CinematicBox changed false do
+	(
+		CinematicCalBox.enabled = false
+	)
+	
+	on CinematicBox changed  true do
+	(
+		CinematicCalBox.enabled =  true
+	)
+	
 	on LightExportBox changed false do
 	(
 		toggleLights false
@@ -992,7 +1011,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 	(
 		local cinematicObjectsToExport = #()
 		checkUserProp "cinematic_object" &cinematicObjectsToExport
-		createCinematicObjects dir "cinematic.xml" cinematicObjectsToExport
+		createCinematicObjects dir "cinematic.xml" cinematicObjectsToExport CinematicCalBox.checked
 		local renderableObjectsToExport = #()
 		checkUserProp "render_export" &renderableObjectsToExport
 		createInstanceMesh dir "renderable_objects.xml" renderableObjectsToExport
