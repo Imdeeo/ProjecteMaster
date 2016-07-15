@@ -1,0 +1,17 @@
+Theora Playback Library v1.0 Release Candidate 2
+------------------------------------------------
+Homepage: http://libtheoraplayer.sourceforge.net
+
+Author: Kresimir Spes [ kreso@cateia.com ]
+
+This is the 1.0RC2 release of the Theora Playback Library.
+Several issues have been fixed. check the SVN log for details;
+
+Included are binaries compiled with MSVC++ 9 (2008), do not use
+them with other compilers (mingw, msvc++ 7,8,10...)
+If you need a version for another compiler, you can compile the
+library from SVN:
+https://libtheoraplayer.svn.sourceforge.net/svnroot/libtheoraplayer/tags/1.0RC2
+
+Any questions and feedback you may have, please post them on the Forum:
+http://sourceforge.net/apps/phpbb/libtheoraplayer/
