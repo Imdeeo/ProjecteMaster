@@ -80,7 +80,8 @@ rollout CamAnim "Camera Animation" width:160 height:134
 				cameraLookAt = at time j Cam.target.pos
 			) else (
 				mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
-				swapXZ &cameraLookAt
+				swapYZ &cameraLookAt
+				cameraLookAt.z *= -1
 				cameraLookAt += cameraTranslation
 			)
 			CustomToRH &cameraUp
