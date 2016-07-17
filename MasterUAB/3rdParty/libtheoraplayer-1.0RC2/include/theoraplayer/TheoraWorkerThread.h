@@ -6,12 +6,27 @@ Copyright (c) 2008-2014 Kresimir Spes (kspes@cateia.com)
 This program is free software; you can redistribute it and/or modify it under
 the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 *************************************************************************************/
-#ifndef _TheoraPlayer_h
-#define _TheoraPlayer_h
+#ifndef _TheoraWorkerThread_h
+#define _TheoraWorkerThread_h
 
-#include "TheoraVideoManager.h"
-#include "TheoraVideoClip.h"
-#include "TheoraVideoFrame.h"
+#include "TheoraAsync.h"
 
+class TheoraVideoClip;
+
+/**
+	This is the worker thread, requests work from TheoraVideoManager
+	and decodes assigned TheoraVideoClip objects
+*/
+class TheoraWorkerThread : public TheoraThread
+{
+	TheoraVideoClip* mClip;
+public:
+	TheoraWorkerThread();
+	~TheoraWorkerThread();
+
+	TheoraVideoClip* getAssignedClip() { return mClip; }
+
+	//! Main Thread Body - do not call directly!
+	void execute();
+};
 #endif
-
