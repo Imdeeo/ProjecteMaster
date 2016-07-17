@@ -12,8 +12,8 @@ public:
 	virtual ~CVideoManagerImplementation();
 	bool Init();
 	void Update(float _ElapsedTime);
-	//TheoraVideoManager *mgr;
-	//TheoraVideoClip *clip;
+	theoraplayer::Manager* mgr;
+	theoraplayer::VideoClip* clip;
 };
 
 #endif //H_VIDEO_MANAGER_IMPLEMENTATION_H
