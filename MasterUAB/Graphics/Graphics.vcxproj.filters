@@ -242,6 +242,9 @@
     <ClCompile Include="Cinematics\CinematicManager.cpp">
       <Filter>Cinematics</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRender\DrawVideoQuadRenderCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -568,6 +571,9 @@
     </ClInclude>
     <ClInclude Include="Cinematics\CinematicManager.h">
       <Filter>Cinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\DrawVideoQuadRenderCommand.h">
+      <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
