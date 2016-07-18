@@ -89,4 +89,7 @@
 	<pool_renderable_object_technique name="triggers_pool">
 		<renderable_object_technique name="trigger" technique="trigger_technique"/>
 	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="vortex_pool">
+        <renderable_object_technique name="vortex" technique="vortex_effect_technique"/>
+    </pool_renderable_object_technique>    
 </renderable_object_techniques>
