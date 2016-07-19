@@ -101,6 +101,10 @@ function ShowMaterialParameters(DebugHelper, UABEngine, material_name)
 			DebugHelper:add_variable(parameter.name..": z",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(2),parameter:get_description())--" group="..parameter.name.." ")
 			DebugHelper:add_variable(parameter.name..": w",CDebugHelper.float,CDebugHelper.read_write,parameter:get_value_address(3),parameter:get_description())--" group="..parameter.name.." \n Materials/"..parameter.name.." group="..material_name.." ")
 			
+		elseif(parameter:get_material_type()==CMaterialParameter.color)then
+			
+			DebugHelper:add_variable(parameter.name,CDebugHelper.color,CDebugHelper.read_write,parameter:get_value_address(0),parameter:get_description())--" group='"..material_name.."' ")
+			
 		end
 	end
 end
@@ -230,11 +234,7 @@ function RegisterLightsBar()
 	DebugHelper:add_lua_button("--------------------------------------","","")
 	DebugHelper:add_lua_button("Add New Omni","CreateNewLight(1)","")
 	DebugHelper:add_lua_button("Add New Spot","CreateNewLight(2)","")
-	DebugHelper:add_lua_button("Add New Directional","CreateNewLight(3)","")
-	DebugHelper:add_variable("FogStart",CDebugHelper.float,CDebugHelper.read_write,LightControllerManager:get_fog_start_lua_address(),"min=0.0 max=100.0 step=0.05")
-	DebugHelper:add_variable("FogEnd",CDebugHelper.float,CDebugHelper.read_write,LightControllerManager:get_fog_end_lua_address(),"min=0.0 max=100.0 step=0.05")
-	DebugHelper:add_variable("FogMax",CDebugHelper.float,CDebugHelper.read_write,LightControllerManager:get_fog_max_attenuattion_lua_address(),"min=0.0 max=1.0 step=0.05")
-	DebugHelper:add_variable("FogColor",CDebugHelper.color,CDebugHelper.read_write,LightControllerManager:get_fog_color_lua_address(),"")
+	DebugHelper:add_lua_button("Add New Directional","CreateNewLight(3)","")	
 	DebugHelper:add_lua_button("---------------------------------------","","")
 	local Lights = LightControllerManager:get_elements_array() --get_address
 	
