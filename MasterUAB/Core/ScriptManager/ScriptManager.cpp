@@ -1082,10 +1082,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_ambient_light", &CLightManager::GetAmbientLight)
 			.def("save", &CLightManager::Save)
 			.def("create_new_light", &CLightManager::CreateNewLight)
-			.def("get_fog_color_lua_address", &CLightManager::GetFogColorLuaAdress)
-			.def("get_fog_start_lua_address", &CLightManager::GetFogStartRangeAttenuattionLuaAdress)
-			.def("get_fog_end_lua_address", &CLightManager::GetFogEndRangeAttenuattionLuaAdress)
-			.def("get_fog_max_attenuattion_lua_address", &CLightManager::GetFogMaxAttenuattionLuaAdress)
 	];
 
 	module(m_LS)[
@@ -1124,11 +1120,12 @@ void CScriptManager::RegisterLUAFunctions()
 				value("float",CMaterialParameter::FLOAT),
 				value("vect2f", CMaterialParameter::VECT2F),
 				value("vect3f", CMaterialParameter::VECT3F),
-				value("vect4f", CMaterialParameter::VECT4F)
+				value("vect4f", CMaterialParameter::VECT4F),
+				value("color", CMaterialParameter::COLOR)
 			]
 			.def("apply", &CMaterialParameter::Apply)
 			.def("get_material_type", &CMaterialParameter::getMaterialType)
-			.def("get_value_address", &CMaterialParameter::GetValueLuaAddress)
+			.def("get_value_address", &CMaterialParameter::GetValueLuaAddress)			
 			.def("get_description", &CMaterialParameter::GetDescription)
 			.scope[
 				def("get_type_from_string",&CMaterialParameter::GetTypeFromString)

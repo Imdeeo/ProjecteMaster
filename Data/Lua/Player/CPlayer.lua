@@ -1,6 +1,8 @@
--- RaycastData
+--// Global Variables
+dofile("Data\\Lua\\Player\\GVars.lua")
+--// RaycastData
 dofile("Data\\Lua\\Raycast.lua")
--- STATES
+--// StateMachine
 dofile("Data\\Lua\\Utils\\state_machine.lua")
 dofile("Data\\Lua\\Player\\PlayerStateIdle.lua")
 dofile("Data\\Lua\\Player\\PlayerStateMoving.lua")
@@ -113,7 +115,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:start()
 		if(not UABEngine:get_lua_reloaded())then
 			self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
-			self.m_PhysXManager:create_character_controller(self.m_Name, 1.2, 0.3, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Player")
+			self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Player")
 			--self.m_PhysXManager:set_character_controller_height("player", 1.8)
 		end
 

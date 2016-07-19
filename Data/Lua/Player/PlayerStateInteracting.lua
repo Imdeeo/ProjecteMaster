@@ -1,4 +1,5 @@
 function InteractingFirst(args)
+utils_log("interact start")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_IsClimbing = false
@@ -32,7 +33,7 @@ function InteractingUpdate(args, _ElapsedTime)
 	--// If player has an item, move it.
 	if m_Timer >= l_Player.m_ItemTime and l_Player.m_Item ~= nil then
 		local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-		l_NewControllerPosition.y = l_NewControllerPosition.y - 0.45
+		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 		local l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_Owner:get_right_object_position())
 		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
 		l_ObjectPosition = l_ObjectPosition+l_NewControllerPosition
