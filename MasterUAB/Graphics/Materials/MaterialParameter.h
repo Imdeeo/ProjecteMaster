@@ -16,7 +16,8 @@ public:
 		FLOAT = 0,
 		VECT2F,
 		VECT3F,
-		VECT4F
+		VECT4F,
+		COLOR
 	};
 protected:
 	TMaterialType m_MaterialType;
