@@ -12,7 +12,7 @@
 		<renderable_object_technique name="lightmap_bump" technique="lightmap_bump_technique"/>
 		<renderable_object_technique name="noise_and_vignetting" technique="noise_and_vignetting"/>
 		<renderable_object_technique name="zblur" technique="zblur_technique"/>
-		<renderable_object_technique name="electric" technique="fire_particle_technique"/>
+		<renderable_object_technique name="particle" technique="particle_technique"/>
 		<renderable_object_technique name="alpha_blend" technique="texture_technique"/>		
 		<renderable_object_technique name="alpha_blend_env" technique="texture_env_technique"/>		
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
@@ -39,14 +39,13 @@
 		<renderable_object_technique name="bump" technique="generate_shadowmap_bump_technique"/>
 		<renderable_object_technique name="bump_env" technique="generate_shadowmap_bump_technique"/>
 		<renderable_object_technique name="animated" technique="generate_shadowmap_animated_technique"/>
-	</pool_renderable_object_technique>	
-	<pool_renderable_object_technique name="deferred_shading">
-		<renderable_object_technique name="fog" technique="fog_technique"/>
-	</pool_renderable_object_technique>	
+	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="deferred_shading_lighting">
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="deff_technique"/>	
-		<renderable_object_technique name="fog" technique="fog_technique"/>
 	</pool_renderable_object_technique>	
+	<pool_renderable_object_technique name="fog_pool">
+		<renderable_object_technique name="fog" technique="fog_technique"/>
+	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="zblur_pool">
 		<renderable_object_technique name="zblur" technique="zblur_technique"/>
 	</pool_renderable_object_technique>	
@@ -81,7 +80,7 @@
 		<renderable_object_technique name="skybox" technique="skybox_technique"/>
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="particles_pool">
-		<renderable_object_technique name="fire" technique="fire_particle_technique"/>
+		<renderable_object_technique name="particle" technique="particle_technique"/>
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="manchas_pool">
 		<renderable_object_technique name="manchas" technique="manchas_technique"/>
@@ -89,7 +88,4 @@
 	<pool_renderable_object_technique name="triggers_pool">
 		<renderable_object_technique name="trigger" technique="trigger_technique"/>
 	</pool_renderable_object_technique>
-	<pool_renderable_object_technique name="vortex_pool">
-        <renderable_object_technique name="vortex" technique="vortex_effect_technique"/>
-    </pool_renderable_object_technique>    
 </renderable_object_techniques>

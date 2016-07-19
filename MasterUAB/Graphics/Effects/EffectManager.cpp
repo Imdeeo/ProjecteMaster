@@ -180,9 +180,6 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 	{
 		CEffectManager::m_LightParameters.m_UseShadowMap[IdLight] = 0.0f;
 	}
-	CLightManager * l_LightManager = UABEngine.GetLightManager();
-	CEffectManager::m_LightParameters.m_FogColor = Vect4f(l_LightManager->GetFogColor());
-	CEffectManager::m_LightParameters.m_MaxAttenuation_StartLinearFog_EndLinearFog = Vect4f(l_LightManager->GetFogMaxAttenuation(), l_LightManager->GetFogStart(), l_LightManager->GetFogEnd(), 0);
 }
 
 void CEffectManager::SetLightsConstants(unsigned int MaxLights)
@@ -204,13 +201,7 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 			SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
 		}
 	}
-	CEffectManager::m_LightParameters.m_FogColor = UABEngine.GetLightManager()->GetFogColor();
-	float maxAttenuation =
-		UABEngine.GetLightManager()->GetFogEnabled() ? UABEngine.GetLightManager()->GetFogMaxAttenuation() : 0.f;
-	CEffectManager::m_LightParameters.m_MaxAttenuation_StartLinearFog_EndLinearFog = 
-		Vect4f(maxAttenuation, UABEngine.GetLightManager()->GetFogStart(),
-		UABEngine.GetLightManager()->GetFogEnd(),1.0f);
-
+	
 	std::map<std::string, CEffectTechnique*>::iterator it;
 	std::map<std::string, CEffectTechnique*>::iterator end =GetResourcesMap().end();
 	for (it = GetResourcesMap().begin(); it != end; it++)
