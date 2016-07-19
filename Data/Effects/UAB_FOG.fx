@@ -121,7 +121,7 @@ float4 GetFogColor(float Depth, float3 Pos)
 float4 mainPS(TVertexPS IN) : SV_Target
 {
 	if(m_Active==0.0)
-		return float4(1,0,0,1);
+		return float4(0,0,0,0);
 	else
 	{
 		float3 l_worldPos = GetPositionFromZDepthView((T0Texture.Sample(S0Sampler,IN.UV).r),IN.UV, m_InverseView, m_InverseProjection);	
