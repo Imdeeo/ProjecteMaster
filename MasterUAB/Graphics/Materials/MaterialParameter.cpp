@@ -1,6 +1,7 @@
 #include "MaterialParameter.h"
 
 #include "Math\Vector4.h"
+#include "Math\Color.h"
 
 CMaterialParameter::TMaterialType CMaterialParameter::GetTypeFromString(std::string _SType)
 {
@@ -20,6 +21,11 @@ CMaterialParameter::TMaterialType CMaterialParameter::GetTypeFromString(std::str
 	{
 		return FLOAT;
 	}
+	if (_SType == "color")
+	{
+		return COLOR;
+	}
+
 	return FLOAT;
 }
 
@@ -41,6 +47,11 @@ std::string CMaterialParameter::GetStringFromType(CMaterialParameter::TMaterialT
 	{
 		return "float";
 	}
+	if (_Type == COLOR)
+	{
+		return "color";
+	}
+
 	return "float";
 }
 
@@ -80,6 +91,15 @@ void CMaterialParameter::Save(FILE* _File, size_t _NTabs)
 	{
 		fprintf_s(_File, "<parameter type=\"float\" name=\"%s\" value=\"%f\" description=\"%s\"/>\n", m_Name.c_str()
 			, *((float*)GetValueAddress())
+			, GetDescription());
+	}
+	if (m_MaterialType == COLOR)
+	{
+		fprintf_s(_File, "<parameter type=\"color\" name=\"%s\" value=\"%f %f %f %f\" description=\"%s\"/>\n", m_Name.c_str()
+			, ((CColor*)GetValueAddress())->x
+			, ((CColor*)GetValueAddress())->y
+			, ((CColor*)GetValueAddress())->z
+			, ((CColor*)GetValueAddress())->w
 			, GetDescription());
 	}
 }
