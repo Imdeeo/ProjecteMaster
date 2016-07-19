@@ -1,76 +1,98 @@
+fileIn "animated_camera.ms"
+fileIn "camera.ms"
+fileIn "character.ms"
+fileIn "cinematic.ms"
+fileIn "export.ms"
+fileIn "light.ms"
+fileIn "navmesh.ms"
+fileIn "renderable_object.ms"
+fileIn "static_mesh.ms"
+
 Obj = undefined
 callbacks.removeScripts #selectionSetChanged id:#swapMode
-callbacks.addScript #selectionSetChanged "UABSetProperties.swapMode $" id:#swapMode persistent:false
-	
-rollout UABSetProperties "UABSetProperties" width:280 height:494
+callbacks.addScript #selectionSetChanged "ASSTool.swapMode $" id:#swapMode persistent:false
+
+rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 (
-	GroupBox grp1 "Geometry" pos:[8,8] width:265 height:428
-		label GeometryLabel "Nothing selected" pos:[24,32] width:232 height:24
-		GroupBox RenderGroup "Render" pos:[16,56] width:248 height:120
-			checkbox RenderExportBox "Export" pos:[24,72] width:88 height:16
-			dropdownList RenderExportList "" pos:[120,72] width:136 height:21 enabled:false items:#("instance_mesh", "animated_instance_mesh")
-			checkbox RenderVisibleBox "Visible" pos:[24,96] width:88 height:16 enabled:false
-			label RenderLayerLabel "Layer" pos:[24,120] width:88 height:16 enabled:false
-			checkbox CinematicBox "Cinematic" pos:[24,144] width:88 height:16 enabled:false 
-			dropdownList RenderLayerList "" pos:[120,112] width:136 height:21 enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles", "skybox", "triggers")
-			edittext AnimModelText "AnimModelLabel" pos:[120,144] width:136 height:24 enabled:false
-		GroupBox PhysicsGroup "Physics" pos:[16,176] width:248 height:204
-			checkbox PhysicsGenerateBox "Generate" pos:[24,200] width:88 height:16
-			dropdownList PhysicsGenerateList "" pos:[120,200] width:136 height:21 enabled:false items:#("triangle_mesh", "convex_shape", "box_shape", "sphere_shape", "plane_shape", "capsule_shape")
-			label PhysicsGroupLabel "Group" pos:[24,224] width:88 height:16 enabled:false
-			dropdownList PhysicsLayerList "" pos:[120,224] width:136 height:21 enabled:false items:#("plane", "objects", "triggers", "player")
-			edittext PhysicsMaterialText "Material" pos:[24,248] width:230 height:24 enabled:false
-			GroupBox TriggerGroup "Trigger" pos:[24,278] width:232 height:44 enabled:false 
-				edittext PhysicsTriggerEnter "Enter" pos:[32,294] width:72 height:24 enabled:false 
-				edittext PhysicsTriggerExit "Exit" pos:[108,294] width:66 height:24 enabled:false 
-				edittext PhysicsTriggerStay "Stay" pos:[178,294] width:72 height:24 enabled:false 
-			GroupBox PlaneGroup "Plane" pos:[24,328] width:232 height:44 enabled:false
-				spinner PlaneOffset "Off:" pos:[46,350] width:48 range:[-1000,1000,0] type:#float scale:0.01 enabled:false
-				label PlaneNormal "Nm" pos:[100,350] width:20 height:16 enabled:false 
-				spinner PlaneX pos:[120,350] width:42 range:[-1000,1000,0] type:#float scale:0.01 enabled:false
-				spinner PlaneY pos:[165,350] width:42 range:[-1000,1000,0] type:#float scale:0.01 enabled:false
-				spinner PlaneZ pos:[210,350] width:42 range:[-1000,1000,0] type:#float scale:0.01 enabled:false
-				label LabelX "x" pos:[135,336] width:8 height:12 enabled:false
-				label LabelY "y" pos:[180,336] width:8 height:12 enabled:false
-				label LabelZ "z" pos:[225,336] width:8 height:12 enabled:false
-		GroupBox LogicGroup "Logic" pos:[16,380] width:248 height:48
-			checkbox LogicGenerateBox "Generate" pos:[24,404] width:88 height:16
-			dropdownList LogicGenerateList "" pos:[120,404] width:136 height:21 items:#("stairs")
-		button GetButton "Get" pos:[24,448] width:112 height:32
-		button SetButton "Set" pos:[144,448] width:112 height:32
-	GroupBox grp2 "Lights" pos:[8,8] width:265 height:208 visible:false
-		GroupBox LightGroup "Light" pos:[16,24] width:248 height:100
-			label LightLabel "Nothing selected" pos:[24,42] width:232 height:24 visible:false
-			checkbox LightExportBox "Export" pos:[24,68] width:88 height:16 visible:false
-			checkbox LightEnabledBox "Enabled" pos:[24,88] width:88 height:16 visible:false enabled:false
-		GroupBox ShadowmapGroup "Shadowmap" pos:[16,126] width:248 height:80
-			checkbox ShadowmapExportBox "Export" pos:[24,144] width:88 height:16 visible:false
-			dropdownList ShadowmapLayerList "" pos:[120,144] width:136 height:21 visible:false enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles")
-			label ShadowmapWHLabel "Width and height" pos:[24,171] width:88 height:16
-			edittext ShadowmapWText pos:[117,169] width:40 height:20 visible:false enabled:false text: "1024"
-			edittext ShadowmapHText pos:[157,169] width:40 height:20 visible:false enabled:false text: "1024"
-		button GetLightButton "Get" pos:[24,224] width:112 height:32 visible:false
-		button SetLightButton "Set" pos:[144,224] width:112 height:32 visible:false
-	GroupBox grp3 "Inactive" pos:[8,8] width:265 height:61 visible:false
-		label UnsupportedLabel "Current selection is not supported." pos:[24,32] width:232 height:24 visible:false
-	GroupBox grp4 "Cameras" pos:[8,8] width:265 height:88 visible:false
-		label CameraLabel "Nothing selected" pos:[24,32] width:232 height:24 visible:false
-		checkbox CameraExportBox "Export" pos:[24,64] width:88 height:16 visible:false
-		dropdownList CameraExportList "" pos:[120,62] width:136 height:21 enabled:false items:#("fps", "spherical", "cycle", "reverse")
-		button GetCameraButton "Get" pos:[24,104] width:112 height:32 visible:false
-		button SetCameraButton "Set" pos:[144,104] width:112 height:32 visible:false
+	GroupBox div "" pos:[139,0] width:4 height:380 visible:true
+		button ExportPathButton "Export Path" pos:[14,24] width:112 height:32 visible:true
+		label ExportPathLabel "C:/export_path_example/ psyduck" pos:[14,64] width:112 height:24 visible:true
+		dropDownList LevelList "" pos:[14,94] width:112 height:21
+		button ExportNavButton "Navmesh" pos:[14,124] width:112 height:32 visible:true
+		button ExportXMLButton "XML" pos:[14,164] width:112 height:32 visible:true
+		button ExportMeshButton "Mesh" pos:[14,204] width:112 height:32 visible:true
+		checkbox ExportMeshCheck "Meshes" pos:[10,286] width:56 height:16
+		checkbox ExportTexturesCheck "Textures" pos:[70,286] width:64 height:16
+		button ExportSceneButton "Scene" pos:[14,304] width:112 height:32 visible:true
+		label SelectionLabel "Nothing selected" pos:[160,32] width:416 height:24
+	GroupBox grp1 "Geometry" pos:[152,8] width:432 height:358
+		GroupBox RenderGroup "Render" pos:[160,56] width:204 height:142
+			checkbox RenderExportBox "Export" pos:[168,72] width:88 height:16
+			checkbox RenderVisibleBox "Visible" pos:[168,96] width:88 height:16 enabled:false
+			label RenderLayerLabel "Layer" pos:[188,120] width:88 height:16 enabled:false
+			checkbox CinematicBox "Cinematic" pos:[168,144] width:88 height:16 enabled:false
+			checkbox CinematicCalBox "Cal3D" pos:[264,144] width:88 height:16 enabled:false
+			dropdownList RenderLayerList "" pos:[264,117] width:88 height:21 enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles", "skybox", "triggers")
+			checkbox AnimatedBox "Animated Model" pos:[168,168] width:96 height:16 enabled:false 
+			edittext AnimModelText "" pos:[264,166] width:88 height:24 enabled:false
+		GroupBox PhysicsGroup "Physics" pos:[372,56] width:204 height:304
+			checkbox PhysicsGenerateBox "Generate" pos:[380,80] width:80 height:16
+			dropdownList PhysicsGenerateList "" pos:[464,78] width:98 height:21 enabled:false items:#("triangle_mesh", "convex_shape", "box_shape", "sphere_shape", "plane_shape", "capsule_shape")
+			label PhysicsGroupLabel "Group" pos:[380,104] width:88 height:16 enabled:false
+			dropdownList PhysicsLayerList "" pos:[464,102] width:98 height:21 enabled:false items:#("plane", "objects", "triggers", "player")
+			edittext PhysicsMaterialText "Material" pos:[380,128] width:180 height:24 enabled:false
+			GroupBox TriggerGroup "Trigger" pos:[380,160] width:188 height:108 enabled:false 
+				edittext PhysicsTriggerEnter "Enter" pos:[388,180] width:172 height:24 enabled:false 
+				edittext PhysicsTriggerExit "Exit  " pos:[388,208] width:172 height:24 enabled:false 
+				edittext PhysicsTriggerStay "Stay " pos:[388,236] width:172 height:24 enabled:false 
+			GroupBox PlaneGroup "Plane" pos:[380,276] width:188 height:76 enabled:false
+				spinner PlaneOffset "Offset:" pos:[418,294] width:64 range:[-1000,1000,0] type:#float scale:0.01 enabled:false
+				label PlaneNormal "Normal:" pos:[388,326] width:36 height:16 enabled:false 
+				spinner PlaneX pos:[430,326] width:42 range:[-1000,1000,0] type:#float scale:0.01 enabled:false
+				spinner PlaneY pos:[475,326] width:42 range:[-1000,1000,0] type:#float scale:0.01 enabled:false
+				spinner PlaneZ pos:[520,326] width:42 range:[-1000,1000,0] type:#float scale:0.01 enabled:false
+				label LabelX "x" pos:[445,310] width:8 height:12 enabled:false
+				label LabelY "y" pos:[488,310] width:8 height:12 enabled:false
+				label LabelZ "z" pos:[535,310] width:8 height:12 enabled:false
+		GroupBox LogicGroup "Logic" pos:[160,206] width:204 height:48
+			checkbox LogicGenerateBox "Generate" pos:[168,230] width:88 height:16
+			dropdownList LogicGenerateList "" pos:[264,228] width:88 height:21 items:#("stairs")
+		button GetButton "Get" pos:[592,144] width:112 height:32
+		button SetButton "Set" pos:[592,184] width:112 height:32
+	GroupBox grp2 "Lights" pos:[152,8] width:432 height:358 visible:false
+			label LightLabel "Nothing selected" pos:[168,42] width:232 height:24 visible:false
+			checkbox LightExportBox "Export" pos:[168,80] width:88 height:16 visible:false
+			checkbox LightEnabledBox "Enabled" pos:[168,100] width:88 height:16 visible:false enabled:false
+		GroupBox ShadowmapGroup "Shadowmap" pos:[280,60] width:248 height:80 visible:false
+			checkbox ShadowmapExportBox "Export" pos:[288,82] width:88 height:16 visible:false
+			dropdownList ShadowmapLayerList "" pos:[384,82] width:136 height:21 visible:false enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles")
+			label ShadowmapWHLabel "Width and height" pos:[288,109] width:88 height:16 visible:false
+			edittext ShadowmapWText pos:[381,107] width:40 height:20 visible:false enabled:false text: "1024"
+			edittext ShadowmapHText pos:[421,107] width:40 height:20 visible:false enabled:false text: "1024"
+		button GetLightButton "Get" pos:[592,144] width:112 height:32 visible:false
+		button SetLightButton "Set" pos:[592,184] width:112 height:32 visible:false
+	GroupBox grp3 "Inactive" pos:[152,8] width:432 height:358 visible:false
+	GroupBox grp4 "Cameras" pos:[152,8] width:432 height:358 visible:false
+		label CameraLabel "Nothing selected" pos:[168,32] width:232 height:24 visible:false
+		checkbox CameraExportBox "Export" pos:[168,64] width:88 height:16 visible:false
+		dropdownList CameraExportList "" pos:[268,62] width:136 height:21 visible:false enabled:false items:#("fps", "spherical", "cycle", "reverse")
+		button ExportAnimatedCamera "Animated Camera" pos:[168,104] width:224 height:32 visible:false
+		button GetCameraButton "Get" pos:[592,144] width:112 height:32 visible:false
+		button SetCameraButton "Set" pos:[592,184] width:112 height:32 visible:false
+	progressBar prog pos:[1,396] width:718 height:8 color:green
+	label progLabel "Progress bar" pos:[8,380] width:680 height:16
 	
 	fn toggleGeometryGroup bool =
 	(
 		grp1.visible = bool
-		GeometryLabel.visible = bool
 		RenderGroup.visible = bool
 		RenderExportBox.visible = bool
-		RenderExportList.visible = bool
 		RenderVisibleBox.visible = bool
 		RenderLayerLabel.visible = bool
 		RenderLayerList.visible = bool
 		CinematicBox.visible = bool
+		CinematicCalBox.visible = bool
+		AnimatedBox.visible = bool
 		AnimModelText.visible = bool
 		PhysicsGroup.visible = bool
 		PhysicsGenerateBox.visible = bool
@@ -101,8 +123,6 @@ rollout UABSetProperties "UABSetProperties" width:280 height:494
 	fn toggleLightsGroup bool =
 	(
 		grp2.visible = bool
-		LightGroup.visible = bool
-		LightLabel.visible = bool
 		LightExportBox.visible = bool
 		LightEnabledBox.visible = bool
 		ShadowmapGroup.visible = bool
@@ -118,9 +138,9 @@ rollout UABSetProperties "UABSetProperties" width:280 height:494
 	fn toggleCamerasGroup bool =
 	(
 		grp4.visible = bool
-		CameraLabel.visible = bool
 		CameraExportBox.visible = bool
 		CameraExportList.visible = bool
+		ExportAnimatedCamera.visible = bool
 		GetCameraButton.visible = bool
 		SetCameraButton.visible = bool
 	)
@@ -128,17 +148,28 @@ rollout UABSetProperties "UABSetProperties" width:280 height:494
 	fn toggleUnsupportedGroup bool =
 	(
 		grp3.visible = bool
-		UnsupportedLabel.visible = bool
 	)
 	
 	fn toggleRender bool =
 	(
-		RenderExportList.enabled = bool
 		RenderVisibleBox.enabled = bool
 		RenderLayerLabel.enabled = bool
 		RenderLayerList.enabled = bool
-		AnimModelText.enabled = bool
+		AnimatedBox.enabled = bool
 		CinematicBox.enabled = bool
+		CinematicCalBox.enabled = bool
+		if AnimatedBox.checked == bool then
+		(
+			AnimModelText.enabled = bool
+		) else (
+			AnimModelText.enabled = false
+		)
+		if CinematicBox.checked == bool then
+		(
+			CinematicCalBox.enabled = bool
+		) else (
+			CinematicCalBox.enabled = false
+		)
 	)
 	
 	fn togglePhysics bool =
@@ -194,12 +225,11 @@ rollout UABSetProperties "UABSetProperties" width:280 height:494
 		toggleGeometryGroup false
 		toggleUnsupportedGroup true
 		toggleCamerasGroup false
-		UABSetProperties.height = 80
 		if (Obj == undefined) then
 		(
-			UnsupportedLabel.text = "Nothing selected."
+			SelectionLabel.text = "Nothing selected."
 		) else (
-			UnsupportedLabel.text = ""+(ClassOf Obj) as string+" is not a supported selection."
+			SelectionLabel.text = ""+(ClassOf Obj) as string+" is not a supported selection."
 		)
 	)
 	
@@ -234,8 +264,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:494
 			toggleGeometryGroup false
 			toggleUnsupportedGroup false
 			toggleCamerasGroup false
-			LightLabel.text = textLabel
-			UABSetProperties.height = 268
+			SelectionLabel.text = textLabel
 		) else (
 			loadUnsupportedSelection Objs
 		)
@@ -268,8 +297,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:494
 			toggleGeometryGroup true
 			toggleUnsupportedGroup false
 			toggleCamerasGroup false
-			GeometryLabel.text = textLabel
-			UABSetProperties.height = 494
+			SelectionLabel.text = textLabel
 		)
 		else
 		(
@@ -292,8 +320,7 @@ rollout UABSetProperties "UABSetProperties" width:280 height:494
 		toggleGeometryGroup false
 		toggleUnsupportedGroup false
 		toggleCamerasGroup true
-		CameraLabel.text = textLabel
-		UABSetProperties.height = 150
+		SelectionLabel.text = textLabel
 	)
 	
 	fn loadSetMode Objs =
@@ -390,8 +417,8 @@ rollout UABSetProperties "UABSetProperties" width:280 height:494
 				
 				case getUserProp Objs[1] "render_export_type" of
 					(
-						"instance_mesh": RenderExportList.selection = 1
-						"animated_instance_mesh": RenderExportList.selection = 2
+						"instance_mesh": AnimatedBox.checked = false
+						"animated_instance_mesh": AnimatedBox.checked = true
 					)
 				
 				RenderVisibleBox.checked = getUserProp Objs[1] "render_visible"
@@ -518,11 +545,12 @@ rollout UABSetProperties "UABSetProperties" width:280 height:494
 				(
 					setUserProp Objs[i] "render_export" true
 					
-					case RenderExportList.items[RenderExportList.selection] of
+					if AnimatedBox.checked then
 					(
-						"instance_mesh": setUserProp Objs[i] "render_export_type" "instance_mesh"
-						"animated_instance_mesh": setUserProp Objs[i] "render_export_type" "animated_instance_mesh"
-					)	
+						setUserProp Objs[i] "render_export_type" "animated_instance_mesh"
+					) else (
+						setUserProp Objs[i] "render_export_type" "instance_mesh"
+					)
 				
 					if RenderVisibleBox.checked then
 					(
@@ -716,6 +744,16 @@ rollout UABSetProperties "UABSetProperties" width:280 height:494
 			toggleTriggers true
 	)
 	
+	on CinematicBox changed false do
+	(
+		CinematicCalBox.enabled = false
+	)
+	
+	on CinematicBox changed  true do
+	(
+		CinematicCalBox.enabled =  true
+	)
+	
 	on LightExportBox changed false do
 	(
 		toggleLights false
@@ -744,6 +782,16 @@ rollout UABSetProperties "UABSetProperties" width:280 height:494
 	on CameraExportBox changed  true do
 	(
 		toggleCameras  true
+	)
+	
+	on AnimatedBox changed true do
+	(
+		AnimModelText.enabled = true
+	)
+	
+	on AnimatedBox changed false do
+	(
+		AnimModelText.enabled = false
 	)
 	
 	on GetButton pressed do
@@ -873,14 +921,195 @@ rollout UABSetProperties "UABSetProperties" width:280 height:494
 			togglePlane false
 	)
 	
-	on UABSetProperties open do
+	-- Export panel
+	
+	fn get_Dir =
 	(
+		local dir = ""+ExportPathLabel.text+"\\" 
+		dirExist dir
+		dir += LevelList.items[LevelList.selection] + "\\"
+		dirExist dir
+		dir
+	)
+	
+	fn exportLights dir =
+	(
+		local lightsToExport = #()
+		checkUserProp "light_export" &lightsToExport
+		createLights dir "lights.xml" lightsToExport
+	)
+
+	fn exportCameras dir =
+	(
+		local camerasToExport = #()
+		checkUserProp "camera_export" &camerasToExport
+		createCameras dir camerasToExport
+	)
+
+	fn exportMesh dir Obj =
+	(
+		local Objs = #()
+		
+		if ClassOf Obj != ObjectSet then
+		(
+			if (SuperClassOf  Obj) == GeometryClass then
+			(
+				append Objs Obj
+				createMeshFromObjects dir Objs &prog &progLabel
+			)
+			else
+			(
+				messageBox "You must select a geometry!" title:"ERROR"
+			)
+		)
+		else
+		(
+			local nonGeometry = false
+			for i=1 to Obj.count do
+			(
+				if SuperClassOf Obj[i]  == GeometryClass then
+				(
+					append Objs Obj[i]
+				)
+				else
+				(
+					nonGeometry = true
+				)
+			)
+			if nonGeometry == false then
+			(
+				createMeshFromObjects dir Objs
+			)
+			else
+			(
+				messageBox "You have selected one or more non-geometry objects!" title:"ERROR"
+			)
+		)
+	)
+
+	fn exportMaterials dir textureCheck =
+	(
+		local materialsToExport = #()
+		checkUserProp "render_export" &materialsToExport
+		createMaterials dir "materials.xml" materialsToExport textureCheck
+	)
+
+	fn exportStaticMesh dir meshCheck =
+	(
+		local meshToExport = #()
+		checkUserProp "render_export" &meshToExport
+		local coresToExport = #()
+		getCores meshToExport &coresToExport
+		createStaticMesh dir (LevelList.items[LevelList.selection]) "static_meshes.xml" coresToExport
+		if meshCheck == true then 
+		(
+			createMeshFromObjects dir coresToExport &prog &progLabel
+		)
+	)
+
+	fn exportRenderableObject dir =
+	(
+		local cinematicObjectsToExport = #()
+		checkUserProp "cinematic_object" &cinematicObjectsToExport
+		createCinematicObjects dir "cinematic.xml" cinematicObjectsToExport CinematicCalBox.checked
+		local renderableObjectsToExport = #()
+		checkUserProp "render_export" &renderableObjectsToExport
+		createInstanceMesh dir "renderable_objects.xml" renderableObjectsToExport
+	)
+	
+	on ExportPathButton pressed do
+	(
+		local l_Path=getSavePath caption:"Select game folder" initialDir:ExportPathLabel.text
+		if l_Path!=undefined then
+		(
+			g_Path = l_Path
+			ExportPathLabel.text = l_Path+"\\"+LevelList.items[LevelList.selection]+"\\"
+		)
+	)
+	
+	on ExportMeshButton pressed do
+    (
+		if $ == undefined then
+		(
+			messageBox "You must select a scene object" title:"ERROR"
+		)
+		else
+		(
+			undo off(
+				local theWatch = PerformanceTester()
+				theWatch.start()
+				exportMesh (get_Dir()) $
+				prog.value = 0
+				progLabel.text = "Done!"
+				theWatch.stop()
+				theWatch.report()
+			)
+		)
+    )
+	
+	on ExportXMLButton pressed do
+	(
+		local dir = get_Dir()
+		exportLights dir
+		exportCameras dir
+		createCharacters dir
+		exportMaterials dir (ExportTexturesCheck.checked)
+		exportStaticMesh dir false
+		exportRenderableObject dir
+	)
+	
+	on ExportSceneButton pressed do
+	(
+		--checkForSave() 
+		undo off(
+			local theWatch = PerformanceTester()
+			theWatch.start()
+			local dir = get_Dir()
+			exportLights dir
+			exportCameras dir
+			createCharacters dir
+			exportMaterials dir (ExportTexturesCheck.checked)
+			exportStaticMesh dir (ExportMeshCheck.checked)
+			exportRenderableObject dir
+			prog.value = 0
+			progLabel.text = "Done!"
+			theWatch.stop()
+			theWatch.report()
+		)
+		--resetMaxFile()
+	)
+	
+	on ExportNavButton pressed do
+    (
+		if $ == undefined then
+		(
+			messageBox "You must select your NavigationMesh" title:"ERROR"
+		)
+		else
+		(
+			exportNavMesh (get_Dir()) $
+		)
+    )
+	
+	on ExportAnimatedCamera pressed do
+	(
+		callbacks.removeScripts #selectionSetChanged id:#checkCam
+		callbacks.addScript #selectionSetChanged "CamAnim.checkCam $" id:#checkCam persistent:false
+		createDialog CamAnim
+	)
+	
+	on ASSTool open do
+	(
+		ExportPathLabel.text="F:\\Game\\Data"
+		local levels=#("level_1", "level_2", "level_3", "level_4", "level_5", "level_6", "level_7", "level_8")
+		LevelList.items=levels
+		g_Path = ExportPathLabel.text+"\\"+LevelList.items[LevelList.selection]+"\\"
 		swapMode $
 	)
 	
-	on UABSetProperties close do
+	on ASSTool close do
 	(
 		callbacks.removeScripts #selectionSetChanged id:#swapMode
 	)
 )
-createDialog UABSetProperties
+createDialog ASSTool

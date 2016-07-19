@@ -21,11 +21,7 @@ bool CLightManager::Load(const std::string &FileName){
 		if (l_Input.Exists())
 		{
 			m_AmbientLight = l_Input.GetVect4fProperty("ambient_light_color", Vect4f(0.1f, 0.1f, 0.1f, 1.0f));
-			m_FogColor = l_Input.GetVect4fProperty("fog_color", Vect4f(1.0f, 0.0f, 1.0f, 1.0));
-			m_FogMaxAttenuation = l_Input.GetFloatProperty("fog_max_attenuation");
-			m_FogStart = l_Input.GetFloatProperty("fog_start");
-			m_FogEnd = l_Input.GetFloatProperty("fog_end");
-			m_FogEnabled= l_Input.GetBoolProperty("fog_enabled");
+
 			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
 			{				
 				CXMLTreeNode l_Element = l_Input(i);
@@ -100,8 +96,8 @@ void CLightManager::Save()
 	if (!fopen_s(&l_File, m_FileName.c_str(), "w"))
 	{
 		fprintf_s(l_File, "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
-		fprintf_s(l_File, "<lights ambient_light_color=\"%f %f %f %f\" fog_color=\"%f %f %f\" fog_max_attenuation=\"%f\" fog_start=\"%f\" fog_end=\"%f\" fog_enabled=\"%s\">\n",
-			m_AmbientLight.x, m_AmbientLight.y, m_AmbientLight.z, m_AmbientLight.w, m_FogColor.x, m_FogColor.y, m_FogColor.z, m_FogMaxAttenuation, m_FogStart, m_FogEnd, m_FogEnabled ? "true" : "false");
+		fprintf_s(l_File, "<lights ambient_light_color=\"%f %f %f %f\">\n", 
+			m_AmbientLight.x, m_AmbientLight.y, m_AmbientLight.z, m_AmbientLight.w);
 
 		typedef TMapResources::iterator it_type;		
 		for (it_type iterator = m_ResourcesMap.begin(); iterator != m_ResourcesMap.end(); iterator++)

@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<effects>
-	<vertex_shader name="vortex_effect_vs" file="Data/Effects/UAB_VORTEX_EFFECT.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
-	 <pixel_shader name="vortex_effect_ps" file="Data/Effects/UAB_VORTEX_EFFECT.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
-	 <effect_technique name="vortex_effect_technique" vertex_shader="vortex_effect_vs" pixel_shader="vortex_effect_ps"/>
-	 
+<effects>	
 	<!--GEOMETRY SHADER-->
+	<vertex_shader name="particle_vs" file="./Data/Effects/UAB_GEOMETRY_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX" preprocessor=""/>
+	<geometry_shader name="particle_gs" file="./Data/Effects/UAB_GEOMETRY_SHADER.fx" shader_model="gs_4_0" entry_point="mainGS" preprocessor=""/>
+	<pixel_shader name="particle_ps" file="./Data/Effects/UAB_GEOMETRY_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
+	<effect_technique name="particle_technique" vertex_shader="particle_vs" geometry_shader="particle_gs" pixel_shader="particle_ps"/>
+	
+	<!--MANCHAS SHADER-->
 	<vertex_shader name="manchas_particle_vs" file="./Data/Effects/UAB_MANCHAS_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<geometry_shader name="manchas_particle_gs" file="./Data/Effects/UAB_MANCHAS_SHADER.fx" shader_model="gs_4_0" entry_point="mainGS" preprocessor=""/>
 	<pixel_shader name="manchas_particle_ps" file="./Data/Effects/UAB_MANCHAS_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
-	<effect_technique name="manchas_technique" vertex_shader="manchas_particle_vs" geometry_shader="manchas_particle_gs" pixel_shader="manchas_particle_ps"/>
-	
-	<!--MANCHAS SHADER-->
-	<vertex_shader name="fire_particle_vs" file="./Data/Effects/UAB_GEOMETRY_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX" preprocessor=""/>
-	<geometry_shader name="fire_particle_gs" file="./Data/Effects/UAB_GEOMETRY_SHADER.fx" shader_model="gs_4_0" entry_point="mainGS" preprocessor=""/>
-	<pixel_shader name="fire_particle_ps" file="./Data/Effects/UAB_GEOMETRY_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
-	<effect_technique name="fire_particle_technique" vertex_shader="fire_particle_vs" geometry_shader="fire_particle_gs" pixel_shader="fire_particle_ps"/>
+	<effect_technique name="manchas_technique" vertex_shader="manchas_particle_vs" geometry_shader="manchas_particle_gs" pixel_shader="manchas_particle_ps"/>	
 	
 	<!--ANIMATED MODELS-->
 	<vertex_shader name="animated_model_def_render_vs" file="./Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_WEIGHT_INDICES;HAS_NORMAL;HAS_UV;HAS_LIGHTS"/>
@@ -32,6 +28,10 @@
 	<vertex_shader name="animated_model_bump_render_vs" file="./Data/Effects/UAB_UBER_FORWARD_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_WEIGHT_INDICES;HAS_NORMAL;HAS_UV;HAS_TANGENT;HAS_LIGHTS"/>
 	<pixel_shader name="animated_model_bump_render_ps" file="./Data/Effects/UAB_UBER_FORWARD_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_WEIGHT_INDICES;HAS_NORMAL;HAS_UV;HAS_TANGENT;HAS_LIGHTS"/>
 	<effect_technique name="animated_bump_technique" vertex_shader="animated_model_bump_render_vs" pixel_shader="animated_model_bump_render_ps"/>
+	
+	<vertex_shader name="animated_glow_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_WEIGHT_INDICES;HAS_NORMAL;HAS_UV;HAS_TANGENT;HAS_GLOW;HAS_LIGHTS"/>
+	<pixel_shader name="animated_glow_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_WEIGHT_INDICES;HAS_NORMAL;HAS_UV;HAS_TANGENT;HAS_GLOW;HAS_LIGHTS"/>
+	<effect_technique name="animated_glow_deferred_technique" vertex_shader="animated_glow_vs" pixel_shader="animated_glow_ps"/>
 	
 	<!--EFECTOS -->
 	<vertex_shader name="color_grading_vs" file="Data/Effects/UAB_COLOR_GRADING.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
@@ -93,6 +93,10 @@
 	<vertex_shader name="flare_combine_vs" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_COMBINE"/>
 	<pixel_shader name="flare_combine_ps" file="Data/Effects/UAB_LENS_FLARE.fx" shader_model="ps_4_0" entry_point="PSCombine" preprocessor="HAS_COMBINE"/>
 	<effect_technique name="flare_combine_technique" vertex_shader="flare_combine_vs" pixel_shader="flare_combine_ps"/>
+	
+    <vertex_shader name="vortex_effect_vs" file="Data/Effects/UAB_VORTEX_EFFECT.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+    <pixel_shader name="vortex_effect_ps" file="Data/Effects/UAB_VORTEX_EFFECT.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
+    <effect_technique name="vortex_effect_technique" vertex_shader="vortex_effect_vs" pixel_shader="vortex_effect_ps"/>
 				
 	<!-- FORWARD --> 	
 	<vertex_shader name="skybox_vs" file="Data/Effects/UAB_SKYBOX.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor=""/>
@@ -164,6 +168,10 @@
 	<pixel_shader name="bump_env_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_TANGENT;HAS_LIGHTS;HAS_REFLECTION"/>
 	<effect_technique name="bump_env_deferred_technique" vertex_shader="bump_env_deferred_vs" pixel_shader="bump_env_deferred_ps"/>
 	
+	<vertex_shader name="glow_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_GLOW;HAS_LIGHTS"/>
+	<pixel_shader name="glow_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_GLOW;HAS_LIGHTS"/>
+	<effect_technique name="glow_deferred_technique" vertex_shader="glow_vs" pixel_shader="glow_ps"/>
+	
 	<vertex_shader name="lightmap_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_LIGHTS"/>
 	<pixel_shader name="lightmap_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_LIGHTS"/>
 	<effect_technique name="lightmap_deferred_technique" vertex_shader="lightmap_deferred_vs" pixel_shader="lightmap_deferred_ps"/>
@@ -184,6 +192,10 @@
 	<pixel_shader name="rnm_bump_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_RNM;HAS_LIGHTS"/>
 	<effect_technique name="rnm_bump_deferred_technique" vertex_shader="rnm_bump_deferred_vs" pixel_shader="rnm_bump_deferred_ps"/>
 	
+	<vertex_shader name="parallax_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_TANGENT;HAS_PARALLAX;HAS_LIGHTS;"/>
+	<pixel_shader name="parallax_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_TANGENT;HAS_PARALLAX;HAS_LIGHTS"/>
+	<effect_technique name="parallax_deferred_technique" vertex_shader="parallax_deferred_vs" pixel_shader="parallax_deferred_ps"/>
+	
 	<!-- SHADOWMAP -->
 	<vertex_shader name="generate_shadowmap_vs" file="Data/Effects/UAB_SHADOWMAP.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV"/>
 	<pixel_shader name="generate_shadowmap_ps" file="Data/Effects/UAB_SHADOWMAP.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV"/>
@@ -201,7 +213,6 @@
 	<vertex_shader name="trigger_vs" file="Data/Effects/UAB_UBER_FORWARD_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV"/>
 	<pixel_shader name="trigger_ps"	file="Data/Effects/UAB_UBER_FORWARD_SHADER.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_TRIGGER"/>
 	<effect_technique name="trigger_technique" vertex_shader="trigger_vs" pixel_shader="trigger_ps"/>
-	
 </effects>
 
 
