@@ -1,17 +1,13 @@
 #include <InputManager\InputManager.h>
 
-
-
-
-
-class MyDeviceButtonListener : public gainput::InputListener
+class CDeviceButtonListener : public gainput::InputListener
 {
 public:
-	MyDeviceButtonListener(gainput::InputManager& manager, int index) : manager_(manager), index_(index) { }
+	CDeviceButtonListener(gainput::InputManager& m_Manager, int index) : m_Manager_(m_Manager), index_(index) { }
 
 	bool OnDeviceButtonBool(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, bool oldValue, bool newValue)
 	{
-		const gainput::InputDevice* device = manager_.GetDevice(deviceId);
+		const gainput::InputDevice* device = m_Manager_.GetDevice(deviceId);
 		char buttonName[64] = "";
 		device->GetButtonName(deviceButton, buttonName, 64);
 		UtilsLog("(" + std::to_string(index_) + ") Device " + std::to_string(deviceId) + " (" + device->GetTypeName() + "" + std::to_string(device->GetIndex()) + ") bool button (" + std::to_string(deviceButton) + "/" + buttonName + ") changed: " + std::to_string(oldValue) + " -> " + std::to_string(newValue) + "\n");
@@ -20,7 +16,7 @@ public:
 
 	bool OnDeviceButtonFloat(gainput::DeviceId deviceId, gainput::DeviceButtonId deviceButton, float oldValue, float newValue)
 	{
-		const gainput::InputDevice* device = manager_.GetDevice(deviceId);
+		const gainput::InputDevice* device = m_Manager_.GetDevice(deviceId);
 		char buttonName[64] = "";
 		device->GetButtonName(deviceButton, buttonName, 64);
 		UtilsLog("(" + std::to_string(index_) + ") Device " + std::to_string(deviceId) + " (" + device->GetTypeName() + "" + std::to_string(device->GetIndex()) + ") float button (" + std::to_string(deviceButton) + "/" + buttonName + ") changed: " + std::to_string(oldValue) + " -> " + std::to_string(newValue) + "\n");
@@ -33,14 +29,14 @@ public:
 	}
 
 private:
-	gainput::InputManager& manager_;
+	gainput::InputManager& m_Manager_;
 	int index_;
 };
 
-class MyUserButtonListener : public gainput::MappedInputListener
+class CUserButtonListener : public gainput::MappedInputListener
 {
 public:
-	MyUserButtonListener(int index) : index_(index) { }
+	CUserButtonListener(int index) : index_(index) { }
 
 	bool OnUserButtonBool(gainput::UserButtonId userButton, bool oldValue, bool newValue)
 	{
@@ -63,90 +59,84 @@ private:
 	int index_;
 };
 
-
-void SampleMain()
+CInputManager::CInputManager(HWND _hWnd, int _width, int _height) :
+	m_Manager(nullptr),
+	m_Map(nullptr),
+	m_DeviceButtonListener(nullptr),
+	m_DeviceButtonListener2(nullptr),
+	m_UserButtonListener(nullptr),
+	m_UserButtonListener2(nullptr)
 {
-	SfwOpenWindow("Gainput: Listener sample");
+	gainput::InputManager l_Manager;
+	m_Manager = &l_Manager;
+	gainput::InputMap l_Map(l_Manager, "Keymap");
+	m_Map = &l_Map;
 
-	gainput::InputManager manager;
+	CDeviceButtonListener l_DeviceButtonListener(l_Manager, 1);
+	m_DeviceButtonListener = &l_DeviceButtonListener;
+	CDeviceButtonListener l_DeviceButtonListener2(l_Manager, 2);
+	m_DeviceButtonListener2 = &l_DeviceButtonListener2;
 
-	manager.CreateDevice<gainput::InputDeviceKeyboard>(gainput::InputDevice::DV_RAW);
-	const gainput::DeviceId keyboardId = manager.CreateDevice<gainput::InputDeviceKeyboard>();
-	manager.CreateDevice<gainput::InputDeviceMouse>(gainput::InputDevice::DV_RAW);
-	const gainput::DeviceId mouseId = manager.CreateDevice<gainput::InputDeviceMouse>();
-	manager.CreateDevice<gainput::InputDevicePad>();
-	manager.CreateDevice<gainput::InputDevicePad>();
-	manager.CreateDevice<gainput::InputDeviceTouch>();
+	CUserButtonListener l_UserButtonListener(2);
+	m_UserButtonListener = &l_UserButtonListener;
+	CUserButtonListener l_UserButtonListener2(1);
+	m_UserButtonListener2 = &l_UserButtonListener2;
 
-#if defined(GAINPUT_PLATFORM_LINUX) || defined(GAINPUT_PLATFORM_WIN)
-	manager.SetDisplaySize(SfwGetWidth(), SfwGetHeight());
-#endif
+	m_Manager->CreateDevice<gainput::InputDeviceKeyboard>(gainput::InputDevice::DV_RAW);
+	m_KeyboardId = m_Manager->CreateDevice<gainput::InputDeviceKeyboard>();
+	m_Manager->CreateDevice<gainput::InputDeviceMouse>(gainput::InputDevice::DV_RAW);
+	m_MouseId = m_Manager->CreateDevice<gainput::InputDeviceMouse>();
+	//m_Manager.CreateDevice<gainput::InputDevicePad>();
+	//m_Manager.CreateDevice<gainput::InputDevicePad>();
+	//m_Manager.CreateDevice<gainput::InputDeviceTouch>();
 
-	SfwSetInputManager(&manager);
-	
+	m_Manager->SetDisplaySize(_width, _height);
 
-	gainput::InputMap map(manager, "testmap");
+	m_Map->MapBool(CInputManager::ButtonToggleListener, m_KeyboardId, gainput::KeyF1);
+	m_Map->MapBool(CInputManager::ButtonToggleMapListener, m_KeyboardId, gainput::KeyF2);
+	m_Map->MapBool(CInputManager::ButtonConfirm, m_MouseId, gainput::MouseButtonLeft);
+	m_Map->MapFloat(CInputManager::ButtonMouseX, m_MouseId, gainput::MouseAxisX);
 
-	map.MapBool(CInputManager::ButtonToggleListener, keyboardId, gainput::KeyF1);
-	map.MapBool(CInputManager::ButtonToggleMapListener, keyboardId, gainput::KeyF2);
-	map.MapBool(CInputManager::ButtonConfirm, mouseId, gainput::MouseButtonLeft);
-	map.MapFloat(CInputManager::ButtonMouseX, mouseId, gainput::MouseAxisX);
+	m_DeviceButtonListenerId = m_Manager->AddListener(m_DeviceButtonListener);
+	m_Manager->AddListener(m_DeviceButtonListener2);
 
-	MyDeviceButtonListener myDeviceButtonListener(manager, 1);
-	gainput::ListenerId myDeviceButtonListenerId = manager.AddListener(&myDeviceButtonListener);
-	MyDeviceButtonListener myDeviceButtonListener2(manager, 2);
-	manager.AddListener(&myDeviceButtonListener2);
+	m_UserButtonListenerId = m_Map->AddListener(m_UserButtonListener);
+	m_Map->AddListener(m_UserButtonListener2);
+}
 
-	MyUserButtonListener myUserButtonListener(2);
-	gainput::ListenerId myUserButtonListenerId = map.AddListener(&myUserButtonListener);
-	MyUserButtonListener myUserButtonListener2(1);
-	map.AddListener(&myUserButtonListener2);
+void CInputManager::Update()
+{
+	m_Manager->Update();
 
-	bool doExit = false;
-
-	while (!SfwIsDone() && !doExit)
+	if (m_Map->GetBoolWasDown(CInputManager::ButtonToggleListener))
 	{
-		manager.Update();
-
-		MSG msg;
-		while (PeekMessage(&msg, SfwGetHWnd(), 0, 0, PM_REMOVE))
+		if (m_DeviceButtonListenerId != gainput::ListenerId(-1))
 		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			manager.HandleMessage(msg);
+			m_Manager->RemoveListener(m_DeviceButtonListenerId);
+			m_DeviceButtonListenerId = gainput::ListenerId(-1);
+			UtilsLog("Device button listener disabled.\n");
 		}
-
-		if (map.GetBoolWasDown(CInputManager::ButtonToggleListener))
+		else
 		{
-			if (myDeviceButtonListenerId != gainput::ListenerId(-1))
-			{
-				manager.RemoveListener(myDeviceButtonListenerId);
-				myDeviceButtonListenerId = gainput::ListenerId(-1);
-				UtilsLog("Device button listener disabled.\n");
-			}
-			else
-			{
-				myDeviceButtonListenerId = manager.AddListener(&myDeviceButtonListener);
-				UtilsLog("Device button listener enabled.\n");
-			}
-		}
-
-		if (map.GetBoolWasDown(CInputManager::ButtonToggleMapListener))
-		{
-			if (myUserButtonListenerId != gainput::ListenerId(-1))
-			{
-				map.RemoveListener(myUserButtonListenerId);
-				myUserButtonListenerId = gainput::ListenerId(-1);
-				UtilsLog("User button listener disabled.\n");
-			}
-			else
-			{
-				myUserButtonListenerId = map.AddListener(&myUserButtonListener);
-				UtilsLog("User button listener enabled.\n");
-			}
+			m_DeviceButtonListenerId = m_Manager->AddListener(m_DeviceButtonListener);
+			UtilsLog("Device button listener enabled.\n");
 		}
 	}
 
-	SfwCloseWindow();
+	if (m_Map->GetBoolWasDown(CInputManager::ButtonToggleMapListener))
+	{
+		if (m_UserButtonListenerId != gainput::ListenerId(-1))
+		{
+			m_Map->RemoveListener(m_UserButtonListenerId);
+			m_UserButtonListenerId = gainput::ListenerId(-1);
+			UtilsLog("User button listener disabled.\n");
+		}
+		else
+		{
+			m_UserButtonListenerId = m_Map->AddListener(m_UserButtonListener);
+			UtilsLog("User button listener enabled.\n");
+		}
+	}
 }
+
 

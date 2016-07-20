@@ -164,11 +164,8 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 	{
 		//CDebugRender debugRender(s_Context.GetDevice());
 
-		// Set up Gainput
-		CInputManagerImplementation inputManager(hWnd);
-		CInputManager::SetCurrentInputManager(&inputManager);
-
-		inputManager.LoadCommandsFromFile("Data\\input.xml");
+		CInputManager inputManager(hWnd, 1, 1);
+		//inputManager.LoadCommandsFromFile("Data\\input.xml");
 
 		CDebugHelperImplementation debugHelper(s_Context.GetDevice());
 		CDebugHelper::SetCurrentDebugHelper(&debugHelper);
@@ -188,9 +185,13 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 		while (msg.message != WM_QUIT)
 		{
-			if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+			inputManager.Update();
+			if (PeekMessage(&msg, hWnd, 0U, 0U, PM_REMOVE))
 			{
-				if (!debugHelper.Update(msg.hwnd, msg.message, msg.wParam, msg.lParam))
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+				inputManager.GetManager()->HandleMessage(msg);
+				/*if (!debugHelper.Update(msg.hwnd, msg.message, msg.wParam, msg.lParam))
 				{
 					bool WasDown = false, IsDown = false, Alt = false;
 
@@ -274,11 +275,11 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 						TranslateMessage(&msg);
 						DispatchMessage(&msg);
 					}
-				}
+				}*/
 			}
 			else
 			{
-				inputManager.BeginFrame();
+				//inputManager.BeginFrame();
 
 				DWORD l_CurrentTime = timeGetTime();
 				float m_ElapsedTime = (float)(l_CurrentTime - m_PreviousTime)*0.001f;
@@ -287,7 +288,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 				application.Update(m_ElapsedTime);
 				application.Render();
 
-				inputManager.EndFrame();
+				//inputManager.EndFrame();
 			}
 		}
 		UnregisterClass(APPLICATION_NAME, wc.hInstance);
