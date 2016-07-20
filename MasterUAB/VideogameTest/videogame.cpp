@@ -15,7 +15,7 @@
 
 #include "Application.h"
 
-#include "InputManager\InputManagerImplementation.h"
+#include "InputManager\InputManager.h"
 #include "DebugHelper\DebugHelperImplementation.h"
 
 #include "ContextManager\ContextManager.h"
