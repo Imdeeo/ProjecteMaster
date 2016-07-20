@@ -32,14 +32,21 @@ void CSphericalCameraController::SetCamera(CCamera *Camera) const
 
 void CSphericalCameraController::Update(float ElapsedTime)
 {
-	if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
+	if (CInputManager::GetMap()->GetBool(CInputManager::Actions::LeftClick))
 	{
 		Vect3f cameraMovement(0, 0, 0);
-		cameraMovement.x = CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * .5f;
-		cameraMovement.y = CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * -.5f;
+		cameraMovement.x = CInputManager::GetMap()->GetFloatDelta(CInputManager::Actions::AxisX);//->GetAxis("X_AXIS") * ElapsedTime * .5f;
+		cameraMovement.y = CInputManager::GetMap()->GetFloatDelta(CInputManager::Actions::AxisY);//GetAxis("Y_AXIS") * ElapsedTime * -.5f;
 		Rotate(cameraMovement);
 	}
-	m_Zoom -= CInputManager::GetInputManager()->GetAxis("ZOOM")*.5f;
+	if (CInputManager::GetMap()->GetBool(CInputManager::Actions::WheelUp))
+	{
+		m_Zoom -= 0.1f;
+	}
+	else if (CInputManager::GetMap()->GetBool(CInputManager::Actions::WheelDown))
+	{
+		m_Zoom += 0.1f;
+	}
 	if (m_Zoom < 1){ m_Zoom = 1; }
 	m_CameraPosition = m_Position - (GetForward()*m_Zoom);
 }
