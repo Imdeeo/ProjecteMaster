@@ -83,7 +83,7 @@ void CManchasSystemInstance::Update(float ElapsedTime)
 				ManchaData manchas = {};
 				manchas.Position.x = GetRandomValue(Vect2f(-1.0f,1.0f));
 				manchas.Position.y = GetRandomValue(Vect2f(-1.0f, 1.0f)); 
-				manchas.Frame = GetRandomValue(0, m_Type->GetFrames());
+				manchas.Frame = (int)GetRandomValue(0, (float)m_Type->GetFrames());
 				manchas.LifeTime = 0;
 				manchas.TotalLife = GetRandomValue(m_Type->GetLife());
 				manchas.Opacity = 0;
@@ -141,7 +141,7 @@ void CManchasSystemInstance::Render(CRenderManager *RM)
 		m_ManchasRenderableData[i].Color = mancha->Color;
 		m_ManchasRenderableData[i].Color.w = mancha->Opacity;
 
-		m_ManchasRenderableData[i].UV.x = mancha->Frame;			
+		m_ManchasRenderableData[i].UV.x = (float)mancha->Frame;			
 		m_ManchasRenderableData[i].UV.y = mancha->Size;
 	}
 

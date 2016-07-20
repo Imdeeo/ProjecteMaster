@@ -36,13 +36,16 @@ private:
 };
 
 CInputManager::CInputManager(HWND _hWnd, int _width, int _height) :
-	m_Manager(nullptr),
-	m_Map(nullptr),
 	m_DeviceButtonListener(nullptr),
 	m_DeviceButtonListener2(nullptr),
 	m_UserButtonListener(nullptr),
 	m_UserButtonListener2(nullptr)
 {
+	RECT l_Rect;
+	GetWindowRect(_hWnd, &l_Rect);
+	int l_Width = l_Rect.right - l_Rect.left;
+	int l_Heigth = l_Rect.bottom - l_Rect.top;	
+
 	gainput::InputManager l_Manager;
 	m_Manager = &l_Manager;
 	gainput::InputMap l_Map(l_Manager, "Keymap");

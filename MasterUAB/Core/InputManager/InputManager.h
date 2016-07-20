@@ -16,8 +16,8 @@ class CUserButtonListener;
 class CInputManager
 {
 protected:
-	gainput::InputManager* m_Manager;
-	gainput::InputMap* m_Map;
+	static gainput::InputManager* m_Manager;
+	static gainput::InputMap* m_Map;
 	CDeviceButtonListener* m_DeviceButtonListener;
 	CDeviceButtonListener* m_DeviceButtonListener2;
 	CUserButtonListener* m_UserButtonListener;
@@ -75,8 +75,10 @@ public:
 	~CInputManager();
 	void Update();
 
+	static gainput::InputManager* GetManager(){ return m_Manager; }
+	static gainput::InputMap* GetMap(){ return m_Map; }
+
 	void LoadLayout(std::string _file);
-	gainput::InputManager* GetManager(){ return m_Manager; }
 	void SetFocus(bool _focus){ m_Focus = _focus; }
 	bool HasFocus() const { return m_Focus; }
 
