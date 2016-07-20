@@ -57,7 +57,7 @@ void C3PersonCameraController::Update(float ElapsedTime)
 {
 	m_Position = m_Target->GetPosition() + m_PositionOffset + (GetForward()*m_RotationOffset.x) + (GetRight()*m_RotationOffset.z);
 
-	if (CInputManager::GetMap()->GetBool(CInputManager::Actions::LeftClick))
+	if (CInputManager::GetMap()->GetBool(CInputManager::Actions::RightClick))
 	{
 		float l_Yaw = CInputManager::GetMap()->GetFloatDelta(CInputManager::Actions::AxisX) * 2.f;
 		float l_Pitch = CInputManager::GetMap()->GetFloatDelta(CInputManager::Actions::AxisY) * -0.5f;

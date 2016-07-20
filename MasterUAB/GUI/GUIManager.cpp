@@ -226,11 +226,11 @@ void CGUIManager::CheckInput()
 {
 	if (!m_InputUpToDate)
 	{
-		CInputManager* l_InputManager = CInputManager::GetInputManager();
-		m_MouseX = l_InputManager->GetCursor().x;
-		m_MouseY = l_InputManager->GetCursor().y;
+		gainput::InputMap* l_InputMap = CInputManager::GetMap();
+		m_MouseX = (int)l_InputMap->GetFloat(CInputManager::Actions::AxisX);
+		m_MouseY = (int)l_InputMap->GetFloat(CInputManager::Actions::AxisY);
 
-		if (m_MouseWentPressed && !l_InputManager->IsActionActive("MOUSE_CLICK_LEFT"))
+		if (m_MouseWentPressed && !l_InputMap->GetBool(CInputManager::Actions::LeftClick))
 		{
 			m_MouseWentReleased = true;
 		}
@@ -238,7 +238,7 @@ void CGUIManager::CheckInput()
 		{
 			m_MouseWentReleased = false;
 		}
-		m_MouseWentPressed = l_InputManager->IsActionActive("MOUSE_CLICK_LEFT");
+		m_MouseWentPressed = l_InputMap->GetBool(CInputManager::Actions::LeftClick);
 		
 
 		m_InputUpToDate = true;
@@ -561,7 +561,7 @@ std::string CGUIManager::DoTextBox(const std::string& guiID, const std::string& 
 	std::string displayText;
 	std::string activeText = currentText;
 
-	if (guiID == m_SelectedItem)
+	/*if (guiID == m_SelectedItem) OJOCUIDAO
 	{
 		CKeyboardInput* keyboard = CInputManager::GetInputManager()->GetKeyboard();
 		wchar_t lastChar = keyboard->ConsumeLastChar();
@@ -577,7 +577,7 @@ std::string CGUIManager::DoTextBox(const std::string& guiID, const std::string& 
 		{
 			activeText = activeText.substr(0, activeText.length() - 1);
 		}
-	}
+	}*/
 
 	FillCommandQueueWithText(_font, displayText, Vect2f(position.Getx() + position.Getwidth() * 0.05f,
 		position.Gety() + position.Getheight() * 0.75f));

@@ -32,7 +32,7 @@ void CSphericalCameraController::SetCamera(CCamera *Camera) const
 
 void CSphericalCameraController::Update(float ElapsedTime)
 {
-	if (CInputManager::GetMap()->GetBool(CInputManager::Actions::LeftClick))
+	if (CInputManager::GetMap()->GetBool(CInputManager::Actions::RightClick))
 	{
 		Vect3f cameraMovement(0, 0, 0);
 		cameraMovement.x = CInputManager::GetMap()->GetFloatDelta(CInputManager::Actions::AxisX);//->GetAxis("X_AXIS") * ElapsedTime * .5f;
