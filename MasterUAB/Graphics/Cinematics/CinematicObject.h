@@ -31,6 +31,7 @@ public:
 	void Update(float _ElapsedTime);
 	void OnRestartCycle();
 	void GetCurrentKey();
+	bool IsFinished();
 
 	void SetPivotPosition(Vect3f _PivotPosition);
 	void SetPivotRotation(Quatf _PivotRotation);

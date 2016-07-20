@@ -11,16 +11,18 @@ function JumpingUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	
 	--// Calculate the player speed
-	local l_PlayerDisplacement = Vect3f(l_Player.m_Velocity.x * 0.985, l_Player.m_Velocity.y + l_Player.m_Gravity * _ElapsedTime, l_Player.m_Velocity.z * 0.985)
+	local l_XZDisplacement = Vect2f(l_Player.m_Velocity.x, l_Player.m_Velocity.z)
+	local l_ExtraJump = l_XZDisplacement:length()*0.2
+	local l_PlayerDisplacement = Vect3f(l_Player.m_Velocity.x * 0.99, l_Player.m_Velocity.y + (l_Player.m_Gravity) * _ElapsedTime, l_Player.m_Velocity.z * 0.99)
 	
 	--// Move the character controller
 	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - 0.45
+	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - g_StandingOffset
 	l_Player.m_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
 	
 	--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_NewControllerPosition.y = l_NewControllerPosition.y - 0.45
+	l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 	l_Owner:set_position(l_NewControllerPosition)
 	
 	--// Save speed in last update so we can create acceleration

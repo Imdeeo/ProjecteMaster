@@ -1,4 +1,8 @@
--- STATES
+--// Global Variables
+dofile("Data\\Lua\\Player\\GVars.lua")
+--// RaycastData
+dofile("Data\\Lua\\Raycast.lua")
+--// StateMachine
 dofile("Data\\Lua\\Utils\\state_machine.lua")
 dofile("Data\\Lua\\Player\\PlayerStateIdle.lua")
 dofile("Data\\Lua\\Player\\PlayerStateMoving.lua")
@@ -71,11 +75,13 @@ class 'CPlayer' (CLUAComponent)
 			self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
 		end
 		
+		self.m_CinematicManager = UABEngine:get_cinematic_manager()
 		self.m_InputManager = CInputManager.get_input_manager()
 		self.m_PhysXManager = UABEngine:get_physX_manager()
 		if(not UABEngine:get_lua_reloaded())then
 			self.m_SoundManager:register_speaker(self.m_RenderableObject)
 		end
+		
 		self.m_JumpSoundEvent = SoundEvent()
 		self.m_JumpSoundEvent.event_name = "Jump"
 		self.m_Velocity = Vect3f(0.0, 0.0, 0.0)
@@ -84,29 +90,33 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Sanity = 100.0
 		self.m_MaxSanity = 100.0
 		
+		self.m_IsSinging = false
+		self.m_IsWindedUp = false
 		self.m_IsCorrecting = false
 		self.m_IsClimbing = false
 		self.m_IsInteracting = false
+		
 		self.m_Target = nil
 		self.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
-		
 		self.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource("LlaveRecibidor")
 		self.m_ItemName = "LlaveRecibidor"
+		self.m_ItemTime = 0
 		
 		self.m_CurrentAnimation = "none"
 		self.m_LastAnimation = "none"
 		self.m_InteractingAnimation = 0
 		self.m_InteractingCinematic = nil
+		self.m_CameraAnimation = nil
 		
-		self.m_IsSinging = false
-		self.m_IsWindedUp = false
+		self.m_RaycastData = RaycastData()
 		
 		self.m_StateMachine = StateMachine.create()
 		self:SetPlayerStateMachine()
 		self.m_StateMachine:start()
 		if(not UABEngine:get_lua_reloaded())then
 			self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
-			self.m_PhysXManager:create_character_controller(self.m_Name, 1.2, 0.3, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Player")
+			self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Player")
+			--self.m_PhysXManager:set_character_controller_height("player", 1.8)
 		end
 
 		self.m_AlreadyInitialized = true

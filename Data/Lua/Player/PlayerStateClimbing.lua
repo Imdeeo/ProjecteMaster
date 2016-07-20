@@ -20,12 +20,12 @@ function ClimbingUpdate(args, _ElapsedTime)
 	
 	--// Move the character controller
 	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - 0.45
+	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - g_StandingOffset
 	l_Player.m_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
 	
 	--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_NewControllerPosition.y = l_NewControllerPosition.y - 0.45
+	l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 	l_Owner:set_position(l_NewControllerPosition)
 	
 	--// Save speed in last update so we can create acceleration
@@ -55,6 +55,8 @@ function ClimbingEnd(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_Target = nil
+	l_Player.m_IsInteracting = false
+	l_Player.m_IsClimbing = false
 	l_Player.m_IsCorrecting = false
 	l_Player.m_CameraController:unlock()
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)

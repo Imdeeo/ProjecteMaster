@@ -56,5 +56,7 @@ public:
 	Quatf GetLeftObjectRotation();
 	Mat33f GetRightObjectTransform();
 	Mat33f GetLeftObjectTransform();
+	Quatf CAnimatedInstanceModel::GetHeadBoneRotation();
+	void CAnimatedInstanceModel::SetHeadBoneRotation(Quatf _rotation);
 };
 #endif //ANIMATED_INSTANCE_MODEL_H

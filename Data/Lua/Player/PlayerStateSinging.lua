@@ -34,7 +34,7 @@ function SingingUpdate(args, _ElapsedTime)
 	--// If player has an item, move it.
 	if m_Timer >= 1.5 and l_Player.m_Item ~= nil then
 		local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-		l_NewControllerPosition.y = l_NewControllerPosition.y - 0.45
+		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 		local l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_Owner:get_right_object_position())
 		--l_ObjectPosition = Vect3f(-l_ObjectPosition.x, l_ObjectPosition.z, l_ObjectPosition.y)
 		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)

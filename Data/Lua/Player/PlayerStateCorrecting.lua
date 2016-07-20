@@ -48,7 +48,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 	
 	--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_NewControllerPosition.y = l_NewControllerPosition.y - 0.9
+	l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 	l_Owner:set_position(l_NewControllerPosition)
 
 	--// Rotate player to match camera

@@ -40,6 +40,7 @@
 #include "Camera\SphericalCameraController.h"
 #include "Camera\3PersonCameraController.h"
 
+#include "Cinematics\CinematicManager.h"
 #include "Cinematics\Cinematic.h"
 #include "Cinematics\CinematicObject.h"
 #include "Cinematics\CinematicObjectKeyFrame.h"
@@ -351,6 +352,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(const_self * other<const float>())
 			.def(const_self / other<const float>())
 			.def("set", &Vect2f::Set)
+			.def("length", &Vect2f::Length)
 	];
 
 	module(m_LS)[
@@ -370,6 +372,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("decouple_x", &Quatf::decoupleX)
 			.def("decouple_y", &Quatf::decoupleY)
 			.def("decouple_z", &Quatf::decoupleZ)
+			.def("get_yaw", &Quatf::GetYaw)
+			.def("get_pitch", &Quatf::GetPitch)
+			.def("get_roll", &Quatf::GetRoll)
 			.def("get_scaled_axis", &Quatf::GetScaledAxis)
 			.def("set_from_scaled_axis", &Quatf::SetFromScaledAxis)
 			.def("set_from_angle_axis", &Quatf::SetFromAngleAxis)
@@ -534,7 +539,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_camera_controller_manager", &CUABEngine::GetCameraControllerManager)
 			.def("get_physX_manager", &CUABEngine::GetPhysXManager)
 			.def("get_sound_manager", &CUABEngine::GetSoundManager)
-			.def("get_cinematic", &CUABEngine::GetCinematic)
+			.def("get_cinematic_manager", &CUABEngine::GetCinematicManager)
 			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
 			.def("get_gui_manager", &CUABEngine::GetGUIManager)
 			.scope[
@@ -723,6 +728,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_left_object_rotation", &CAnimatedInstanceModel::GetLeftObjectRotation)
 			.def("get_right_object_transform", &CAnimatedInstanceModel::GetRightObjectTransform)
 			.def("get_left_object_transform", &CAnimatedInstanceModel::GetLeftObjectTransform)
+			.def("get_head_bone_rotation", &CAnimatedInstanceModel::GetHeadBoneRotation)
+			.def("set_head_bone_rotation", &CAnimatedInstanceModel::SetHeadBoneRotation)
 	];
 
 	module(m_LS) [
@@ -815,7 +822,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_cycle", &CCameraKeyController::SetCycle)
 			.def("is_reverse", &CCameraKeyController::IsReverse)
 			.def("set_reverse", &CCameraKeyController::SetReverse)
-			.def("set_camera", &CCameraKeyController::SetCamera)			
+			.def("set_camera", &CCameraKeyController::SetCamera)
+			.def_readwrite("m_PositionOffset", &CCameraKeyController::m_PositionOffset)
 	];
 
 	module(m_LS)[
@@ -862,23 +870,21 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("stop", &CCinematicPlayer::Stop)
 			.def("play", &CCinematicPlayer::Play)
 			.def("pause", &CCinematicPlayer::Pause)
-			.def("is_finished", &CCinematicPlayer::IsFinished)
 			.def("get_duration", &CCinematicPlayer::GetDuration)
-			.def("get_current_time", &CCinematicPlayer::GetTickCount)
+			.def("get_current_time", &CCinematicPlayer::GetCurrentT)
 			.def("on_restart_cycle", &CCinematicPlayer::OnRestartCycle)
 	];
 
 	module(m_LS)[
-		class_<CCinematic, bases<CRenderableObject, CCinematicPlayer>>("CCinematic")
-			.def(constructor<>())
-			.def("load_xml", &CCinematic::LoadXML)
+		class_<CCinematic, bases<CNamed, CCinematicPlayer>>("CCinematic")
+			.def(constructor<CXMLTreeNode&>())
 			.def("add_cinematic_object", &CCinematic::AddCinematicObject)
 			.def("update", &CCinematic::Update)
-			.def("render", &CCinematic::Render)
 			.def("play",&CCinematic::Play)
 			.def("stop",&CCinematic::Stop)
 			.def("pause", &CCinematic::Pause)
 			.def("on_restart_cycle", &CCinematic::OnRestartCycle)
+			.def("is_finished", &CCinematic::IsFinished)
 	];
 
 	module(m_LS)[
@@ -895,6 +901,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_pivot_rotation", &CCinematicObject::SetPivotRotation)
 			.def("get_pivot_scale", &CCinematicObject::GetPivotScale)
 			.def("set_pivot_scale", &CCinematicObject::SetPivotScale)
+			.def("is_finished", &CCinematicObject::IsFinished)
 	];
 
 	module(m_LS)[
@@ -904,7 +911,15 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_key_frame_time",&CCinematicObjectKeyFrame::SetKeyFrameTime)
 	];
 
-	
+	RegisterTemplatedMapManager<CCinematic>(m_LS);
+
+	module(m_LS)[
+		class_<CCinematicManager, bases<CRenderableObject, CTemplatedMapManager<CCinematic>>>("CCinematicManager")
+			.def(constructor<>())
+			.def("load_xml", &CCinematicManager::LoadXML)
+			.def("update", &CCinematicManager::Update)
+			.def("render", &CCinematicManager::Render)
+	];
 
 	// ContextManager----------------------------------------------------------------------------------
 	module(m_LS)[
@@ -1065,10 +1080,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_ambient_light", &CLightManager::GetAmbientLight)
 			.def("save", &CLightManager::Save)
 			.def("create_new_light", &CLightManager::CreateNewLight)
-			.def("get_fog_color_lua_address", &CLightManager::GetFogColorLuaAdress)
-			.def("get_fog_start_lua_address", &CLightManager::GetFogStartRangeAttenuattionLuaAdress)
-			.def("get_fog_end_lua_address", &CLightManager::GetFogEndRangeAttenuattionLuaAdress)
-			.def("get_fog_max_attenuattion_lua_address", &CLightManager::GetFogMaxAttenuattionLuaAdress)
 	];
 
 	module(m_LS)[
@@ -1107,11 +1118,12 @@ void CScriptManager::RegisterLUAFunctions()
 				value("float",CMaterialParameter::FLOAT),
 				value("vect2f", CMaterialParameter::VECT2F),
 				value("vect3f", CMaterialParameter::VECT3F),
-				value("vect4f", CMaterialParameter::VECT4F)
+				value("vect4f", CMaterialParameter::VECT4F),
+				value("color", CMaterialParameter::COLOR)
 			]
 			.def("apply", &CMaterialParameter::Apply)
 			.def("get_material_type", &CMaterialParameter::getMaterialType)
-			.def("get_value_address", &CMaterialParameter::GetValueLuaAddress)
+			.def("get_value_address", &CMaterialParameter::GetValueLuaAddress)			
 			.def("get_description", &CMaterialParameter::GetDescription)
 			.scope[
 				def("get_type_from_string",&CMaterialParameter::GetTypeFromString)

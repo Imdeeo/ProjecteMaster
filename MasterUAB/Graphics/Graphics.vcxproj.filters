@@ -239,6 +239,9 @@
     <ClCompile Include="Manchas\ManchasSystemInstance.cpp">
       <Filter>Manchas</Filter>
     </ClCompile>
+    <ClCompile Include="Cinematics\CinematicManager.cpp">
+      <Filter>Cinematics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -562,6 +565,9 @@
     </ClInclude>
     <ClInclude Include="Manchas\ManchasSystemInstance.h">
       <Filter>Manchas</Filter>
+    </ClInclude>
+    <ClInclude Include="Cinematics\CinematicManager.h">
+      <Filter>Cinematics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

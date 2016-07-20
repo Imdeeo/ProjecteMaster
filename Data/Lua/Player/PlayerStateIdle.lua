@@ -1,6 +1,8 @@
 function IdleFirst(args)
 	local l_Owner = args["owner"]
+	local l_Player = args["self"]
 	l_Owner:blend_cycle(0,1.0,0.1)
+	l_Player.m_PhysXManager:set_character_controller_height("player", g_Height)
 end
 
 function IdleUpdate(args, _ElapsedTime)
@@ -12,13 +14,18 @@ function IdleUpdate(args, _ElapsedTime)
 	
 	--// Move the character controller
 	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - 0.45
+	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - g_StandingOffset
 	l_Player.m_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
 	
 	--// Assign to the character the controller's position
-	local l_NewControllerPosition = g_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_NewControllerPosition.y = l_NewControllerPosition.y - 0.45
+	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
+	l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 	l_Owner:set_position(l_NewControllerPosition)
+	
+	--// Raycast
+	if l_Player.m_InputManager:is_action_active("INTERACT") then
+		CheckRaycast(l_Player, l_NewControllerPosition)
+	end
 	
 	--// Save speed in last update so we can create acceleration
 	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
@@ -34,7 +41,6 @@ function IdleUpdate(args, _ElapsedTime)
 	--// If player has an item, move it.
 	if l_Player.m_Item ~= nil then
 		local l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_Owner:get_right_object_position())
-		--l_ObjectPosition = Vect3f(-l_ObjectPosition.x, l_ObjectPosition.z, l_ObjectPosition.y)
 		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
 		l_ObjectPosition = l_ObjectPosition+l_NewControllerPosition
 		l_Player.m_Item:set_position(l_ObjectPosition)
