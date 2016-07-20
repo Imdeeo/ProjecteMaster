@@ -4,12 +4,22 @@
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
+#include <gainput/gainput.h>
+#include <Engine\UABEngine.h>
+#include <Utils.h>
 #include "KeyboardInput.h"
 #include "Math\Vector2.h"
 
 class CInputManager
 {
 public:
+	enum Button
+	{
+		ButtonToggleListener,
+		ButtonToggleMapListener,
+		ButtonConfirm,
+		ButtonMouseX,
+	};
 
 	bool IsActionActive(const std::string& action) const { return m_ActiveActions.count(action) > 0; }
 	float GetAxis(const std::string& axis) const { std::unordered_map<std::string, float>::const_iterator it = m_ActiveAxis.find(axis); if (it == m_ActiveAxis.end()) return 0; else return it->second; }
