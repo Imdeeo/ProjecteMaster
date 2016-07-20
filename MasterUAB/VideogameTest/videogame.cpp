@@ -164,6 +164,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 	{
 		//CDebugRender debugRender(s_Context.GetDevice());
 
+		// Set up Gainput
 		CInputManagerImplementation inputManager(hWnd);
 		CInputManager::SetCurrentInputManager(&inputManager);
 
