@@ -7,12 +7,6 @@
     <ClCompile Include="InputManager\InputManager.cpp">
       <Filter>InputManager</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager\InputManagerImplementation.cpp">
-      <Filter>InputManager</Filter>
-    </ClCompile>
-    <ClCompile Include="ScriptManager\ScriptManager.cpp">
-      <Filter>ScriptManager</Filter>
-    </ClCompile>
     <ClCompile Include="DebugHelper\DebugHelper.cpp">
       <Filter>DebugHelper</Filter>
     </ClCompile>
@@ -25,6 +19,9 @@
     <ClCompile Include="IA\AStar.cpp">
       <Filter>AI</Filter>
     </ClCompile>
+    <ClCompile Include="ScriptManager\ScriptManager.cpp">
+      <Filter>ScriptManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\UABEngine.h">
@@ -32,12 +29,6 @@
     </ClInclude>
     <ClInclude Include="InputManager\InputManager.h">
       <Filter>InputManager</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager\InputManagerImplementation.h">
-      <Filter>InputManager</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptManager\ScriptManager.h">
-      <Filter>ScriptManager</Filter>
     </ClInclude>
     <ClInclude Include="DebugHelper\DebugHelperImplementation.h">
       <Filter>DebugHelper</Filter>
@@ -50,6 +41,9 @@
     </ClInclude>
     <ClInclude Include="IA\AStar.h">
       <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptManager\ScriptManager.h">
+      <Filter>ScriptManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

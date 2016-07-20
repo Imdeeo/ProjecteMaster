@@ -19,8 +19,8 @@
 
 #include "Engine\UABEngine.h"
 
-#include "InputManager\InputManager.h"
-#include "InputManager\InputManagerImplementation.h"
+//#include "InputManager\InputManager.h"
+//#include "InputManager\InputManagerImplementation.h"
 
 #include "DebugHelper\DebugHelper.h"
 #include "DebugHelper\DebugHelperImplementation.h"
@@ -561,7 +561,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	// InputManager-------------------------------------------------------------------------------------
-	module(m_LS)[
+	/*module(m_LS)[ OJOCUIDAO
 		class_<CInputManager>("CInputManager")
 			.def("is_action_active", &CInputManager::IsActionActive)
 			.def("get_axis", &CInputManager::GetAxis)
@@ -587,7 +587,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update_cursor", &CInputManagerImplementation::UpdateCursor)
 			.def("update_cursor_movement", &CInputManagerImplementation::UpdateCursorMovement)
 			.def("reload", &CInputManagerImplementation::reload)
-	];
+	];*/
 	
 
 // GRAPHICS-----------------------------------------------------------------------------------------
