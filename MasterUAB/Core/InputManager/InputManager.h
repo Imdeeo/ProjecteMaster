@@ -2,13 +2,9 @@
 #define INPUTMANAGER_H
 
 #include <string>
-//#include <unordered_set>
-//#include <unordered_map>
 #include <gainput\gainput.h>
 #include <Engine\UABEngine.h>
 #include <Utils.h>
-//#include "KeyboardInput.h"
-//#include "Math\Vector2.h"
 
 class CDeviceButtonListener;
 class CUserButtonListener;
@@ -22,8 +18,6 @@ protected:
 	CDeviceButtonListener* m_DeviceButtonListener2;
 	CUserButtonListener* m_UserButtonListener;
 	CUserButtonListener* m_UserButtonListener2;
-	gainput::ListenerId m_DeviceButtonListenerId;
-	gainput::ListenerId m_UserButtonListenerId;
 
 	bool m_Focus;
 
