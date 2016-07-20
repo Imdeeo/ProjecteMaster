@@ -5,24 +5,24 @@
 #include <vector>
 #include "RenderableObjects\RenderableObject.h"
 #include "CinematicPlayer.h"
+#include "Utils.h"
 
 class CCinematicObject;
 
-class CCinematic : public CRenderableObject, public CCinematicPlayer
+class CCinematic : public CCinematicPlayer, public CNamed
 {
 protected:
 	std::vector<CCinematicObject *> m_CinematicObjects;
 public:
-	CCinematic();
+	CCinematic(CXMLTreeNode _Input);
 	virtual ~CCinematic();
-	void LoadXML(const std::string &FileName);
 	void AddCinematicObject(CCinematicObject *CinematicObject);
 	void Update(float _ElapsedTime);
-	virtual void Render(CRenderManager *RenderManager){};
 	void Play();
 	void Stop();
 	void Pause();
 	void OnRestartCycle();
+	bool IsFinished();
 };
 
 #endif H_CINEMATIC_H

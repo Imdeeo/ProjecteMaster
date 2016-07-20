@@ -24,14 +24,15 @@ CTexture::~CTexture(void)
 bool CTexture::LoadFile()
 {
 	ID3D11Device *l_Device=UABEngine.GetRenderManager()->GetDevice();
+	ID3D11DeviceContext *l_Context = UABEngine.GetRenderManager()->GetDeviceContext();
 	std::wstring wName;
 	wName.assign(m_Name.begin(), m_Name.end());
 
 	// DirectXTK
-	HRESULT l_HR = DirectX::CreateDDSTextureFromFile(l_Device, wName.c_str(), nullptr, &m_Texture);
+	HRESULT l_HR = DirectX::CreateDDSTextureFromFile(l_Device, l_Context, wName.c_str(), nullptr, &m_Texture);
 	if (FAILED(l_HR))
 	{
-		l_HR = DirectX::CreateWICTextureFromFile(l_Device, wName.c_str(), nullptr, &m_Texture);
+		l_HR = DirectX::CreateWICTextureFromFile(l_Device, l_Context, wName.c_str(), nullptr, &m_Texture);
 		if (FAILED(l_HR))
 		{
 			InfoMessage("Error loading file %s of type %d", m_Name.c_str(), l_HR);

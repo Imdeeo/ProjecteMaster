@@ -125,7 +125,6 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 	m_Actions.clear();
 	m_Axis.clear();
 
-
 	CXMLTreeNode l_XML;
 	if (l_XML.LoadFile(path.c_str()))
 	{

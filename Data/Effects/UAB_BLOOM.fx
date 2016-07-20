@@ -17,6 +17,7 @@
 	static float m_OriginalIntensity=m_RawDataArray[2];
 	static float m_BloomSaturation=m_RawDataArray[3];
 	static float m_OriginalSaturation=m_RawDataArray[4];
+	static float m_ShowBloom=m_RawDataArray[5];
 #endif
 
 struct VS_INPUT
@@ -53,31 +54,31 @@ PS_INPUT mainVS(VS_INPUT IN)
 	
 #ifdef HAS_BLUR
 	float4 GetGaussianBlurFromSampler(Texture2D _Texture2D, SamplerState _SamplerState, float2 UV, float2 TextureSize, float TextureScale)
-	{
-		float2 l_PixelKernel[7] =
+	{		
+		float2 l_PixelKernel[9] =
 		{
 			{ -1, 1 },
-			{ -1, -1 },
 			{ -1, 0 },
+			{ -1, -1 },
+			{ 0, 1 },
 			{ 0, 0 },
+			{ 0, -1 },
+			{ 1, 1 },
 			{ 1, 0 },
 			{ 1, -1 },
-			{ 1, 1 },
 		};
-		float l_BlurWeights[7] =
+		
+		float l_BlurWeights[9] =
 		{
-			0.120985,
-			0.120985,
-			0.176033,
-			0.199471,
-			0.176033,
-			0.120985,
-			0.120985,
+			0.11, 0.15, 0.11,
+			0.15, 0.19, 0.15,
+			0.11, 0.15, 0.11, 
 		};
+		
 		float4 l_GaussianColor = 0;
 		float2 l_TextureSize=TextureSize*TextureScale;
 		float l_TotalWeights=0.0;
-		for(int i = 0; i<7; ++i)
+		for(int i = 0; i < 9; ++i)
 		{
 			float4 l_Color=_Texture2D.Sample(_SamplerState, UV+(l_PixelKernel[i]*l_TextureSize))*l_BlurWeights[i];
 			l_TotalWeights+=l_BlurWeights[i];
@@ -108,16 +109,23 @@ PS_INPUT mainVS(VS_INPUT IN)
 			return T0Texture.Sample(S0Sampler, IN.UV);
 		else
 		{
-			float4 l_BloomColor=T1Texture.Sample(S1Sampler, IN.UV);
-			// Get our original pixel from ColorMap
-			float4 l_OriginalColor=T0Texture.Sample(S0Sampler, IN.UV);
-			// Adjust color saturation and intensity based on the input variables to the shader
-			l_BloomColor=AdjustSaturation(l_BloomColor, m_BloomSaturation)*m_BloomIntensity;
-			l_OriginalColor=AdjustSaturation(l_OriginalColor, m_OriginalSaturation)*m_OriginalIntensity;
-			// make the originalColor darker in very bright areas, avoiding these areas look burned-out
-			l_OriginalColor*=(1-saturate(l_BloomColor));
-			// Combine the two images.
-			return l_OriginalColor+l_BloomColor;
+			if(m_ShowBloom==0.0)
+			{
+				float4 l_BloomColor=T1Texture.Sample(S1Sampler, IN.UV);
+				// Get our original pixel from ColorMap
+				float4 l_OriginalColor=T0Texture.Sample(S0Sampler, IN.UV);
+				// Adjust color saturation and intensity based on the input variables to the shader
+				l_BloomColor=AdjustSaturation(l_BloomColor, m_BloomSaturation)*m_BloomIntensity;
+				l_OriginalColor=AdjustSaturation(l_OriginalColor, m_OriginalSaturation)*m_OriginalIntensity;
+				// make the originalColor darker in very bright areas, avoiding these areas look burned-out
+				l_OriginalColor*=(1-saturate(l_BloomColor));
+				// Combine the two images.
+				return l_OriginalColor+l_BloomColor;
+			}
+			else
+			{
+				return T1Texture.Sample(S1Sampler, IN.UV);
+			}
 		}
 	}
 #endif

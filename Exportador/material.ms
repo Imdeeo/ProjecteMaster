@@ -66,14 +66,33 @@ fn createMaterials dir filename Objs copyTexture =
 							(
 								format "\t<material name=\"%\" renderable_object_technique=\"reflection\">\n" mat[j].name to:file
 							)else(
-								if (classof mat[j].bumpMap == Bitmaptexture) then
+								if (classof mat[j].bumpMap == Bitmaptexture or classof mat[j].bumpMap ==  Normal_Bump) then
 								(
-									format "\t<material name=\"%\" renderable_object_technique=\"bump\">\n" mat[j].name to:file
+									if (classof mat[j].selfIllumMap == Bitmaptexture) then
+									(
+										format "\t<material name=\"%\" renderable_object_technique=\"lightmap_bump\">\n" mat[j].name to:file
+									)
+									else
+									(
+										format "\t<material name=\"%\" renderable_object_technique=\"bump\">\n" mat[j].name to:file
+									)
 								)
 								else
 								(
-									format "\t<material name=\"%\" renderable_object_technique=\"lights\">\n" mat[j].name to:file
+									if (classof mat[j].selfIllumMap == Bitmaptexture) then
+									(
+										format "\t<material name=\"%\" renderable_object_technique=\"lightmap\">\n" mat[j].name to:file
+									)
+									else
+									(
+										format "\t<material name=\"%\" renderable_object_technique=\"lights\">\n" mat[j].name to:file
+									)
 								)
+							)
+						) else (
+							if (classof mat[j].reflectionMap == Bitmaptexture) then
+							(
+								format "\t<material name=\"%\" renderable_object_technique=\"skybox\">\n" mat[j].name to:file
 							)
 						)
 						materialsDictionary.Add mat[j].name "defined"
@@ -187,13 +206,14 @@ fn createMaterials dir filename Objs copyTexture =
 						(
 							local specularAmount = mat[j].specularLevelMapAmount/100
 							local glossinessAmount = mat[j].glossiness
-							format "\t\t<parameter type=\"float\" name=\"active\" value=\"1.0\"/>\n" to:file
-							format "\t\t<parameter type=\"float\" name=\"exposure\" value=\"0.082\" description=\"min=0.0 max=3.0 step=0.001\"/>\n" to:file
+							
+							format "\t\t<parameter type=\"float\" name=\"exposure\" value=\"0.80\" description=\"min=0.0 max=1.0 step=0.01\"/>\n" to:file
 							format "\t\t<parameter type=\"float\" name=\"specular_power\" value=\"%\" description=\"min=0.0 max=100.0 step=0.1\"/>\n" glossinessAmount to:file
 							format "\t\t<parameter type=\"float\" name=\"specular_factor\" value=\"%\" description=\"min=0.0 max=1.0 step=0.01\"/>\n" specularAmount to:file
 							format "\t\t<parameter type=\"float\" name=\"reflection\" value=\"1.0\" description=\"min=0.0 max=1.0 step=0.001\"/>\n" to:file
-							format "\t</material>\n" to:file 
 						)
+						format "\t\t<parameter type=\"float\" name=\"active\" value=\"1.0\"/>\n" to:file
+						format "\t</material>\n" to:file 
 					)
 				)
 			)

@@ -266,7 +266,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		float3 l_EyeToWorldPosition = normalize(IN.Pixelpos-m_InverseView[3].xyz);
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
 		float4 l_ReflectColor = T8Texture.Sample(S8Sampler, l_ReflectVector);
-		Out = Out*0.9 + l_ReflectColor*0.10;
+		Out = Out * m_Exposure + l_ReflectColor * (1 - m_Exposure);
 	#endif
 	#ifdef HAS_TRIGGER
 		return float4(0,1,0,0.5);

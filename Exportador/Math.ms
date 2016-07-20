@@ -5,26 +5,19 @@ fn lerp minVal maxVal term &ret =
 
 fn mat3xvect3 mat vect &res =
 ( 
-    res = [0, 0, 0]
-	local x = vect.x
-	local y = vect.y
-	local z = vect.z
-    res.x = (mat.row1.x*x) + (mat.row1.y*y) + (mat.row1.z*z)
-    res.y = (mat.row2.x*x) + (mat.row2.y*y) + (mat.row2.z*z)
-    res.z = (mat.row3.x*x) + (mat.row3.y*y) + (mat.row3.z*z)
+	res = [0, 0, 0]
+    res.x = (mat.row1.x*vect.x) + (mat.row1.y*vect.y) + (mat.row1.z*vect.z)
+    res.y = (mat.row2.x*vect.x) + (mat.row2.y*vect.y) + (mat.row2.z*vect.z)
+    res.z = (mat.row3.x*vect.x) + (mat.row3.y*vect.y) + (mat.row3.z*vect.z)
 )
 
-fn mat4xvect3 mat vect w =
+fn mat4xvect3 mat vect w &res =
 ( 
     -- w=1 -> Translate // w=0 -> Rotate
-    local res = [0, 0, 0]
-	local x = vect.x
-	local y = vect.y
-	local z = vect.z
-    res.x = (mat.row1.x*x) + (mat.row2.x*y) + (mat.row3.x*z) + (mat.row4.x*w)
-    res.y = (mat.row1.y*x) + (mat.row2.y*y) + (mat.row3.y*z) + (mat.row4.y*w)
-    res.z = (mat.row1.z*x) + (mat.row2.z*y) + (mat.row3.z*z) + (mat.row4.z*w)
-    return res
+    res = [0, 0, 0]
+    res.x = (mat.row1.x*vect.x) + (mat.row2.x*vect.y) + (mat.row3.x*vect.z) + (mat.row4.x*vect.w)
+    res.y = (mat.row1.y*vect.x) + (mat.row2.y*vect.y) + (mat.row3.y*vect.z) + (mat.row4.y*vect.w)
+    res.z = (mat.row1.z*vect.x) + (mat.row2.z*vect.y) + (mat.row3.z*vect.z) + (mat.row4.z*vect.w)
 )
 
 fn swapYZ &vect =
@@ -32,6 +25,20 @@ fn swapYZ &vect =
 	local aux = vect.y
 	vect.y = vect.z
 	vect.z = aux
+)
+
+fn swapXZ &vect =
+(
+	local aux = vect.x
+	vect.x = vect.z
+	vect.z = aux
+)
+
+fn swapXY &vect =
+(
+	local aux = vect.x
+	vect.x = vect.y
+	vect.y = aux
 )
 
 fn QuatToRH &q =
@@ -42,6 +49,11 @@ fn QuatToRH &q =
 fn InverseQuat &q =
 (
 	q.w = -q.w
+)
+
+fn CustomToRH &translation =
+(
+	translation = [-translation.y, translation.z, translation.x]
 )
 
 fn TranslationToRH &translation =

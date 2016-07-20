@@ -135,28 +135,28 @@ inline CColor& CColor::operator *= (float escalar)
 
 inline CColor CColor::HsvToRgb(HsvColor hsv)
 {
+	float hh, p, q, t, ff;
+	long i;
 	CColor rgb;
-	unsigned char region, remainder, p, q, t;
-
-	if (hsv.s == 0)
-	{
-		rgb.SetRed(hsv.v / 255.0f);
-		rgb.SetGreen(hsv.v / 255.0f);
-		rgb.SetBlue(hsv.v / 255.0f);
-		return rgb;
-	}
-
-	region = hsv.h / 43;
-	remainder = (hsv.h - (region * 43)) * 6;
-
-	p = (hsv.v * (255 - hsv.s)) >> 8;
-	q = (hsv.v * (255 - ((hsv.s * remainder) >> 8))) >> 8;
-	t = (hsv.v * (255 - ((hsv.s * (255 - remainder)) >> 8))) >> 8;
 
 	rgb.SetAlpha(hsv.alpha);
 
-	switch (region)
-	{
+	if (hsv.s <= 0.0) {       // < is bogus, just shuts up warnings
+		rgb.SetRed(hsv.v);
+		rgb.SetGreen(hsv.v);
+		rgb.SetBlue(hsv.v);
+		return rgb;
+	}
+	hh = hsv.h;
+	if (hh >= 360.0) hh = 0.0f;
+	hh /= 60.0f;
+	i = (long)hh;
+	ff = hh - i;
+	p = hsv.v * (1.0f - hsv.s);
+	q = hsv.v * (1.0f - (hsv.s * ff));
+	t = hsv.v * (1.0f - (hsv.s * (1.0f - ff)));
+
+	switch (i) {
 	case 0:
 		rgb.SetRed(hsv.v);
 		rgb.SetGreen(t);
@@ -172,6 +172,7 @@ inline CColor CColor::HsvToRgb(HsvColor hsv)
 		rgb.SetGreen(hsv.v);
 		rgb.SetBlue(t);
 		break;
+
 	case 3:
 		rgb.SetRed(p);
 		rgb.SetGreen(q);
@@ -182,57 +183,59 @@ inline CColor CColor::HsvToRgb(HsvColor hsv)
 		rgb.SetGreen(p);
 		rgb.SetBlue(hsv.v);
 		break;
+	case 5:
 	default:
 		rgb.SetRed(hsv.v);
 		rgb.SetGreen(p);
 		rgb.SetBlue(q);
 		break;
 	}
-
-	rgb.SetRed(rgb.GetRed() > 0 ? rgb.GetRed() / 255 : 0);
-	rgb.SetGreen(rgb.GetGreen() > 0 ? rgb.GetGreen() / 255 : 0);
-	rgb.SetBlue(rgb.GetBlue() > 0 ? rgb.GetBlue() / 255 : 0);
-	rgb.SetAlpha(rgb.GetAlpha() > 0 ? rgb.GetAlpha() / 255 : 0);
-
 	return rgb;
 }
 
 inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
 {
 	HsvColor hsv;
-	unsigned char rgbMin, rgbMax;
+	float min, max, delta;
 
-	int l_R = (int)rgb.GetRed() * 255;
-	int l_G = (int)rgb.GetGreen() * 255;
-	int l_B = (int)rgb.GetBlue() * 255;
-	int l_Alpha = (int)rgb.GetAlpha() * 255;
+	hsv.alpha = rgb.GetAlpha();
+	
+	min = rgb.GetRed() < rgb.GetGreen() ? rgb.GetRed() : rgb.GetGreen();
+	min = min  < rgb.GetBlue() ? min : rgb.GetBlue();
 
-	rgbMin = l_R < l_G ? (l_R < l_B ? l_R : l_B) : (l_G < l_B ? l_G : l_B);
-	rgbMax = l_R > l_G ? (l_R > l_B ? l_R : l_B) : (l_G > l_B ? l_G : l_B);
+	max = rgb.GetRed() > rgb.GetGreen() ? rgb.GetRed() : rgb.GetGreen();
+	max = max  > rgb.GetBlue() ? max : rgb.GetBlue();
 
-	hsv.v = rgbMax;
-	if (hsv.v == 0)
+	hsv.v = max;                                // v
+	delta = max - min;
+	if (delta < 0.00001)
 	{
-		hsv.h = 0;
-		hsv.s = 0;
+		hsv.s = 0.0f;
+		hsv.h = 0.0f; // undefined, maybe nan?
 		return hsv;
 	}
-
-	hsv.s = 255 * long(rgbMax - rgbMin) / hsv.v;
-	if (hsv.s == 0)
-	{
-		hsv.h = 0;
+	if (max > 0.0) { // NOTE: if Max is == 0, this divide would cause a crash
+		hsv.s = (delta / max);                  // s
+	}
+	else {
+		// if max is 0, then r = g = b = 0              
+		// s = 0, v is undefined
+		hsv.s = 0.0f;
+		hsv.h = NAN;                            // its now undefined
 		return hsv;
 	}
-
-	if (rgbMax == l_R)
-		hsv.h = 0 + 43 * (l_G - l_B) / (rgbMax - rgbMin);
-	else if (rgbMax == l_G)
-		hsv.h = 85 + 43 * (l_B - l_R) / (rgbMax - rgbMin);
+	if (rgb.GetRed() >= max)                           // > is bogus, just keeps compilor happy
+		hsv.h = (rgb.GetGreen() - rgb.GetBlue()) / delta;        // between yellow & magenta
 	else
-		hsv.h = 171 + 43 * (l_R - l_G) / (rgbMax - rgbMin);
+		if (rgb.GetGreen() >= max)
+			hsv.h = 2.0f + (rgb.GetBlue() - rgb.GetRed()) / delta;  // between cyan & yellow
+		else
+			hsv.h = 4.0f + (rgb.GetRed() - rgb.GetGreen()) / delta;  // between magenta & cyan
 
-	hsv.alpha = l_Alpha;
+	hsv.h *= 60.0f;                              // degrees
+
+	if (hsv.h < 0.0)
+		hsv.h += 360.0f;
 
 	return hsv;
 }
@@ -251,7 +254,7 @@ inline CColor CColor::interpolate(CColor a, CColor b, float t)
 	return HsvToRgb(final);
 }
 
-inline int CColor::linear(int a, int b, float t)
+inline float CColor::linear(float a, float b, float t)
 {
-	return (int)(a * (1 - t) + b * t);
+	return (a * (1 - t) + b * t);
 }

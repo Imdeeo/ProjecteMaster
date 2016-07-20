@@ -15,7 +15,7 @@ class CRenderManager;
 class CAnimatedModelsManager;
 class CScriptManager;
 class CCameraControllerManager;
-class CCinematic;
+class CCinematicManager;
 class CPhysXManager;
 class CRenderableObjectTechniqueManager;
 class CSceneRendererCommandManager;
@@ -46,7 +46,7 @@ private:
 	CAnimatedModelsManager * m_AnimatedModelsManager;
 	CScriptManager * m_ScriptManager;
 	CCameraControllerManager * m_CameraControllerManager;
-	CCinematic * m_Cinematic;
+	CCinematicManager * m_CinematicManager;
 	CPhysXManager * m_PhysXManager;
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
 	CSceneRendererCommandManager* m_SceneRendererCommandManager;
@@ -70,7 +70,7 @@ public:
 	CAnimatedModelsManager * GetAnimatedModelsManager()const;
 	CScriptManager * GetScriptManager()const;
 	CCameraControllerManager * GetCameraControllerManager()const;
-	CCinematic * GetCinematic()const;
+	CCinematicManager * GetCinematicManager()const;
 	CPhysXManager * GetPhysXManager()const;
 	CRenderableObjectTechniqueManager * GetRenderableObjectTechniqueManager()const;
 	CSceneRendererCommandManager * GetSceneRendererCommandManager()const;

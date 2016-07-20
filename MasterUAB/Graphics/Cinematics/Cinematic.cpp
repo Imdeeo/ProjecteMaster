@@ -3,9 +3,21 @@
 
 #include "XML\XMLTreeNode.h"
 
-CCinematic::CCinematic()
+CCinematic::CCinematic(CXMLTreeNode _Input) : CNamed(_Input)
 {
-
+	m_Playing = false;
+	m_CurrentTime = 0.0f;
+	m_Name = _Input.GetPszProperty("name");
+	m_Duration = _Input.GetFloatProperty("duration", 0);
+	m_Cycle = _Input.GetBoolProperty("cycle", false);
+	for (int i = 0; i < _Input.GetNumChildren(); ++i)
+	{
+		CXMLTreeNode l_Element = _Input(i);
+		if (l_Element.GetName() == std::string("cinematic_object"))
+		{
+			AddCinematicObject(new CCinematicObject(l_Element));
+		}
+	}
 }
 
 CCinematic::~CCinematic()
@@ -20,31 +32,6 @@ CCinematic::~CCinematic()
 
 }
 
-void CCinematic::LoadXML(const std::string &FileName)
-{
-	m_Playing=false;
-	m_CurrentTime=0;
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(FileName.c_str()))
-	{
-		CXMLTreeNode l_Input = l_XML["cinematic"];
-		if (l_Input.Exists())
-		{
-			m_Name = l_Input.GetPszProperty("name");
-			m_Duration = l_Input.GetFloatProperty("duration", 0);
-			m_Cycle = l_Input.GetBoolProperty("cycle", false);
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
-			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("cinematic_object"))
-				{
-					AddCinematicObject(new CCinematicObject(l_Element));
-				}
-			}
-		}
-	}	
-}
-
 void CCinematic::AddCinematicObject(CCinematicObject *CinematicObject)
 {
 	m_CinematicObjects.push_back(CinematicObject);
@@ -52,9 +39,9 @@ void CCinematic::AddCinematicObject(CCinematicObject *CinematicObject)
 
 void CCinematic::Update(float _ElapsedTime)
 {
-	if(m_Playing)
+	if (m_Playing)
 	{
-		m_CurrentTime+=_ElapsedTime;
+		m_CurrentTime += _ElapsedTime;
 		if(!IsFinished())
 		{
 			for (size_t i = 0; i<m_CinematicObjects.size(); ++i)
@@ -70,7 +57,7 @@ void CCinematic::Update(float _ElapsedTime)
 			}
 			else
 			{
-				Stop();
+				Pause();
 			}
 		}
 	}
@@ -78,7 +65,7 @@ void CCinematic::Update(float _ElapsedTime)
 
 void CCinematic::Play()
 {
-	m_Playing=true;
+	m_Playing = true;
 	for (size_t i = 0; i<m_CinematicObjects.size(); ++i)
 	{
 		m_CinematicObjects[i]->Play(m_Cycle);
@@ -87,6 +74,8 @@ void CCinematic::Play()
 
 void CCinematic::Stop()
 {
+	m_Playing = false;
+	m_CurrentTime = 0.0f;
 	for (size_t i = 0; i<m_CinematicObjects.size(); ++i)
 	{
 		m_CinematicObjects[i]->Stop();
@@ -95,6 +84,7 @@ void CCinematic::Stop()
 
 void CCinematic::Pause()
 {
+	m_Playing = false;
 	for (size_t i = 0; i<m_CinematicObjects.size(); ++i)
 	{
 		m_CinematicObjects[i]->Pause();
@@ -103,11 +93,15 @@ void CCinematic::Pause()
 
 void CCinematic::OnRestartCycle()
 {
-	m_Playing=true;
-	m_CurrentTime=0;
+	m_Playing = true;
+	m_CurrentTime = 0.0f;
 	for (size_t i = 0; i<m_CinematicObjects.size(); ++i)
 	{
 		m_CinematicObjects[i]->OnRestartCycle();
 	}
 }
 
+bool CCinematic::IsFinished()
+{
+	return (m_CurrentTime >= m_Duration);
+}
