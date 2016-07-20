@@ -28,12 +28,44 @@ protected:
 	bool m_Focus;
 
 public:
-	enum Button
+	enum Actions
 	{
-		ButtonToggleListener,
-		ButtonToggleMapListener,
-		ButtonConfirm,
-		ButtonMouseX,
+		LeftClick,
+		RightClick,
+		MiddleClick,
+		WheelUp,
+		WheelDown,
+		AxisX,
+		AxisY,
+		MoveForward,
+		MoveBackward,
+		StrafeLeft,
+		StrafeRight,
+		Jump,
+		Crouch,
+		Run,
+		Interact,
+		Pause,
+#ifdef _DEBUG
+		DebugToggleFrustum,
+		DebugSpeedUp,
+		DebugSpeedDown,
+		DebugSanityUp,
+		DebugSanityDown,
+		DebugReloadLua,
+		DebugToggleRenderLights,
+		DebugChangeCameraControl,
+		DebugChangeCameraVision,
+		DebugChangeCamera,
+		DebugToggleRenderCamera,
+		DebugMusicVolumeUp,
+		DebugMusicVolumeDown,
+		DebugFxVolumeUp,
+		DebugFxVolumeDown,
+		DebugMonsterRun,
+		DebugMonsterIdle,
+		DebugMonsterHit,
+#endif
 	};
 
 	gainput::DeviceId m_KeyboardId;
@@ -43,8 +75,8 @@ public:
 	~CInputManager();
 	void Update();
 
+	void LoadLayout(std::string _file);
 	gainput::InputManager* GetManager(){ return m_Manager; }
-
 	void SetFocus(bool _focus){ m_Focus = _focus; }
 	bool HasFocus() const { return m_Focus; }
 
