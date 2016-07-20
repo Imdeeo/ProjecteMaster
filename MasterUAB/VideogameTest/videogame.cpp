@@ -164,15 +164,15 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 	{
 		//CDebugRender debugRender(s_Context.GetDevice());
 
-		CInputManager inputManager(hWnd, 1, 1);
-		inputManager.LoadLayout("Data\\input.xml");
-
 		CDebugHelperImplementation debugHelper(s_Context.GetDevice());
 		CDebugHelper::SetCurrentDebugHelper(&debugHelper);
 
 		CApplication application(&s_Context);
 
 		application.Init();
+
+		UABEngine.GetInputManager()->SetWindow(hWnd, 1280, 720);
+		UABEngine.GetInputManager()->LoadLayout("Data\\input.xml");
 
 		UpdateWindow(hWnd);
 		MSG msg;
@@ -185,12 +185,12 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 		while (msg.message != WM_QUIT)
 		{
-			inputManager.Update();
+			UABEngine.GetInputManager()->Update();
 			if (PeekMessage(&msg, hWnd, 0U, 0U, PM_REMOVE))
 			{
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
-				inputManager.GetManager()->HandleMessage(msg);
+				UABEngine.GetInputManager()->GetManager()->HandleMessage(msg);
 				/*if (!debugHelper.Update(msg.hwnd, msg.message, msg.wParam, msg.lParam))
 				{
 					bool WasDown = false, IsDown = false, Alt = false;
