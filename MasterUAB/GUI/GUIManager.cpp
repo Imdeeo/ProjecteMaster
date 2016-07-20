@@ -226,7 +226,7 @@ void CGUIManager::CheckInput()
 {
 	if (!m_InputUpToDate)
 	{
-		gainput::InputMap* l_InputMap = CInputManager::GetMap();
+		gainput::InputMap* l_InputMap = UABEngine.GetInputManager()->GetMap();
 		m_MouseX = (int)l_InputMap->GetFloat(CInputManager::Actions::AxisX);
 		m_MouseY = (int)l_InputMap->GetFloat(CInputManager::Actions::AxisY);
 

@@ -4,6 +4,7 @@
 
 #include "Utils.h"
 
+#include "InputManager\InputManager.h"
 #include "Effects\EffectManager.h"
 #include "Materials\MaterialManager.h"
 #include "Texture\TextureManager.h"
@@ -30,6 +31,7 @@ CUABEngine::CUABEngine(void)
 	m_TimeScale = 1;
 	m_CurrentCamera_vision = 1;
 	m_Pause = false; //Iniciara en false
+	m_InputManager = new CInputManager();
 	m_EffectManager = new CEffectManager();
 	m_MaterialManager = new CMaterialManager();
 	m_TextureManager = new CTextureManager();
@@ -173,6 +175,7 @@ void CUABEngine::Quit()
 {
 	PostQuitMessage(0);
 }
+UAB_GET_PROPERTY_CPP(CUABEngine, CInputManager *, InputManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CStaticMeshManager *, StaticMeshManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CLayerManager *, LayerManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CMaterialManager *, MaterialManager)

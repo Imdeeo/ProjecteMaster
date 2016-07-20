@@ -2,13 +2,13 @@
 #define INPUTMANAGER_H
 
 #include <string>
-#include <unordered_set>
-#include <unordered_map>
+//#include <unordered_set>
+//#include <unordered_map>
 #include <gainput\gainput.h>
 #include <Engine\UABEngine.h>
 #include <Utils.h>
-#include "KeyboardInput.h"
-#include "Math\Vector2.h"
+//#include "KeyboardInput.h"
+//#include "Math\Vector2.h"
 
 class CDeviceButtonListener;
 class CUserButtonListener;
@@ -16,8 +16,8 @@ class CUserButtonListener;
 class CInputManager
 {
 protected:
-	static gainput::InputManager* m_Manager;
-	static gainput::InputMap* m_Map;
+	gainput::InputManager* m_Manager;
+	gainput::InputMap* m_Map;
 	CDeviceButtonListener* m_DeviceButtonListener;
 	CDeviceButtonListener* m_DeviceButtonListener2;
 	CUserButtonListener* m_UserButtonListener;
@@ -71,18 +71,19 @@ public:
 	gainput::DeviceId m_KeyboardId;
 	gainput::DeviceId m_MouseId;
 
-	CInputManager(HWND _hWnd, int _width, int _height);
+	CInputManager();
 	~CInputManager();
 	void Update();
+	void SetWindow(HWND _hWnd, int _width, int _height);
 
-	static gainput::InputManager* GetManager(){ return m_Manager; }
-	static gainput::InputMap* GetMap(){ return m_Map; }
-
+	gainput::InputManager* GetManager(){ return m_Manager; }
+	gainput::InputMap* GetMap(){ return m_Map; }
 	void LoadLayout(std::string _file);
-	void SetFocus(bool _focus){ m_Focus = _focus; }
+	
+	/*void SetFocus(bool _focus){ m_Focus = _focus; }
 	bool HasFocus() const { return m_Focus; }
 
-	/*bool IsActionActive(const std::string& action) const { return m_ActiveActions.count(action) > 0; }
+	bool IsActionActive(const std::string& action) const { return m_ActiveActions.count(action) > 0; }
 	float GetAxis(const std::string& axis) const { std::unordered_map<std::string, float>::const_iterator it = m_ActiveAxis.find(axis); if (it == m_ActiveAxis.end()) return 0; else return it->second; }
 	
 	Vect2i GetCursor() const { return m_Cursor; }

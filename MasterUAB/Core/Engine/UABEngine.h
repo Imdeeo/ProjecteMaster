@@ -5,6 +5,7 @@
 
 #define LEVEL "2"
 
+class CInputManager;
 class CStaticMeshManager;
 class CLayerManager;
 class CMaterialManager;
@@ -35,6 +36,7 @@ private:
 	static CUABEngine * m_Instance;
 	CUABEngine(void);
 
+	CInputManager * m_InputManager;
 	CStaticMeshManager * m_StaticMeshManager;
 	CLayerManager * m_LayerManager;
 	CMaterialManager * m_MaterialManager;
@@ -58,6 +60,7 @@ private:
 	int m_CurrentCamera_vision;
 	
 public:
+	CInputManager * GetInputManager()const;
 	CStaticMeshManager * GetStaticMeshManager()const;
 	CLayerManager * GetLayerManager()const;
 	CMaterialManager * GetMaterialManager()const;

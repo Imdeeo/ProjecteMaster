@@ -6,6 +6,7 @@
 class CCamera;
 class CRenderableObject;
 class CXMLTreeNode;
+class CInputManager;
 
 class C3PersonCameraController : public CCameraController
 {

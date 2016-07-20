@@ -35,17 +35,12 @@ private:
 	int index_;
 };
 
-CInputManager::CInputManager(HWND _hWnd, int _width, int _height) :
+CInputManager::CInputManager() :
 	m_DeviceButtonListener(nullptr),
 	m_DeviceButtonListener2(nullptr),
 	m_UserButtonListener(nullptr),
 	m_UserButtonListener2(nullptr)
 {
-	RECT l_Rect;
-	GetWindowRect(_hWnd, &l_Rect);
-	int l_Width = l_Rect.right - l_Rect.left;
-	int l_Heigth = l_Rect.bottom - l_Rect.top;	
-
 	gainput::InputManager l_Manager;
 	m_Manager = &l_Manager;
 	gainput::InputMap l_Map(l_Manager, "Keymap");
@@ -66,13 +61,20 @@ CInputManager::CInputManager(HWND _hWnd, int _width, int _height) :
 	m_Manager->CreateDevice<gainput::InputDeviceMouse>(gainput::InputDevice::DV_RAW);
 	m_MouseId = m_Manager->CreateDevice<gainput::InputDeviceMouse>();
 
-	m_Manager->SetDisplaySize(_width, _height);
-
 	m_DeviceButtonListenerId = m_Manager->AddListener(m_DeviceButtonListener);
 	m_Manager->AddListener(m_DeviceButtonListener2);
 
 	m_UserButtonListenerId = m_Map->AddListener(m_UserButtonListener);
 	m_Map->AddListener(m_UserButtonListener2);
+}
+
+void CInputManager::SetWindow(HWND _hWnd, int _width, int _height)
+{
+	RECT l_Rect;
+	GetWindowRect(_hWnd, &l_Rect);
+	int l_Width = l_Rect.right - l_Rect.left;
+	int l_Heigth = l_Rect.bottom - l_Rect.top;
+	m_Manager->SetDisplaySize(_width, _height);
 }
 
 void CInputManager::Update()

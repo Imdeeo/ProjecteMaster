@@ -44,7 +44,7 @@ void CApplication::Update(float _ElapsedTime)
 
 #ifdef _DEBUG
 
-	gainput::InputMap* l_InputMap = CInputManager::GetMap();
+	gainput::InputMap* l_InputMap = UABEngine.GetInputManager()->GetMap();
 
 	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugReloadLua))
 	{
