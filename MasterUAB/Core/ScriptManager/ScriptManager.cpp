@@ -19,8 +19,7 @@
 
 #include "Engine\UABEngine.h"
 
-//#include "InputManager\InputManager.h"
-//#include "InputManager\InputManagerImplementation.h"
+#include "InputManager\InputManager.h"
 
 #include "DebugHelper\DebugHelper.h"
 #include "DebugHelper\DebugHelperImplementation.h"

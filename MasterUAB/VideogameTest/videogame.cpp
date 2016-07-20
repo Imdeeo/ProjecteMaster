@@ -165,7 +165,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 		//CDebugRender debugRender(s_Context.GetDevice());
 
 		CInputManager inputManager(hWnd, 1, 1);
-		//inputManager.LoadCommandsFromFile("Data\\input.xml");
+		inputManager.LoadLayout("Data\\input.xml");
 
 		CDebugHelperImplementation debugHelper(s_Context.GetDevice());
 		CDebugHelper::SetCurrentDebugHelper(&debugHelper);
