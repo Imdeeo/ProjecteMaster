@@ -8,26 +8,16 @@
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "Materials\MaterialManager.h"
 #include "Utils.h"
-
+#include "VideoManager\VideoManager.h"
 #include "XML\XMLTreeNode.h"
-
+#include "theoraplayer\TheoraPlayer.h"
+#include "Texture\DynamicTexture.h"
 #include "Math\Color.h"
 
 
 CDrawVideoQuadRendererCommand::CDrawVideoQuadRendererCommand(CXMLTreeNode &TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
 {
-	CXMLTreeNode l_Element = TreeNode;
-	const char* c = l_Element.GetPszProperty("material");
-	if (c != NULL)
-	{
-		m_Material = UABEngine.GetMaterialManager()->GetResource(std::string(c));
-		m_RenderableObjectTechnique = m_Material->GetRenderableObjectTechnique();
-	}
-	else
-	{
-		m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("MV_POSITION4_NORMAL_TEXTURE_VERTEX");
-		m_Material = nullptr;
-	}
+	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("MV_POSITION4_NORMAL_TEXTURE_VERTEX");
 }
 
 CDrawVideoQuadRendererCommand::~CDrawVideoQuadRendererCommand(void)
@@ -38,12 +28,15 @@ void CDrawVideoQuadRendererCommand::Execute(CRenderManager &_RenderManager)
 {
 	if (GetActive())
 	{
-		for (size_t i = 0; i < m_StagedTextures.size(); i++)
-			m_StagedTextures[i].Activate();
-
-		if (m_Material != nullptr)
-			m_Material->Apply(m_RenderableObjectTechnique);
-
-		_RenderManager.DrawScreenQuad(m_RenderableObjectTechnique->GetEffectTechnique(), NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
+		TheoraVideoClip* l_Clip = UABEngine.GetVideoManager()->GetClip();
+		TheoraVideoFrame *frame = l_Clip->getNextFrame();
+		//if (frame)
+		//{
+			CDynamicTexture *l_Texture = new CDynamicTexture("pepe", frame->getWidth(), frame->getHeight(), false, "rgba8");
+			l_Texture->LoadBuffer(frame->getBuffer(), sizeof((frame->getBuffer())));
+			//l_Texture->Load("image.png");
+			//l_Clip->popFrame(); // be sure to pop the frame from the frame queue when you're done
+			_RenderManager.DrawScreenQuad(m_RenderableObjectTechnique->GetEffectTechnique(), l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
+		//}
 	}
 }

@@ -4,9 +4,6 @@
 #include "VideoManager.h"
 #include "SDL.h"
 
-class TheoraVideoManager;
-class TheoraVideoClip;
-
 class CVideoManagerImplementation : public IVideoManager
 {	
 public:
@@ -14,8 +11,7 @@ public:
 	virtual ~CVideoManagerImplementation();
 	bool Init();
 	void Update(float _ElapsedTime);
-	TheoraVideoManager* mgr;
-	TheoraVideoClip* clip;
+	TheoraVideoClip* GetClip();
 };
 
 #endif //H_VIDEO_MANAGER_IMPLEMENTATION_H
