@@ -170,9 +170,14 @@ void CMaterial::operator=(CMaterial &b)
 		}
 		if (l_type == CMaterialParameter::COLOR)
 		{
-			m_Parameters.push_back(new CTemplatedMaterialParameter<CColor>(*((CTemplatedMaterialParameter<CColor>*)l_MaterialParameter)));
+			m_Parameters.push_back(new CTemplatedMaterialParameter<CColor>(*((CTemplatedMaterialParameter<CColor>*)l_MaterialParameter)));			
 		}
 	}
+}
+
+void CMaterial::SetValue(int _index, float _value)
+{
+	((CTemplatedMaterialParameter<float>*)m_Parameters[_index])->SetValueAddress(_value);
 }
 
 CRenderableObjectTechnique* CMaterial::GetRenderableObjectTechnique()

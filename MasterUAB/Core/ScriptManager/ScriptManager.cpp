@@ -779,6 +779,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_position", &CCameraController::GetPosition)
 			.def("set_position", &CCameraController::SetPosition)
 			.def("update", &CCameraController::Update)
+			.def("set_fov", &CCameraController::SetFov)
+			.def("get_fov", &CCameraController::GetFov)
 	];
 
 	RegisterTemplatedMapManager<CCameraController>(m_LS);
@@ -1140,6 +1142,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_parameters", &CMaterial::GetParameters, luabind::return_stl_iterator)
 			.def("get_renderable_object_technique", &CMaterial::GetRenderableObjectTechnique)
 			.def("get_texture", &CMaterial::GetTexture)
+			.def("set_value", &CMaterial::SetValue)
 	];
 
 	RegisterTemplatedMapManager<CMaterial>(m_LS);

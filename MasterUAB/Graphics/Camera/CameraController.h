@@ -14,6 +14,7 @@ class CCameraController : public CNamed
 protected:
 	Vect3f m_Position;
 	Quatf m_Rotation;
+	float m_Fov;
 public:
 	CCameraController(const CXMLTreeNode &);
 	virtual ~CCameraController();
@@ -31,9 +32,10 @@ public:
 	const Vect3f & GetPosition() const { return m_Position; }
 	void SetPosition(const Vect3f &Position) { m_Position = Position; }
 
-	virtual void Update(float ElapsedTime)
-	{
-	}
+	virtual void Update(float ElapsedTime){}
+
+	void SetFov(float _value);
+	float GetFov();
 };
 
 #endif
