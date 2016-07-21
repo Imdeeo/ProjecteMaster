@@ -36,26 +36,17 @@ private:
 };
 
 CInputManager::CInputManager() :
-	m_DeviceButtonListener(nullptr),
-	m_DeviceButtonListener2(nullptr),
-	m_UserButtonListener(nullptr),
-	m_UserButtonListener2(nullptr)
+	m_Manager(nullptr),
+	m_Map(nullptr),
+	m_KeyboardId(nullptr),
+	m_MouseId(nullptr)
 {
-	gainput::InputManager l_Manager;
-	m_Manager = &l_Manager;
+	m_Manager = new gainput::InputManager;
+	
+	m_KeyboardId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDeviceKeyboard>());
+	m_MouseId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDeviceMouse>());
 
-	CDeviceButtonListener l_DeviceButtonListener(l_Manager, 1);
-	CDeviceButtonListener l_DeviceButtonListener2(l_Manager, 2);
-	m_DeviceButtonListener = &l_DeviceButtonListener;
-	m_DeviceButtonListener2 = &l_DeviceButtonListener2;
-
-	m_Manager->CreateDevice<gainput::InputDeviceKeyboard>(gainput::InputDevice::DV_RAW);
-	m_KeyboardId = m_Manager->CreateDevice<gainput::InputDeviceKeyboard>();
-	m_Manager->CreateDevice<gainput::InputDeviceMouse>(gainput::InputDevice::DV_RAW);
-	m_MouseId = m_Manager->CreateDevice<gainput::InputDeviceMouse>();
-
-	m_Manager->AddListener(m_DeviceButtonListener);
-	m_Manager->AddListener(m_DeviceButtonListener2);
+	m_Map = new gainput::InputMap(*m_Manager, "Keymap");
 }
 
 void CInputManager::SetWindow(HWND _hWnd, int _width, int _height)
@@ -70,68 +61,47 @@ void CInputManager::SetWindow(HWND _hWnd, int _width, int _height)
 void CInputManager::Update()
 {
 	m_Manager->Update();
-
-	if (m_Map->GetBoolWasDown(CInputManager::LeftClick))
-	{
-		UtilsLog("Left click!.\n");
-	}
-
-	if (m_Map->GetBoolWasDown(CInputManager::RightClick))
-	{
-		UtilsLog("Right click!.\n");
-	}
 }
 
 void CInputManager::LoadLayout(std::string _file)
-{
-	gainput::InputMap l_Map(*m_Manager, "Keymap");
-
+{	
 	// Mouse Mapping
-	l_Map.MapBool(CInputManager::LeftClick, m_MouseId, gainput::MouseButtonLeft);
-	l_Map.MapBool(CInputManager::RightClick, m_MouseId, gainput::MouseButtonRight);
-	l_Map.MapBool(CInputManager::MiddleClick, m_MouseId, gainput::MouseButtonMiddle);
-	l_Map.MapBool(CInputManager::WheelUp, m_MouseId, gainput::MouseButtonWheelUp);
-	l_Map.MapBool(CInputManager::WheelDown, m_MouseId, gainput::MouseButtonWheelDown);
-	l_Map.MapFloat(CInputManager::AxisX, m_MouseId, gainput::MouseAxisX);
-	l_Map.MapFloat(CInputManager::AxisY, m_MouseId, gainput::MouseAxisY);
+	m_Map->MapBool(CInputManager::LeftClick, *m_MouseId, gainput::MouseButtonLeft);
+	m_Map->MapBool(CInputManager::RightClick, *m_MouseId, gainput::MouseButtonRight);
+	m_Map->MapBool(CInputManager::MiddleClick, *m_MouseId, gainput::MouseButtonMiddle);
+	m_Map->MapBool(CInputManager::WheelUp, *m_MouseId, gainput::MouseButtonWheelUp);
+	m_Map->MapBool(CInputManager::WheelDown, *m_MouseId, gainput::MouseButtonWheelDown);
+	m_Map->MapFloat(CInputManager::AxisX, *m_MouseId, gainput::MouseAxisX);
+	m_Map->MapFloat(CInputManager::AxisY, *m_MouseId, gainput::MouseAxisY);
 
 	// Keyboard Mapping
-	l_Map.MapBool(CInputManager::MoveForward, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::MoveBackward, m_KeyboardId, gainput::KeyF2);
-	l_Map.MapBool(CInputManager::StrafeLeft, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::StrafeRight, m_KeyboardId, gainput::KeyF2);
-	l_Map.MapBool(CInputManager::Jump, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::Crouch, m_KeyboardId, gainput::KeyF2);
-	l_Map.MapBool(CInputManager::Run, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::Interact, m_KeyboardId, gainput::KeyF2);
-	l_Map.MapBool(CInputManager::Pause, m_KeyboardId, gainput::KeyF1);
+	m_Map->MapBool(CInputManager::MoveForward, *m_KeyboardId, gainput::KeyF1);
+	m_Map->MapBool(CInputManager::MoveBackward, *m_KeyboardId, gainput::KeyF2);
+	m_Map->MapBool(CInputManager::StrafeLeft, *m_KeyboardId, gainput::KeyF3);
+	m_Map->MapBool(CInputManager::StrafeRight, *m_KeyboardId, gainput::KeyF4);
+	m_Map->MapBool(CInputManager::Jump, *m_KeyboardId, gainput::KeyF5);
+	m_Map->MapBool(CInputManager::Crouch, *m_KeyboardId, gainput::KeyF6);
+	m_Map->MapBool(CInputManager::Run, *m_KeyboardId, gainput::KeyF7);
+	m_Map->MapBool(CInputManager::Interact, *m_KeyboardId, gainput::KeyF8);
+	m_Map->MapBool(CInputManager::Pause, *m_KeyboardId, gainput::KeyF9);
 #ifdef _DEBUG
-	l_Map.MapBool(CInputManager::DebugToggleFrustum, m_KeyboardId, gainput::KeyF2);
-	l_Map.MapBool(CInputManager::DebugSpeedUp, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::DebugSpeedDown, m_KeyboardId, gainput::KeyF2);
-	l_Map.MapBool(CInputManager::DebugSanityUp, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::DebugSanityDown, m_KeyboardId, gainput::KeyF2);
-	l_Map.MapBool(CInputManager::DebugReloadLua, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::DebugToggleRenderLights, m_KeyboardId, gainput::KeyF2);
-	l_Map.MapBool(CInputManager::DebugChangeCameraControl, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::DebugChangeCameraVision, m_KeyboardId, gainput::KeyF2);
-	l_Map.MapBool(CInputManager::DebugChangeCamera, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::DebugToggleRenderCamera, m_KeyboardId, gainput::KeyF2);
-	l_Map.MapBool(CInputManager::DebugMusicVolumeUp, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::DebugMusicVolumeDown, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::DebugFxVolumeUp, m_KeyboardId, gainput::KeyF2);
-	l_Map.MapBool(CInputManager::DebugFxVolumeDown, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::DebugMonsterRun, m_KeyboardId, gainput::KeyF2);
-	l_Map.MapBool(CInputManager::DebugMonsterIdle, m_KeyboardId, gainput::KeyF1);
-	l_Map.MapBool(CInputManager::DebugMonsterHit, m_KeyboardId, gainput::KeyF2);
+	m_Map->MapBool(CInputManager::DebugToggleFrustum, *m_KeyboardId, gainput::Key0);
+	m_Map->MapBool(CInputManager::DebugSpeedUp, *m_KeyboardId, gainput::Key1);
+	m_Map->MapBool(CInputManager::DebugSpeedDown, *m_KeyboardId, gainput::Key2);
+	m_Map->MapBool(CInputManager::DebugSanityUp, *m_KeyboardId, gainput::Key3);
+	m_Map->MapBool(CInputManager::DebugSanityDown, *m_KeyboardId, gainput::Key4);
+	m_Map->MapBool(CInputManager::DebugReloadLua, *m_KeyboardId, gainput::Key5);
+	m_Map->MapBool(CInputManager::DebugToggleRenderLights, *m_KeyboardId, gainput::Key6);
+	m_Map->MapBool(CInputManager::DebugChangeCameraControl, *m_KeyboardId, gainput::Key7);
+	m_Map->MapBool(CInputManager::DebugChangeCameraVision, *m_KeyboardId, gainput::Key8);
+	m_Map->MapBool(CInputManager::DebugChangeCamera, *m_KeyboardId, gainput::Key9);
+	m_Map->MapBool(CInputManager::DebugToggleRenderCamera, *m_KeyboardId, gainput::KeyF10);
+	m_Map->MapBool(CInputManager::DebugMusicVolumeUp, *m_KeyboardId, gainput::KeyF11);
+	m_Map->MapBool(CInputManager::DebugMusicVolumeDown, *m_KeyboardId, gainput::KeyF12);
+	m_Map->MapBool(CInputManager::DebugFxVolumeUp, *m_KeyboardId, gainput::KeyA);
+	m_Map->MapBool(CInputManager::DebugFxVolumeDown, *m_KeyboardId, gainput::KeyN);
+	m_Map->MapBool(CInputManager::DebugMonsterRun, *m_KeyboardId, gainput::KeyB);
+	m_Map->MapBool(CInputManager::DebugMonsterIdle, *m_KeyboardId, gainput::KeyC);
+	m_Map->MapBool(CInputManager::DebugMonsterHit, *m_KeyboardId, gainput::KeyD);
 #endif
-
-	CUserButtonListener l_UserButtonListener(2);
-	CUserButtonListener l_UserButtonListener2(1);
-	m_UserButtonListener = &l_UserButtonListener;
-	m_UserButtonListener2 = &l_UserButtonListener2;
-
-	l_Map.AddListener(m_UserButtonListener);
-	l_Map.AddListener(m_UserButtonListener2);
-	m_Map = &l_Map;
 }
