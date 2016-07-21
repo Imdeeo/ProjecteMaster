@@ -177,7 +177,12 @@ void CMaterial::operator=(CMaterial &b)
 
 void CMaterial::SetValue(int _index, float _value)
 {
-	((CTemplatedMaterialParameter<float>*)m_Parameters[_index])->SetValueAddress(_value);
+	((CTemplatedMaterialParameter<float>*)m_Parameters[_index])->SetValue(_value);
+}
+
+float CMaterial::GetValue(int _index)
+{
+	return ((CTemplatedMaterialParameter<float>*)m_Parameters[_index])->GetValue();
 }
 
 CRenderableObjectTechnique* CMaterial::GetRenderableObjectTechnique()
