@@ -1143,6 +1143,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_renderable_object_technique", &CMaterial::GetRenderableObjectTechnique)
 			.def("get_texture", &CMaterial::GetTexture)
 			.def("set_value", &CMaterial::SetValue)
+			.def("get_value", &CMaterial::GetValue)
 	];
 
 	RegisterTemplatedMapManager<CMaterial>(m_LS);
