@@ -132,13 +132,6 @@ void CUABEngine::Init()
 
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	m_ScriptManager->RunCode("mainLua(\""+m_LevelLoaded+"\")");
-	// TEST LECTURA XML
-	/*float l_EndTime = (float)timeGetTime();
-	float l_LoadTimer = l_EndTime - l_StartTime;
-	std::ostringstream ss;
-	ss << l_LoadTimer;
-	std::string s(ss.str());
-	CDebugHelper::GetDebugHelper()->Log(s);*/
 }
 void CUABEngine::Destroy()
 {
