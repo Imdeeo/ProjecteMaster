@@ -3,6 +3,7 @@
 
 #include "Utils\Named.h"
 #include <vector>
+#include <string.h>
 
 class CTexture;
 class CMaterialParameter;
