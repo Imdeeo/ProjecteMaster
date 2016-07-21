@@ -111,7 +111,7 @@ void CUABEngine::Init()
 	// INICIO TIEMPO TEST LECTURA XML
 	//float l_StartTime = (float)timeGetTime();
 	LoadLevelXML("Data\\level.xml");
-	m_InputManager->LoadLayout("Data\\input.xml");
+	m_InputManager->Load("Data\\input.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
