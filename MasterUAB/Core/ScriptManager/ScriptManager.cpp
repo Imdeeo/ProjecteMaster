@@ -560,34 +560,17 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	// InputManager-------------------------------------------------------------------------------------
-	/*module(m_LS)[ OJOCUIDAO
+	module(m_LS)[
 		class_<CInputManager>("CInputManager")
 			.def("is_action_active", &CInputManager::IsActionActive)
-			.def("get_axis", &CInputManager::GetAxis)
+			.def("is_action_new", &CInputManager::IsActionNew)
+			.def("is_action_released", &CInputManager::IsActionReleased)
+			.def("was_action_active", &CInputManager::WasActionActive)
 			.def("get_cursor", &CInputManager::GetCursor)
 			.def("get_cursor_movement", &CInputManager::GetCursorMovement)
-			.def("has_focus", &CInputManager::HasFocus)
-			.def("set_current_input_manager", &CInputManager::SetCurrentInputManager)
-			.scope[
-				def("get_input_manager", &CInputManager::GetInputManager)
-			]
-			.def("reload", &CInputManager::reload)
+			.def("reload", &CInputManager::Reload)
 	];
 
-	module(m_LS)[
-		class_<CInputManagerImplementation, CInputManager>("CInputManagerImplementation")
-			.def(constructor<HWND>())
-			.def("load_commands_from_file", &CInputManagerImplementation::LoadCommandsFromFile)
-			.def("begin_frame", &CInputManagerImplementation::BeginFrame)
-			.def("end_frame", &CInputManagerImplementation::EndFrame)
-			.def("set_focus", &CInputManagerImplementation::SetFocus)
-			.def("set_mouse_speed", &CInputManagerImplementation::SetMouseSpeed)
-			.def("key_event_received", &CInputManagerImplementation::KeyEventReceived)
-			.def("update_cursor", &CInputManagerImplementation::UpdateCursor)
-			.def("update_cursor_movement", &CInputManagerImplementation::UpdateCursorMovement)
-			.def("reload", &CInputManagerImplementation::reload)
-	];*/
-	
 
 // GRAPHICS-----------------------------------------------------------------------------------------
 #ifdef _DEBUG

@@ -16,6 +16,7 @@ protected:
 	gainput::InputMap* m_Map;
 
 	bool m_Focus;
+	std::string m_Filename;
 
 public:
 	enum Actions
@@ -64,11 +65,22 @@ public:
 	CInputManager();
 	~CInputManager();
 	void Update();
+
+	void Load(std::string _file);
+	void Reload();
 	void SetWindow(HWND _hWnd, int _width, int _height);
+	int GetAction(std::string _name);
+
+	Vect2i GetCursor();
+	Vect2i GetCursorMovement();
+	bool IsActionActive(std::string _name);
+	bool IsActionNew(std::string _name);
+	bool IsActionReleased(std::string _name);
+	bool WasActionActive(std::string _name);
 
 	gainput::InputManager* GetManager(){ return m_Manager; }
 	gainput::InputMap* GetMap(){ return m_Map; }
-	void LoadLayout(std::string _file);
+	
 	
 	/*void SetFocus(bool _focus){ m_Focus = _focus; }
 	bool HasFocus() const { return m_Focus; }

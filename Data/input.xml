@@ -1,47 +1,46 @@
 <input>
-	<action name="MOVE_FWD" type="KEYBOARD" mode="WHILE_PRESSED" key="W" triggers_axis="true" axis="MOVE_FWD" axis_value="1"/>
-	<action name="MOVE_BACK" type="KEYBOARD" mode="WHILE_PRESSED" key="S" triggers_axis="true" axis="MOVE_FWD" axis_value="-1"/>
-	<action name="STRAFE_LEFT" type="KEYBOARD" mode="WHILE_PRESSED" key="A" triggers_axis="true" axis="STRAFE" axis_value="-1"/>
-	<action name="STRAFE_RIGHT" type="KEYBOARD" mode="WHILE_PRESSED" key="D" triggers_axis="true" axis="STRAFE" axis_value="1"/>
+	<action name="MoveForward" type="Keyboard" key="W"/>
+	<action name="MoveBackward" type="Keyboard" key="S"/>
+	<action name="StrafeLeft" type="Keyboard" key="A"/>
+	<action name="StrafeRight" type="Keyboard" key="D"/>
 	
-	<action name="JUMP" type="KEYBOARD" mode="ON_PRESS" key=" "/>
-	<action name="CROUCH" type="KEYBOARD" mode="WHILE_PRESSED" key="Q"/>
-	<action name="RUN" type="KEYBOARD" mode="WHILE_PRESSED" key="E"/>
-	<action name="INTERACT" type="KEYBOARD" mode="ON_PRESS" key="F"/>
-	<action name="FRUSTUM" type="KEYBOARD" mode="ON_PRESS" key="K"/>
+	<action name="Jump" type="Keyboard" key="Spacebar"/>
+	<action name="Crouch" type="Keyboard" key="Q"/>
+	<action name="Run" type="Keyboard" key="E"/>
+	<action name="Interact" type="Keyboard" key="F"/>
+	<action name="Pause" type="Keyboard" key="K"/>
 		
-	<action name="SPEEDUP" type="KEYBOARD" mode="ON_PRESS" key="M"/>
-	<action name="SPEEDDOWN" type="KEYBOARD" mode="ON_PRESS" key="N"/>
+	<action name="DebugSpeedUp" type="Keyboard" key="M"/>
+	<action name="DebugSpeedDown" type="Keyboard" key="N"/>
+	<action name="DebugSanityUp" type="Keyboard" key="J"/>
+	<action name="DebugSanityDown" type="Keyboard" key="H"/>
 	
-	<action name="SANITYDUP" type="KEYBOARD" mode="ON_PRESS" key="J"/>
-	<action name="SANITYDOWN" type="KEYBOARD" mode="ON_PRESS" key="H"/>
+	<action name="DebugToggleFrustum" type="Keyboard" key="P"/>
 	
-	<action name="PAUSE" type="KEYBOARD" mode="ON_PRESS" key="P"/>
+	<action name="RELOAD" type="Keyboard" key="R"/>
+	<action name="SWITCH_RENDER_LIGHTS" type="Keyboard" key="L"/>
 	
-	<action name="RELOAD" type="KEYBOARD" mode="ON_PRESS" key="R"/>
-	<action name="SWITCH_RENDER_LIGHTS" type="KEYBOARD" mode="ON_PRESS" key="L"/>
-	
-	<action name="CHANGE_CAMERA_CONTROL" type="KEYBOARD" mode="ON_PRESS" key="C"/>
-	<action name="CHANGE_CAMERA_VISION" type="KEYBOARD" mode="ON_PRESS" key="V"/>
-	<action name="CHANGE_CAMERA_BOTH" type="KEYBOARD" mode="ON_PRESS" key="B"/>
-	<action name="RENDER_CAMERA" type="KEYBOARD" mode="ON_PRESS" key="X"/>
+	<action name="CHANGE_CAMERA_CONTROL" type="Keyboard" key="C"/>
+	<action name="CHANGE_CAMERA_VISION" type="Keyboard" key="V"/>
+	<action name="CHANGE_CAMERA_BOTH" type="Keyboard" key="B"/>
+	<action name="RENDER_CAMERA" type="Keyboard" key="X"/>
 
-	<action name="MUSIC_VOLUME_DOWN" type="KEYBOARD" mode="ON_PRESS" key="7"/>
-	<action name="MUSIC_VOLUME_UP" type="KEYBOARD" mode="ON_PRESS" key="8"/>
-	<action name="FX_VOLUME_DOWN" type="KEYBOARD" mode="ON_PRESS" key="9"/>
-	<action name="FX_VOLUME_UP" type="KEYBOARD" mode="ON_PRESS" key="0"/>
+	<action name="MUSIC_VOLUME_DOWN" type="Keyboard" key="7"/>
+	<action name="MUSIC_VOLUME_UP" type="Keyboard" key="8"/>
+	<action name="FX_VOLUME_DOWN" type="Keyboard" key="9"/>
+	<action name="FX_VOLUME_UP" type="Keyboard" key="0"/>
 
-	<action name="MONSTER_RUN" type="KEYBOARD" mode="ON_PRESS" key="1"/>
-	<action name="MONSTER_IDLE" type="KEYBOARD" mode="ON_PRESS" key="2"/>
-	<action name="MONSTER_HIT" type="KEYBOARD" mode="ON_PRESS" key="3"/>
+	<action name="MonsterRun" type="Keyboard" key="1"/>
+	<action name="MONSTER_IDLE" type="Keyboard" key="2"/>
+	<action name="MONSTER_HIT" type="Keyboard" key="3"/>
 	
-	<action name="MOVE_CAMERA" type="MOUSE" mode="WHILE_PRESSED" mouse_button="RIGHT"/>
-	<action name="MOUSE_CLICK_LEFT" type="MOUSE" mode="WHILE_PRESSED" mouse_button="LEFT"/>
+	<action name="MOVE_CAMERA" type="Mouse" key="1"/>
+	<action name="Mouse_CLICK_LEFT" type="Mouse" key="1"/>
 	
-	<axis name="X_AXIS" type="MOUSE" mouse_axis="X" mouse_scale="0.05"/>
-	<axis name="Y_AXIS" type="MOUSE" mouse_axis="Y" mouse_scale="0.05"/>
-	<axis name="ZOOM" type="MOUSE" mouse_axis="WHEEL" mouse_scale="0.05"/>
+	<axis name="X_AXIS" type="Mouse" key="1"/>
+	<axis name="Y_AXIS" type="Mouse" key="1"/>
+	<axis name="ZOOM" type="Mouse" key="1"/>
 	
-	<axis name="X_AXIS" type="GAMEPAD" gamepad_axis="LEFT_X" gamepad_number="0"/>
-	<axis name="Y_AXIS" type="GAMEPAD" gamepad_axis="LEFT_Y" gamepad_number="0"/>
+	<axis name="X_AXIS" type="Gamepad" key="1"/>
+	<axis name="Y_AXIS" type="Gamepad" key="1"/>
 </input>

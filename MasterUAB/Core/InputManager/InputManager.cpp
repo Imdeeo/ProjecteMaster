@@ -49,6 +49,14 @@ CInputManager::CInputManager() :
 	m_Map = new gainput::InputMap(*m_Manager, "Keymap");
 }
 
+CInputManager::~CInputManager(void)
+{
+	CHECKED_DELETE(m_Manager);
+	CHECKED_DELETE(m_Map);
+	CHECKED_DELETE(m_KeyboardId);
+	CHECKED_DELETE(m_MouseId);
+}
+
 void CInputManager::SetWindow(HWND _hWnd, int _width, int _height)
 {
 	/*RECT l_Rect;
@@ -58,13 +66,21 @@ void CInputManager::SetWindow(HWND _hWnd, int _width, int _height)
 	m_Manager->SetDisplaySize(_width, _height);
 }
 
+void CInputManager::Reload()
+{
+	m_Map->Clear();
+	Load(m_Filename);
+}
+
 void CInputManager::Update()
 {
 	m_Manager->Update();
 }
 
-void CInputManager::LoadLayout(std::string _file)
+void CInputManager::Load(std::string _file)
 {	
+	m_Filename = _file;
+
 	// Mouse Mapping
 	m_Map->MapBool(CInputManager::LeftClick, *m_MouseId, gainput::MouseButtonLeft);
 	m_Map->MapBool(CInputManager::RightClick, *m_MouseId, gainput::MouseButtonRight);
@@ -104,4 +120,111 @@ void CInputManager::LoadLayout(std::string _file)
 	m_Map->MapBool(CInputManager::DebugMonsterIdle, *m_KeyboardId, gainput::KeyC);
 	m_Map->MapBool(CInputManager::DebugMonsterHit, *m_KeyboardId, gainput::KeyD);
 #endif
+}
+
+int CInputManager::GetAction(std::string _name)
+{
+	if (_name == "LeftClick")
+		return CInputManager::LeftClick;
+	else if (_name == "RightClick")
+		return CInputManager::RightClick;
+	else if (_name == "MiddleClick")
+		return CInputManager::MiddleClick;
+	else if (_name == "WheelUp")
+		return CInputManager::WheelUp;
+	else if (_name == "WheelDown")
+		return CInputManager::WheelDown;
+	else if (_name == "MoveForward")
+		return CInputManager::MoveForward;
+	else if (_name == "MoveBackward")
+		return CInputManager::MoveBackward;
+	else if (_name == "StrafeLeft")
+		return CInputManager::StrafeLeft;
+	else if (_name == "StrafeRight")
+		return CInputManager::StrafeRight;
+	else if (_name == "Jump")
+		return CInputManager::Jump;
+	else if (_name == "Crouch")
+		return CInputManager::Crouch;
+	else if (_name == "Run")
+		return CInputManager::Run;
+	else if (_name == "Interact")
+		return CInputManager::Interact;
+	else if (_name == "Pause")
+		return CInputManager::Pause;
+#ifdef _DEBUG
+	else if (_name == "DebugToggleFrustum")
+		return CInputManager::DebugToggleFrustum;
+	else if (_name == "DebugSpeedUp")
+		return CInputManager::DebugSpeedUp;
+	else if (_name == "DebugSpeedDown")
+		return CInputManager::DebugSpeedDown;
+	else if (_name == "DebugSanityUp")
+		return CInputManager::DebugSanityUp;
+	else if (_name == "DebugSanityDown")
+		return CInputManager::DebugSanityDown;
+	else if (_name == "DebugReloadLua")
+		return CInputManager::DebugReloadLua;
+	else if (_name == "DebugToggleRenderLights")
+		return CInputManager::DebugToggleRenderLights;
+	else if (_name == "DebugChangeCameraControl")
+		return CInputManager::DebugChangeCameraControl;
+	else if (_name == "DebugChangeCameraVision")
+		return CInputManager::DebugChangeCameraVision;
+	else if (_name == "DebugChangeCamera")
+		return CInputManager::DebugChangeCamera;
+	else if (_name == "DebugToggleRenderCamera")
+		return CInputManager::DebugToggleRenderCamera;
+	else if (_name == "DebugMusicVolumeUp")
+		return CInputManager::DebugMusicVolumeUp;
+	else if (_name == "DebugMusicVolumeDown")
+		return CInputManager::DebugMusicVolumeDown;
+	else if (_name == "DebugFxVolumeUp")
+		return CInputManager::DebugFxVolumeUp;
+	else if (_name == "DebugFxVolumeDown")
+		return CInputManager::DebugFxVolumeDown;
+	else if (_name == "DebugMonsterRun")
+		return CInputManager::DebugMonsterRun;
+	else if (_name == "DebugMonsterIdle")
+		return CInputManager::DebugMonsterIdle;
+	else if (_name == "DebugMonsterHit")
+		return CInputManager::DebugMonsterHit;
+#endif
+	else
+		assert("This should not happen!");
+}
+
+Vect2i CInputManager::GetCursor()
+{
+	return Vect2i(
+		m_Map->GetFloat(CInputManager::AxisX),
+		m_Map->GetFloat(CInputManager::AxisY));
+}
+
+Vect2i CInputManager::GetCursorMovement()
+{
+	m_Map->GetBoolIsNew(CInputManager::DebugMonsterIdle);
+	return Vect2i(
+		m_Map->GetFloatDelta(CInputManager::AxisX),
+		m_Map->GetFloatDelta(CInputManager::AxisY));
+}
+
+bool CInputManager::IsActionActive(std::string _name)
+{
+	return m_Map->GetBool(GetAction(_name));
+}
+
+bool CInputManager::IsActionNew(std::string _name)
+{
+	return m_Map->GetBoolIsNew(GetAction(_name));
+}
+
+bool CInputManager::IsActionReleased(std::string _name)
+{
+	return m_Map->GetBoolWasDown(GetAction(_name));
+}
+
+bool CInputManager::WasActionActive(std::string _name)
+{
+	return m_Map->GetBoolPrevious(GetAction(_name));
 }
