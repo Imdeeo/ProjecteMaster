@@ -14,10 +14,6 @@ class CInputManager
 protected:
 	gainput::InputManager* m_Manager;
 	gainput::InputMap* m_Map;
-	CDeviceButtonListener* m_DeviceButtonListener;
-	CDeviceButtonListener* m_DeviceButtonListener2;
-	CUserButtonListener* m_UserButtonListener;
-	CUserButtonListener* m_UserButtonListener2;
 
 	bool m_Focus;
 
@@ -62,8 +58,8 @@ public:
 #endif
 	};
 
-	gainput::DeviceId m_KeyboardId;
-	gainput::DeviceId m_MouseId;
+	const gainput::DeviceId* m_KeyboardId;
+	const gainput::DeviceId* m_MouseId;
 
 	CInputManager();
 	~CInputManager();

@@ -45,6 +45,13 @@ void CApplication::Update(float _ElapsedTime)
 #ifdef _DEBUG
 
 	gainput::InputMap* l_InputMap = UABEngine.GetInputManager()->GetMap();
+	
+	UtilsLog("application update");
+
+	if (UABEngine.GetInputManager()->GetMap()->GetBoolWasDown(CInputManager::Actions::DebugReloadLua))
+	{
+		UtilsLog("Reloading Lua");
+	}
 
 	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugReloadLua))
 	{

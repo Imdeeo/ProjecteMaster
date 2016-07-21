@@ -172,7 +172,6 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 		application.Init();
 
 		UABEngine.GetInputManager()->SetWindow(hWnd, 1280, 720);
-		UABEngine.GetInputManager()->LoadLayout("Data\\input.xml");
 
 		UpdateWindow(hWnd);
 		MSG msg;
