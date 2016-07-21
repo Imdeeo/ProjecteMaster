@@ -24,7 +24,7 @@ public:
 		memcpy(m_EffectAddress,&m_Value,sizeof(T));
 	}
 	void * GetValueAddress(int index= 0) const { return (void*)((float*)&m_Value + index); }
-
+	void SetValueAddress(T _value) { m_Value = _value; }
 	const char* GetDescription() const { return m_Description.c_str(); };
 };
 
