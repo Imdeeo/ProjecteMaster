@@ -562,6 +562,8 @@ void CScriptManager::RegisterLUAFunctions()
 	// InputManager-------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CInputManager>("CInputManager")
+			.def("get_action", &CInputManager::GetAction)
+			.def("get_input", &CInputManager::GetInput)
 			.def("is_action_active", &CInputManager::IsActionActive)
 			.def("is_action_new", &CInputManager::IsActionNew)
 			.def("is_action_released", &CInputManager::IsActionReleased)

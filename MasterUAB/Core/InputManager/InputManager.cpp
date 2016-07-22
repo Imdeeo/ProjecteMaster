@@ -194,6 +194,98 @@ int CInputManager::GetAction(std::string _name)
 		assert("This should not happen!");
 }
 
+int CInputManager::GetInput(std::string _name)
+{
+	if (_name == "MouseButtonLeft")
+		return gainput::MouseButtonLeft;
+	else if (_name == "MouseButtonRight")
+		return gainput::MouseButtonRight;
+	else if (_name == "MouseButtonMiddle")
+		return gainput::MouseButtonMiddle;
+	else if (_name == "MouseButtonWheelUp")
+		return gainput::MouseButtonWheelUp;
+	else if (_name == "MouseButtonWheelDown")
+		return gainput::MouseButtonWheelDown;
+	else if (_name == "MouseAxisX")
+		return gainput::MouseAxisX;
+	else if (_name == "MouseAxisY")
+		return gainput::MouseAxisY;
+	else if (_name == "KeyA")
+		return gainput::KeyA;
+	else if (_name == "KeyB")
+		return gainput::KeyB;
+	else if (_name == "KeyC")
+		return gainput::KeyC;
+	else if (_name == "KeyD")
+		return gainput::KeyD;
+	else if (_name == "KeyE")
+		return gainput::KeyE;
+	else if (_name == "KeyF")
+		return gainput::KeyF;
+	else if (_name == "KeyG")
+		return gainput::KeyG;
+	else if (_name == "KeyH")
+		return gainput::KeyH;
+	else if (_name == "KeyI")
+		return gainput::KeyI;
+	else if (_name == "KeyJ")
+		return gainput::KeyJ;
+	else if (_name == "KeyK")
+		return gainput::KeyK;
+	else if (_name == "KeyL")
+		return gainput::KeyL;
+	else if (_name == "KeyM")
+		return gainput::KeyM;
+	else if (_name == "KeyN")
+		return gainput::KeyN;
+	else if (_name == "KeyO")
+		return gainput::KeyO;
+	else if (_name == "KeyP")
+		return gainput::KeyP;
+	else if (_name == "KeyQ")
+		return gainput::KeyQ;
+	else if (_name == "KeyR")
+		return gainput::KeyR;
+	else if (_name == "KeyS")
+		return gainput::KeyS;
+	else if (_name == "KeyT")
+		return gainput::KeyT;
+	else if (_name == "KeyU")
+		return gainput::KeyU;
+	else if (_name == "KeyV")
+		return gainput::KeyV;
+	else if (_name == "KeyW")
+		return gainput::KeyW;
+	else if (_name == "KeyX")
+		return gainput::KeyX;
+	else if (_name == "KeyY")
+		return gainput::KeyY;
+	else if (_name == "KeyZ")
+		return gainput::KeyZ;
+	else if (_name == "Key0")
+		return gainput::Key0;
+	else if (_name == "Key1")
+		return gainput::Key1;
+	else if (_name == "Key2")
+		return gainput::Key2;
+	else if (_name == "Key3")
+		return gainput::Key3;
+	else if (_name == "Key4")
+		return gainput::Key4;
+	else if (_name == "Key5")
+		return gainput::Key5;
+	else if (_name == "Key6")
+		return gainput::Key6;
+	else if (_name == "Key7")
+		return gainput::Key7;
+	else if (_name == "Key8")
+		return gainput::Key8;
+	else if (_name == "Key9")
+		return gainput::Key9;
+	else
+		assert("This should not happen!");
+}
+
 Vect2i CInputManager::GetCursor()
 {
 	return Vect2i(
