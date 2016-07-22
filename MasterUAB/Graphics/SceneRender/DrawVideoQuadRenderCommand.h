@@ -5,11 +5,13 @@
 
 class CRenderableObjectTechnique;
 class CMaterial;
+class CDynamicTexture;
 
 class CDrawVideoQuadRendererCommand : public CStagedTexturedSceneRendererCommand
 {
 private:
 	CRenderableObjectTechnique* m_RenderableObjectTechnique;
+	CDynamicTexture *m_Texture;
 public:
 	CDrawVideoQuadRendererCommand(CXMLTreeNode &TreeNode);
 	virtual ~CDrawVideoQuadRendererCommand(void);
