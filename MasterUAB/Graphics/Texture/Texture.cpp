@@ -61,15 +61,15 @@ bool CTexture::LoadBuffer(unsigned char* _Buffer, size_t _Size)
 {
 	ID3D11Device *l_Device = UABEngine.GetRenderManager()->GetDevice();
 	ID3D11DeviceContext *l_Context = UABEngine.GetRenderManager()->GetDeviceContext();
-	std::wstring wName;
-	wName.assign(m_Name.begin(), m_Name.end());
+	/*std::wstring wName;
+	wName.assign(m_Name.begin(), m_Name.end());*/
 
 	// DirectXTK
 
 	//HRESULT l_HR = DirectX::CreateWICTextureFromMemory(l_Device, _Buffer, _Size, nullptr, &m_Texture);
-	std::basic_ifstream<unsigned char> file("image.png", std::ios::binary);
-	HRESULT l_HR;
-	l_HR = false;
+	//std::basic_ifstream<unsigned char> file("image.png", std::ios::binary);
+	//HRESULT l_HR;
+	/*l_HR = false;
 	if (file.is_open())
 	{
 		file.seekg(0, std::ios::end);
@@ -83,10 +83,10 @@ bool CTexture::LoadBuffer(unsigned char* _Buffer, size_t _Size)
 		int l_length = strlen((char*)_Buffer)/8;
 		l_HR = DirectX::CreateWICTextureFromMemory(l_Device, l_Context, &_Buffer[0], l_length, nullptr, &m_Texture, NULL);
 		//l_HR = DirectX::CreateWICTextureFromMemory(l_Device, l_Context, &buffer[0], length, nullptr, &m_Texture, NULL);
-	}
+	}*/
 	
 	
-	
+	HRESULT l_HR = DirectX::CreateDDSTextureFromMemory(l_Device, (const uint8_t*)_Buffer, _Size, nullptr, &m_Texture, NULL);
 	
 	//HRESULT l_HR = DirectX::CreateWICTextureFromMemory(l_Device, l_Context, (const uint8_t*)&_Buffer[0], (size_t)l_length, nullptr, &m_Texture, NULL);
 
