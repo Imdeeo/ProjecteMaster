@@ -70,6 +70,7 @@ public:
 	void Reload();
 	void SetWindow(HWND _hWnd, int _width, int _height);
 	int GetAction(std::string _name);
+	int GetInput(std::string _name);
 
 	Vect2i GetCursor();
 	Vect2i GetCursorMovement();
