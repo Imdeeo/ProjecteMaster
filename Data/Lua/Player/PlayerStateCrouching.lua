@@ -15,12 +15,24 @@ end
 function CrouchingUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	local l_ForwardMovement = l_Player.m_InputManager:get_axis("MOVE_FWD")
-	local l_StrafeMovement = l_Player.m_InputManager:get_axis("STRAFE")
+	local l_ForwardMovement = 0
+	local l_StrafeMovement = 0
+	if l_Player.m_InputManager:is_action_active("MoveForward") then 
+		l_ForwardMovement = l_ForwardMovement+1
+	end
+	if l_Player.m_InputManager:is_action_active("MoveBackward") then
+		l_ForwardMovement = l_ForwardMovement-1
+	end
+	if l_Player.m_InputManager:is_action_active("StrafeLeft") then
+		l_StrafeMovement = l_StrafeMovement-1
+	end
+	if l_Player.m_InputManager:is_action_active("StrafeRight") then
+		l_StrafeMovement = l_StrafeMovement+1
+	end
 	local l_Speed = l_Player.m_Speed
 	
 	--// Detect if player is crouching backwards
-	if l_Player.m_InputManager:is_action_active("MOVE_BACK") then
+	if l_Player.m_InputManager:is_action_active("MoveBackward") then
 		l_Speed = l_Speed * 0.15
 	else
 		l_Speed = l_Speed * 0.3
@@ -86,5 +98,5 @@ end
 
 function CrouchingToIdleCondition(args)
 	local l_Player = args["self"]
-	return not (l_Player.m_InputManager:is_action_active("CROUCH"))
+	return not (l_Player.m_InputManager:is_action_active("Crouch"))
 end

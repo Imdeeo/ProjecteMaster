@@ -524,6 +524,7 @@ void CScriptManager::RegisterLUAFunctions()
 	// Engine-------------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CUABEngine>("CUABEngine")
+			.def("get_input_manager", &CUABEngine::GetInputManager)
 			.def("get_static_mesh_manager", &CUABEngine::GetStaticMeshManager)
 			.def("get_layer_manager", &CUABEngine::GetLayerManager)
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)

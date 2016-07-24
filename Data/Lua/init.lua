@@ -56,29 +56,32 @@ function luaUpdate(_ElapsedTime)
 	end
 	
 	local l_Engine = CUABEngine.get_instance()
-	if CInputManager.get_input_manager():is_action_active("SPEEDUP") then
+	local l_InputManager = l_Engine:get_input_manager()
+	if l_InputManager:is_action_released("DebugSpeedUp") then
+		utils_log("DebugSpeedUp")
 		if l_Engine:get_time_scale() < 11 then
 			l_Engine:set_time_scale(l_Engine:get_time_scale()+1)
 		end
 	end
-	if CInputManager.get_input_manager():is_action_active("SPEEDDOWN") then
+	if l_InputManager:is_action_released("DebugSpeedDown") then
+		utils_log("DebugSpeedDown")
 		if l_Engine:get_time_scale() > 1 then
 			l_Engine:set_time_scale(l_Engine:get_time_scale()-1)
 		end
 	end
-	if CInputManager.get_input_manager():is_action_active("SANITYDUP") then
-		utils_log("SANITYDUP")
+	if l_InputManager:is_action_released("DebugSanityUp") then
+		utils_log("DebugSanityUp")
 		m_CharacterManager.m_Player[1]:ModifySanity(10)
 	end
-	if CInputManager.get_input_manager():is_action_active("SANITYDOWN") then
-		utils_log("SANITYDOWN")
+	if l_InputManager:is_action_released("DebugSanityDown") then
+		utils_log("DebugSanityDown")
 		m_CharacterManager.m_Player[1]:ModifySanity(-10)
 	end
-	if CInputManager.get_input_manager():is_action_active("PAUSE") then
+	if l_InputManager:is_action_released("Pause") then
 		m_menu = true
 		CUABEngine.get_instance():set_pause(true)
 	end
-	if CInputManager.get_input_manager():is_action_active("FRUSTUM") then
+	if l_InputManager:is_action_released("DebugToggleFrustum") then
 		l_Engine:set_frustum_active(not l_Engine:get_frustum_active())
 	end
 	g_VolumeController:CheckVolumeKeys()	

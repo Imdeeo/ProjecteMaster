@@ -76,7 +76,7 @@ class 'CPlayer' (CLUAComponent)
 		end
 		
 		self.m_CinematicManager = UABEngine:get_cinematic_manager()
-		self.m_InputManager = CInputManager.get_input_manager()
+		self.m_InputManager = UABEngine.get_input_manager()
 		self.m_PhysXManager = UABEngine:get_physX_manager()
 		if(not UABEngine:get_lua_reloaded())then
 			self.m_SoundManager:register_speaker(self.m_RenderableObject)
