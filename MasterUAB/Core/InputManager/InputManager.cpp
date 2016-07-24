@@ -1,4 +1,5 @@
 #include <InputManager\InputManager.h>
+#include "XML\XMLTreeNode.h"
 
 class CDeviceButtonListener : public gainput::InputListener
 {
@@ -39,22 +40,25 @@ CInputManager::CInputManager() :
 	m_Manager(nullptr),
 	m_Map(nullptr),
 	m_KeyboardId(nullptr),
-	m_MouseId(nullptr)
+	m_MouseId(nullptr),
+	m_GamepadId(nullptr)
 {
 	m_Manager = new gainput::InputManager;
 	
 	m_KeyboardId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDeviceKeyboard>());
 	m_MouseId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDeviceMouse>());
+	m_GamepadId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDevicePad>());
 
 	m_Map = new gainput::InputMap(*m_Manager, "Keymap");
 }
 
 CInputManager::~CInputManager(void)
 {
-	CHECKED_DELETE(m_Manager);
-	CHECKED_DELETE(m_Map);
-	CHECKED_DELETE(m_KeyboardId);
+	CHECKED_DELETE(m_GamepadId);
 	CHECKED_DELETE(m_MouseId);
+	CHECKED_DELETE(m_KeyboardId);
+	CHECKED_DELETE(m_Map);
+	CHECKED_DELETE(m_Manager);
 }
 
 void CInputManager::SetWindow(HWND _hWnd, int _width, int _height)
@@ -80,51 +84,107 @@ void CInputManager::Update()
 void CInputManager::Load(std::string _file)
 {	
 	m_Filename = _file;
+	std::string l_Name;
+	std::string l_Device;
+	std::string l_Key;
 
-	// Mouse Mapping
-	m_Map->MapBool(CInputManager::LeftClick, *m_MouseId, gainput::MouseButtonLeft);
-	m_Map->MapBool(CInputManager::RightClick, *m_MouseId, gainput::MouseButtonRight);
-	m_Map->MapBool(CInputManager::MiddleClick, *m_MouseId, gainput::MouseButtonMiddle);
-	m_Map->MapBool(CInputManager::WheelUp, *m_MouseId, gainput::MouseButtonWheelUp);
-	m_Map->MapBool(CInputManager::WheelDown, *m_MouseId, gainput::MouseButtonWheelDown);
-	m_Map->MapFloat(CInputManager::AxisX, *m_MouseId, gainput::MouseAxisX);
-	m_Map->MapFloat(CInputManager::AxisY, *m_MouseId, gainput::MouseAxisY);
+	CXMLTreeNode l_XML;
+	if (l_XML.LoadFile(_file.c_str()))
+	{
+		CXMLTreeNode l_Input = l_XML["input"];
+		if (l_Input.Exists())
+		{
+			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			{
+				CXMLTreeNode l_Element = l_Input(i);
+				if (l_Element.GetName() == std::string("action"))
+				{
+					l_Name = l_Element.GetPszProperty("name");
+					l_Device = l_Element.GetPszProperty("device");
+					l_Key = l_Element.GetPszProperty("key");
 
-	// Keyboard Mapping
-	m_Map->MapBool(CInputManager::MoveForward, *m_KeyboardId, gainput::KeyF1);
-	m_Map->MapBool(CInputManager::MoveBackward, *m_KeyboardId, gainput::KeyF2);
-	m_Map->MapBool(CInputManager::StrafeLeft, *m_KeyboardId, gainput::KeyF3);
-	m_Map->MapBool(CInputManager::StrafeRight, *m_KeyboardId, gainput::KeyF4);
-	m_Map->MapBool(CInputManager::Jump, *m_KeyboardId, gainput::KeyF5);
-	m_Map->MapBool(CInputManager::Crouch, *m_KeyboardId, gainput::KeyF6);
-	m_Map->MapBool(CInputManager::Run, *m_KeyboardId, gainput::KeyF7);
-	m_Map->MapBool(CInputManager::Interact, *m_KeyboardId, gainput::KeyF8);
-	m_Map->MapBool(CInputManager::Pause, *m_KeyboardId, gainput::KeyF9);
+					if (l_Device == "Keyboard")
+						m_Map->MapBool(GetAction(l_Name), *m_KeyboardId, GetInput(l_Key));
+					else if (l_Device == "Mouse")
+						m_Map->MapBool(GetAction(l_Name), *m_MouseId, GetInput(l_Key));
+					else if (l_Device == "Gamepad")
+						m_Map->MapBool(GetAction(l_Name), *m_GamepadId, GetInput(l_Key));
+					else
+						assert("This should not happen!");
+				}
+				else if (l_Element.GetName() == std::string("axis"))
+				{
+					l_Name = l_Element.GetPszProperty("name");
+					l_Device = l_Element.GetPszProperty("device");
+					l_Key = l_Element.GetPszProperty("key");
+
+					if (l_Device == "Keyboard")
+						m_Map->MapFloat(GetAction(l_Name), *m_KeyboardId, GetInput(l_Key));
+					else if (l_Device == "Mouse")
+						m_Map->MapFloat(GetAction(l_Name), *m_MouseId, GetInput(l_Key));
+					else if (l_Device == "Gamepad")
+						m_Map->MapFloat(GetAction(l_Name), *m_GamepadId, GetInput(l_Key));
+					else
+						assert("This should not happen!");
+				}
+			}
+		}
+	}
+	else
+	{
+		// Mouse Mapping
+		m_Map->MapBool(CInputManager::LeftClick, *m_MouseId, gainput::MouseButtonLeft);
+		m_Map->MapBool(CInputManager::RightClick, *m_MouseId, gainput::MouseButtonRight);
+		m_Map->MapBool(CInputManager::MiddleClick, *m_MouseId, gainput::MouseButtonMiddle);
+		m_Map->MapBool(CInputManager::WheelUp, *m_MouseId, gainput::MouseButtonWheelUp);
+		m_Map->MapBool(CInputManager::WheelDown, *m_MouseId, gainput::MouseButtonWheelDown);
+		m_Map->MapFloat(CInputManager::AxisX, *m_MouseId, gainput::MouseAxisX);
+		m_Map->MapFloat(CInputManager::AxisY, *m_MouseId, gainput::MouseAxisY);
+		
+		// Gamepad Mapping
+		m_Map->MapFloat(CInputManager::AxisX, *m_GamepadId, gainput::PadButtonRightStickX);
+		m_Map->MapFloat(CInputManager::AxisY, *m_GamepadId, gainput::PadButtonRightStickY);
+
+		// Keyboard Mapping
+		m_Map->MapBool(CInputManager::MoveForward, *m_KeyboardId, gainput::KeyF1);
+		m_Map->MapBool(CInputManager::MoveBackward, *m_KeyboardId, gainput::KeyF2);
+		m_Map->MapBool(CInputManager::StrafeLeft, *m_KeyboardId, gainput::KeyF3);
+		m_Map->MapBool(CInputManager::StrafeRight, *m_KeyboardId, gainput::KeyF4);
+		m_Map->MapBool(CInputManager::Jump, *m_KeyboardId, gainput::KeyF5);
+		m_Map->MapBool(CInputManager::Crouch, *m_KeyboardId, gainput::KeyF6);
+		m_Map->MapBool(CInputManager::Run, *m_KeyboardId, gainput::KeyF7);
+		m_Map->MapBool(CInputManager::Interact, *m_KeyboardId, gainput::KeyF8);
+		m_Map->MapBool(CInputManager::Pause, *m_KeyboardId, gainput::KeyF9);
 #ifdef _DEBUG
-	m_Map->MapBool(CInputManager::DebugToggleFrustum, *m_KeyboardId, gainput::Key0);
-	m_Map->MapBool(CInputManager::DebugSpeedUp, *m_KeyboardId, gainput::Key1);
-	m_Map->MapBool(CInputManager::DebugSpeedDown, *m_KeyboardId, gainput::Key2);
-	m_Map->MapBool(CInputManager::DebugSanityUp, *m_KeyboardId, gainput::Key3);
-	m_Map->MapBool(CInputManager::DebugSanityDown, *m_KeyboardId, gainput::Key4);
-	m_Map->MapBool(CInputManager::DebugReloadLua, *m_KeyboardId, gainput::Key5);
-	m_Map->MapBool(CInputManager::DebugToggleRenderLights, *m_KeyboardId, gainput::Key6);
-	m_Map->MapBool(CInputManager::DebugChangeCameraControl, *m_KeyboardId, gainput::Key7);
-	m_Map->MapBool(CInputManager::DebugChangeCameraVision, *m_KeyboardId, gainput::Key8);
-	m_Map->MapBool(CInputManager::DebugChangeCamera, *m_KeyboardId, gainput::Key9);
-	m_Map->MapBool(CInputManager::DebugToggleRenderCamera, *m_KeyboardId, gainput::KeyF10);
-	m_Map->MapBool(CInputManager::DebugMusicVolumeUp, *m_KeyboardId, gainput::KeyF11);
-	m_Map->MapBool(CInputManager::DebugMusicVolumeDown, *m_KeyboardId, gainput::KeyF12);
-	m_Map->MapBool(CInputManager::DebugFxVolumeUp, *m_KeyboardId, gainput::KeyA);
-	m_Map->MapBool(CInputManager::DebugFxVolumeDown, *m_KeyboardId, gainput::KeyN);
-	m_Map->MapBool(CInputManager::DebugMonsterRun, *m_KeyboardId, gainput::KeyB);
-	m_Map->MapBool(CInputManager::DebugMonsterIdle, *m_KeyboardId, gainput::KeyC);
-	m_Map->MapBool(CInputManager::DebugMonsterHit, *m_KeyboardId, gainput::KeyD);
+		m_Map->MapBool(CInputManager::DebugToggleFrustum, *m_KeyboardId, gainput::Key0);
+		m_Map->MapBool(CInputManager::DebugSpeedUp, *m_KeyboardId, gainput::Key1);
+		m_Map->MapBool(CInputManager::DebugSpeedDown, *m_KeyboardId, gainput::Key2);
+		m_Map->MapBool(CInputManager::DebugSanityUp, *m_KeyboardId, gainput::Key3);
+		m_Map->MapBool(CInputManager::DebugSanityDown, *m_KeyboardId, gainput::Key4);
+		m_Map->MapBool(CInputManager::DebugReloadLua, *m_KeyboardId, gainput::Key5);
+		m_Map->MapBool(CInputManager::DebugToggleRenderLights, *m_KeyboardId, gainput::Key6);
+		m_Map->MapBool(CInputManager::DebugChangeCameraControl, *m_KeyboardId, gainput::Key7);
+		m_Map->MapBool(CInputManager::DebugChangeCameraVision, *m_KeyboardId, gainput::Key8);
+		m_Map->MapBool(CInputManager::DebugChangeCamera, *m_KeyboardId, gainput::Key9);
+		m_Map->MapBool(CInputManager::DebugToggleRenderCamera, *m_KeyboardId, gainput::KeyF10);
+		m_Map->MapBool(CInputManager::DebugMusicVolumeUp, *m_KeyboardId, gainput::KeyF11);
+		m_Map->MapBool(CInputManager::DebugMusicVolumeDown, *m_KeyboardId, gainput::KeyF12);
+		m_Map->MapBool(CInputManager::DebugFxVolumeUp, *m_KeyboardId, gainput::KeyA);
+		m_Map->MapBool(CInputManager::DebugFxVolumeDown, *m_KeyboardId, gainput::KeyN);
+		m_Map->MapBool(CInputManager::DebugMonsterRun, *m_KeyboardId, gainput::KeyB);
+		m_Map->MapBool(CInputManager::DebugMonsterIdle, *m_KeyboardId, gainput::KeyC);
+		m_Map->MapBool(CInputManager::DebugMonsterHit, *m_KeyboardId, gainput::KeyD);
 #endif
+	}
 }
 
 int CInputManager::GetAction(std::string _name)
 {
-	if (_name == "LeftClick")
+	if (_name == "AxisX")
+		return CInputManager::AxisX;
+	else if (_name == "AxisY")
+		return CInputManager::AxisY;
+	else if (_name == "LeftClick")
 		return CInputManager::LeftClick;
 	else if (_name == "RightClick")
 		return CInputManager::RightClick;
@@ -190,8 +250,10 @@ int CInputManager::GetAction(std::string _name)
 	else if (_name == "DebugMonsterHit")
 		return CInputManager::DebugMonsterHit;
 #endif
-	else
+	else{
 		assert("This should not happen!");
+		return 0;
+	}
 }
 
 int CInputManager::GetInput(std::string _name)
@@ -210,6 +272,8 @@ int CInputManager::GetInput(std::string _name)
 		return gainput::MouseAxisX;
 	else if (_name == "MouseAxisY")
 		return gainput::MouseAxisY;
+	else if (_name == "KeySpace")
+		return gainput::KeySpace;
 	else if (_name == "KeyA")
 		return gainput::KeyA;
 	else if (_name == "KeyB")
@@ -282,21 +346,27 @@ int CInputManager::GetInput(std::string _name)
 		return gainput::Key8;
 	else if (_name == "Key9")
 		return gainput::Key9;
-	else
+	else if (_name == "PadButtonRightStickX")
+		return gainput::PadButtonRightStickX;
+	else if (_name == "PadButtonRightStickY")
+		return gainput::PadButtonRightStickY;
+	else{
 		assert("This should not happen!");
+		return 0;
+	}
 }
 
-Vect2i CInputManager::GetCursor()
+Vect2f CInputManager::GetCursor()
 {
-	return Vect2i(
+	return Vect2f(
 		m_Map->GetFloat(CInputManager::AxisX),
 		m_Map->GetFloat(CInputManager::AxisY));
 }
 
-Vect2i CInputManager::GetCursorMovement()
+Vect2f CInputManager::GetCursorMovement()
 {
 	m_Map->GetBoolIsNew(CInputManager::DebugMonsterIdle);
-	return Vect2i(
+	return Vect2f(
 		m_Map->GetFloatDelta(CInputManager::AxisX),
 		m_Map->GetFloatDelta(CInputManager::AxisY));
 }
