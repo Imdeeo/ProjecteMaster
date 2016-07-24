@@ -230,17 +230,9 @@ void CGUIManager::CheckInput()
 		m_MouseX = (int)l_InputMap->GetFloat(CInputManager::Actions::AxisX);
 		m_MouseY = (int)l_InputMap->GetFloat(CInputManager::Actions::AxisY);
 
-		if (m_MouseWentPressed && !l_InputMap->GetBool(CInputManager::Actions::LeftClick))
-		{
-			m_MouseWentReleased = true;
-		}
-		else
-		{
-			m_MouseWentReleased = false;
-		}
+		m_MouseWentReleased = l_InputMap->GetBoolWasDown(CInputManager::Actions::LeftClick);
 		m_MouseWentPressed = l_InputMap->GetBool(CInputManager::Actions::LeftClick);
 		
-
 		m_InputUpToDate = true;
 	}
 }
