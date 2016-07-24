@@ -61,6 +61,7 @@ public:
 
 	const gainput::DeviceId* m_KeyboardId;
 	const gainput::DeviceId* m_MouseId;
+	const gainput::DeviceId* m_GamepadId;
 
 	CInputManager();
 	~CInputManager();
@@ -72,8 +73,8 @@ public:
 	int GetAction(std::string _name);
 	int GetInput(std::string _name);
 
-	Vect2i GetCursor();
-	Vect2i GetCursorMovement();
+	Vect2f GetCursor();
+	Vect2f GetCursorMovement();
 	bool IsActionActive(std::string _name);
 	bool IsActionNew(std::string _name);
 	bool IsActionReleased(std::string _name);

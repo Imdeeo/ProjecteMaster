@@ -45,13 +45,6 @@ void CApplication::Update(float _ElapsedTime)
 #ifdef _DEBUG
 
 	gainput::InputMap* l_InputMap = UABEngine.GetInputManager()->GetMap();
-	
-	UtilsLog("application update");
-
-	if (UABEngine.GetInputManager()->GetMap()->GetBoolWasDown(CInputManager::Actions::DebugReloadLua))
-	{
-		UtilsLog("Reloading Lua");
-	}
 
 	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugReloadLua))
 	{
@@ -60,18 +53,16 @@ void CApplication::Update(float _ElapsedTime)
 		UtilsLog("Reloading Lua");
 		UABEngine.GetScriptManager()->RunCode("mainLua(\"" + UABEngine.GetLevelLoaded() + "\")");
 	}
+
 	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderLights))
-	{
 		UABEngine.GetLightManager()->SwitchRenderLights();
-	}
+
 	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCamera))
-	{
 		UABEngine.SwitchCamera();
-	}
+
 	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCameraVision))
-	{
 		UABEngine.ChangeCameraVision();
-	}
+
 	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCameraControl))
 	{
 		int l_currentCameraCotnrol = UABEngine.GetCameraControllerManager()->GetCurrentCameraControl();
@@ -79,10 +70,9 @@ void CApplication::Update(float _ElapsedTime)
 		l_currentCameraCotnrol = l_currentCameraCotnrol % 2;
 		UABEngine.GetCameraControllerManager()->SetCurrentCameraControl(l_currentCameraCotnrol);
 	}
+
 	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderCamera))
-	{
 		m_RenderCameraCube = !m_RenderCameraCube;
-	}
 
 	/*if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugMonsterIdle))
 	{
