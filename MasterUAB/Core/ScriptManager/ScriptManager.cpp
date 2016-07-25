@@ -1397,6 +1397,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_awake", &CManchasSystemInstance::GetAwake)
 			.def("set_awake", &CManchasSystemInstance::SetAwake)
 			.def("get_lua_awake", &CManchasSystemInstance::GetLuaAwake)
+			.def("set_type", &CManchasSystemInstance::SetType)
 	];
 
 

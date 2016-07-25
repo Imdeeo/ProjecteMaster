@@ -69,6 +69,69 @@ class 'CPlayer' (CLUAComponent)
 		self.m_CameraController = UABEngine:get_camera_controller_manager():get_resource(self.m_CameraControllerName)
 		self.m_LuaCommand = _TreeNode:get_psz_property("lua_command", "", false)
 		
+		-- distance, time, sanity amount
+		self.m_SanityEffects = {}
+		for i = 0, _TreeNode:get_num_children()-1 do
+			local l_Param = _TreeNode:get_child(i)
+			if l_Param:get_name() == "vortex" then
+				l_VortexEffects = {}
+				table.insert(l_VortexEffects, "vortex")
+				table.insert(l_VortexEffects, l_Param:get_psz_property("type","",false))
+				table.insert(l_VortexEffects, l_Param:get_float_property("start",0.0,false))
+				table.insert(l_VortexEffects, l_Param:get_float_property("end",0.0,false))
+				table.insert(l_VortexEffects, l_Param:get_psz_property("material","",false))
+				table.insert(l_VortexEffects, l_Param:get_float_property("variation",0.0,false))
+				table.insert(l_VortexEffects, l_Param:get_float_property("default_value",0.0,false))
+				table.insert(self.m_SanityEffects, l_VortexEffects)
+			elseif l_Param:get_name() == "stain" then
+				l_StainEffects = {}
+				table.insert(l_StainEffects, "stain")
+				table.insert(l_StainEffects, l_Param:get_psz_property("type","",false))
+				table.insert(l_StainEffects, l_Param:get_float_property("start",0.0,false))
+				table.insert(l_StainEffects, l_Param:get_float_property("end",0.0,false))
+				table.insert(l_StainEffects, l_Param:get_psz_property("renderable_object","",false))
+				table.insert(self.m_SanityEffects, l_StainEffects)
+			elseif l_Param:get_name() == "vignetting" then
+				l_VignettinEffects = {}
+				table.insert(l_VignettinEffects, "vignetting")
+				table.insert(l_VignettinEffects, l_Param:get_psz_property("type","",false))
+				table.insert(l_VignettinEffects, l_Param:get_float_property("start",0.0,false))
+				table.insert(l_VignettinEffects, l_Param:get_float_property("end",0.0,false))
+				table.insert(l_VignettinEffects, l_Param:get_psz_property("material","",false))
+				table.insert(l_VignettinEffects, l_Param:get_float_property("default_value",0.0,false))
+				table.insert(self.m_SanityEffects, l_VignettinEffects)
+			elseif l_Param:get_name() == "fov" then
+				l_FovEffects = {}
+				table.insert(l_FovEffects, "fov")
+				table.insert(l_FovEffects, l_Param:get_psz_property("type","",false))
+				table.insert(l_FovEffects, l_Param:get_float_property("start",0.0,false))
+				table.insert(l_FovEffects, l_Param:get_float_property("end",0.0,false))
+				table.insert(l_FovEffects, l_Param:get_float_property("start_value",0.0,false))
+				table.insert(l_FovEffects, l_Param:get_float_property("end_value",0.0,false))
+				table.insert(l_FovEffects, l_Param:get_float_property("default_value",0.0,false))
+				table.insert(self.m_SanityEffects, l_FovEffects)
+			elseif l_Param:get_name() == "velocity" then
+				l_VelocityEffects = {}
+				table.insert(l_VelocityEffects, "velocity")
+				table.insert(l_VelocityEffects, l_Param:get_psz_property("type","",false))				
+				table.insert(l_VelocityEffects, l_Param:get_float_property("start",0.0,false))
+				table.insert(l_VelocityEffects, l_Param:get_float_property("end",0.0,false))
+				if l_Param:get_psz_property("type","",false) == "walk" then
+					table.insert(l_VelocityEffects, l_Param:get_float_property("start_value",0.0,false))
+					table.insert(l_VelocityEffects, l_Param:get_float_property("end_value",0.0,false))
+				end
+				table.insert(self.m_SanityEffects, l_VelocityEffects)
+			--[[elseif l_Param:get_name() == "control" then
+				l_ControlEffects = {}
+				table.insert(l_ControlEffects, "control")
+				table.insert(l_ControlEffects, l_Param:get_psz_property("type","",false))
+				table.insert(l_ControlEffects, l_Param:get_float_property("start",0.0,false))
+				table.insert(l_ControlEffects, l_Param:get_float_property("end",0.0,false))
+				table.insert(self.m_SanityEffects, l_ControlEffects)]]
+			end
+		end
+		utils_log("PARAMETROS CORDURA LEIDOS CORRECTAMENTE!!!")
+		
 		self.m_SoundManager = UABEngine:get_sound_manager()
 		if self.m_AlreadyInitialized then
 			-- unregister old speaker before assigning new renderable object
@@ -89,6 +152,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Speed = 5.0
 		self.m_Sanity = 100.0
 		self.m_MaxSanity = 100.0
+		self.m_TimerVortex = 0
 		
 		self.m_IsSinging = false
 		self.m_IsWindedUp = false
@@ -137,29 +201,107 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Sanity = math.max(math.min(self.m_Sanity + _amount, self.m_MaxSanity),0)
 	end
 	
-	function CPlayer:RecoverSanity()
+	function CPlayer:UpdateSanityEffects(_ElapsedTime)
+		local UABEngine = CUABEngine.get_instance()
+		
+		for i=1, table.maxn(self.m_SanityEffects)-1 do
+			l_EffectAux = self.m_SanityEffects[i]
+			
+			if self.m_Sanity <= l_EffectAux[3] and self.m_Sanity >= l_EffectAux[4] then
+				if l_EffectAux[1] == "vortex" then
+					l_Material = UABEngine:get_material_manager():get_resource(l_EffectAux[5])
+					
+					local l_Value = 0.0
+					local l_Previous = l_Material:get_value(1)
+					
+					if l_EffectAux[2] == "lineal" then
+						l_Value = (l_EffectAux[3] - self.m_Sanity) / (l_EffectAux[3] - l_EffectAux[4])												
+					else
+						self.m_TimerVortex = self.m_TimerVortex + _ElapsedTime
+						
+						l_AuxValue = (l_EffectAux[3] - self.m_Sanity) / (l_EffectAux[3] - l_EffectAux[4])
+						l_AuxValueMin = l_AuxValue - l_EffectAux[6]
+						l_AuxValueMax = l_AuxValue + l_EffectAux[6]
+						
+						l_Value = l_AuxValueMin + math.cos(self.m_TimerVortex)*l_EffectAux[6]*2
+					end
+					
+					l_Value = l_Previous + (l_Value-l_Previous)*_ElapsedTime
+					l_Material:set_value(1,l_Value)
+				elseif l_EffectAux[1] == "stain" then
+					local l_Layer = UABEngine:get_layer_manager():get_layer("manchas")
+					local l_Mancha = l_Layer:get_resource(l_EffectAux[5])
+					local l_ManchaType = UABEngine:get_manchas_manager():get_resource(l_EffectAux[2])
+					
+					l_Mancha:set_type(l_ManchaType)
+					l_Mancha:set_awake(true)
+				elseif l_EffectAux[1] == "vignetting" then
+					l_Material = UABEngine:get_material_manager():get_resource(l_EffectAux[5])
+					
+					local l_Value = 0.0
+					local l_Previous = l_Material:get_value(1)
+					
+					if l_EffectAux[2] == "lineal" then
+						l_Value = (l_EffectAux[3] - self.m_Sanity) / (l_EffectAux[3] - l_EffectAux[4])
+					end
+					
+					l_Value = l_Previous + (l_Value-l_Previous)*_ElapsedTime
+					l_Material:set_value(1,l_Value)
+				elseif l_EffectAux[1] == "fov" then
+					local CameraControllerManager = UABEngine:get_camera_controller_manager()
+					local MainCamera = CameraControllerManager:get_main_camera()
+					local l_Fov_Value = l_EffectAux[5] + (l_EffectAux[6] - l_EffectAux[5]) * (l_EffectAux[3] - self.m_Sanity) / (l_EffectAux[3] - l_EffectAux[4])
+					local l_Previous_fov = MainCamera:get_fov()
+					
+					l_Fov_Value = l_Previous_fov + (l_Fov_Value-l_Previous_fov)*_ElapsedTime					
+					MainCamera:set_fov(l_Fov_Value)
+					CameraControllerManager:choose_main_camera("MainCamera")
+				elseif l_EffectAux[1] == "velocity" then
+					
+				--elseif l_EffectAux[1] == "control" then					
+				end
+			else
+				if l_EffectAux[1] == "vortex" then
+					l_Material = UABEngine:get_material_manager():get_resource(l_EffectAux[5])
+					
+					local l_Previous = l_Material:get_value(1)
+					if l_Previous ~= l_EffectAux[7] then
+						local l_Value = l_Previous + (l_EffectAux[7]-l_Previous)*_ElapsedTime
+						l_Material:set_value(1, l_Value)
+					end
+				elseif l_EffectAux[1] == "stain" then
+					local l_Layer = UABEngine:get_layer_manager():get_layer("manchas")
+					local l_Mancha = l_Layer:get_resource(l_EffectAux[5])
+
+					if l_Mancha:get_awake() then
+						l_Mancha:set_awake(false)
+					end
+				elseif l_EffectAux[1] == "vignetting" then
+					l_Material = UABEngine:get_material_manager():get_resource(l_EffectAux[5])
+					
+					local l_Previous = l_Material:get_value(1)
+					if l_Previous ~= l_EffectAux[6] then
+						local l_Value = l_Previous + (l_EffectAux[6]-l_Previous)*_ElapsedTime
+						l_Material:set_value(1, l_Value)
+					end
+				elseif l_EffectAux[1] == "fov" then
+					local CameraControllerManager = UABEngine:get_camera_controller_manager()
+					local MainCamera = CameraControllerManager:get_main_camera()
+					local l_Previous_fov = MainCamera:get_fov()
+					
+					if l_Previous_fov ~= l_EffectAux[7] then
+						local l_Fov_Value = l_Previous_fov + (l_EffectAux[7]-l_Previous_fov)*_ElapsedTime
+						MainCamera:set_fov(l_Fov_Value)
+						CameraControllerManager:choose_main_camera("MainCamera")
+					end
+				elseif l_EffectAux[1] == "velocity" then
+				end
+			end
+		end
+	end
+	
+	--[[function CPlayer:RecoverSanity()
 		self.m_Sanity = self.m_MaxSanity
-	end
-	
-	--[[function CPlayer:ModifySanity(_amount, _override)
-		self.m_Sanity = self.m_Sanity + _amount
-		if _override and self.m_Sanity > self.m_MaxSanity then
-			self.m_MaxSanity = self.m_Sanity
-		else
-	end
-	
-	function CPlayer:GainSanity()
-		self.m_Sanity = self.m_Sanity + 10
-		if self.m_Sanity > self.m_MaxSanity then
-			self.m_Sanity = self.m_MaxSanity
-		end
-	end
-	
-	function CPlayer:LoseSanity()
-		self.m_Sanity = self.m_Sanity - 10
-		if self.m_Sanity < 0 then
-			self.m_Sanity = 0
-		end
 	end]]
 	
 	function CPlayer:Update(_ElapsedTime)
@@ -167,6 +309,7 @@ class 'CPlayer' (CLUAComponent)
 		args["owner"] = self.m_RenderableObject
 		args["self"] = self
 		self.m_StateMachine:update(args, _ElapsedTime)
+		self:UpdateSanityEffects(_ElapsedTime)
 	end
 	
 	function CPlayer:SetPlayerStateMachine()
