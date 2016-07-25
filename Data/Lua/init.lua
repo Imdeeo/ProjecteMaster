@@ -19,8 +19,10 @@ m_Cordura = CSliderResult(50.0, 50.0)
 
 function mainLua(level)
 	InitAntweakBar()
+	
 	m_CharacterManager:LoadXML("Data\\level_"..level.."\\characters.xml")
-	local l_SoundManager = CUABEngine.get_instance():get_sound_manager()
+
+	local l_SoundManager = g_Engine:get_sound_manager()
 	local l_WaterSoundEvent = SoundEvent()
 	l_WaterSoundEvent.event_name = "water"
 	local l_MainMusicEvent = SoundEvent()
@@ -40,7 +42,7 @@ function mainLua(level)
 	g_VolumeController:SetMusicVolume(50)
 	m_timerPause = 0
 	m_iniciando = true
-	--if CUABEngine.get_instance():get_level_loaded() == "2" then
+	--if g_Engine:get_level_loaded() == "2" then
 	--	g_TestEnemy = CVisionTestEnemy()
 	--	g_TestEnemy:InitEnemy("automata_LOW001")
 	--end
@@ -51,22 +53,21 @@ function luaUpdate(_ElapsedTime)
 		m_timerPause = m_timerPause + _ElapsedTime
 		if m_timerPause >= 0.2 then
 			m_iniciando = false
-			CUABEngine.get_instance():set_pause(true)
+			g_Engine:set_pause(true)
 		end		
 	end
 	
-	local l_Engine = CUABEngine.get_instance()
-	local l_InputManager = l_Engine:get_input_manager()
+	local l_InputManager = g_Engine:get_input_manager()
 	if l_InputManager:is_action_released("DebugSpeedUp") then
 		utils_log("DebugSpeedUp")
-		if l_Engine:get_time_scale() < 11 then
-			l_Engine:set_time_scale(l_Engine:get_time_scale()+1)
+		if g_Engine:get_time_scale() < 11 then
+			g_Engine:set_time_scale(g_Engine:get_time_scale()+1)
 		end
 	end
 	if l_InputManager:is_action_released("DebugSpeedDown") then
 		utils_log("DebugSpeedDown")
-		if l_Engine:get_time_scale() > 1 then
-			l_Engine:set_time_scale(l_Engine:get_time_scale()-1)
+		if g_Engine:get_time_scale() > 1 then
+			g_Engine:set_time_scale(g_Engine:get_time_scale()-1)
 		end
 	end
 	if l_InputManager:is_action_released("DebugSanityUp") then
@@ -82,15 +83,15 @@ function luaUpdate(_ElapsedTime)
 		CUABEngine.get_instance():set_pause(true)
 	end
 	if l_InputManager:is_action_released("DebugToggleFrustum") then
-		l_Engine:set_frustum_active(not l_Engine:get_frustum_active())
+		g_Engine:set_frustum_active(not g_Engine:get_frustum_active())
 	end
-	g_VolumeController:CheckVolumeKeys()	
+	--g_VolumeController:CheckVolumeKeys()	
 end
 
 function luaGui()
-	local gui_manager = CUABEngine.get_instance():get_gui_manager()
+	local gui_manager = g_Engine:get_gui_manager()
 	gui_position = CGUIPosition(580, 50, 500, 30, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-	m_Cordura = gui_manager:do_slider("Cordura", "mad_slider", gui_position,0, m_CharacterManager.m_Player[1].m_MaxSanity, m_CharacterManager.m_Player[1].m_Sanity, false)
+	--m_Cordura = gui_manager:do_slider("Cordura", "mad_slider", gui_position,0, m_CharacterManager.m_Player[1].m_MaxSanity, m_CharacterManager.m_Player[1].m_Sanity, false)
 			
 	if m_fps then
 		local color = CColor(1,0.2,0.2,1)
@@ -147,7 +148,7 @@ function luaGui()
 			local b_play = gui_manager:do_button("Play", "play_button", gui_position)
 			if b_play then
 				m_menu = false
-				CUABEngine.get_instance():set_pause(false)
+				g_Engine:set_pause(false)
 			end 
 			
 			gui_position = CGUIPosition(500, 460, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)

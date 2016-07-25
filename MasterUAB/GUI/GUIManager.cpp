@@ -34,30 +34,25 @@ CGUIManager::~CGUIManager()
 void CGUIManager::Destroy()
 {
 	for (size_t i = 0; i < m_Materials.size(); i++)
-	{
 		CHECKED_DELETE(m_Materials[i]);
-	}
 	m_Materials.clear();
+
 	for (size_t i = 0; i < m_VertexBuffers.size(); i++)
-	{
 		CHECKED_DELETE(m_VertexBuffers[i]);
-	}
 	m_VertexBuffers.clear();
+
 	for (auto it = m_Buttons.begin(); it != m_Buttons.end(); it++)
-	{
 		CHECKED_DELETE(it->second);
-	}
 	m_Buttons.clear();
+
 	for (auto it = m_Sliders.begin(); it != m_Sliders.end(); it++)
-	{
 		CHECKED_DELETE(it->second);
-	}
 	m_Sliders.clear();
+
 	for (auto it = m_TexturePerFont.begin(); it != m_TexturePerFont.end(); it++)
-	{
 		it->second.clear();
-	}
 	m_TexturePerFont.clear();
+
 	m_LineHeightPerFont.clear();
 	m_BasePerFont.clear();
 	m_SpriteMaps.clear();
@@ -79,17 +74,13 @@ void CGUIManager::SetNotActive()
 void CGUIManager::SetHot(const std::string& id)
 {
 	if (m_ActiveItem == "" || m_ActiveItem == id)
-	{
 		m_HotItem = id;
-	}
 }
 
 void CGUIManager::SetNotHot(const std::string& id)
 {
 	if (m_HotItem == id)
-	{
 		m_HotItem = "";
-	}
 }
 
 void CGUIManager::SetSelected(const std::string& id)
@@ -147,13 +138,9 @@ bool CGUIManager::Load(std::string _FileName)
 				
 				}
 				else if (l_Element.GetName() == std::string("button"))
-				{
 					m_Buttons[l_Element.GetPszProperty("name")] = new CButon(&m_Sprites[l_Element.GetPszProperty("normal")], &m_Sprites[l_Element.GetPszProperty("highlight")], &m_Sprites[l_Element.GetPszProperty("pressed")]);
-				}
 				else if (l_Element.GetName() == std::string("slider"))
-				{
 					m_Sliders[l_Element.GetPszProperty("name")] = new CSlider(&m_Sprites[l_Element.GetPszProperty("base")], &m_Sprites[l_Element.GetPszProperty("top")], &m_Sprites[l_Element.GetPszProperty("handle")], &m_Sprites[l_Element.GetPszProperty("pressed_handle")]);
-				}
 				else if (l_Element.GetName() == std::string("font"))
 				{
 					CXMLTreeNode l_XMLfont;
@@ -178,9 +165,7 @@ bool CGUIManager::Load(std::string _FileName)
 									{
 										CXMLTreeNode l_PagesFile = l_ElementFile(l);
 										if (l_PagesFile.GetName() == std::string("page"))
-										{
-											m_TexturePerFont[l_FontName].push_back(&m_Sprites[l_PagesFile.GetPszProperty("file")]);
-										}										
+											m_TexturePerFont[l_FontName].push_back(&m_Sprites[l_PagesFile.GetPszProperty("file")]);									
 									}
 								}
 								else if (l_ElementFile.GetName() == std::string("chars"))
@@ -202,9 +187,7 @@ bool CGUIManager::Load(std::string _FileName)
 									{
 										CXMLTreeNode l_KerningFile = l_ElementFile(l);
 										if (l_KerningFile.GetName() == std::string("kerning"))
-										{
 											m_KerningsPerFont[l_FontName][l_KerningFile.GetIntProperty("first")][l_KerningFile.GetIntProperty("second")] = l_KerningFile.GetIntProperty("second");
-										}
 									}
 								}
 							}
@@ -216,9 +199,7 @@ bool CGUIManager::Load(std::string _FileName)
 		}
 	}
 	else
-	{
 		return false;
-	}
 	return true;
 }
 
@@ -239,13 +220,8 @@ void CGUIManager::CheckInput()
 
 bool IsMouseInside(int _mouseX, int _mouseY, int x, int y, int width, int height)
 {
-	if (_mouseX >= x && _mouseX <= x + width)
-	{
-		if (_mouseY >= y && _mouseY <= y + height)
-		{
+	if ((_mouseX >= x && _mouseX <= x + width) && (_mouseY >= y && _mouseY <= y + height))
 			return true;
-		}
-	}
 	return false;
 }
 
@@ -257,47 +233,32 @@ bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID
 
 	if (m_ActiveItem == guiID)
 	{
-		
 		if (m_MouseWentReleased)
 		{
 			if (m_HotItem == guiID)
-			{
 				l_result = true;
-			}
 			SetNotActive();
 		}	
 	}
 	else if (m_HotItem == guiID)
 	{
 		if (m_MouseWentPressed)
-		{
 			SetActive(guiID);
-		}
 	}
 
 	if (IsMouseInside(m_MouseX, m_MouseY, position.Getx(), position.Gety(), position.Getwidth(), position.Getheight()))
-	{
-		SetHot(guiID);		
-	}
+		SetHot(guiID);
 	else
-	{
 		SetNotHot(guiID);
-	}
 
 	if (m_ActiveItem == guiID && m_HotItem == guiID)
-	{
 		l_sprite = m_Buttons[buttonID]->GetPressed();
-	}
 	else
 	{
 		if (m_HotItem == guiID)
-		{
 			l_sprite = m_Buttons[buttonID]->GetHighlight();
-		}
 		else
-		{
 			l_sprite = m_Buttons[buttonID]->GetNormal();
-		}
 	}
 
 	GUICommand command = { 
@@ -334,28 +295,20 @@ CSliderResult CGUIManager::DoSlider(const std::string& GuiID, const std::string&
 				if (m_MouseWentReleased)
 				{
 					if (m_HotItem == GuiID)
-					{
 						RealResult = true;
-					}
 					SetNotActive();
 				}
 			}
 			else if (m_HotItem == GuiID)
 			{
 				if (m_MouseWentPressed)
-				{
 					SetActive(GuiID);
-				}
 			}
 
 			if (RealResult)
-			{
 				l_Result.m_Real = l_Result.m_Temp;
-			}
 			else if (m_ActiveItem == GuiID)
-			{
 				l_Result.m_Real = CurrentValue;
-			}
 			else
 			{
 				l_Result.m_Temp = CurrentValue;
@@ -370,17 +323,11 @@ CSliderResult CGUIManager::DoSlider(const std::string& GuiID, const std::string&
 			int l_RealHandleY = (int)(Position.Gety() + Position.Getheight() * 0.5f - l_RealHandleHeight * 0.5);
 
 			if (IsMouseInside(m_MouseX, m_MouseY, Position.Getx(), Position.Gety(), Position.Getwidth(), Position.Getheight()))
-			{
 				SetHot(GuiID);
-			}
 			else if (IsMouseInside(m_MouseX, m_MouseY, l_RealHandleX, l_RealHandleY, (int)l_RealHandleWidth, (int)l_RealHandleHeight))
-			{
 				SetHot(GuiID);
-			}
 			else
-			{
 				SetNotHot(GuiID);
-			}
 
 			GUICommand l_Base = { l_Slider->GetBase(), (int)Position.Getx(), (int)Position.Gety(), (int)(Position.Getx() + Position.Getwidth()), (int)(Position.Gety() + Position.Getheight())
 				, 0, 0, 1, 1,
@@ -511,21 +458,13 @@ void CGUIManager::FillCommandQueueWithText(const std::string& _font, const std::
 	Vect2f adjustment = _coord;
 
 	if ((int)_anchor & (int)GUIAnchor::TOP)
-	{
 		adjustment.y -= textSizes.y;
-	}
 	else if ((int)_anchor & (int)GUIAnchor::MID)
-	{
 		adjustment.y -= (textSizes.y + textSizes.w) * 0.5f;
-	}
 	else if ((int)_anchor & (int)GUIAnchor::BOTTOM)
-	{
 		adjustment.y -= textSizes.w;
-	}
 	else
-	{
 		assert(false);
-	}
 
 	for (size_t i = m_Commands.size() - numCommands; i < m_Commands.size(); ++i)
 	{
@@ -538,16 +477,11 @@ void CGUIManager::FillCommandQueueWithText(const std::string& _font, const std::
 
 std::string CGUIManager::DoTextBox(const std::string& guiID, const std::string& _font, const std::string& currentText, CGUIPosition position)
 {
-	if (m_ActiveItem == guiID)
+	if (m_ActiveItem == guiID && m_MouseWentReleased)
 	{
-		if (m_MouseWentReleased)
-		{
-			if (m_HotItem == guiID)
-			{
-				SetSelected(guiID);
-			}
-			SetNotActive();
-		}
+		if (m_HotItem == guiID)
+			SetSelected(guiID);
+		SetNotActive();
 	}
 
 	std::string displayText;
@@ -579,7 +513,6 @@ std::string CGUIManager::DoTextBox(const std::string& guiID, const std::string& 
 
 void CGUIManager::Render(CRenderManager *RenderManager)
 {
-	
 	int currentVertex = 0;
 	SpriteMapInfo *currentSpriteMap = nullptr;
 	for (size_t i = 0; i < m_Commands.size(); ++i)  //commandsExecutionOrder.size()
