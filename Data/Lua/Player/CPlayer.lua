@@ -116,10 +116,6 @@ class 'CPlayer' (CLUAComponent)
 				table.insert(l_VelocityEffects, l_Param:get_psz_property("type","",false))				
 				table.insert(l_VelocityEffects, l_Param:get_float_property("start",0.0,false))
 				table.insert(l_VelocityEffects, l_Param:get_float_property("end",0.0,false))
-				if l_Param:get_psz_property("type","",false) == "walk" then
-					table.insert(l_VelocityEffects, l_Param:get_float_property("start_value",0.0,false))
-					table.insert(l_VelocityEffects, l_Param:get_float_property("end_value",0.0,false))
-				end
 				table.insert(self.m_SanityEffects, l_VelocityEffects)
 			--[[elseif l_Param:get_name() == "control" then
 				l_ControlEffects = {}
@@ -150,6 +146,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Velocity = Vect3f(0.0, 0.0, 0.0)
 		self.m_Gravity = -9.81
 		self.m_Speed = 5.0
+		self.m_DefaultSpeed = 5.0
 		self.m_Sanity = 100.0
 		self.m_MaxSanity = 100.0
 		self.m_TimerVortex = 0
@@ -204,7 +201,7 @@ class 'CPlayer' (CLUAComponent)
 	function CPlayer:UpdateSanityEffects(_ElapsedTime)
 		local UABEngine = CUABEngine.get_instance()
 		
-		for i=1, table.maxn(self.m_SanityEffects)-1 do
+		for i=1, table.maxn(self.m_SanityEffects) do
 			l_EffectAux = self.m_SanityEffects[i]
 			
 			if self.m_Sanity <= l_EffectAux[3] and self.m_Sanity >= l_EffectAux[4] then
@@ -257,7 +254,20 @@ class 'CPlayer' (CLUAComponent)
 					MainCamera:set_fov(l_Fov_Value)
 					CameraControllerManager:choose_main_camera("MainCamera")
 				elseif l_EffectAux[1] == "velocity" then
-					
+					utils_log("TYPE: "..l_EffectAux[2])
+					if l_EffectAux[2] == "run" then
+						if self.m_CurrentAnimation == "run" then
+							self.m_Speed = self.m_DefaultSpeed - ((self.m_DefaultSpeed / 2)* (l_EffectAux[3] - self.m_Sanity) / (l_EffectAux[3] - l_EffectAux[4]))
+						else
+							self.m_Speed = self.m_DefaultSpeed
+						end 
+					elseif l_EffectAux[2] == "walk" then
+						self.m_Speed = self.m_DefaultSpeed - self.m_DefaultSpeed * (l_EffectAux[3] - self.m_Sanity) / (l_EffectAux[3] - l_EffectAux[4])					
+						if self.m_CurrentAnimation == "run" then
+							self.m_Speed = self.m_Speed / 2
+						end
+					end
+					--utils_log("STATE: "..self.m_CurrentAnimation..", SPEED: "..self.m_Speed)
 				--elseif l_EffectAux[1] == "control" then					
 				end
 			else
@@ -294,7 +304,6 @@ class 'CPlayer' (CLUAComponent)
 						MainCamera:set_fov(l_Fov_Value)
 						CameraControllerManager:choose_main_camera("MainCamera")
 					end
-				elseif l_EffectAux[1] == "velocity" then
 				end
 			end
 		end
