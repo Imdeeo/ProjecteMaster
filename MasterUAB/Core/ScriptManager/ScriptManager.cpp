@@ -1577,6 +1577,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CGamePlayManager>("CGamePlayManager")
 			.def("add_component", &CGamePlayManager::AddComponent)
+			.def("destroy", &CGamePlayManager::Destroy)
 	];
 }
 

@@ -182,18 +182,17 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor;
 	#endif
 
-	#ifdef HAS_TANGENT
+	#ifdef HAS_TANGENT		
 		Nn=normalize(IN.WorldNormal);
 		float3 Tn=normalize(IN.WorldTangent);
 		float3 Bn=normalize(IN.WorldBinormal);
 		float4 l_NormalMap = T2Texture.Sample(S2Sampler,IN.UV);
-
+		
+		Nn=CalcNormalMap(Nn, Tn, Bn, l_NormalMap);	
 		#ifdef HAS_PARALLAX
 			Nn=CalcParallaxMap(l_EyeToWorldPosition, Nn, Tn, Bn, IN.UV, IN.UV, l_NormalMap);
-		#else
-			Nn=CalcNormalMap(Nn, Tn, Bn, l_NormalMap);
-		#endif
-
+		#endif 
+		
 		l_specularFactor *= l_NormalMap.w;
 	#endif
 
