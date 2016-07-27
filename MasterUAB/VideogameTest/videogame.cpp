@@ -189,6 +189,8 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 			{
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
+				if (msg.wParam == VK_ESCAPE)
+					PostQuitMessage(0);
 				UABEngine.GetInputManager()->GetManager()->HandleMessage(msg);
 				/*if (!debugHelper.Update(msg.hwnd, msg.message, msg.wParam, msg.lParam))
 				{
