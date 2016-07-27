@@ -373,6 +373,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 			setUserProp Obj "has_render_layer" true
 			setUserProp Obj "render_layer" "solid"
 			setUserProp Obj "anim_model_core" "undefined"
+			setUserProp Obj "cinematic_name" ""
 			setUserProp Obj "physics_generate" false
 			setUserProp Obj "physics_generate_type" "triangle_mesh"
 			setUserProp Obj "has_physics_layer" false
@@ -451,6 +452,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 			
 				AnimModelText.text = getUserProp Objs[1] "anim_model_core"
 				CinematicBox.checked = getUserProp Objs[1] "cinematic_object"
+				CinematicNameText.text = getUserProp Objs[1] "cinematic_name"
 			) else (
 				toggleRender false
 				RenderVisibleBox.checked = false
@@ -578,6 +580,13 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 						"particles": setUserProp Objs[i] "render_layer" "particles"
 						"skybox": setUserProp Objs[i] "render_layer" "skybox"
 						"triggers": setUserProp Objs[i] "render_layer" "triggers"
+					)
+					
+					if CinematicBox.checked then
+					(
+						setUserProp Objs[i] "cinematic_name" CinematicNameText.text
+					) else (
+						setUserProp Objs[i] "cinematic_name" "undefined"
 					)
 					
 					if AnimModelText.text == "" then
