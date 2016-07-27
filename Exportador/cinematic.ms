@@ -86,7 +86,7 @@ fn createCinematicObjects dir filename Objs isCal3D =
 			)
 		)
 		format "\t</cinematic>\n" to:file
-		format "<cinematics>\n" to:file
+		format "</cinematics>\n" to:file
 		close file
 	)
 )
