@@ -3,15 +3,19 @@
 
 #include "VideoManager.h"
 #include "SDL.h"
+#include <string>
 
 class CVideoManagerImplementation : public IVideoManager
 {	
 public:
 	CVideoManagerImplementation();
 	virtual ~CVideoManagerImplementation();
-	bool Init();
+	bool LoadClip(const std::string &l_ClipFile, bool _Restart=false);
+	bool ClearClip(const std::string &l_ClipFile);
+	bool PlayClip(const std::string &l_ClipName);
+	bool RenderSceenClip(const std::string &l_ClipName);
 	void Update(float _ElapsedTime);
-	TheoraVideoClip* GetClip();
+	TheoraVideoClip* GetActualClip();
 };
 
 #endif //H_VIDEO_MANAGER_IMPLEMENTATION_H
