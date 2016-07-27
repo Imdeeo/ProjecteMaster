@@ -105,6 +105,7 @@
 #include "PhysXManager\PhysXManager.h"
 
 #include "SoundManager\SoundManager.h"
+#include "VideoManager\VideoManager.h"
 
 #include "IA\AStar.h"
 
@@ -539,6 +540,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_camera_controller_manager", &CUABEngine::GetCameraControllerManager)
 			.def("get_physX_manager", &CUABEngine::GetPhysXManager)
 			.def("get_sound_manager", &CUABEngine::GetSoundManager)
+			.def("get_video_manager", &CUABEngine::GetVideoManager)
 			.def("get_cinematic_manager", &CUABEngine::GetCinematicManager)
 			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
 			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
@@ -1562,7 +1564,14 @@ void CScriptManager::RegisterLUAFunctions()
 					.def_readwrite("time_to_wait", &CAStar::TNodePatrol::time_to_wait)
 			]
 	];
-	
+// VIDEO
+	module(m_LS)[
+		class_<IVideoManager>("IVideoManager")
+			.def("load_clip", &IVideoManager::LoadClip)
+			.def("render_sreen_clip", &IVideoManager::RenderSceenClip)
+			.def("clear_clip", &IVideoManager::ClearClip)
+	];
+
 // VIDEOGAME----------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CApplication>("CApplication")

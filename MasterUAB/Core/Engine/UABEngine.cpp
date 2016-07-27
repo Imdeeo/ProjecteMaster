@@ -134,7 +134,6 @@ void CUABEngine::Init()
 	m_SoundManager->SetPath("Data\\Sounds\\");
 	m_SoundManager->Init();
 	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
-	m_VideoManager->Init();
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	m_ScriptManager->RunCode("mainLua(\""+m_LevelLoaded+"\")");
 	// TEST LECTURA XML
