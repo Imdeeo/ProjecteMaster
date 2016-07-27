@@ -56,15 +56,15 @@ end
 
 function IdleToMovingCondition(args)
 	local l_Player = args["self"]
-	return (l_Player.m_InputManager:is_action_active("MOVE_FWD") or l_Player.m_InputManager:is_action_active("MOVE_BACK") or l_Player.m_InputManager:is_action_active("STRAFE_LEFT") or l_Player.m_InputManager:is_action_active("STRAFE_RIGHT"))
+	return (l_Player.m_InputManager:is_action_active("MoveForward") or l_Player.m_InputManager:is_action_active("MoveBackward") or l_Player.m_InputManager:is_action_active("StrafeLeft") or l_Player.m_InputManager:is_action_active("StrafeRight"))
 end
 
 function IdleToCrouchingCondition(args)
 	local l_Player = args["self"]
-	return l_Player.m_InputManager:is_action_active("CROUCH")
+	return l_Player.m_InputManager:is_action_active("Crouch")
 end
 
 function IdleToJumpingCondition(args)
 	local l_Player = args["self"]
-	return l_Player.m_InputManager:is_action_active("JUMP")
+	return l_Player.m_InputManager:is_action_active("Jump")
 end
