@@ -23,7 +23,7 @@ function IdleUpdate(args, _ElapsedTime)
 	l_Owner:set_position(l_NewControllerPosition)
 	
 	--// Raycast
-	if l_Player.m_InputManager:is_action_active("INTERACT") then
+	if l_Player.m_InputManager:is_action_active("Interact") then
 		CheckRaycast(l_Player, l_NewControllerPosition)
 	end
 	
