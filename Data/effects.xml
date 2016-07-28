@@ -191,6 +191,14 @@
 	<vertex_shader name="rnm_bump_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_RNM;HAS_LIGHTS"/>
 	<pixel_shader name="rnm_bump_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_RNM;HAS_LIGHTS"/>
 	<effect_technique name="rnm_bump_deferred_technique" vertex_shader="rnm_bump_deferred_vs" pixel_shader="rnm_bump_deferred_ps"/>
+
+	<vertex_shader name="rnm_bump_env_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_RNM;HAS_LIGHTS;HAS_REFLECTION"/>
+	<pixel_shader name="rnm_bump_env_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_TANGENT;HAS_RNM;HAS_LIGHTS;HAS_REFLECTION"/>
+	<effect_technique name="rnm_bump_env_deferred_technique" vertex_shader="rnm_bump_env_deferred_vs" pixel_shader="rnm_bump_env_deferred_ps"/>
+	
+	<vertex_shader name="rnm_env_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_RNM;HAS_LIGHTS;HAS_REFLECTION"/>
+	<pixel_shader name="rnm_env_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_UV2;HAS_RNM;HAS_LIGHTS;HAS_REFLECTION"/>
+	<effect_technique name="rnm_env_deferred_technique" vertex_shader="rnm_env_deferred_vs" pixel_shader="rnm_env_deferred_ps"/>
 	
 	<vertex_shader name="parallax_deferred_vs" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_TANGENT;HAS_PARALLAX;HAS_LIGHTS;"/>
 	<pixel_shader name="parallax_deferred_ps" file="Data/Effects/UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_TANGENT;HAS_PARALLAX;HAS_LIGHTS"/>
