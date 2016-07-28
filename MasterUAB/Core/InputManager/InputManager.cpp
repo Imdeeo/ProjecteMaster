@@ -356,6 +356,16 @@ int CInputManager::GetInput(std::string _name)
 	}
 }
 
+void CInputManager::SetFocus(bool _focus)
+{
+	m_Focus = _focus;
+}
+
+bool CInputManager::GetFocus() const
+{
+	return m_Focus;
+}
+
 Vect2f CInputManager::GetCursor()
 {
 	return Vect2f(

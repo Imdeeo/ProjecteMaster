@@ -73,6 +73,9 @@ public:
 	int GetAction(std::string _name);
 	int GetInput(std::string _name);
 
+	void SetFocus(bool _focus);
+	bool GetFocus() const;
+
 	Vect2f GetCursor();
 	Vect2f GetCursorMovement();
 	bool IsActionActive(std::string _name);

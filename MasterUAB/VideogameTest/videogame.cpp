@@ -184,99 +184,38 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 		while (msg.message != WM_QUIT)
 		{
-			UABEngine.GetInputManager()->Update();
+			CInputManager* l_InputManager = UABEngine.GetInputManager();
+			l_InputManager->Update();
+
 			if (PeekMessage(&msg, hWnd, 0U, 0U, PM_REMOVE))
 			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-				if (msg.wParam == VK_ESCAPE)
-					PostQuitMessage(0);
-				UABEngine.GetInputManager()->GetManager()->HandleMessage(msg);
-				/*if (!debugHelper.Update(msg.hwnd, msg.message, msg.wParam, msg.lParam))
+				if (!debugHelper.Update(msg.hwnd, msg.message, msg.wParam, msg.lParam))
 				{
-					bool WasDown = false, IsDown = false, Alt = false;
-
-					switch (msg.message)
+					if (msg.message == WM_KEYDOWN)
 					{
-					case WM_SETFOCUS:
-						hasFocus = true;
-						inputManager.SetFocus(true);
-						break;
-					case  WM_KILLFOCUS:
-						hasFocus = false;
-						inputManager.SetFocus(false);
-						break;
-					case WM_SYSKEYDOWN:
-					case WM_SYSKEYUP:
-					case WM_KEYDOWN:
-					case WM_KEYUP:
-						WasDown = ((msg.lParam & (1 << 30)) != 0);
-						IsDown = ((msg.lParam & (1 << 31)) == 0);
+						bool Alt = false;
 						Alt = ((msg.lParam & (1 << 29)) != 0);
 
-						if (WasDown != IsDown)
+						if (msg.wParam == VK_RETURN && Alt)
 						{
-							if (IsDown)
-							{
-								bool consumed = false;
-								switch (msg.wParam)
-								{
-								case VK_RETURN:
-									if (Alt)
-									{
-										WINDOWPLACEMENT windowPosition = { sizeof(WINDOWPLACEMENT) };
-										GetWindowPlacement(msg.hwnd, &windowPosition);
+							WINDOWPLACEMENT windowPosition = { sizeof(WINDOWPLACEMENT) };
+							GetWindowPlacement(msg.hwnd, &windowPosition);
 
-										ToggleFullscreen(msg.hwnd, windowPosition);
-										consumed = true;
-									}
-									break;
-								case VK_ESCAPE:
-									PostQuitMessage(0);
-									consumed = true;
-									break;
-								case VK_F4:
-									if (Alt)
-									{
-										PostQuitMessage(0);
-										consumed = true;
-									}
-									break;
-								}
-								if (consumed)
-								{
-									break;
-								}
-							}
+							ToggleFullscreen(msg.hwnd, windowPosition);
 						}
-						if (!hasFocus || !inputManager.KeyEventReceived(msg.wParam, msg.lParam))
-						{
-							TranslateMessage(&msg);
-							DispatchMessage(&msg);
-						}
-						break;
-					case WM_MOUSEMOVE:
-						if (hasFocus)
-						{
-							int xPosAbsolute = GET_X_LPARAM(msg.lParam);
-							int yPosAbsolute = GET_Y_LPARAM(msg.lParam);
-
-							inputManager.UpdateCursor(xPosAbsolute, yPosAbsolute);
-						}
-						else
-						{
-							TranslateMessage(&msg);
-							DispatchMessage(&msg);
-						}
-						break;
-					case WM_CHAR:
-						inputManager.GetKeyboard()->SetLastChar(msg.wParam);
-						break;
-					default:
-						TranslateMessage(&msg);
-						DispatchMessage(&msg);
+						else if (msg.wParam == VK_ESCAPE)
+							PostQuitMessage(0);
 					}
-				}*/
+					else if (msg.message == WM_SETFOCUS)
+						l_InputManager->SetFocus(true);
+					else if (msg.message == WM_KILLFOCUS)
+						l_InputManager->SetFocus(false);
+
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
+
+					l_InputManager->GetManager()->HandleMessage(msg);
+				}
 			}
 			else
 			{
