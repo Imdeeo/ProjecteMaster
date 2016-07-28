@@ -32,6 +32,8 @@
 		<renderable_object_technique name="animated" technique="animated_def_technique"/>
 		<renderable_object_technique name="animated_bump" technique="animated_bump_def_technique"/>
 		<renderable_object_technique name="animated_glow" technique="animated_glow_deferred_technique"/>
+		<renderable_object_technique name="radiosity_bump_env" technique="rnm_bump_env_deferred_technique"/>
+		<renderable_object_technique name="radiosity_env" technique="rnm_env_deferred_technique"/>
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_deferred_technique"/>
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="generate_shadowmap_pool">
