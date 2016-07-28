@@ -36,7 +36,7 @@ void CSphericalCameraController::Update(float ElapsedTime)
 	{
 		Vect3f cameraMovement(0, 0, 0);
 		cameraMovement.x = UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisX);//->GetAxis("X_AXIS") * ElapsedTime * .5f;
-		cameraMovement.y = UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisY);//GetAxis("Y_AXIS") * ElapsedTime * -.5f;
+		cameraMovement.y = -UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisY);//GetAxis("Y_AXIS") * ElapsedTime * -.5f;
 		Rotate(cameraMovement);
 	}
 	if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::WheelUp))

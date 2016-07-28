@@ -7,7 +7,6 @@
 
 #include <cassert>
 
-// TODO: Activar AntTeakBar
 #include <AntTweakBar.h>
 
 #include "Math\Matrix44.h"
@@ -27,6 +26,8 @@
 #pragma comment(lib, "Winmm.lib")
 
 #define APPLICATION_NAME	"VIDEOGAME"
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 
 CContextManager s_Context;
 
@@ -171,16 +172,13 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 		application.Init();
 
-		UABEngine.GetInputManager()->SetWindow(hWnd, 1280, 720);
+		UABEngine.GetInputManager()->SetWindow(hWnd, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		UpdateWindow(hWnd);
 		MSG msg;
 		ZeroMemory(&msg, sizeof(msg));
 
-		// Añadir en el while la condición de salida del programa de la aplicación
 		DWORD m_PreviousTime = timeGetTime();
-
-		bool hasFocus = true;
 
 		while (msg.message != WM_QUIT)
 		{

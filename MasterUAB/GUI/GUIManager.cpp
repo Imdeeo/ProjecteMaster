@@ -208,8 +208,8 @@ void CGUIManager::CheckInput()
 	if (!m_InputUpToDate)
 	{
 		gainput::InputMap* l_InputMap = UABEngine.GetInputManager()->GetMap();
-		m_MouseX = (int)l_InputMap->GetFloat(CInputManager::Actions::AxisX);
-		m_MouseY = (int)l_InputMap->GetFloat(CInputManager::Actions::AxisY);
+		m_MouseX = (int)(WINDOW_WIDTH*l_InputMap->GetFloat(CInputManager::Actions::AxisX));
+		m_MouseY = (int)(WINDOW_HEIGHT*l_InputMap->GetFloat(CInputManager::Actions::AxisY));
 
 		m_MouseWentReleased = l_InputMap->GetBoolWasDown(CInputManager::Actions::LeftClick);
 		m_MouseWentPressed = l_InputMap->GetBool(CInputManager::Actions::LeftClick);
