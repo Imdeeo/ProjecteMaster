@@ -186,7 +186,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 		while (msg.message != WM_QUIT)
 		{
 			l_InputManager->Update();
-			if (PeekMessage(&msg, hWnd, 0U, 0U, PM_REMOVE))
+			/*if (PeekMessage(&msg, hWnd, 0U, 0U, PM_REMOVE))
 			{
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
@@ -250,11 +250,11 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 									}
 								}
 							}
-							/*if (!hasFocus || !inputManager.KeyEventReceived(msg.wParam, msg.lParam))
+							if (!hasFocus || !inputManager.KeyEventReceived(msg.wParam, msg.lParam))
 							{
 								TranslateMessage(&msg);
 								DispatchMessage(&msg);
-							}*/
+							}
 							l_InputManager->GetManager()->HandleMessage(msg);
 							break;
 						case WM_MOUSEMOVE:
@@ -273,6 +273,36 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 							TranslateMessage(&msg);
 							DispatchMessage(&msg);
 					}
+				}
+			}*/
+			if (PeekMessage(&msg, hWnd, 0U, 0U, PM_REMOVE))
+			{
+				if (!debugHelper.Update(msg.hwnd, msg.message, msg.wParam, msg.lParam))
+				{
+					if (msg.message == WM_KEYDOWN)
+					{
+						bool Alt = false;
+						Alt = ((msg.lParam & (1 << 29)) != 0);
+
+						if (msg.wParam == VK_RETURN && Alt)
+						{
+							WINDOWPLACEMENT windowPosition = { sizeof(WINDOWPLACEMENT) };
+							GetWindowPlacement(msg.hwnd, &windowPosition);
+
+							ToggleFullscreen(msg.hwnd, windowPosition);
+						}
+						else if (msg.wParam == VK_ESCAPE)
+							PostQuitMessage(0);
+					}
+					else if (msg.message == WM_SETFOCUS)
+						l_InputManager->SetFocus(true);
+					else if (msg.message == WM_KILLFOCUS)
+						l_InputManager->SetFocus(false);
+
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
+
+					l_InputManager->GetManager()->HandleMessage(msg);
 				}
 			}
 			else
