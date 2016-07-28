@@ -172,7 +172,8 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 		application.Init();
 
-		UABEngine.GetInputManager()->SetWindow(hWnd, WINDOW_WIDTH, WINDOW_HEIGHT);
+		CInputManager* l_InputManager = UABEngine.GetInputManager();
+		l_InputManager->SetWindow(hWnd, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		UpdateWindow(hWnd);
 		MSG msg;
@@ -180,9 +181,11 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 
 		DWORD m_PreviousTime = timeGetTime();
 
+		bool hasFocus = true;
+
 		while (msg.message != WM_QUIT)
 		{
-			UABEngine.GetInputManager()->Update();
+			l_InputManager->Update();
 			if (PeekMessage(&msg, hWnd, 0U, 0U, PM_REMOVE))
 			{
 				TranslateMessage(&msg);
@@ -198,11 +201,11 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 					{
 						case WM_SETFOCUS:
 							hasFocus = true;
-							//inputManager.SetFocus(true);
+							l_InputManager->SetFocus(true);
 							break;
 						case  WM_KILLFOCUS:
 							hasFocus = false;
-							//inputManager.SetFocus(false);
+							l_InputManager->SetFocus(false);
 							break;
 						case WM_SYSKEYDOWN:
 						case WM_SYSKEYUP:
@@ -249,19 +252,14 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 							}
 							/*if (!hasFocus || !inputManager.KeyEventReceived(msg.wParam, msg.lParam))
 							{
-							TranslateMessage(&msg);
-							DispatchMessage(&msg);
+								TranslateMessage(&msg);
+								DispatchMessage(&msg);
 							}*/
-							UABEngine.GetInputManager()->GetManager()->HandleMessage(msg);
+							l_InputManager->GetManager()->HandleMessage(msg);
 							break;
 						case WM_MOUSEMOVE:
 							if (hasFocus)
-							{
-								int xPosAbsolute = GET_X_LPARAM(msg.lParam);
-								int yPosAbsolute = GET_Y_LPARAM(msg.lParam);
-								UABEngine.GetInputManager()->GetManager()->HandleMessage(msg);
-								//inputManager.UpdateCursor(xPosAbsolute, yPosAbsolute);
-							}
+								l_InputManager->GetManager()->HandleMessage(msg);
 							else
 							{
 								TranslateMessage(&msg);
@@ -269,8 +267,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 							}
 							break;
 						case WM_CHAR:
-							UABEngine.GetInputManager()->GetManager()->HandleMessage(msg);
-							//inputManager.GetKeyboard()->SetLastChar(msg.wParam);
+							l_InputManager->GetManager()->HandleMessage(msg);
 							break;
 						default:
 							TranslateMessage(&msg);
