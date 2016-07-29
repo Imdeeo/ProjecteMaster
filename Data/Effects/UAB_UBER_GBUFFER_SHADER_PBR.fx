@@ -137,15 +137,15 @@ float3 CalcNormalMap(float3 Normal, float3 Tangent, float3 Binormal, float4 Norm
 float3 CalcParallaxMap(float3 Vn, float3 WorldNormal, float3 WorldTangent, float3 WorldBinormal, float2 UV, out float2 OutUV, float4 NormalMap)
 {
 	float2 l_UV = UV;
-	
+
 	// parallax code
 	float3x3 tbnXf = float3x3(WorldTangent,WorldBinormal,WorldNormal);
 	float height = NormalMap.w * 0.06 - 0.03;
 	l_UV += height * mul(tbnXf,Vn).xy;
-	
+
 	// normal map
 	float3 tNorm = NormalMap.xyz - float3(0.5,0.5,0.5);
-	
+
 	// transform tNorm to world space
 	tNorm = normalize(tNorm.x*WorldTangent - tNorm.y*WorldBinormal + tNorm.z*WorldNormal);
 	OutUV=l_UV;
@@ -175,24 +175,17 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	// "This is easy to enforce in a shading system: one simply subtracts reflected light before allowing the diffuse shading to occur."
 	l_Albedo *= (1-l_specularFactor);
 
-	float4 l_AmbientIllumination = l_Albedo * l_Ambient;
-	#ifdef HAS_REFLECTION
-		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
-		float4 l_ReflectColor = T8Texture.SampleLevel(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
-		l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor;
-	#endif
-
-	#ifdef HAS_TANGENT		
+	#ifdef HAS_TANGENT
 		Nn=normalize(IN.WorldNormal);
 		float3 Tn=normalize(IN.WorldTangent);
 		float3 Bn=normalize(IN.WorldBinormal);
 		float4 l_NormalMap = T2Texture.Sample(S2Sampler,IN.UV);
-		
-		Nn=CalcNormalMap(Nn, Tn, Bn, l_NormalMap);	
+
+		Nn=CalcNormalMap(Nn, Tn, Bn, l_NormalMap);
 		#ifdef HAS_PARALLAX
 			Nn=CalcParallaxMap(l_EyeToWorldPosition, Nn, Tn, Bn, IN.UV, IN.UV, l_NormalMap);
-		#endif 
-		
+		#endif
+
 		l_specularFactor *= l_NormalMap.w;
 	#endif
 
@@ -203,6 +196,14 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 			l_Ambient = T1Texture.Sample(S1Sampler,IN.UV2);
 		#endif
 	#endif
+
+	float4 l_AmbientIllumination = l_Albedo * l_Ambient;
+	#ifdef HAS_REFLECTION
+		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
+		float4 l_ReflectColor = T8Texture.SampleLevel(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
+		l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor;
+	#endif
+
 
 	// PBR: interpret the specularPower/glossiness scale as logarithmic (an arbitrary choice)
 	float l_MaxPower = 200.0f;
