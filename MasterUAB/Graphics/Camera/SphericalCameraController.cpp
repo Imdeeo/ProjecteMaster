@@ -20,7 +20,7 @@ CSphericalCameraController::~CSphericalCameraController()
 
 void CSphericalCameraController::SetCamera(CCamera *Camera) const
 {
-	Camera->SetFOV(1.13446f);
+	Camera->SetFOV(m_Fov);
 	Camera->SetAspectRatio(16.0f / 9.0f);
 
 	Camera->SetLookAt(m_Position);

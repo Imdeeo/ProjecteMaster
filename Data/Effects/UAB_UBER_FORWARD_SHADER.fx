@@ -196,44 +196,6 @@ float4 applyAllLights(TVertexPS IN)
 	}
 	return saturate(float4(lightContrib.xyz, l_Out.w));
 }
-
-float CalcAttenuation(float Depth, float StartFog, float EndFog)
-{
-	if(Depth<EndFog)
-	{
-		return m_MaxAttenuation*smoothstep(StartFog, EndFog, Depth);
-	} 
-	else 
-	{
-		return m_MaxAttenuation;
-	}
-}
-
-float CalcLinearFog(float Depth, float StartFog, float EndFog) 
-{
-	float l_Fog = CalcAttenuation(Depth, StartFog, EndFog);
-	return l_Fog;
-}
-
-float CalcExp2Fog(float Depth, float ExpDensityFog) 
-{ 
-	const float LOG2E = 1.442695; // = 1 / log(2) 
-	float l_Fog = exp2(-ExpDensityFog * ExpDensityFog * Depth * Depth * LOG2E); 
-	return l_Fog;
-} 
-
-float CalcExpFog(float Depth, float ExpDensityFog) 
-{ 
-	const float LOG2E = 1.442695; // = 1 / log(2) 
-	float l_Fog = exp2(-ExpDensityFog * Depth * LOG2E); 
-	return l_Fog;
-}
-
-float4 GetFogColor(float Depth) 
-{ 
-	float l_FogIntensity=CalcLinearFog(Depth, m_StartFog, m_EndFog);
-	return saturate(float4(m_FogColor.xyz,l_FogIntensity));
-}
 #endif
 
 float4 mainPS(TVertexPS IN) : SV_Target
@@ -252,10 +214,6 @@ float4 mainPS(TVertexPS IN) : SV_Target
 				clip(-1);
 			}
 		#endif
-		
-		float l_DistanceEyeToWorldPosition=length(IN.Pixelpos-m_InverseView[3].xyz);
-		float4 l_FogColor = GetFogColor(l_DistanceEyeToWorldPosition);
-		Out = float4(Out.xyz+l_FogColor.xyz*l_FogColor.a,Out.a);		
 	#else
 		#ifdef HAS_UV
 			Out = T0Texture.Sample(S0Sampler, IN.UV).xyzw;
