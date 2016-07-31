@@ -21,6 +21,8 @@ protected:
 	Vect3f m_BoundingSphereCenter;
 	float  m_BoundingSphereRadius;
 	std::string m_FileName;
+
+	std::string m_PhysxMeshesDirectory;
 public:
 	CStaticMesh();
 	virtual ~CStaticMesh();
@@ -36,6 +38,9 @@ public:
 	Vect3f GetBoundingBoxMin(){ return m_BoundingBoxMin; }
 	Vect3f GetBoundingSphereCenter(){ return m_BoundingSphereCenter; }
 	float GetBoundingSphereRadius(){ return m_BoundingSphereRadius; }
+
+	void SetPhysxMeshesDirectory(std::string &_PhysxMeshesDirectory){ m_PhysxMeshesDirectory = _PhysxMeshesDirectory; }
+	const std::string &GetPhysxMeshesDirectory() const{ return m_PhysxMeshesDirectory; }
 
 	const std::vector<CRenderableVertexs *> &GetRenderableVertexs() const { return m_RVs; }
 

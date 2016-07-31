@@ -25,6 +25,9 @@
     <ClCompile Include="IA\AStar.cpp">
       <Filter>AI</Filter>
     </ClCompile>
+    <ClCompile Include="LevelManager\LevelManager.cpp">
+      <Filter>LevelManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\UABEngine.h">
@@ -51,6 +54,9 @@
     <ClInclude Include="IA\AStar.h">
       <Filter>AI</Filter>
     </ClInclude>
+    <ClInclude Include="LevelManager\LevelManager.h">
+      <Filter>LevelManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -67,6 +73,9 @@
     </Filter>
     <Filter Include="AI">
       <UniqueIdentifier>{d41f5a47-d204-4c4e-9a55-2938cd452ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelManager">
+      <UniqueIdentifier>{57cf4ffa-0bd9-4da7-8bec-db41fbc0607a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
