@@ -9,7 +9,7 @@
 #include "Layers\LayerManager.h"
 #include "ScriptManager\ScriptManager.h"
 #include "Camera\CameraControllerManager.h"
-#include "Cinematics\Cinematic.h"
+#include "Cinematics\CinematicManager.h"
 #include "Particles\ParticleManager.h"
 
 CLevelManager::CLevelManager()
@@ -57,7 +57,7 @@ void CLevelManager::LoadLevel(const std::string &_LevelName)
 	UABEngine.GetStaticMeshManager()->Load(l_LevelDirectory + "\\static_meshes.xml");
 	UABEngine.GetLayerManager()->Load(l_LevelDirectory + "\\renderable_objects.xml");
 	UABEngine.GetLightManager()->Load(l_LevelDirectory + "\\lights.xml");
-	UABEngine.GetCinematic()->LoadXML(l_LevelDirectory + "\\cinematic.xml");
+	UABEngine.GetCinematicManager()->LoadXML(l_LevelDirectory + "\\cinematic.xml");
 	UABEngine.GetCameraControllerManager()->Load(l_LevelDirectory + "\\cameras.xml");
 	//UABEngine.GetScriptManager()->RunCode("mainLua(\"" + l_LevelDirectory + "\")");
 	m_LevelsInfo[_LevelName].m_Loaded = true;
