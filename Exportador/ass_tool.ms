@@ -26,15 +26,17 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		button ExportSceneButton "Scene" pos:[14,304] width:112 height:32 visible:true
 		label SelectionLabel "Nothing selected" pos:[160,32] width:416 height:24
 	GroupBox grp1 "Geometry" pos:[152,8] width:432 height:358
-		GroupBox RenderGroup "Render" pos:[160,56] width:204 height:142
+		GroupBox RenderGroup "Render" pos:[160,56] width:204 height:168
 			checkbox RenderExportBox "Export" pos:[168,72] width:88 height:16
 			checkbox RenderVisibleBox "Visible" pos:[168,96] width:88 height:16 enabled:false
 			label RenderLayerLabel "Layer" pos:[188,120] width:88 height:16 enabled:false
 			checkbox CinematicBox "Cinematic" pos:[168,144] width:88 height:16 enabled:false
 			checkbox CinematicCalBox "Cal3D" pos:[264,144] width:88 height:16 enabled:false
 			dropdownList RenderLayerList "" pos:[264,117] width:88 height:21 enabled:false items:#("solid", "alpha_objects", "alpha_blend_objects", "particles", "skybox", "triggers")
-			checkbox AnimatedBox "Animated Model" pos:[168,168] width:96 height:16 enabled:false 
-			edittext AnimModelText "" pos:[264,166] width:88 height:24 enabled:false
+			checkbox AnimatedBox "Animated Model" pos:[168,194] width:96 height:16 enabled:false 
+			edittext AnimModelText "" pos:[264,192] width:88 height:24 enabled:false
+			label CinematicNameLabel "Cinematic Name" pos:[186,170] width:80 height:16 enabled:false
+			edittext CinematicNameText "" pos:[264,166] width:88 height:24 enabled:false
 		GroupBox PhysicsGroup "Physics" pos:[372,56] width:204 height:304
 			checkbox PhysicsGenerateBox "Generate" pos:[380,80] width:80 height:16
 			dropdownList PhysicsGenerateList "" pos:[464,78] width:98 height:21 enabled:false items:#("triangle_mesh", "convex_shape", "box_shape", "sphere_shape", "plane_shape", "capsule_shape")
@@ -54,9 +56,9 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 				label LabelX "x" pos:[445,310] width:8 height:12 enabled:false
 				label LabelY "y" pos:[488,310] width:8 height:12 enabled:false
 				label LabelZ "z" pos:[535,310] width:8 height:12 enabled:false
-		GroupBox LogicGroup "Logic" pos:[160,206] width:204 height:48
-			checkbox LogicGenerateBox "Generate" pos:[168,230] width:88 height:16
-			dropdownList LogicGenerateList "" pos:[264,228] width:88 height:21 items:#("stairs")
+		GroupBox LogicGroup "Logic" pos:[160,232] width:204 height:48
+			checkbox LogicGenerateBox "Generate" pos:[168,256] width:88 height:16
+			dropdownList LogicGenerateList "" pos:[264,254] width:88 height:21 items:#("stairs")
 		button GetButton "Get" pos:[592,144] width:112 height:32
 		button SetButton "Set" pos:[592,184] width:112 height:32
 	GroupBox grp2 "Lights" pos:[152,8] width:432 height:358 visible:false
@@ -94,6 +96,8 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		CinematicCalBox.visible = bool
 		AnimatedBox.visible = bool
 		AnimModelText.visible = bool
+		CinematicNameLabel.visible = bool
+		CinematicNameText.visible = bool
 		PhysicsGroup.visible = bool
 		PhysicsGenerateBox.visible = bool
 		PhysicsGenerateList.visible = bool
@@ -150,6 +154,13 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		grp3.visible = bool
 	)
 	
+	fn toggleCinematics bool =
+	(
+		CinematicCalBox.enabled = bool
+		CinematicNameLabel.enabled = bool
+		CinematicNameText.enabled = bool
+	)
+	
 	fn toggleRender bool =
 	(
 		RenderVisibleBox.enabled = bool
@@ -166,9 +177,9 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		)
 		if CinematicBox.checked == bool then
 		(
-			CinematicCalBox.enabled = bool
+			toggleCinematics bool
 		) else (
-			CinematicCalBox.enabled = false
+			toggleCinematics false
 		)
 	)
 	
@@ -362,6 +373,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 			setUserProp Obj "has_render_layer" true
 			setUserProp Obj "render_layer" "solid"
 			setUserProp Obj "anim_model_core" "undefined"
+			setUserProp Obj "cinematic_name" ""
 			setUserProp Obj "physics_generate" false
 			setUserProp Obj "physics_generate_type" "triangle_mesh"
 			setUserProp Obj "has_physics_layer" false
@@ -440,6 +452,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 			
 				AnimModelText.text = getUserProp Objs[1] "anim_model_core"
 				CinematicBox.checked = getUserProp Objs[1] "cinematic_object"
+				CinematicNameText.text = getUserProp Objs[1] "cinematic_name"
 			) else (
 				toggleRender false
 				RenderVisibleBox.checked = false
@@ -567,6 +580,13 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 						"particles": setUserProp Objs[i] "render_layer" "particles"
 						"skybox": setUserProp Objs[i] "render_layer" "skybox"
 						"triggers": setUserProp Objs[i] "render_layer" "triggers"
+					)
+					
+					if CinematicBox.checked then
+					(
+						setUserProp Objs[i] "cinematic_name" CinematicNameText.text
+					) else (
+						setUserProp Objs[i] "cinematic_name" "undefined"
 					)
 					
 					if AnimModelText.text == "" then
@@ -746,12 +766,12 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 	
 	on CinematicBox changed false do
 	(
-		CinematicCalBox.enabled = false
+		toggleCinematics false
 	)
 	
 	on CinematicBox changed  true do
 	(
-		CinematicCalBox.enabled =  true
+		toggleCinematics true
 	)
 	
 	on LightExportBox changed false do
