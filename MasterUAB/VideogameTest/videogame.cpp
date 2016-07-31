@@ -212,9 +212,20 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
+			if (!debugHelper.Update(msg.hwnd, msg.message, msg.wParam, msg.lParam))
+				l_InputManager->GetManager()->HandleMessage(msg);
 
-			// Forward any input messages to Gainput
-			l_InputManager->GetManager()->HandleMessage(msg);
+			if (msg.message == WM_KEYUP)
+			{
+				bool Alt = ((msg.lParam & (1 << 29)) != 0);
+				if (msg.wParam == VK_RETURN && Alt)
+				{
+					WINDOWPLACEMENT windowPosition = { sizeof(WINDOWPLACEMENT) };
+					GetWindowPlacement(msg.hwnd, &windowPosition);
+
+					ToggleFullscreen(msg.hwnd, windowPosition);
+				}
+			}
 		}
 		
 		l_CurrentTime = timeGetTime();

@@ -267,7 +267,6 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="GamePlayManager.cpp" />
-    <ClCompile Include="videogame - copia.cpp" />
     <ClCompile Include="videogame.cpp" />
   </ItemGroup>
   <ItemGroup>
