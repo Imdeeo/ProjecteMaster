@@ -109,7 +109,6 @@ void CUABEngine::Update(float _ElapsedTime)
 }
 void CUABEngine::Init()
 {
-<<<<<<< HEAD
 
 	m_LevelManager->LoadFile("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
@@ -118,7 +117,6 @@ void CUABEngine::Init()
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
 	m_LevelManager->LoadLevel("Recibidor");
 	m_LevelManager->LoadLevel("Biblioteca");
-	m_LayerManager->GetLayer()->AddResource("Cinematic", m_Cinematic);
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
 	m_MaterialManager->Load("Data\\default_effect_materials.xml");
@@ -131,12 +129,9 @@ void CUABEngine::Init()
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	m_LevelManager->ReloadAllLua();
 
-	/*LoadLevelXML("Data\\level.xml");
-=======
 	// INICIO TIEMPO TEST LECTURA XML
 	//float l_StartTime = (float)timeGetTime();
-	LoadLevelXML("Data\\level.xml");
->>>>>>> develop
+	/*LoadLevelXML("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
@@ -159,10 +154,7 @@ void CUABEngine::Init()
 	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
 
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
-<<<<<<< HEAD
 	m_ScriptManager->RunCode("mainLua(\""+m_LevelLoaded+"\")");*/
-=======
-	m_ScriptManager->RunCode("mainLua(\""+m_LevelLoaded+"\")");
 	// TEST LECTURA XML
 	/*float l_EndTime = (float)timeGetTime();
 	float l_LoadTimer = l_EndTime - l_StartTime;
@@ -170,7 +162,6 @@ void CUABEngine::Init()
 	ss << l_LoadTimer;
 	std::string s(ss.str());
 	CDebugHelper::GetDebugHelper()->Log(s);*/
->>>>>>> develop
 }
 void CUABEngine::Destroy()
 {
