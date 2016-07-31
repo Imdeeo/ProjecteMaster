@@ -26,6 +26,7 @@
     <ClCompile Include="InputManager\InputManager.cpp" />
     <ClCompile Include="InputManager\InputManagerImplementation.cpp" />
     <ClCompile Include="InputManager\KeyboardInput.cpp" />
+    <ClCompile Include="LevelManager\LevelManager.cpp" />
     <ClCompile Include="ScriptManager\ScriptManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +37,7 @@
     <ClInclude Include="InputManager\InputManager.h" />
     <ClInclude Include="InputManager\InputManagerImplementation.h" />
     <ClInclude Include="InputManager\KeyboardInput.h" />
+    <ClInclude Include="LevelManager\LevelManager.h" />
     <ClInclude Include="ScriptManager\ScriptManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

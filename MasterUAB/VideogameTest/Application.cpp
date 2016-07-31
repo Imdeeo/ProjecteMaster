@@ -17,6 +17,7 @@
 #include "ScriptManager\ScriptManager.h"
 #include "SoundManager\SoundManager.h"
 #include "Camera\CameraControllerManager.h"
+#include "LevelManager\LevelManager.h"
 
 #include "no_sillywarnings_please.h"
 
@@ -47,7 +48,7 @@ void CApplication::Update(float _ElapsedTime)
 		UABEngine.LuaIsReloaded();
 		UABEngine.GetScriptManager()->RunFile("Data\\Lua\\init.lua");
 		UtilsLog("Reloading Lua");
-		UABEngine.GetScriptManager()->RunCode("mainLua(\"" + UABEngine.GetLevelLoaded() + "\")");
+		UABEngine.GetLevelManager()->ReloadAllLua();
 	}
 	if (CInputManager::GetInputManager()->IsActionActive("SWITCH_RENDER_LIGHTS"))
 	{

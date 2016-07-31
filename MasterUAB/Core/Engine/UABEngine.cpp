@@ -22,6 +22,7 @@
 #include "GUIManager.h"
 #include "SoundManager\SoundManager.h"
 #include "GamePlayManager.h"
+#include "LevelManager\LevelManager.h"
 #include "Manchas\ManchasManager.h"
 #include "DebugHelper\DebugHelper.h"
 
@@ -49,6 +50,7 @@ CUABEngine::CUABEngine(void)
 	m_SoundManager = ISoundManager::InstantiateSoundManager();
 	m_FrustumActive = true;
 	m_GamePlayManager = new CGamePlayManager();
+	m_LevelManager = new CLevelManager();
 	m_ManchasManager = new CManchasManager();
 }
 
@@ -73,6 +75,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_GUIManager)
 	CHECKED_DELETE(m_SoundManager);
+	CHECKED_DELETE(m_LevelManager);
 	CHECKED_DELETE(m_ManchasManager);
 	//CHECKED_DELETE(m_CinematicManager);
 }
@@ -106,9 +109,29 @@ void CUABEngine::Update(float _ElapsedTime)
 }
 void CUABEngine::Init()
 {
+
+	m_LevelManager->LoadFile("Data\\level.xml");
+	m_PhysXManager->LoadPhysx("Data\\physx.xml");
+	m_EffectManager->Load("Data\\effects.xml");
+	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
+	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
+	m_LevelManager->LoadLevel("Recibidor");
+	m_LevelManager->LoadLevel("Biblioteca");
+	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
+	m_ScriptManager->Initialize();
+	m_MaterialManager->Load("Data\\default_effect_materials.xml");
+	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
+	m_RenderManager->Init();
+	m_SoundManager->SetPath("Data\\Sounds\\");
+	m_SoundManager->Init();
+	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
+
+	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
+	m_LevelManager->ReloadAllLua();
+
 	// INICIO TIEMPO TEST LECTURA XML
 	//float l_StartTime = (float)timeGetTime();
-	LoadLevelXML("Data\\level.xml");
+	/*LoadLevelXML("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
@@ -131,25 +154,18 @@ void CUABEngine::Init()
 	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
 
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
-	m_ScriptManager->RunCode("mainLua(\""+m_LevelLoaded+"\")");
+	m_ScriptManager->RunCode("mainLua(\""+m_LevelLoaded+"\")");*/
+	// TEST LECTURA XML
+	/*float l_EndTime = (float)timeGetTime();
+	float l_LoadTimer = l_EndTime - l_StartTime;
+	std::ostringstream ss;
+	ss << l_LoadTimer;
+	std::string s(ss.str());
+	CDebugHelper::GetDebugHelper()->Log(s);*/
 }
 void CUABEngine::Destroy()
 {
 	CHECKED_DELETE(m_Instance);
-}
-void CUABEngine::LoadLevelXML(std::string filename)
-{
-	CXMLTreeNode l_XML;
-	bool isLoading = l_XML.LoadFile(filename.c_str());
-
-	if (isLoading)
-	{
-		CXMLTreeNode l_Input = l_XML["level"];
-		if (l_Input.Exists())
-		{
-			m_LevelLoaded = l_Input.GetPszProperty("level_to_load");
-		}
-	}
 }
 void CUABEngine::SwitchCamera()
 {
@@ -184,4 +200,5 @@ UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, ISoundManager *, SoundManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager *, GamePlayManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CLevelManager *, LevelManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CManchasManager *, ManchasManager)

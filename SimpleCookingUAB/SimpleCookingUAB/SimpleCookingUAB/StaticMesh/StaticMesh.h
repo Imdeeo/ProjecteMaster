@@ -16,11 +16,16 @@ protected:
 	unsigned short m_NumFaces;
 	long m_NumVertexs;
 	long m_NumIndexs;
+
+	std::string m_PhysxMeshesDirectory;
 public:
 	CStaticMesh();
 	virtual ~CStaticMesh();
 	bool Load (const std::string &FileName);
 	const std::vector<CRenderableVertexs *> &GetRenderableVertexs() const { return m_RVs; }
+
+	void SetPhysxMeshesDirectory(std::string &_PhysxMeshesDirectory){ m_PhysxMeshesDirectory = _PhysxMeshesDirectory; }
+	const std::string &GetPhysxMeshesDirectory() const{ return m_PhysxMeshesDirectory; }
 	
 private:
 	bool Destroy ();
