@@ -213,10 +213,6 @@ void CGUIManager::CheckInput()
 
 		m_MouseWentReleased = l_InputMap->GetBoolWasDown(CInputManager::Actions::LeftClick);
 		m_MouseWentPressed = l_InputMap->GetBool(CInputManager::Actions::LeftClick);
-		if (m_MouseWentReleased)
-			UtilsLog("Released!");
-		if (m_MouseWentPressed)
-			UtilsLog("Pressed!");
 		m_InputUpToDate = true;
 	}
 }
