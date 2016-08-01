@@ -111,7 +111,7 @@ void CUABEngine::Update(float _ElapsedTime)
 }
 void CUABEngine::Init()
 {
-
+	m_InputManager->Load("Data\\input.xml");
 	m_LevelManager->LoadFile("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
 	m_EffectManager->Load("Data\\effects.xml");
