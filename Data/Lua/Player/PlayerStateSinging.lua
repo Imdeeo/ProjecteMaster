@@ -2,11 +2,13 @@ function SingingFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_IsSinging = true
+	
 	if l_Player.m_IsWindedUp then
 		l_Owner:blend_cycle(1,1.0,0.1)
 	else
 		l_Owner:execute_action(2, 0.1, 0.1, 1.0, true)
 	end
+	
 	m_Timer = 0.0
 end
 
