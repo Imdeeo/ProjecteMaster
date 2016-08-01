@@ -135,7 +135,7 @@ class 'CPlayer' (CLUAComponent)
 		end
 		
 		self.m_CinematicManager = UABEngine:get_cinematic_manager()
-		self.m_InputManager = CInputManager.get_input_manager()
+		self.m_InputManager = UABEngine:get_input_manager()
 		self.m_PhysXManager = UABEngine:get_physX_manager()
 		if(not UABEngine:get_lua_reloaded())then
 			self.m_SoundManager:register_speaker(self.m_RenderableObject)
@@ -174,13 +174,14 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine = StateMachine.create()
 		self:SetPlayerStateMachine()
 		self.m_StateMachine:start()
+		
 		if(not UABEngine:get_lua_reloaded())then
 			self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
 			self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Player")
-			--self.m_PhysXManager:set_character_controller_height("player", 1.8)
 		end
 
 		self.m_AlreadyInitialized = true
+		utils_log("Player init finished")
 	end
 
 	function CPlayer:SetSanity(_amount, _override)
@@ -397,6 +398,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:add_state("Jumping", JumpingState)
 		self.m_StateMachine:add_state("Falling", FallingState)
 		self.m_StateMachine:add_state("Interacting", InteractingState)
+		self.m_StateMachine:add_state("Singing", SingingState)
 		self.m_StateMachine:add_state("Dead", DeadState)
 		
 		utils_log("End Set PlayerStateMachine")
