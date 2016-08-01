@@ -11,11 +11,11 @@
 #include "Camera\CameraControllerManager.h"
 #include "Cinematics\CinematicManager.h"
 #include "Particles\ParticleManager.h"
+#include "Manchas\ManchasManager.h"
 
 CLevelManager::CLevelManager()
 {
 }
-
 
 CLevelManager::~CLevelManager()
 {
@@ -54,6 +54,7 @@ void CLevelManager::LoadLevel(const std::string &_LevelName)
 	std::string l_LevelDirectory = m_LevelsInfo[_LevelName].m_Directory;
 	UABEngine.GetMaterialManager()->Load(l_LevelDirectory + "\\materials.xml", "Data\\default_effect_materials.xml");
 	UABEngine.GetParticleManager()->Load(l_LevelDirectory + "\\particles.xml");
+	UABEngine.GetManchasManager()->Load(l_LevelDirectory + "\\cordura.xml");
 	UABEngine.GetStaticMeshManager()->Load(l_LevelDirectory + "\\static_meshes.xml");
 	UABEngine.GetLayerManager()->Load(l_LevelDirectory + "\\renderable_objects.xml");
 	UABEngine.GetLightManager()->Load(l_LevelDirectory + "\\lights.xml");
