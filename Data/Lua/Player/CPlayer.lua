@@ -246,6 +246,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:add_state("Jumping", JumpingState)
 		self.m_StateMachine:add_state("Falling", FallingState)
 		self.m_StateMachine:add_state("Interacting", InteractingState)
+		self.m_StateMachine:add_state("Singing", SingingState)
 		self.m_StateMachine:add_state("Dead", DeadState)
 		
 		utils_log("End Set PlayerStateMachine")
