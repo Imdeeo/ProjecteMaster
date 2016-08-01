@@ -4,6 +4,7 @@
 
 #include "Utils.h"
 
+#include "InputManager\InputManager.h"
 #include "Effects\EffectManager.h"
 #include "Materials\MaterialManager.h"
 #include "Texture\TextureManager.h"
@@ -31,6 +32,7 @@ CUABEngine::CUABEngine(void)
 	m_TimeScale = 1;
 	m_CurrentCamera_vision = 1;
 	m_Pause = false; //Iniciara en false
+	m_InputManager = new CInputManager();
 	m_EffectManager = new CEffectManager();
 	m_MaterialManager = new CMaterialManager();
 	m_TextureManager = new CTextureManager();
@@ -109,7 +111,7 @@ void CUABEngine::Update(float _ElapsedTime)
 }
 void CUABEngine::Init()
 {
-
+	m_InputManager->Load("Data\\input.xml");
 	m_LevelManager->LoadFile("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
 	m_EffectManager->Load("Data\\effects.xml");
@@ -132,6 +134,7 @@ void CUABEngine::Init()
 	// INICIO TIEMPO TEST LECTURA XML
 	//float l_StartTime = (float)timeGetTime();
 	/*LoadLevelXML("Data\\level.xml");
+	m_InputManager->Load("Data\\input.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
@@ -182,6 +185,7 @@ void CUABEngine::Quit()
 {
 	PostQuitMessage(0);
 }
+UAB_GET_PROPERTY_CPP(CUABEngine, CInputManager *, InputManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CStaticMeshManager *, StaticMeshManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CLayerManager *, LayerManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CMaterialManager *, MaterialManager)
