@@ -1,7 +1,7 @@
 fn getRelativePath &pathString = 
 (
-		local startFrom = (findString pathString "Data")
-		pathString = substring pathString startFrom (pathString.count-startFrom+1)
+	local startFrom = (findString pathString "Data")
+	pathString = substring pathString startFrom (pathString.count-startFrom+1)
 )
 
 fn checkUserProp usrProp &usrDefined =
@@ -9,6 +9,14 @@ fn checkUserProp usrProp &usrDefined =
 	for Obj in $* do
 	(
 		if (getUserProp Obj usrProp) == true then append usrDefined Obj
+	)
+)
+
+fn checkUserPropValue Objs usrProp usrPropValue &usrDefined =
+(
+	for Obj in Objs do
+	(
+		if (getUserProp Obj usrProp) == usrPropValue then append usrDefined Obj
 	)
 )
 

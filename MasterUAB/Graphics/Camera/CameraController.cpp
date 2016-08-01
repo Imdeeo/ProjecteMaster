@@ -9,6 +9,7 @@
 CCameraController::CCameraController(const CXMLTreeNode & _TreeNode) : CNamed(_TreeNode)
 , m_Rotation(Quatf(0, 0, 0, 1))
 , m_Position(0,0,0)
+, m_Fov(_TreeNode.GetFloatProperty("fov", .0f, true))
 {
 }
 CCameraController::~CCameraController()
@@ -42,4 +43,14 @@ void CCameraController::AddPitch(float Radians)
 	Quatf l_PitchRotation = Quatf(0, 0, 0, 1);
 	l_PitchRotation.SetFromScaledAxis(Vect3f(Radians, 0, 0));
 	m_Rotation = l_PitchRotation*m_Rotation;
+}
+
+void CCameraController::SetFov(float _value)
+{
+	m_Fov = _value;
+}
+
+float CCameraController::GetFov()
+{
+	return m_Fov;
 }

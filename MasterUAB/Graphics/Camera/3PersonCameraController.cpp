@@ -38,7 +38,7 @@ void C3PersonCameraController::Move(Vect3f _MovementVector, float ElapsedTime)
 
 void C3PersonCameraController::SetCamera(CCamera *Camera) const
 {
-	Camera->SetFOV(1.13446f);
+	Camera->SetFOV(m_Fov);
 	Camera->SetAspectRatio(16.0f/9.0f);
 
 	Camera->SetPosition(m_Position);
