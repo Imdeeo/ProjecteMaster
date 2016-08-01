@@ -541,8 +541,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_sound_manager", &CUABEngine::GetSoundManager)
 			.def("get_cinematic_manager", &CUABEngine::GetCinematicManager)
 			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
-			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
-			.def("load_level_xml", &CUABEngine::LoadLevelXML)
 			.def("get_gui_manager", &CUABEngine::GetGUIManager)
 			.scope[
 				def("get_instance", &CUABEngine::GetInstance)
@@ -764,6 +762,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_position", &CCameraController::GetPosition)
 			.def("set_position", &CCameraController::SetPosition)
 			.def("update", &CCameraController::Update)
+			.def("set_fov", &CCameraController::SetFov)
+			.def("get_fov", &CCameraController::GetFov)
 	];
 
 	RegisterTemplatedMapManager<CCameraController>(m_LS);
@@ -1125,6 +1125,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_parameters", &CMaterial::GetParameters, luabind::return_stl_iterator)
 			.def("get_renderable_object_technique", &CMaterial::GetRenderableObjectTechnique)
 			.def("get_texture", &CMaterial::GetTexture)
+			.def("set_value", &CMaterial::SetValue)
+			.def("get_value", &CMaterial::GetValue)
 	];
 
 	RegisterTemplatedMapManager<CMaterial>(m_LS);
@@ -1378,6 +1380,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_awake", &CManchasSystemInstance::GetAwake)
 			.def("set_awake", &CManchasSystemInstance::SetAwake)
 			.def("get_lua_awake", &CManchasSystemInstance::GetLuaAwake)
+			.def("set_type", &CManchasSystemInstance::SetType)
 	];
 
 
@@ -1557,6 +1560,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CGamePlayManager>("CGamePlayManager")
 			.def("add_component", &CGamePlayManager::AddComponent)
+			.def("destroy", &CGamePlayManager::Destroy)
 	];
 }
 

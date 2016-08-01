@@ -40,6 +40,7 @@ struct PS_INPUT
 		float3 WorldNormal: TEXCOORD4;
 	#endif
 	float4 HPos : TEXCOORD5;
+	float4 WorldPos : TEXCOORD6;
 };
 
 struct PS_OUTPUT
@@ -90,6 +91,7 @@ PS_INPUT mainVS(VS_INPUT IN)
 		l_Output.Pos = mul( float4(IN.Pos, 1.0), m_World );
 	#endif
 		
+	l_Output.WorldPos = l_Output.Pos;
 	l_Output.Pos = mul( l_Output.Pos, m_View );
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
 	l_Output.HPos = l_Output.Pos ;
@@ -158,14 +160,16 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	
 	float4 l_Ambient = m_LightAmbient;
 	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
+	
 	if (l_Albedo.w < 0.1)
 	{
 		clip(-1);
 	}
-	float3 Nn = IN.Normal;
+	
+	float3 Nn = IN.Normal;	
+	float3 l_EyeToWorldPosition = normalize(IN.WorldPos - m_InverseView[3].xyz);
 	
 	#ifdef HAS_REFLECTION
-		float3 l_EyeToWorldPosition = normalize(IN.HPos - m_InverseView[3].xyz);
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
 		float4 l_ReflectColor = T8Texture.Sample(S8Sampler, l_ReflectVector);
 		l_Albedo = l_Albedo * m_Exposure + l_ReflectColor * (1 - m_Exposure);
@@ -177,11 +181,9 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		float3 Bn=normalize(IN.WorldBinormal);
 		float4 l_NormalMap = T2Texture.Sample(S2Sampler,IN.UV);
 		
+		Nn=CalcNormalMap(Nn, Tn, Bn, l_NormalMap);	
 		#ifdef HAS_PARALLAX
-			float3 l_EyeToWorldPosition = normalize(IN.HPos-m_CameraPosition.xyz);
 			Nn=CalcParallaxMap(l_EyeToWorldPosition, Nn, Tn, Bn, IN.UV, IN.UV, l_NormalMap);
-		#else
-			Nn=CalcNormalMap(Nn, Tn, Bn, l_NormalMap);	
 		#endif 
 		
 		l_specularFactor *= l_NormalMap.w;

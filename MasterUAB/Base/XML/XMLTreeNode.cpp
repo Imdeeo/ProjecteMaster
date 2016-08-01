@@ -2,7 +2,8 @@
 
 #define MY_ENCODING "ISO-8859-1"
 
-CXMLTreeNode::CXMLTreeNode()
+CXMLTreeNode::CXMLTreeNode() :
+m_pNode(0), m_xmlDoc(0)
 {
 	m_xmlDoc = new tinyxml2::XMLDocument();
 }

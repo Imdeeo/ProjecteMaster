@@ -10,7 +10,7 @@ fn createStaticMesh dir level filename Objs=
 	(
 		for i=1 to Objs.count do
 		(
-			if Objs[i].material != undefined then format "\t<static_mesh name=\"%\" filename=\"%\"/>\n" Objs[i].name ("Data\\" + level + "\\Meshes\\"+Objs[i].name+".mesh") to:file
+			if Objs[i].material != undefined then format "\t<static_mesh name=\"%\" filename=\"%\" physx_mesh_directory=\"%\"/>\n" Objs[i].name ("Data\\" + level + "\\Meshes\\"+Objs[i].name+".mesh") ("Data\\" + level + "\\Meshes\\PhysXMeshes") to:file
 		)
 	)
 	format "</static_meshes>\n" to:file

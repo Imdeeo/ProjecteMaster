@@ -24,7 +24,7 @@ private:
 		float Size;
 		float SizeSpeed;
 		float Opacity, MaxOpacity;
-		int Frame;
+		float Frame;
 		CColor Color;
 	};
 
