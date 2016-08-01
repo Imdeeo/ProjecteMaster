@@ -36,6 +36,7 @@ public:
 		Crouch,
 		Run,
 		Interact,
+		Sing,
 		Pause,
 #ifdef _DEBUG
 		DebugToggleFrustum,

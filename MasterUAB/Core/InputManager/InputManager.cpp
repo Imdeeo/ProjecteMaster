@@ -154,7 +154,8 @@ void CInputManager::Load(std::string _file)
 		m_Map->MapBool(CInputManager::Crouch, *m_KeyboardId, gainput::KeyF6);
 		m_Map->MapBool(CInputManager::Run, *m_KeyboardId, gainput::KeyF7);
 		m_Map->MapBool(CInputManager::Interact, *m_KeyboardId, gainput::KeyF8);
-		m_Map->MapBool(CInputManager::Pause, *m_KeyboardId, gainput::KeyF9);
+		m_Map->MapBool(CInputManager::Sing, *m_KeyboardId, gainput::KeyF9);
+		m_Map->MapBool(CInputManager::Pause, *m_KeyboardId, gainput::KeyF10);
 #ifdef _DEBUG
 		m_Map->MapBool(CInputManager::DebugToggleFrustum, *m_KeyboardId, gainput::Key0);
 		m_Map->MapBool(CInputManager::DebugSpeedUp, *m_KeyboardId, gainput::Key1);
@@ -210,6 +211,8 @@ int CInputManager::GetAction(std::string _name)
 		return CInputManager::Run;
 	else if (_name == "Interact")
 		return CInputManager::Interact;
+	else if (_name == "Sing")
+		return CInputManager::Sing;
 	else if (_name == "Pause")
 		return CInputManager::Pause;
 #ifdef _DEBUG

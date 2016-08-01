@@ -21,16 +21,17 @@
 	<action name="Crouch" device="Keyboard" key="KeyQ"/>
 	<action name="Run" device="Keyboard" key="KeyE"/>
 	<action name="Interact" device="Keyboard" key="KeyF"/>
-	<action name="Pause" device="Keyboard" key="KeyK"/>
+	<action name="Sing" device="Keyboard" key="KeyR"/>
+	<action name="Pause" device="Keyboard" key="KeyP"/>
 		
 	<action name="DebugSpeedUp" device="Keyboard" key="KeyM"/>
 	<action name="DebugSpeedDown" device="Keyboard" key="KeyN"/>
 	<action name="DebugSanityUp" device="Keyboard" key="KeyJ"/>
 	<action name="DebugSanityDown" device="Keyboard" key="KeyH"/>
 	
-	<action name="DebugToggleFrustum" device="Keyboard" key="KeyP"/>
+	<action name="DebugToggleFrustum" device="Keyboard" key="KeyK"/>
 	
-	<action name="DebugReloadLua" device="Keyboard" key="KeyR"/>
+	<action name="DebugReloadLua" device="Keyboard" key="KeyT"/>
 	<action name="DebugToggleRenderLights" device="Keyboard" key="KeyL"/>
 	
 	<action name="DebugChangeCameraControl" device="Keyboard" key="KeyC"/>
