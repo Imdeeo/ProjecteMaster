@@ -8,10 +8,16 @@ end
 function ClimbingUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	local l_ForwardMovement = l_Player.m_InputManager:get_axis("MOVE_FWD")
+	local l_ForwardMovement = 0
+	if l_Player.m_InputManager:is_action_active("MoveForward") then 
+		l_ForwardMovement = l_ForwardMovement+1
+	end
+	if l_Player.m_InputManager:is_action_active("MoveBackward") then
+		l_ForwardMovement = l_ForwardMovement-1
+	end
 	local l_Speed = l_Player.m_Speed * 20
 	
-	if l_Player.m_InputManager:is_action_active("INTERACT") then
+	if l_Player.m_InputManager:is_action_active("Interact") then
 		l_Player.m_IsClimbing = false
 	end
 	
@@ -20,12 +26,12 @@ function ClimbingUpdate(args, _ElapsedTime)
 	
 	--// Move the character controller
 	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - 0.45
+	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - g_StandingOffset
 	l_Player.m_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
 	
 	--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_NewControllerPosition.y = l_NewControllerPosition.y - 0.45
+	l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 	l_Owner:set_position(l_NewControllerPosition)
 	
 	--// Save speed in last update so we can create acceleration

@@ -1,5 +1,7 @@
 class "VolumeController"
   function VolumeController:__init()
+	l_Engine = CUABEngine.get_instance()
+	
     self.m_MusicVolume = 50.0
     self.m_FXVolume = 50.0
 
@@ -8,21 +10,21 @@ class "VolumeController"
     self.m_FXRTPC = SoundRTPC()
     self.m_FXRTPC.rtpc_name = "fx_volume"
 
-    self.m_InputManager = CInputManager.get_input_manager()
-    self.m_SoundManager = CUABEngine.get_instance():get_sound_manager()
+    self.m_InputManager = l_Engine:get_input_manager()
+    self.m_SoundManager = l_Engine:get_sound_manager()
   end
 
   function VolumeController:CheckVolumeKeys()
-    if self.m_InputManager:is_action_active("MUSIC_VOLUME_UP") then
+    if self.m_InputManager:is_action_active("DebugMusicVolumeUp") then
       self:SetMusicVolume(self.m_MusicVolume + 5.0)
     end
-    if self.m_InputManager:is_action_active("MUSIC_VOLUME_DOWN") then
+    if self.m_InputManager:is_action_active("DebugMusicVolumeDown") then
       self:SetMusicVolume(self.m_MusicVolume - 5.0)
     end
-    if self.m_InputManager:is_action_active("FX_VOLUME_UP") then
+    if self.m_InputManager:is_action_active("DebugFxVolumeUp") then
       self:SetFXVolume(self.m_FXVolume + 5.0)
     end
-    if self.m_InputManager:is_action_active("FX_VOLUME_DOWN") then
+    if self.m_InputManager:is_action_active("DebugFxVolumeDown") then
       self:SetFXVolume(self.m_FXVolume - 5.0)
     end
   end

@@ -20,7 +20,7 @@ CSphericalCameraController::~CSphericalCameraController()
 
 void CSphericalCameraController::SetCamera(CCamera *Camera) const
 {
-	Camera->SetFOV(1.13446f);
+	Camera->SetFOV(m_Fov);
 	Camera->SetAspectRatio(16.0f / 9.0f);
 
 	Camera->SetLookAt(m_Position);
@@ -32,14 +32,21 @@ void CSphericalCameraController::SetCamera(CCamera *Camera) const
 
 void CSphericalCameraController::Update(float ElapsedTime)
 {
-	if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
+	if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::RightClick))
 	{
 		Vect3f cameraMovement(0, 0, 0);
-		cameraMovement.x = CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * .5f;
-		cameraMovement.y = CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * -.5f;
+		cameraMovement.x = UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisX);//->GetAxis("X_AXIS") * ElapsedTime * .5f;
+		cameraMovement.y = -UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisY);//GetAxis("Y_AXIS") * ElapsedTime * -.5f;
 		Rotate(cameraMovement);
 	}
-	m_Zoom -= CInputManager::GetInputManager()->GetAxis("ZOOM")*.5f;
+	if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::WheelUp))
+	{
+		m_Zoom -= 0.1f;
+	}
+	else if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::WheelDown))
+	{
+		m_Zoom += 0.1f;
+	}
 	if (m_Zoom < 1){ m_Zoom = 1; }
 	m_CameraPosition = m_Position - (GetForward()*m_Zoom);
 }

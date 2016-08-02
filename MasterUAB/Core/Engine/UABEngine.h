@@ -5,6 +5,7 @@
 
 #define LEVEL "2"
 
+class CInputManager;
 class CStaticMeshManager;
 class CLayerManager;
 class CMaterialManager;
@@ -24,6 +25,7 @@ class CGUIManager;
 class ISoundManager;
 class IVideoManager;
 class CGamePlayManager;
+class CLevelManager;
 class CManchasManager;
 
 #include <string>
@@ -36,6 +38,7 @@ private:
 	static CUABEngine * m_Instance;
 	CUABEngine(void);
 
+	CInputManager * m_InputManager;
 	CStaticMeshManager * m_StaticMeshManager;
 	CLayerManager * m_LayerManager;
 	CMaterialManager * m_MaterialManager;
@@ -55,11 +58,13 @@ private:
 	ISoundManager* m_SoundManager;
 	IVideoManager* m_VideoManager;
 	CGamePlayManager* m_GamePlayManager;
+	CLevelManager* m_LevelManager;
 	CManchasManager* m_ManchasManager;
 	std::string m_LevelLoaded;
 	int m_CurrentCamera_vision;
 	
 public:
+	CInputManager * GetInputManager()const;
 	CStaticMeshManager * GetStaticMeshManager()const;
 	CLayerManager * GetLayerManager()const;
 	CMaterialManager * GetMaterialManager()const;
@@ -79,9 +84,8 @@ public:
 	ISoundManager * GetSoundManager()const;
 	IVideoManager * GetVideoManager() const;
 	CGamePlayManager * GetGamePlayManager()const;
+	CLevelManager * GetLevelManager()const;
 	CManchasManager * GetManchasManager()const;
-	std::string GetLevelLoaded()const{return m_LevelLoaded;}
-	void LoadLevelXML(std::string filename);
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
 	void Destroy();

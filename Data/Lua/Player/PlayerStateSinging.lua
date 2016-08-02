@@ -2,11 +2,13 @@ function SingingFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_IsSinging = true
+	
 	if l_Player.m_IsWindedUp then
 		l_Owner:blend_cycle(1,1.0,0.1)
 	else
 		l_Owner:execute_action(2, 0.1, 0.1, 1.0, true)
 	end
+	
 	m_Timer = 0.0
 end
 
@@ -20,7 +22,7 @@ function SingingUpdate(args, _ElapsedTime)
 		l_Player.m_IsWindedUp = true
 	end
 	
-	if not l_Player.m_InputManager:is_action_active("SING") then
+	if not l_Player.m_InputManager:is_action_active("Sing") then
 		l_Player.m_IsSinging = false
 	end
 	
@@ -34,7 +36,7 @@ function SingingUpdate(args, _ElapsedTime)
 	--// If player has an item, move it.
 	if m_Timer >= 1.5 and l_Player.m_Item ~= nil then
 		local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-		l_NewControllerPosition.y = l_NewControllerPosition.y - 0.45
+		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 		local l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_Owner:get_right_object_position())
 		--l_ObjectPosition = Vect3f(-l_ObjectPosition.x, l_ObjectPosition.z, l_ObjectPosition.y)
 		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
@@ -68,5 +70,5 @@ end
 
 function ANYToSingingCondition(args)
 	local l_Player = args["self"]
-	return l_Player.m_InputManager:is_action_active("SING")
+	return l_Player.m_InputManager:is_action_active("Sing")
 end
