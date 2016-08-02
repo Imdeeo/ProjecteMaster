@@ -40,6 +40,7 @@ struct PS_INPUT
 		float3 WorldNormal: TEXCOORD4;
 	#endif
 	float4 HPos : TEXCOORD5;
+	float4 WorldPos : TEXCOORD6;
 };
 
 struct PS_OUTPUT
@@ -90,10 +91,11 @@ PS_INPUT mainVS(VS_INPUT IN)
 		l_Output.Pos = mul( float4(IN.Pos, 1.0), m_World );
 	#endif
 		
-	l_Output.HPos = l_Output.Pos ;
+	l_Output.WorldPos = l_Output.Pos;
 	l_Output.Pos = mul( l_Output.Pos, m_View );
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
-	l_Output.Normal = normalize(mul(IN.Normal, (float3x3)m_World));	
+	l_Output.HPos = l_Output.Pos ;
+	l_Output.Normal = normalize(mul(IN.Normal, (float3x3)m_World));
 	l_Output.UV = IN.UV;
 	
 	#ifdef HAS_TANGENT
@@ -107,14 +109,6 @@ PS_INPUT mainVS(VS_INPUT IN)
 	#endif
 	
 	return l_Output;
-}
-
-float3 CalcNormalMap(float3 Normal, float3 Tangent, float3 Binormal, float4 NormalMap)
-{
-	float g_Bump = 2.4;
-	float3 bump=g_Bump*((NormalMap.xyz) - float3(0.5,0.5,0.5));		
-	float3 Nn = Normal + bump.x*Tangent + bump.y*Binormal;
-	return normalize(Nn);
 }
 
 float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, SamplerState	
@@ -132,22 +126,50 @@ float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, S
 	return l_RNMLighting;
 }
 
+float3 CalcNormalMap(float3 Normal, float3 Tangent, float3 Binormal, float4 NormalMap)
+{
+	float g_Bump = 2.4;
+	float3 bump=g_Bump*((NormalMap.xyz) - float3(0.5,0.5,0.5));		
+	float3 Nn = Normal + bump.x*Tangent + bump.y*Binormal;
+	return normalize(Nn);
+}
+
+float3 CalcParallaxMap(float3 Vn, float3 WorldNormal, float3 WorldTangent, float3 WorldBinormal, float2 UV, out float2 OutUV, float4 NormalMap)
+{
+	float2 l_UV = UV;
+	
+	// parallax code
+	float3x3 tbnXf = float3x3(WorldTangent,WorldBinormal,WorldNormal);
+	float height = NormalMap.w * 0.06 - 0.03;
+	l_UV += height * mul(tbnXf,Vn).xy;
+	
+	// normal map
+	float3 tNorm = NormalMap.xyz - float3(0.5,0.5,0.5);
+	
+	// transform tNorm to world space
+	tNorm = normalize(tNorm.x*WorldTangent - tNorm.y*WorldBinormal + tNorm.z*WorldNormal);
+	OutUV=l_UV;
+	return tNorm;
+}
+
 PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 {
 	PS_OUTPUT l_Out = (PS_OUTPUT)0;
 	float l_specularFactor=m_SpecularFactor;
-	float l_Depth = IN.Pos.z / IN.Pos.w;
-
+	float l_Depth = IN.HPos.z / IN.HPos.w;
+	
 	float4 l_Ambient = m_LightAmbient;
 	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
+	
 	if (l_Albedo.w < 0.1)
 	{
 		clip(-1);
 	}
-	float3 Nn = IN.Normal;
+	
+	float3 Nn = IN.Normal;	
+	float3 l_EyeToWorldPosition = normalize(IN.WorldPos - m_InverseView[3].xyz);
 	
 	#ifdef HAS_REFLECTION
-		float3 l_EyeToWorldPosition = normalize(IN.HPos-m_CameraPosition.xyz);
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
 		float4 l_ReflectColor = T8Texture.Sample(S8Sampler, l_ReflectVector);
 		l_Albedo = l_Albedo * m_Exposure + l_ReflectColor * (1 - m_Exposure);
@@ -160,13 +182,16 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		float4 l_NormalMap = T2Texture.Sample(S2Sampler,IN.UV);
 		
 		Nn=CalcNormalMap(Nn, Tn, Bn, l_NormalMap);	
+		#ifdef HAS_PARALLAX
+			Nn=CalcParallaxMap(l_EyeToWorldPosition, Nn, Tn, Bn, IN.UV, IN.UV, l_NormalMap);
+		#endif 
 		
 		l_specularFactor *= l_NormalMap.w;
 	#endif
 	
 	#ifdef HAS_UV2
 		#ifdef HAS_RNM
-			l_Ambient = float4(GetRadiosityNormalMap(Nn, IN.UV2, T1Texture, S1Sampler, T1Texture, S1Sampler, T1Texture, S1Sampler),1.0);
+			l_Ambient = float4(GetRadiosityNormalMap(Nn, IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler),1.0);
 		#else
 			l_Ambient = T1Texture.Sample(S1Sampler,IN.UV2);
 		#endif

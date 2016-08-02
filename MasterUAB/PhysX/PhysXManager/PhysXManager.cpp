@@ -600,40 +600,6 @@ void CPhysXManager::CreateStaticSphere(const std::string _name, float _radius, c
 		_group)->release();
 }
 
-void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const CStaticMesh* _Mesh , const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
-{
-	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
-	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
-	{
-		std::vector<Vect3f> l_vertexos(l_RenderableVertex[i]->GetNVertexs());
-
-		physx::PxConvexMeshDesc l_ConvexMeshDesc;
-		l_ConvexMeshDesc.setToDefault();
-		l_ConvexMeshDesc.points.count = l_RenderableVertex[i]->GetNVertexs();
-		l_ConvexMeshDesc.points.stride = sizeof(Vect3f);
-		l_ConvexMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
-
-		l_ConvexMeshDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX | physx::PxConvexFlag::eINFLATE_CONVEX;
-		physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
-		physx::PxConvexMeshCookingResult::Enum l_Result;
-		bool success = m_Cooking->cookConvexMesh(l_ConvexMeshDesc, l_DefaultMemoryOutputStream, &l_Result);
-		assert(success);
-		physx::PxDefaultMemoryInputData l_DefaultMemoryInputData(l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
-		physx::PxConvexMesh* l_ConvexMesh = m_PhysX->createConvexMesh(l_DefaultMemoryInputData);
-
-		physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
-		physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
-
-		char l_ActorName[256] = "";
-		sprintf_s(l_ActorName, "%s_%u", _name.c_str(), i);
-
-		L_PutGroupToShape(l_Shape, m_Groups[_group]);
-
-		l_Body->userData = (void*)AddActor(l_ActorName, _position, _orientation, l_Body);
-		m_Scene->addActor(*l_Body);
-	}
-}
-
 bool LoadMeshFile(std::string _FileName,physx::PxU8** Data_,physx::PxU32* Size_)
 {
 	std::fstream l_File(_FileName, std::ios::binary | std::ios::in);
@@ -664,6 +630,34 @@ bool LoadMeshFile(std::string _FileName,physx::PxU8** Data_,physx::PxU32* Size_)
 	}
 	return true;
 }
+void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
+{
+	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
+	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
+	{
+		char l_FileName[256] = "";
+		sprintf_s(l_FileName, "%s\\%s_%u.cmesh", _Mesh->GetPhysxMeshesDirectory().c_str(), _name.c_str(), i);
+
+		physx::PxU8* l_Data;
+		physx::PxU32 l_Size;
+
+		if (LoadMeshFile(l_FileName, &l_Data, &l_Size)){
+			physx::PxDefaultMemoryInputData l_DefaultMemoryInputData(l_Data, l_Size);
+			physx::PxConvexMesh* l_ConvexMesh = m_PhysX->createConvexMesh(l_DefaultMemoryInputData);
+
+			physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+			physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
+
+			char l_ActorName[256] = "";
+			sprintf_s(l_ActorName, "%s_%u", _name.c_str(), i);
+
+			L_PutGroupToShape(l_Shape, m_Groups[_group]);
+
+			l_Body->userData = (void*)AddActor(l_ActorName, _position, _orientation, l_Body);
+			m_Scene->addActor(*l_Body);
+		}
+	}
+}
 
 void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
@@ -671,7 +665,7 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStat
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
 	{
 		char l_FileName[256] = "";
-		sprintf_s(l_FileName, "Data\\level_%s\\Meshes\\PhysXMeshes\\%s_%u.cmesh", UABEngine.GetLevelLoaded().c_str(), _name.c_str(), i);
+		sprintf_s(l_FileName, "%s\\%s_%u.cmesh", _Mesh->GetPhysxMeshesDirectory().c_str(), _name.c_str(), i);
 
 		physx::PxU8* l_Data;
 		physx::PxU32 l_Size;
@@ -699,11 +693,12 @@ void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CSta
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
 	{
-		char l_FileName[256] = "";
-		sprintf_s(l_FileName, "Data\\level_%s\\Meshes\\PhysXMeshes\\%s_%u.tmesh", UABEngine.GetLevelLoaded().c_str(), _name.c_str(), i);
 
 		physx::PxU8* l_Data;
 		physx::PxU32 l_Size;
+
+		char l_FileName[256] = "";
+		sprintf_s(l_FileName, "%s\\%s_%u.tmesh", _Mesh->GetPhysxMeshesDirectory().c_str(), _name.c_str(), i);
 
 		if (LoadMeshFile(l_FileName,&l_Data,&l_Size)){
 

@@ -27,6 +27,7 @@ void CGamePlayManager::Destroy()
 	{
 		CHECKED_DELETE(m_Resources[i]);
 	}
+	m_Resources.clear();
 }
 
 void CGamePlayManager::AddComponent(CLUAComponent* _LUAComponent)

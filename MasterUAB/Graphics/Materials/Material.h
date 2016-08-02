@@ -28,7 +28,8 @@ public:
 	const std::vector<CMaterialParameter *> & GetParameters(){ return m_Parameters;}
 	void CMaterial::operator=(CMaterial &b);
 	CTexture * GetTexture(int index = 0);
-
+	void SetValue(int _index, float _value);
+	float GetValue(int _index);
 	void Save(FILE* _File);
 };
 

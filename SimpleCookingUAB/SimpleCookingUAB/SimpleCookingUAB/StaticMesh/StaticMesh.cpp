@@ -15,7 +15,7 @@
 #define HEADER 65109
 #define FOOTER 22014
 
-CStaticMesh::CStaticMesh(void):CNamed("")
+CStaticMesh::CStaticMesh(void) :CNamed(""), m_PhysxMeshesDirectory("")
 {	
 }
 

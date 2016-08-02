@@ -20,7 +20,6 @@
 #include "Engine\UABEngine.h"
 
 #include "InputManager\InputManager.h"
-#include "InputManager\InputManagerImplementation.h"
 
 #include "DebugHelper\DebugHelper.h"
 #include "DebugHelper\DebugHelperImplementation.h"
@@ -526,6 +525,7 @@ void CScriptManager::RegisterLUAFunctions()
 	// Engine-------------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CUABEngine>("CUABEngine")
+			.def("get_input_manager", &CUABEngine::GetInputManager)
 			.def("get_static_mesh_manager", &CUABEngine::GetStaticMeshManager)
 			.def("get_layer_manager", &CUABEngine::GetLayerManager)
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)
@@ -543,8 +543,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_video_manager", &CUABEngine::GetVideoManager)
 			.def("get_cinematic_manager", &CUABEngine::GetCinematicManager)
 			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
-			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
-			.def("load_level_xml", &CUABEngine::LoadLevelXML)
 			.def("get_gui_manager", &CUABEngine::GetGUIManager)
 			.scope[
 				def("get_instance", &CUABEngine::GetInstance)
@@ -565,32 +563,17 @@ void CScriptManager::RegisterLUAFunctions()
 	// InputManager-------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CInputManager>("CInputManager")
+			.def("get_action", &CInputManager::GetAction)
+			.def("get_input", &CInputManager::GetInput)
 			.def("is_action_active", &CInputManager::IsActionActive)
-			.def("get_axis", &CInputManager::GetAxis)
+			.def("is_action_new", &CInputManager::IsActionNew)
+			.def("is_action_released", &CInputManager::IsActionReleased)
+			.def("was_action_active", &CInputManager::WasActionActive)
 			.def("get_cursor", &CInputManager::GetCursor)
 			.def("get_cursor_movement", &CInputManager::GetCursorMovement)
-			.def("has_focus", &CInputManager::HasFocus)
-			.def("set_current_input_manager", &CInputManager::SetCurrentInputManager)
-			.scope[
-				def("get_input_manager", &CInputManager::GetInputManager)
-			]
-			.def("reload", &CInputManager::reload)
+			.def("reload", &CInputManager::Reload)
 	];
 
-	module(m_LS)[
-		class_<CInputManagerImplementation, CInputManager>("CInputManagerImplementation")
-			.def(constructor<HWND>())
-			.def("load_commands_from_file", &CInputManagerImplementation::LoadCommandsFromFile)
-			.def("begin_frame", &CInputManagerImplementation::BeginFrame)
-			.def("end_frame", &CInputManagerImplementation::EndFrame)
-			.def("set_focus", &CInputManagerImplementation::SetFocus)
-			.def("set_mouse_speed", &CInputManagerImplementation::SetMouseSpeed)
-			.def("key_event_received", &CInputManagerImplementation::KeyEventReceived)
-			.def("update_cursor", &CInputManagerImplementation::UpdateCursor)
-			.def("update_cursor_movement", &CInputManagerImplementation::UpdateCursorMovement)
-			.def("reload", &CInputManagerImplementation::reload)
-	];
-	
 
 // GRAPHICS-----------------------------------------------------------------------------------------
 #ifdef _DEBUG
@@ -781,6 +764,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_position", &CCameraController::GetPosition)
 			.def("set_position", &CCameraController::SetPosition)
 			.def("update", &CCameraController::Update)
+			.def("set_fov", &CCameraController::SetFov)
+			.def("get_fov", &CCameraController::GetFov)
 	];
 
 	RegisterTemplatedMapManager<CCameraController>(m_LS);
@@ -1084,10 +1069,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_ambient_light", &CLightManager::GetAmbientLight)
 			.def("save", &CLightManager::Save)
 			.def("create_new_light", &CLightManager::CreateNewLight)
-			.def("get_fog_color_lua_address", &CLightManager::GetFogColorLuaAdress)
-			.def("get_fog_start_lua_address", &CLightManager::GetFogStartRangeAttenuattionLuaAdress)
-			.def("get_fog_end_lua_address", &CLightManager::GetFogEndRangeAttenuattionLuaAdress)
-			.def("get_fog_max_attenuattion_lua_address", &CLightManager::GetFogMaxAttenuattionLuaAdress)
 	];
 
 	module(m_LS)[
@@ -1126,11 +1107,12 @@ void CScriptManager::RegisterLUAFunctions()
 				value("float",CMaterialParameter::FLOAT),
 				value("vect2f", CMaterialParameter::VECT2F),
 				value("vect3f", CMaterialParameter::VECT3F),
-				value("vect4f", CMaterialParameter::VECT4F)
+				value("vect4f", CMaterialParameter::VECT4F),
+				value("color", CMaterialParameter::COLOR)
 			]
 			.def("apply", &CMaterialParameter::Apply)
 			.def("get_material_type", &CMaterialParameter::getMaterialType)
-			.def("get_value_address", &CMaterialParameter::GetValueLuaAddress)
+			.def("get_value_address", &CMaterialParameter::GetValueLuaAddress)			
 			.def("get_description", &CMaterialParameter::GetDescription)
 			.scope[
 				def("get_type_from_string",&CMaterialParameter::GetTypeFromString)
@@ -1145,6 +1127,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_parameters", &CMaterial::GetParameters, luabind::return_stl_iterator)
 			.def("get_renderable_object_technique", &CMaterial::GetRenderableObjectTechnique)
 			.def("get_texture", &CMaterial::GetTexture)
+			.def("set_value", &CMaterial::SetValue)
+			.def("get_value", &CMaterial::GetValue)
 	];
 
 	RegisterTemplatedMapManager<CMaterial>(m_LS);
@@ -1398,6 +1382,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_awake", &CManchasSystemInstance::GetAwake)
 			.def("set_awake", &CManchasSystemInstance::SetAwake)
 			.def("get_lua_awake", &CManchasSystemInstance::GetLuaAwake)
+			.def("set_type", &CManchasSystemInstance::SetType)
 	];
 
 
@@ -1584,6 +1569,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CGamePlayManager>("CGamePlayManager")
 			.def("add_component", &CGamePlayManager::AddComponent)
+			.def("destroy", &CGamePlayManager::Destroy)
 	];
 }
 

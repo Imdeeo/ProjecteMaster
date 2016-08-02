@@ -94,6 +94,12 @@ CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_Current
 				Vect4f Value = l_Child.GetVect4fProperty("value",Vect4f(1.0f,1.0f,1.0f,1.0f));
 				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect4f>(this, l_Child, Value, l_type, l_Description));
 			}
+			if (l_type == CMaterialParameter::COLOR)
+			{
+				Vect4f Value = l_Child.GetVect4fProperty("value", Vect4f(1.0f, 1.0f, 1.0f, 1.0f));
+				CColor l_Aux(Value.x, Value.y, Value.z, Value.w);
+				m_Parameters.push_back(new CTemplatedMaterialParameter<CColor>(this, l_Child, l_Aux, l_type, l_Description));
+			}
 		}
 	}
 }
@@ -162,7 +168,21 @@ void CMaterial::operator=(CMaterial &b)
 		{
 			m_Parameters.push_back(new CTemplatedMaterialParameter<Vect4f>(*((CTemplatedMaterialParameter<Vect4f>*)l_MaterialParameter)));
 		}
+		if (l_type == CMaterialParameter::COLOR)
+		{
+			m_Parameters.push_back(new CTemplatedMaterialParameter<CColor>(*((CTemplatedMaterialParameter<CColor>*)l_MaterialParameter)));			
+		}
 	}
+}
+
+void CMaterial::SetValue(int _index, float _value)
+{
+	((CTemplatedMaterialParameter<float>*)m_Parameters[_index])->SetValue(_value);
+}
+
+float CMaterial::GetValue(int _index)
+{
+	return ((CTemplatedMaterialParameter<float>*)m_Parameters[_index])->GetValue();
 }
 
 CRenderableObjectTechnique* CMaterial::GetRenderableObjectTechnique()

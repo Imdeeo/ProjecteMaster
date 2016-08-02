@@ -38,7 +38,7 @@ void C3PersonCameraController::Move(Vect3f _MovementVector, float ElapsedTime)
 
 void C3PersonCameraController::SetCamera(CCamera *Camera) const
 {
-	Camera->SetFOV(1.13446f);
+	Camera->SetFOV(m_Fov);
 	Camera->SetAspectRatio(16.0f/9.0f);
 
 	Camera->SetPosition(m_Position);
@@ -56,11 +56,11 @@ Vect3f C3PersonCameraController::GetDirection() const
 void C3PersonCameraController::Update(float ElapsedTime)
 {
 	m_Position = m_Target->GetPosition() + m_PositionOffset + (GetForward()*m_RotationOffset.x) + (GetRight()*m_RotationOffset.z);
-
-	if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
+	
+	if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::RightClick))
 	{
-		float l_Yaw = CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime * 2.f;
-		float l_Pitch = CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime * -0.5f;
+		float l_Yaw = UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisX) * 2.f;
+		float l_Pitch = UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisY) * -0.5f;
 		AddYaw(l_Yaw*m_YawSpeed);
 		AddPitch(l_Pitch*m_PitchSpeed);
 	}

@@ -17,7 +17,7 @@ class 'CCharacterManager'
 		local l_Loaded=l_XMLTreeNode:load_file(Filename)
 		local UABEngine = CUABEngine.get_instance()
 		if l_Loaded then
-			for i=0, l_XMLTreeNode:get_num_children() do
+			for i=0, (l_XMLTreeNode:get_num_children()-1), 1 do
 				local l_Atts=l_XMLTreeNode:get_child(i)
 				local l_ElemName=l_Atts:get_name()
 				if l_ElemName=="player" then
@@ -46,7 +46,6 @@ class 'CCharacterManager'
 					elseif l_Type == "Whisperer" then
 						utils_log("other")
 					end
-					
 				end	
 			end
 		else

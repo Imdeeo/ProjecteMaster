@@ -26,9 +26,6 @@
     <ClInclude Include="Math\Vector4.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="XML\XMLTreeNode.h">
-      <Filter>XML</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\Types.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -72,6 +69,12 @@
     </ClInclude>
     <ClInclude Include="Components\TriggerComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="XML\tinyxml2.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="XML\XMLTreeNode.h">
+      <Filter>XML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="Components\TriggerComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="XML\tinyxml2.cpp">
+      <Filter>XML</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
