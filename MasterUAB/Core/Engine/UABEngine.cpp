@@ -132,7 +132,7 @@ void CUABEngine::Init()
 	//m_LevelManager->LoadLevel("Biblioteca");
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
-	m_MaterialManager->Load("Data\\default_effect_materials.xml");
+	//m_MaterialManager->Load("Data\\default_effect_materials.xml");
 	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
 	
 	m_SoundManager->SetPath("Data\\Sounds\\");
