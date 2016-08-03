@@ -216,16 +216,16 @@
       <Filter>RenderableObjects</Filter>
     </ClCompile>
     <ClCompile Include="Particles\ParticleManager.cpp">
-      <Filter>SceneRender\Particles</Filter>
+      <Filter>Particles</Filter>
     </ClCompile>
     <ClCompile Include="Particles\ParticleSystemType.cpp">
-      <Filter>SceneRender\Particles</Filter>
+      <Filter>Particles</Filter>
     </ClCompile>
     <ClCompile Include="RenderHelper\RenderHelper.cpp">
       <Filter>RenderHelper</Filter>
     </ClCompile>
     <ClCompile Include="Particles\ParticleSystemInstance.cpp">
-      <Filter>SceneRender\Particles</Filter>
+      <Filter>Particles</Filter>
     </ClCompile>
     <ClCompile Include="SceneRender\RenderDebugFrustumSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
@@ -289,7 +289,7 @@
     <Filter Include="Manchas">
       <UniqueIdentifier>{0629ac20-b5c5-48f5-826d-28b18b69002a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SceneRender\Particles">
+    <Filter Include="Particles">
       <UniqueIdentifier>{60ebdd8f-8f9b-4458-86f3-1f6b978676ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -543,16 +543,16 @@
       <Filter>SceneRender</Filter>
     </ClInclude>
     <ClInclude Include="Particles\ParticleManager.h">
-      <Filter>SceneRender\Particles</Filter>
+      <Filter>Particles</Filter>
     </ClInclude>
     <ClInclude Include="Particles\ParticleSystemType.h">
-      <Filter>SceneRender\Particles</Filter>
+      <Filter>Particles</Filter>
     </ClInclude>
     <ClInclude Include="RenderHelper\RenderHelper.h">
       <Filter>RenderHelper</Filter>
     </ClInclude>
     <ClInclude Include="Particles\ParticleSystemInstance.h">
-      <Filter>SceneRender\Particles</Filter>
+      <Filter>Particles</Filter>
     </ClInclude>
     <ClInclude Include="SceneRender\RenderDebugFrustumSceneRendererCommand.h">
       <Filter>SceneRender</Filter>

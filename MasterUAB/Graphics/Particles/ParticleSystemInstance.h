@@ -26,13 +26,16 @@ private:
 		float Angle, AngularSpeed, AngularAcceleration;
 		float DistanceToCamera;
 
-		int ColorControlPoint, SizeControlPoint;
+		int ColorControlPoint, SizeControlPoint, SpeedControlPoint, AccelerationControlPoint;
 
 		float LastColorControlTime, NextColorControlTime;
 		float LastSizeControlTime, NextSizeControlTime;
+		float LastSpeedControlTime, NextSpeedControlTime;
+		float LastAccelerationControlTime, NextAccelerationControlTime;
 
 		CColor LastColor, NextColor;
 		float LastSize, NextSize;
+		Vect3f LastSpeed, LastAcceleration, NextSpeed, NextAcceleration;
 	};
 
 	int m_ActiveParticles;
