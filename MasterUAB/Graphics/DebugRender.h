@@ -17,6 +17,7 @@ private:
 
 
 #include "Math\Vector3.h"
+#include "Utils.h"
 
 class CEffect;
 class ID3D11Device;
@@ -75,7 +76,7 @@ public:
 	CEffectTechnique *	GetDebugTechnique() const;
 
 private:
-	CRenderableObjectTechnique		*m_EffectTechnique;
+	//CRenderableObjectTechnique		*m_EffectTechnique;
 
 	CRenderableVertexs				*m_SimpleTriangle;
 	CRenderableVertexs				*m_ClassicBlendTriangle;
@@ -122,6 +123,8 @@ private:
 	
 	Vect3f m_Sphere_10SegBSCenter;
 	Vect3f m_ConeBSCenter;
+
+	UAB_BUILD_GET_SET(CRenderableObjectTechnique *, EffectTechnique);
 };
 
 #endif

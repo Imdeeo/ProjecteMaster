@@ -4,6 +4,7 @@
 #define RENDER_HELPER_H
 
 #include "Math\Vector3.h"
+#include "Utils.h"
 
 class CEffect;
 class ID3D11Device;
@@ -25,6 +26,8 @@ private:
 	CRenderableObjectTechnique		*m_EffectTechnique;
 
 	CRenderableVertexs				*m_DrawQuadRV;
+
+	UAB_BUILD_GET_SET(CRenderableObjectTechnique *, EffectTechnique);
 
 };
 
