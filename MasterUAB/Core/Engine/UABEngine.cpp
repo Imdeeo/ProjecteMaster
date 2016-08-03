@@ -118,10 +118,10 @@ void CUABEngine::Init()
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
 	m_LevelManager->LoadLevel("Recibidor");
-	m_LevelManager->LoadLevel("Biblioteca");
+	//m_LevelManager->LoadLevel("Biblioteca");
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
-	m_MaterialManager->Load("Data\\default_effect_materials.xml");
+	//m_MaterialManager->Load("Data\\default_effect_materials.xml");
 	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
 	m_RenderManager->Init();
 	m_SoundManager->SetPath("Data\\Sounds\\");
