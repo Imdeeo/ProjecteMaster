@@ -12,7 +12,6 @@ CParticleSystemType::CParticleSystemType(CXMLTreeNode &TreeNode) : CNamed(TreeNo
 	m_EmitAbsolute = l_Element.GetBoolProperty("emit_absolute",false);
 	m_StartingDirectionAngle = l_Element.GetFloatProperty("start_dir_angle",1.0);
 	m_StartingAccelerationAngle = l_Element.GetFloatProperty("start_acc_angle",1.0);
-	m_Size = l_Element.GetVect2fProperty("size",Vect2f(0.0, 0.0));
 	m_EmitRate = l_Element.GetVect2fProperty("emit_rate",Vect2f(0.0,0.0));
 	m_AwakeTime = l_Element.GetVect2fProperty("awake_time", Vect2f(0.0, 0.0));
 	m_SleepTime = l_Element.GetVect2fProperty("sleep_time", Vect2f(0.0, 0.0));
@@ -20,13 +19,7 @@ CParticleSystemType::CParticleSystemType(CXMLTreeNode &TreeNode) : CNamed(TreeNo
 	m_StartingAngle = l_Element.GetVect2fProperty("start_angle", Vect2f(0.0, 0.0));
 	m_StartingAngularSpeed = l_Element.GetVect2fProperty("start_angular_speed", Vect2f(0.0, 0.0));
 	m_AngularAcceleration = l_Element.GetVect2fProperty("angular_acc", Vect2f(0.0, 0.0));
-	m_StartingSpeed1 = l_Element.GetVect3fProperty("start_speed_1", Vect3f(0.0, 0.0, 0.0));
-	m_StartingSpeed2 = l_Element.GetVect3fProperty("start_speed_2", Vect3f(0.0, 0.0, 0.0));
-	m_StartingAcceleration1 = l_Element.GetVect3fProperty("start_acc_1", Vect3f(0.0, 0.0, 0.0));
-	m_StartingAcceleration2 = l_Element.GetVect3fProperty("start_acc_2", Vect3f(0.0, 0.0, 0.0));
-	m_Color1 = CColor(TreeNode.GetVect4fProperty("color_1", Vect4f(1.0, 1.0f, 1.0f, 1.0f)));
-	m_Color2 = CColor(TreeNode.GetVect4fProperty("color_2", Vect4f(1.0f, 1.0f, 1.0f, 1.0f)));
-
+	
 	for (int i = 0; i < l_Element.GetNumChildren(); ++i)
 	{
 		if (l_Element(i).GetPszProperty("type") == std::string("size"))
@@ -44,6 +37,22 @@ CParticleSystemType::CParticleSystemType(CXMLTreeNode &TreeNode) : CNamed(TreeNo
 			aux.m_Time = l_Element(i).GetVect2fProperty("time", Vect2f(0.0, 0.0));
 			m_ControlPointColors.push_back(aux);
 		}
+		else if (l_Element(i).GetPszProperty("type") == std::string("speed"))
+		{
+			ControlPointSpeed aux;
+			aux.m_Speed1 = l_Element(i).GetVect3fProperty("speed_1", Vect3f(0.0, 0.0, 0.0));
+			aux.m_Speed2 = l_Element(i).GetVect3fProperty("speed_2", Vect3f(0.0, 0.0, 0.0));
+			aux.m_Time = l_Element(i).GetVect2fProperty("time", Vect2f(0.0, 0.0));
+			m_ControlPointSpeeds.push_back(aux);
+		}
+		else if (l_Element(i).GetPszProperty("type") == std::string("acceleration"))
+		{
+			ControlPointAcceleration aux;
+			aux.m_Acceleration1 = l_Element(i).GetVect3fProperty("acceleration_1", Vect3f(0.0, 0.0, 0.0));
+			aux.m_Acceleration2 = l_Element(i).GetVect3fProperty("acceleration_2", Vect3f(0.0, 0.0, 0.0));
+			aux.m_Time = l_Element(i).GetVect2fProperty("time", Vect2f(0.0, 0.0));
+			m_ControlPointAccelerations.push_back(aux);
+		}
 	}
 }
 
@@ -59,14 +68,10 @@ void CParticleSystemType::Destroy()
 void CParticleSystemType::Save(FILE* _File)
 {
 	fprintf_s(_File, "\t<particle name=\"%s\" material=\"%s\" frames=\"%i\" time=\"%f\" loop=\"%s\" emit_absolute=\"%s\" start_dir_angle=\"%f\" start_acc_angle=\"%f\""
-		" size=\"%f %f\" emit_rate=\"%f %f\" awake_time=\"%f %f\" sleep_time=\"%f %f\" life=\"%f %f\" start_angle=\"%f %f\" start_angular_speed=\"%f %f\""
-		" angular_acc=\"%f %f\" start_speed_1=\"%f %f %f\" start_speed_2=\"%f %f %f\" start_acc_1=\"%f %f %f\" start_acc_2=\"%f %f %f\" color_1=\"%f %f %f %f\" color_2=\"%f %f %f %f\">\n",
+		" emit_rate=\"%f %f\" awake_time=\"%f %f\" sleep_time=\"%f %f\" life=\"%f %f\" start_angle=\"%f %f\" start_angular_speed=\"%f %f\" angular_acc=\"%f %f\">\n",
 		m_Name.c_str(), GetMaterial()->GetName().c_str(), m_NumFrames, m_TimePerFrame, m_LoopFrames ? "true" : "false", m_EmitAbsolute ? "true" : "false", m_StartingDirectionAngle, 
-		m_StartingAccelerationAngle, m_Size[0], m_Size[1], m_EmitRate[0], m_EmitRate[1], m_AwakeTime[0], m_AwakeTime[1], m_SleepTime[0], m_SleepTime[1], m_Life[0], m_Life[1], m_StartingAngle[0], 
-		m_StartingAngle[1], m_StartingAngularSpeed[0], m_StartingAngularSpeed[1], m_AngularAcceleration[0], m_AngularAcceleration[1], m_StartingSpeed1[0], m_StartingSpeed1[1], 
-		m_StartingSpeed1[2], m_StartingSpeed2[0], m_StartingSpeed2[1], m_StartingSpeed2[2], m_StartingAcceleration1[0], m_StartingAcceleration1[1], m_StartingAcceleration1[2],
-		m_StartingAcceleration2[0], m_StartingAcceleration2[1], m_StartingAcceleration2[2], m_Color1.GetRed(), m_Color1.GetGreen(), m_Color1.GetBlue(), m_Color1.GetAlpha(),
-		m_Color2.GetRed(), m_Color2.GetGreen(), m_Color2.GetBlue(), m_Color2.GetAlpha());
+		m_StartingAccelerationAngle, m_EmitRate[0], m_EmitRate[1], m_AwakeTime[0], m_AwakeTime[1], m_SleepTime[0], m_SleepTime[1], m_Life[0], m_Life[1], m_StartingAngle[0], 
+		m_StartingAngle[1], m_StartingAngularSpeed[0], m_StartingAngularSpeed[1], m_AngularAcceleration[0], m_AngularAcceleration[1]);
 	for (size_t i = 0; i < m_ControlPointColors.size(); i++)
 	{
 		Vect2f auxTime = m_ControlPointColors[i].m_Time;
@@ -83,6 +88,24 @@ void CParticleSystemType::Save(FILE* _File)
 		Vect2f auxSize = m_ControlPointSizes[i].m_Size;
 		fprintf_s(_File, "\t\t<control_point type=\"size\" time=\"%f %f\" size=\"%f %f\"/>\n",
 			auxTime[0], auxTime[1], auxSize[0], auxSize[1]);
+	}
+
+	for (size_t i = 0; i < m_ControlPointSpeeds.size(); i++)
+	{
+		Vect2f auxTime = m_ControlPointSpeeds[i].m_Time;
+		Vect3f auxSpeed1 = m_ControlPointSpeeds[i].m_Speed1;
+		Vect3f auxSpeed2 = m_ControlPointSpeeds[i].m_Speed2;
+		fprintf_s(_File, "\t\t<control_point type=\"speed\" time=\"%f %f\" speed_1=\"%f %f %f\" speed_2=\"%f %f %f\"/>\n",
+			auxTime[0], auxTime[1], auxSpeed1[0], auxSpeed1[1], auxSpeed1[2], auxSpeed2[0], auxSpeed2[1], auxSpeed2[2]);
+	}
+
+	for (size_t i = 0; i < m_ControlPointAccelerations.size(); i++)
+	{
+		Vect2f auxTime = m_ControlPointAccelerations[i].m_Time;
+		Vect3f auxAcc1 = m_ControlPointAccelerations[i].m_Acceleration1;
+		Vect3f auxAcc2 = m_ControlPointAccelerations[i].m_Acceleration2;
+		fprintf_s(_File, "\t\t<control_point type=\"acceleration\" time=\"%f %f\" acceleration_1=\"%f %f %f\" acceleration_2=\"%f %f %f\"/>\n",
+			auxTime[0], auxTime[1], auxAcc1[0], auxAcc1[1], auxAcc1[2], auxAcc2[0], auxAcc2[1], auxAcc2[2]);
 	}
 
 	fprintf_s(_File, "\t</particle>\n");

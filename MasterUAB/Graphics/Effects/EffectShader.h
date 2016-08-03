@@ -29,6 +29,8 @@ protected:
 	std::string m_ShaderModel;
 	std::string m_EntryPoint;
 	std::string m_Filename;
+	std::string m_Path = "Data/Effects/";
+	std::string m_CompiledPath = "Data/Effects/Compiled/";
 	std::vector<std::string> m_PreprocessorMacros;
 	D3D10_SHADER_MACRO *m_ShaderMacros;
 
