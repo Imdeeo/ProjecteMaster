@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{BB47EFCD-C73D-4442-B00F-B801520EDBCE}"
 EndProject
@@ -49,6 +49,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "luabind", "3rdParty\luabind\luabind.vcxproj", "{09B805A4-13DB-4A24-8E3A-386DAD319399}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK", "3rdParty\DirectXTK\DirectXTK_Desktop_2013.vcxproj", "{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Video", "Video\Video.vcxproj", "{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -205,6 +207,18 @@ Global
 		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Release7|Win32.Build.0 = Release|Win32
 		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Release7|x64.ActiveCfg = Release|x64
 		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Release7|x64.Build.0 = Release|x64
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}.Debug|Win32.Build.0 = Debug|Win32
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}.Debug|x64.ActiveCfg = Debug|Win32
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}.Debug7|Win32.ActiveCfg = Debug7|Win32
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}.Debug7|Win32.Build.0 = Debug7|Win32
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}.Debug7|x64.ActiveCfg = Debug7|Win32
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}.Release|Win32.ActiveCfg = Release|Win32
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}.Release|Win32.Build.0 = Release|Win32
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}.Release|x64.ActiveCfg = Release|Win32
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}.Release7|Win32.ActiveCfg = Release7|Win32
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}.Release7|Win32.Build.0 = Release7|Win32
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2}.Release7|x64.ActiveCfg = Release7|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -223,5 +237,6 @@ Global
 		{209A2A97-A786-41E1-9CA4-906B36EED6B8} = {DC62A030-424F-4F52-A237-443505E82B2A}
 		{09B805A4-13DB-4A24-8E3A-386DAD319399} = {DC62A030-424F-4F52-A237-443505E82B2A}
 		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E} = {DC62A030-424F-4F52-A237-443505E82B2A}
+		{E5BDFFBC-980E-46C7-B600-E9DF9965A6B2} = {BB47EFCD-C73D-4442-B00F-B801520EDBCE}
 	EndGlobalSection
 EndGlobal

@@ -154,6 +154,8 @@ void CDynamicTexture::SetFormat(const std::string &Format)
 		m_Format = 28; //DXGI_FORMAT_R8G8B8A8_UNORM
 	else if (Format == "r32")
 		m_Format = 41; //DXGI_FORMAT_R32_FLOAT
+	else if (Format == "r8u")
+		m_Format = DXGI_FORMAT_R8G8B8A8_UNORM; //DXGI_FORMAT_R8_UINT
 	else if (Format == "rgba32")
 		m_Format = 2; //DXGI_FORMAT_R32G32B32A32_FLOAT
 	else
