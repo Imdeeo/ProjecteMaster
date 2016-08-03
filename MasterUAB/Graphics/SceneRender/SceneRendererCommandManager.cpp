@@ -26,6 +26,7 @@
 #include "RenderDebugLayerSceneRendererCommand.h"
 #include "RenderDebugShadowMapsSceneRendererCommand.h"
 #include "RenderGUISceneRendererCommand.h"
+#include "DrawVideoQuadRenderCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -170,6 +171,10 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				{
 					AddResource(l_Name, new CRenderGUISceneRendererCommand(l_Element));
 				}
+				else if (l_Element.GetName() == std::string("render_video"))
+				{
+					AddResource(l_Name, new CDrawVideoQuadRendererCommand(l_Element));
+				}
 			}
 		}
 	}
@@ -305,6 +310,10 @@ bool CSceneRendererCommandManager::Reload()
 				else if (l_Element.GetName() == std::string("render_gui"))
 				{
 					AddResource(l_Name, new CRenderGUISceneRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("render_video"))
+				{
+					AddResource(l_Name, new CDrawVideoQuadRendererCommand(l_Element));
 				}
 			}
 		}
