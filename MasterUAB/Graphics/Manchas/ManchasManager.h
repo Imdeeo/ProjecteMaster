@@ -13,7 +13,7 @@ public:
 	virtual ~CManchasManager(void);
 	void Load(const std::string &Filename);
 	void Reload();
-	//void Save();
+	void Save();
 };
 
 #endif //MANCHAS_MANAGER_H

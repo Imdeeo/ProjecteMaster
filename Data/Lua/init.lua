@@ -17,6 +17,7 @@ m_MusicSliderResult = CSliderResult(50.0, 50.0)
 m_FxSliderResult = CSliderResult(50.0, 50.0)
 m_Cordura = CSliderResult(50.0, 50.0)
 
+
 function mainLua(level)
 	level = string.gsub(level,"\/","\\")
 	InitAntweakBar()
@@ -37,7 +38,6 @@ function mainLua(level)
 	l_switchvalue.sound_switch = l_switch
 	l_switchvalue.value_name = "exploration"
 	--g_Player.m_SoundManager:set_switch(l_switchvalue)
-
 	g_VolumeController = VolumeController()
 	g_VolumeController:SetMusicVolume(50)
 	m_timerPause = 0
@@ -53,7 +53,7 @@ function luaUpdate(_ElapsedTime)
 		m_timerPause = m_timerPause + _ElapsedTime
 		if m_timerPause >= 0.2 then
 			m_iniciando = false
-			g_Engine:set_pause(true)
+			CUABEngine.get_instance():set_pause(true)
 		end		
 	end
 	
@@ -83,7 +83,10 @@ function luaUpdate(_ElapsedTime)
 		CUABEngine.get_instance():set_pause(true)
 	end
 	if l_InputManager:is_action_released("DebugToggleFrustum") then
-		g_Engine:set_frustum_active(not g_Engine:get_frustum_active())
+		--g_Engine:set_frustum_active(not g_Engine:get_frustum_active())
+		local l_videoManager = g_Engine:get_video_manager()
+		l_videoManager:load_clip("bunny.ogv",false)
+		l_videoManager:render_sreen_clip("bunny.ogv")
 	end
 	--g_VolumeController:CheckVolumeKeys()	
 end
