@@ -49,6 +49,8 @@ CInputManager::CInputManager() :
 	m_MouseId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDeviceMouse>());
 	m_GamepadId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDevicePad>());
 
+	gainput::InputDevice::DeviceVariant l_variant = m_Manager->GetDevice(*m_MouseId)->GetVariant();
+
 	m_Map = new gainput::InputMap(*m_Manager, "Keymap");
 }
 
@@ -79,6 +81,12 @@ void CInputManager::Reload()
 void CInputManager::Update()
 {
 	m_Manager->Update();
+}
+
+void CInputManager::UpdateAxis(float _x, float _y)
+{
+	m_AxisX = _x;
+	m_AxisY = _y;
 }
 
 void CInputManager::Load(std::string _file)
@@ -382,6 +390,16 @@ Vect2f CInputManager::GetCursorMovement()
 	return Vect2f(
 		m_Map->GetFloatDelta(CInputManager::AxisX),
 		m_Map->GetFloatDelta(CInputManager::AxisY));
+}
+
+float CInputManager::GetAxisX()
+{
+	return m_AxisX;
+}
+
+float CInputManager::GetAxisY()
+{
+	return m_AxisY;
 }
 
 bool CInputManager::IsActionActive(std::string _name)
