@@ -429,7 +429,7 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 
 	}
 
-	m_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid");
+	//m_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid");
 
 }
 CDebugRender::~CDebugRender()
