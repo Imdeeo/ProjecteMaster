@@ -211,17 +211,16 @@
 	
 	<vertex_shader name="generate_shadowmap_vs2" file="UAB_SHADOWMAP.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_NORMAL;HAS_UV;HAS_TANGENT"/>
 	<pixel_shader name="generate_shadowmap_ps2" file="UAB_SHADOWMAP.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_TANGENT"/>
-	<effect_technique name="generate_shadowmap_bump_technique" vertex_shader="generate_shadowmap_vs2" pixel_shader="generate_shadowmap_ps2"/>		
+	<effect_technique name="generate_shadowmap_bump_technique" vertex_shader="generate_shadowmap_vs2" pixel_shader="generate_shadowmap_ps2"/>
 	
 	<vertex_shader name="generate_shadowmap_vs3" file="UAB_SHADOWMAP.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_WEIGHT_INDICES;HAS_NORMAL;HAS_UV"/>
 	<pixel_shader name="generate_shadowmap_ps3" file="UAB_SHADOWMAP.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_WEIGHT_INDICES;HAS_NORMAL;HAS_UV"/>
-	<effect_technique name="generate_shadowmap_animated_technique" vertex_shader="generate_shadowmap_vs3" pixel_shader="generate_shadowmap_ps3"/>	
+	<effect_technique name="generate_shadowmap_animated_technique" vertex_shader="generate_shadowmap_vs3" pixel_shader="generate_shadowmap_ps3"/>
 	
 	<!-- TRIGGERS -->
 	<vertex_shader name="trigger_vs" file="UAB_UBER_FORWARD_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor="HAS_NORMAL;HAS_UV"/>
 	<pixel_shader name="trigger_ps"	file="UAB_UBER_FORWARD_SHADER.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_TRIGGER"/>
 	<effect_technique name="trigger_technique" vertex_shader="trigger_vs" pixel_shader="trigger_ps"/>
-	
 </effects>
 
 

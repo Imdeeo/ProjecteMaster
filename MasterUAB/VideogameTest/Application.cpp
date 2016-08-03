@@ -18,6 +18,7 @@
 #include "SoundManager\SoundManager.h"
 #include "Camera\CameraControllerManager.h"
 #include "LevelManager\LevelManager.h"
+#include "GamePlayManager.h"
 
 #include "no_sillywarnings_please.h"
 
@@ -50,6 +51,9 @@ void CApplication::Update(float _ElapsedTime)
 	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugReloadLua))
 	{
 		UABEngine.LuaIsReloaded();
+		UABEngine.GetScriptManager()->Destroy();		
+		UABEngine.GetGamePlayManager()->Clear();
+		UABEngine.GetScriptManager()->Initialize();
 		UABEngine.GetScriptManager()->RunFile("Data\\Lua\\init.lua");
 		UtilsLog("Reloading Lua");
 		UABEngine.GetLevelManager()->ReloadAllLua();
