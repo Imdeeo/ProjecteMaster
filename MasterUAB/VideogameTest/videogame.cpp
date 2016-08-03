@@ -215,16 +215,28 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 			if (!debugHelper.Update(msg.hwnd, msg.message, msg.wParam, msg.lParam))
 				l_InputManager->GetManager()->HandleMessage(msg);
 
-			if (msg.message == WM_KEYUP)
+			switch (msg.message)
 			{
-				bool Alt = ((msg.lParam & (1 << 29)) != 0);
-				if (msg.wParam == VK_RETURN && Alt)
-				{
-					WINDOWPLACEMENT windowPosition = { sizeof(WINDOWPLACEMENT) };
-					GetWindowPlacement(msg.hwnd, &windowPosition);
+				case WM_SETFOCUS:
+					hasFocus = true;
+					break;
+				case WM_KILLFOCUS:
+					hasFocus = false;
+					break;
+				case WM_MOUSEMOVE:
+					if (hasFocus)
+						l_InputManager->UpdateAxis(GET_X_LPARAM(msg.lParam), GET_Y_LPARAM(msg.lParam));
+					break;
+				case WM_KEYUP:
+					bool Alt = ((msg.lParam & (1 << 29)) != 0);
+					if (msg.wParam == VK_RETURN && Alt)
+					{
+						WINDOWPLACEMENT windowPosition = { sizeof(WINDOWPLACEMENT) };
+						GetWindowPlacement(msg.hwnd, &windowPosition);
 
-					ToggleFullscreen(msg.hwnd, windowPosition);
-				}
+						ToggleFullscreen(msg.hwnd, windowPosition);
+					}
+					break;
 			}
 		}
 		
