@@ -15,7 +15,8 @@
 		<renderable_object_technique name="zblur" technique="zblur_technique"/>
 		<renderable_object_technique name="particle" technique="particle_technique"/>
 		<renderable_object_technique name="alpha_blend" technique="texture_technique"/>		
-		<renderable_object_technique name="alpha_blend_env" technique="texture_env_technique"/>		
+		<renderable_object_technique name="alpha_blend_env" technique="texture_env_technique"/>
+		<renderable_object_technique name="glossiness_map" technique="reflection_glossiness_technique"/>
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
 	</pool_renderable_object_technique>	
 	<pool_renderable_object_technique name="gBuffer">
@@ -36,7 +37,6 @@
 		<renderable_object_technique name="radiosity_bump_env" technique="rnm_bump_env_deferred_technique"/>
 		<renderable_object_technique name="radiosity_env" technique="rnm_env_deferred_technique"/>
 		<renderable_object_technique name="glossiness_map" technique="reflection_glossiness_deferred_technique"/>
-		
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_deferred_technique"/>
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="generate_shadowmap_pool">

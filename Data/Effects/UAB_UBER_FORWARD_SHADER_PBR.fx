@@ -218,6 +218,11 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		float l_Fresnel = pow(1 - dot(-l_EyeToWorldPosition, IN.Normal), 2);
 		float l_SpecularFactor = m_SpecularFactor + l_Fresnel * (1-m_SpecularFactor);
 	#endif
+	
+	#ifdef HAS_GLOSSINESS_MAP
+		float4 l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV);
+		m_SpecularPower *= (l_Glossiness.x + l_Glossiness.y + l_Glossiness.z) / 3;
+	#endif
 
 	#ifdef HAS_LIGHTS
 		#ifdef HAS_NORMAL
