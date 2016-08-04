@@ -12,6 +12,7 @@ Texture2D T6Texture: register( t6 );	// Shadowmap
 Texture2D T7Texture: register( t7 );	// Shadowmask
 TextureCube T8Texture: register( t8 );	// Reflection
 Texture3D T9Texture: register( t9 );	// Skybox
+Texture2D T10Texture: register( t10 );  // Specular map
 
 SamplerState S0Sampler: register( s0 );
 SamplerState S1Sampler: register( s1 );
@@ -23,5 +24,6 @@ SamplerState S6Sampler: register( s6 );
 SamplerState S7Sampler: register( s7 );
 SamplerState S8Sampler: register( s8 );
 SamplerState S9Sampler: register( s9 );
+SamplerState S10Sampler: register( s10 );
 
 #endif //SAMPLERS_FXH

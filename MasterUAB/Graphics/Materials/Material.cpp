@@ -16,6 +16,7 @@
 #define INDEX_LIGHTMAP_3_TEXTURE 4
 #define INDEX_GLOSSINESS_TEXTURE 5
 #define INDEX_CUBEMAP_TEXTURE 8
+#define INDEX_SPECULAR_TEXTURE 10
 
 CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0)
 {
@@ -63,6 +64,10 @@ CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_Current
 			if (l_TextureType == "glossiness")
 			{
 				m_Textures[INDEX_GLOSSINESS_TEXTURE] = l_texture;
+			}
+			if (l_TextureType == "specular")
+			{
+				m_Textures[INDEX_SPECULAR_TEXTURE] = l_texture;
 			}
 		}
 		if (l_Child.GetName() == std::string("parameter"))
