@@ -6,6 +6,7 @@
 		<renderable_object_technique name="animated" technique="animated_technique"/>
 		<renderable_object_technique name="animated_bump" technique="animated_bump_technique"/>
 		<renderable_object_technique name="lights" technique="lights_technique"/>
+		<renderable_object_technique name="reflection" technique="lights_env_technique"/>
 		<renderable_object_technique name="bump" technique="bump_technique"/>
 		<renderable_object_technique name="bump_env" technique="bump_env_technique"/>
 		<renderable_object_technique name="lightmap" technique="lightmap_technique"/>
