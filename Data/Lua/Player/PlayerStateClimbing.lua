@@ -8,10 +8,16 @@ end
 function ClimbingUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	local l_ForwardMovement = l_Player.m_InputManager:get_axis("MOVE_FWD")
+	local l_ForwardMovement = 0
+	if l_Player.m_InputManager:is_action_active("MoveForward") then 
+		l_ForwardMovement = l_ForwardMovement+1
+	end
+	if l_Player.m_InputManager:is_action_active("MoveBackward") then
+		l_ForwardMovement = l_ForwardMovement-1
+	end
 	local l_Speed = l_Player.m_Speed * 20
 	
-	if l_Player.m_InputManager:is_action_active("INTERACT") then
+	if l_Player.m_InputManager:is_action_active("Interact") then
 		l_Player.m_IsClimbing = false
 	end
 	

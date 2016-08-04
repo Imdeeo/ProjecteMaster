@@ -14,17 +14,29 @@ end
 function MovingUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	local l_ForwardMovement = l_Player.m_InputManager:get_axis("MOVE_FWD")
-	local l_StrafeMovement = l_Player.m_InputManager:get_axis("STRAFE")
+	local l_ForwardMovement = 0
+	local l_StrafeMovement = 0
+	if l_Player.m_InputManager:is_action_active("MoveForward") then 
+		l_ForwardMovement = l_ForwardMovement+1
+	end
+	if l_Player.m_InputManager:is_action_active("MoveBackward") then
+		l_ForwardMovement = l_ForwardMovement-1
+	end
+	if l_Player.m_InputManager:is_action_active("StrafeLeft") then
+		l_StrafeMovement = l_StrafeMovement-1
+	end
+	if l_Player.m_InputManager:is_action_active("StrafeRight") then
+		l_StrafeMovement = l_StrafeMovement+1
+	end
 	local l_Speed = l_Player.m_Speed
 
 	--// Detect if player is moving backwards, walking, or running, then assign animation accordingly.
-	if l_Player.m_InputManager:is_action_active("MOVE_BACK") and not l_Player.m_InputManager:is_action_active("RUN") then
+	if l_Player.m_InputManager:is_action_active("MoveBackward") and not l_Player.m_InputManager:is_action_active("Run") then
 		l_Speed = l_Speed * 0.5
 	end
 	
 	l_Player.m_LastAnimation = l_Player.m_CurrentAnimation
-	if l_Player.m_InputManager:is_action_active("RUN") then
+	if l_Player.m_InputManager:is_action_active("Run") then
 		l_Speed = l_Speed * 2
 		l_Player.m_CurrentAnimation = "run"
 	else
@@ -78,15 +90,15 @@ end
 
 function MovingToIdleCondition(args)
 	local l_Player = args["self"]
-	return not (l_Player.m_InputManager:is_action_active("MOVE_FWD") or l_Player.m_InputManager:is_action_active("MOVE_BACK") or l_Player.m_InputManager:is_action_active("STRAFE_LEFT") or l_Player.m_InputManager:is_action_active("STRAFE_RIGHT"))
+	return not (l_Player.m_InputManager:is_action_active("MoveForward") or l_Player.m_InputManager:is_action_active("MoveBackward") or l_Player.m_InputManager:is_action_active("StrafeLeft") or l_Player.m_InputManager:is_action_active("StrafeRight"))
 end
 
 function MovingToCrouchingCondition(args)
 	local l_Player = args["self"]
-	return l_Player.m_InputManager:is_action_active("CROUCH")
+	return l_Player.m_InputManager:is_action_active("Crouch")
 end
 
 function MovingToJumpingCondition(args)
 	local l_Player = args["self"]
-	return l_Player.m_InputManager:is_action_active("JUMP")
+	return l_Player.m_InputManager:is_action_active("Jump")
 end

@@ -60,7 +60,8 @@ public:
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
 	//void RenderDebug(CRenderManager *RM);
-	//void Save(FILE* _File, std::string _layer);
+	void Save(FILE* _File, std::string _layer);
+
 	CEmptyPointerClass* GetLuaAwake()
 	{
 		return (CEmptyPointerClass*)&m_Awake;

@@ -20,7 +20,6 @@
 #include "Engine\UABEngine.h"
 
 #include "InputManager\InputManager.h"
-#include "InputManager\InputManagerImplementation.h"
 
 #include "DebugHelper\DebugHelper.h"
 #include "DebugHelper\DebugHelperImplementation.h"
@@ -105,6 +104,7 @@
 #include "PhysXManager\PhysXManager.h"
 
 #include "SoundManager\SoundManager.h"
+#include "VideoManager\VideoManager.h"
 
 #include "IA\AStar.h"
 
@@ -525,6 +525,7 @@ void CScriptManager::RegisterLUAFunctions()
 	// Engine-------------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CUABEngine>("CUABEngine")
+			.def("get_input_manager", &CUABEngine::GetInputManager)
 			.def("get_static_mesh_manager", &CUABEngine::GetStaticMeshManager)
 			.def("get_layer_manager", &CUABEngine::GetLayerManager)
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)
@@ -539,9 +540,11 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_camera_controller_manager", &CUABEngine::GetCameraControllerManager)
 			.def("get_physX_manager", &CUABEngine::GetPhysXManager)
 			.def("get_sound_manager", &CUABEngine::GetSoundManager)
+			.def("get_video_manager", &CUABEngine::GetVideoManager)
 			.def("get_cinematic_manager", &CUABEngine::GetCinematicManager)
 			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
 			.def("get_gui_manager", &CUABEngine::GetGUIManager)
+			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
 			.scope[
 				def("get_instance", &CUABEngine::GetInstance)
 			]
@@ -561,32 +564,17 @@ void CScriptManager::RegisterLUAFunctions()
 	// InputManager-------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CInputManager>("CInputManager")
+			.def("get_action", &CInputManager::GetAction)
+			.def("get_input", &CInputManager::GetInput)
 			.def("is_action_active", &CInputManager::IsActionActive)
-			.def("get_axis", &CInputManager::GetAxis)
+			.def("is_action_new", &CInputManager::IsActionNew)
+			.def("is_action_released", &CInputManager::IsActionReleased)
+			.def("was_action_active", &CInputManager::WasActionActive)
 			.def("get_cursor", &CInputManager::GetCursor)
 			.def("get_cursor_movement", &CInputManager::GetCursorMovement)
-			.def("has_focus", &CInputManager::HasFocus)
-			.def("set_current_input_manager", &CInputManager::SetCurrentInputManager)
-			.scope[
-				def("get_input_manager", &CInputManager::GetInputManager)
-			]
-			.def("reload", &CInputManager::reload)
+			.def("reload", &CInputManager::Reload)
 	];
 
-	module(m_LS)[
-		class_<CInputManagerImplementation, CInputManager>("CInputManagerImplementation")
-			.def(constructor<HWND>())
-			.def("load_commands_from_file", &CInputManagerImplementation::LoadCommandsFromFile)
-			.def("begin_frame", &CInputManagerImplementation::BeginFrame)
-			.def("end_frame", &CInputManagerImplementation::EndFrame)
-			.def("set_focus", &CInputManagerImplementation::SetFocus)
-			.def("set_mouse_speed", &CInputManagerImplementation::SetMouseSpeed)
-			.def("key_event_received", &CInputManagerImplementation::KeyEventReceived)
-			.def("update_cursor", &CInputManagerImplementation::UpdateCursor)
-			.def("update_cursor_movement", &CInputManagerImplementation::UpdateCursorMovement)
-			.def("reload", &CInputManagerImplementation::reload)
-	];
-	
 
 // GRAPHICS-----------------------------------------------------------------------------------------
 #ifdef _DEBUG
@@ -1238,10 +1226,6 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("set_angular_acceleration", &CParticleSystemType::SetAngularAcceleration)
 		.def("get_awake_time", &CParticleSystemType::GetAwakeTime)
 		.def("set_awake_time", &CParticleSystemType::SetAwakeTime)
-		.def("get_color1", &CParticleSystemType::GetColor1)
-		.def("set_color1", &CParticleSystemType::SetColor1)
-		.def("get_color2", &CParticleSystemType::GetColor2)
-		.def("set_color2", &CParticleSystemType::SetColor2)
 		.def("get_emit_absolute", &CParticleSystemType::GetEmitAbsolute)
 		.def("set_emit_absolute", &CParticleSystemType::SetEmitAbsolute)
 		.def("get_emit_rate", &CParticleSystemType::GetEmitRate)
@@ -1254,14 +1238,8 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("set_name", &CParticleSystemType::SetName)
 		.def("get_num_frames", &CParticleSystemType::GetNumFrames)
 		.def("set_num_frames", &CParticleSystemType::SetNumFrames)
-		.def("get_size", &CParticleSystemType::GetSize)
-		.def("set_size", &CParticleSystemType::SetSize)
 		.def("get_sleep_time", &CParticleSystemType::GetSleepTime)
 		.def("set_sleep_time", &CParticleSystemType::SetSleepTime)
-		.def("get_starting_acceleration1", &CParticleSystemType::GetStartingAcceleration1)
-		.def("set_starting_acceleration1", &CParticleSystemType::SetStartingAcceleration1)
-		.def("get_starting_acceleration2", &CParticleSystemType::GetStartingAcceleration2)
-		.def("set_starting_acceleration2", &CParticleSystemType::SetStartingAcceleration2)
 		.def("get_starting_acceleration_angle", &CParticleSystemType::GetStartingAccelerationAngle)
 		.def("set_starting_acceleration_angle", &CParticleSystemType::SetStartingAccelerationAngle)
 		.def("get_starting_angle", &CParticleSystemType::GetStartingAngle)
@@ -1270,35 +1248,26 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("set_starting_angular_speed", &CParticleSystemType::SetStartingAngularSpeed)
 		.def("get_starting_direction_angle", &CParticleSystemType::GetStartingDirectionAngle)
 		.def("set_starting_direction_angle", &CParticleSystemType::SetStartingDirectionAngle)
-		.def("get_starting_speed1", &CParticleSystemType::GetStartingSpeed1)
-		.def("set_starting_speed1", &CParticleSystemType::SetStartingSpeed1)
-		.def("get_starting_speed2", &CParticleSystemType::GetStartingSpeed2)
-		.def("set_starting_speed2", &CParticleSystemType::SetStartingSpeed2)
 		.def("get_time_per_frame", &CParticleSystemType::GetTimePerFrame)
 		.def("set_time_per_frame", &CParticleSystemType::SetTimePerFrame)
 		.def("get_material", &CParticleSystemType::GetMaterial)
 		.def("set_material", &CParticleSystemType::SetMaterial)
 		.def("get_sizes_control_points_size", &CParticleSystemType::GetSizesControlPointSize)
 		.def("get_colors_control_points_size", &CParticleSystemType::GetColorsControlPointSize)
+		.def("get_speeds_control_points_size", &CParticleSystemType::GetSpeedsControlPointSize)
+		.def("get_accelerations_control_points_size", &CParticleSystemType::GetAccelerationsControlPointSize)
 		.def("get_lua_angular_acceleration",  &CParticleSystemType::GetLuaAngularAcceleration)
 		.def("get_lua_awake_time", &CParticleSystemType::GetLuaAwakeTime)
-		.def("get_lua_color1", &CParticleSystemType::GetLuaColor1)
-		.def("get_lua_color2", &CParticleSystemType::GetLuaColor2)
 		.def("get_emit_absolute", &CParticleSystemType::GetLuaEmitAbsolute)
 		.def("get_emit_rate", &CParticleSystemType::GetLuaEmitRate)
 		.def("get_lua_loop_frames", &CParticleSystemType::GetLuaLoopFrames)
 		.def("get_lua_name_address", &CParticleSystemType::GetLuaNameAddress)
 		.def("get_lua_num_frames", &CParticleSystemType::GetLuaNumFrames)
-		.def("get_lua_size", &CParticleSystemType::GetLuaSize)
 		.def("get_lua_sleep_time", &CParticleSystemType::GetLuaSleepTime)
-		.def("get_lua_starting_acceleration1", &CParticleSystemType::GetLuaStartingAcceleration1)
-		.def("get_lua_starting_acceleration2", &CParticleSystemType::GetLuaStartingAcceleration2)
 		.def("get_lua_starting_acceleration_angle", &CParticleSystemType::GetLuaStartingAccelerationAngle)
 		.def("get_lua_starting_angle", &CParticleSystemType::GetLuaStartingAngle)
 		.def("get_lua_starting_angular_speed", &CParticleSystemType::GetLuaStartingAngularSpeed)
 		.def("get_lua_starting_direction_angle", &CParticleSystemType::GetLuaStartingDirectionAngle)
-		.def("get_lua_starting_speed1", &CParticleSystemType::GetLuaStartingSpeed1)
-		.def("get_lua_starting_speed2", &CParticleSystemType::GetLuaStartingSpeed2)
 		.def("get_lua_time_per_frame", &CParticleSystemType::GetLuaTimePerFrame)
 		.def("get_lua_life", &CParticleSystemType::GetLuaLife)
 		.def("get_lua_control_point_size", &CParticleSystemType::GetLuaCPSize)
@@ -1306,6 +1275,12 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("get_lua_control_point_color1", &CParticleSystemType::GetLuaCPColor1)
 		.def("get_lua_control_point_color2", &CParticleSystemType::GetLuaCPColor2)
 		.def("get_lua_control_point_color_time", &CParticleSystemType::GetLuaCPColorTime)
+		.def("get_lua_control_point_speed1", &CParticleSystemType::GetLuaCPSpeed1)
+		.def("get_lua_control_point_speed2", &CParticleSystemType::GetLuaCPSpeed2)
+		.def("get_lua_control_point_speed_time", &CParticleSystemType::GetLuaCPSpeedTime)
+		.def("get_lua_control_point_acceleration1", &CParticleSystemType::GetLuaCPAcceleration1)
+		.def("get_lua_control_point_acceleration2", &CParticleSystemType::GetLuaCPAcceleration2)
+		.def("get_lua_control_point_acceleration_time", &CParticleSystemType::GetLuaCPAccelerationTime)
 	];
 
 	RegisterTemplatedMapManager<CParticleSystemType>(m_LS);
@@ -1562,7 +1537,14 @@ void CScriptManager::RegisterLUAFunctions()
 					.def_readwrite("time_to_wait", &CAStar::TNodePatrol::time_to_wait)
 			]
 	];
-	
+// VIDEO
+	module(m_LS)[
+		class_<IVideoManager>("IVideoManager")
+			.def("load_clip", &IVideoManager::LoadClip)
+			.def("render_sreen_clip", &IVideoManager::RenderSceenClip)
+			.def("clear_clip", &IVideoManager::ClearClip)
+	];
+
 // VIDEOGAME----------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CApplication>("CApplication")

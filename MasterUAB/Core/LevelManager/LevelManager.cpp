@@ -11,11 +11,11 @@
 #include "Camera\CameraControllerManager.h"
 #include "Cinematics\CinematicManager.h"
 #include "Particles\ParticleManager.h"
+#include "Manchas\ManchasManager.h"
 
 CLevelManager::CLevelManager()
 {
 }
-
 
 CLevelManager::~CLevelManager()
 {
@@ -41,6 +41,7 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 					std::string l_LevelName = l_Element.GetPszProperty("name");
 					TLevelInfo l_LevelInfo;
 					l_LevelInfo.m_Loaded = false;
+					l_LevelInfo.m_ID = l_Element.GetPszProperty("id");
 					l_LevelInfo.m_Directory = l_Element.GetPszProperty("directory");
 					m_LevelsInfo[l_LevelName] = l_LevelInfo;
 				}
@@ -51,9 +52,11 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 
 void CLevelManager::LoadLevel(const std::string &_LevelName)
 {
+	UABEngine.SetLevelLoaded(m_LevelsInfo[_LevelName].m_ID);
 	std::string l_LevelDirectory = m_LevelsInfo[_LevelName].m_Directory;
 	UABEngine.GetMaterialManager()->Load(l_LevelDirectory + "\\materials.xml", "Data\\default_effect_materials.xml");
 	UABEngine.GetParticleManager()->Load(l_LevelDirectory + "\\particles.xml");
+	UABEngine.GetManchasManager()->Load(l_LevelDirectory + "\\cordura.xml");
 	UABEngine.GetStaticMeshManager()->Load(l_LevelDirectory + "\\static_meshes.xml");
 	UABEngine.GetLayerManager()->Load(l_LevelDirectory + "\\renderable_objects.xml");
 	UABEngine.GetLightManager()->Load(l_LevelDirectory + "\\lights.xml");
