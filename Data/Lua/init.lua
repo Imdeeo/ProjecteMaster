@@ -17,12 +17,13 @@ m_MusicSliderResult = CSliderResult(50.0, 50.0)
 m_FxSliderResult = CSliderResult(50.0, 50.0)
 m_Cordura = CSliderResult(50.0, 50.0)
 
+
 function mainLua(level)
 	level = string.gsub(level,"\/","\\")
 	InitAntweakBar()
-	utils_log(level.."\\characters.xml")
+	
 	m_CharacterManager:LoadXML(level.."\\characters.xml")
-	local l_SoundManager = CUABEngine.get_instance():get_sound_manager()
+	local l_SoundManager = g_Engine:get_sound_manager()
 	local l_WaterSoundEvent = SoundEvent()
 	l_WaterSoundEvent.event_name = "water"
 	local l_MainMusicEvent = SoundEvent()
@@ -37,12 +38,11 @@ function mainLua(level)
 	l_switchvalue.sound_switch = l_switch
 	l_switchvalue.value_name = "exploration"
 	--g_Player.m_SoundManager:set_switch(l_switchvalue)
-
 	g_VolumeController = VolumeController()
 	g_VolumeController:SetMusicVolume(50)
 	m_timerPause = 0
 	m_iniciando = true
-	--if CUABEngine.get_instance():get_level_loaded() == "2" then
+	--if g_Engine:get_level_loaded() == "2" then
 	--	g_TestEnemy = CVisionTestEnemy()
 	--	g_TestEnemy:InitEnemy("automata_LOW001")
 	--end
@@ -57,39 +57,44 @@ function luaUpdate(_ElapsedTime)
 		end		
 	end
 	
-	local l_Engine = CUABEngine.get_instance()
-	if CInputManager.get_input_manager():is_action_active("SPEEDUP") then
-		if l_Engine:get_time_scale() < 11 then
-			l_Engine:set_time_scale(l_Engine:get_time_scale()+1)
+	local l_InputManager = g_Engine:get_input_manager()
+	if l_InputManager:is_action_released("DebugSpeedUp") then
+		utils_log("DebugSpeedUp")
+		if g_Engine:get_time_scale() < 11 then
+			g_Engine:set_time_scale(g_Engine:get_time_scale()+1)
 		end
 	end
-	if CInputManager.get_input_manager():is_action_active("SPEEDDOWN") then
-		if l_Engine:get_time_scale() > 1 then
-			l_Engine:set_time_scale(l_Engine:get_time_scale()-1)
+	if l_InputManager:is_action_released("DebugSpeedDown") then
+		utils_log("DebugSpeedDown")
+		if g_Engine:get_time_scale() > 1 then
+			g_Engine:set_time_scale(g_Engine:get_time_scale()-1)
 		end
 	end
-	if CInputManager.get_input_manager():is_action_active("SANITYDUP") then
-		utils_log("SANITYDUP")
+	if l_InputManager:is_action_released("DebugSanityUp") then
+		utils_log("DebugSanityUp")
 		m_CharacterManager.m_Player[1]:ModifySanity(10)
 	end
-	if CInputManager.get_input_manager():is_action_active("SANITYDOWN") then
-		utils_log("SANITYDOWN")
+	if l_InputManager:is_action_released("DebugSanityDown") then
+		utils_log("DebugSanityDown")
 		m_CharacterManager.m_Player[1]:ModifySanity(-10)
 	end
-	if CInputManager.get_input_manager():is_action_active("PAUSE") then
+	if l_InputManager:is_action_released("Pause") then
 		m_menu = true
 		CUABEngine.get_instance():set_pause(true)
 	end
-	if CInputManager.get_input_manager():is_action_active("FRUSTUM") then
-		l_Engine:set_frustum_active(not l_Engine:get_frustum_active())
+	if l_InputManager:is_action_released("DebugToggleFrustum") then
+		--g_Engine:set_frustum_active(not g_Engine:get_frustum_active())
+		local l_videoManager = g_Engine:get_video_manager()
+		l_videoManager:load_clip("bunny.ogv",false)
+		l_videoManager:render_sreen_clip("bunny.ogv")
 	end
-	g_VolumeController:CheckVolumeKeys()	
+	--g_VolumeController:CheckVolumeKeys()	
 end
 
 function luaGui()
-	local gui_manager = CUABEngine.get_instance():get_gui_manager()
+	local gui_manager = g_Engine:get_gui_manager()
 	gui_position = CGUIPosition(580, 50, 500, 30, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-	m_Cordura = gui_manager:do_slider("Cordura", "mad_slider", gui_position,0, m_CharacterManager.m_Player[1].m_MaxSanity, m_CharacterManager.m_Player[1].m_Sanity, false)
+	--m_Cordura = gui_manager:do_slider("Cordura", "mad_slider", gui_position,0, m_CharacterManager.m_Player[1].m_MaxSanity, m_CharacterManager.m_Player[1].m_Sanity, false)
 			
 	if m_fps then
 		local color = CColor(1,0.2,0.2,1)
@@ -146,7 +151,7 @@ function luaGui()
 			local b_play = gui_manager:do_button("Play", "play_button", gui_position)
 			if b_play then
 				m_menu = false
-				CUABEngine.get_instance():set_pause(false)
+				g_Engine:set_pause(false)
 			end 
 			
 			gui_position = CGUIPosition(500, 460, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)

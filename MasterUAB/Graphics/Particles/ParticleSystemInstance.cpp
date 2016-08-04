@@ -21,7 +21,7 @@ CParticleSystemInstance::CParticleSystemInstance(CXMLTreeNode &TreeNode) :
 	m_NextParticleEmission = l_Element.GetFloatProperty("next_particle_emission", 1.0f);
 	m_Awake = l_Element.GetBoolProperty("awake", false);
 	m_AwakeTimer = l_Element.GetFloatProperty("awake_timer", 1.0f);
-	m_EmissionBoxHalfSize = l_Element.GetVect3fProperty("emission_box_half_size", Vect3f(1.0, 1.0, 1.0)) * 0.5f;
+	m_EmissionBoxHalfSize = l_Element.GetVect3fProperty("emission_box_half_size", Vect3f(1.0, 1.0, 1.0));
 	m_EmissionVolume = m_EmissionBoxHalfSize.x * m_EmissionBoxHalfSize.y * m_EmissionBoxHalfSize.z * 8;
 	m_EmissionScaler = m_Type->GetEmitAbsolute() ? 1 : 1.0f / m_EmissionVolume;
 	m_ActiveParticles = 0;
@@ -102,12 +102,9 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 			{
 				ParticleData particle = {};
 				particle.Position = GetRandomValue(-m_EmissionBoxHalfSize, m_EmissionBoxHalfSize)+m_Position;
-				particle.Velocity = GetRandomValue(m_Type->GetStartingSpeed1(), m_Type->GetStartingSpeed2());
-				particle.Acceleration = GetRandomValue(m_Type->GetStartingAcceleration1(), m_Type->GetStartingAcceleration2());
 				particle.AngularSpeed = GetRandomValue(m_Type->GetStartingAngularSpeed()[0], m_Type->GetStartingAngularSpeed()[1]);
 				particle.AngularAcceleration = GetRandomValue(m_Type->GetAngularAcceleration()[0], m_Type->GetAngularAcceleration()[1]);
 
-				//particle.Size = GetRandomValue(m_Type->GetSize().x, m_Type->GetSize().y);
 				particle.SizeControlPoint = 0;
 				particle.LastSizeControlTime = 0;
 				particle.LastSize = GetRandomValue(m_Type->m_ControlPointSizes[0].m_Size);
@@ -120,6 +117,18 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 				particle.NextColorControlTime = m_Type->m_ControlPointColors.size() < 2 ? particle.TotalLife : GetRandomValue(m_Type->m_ControlPointColors[1].m_Time);
 				particle.NextColor = m_Type->m_ControlPointColors.size() < 2 ? particle.LastColor : GetRandomValue(m_Type->m_ControlPointColors[1].m_Color1, m_Type->m_ControlPointColors[1].m_Color2);
 				
+				particle.SpeedControlPoint = 0;
+				particle.LastSpeedControlTime = 0;
+				particle.LastSpeed = GetRandomValue(m_Type->m_ControlPointSpeeds[0].m_Speed1, m_Type->m_ControlPointSpeeds[0].m_Speed2);
+				particle.NextSpeedControlTime = m_Type->m_ControlPointSpeeds.size() < 2 ? particle.TotalLife : GetRandomValue(m_Type->m_ControlPointSpeeds[1].m_Time);
+				particle.NextSpeed = m_Type->m_ControlPointSpeeds.size() < 2 ? particle.LastSpeed : GetRandomValue(m_Type->m_ControlPointSpeeds[1].m_Speed1, m_Type->m_ControlPointSpeeds[1].m_Speed2);
+
+				particle.AccelerationControlPoint = 0;
+				particle.LastAccelerationControlTime = 0;
+				particle.LastAcceleration = GetRandomValue(m_Type->m_ControlPointAccelerations[0].m_Acceleration1, m_Type->m_ControlPointAccelerations[0].m_Acceleration2);
+				particle.NextAccelerationControlTime = m_Type->m_ControlPointAccelerations.size() < 2 ? particle.TotalLife : GetRandomValue(m_Type->m_ControlPointAccelerations[1].m_Time);
+				particle.NextAcceleration = m_Type->m_ControlPointAccelerations.size() < 2 ? particle.LastAcceleration : GetRandomValue(m_Type->m_ControlPointAccelerations[1].m_Acceleration1, m_Type->m_ControlPointAccelerations[1].m_Acceleration2);
+
 				particle.Angle = GetRandomValue(m_Type->GetStartingAngle().x, m_Type->GetStartingAngle().y);
 
 				particle.CurrentFrame = 0;
@@ -139,8 +148,19 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 	for (int i = 0; i < m_ActiveParticles; ++i)
 	{
 		ParticleData *particle = &m_ParticleData[i];
+
+		float SpeedControlAlpha = (particle->LifeTime < particle->NextSpeedControlTime) ?
+			(particle->LifeTime - particle->LastSpeedControlTime) / (particle->NextSpeedControlTime - particle->LastSpeedControlTime) :
+			1.0f;
+
+		float AccelerationControlAlpha = (particle->LifeTime < particle->NextAccelerationControlTime) ?
+			(particle->LifeTime - particle->LastAccelerationControlTime) / (particle->NextAccelerationControlTime - particle->LastAccelerationControlTime) :
+			1.0f;
+
+		particle->Velocity = particle->LastSpeed.Lerp(particle->NextSpeed, SpeedControlAlpha);
+		particle->Acceleration = particle->LastAcceleration.Lerp(particle->NextAcceleration, AccelerationControlAlpha);
 		particle->Position += particle->Velocity * ElapsedTime + 0.5f * ElapsedTime * ElapsedTime * particle->Acceleration;
-		particle->Velocity += particle->Acceleration * ElapsedTime;
+		//particle->Velocity += particle->Acceleration * ElapsedTime;
 		particle->Angle += particle->AngularSpeed * ElapsedTime + 0.5f * ElapsedTime * ElapsedTime * particle->AngularAcceleration;
 		particle->TimeToNextFrame -= ElapsedTime;
 		particle->LifeTime += ElapsedTime;		
@@ -186,6 +206,44 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 			else
 			{
 				particle->NextColorControlTime = particle->TotalLife;
+			}
+		}
+
+		while (particle->LifeTime > particle->NextSpeedControlTime && particle->LifeTime < particle->TotalLife)
+		{
+			++particle->SpeedControlPoint;
+
+			particle->LastSpeed = particle->NextSpeed;
+			particle->LastSpeedControlTime = particle->NextSpeedControlTime;
+
+			if (particle->SpeedControlPoint + 1 < (int)m_Type->m_ControlPointSpeeds.size())
+			{
+				particle->NextSpeed = GetRandomValue(m_Type->m_ControlPointSpeeds[particle->SpeedControlPoint + 1].m_Speed1,
+					m_Type->m_ControlPointSpeeds[particle->SpeedControlPoint + 1].m_Speed2);
+				particle->NextSpeedControlTime = GetRandomValue(m_Type->m_ControlPointSpeeds[particle->SpeedControlPoint + 1].m_Time);
+			}
+			else
+			{
+				particle->NextSpeedControlTime = particle->TotalLife;
+			}
+		}
+
+		while (particle->LifeTime > particle->NextAccelerationControlTime && particle->LifeTime < particle->TotalLife)
+		{
+			++particle->AccelerationControlPoint;
+
+			particle->LastAcceleration = particle->NextAcceleration;
+			particle->LastAccelerationControlTime = particle->NextAccelerationControlTime;
+
+			if (particle->AccelerationControlPoint + 1 < (int)m_Type->m_ControlPointAccelerations.size())
+			{
+				particle->NextAcceleration = GetRandomValue(m_Type->m_ControlPointAccelerations[particle->AccelerationControlPoint + 1].m_Acceleration1,
+					m_Type->m_ControlPointAccelerations[particle->AccelerationControlPoint + 1].m_Acceleration2);
+				particle->NextAccelerationControlTime = GetRandomValue(m_Type->m_ControlPointAccelerations[particle->AccelerationControlPoint + 1].m_Time);
+			}
+			else
+			{
+				particle->NextAccelerationControlTime = particle->TotalLife;
 			}
 		}
 

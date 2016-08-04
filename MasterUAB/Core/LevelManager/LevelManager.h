@@ -8,7 +8,8 @@ class CLayerManager;
 
 typedef struct SLevelInfo
 {
-	bool		m_Loaded;
+	std::string m_ID;
+	bool m_Loaded;
 	std::string	m_Directory;
 } TLevelInfo;
 
