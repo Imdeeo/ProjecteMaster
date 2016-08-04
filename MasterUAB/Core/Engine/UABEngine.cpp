@@ -199,6 +199,18 @@ void CUABEngine::Quit()
 {
 	PostQuitMessage(0);
 }
+
+void CUABEngine::ReloadLUA()
+{
+	LuaIsReloaded();
+	m_ScriptManager->Destroy();
+	m_GamePlayManager->Clear();
+	m_ScriptManager->Initialize();
+	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
+	UtilsLog("Reloading Lua");
+	m_LevelManager->ReloadAllLua();
+}
+
 UAB_GET_PROPERTY_CPP(CUABEngine, CInputManager *, InputManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CStaticMeshManager *, StaticMeshManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CLayerManager *, LayerManager)

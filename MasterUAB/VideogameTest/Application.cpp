@@ -50,13 +50,7 @@ void CApplication::Update(float _ElapsedTime)
 
 	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugReloadLua))
 	{
-		UABEngine.LuaIsReloaded();
-		UABEngine.GetScriptManager()->Destroy();		
-		UABEngine.GetGamePlayManager()->Clear();
-		UABEngine.GetScriptManager()->Initialize();
-		UABEngine.GetScriptManager()->RunFile("Data\\Lua\\init.lua");
-		UtilsLog("Reloading Lua");
-		UABEngine.GetLevelManager()->ReloadAllLua();
+		UABEngine.ReloadLUA();
 	}
 
 	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderLights))
