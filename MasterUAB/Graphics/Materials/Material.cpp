@@ -14,6 +14,7 @@
 #define INDEX_NORMAL_TEXTURE 2
 #define INDEX_LIGHTMAP_2_TEXTURE 3
 #define INDEX_LIGHTMAP_3_TEXTURE 4
+#define INDEX_GLOSSINESS_TEXTURE 5
 #define INDEX_CUBEMAP_TEXTURE 8
 
 CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0)
@@ -58,6 +59,10 @@ CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_Current
 			if (l_TextureType == "diffuse")
 			{
 				m_Textures[INDEX_DIFFUSE_TEXTURE] = l_texture;
+			}
+			if (l_TextureType == "glossiness")
+			{
+				m_Textures[INDEX_GLOSSINESS_TEXTURE] = l_texture;
 			}
 		}
 		if (l_Child.GetName() == std::string("parameter"))

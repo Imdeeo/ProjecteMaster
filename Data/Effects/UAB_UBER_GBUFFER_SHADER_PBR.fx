@@ -165,6 +165,11 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		clip(-1);
 	}
 	float3 Nn = IN.Normal;
+	
+	#ifdef HAS_GLOSSINESS_MAP
+		float4 l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV);
+		m_SpecularPower *= (l_Glossiness.x + l_Glossiness.y + l_Glossiness.z) / 3;
+	#endif
 
 	// PBR modifications according to http://www.marmoset.co/toolbag/learn/pbr-theory
 	// PBR: fresnel (the formula is arbitrary, not based on any source, but the curve would look somewhat similar to the examples)
