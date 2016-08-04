@@ -96,6 +96,7 @@ public:
 	void SwitchCamera();
 	void ChangeCameraVision();
 	void Quit();
+	void ReloadLUA();
 	UAB_BUILD_GET_SET(bool, FrustumActive);
 	UAB_BUILD_GET_SET(float, TimeScale);
 	UAB_BUILD_GET_SET(bool, Pause);
