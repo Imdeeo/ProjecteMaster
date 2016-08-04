@@ -7,7 +7,7 @@ Texture2D T1Texture: register( t1 );	// UV2
 Texture2D T2Texture: register( t2 );	// Bump
 Texture2D T3Texture: register( t3 );	// 
 Texture2D T4Texture: register( t4 );	// 
-Texture2D T5Texture: register( t5 );	// 
+Texture2D T5Texture: register( t5 );	// Glossiness map
 Texture2D T6Texture: register( t6 );	// Shadowmap
 Texture2D T7Texture: register( t7 );	// Shadowmask
 TextureCube T8Texture: register( t8 );	// Reflection
