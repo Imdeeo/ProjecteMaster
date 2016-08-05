@@ -213,7 +213,7 @@ void CPhysXManager::CreateConvexMesh(const std::string &_name, const CStaticMesh
 		physx::PxConvexMeshDesc l_ConvexMeshDesc;
 		l_ConvexMeshDesc.setToDefault();
 		l_ConvexMeshDesc.points.count = l_RenderableVertex[i]->GetNVertexs();
-		if (l_ConvexMeshDesc.points.count < 0)
+		if (l_ConvexMeshDesc.points.count > 0)
 		{
 			l_ConvexMeshDesc.points.stride = sizeof(Vect3f);
 			l_ConvexMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
@@ -252,7 +252,7 @@ void CPhysXManager::CreateTriangleMesh(const std::string &_name, const CStaticMe
 		physx::PxTriangleMeshDesc l_TriangleMeshDesc;
 		l_TriangleMeshDesc.setToDefault();
 		l_TriangleMeshDesc.points.count = l_RenderableVertex[i]->GetNVertexs();
-		if (l_TriangleMeshDesc.points.count < 0)
+		if (l_TriangleMeshDesc.points.count > 0)
 		{
 			l_TriangleMeshDesc.points.stride = sizeof(Vect3f);
 			l_TriangleMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
