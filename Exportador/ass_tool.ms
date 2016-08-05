@@ -1043,7 +1043,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		if l_Path!=undefined then
 		(
 			g_Path = l_Path
-			ExportPathLabel.text = l_Path+"\\"+LevelList.items[LevelList.selection]+"\\"
+			ExportPathLabel.text = l_Path--+"\\"+LevelList.items[LevelList.selection]+"\\"
 		)
 	)
 	
