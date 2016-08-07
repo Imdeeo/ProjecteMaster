@@ -21,7 +21,7 @@ CParticleSystemInstance::CParticleSystemInstance(CXMLTreeNode &TreeNode) :
 	m_NextParticleEmission = l_Element.GetFloatProperty("next_particle_emission", 1.0f);
 	m_Awake = l_Element.GetBoolProperty("awake", false);
 	m_AwakeTimer = l_Element.GetFloatProperty("awake_timer", 1.0f);
-	m_EmissionBoxHalfSize = l_Element.GetVect3fProperty("emission_box_half_size", Vect3f(1.0, 1.0, 1.0)) * 0.5f;
+	m_EmissionBoxHalfSize = l_Element.GetVect3fProperty("emission_box_half_size", Vect3f(1.0, 1.0, 1.0));
 	m_EmissionVolume = m_EmissionBoxHalfSize.x * m_EmissionBoxHalfSize.y * m_EmissionBoxHalfSize.z * 8;
 	m_EmissionScaler = m_Type->GetEmitAbsolute() ? 1 : 1.0f / m_EmissionVolume;
 	m_ActiveParticles = 0;

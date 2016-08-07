@@ -27,6 +27,11 @@
 #include "LevelManager\LevelManager.h"
 #include "Manchas\ManchasManager.h"
 #include "DebugHelper\DebugHelper.h"
+#ifdef _DEBUG
+#include "DebugRender.h"
+#else
+#include "RenderHelper\RenderHelper.h"
+#endif
 
 CUABEngine::CUABEngine(void)
 {
@@ -116,6 +121,7 @@ void CUABEngine::Update(float _ElapsedTime)
 }
 void CUABEngine::Init()
 {
+	m_RenderManager->Init();
 	m_InputManager->Load("Data\\input.xml");
 	m_LevelManager->LoadFile("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
@@ -128,11 +134,15 @@ void CUABEngine::Init()
 	m_ScriptManager->Initialize();
 	//m_MaterialManager->Load("Data\\default_effect_materials.xml");
 	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
-	m_RenderManager->Init();
+	
 	m_SoundManager->SetPath("Data\\Sounds\\");
 	m_SoundManager->Init();
 	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
-
+#ifdef _DEBUG
+	m_RenderManager->GetDebugRender()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
+#else
+	m_RenderManager->GetRenderHelper()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
+#endif
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	m_LevelManager->ReloadAllLua();
 
@@ -189,6 +199,18 @@ void CUABEngine::Quit()
 {
 	PostQuitMessage(0);
 }
+
+void CUABEngine::ReloadLUA()
+{
+	LuaIsReloaded();
+	m_ScriptManager->Destroy();
+	m_GamePlayManager->Clear();
+	m_ScriptManager->Initialize();
+	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
+	UtilsLog("Reloading Lua");
+	m_LevelManager->ReloadAllLua();
+}
+
 UAB_GET_PROPERTY_CPP(CUABEngine, CInputManager *, InputManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CStaticMeshManager *, StaticMeshManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CLayerManager *, LayerManager)

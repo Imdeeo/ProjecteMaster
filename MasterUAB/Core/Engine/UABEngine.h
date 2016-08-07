@@ -62,7 +62,7 @@ private:
 	CManchasManager* m_ManchasManager;
 	std::string m_LevelLoaded;
 	int m_CurrentCamera_vision;
-	
+
 public:
 	CInputManager * GetInputManager()const;
 	CStaticMeshManager * GetStaticMeshManager()const;
@@ -85,6 +85,8 @@ public:
 	IVideoManager * GetVideoManager() const;
 	CGamePlayManager * GetGamePlayManager()const;
 	CLevelManager * GetLevelManager()const;
+	std::string GetLevelLoaded()const{ return m_LevelLoaded; }
+	void SetLevelLoaded(std::string _id){ m_LevelLoaded = _id; }
 	CManchasManager * GetManchasManager()const;
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
@@ -94,6 +96,7 @@ public:
 	void SwitchCamera();
 	void ChangeCameraVision();
 	void Quit();
+	void ReloadLUA();
 	UAB_BUILD_GET_SET(bool, FrustumActive);
 	UAB_BUILD_GET_SET(float, TimeScale);
 	UAB_BUILD_GET_SET(bool, Pause);
