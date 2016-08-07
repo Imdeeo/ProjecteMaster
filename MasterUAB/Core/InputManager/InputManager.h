@@ -17,6 +17,9 @@ protected:
 
 	float m_AxisX;
 	float m_AxisY;
+	float m_AxisZ;
+
+	float m_Speed;
 
 	bool m_Focus;
 	std::string m_Filename;
@@ -70,7 +73,7 @@ public:
 	CInputManager();
 	~CInputManager();
 	void Update();
-	void UpdateAxis(float _x, float _y);
+	void UpdateAxis(float _x, float _y, float _z);
 
 	void Load(std::string _file);
 	void Reload();

@@ -224,8 +224,30 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 					hasFocus = false;
 					break;
 				case WM_MOUSEMOVE:
-					if (hasFocus)
-						l_InputManager->UpdateAxis(GET_X_LPARAM(msg.lParam), GET_Y_LPARAM(msg.lParam));
+					if (hasFocus){
+						/*{
+							DIMOUSESTATE2 l_DIMouseState;
+
+							if (m_Mouse != NULL)
+							{
+								ZeroMemory(&l_DIMouseState, sizeof(l_DIMouseState));
+								HRESULT l_HR = m_Mouse->GetDeviceState(sizeof(DIMOUSESTATE2), &l_DIMouseState);
+								if (FAILED(l_HR))
+								{
+									l_HR = m_Mouse->Acquire();
+									while (l_HR == DIERR_INPUTLOST)
+										l_HR = m_Mouse->Acquire();
+								}
+								else
+								{
+									m_MovementX = l_DIMouseState.lX;
+									m_MovementY = l_DIMouseState.lY;
+								}
+							}
+						}*/
+						
+						l_InputManager->UpdateAxis(GET_X_LPARAM(msg.lParam), GET_Y_LPARAM(msg.lParam), .0f);
+					}
 					break;
 				case WM_KEYUP:
 					bool Alt = ((msg.lParam & (1 << 29)) != 0);
