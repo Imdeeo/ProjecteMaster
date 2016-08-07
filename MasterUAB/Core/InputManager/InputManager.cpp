@@ -41,7 +41,11 @@ CInputManager::CInputManager() :
 	m_Map(nullptr),
 	m_KeyboardId(nullptr),
 	m_MouseId(nullptr),
-	m_GamepadId(nullptr)
+	m_GamepadId(nullptr),
+	m_Speed(1.f),
+	m_AxisX(.0f),
+	m_AxisY(.0f),
+	m_AxisZ(.0f)
 {
 	m_Manager = new gainput::InputManager;
 	
@@ -83,11 +87,27 @@ void CInputManager::Update()
 	m_Manager->Update();
 }
 
-void CInputManager::UpdateAxis(float _x, float _y, float _z)
+void CInputManager::UpdateAxis(LPARAM _param)
 {
-	m_AxisX += _x * m_Speed;// * axis scale
-	m_AxisY += _y * m_Speed;// * axis scale
-	m_AxisZ += _z * m_Speed;// * axis scale
+	DIMOUSESTATE2 l_DIMouseState;
+
+	if (m_Mouse != NULL)
+	{
+		ZeroMemory(&l_DIMouseState, sizeof(l_DIMouseState));
+		HRESULT l_HR = m_Mouse->GetDeviceState(sizeof(DIMOUSESTATE2), &l_DIMouseState);
+		if (FAILED(l_HR))
+		{
+			l_HR = m_Mouse->Acquire();
+			while (l_HR == DIERR_INPUTLOST)
+				l_HR = m_Mouse->Acquire();
+		}
+		else
+		{
+			m_AxisX += l_DIMouseState.lX * m_Speed;// * axis scale
+			m_AxisY += l_DIMouseState.lY * m_Speed;// * axis scale
+			m_AxisZ += l_DIMouseState.lZ * m_Speed;// * axis scale
+		}
+	}
 }
 
 void CInputManager::Load(std::string _file)

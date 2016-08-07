@@ -1,10 +1,12 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
+#define DIRECTINPUT_VERSION 0x0800
 
 #include <string>
 #include <gainput\gainput.h>
 #include <Engine\UABEngine.h>
 #include <Utils.h>
+#include <dinput.h>
 
 class CDeviceButtonListener;
 class CUserButtonListener;
@@ -12,6 +14,7 @@ class CUserButtonListener;
 class CInputManager
 {
 protected:
+	LPDIRECTINPUTDEVICE8 m_Mouse;
 	gainput::InputManager* m_Manager;
 	gainput::InputMap* m_Map;
 
@@ -73,7 +76,7 @@ public:
 	CInputManager();
 	~CInputManager();
 	void Update();
-	void UpdateAxis(float _x, float _y, float _z);
+	void UpdateAxis(LPARAM _param);
 
 	void Load(std::string _file);
 	void Reload();
