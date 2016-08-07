@@ -83,10 +83,11 @@ void CInputManager::Update()
 	m_Manager->Update();
 }
 
-void CInputManager::UpdateAxis(float _x, float _y)
+void CInputManager::UpdateAxis(float _x, float _y, float _z)
 {
-	m_AxisX = _x;
-	m_AxisY = _y;
+	m_AxisX += _x * m_Speed;// * axis scale
+	m_AxisY += _y * m_Speed;// * axis scale
+	m_AxisZ += _z * m_Speed;// * axis scale
 }
 
 void CInputManager::Load(std::string _file)
