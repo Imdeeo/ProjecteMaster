@@ -81,8 +81,8 @@ void CFPSCameraController::Update(float ElapsedTime)
 	m_Position = m_Target->GetPosition() + m_Offset;
 	if (m_Locked)
 		return;
-	//AddPitch(UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisY));
-	//AddYaw(UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisX));
-	AddPitch(UABEngine.GetInputManager()->GetAxisY()*ElapsedTime);
-	AddYaw(UABEngine.GetInputManager()->GetAxisX()*ElapsedTime);
+	AddPitch(UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisY));
+	AddYaw(UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisX));
+	//AddPitch(UABEngine.GetInputManager()->GetAxisY()*ElapsedTime);
+	//AddYaw(UABEngine.GetInputManager()->GetAxisX()*ElapsedTime);
 }

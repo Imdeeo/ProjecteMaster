@@ -27,6 +27,11 @@ void CGamePlayManager::Destroy()
 	{
 		CHECKED_DELETE(m_Resources[i]);
 	}
+	Clear();
+}
+
+void CGamePlayManager::Clear()
+{
 	m_Resources.clear();
 }
 
