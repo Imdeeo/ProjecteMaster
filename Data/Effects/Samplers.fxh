@@ -12,7 +12,7 @@ Texture2D T6Texture: register( t6 );	// Shadowmap
 Texture2D T7Texture: register( t7 );	// Shadowmask
 TextureCube T8Texture: register( t8 );	// Reflection
 Texture3D T9Texture: register( t9 );	// Skybox
-Texture2D T10Texture: register( t10 );  // Specular map
+Texture2D T10Texture: register( t10 );  // Specular/metalness map
 
 SamplerState S0Sampler: register( s0 );
 SamplerState S1Sampler: register( s1 );

@@ -160,21 +160,22 @@ TVertexPS mainVS(TVertexVS IN)
 }
 
 #ifdef HAS_LIGHTS
-float4 applyAllLights(TVertexPS IN, float SpecularFactor)
+float4 applyAllLights(TVertexPS IN, float SpecularFactor, float4 Albedo, float AlbedoFactor, float Metalness)
 {
 	float3 Nn = IN.Normal;
 	float l_specularFactor=SpecularFactor;
-	float4 l_Out = float4(1,1,1,1);
-	#ifdef HAS_UV
-		l_Out = T0Texture.Sample(S0Sampler, IN.UV);
-		l_Out *= 1-l_specularFactor;
-		l_Out.w = 1.0;
-	#endif
+	//float4 l_Out = float4(1,1,1,1);
+	//#ifdef HAS_UV
+	//	l_Out = T0Texture.Sample(S0Sampler, IN.UV);
+	//	//l_Out *= 1-l_specularFactor;
+	//	l_Out.w = 1.0;
+	//#endif
+	float4 l_Out = Albedo;
 
 	#ifdef HAS_UV2
 		float4 lightContrib = T1Texture.Sample(S1Sampler, IN.UV2);
 	#else
-		float4 lightContrib = m_LightAmbient*l_Out;
+		float4 lightContrib = m_LightAmbient*AlbedoFactor*l_Out;
 	#endif
 
 	#ifdef HAS_TANGENT
@@ -192,13 +193,13 @@ float4 applyAllLights(TVertexPS IN, float SpecularFactor)
 	float l_MaxPower = 200.0f;
 	float l_MinPower = 5.0f;
 	float l_SpecularPower = (pow(l_MaxPower/l_MinPower, m_SpecularPower/100) * l_MinPower);
-	float l_BaseFactor = 0.1;
-	l_specularFactor *= l_BaseFactor + (1-l_BaseFactor) * pow((m_SpecularPower/100), 2);
+	//float l_BaseFactor = 0.1;
+	//l_specularFactor *= l_BaseFactor + (1-l_BaseFactor) * pow((m_SpecularPower/100), 2);
 	for(int i = 0;i<MAX_LIGHTS_BY_SHADER;i++)
 	{
 		if (m_LightEnabledArray[i])
 		{
-			lightContrib += applyLights(IN.Pixelpos,Nn,l_Out,i, l_SpecularPower, l_specularFactor);
+			lightContrib += applyLights(IN.Pixelpos,Nn,l_Out,i, l_SpecularPower, l_specularFactor, Metalness);
 		}
 	}
 	return saturate(float4(lightContrib.xyz, l_Out.w));
@@ -217,16 +218,34 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		float3 l_EyeToWorldPosition = normalize(IN.Pixelpos-m_InverseView[3].xyz);
 		float l_Fresnel = pow(1 - dot(-l_EyeToWorldPosition, IN.Normal), 2);
 		float l_SpecularFactor = m_SpecularFactor + l_Fresnel * (1-m_SpecularFactor);
+		
+		#ifdef HAS_METALNESS_MAP
+			float l_Metalness = T10Texture.Sample(S10Sampler, IN.UV);
+			l_SpecularFactor = l_SpecularFactor + l_Metalness * (1-l_SpecularFactor);
+			float l_AlbedoFactor = 1 - l_Metalness;
+			l_AlbedoFactor *= 1 - l_SpecularFactor;
+		#else
+			float l_AlbedoFactor = 1-l_SpecularFactor;
+			float l_Metalness = 0.0f;
+		#endif
 	#endif
+	
+	
 	
 	#ifdef HAS_GLOSSINESS_MAP
 		float4 l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV);
 		m_SpecularPower *= (l_Glossiness.x + l_Glossiness.y + l_Glossiness.z) / 3;
 	#endif
 
+
 	#ifdef HAS_LIGHTS
+		float4 l_Albedo = float4(1,1,1,1);
+		#ifdef HAS_UV
+			l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
+			l_Albedo.w = 1.0;
+		#endif
 		#ifdef HAS_NORMAL
-			Out = Out*applyAllLights(IN, l_SpecularFactor);
+			Out = Out*applyAllLights(IN, l_SpecularFactor, l_Albedo, l_AlbedoFactor, l_Metalness);
 			if (Out.w < 0.1)
 			{
 				clip(-1);
@@ -241,7 +260,11 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	#ifdef HAS_REFLECTION
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
 		float4 l_ReflectColor = T8Texture.SampleLevel(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
-		Out += l_ReflectColor * l_SpecularFactor * m_ReflectionFactor;
+		#ifdef HAS_METALNESS_MAP
+			Out += l_ReflectColor * l_SpecularFactor * m_ReflectionFactor * l_Albedo;
+		#else
+			Out += l_ReflectColor * l_SpecularFactor * m_ReflectionFactor;
+		#endif
 	#endif
 	#ifdef HAS_TRIGGER
 		return float4(0,1,0,0.5);

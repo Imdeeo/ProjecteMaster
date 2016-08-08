@@ -49,6 +49,13 @@
 		<texture load_file="false" file="NormalMapTexture" stage_id="1"/>
 		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
 	</render_draw_quad>
+	
+	<!-- ALPHA BLEND OBJECTS LAYER -->
+	<enable_alpha_blend name="enable alpha blend AAZZOO Alpha Blend" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF Alpha Blend" enable_z_test="true" write_z_buffer="false" active="true"/>
+	<set_pool_renderable_objects_technique name="set pool Alpha Blend" pool="forward_shading" active="true"/>
+	<render_layer name="render layer Alpha Blend" layer="alpha_blend_objects" active="true"/>
+	<disable_alpha_blend name="disable alpha blend Alpha Blend" active="true"/>
 		
 	<!-- FOG -->
 	<set_pool_renderable_objects_technique name="set pool fog_pool" pool="fog_pool" active="true"/>
@@ -142,13 +149,6 @@
 	<set_depth_stencil_state name="set depth stencil TF Skybox" enable_z_test="true" write_z_buffer="false" active="true"/>
 	<set_pool_renderable_objects_technique name="set pool skybox" pool="skybox_pool" active="true"/>
 	<render_layer name="render layer skybox" layer="skybox" active="true"/>
-	
-	<!-- ALPHA BLEND OBJECTS LAYER -->
-	<enable_alpha_blend name="enable alpha blend AAZZOO Alpha Blend" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
-	<set_depth_stencil_state name="set depth stencil TF Alpha Blend" enable_z_test="true" write_z_buffer="false" active="true"/>
-	<set_pool_renderable_objects_technique name="set pool Alpha Blend" pool="forward_shading" active="true"/>
-	<render_layer name="render layer Alpha Blend" layer="alpha_blend_objects" active="true"/>
-	<disable_alpha_blend name="disable alpha blend Alpha Blend" active="true"/>
 	
 	<!-- Particles -->
 	<set_depth_stencil_state name="set depth stencil TF Particles" enable_z_test="true" write_z_buffer="true" active="true"/>
