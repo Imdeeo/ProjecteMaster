@@ -22,10 +22,9 @@
 #include "Effects\Effect.h"
 #include "Camera\Camera.h"
 
-
 #pragma comment(lib, "Winmm.lib")
 
-#define APPLICATION_NAME	"VIDEOGAME"
+#define APPLICATION_NAME "VIDEOGAME"
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 
@@ -223,10 +222,16 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 				case WM_KILLFOCUS:
 					hasFocus = false;
 					break;
-				case WM_MOUSEMOVE:
-					if (hasFocus)					
-						l_InputManager->UpdateAxis(msg.lParam);
+				case WM_INPUT:
+				{
+					UINT dwSize = 40;
+					static BYTE lpb[40];
+					GetRawInputData((HRAWINPUT)msg.lParam, RID_INPUT, lpb, &dwSize, sizeof(RAWINPUTHEADER));
+					RAWINPUT* raw = (RAWINPUT*)lpb;
+					if (raw->header.dwType == RIM_TYPEMOUSE)
+						l_InputManager->UpdateAxis(raw->data.mouse.lLastX, raw->data.mouse.lLastY);
 					break;
+				}
 				case WM_KEYUP:
 					bool Alt = ((msg.lParam & (1 << 29)) != 0);
 					if (msg.wParam == VK_RETURN && Alt)
@@ -235,6 +240,11 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 						GetWindowPlacement(msg.hwnd, &windowPosition);
 
 						ToggleFullscreen(msg.hwnd, windowPosition);
+					}
+					else if (msg.wParam == VK_ESCAPE)
+					{
+						PostQuitMessage(0);
+						doExit = true;
 					}
 					break;
 			}

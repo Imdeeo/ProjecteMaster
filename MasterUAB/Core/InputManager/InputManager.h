@@ -14,7 +14,6 @@ class CUserButtonListener;
 class CInputManager
 {
 protected:
-	LPDIRECTINPUTDEVICE8 m_Mouse;
 	gainput::InputManager* m_Manager;
 	gainput::InputMap* m_Map;
 
@@ -26,6 +25,8 @@ protected:
 
 	bool m_Focus;
 	std::string m_Filename;
+
+	RAWINPUTDEVICE m_RID[1];
 
 public:
 	enum Actions
@@ -76,7 +77,6 @@ public:
 	CInputManager();
 	~CInputManager();
 	void Update();
-	void UpdateAxis(LPARAM _param);
 
 	void Load(std::string _file);
 	void Reload();
@@ -87,6 +87,7 @@ public:
 	void SetFocus(bool _focus);
 	bool GetFocus() const;
 
+	void UpdateAxis(LONG _x, LONG _y);
 	Vect2f GetCursor();
 	Vect2f GetCursorMovement();
 	float GetAxisX();
