@@ -26,8 +26,6 @@ protected:
 	bool m_Focus;
 	std::string m_Filename;
 
-	RAWINPUTDEVICE m_RID[1];
-
 public:
 	enum Actions
 	{
