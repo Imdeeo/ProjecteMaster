@@ -78,11 +78,12 @@ void CInputManager::SetWindow(HWND _hWnd, int _width, int _height)
 	GetWindowRect(_hWnd, &l_Rect);
 	int l_Width = l_Rect.right - l_Rect.left;
 	int l_Heigth = l_Rect.bottom - l_Rect.top;*/
-	m_RID[0].usUsagePage = HID_USAGE_PAGE_GENERIC;
-	m_RID[0].usUsage = HID_USAGE_GENERIC_MOUSE;
-	m_RID[0].dwFlags = RIDEV_INPUTSINK;
-	m_RID[0].hwndTarget = _hWnd;
-	RegisterRawInputDevices(m_RID, 1, sizeof(m_RID[0]));
+	RAWINPUTDEVICE l_RID[1];
+	l_RID[0].usUsagePage = HID_USAGE_PAGE_GENERIC;
+	l_RID[0].usUsage = HID_USAGE_GENERIC_MOUSE;
+	l_RID[0].dwFlags = RIDEV_INPUTSINK;
+	l_RID[0].hwndTarget = _hWnd;
+	RegisterRawInputDevices(l_RID, 1, sizeof(l_RID[0]));
 	m_Manager->SetDisplaySize(_width, _height);
 }
 
