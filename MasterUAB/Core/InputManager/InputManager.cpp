@@ -1,6 +1,13 @@
 #include <InputManager\InputManager.h>
 #include "XML\XMLTreeNode.h"
 
+#ifndef HID_USAGE_PAGE_GENERIC
+#define HID_USAGE_PAGE_GENERIC         ((USHORT) 0x01)
+#endif
+#ifndef HID_USAGE_GENERIC_MOUSE
+#define HID_USAGE_GENERIC_MOUSE        ((USHORT) 0x02)
+#endif
+
 class CDeviceButtonListener : public gainput::InputListener
 {
 public:
@@ -41,7 +48,11 @@ CInputManager::CInputManager() :
 	m_Map(nullptr),
 	m_KeyboardId(nullptr),
 	m_MouseId(nullptr),
-	m_GamepadId(nullptr)
+	m_GamepadId(nullptr),
+	m_Speed(1.f),
+	m_AxisX(.0f),
+	m_AxisY(.0f),
+	m_AxisZ(.0f)
 {
 	m_Manager = new gainput::InputManager;
 	
@@ -49,9 +60,7 @@ CInputManager::CInputManager() :
 	m_MouseId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDeviceMouse>());
 	m_GamepadId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDevicePad>());
 
-	gainput::InputDevice::DeviceVariant l_variant = m_Manager->GetDevice(*m_MouseId)->GetVariant();
-
-	m_Map = new gainput::InputMap(*m_Manager, "Keymap");
+	m_Map = new gainput::InputMap(*m_Manager, "Keymap");	
 }
 
 CInputManager::~CInputManager(void)
@@ -69,6 +78,12 @@ void CInputManager::SetWindow(HWND _hWnd, int _width, int _height)
 	GetWindowRect(_hWnd, &l_Rect);
 	int l_Width = l_Rect.right - l_Rect.left;
 	int l_Heigth = l_Rect.bottom - l_Rect.top;*/
+	RAWINPUTDEVICE l_RID[1];
+	l_RID[0].usUsagePage = HID_USAGE_PAGE_GENERIC;
+	l_RID[0].usUsage = HID_USAGE_GENERIC_MOUSE;
+	l_RID[0].dwFlags = RIDEV_INPUTSINK;
+	l_RID[0].hwndTarget = _hWnd;
+	RegisterRawInputDevices(l_RID, 1, sizeof(l_RID[0]));
 	m_Manager->SetDisplaySize(_width, _height);
 }
 
@@ -81,12 +96,6 @@ void CInputManager::Reload()
 void CInputManager::Update()
 {
 	m_Manager->Update();
-}
-
-void CInputManager::UpdateAxis(float _x, float _y)
-{
-	m_AxisX = _x;
-	m_AxisY = _y;
 }
 
 void CInputManager::Load(std::string _file)
@@ -377,6 +386,12 @@ bool CInputManager::GetFocus() const
 	return m_Focus;
 }
 
+void CInputManager::UpdateAxis(LONG _x, LONG _y)
+{
+	m_AxisX = (float)_x;
+	m_AxisY = (float)_y;
+}
+
 Vect2f CInputManager::GetCursor()
 {
 	return Vect2f(
@@ -386,7 +401,6 @@ Vect2f CInputManager::GetCursor()
 
 Vect2f CInputManager::GetCursorMovement()
 {
-	m_Map->GetBoolIsNew(CInputManager::DebugMonsterIdle);
 	return Vect2f(
 		m_Map->GetFloatDelta(CInputManager::AxisX),
 		m_Map->GetFloatDelta(CInputManager::AxisY));
