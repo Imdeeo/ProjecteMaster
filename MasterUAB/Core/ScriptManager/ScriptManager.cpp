@@ -1540,8 +1540,9 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<IVideoManager>("IVideoManager")
 			.def("load_clip", &IVideoManager::LoadClip)
-			.def("render_sreen_clip", &IVideoManager::RenderSceenClip)
+			.def("render_screen_clip", &IVideoManager::RenderSceenClip)
 			.def("clear_clip", &IVideoManager::ClearClip)
+			.def("play_clip", &IVideoManager::PlayClip)
 	];
 
 // VIDEOGAME----------------------------------------------------------------------------------------
