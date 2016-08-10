@@ -233,9 +233,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 
 
 	// PBR: interpret the specularPower/glossiness scale as logarithmic (an arbitrary choice)
-	float l_MaxPower = 100.0f;
-	float l_MinPower = 5.0f;
-	float l_SpecularPower = (pow(l_MaxPower/l_MinPower, m_SpecularPower/100) * l_MinPower);
+	float l_SpecularPower = (pow(MAX_SPECULAR_POWER/MIN_SPECULAR_POWER, m_SpecularPower/100) * MIN_SPECULAR_POWER);
 
 	l_SpecularPower /= 100;
 	l_Out.Target0 = float4(l_Albedo.xyz, l_specularFactor);

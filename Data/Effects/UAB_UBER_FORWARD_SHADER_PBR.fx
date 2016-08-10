@@ -190,9 +190,7 @@ float4 applyAllLights(TVertexPS IN, float SpecularFactor, float4 Albedo, float A
 		l_specularFactor *= auxNormal;
 	#endif
 
-	float l_MaxPower = 100.0f;
-	float l_MinPower = 5.0f;
-	float l_SpecularPower = (pow(l_MaxPower/l_MinPower, m_SpecularPower/100) * l_MinPower);
+	float l_SpecularPower = (pow(MAX_SPECULAR_POWER/MIN_SPECULAR_POWER, m_SpecularPower/100) * MIN_SPECULAR_POWER);
 
 	for(int i = 0;i<MAX_LIGHTS_BY_SHADER;i++)
 	{
