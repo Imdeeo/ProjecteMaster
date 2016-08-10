@@ -49,6 +49,7 @@ struct PS_OUTPUT
 	float4 Target1 : SV_Target1;
 	float4 Target2 : SV_Target2;
 	float4 Target3 : SV_Target3;
+	float4 Target4 : SV_Target4;
 };
 
 float3 Normal2Texture(float3 Normal)
@@ -171,6 +172,10 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		m_SpecularPower *= (l_Glossiness.x + l_Glossiness.y + l_Glossiness.z) / 3;
 	#endif
 
+	#ifdef HAS_SPECULAR_MAP
+		float4 l_Specular = T10Texture.Sample(S10Sampler, IN.UV);
+		l_specularFactor *= l_Specular.w;
+	#endif
 	// PBR modifications according to http://www.marmoset.co/toolbag/learn/pbr-theory
 	// PBR: fresnel (the formula is arbitrary, not based on any source, but the curve would look somewhat similar to the examples)
 	float3 l_EyeToWorldPosition = normalize(IN.WorldPos-m_CameraPosition.xyz);
@@ -179,11 +184,9 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	// PBR: energy conservation: "reflection and diffusion are mutually exclusive"
 	// "This is easy to enforce in a shading system: one simply subtracts reflected light before allowing the diffuse shading to occur."
 	#ifdef HAS_SPECULAR_MAP
-		float4 l_Specular = T10Texture.Sample(S10Sampler, IN.UV);
-		float l_SpecularMean = (l_Specular.x + l_Specular.y + l_Specular.z) / 3;
-		float l_AlbedoFactor = 1 - l_specularFactor*l_SpecularMean;
+		float l_AlbedoFactor = 1 - l_specularFactor;
 		float l_Metalness = 0.0f;
-	#elif HAS_METALNESS_MAP
+	#elif defined(HAS_METALNESS_MAP)
 		float l_Metalness = T10Texture.Sample(S10Sampler, IN.UV);
 		l_specularFactor = l_specularFactor + l_Metalness * (1-l_specularFactor);
 		float l_AlbedoFactor = 1 - l_Metalness;
@@ -220,8 +223,8 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
 		float4 l_ReflectColor = T8Texture.SampleLevel(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
 		#ifdef HAS_SPECULAR_MAP
-			l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor * l_Specular;
-		#elif HAS_METALNESS_MAP
+			l_AmbientIllumination += float4(l_ReflectColor.xyz * l_specularFactor * m_ReflectionFactor * l_Specular.xyz, 1);
+		#elif defined(HAS_METALNESS_MAP)
 			l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor * l_Albedo;
 		#else
 			l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor;
@@ -243,6 +246,11 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	#endif
 	l_Out.Target2 = float4(Normal2Texture(Nn), l_Metalness);
 	l_Out.Target3 = float4(l_Depth,l_Depth,l_Depth, 1.0f);
+	#ifdef HAS_SPECULAR_MAP
+		l_Out.Target4 = float4(l_Specular.rgb, 1);
+	#else
+		l_Out.Target4 = float4(1, 1, 1, 1);
+	#endif
 
 	return l_Out;
 }

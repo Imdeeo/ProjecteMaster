@@ -190,7 +190,7 @@ float4 applyAllLights(TVertexPS IN, float SpecularFactor, float4 Albedo, float A
 		l_specularFactor *= auxNormal;
 	#endif
 
-	float l_MaxPower = 200.0f;
+	float l_MaxPower = 100.0f;
 	float l_MinPower = 5.0f;
 	float l_SpecularPower = (pow(l_MaxPower/l_MinPower, m_SpecularPower/100) * l_MinPower);
 	//float l_BaseFactor = 0.1;
@@ -199,7 +199,7 @@ float4 applyAllLights(TVertexPS IN, float SpecularFactor, float4 Albedo, float A
 	{
 		if (m_LightEnabledArray[i])
 		{
-			lightContrib += applyLights(IN.Pixelpos,Nn,l_Out,i, l_SpecularPower, l_specularFactor, Metalness);
+			lightContrib += applyLights(IN.Pixelpos,Nn,l_Out,i, l_SpecularPower, l_specularFactor, Metalness, float4(1, 1, 1, 1));
 		}
 	}
 	return saturate(float4(lightContrib.xyz, l_Out.w));
