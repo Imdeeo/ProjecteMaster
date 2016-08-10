@@ -160,7 +160,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	float l_Depth = IN.HPos.z / IN.HPos.w;
 
 	float4 l_Ambient = m_LightAmbient;
-	float4 l_Albedo = T0Texture.SampleLevel(S0Sampler, IN.UV, 0);
+	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
 	if (l_Albedo.w < 0.1)
 	{
 		clip(-1);
@@ -221,7 +221,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	float4 l_AmbientIllumination = l_Albedo * l_AlbedoFactor * l_Ambient;
 	#ifdef HAS_REFLECTION
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
-		float4 l_ReflectColor = T8Texture.SampleLevel(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
+		float4 l_ReflectColor = T8Texture.SampleBias(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
 		#ifdef HAS_SPECULAR_MAP
 			l_AmbientIllumination += float4(l_ReflectColor.xyz * l_specularFactor * m_ReflectionFactor * l_Specular.xyz, 1);
 		#elif defined(HAS_METALNESS_MAP)
@@ -238,7 +238,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	l_SpecularPower /= 100;
 	l_Out.Target0 = float4(l_Albedo.xyz, l_specularFactor);
 	#ifdef HAS_GLOW
-		l_Out.Target1 = float4(T0Texture.SampleLevel(S0Sampler, IN.UV, 0).xyz, l_SpecularPower);
+		l_Out.Target1 = float4(T0Texture.Sample(S0Sampler, IN.UV).xyz, l_SpecularPower);
 	#else
 		l_Out.Target1 = float4(l_AmbientIllumination.xyz, l_SpecularPower);
 	#endif

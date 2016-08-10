@@ -259,7 +259,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 
 	#ifdef HAS_REFLECTION
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
-		float4 l_ReflectColor = T8Texture.SampleLevel(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
+		float4 l_ReflectColor = T8Texture.SampleBias(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
 		#if defined(HAS_SPECULAR_MAP)
 			Out += float4(l_ReflectColor.rgb * l_SpecularFactor * m_ReflectionFactor * l_Specular.rgb, 1);
 		#elif defined(HAS_METALNESS_MAP)
