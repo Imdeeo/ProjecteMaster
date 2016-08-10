@@ -47,9 +47,9 @@ float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	 * highlights which appear dimmer than the smaller, sharper highlights of a
 	 * smooth surface"
 	 */
-	float l_BaseIntensity = 0.1;
-	float l_SpecularIntensity =  l_BaseIntensity + (1-l_BaseIntensity) * pow((_SpecularPower/100), 2);
-	
+	float l_BaseIntensity = 0.2;
+	float l_SpecularIntensity =  l_BaseIntensity + (1-l_BaseIntensity) * pow(_SpecularPower/MAX_SPECULAR_POWER, SPECULAR_DIMMING_POWER);
+
 	// Diffusion
 	l_DiffuseContrib = dot(Nn, -l_RayDirection);
 	l_DiffuseContrib = saturate(l_DiffuseContrib);
@@ -80,9 +80,9 @@ float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int 
 	float4 l_SpecularColor = float4((l_albedo.xyz + (1.0f-_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_albedo.xyz)) * _SpecularColor.rgb, 1);
 	float l_AlbedoFactor = (1 - _Metalness) * (1 - _SpecularFactor);
 	// PBR - energy conservation
-	float l_BaseIntensity = 0.1;
-	float l_SpecularIntensity =  l_BaseIntensity + (1-l_BaseIntensity) * pow((_SpecularPower/100), 2);
-	
+	float l_BaseIntensity = 0.2;
+	float l_SpecularIntensity =  l_BaseIntensity + (1-l_BaseIntensity) * pow(_SpecularPower/MAX_SPECULAR_POWER, SPECULAR_DIMMING_POWER);
+
 	// Specular
 	float3 cameraToVertex = normalize(m_CameraPosition.xyz - l_WorldPosition);
 	float3 H = normalize(cameraToVertex -m_LightDirection[lightIndex]);
@@ -104,9 +104,9 @@ float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	float l_AlbedoFactor = (1 - _Metalness) * (1 - _SpecularFactor);
 	
 	// PBR - energy conservation
-	float l_BaseIntensity = 0.1;
-	float l_SpecularIntensity =  l_BaseIntensity + (1-l_BaseIntensity) * pow((_SpecularPower/100), 2);
-	
+	float l_BaseIntensity = 0.2;
+	float l_SpecularIntensity =  l_BaseIntensity + (1-l_BaseIntensity) * pow(_SpecularPower/MAX_SPECULAR_POWER, SPECULAR_DIMMING_POWER);
+
 	// Distance attenuation (linear)
 	l_DistanceAttenuation = 1 - saturate((l_Distance - m_LightAttenuationStartRangeArray[lightIndex]) / (m_LightAttenuationEndRangeArray[lightIndex] - m_LightAttenuationStartRangeArray[lightIndex]));
 	
