@@ -164,12 +164,6 @@ float4 applyAllLights(TVertexPS IN, float SpecularFactor, float4 Albedo, float A
 {
 	float3 Nn = IN.Normal;
 	float l_specularFactor=SpecularFactor;
-	//float4 l_Out = float4(1,1,1,1);
-	//#ifdef HAS_UV
-	//	l_Out = T0Texture.Sample(S0Sampler, IN.UV);
-	//	//l_Out *= 1-l_specularFactor;
-	//	l_Out.w = 1.0;
-	//#endif
 	float4 l_Out = Albedo;
 
 	#ifdef HAS_UV2
@@ -242,7 +236,6 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		float4 l_Albedo = float4(1,1,1,1);
 		#ifdef HAS_UV
 			l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
-			l_Albedo.w = 1.0;
 		#endif
 		#ifdef HAS_NORMAL
 			Out = Out*applyAllLights(IN, l_SpecularFactor, l_Albedo, l_AlbedoFactor, l_Metalness, l_Specular);
