@@ -2,7 +2,6 @@
 #define H_VIDEO_MANAGER_IMPLEMENTATION_H
 
 #include "VideoManager.h"
-#include "SDL.h"
 #include <string>
 
 class CVideoManagerImplementation : public IVideoManager
