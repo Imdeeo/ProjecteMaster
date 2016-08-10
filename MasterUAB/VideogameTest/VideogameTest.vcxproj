@@ -183,8 +183,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName)_d.pdb</ProgramDatabaseFile>
-      <AdditionalDependencies>Graphics_d.lib;Base_d.lib;PhysX_d.lib;Core_d.lib;AntTweakBarDebug.lib;LuaDebug.lib;luabindDebug.lib;iconv.lib;cal3d_d.lib;d3d11.lib;d3dcompiler.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;gainputstatic_d.lib;gainput.lib;Xinput9_1_0.lib;WS2_32.lib;SDL2.lib;SDL2main.lib;Video_d.lib;libtheoraplayer.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\;$(SolutionDir)3rdParty\iconv-1.9.2.win32\lib;$(SolutionDir)3rdParty\cal3d-0.11rc2\bin\Debug;$(SolutionDir)3rdParty\PhysX-3.3-master\lib;$(SolutionDir)\3rdParty\Wwise\Win32_vc120\Debug\lib;$(SolutionDir)\3rdParty\Gainput\lib;$(WindowsSdkDir)Lib\winv6.3\um\x86;$(SolutionDir)\3rdParty\libtheoraplayer-1.0RC2\lib\DebugLib;$(SolutionDir)\3rdParty\SDL2-2.0.4\lib\x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Graphics_d.lib;Base_d.lib;PhysX_d.lib;Core_d.lib;AntTweakBarDebug.lib;LuaDebug.lib;luabindDebug.lib;iconv.lib;cal3d_d.lib;d3d11.lib;d3dcompiler.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;gainputstatic_d.lib;gainput.lib;Xinput9_1_0.lib;WS2_32.lib;Video_d.lib;libtheoraplayer.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\;$(SolutionDir)3rdParty\iconv-1.9.2.win32\lib;$(SolutionDir)3rdParty\cal3d-0.11rc2\bin\Debug;$(SolutionDir)3rdParty\PhysX-3.3-master\lib;$(SolutionDir)\3rdParty\Wwise\Win32_vc120\Debug\lib;$(SolutionDir)\3rdParty\Gainput\lib;$(WindowsSdkDir)Lib\winv6.3\um\x86;$(SolutionDir)\3rdParty\libtheoraplayer-1.0RC2\lib\DebugLib</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
@@ -205,8 +205,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName)_d.pdb</ProgramDatabaseFile>
-      <AdditionalDependencies>Graphics_d.lib;Base_d.lib;PhysX_d.lib;Core_d.lib;AntTweakBarDebug.lib;LuaDebug.lib;luabindDebug.lib;iconv.lib;cal3d_d.lib;d3d11.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;gainputstatic_d.lib;gainput.lib;Xinput9_1_0.lib;WS2_32.lib;SDL2.lib;SDL2main.lib;Video_d.lib;libtheoraplayer.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\;$(SolutionDir)3rdParty\iconv-1.9.2.win32\lib;$(SolutionDir)3rdParty\cal3d-0.11rc2\bin\Debug;$(SolutionDir)3rdParty\PhysX-3.3-master\lib;$(DXSDK_DIR)\lib\x86;$(SolutionDir)3rdParty\Wwise\Win32_vc120\Debug\lib;$(SolutionDir)\3rdParty\Gainput\lib;$(SolutionDir)\3rdParty\libtheoraplayer-1.0RC2\lib\DebugLib;$(SolutionDir)\3rdParty\SDL2-2.0.4\lib\x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Graphics_d.lib;Base_d.lib;PhysX_d.lib;Core_d.lib;AntTweakBarDebug.lib;LuaDebug.lib;luabindDebug.lib;iconv.lib;cal3d_d.lib;d3d11.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;gainputstatic_d.lib;gainput.lib;Xinput9_1_0.lib;WS2_32.lib;Video_d.lib;libtheoraplayer.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\;$(SolutionDir)3rdParty\iconv-1.9.2.win32\lib;$(SolutionDir)3rdParty\cal3d-0.11rc2\bin\Debug;$(SolutionDir)3rdParty\PhysX-3.3-master\lib;$(DXSDK_DIR)\lib\x86;$(SolutionDir)3rdParty\Wwise\Win32_vc120\Debug\lib;$(SolutionDir)\3rdParty\Gainput\lib;$(SolutionDir)\3rdParty\libtheoraplayer-1.0RC2\lib\DebugLib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release7|Win32'">
@@ -227,7 +227,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
-      <AdditionalDependencies>Graphics.lib;Base.lib;PhysX.lib;Core.lib;AntTweakBar.lib;Sound.lib;GUI.lib;Lua.lib;luabind.lib;iconv.lib;cal3d.lib;d3d11.lib;D3DX11.lib;D3DCompiler.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;SDL2.lib;SDL2main.lib;Video.lib;libtheoraplayer.lib</AdditionalDependencies>
+      <AdditionalDependencies>Graphics.lib;Base.lib;PhysX.lib;Core.lib;AntTweakBar.lib;Sound.lib;GUI.lib;Lua.lib;luabind.lib;iconv.lib;cal3d.lib;d3d11.lib;D3DX11.lib;D3DCompiler.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Video.lib;libtheoraplayer.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\;$(SolutionDir)3rdParty\iconv-1.9.2.win32\lib;$(SolutionDir)3rdParty\cal3d-0.11rc2\bin\Release;$(SolutionDir)3rdParty\PhysX-3.3-master\lib;$(DXSDK_DIR)\lib\x86;$(SolutionDir)3rdParty\Wwise\Win32_vc120\Release\lib;$(SolutionDir)\3rdParty\libtheoraplayer-1.0RC2\lib\ReleaseLib</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -255,7 +255,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
-      <AdditionalDependencies>Graphics.lib;Base.lib;PhysX.lib;Core.lib;AntTweakBar.lib;Sound.lib;GUI.lib;Lua.lib;luabind.lib;iconv.lib;cal3d.lib;d3d11.lib;d3dcompiler.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;SDL2.lib;SDL2main.lib;Video.lib;libtheoraplayer.lib</AdditionalDependencies>
+      <AdditionalDependencies>Graphics.lib;Base.lib;PhysX.lib;Core.lib;AntTweakBar.lib;Sound.lib;GUI.lib;Lua.lib;luabind.lib;iconv.lib;cal3d.lib;d3d11.lib;d3dcompiler.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Video.lib;libtheoraplayer.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\;$(SolutionDir)3rdParty\iconv-1.9.2.win32\lib;$(SolutionDir)3rdParty\cal3d-0.11rc2\bin\Release;$(SolutionDir)3rdParty\PhysX-3.3-master\lib;$(WindowsSdkDir)Lib\winv6.3\um\x86;$(SolutionDir)3rdParty\Wwise\Win32_vc120\Release\lib;$(SolutionDir)\3rdParty\libtheoraplayer-1.0RC2\lib\ReleaseLib</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
