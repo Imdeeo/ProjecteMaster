@@ -17,6 +17,7 @@
 		<renderable_object_technique name="alpha_blend" technique="texture_technique"/>		
 		<renderable_object_technique name="alpha_blend_env" technique="texture_env_technique"/>
 		<renderable_object_technique name="glossiness" technique="reflection_glossiness_technique"/>
+		<renderable_object_technique name="specular_map" technique="reflection_specularmap_technique"/>
 		<renderable_object_technique name="metalness_map" technique="reflection_metalness_technique"/>
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
 	</pool_renderable_object_technique>	
