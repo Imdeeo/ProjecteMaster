@@ -14,6 +14,7 @@
 		<dynamic_texture name="LightMapTexture" texture_width_as_frame_buffer="true" format_type="rgba8"/>
 		<dynamic_texture name="NormalMapTexture" texture_width_as_frame_buffer="true" format_type="rgba32"/>
 		<dynamic_texture name="DepthMapTexture" texture_width_as_frame_buffer="true" format_type="r32"/>
+		<dynamic_texture name="SpecularMapTexture" texture_width_as_frame_buffer="true" format_type="rgba32"/>
 	</set_render_target>
 	
 	<clear name="clear FT defferred" render_target="true" depth_stencil="true"/>
@@ -36,6 +37,7 @@
 		<texture stage_id="1" file="LightMapTexture" load_file="false"/>
 		<texture stage_id="2" file="NormalMapTexture" load_file="false"/>
 		<texture stage_id="3" file="DepthMapTexture" load_file="false"/>
+		<texture stage_id="4" file="SpecularMapTexture" load_file="false"/>
 	</render_deferred_shading>	
 	
 	<!-- HDAO -->
