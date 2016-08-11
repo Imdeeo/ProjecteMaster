@@ -200,7 +200,7 @@ float4 applyAllLights(TVertexPS IN, float SpecularFactor, float4 Albedo, float A
 float4 mainPS(TVertexPS IN) : SV_Target
 {
 	float4 Out = float4(1,1,1,1);
-	float4 l_Specular = float4(1, 1, 1, 1);
+	float4 l_SpecularColor = float4(1, 1, 1, 1);
 
 	#ifdef HAS_COLOR
 		Out = IN.Color;
@@ -214,8 +214,8 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		#if defined(HAS_SPECULAR_MAP)
 			float l_AlbedoFactor = 1 - l_SpecularFactor;
 			float l_Metalness = 0.0f;
-			l_Specular = T10Texture.Sample(S10Sampler, IN.UV);
-			l_SpecularFactor *= l_Specular.w;
+			l_SpecularColor = T10Texture.Sample(S10Sampler, IN.UV);
+			l_SpecularFactor *= l_SpecularColor.a;
 		#elif defined(HAS_METALNESS_MAP)
 			float l_Metalness = T10Texture.Sample(S10Sampler, IN.UV);
 			l_SpecularFactor = l_SpecularFactor + l_Metalness * (1-l_SpecularFactor);
@@ -238,7 +238,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 			l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
 		#endif
 		#ifdef HAS_NORMAL
-			Out = Out*applyAllLights(IN, l_SpecularFactor, l_Albedo, l_AlbedoFactor, l_Metalness, l_Specular);
+			Out = Out*applyAllLights(IN, l_SpecularFactor, l_Albedo, l_AlbedoFactor, l_Metalness, l_SpecularColor);
 			if (Out.w < 0.1)
 			{
 				clip(-1);
@@ -254,11 +254,13 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
 		float4 l_ReflectColor = T8Texture.SampleBias(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
 		#if defined(HAS_SPECULAR_MAP)
-			Out += float4(l_ReflectColor.rgb * l_SpecularFactor * m_ReflectionFactor * l_Specular.rgb, 1);
+			Out += float4(l_ReflectColor.rgb * l_SpecularColor.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
 		#elif defined(HAS_METALNESS_MAP)
-			Out += l_ReflectColor * l_SpecularFactor * m_ReflectionFactor * l_Albedo;
+			Out += float4(l_ReflectColor.rgb * l_Albedo.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
+		#elif defined(HAS_LIGHTS)
+			Out += float4(l_ReflectColor.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
 		#else
-			Out += l_ReflectColor * l_SpecularFactor * m_ReflectionFactor;
+			Out += float4(l_ReflectColor.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
 		#endif
 	#endif
 	#ifdef HAS_TRIGGER
