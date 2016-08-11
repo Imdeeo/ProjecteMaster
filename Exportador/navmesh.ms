@@ -41,7 +41,8 @@ fn exportNavMesh dir tpoly =
 	for vert in allverts do(
 		count = count +1
 		local auxPos = polyOp.getVert tpoly count
-		format "\t<node name=\"node%\" pos=\"% % %\"/>\n" count auxPos[1] auxPos[3] auxPos[2] to:file
+		TranslationToRH &auxPos
+		format "\t<node name=\"node%\" pos=\"% % %\"/>\n" count auxPos[1] auxPos[2] auxPos[3] to:file
 	)
 	local count = 0
 	--escriure dades
