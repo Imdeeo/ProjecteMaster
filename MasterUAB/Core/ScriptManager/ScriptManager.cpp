@@ -18,7 +18,7 @@
 #include "Components\LUAComponent.h"
 
 #include "Engine\UABEngine.h"
-
+#include "LevelManager\LevelManager.h"
 #include "InputManager\InputManager.h"
 
 #include "DebugHelper\DebugHelper.h"
@@ -519,6 +519,14 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CScriptManager>("CScriptManager")
 			.def(constructor<>())
 			.def("runcode", &CScriptManager::RunCode)
+	];
+
+	//LevelManager
+	module(m_LS)[
+		class_<CLevelManager>("CLevelManager")
+			.def("load_level", &CLevelManager::LoadLevel)
+			.def("reload_level", &CLevelManager::ReloadLevel)
+			.def("unload_level", &CLevelManager::UnloadLevel)
 	];
 
 

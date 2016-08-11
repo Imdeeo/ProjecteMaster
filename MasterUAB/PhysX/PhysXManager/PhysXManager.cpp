@@ -35,18 +35,18 @@
 
 #include <PxPhysicsAPI.h>
 
-#define CONTACT_OFFSET			0.01f
-//	#define CONTACT_OFFSET			0.1f
-//	#define STEP_OFFSET				0.01f
-#define STEP_OFFSET				0.05f
-//	#define STEP_OFFSET				0.1f
-//	#define STEP_OFFSET				0.2f
+//#define CONTACT_OFFSET			0.01f
+#define CONTACT_OFFSET			0.1f
+//#define STEP_OFFSET				0.01f
+#define STEP_OFFSET				0.2f
+//#define STEP_OFFSET				0.1f
+//#define STEP_OFFSET				0.2f
 
-//	#define SLOPE_LIMIT				0.8f
-#define SLOPE_LIMIT				0.0f
-//	#define INVISIBLE_WALLS_HEIGHT	6.0f
+#define SLOPE_LIMIT				0.8f
+//#define SLOPE_LIMIT				0.0f
+//#define INVISIBLE_WALLS_HEIGHT	6.0f
 #define INVISIBLE_WALLS_HEIGHT	0.0f
-//	#define MAX_JUMP_HEIGHT			4.0f
+//#define MAX_JUMP_HEIGHT			4.0f
 #define MAX_JUMP_HEIGHT			0.0f
 
 static const float gScaleFactor = 1.5f;
