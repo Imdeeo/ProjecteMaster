@@ -16,7 +16,7 @@ function IdleUpdateCagedAutomaton(args, _ElapsedTime)
 	local l_Enemy = args["self"]
 	
 	l_Enemy.m_timer_to_stop = l_Enemy.m_timer_to_stop + _ElapsedTime
-	if l_Enemy.m_timer_to_stop >= 6.5 then
+	if l_Enemy.m_timer_to_stop >= 6.1 then
 		l_Enemy.m_State = "attack"
 	end
 end
