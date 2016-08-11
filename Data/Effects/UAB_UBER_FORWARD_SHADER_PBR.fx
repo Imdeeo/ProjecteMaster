@@ -190,7 +190,7 @@ float4 applyAllLights(TVertexPS IN, float SpecularFactor, float4 Albedo, float A
 	{
 		if (m_LightEnabledArray[i])
 		{
-			lightContrib += applyLights(IN.Pixelpos,Nn,l_Out,i, l_SpecularPower, l_specularFactor, Metalness, float4(SpecularColor.rgb, 1));
+			lightContrib += applyLights(IN.Pixelpos,Nn,l_Out,i, l_SpecularPower, l_specularFactor, Metalness, SpecularColor);
 		}
 	}
 	return saturate(float4(lightContrib.xyz, l_Out.w));
@@ -227,8 +227,8 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		#endif
 		
 		#ifdef HAS_GLOSSINESS_MAP
-			float4 l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV);
-			m_SpecularPower *= (l_Glossiness.x + l_Glossiness.y + l_Glossiness.z) / 3;
+			float l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV);
+			m_SpecularPower *= l_Glossiness;
 		#endif
 	#endif
 
