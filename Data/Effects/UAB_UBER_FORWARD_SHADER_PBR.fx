@@ -208,7 +208,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 
 	#if defined(HAS_LIGHTS) || defined(HAS_REFLECTION)
 		float3 l_EyeToWorldPosition = normalize(IN.Pixelpos-m_InverseView[3].xyz);
-		float l_Fresnel = pow(1 - dot(-l_EyeToWorldPosition, IN.Normal), 2);
+		float l_Fresnel = pow(1 - dot(-l_EyeToWorldPosition, IN.Normal), FRESNEL_POWER);
 		float l_SpecularFactor = m_SpecularFactor + l_Fresnel * (1-m_SpecularFactor);
 		
 		#if defined(HAS_SPECULAR_MAP)

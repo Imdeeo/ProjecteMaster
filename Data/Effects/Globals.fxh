@@ -9,6 +9,8 @@
 #define MIN_SPECULAR_POWER 3
 #define SPECULAR_DIMMING_POWER 0.7
 
+#define FRESNEL_POWER 5
+
 cbuffer SceneConstantBuffer : register( b0 )
 {
 	float4x4 m_World;
