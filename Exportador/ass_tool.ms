@@ -373,7 +373,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 			setUserProp Obj "has_render_layer" true
 			setUserProp Obj "render_layer" "solid"
 			setUserProp Obj "anim_model_core" "undefined"
-			setUserProp Obj "cinematic_name" ""
+			setUserProp Obj "cinematic_name" "undefined"
 			setUserProp Obj "physics_generate" false
 			setUserProp Obj "physics_generate_type" "triangle_mesh"
 			setUserProp Obj "has_physics_layer" false
@@ -416,6 +416,11 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		for i = 1 to Objs.count do
 		(
 			if (getUserProp Objs[i] "render_export" == undefined) and (getUserProp Objs[i] "light_export" == undefined) and (getUserProp Objs[i] "camera_export" == undefined) then
+			(
+				initUserProps Objs[i]
+			)
+			
+			if (getUserProp Objs[i] "render_export" != undefined) and (getUserProp Objs[i] "cinematic_name" == undefined) then
 			(
 				initUserProps Objs[i]
 			)
@@ -1043,7 +1048,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		if l_Path!=undefined then
 		(
 			g_Path = l_Path
-			ExportPathLabel.text = l_Path+"\\"+LevelList.items[LevelList.selection]+"\\"
+			ExportPathLabel.text = l_Path--+"\\"+LevelList.items[LevelList.selection]+"\\"
 		)
 	)
 	

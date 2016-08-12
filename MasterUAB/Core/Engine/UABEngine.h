@@ -5,6 +5,7 @@
 
 #define LEVEL "2"
 
+class CInputManager;
 class CStaticMeshManager;
 class CLayerManager;
 class CMaterialManager;
@@ -22,7 +23,9 @@ class CSceneRendererCommandManager;
 class CParticleManager;
 class CGUIManager;
 class ISoundManager;
+class IVideoManager;
 class CGamePlayManager;
+class CLevelManager;
 class CManchasManager;
 
 #include <string>
@@ -35,6 +38,7 @@ private:
 	static CUABEngine * m_Instance;
 	CUABEngine(void);
 
+	CInputManager * m_InputManager;
 	CStaticMeshManager * m_StaticMeshManager;
 	CLayerManager * m_LayerManager;
 	CMaterialManager * m_MaterialManager;
@@ -52,12 +56,15 @@ private:
 	CParticleManager* m_ParticleManager;
 	CGUIManager* m_GUIManager;
 	ISoundManager* m_SoundManager;
+	IVideoManager* m_VideoManager;
 	CGamePlayManager* m_GamePlayManager;
+	CLevelManager* m_LevelManager;
 	CManchasManager* m_ManchasManager;
 	std::string m_LevelLoaded;
 	int m_CurrentCamera_vision;
-	
+
 public:
+	CInputManager * GetInputManager()const;
 	CStaticMeshManager * GetStaticMeshManager()const;
 	CLayerManager * GetLayerManager()const;
 	CMaterialManager * GetMaterialManager()const;
@@ -75,10 +82,12 @@ public:
 	CParticleManager * GetParticleManager()const;
 	CGUIManager * GetGUIManager() const;
 	ISoundManager * GetSoundManager()const;
+	IVideoManager * GetVideoManager() const;
 	CGamePlayManager * GetGamePlayManager()const;
+	CLevelManager * GetLevelManager()const;
+	std::string GetLevelLoaded()const{ return m_LevelLoaded; }
+	void SetLevelLoaded(std::string _id){ m_LevelLoaded = _id; }
 	CManchasManager * GetManchasManager()const;
-	std::string GetLevelLoaded()const{return m_LevelLoaded;}
-	void LoadLevelXML(std::string filename);
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
 	void Destroy();
@@ -87,6 +96,7 @@ public:
 	void SwitchCamera();
 	void ChangeCameraVision();
 	void Quit();
+	void ReloadLUA();
 	UAB_BUILD_GET_SET(bool, FrustumActive);
 	UAB_BUILD_GET_SET(float, TimeScale);
 	UAB_BUILD_GET_SET(bool, Pause);

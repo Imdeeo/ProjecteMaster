@@ -3,6 +3,7 @@ function ReturnFirstAutomaton(args)
 	local l_Owner = args["owner"]
 	l_Owner:clear_cycle(0,0.5)
 	l_Owner:clear_cycle(2,0.5)
+	l_Owner:clear_cycle(3,0.5)
 	l_Owner:blend_cycle(1,1.0,0.5)
 	
 	local l_Enemy = args["self"]

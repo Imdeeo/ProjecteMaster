@@ -15,6 +15,7 @@ public:
 	~CGamePlayManager();
 	void Update(float ElapsedTime);
 	void Destroy();
+	void Clear();
 	void AddComponent(CLUAComponent* _LUAComponent);
 };
 

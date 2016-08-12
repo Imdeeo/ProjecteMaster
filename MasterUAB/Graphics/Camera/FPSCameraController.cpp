@@ -81,7 +81,8 @@ void CFPSCameraController::Update(float ElapsedTime)
 	m_Position = m_Target->GetPosition() + m_Offset;
 	if (m_Locked)
 		return;
-	AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * ElapsedTime);
-	AddYaw(CInputManager::GetInputManager()->GetAxis("X_AXIS") * ElapsedTime);
-	//Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, ElapsedTime);
+	CInputManager* l_InputManager = UABEngine.GetInputManager();
+	AddPitch(l_InputManager->GetAxisY()*ElapsedTime);
+	AddYaw(l_InputManager->GetAxisX()*ElapsedTime);
+	l_InputManager->UpdateAxis(0, 0);
 }

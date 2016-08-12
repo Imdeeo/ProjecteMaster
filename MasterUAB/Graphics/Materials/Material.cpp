@@ -8,6 +8,11 @@
 
 #include "RenderableObjects\RenderableObjectTechnique.h"
 #include "TemplatedMaterialParameter.h"
+#include "Texture\DynamicTexture.h"
+#include "VideoManager\VideoManager.h"
+#include "theoraplayer\TheoraPlayer.h"
+#include "D3D11.h"
+#include "RenderManager\RenderManager.h"
 
 #define INDEX_DIFFUSE_TEXTURE 0
 #define INDEX_LIGHTMAP_TEXTURE 1
@@ -33,42 +38,55 @@ CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_Current
 		CXMLTreeNode l_Child = TreeNode(i);
 		if (l_Child.GetName() == std::string("texture"))
 		{
-			CTexture* l_texture = CUABEngine::GetInstance()->GetTextureManager()->GetTexture(l_Child.GetPszProperty("filename"));
 			std::string l_TextureType = l_Child.GetPszProperty("type", "diffuse", true);
-			l_texture->SetType(l_TextureType);
+			std::string l_FileName = l_Child.GetPszProperty("filename");
+			if (l_TextureType == "video")
+			{
+				IVideoManager* l_VideoManager = UABEngine.GetVideoManager(); 
+				TheoraVideoClip* l_Clip =  l_VideoManager->LoadVideoClip(l_FileName, false);
+				CDynamicTexture* l_DynamicTexture = new CDynamicTexture(l_FileName, l_Clip->getWidth(), l_Clip->getHeight(), false, "r8u");
+				l_DynamicTexture->SetType(l_TextureType);
+				m_Textures[INDEX_DIFFUSE_TEXTURE] = l_DynamicTexture;
+			}
+			else
+			{
+				CTexture* l_texture = CUABEngine::GetInstance()->GetTextureManager()->GetTexture(l_FileName);
 
-			if (l_TextureType == "lightmap")
-			{
-				m_Textures[INDEX_LIGHTMAP_TEXTURE] = l_texture;
-			}
-			if (l_TextureType == "lightmap2")
-			{
-				m_Textures[INDEX_LIGHTMAP_2_TEXTURE] = l_texture;
-			}
-			if (l_TextureType == "lightmap3")
-			{
-				m_Textures[INDEX_LIGHTMAP_3_TEXTURE] = l_texture;
-			}
-			if (l_TextureType == "normal")
-			{
-				m_Textures[INDEX_NORMAL_TEXTURE] = l_texture;
-			}
-			if (l_TextureType == "reflection")
-			{
-				m_Textures[INDEX_CUBEMAP_TEXTURE] = l_texture;
-			}
-			if (l_TextureType == "diffuse")
-			{
-				m_Textures[INDEX_DIFFUSE_TEXTURE] = l_texture;
-			}
-			if (l_TextureType == "glossiness")
-			{
-				m_Textures[INDEX_GLOSSINESS_TEXTURE] = l_texture;
-			}
-			if (l_TextureType == "specular")
-			{
-				m_Textures[INDEX_SPECULAR_TEXTURE] = l_texture;
-			}
+				l_texture->SetType(l_TextureType);
+
+				if (l_TextureType == "lightmap")
+				{
+					m_Textures[INDEX_LIGHTMAP_TEXTURE] = l_texture;
+				}
+				if (l_TextureType == "lightmap2")
+				{
+					m_Textures[INDEX_LIGHTMAP_2_TEXTURE] = l_texture;
+				}
+				if (l_TextureType == "lightmap3")
+				{
+					m_Textures[INDEX_LIGHTMAP_3_TEXTURE] = l_texture;
+				}
+				if (l_TextureType == "normal")
+				{
+					m_Textures[INDEX_NORMAL_TEXTURE] = l_texture;
+				}
+				if (l_TextureType == "reflection")
+				{
+					m_Textures[INDEX_CUBEMAP_TEXTURE] = l_texture;
+				}
+				if (l_TextureType == "diffuse")
+				{
+					m_Textures[INDEX_DIFFUSE_TEXTURE] = l_texture;
+				}
+				if (l_TextureType == "glossiness")
+				{
+					m_Textures[INDEX_GLOSSINESS_TEXTURE] = l_texture;
+				}
+				if (l_TextureType == "specular")
+				{
+					m_Textures[INDEX_SPECULAR_TEXTURE] = l_texture;
+				}
+			}			
 		}
 		if (l_Child.GetName() == std::string("parameter"))
 		{
@@ -139,6 +157,53 @@ void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 	{
 		if (m_Textures[i] != nullptr)
 		{
+			if (m_Textures[i]->GetType() == "video")
+			{
+				IVideoManager* l_VideoManager = UABEngine.GetVideoManager();
+				TheoraVideoClip* l_Clip = l_VideoManager->GetClip(m_Textures[i]->GetName());
+				if (l_Clip != nullptr)
+				{
+					TheoraVideoFrame *l_Frame = l_Clip->getNextFrame();
+					if (l_Frame)
+					{
+						D3D11_TEXTURE2D_DESC textureDesc;
+						HRESULT result;
+						D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
+						D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
+
+						// Initialize the render target texture description.
+						ZeroMemory(&textureDesc, sizeof(textureDesc));
+
+						// Setup the render target texture description.
+						textureDesc.Width = l_Frame->getWidth();
+						textureDesc.Height = l_Frame->getHeight();
+						textureDesc.MipLevels = 1;
+						textureDesc.ArraySize = 1;
+						textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+						textureDesc.SampleDesc.Count = 1;
+						textureDesc.Usage = D3D11_USAGE_DEFAULT;
+						textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+						textureDesc.CPUAccessFlags = 0;
+						textureDesc.MiscFlags = 0;
+
+						D3D11_SUBRESOURCE_DATA srd;
+						srd.pSysMem = l_Frame->getBuffer();
+						srd.SysMemPitch = l_Frame->getWidth() * 4;
+						srd.SysMemSlicePitch = 0;
+
+
+						ID3D11Texture2D* l_Texture2D = NULL;
+						ID3D11Device* l_Device = UABEngine.GetRenderManager()->GetDevice();
+						//HRESULT l_HR = l_Device->CreateTexture2D(&textureDesc, &srd, &l_Texture2D);
+						HRESULT l_HR = l_Device->CreateTexture2D(&textureDesc, &srd, &l_Texture2D);
+						if (!FAILED(l_HR))
+						{
+							l_HR = l_Device->CreateShaderResourceView(l_Texture2D, 0, &m_Textures[i]->m_Texture);
+						}
+						l_Clip->popFrame(); // be sure to pop the frame from the frame queue when you're done
+					}
+				}
+			}
 			m_Textures[i]->Activate(i);
 		}
 	}

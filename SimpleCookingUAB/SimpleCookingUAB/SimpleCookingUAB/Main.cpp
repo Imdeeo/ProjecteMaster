@@ -13,7 +13,7 @@ void main()
 	fflush(stdin);
 	printf_s("\n");
 	if(l_StaticMeshManager.Load(l_Directory,"static_meshes.xml"))
-		l_StaticMeshManager.CreatePhysXMeshes(l_Directory,l_PhysXManager);
+		l_StaticMeshManager.CreatePhysXMeshes(l_PhysXManager);
 
 	char c;
 	printf("pene");

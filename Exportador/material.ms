@@ -142,9 +142,12 @@ fn createMaterials dir filename Objs copyTexture =
 							if copyTexture == true then
 							(
 								dirExist (dir+"Textures")
-								copyFile mat[j].selfIllumMap.id_0_color_shader.filename pathfile1
-								copyFile mat[j].selfIllumMap.id_1_color_shader.filename pathfile2
-								copyFile mat[j].selfIllumMap.id_2_color_shader.filename pathfile3
+								copyFile (openBitMap mat[j].selfIllumMap.id_0_color_shader.bitmap.filename).fileName pathfile1
+								copyFile (openBitMap mat[j].selfIllumMap.id_1_color_shader.bitmap.filename).fileName pathfile2
+								copyFile (openBitMap mat[j].selfIllumMap.id_2_color_shader.bitmap.filename).fileName pathfile3
+								--copyFile mat[j].selfIllumMap.id_0_color_shader.filename pathfile1
+								--copyFile mat[j].selfIllumMap.id_1_color_shader.filename pathfile2
+								--copyFile mat[j].selfIllumMap.id_2_color_shader.filename pathfile3
 							)
 						)
 						else if (classof mat[j].selfIllumMap == Bitmaptexture) then
@@ -159,7 +162,8 @@ fn createMaterials dir filename Objs copyTexture =
 								if copyTexture == true then
 								(
 									dirExist (dir+"Textures")
-									copyFile mat[j].selfIllumMap.bitmap.filename pathfile
+									copyFile (openBitMap mat[j].selfIllumMap.bitmap.filename).fileName pathfile
+									--copyFile mat[j].selfIllumMap.bitmap.filename pathfile
 								)
 							)
 						)
@@ -175,7 +179,8 @@ fn createMaterials dir filename Objs copyTexture =
 								if copyTexture == true then
 								(
 									dirExist (dir+"Textures")
-									copyFile mat[j].reflectionMap.bitmap.filename pathfile
+									copyFile (openBitMap mat[j].reflectionMap.bitmap.filename).fileName pathfile
+									--copyFile mat[j].reflectionMap.bitmap.filename pathfile
 								)
 							)
 						)
@@ -191,7 +196,8 @@ fn createMaterials dir filename Objs copyTexture =
 								if copyTexture == true then
 								(
 									dirExist (dir+"Textures")
-									copyFile mat[j].bumpMap.bitmap.filename pathfile
+									copyFile (openBitMap mat[j].bumpMap.bitmap.filename).fileName pathfile
+									--copyFile mat[j].bumpMap.bitmap.filename pathfile
 								)
 							)
 						) else if (classof mat[j].bumpMap == Normal_Bump) then
@@ -206,7 +212,8 @@ fn createMaterials dir filename Objs copyTexture =
 								if copyTexture == true then
 								(
 									dirExist (dir+"Textures")
-									copyFile mat[j].bumpMap.normal_map.bitmap.filename pathfile
+									copyFile (openBitMap mat[j].bumpMap.normal_map.bitmap.filename).fileName pathfile
+									--copyFile mat[j].bumpMap.normal_map.bitmap.filename pathfile
 								)
 							)
 						)
@@ -220,6 +227,7 @@ fn createMaterials dir filename Objs copyTexture =
 							format "\t\t<parameter type=\"float\" name=\"specular_power\" value=\"%\" description=\"min=0.0 max=100.0 step=0.1\"/>\n" glossinessAmount to:file
 							format "\t\t<parameter type=\"float\" name=\"specular_factor\" value=\"%\" description=\"min=0.0 max=1.0 step=0.01\"/>\n" specularAmount to:file
 							format "\t\t<parameter type=\"float\" name=\"reflection\" value=\"1.0\" description=\"min=0.0 max=1.0 step=0.001\"/>\n" to:file
+							format "\t\t<parameter type=\"float\" name=\"ssr_reflection\" value=\"0.0\" description=\"min=0.0 max=1.0 step=0.001\"/>\n" to:file
 						)						
 						format "\t</material>\n" to:file 
 					)
