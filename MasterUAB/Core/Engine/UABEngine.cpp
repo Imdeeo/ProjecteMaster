@@ -28,6 +28,7 @@
 #include "Manchas\ManchasManager.h"
 #include "DebugHelper\DebugHelper.h"
 #include "ContextManager\ContextManager.h"
+#include "RenderableObjects\RenderableVertexs.h"
 #ifdef _DEBUG
 #include "DebugRender.h"
 #else
@@ -154,19 +155,22 @@ void CUABEngine::LoadScreen(const std::string _FileName)
 			}
 			CTexture* l_Texture = new CTexture();
 			l_Texture->Load("Data\\GUI\\textures\\Carga.png");
-			m_RenderManager->GetContextManager()->BeginRender();
+			CContextManager* l_ContextManager = m_RenderManager->GetContextManager();
+			
+			l_ContextManager->BeginRender();			
+			m_RenderManager->SetMatrixViewProjection();
+			m_RenderManager->Clear(true, true);
+			m_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
+			CEffectManager::SetSceneConstants(l_EffectTechnique);
 			m_RenderManager->DrawScreenQuad(l_EffectTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
-			m_RenderManager->GetContextManager()->EndRender();
+			l_ContextManager->EndRender();
 		}
 	}
-	//CEffectVertexShader *l_EffectVertexShader = new CEffectVertexShader(l_Element);
-	//CEffectPixelShader *l_EffectPixelShader = new CEffectPixelShader(l_Element);
-	//CEffectTechnique *l_EffectTechnique = new CEffectTechnique(l_Element);
 }
 void CUABEngine::Init()
 {	
 	m_RenderManager->Init();
-	//LoadScreen("Data\\effects.xml");
+	LoadScreen("Data\\effects.xml");
 	m_InputManager->Load("Data\\input.xml");
 	m_LevelManager->LoadFile("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
@@ -190,7 +194,7 @@ void CUABEngine::Init()
 #endif
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	m_LevelManager->ReloadAllLua();
-
+	
 	// INICIO TIEMPO TEST LECTURA XML
 	//float l_StartTime = (float)timeGetTime();
 	/*LoadLevelXML("Data\\level.xml");
