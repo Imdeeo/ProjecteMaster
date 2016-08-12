@@ -15,7 +15,7 @@ void CMaterialManager::Load(const std::string &LevelMaterialsFilename, const std
 	m_LevelMaterialsFilename = LevelMaterialsFilename;
 	m_DefaultMaterialsFilename = DefaultMaterialsFilename;
 
-	Destroy();
+	//Destroy();
 
 	LoadMaterialsFromFile(LevelMaterialsFilename);
 	if (DefaultMaterialsFilename != "")

@@ -17,6 +17,8 @@
 #include "ScriptManager\ScriptManager.h"
 #include "SoundManager\SoundManager.h"
 #include "Camera\CameraControllerManager.h"
+#include "LevelManager\LevelManager.h"
+#include "GamePlayManager.h"
 
 #include "no_sillywarnings_please.h"
 
@@ -42,38 +44,36 @@ void CApplication::Update(float _ElapsedTime)
 	m_Timer+= _ElapsedTime;
 	UABEngine.GetEffectManager()->m_SceneParameters.m_Time = m_Timer;
 
-	if(CInputManager::GetInputManager()->IsActionActive("RELOAD_LUA"))
+#ifdef _DEBUG
+
+	gainput::InputMap* l_InputMap = UABEngine.GetInputManager()->GetMap();
+
+	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugReloadLua))
 	{
-		UABEngine.LuaIsReloaded();
-		UABEngine.GetScriptManager()->RunFile("Data\\Lua\\init.lua");
-		UtilsLog("Reloading Lua");
-		UABEngine.GetScriptManager()->RunCode("mainLua(\"" + UABEngine.GetLevelLoaded() + "\")");
+		UABEngine.ReloadLUA();
 	}
-	if (CInputManager::GetInputManager()->IsActionActive("SWITCH_RENDER_LIGHTS"))
-	{
+
+	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderLights))
 		UABEngine.GetLightManager()->SwitchRenderLights();
-	}
-	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_BOTH"))
-	{
+
+	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCamera))
 		UABEngine.SwitchCamera();
-	}
-	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_VISION"))
-	{
+
+	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCameraVision))
 		UABEngine.ChangeCameraVision();
-	}
-	if(CInputManager::GetInputManager()->IsActionActive("CHANGE_CAMERA_CONTROL"))
+
+	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCameraControl))
 	{
 		int l_currentCameraCotnrol = UABEngine.GetCameraControllerManager()->GetCurrentCameraControl();
 		l_currentCameraCotnrol++;
 		l_currentCameraCotnrol = l_currentCameraCotnrol % 2;
 		UABEngine.GetCameraControllerManager()->SetCurrentCameraControl(l_currentCameraCotnrol);
 	}
-	if(CInputManager::GetInputManager()->IsActionActive("RENDER_CAMERA"))
-	{
-		m_RenderCameraCube = !m_RenderCameraCube;
-	}
 
-	/*if(CInputManager::GetInputManager()->IsActionActive("MONSTER_IDLE"))
+	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderCamera))
+		m_RenderCameraCube = !m_RenderCameraCube;
+
+	/*if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugMonsterIdle))
 	{
 		if(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")!=nullptr)
 		{
@@ -89,7 +89,7 @@ void CApplication::Update(float _ElapsedTime)
 			((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(0,1.f,0.1f);
 		}
 	}
-	if(CInputManager::GetInputManager()->IsActionActive("MONSTER_RUN"))
+	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugMonsterRun))
 	{
 		if(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")!=nullptr)
 		{
@@ -105,7 +105,7 @@ void CApplication::Update(float _ElapsedTime)
 			((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(1,1.f,0.1f);
 		}
 	}
-	if(CInputManager::GetInputManager()->IsActionActive("MONSTER_HIT"))
+	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugMonsterHit))
 	{
 		if(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")!=nullptr)
 		{
@@ -124,6 +124,8 @@ void CApplication::Update(float _ElapsedTime)
 		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ExecuteAction(2,0.1f,0.1f);
 		}
 	}*/	
+
+#endif
 
 	// ANTIGUO UPDATE
 	/*if (_ElapsedTime > 0.0f){

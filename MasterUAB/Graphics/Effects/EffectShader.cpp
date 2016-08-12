@@ -86,6 +86,7 @@ void CEffectShader::CreateShaderMacro()
 
 bool CEffectShader::LoadShader(const std::string &Filename, const std::string &EntryPoint, const std::string &ShaderModel, ID3DBlob **BlobOut)
 {
+	std::string l_Filename = m_Path + Filename;
 #ifdef WIN7
 	// D3DX
 	HRESULT hr = S_OK;
@@ -94,7 +95,7 @@ bool CEffectShader::LoadShader(const std::string &Filename, const std::string &E
 	dwShaderFlags |= D3DCOMPILE_DEBUG;
 #endif
 	ID3DBlob* pErrorBlob;
-	hr = D3DX11CompileFromFile(Filename.c_str(), m_ShaderMacros, NULL, EntryPoint.c_str(), ShaderModel.c_str(), dwShaderFlags, 0, NULL, BlobOut, &pErrorBlob, NULL);
+	hr = D3DX11CompileFromFile(l_Filename.c_str(), m_ShaderMacros, NULL, EntryPoint.c_str(), ShaderModel.c_str(), dwShaderFlags, 0, NULL, BlobOut, &pErrorBlob, NULL);
 #else
 	// D3D11
 	UINT dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
@@ -106,7 +107,7 @@ bool CEffectShader::LoadShader(const std::string &Filename, const std::string &E
 	const D3D_SHADER_MACRO defines[] = { "EXAMPLE_DEFINE", "1", NULL, NULL };
 	ID3DBlob* pErrorBlob = nullptr;
 	std::wstring wFilename;
-	wFilename.assign(Filename.begin(), Filename.end());
+	wFilename.assign(l_Filename.begin(), l_Filename.end());
 	HRESULT hr = D3DCompileFromFile(wFilename.c_str(), m_ShaderMacros, D3D_COMPILE_STANDARD_FILE_INCLUDE, EntryPoint.c_str(), ShaderModel.c_str(), dwShaderFlags, 0, BlobOut, &pErrorBlob);
 #endif
 	
@@ -309,8 +310,7 @@ bool CEffectPixelShader::Load()
 {
 	CreateShaderMacro();
 	ID3DBlob *l_PSBlob = NULL;
-	bool l_Loaded = LoadShader(m_Filename.c_str(), m_EntryPoint.c_str(),
-		m_ShaderModel.c_str(), &l_PSBlob);
+	bool l_Loaded = LoadShader(m_Filename.c_str(), m_EntryPoint.c_str(), m_ShaderModel.c_str(), &l_PSBlob);
 	if (!l_Loaded)
 		return false;
 	/*CRenderManager &l_RenderManager = UABEngine.GetRenderManager();

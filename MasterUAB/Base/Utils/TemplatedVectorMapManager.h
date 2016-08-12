@@ -138,6 +138,18 @@ public:
 		return l_ElementsVector;
 	}
 
+	void ChageKeyName(std::string _old, std::string _new)
+	{
+		TMapResources::iterator i = m_ResourcesMap.find(_old);
+
+		if (i != m_ResourcesMap.end())
+		{
+			CMapResourceValue value(i->second.m_Value, i->second.m_Id);
+			m_ResourcesMap.erase(i);
+			m_ResourcesMap.insert(std::pair<std::string, CMapResourceValue>(_new, CMapResourceValue(value.m_Value, value.m_Id)));
+		}
+	}
+
 	virtual CTemplatedVectorMapManager<T>& CTemplatedVectorMapManager<T>::operator=(CTemplatedVectorMapManager<T>& _TemplatedVectorMapManager)
 	{
 		TMapResources::iterator l_iterator = m_ResourcesMap.begin();

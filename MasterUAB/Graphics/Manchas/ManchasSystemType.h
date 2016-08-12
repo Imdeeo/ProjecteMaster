@@ -19,7 +19,7 @@ public:
 	CManchasSystemType(CXMLTreeNode &TreeNode);
 	virtual ~CManchasSystemType(void);
 	void Destroy();
-	//void Save(FILE* _File);
+	void Save(FILE* _File);
 
 	UAB_BUILD_GET_SET(CMaterial *, Material);
 	UAB_BUILD_GET_SET(int, Frames);

@@ -16,7 +16,7 @@ public:
 	virtual ~CStaticMeshManager(void);
 	bool Load(const std::string &_DirName,const std::string &FileName);
 
-	void CreatePhysXMeshes(const std::string &_DirName, CPhysXManager*);
+	void CreatePhysXMeshes(CPhysXManager*);
 };
 
 #endif // STATIC_MESH_MANAGER_H

@@ -7,23 +7,20 @@
     <ClCompile Include="InputManager\InputManager.cpp">
       <Filter>InputManager</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager\InputManagerImplementation.cpp">
-      <Filter>InputManager</Filter>
-    </ClCompile>
-    <ClCompile Include="ScriptManager\ScriptManager.cpp">
-      <Filter>ScriptManager</Filter>
-    </ClCompile>
     <ClCompile Include="DebugHelper\DebugHelper.cpp">
       <Filter>DebugHelper</Filter>
     </ClCompile>
     <ClCompile Include="DebugHelper\DebugHelperImplementation.cpp">
       <Filter>DebugHelper</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager\KeyboardInput.cpp">
-      <Filter>InputManager</Filter>
-    </ClCompile>
     <ClCompile Include="IA\AStar.cpp">
       <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptManager\ScriptManager.cpp">
+      <Filter>ScriptManager</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager\LevelManager.cpp">
+      <Filter>LevelManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -33,23 +30,20 @@
     <ClInclude Include="InputManager\InputManager.h">
       <Filter>InputManager</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager\InputManagerImplementation.h">
-      <Filter>InputManager</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptManager\ScriptManager.h">
-      <Filter>ScriptManager</Filter>
-    </ClInclude>
     <ClInclude Include="DebugHelper\DebugHelperImplementation.h">
       <Filter>DebugHelper</Filter>
     </ClInclude>
     <ClInclude Include="DebugHelper\DebugHelper.h">
       <Filter>DebugHelper</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager\KeyboardInput.h">
-      <Filter>InputManager</Filter>
-    </ClInclude>
     <ClInclude Include="IA\AStar.h">
       <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptManager\ScriptManager.h">
+      <Filter>ScriptManager</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager\LevelManager.h">
+      <Filter>LevelManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +61,9 @@
     </Filter>
     <Filter Include="AI">
       <UniqueIdentifier>{d41f5a47-d204-4c4e-9a55-2938cd452ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelManager">
+      <UniqueIdentifier>{57cf4ffa-0bd9-4da7-8bec-db41fbc0607a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
