@@ -91,6 +91,7 @@ public:
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
 	void Destroy();
+	void LoadScreen(const std::string _FileName);
 	void Init();
 	void Update(float _ElapsedTime);
 	void SwitchCamera();

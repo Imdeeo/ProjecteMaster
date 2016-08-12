@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<load_screen>
+	<vertex_shader name="carga_vs" file="UAB_CARGA.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="carga_ps"	file="UAB_CARGA.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor=""/>
+	<effect_technique name="carga_technique" vertex_shader="carga_vs" pixel_shader="carga_ps"/>
+</load_screen>
 <effects>	
 	<!--GEOMETRY SHADER-->
 	<vertex_shader name="particle_vs" file="UAB_GEOMETRY_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX" preprocessor=""/>
@@ -222,8 +227,3 @@
 	<pixel_shader name="trigger_ps"	file="UAB_UBER_FORWARD_SHADER.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_TRIGGER"/>
 	<effect_technique name="trigger_technique" vertex_shader="trigger_vs" pixel_shader="trigger_ps"/>
 </effects>
-
-
-
-
-
