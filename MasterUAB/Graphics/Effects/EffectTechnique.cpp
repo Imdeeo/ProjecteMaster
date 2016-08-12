@@ -14,12 +14,20 @@ CEffectTechnique::CEffectTechnique(CXMLTreeNode &TreeNode):CNamed(TreeNode)
 	m_PixelShader = UABEngine.GetEffectManager()->GetPixelShader(m_PixelShaderName);
 	m_GeometryShader = UABEngine.GetEffectManager()->GetGeometryShader(m_GeometryShaderName);
 }
-
+CEffectTechnique::CEffectTechnique(CEffectVertexShader* _EffectVertexShader, CEffectPixelShader* _EffectPixelShader, CEffectGeometryShader* _EffectGeometryShader, const std::string _Name) :CNamed(_Name)
+{
+	m_VertexShaderName = _EffectVertexShader->GetName();
+	m_PixelShaderName = _EffectPixelShader->GetName();
+	if (_EffectGeometryShader!=nullptr)
+		m_GeometryShaderName = _EffectGeometryShader->GetName();
+	m_VertexShader = _EffectVertexShader;
+	m_PixelShader = _EffectPixelShader;
+	m_GeometryShader = _EffectGeometryShader;
+}
 CEffectTechnique::~CEffectTechnique()
 {
 
 }
-
 void CEffectTechnique::Refresh()
 {
 	m_VertexShader = UABEngine.GetEffectManager()->GetVertexShader(m_VertexShaderName);

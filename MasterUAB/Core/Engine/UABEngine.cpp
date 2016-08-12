@@ -27,6 +27,7 @@
 #include "LevelManager\LevelManager.h"
 #include "Manchas\ManchasManager.h"
 #include "DebugHelper\DebugHelper.h"
+#include "ContextManager\ContextManager.h"
 #ifdef _DEBUG
 #include "DebugRender.h"
 #else
@@ -119,16 +120,60 @@ void CUABEngine::Update(float _ElapsedTime)
 	GetSoundManager()->Update(l_CurrentCamera);
 	m_ScriptManager->RunCode("luaGui()");
 }
-void CUABEngine::Init()
+void CUABEngine::LoadScreen(const std::string _FileName)
 {
+	std::string l_EffectName;
+	CEffectVertexShader* l_EffectVertexShader;
+	CEffectPixelShader* l_EffectPixelShader;
+	CEffectTechnique* l_EffectTechnique;
+	CXMLTreeNode l_XML;
+	if (l_XML.LoadFile(_FileName.c_str()))
+	{
+		CXMLTreeNode l_Input = l_XML["load_screen"];
+		if (l_Input.Exists())
+		{
+			
+			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			{
+				CXMLTreeNode l_Element = l_Input(i);
+				if (l_Element.GetName() == std::string("vertex_shader"))
+				{
+					l_EffectVertexShader = new CEffectVertexShader(l_Element);
+					l_EffectVertexShader->Load();
+				}
+				else if (l_Element.GetName() == std::string("pixel_shader"))
+				{
+					l_EffectPixelShader = new CEffectPixelShader(l_Element);
+					l_EffectPixelShader->Load();
+				}			
+				else if (l_Element.GetName() == std::string("effect_technique"))
+				{
+					l_EffectName = l_Element.GetPszProperty("name");
+					l_EffectTechnique = new CEffectTechnique(l_EffectVertexShader, l_EffectPixelShader, nullptr, l_EffectName);
+				}
+			}
+			CTexture* l_Texture = new CTexture();
+			l_Texture->Load("Data\\GUI\\textures\\Carga.png");
+			m_RenderManager->GetContextManager()->BeginRender();
+			m_RenderManager->DrawScreenQuad(l_EffectTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
+			m_RenderManager->GetContextManager()->EndRender();
+		}
+	}
+	//CEffectVertexShader *l_EffectVertexShader = new CEffectVertexShader(l_Element);
+	//CEffectPixelShader *l_EffectPixelShader = new CEffectPixelShader(l_Element);
+	//CEffectTechnique *l_EffectTechnique = new CEffectTechnique(l_Element);
+}
+void CUABEngine::Init()
+{	
 	m_RenderManager->Init();
+	LoadScreen("Data\\effects.xml");
 	m_InputManager->Load("Data\\input.xml");
 	m_LevelManager->LoadFile("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
-	m_LevelManager->LoadLevel("Recibidor");
+	m_LevelManager->LoadLevel("Biblioteca");
 	//m_LevelManager->LoadLevel("Biblioteca");
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
