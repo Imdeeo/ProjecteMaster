@@ -166,7 +166,7 @@ void CUABEngine::LoadScreen(const std::string _FileName)
 void CUABEngine::Init()
 {	
 	m_RenderManager->Init();
-	LoadScreen("Data\\effects.xml");
+	//LoadScreen("Data\\effects.xml");
 	m_InputManager->Load("Data\\input.xml");
 	m_LevelManager->LoadFile("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
