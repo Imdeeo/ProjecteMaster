@@ -30,8 +30,8 @@ fn createInstanceMesh dir filename Objs=
 			if (getUserProp Objs[i] "render_layer") == "triggers" then
 			(
 				format "\t<instance_mesh name=\"%\" layer =\"triggers\" on_trigger_enter=\"%\" on_trigger_exit=\"%\" on_trigger_stay=\"%\" is_active=\"true\" core_name=\"%\" position=\"% % %\" rotation=\"% % % %\" create_physics=\"true\" physics_type=\"%\" physics_material=\"%\" physics_group=\"%\" visible=\"%\">\n" Objs[i].name (getUserProp Objs[i] "on_trigger_enter") (getUserProp Objs[i] "on_trigger_exit") (getUserProp Objs[i] "on_trigger_stay") core pos[1] pos[2] pos[3] rot.x rot.y rot.z rot.w (getUserProp Objs[i] "physics_generate_type") (getUserProp Objs[i] "physics_material") (getUserProp Objs[i] "physics_layer") true to:file
-				format "\t\t<active_actor actor_name=\"player\"/>" to:file
-				format "\t</instance_mesh>" to:file
+				format "\t\t<active_actor actor_name=\"player\"/>\n" to:file
+				format "\t</instance_mesh>\n" to:file
 			) else (
 				if((getUserProp Objs[i] "render_export_type") == "animated_instance_mesh") then
 				(
