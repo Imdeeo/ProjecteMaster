@@ -83,9 +83,11 @@ class 'CAutomatonEnemy' (CEnemy)
 		local l_Owner = self.m_RenderableObject;
 		local l_EnemyForward = l_Owner:get_rotation():get_forward_vector():get_normalized(1)
 		local l_EnemyPos = l_Owner:get_position()
-		local l_NewPos = l_EnemyForward * _MoveSpeed
-		self.m_PhysXManager:character_controller_move(self.m_Name, l_NewPos, _ElapsedTime)
-		l_Owner:set_position(l_EnemyPos + l_NewPos * _ElapsedTime)
+		self.m_Velocity = Vect3f(l_EnemyForward.x * _MoveSpeed, self.m_Velocity.y, l_EnemyForward.z * _MoveSpeed)
+		--self.m_PhysXManager:character_controller_move(self.m_Name, l_NewPos, _ElapsedTime)
+		--l_Owner:set_position(l_EnemyPos + l_NewPos * _ElapsedTime)
+		
+		self:EnemyMove(_ElapsedTime)
 
 		-- with the rotation, the enemy chases to the player
 		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)	
@@ -105,5 +107,26 @@ class 'CAutomatonEnemy' (CEnemy)
 		
 		local target_quat = l_Owner:get_rotation():slerp(l_Owner:get_rotation() * quat_to_turn, _PercentRotation)
 		l_Owner:set_rotation(target_quat)
+	end
+	
+	function CAutomatonEnemy:EnemyMove(_ElapsedTime)
+		local l_Owner = self.m_RenderableObject;
+		
+		-- Calculate the enemy speed
+		local l_PlayerDisplacement = Vect3f(self.m_Velocity.x, self.m_Velocity.y + self.m_Gravity * _ElapsedTime, self.m_Velocity.z)
+		
+		--// Move the character controller
+		local l_PreviousControllerPosition = self.m_PhysXManager:get_character_controler_pos(self.m_Name)
+		l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - g_StandingOffset
+		self.m_PhysXManager:character_controller_move(self.m_Name, l_PlayerDisplacement, _ElapsedTime)
+		
+		--// Assign to the character the controller's position
+		local l_NewControllerPosition = self.m_PhysXManager:get_character_controler_pos(self.m_Name)
+		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
+		l_Owner:set_position(l_NewControllerPosition)
+		
+		--// Save speed in last update so we can create acceleration
+		local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
+		self.m_Velocity = l_Displacement/_ElapsedTime
 	end
 --end

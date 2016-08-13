@@ -18,6 +18,7 @@ private:
 	std::string m_GeometryShaderName;
 public:
 	CEffectTechnique(CXMLTreeNode &TreeNode);
+	CEffectTechnique(CEffectVertexShader* _EffectVertexShader, CEffectPixelShader* _EffectPixelShader, CEffectGeometryShader* _EffectGeometryShader, const std::string _Name);
 	virtual ~CEffectTechnique();
 	
 	CEffectVertexShader* GetVertexShader();

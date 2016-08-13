@@ -18,9 +18,13 @@
 #include "Components\LUAComponent.h"
 
 #include "Engine\UABEngine.h"
+<<<<<<< HEAD
 
 #include "LevelManager\LevelManager.h"
 
+=======
+#include "LevelManager\LevelManager.h"
+>>>>>>> develop
 #include "InputManager\InputManager.h"
 
 #include "DebugHelper\DebugHelper.h"
@@ -523,6 +527,14 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("runcode", &CScriptManager::RunCode)
 	];
 
+	//LevelManager
+	module(m_LS)[
+		class_<CLevelManager>("CLevelManager")
+			.def("load_level", &CLevelManager::LoadLevel)
+			.def("reload_level", &CLevelManager::ReloadLevel)
+			.def("unload_level", &CLevelManager::UnloadLevel)
+	];
+
 
 	// Engine-------------------------------------------------------------------------------------------
 	module(m_LS)[
@@ -548,6 +560,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_gui_manager", &CUABEngine::GetGUIManager)
 			.def("get_level_manager", &CUABEngine::GetLevelManager)
 			.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
+			.def("get_level_manager", &CUABEngine::GetLevelManager)
 			.scope[
 				def("get_instance", &CUABEngine::GetInstance)
 			]
@@ -1554,8 +1567,9 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<IVideoManager>("IVideoManager")
 			.def("load_clip", &IVideoManager::LoadClip)
-			.def("render_sreen_clip", &IVideoManager::RenderSceenClip)
+			.def("render_screen_clip", &IVideoManager::RenderSceenClip)
 			.def("clear_clip", &IVideoManager::ClearClip)
+			.def("play_clip", &IVideoManager::PlayClip)
 	];
 
 // VIDEOGAME----------------------------------------------------------------------------------------

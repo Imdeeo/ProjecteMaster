@@ -1,10 +1,12 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
+#define DIRECTINPUT_VERSION 0x0800
 
 #include <string>
 #include <gainput\gainput.h>
 #include <Engine\UABEngine.h>
 #include <Utils.h>
+#include <dinput.h>
 
 class CDeviceButtonListener;
 class CUserButtonListener;
@@ -17,6 +19,9 @@ protected:
 
 	float m_AxisX;
 	float m_AxisY;
+	float m_AxisZ;
+
+	float m_Speed;
 
 	bool m_Focus;
 	std::string m_Filename;
@@ -70,7 +75,6 @@ public:
 	CInputManager();
 	~CInputManager();
 	void Update();
-	void UpdateAxis(float _x, float _y);
 
 	void Load(std::string _file);
 	void Reload();
@@ -81,6 +85,7 @@ public:
 	void SetFocus(bool _focus);
 	bool GetFocus() const;
 
+	void UpdateAxis(LONG _x, LONG _y);
 	Vect2f GetCursor();
 	Vect2f GetCursorMovement();
 	float GetAxisX();
