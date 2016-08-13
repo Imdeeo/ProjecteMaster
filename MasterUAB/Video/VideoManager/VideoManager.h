@@ -10,7 +10,9 @@ class IVideoManager
 public:
 	static IVideoManager* InstantiateVideoManager();
 	virtual ~IVideoManager() {}
-	virtual bool LoadClip(const std::string &l_ClipFile, bool _Restart=false) = 0;
+	virtual bool LoadClip(const std::string &l_ClipFile, bool _Restart = false) = 0;
+	virtual TheoraVideoClip* LoadVideoClip(const std::string &l_ClipFile, bool _Restart = false)=0;
+	virtual TheoraVideoClip* GetClip(const std::string &l_ClipName) = 0;
 	virtual bool ClearClip(const std::string &l_ClipFile) = 0;
 	virtual bool PlayClip(const std::string &l_ClipName) = 0;
 	virtual bool RenderSceenClip(const std::string &l_ClipName) = 0;

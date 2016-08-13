@@ -1,3 +1,6 @@
+--// Global Variables
+dofile("Data\\Lua\\Utils\\GVars.lua")
+
 class 'CEnemy' (CLUAComponent)
 	function CEnemy:__init(_TreeNode)
 		local UABEngine = CUABEngine.get_instance()
@@ -12,8 +15,8 @@ class 'CEnemy' (CLUAComponent)
 		self.m_Gravity = -9.81
 		self.m_WalkSpeed = 0.5
 		self.m_RunSpeed = 2.5
-		self.m_AngularWalkSpeed = 1000.0
-		self.m_AngularRunSpeed = 250.0
+		self.m_AngularWalkSpeed = 500.0
+		self.m_AngularRunSpeed = 100.0
 		self.m_TimerRotation = 0.0
 		self.m_Timer = 0
 		self.m_DefaultPosition = Vect3f(self.m_RenderableObject:get_position().x, self.m_RenderableObject:get_position().y, self.m_RenderableObject:get_position().z)
@@ -30,7 +33,7 @@ class 'CEnemy' (CLUAComponent)
 		-- TODO: get group numbers somehow
 		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
 		self.m_PhysXGroups = 2 + 8 -- objects and player
-		self.m_MaxDistance = 25.0
+		self.m_MaxDistance = 5.0
 		self.m_MaxAngle = 0.25 * math.pi
 		self.m_HeadOffset = Vect3f(0.0, 1.7, 0.0)
 		self.m_BlockingObjectName = nil
@@ -48,7 +51,7 @@ class 'CEnemy' (CLUAComponent)
 		
 		self.m_StateMachine = StateMachine.create()
 		if(not UABEngine:get_lua_reloaded())then
-			self.m_PhysXManager:create_character_controller(self.m_Name, 1.2, 0.3, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Enemy")
+			self.m_PhysXManager:create_character_controller(self.m_Name, g_EnemyHeight, g_EnemyRadius, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Enemy")
 		end
 	end
 	
@@ -98,7 +101,7 @@ class 'CEnemy' (CLUAComponent)
 		local l_EnemyForward = _Owner:get_rotation():get_forward_vector():get_normalized(1)
 		local l_EnemyPos = _Owner:get_position()
 		
-		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)	
+		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)
 		local l_Angle = l_EnemyForward * l_Direction
 		if 1.0 - l_Angle < 0.01 then
 		  return
@@ -116,7 +119,7 @@ class 'CEnemy' (CLUAComponent)
 	end
 	
 	function CEnemy:LoseSanity(_Distance)
-		for i=1, table.maxn(self.m_LoseSanity)-1 do
+		for i=1, table.maxn(self.m_LoseSanity) do
 			if _Distance <= self.m_LoseSanity[i].x and _Distance > self.m_LoseSanity[i+1].x and self.m_Timer >= self.m_LoseSanity[i].y then
 				g_Player:ModifySanity(self.m_LoseSanity[i].z)
 				self.m_Timer = 0

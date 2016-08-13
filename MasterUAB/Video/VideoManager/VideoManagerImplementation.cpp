@@ -16,17 +16,30 @@ CVideoManagerImplementation::~CVideoManagerImplementation()
 	CHECKED_DELETE(mgr);
 }
 
+TheoraVideoClip* CVideoManagerImplementation::LoadVideoClip(const std::string &l_ClipFile, bool _Restart)
+{
+	TheoraVideoClip* l_Clip = mgr->createVideoClip(m_Path + l_ClipFile, TH_RGBX);
+	if (l_Clip == nullptr)
+		return nullptr;
+	l_Clip->setAutoRestart(_Restart);
+	l_Clip->stop();
+	return l_Clip;
+}
+
 bool CVideoManagerImplementation::LoadClip(const std::string &l_ClipFile, bool _Restart)
 {
 	//clip = mgr->createVideoClip("Data/Video/bunny.ogv", TH_RGBX);
-	TheoraVideoClip* l_Clip = mgr->createVideoClip(m_Path + l_ClipFile, TH_RGBX);
+	TheoraVideoClip* l_Clip = LoadVideoClip(l_ClipFile, _Restart);
 	if (l_Clip == nullptr)
 		return false;
-	l_Clip->setAutoRestart(_Restart);
-	l_Clip->stop();
 	return true;
 }
  
+TheoraVideoClip* CVideoManagerImplementation::GetClip(const std::string &l_ClipName)
+{
+	return mgr->getVideoClipByName(m_Path + l_ClipName);
+}
+
 bool CVideoManagerImplementation::ClearClip(const std::string &l_ClipName)
 {
 	TheoraVideoClip* l_Clip = mgr->getVideoClipByName(m_Path+l_ClipName);

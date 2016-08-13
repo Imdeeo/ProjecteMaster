@@ -2,4 +2,6 @@
 <levels>
 	<level id="1" name="Recibidor" directory="Data\level_1"/>
 	<level id="2" name="Biblioteca" directory="Data\level_2"/>
+	<level id="3" name="Taller" directory="Data\level_3"/>
+	<level id="4" name="Maquinas" directory="Data\level_4"/>
 </levels>

@@ -86,7 +86,7 @@ function luaUpdate(_ElapsedTime)
 		--g_Engine:set_frustum_active(not g_Engine:get_frustum_active())
 		local l_videoManager = g_Engine:get_video_manager()
 		l_videoManager:load_clip("bunny.ogv",false)
-		l_videoManager:render_sreen_clip("bunny.ogv")
+		l_videoManager:render_screen_clip("bunny.ogv")
 	end
 	--g_VolumeController:CheckVolumeKeys()	
 end

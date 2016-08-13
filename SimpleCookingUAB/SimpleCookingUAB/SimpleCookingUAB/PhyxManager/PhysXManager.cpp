@@ -213,24 +213,31 @@ void CPhysXManager::CreateConvexMesh(const std::string &_name, const CStaticMesh
 		physx::PxConvexMeshDesc l_ConvexMeshDesc;
 		l_ConvexMeshDesc.setToDefault();
 		l_ConvexMeshDesc.points.count = l_RenderableVertex[i]->GetNVertexs();
-		l_ConvexMeshDesc.points.stride = sizeof(Vect3f);
-		l_ConvexMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
-
-		l_ConvexMeshDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX | physx::PxConvexFlag::eINFLATE_CONVEX;
-		physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
-		physx::PxConvexMeshCookingResult::Enum l_Result;
-		bool success = m_Cooking->cookConvexMesh(l_ConvexMeshDesc, l_DefaultMemoryOutputStream, &l_Result);
-
-		if (success)
+		if (l_ConvexMeshDesc.points.count > 0)
 		{
-			char l_FileName[256] = "";
-			sprintf_s(l_FileName, (_Mesh->GetPhysxMeshesDirectory() + std::string("\\%s_%u.cmesh")).c_str(), _name.c_str(), i);
+			l_ConvexMeshDesc.points.stride = sizeof(Vect3f);
+			l_ConvexMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
 
-			WriteMeshFile(l_FileName, l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
+			l_ConvexMeshDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX | physx::PxConvexFlag::eINFLATE_CONVEX;
+			physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
+			physx::PxConvexMeshCookingResult::Enum l_Result;
+			bool success = m_Cooking->cookConvexMesh(l_ConvexMeshDesc, l_DefaultMemoryOutputStream, &l_Result);
+
+			if (success)
+			{
+				char l_FileName[256] = "";
+				sprintf_s(l_FileName, (_Mesh->GetPhysxMeshesDirectory() + std::string("\\%s_%u.cmesh")).c_str(), _name.c_str(), i);
+
+				WriteMeshFile(l_FileName, l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
+			}
+			else
+			{
+				printf_s("Cannot Create Convex Mesh: %s\n", _name.c_str());
+			}
 		}
 		else
 		{
-			printf_s("Cannot Create Convex Mesh: %s\n", _name.c_str());
+			printf_s("WARNING: The Mesh has no vertexs: %s\n", _name.c_str());
 		}
 	}
 }
@@ -245,31 +252,38 @@ void CPhysXManager::CreateTriangleMesh(const std::string &_name, const CStaticMe
 		physx::PxTriangleMeshDesc l_TriangleMeshDesc;
 		l_TriangleMeshDesc.setToDefault();
 		l_TriangleMeshDesc.points.count = l_RenderableVertex[i]->GetNVertexs();
-		l_TriangleMeshDesc.points.stride = sizeof(Vect3f);
-		l_TriangleMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
-		
-		l_TriangleMeshDesc.triangles.count = l_RenderableVertex[i]->GetNIndexs()/3;
-		l_TriangleMeshDesc.triangles.stride = 3*l_RenderableVertex[i]->GetSizeOfIndexs();
-		l_TriangleMeshDesc.triangles.data = l_RenderableVertex[i]->GetIndexs();
-
-		if (l_TriangleMeshDesc.triangles.stride == sizeof(unsigned short)*3)
-			l_TriangleMeshDesc.flags |= physx::PxMeshFlag::e16_BIT_INDICES;
-		if (_FlipNormals)
-			l_TriangleMeshDesc.flags |= physx::PxMeshFlag::eFLIPNORMALS;
-
-		physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
-		bool success = m_Cooking->cookTriangleMesh(l_TriangleMeshDesc, l_DefaultMemoryOutputStream);
-
-		if (success)
+		if (l_TriangleMeshDesc.points.count > 0)
 		{
-			char l_FileName[256] = "";
-			sprintf_s(l_FileName, (_Mesh->GetPhysxMeshesDirectory() + std::string("\\%s_%u.tmesh")).c_str(), _name.c_str(), i);
+			l_TriangleMeshDesc.points.stride = sizeof(Vect3f);
+			l_TriangleMeshDesc.points.data = (const void*)(&l_RenderableVertex[i]->GetVertexs()[0]);
 
-			WriteMeshFile(l_FileName, l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
+			l_TriangleMeshDesc.triangles.count = l_RenderableVertex[i]->GetNIndexs() / 3;
+			l_TriangleMeshDesc.triangles.stride = 3 * l_RenderableVertex[i]->GetSizeOfIndexs();
+			l_TriangleMeshDesc.triangles.data = l_RenderableVertex[i]->GetIndexs();
+
+			if (l_TriangleMeshDesc.triangles.stride == sizeof(unsigned short)* 3)
+				l_TriangleMeshDesc.flags |= physx::PxMeshFlag::e16_BIT_INDICES;
+			if (_FlipNormals)
+				l_TriangleMeshDesc.flags |= physx::PxMeshFlag::eFLIPNORMALS;
+
+			physx::PxDefaultMemoryOutputStream l_DefaultMemoryOutputStream;
+			bool success = m_Cooking->cookTriangleMesh(l_TriangleMeshDesc, l_DefaultMemoryOutputStream);
+
+			if (success)
+			{
+				char l_FileName[256] = "";
+				sprintf_s(l_FileName, (_Mesh->GetPhysxMeshesDirectory() + std::string("\\%s_%u.tmesh")).c_str(), _name.c_str(), i);
+
+				WriteMeshFile(l_FileName, l_DefaultMemoryOutputStream.getData(), l_DefaultMemoryOutputStream.getSize());
+			}
+			else
+			{
+				printf_s("Cannot Create Triangle Mesh: %s\n", _name.c_str());
+			}
 		}
 		else
 		{
-			printf_s("Cannot Create Triangle Mesh: %s\n", _name.c_str());
+			printf_s("WARNING: The Mesh has no vertexs: %s\n", _name.c_str());
 		}
 
 	}
