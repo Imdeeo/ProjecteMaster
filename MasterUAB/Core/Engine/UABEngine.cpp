@@ -128,11 +128,13 @@ void CUABEngine::Init()
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
-	m_LevelManager->LoadLevel("Recibidor");
+	
 	//m_LevelManager->LoadLevel("Biblioteca");
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
+
 	m_ScriptManager->Initialize();
-	//m_MaterialManager->Load("Data\\default_effect_materials.xml");
+	m_MaterialManager->Load("Data\\default_effect_materials.xml");
+	m_LayerManager->Load("Data\\layers.xml");
 	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
 	
 	m_SoundManager->SetPath("Data\\Sounds\\");
@@ -144,7 +146,8 @@ void CUABEngine::Init()
 	m_RenderManager->GetRenderHelper()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
 #endif
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
-	m_LevelManager->ReloadAllLua();
+	UABEngine.GetScriptManager()->RunCode("mainLua()");
+	//m_LevelManager->ReloadAllLua();
 
 	// INICIO TIEMPO TEST LECTURA XML
 	//float l_StartTime = (float)timeGetTime();
