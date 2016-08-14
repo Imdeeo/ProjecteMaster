@@ -23,7 +23,7 @@ function mainLua()
 	
 	local l_LevelManager = g_Engine:get_level_manager()
 	
-	--[[
+	
 	local l_SoundManager = g_Engine:get_sound_manager()
 	local l_WaterSoundEvent = SoundEvent()
 	l_WaterSoundEvent.event_name = "water"
@@ -42,7 +42,7 @@ function mainLua()
 	g_VolumeController = VolumeController()
 	g_VolumeController:SetMusicVolume(50)
 	m_timerPause = 0
-	m_iniciando = true --]]
+	m_iniciando = true 
 	--if g_Engine:get_level_loaded() == "2" then
 	--	g_TestEnemy = CVisionTestEnemy()
 	--	g_TestEnemy:InitEnemy("automata_LOW001")
