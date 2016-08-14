@@ -18,8 +18,7 @@ m_FxSliderResult = CSliderResult(50.0, 50.0)
 m_Cordura = CSliderResult(50.0, 50.0)
 
 
-function mainLua(level)
-	level = string.gsub(level,"\/","\\")
+function mainLua()
 	InitAntweakBar()
 	
 	local l_LevelManager = g_Engine:get_level_manager()
