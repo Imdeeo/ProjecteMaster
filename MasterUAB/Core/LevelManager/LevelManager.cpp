@@ -54,7 +54,7 @@ void CLevelManager::LoadLevel(const std::string &_LevelName)
 {
 	UABEngine.SetLevelLoaded(m_LevelsInfo[_LevelName].m_ID);
 	std::string l_LevelDirectory = m_LevelsInfo[_LevelName].m_Directory;
-	UABEngine.GetMaterialManager()->Load(l_LevelDirectory + "\\materials.xml", "Data\\default_effect_materials.xml");
+	UABEngine.GetMaterialManager()->Load(l_LevelDirectory + "\\materials.xml");
 	UABEngine.GetParticleManager()->Load(l_LevelDirectory + "\\particles.xml");
 	UABEngine.GetManchasManager()->Load(l_LevelDirectory + "\\cordura.xml");
 	UABEngine.GetStaticMeshManager()->Load(l_LevelDirectory + "\\static_meshes.xml");
@@ -62,7 +62,7 @@ void CLevelManager::LoadLevel(const std::string &_LevelName)
 	UABEngine.GetLightManager()->Load(l_LevelDirectory + "\\lights.xml");
 	UABEngine.GetCinematicManager()->LoadXML(l_LevelDirectory + "\\cinematic.xml");
 	UABEngine.GetCameraControllerManager()->Load(l_LevelDirectory + "\\cameras.xml");
-	//UABEngine.GetScriptManager()->RunCode("mainLua(\"" + l_LevelDirectory + "\")");
+	//UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_LevelDirectory + "\")");
 	m_LevelsInfo[_LevelName].m_Loaded = true;
 }
 
@@ -84,7 +84,7 @@ void CLevelManager::ReloadAllLua()
 		{
 			std::string l_Directory = l_iterator->second.m_Directory;
 			std::replace(l_Directory.begin(), l_Directory.end(), '\\', '\/');
-			UABEngine.GetScriptManager()->RunCode("mainLua(\"" + l_Directory + "\")");
+			UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_Directory + "\")");
 		}
 	}
 }
