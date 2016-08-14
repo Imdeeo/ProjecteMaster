@@ -62,7 +62,9 @@ void CLevelManager::LoadLevel(const std::string &_LevelName)
 	UABEngine.GetLightManager()->Load(l_LevelDirectory + "\\lights.xml");
 	UABEngine.GetCinematicManager()->LoadXML(l_LevelDirectory + "\\cinematic.xml");
 	UABEngine.GetCameraControllerManager()->Load(l_LevelDirectory + "\\cameras.xml");
-	//UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_LevelDirectory + "\")");
+	std::string l_LevelDirectoryChangedSlashes = l_LevelDirectory;
+	std::replace(l_LevelDirectoryChangedSlashes.begin(), l_LevelDirectoryChangedSlashes.end(), '\\', '\/');
+	UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_LevelDirectoryChangedSlashes + "\")");
 	m_LevelsInfo[_LevelName].m_Loaded = true;
 }
 
