@@ -85,7 +85,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_PhysXManager);
 	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_GUIManager)
-	//CHECKED_DELETE(m_SoundManager);
+	CHECKED_DELETE(m_SoundManager);
 	CHECKED_DELETE(m_VideoManager);
 	CHECKED_DELETE(m_LevelManager);
 	CHECKED_DELETE(m_ManchasManager);
