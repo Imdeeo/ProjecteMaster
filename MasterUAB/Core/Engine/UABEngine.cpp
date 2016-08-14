@@ -195,14 +195,8 @@ void CUABEngine::Init()
 	m_RenderManager->GetRenderHelper()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
 #endif
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
-<<<<<<< HEAD
 	UABEngine.GetScriptManager()->RunCode("mainLua()");
 	//m_LevelManager->ReloadAllLua();
-
-=======
-	m_LevelManager->ReloadAllLua();
-	
->>>>>>> develop
 	// INICIO TIEMPO TEST LECTURA XML
 	//float l_StartTime = (float)timeGetTime();
 	/*LoadLevelXML("Data\\level.xml");
