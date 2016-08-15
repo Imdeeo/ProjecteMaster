@@ -222,6 +222,9 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 				case WM_KILLFOCUS:
 					hasFocus = false;
 					break;
+				case WM_CHAR:
+					UABEngine.GetInputManager()->GetKeyBoard()->SetLastChar(msg.wParam);	
+					//	break;
 				case WM_INPUT:
 				{
 					UINT dwSize = 40;

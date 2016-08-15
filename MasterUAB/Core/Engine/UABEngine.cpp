@@ -21,6 +21,7 @@
 #include "SceneRender\SceneRendererCommandManager.h"
 #include "Particles\ParticleManager.h"
 #include "GUIManager.h"
+#include "GUIPosition.h"
 #include "SoundManager\SoundManager.h"
 #include "VideoManager\VideoManager.h"
 #include "GamePlayManager.h"
@@ -112,9 +113,9 @@ void CUABEngine::Update(float _ElapsedTime)
 		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 		m_PhysXManager->Update(l_ElapsedTime);
 		m_CameraControllerManager->Update(l_ElapsedTime);
-		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
+		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);	
 		m_LayerManager->Update(l_ElapsedTime);
-		
+		Consola(10, 300, 700, 70);
 		m_ScriptManager->RunCode("luaUpdate(" + std::to_string(l_ElapsedTime) + ")");
 		m_GamePlayManager->Update(l_ElapsedTime);
 	}
@@ -273,6 +274,20 @@ void CUABEngine::ReloadLUA()
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	UtilsLog("Reloading Lua");
 	m_LevelManager->ReloadAllLua();
+}
+
+void CUABEngine::Consola(float _x, float _y, float _w, float _h)
+{
+	static std::string text = "";
+	text = m_GUIManager->DoTextBox("console", "fontTest", "> " + text, CGUIPosition(_x, _y, _w, _h));
+	text = text.substr(2, text.length() - 2);
+
+	if (text.length() > 0 && text[text.length() - 1] == '\n')
+	{
+		std::string command = text.substr(0, text.length() - 1);
+		m_ScriptManager->RunCode(command);
+		text = "";
+	}
 }
 
 UAB_GET_PROPERTY_CPP(CUABEngine, CInputManager *, InputManager)
