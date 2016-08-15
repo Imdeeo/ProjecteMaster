@@ -18,6 +18,6 @@ CRenderPathFindingSceneRendererCommand::~CRenderPathFindingSceneRendererCommand(
 void CRenderPathFindingSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
 #ifdef _DEBUG
-	UABEngine.GetInstance()->GetPathFinding()->Render(&RenderManager);
+	UABEngine.GetInstance()->GetAStarManager()->Render(&RenderManager);
 #endif
 }
