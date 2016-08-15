@@ -1,5 +1,5 @@
 --// Global Variables
-dofile("Data\\Lua\\Utils\\GVars.lua")
+dofile("Data\\Lua\\Player\\GVars.lua")
 --// RaycastData
 dofile("Data\\Lua\\Raycast.lua")
 --// StateMachine
@@ -57,6 +57,7 @@ dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 
 class 'CPlayer' (CLUAComponent)
 	function CPlayer:__init(_TreeNode)
+		self.m_AlreadyInitialized = false
 		local UABEngine = CUABEngine.get_instance()
 		self.m_Name = _TreeNode:get_psz_property("name", "", false)
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
@@ -127,7 +128,12 @@ class 'CPlayer' (CLUAComponent)
 		end
 		utils_log("PARAMETROS CORDURA LEIDOS CORRECTAMENTE!!!")
 		
-		self.m_SoundManager = UABEngine:get_sound_manager()		
+		self.m_SoundManager = UABEngine:get_sound_manager()
+		if self.m_AlreadyInitialized then
+			-- unregister old speaker before assigning new renderable object
+			self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
+		end
+		
 		self.m_CinematicManager = UABEngine:get_cinematic_manager()
 		self.m_InputManager = UABEngine:get_input_manager()
 		self.m_PhysXManager = UABEngine:get_physX_manager()
@@ -174,6 +180,7 @@ class 'CPlayer' (CLUAComponent)
 			self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Player")
 		end
 
+		self.m_AlreadyInitialized = true
 		utils_log("Player init finished")
 	end
 
