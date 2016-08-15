@@ -1,5 +1,5 @@
---// Global Variables
-dofile("Data\\Lua\\Utils\\GVars.lua")
+dofile("Data\\Lua\\Utils\\GVars.lua") --// Global Variables
+dofile("Data\\Lua\\Utils\\state_machine.lua")
 
 class 'CEnemy' (CLUAComponent)
 	function CEnemy:__init(_TreeNode)
@@ -8,20 +8,23 @@ class 'CEnemy' (CLUAComponent)
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
 		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "", false)
 		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
-		CLUAComponent.__init(self,self.m_Name, self.m_RenderableObject)		
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
-		self.m_PathFindig = CAStar()
-		self.m_Velocity = Vect3f(0,0,0)
-		self.m_Gravity = -9.81
-		self.m_WalkSpeed = 0.5
-		self.m_RunSpeed = 2.5
-		self.m_AngularWalkSpeed = 500.0
-		self.m_AngularRunSpeed = 100.0
-		self.m_TimerRotation = 0.0
+		CLUAComponent.__init(self,self.m_Name, self.m_RenderableObject)
+		
 		self.m_Timer = 0
-		self.m_DefaultPosition = Vect3f(self.m_RenderableObject:get_position().x, self.m_RenderableObject:get_position().y, self.m_RenderableObject:get_position().z)
-		self.m_Patrol = _TreeNode:get_bool_property("patrol", false, false)
+		self.m_DefaultPosition = Vect3f(self.m_RenderableObject:get_position().x, self.m_RenderableObject:get_position().y, self.m_RenderableObject:get_position().z)		
 		self.m_State = "off"
+		self.m_Awake = _TreeNode:get_bool_property("awake", false, false)
+		self.m_ActualAnimation = 0
+		
+		-- TODO: get group numbers somehow
+		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
+		self.m_PhysXGroups = 2 + 8 -- objects and player
+		self.m_MaxDistance = _TreeNode:get_float_property("vision_distance", 5.0, false)
+		self.m_MaxAngle = _TreeNode:get_float_property("vision_angle", 0.25, false) * math.pi
+		self.m_HeadOffset = Vect3f(0.0, g_EnemyHeight + g_EnemyRadius * 2, 0.0)
+		self.m_BlockingObjectName = nil
+		self.m_DistanceToKill = _TreeNode:get_float_property("distance_kill", 1.0, false)
 		
 		-- distance, time, sanity amount
 		self.m_LoseSanity = {}
@@ -30,27 +33,8 @@ class 'CEnemy' (CLUAComponent)
 			table.insert(self.m_LoseSanity, Vect3f(l_Param:get_float_property("distance",0.0,false), l_Param:get_float_property("time",0.0,false), l_Param:get_float_property("sanity_amount",0.0,false)))
 		end
 		
-		-- TODO: get group numbers somehow
-		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
-		self.m_PhysXGroups = 2 + 8 -- objects and player
-		self.m_MaxDistance = 5.0
-		self.m_MaxAngle = 0.25 * math.pi
-		self.m_HeadOffset = Vect3f(0.0, 1.7, 0.0)
-		self.m_BlockingObjectName = nil
-		self.m_StandardAlertTime = 3.0
-		
-		self.m_distance_to_activate = 10.0
-		self.m_off = true
-		self.m_time_to_teleport = 1.0
-		self.m_teleport_distance = 5.0
-		self.m_teleport_timer = 0
-		self.m_time_sin_mirar = 1.5
-		self.m_timer_to_stop = 0
-		self.m_alert_timer = 0
-		self.m_distance_to_kill = 1.0
-		
 		self.m_StateMachine = StateMachine.create()
-		if(not UABEngine:get_lua_reloaded())then
+		if (not UABEngine:get_lua_reloaded()) then
 			self.m_PhysXManager:create_character_controller(self.m_Name, g_EnemyHeight, g_EnemyRadius, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Enemy")
 		end
 	end

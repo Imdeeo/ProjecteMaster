@@ -65,6 +65,7 @@ CUABEngine::CUABEngine(void)
 	m_GamePlayManager = new CGamePlayManager();
 	m_LevelManager = new CLevelManager();
 	m_ManchasManager = new CManchasManager();
+	m_AStarManager = new CAStar();
 }
 
 CUABEngine::~CUABEngine(void)
@@ -91,6 +92,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_VideoManager);
 	CHECKED_DELETE(m_LevelManager);
 	CHECKED_DELETE(m_ManchasManager);
+	CHECKED_DELETE(m_AStarManager);
 	//CHECKED_DELETE(m_CinematicManager);
 }
 
@@ -234,14 +236,6 @@ void CUABEngine::Init()
 	CDebugHelper::GetDebugHelper()->Log(s);*/
 }
 
-void CUABEngine::SetPathFinding(CAStar* _path) { 
-	m_PathFinding = _path; 
-}
-
-CAStar* CUABEngine::GetPathFinding(){ 
-	return m_PathFinding; 
-}
-
 void CUABEngine::Destroy()
 {
 	CHECKED_DELETE(m_Instance);
@@ -312,3 +306,4 @@ UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager *, GamePlayManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CLevelManager *, LevelManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CManchasManager *, ManchasManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CAStar *, AStarManager)
