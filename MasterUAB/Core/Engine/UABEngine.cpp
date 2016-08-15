@@ -29,6 +29,7 @@
 #include "DebugHelper\DebugHelper.h"
 #include "ContextManager\ContextManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
+#include "IA\AStar.h"
 #ifdef _DEBUG
 #include "DebugRender.h"
 #else
@@ -102,6 +103,7 @@ CUABEngine* CUABEngine::GetInstance()
 	}
 	return m_Instance;
 }
+
 void CUABEngine::Update(float _ElapsedTime)
 {
 	float l_ElapsedTime = _ElapsedTime * m_TimeScale;
@@ -121,6 +123,7 @@ void CUABEngine::Update(float _ElapsedTime)
 	GetSoundManager()->Update(l_CurrentCamera);
 	m_ScriptManager->RunCode("luaGui()");
 }
+
 void CUABEngine::LoadScreen(const std::string _FileName)
 {
 	std::string l_EffectName;
@@ -167,6 +170,7 @@ void CUABEngine::LoadScreen(const std::string _FileName)
 		}
 	}
 }
+
 void CUABEngine::Init()
 {	
 	m_RenderManager->Init();
@@ -229,21 +233,33 @@ void CUABEngine::Init()
 	std::string s(ss.str());
 	CDebugHelper::GetDebugHelper()->Log(s);*/
 }
+
+void CUABEngine::SetPathFinding(CAStar* _path) { 
+	m_PathFinding = _path; 
+}
+
+CAStar* CUABEngine::GetPathFinding(){ 
+	return m_PathFinding; 
+}
+
 void CUABEngine::Destroy()
 {
 	CHECKED_DELETE(m_Instance);
 }
+
 void CUABEngine::SwitchCamera()
 {
 	m_CurrentCamera_vision++;
 	m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
 	UABEngine.GetCameraControllerManager()->SetCurrentCameraControl(m_CurrentCamera_vision);
 }
+
 void CUABEngine::ChangeCameraVision()
 {
 	m_CurrentCamera_vision++;
 	m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
 }
+
 void CUABEngine::Quit()
 {
 	PostQuitMessage(0);

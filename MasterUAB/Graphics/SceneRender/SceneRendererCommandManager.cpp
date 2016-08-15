@@ -27,6 +27,7 @@
 #include "RenderDebugShadowMapsSceneRendererCommand.h"
 #include "RenderGUISceneRendererCommand.h"
 #include "DrawVideoQuadRenderCommand.h"
+#include "RenderPathFindingSceneRendererCommand.h"
 
 CSceneRendererCommandManager::CSceneRendererCommandManager(){}
 
@@ -174,6 +175,10 @@ bool CSceneRendererCommandManager::Load(const std::string &Filename)
 				else if (l_Element.GetName() == std::string("render_video"))
 				{
 					AddResource(l_Name, new CDrawVideoQuadRendererCommand(l_Element));
+				}
+				else if (l_Element.GetName() == std::string("render_debug_pathfinding"))
+				{
+					AddResource(l_Name, new CRenderPathFindingSceneRendererCommand(l_Element));
 				}
 			}
 		}

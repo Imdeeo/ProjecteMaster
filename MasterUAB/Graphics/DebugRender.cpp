@@ -455,7 +455,10 @@ CRenderableVertexs * CDebugRender::GetLine(Vect3f inici, Vect3f final) const
 		{ inici, CColor(1.f, 1.f, 1.f, 1.f) },
 		{ final, CColor(1.f, 1.f, 1.f, 1.f) }
 	};
-	return new CUABLinesListRenderableVertexs<MV_POSITION_COLOR_VERTEX>(l_Line,2,1);
+
+	uint16_t l_LineIdxs[] = { 0, 1 };
+
+	return new CUABLineListRenderableIndexed16Vertexs<MV_POSITION_COLOR_VERTEX>(l_Line, 2, l_LineIdxs, 2);
 }
 
 

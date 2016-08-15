@@ -245,6 +245,9 @@
     <ClCompile Include="SceneRender\DrawVideoQuadRenderCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRender\RenderPathFindingSceneRendererCommand.cpp">
+      <Filter>SceneRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -573,6 +576,9 @@
       <Filter>Cinematics</Filter>
     </ClInclude>
     <ClInclude Include="SceneRender\DrawVideoQuadRenderCommand.h">
+      <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRender\RenderPathFindingSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
     </ClInclude>
   </ItemGroup>

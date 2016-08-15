@@ -27,6 +27,7 @@ class IVideoManager;
 class CGamePlayManager;
 class CLevelManager;
 class CManchasManager;
+class CAStar;
 
 #include <string>
 
@@ -62,6 +63,7 @@ private:
 	CManchasManager* m_ManchasManager;
 	std::string m_LevelLoaded;
 	int m_CurrentCamera_vision;
+	CAStar* m_PathFinding;
 
 public:
 	CInputManager * GetInputManager()const;
@@ -104,6 +106,9 @@ public:
 
 	bool GetLuaReloaded(){ return m_LuaReloaded; }
 	void LuaIsReloaded(){ m_LuaReloaded = true; }
+
+	void SetPathFinding(CAStar* _path);
+	CAStar* GetPathFinding();
 };
 
 #define UABEngine (*(CUABEngine::GetInstance()))

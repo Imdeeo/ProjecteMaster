@@ -567,6 +567,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_frustum_active", &CUABEngine::GetFrustumActive)
 			.def("set_frustum_active", &CUABEngine::SetFrustumActive)
 			.def("get_lua_reloaded", &CUABEngine::GetLuaReloaded)
+			.def("set_path_finding", &CUABEngine::SetPathFinding)
 	];
 
 	// InputManager-------------------------------------------------------------------------------------
