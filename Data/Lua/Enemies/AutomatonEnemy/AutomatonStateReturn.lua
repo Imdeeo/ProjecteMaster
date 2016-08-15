@@ -1,12 +1,13 @@
 function ReturnFirstAutomaton(args)
 	utils_log("ReturnFirst")
 	local l_Owner = args["owner"]
-	l_Owner:clear_cycle(0,0.5)
-	l_Owner:clear_cycle(2,0.5)
-	l_Owner:clear_cycle(3,0.5)
-	l_Owner:blend_cycle(1,1.0,0.5)
-	
 	local l_Enemy = args["self"]
+	
+	l_Owner:clear_cycle(l_Enemy.m_ActualAnimation,0.5)
+	l_Enemy.m_ActualAnimation = 1
+	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
+		
+	l_Enemy.m_Velocity = Vect3f(0,0,0)
 	l_Enemy.m_TotalNodes = 0.0
 	l_Enemy.m_TimerRotation = 0.0
 	l_Enemy.m_LastPositionPlayer = nil
@@ -45,7 +46,7 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 			
 			-- Si la distancia entre el enemy y el punto es menor de un valor predeterminado pasamos al siguiente punto
 			local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	
-			if l_Distance <= 2.0 then
+			if l_Distance <= 1.0 then
 				if l_Enemy.m_PathFindig:increment_actual_point() == false then
 					l_Enemy.m_State = "idle"
 				end

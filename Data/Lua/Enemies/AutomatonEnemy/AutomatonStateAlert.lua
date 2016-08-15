@@ -1,12 +1,12 @@
 function AlertFirstAutomaton(args)
 	utils_log("AlertFirst")
 	local l_Owner = args["owner"]
-	l_Owner:clear_cycle(0,0.5)
-	l_Owner:clear_cycle(1,0.5)
-	l_Owner:clear_cycle(2,0.5)
-	l_Owner:blend_cycle(3,1.0,0.5)
-	
 	local l_Enemy = args["self"]
+	
+	l_Owner:clear_cycle(l_Enemy.m_ActualAnimation,0.5)
+	l_Enemy.m_ActualAnimation = 3
+	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
+		
 	l_Enemy.m_Velocity = Vect3f(0,0,0)
 end
 
