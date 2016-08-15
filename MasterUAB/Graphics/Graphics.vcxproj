@@ -84,6 +84,7 @@
     <ClCompile Include="SceneRender\RenderGridSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\RenderGUISceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\RenderLayerSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderPathFindingSceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SceneRendererCommand.cpp" />
     <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp" />
     <ClCompile Include="SceneRender\SetDepthStencilStateSceneRendererCommand.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="SceneRender\RenderGridSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\RenderGUISceneRendererCommand.h" />
     <ClInclude Include="SceneRender\RenderLayerSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderPathFindingSceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SceneRendererCommand.h" />
     <ClInclude Include="SceneRender\SceneRendererCommandManager.h" />
     <ClInclude Include="SceneRender\SetDepthStencilStateSceneRendererCommand.h" />

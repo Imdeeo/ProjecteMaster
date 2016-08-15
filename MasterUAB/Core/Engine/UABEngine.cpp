@@ -29,6 +29,7 @@
 #include "DebugHelper\DebugHelper.h"
 #include "ContextManager\ContextManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
+#include "IA\AStar.h"
 #ifdef _DEBUG
 #include "DebugRender.h"
 #else
@@ -63,6 +64,7 @@ CUABEngine::CUABEngine(void)
 	m_GamePlayManager = new CGamePlayManager();
 	m_LevelManager = new CLevelManager();
 	m_ManchasManager = new CManchasManager();
+	m_AStarManager = new CAStar();
 }
 
 CUABEngine::~CUABEngine(void)
@@ -89,6 +91,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_VideoManager);
 	CHECKED_DELETE(m_LevelManager);
 	CHECKED_DELETE(m_ManchasManager);
+	CHECKED_DELETE(m_AStarManager);
 	//CHECKED_DELETE(m_CinematicManager);
 }
 
@@ -102,6 +105,7 @@ CUABEngine* CUABEngine::GetInstance()
 	}
 	return m_Instance;
 }
+
 void CUABEngine::Update(float _ElapsedTime)
 {
 	float l_ElapsedTime = _ElapsedTime * m_TimeScale;
@@ -118,9 +122,10 @@ void CUABEngine::Update(float _ElapsedTime)
 	}
 	m_VideoManager->Update(l_ElapsedTime);
 	const CCamera *l_CurrentCamera = m_RenderManager->GetCurrentCamera();
-	GetSoundManager()->Update(l_CurrentCamera);
+	//GetSoundManager()->Update(l_CurrentCamera);
 	m_ScriptManager->RunCode("luaGui()");
 }
+
 void CUABEngine::LoadScreen(const std::string _FileName)
 {
 	std::string l_EffectName;
@@ -167,34 +172,34 @@ void CUABEngine::LoadScreen(const std::string _FileName)
 		}
 	}
 }
+
 void CUABEngine::Init()
 {	
 	m_RenderManager->Init();
-	LoadScreen("Data\\effects.xml");
+	m_SoundManager->SetPath("Data\\Sounds\\");
+	m_SoundManager->Init();
+	LoadScreen("Data\\effects.xml");	
+	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
 	m_InputManager->Load("Data\\input.xml");
 	m_LevelManager->LoadFile("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
-	m_LevelManager->LoadLevel("Recibidor");
 	//m_LevelManager->LoadLevel("Biblioteca");
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
-	//m_MaterialManager->Load("Data\\default_effect_materials.xml");
+	m_MaterialManager->Load("Data\\default_effect_materials.xml");
+	m_LayerManager->Load("Data\\layers.xml");
 	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
-	
-	m_SoundManager->SetPath("Data\\Sounds\\");
-	m_SoundManager->Init();
-	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
 #ifdef _DEBUG
 	m_RenderManager->GetDebugRender()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
 #else
 	m_RenderManager->GetRenderHelper()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
 #endif
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
-	m_LevelManager->ReloadAllLua();
-	
+	UABEngine.GetScriptManager()->RunCode("mainLua()");
+	//m_LevelManager->ReloadAllLua();
 	// INICIO TIEMPO TEST LECTURA XML
 	//float l_StartTime = (float)timeGetTime();
 	/*LoadLevelXML("Data\\level.xml");
@@ -229,21 +234,25 @@ void CUABEngine::Init()
 	std::string s(ss.str());
 	CDebugHelper::GetDebugHelper()->Log(s);*/
 }
+
 void CUABEngine::Destroy()
 {
 	CHECKED_DELETE(m_Instance);
 }
+
 void CUABEngine::SwitchCamera()
 {
 	m_CurrentCamera_vision++;
 	m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
 	UABEngine.GetCameraControllerManager()->SetCurrentCameraControl(m_CurrentCamera_vision);
 }
+
 void CUABEngine::ChangeCameraVision()
 {
 	m_CurrentCamera_vision++;
 	m_CurrentCamera_vision = m_CurrentCamera_vision % 2;
 }
+
 void CUABEngine::Quit()
 {
 	PostQuitMessage(0);
@@ -282,3 +291,4 @@ UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager *, GamePlayManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CLevelManager *, LevelManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CManchasManager *, ManchasManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CAStar *, AStarManager)

@@ -26,6 +26,7 @@ public:
 #ifdef _DEBUG
 	void Render(CRenderManager *_RenderManager);
 	CRenderableVertexs* CAStar::GetShape(CRenderManager *_RenderManager);
+	CRenderableVertexs* CAStar::GetLine(CRenderManager *_RenderManager, Vect3f _pos1, Vect3f _pos2);
 	const Mat44f &GetTransform(Vect3f _Position);
 #endif
 

@@ -96,15 +96,32 @@ void CAStar::DestroyMap() {
 #ifdef _DEBUG
 void CAStar::Render(CRenderManager *_RenderManager)
 {
-	CEffectManager::m_SceneParameters.m_BaseColor = CColor(1,1,1,1);
+	CEffectManager::m_SceneParameters.m_BaseColor = CColor(0, 1, 0, 1);
 	CEffectManager::m_SceneParameters.m_BaseColor.SetAlpha(1.f);
 
-	for (TNodeMap::iterator l_iterator = m_map.begin(); l_iterator != m_map.end(); l_iterator++) {
+	for (TNodeMap::iterator l_iterator = m_map.begin(); l_iterator != m_map.end(); l_iterator++)
+	{
 		TNode *currentNode = l_iterator->second;
 		_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform(currentNode->position));
-		CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_pathfinding")->GetEffectTechnique();
+		CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
 		CEffectManager::SetSceneConstants(l_EffectTechnique);
 		GetShape(_RenderManager)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+	}
+
+	CEffectManager::m_SceneParameters.m_BaseColor = CColor(0, 0, 1, 1);
+	CEffectManager::m_SceneParameters.m_BaseColor.SetAlpha(1.f);
+
+	for (TNodePatrolPath::iterator l_iterator = m_NodePatrolPath.begin(); l_iterator != m_NodePatrolPath.end(); l_iterator++)
+	{
+		std::vector<TNodePatrol*> currentPath = l_iterator->second;
+		for (size_t i = 0; i < currentPath.size(); ++i)
+		{
+			TNode* currentNode = currentPath[i]->node;
+			_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform(currentNode->position));
+			CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
+			CEffectManager::SetSceneConstants(l_EffectTechnique);
+			GetShape(_RenderManager)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+		}
 	}
 }
 
@@ -113,22 +130,27 @@ CRenderableVertexs* CAStar::GetShape(CRenderManager *_RenderManager)
 	return _RenderManager->GetDebugRender()->GetSPhere10();
 }
 
+CRenderableVertexs* CAStar::GetLine(CRenderManager *_RenderManager, Vect3f _pos1, Vect3f _pos2)
+{
+	return _RenderManager->GetDebugRender()->GetLine(_pos1, _pos2);
+}
+
 const Mat44f & CAStar::GetTransform(Vect3f _Position)
 {
 	Mat44f l_ScaleMatrix;
 	l_ScaleMatrix.SetIdentity();
-	l_ScaleMatrix.Scale(1.0, 1.0, 1.0);
+	l_ScaleMatrix.Scale(0.25, 0.25, 0.25);
 
 	Mat44f l_RotationMatrix;
 	l_RotationMatrix.SetIdentity();
-	//m_RotationMatrix = m_Rotation.rotationMatrix();
+	l_RotationMatrix = Quatf(0, 0, 0, 1).rotationMatrix();
 
 	Mat44f l_TranslationMatrix;
 	l_TranslationMatrix.SetIdentity();
 	l_TranslationMatrix.SetPos(_Position.x, _Position.y, _Position.z);
 
 	Mat44f l_TransformMatrix;
-	l_TransformMatrix = l_ScaleMatrix*l_RotationMatrix*l_TransformMatrix;
+	l_TransformMatrix = l_ScaleMatrix*l_RotationMatrix*l_TranslationMatrix;
 
 	return l_TransformMatrix;
 }
