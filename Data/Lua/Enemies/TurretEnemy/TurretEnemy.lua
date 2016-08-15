@@ -1,4 +1,3 @@
-dofile("Data\\Lua\\Utils\\state_machine.lua")
 dofile("Data\\Lua\\Enemies\\TurretEnemy\\TurretStateOff.lua")
 dofile("Data\\Lua\\Enemies\\TurretEnemy\\TurretStateIdle.lua")
 dofile("Data\\Lua\\Enemies\\TurretEnemy\\TurretStateAttack.lua")
