@@ -1,8 +1,11 @@
 function AttackFirstCagedAutomaton(args)
 	utils_log("AttackFirstCagedAutomaton")
 	local l_Owner = args["owner"]
-	l_Owner:remove_action(0)
-	l_Owner:blend_cycle(2,1.0,0.5)
+	local l_Enemy = args["self"]
+
+	l_Owner:remove_action(l_Enemy.m_ActualAnimation)
+	l_Enemy.m_ActualAnimation = 2
+	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5))
 end
 
 function AttackUpdateCagedAutomaton(args, _ElapsedTime)
