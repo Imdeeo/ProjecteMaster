@@ -4,9 +4,9 @@ function IdleFirstCagedAutomaton(args)
 	local l_Enemy = args["self"]
 	
 	if l_Enemy.m_Break then
-		l_Enemy.m_ActualAnimation = 1		
-	else
 		l_Enemy.m_ActualAnimation = 1
+	else
+		l_Enemy.m_ActualAnimation = 0
 	end
 
 	l_Owner:execute_action(l_Enemy.m_ActualAnimation,0.5,0.5,1.0,true)

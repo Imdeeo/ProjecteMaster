@@ -10,9 +10,7 @@ class 'CAutomatonEnemy' (CEnemy)
 	function CAutomatonEnemy:__init(_TreeNode)
 		CEnemy.__init(self,_TreeNode)
 		
-		self.m_PathFindig = CAStar()
-		self.m_PathFindig:load_map("Data\\level_"..g_Engine:get_level_loaded().."\\pathfinding.xml")
-		CUABEngine.get_instance():set_path_finding(self.m_PathFindig)
+		self.m_PathFindig = CUABEngine.get_instance():get_astar_manager()
 		self.m_TotalNodes = 0
 		self.m_Patrol = _TreeNode:get_bool_property("patrol", false, false)
 		self.m_PatrolName = _TreeNode:get_psz_property("patrol_name", "", false)

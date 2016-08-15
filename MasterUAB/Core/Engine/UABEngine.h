@@ -63,33 +63,34 @@ private:
 	CManchasManager* m_ManchasManager;
 	std::string m_LevelLoaded;
 	int m_CurrentCamera_vision;
-	CAStar* m_PathFinding;
+	CAStar* m_AStarManager;
 
 public:
-	CInputManager * GetInputManager()const;
-	CStaticMeshManager * GetStaticMeshManager()const;
-	CLayerManager * GetLayerManager()const;
-	CMaterialManager * GetMaterialManager()const;
-	CEffectManager * GetEffectManager()const;
-	CTextureManager * GetTextureManager()const;
-	CLightManager * GetLightManager()const;
-	CRenderManager * GetRenderManager()const;
-	CAnimatedModelsManager * GetAnimatedModelsManager()const;
-	CScriptManager * GetScriptManager()const;
-	CCameraControllerManager * GetCameraControllerManager()const;
-	CCinematicManager * GetCinematicManager()const;
-	CPhysXManager * GetPhysXManager()const;
-	CRenderableObjectTechniqueManager * GetRenderableObjectTechniqueManager()const;
-	CSceneRendererCommandManager * GetSceneRendererCommandManager()const;
-	CParticleManager * GetParticleManager()const;
+	CInputManager * GetInputManager() const;
+	CStaticMeshManager * GetStaticMeshManager() const;
+	CLayerManager * GetLayerManager() const;
+	CMaterialManager * GetMaterialManager() const;
+	CEffectManager * GetEffectManager() const;
+	CTextureManager * GetTextureManager() const;
+	CLightManager * GetLightManager() const;
+	CRenderManager * GetRenderManager() const;
+	CAnimatedModelsManager * GetAnimatedModelsManager() const;
+	CScriptManager * GetScriptManager() const;
+	CCameraControllerManager * GetCameraControllerManager() const;
+	CCinematicManager * GetCinematicManager() const;
+	CPhysXManager * GetPhysXManager() const;
+	CRenderableObjectTechniqueManager * GetRenderableObjectTechniqueManager() const;
+	CSceneRendererCommandManager * GetSceneRendererCommandManager() const;
+	CParticleManager * GetParticleManager() const;
 	CGUIManager * GetGUIManager() const;
-	ISoundManager * GetSoundManager()const;
+	ISoundManager * GetSoundManager() const;
 	IVideoManager * GetVideoManager() const;
 	CGamePlayManager * GetGamePlayManager()const;
 	CLevelManager * GetLevelManager()const;
 	std::string GetLevelLoaded()const{ return m_LevelLoaded; }
 	void SetLevelLoaded(std::string _id){ m_LevelLoaded = _id; }
-	CManchasManager * GetManchasManager()const;
+	CManchasManager * GetManchasManager() const;
+	CAStar * GetAStarManager() const;
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
 	void Destroy();
@@ -105,10 +106,7 @@ public:
 	UAB_BUILD_GET_SET(bool, Pause);
 
 	bool GetLuaReloaded(){ return m_LuaReloaded; }
-	void LuaIsReloaded(){ m_LuaReloaded = true; }
-
-	void SetPathFinding(CAStar* _path);
-	CAStar* GetPathFinding();
+	void LuaIsReloaded(){ m_LuaReloaded = true; }	
 };
 
 #define UABEngine (*(CUABEngine::GetInstance()))
