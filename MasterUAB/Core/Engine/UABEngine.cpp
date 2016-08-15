@@ -120,7 +120,7 @@ void CUABEngine::Update(float _ElapsedTime)
 	}
 	m_VideoManager->Update(l_ElapsedTime);
 	const CCamera *l_CurrentCamera = m_RenderManager->GetCurrentCamera();
-	GetSoundManager()->Update(l_CurrentCamera);
+	//GetSoundManager()->Update(l_CurrentCamera);
 	m_ScriptManager->RunCode("luaGui()");
 }
 
@@ -174,31 +174,30 @@ void CUABEngine::LoadScreen(const std::string _FileName)
 void CUABEngine::Init()
 {	
 	m_RenderManager->Init();
-	LoadScreen("Data\\effects.xml");
+	m_SoundManager->SetPath("Data\\Sounds\\");
+	m_SoundManager->Init();
+	LoadScreen("Data\\effects.xml");	
+	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
 	m_InputManager->Load("Data\\input.xml");
 	m_LevelManager->LoadFile("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
-	m_LevelManager->LoadLevel("Biblioteca");
 	//m_LevelManager->LoadLevel("Biblioteca");
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
-	//m_MaterialManager->Load("Data\\default_effect_materials.xml");
+	m_MaterialManager->Load("Data\\default_effect_materials.xml");
+	m_LayerManager->Load("Data\\layers.xml");
 	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
-	
-	m_SoundManager->SetPath("Data\\Sounds\\");
-	m_SoundManager->Init();
-	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
 #ifdef _DEBUG
 	m_RenderManager->GetDebugRender()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
 #else
 	m_RenderManager->GetRenderHelper()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
 #endif
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
-	m_LevelManager->ReloadAllLua();
-	
+	UABEngine.GetScriptManager()->RunCode("mainLua()");
+	//m_LevelManager->ReloadAllLua();
 	// INICIO TIEMPO TEST LECTURA XML
 	//float l_StartTime = (float)timeGetTime();
 	/*LoadLevelXML("Data\\level.xml");
