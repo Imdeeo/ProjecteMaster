@@ -22,6 +22,9 @@
     <ClCompile Include="LevelManager\LevelManager.cpp">
       <Filter>LevelManager</Filter>
     </ClCompile>
+    <ClCompile Include="InputManager\KeyboardInput.cpp">
+      <Filter>InputManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\UABEngine.h">
@@ -44,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="LevelManager\LevelManager.h">
       <Filter>LevelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager\KeyboardInput.h">
+      <Filter>InputManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

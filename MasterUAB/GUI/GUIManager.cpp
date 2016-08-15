@@ -476,35 +476,56 @@ void CGUIManager::FillCommandQueueWithText(const std::string& _font, const std::
 
 std::string CGUIManager::DoTextBox(const std::string& guiID, const std::string& _font, const std::string& currentText, CGUIPosition position)
 {
-	if (m_ActiveItem == guiID && m_MouseWentReleased)
+	CheckInput();
+	
+	if (IsMouseInside(m_MouseX, m_MouseY, position.Getx(), position.Gety(), position.Getwidth(), position.Getheight()))
+		SetHot(guiID);
+	else
+		SetNotHot(guiID);
+
+	if (m_ActiveItem == guiID )
 	{
-		if (m_HotItem == guiID)
-			SetSelected(guiID);
-		SetNotActive();
+		if (m_MouseWentReleased)
+		{
+			if (m_HotItem == guiID)
+			{
+				SetSelected(guiID);
+			}
+			SetNotActive();
+		}
+	}
+	else if (m_HotItem == guiID)
+	{
+		if (m_MouseWentPressed)
+			SetActive(guiID);
 	}
 
 	std::string displayText;
 	std::string activeText = currentText;
 
-	/*if (guiID == m_SelectedItem) OJOCUIDAO
+	if (guiID == m_SelectedItem) 
 	{
-		CKeyboardInput* keyboard = CInputManager::GetInputManager()->GetKeyboard();
-		wchar_t lastChar = keyboard->ConsumeLastChar();
-		if (lastChar >= 0x20 && lastChar < 255)
+		CKeyboardInput* l_KeyBoard = UABEngine.GetInputManager()->GetKeyBoard();
+		if (l_KeyBoard->isConsumible())
 		{
-			activeText += (char)lastChar;
-		}
-		else if (lastChar == '\r')
-		{
-			activeText += '\n';
-		}
-		else if (lastChar == '\b')
-		{
-			activeText = activeText.substr(0, activeText.length() - 1);
-		}
-	}*/
+			wchar_t lastChar = l_KeyBoard->ConsumeLastChar();
+			if (lastChar >= 0x20 && lastChar < 255)
+			{
+				activeText += (char)lastChar;
+			}
+			else if (lastChar == '\r')
+			{
+				activeText += '\n';
+			}
+			else if (lastChar == '\b')
+			{
+				if (activeText.length() > 2)
+					activeText = activeText.substr(0, activeText.length() - 1);
+			}
+		}		
+	}
 
-	FillCommandQueueWithText(_font, displayText, Vect2f(position.Getx() + position.Getwidth() * 0.05f,
+	FillCommandQueueWithText(_font, activeText, Vect2f(position.Getx() + position.Getwidth() * 0.05f,
 		position.Gety() + position.Getheight() * 0.75f));
 	return activeText;
 }

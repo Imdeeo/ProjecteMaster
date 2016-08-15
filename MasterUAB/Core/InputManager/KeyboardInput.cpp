@@ -17,3 +17,8 @@ char CKeyboardInput::ConsumeLastChar()
 	m_ActiveLastChar = false;
 	return m_LastChar;
 }
+
+bool CKeyboardInput::isConsumible()
+{
+	return m_ActiveLastChar;
+}

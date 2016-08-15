@@ -59,7 +59,7 @@ CInputManager::CInputManager() :
 	m_KeyboardId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDeviceKeyboard>());
 	m_MouseId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDeviceMouse>());
 	m_GamepadId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDevicePad>());
-
+	m_KeyBoard = new CKeyboardInput();
 	m_Map = new gainput::InputMap(*m_Manager, "Keymap");	
 }
 
@@ -70,6 +70,7 @@ CInputManager::~CInputManager(void)
 	CHECKED_DELETE(m_KeyboardId);
 	CHECKED_DELETE(m_Map);
 	CHECKED_DELETE(m_Manager);
+	CHECKED_DELETE(m_KeyBoard);
 }
 
 void CInputManager::SetWindow(HWND _hWnd, int _width, int _height)
