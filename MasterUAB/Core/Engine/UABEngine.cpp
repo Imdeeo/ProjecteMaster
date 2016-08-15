@@ -112,7 +112,7 @@ void CUABEngine::Update(float _ElapsedTime)
 		m_CameraControllerManager->Update(l_ElapsedTime);
 		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 		m_LayerManager->Update(l_ElapsedTime);
-		
+		m_CinematicManager->Update(l_ElapsedTime);
 		m_ScriptManager->RunCode("luaUpdate(" + std::to_string(l_ElapsedTime) + ")");
 		m_GamePlayManager->Update(l_ElapsedTime);
 	}

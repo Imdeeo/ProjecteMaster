@@ -159,8 +159,8 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_Target = nil
 		self.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
-		self.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource("LlaveRecibidor")
-		self.m_ItemName = "LlaveRecibidor"
+		self.m_Item = nil --CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource("LlaveRecibidor")
+		self.m_ItemName = "" --"LlaveRecibidor"
 		self.m_ItemTime = 0
 		
 		self.m_CurrentAnimation = "none"
@@ -168,6 +168,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_InteractingAnimation = 0
 		self.m_InteractingCinematic = nil
 		self.m_CameraAnimation = nil
+		self.m_AnimationTime = 0
 		
 		self.m_RaycastData = RaycastData()
 		
