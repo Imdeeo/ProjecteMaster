@@ -8,7 +8,9 @@ end
 
 function TriggerRaycast(_Player, _Pos)
 	if _Player.m_RaycastData.actor_name == "TriggerComoda" then
-		RaycastComoda(_Player, _Pos)
+		if _Player.m_ItemName == "" then
+			RaycastComoda(_Player, _Pos)
+		end
 	elseif _Player.m_RaycastData.actor_name == "TriggerDoor" then
 		if _Player.m_ItemName == "LlaveRecibidor" then
 			RaycastDoor(_Player, _Pos)
@@ -30,10 +32,11 @@ function RaycastComoda(_Player, _Pos)
 	if FacingRaycast(_Player, l_Target, _Pos, 0.75) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
-		_Player.m_InteractingCinematic = "OpenBureau"
-		_Player.m_CameraAnimation = _Player.m_InteractingCinematic
-		_Player.m_ItemName = "LlaveRecibidor"
+		_Player.m_InteractingCinematic = nil
+		_Player.m_CameraAnimation = nil
+		_Player.m_NewItemName = "LlaveRecibidor"
 		_Player.m_ItemTime = 1.5
+		_Player.m_AnimationTime = 2.6
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -48,6 +51,8 @@ function RaycastDoor(_Player, _Pos)
 		_Player.m_InteractingAnimation = 4
 		_Player.m_InteractingCinematic = "CrossDoor"
 		_Player.m_CameraAnimation = _Player.m_InteractingCinematic
+		_Player.m_NewItemName = ""
+		_Player.m_ItemTime = 1.5
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
