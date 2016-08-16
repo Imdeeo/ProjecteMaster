@@ -28,7 +28,7 @@ function IdleUpdateAutomaton(args, _ElapsedTime)
 			or (l_Run == true and l_Distance <= l_Enemy.m_DistanceToActivateRun)
 			or (l_Crouch == false and l_Run == false and l_Distance <= l_Enemy.m_DistanceToActivateWalk)
 			or (l_Crouch == true and l_Distance <= l_Enemy.m_DistanceToActivateCrouching) then			
-			l_Enemy.m_State = "chase"		
+			l_Enemy.m_State = "chase"
 		end		
 	end
 end

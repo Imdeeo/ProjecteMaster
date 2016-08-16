@@ -101,6 +101,7 @@ public:
 	void ChangeCameraVision();
 	void Quit();
 	void ReloadLUA();
+	void Consola(float _x, float _y, float _w, float _h);
 	UAB_BUILD_GET_SET(bool, FrustumActive);
 	UAB_BUILD_GET_SET(float, TimeScale);
 	UAB_BUILD_GET_SET(bool, Pause);
