@@ -15,8 +15,10 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_Patrol = _TreeNode:get_bool_property("patrol", false, false)
 		self.m_PatrolName = _TreeNode:get_psz_property("patrol_name", "", false)
 		self.m_IsChasing = false
+		self.m_IsReturn = false
 		self.m_LastPositionPlayer = nil
 		self.m_StandardAlertTime = _TreeNode:get_float_property("alert_time", 1.0, false) * math.pi
+		self.m_LastPositionEnemy = nil
 		
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
@@ -27,7 +29,7 @@ class 'CAutomatonEnemy' (CEnemy)
 		
 		self.m_DistanceToActivateRun = _TreeNode:get_float_property("distance_activate_run", 25.0, false)
 		self.m_DistanceToActivateWalk = _TreeNode:get_float_property("distance_activate_walk", 15.0, false)
-		self.m_DistanceToActivateCrouching = _TreeNode:get_float_property("distance_activate_crouching", 5.0, false)		
+		self.m_DistanceToActivateCrouching = _TreeNode:get_float_property("distance_activate_crouching", 5.0, false)
 		
 		self.m_TimerRotation = 0.0
 		self.m_alert_timer = 0

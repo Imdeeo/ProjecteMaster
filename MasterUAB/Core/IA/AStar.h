@@ -56,7 +56,10 @@ public:
 	bool IncrementActualPoint();
 	TNodePatrol* GetActualPatrolPoint(std::string _patrolName);
 	void IncrementActualPatrolPoint(std::string _patrolName);
+	void GetRenderNodes(bool _RenderNodes){ m_RenderNodes = _RenderNodes; }
+	bool SwitchRenderNodes(){ m_RenderNodes = !m_RenderNodes; return m_RenderNodes; }
 private:
+	bool m_RenderNodes = false;
 	int m_IndexPoint;
 	VPoints3 m_PathPoints;	
 	
