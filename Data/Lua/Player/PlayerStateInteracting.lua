@@ -10,9 +10,6 @@ function InteractingFirst(args)
 	end
 	
 	m_Timer = 0.0
-	if l_Player.m_ItemName ~= nil then
-		l_Player.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
-	end
 	
 	if l_Player.m_CameraAnimation ~= nil then
 		l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
@@ -37,8 +34,21 @@ function InteractingUpdate(args, _ElapsedTime)
 	else
 		l_Player.m_IsInteracting = (m_Timer < l_Player.m_AnimationTime)
 	end
+	
+	--// Change old to new item
+	if m_Timer >= l_Player.m_ItemTime then
+		l_Player.m_ItemName = l_Player.m_NewItemName
+		l_Player.m_NewItemName = ""
+		if l_Player.m_ItemName ~= "" then
+			l_Player.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
+		else
+			l_Player.m_Item = nil
+		end
+		l_Player.m_ItemTime = -1
+	end
+	
 	--// If player has an item, move it.
-	if m_Timer >= l_Player.m_ItemTime and l_Player.m_Item ~= nil then
+	if l_Player.m_Item ~= nil then
 		local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
 		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 		local l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_Owner:get_right_object_position())
