@@ -54,6 +54,8 @@ public:
 		DebugSanityDown,
 		DebugReloadLua,
 		DebugToggleRenderLights,
+		DebugToggleRenderAStar,
+		DebugToggleLoadVideo,
 		DebugChangeCameraControl,
 		DebugChangeCameraVision,
 		DebugChangeCamera,
