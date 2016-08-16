@@ -24,6 +24,7 @@
     <ClCompile Include="Engine\UABEngine.cpp" />
     <ClCompile Include="IA\AStar.cpp" />
     <ClCompile Include="InputManager\InputManager.cpp" />
+    <ClCompile Include="InputManager\KeyboardInput.cpp" />
     <ClCompile Include="LevelManager\LevelManager.cpp" />
     <ClCompile Include="ScriptManager\ScriptManager.cpp" />
   </ItemGroup>
@@ -33,6 +34,7 @@
     <ClInclude Include="Engine\UABEngine.h" />
     <ClInclude Include="IA\AStar.h" />
     <ClInclude Include="InputManager\InputManager.h" />
+    <ClInclude Include="InputManager\KeyboardInput.h" />
     <ClInclude Include="LevelManager\LevelManager.h" />
     <ClInclude Include="ScriptManager\ScriptManager.h" />
   </ItemGroup>

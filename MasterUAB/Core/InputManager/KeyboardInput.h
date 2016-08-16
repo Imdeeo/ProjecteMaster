@@ -17,6 +17,7 @@ public:
 	~CKeyboardInput(){};
 	void SetLastChar(char _caracter);
 	char ConsumeLastChar();
+	bool isConsumible();
 };
 
 #endif //H_KEYBOARD_INPUT_H

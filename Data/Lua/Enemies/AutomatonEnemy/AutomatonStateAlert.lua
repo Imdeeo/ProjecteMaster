@@ -17,6 +17,7 @@ function AlertUpdateAutomaton(args, _ElapsedTime)
 	l_Enemy:EnemyMove(_ElapsedTime)
 	
 	if l_Enemy:PlayerVisible(l_Owner) then
+		l_Enemy.m_IsChasing = true
 		l_Enemy.m_State = "chase"
 		l_Enemy.m_alert_timer = 0.0
 	else
