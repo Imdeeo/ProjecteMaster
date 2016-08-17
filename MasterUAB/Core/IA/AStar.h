@@ -26,6 +26,7 @@ public:
 #ifdef _DEBUG
 	void Render(CRenderManager *_RenderManager);
 	CRenderableVertexs* CAStar::GetShape(CRenderManager *_RenderManager);
+	CRenderableVertexs* CAStar::GetLine(CRenderManager *_RenderManager, Vect3f _pos1, Vect3f _pos2);
 	const Mat44f &GetTransform(Vect3f _Position);
 #endif
 
@@ -55,7 +56,10 @@ public:
 	bool IncrementActualPoint();
 	TNodePatrol* GetActualPatrolPoint(std::string _patrolName);
 	void IncrementActualPatrolPoint(std::string _patrolName);
+	void GetRenderNodes(bool _RenderNodes){ m_RenderNodes = _RenderNodes; }
+	bool SwitchRenderNodes(){ m_RenderNodes = !m_RenderNodes; return m_RenderNodes; }
 private:
+	bool m_RenderNodes = false;
 	int m_IndexPoint;
 	VPoints3 m_PathPoints;	
 	

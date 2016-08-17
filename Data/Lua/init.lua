@@ -21,9 +21,7 @@ m_Cordura = CSliderResult(50.0, 50.0)
 function mainLua()
 	InitAntweakBar()
 	
-	local l_LevelManager = g_Engine:get_level_manager()
-	
-	
+	local l_LevelManager = g_Engine:get_level_manager()	
 	local l_SoundManager = g_Engine:get_sound_manager()
 	local l_WaterSoundEvent = SoundEvent()
 	l_WaterSoundEvent.event_name = "water"
@@ -43,13 +41,10 @@ function mainLua()
 	g_VolumeController:SetMusicVolume(50)
 	m_timerPause = 0
 	m_iniciando = true 
-	--if g_Engine:get_level_loaded() == "2" then
-	--	g_TestEnemy = CVisionTestEnemy()
-	--	g_TestEnemy:InitEnemy("automata_LOW001")
-	--end
 	
-	l_LevelManager:load_level("Recibidor")
-	
+	--l_LevelManager:load_level("Recibidor")	
+	l_LevelManager:load_level("Biblioteca")
+	--l_LevelManager:load_level("Maquinas")	
 end
 
 function levelMainLua(level)
@@ -93,10 +88,13 @@ function luaUpdate(_ElapsedTime)
 		CUABEngine.get_instance():set_pause(true)
 	end
 	if l_InputManager:is_action_released("DebugToggleFrustum") then
-		--g_Engine:set_frustum_active(not g_Engine:get_frustum_active())
+		g_Engine:set_frustum_active(not g_Engine:get_frustum_active())		
+	end
+	if l_InputManager:is_action_released("DebugToggleLoadVideo") then
 		local l_videoManager = g_Engine:get_video_manager()
-		l_videoManager:load_clip("bunny.ogv",false)
-		l_videoManager:render_screen_clip("bunny.ogv")
+		l_videoManager:play_clip("bunny.ogv")
+		--l_videoManager:load_clip("bunny.ogv",false)
+		--l_videoManager:render_screen_clip("bunny.ogv")
 	end
 	--g_VolumeController:CheckVolumeKeys()	
 end

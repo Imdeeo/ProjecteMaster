@@ -1,6 +1,7 @@
 function CorrectingFirst(args)
 	local l_Player = args["self"]
 	l_Player.m_CameraController:lock()
+	utils_log("CorrectingFirst")
 end
 
 function CorrectingUpdate(args, _ElapsedTime)
@@ -60,7 +61,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 end
 
 function CorrectingEnd(args)
-	
+	utils_log("CorrectingEnd")
 end
 
 function CheckClimbingOrInteracting(_Player)

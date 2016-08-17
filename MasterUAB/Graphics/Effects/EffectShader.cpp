@@ -86,7 +86,9 @@ void CEffectShader::CreateShaderMacro()
 
 bool CEffectShader::LoadShader(const std::string &Filename, const std::string &EntryPoint, const std::string &ShaderModel, ID3DBlob **BlobOut)
 {
+	std::string l_CompiledName = m_CompiledPath + Filename;
 	std::string l_Filename = m_Path + Filename;
+	std::wstring l_WCompiledName;
 #ifdef WIN7
 	// D3DX
 	HRESULT hr = S_OK;
@@ -104,11 +106,19 @@ bool CEffectShader::LoadShader(const std::string &Filename, const std::string &E
 #endif
 	ID3D11Device *l_Device = UABEngine.GetRenderManager()->GetDevice();
 	//LPCSTR profile = (l_Device->GetFeatureLevel() >= D3D_FEATURE_LEVEL_11_0) ? "cs_5_0" : "cs_4_0";
+	//std::wstring l_Str;
+	//l_Str.assign(l_CompiledName.begin(), l_CompiledName.end());
+	//HRESULT hr = D3DReadFileToBlob(l_Str.c_str(), BlobOut);
 	const D3D_SHADER_MACRO defines[] = { "EXAMPLE_DEFINE", "1", NULL, NULL };
 	ID3DBlob* pErrorBlob = nullptr;
 	std::wstring wFilename;
 	wFilename.assign(l_Filename.begin(), l_Filename.end());
 	HRESULT hr = D3DCompileFromFile(wFilename.c_str(), m_ShaderMacros, D3D_COMPILE_STANDARD_FILE_INCLUDE, EntryPoint.c_str(), ShaderModel.c_str(), dwShaderFlags, 0, BlobOut, &pErrorBlob);
+	if (hr == S_OK)
+	{
+		l_WCompiledName.assign(l_CompiledName.begin(), l_CompiledName.end());
+		D3DWriteBlobToFile(*BlobOut, l_WCompiledName.c_str(), true);
+	}
 #endif
 	
 	if (FAILED(hr))
