@@ -26,7 +26,7 @@ void CCinematicManager::LoadXML(const std::string &FileName)
 				AddResource(l_Cinematic->GetName(), l_Cinematic);
 			}
 		}
-	}	
+	}
 }
 
 

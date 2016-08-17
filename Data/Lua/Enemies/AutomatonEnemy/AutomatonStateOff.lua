@@ -9,8 +9,14 @@ function OffUpdateAutomaton(args, _ElapsedTime)
 	
 	l_Enemy:EnemyMove(_ElapsedTime)
 	
-	if l_Distance < l_Enemy.m_distance_to_activate or l_Enemy.m_Patrol then
-		l_Enemy.m_State = "idle"
+	local l_Run = g_Player.m_InputManager:is_action_active("Run")
+	local l_Crouch = g_Player.m_InputManager:is_action_active("Crouch")
+	
+	if l_Enemy.m_Awake
+		or (l_Run and l_Distance <= l_Enemy.m_DistanceToActivateRun)
+		or (not l_Crouch and not l_Run and l_Distance <= l_Enemy.m_DistanceToActivateWalk)
+		or (l_Crouch and l_Distance <= l_Enemy.m_DistanceToActivateCrouching) then		
+		l_Enemy.m_State = "idle"	
 	end
 end
 

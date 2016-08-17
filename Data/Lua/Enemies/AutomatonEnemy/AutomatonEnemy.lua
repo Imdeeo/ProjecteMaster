@@ -1,4 +1,3 @@
-dofile("Data\\Lua\\Utils\\state_machine.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateOff.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateIdle.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStatePatrol.lua")
@@ -11,11 +10,29 @@ class 'CAutomatonEnemy' (CEnemy)
 	function CAutomatonEnemy:__init(_TreeNode)
 		CEnemy.__init(self,_TreeNode)
 		
-		self.m_PathFindig:load_map("Data\\level_"..g_Engine:get_level_loaded().."\\pathfinding.xml")
-		self.m_PatrolName = _TreeNode:get_psz_property("patrol_name", "", false)
-		self.m_LastPositionPlayer = nil
+		self.m_PathFindig = CUABEngine.get_instance():get_astar_manager()
 		self.m_TotalNodes = 0
-		self.m_IsChasing = false		
+		self.m_Patrol = _TreeNode:get_bool_property("patrol", false, false)
+		self.m_PatrolName = _TreeNode:get_psz_property("patrol_name", "", false)
+		self.m_IsChasing = false
+		self.m_IsReturn = false
+		self.m_LastPositionPlayer = nil
+		self.m_StandardAlertTime = _TreeNode:get_float_property("alert_time", 1.0, false) * math.pi
+		self.m_LastPositionEnemy = nil
+		
+		self.m_Velocity = Vect3f(0,0,0)
+		self.m_Gravity = -9.81
+		self.m_WalkSpeed = _TreeNode:get_float_property("walk_speed", 1.0, false)
+		self.m_RunSpeed = _TreeNode:get_float_property("run_speed", 5.0, false)
+		self.m_AngularWalkSpeed = _TreeNode:get_float_property("angular_walk_speed", 1000.0, false)
+		self.m_AngularRunSpeed = _TreeNode:get_float_property("angular_run_speed", 250.0, false)
+		
+		self.m_DistanceToActivateRun = _TreeNode:get_float_property("distance_activate_run", 25.0, false)
+		self.m_DistanceToActivateWalk = _TreeNode:get_float_property("distance_activate_walk", 15.0, false)
+		self.m_DistanceToActivateCrouching = _TreeNode:get_float_property("distance_activate_crouching", 5.0, false)
+		
+		self.m_TimerRotation = 0.0
+		self.m_alert_timer = 0
 		
 		self:SetAutomatonStateMachine()
 		self.m_StateMachine:start()
@@ -84,8 +101,6 @@ class 'CAutomatonEnemy' (CEnemy)
 		local l_EnemyForward = l_Owner:get_rotation():get_forward_vector():get_normalized(1)
 		local l_EnemyPos = l_Owner:get_position()
 		self.m_Velocity = Vect3f(l_EnemyForward.x * _MoveSpeed, self.m_Velocity.y, l_EnemyForward.z * _MoveSpeed)
-		--self.m_PhysXManager:character_controller_move(self.m_Name, l_NewPos, _ElapsedTime)
-		--l_Owner:set_position(l_EnemyPos + l_NewPos * _ElapsedTime)
 		
 		self:EnemyMove(_ElapsedTime)
 

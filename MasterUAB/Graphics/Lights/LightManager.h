@@ -28,7 +28,7 @@ public:
 
 	bool Reload();
 	Vect4f GetAmbientLight(){ return m_AmbientLight; }	
-	void GetRenderLights(bool _RenderLights){ m_RenderLights = _RenderLights; }
+	void SetRenderLights(bool _RenderLights){ m_RenderLights = _RenderLights; }
 	bool IsRenderLights(){ return m_RenderLights; }
 	bool SwitchRenderLights(){ m_RenderLights = !m_RenderLights; return m_RenderLights; }
 	void Save();
