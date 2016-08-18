@@ -387,6 +387,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.scope[
 				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
 			]
+			.def("compare", &Quatf::Compare)
 	];
 	
 	module(m_LS)[
