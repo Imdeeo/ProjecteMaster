@@ -224,7 +224,7 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 					break;
 				case WM_CHAR:
 					UABEngine.GetInputManager()->GetKeyBoard()->SetLastChar(msg.wParam);	
-					//	break;
+					break;
 				case WM_INPUT:
 				{
 					UINT dwSize = 40;
