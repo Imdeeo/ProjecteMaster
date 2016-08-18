@@ -39,7 +39,6 @@ float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	float l_Distance = distance(l_WorldPosition, m_LightPosition[lightIndex]);
 	float l_DirectionContrib = dot(l_RayDirection, normalize(m_LightDirection[lightIndex]));
 
-	float4 l_SpecularColor = float4((l_albedo.xyz + (1.0f-_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_albedo.xyz)) * _SpecularColor.rgb, 1);
 	float l_AlbedoFactor = (1 - _Metalness) * (1 - _SpecularFactor);
 	/*
 	 * PBR - energy conservation
@@ -63,7 +62,7 @@ float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	// Specular
 	float3 cameraToVertex = normalize(m_CameraPosition.xyz - l_WorldPosition);
 	float3 H = normalize(cameraToVertex - m_LightDirection[lightIndex]);
-	float3 specular = saturate(_SpecularFactor*l_SpecularIntensity*m_LightColor[lightIndex]*pow(dot(Nn, H), _SpecularPower)* l_SpecularColor);
+	float3 specular = saturate(_SpecularFactor*l_SpecularIntensity*m_LightColor[lightIndex]*pow(dot(Nn, H), _SpecularPower)* _SpecularColor);
 	specular *= l_SpotAttenuation;
 	specular *= l_DistanceAttenuation;
 	
@@ -77,7 +76,6 @@ float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int 
 	float l_DiffuseContrib;	
 	l_DiffuseContrib = dot(Nn, (-m_LightDirection[lightIndex]));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
-	float4 l_SpecularColor = float4((l_albedo.xyz + (1.0f-_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_albedo.xyz)) * _SpecularColor.rgb, 1);
 	float l_AlbedoFactor = (1 - _Metalness) * (1 - _SpecularFactor);
 	// PBR - energy conservation
 	float l_BaseIntensity = 0.2;
@@ -87,7 +85,7 @@ float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int 
 	float3 cameraToVertex = normalize(m_CameraPosition.xyz - l_WorldPosition);
 	float3 H = normalize(cameraToVertex -m_LightDirection[lightIndex]);
 	float aux = dot(cameraToVertex, - m_LightDirection[lightIndex]);
-	float4 specular = saturate(_SpecularFactor*l_SpecularIntensity*m_LightColor[lightIndex] * pow(dot(Nn, H), _SpecularPower)*l_SpecularColor);
+	float4 specular = saturate(_SpecularFactor*l_SpecularIntensity*m_LightColor[lightIndex] * pow(dot(Nn, H), _SpecularPower)*_SpecularColor);
 	float4 outLight = float4((l_albedo*l_AlbedoFactor*l_DiffuseContrib*m_LightColor[lightIndex]*m_LightIntensityArray[lightIndex]+specular*m_LightIntensityArray[lightIndex]).xyz,1);
 	
 	return saturate(outLight);
@@ -100,7 +98,6 @@ float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	float l_Distance = distance(l_WorldPosition, m_LightPosition[lightIndex]);
 	l_DiffuseContrib = dot(Nn, normalize(m_LightPosition[lightIndex]-l_WorldPosition));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
-	float4 l_SpecularColor = float4((l_albedo.xyz + (1.0f-_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_albedo.xyz)) * _SpecularColor.rgb, 1);
 	float l_AlbedoFactor = (1 - _Metalness) * (1 - _SpecularFactor);
 	
 	// PBR - energy conservation
@@ -114,7 +111,7 @@ float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	float3 cameraToVertex = normalize(m_CameraPosition.xyz - l_WorldPosition);
 	float3 lightToVertex = normalize(m_LightPosition[lightIndex].xyz - l_WorldPosition);
 	float3 H = normalize(cameraToVertex + lightToVertex);
-	float3 specular = saturate(_SpecularFactor*l_SpecularIntensity*m_LightColor[lightIndex]*pow(dot(Nn, H), _SpecularPower)*l_SpecularColor);
+	float3 specular = saturate(_SpecularFactor*l_SpecularIntensity*m_LightColor[lightIndex]*pow(dot(Nn, H), _SpecularPower)*_SpecularColor);
 	//specular *= l_SpotAttenuation;
 	specular *= l_DistanceAttenuation;
 	
