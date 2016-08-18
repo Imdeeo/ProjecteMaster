@@ -173,8 +173,8 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	#endif
 
 	#ifdef HAS_SPECULAR_MAP
-		float4 l_Specular = T10Texture.Sample(S10Sampler, IN.UV);
-		l_specularFactor *= l_Specular.w;
+		float4 l_SpecularColor = T10Texture.Sample(S10Sampler, IN.UV);
+		l_specularFactor *= l_SpecularColor.w;
 	#endif
 	// PBR modifications according to http://www.marmoset.co/toolbag/learn/pbr-theory
 	// PBR: fresnel (the formula is arbitrary, not based on any source, but the curve would look somewhat similar to the examples)
@@ -191,6 +191,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		l_specularFactor = l_specularFactor + l_Metalness * (1-l_specularFactor);
 		float l_AlbedoFactor = 1 - l_Metalness;
 		l_AlbedoFactor *= 1 - l_specularFactor;
+		float4 l_SpecularColor = float4(l_Albedo.rgb + (1.0f-l_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_Albedo.rgb), 1);
 	#else
 		float l_AlbedoFactor = 1-l_specularFactor;
 		float l_Metalness = 0.0f;
@@ -223,9 +224,9 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, Nn));
 		float4 l_ReflectColor = T8Texture.SampleBias(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
 		#ifdef HAS_SPECULAR_MAP
-			l_AmbientIllumination += float4(l_ReflectColor.xyz * l_specularFactor * m_ReflectionFactor * l_Specular.xyz, 1);
+			l_AmbientIllumination += float4(l_ReflectColor.xyz * l_specularFactor * m_ReflectionFactor * l_SpecularColor.xyz, 1);
 		#elif defined(HAS_METALNESS_MAP)
-			l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor * l_Albedo;
+			l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor * l_SpecularColor;
 		#else
 			l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor;
 		#endif
@@ -244,8 +245,8 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	#endif
 	l_Out.Target2 = float4(Normal2Texture(Nn), l_Metalness);
 	l_Out.Target3 = float4(l_Depth,l_Depth,l_Depth, 1.0f);
-	#ifdef HAS_SPECULAR_MAP
-		l_Out.Target4 = float4(l_Specular.rgb, 1);
+	#if defined(HAS_SPECULAR_MAP) || defined(HAS_METALNESS_MAP)
+		l_Out.Target4 = float4(l_SpecularColor.rgb, 1);
 	#else
 		l_Out.Target4 = float4(1, 1, 1, 1);
 	#endif

@@ -237,6 +237,9 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		#ifdef HAS_UV
 			l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
 		#endif
+		#ifdef HAS_METALNESS_MAP
+			l_SpecularColor = float4(l_Albedo.rgb + (1.0f-l_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_Albedo.rgb), 1);
+		#endif
 		#ifdef HAS_NORMAL
 			Out = Out*applyAllLights(IN, l_SpecularFactor, l_Albedo, l_AlbedoFactor, l_Metalness, l_SpecularColor);
 			if (Out.w < 0.1)
@@ -256,7 +259,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		#if defined(HAS_SPECULAR_MAP)
 			Out += float4(l_ReflectColor.rgb * l_SpecularColor.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
 		#elif defined(HAS_METALNESS_MAP)
-			Out += float4(l_ReflectColor.rgb * l_Albedo.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
+			Out += float4(l_ReflectColor.rgb * l_SpecularColor.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
 		#elif defined(HAS_LIGHTS)
 			Out += float4(l_ReflectColor.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
 		#else
