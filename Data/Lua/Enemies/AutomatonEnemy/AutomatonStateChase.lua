@@ -67,7 +67,7 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 				
 				-- Si la distancia entre el enemy y el punto es menor de 1 pasamos al siguiente punto
 				local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	
-				if l_Distance <= 0.5 then
+				if l_Distance <= l_Enemy.m_DistanceToChangeNodeRunning then
 					if l_Enemy.m_PathFindig:increment_actual_point() == false then
 						-- no se ha podido pasar al siguiente punto porque era el ultimo, por tanto pasamos a alert ya que hemos perdido al player
 						l_Enemy.m_State = "alert"

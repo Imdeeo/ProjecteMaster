@@ -49,7 +49,7 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 			
 			-- Si la distancia entre el enemy y el punto es menor de un valor predeterminado pasamos al siguiente punto
 			local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	
-			if l_Distance <= 1.0 then
+			if l_Distance <= l_Enemy.m_DistanceToChangeNodeWalking then
 				if l_Enemy.m_PathFindig:increment_actual_point() == false then
 					local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Owner:get_rotation():get_forward_vector(), l_Enemy.m_DefaultForward)
 					if angle_to_turn ~= nil and (angle_to_turn > 0.8 or angle_to_turn < 0.6) then
