@@ -39,6 +39,8 @@ float4 spotLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	float l_Distance = distance(l_WorldPosition, m_LightPosition[lightIndex]);
 	float l_DirectionContrib = dot(l_RayDirection, normalize(m_LightDirection[lightIndex]));
 
+	// In case of not using the extra gbuffer channel for specular color, calculate it from albedo according to metalness
+	//float4 l_SpecularColor = float4((l_albedo.xyz + (1.0f-_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_albedo.xyz)) * _SpecularColor.rgb, 1);
 	float l_AlbedoFactor = (1 - _Metalness) * (1 - _SpecularFactor);
 	/*
 	 * PBR - energy conservation
@@ -76,6 +78,8 @@ float4 directionalLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int 
 	float l_DiffuseContrib;	
 	l_DiffuseContrib = dot(Nn, (-m_LightDirection[lightIndex]));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
+	// In case of not using the extra gbuffer channel for specular color, calculate it from albedo according to metalness
+	//float4 l_SpecularColor = float4((l_albedo.xyz + (1.0f-_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_albedo.xyz)) * _SpecularColor.rgb, 1);
 	float l_AlbedoFactor = (1 - _Metalness) * (1 - _SpecularFactor);
 	// PBR - energy conservation
 	float l_BaseIntensity = 0.2;
@@ -98,6 +102,8 @@ float4 omniLight(float3 l_WorldPosition, float3 Nn, float4 l_albedo, int lightIn
 	float l_Distance = distance(l_WorldPosition, m_LightPosition[lightIndex]);
 	l_DiffuseContrib = dot(Nn, normalize(m_LightPosition[lightIndex]-l_WorldPosition));
 	l_DiffuseContrib = max(0, l_DiffuseContrib);
+	// In case of not using the extra gbuffer channel for specular color, calculate it from albedo according to metalness
+	//float4 l_SpecularColor = float4((l_albedo.xyz + (1.0f-_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_albedo.xyz)) * _SpecularColor.rgb, 1);
 	float l_AlbedoFactor = (1 - _Metalness) * (1 - _SpecularFactor);
 	
 	// PBR - energy conservation
