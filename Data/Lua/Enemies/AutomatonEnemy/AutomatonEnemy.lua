@@ -30,6 +30,8 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_DistanceToActivateRun = _TreeNode:get_float_property("distance_activate_run", 25.0, false)
 		self.m_DistanceToActivateWalk = _TreeNode:get_float_property("distance_activate_walk", 15.0, false)
 		self.m_DistanceToActivateCrouching = _TreeNode:get_float_property("distance_activate_crouching", 5.0, false)
+		self.m_DistanceToChangeNodeWalking = _TreeNode:get_float_property("distance_change_node_walking", 2.0, false)
+		self.m_DistanceToChangeNodeRunning = _TreeNode:get_float_property("distance_change_node_running", 2.0, false)
 		
 		self.m_TimerRotation = 0.0
 		self.m_TimerRotation2 = 0.0
