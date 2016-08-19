@@ -40,7 +40,7 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 			l_Enemy.m_State = "attack"
 		end		
 	else
-		if l_Enemy.m_BlockingObjectName == nil then
+		if l_Enemy.m_BlockingObjectName == nil and l_Enemy.m_IsChasing then
 			l_Enemy.m_LastPositionPlayer = nil
 			l_Enemy.m_State = "alert"
 		else
@@ -60,13 +60,14 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 					
 				if l_PercentRotation > 1.0 then
 					l_PercentRotation = 1.0
+					l_Enemy.m_TimerRotation = 0
 				end 
 				
 				l_Enemy:EnemyWalk(l_PointPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
 				
 				-- Si la distancia entre el enemy y el punto es menor de 1 pasamos al siguiente punto
 				local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	
-				if l_Distance <= 1.0 then
+				if l_Distance <= 0.5 then
 					if l_Enemy.m_PathFindig:increment_actual_point() == false then
 						-- no se ha podido pasar al siguiente punto porque era el ultimo, por tanto pasamos a alert ya que hemos perdido al player
 						l_Enemy.m_State = "alert"
