@@ -562,7 +562,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_game_play_manager", &CUABEngine::GetGamePlayManager)
 			.def("get_frustum_active", &CUABEngine::GetFrustumActive)
 			.def("set_frustum_active", &CUABEngine::SetFrustumActive)
-			.def("get_lua_reloaded", &CUABEngine::GetLuaReloaded)			
+			.def("get_lua_reloaded", &CUABEngine::GetLuaReloaded)		
+			.def("get_active_console", &CUABEngine::GetActiveConsole)
+			.def("set_active_console", &CUABEngine::SetActiveConsole)
 	];
 
 	// InputManager-------------------------------------------------------------------------------------

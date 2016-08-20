@@ -182,7 +182,7 @@ void CInputManager::Load(std::string _file)
 		m_Map->MapBool(CInputManager::DebugSanityDown, *m_KeyboardId, gainput::Key4);
 		m_Map->MapBool(CInputManager::DebugReloadLua, *m_KeyboardId, gainput::Key5);
 		m_Map->MapBool(CInputManager::DebugToggleRenderLights, *m_KeyboardId, gainput::Key6);
-		m_Map->MapBool(CInputManager::DebugChangeCameraControl, *m_KeyboardId, gainput::Key7);
+		m_Map->MapBool(CInputManager::DebugConsole, *m_KeyboardId, gainput::Key7);
 		m_Map->MapBool(CInputManager::DebugChangeCameraVision, *m_KeyboardId, gainput::Key8);
 		m_Map->MapBool(CInputManager::DebugChangeCamera, *m_KeyboardId, gainput::Key9);
 		m_Map->MapBool(CInputManager::DebugToggleRenderCamera, *m_KeyboardId, gainput::KeyF10);
@@ -254,8 +254,8 @@ int CInputManager::GetAction(std::string _name)
 		return CInputManager::DebugToggleRenderAStar;
 	else if (_name == "DebugToggleLoadVideo")
 		return CInputManager::DebugToggleLoadVideo;
-	else if (_name == "DebugChangeCameraControl")
-		return CInputManager::DebugChangeCameraControl;
+	else if (_name == "DebugConsole")
+		return CInputManager::DebugConsole;
 	else if (_name == "DebugChangeCameraVision")
 		return CInputManager::DebugChangeCameraVision;
 	else if (_name == "DebugChangeCamera")
