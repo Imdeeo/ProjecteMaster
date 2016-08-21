@@ -166,10 +166,15 @@ class 'CAutomatonEnemy' (CEnemy)
 		local l_Distance = g_Player.m_RenderableObject:get_position():distance(self.m_RenderableObject:get_position())
 		local l_Run = g_Player.m_InputManager:is_action_active("Run")
 		local l_Crouch = g_Player.m_InputManager:is_action_active("Crouch")
+		local l_MoveForward = g_Player.m_InputManager:is_action_active("MoveForward")
+		local l_MoveBackward = g_Player.m_InputManager:is_action_active("MoveBackward")
+		local l_MoveLeft = g_Player.m_InputManager:is_action_active("StrafeLeft")
+		local l_MoveRight = g_Player.m_InputManager:is_action_active("StrafeRight")
 		
-		if (l_Run and l_Distance <= self.m_DistanceToActivateRun * _increment)
-			or (not l_Crouch and not l_Run and l_Distance <= self.m_DistanceToActivateWalk * _increment)
-			or (l_Crouch and l_Distance <= self.m_DistanceToActivateCrouching * _increment) then
+		if (l_MoveForward or l_MoveBackward or l_MoveLeft or l_MoveRight) 
+			and ((not l_Crouch and not l_Run and l_Distance <= self.m_DistanceToActivateWalk * _increment)
+			or (l_Run and l_Distance <= self.m_DistanceToActivateRun * _increment)
+			or (l_Crouch and l_Distance <= self.m_DistanceToActivateCrouching * _increment)) then
 			return true
 		else
 			return false
