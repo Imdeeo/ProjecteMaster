@@ -52,7 +52,7 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 			if l_Distance <= l_Enemy.m_DistanceToChangeNodeWalking then
 				if l_Enemy.m_PathFindig:increment_actual_point() == false then
 					local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Owner:get_rotation():get_forward_vector(), l_Enemy.m_DefaultForward)
-					if angle_to_turn ~= nil and (angle_to_turn > 0.8 or angle_to_turn < 0.6) then
+					if angle_to_turn ~= nil and (angle_to_turn > 0.75 or angle_to_turn < 0.65) then
 						l_Enemy.m_TimerRotation2 = l_Enemy.m_TimerRotation2 + _ElapsedTime	
 						l_PercentRotation = l_Enemy.m_TimerRotation2 / l_Enemy.m_AngularWalkSpeed * 5
 							
