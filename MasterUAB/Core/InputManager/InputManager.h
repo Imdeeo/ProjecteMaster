@@ -56,7 +56,7 @@ public:
 		DebugToggleRenderLights,
 		DebugToggleRenderAStar,
 		DebugToggleLoadVideo,
-		DebugChangeCameraControl,
+		DebugConsole,
 		DebugChangeCameraVision,
 		DebugChangeCamera,
 		DebugToggleRenderCamera,

@@ -532,6 +532,16 @@ public:
 			);
 	}
 
+	/**
+	* @brief Returns the quaternion slerped between this and q1 by fraction 0 <= t <= 1.
+	*/
+	bool Compare(const Quatn& q1) {
+		if (x == q1.x && y == q1.y && z == q1.z && w == q1.w)
+			return true;
+		else
+			return false;
+	}
+
 	Vector3<T> RotateVectorByQuat(const Vector3<T>& v)
 	{
 		Vector3<T> vprime;

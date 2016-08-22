@@ -160,5 +160,5 @@ void CManchasSystemInstance::Render(CRenderManager *RM)
 void CManchasSystemInstance::Save(FILE* _File, std::string _layer)
 {
 	fprintf_s(_File, "\t<manchas_instance name=\"%s\" layer=\"%s\" type=\"%s\" awake=\"%s\" visible=\"%s\"/>\n",
-		m_Name.c_str(), _layer.c_str(), m_Type->GetName().c_str(), m_Awake ? "true" : false , m_Visible ? "true" : "false");
+		m_Name.c_str(), _layer.c_str(), m_Type->GetName().c_str(), m_Awake ? "true" : "false" , m_Visible ? "true" : "false");
 }
