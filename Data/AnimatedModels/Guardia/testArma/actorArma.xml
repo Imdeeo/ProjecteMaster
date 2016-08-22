@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<animated_model name="guardia">
-	<skeleton filename="guardiaSkeleton.csf"/>
-	<mesh filename="guardiaMesh.cmf"/>
-	
-	<diffuse_texture filename="textura_guardia.dds" />
-	<animation name="idle" filename="staticIdleArma.caf" />
-</animated_model>
