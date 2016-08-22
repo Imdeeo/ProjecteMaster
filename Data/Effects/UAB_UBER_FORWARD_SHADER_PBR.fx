@@ -160,9 +160,8 @@ TVertexPS mainVS(TVertexVS IN)
 }
 
 #ifdef HAS_LIGHTS
-float4 applyAllLights(TVertexPS IN, float SpecularFactor, float4 Albedo, float AlbedoFactor, float Metalness, float4 SpecularColor)
+float4 applyAllLights(TVertexPS IN, float3 Nn, float SpecularFactor, float4 Albedo, float AlbedoFactor, float Metalness, float4 SpecularColor)
 {
-	float3 Nn = IN.Normal;
 	float l_specularFactor=SpecularFactor;
 	float4 l_Out = Albedo;
 
@@ -170,18 +169,6 @@ float4 applyAllLights(TVertexPS IN, float SpecularFactor, float4 Albedo, float A
 		float4 lightContrib = T1Texture.Sample(S1Sampler, IN.UV2);
 	#else
 		float4 lightContrib = m_LightAmbient*AlbedoFactor*l_Out;
-	#endif
-
-	#ifdef HAS_TANGENT
-		float g_Bump = 2.4;
-
-		float3 Tn=normalize(IN.WorldTangent);
-		float3 Bn=normalize(IN.WorldBinormal);
-		float4 auxNormal = T2Texture.Sample(S2Sampler,IN.UV);
-		float3 bump=g_Bump*((auxNormal.xyz) - float3(0.5,0.5,0.5));
-		Nn = Nn + bump.x*Tn + bump.y*Bn;
-		Nn = normalize(Nn);
-		l_specularFactor *= auxNormal;
 	#endif
 
 	float l_SpecularPower = (pow(MAX_SPECULAR_POWER/MIN_SPECULAR_POWER, m_SpecularPower/100) * MIN_SPECULAR_POWER);
@@ -205,11 +192,27 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	#ifdef HAS_COLOR
 		Out = IN.Color;
 	#endif
+	
+	#ifdef HAS_NORMAL
+		float3 Nn = IN.Normal;
+	#endif
 
 	#if defined(HAS_LIGHTS) || defined(HAS_REFLECTION)
+		float l_SpecularFactor = 1.0;
+		#ifdef HAS_TANGENT
+			float g_Bump = 2.4;
+
+			float3 Tn=normalize(IN.WorldTangent);
+			float3 Bn=normalize(IN.WorldBinormal);
+			float4 auxNormal = T2Texture.Sample(S2Sampler,IN.UV);
+			float3 bump=g_Bump*((auxNormal.xyz) - float3(0.5,0.5,0.5));
+			Nn = Nn + bump.x*Tn + bump.y*Bn;
+			Nn = normalize(Nn);
+			l_SpecularFactor *= auxNormal;
+		#endif
 		float3 l_EyeToWorldPosition = normalize(IN.Pixelpos-m_InverseView[3].xyz);
-		float l_Fresnel = pow(1 - dot(-l_EyeToWorldPosition, IN.Normal), FRESNEL_POWER);
-		float l_SpecularFactor = m_SpecularFactor + l_Fresnel * (1-m_SpecularFactor);
+		float l_Fresnel = pow(1 - dot(-l_EyeToWorldPosition, Nn), FRESNEL_POWER);
+		l_SpecularFactor *= m_SpecularFactor + l_Fresnel * (1-m_SpecularFactor);
 		
 		#if defined(HAS_SPECULAR_MAP)
 			float l_AlbedoFactor = 1 - l_SpecularFactor;
@@ -241,7 +244,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 			l_SpecularColor = float4(l_Albedo.rgb + (1.0f-l_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_Albedo.rgb), 1);
 		#endif
 		#ifdef HAS_NORMAL
-			Out = Out*applyAllLights(IN, l_SpecularFactor, l_Albedo, l_AlbedoFactor, l_Metalness, l_SpecularColor);
+			Out = Out*applyAllLights(IN, Nn, l_SpecularFactor, l_Albedo, l_AlbedoFactor, l_Metalness, l_SpecularColor);
 			if (Out.w < 0.1)
 			{
 				clip(-1);
@@ -254,7 +257,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	#endif
 
 	#ifdef HAS_REFLECTION
-		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
+		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, Nn));
 		float4 l_ReflectColor = T8Texture.SampleBias(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
 		#if defined(HAS_SPECULAR_MAP)
 			Out += float4(l_ReflectColor.rgb * l_SpecularColor.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
