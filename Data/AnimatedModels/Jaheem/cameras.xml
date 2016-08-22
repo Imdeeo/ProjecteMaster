@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<cameras>
-	<camera name="OpenBureau" total_time="18.3333" type="key" undefined="true" pos="0.0 -0.066 1.789" filename="Data\\level_2\\cameras\\OpenBureau.xml"/>
-	<camera name="CrossDoor" total_time="4.33333" type="key" undefined="true" pos="0.101435 0.000433043 1.87488" filename="Data\\level_2\\cameras\CrossDoor.xml"/>
-</cameras>
