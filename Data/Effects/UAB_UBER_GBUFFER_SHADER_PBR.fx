@@ -167,6 +167,20 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	}
 	float3 Nn = IN.Normal;
 	
+	#ifdef HAS_TANGENT
+		Nn=normalize(IN.WorldNormal);
+		float3 Tn=normalize(IN.WorldTangent);
+		float3 Bn=normalize(IN.WorldBinormal);
+		float4 l_NormalMap = T2Texture.Sample(S2Sampler,IN.UV);
+
+		Nn=CalcNormalMap(Nn, Tn, Bn, l_NormalMap);
+		#ifdef HAS_PARALLAX
+			Nn=CalcParallaxMap(l_EyeToWorldPosition, Nn, Tn, Bn, IN.UV, IN.UV, l_NormalMap);
+		#endif
+
+		l_specularFactor *= l_NormalMap.w;
+	#endif
+	
 	#ifdef HAS_GLOSSINESS_MAP
 		float4 l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV);
 		m_SpecularPower *= (l_Glossiness.x + l_Glossiness.y + l_Glossiness.z) / 3;
@@ -195,20 +209,6 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	#else
 		float l_AlbedoFactor = 1-l_specularFactor;
 		float l_Metalness = 0.0f;
-	#endif
-
-	#ifdef HAS_TANGENT
-		Nn=normalize(IN.WorldNormal);
-		float3 Tn=normalize(IN.WorldTangent);
-		float3 Bn=normalize(IN.WorldBinormal);
-		float4 l_NormalMap = T2Texture.Sample(S2Sampler,IN.UV);
-
-		Nn=CalcNormalMap(Nn, Tn, Bn, l_NormalMap);
-		#ifdef HAS_PARALLAX
-			Nn=CalcParallaxMap(l_EyeToWorldPosition, Nn, Tn, Bn, IN.UV, IN.UV, l_NormalMap);
-		#endif
-
-		l_specularFactor *= l_NormalMap.w;
 	#endif
 
 	#ifdef HAS_UV2
