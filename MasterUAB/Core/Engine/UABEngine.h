@@ -64,6 +64,7 @@ private:
 	std::string m_LevelLoaded;
 	int m_CurrentCamera_vision;
 	CAStar* m_AStarManager;
+	bool m_ActiveConsole;
 
 public:
 	CInputManager * GetInputManager() const;
@@ -105,7 +106,8 @@ public:
 	UAB_BUILD_GET_SET(bool, FrustumActive);
 	UAB_BUILD_GET_SET(float, TimeScale);
 	UAB_BUILD_GET_SET(bool, Pause);
-
+	bool GetActiveConsole() { return m_ActiveConsole; };
+	void SetActiveConsole(bool _ActiveConsole);
 	bool GetLuaReloaded(){ return m_LuaReloaded; }
 	void LuaIsReloaded(){ m_LuaReloaded = true; }	
 };

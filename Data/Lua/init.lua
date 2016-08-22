@@ -54,47 +54,53 @@ function levelMainLua(level)
 end
 
 function luaUpdate(_ElapsedTime)
-	if m_iniciando then
-		m_timerPause = m_timerPause + _ElapsedTime
-		if m_timerPause >= 0.2 then
-			m_iniciando = false
+	if not g_Engine:get_active_console() then
+		if m_iniciando then
+			m_timerPause = m_timerPause + _ElapsedTime
+			if m_timerPause >= 0.2 then
+				m_iniciando = false
+				CUABEngine.get_instance():set_pause(true)
+			end		
+		end
+		
+		local l_InputManager = g_Engine:get_input_manager()
+		if l_InputManager:is_action_released("DebugSpeedUp") then
+			utils_log("DebugSpeedUp")
+			if g_Engine:get_time_scale() < 11 then
+				g_Engine:set_time_scale(g_Engine:get_time_scale()+1)
+			end
+		end
+		if l_InputManager:is_action_released("DebugSpeedDown") then
+			utils_log("DebugSpeedDown")
+			if g_Engine:get_time_scale() > 1 then
+				g_Engine:set_time_scale(g_Engine:get_time_scale()-1)
+			end
+		end
+		if l_InputManager:is_action_released("DebugSanityUp") then
+			utils_log("DebugSanityUp")
+			m_CharacterManager.m_Player[1]:ModifySanity(10)
+		end
+		if l_InputManager:is_action_released("DebugSanityDown") then
+			utils_log("DebugSanityDown")
+			m_CharacterManager.m_Player[1]:ModifySanity(-10)
+		end
+		if l_InputManager:is_action_released("Pause") then
+			m_menu = true
 			CUABEngine.get_instance():set_pause(true)
-		end		
-	end
-	
-	local l_InputManager = g_Engine:get_input_manager()
-	if l_InputManager:is_action_released("DebugSpeedUp") then
-		utils_log("DebugSpeedUp")
-		if g_Engine:get_time_scale() < 11 then
-			g_Engine:set_time_scale(g_Engine:get_time_scale()+1)
 		end
-	end
-	if l_InputManager:is_action_released("DebugSpeedDown") then
-		utils_log("DebugSpeedDown")
-		if g_Engine:get_time_scale() > 1 then
-			g_Engine:set_time_scale(g_Engine:get_time_scale()-1)
+		if l_InputManager:is_action_released("DebugToggleFrustum") then
+			g_Engine:set_frustum_active(not g_Engine:get_frustum_active())		
 		end
-	end
-	if l_InputManager:is_action_released("DebugSanityUp") then
-		utils_log("DebugSanityUp")
-		m_CharacterManager.m_Player[1]:ModifySanity(10)
-	end
-	if l_InputManager:is_action_released("DebugSanityDown") then
-		utils_log("DebugSanityDown")
-		m_CharacterManager.m_Player[1]:ModifySanity(-10)
-	end
-	if l_InputManager:is_action_released("Pause") then
-		m_menu = true
-		CUABEngine.get_instance():set_pause(true)
-	end
-	if l_InputManager:is_action_released("DebugToggleFrustum") then
-		g_Engine:set_frustum_active(not g_Engine:get_frustum_active())		
-	end
-	if l_InputManager:is_action_released("DebugToggleLoadVideo") then
-		local l_videoManager = g_Engine:get_video_manager()
-		l_videoManager:play_clip("bunny.ogv")
-		--l_videoManager:load_clip("bunny.ogv",false)
-		--l_videoManager:render_screen_clip("bunny.ogv")
+		if l_InputManager:is_action_released("DebugConsole") then
+			g_Engine:set_pause(true)
+			g_Engine:set_active_console(true)	
+		end	
+		if l_InputManager:is_action_released("DebugToggleLoadVideo") then
+			local l_videoManager = g_Engine:get_video_manager()
+			l_videoManager:play_clip("bunny.ogv")
+			--l_videoManager:load_clip("bunny.ogv",false)
+			--l_videoManager:render_screen_clip("bunny.ogv")
+		end
 	end
 	--g_VolumeController:CheckVolumeKeys()	
 end
@@ -175,5 +181,10 @@ function luaGui()
 			end
 		end	
 	end 	 
+end
+
+function quit()
+	utils_log("quit")
+	g_Engine:quit()
 end
 

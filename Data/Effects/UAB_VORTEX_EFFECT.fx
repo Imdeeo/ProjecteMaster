@@ -1,10 +1,9 @@
 #include "globals.fxh"
 #include "Samplers.fxh"
 
-static float enable = m_RawDataArray[0];
+static float m_Active = m_RawDataArray[0];
 static float m_Angle = m_RawDataArray[1];
 static float4 m_CenterRadius = float4(m_RawDataArray[2],m_RawDataArray[3],m_RawDataArray[4],m_RawDataArray[5]);
-
 
 struct VS_INPUT
 {
@@ -31,7 +30,7 @@ PS_INPUT mainVS(VS_INPUT IN)
 
 float4 mainPS(PS_INPUT IN) : SV_Target
 {
-	if(enable)
+	if(m_Active)
 	{
 		float2 offset = IN.UV_ORIG;
 		float angle = 1.0 - length(offset / m_CenterRadius.zw);
