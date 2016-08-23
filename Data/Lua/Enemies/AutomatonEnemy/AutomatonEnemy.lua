@@ -129,7 +129,7 @@ class 'CAutomatonEnemy' (CEnemy)
 		self:EnemyMove(_ElapsedTime)
 
 		-- with the rotation, the enemy chases to the player
-		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)	
+		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)
 		
 		local angle_to_turn = self:CalculateAngleRotation(l_EnemyForward, l_Direction)
 		if angle_to_turn ~= nil then

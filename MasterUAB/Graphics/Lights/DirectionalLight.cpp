@@ -46,7 +46,7 @@ void CDirectionalLight::Render(CRenderManager *RenderManager)
 		RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
 		CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
 		CEffectManager::SetSceneConstants(l_EffectTechnique);
-		l_Line->Render(RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+		l_Line->RenderIndexed(RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 		delete l_Line;
 	}
 }
@@ -93,6 +93,11 @@ void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 	m_viewport.TopLeftY = 0.0f;
 	RenderManager.GetDeviceContext()->RSSetViewports(1, &m_viewport);
 	RenderManager.SetRenderTargets(1, l_RenderTargetViews, m_ShadowMap->GetDepthStencilView());
+}
+
+bool const CDirectionalLight::GetInsideFrustum()
+{
+	return true;
 }
 
 void CDirectionalLight::Save(FILE* _File)

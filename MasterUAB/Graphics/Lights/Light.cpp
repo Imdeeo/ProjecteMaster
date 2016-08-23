@@ -11,21 +11,24 @@
 #include "RenderableObjects\RenderableVertexs.h"
 
 #include "Texture\DynamicTexture.h"
-
+#include "Camera\Frustum.h"
 
 #include "XML\XMLTreeNode.h"
 //#include "RenderManager\RenderManager.h"
 
 CLight::CLight() : CNamed(""), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false), m_GenerateShadowMap(false), m_ShadowMap(nullptr)
 {
+	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 }
 
 CLight::CLight(std::string _name) : CNamed(_name), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false), m_GenerateShadowMap(false), m_ShadowMap(nullptr)
 {	
+	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 }
 
 CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)
 {
+	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 	m_Type = GetLightTypeByName(TreeNode.GetPszProperty("type"));
 	//m_Position = TreeNode.GetVect3fProperty("pos", Vect3f(0.0f, 0.0f, 0.0f), true);
 	m_Color = CColor(TreeNode.GetVect4fProperty("color", Vect4f(255.0f, 255.0f, 255.0f, 1.0f), true));
@@ -76,6 +79,11 @@ void CLight::Render(CRenderManager *_RenderManager)
 		GetShape(_RenderManager)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 	}
 }
+
+CRenderableVertexs* CLight::GetShape(CRenderManager *_RenderManager)
+{
+	return _RenderManager->GetDebugRender()->GetSPhere10();
+}
 #endif
 
 CLight::TLightType CLight::GetLightTypeByName(const std::string &StrLightType)
@@ -105,11 +113,13 @@ const Mat44f & CLight::GetTransform()
 	return m_TransformMatrix;
 }
 
-#ifdef _DEBUG
-CRenderableVertexs* CLight::GetShape(CRenderManager *_RenderManager)
+const bool CLight::GetInsideFrustum()
 {
-	return _RenderManager->GetDebugRender()->GetSPhere10();
+	return m_Frustum->SphereVisible(m_Position, m_EndRangeAttenuation);
 }
+
+#ifdef _DEBUG
+
 #endif
 
 CDynamicTexture* CLight::GetShadowMap()
