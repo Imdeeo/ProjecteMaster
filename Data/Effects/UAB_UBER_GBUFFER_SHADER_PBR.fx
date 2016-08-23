@@ -116,9 +116,9 @@ float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, S
 	LightmapXSampler, Texture2D LightmapYTexture, SamplerState LightmapYSampler, Texture2D
 	LightmapZTexture, SamplerState LightmapZSampler)
 {
-	float3 l_LightmapX=LightmapXTexture.Sample(LightmapXSampler, UV)*2;
-	float3 l_LightmapY=LightmapYTexture.Sample(LightmapYSampler, UV)*2;
-	float3 l_LightmapZ=LightmapZTexture.Sample(LightmapZSampler, UV)*2;
+	float3 l_LightmapX=LightmapXTexture.Sample(LightmapXSampler, UV);
+	float3 l_LightmapY=LightmapYTexture.Sample(LightmapYSampler, UV);
+	float3 l_LightmapZ=LightmapZTexture.Sample(LightmapZSampler, UV);
 	float3 l_BumpBasisX=normalize(float3(0.816496580927726, 0, 0.5773502691896258));
 	float3 l_BumpBasisY=normalize(float3(-0.408248290463863,  0.7071067811865475, 0.5773502691896258));
 	float3 l_BumpBasisZ=normalize(float3(-0.408248290463863, -0.7071067811865475, 0.5773502691896258));
