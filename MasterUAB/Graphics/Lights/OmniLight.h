@@ -9,6 +9,7 @@ public:
 	COmniLight();
 	COmniLight(std::string _name);
 	COmniLight(CXMLTreeNode &TreeNode);
+	bool const GetInsideFrustum();
 	void SetShadowMap(CRenderManager &RenderManager);
 	void Save(FILE* _File);
 };
