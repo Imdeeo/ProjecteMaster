@@ -56,6 +56,11 @@ fn CustomToRH &translation =
 	translation = [-translation.y, translation.z, translation.x]
 )
 
+fn AnimatedCameraToRH &translation =
+(
+	translation = [translation.x, translation.z, -translation.y]
+)
+
 fn TranslationToRH &translation =
 (
 	translation = [-translation.x, translation.z, translation.y]

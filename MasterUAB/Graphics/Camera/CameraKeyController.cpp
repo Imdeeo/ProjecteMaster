@@ -213,3 +213,8 @@ void CCameraKeyController::SetCamera(CCamera *Camera) const
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
 }
+
+Vect3f CCameraKeyController::GetLastLookAt()
+{
+	return m_Keys[m_Keys.size()-1]->m_CameraInfo.m_LookAt;
+}

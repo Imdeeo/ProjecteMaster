@@ -20,7 +20,7 @@
 		</cinematic_object>
 	</cinematic>
 	<cinematic name="PickKey" duration="15.5" cycle="false">
-		<cinematic_object resource="CajonComodaDerecha2" layer="solid">
+		<cinematic_object resource="CajonComodaIzquierda2" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="1.16667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="1.83333" pos="-0.177185 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
