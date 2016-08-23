@@ -84,9 +84,9 @@ rollout CamAnim "Camera Animation" width:160 height:134
 				cameraLookAt.z *= -1
 				cameraLookAt += cameraTranslation
 			)
-			CustomToRH &cameraUp
-			CustomToRH &cameraLookAt
-			CustomToRH &cameraTranslation
+			AnimatedCameraToRH &cameraUp
+			AnimatedCameraToRH &cameraLookAt
+			AnimatedCameraToRH &cameraTranslation
 			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z (at time j Cam.fov) (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
 			j = at time j trackbar.getNextKeyTime()
 		) while j < CameraKeyEnd.value
