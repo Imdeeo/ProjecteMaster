@@ -82,18 +82,17 @@ class 'CEnemy' (CLUAComponent)
 	end
 	
 	function CEnemy:RotateEnemyHead(_Owner, _DesiredPos)
-		-- Seguimos al player con la mirada
-		local l_EnemyForward = _Owner:get_rotation():get_forward_vector():get_normalized(1)
+		-- Seguimos al player con la mirada		
 		local l_EnemyPos = _Owner:get_position()
 		
 		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)
-		local l_Angle = l_EnemyForward * l_Direction
+		local l_Angle = self.m_DefaultForward * l_Direction
 		if 1.0 - l_Angle < 0.01 then
-		  return
+			return
 		end
 		
 		local angle_to_turn = math.acos(l_Angle)
-		local cross = l_Direction ^ l_EnemyForward
+		local cross = l_Direction ^ self.m_DefaultForward
 		if cross.y < 0.0 then
 		  angle_to_turn = -angle_to_turn
 		end
@@ -104,7 +103,7 @@ class 'CEnemy' (CLUAComponent)
 	end
 	
 	function CEnemy:LoseSanity(_Distance)
-		for i=1, table.maxn(self.m_LoseSanity) do
+		for i=1, table.maxn(self.m_LoseSanity)-1 do
 			if _Distance <= self.m_LoseSanity[i].x and _Distance > self.m_LoseSanity[i+1].x and self.m_Timer >= self.m_LoseSanity[i].y then
 				g_Player:ModifySanity(self.m_LoseSanity[i].z)
 				self.m_Timer = 0
