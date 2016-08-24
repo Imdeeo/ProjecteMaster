@@ -59,7 +59,7 @@ CInputManager::CInputManager() :
 	m_KeyboardId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDeviceKeyboard>());
 	m_MouseId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDeviceMouse>());
 	m_GamepadId = new gainput::DeviceId(m_Manager->CreateDevice<gainput::InputDevicePad>());
-
+	m_KeyBoard = new CKeyboardInput();
 	m_Map = new gainput::InputMap(*m_Manager, "Keymap");	
 }
 
@@ -70,6 +70,7 @@ CInputManager::~CInputManager(void)
 	CHECKED_DELETE(m_KeyboardId);
 	CHECKED_DELETE(m_Map);
 	CHECKED_DELETE(m_Manager);
+	CHECKED_DELETE(m_KeyBoard);
 }
 
 void CInputManager::SetWindow(HWND _hWnd, int _width, int _height)
@@ -181,7 +182,7 @@ void CInputManager::Load(std::string _file)
 		m_Map->MapBool(CInputManager::DebugSanityDown, *m_KeyboardId, gainput::Key4);
 		m_Map->MapBool(CInputManager::DebugReloadLua, *m_KeyboardId, gainput::Key5);
 		m_Map->MapBool(CInputManager::DebugToggleRenderLights, *m_KeyboardId, gainput::Key6);
-		m_Map->MapBool(CInputManager::DebugChangeCameraControl, *m_KeyboardId, gainput::Key7);
+		m_Map->MapBool(CInputManager::DebugConsole, *m_KeyboardId, gainput::Key7);
 		m_Map->MapBool(CInputManager::DebugChangeCameraVision, *m_KeyboardId, gainput::Key8);
 		m_Map->MapBool(CInputManager::DebugChangeCamera, *m_KeyboardId, gainput::Key9);
 		m_Map->MapBool(CInputManager::DebugToggleRenderCamera, *m_KeyboardId, gainput::KeyF10);
@@ -192,6 +193,8 @@ void CInputManager::Load(std::string _file)
 		m_Map->MapBool(CInputManager::DebugMonsterRun, *m_KeyboardId, gainput::KeyB);
 		m_Map->MapBool(CInputManager::DebugMonsterIdle, *m_KeyboardId, gainput::KeyC);
 		m_Map->MapBool(CInputManager::DebugMonsterHit, *m_KeyboardId, gainput::KeyD);
+		m_Map->MapBool(CInputManager::DebugToggleRenderAStar, *m_KeyboardId, gainput::KeyO);
+		m_Map->MapBool(CInputManager::DebugToggleLoadVideo, *m_KeyboardId, gainput::KeyI);
 #endif
 	}
 }
@@ -247,8 +250,12 @@ int CInputManager::GetAction(std::string _name)
 		return CInputManager::DebugReloadLua;
 	else if (_name == "DebugToggleRenderLights")
 		return CInputManager::DebugToggleRenderLights;
-	else if (_name == "DebugChangeCameraControl")
-		return CInputManager::DebugChangeCameraControl;
+	else if (_name == "DebugToggleRenderAStar")
+		return CInputManager::DebugToggleRenderAStar;
+	else if (_name == "DebugToggleLoadVideo")
+		return CInputManager::DebugToggleLoadVideo;
+	else if (_name == "DebugConsole")
+		return CInputManager::DebugConsole;
 	else if (_name == "DebugChangeCameraVision")
 		return CInputManager::DebugChangeCameraVision;
 	else if (_name == "DebugChangeCamera")

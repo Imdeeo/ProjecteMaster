@@ -1,12 +1,13 @@
 function ChaseFirstAutomaton(args)
 	utils_log("ChaseFirst")
 	local l_Owner = args["owner"]
-	l_Owner:clear_cycle(0,0.5)
-	l_Owner:clear_cycle(1,0.5)
-	l_Owner:clear_cycle(3,0.5)
-	l_Owner:blend_cycle(2,1.0,0.5)
-	
 	local l_Enemy = args["self"]
+	
+	l_Owner:clear_cycle(l_Enemy.m_ActualAnimation,0.5)
+	l_Enemy.m_ActualAnimation = 2
+	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
+		
+	l_Enemy.m_Velocity = Vect3f(0,0,0)
 	l_Enemy.m_TotalNodes = 0.0
 	l_Enemy.m_TimerRotation = 0.0
 	l_Enemy.m_LastPositionPlayer = nil
@@ -16,6 +17,10 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
+	
+	local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PlayerPos)
+	l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
+	l_Enemy:LoseSanity(l_Distance)
 	
 	if l_Enemy:PlayerVisible(l_Owner) then
 		l_Enemy.m_LastPositionPlayer = nil
@@ -28,18 +33,14 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 			l_Enemy.m_TimerRotation = 0.0
 		end 
 		
-		l_Enemy:EnemyWalk(l_PlayerPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
+		l_Enemy:EnemyWalk(l_PlayerPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)		
 		
 		-- Si la distancia entre el enemy y el player es menor a lo establecido pasamos a attack
-		local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PlayerPos)
-		l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
-		l_Enemy:LoseSanity(l_Distance)
-		
-		if l_Distance < l_Enemy.m_distance_to_kill then
+		if l_Distance < l_Enemy.m_DistanceToKill then
 			l_Enemy.m_State = "attack"
 		end		
 	else
-		if l_Enemy.m_BlockingObjectName == nil then
+		if l_Enemy.m_BlockingObjectName == nil and l_Enemy.m_IsChasing then
 			l_Enemy.m_LastPositionPlayer = nil
 			l_Enemy.m_State = "alert"
 		else
@@ -59,14 +60,14 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 					
 				if l_PercentRotation > 1.0 then
 					l_PercentRotation = 1.0
-					l_Enemy.m_TimerRotation = 0.0
+					l_Enemy.m_TimerRotation = 0
 				end 
 				
 				l_Enemy:EnemyWalk(l_PointPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
 				
 				-- Si la distancia entre el enemy y el punto es menor de 1 pasamos al siguiente punto
 				local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	
-				if l_Distance <= 2.0 then
+				if l_Distance <= l_Enemy.m_DistanceToChangeNodeRunning then
 					if l_Enemy.m_PathFindig:increment_actual_point() == false then
 						-- no se ha podido pasar al siguiente punto porque era el ultimo, por tanto pasamos a alert ya que hemos perdido al player
 						l_Enemy.m_State = "alert"

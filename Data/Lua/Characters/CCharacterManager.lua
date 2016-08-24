@@ -12,12 +12,12 @@ class 'CCharacterManager'
 	end
 		
 	function CCharacterManager:LoadXML(Filename)
-		utils_log(Filename)
 		local l_XMLTreeNode=CXMLTreeNode()
 		local l_Loaded=l_XMLTreeNode:load_file(Filename)
 		local UABEngine = CUABEngine.get_instance()
+		--UABEngine:get_game_play_manager():destroy()
 		if l_Loaded then
-			for i=0, (l_XMLTreeNode:get_num_children()-1), 1 do
+			for i=0, l_XMLTreeNode:get_num_children()-1 do
 				local l_Atts=l_XMLTreeNode:get_child(i)
 				local l_ElemName=l_Atts:get_name()
 				if l_ElemName=="player" then
@@ -45,7 +45,7 @@ class 'CCharacterManager'
 						table.insert(self.m_Enemics, l_Enemy)
 					elseif l_Type == "Whisperer" then
 						utils_log("other")
-					end
+					end					
 				end	
 			end
 		else
