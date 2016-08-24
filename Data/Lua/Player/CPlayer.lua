@@ -255,7 +255,7 @@ class 'CPlayer' (CLUAComponent)
 					
 					l_Fov_Value = l_Previous_fov + (l_Fov_Value-l_Previous_fov)*_ElapsedTime					
 					MainCamera:set_fov(l_Fov_Value)
-					CameraControllerManager:choose_main_camera("MainCamera")
+					--CameraControllerManager:choose_main_camera("MainCamera")
 				elseif l_EffectAux[1] == "velocity" then
 					utils_log("TYPE: "..l_EffectAux[2])
 					if l_EffectAux[2] == "run" then
@@ -305,7 +305,7 @@ class 'CPlayer' (CLUAComponent)
 					if l_Previous_fov ~= l_EffectAux[7] then
 						local l_Fov_Value = l_Previous_fov + (l_EffectAux[7]-l_Previous_fov)*_ElapsedTime
 						MainCamera:set_fov(l_Fov_Value)
-						CameraControllerManager:choose_main_camera("MainCamera")
+						--CameraControllerManager:choose_main_camera("MainCamera")
 					end
 				end
 			end

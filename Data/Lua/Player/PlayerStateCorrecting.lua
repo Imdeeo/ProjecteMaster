@@ -24,9 +24,11 @@ function CorrectingUpdate(args, _ElapsedTime)
 		--// Rotation
 	local l_CameraDirection = l_Player.m_CameraController:get_forward()
 	l_CameraDirection.y = 0.0
+	utils_log("Cam x: "..l_CameraDirection.x..", z:"..l_CameraDirection.z)
 	local l_Off = l_Player.m_TargetOffset
 	l_Off = l_Off * (-1.0)
 	l_Off.y = 0.0
+	utils_log("Off x: "..l_Off.x..", z:"..l_Off.z)
 	local l_OriginYaw = math.atan2(l_CameraDirection:get_normalized(1).z, l_CameraDirection:get_normalized(1).x)
 	local l_Yaw = l_CameraDirection:get_normalized(1):get_angle_with(l_Off:get_normalized(1))
 	if (l_OriginYaw > 0) then
@@ -40,6 +42,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 		l_AngleOK = true
 	else
 		l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
+		utils_log("Yaw: "..l_Yaw)
 	end
 		
 	if l_PosOK and l_AngleOK then
