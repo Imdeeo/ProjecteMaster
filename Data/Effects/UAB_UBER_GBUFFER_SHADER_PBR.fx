@@ -182,8 +182,8 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	#endif
 	
 	#ifdef HAS_GLOSSINESS_MAP
-		float4 l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV);
-		m_SpecularPower *= (l_Glossiness.x + l_Glossiness.y + l_Glossiness.z) / 3;
+		float l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV);
+		m_SpecularPower *= l_Glossiness;
 	#endif
 
 	#ifdef HAS_SPECULAR_MAP
