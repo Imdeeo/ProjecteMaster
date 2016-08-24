@@ -52,6 +52,9 @@ fn CheckBB =
 	$BoundingBoxMax.position = BBMax+$.position
 	$BoundingBoxMin.position = BBMin+$.position
 	
+	ffd=ffdbox() 
+	addModifier $ ffd
+	
 	lerp BBMin BBMax .5 &BSphere[1]
 	BSphere[2] = 0
 
