@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cameras>
-	<camera name="OpenBureau" total_time="18.3333" type="key" undefined="true" pos="0.0 -0.066 1.789" filename="Data\\level_2\\cameras\\OpenBureau.xml"/>
-	<camera name="CrossDoor" total_time="4.33333" type="key" undefined="true" pos="0.101435 0.000433043 1.87488" filename="Data\\level_2\\cameras\CrossDoor.xml"/>
+	<camera name="PickKey" total_time="11.3333" type="key" undefined="true" pos="-0.000433776 0.0291467 1.87888" filename="cameras\PickKey.xml"/>
+	<camera name="ForceBureau" total_time="2.5" type="key" undefined="true" pos="-0.000433776 0.0291467 1.87888" filename="cameras\ForceBureau.xml"/>
+	<camera name="CrossDoor" total_time="3.66667" type="key" undefined="true" pos="0.603216 -1.40004 1.87888" filename="cameras\CrossDoor.xml"/>
 </cameras>

@@ -32,7 +32,7 @@ fn createCameras dir Objs =
 				key = replace key key.count 1 ""
 				key = (key as float)/30		
 				dirExist (dir+"cameras\\")
-				cameraFileDir = "cameras\\"+Objs[i].name+".xml"
+				cameraFileDir = dir+"cameras\\"+Objs[i].name+".xml"
 				cameraType = getUserProp Objs[i] "camera_export_type"
 				TranslationToRH &cameraTranslation
 				format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"% % %\" filename=\"%\"/>\n" Objs[i].name key cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraFileDir to:file
