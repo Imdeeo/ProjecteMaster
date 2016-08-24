@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <levels>
+	<level id="0" name="Player" directory="Data\level_0"/>
 	<level id="1" name="Recibidor" directory="Data\level_1"/>
 	<level id="2" name="Biblioteca" directory="Data\level_2"/>
 	<level id="3" name="Taller" directory="Data\level_3"/>

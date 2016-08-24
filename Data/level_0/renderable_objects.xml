@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<renderable_objects>
+	<layer name="solid" default="true"/>
+	<layer name="alpha_objects"/>
+	<layer name="alpha_blend_objects"/>
+	<layer name="particles"/>
+	<layer name="triggers"/>
+	<layer name="manchas"/>
+	<layer name="skybox"/>
+	<animated_instance_mesh name="Jaheem" layer="solid" core_name="Jaheem" position="0.664598 0.010000 1.933776" rotation="-0.000000 0.703490 -0.000000 0.710705" create_physics="false" visible="true"/>
+	<manchas_instance name="manchas" layer="manchas" type="manchasCordura1" awake="(null)" visible="true"/>
+</renderable_objects>
