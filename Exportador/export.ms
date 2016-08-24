@@ -171,12 +171,12 @@ fn processFaces arx Obj &prog=
 		Vt1=(getVert l_Obj IdxsFace.x)*InvTransform
 		Vt2=(getVert l_Obj IdxsFace.y)*InvTransform
 		Vt3=(getVert l_Obj IdxsFace.z)*InvTransform
-		TranslationToRH &Vt1
-		TranslationToRH &Vt2
-		TranslationToRH &Vt3
 		getBoundingBox Vt1 &BBMax &BBMin
 		getBoundingBox Vt2 &BBMax &BBMin
 		getBoundingBox Vt3 &BBMax &BBMin
+		TranslationToRH &Vt1
+		TranslationToRH &Vt2
+		TranslationToRH &Vt3
 	)
 	
     lerp BBMin BBMax .5 &BSphere[1]
@@ -192,12 +192,12 @@ fn processFaces arx Obj &prog=
 		Vt1=(getVert l_Obj IdxsFace.x)*InvTransform
 		Vt2=(getVert l_Obj IdxsFace.y)*InvTransform
 		Vt3=(getVert l_Obj IdxsFace.z)*InvTransform
-		TranslationToRH &Vt1
-		TranslationToRH &Vt2
-		TranslationToRH &Vt3
 		getBoundingSphere Vt1 &BSphere
 		getBoundingSphere Vt2 &BSphere
 		getBoundingSphere Vt3 &BSphere
+		TranslationToRH &Vt1
+		TranslationToRH &Vt2
+		TranslationToRH &Vt3
 		
 		UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal UABVtxsNormals &Nm1
 		UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal UABVtxsNormals &Nm2
@@ -280,6 +280,9 @@ fn processFaces arx Obj &prog=
 	free UABVtxsNormals
 	local VtxID = 0x0000
 	VtxID = PosID+ColorID+NmID+UVID+UV2ID+BnmID+TngID
+	TranslationToRH &BBMin
+	TranslationToRH &BBMax
+	TranslationToRH &BSphere[1]
 	writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere
 	
 	if classof Obj != Editable_mesh then ( delete l_Obj )

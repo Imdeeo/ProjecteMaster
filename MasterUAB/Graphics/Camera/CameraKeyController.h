@@ -32,6 +32,7 @@ public:
 	void SetReverse(bool Reverse);
 	void SetCamera(CCamera *Camera) const;
 
+	Vect3f GetLastLookAt();
 	Vect3f m_PositionOffset;
 };
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cinematics>
+	<cinematic name="CrossDoor" duration="3.66667" cycle="false">
+		<cinematic_object resource="Puertaanimada" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.5" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.83333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.5" pos="0.0 0.0 0.0" rotation="0.0 0.5373 0.0 0.843392" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.0" pos="0.0 0.0 0.0" rotation="0.0 0.5373 0.0 0.843392" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.66667" pos="0.00756836 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="Pomoanimado" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.5" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.83333" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.337873 0.941192" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.5" pos="-0.862474 0.0 -1.579" rotation="0.181539 0.505702 -0.284959 0.793793" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.66667" pos="-0.862474 0.0 -1.579" rotation="0.0 0.5373 0.0 0.843392" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.0" pos="-0.862474 0.0 -1.579" rotation="0.0 0.5373 0.0 0.843392" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.66667" pos="0.00756836 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="PickKey" duration="15.5" cycle="false">
+		<cinematic_object resource="CajonComodaIzquierda2" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.16667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.83333" pos="-0.177185 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="9.83333" pos="-0.177185 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.2" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="14.1667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="14.3" pos="-0.00940198 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="14.4" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="14.6" pos="-0.00541139 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="14.8333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="15.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="15.5" pos="-0.199439 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+</cinematics>
