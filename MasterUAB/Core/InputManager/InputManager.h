@@ -5,6 +5,7 @@
 #include <string>
 #include <gainput\gainput.h>
 #include <Engine\UABEngine.h>
+#include "KeyboardInput.h"
 #include <Utils.h>
 #include <dinput.h>
 
@@ -20,9 +21,8 @@ protected:
 	float m_AxisX;
 	float m_AxisY;
 	float m_AxisZ;
-
 	float m_Speed;
-
+	CKeyboardInput* m_KeyBoard;
 	bool m_Focus;
 	std::string m_Filename;
 
@@ -54,7 +54,9 @@ public:
 		DebugSanityDown,
 		DebugReloadLua,
 		DebugToggleRenderLights,
-		DebugChangeCameraControl,
+		DebugToggleRenderAStar,
+		DebugToggleLoadVideo,
+		DebugConsole,
 		DebugChangeCameraVision,
 		DebugChangeCamera,
 		DebugToggleRenderCamera,
@@ -94,9 +96,9 @@ public:
 	bool IsActionNew(std::string _name);
 	bool IsActionReleased(std::string _name);
 	bool WasActionActive(std::string _name);
-
-	gainput::InputManager* GetManager(){ return m_Manager; }
-	gainput::InputMap* GetMap(){ return m_Map; }
+	CKeyboardInput* GetKeyBoard(){ return m_KeyBoard; };
+	gainput::InputManager* GetManager(){ return m_Manager; };
+	gainput::InputMap* GetMap(){ return m_Map; };
 };
 
 #endif

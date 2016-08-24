@@ -282,11 +282,11 @@ CDebugRender::CDebugRender(ID3D11Device* _Device)
 		uint16_t l_Sphere_10SegIdxs[] = { 0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 6, 0, 6, 7, 0, 7, 8, 0, 8, 9, 0, 9, 10, 0, 10, 1, 1, 11, 12, 1, 12, 2, 2, 12, 13, 2, 13, 3, 3, 13, 14, 3, 14, 4, 4, 14, 15, 4, 15, 5, 5, 15, 16, 5, 16, 6, 6, 16, 17, 6, 17, 7, 7, 17, 18, 7, 18, 8, 8, 18, 19, 8, 19, 9, 9, 19, 20, 9, 20, 10, 10, 20, 11, 10, 11, 1, 11, 21, 22, 11, 22, 12, 12, 22, 23, 12, 23, 13, 13, 23, 24, 13, 24, 14, 14, 24, 25, 14, 25, 15, 15, 25, 26, 15, 26, 16, 16, 26, 27, 16, 27, 17, 17, 27, 28, 17, 28, 18, 18, 28, 29, 18, 29, 19, 19, 29, 30, 19, 30, 20, 20, 30, 21, 20, 21, 11, 21, 31, 32, 21, 32, 22, 22, 32, 33, 22, 33, 23, 23, 33, 34, 23, 34, 24, 24, 34, 35, 24, 35, 25, 25, 35, 36, 25, 36, 26, 26, 36, 37, 26, 37, 27, 27, 37, 38, 27, 38, 28, 28, 38, 39, 28, 39, 29, 29, 39, 40, 29, 40, 30, 30, 40, 31, 30, 31, 21, 41, 32, 31, 41, 33, 32, 41, 34, 33, 41, 35, 34, 41, 36, 35, 41, 37, 36, 41, 38, 37, 41, 39, 38, 41, 40, 39, 41, 31, 40 };
 
 		m_Sphere_10Seg = new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_COLOR_VERTEX>(l_Sphere_10SegVtxs, 42, l_Sphere_10SegIdxs, 240);
+		m_Sphere_10Seg2 = new CUABLineListRenderableIndexed16Vertexs<MV_POSITION_COLOR_VERTEX>(l_Sphere_10SegVtxs, 42, l_Sphere_10SegIdxs, 240);
 		m_Sphere_10SegBSRadi = 1.0f;
 		m_Sphere_10SegBSCenter = Vect3f(0.0f, 1.19209e-007f, 0.0f);
 		m_Sphere_10SegBBMin = Vect3f(1e+030f, 1e+030f, 1e+030f);
 		m_Sphere_10SegBBMax = Vect3f(-1e+030f, -1e+030f, -1e+030f);
-
 
 	}
 
@@ -455,7 +455,10 @@ CRenderableVertexs * CDebugRender::GetLine(Vect3f inici, Vect3f final) const
 		{ inici, CColor(1.f, 1.f, 1.f, 1.f) },
 		{ final, CColor(1.f, 1.f, 1.f, 1.f) }
 	};
-	return new CUABLinesListRenderableVertexs<MV_POSITION_COLOR_VERTEX>(l_Line,2,1);
+
+	uint16_t l_LineIdxs[] = { 0, 1 };
+
+	return new CUABLineListRenderableIndexed16Vertexs<MV_POSITION_COLOR_VERTEX>(l_Line, 2, l_LineIdxs, 2);
 }
 
 

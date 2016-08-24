@@ -33,8 +33,10 @@
 	
 	<action name="DebugReloadLua" device="Keyboard" key="KeyT"/>
 	<action name="DebugToggleRenderLights" device="Keyboard" key="KeyL"/>
+	<action name="DebugToggleRenderAStar" device="Keyboard" key="KeyO"/>
+	<action name="DebugToggleLoadVideo" device="Keyboard" key="KeyI"/>
 	
-	<action name="DebugChangeCameraControl" device="Keyboard" key="KeyC"/>
+	<action name="DebugConsole" device="Keyboard" key="KeyC"/>
 	<action name="DebugChangeCameraVision" device="Keyboard" key="KeyV"/>
 	<action name="DebugChangeCamera" device="Keyboard" key="KeyB"/>
 	<action name="DebugToggleRenderCamera" device="Keyboard" key="KeyX"/>

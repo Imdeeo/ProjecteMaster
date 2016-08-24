@@ -5,7 +5,7 @@
 #include "Effects\EffectManager.h"
 #include "RenderManager\RenderManager.h"
 #include "DebugRender.h"
-
+#include "Camera\Frustum.h"
 #include "Texture\DynamicTexture.h"
 
 CSpotLight::CSpotLight():CDirectionalLight(),m_Angle(0.0f),m_FallOff(0.0f){}
@@ -108,6 +108,11 @@ CRenderableVertexs* CSpotLight::GetShape(CRenderManager *_RenderManager)
 	return _RenderManager->GetDebugRender()->GetCone();
 }
 #endif
+
+bool const CSpotLight::GetInsideFrustum()
+{
+	return m_Frustum->SphereVisible(m_Position + (m_Direction.GetNormalized() * m_EndRangeAttenuation) / 2, m_EndRangeAttenuation);
+}
 
 void CSpotLight::Save(FILE* _File)
 {

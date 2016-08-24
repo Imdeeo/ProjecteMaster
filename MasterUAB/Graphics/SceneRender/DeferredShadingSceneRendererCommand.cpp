@@ -31,12 +31,16 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
 	for (size_t i = 0; i < m_StagedTextures.size(); ++i)
 				m_StagedTextures[i].Activate();
 
+	int count = 0;
+
 	for (size_t j = 0; j < UABEngine.GetLightManager()->GetResourcesVector().size(); ++j)
 	{
 		CLight *l_Light = UABEngine.GetLightManager()->GetResourceById(j);
-		if (!l_Light->GetEnabled()) {
+		if (!l_Light->GetEnabled() || !l_Light->GetInsideFrustum()) {
 			continue;
 		}
+
+		count++;
 		UABEngine.GetEffectManager()->SetLightConstants(0, l_Light);
 
 		CEffectTechnique* l_EffectTechnique = m_RenderableObjectTechnique->GetEffectTechnique();
@@ -48,5 +52,6 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
 
 		_RenderManager.DrawScreenQuad(l_EffectTechnique, NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	}
+	printf("TOTAL DE LUCES PINTADAS %i", count);
 	_RenderManager.GetContextManager()->GetDeviceContext()->OMSetBlendState(NULL, NULL, 0xffffffff);
 }	

@@ -19,6 +19,7 @@
 #include "Camera\CameraControllerManager.h"
 #include "LevelManager\LevelManager.h"
 #include "GamePlayManager.h"
+#include "IA\AStar.h"
 
 #include "no_sillywarnings_please.h"
 
@@ -45,86 +46,94 @@ void CApplication::Update(float _ElapsedTime)
 	UABEngine.GetEffectManager()->m_SceneParameters.m_Time = m_Timer;
 
 #ifdef _DEBUG
-
-	gainput::InputMap* l_InputMap = UABEngine.GetInputManager()->GetMap();
-
-	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugReloadLua))
+	if (! UABEngine.GetActiveConsole())
 	{
-		UABEngine.ReloadLUA();
-	}
+		gainput::InputMap* l_InputMap = UABEngine.GetInputManager()->GetMap();
 
-	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderLights))
-		UABEngine.GetLightManager()->SwitchRenderLights();
-
-	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCamera))
-		UABEngine.SwitchCamera();
-
-	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCameraVision))
-		UABEngine.ChangeCameraVision();
-
-	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCameraControl))
-	{
-		int l_currentCameraCotnrol = UABEngine.GetCameraControllerManager()->GetCurrentCameraControl();
-		l_currentCameraCotnrol++;
-		l_currentCameraCotnrol = l_currentCameraCotnrol % 2;
-		UABEngine.GetCameraControllerManager()->SetCurrentCameraControl(l_currentCameraCotnrol);
-	}
-
-	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderCamera))
-		m_RenderCameraCube = !m_RenderCameraCube;
-
-	/*if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugMonsterIdle))
-	{
-		if(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")!=nullptr)
+		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugReloadLua))
 		{
-			if(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->IsActionAnimationActive(2))
-			{
-				((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-					RemoveAction(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-					GetActualActionAnimation());
-			}
-			((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-			ClearCycle(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-			GetActualCycleAnimation(),0.1f);
-			((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(0,1.f,0.1f);
+			UABEngine.ReloadLUA();
 		}
-	}
-	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugMonsterRun))
-	{
-		if(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")!=nullptr)
+
+		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderLights))
 		{
-			if(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->IsActionAnimationActive(2))
-			{
-				((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-					RemoveAction(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-				GetActualActionAnimation());
-			}
-			((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-			ClearCycle(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-			GetActualCycleAnimation(),0.1f);
-			((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(1,1.f,0.1f);
+			UABEngine.GetLightManager()->SwitchRenderLights();
 		}
-	}
-	if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugMonsterHit))
-	{
-		if(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")!=nullptr)
+
+		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderAStar))
 		{
-			if(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->IsActionAnimationActive(2))
+			UABEngine.GetAStarManager()->SwitchRenderNodes();
+		}
+
+		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCamera))
+			UABEngine.SwitchCamera();
+
+		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCameraVision))
+			UABEngine.ChangeCameraVision();
+
+		/*if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCameraControl))
+		{
+			int l_currentCameraCotnrol = UABEngine.GetCameraControllerManager()->GetCurrentCameraControl();
+			l_currentCameraCotnrol++;
+			l_currentCameraCotnrol = l_currentCameraCotnrol % 2;
+			UABEngine.GetCameraControllerManager()->SetCurrentCameraControl(l_currentCameraCotnrol);
+		}*/
+
+		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderCamera))
+			m_RenderCameraCube = !m_RenderCameraCube;
+
+		/*if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugMonsterIdle))
+		{
+			if(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")!=nullptr)
 			{
+				if(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->IsActionAnimationActive(2))
+				{
+					((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+						RemoveAction(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+						GetActualActionAnimation());
+				}
 				((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-					RemoveAction(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-				GetActualActionAnimation());
-			}
-			else
-			{*/
-				/*((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
 				ClearCycle(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
-				GetActualAnimation(),0.1f);*/
-			/*}
-		((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ExecuteAction(2,0.1f,0.1f);
+				GetActualCycleAnimation(),0.1f);
+				((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(0,1.f,0.1f);
+			}
 		}
-	}*/	
-
+		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugMonsterRun))
+		{
+			if(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")!=nullptr)
+			{
+				if(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->IsActionAnimationActive(2))
+				{
+					((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+						RemoveAction(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+					GetActualActionAnimation());
+				}
+				((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+				ClearCycle(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+				GetActualCycleAnimation(),0.1f);
+				((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->BlendCycle(1,1.f,0.1f);
+			}
+		}
+		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugMonsterHit))
+		{
+			if(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")!=nullptr)
+			{
+				if(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->IsActionAnimationActive(2))
+				{
+					((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+						RemoveAction(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+					GetActualActionAnimation());
+				}
+				else
+				{*/
+					/*((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+					ClearCycle(((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->
+					GetActualAnimation(),0.1f);*/
+				/*}
+			((CAnimatedInstanceModel*)(UABEngine.GetRenderableObjectsManager()->GetResource("Bot001")))->ExecuteAction(2,0.1f,0.1f);
+			}
+		}*/	
+	}
 #endif
 
 	// ANTIGUO UPDATE
