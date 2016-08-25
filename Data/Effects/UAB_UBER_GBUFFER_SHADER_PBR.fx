@@ -6,6 +6,7 @@ static float m_Exposure = m_RawDataArray[1];
 static float m_SpecularPower = m_RawDataArray[2];
 static float m_SpecularFactor = m_RawDataArray[3];
 static float m_ReflectionFactor = m_RawDataArray[4];
+static float m_SSRReflection = m_RawDataArray[5];
 
 struct VS_INPUT
 {
@@ -245,12 +246,12 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	#else
 		l_Out.Target1 = float4(l_AmbientIllumination.xyz, l_SpecularPower);
 	#endif
-	l_Out.Target2 = float4(Normal2Texture(Nn), l_Metalness);
+	l_Out.Target2 = float4(Normal2Texture(Nn), m_SSRReflection);
 	l_Out.Target3 = float4(l_Depth,l_Depth,l_Depth, 1.0f);
 	#if defined(HAS_SPECULAR_MAP) || defined(HAS_METALNESS_MAP)
-		l_Out.Target4 = float4(l_SpecularColor.rgb, 1);
+		l_Out.Target4 = float4(l_SpecularColor.rgb, l_Metalness);
 	#else
-		l_Out.Target4 = float4(1, 1, 1, 1);
+		l_Out.Target4 = float4(1, 1, 1, 0);
 	#endif
 
 	return l_Out;

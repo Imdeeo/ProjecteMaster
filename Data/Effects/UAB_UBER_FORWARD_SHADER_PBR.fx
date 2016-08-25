@@ -160,7 +160,7 @@ TVertexPS mainVS(TVertexVS IN)
 }
 
 #ifdef HAS_LIGHTS
-float4 applyAllLights(TVertexPS IN, float3 Nn, float SpecularFactor, float4 Albedo, float AlbedoFactor, float Metalness, float4 SpecularColor)
+float4 applyAllLights(TVertexPS IN, float3 Nn, float SpecularFactor, float4 Albedo, float AlbedoFactor, float Metalness, float3 SpecularColor)
 {
 	float l_specularFactor=SpecularFactor;
 	float4 l_Out = Albedo;
@@ -244,7 +244,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 			l_SpecularColor = float4(l_Albedo.rgb + (1.0f-l_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_Albedo.rgb), 1);
 		#endif
 		#ifdef HAS_NORMAL
-			Out = Out*applyAllLights(IN, Nn, l_SpecularFactor, l_Albedo, l_AlbedoFactor, l_Metalness, l_SpecularColor);
+			Out = Out*applyAllLights(IN, Nn, l_SpecularFactor, l_Albedo, l_AlbedoFactor, l_Metalness, l_SpecularColor.rgb);
 			if (Out.w < 0.1)
 			{
 				clip(-1);
