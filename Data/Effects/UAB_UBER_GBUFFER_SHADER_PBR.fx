@@ -6,6 +6,7 @@ static float m_Exposure = m_RawDataArray[1];
 static float m_SpecularPower = m_RawDataArray[2];
 static float m_SpecularFactor = m_RawDataArray[3];
 static float m_ReflectionFactor = m_RawDataArray[4];
+static float m_SSRReflection = m_RawDataArray[5];
 
 struct VS_INPUT
 {
@@ -49,6 +50,7 @@ struct PS_OUTPUT
 	float4 Target1 : SV_Target1;
 	float4 Target2 : SV_Target2;
 	float4 Target3 : SV_Target3;
+	float4 Target4 : SV_Target4;
 };
 
 float3 Normal2Texture(float3 Normal)
@@ -115,12 +117,12 @@ float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, S
 	LightmapXSampler, Texture2D LightmapYTexture, SamplerState LightmapYSampler, Texture2D
 	LightmapZTexture, SamplerState LightmapZSampler)
 {
-	float3 l_LightmapX=LightmapXTexture.Sample(LightmapXSampler, UV)*2;
-	float3 l_LightmapY=LightmapYTexture.Sample(LightmapYSampler, UV)*2;
-	float3 l_LightmapZ=LightmapZTexture.Sample(LightmapZSampler, UV)*2;
-	float3 l_BumpBasisX=normalize(float3(0.816496580927726, 0.5773502691896258, 0 ));
-	float3 l_BumpBasisY=normalize(float3(-0.408248290463863, 0.5773502691896258, 0.7071067811865475 ));
-	float3 l_BumpBasisZ=normalize(float3(-0.408248290463863, 0.5773502691896258, -0.7071067811865475));
+	float3 l_LightmapX=LightmapXTexture.Sample(LightmapXSampler, UV);
+	float3 l_LightmapY=LightmapYTexture.Sample(LightmapYSampler, UV);
+	float3 l_LightmapZ=LightmapZTexture.Sample(LightmapZSampler, UV);
+	float3 l_BumpBasisX=normalize(float3(0.816496580927726, 0, 0.5773502691896258));
+	float3 l_BumpBasisY=normalize(float3(-0.408248290463863,  0.7071067811865475, 0.5773502691896258));
+	float3 l_BumpBasisZ=normalize(float3(-0.408248290463863, -0.7071067811865475, 0.5773502691896258));
 	float3 l_RNMLighting=saturate(dot(Nn, l_BumpBasisX)) * l_LightmapX+saturate(dot(Nn, l_BumpBasisY)) * l_LightmapY + saturate(dot(Nn, l_BumpBasisZ)) * l_LightmapZ;
 
 	return l_RNMLighting;
@@ -159,22 +161,13 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	float l_Depth = IN.HPos.z / IN.HPos.w;
 
 	float4 l_Ambient = m_LightAmbient;
-	float4 l_Albedo = T0Texture.SampleLevel(S0Sampler, IN.UV, 0);
+	float4 l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
 	if (l_Albedo.w < 0.1)
 	{
 		clip(-1);
 	}
 	float3 Nn = IN.Normal;
-
-	// PBR modifications according to http://www.marmoset.co/toolbag/learn/pbr-theory
-	// PBR: fresnel (the formula is arbitrary, not based on any source, but the curve would look somewhat similar to the examples)
-	float3 l_EyeToWorldPosition = normalize(IN.WorldPos-m_CameraPosition.xyz);
-	float fresnel = pow(1 - dot(-l_EyeToWorldPosition, Nn), 2);
-	l_specularFactor += fresnel * (1-l_specularFactor);
-	// PBR: energy conservation: "reflection and diffusion are mutually exclusive"
-	// "This is easy to enforce in a shading system: one simply subtracts reflected light before allowing the diffuse shading to occur."
-	l_Albedo *= (1-l_specularFactor);
-
+	
 	#ifdef HAS_TANGENT
 		Nn=normalize(IN.WorldNormal);
 		float3 Tn=normalize(IN.WorldTangent);
@@ -188,45 +181,78 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 
 		l_specularFactor *= l_NormalMap.w;
 	#endif
+	
+	#ifdef HAS_GLOSSINESS_MAP
+		float l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV);
+		m_SpecularPower *= l_Glossiness;
+	#endif
+
+	#ifdef HAS_SPECULAR_MAP
+		float4 l_SpecularColor = T10Texture.Sample(S10Sampler, IN.UV);
+		l_specularFactor *= l_SpecularColor.w;
+	#endif
+	// PBR modifications according to http://www.marmoset.co/toolbag/learn/pbr-theory
+	// PBR: fresnel (the formula is arbitrary, not based on any source, but the curve would look somewhat similar to the examples)
+	float3 l_EyeToWorldPosition = normalize(IN.WorldPos-m_CameraPosition.xyz);
+	float fresnel = pow(1 - dot(-l_EyeToWorldPosition, Nn), FRESNEL_POWER);
+	l_specularFactor += fresnel * (1-l_specularFactor);
+	// PBR: energy conservation: "reflection and diffusion are mutually exclusive"
+	// "This is easy to enforce in a shading system: one simply subtracts reflected light before allowing the diffuse shading to occur."
+	#ifdef HAS_SPECULAR_MAP
+		float l_AlbedoFactor = 1 - l_specularFactor;
+		float l_Metalness = 0.0f;
+	#elif defined(HAS_METALNESS_MAP)
+		float l_Metalness = T10Texture.Sample(S10Sampler, IN.UV);
+		l_specularFactor = l_specularFactor + l_Metalness * (1-l_specularFactor);
+		float l_AlbedoFactor = 1 - l_Metalness;
+		l_AlbedoFactor *= 1 - l_specularFactor;
+		float4 l_SpecularColor = float4(l_Albedo.rgb + (1.0f-l_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_Albedo.rgb), 1);
+	#else
+		float l_AlbedoFactor = 1-l_specularFactor;
+		float l_Metalness = 0.0f;
+	#endif
 
 	#ifdef HAS_UV2
-		#ifdef HAS_RNM
-			l_Ambient = float4(GetRadiosityNormalMap(Nn, IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
+		#if defined(HAS_TANGENT) && defined(HAS_RNM)
+			l_Ambient = float4(GetRadiosityNormalMap(l_NormalMap.xyz, IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
+		#elif defined(HAS_RNM)
+			l_Ambient = float4(GetRadiosityNormalMap(float3(0,0,1), IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
 		#else
 			l_Ambient = T1Texture.Sample(S1Sampler,IN.UV2);
 		#endif
 	#endif
 
-	float4 l_AmbientIllumination = l_Albedo * l_Ambient;
+	float4 l_AmbientIllumination = l_Albedo * l_AlbedoFactor * l_Ambient;
 	#ifdef HAS_REFLECTION
-		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, IN.Normal));
-		float4 l_ReflectColor = T8Texture.SampleLevel(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
-		l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor;
+		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, Nn));
+		float4 l_ReflectColor = T8Texture.SampleBias(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
+		#ifdef HAS_SPECULAR_MAP
+			l_AmbientIllumination += float4(l_ReflectColor.xyz * l_specularFactor * m_ReflectionFactor * l_SpecularColor.xyz, 1);
+		#elif defined(HAS_METALNESS_MAP)
+			l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor * l_SpecularColor;
+		#else
+			l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor;
+		#endif
 	#endif
 
 
 	// PBR: interpret the specularPower/glossiness scale as logarithmic (an arbitrary choice)
-	float l_MaxPower = 200.0f;
-	float l_MinPower = 5.0f;
-	float l_SpecularPower = (pow(l_MaxPower/l_MinPower, m_SpecularPower/100) * l_MinPower);
-
-	/* PBR: energy conservation (an arbitrary formula):
-	 * "a renderer should display rough surfaces as having larger reflection
-	 * highlights which appear dimmer than the smaller, sharper highlights of a
-	 * smooth surface"
-	 */
-	float l_BaseFactor = 0.1;
-	l_specularFactor *= l_BaseFactor + (1-l_BaseFactor) * pow((m_SpecularPower/100), 2);
+	float l_SpecularPower = (pow(MAX_SPECULAR_POWER/MIN_SPECULAR_POWER, m_SpecularPower/100) * MIN_SPECULAR_POWER);
 
 	l_SpecularPower /= 100;
 	l_Out.Target0 = float4(l_Albedo.xyz, l_specularFactor);
 	#ifdef HAS_GLOW
-		l_Out.Target1 = float4(T0Texture.SampleLevel(S0Sampler, IN.UV, 0).xyz, l_SpecularPower);
+		l_Out.Target1 = float4(T0Texture.Sample(S0Sampler, IN.UV).xyz, l_SpecularPower);
 	#else
 		l_Out.Target1 = float4(l_AmbientIllumination.xyz, l_SpecularPower);
 	#endif
-	l_Out.Target2 = float4(Normal2Texture(Nn), m_ReflectionFactor);
+	l_Out.Target2 = float4(Normal2Texture(Nn), m_SSRReflection);
 	l_Out.Target3 = float4(l_Depth,l_Depth,l_Depth, 1.0f);
+	#if defined(HAS_SPECULAR_MAP) || defined(HAS_METALNESS_MAP)
+		l_Out.Target4 = float4(l_SpecularColor.rgb, l_Metalness);
+	#else
+		l_Out.Target4 = float4(1, 1, 1, 0);
+	#endif
 
 	return l_Out;
 }
