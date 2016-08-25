@@ -9,7 +9,6 @@ function IdleFirstAutomaton(args)
 	
 	l_Enemy.m_Velocity = Vect3f(0,0,0)
 	l_Enemy.m_LastPositionPlayer = nil
-	l_Enemy.m_IsChasing = false
 end
 
 function IdleUpdateAutomaton(args, _ElapsedTime)
@@ -21,11 +20,7 @@ function IdleUpdateAutomaton(args, _ElapsedTime)
 	if l_Enemy.m_Patrol then	
 		l_Enemy.m_State = "patrol"		
 	else
-		if l_Enemy:PlayerVisible(l_Owner) then
-			-- the enemy has seen to player
-			l_Enemy.m_IsChasing = true
-			l_Enemy.m_State = "chase"
-		elseif l_Enemy:DetectPlayerNoise(1) then
+		if l_Enemy:PlayerVisible(l_Owner) or l_Enemy:DetectPlayerNoise(1) then
 			l_Enemy.m_State = "chase"
 		end
 	end

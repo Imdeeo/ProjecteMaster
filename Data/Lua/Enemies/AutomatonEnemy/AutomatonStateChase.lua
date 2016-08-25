@@ -38,9 +38,9 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 		-- Si la distancia entre el enemy y el player es menor a lo establecido pasamos a attack
 		if l_Distance < l_Enemy.m_DistanceToKill then
 			l_Enemy.m_State = "attack"
-		end		
+		end
 	else
-		if l_Enemy.m_BlockingObjectName == nil and l_Enemy.m_IsChasing then
+		if l_Enemy.m_BlockingObjectName == nil and not l_Enemy.m_DetectedSound then
 			l_Enemy.m_LastPositionPlayer = nil
 			l_Enemy.m_State = "alert"
 		else

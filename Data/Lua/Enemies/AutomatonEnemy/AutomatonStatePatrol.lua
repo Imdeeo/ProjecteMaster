@@ -16,14 +16,10 @@ function PatrolUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
-	if l_Enemy:PlayerVisible(l_Owner) then
+	if l_Enemy:PlayerVisible(l_Owner) or l_Enemy:DetectPlayerNoise(1) then
+		l_Enemy.m_DefaultPosition = Vect3f(l_Owner:get_position().x, l_Owner:get_position().y, l_Owner:get_position().z)
+		l_Enemy.m_DefaultRotation = l_Owner:get_rotation()		
 		l_Enemy.m_IsChasing = true
-		l_Enemy.m_DefaultPosition = Vect3f(l_Owner:get_position().x, l_Owner:get_position().y, l_Owner:get_position().z)
-		l_Enemy.m_DefaultRotation = l_Owner:get_rotation()
-		l_Enemy.m_State = "chase"
-	elseif l_Enemy:DetectPlayerNoise(1) then
-		l_Enemy.m_DefaultPosition = Vect3f(l_Owner:get_position().x, l_Owner:get_position().y, l_Owner:get_position().z)
-		l_Enemy.m_DefaultRotation = l_Owner:get_rotation()
 		l_Enemy.m_State = "chase"
 	else
 		local l_NodePoint = l_Enemy.m_PathFindig:get_actual_patrol_point(l_Enemy.m_PatrolName)

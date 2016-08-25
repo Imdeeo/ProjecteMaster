@@ -14,6 +14,7 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_TotalNodes = 0
 		self.m_Patrol = _TreeNode:get_bool_property("patrol", false, false)
 		self.m_PatrolName = _TreeNode:get_psz_property("patrol_name", "", false)
+		self.m_DetectedSound = false
 		self.m_IsChasing = false
 		self.m_IsReturn = false
 		self.m_LastPositionPlayer = nil
@@ -175,9 +176,11 @@ class 'CAutomatonEnemy' (CEnemy)
 			and ((not l_Crouch and not l_Run and l_Distance <= self.m_DistanceToActivateWalk * _increment)
 			or (l_Run and l_Distance <= self.m_DistanceToActivateRun * _increment)
 			or (l_Crouch and l_Distance <= self.m_DistanceToActivateCrouching * _increment)) then
-			return true
+			self.m_DetectedSound = true
 		else
-			return false
+			self.m_DetectedSound = false
 		end
+		
+		return self.m_DetectedSound
 	end
 --end
