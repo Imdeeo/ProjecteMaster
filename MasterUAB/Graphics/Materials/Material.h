@@ -9,7 +9,7 @@ class CTexture;
 class CMaterialParameter;
 class CRenderableObjectTechnique;
 
-#define MAX_TEXTURES 10
+#define MAX_TEXTURES 11
 
 class CMaterial : public CNamed
 {
