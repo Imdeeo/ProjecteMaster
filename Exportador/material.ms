@@ -60,55 +60,83 @@ fn createMaterials dir filename Objs copyTexture =
 				(
 					if (materialsDictionary.Item[mat[j].name]==undefined) then
 					(
-						if (classof mat[j].diffuseMap == Bitmaptexture) then
+						local hasDiffuse = (classof mat[j].diffuseMap == Bitmaptexture) as booleanClass
+						local hasReflection = (classof mat[j].reflectionMap == Bitmaptexture) as booleanClass
+						local hasBump = (classof mat[j].bumpMap == Bitmaptexture or classof mat[j].bumpMap ==  Normal_Bump) as booleanClass
+						local hasLightmap = (classof mat[j].selfIllumMap == Bitmaptexture) as booleanClass
+						local hasRNM = (classof mat[j].selfIllumMap == Multi_Sub_Map) as booleanClass
+						local hasGlossiness = (classof mat[j].glossinessMap == Bitmaptexture) as booleanClass
+						local hasSpecular = (classof mat[j].specularMap == Bitmaptexture) as booleanClass
+						
+						local renderableTechnique = ""
+						if (hasDiffuse and not hasReflection and not hasBump and not hasLightmap and not hasRNM and not hasGlossiness and not hasSpecular) then
 						(
-							if (classof mat[j].reflectionMap == Bitmaptexture) then
-							(
-								format "\t<material name=\"%\" renderable_object_technique=\"reflection\">\n" mat[j].name to:file
-							)else(
-								if (classof mat[j].bumpMap == Bitmaptexture or classof mat[j].bumpMap ==  Normal_Bump) then
-								(
-									if (classof mat[j].selfIllumMap == Bitmaptexture) then
-									(
-										format "\t<material name=\"%\" renderable_object_technique=\"lightmap_bump\">\n" mat[j].name to:file
-									)
-									else if (classof mat[j].selfIllumMap == Multi_Sub_Map) then
-									(
-										format "\t<material name=\"%\" renderable_object_technique=\"radiosity_bump\">\n" mat[j].name to:file
-									)
-									else
-									(
-										format "\t<material name=\"%\" renderable_object_technique=\"bump\">\n" mat[j].name to:file
-									)
-								)
-								else
-								(
-									if (classof mat[j].selfIllumMap == Bitmaptexture) then
-									(
-										format "\t<material name=\"%\" renderable_object_technique=\"lightmap\">\n" mat[j].name to:file
-									)
-									else if (classof mat[j].selfIllumMap == Multi_Sub_Map) then
-									(
-										format "\t<material name=\"%\" renderable_object_technique=\"radiosity\">\n" mat[j].name to:file
-									)
-									else
-									(
-										format "\t<material name=\"%\" renderable_object_technique=\"lights\">\n" mat[j].name to:file
-									)
-								)
-							)
-						) else (
-							if (classof mat[j].reflectionMap == Bitmaptexture) then
-							(
-								format "\t<material name=\"%\" renderable_object_technique=\"skybox\">\n" mat[j].name to:file
-							)
+							renderableTechnique = "lights"
 						)
+						else if (not hasDiffuse and hasReflection and not hasBump and hasLightmap and not hasRNM and not hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "skybox"
+						)
+						else if (hasDiffuse and hasReflection and not hasBump and not hasLightmap and not hasRNM and not hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "reflection"
+						)
+						else if (hasDiffuse and not hasReflection and hasBump and not hasLightmap and not hasRNM and not hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "bump"
+						)
+						else if (hasDiffuse and hasReflection and hasBump and not hasLightmap and not hasRNM and not hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "bump_env"
+						)
+						else if (hasDiffuse and not hasReflection and hasBump and hasLightmap and not hasRNM and not hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "lightmap_bump"
+						)						
+						else if (hasDiffuse and hasReflection  and hasBump and hasLightmap and not hasRNM and not hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "lightmap_bump_env"
+						)						
+						else if (hasDiffuse and hasReflection and hasBump and hasLightmap and not hasRNM and hasGlossiness and hasSpecular) then
+						(
+							renderableTechnique = "lightmap_bump_specularmap"
+						)
+						else if (hasDiffuse and hasReflection and hasBump and hasLightmap and not hasRNM and hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "lightmap_bump_metalnessmap"
+						)
+						else if (hasDiffuse and not hasReflection and not hasBump and not hasLightmap and hasRNM and not hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "radiosity"
+						)
+						else if (hasDiffuse and not hasReflection and hasBump and not hasLightmap and hasRNM and not hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "radiosity_bump"
+						)
+						else if (hasDiffuse and hasReflection and hasBump and not hasLightmap and hasRNM and not hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "radiosity_bump_env"
+						)
+						else if (hasDiffuse and hasReflection and hasBump and not hasLightmap and hasRNM and hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "radiosity_bump_specularmap"
+						)
+						else if (hasDiffuse and hasReflection and hasBump and not hasLightmap and hasRNM and hasGlossiness and hasSpecular) then
+						(
+							renderableTechnique = "radiosity_bump_metalnessmap"
+						)
+						else
+						(
+							renderableTechnique = "lights"
+						)
+
+						format "\t<material name=\"%\" renderable_object_technique=\"%\">\n" mat[j].name renderableTechnique to:file
+						
 						materialsDictionary.Add mat[j].name "defined"
-						if (classof mat[j].diffuseMap == Bitmaptexture) then
+						if (hasDiffuse == true) then
 						(
 							if (mat[j].diffuseMap.bitmap != undefined) then
 							(
-								--nomTextura = (openBitMap mat[j].diffuseMap.bitmap.filename).fileName
 								nomTextura = filenameFromPath (mat[j].diffuseMap.bitmap.filename)					
 								pathfile = (dir + "Textures\\" + nomTextura)
 								relativePathfile = pathfile
@@ -118,11 +146,11 @@ fn createMaterials dir filename Objs copyTexture =
 								(
 									dirExist (dir+"Textures")
 									copyFile (openBitMap mat[j].diffuseMap.bitmap.filename).fileName pathfile
-									--copyFile mat[j].diffuseMap.bitmap.filename pathfile
 								)
 							)
 						)
-						if (classof mat[j].selfIllumMap == Multi_Sub_Map) then
+						
+						if (hasRNM) then
 						(
 							nomTextura1 = filenameFromPath (mat[j].selfIllumMap.id_0_color_shader.filename)
 							nomTextura2 = filenameFromPath (mat[j].selfIllumMap.id_1_color_shader.filename)
@@ -145,12 +173,9 @@ fn createMaterials dir filename Objs copyTexture =
 								copyFile (openBitMap mat[j].selfIllumMap.id_0_color_shader.bitmap.filename).fileName pathfile1
 								copyFile (openBitMap mat[j].selfIllumMap.id_1_color_shader.bitmap.filename).fileName pathfile2
 								copyFile (openBitMap mat[j].selfIllumMap.id_2_color_shader.bitmap.filename).fileName pathfile3
-								--copyFile mat[j].selfIllumMap.id_0_color_shader.filename pathfile1
-								--copyFile mat[j].selfIllumMap.id_1_color_shader.filename pathfile2
-								--copyFile mat[j].selfIllumMap.id_2_color_shader.filename pathfile3
 							)
 						)
-						else if (classof mat[j].selfIllumMap == Bitmaptexture) then
+						else if (hasLightmap) then
 						(
 							if (mat[j].selfIllumMap.bitmap != undefined) then
 							(
@@ -163,11 +188,11 @@ fn createMaterials dir filename Objs copyTexture =
 								(
 									dirExist (dir+"Textures")
 									copyFile (openBitMap mat[j].selfIllumMap.bitmap.filename).fileName pathfile
-									--copyFile mat[j].selfIllumMap.bitmap.filename pathfile
 								)
 							)
 						)
-						if (classof mat[j].reflectionMap == Bitmaptexture) then
+						
+						if (hasReflection) then
 						(
 							if (mat[j].reflectionMap.bitmap != undefined) then
 							(
@@ -180,10 +205,10 @@ fn createMaterials dir filename Objs copyTexture =
 								(
 									dirExist (dir+"Textures")
 									copyFile (openBitMap mat[j].reflectionMap.bitmap.filename).fileName pathfile
-									--copyFile mat[j].reflectionMap.bitmap.filename pathfile
 								)
 							)
 						)
+						
 						if (classof mat[j].bumpMap == Bitmaptexture) then
 						(
 							if (mat[j].bumpMap.bitmap != undefined) then
@@ -197,10 +222,10 @@ fn createMaterials dir filename Objs copyTexture =
 								(
 									dirExist (dir+"Textures")
 									copyFile (openBitMap mat[j].bumpMap.bitmap.filename).fileName pathfile
-									--copyFile mat[j].bumpMap.bitmap.filename pathfile
 								)
 							)
-						) else if (classof mat[j].bumpMap == Normal_Bump) then
+						) 
+						else if (classof mat[j].bumpMap == Normal_Bump) then
 						(
 							if (mat[j].bumpMap.normal_map.bitmap != undefined) then
 							(
@@ -213,19 +238,67 @@ fn createMaterials dir filename Objs copyTexture =
 								(
 									dirExist (dir+"Textures")
 									copyFile (openBitMap mat[j].bumpMap.normal_map.bitmap.filename).fileName pathfile
-									--copyFile mat[j].bumpMap.normal_map.bitmap.filename pathfile
 								)
 							)
 						)
-						if (classof mat[j].diffuseMap == Bitmaptexture) then
+						
+						if (hasGlossiness and not hasSpecular) then
+						(
+							if (mat[j].glossinessMap.bitmap != undefined) then
+							(
+								nomTextura = filenameFromPath (mat[j].glossinessMap.bitmap.filename)	
+								pathfile = (dir + "Textures\\" + nomTextura)
+								relativePathfile = pathfile
+								relativePathfile2 = (dir + "Textures\\white.dds")
+								getRelativePath &relativePathFile
+								format "\t\t<texture type=\"glossiness\" filename=\"%\"/>\n" relativePathfile to:file
+								format "\t\t<texture type=\"specular\" filename=\"%\"/>\n" relativePathfile2 to:file
+								if copyTexture == true then
+								(
+									dirExist (dir+"Textures")
+									copyFile (openBitMap mat[j].glossinessMap.bitmap.filename).fileName pathfile
+								)
+							)
+						)
+						else if (hasGlossiness and hasSpecular) then
+						(
+							if (mat[j].specularMap.bitmap != undefined && mat[j].glossinessMap.bitmap != undefined) then
+							(
+								nomTextura = filenameFromPath (mat[j].glossinessMap.bitmap.filename)	
+								nomTextura2 = filenameFromPath (mat[j].specularMap.bitmap.filename)	
+								pathfile = (dir + "Textures\\" + nomTextura)
+								pathfile2 = (dir + "Textures\\" + nomTextura2)
+								relativePathfile = pathfile
+								relativePathfile2 = pathfile2
+								getRelativePath &relativePathFile
+								format "\t\t<texture type=\"glossiness\" filename=\"%\"/>\n" relativePathfile to:file
+								format "\t\t<texture type=\"specular\" filename=\"%\"/>\n" relativePathfile2 to:file
+								if copyTexture == true then
+								(
+									dirExist (dir+"Textures")
+									copyFile (openBitMap mat[j].glossinessMap.bitmap.filename).fileName pathfile
+									copyFile (openBitMap mat[j].specularMap.bitmap.filename).fileName pathfile2
+								)
+							)
+						)
+						
+						if (hasDiffuse) then
 						(
 							local specularAmount = mat[j].specularLevelMapAmount/100
 							local glossinessAmount = mat[j].glossiness
 						
 							format "\t\t<parameter type=\"float\" name=\"active\" value=\"1.0\"/>\n" to:file
 							format "\t\t<parameter type=\"float\" name=\"exposure\" value=\"0.80\" description=\"min=0.0 max=1.0 step=0.01\"/>\n" to:file
-							format "\t\t<parameter type=\"float\" name=\"specular_power\" value=\"%\" description=\"min=0.0 max=100.0 step=0.1\"/>\n" glossinessAmount to:file
-							format "\t\t<parameter type=\"float\" name=\"specular_factor\" value=\"%\" description=\"min=0.0 max=1.0 step=0.01\"/>\n" specularAmount to:file
+							if (hasGlossiness and not hasSpecular) then
+							(
+								format "\t\t<parameter type=\"float\" name=\"glossiness\" value=\"%\" description=\"min=0.0 max=100.0 step=0.1\"/>\n" glossinessAmount to:file
+								format "\t\t<parameter type=\"float\" name=\"reflectivity\" value=\"%\" description=\"min=0.0 max=1.0 step=0.01\"/>\n" specularAmount to:file
+							)							
+							else
+							(
+								format "\t\t<parameter type=\"float\" name=\"specular_power\" value=\"%\" description=\"min=0.0 max=100.0 step=0.1\"/>\n" glossinessAmount to:file
+								format "\t\t<parameter type=\"float\" name=\"specular_factor\" value=\"%\" description=\"min=0.0 max=1.0 step=0.01\"/>\n" specularAmount to:file
+							)							
 							format "\t\t<parameter type=\"float\" name=\"reflection\" value=\"1.0\" description=\"min=0.0 max=1.0 step=0.001\"/>\n" to:file
 							format "\t\t<parameter type=\"float\" name=\"ssr_reflection\" value=\"0.0\" description=\"min=0.0 max=1.0 step=0.001\"/>\n" to:file
 						)						
