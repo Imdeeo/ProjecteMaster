@@ -13,8 +13,6 @@ rollout CamAnim "Camera Animation" width:160 height:134
 	edittext CameraAnimationName "Name: " pos:[24,74] width:112 height:16 enabled:false visible:true
 	button ExportButton "Export" pos:[24,104] width:112 height:16 visible:true
 	
-	fn existFile fname = (getfiles fname).count != 0
-	
 	fn loadOK Obj =
 	(
 		CameraLabel.text = Obj.name
