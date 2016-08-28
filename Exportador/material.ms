@@ -85,6 +85,14 @@ fn createMaterials dir filename Objs copyTexture =
 						(
 							renderableTechnique = "bump"
 						)
+						else if (hasDiffuse and not hasReflection and not hasBump and not hasLightmap and not hasRNM and hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "metalnessmap"
+						)
+						else if (hasDiffuse and not hasReflection and not hasBump and not hasLightmap and not hasRNM and hasGlossiness and hasSpecular) then
+						(
+							renderableTechnique = "specularmap"
+						)
 						else if (hasDiffuse and hasReflection and hasBump and not hasLightmap and not hasRNM and not hasGlossiness and not hasSpecular) then
 						(
 							renderableTechnique = "bump_env"
@@ -96,10 +104,22 @@ fn createMaterials dir filename Objs copyTexture =
 						else if (hasDiffuse and hasReflection  and hasBump and hasLightmap and not hasRNM and not hasGlossiness and not hasSpecular) then
 						(
 							renderableTechnique = "lightmap_bump_env"
+						)
+						else if (hasDiffuse and hasReflection  and not hasBump and hasLightmap and not hasRNM and not hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "lightmap_env"
 						)						
 						else if (hasDiffuse and hasReflection and hasBump and hasLightmap and not hasRNM and hasGlossiness and hasSpecular) then
 						(
 							renderableTechnique = "lightmap_bump_specularmap"
+						)
+						else if (hasDiffuse and hasReflection and not hasBump and hasLightmap and not hasRNM and hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "lightmap_metalnessmap"
+						)
+						else if (hasDiffuse and hasReflection and not hasBump and hasLightmap and not hasRNM and hasGlossiness and hasSpecular) then
+						(
+							renderableTechnique = "lightmap_specularmap"
 						)
 						else if (hasDiffuse and hasReflection and hasBump and hasLightmap and not hasRNM and hasGlossiness and not hasSpecular) then
 						(
@@ -117,13 +137,25 @@ fn createMaterials dir filename Objs copyTexture =
 						(
 							renderableTechnique = "radiosity_bump_env"
 						)
+						else if (hasDiffuse and hasReflection and not hasBump and not hasLightmap and hasRNM and not hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "radiosity_env"
+						)
 						else if (hasDiffuse and hasReflection and hasBump and not hasLightmap and hasRNM and hasGlossiness and not hasSpecular) then
 						(
-							renderableTechnique = "radiosity_bump_specularmap"
+							renderableTechnique = "radiosity_bump_metalnessmap"							
 						)
 						else if (hasDiffuse and hasReflection and hasBump and not hasLightmap and hasRNM and hasGlossiness and hasSpecular) then
 						(
-							renderableTechnique = "radiosity_bump_metalnessmap"
+							renderableTechnique = "radiosity_bump_specularmap"
+						)
+						else if (hasDiffuse and hasReflection and not hasBump and not hasLightmap and hasRNM and hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "radiosity_metalnessmap"							
+						)
+						else if (hasDiffuse and hasReflection and not hasBump and not hasLightmap and hasRNM and hasGlossiness and hasSpecular) then
+						(
+							renderableTechnique = "radiosity_specularmap"
 						)
 						else
 						(
@@ -251,6 +283,7 @@ fn createMaterials dir filename Objs copyTexture =
 								relativePathfile = pathfile
 								relativePathfile2 = (dir + "Textures\\white.dds")
 								getRelativePath &relativePathFile
+								getRelativePath &relativePathFile2
 								format "\t\t<texture type=\"glossiness\" filename=\"%\"/>\n" relativePathfile to:file
 								format "\t\t<texture type=\"specular\" filename=\"%\"/>\n" relativePathfile2 to:file
 								if copyTexture == true then
@@ -262,7 +295,7 @@ fn createMaterials dir filename Objs copyTexture =
 						)
 						else if (hasGlossiness and hasSpecular) then
 						(
-							if (mat[j].specularMap.bitmap != undefined && mat[j].glossinessMap.bitmap != undefined) then
+							if (mat[j].specularMap.bitmap != undefined and mat[j].glossinessMap.bitmap != undefined) then
 							(
 								nomTextura = filenameFromPath (mat[j].glossinessMap.bitmap.filename)	
 								nomTextura2 = filenameFromPath (mat[j].specularMap.bitmap.filename)	
@@ -271,6 +304,7 @@ fn createMaterials dir filename Objs copyTexture =
 								relativePathfile = pathfile
 								relativePathfile2 = pathfile2
 								getRelativePath &relativePathFile
+								getRelativePath &relativePathFile2
 								format "\t\t<texture type=\"glossiness\" filename=\"%\"/>\n" relativePathfile to:file
 								format "\t\t<texture type=\"specular\" filename=\"%\"/>\n" relativePathfile2 to:file
 								if copyTexture == true then
