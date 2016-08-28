@@ -38,6 +38,7 @@ function RaycastComoda(_Player, _Pos)
 		_Player.m_NewItemName = "LlaveRecibidor"
 		_Player.m_ItemTime = 1.5
 		_Player.m_AnimationTime = 2.6
+		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -54,6 +55,7 @@ function RaycastDoor(_Player, _Pos)
 		_Player.m_CameraAnimation = "CrossDoor"
 		_Player.m_NewItemName = ""
 		_Player.m_ItemTime = 1
+		_Player.m_CurrentAend = "CrossDoor"
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
