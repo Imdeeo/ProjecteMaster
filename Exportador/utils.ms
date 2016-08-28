@@ -1,3 +1,5 @@
+fn existFile fname = (getfiles fname).count != 0
+
 fn getRelativePath &pathString = 
 (
 	local startFrom = (findString pathString "Data")
