@@ -90,6 +90,7 @@ public:
 	virtual void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, std::string _group) = 0;
 
 	void CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime);
+	void CharacterControllerWarp(std::string _name, Vect3f _movement);
 
 	bool Raycast(const Vect3f _origin, const Vect3f _end, int _GROUPS, RaycastData* result_);
 

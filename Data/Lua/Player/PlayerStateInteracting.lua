@@ -74,6 +74,13 @@ function InteractingEnd(args)
 	if l_Player.m_InteractingCinematic ~= nil then
 		l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):stop()
 	end
+	if l_Player.m_CurrentAend ~= nil then
+		l_Player.m_PhysXManager:character_controller_warp("player", l_Player.m_Aends[l_Player.m_CurrentAend])
+		local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
+		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
+		l_Owner:set_position(l_NewControllerPosition)
+	end
+	l_Player.m_CurrentAend = nil
 	l_Player.m_Target = nil
 	l_Player.m_TargetOffset = Vect3f(0.0, 0.0, 0.0)
 	l_Player.m_InteractingAnimation = 0

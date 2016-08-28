@@ -173,6 +173,22 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_RaycastData = RaycastData()
 		
+		self.m_CurrentAend = nil
+		self.m_Aends = {}
+		local l_AendsXML = CXMLTreeNode()
+		local l_AendsLoaded = l_AendsXML:load_file("Data\\animation_ends.xml")
+		if l_AendsLoaded then
+			for i=0, l_AendsXML:get_num_children()-1 do
+				local l_Atts=l_AendsXML:get_child(i)
+				local l_ElemName=l_Atts:get_name()
+				if l_ElemName=="aend" then
+					self.m_Aends[l_Atts:get_psz_property("name", "", false)] = l_Atts:get_vect3f_property("pos", Vect3f(0.0,0.0,0.0), false)
+				end	
+			end
+		else
+			utils_log("Animation ends xml not correctly loaded.")
+		end
+		
 		self.m_StateMachine = StateMachine.create()
 		self:SetPlayerStateMachine()
 		self.m_StateMachine:start()

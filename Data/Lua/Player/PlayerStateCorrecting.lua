@@ -25,12 +25,12 @@ function CorrectingUpdate(args, _ElapsedTime)
 	local l_CameraDirection = l_Player.m_CameraController:get_forward()
 	l_CameraDirection.y = 0.0
 	l_CameraDirection:normalize(1)
-	utils_log("Cam x: "..l_CameraDirection.x..", z:"..l_CameraDirection.z)
+	--utils_log("Cam x: "..l_CameraDirection.x..", z:"..l_CameraDirection.z)
 	local l_Off = l_Player.m_TargetOffset
 	l_Off = l_Off * (-1.0)
 	l_Off.y = 0.0
 	l_Off:normalize(1)
-	utils_log("Off x: "..l_Off.x..", z:"..l_Off.z)
+	--utils_log("Off x: "..l_Off.x..", z:"..l_Off.z)
 	local l_Yaw = l_CameraDirection:get_angle_with(l_Off)
 	local l_OriginYaw
 	if math.abs(l_Off.x) > math.abs(l_Off.z) then
@@ -55,13 +55,12 @@ function CorrectingUpdate(args, _ElapsedTime)
 		l_AngleOK = true
 	else
 		l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
-		utils_log("Yaw: "..l_Yaw)
+		--utils_log("Yaw: "..l_Yaw)
 	end
 		
 	if l_PosOK and l_AngleOK then
 		CheckClimbingOrInteracting(l_Player)
 	end
-	--//
 	
 	--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
