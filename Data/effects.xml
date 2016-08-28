@@ -189,6 +189,10 @@
 	<pixel_shader name="radiosity_bump_env_metalnessmap_deferred_ps" file="UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS;HAS_REFLECTION;HAS_METALNESS_MAP;HAS_GLOSSINESS_MAP;HAS_TANGENT;HAS_UV2;HAS_RNM"/>
 	<effect_technique name="radiosity_bump_env_metalnessmap_deferred_technique" vertex_shader="radiosity_bump_env_metalnessmap_deferred_vs" pixel_shader="radiosity_bump_env_metalnessmap_deferred_ps"/>
 	
+	<vertex_shader name="radiosity_env_metalnessmap_deferred_vs" file="UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX" preprocessor="HAS_UV;HAS_LIGHTS;HAS_REFLECTION;HAS_METALNESS_MAP;HAS_GLOSSINESS_MAP;HAS_UV2;HAS_RNM"/>
+	<pixel_shader name="radiosity_env_metalnessmap_deferred_ps" file="UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS;HAS_REFLECTION;HAS_METALNESS_MAP;HAS_GLOSSINESS_MAP;HAS_UV2;HAS_RNM"/>
+	<effect_technique name="radiosity_env_metalnessmap_deferred_technique" vertex_shader="radiosity_env_metalnessmap_deferred_vs" pixel_shader="radiosity_env_metalnessmap_deferred_ps"/>
+	
 	<vertex_shader name="bump_env_specularmap_deferred_vs" file="UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_UV;HAS_LIGHTS;HAS_REFLECTION;HAS_SPECULAR_MAP;HAS_GLOSSINESS_MAP;HAS_TANGENT"/>
 	<pixel_shader name="bump_env_specularmap_deferred_ps" file="UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_UV;HAS_LIGHTS;HAS_REFLECTION;HAS_SPECULAR_MAP;HAS_GLOSSINESS_MAP;HAS_TANGENT"/>
 	<effect_technique name="bump_env_specularmap_deferred_technique" vertex_shader="bump_env_specularmap_deferred_vs" pixel_shader="bump_env_specularmap_deferred_ps"/>
@@ -197,9 +201,12 @@
 	<pixel_shader name="radiosity_bump_env_specularmap_deferred_ps" file="UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS;HAS_REFLECTION;HAS_SPECULAR_MAP;HAS_GLOSSINESS_MAP;HAS_TANGENT;HAS_UV2;HAS_RNM"/>
 	<effect_technique name="radiosity_bump_env_specularmap_deferred_technique" vertex_shader="radiosity_bump_env_specularmap_deferred_vs" pixel_shader="radiosity_bump_env_specularmap_deferred_ps"/>
 	
+	<vertex_shader name="radiosity_env_specularmap_deferred_vs" file="UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX" preprocessor="HAS_UV;HAS_LIGHTS;HAS_REFLECTION;HAS_SPECULAR_MAP;HAS_GLOSSINESS_MAP;HAS_UV2;HAS_RNM"/>
+	<pixel_shader name="radiosity_env_specularmap_deferred_ps" file="UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_NORMAL;HAS_UV;HAS_LIGHTS;HAS_REFLECTION;HAS_SPECULAR_MAP;HAS_GLOSSINESS_MAP;HAS_UV2;HAS_RNM"/>
+	<effect_technique name="radiosity_env_specularmap_deferred_technique" vertex_shader="radiosity_env_specularmap_deferred_vs" pixel_shader="radiosity_env_specularmap_deferred_ps"/>
+		
 	<vertex_shader name="bump_deferred_vs" file="UAB_UBER_GBUFFER_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX" preprocessor="HAS_TANGENT"/>
 	<pixel_shader name="bump_deferred_ps" file="UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_TANGENT"/>
-
 	<effect_technique name="bump_deferred_technique" vertex_shader="bump_deferred_vs" pixel_shader="bump_deferred_ps"/>
 	
 	<vertex_shader name="2d_deferred_vs" file="UAB_2Ddeferred.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
