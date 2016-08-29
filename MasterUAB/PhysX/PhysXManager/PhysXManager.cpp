@@ -966,6 +966,19 @@ void CPhysXManager::CharacterControllerWarp(std::string _name, Vect3f _movement)
 	cct->setFootPosition(p);
 }
 
+void CPhysXManager::CharacterControllerTeleport(std::string _name, Vect3f _newPos)
+{
+	physx::PxController* cct = m_CharacterControllers[_name];
+
+	physx::PxExtendedVec3 p = cct->getFootPosition();
+	p.x = _newPos.x;
+	p.y = _newPos.y;
+	p.z = _newPos.z;
+
+	cct->setFootPosition(p);
+}
+
+
 bool CPhysXManager::Raycast(const Vect3f _origin, const Vect3f _end, int _GROUPS,RaycastData* result_)
 {
 	physx::PxFilterData l_filterData;

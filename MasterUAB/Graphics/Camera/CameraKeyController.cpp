@@ -1,6 +1,6 @@
-
 #include "Camera\CameraKeyController.h"
 #include "Camera\Camera.h"
+#include "Camera\CameraInfo.h"
 #include "Engine\UABEngine.h"
 #include "CameraKey.h"
 #include "Utils.h"
