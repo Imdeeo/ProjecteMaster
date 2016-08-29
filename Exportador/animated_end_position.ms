@@ -5,7 +5,7 @@ fn AddAnimationEnd _file =
 (
 	local apos = at time (normTime 1) $.position
 	apos.z -= 1.634
-	CustomToRH &apos
+	AnimatedCameraToRH &apos
 	format "\t<aend name=\"%\" pos=\"% % %\"/>\n" maxFileName apos.x apos.y apos.z to:_file
 )
 
