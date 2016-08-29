@@ -228,5 +228,5 @@ void CCameraKeyController::SetFirstKey(Vect3f _Forward, Vect3f _Pos, float _Fov)
 
 CCameraInfo* CCameraKeyController::GetLastKey()
 {
-	return &m_Keys[m_Keys.size()]->m_CameraInfo;
+	return &m_Keys[m_Keys.size()-1]->m_CameraInfo;
 }
