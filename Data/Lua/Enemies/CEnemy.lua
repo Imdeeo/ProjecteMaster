@@ -111,4 +111,68 @@ class 'CEnemy' (CLUAComponent)
 			end
 		end
 	end
+	
+	function CEnemy:EnemyMove(_ElapsedTime)
+		local l_Owner = self.m_RenderableObject;
+		
+		-- Calculate the enemy speed
+		local l_PlayerDisplacement = Vect3f(self.m_Velocity.x, self.m_Velocity.y + self.m_Gravity * _ElapsedTime, self.m_Velocity.z)
+		
+		--// Move the character controller
+		local l_PreviousControllerPosition = self.m_PhysXManager:get_character_controler_pos(self.m_Name)
+		l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - g_StandingOffset
+		self.m_PhysXManager:character_controller_move(self.m_Name, l_PlayerDisplacement, _ElapsedTime)
+		
+		--// Assign to the character the controller's position
+		local l_NewControllerPosition = self.m_PhysXManager:get_character_controler_pos(self.m_Name)
+		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
+		l_Owner:set_position(l_NewControllerPosition)
+		
+		--// Save speed in last update so we can create acceleration
+		local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
+		self.m_Velocity = l_Displacement/_ElapsedTime
+	end
+	
+	function CEnemy:EnemyWalk(_DesiredPos, _MoveSpeed, _PercentRotation, _ElapsedTime)
+		-- enemy always walks in forward direction
+		local l_Owner = self.m_RenderableObject;
+		local l_EnemyForward = l_Owner:get_rotation():get_forward_vector():get_normalized(1)
+		local l_EnemyPos = l_Owner:get_position()
+		self.m_Velocity = Vect3f(l_EnemyForward.x * _MoveSpeed, self.m_Velocity.y, l_EnemyForward.z * _MoveSpeed)
+		
+		self:EnemyMove(_ElapsedTime)
+
+		-- with the rotation, the enemy chases to the player
+		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)
+		
+		local angle_to_turn = self:CalculateAngleRotation(l_EnemyForward, l_Direction)
+		if angle_to_turn ~= nil then
+			self:EnemyRotation(angle_to_turn, _PercentRotation)
+		end
+	end
+	
+	function CEnemy:EnemyRotation(_AngleToTurn, _PercentRotation)
+		local l_Owner = self.m_RenderableObject;
+		
+		local quat_to_turn = Quatf()
+		quat_to_turn:quat_from_yaw_pitch_roll(_AngleToTurn, 0.0, 0.0)
+
+		local target_quat = l_Owner:get_rotation():slerp(l_Owner:get_rotation() * quat_to_turn, _PercentRotation)
+		l_Owner:set_rotation(target_quat)
+	end
+	
+	function CEnemy:CalculateAngleRotation(_EnemyForward, _Direction)
+		local l_Angle = _EnemyForward * _Direction
+		if 1.0 - l_Angle < 0.01 then
+			return nil
+		end
+		
+		local angle_to_turn = math.acos(l_Angle)
+		local cross = _Direction ^ _EnemyForward
+		if cross.y < 0.0 then
+		  angle_to_turn = -angle_to_turn
+		end	
+
+		return angle_to_turn		
+	end	
 --end

@@ -42,9 +42,9 @@ function mainLua()
 	m_timerPause = 0
 	m_iniciando = true 
 	
-	l_LevelManager:load_level("Recibidor")	
+	--l_LevelManager:load_level("Recibidor")	
 	--l_LevelManager:load_level("Biblioteca")
-	--l_LevelManager:load_level("Maquinas")	
+	l_LevelManager:load_level("Maquinas")	
 end
 
 function levelMainLua(level)
@@ -62,7 +62,7 @@ function luaUpdate(_ElapsedTime)
 				CUABEngine.get_instance():set_pause(true)
 			end		
 		end
-		
+	
 		local l_InputManager = g_Engine:get_input_manager()
 		if l_InputManager:is_action_released("DebugSpeedUp") then
 			utils_log("DebugSpeedUp")
@@ -92,17 +92,18 @@ function luaUpdate(_ElapsedTime)
 			g_Engine:set_frustum_active(not g_Engine:get_frustum_active())		
 		end
 		if l_InputManager:is_action_released("DebugConsole") then
-			g_Engine:set_pause(true)
-			g_Engine:set_active_console(true)	
-		end	
+            g_Engine:set_pause(true)
+            g_Engine:set_active_console(true)    
+        end    
+
 		if l_InputManager:is_action_released("DebugToggleLoadVideo") then
 			local l_videoManager = g_Engine:get_video_manager()
 			l_videoManager:play_clip("bunny.ogv")
 			--l_videoManager:load_clip("bunny.ogv",false)
 			--l_videoManager:render_screen_clip("bunny.ogv")
 		end
+		--g_VolumeController:CheckVolumeKeys()	
 	end
-	--g_VolumeController:CheckVolumeKeys()	
 end
 
 function luaGui()
@@ -183,8 +184,12 @@ function luaGui()
 	end 	 
 end
 
-function quit()
-	utils_log("quit")
-	g_Engine:quit()
+function iniciar()
+	m_CharacterManager.m_Enemics[1].m_Off = false
 end
 
+function pos_player()
+	utils_log("Pos x:"..g_Player.m_RenderableObject:get_position().x)
+	utils_log("Pos y:"..g_Player.m_RenderableObject:get_position().y)
+	utils_log("Pos z:"..g_Player.m_RenderableObject:get_position().z)
+end
