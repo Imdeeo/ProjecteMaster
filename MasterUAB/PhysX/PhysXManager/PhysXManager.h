@@ -91,6 +91,7 @@ public:
 
 	void CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime);
 	void CharacterControllerWarp(std::string _name, Vect3f _movement);
+	void CharacterControllerTeleport(std::string _name, Vect3f _newPos);
 
 	bool Raycast(const Vect3f _origin, const Vect3f _end, int _GROUPS, RaycastData* result_);
 

@@ -5,6 +5,7 @@
 #include <vector>
 
 class CCameraKey;
+class CCameraInfo;
 class CXMLTreeNode;
 class CCameraKeyController : public CCameraController
 {	
