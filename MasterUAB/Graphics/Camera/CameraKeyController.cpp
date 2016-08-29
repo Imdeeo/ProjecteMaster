@@ -115,12 +115,14 @@ void CCameraKeyController::Update(float ElapsedTime)
 {
 	SetCurrentTime(m_CurrentTime + ElapsedTime);
 	GetCurrentKey();
+	
 	float l_CurrentTime;
+
 	float l_tI;
 	float l_tF;
+
 	Vect3f l_pI;
 	Vect3f l_pF;
-
 
 	float l_fI;
 	float l_fF;
@@ -143,8 +145,6 @@ void CCameraKeyController::Update(float ElapsedTime)
 
 		l_lI = m_Keys[m_CurrentKey]->m_CameraInfo.m_LookAt;
 		l_lF = m_Keys[m_NextKey]->m_CameraInfo.m_LookAt;
-
-
 	}
 	else
 	{
@@ -217,4 +217,16 @@ void CCameraKeyController::SetCamera(CCamera *Camera) const
 Vect3f CCameraKeyController::GetLastLookAt()
 {
 	return m_Keys[m_Keys.size()-1]->m_CameraInfo.m_LookAt;
+}
+
+void CCameraKeyController::SetFirstKey(Vect3f _Forward, Vect3f _Pos, float _Fov)
+{
+	m_Keys[0]->m_CameraInfo.m_FOV = _Fov;
+	m_Keys[0]->m_CameraInfo.m_LookAt = _Forward;
+	m_Keys[0]->m_CameraInfo.m_Eye = _Pos;
+}
+
+CCameraInfo* CCameraKeyController::GetLastKey()
+{
+	return &m_Keys[m_Keys.size()]->m_CameraInfo;
 }

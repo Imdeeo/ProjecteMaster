@@ -831,6 +831,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("is_reverse", &CCameraKeyController::IsReverse)
 			.def("set_reverse", &CCameraKeyController::SetReverse)
 			.def("set_camera", &CCameraKeyController::SetCamera)
+			.def("set_first_key", &CCameraKeyController::SetFirstKey)
+			.def("get_last_key", &CCameraKeyController::GetLastKey)
 			.def_readwrite("m_PositionOffset", &CCameraKeyController::m_PositionOffset)
 	];
 

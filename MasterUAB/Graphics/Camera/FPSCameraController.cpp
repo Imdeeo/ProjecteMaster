@@ -1,5 +1,5 @@
 #include "Camera\FPSCameraController.h"
-#include "Camera\CameraKeyController.h"
+#include "Camera\CameraInfo.h"
 #include "Camera\Camera.h"
 
 #include "Engine\UABEngine.h"
@@ -88,9 +88,9 @@ void CFPSCameraController::Update(float ElapsedTime)
 	l_InputManager->UpdateAxis(0, 0);
 }
 
-void CFPSCameraController::CopyFromKeyCamera(CCameraKeyController* _CameraController)
+void CFPSCameraController::CopyFromKeyCamera(CCameraInfo* _CameraInfo)
 {
-	m_Fov = _CameraController->GetFov();
-	Vect3f l_LookAt = _CameraController->GetLastLookAt();
-	m_Rotation.SetFromAngleAxis((_CameraController->GetLastLookAt() - m_Position).GetNormalized(), 0);
+	m_Fov = _CameraInfo->m_FOV;
+	Vect3f l_LookAt = _CameraInfo->m_LookAt;
+	m_Rotation.SetFromAngleAxis((l_LookAt - m_Position).GetNormalized(), 0);
 }
