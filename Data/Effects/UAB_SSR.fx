@@ -6,7 +6,7 @@ static float m_SSRQuality=m_RawDataArray[1];
 static float m_SSROpacity=m_RawDataArray[2];
 static float m_SSRIncrementMultiplier=m_RawDataArray[3];
 static float m_OffsetScreen=m_RawDataArray[4];
-static float2 m_ScreenResolution=m_RawDataArray[5];
+static float2 m_ScreenResolution=float2(m_RawDataArray[5],m_RawDataArray[6]);
 
 struct VS_INPUT
 {
@@ -53,8 +53,8 @@ float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, floa
 {
 	float4 l_Color=float4(0, 0, 0, 0);
 	float3 l_CameraToWorldPosition=WorldPosition-m_InverseView[3].xyz;
-	float l_CameraToWorldDistance=length(l_CameraToWorldPosition);
 	float3 l_CameraToWorldNormalized=normalize(l_CameraToWorldPosition);
+	float l_CameraToWorldDistance=distance(WorldPosition,m_InverseView[3].xyz);
 	float3 l_ReflectedVector=normalize(reflect(l_CameraToWorldNormalized, Nn));
 	
 	if(dot(l_ReflectedVector, l_CameraToWorldNormalized)<0)
@@ -65,27 +65,32 @@ float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, floa
 	float3 l_RayTrace=WorldPosition;
 	float l_CurrentWorldDistance, l_RayDistance;
 	float incr = 1 / m_SSRQuality;
-	float3 l_CameraPosition=m_InverseView[3].xyz;
+	float total_distance;
+	
+	l_ReflectedVector = l_ReflectedVector * incr;
 	
 	do
 	{
 		i+=0.05;
-		l_RayTrace+=l_ReflectedVector*incr;
-		incr*=m_SSRIncrementMultiplier;
+		
+		l_RayTrace+=l_ReflectedVector;
 		l_ScreenPosition=mul(float4(l_RayTrace, 1), ViewProjection);
+		
 		l_ScreenPosition.xyz/=l_ScreenPosition.w;
 		l_ScreenPosition.x=(l_ScreenPosition.x+1)*0.5;
 		l_ScreenPosition.y=(1-l_ScreenPosition.y)*0.5;
 		float2 l_ScreenCoords=l_ScreenPosition.xy;
+		
 		float l_Depth=T2Texture.Sample(S2Sampler, l_ScreenCoords).x;
-		float3 l_CurrentWorldPosition=GetPositionFromZDepthView(l_Depth, l_ScreenCoords * float2(m_ScreenResolution.x, m_ScreenResolution.y), m_InverseView, m_InverseProjection);
-		l_CurrentWorldDistance=length(l_CurrentWorldPosition.xyz - l_CameraPosition.xyz);
-		l_RayDistance=length(l_RayTrace.xyz - l_CameraPosition.xyz);
+		float3 l_CurrentWorldPosition=GetPositionFromZDepthView(l_Depth, l_ScreenCoords, m_InverseView, m_InverseProjection); // Aqui multiplicaba por la resolucion pero a partir de un valor muy bajo, como 3 o 4 ya no cambiaba el resultado. Al quitarselo parece que empieza a pintar desde la base pero da la impresion de que entonces se ven varios reflejos
+		l_CurrentWorldDistance=distance(l_CurrentWorldPosition.xyz,m_InverseView[3].xyz);
+		l_RayDistance=distance(l_RayTrace.xyz,m_InverseView[3].xyz);
+		
 		if(l_ScreenPosition.x>1 || l_ScreenPosition.x<-1 || l_ScreenPosition.y>1 ||	l_ScreenPosition.y<-1 || i>=0.5 || l_CameraToWorldDistance>l_CurrentWorldDistance)
 			break;
-	} while(l_RayDistance<l_CurrentWorldDistance);
+	} while(l_RayDistance < l_CurrentWorldDistance);
 	
-	l_Color=T0Texture.Sample(S0Sampler, l_ScreenPosition.xy);
+	l_Color=T0Texture.Sample(S0Sampler, l_ScreenPosition);
 	float l_SSRContrib=0.0;
 	
 	if(l_ScreenPosition.x>1 || l_ScreenPosition.x<0 || l_ScreenPosition.y>1 || l_ScreenPosition.y<0)
@@ -99,10 +104,8 @@ float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, floa
 		l_SSRContrib=max(l_SSRContribX, l_SSRContrib);
 		l_SSRContrib=max(l_SSRContribY, l_SSRContrib);
 	}
-	//l_Color=SourceColor * l_SSRContrib + l_Color * (1 - (ReflectionFactor*l_SSRContrib)*ReflectionFactor);
-	l_Color=(1.0f-((1.0-l_SSRContrib)*ReflectionFactor))*SourceColor+l_Color*(1.0-l_SSRContrib)*ReflectionFactor;
-	//return SourceColor;
-	//return float4(ReflectionFactor,0,0,1);
+	
+	l_Color = SourceColor * l_SSRContrib + l_Color * (1-l_SSRContrib) * ReflectionFactor;
 	return l_Color;
 }
 
@@ -110,11 +113,11 @@ float4 SSRPS(PS_INPUT IN) : SV_Target
 {
 	float4 l_Color=T0Texture.Sample(S0Sampler, IN.UV);
 	float l_ReflectionFactor = T1Texture.Sample(S1Sampler, IN.UV).w;
-
+	
 	if(m_Enabled && l_ReflectionFactor > 0.0f)
 	{
-		float3 Nn=normalize(T1Texture.Sample(S1Sampler, IN.UV.xy).xyz * 2 - 1.);
-		float l_Depth=T2Texture.Sample(S2Sampler, IN.UV.xy).x;
+		float3 Nn=normalize(T1Texture.Sample(S1Sampler, IN.UV.xy).xyz * 2 - 1);
+		float l_Depth=T2Texture.Sample(S2Sampler, IN.UV).x;
 		float3 l_WorldPosition=GetPositionFromZDepthView(l_Depth, IN.UV, m_InverseView, m_InverseProjection);
 		float4x4 l_ViewProjection=mul(m_View, m_Projection);
 		return float4(CalcSSRColor(IN.UV.xy, l_ViewProjection, l_Color, l_WorldPosition, Nn, l_ReflectionFactor).xyz, m_SSROpacity);

@@ -10,6 +10,7 @@ class 'CTurretEnemy' (CEnemy)
 		self.m_DistanceToAttack = _TreeNode:get_float_property("distance_attack", 2.0, false)
 		self.m_DistanceToKill = _TreeNode:get_float_property("distance_kill", 1.0, false)
 		self.m_TimerRotation = 0.0
+		self.m_TimerToStop = 0.0
 		
 		self:SetTurretStateMachine()
 		self.m_StateMachine:start()
@@ -41,30 +42,5 @@ class 'CTurretEnemy' (CEnemy)
 		self.m_StateMachine:add_state("Off", OffState)
 		self.m_StateMachine:add_state("Idle", IdleState)
 		self.m_StateMachine:add_state("Attack", AttackState)
-	end
-	
-	function CTurretEnemy:EnemyRotation(_AngleToTurn, _PercentRotation)
-		local l_Owner = self.m_RenderableObject;
-		
-		local quat_to_turn = Quatf()
-		quat_to_turn:quat_from_yaw_pitch_roll(_AngleToTurn, 0.0, 0.0)
-
-		local target_quat = l_Owner:get_rotation():slerp(l_Owner:get_rotation() * quat_to_turn, _PercentRotation)
-		l_Owner:set_rotation(target_quat)
-	end
-	
-	function CTurretEnemy:CalculateAngleRotation(_EnemyForward, _Direction)
-		local l_Angle = _EnemyForward * _Direction
-		if 1.0 - l_Angle < 0.01 then
-			return nil
-		end
-		
-		local angle_to_turn = math.acos(l_Angle)
-		local cross = _Direction ^ _EnemyForward
-		if cross.y < 0.0 then
-		  angle_to_turn = -angle_to_turn
-		end	
-
-		return angle_to_turn		
 	end
 --end

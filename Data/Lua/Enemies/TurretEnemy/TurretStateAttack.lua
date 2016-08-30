@@ -4,8 +4,8 @@ function AttackFirstTurret(args)
 	local l_Enemy = args["self"]
 	
 	l_Owner:clear_cycle(l_Enemy.m_ActualAnimation,0.5)
-	l_Enemy.m_ActualAnimation = 2
-	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
+	--l_Enemy.m_ActualAnimation = 2
+	--l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
 	
 	l_Enemy.m_Timer = 0
 end

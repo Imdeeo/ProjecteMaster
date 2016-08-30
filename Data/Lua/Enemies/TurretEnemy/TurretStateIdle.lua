@@ -5,7 +5,7 @@ function IdleFirstTurret(args)
 
 	l_Owner:clear_cycle(l_Enemy.m_ActualAnimation,0.5)
 	l_Enemy.m_ActualAnimation = 0
-	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
+	l_Owner:execute_action(l_Enemy.m_ActualAnimation,0.5,0.5,1.0,true)
 end
 
 function IdleUpdateTurret(args, _ElapsedTime)
