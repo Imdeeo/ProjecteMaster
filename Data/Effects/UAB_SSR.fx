@@ -51,7 +51,6 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 
 float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, float3 WorldPosition, float3 Nn, float ReflectionFactor)
 {
-	float4 l_Color=float4(0, 0, 0, 0);
 	float3 l_CameraToWorldPosition=WorldPosition-m_InverseView[3].xyz;
 	float3 l_CameraToWorldNormalized=normalize(l_CameraToWorldPosition);
 	float l_CameraToWorldDistance=distance(WorldPosition,m_InverseView[3].xyz);
@@ -68,7 +67,7 @@ float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, floa
 	float total_distance;
 	
 	l_ReflectedVector = l_ReflectedVector * incr;
-	
+	float l_Depth;
 	do
 	{
 		i+=0.05;
@@ -81,7 +80,7 @@ float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, floa
 		l_ScreenPosition.y=(1-l_ScreenPosition.y)*0.5;
 		float2 l_ScreenCoords=l_ScreenPosition.xy;
 		
-		float l_Depth=T2Texture.Sample(S2Sampler, l_ScreenCoords).x;
+		l_Depth=T2Texture.Sample(S2Sampler, l_ScreenCoords).x;
 		float3 l_CurrentWorldPosition=GetPositionFromZDepthView(l_Depth, l_ScreenCoords, m_InverseView, m_InverseProjection); // Aqui multiplicaba por la resolucion pero a partir de un valor muy bajo, como 3 o 4 ya no cambiaba el resultado. Al quitarselo parece que empieza a pintar desde la base pero da la impresion de que entonces se ven varios reflejos
 		l_CurrentWorldDistance=distance(l_CurrentWorldPosition.xyz,m_InverseView[3].xyz);
 		l_RayDistance=distance(l_RayTrace.xyz,m_InverseView[3].xyz);
@@ -90,7 +89,7 @@ float4 CalcSSRColor(float2 UV, float4x4 ViewProjection, float4 SourceColor, floa
 			break;
 	} while(l_RayDistance < l_CurrentWorldDistance);
 	
-	l_Color=T0Texture.Sample(S0Sampler, l_ScreenPosition);
+	float4 l_Color=T0Texture.Sample(S0Sampler, l_ScreenPosition.xy);
 	float l_SSRContrib=0.0;
 	
 	if(l_ScreenPosition.x>1 || l_ScreenPosition.x<0 || l_ScreenPosition.y>1 || l_ScreenPosition.y<0)

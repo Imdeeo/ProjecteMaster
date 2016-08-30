@@ -97,10 +97,10 @@ TVertexPS mainVS(TVertexVS IN)
 		float4 l_TempPos=float4(IN.Pos.xyz, 1.0);
 		float3 l_Position= 0;
 		float4 l_Indices=IN.Indices;
-		l_Position=mul(l_TempPos, m_Bones[l_Indices.x]) * IN.Weight.x;
-		l_Position+=mul(l_TempPos, m_Bones[l_Indices.y]) * IN.Weight.y;
-		l_Position+=mul(l_TempPos, m_Bones[l_Indices.z]) * IN.Weight.z;
-		l_Position+=mul(l_TempPos, m_Bones[l_Indices.w]) * IN.Weight.w;
+		l_Position=mul(l_TempPos, m_Bones[l_Indices.x]).xyz * IN.Weight.x;
+		l_Position+=mul(l_TempPos, m_Bones[l_Indices.y]).xyz * IN.Weight.y;
+		l_Position+=mul(l_TempPos, m_Bones[l_Indices.z]).xyz * IN.Weight.z;
+		l_Position+=mul(l_TempPos, m_Bones[l_Indices.w]).xyz * IN.Weight.w;
 
 		#ifdef HAS_NORMAL
 			
@@ -211,7 +211,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 			float3 bump=g_Bump*((auxNormal.xyz) - float3(0.5,0.5,0.5));
 			Nn = Nn + bump.x*Tn + bump.y*Bn;
 			Nn = normalize(Nn);
-			l_SpecularFactor *= auxNormal;
+			l_SpecularFactor *= auxNormal.w;
 		#endif
 		float3 l_EyeToWorldPosition = normalize(IN.Pixelpos-m_InverseView[3].xyz);
 		float l_Fresnel = pow(1 - dot(-l_EyeToWorldPosition, Nn), FRESNEL_POWER);
@@ -223,7 +223,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 			l_SpecularColor = T10Texture.Sample(S10Sampler, IN.UV);
 			l_SpecularFactor *= l_SpecularColor.a;
 		#elif defined(HAS_METALNESS_MAP)
-			float l_Metalness = T10Texture.Sample(S10Sampler, IN.UV);
+			float l_Metalness = T10Texture.Sample(S10Sampler, IN.UV).x;
 			l_SpecularFactor = l_SpecularFactor + l_Metalness * (1-l_SpecularFactor);
 			float l_AlbedoFactor = 1 - l_Metalness;
 			l_AlbedoFactor *= 1 - l_SpecularFactor;
@@ -233,7 +233,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 		#endif
 		
 		#ifdef HAS_GLOSSINESS_MAP
-			float l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV);
+			float l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV).x;
 			m_SpecularPower *= l_Glossiness;
 		#endif
 	#endif

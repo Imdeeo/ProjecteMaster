@@ -71,10 +71,10 @@ PS_INPUT mainVS(VS_INPUT IN)
 		float4 l_TempPos=float4(IN.Pos.xyz, 1.0);
 		float3 l_Position= 0;
 		float4 l_Indices=IN.Indices;
-		l_Position=mul(l_TempPos, m_Bones[l_Indices.x]) * IN.Weight.x;
-		l_Position+=mul(l_TempPos, m_Bones[l_Indices.y]) * IN.Weight.y;
-		l_Position+=mul(l_TempPos, m_Bones[l_Indices.z]) * IN.Weight.z;
-		l_Position+=mul(l_TempPos, m_Bones[l_Indices.w]) * IN.Weight.w;
+		l_Position=mul(l_TempPos, m_Bones[l_Indices.x]).xyz * IN.Weight.x;
+		l_Position+=mul(l_TempPos, m_Bones[l_Indices.y]).xyz * IN.Weight.y;
+		l_Position+=mul(l_TempPos, m_Bones[l_Indices.z]).xyz * IN.Weight.z;
+		l_Position+=mul(l_TempPos, m_Bones[l_Indices.w]).xyz * IN.Weight.w;
 		#ifdef HAS_NORMAL
 			float3x3 m;
 			m[0].xyz = m_Bones[l_Indices.x][0].xyz;
@@ -121,9 +121,9 @@ float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, S
 	LightmapXSampler, Texture2D LightmapYTexture, SamplerState LightmapYSampler, Texture2D
 	LightmapZTexture, SamplerState LightmapZSampler)
 {
-	float3 l_LightmapX=LightmapXTexture.Sample(LightmapXSampler, UV);
-	float3 l_LightmapY=LightmapYTexture.Sample(LightmapYSampler, UV);
-	float3 l_LightmapZ=LightmapZTexture.Sample(LightmapZSampler, UV);
+	float3 l_LightmapX=LightmapXTexture.Sample(LightmapXSampler, UV).xyz;
+	float3 l_LightmapY=LightmapYTexture.Sample(LightmapYSampler, UV).xyz;
+	float3 l_LightmapZ=LightmapZTexture.Sample(LightmapZSampler, UV).xyz;
 	float3 l_BumpBasisX=normalize(float3(0.816496580927726, 0, 0.5773502691896258));
 	float3 l_BumpBasisY=normalize(float3(-0.408248290463863,  0.7071067811865475, 0.5773502691896258));
 	float3 l_BumpBasisZ=normalize(float3(-0.408248290463863, -0.7071067811865475, 0.5773502691896258));
@@ -158,10 +158,10 @@ float3 CalcParallaxMap(float3 Vn, float3 WorldNormal, float3 WorldTangent, float
 	return tNorm;
 }
 
-PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
+PS_OUTPUT mainPS(PS_INPUT IN)
 {
 	PS_OUTPUT l_Out = (PS_OUTPUT)0;
-	float3 l_EyeToWorldPosition = normalize(IN.WorldPos-m_CameraPosition.xyz);
+	float3 l_EyeToWorldPosition = normalize(IN.WorldPos.xyz-m_CameraPosition.xyz);
 	float l_specularFactor=m_SpecularFactor;
 	float l_Depth = IN.HPos.z / IN.HPos.w;
 
@@ -188,7 +188,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	#endif
 	
 	#ifdef HAS_GLOSSINESS_MAP
-		float l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV);
+		float l_Glossiness = T5Texture.Sample(S5Sampler, IN.UV).x;
 		m_SpecularPower *= l_Glossiness;
 	#endif
 
@@ -207,7 +207,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 		float l_AlbedoFactor = 1 - l_specularFactor;
 		float l_Metalness = 0.0f;
 	#elif defined(HAS_METALNESS_MAP)
-		float l_Metalness = T10Texture.Sample(S10Sampler, IN.UV);
+		float l_Metalness = T10Texture.Sample(S10Sampler, IN.UV).x;
 		l_specularFactor = l_specularFactor + l_Metalness * (1-l_specularFactor);
 		float l_AlbedoFactor = 1 - l_Metalness;
 		l_AlbedoFactor *= 1 - l_specularFactor;
