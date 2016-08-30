@@ -38,6 +38,7 @@
 		<renderable_object_technique name="animated" technique="animated_def_technique"/>
 		<renderable_object_technique name="animated_bump" technique="animated_bump_def_technique"/>
 		<renderable_object_technique name="animated_glow" technique="animated_glow_deferred_technique"/>
+		<renderable_object_technique name="animated_specular" technique="animated_bump_specular_def_technique"/>
 		<renderable_object_technique name="glossiness" technique="env_glossiness_deferred_technique"/>
 		<renderable_object_technique name="specularmap" technique="env_specularmap_deferred_technique"/>
 		<renderable_object_technique name="metalnessmap" technique="env_metalnessmap_deferred_technique"/>
