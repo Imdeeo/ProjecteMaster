@@ -964,6 +964,8 @@ void CPhysXManager::CharacterControllerWarp(std::string _name, Vect3f _movement)
 	p.z += _movement.z;
 
 	cct->setFootPosition(p);
+	size_t l_index = GetActorIndexFromName(_name);
+	m_ActorPositions[l_index] = Vect3f(p.x,p.y,p.z);
 }
 
 void CPhysXManager::CharacterControllerTeleport(std::string _name, Vect3f _newPos)
@@ -976,6 +978,8 @@ void CPhysXManager::CharacterControllerTeleport(std::string _name, Vect3f _newPo
 	p.z = _newPos.z;
 
 	cct->setFootPosition(p);
+	size_t l_index = GetActorIndexFromName(_name);
+	m_ActorPositions[l_index] = _newPos;
 }
 
 
