@@ -85,13 +85,13 @@ PS_INPUT mainVS(VS_INPUT IN)
 			m[1].xyz = m_Bones[l_Indices.y][1].xyz;
 			m[2].xyz = m_Bones[l_Indices.y][2].xyz;
 			l_Normal+=mul(IN.Normal.xyz, m)* IN.Weight.y;
+		#else
+			l_Normal = IN.Normal;
 		#endif
 
 		l_Output.Pos = mul(float4(l_Position, 1.0), m_World);
 	#else
-		#ifdef HAS_NORMAL			
-			l_Normal = IN.Normal;
-		#endif
+		l_Normal = IN.Normal;
 		l_Output.Pos = mul( float4(IN.Pos, 1.0), m_World );
 		//l_Output.Normal = normalize(mul(l_Normal, (float3x3)m_World));
 	#endif
