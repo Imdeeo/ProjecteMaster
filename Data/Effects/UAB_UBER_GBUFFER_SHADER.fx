@@ -161,6 +161,7 @@ float3 CalcParallaxMap(float3 Vn, float3 WorldNormal, float3 WorldTangent, float
 PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 {
 	PS_OUTPUT l_Out = (PS_OUTPUT)0;
+	float3 l_EyeToWorldPosition = normalize(IN.WorldPos-m_CameraPosition.xyz);
 	float l_specularFactor=m_SpecularFactor;
 	float l_Depth = IN.HPos.z / IN.HPos.w;
 
@@ -197,7 +198,7 @@ PS_OUTPUT mainPS(PS_INPUT IN) : SV_Target
 	#endif
 	// PBR modifications according to http://www.marmoset.co/toolbag/learn/pbr-theory
 	// PBR: fresnel (the formula is arbitrary, not based on any source, but the curve would look somewhat similar to the examples)
-	float3 l_EyeToWorldPosition = normalize(IN.WorldPos-m_CameraPosition.xyz);
+	
 	float fresnel = pow(1 - dot(-l_EyeToWorldPosition, Nn), FRESNEL_POWER);
 	l_specularFactor += fresnel * (1-l_specularFactor);
 	// PBR: energy conservation: "reflection and diffusion are mutually exclusive"
