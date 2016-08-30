@@ -54,7 +54,26 @@
 		<renderable_object_technique name="lights" technique="generate_shadowmap_technique"/>
 		<renderable_object_technique name="bump" technique="generate_shadowmap_bump_technique"/>
 		<renderable_object_technique name="bump_env" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="lights_glow" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="lightmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="lightmap_bump" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="lightmap_glow" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_env" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_bump" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_bump_env" technique="generate_shadowmap_bump_technique"/>
 		<renderable_object_technique name="animated" technique="generate_shadowmap_animated_technique"/>
+		<renderable_object_technique name="animated_bump" technique="generate_shadowmap_animated_technique"/>
+		<renderable_object_technique name="animated_specular" technique="generate_shadowmap_animated_technique"/>
+		<renderable_object_technique name="glossiness" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="specularmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="metalnessmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="bump_metalnessmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_bump_metalnessmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_metalnessmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="bump_specularmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_bump_specularmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_specularmap" technique="generate_shadowmap_bump_technique"/>
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="deferred_shading_lighting">
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="deff_technique"/>	
