@@ -283,8 +283,8 @@ function RegisterLightParameters(light_name)
 		DebugHelper:add_variable("X:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_direction_lua_address(0),"min=-50.0 max=50.0 step=0.1 group=\"Direction\"")
 		DebugHelper:add_variable("Y:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_direction_lua_address(1),"min=-50.0 max=50.0 step=0.1 group=\"Direction\"")
 		DebugHelper:add_variable("Z:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_direction_lua_address(2),"min=-50.0 max=50.0 step=0.1 group=\"Direction\"")
-		DebugHelper:add_variable("Angle:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_angle_lua_address(),"")
-		DebugHelper:add_variable("FallOff:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_falloff_lua_address(),"")
+		DebugHelper:add_variable("Angle:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_angle_lua_address(),"min=-50.0 max=50.0 step=0.1")
+		DebugHelper:add_variable("FallOff:",CDebugHelper.float,CDebugHelper.read_write,Spot:get_falloff_lua_address(),"min=-50.0 max=50.0 step=0.1")
 	end
 	
 	DebugHelper:register_bar()

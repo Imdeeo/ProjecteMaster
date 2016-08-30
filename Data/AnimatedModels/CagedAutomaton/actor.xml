@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<actor name="Automaton" radius_bs="2.0" pos_bs="0.0 1.0 0.0">
+<actor name="CagedAutomaton" radius_bs="2.0" pos_bs="0.0 1.0 0.0">
 	<skeleton filename="CagedAutomatonSkeleton.CSF"/>
 	<mesh filename="CagedAutomatonMesh.CMF"/>
 	<material name="caged_automaton_material_1" renderable_object_technique="animated_bump">
 		<texture type="diffuse" filename="Data/AnimatedModels/CagedAutomaton/automata.dds"/>
 		<texture type="normal" filename="Data/AnimatedModels/CagedAutomaton/automata_NRM.dds"/>
+		<texture type="reflection" filename="Data/AnimatedModels/CagedAutomaton/Cubemap_Generico.dds"/>
+		<texture type="glossiness" filename="Data/AnimatedModels/CagedAutomaton/automata_GLOSS.dds"/>
+		<texture type="specular" filename="Data/AnimatedModels/CagedAutomaton/automata_SPEC.dds"/>
 		<parameter type="float" name="active" value="1.0"/>
 		<parameter type="float" name="exposure" value="0.082" description="min=0.0 max=3.0 step=0.001"/>
 		<parameter type="float" name="specular_power" value="30.0" description="min=0.0 max=100.0 step=0.1"/>
