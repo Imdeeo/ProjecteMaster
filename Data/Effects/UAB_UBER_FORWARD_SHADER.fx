@@ -92,7 +92,7 @@ struct TVertexPS
 TVertexPS mainVS(TVertexVS IN)
 {
 	TVertexPS l_Out = (TVertexPS)0;
-
+	float3 l_Normal= 0;
 	#ifdef HAS_WEIGHT_INDICES
 		float4 l_TempPos=float4(IN.Pos.xyz, 1.0);
 		float3 l_Position= 0;
@@ -103,7 +103,7 @@ TVertexPS mainVS(TVertexVS IN)
 		l_Position+=mul(l_TempPos, m_Bones[l_Indices.w]) * IN.Weight.w;
 
 		#ifdef HAS_NORMAL
-			float3 l_Normal= 0;
+			
 			float3x3 m;
 			m[0].xyz = m_Bones[l_Indices.x][0].xyz;
 			m[1].xyz = m_Bones[l_Indices.x][1].xyz;
@@ -118,6 +118,9 @@ TVertexPS mainVS(TVertexVS IN)
 		l_Out.Pos = mul(float4(l_Position, 1.0), m_World);
 	#else
 		l_Out.Pos = mul(float4(IN.Pos.xyz, 1.0), m_World);
+		#ifdef HAS_NORMAL
+			l_Normal = IN.Normal;
+		#endif
 	#endif
 
 	#ifdef HAS_LIGHTS
@@ -135,7 +138,7 @@ TVertexPS mainVS(TVertexVS IN)
 		//#ifdef HAS_WEIGHT_INDICES
 		//	l_Out.Normal = l_Normal;
 		//#else
-			l_Out.Normal = normalize(mul(IN.Normal, (float3x3)m_World));
+			l_Out.Normal = normalize(mul(l_Normal, (float3x3)m_World));
 		//#endif
 	#endif
 
