@@ -9,6 +9,7 @@ class 'CCharacterManager'
 	function CCharacterManager:__init()
 		self.m_Enemics={}
 		self.m_Player={}
+		self.m_Fog = nil
 	end
 		
 	function CCharacterManager:LoadXML(Filename)
@@ -34,6 +35,7 @@ class 'CCharacterManager'
 					elseif l_Type == "FogAutomaton" then
 						local l_Enemy = CFogEnemy(l_Atts)
 						UABEngine:get_game_play_manager():add_component(l_Enemy)
+						self.m_Fog = l_Enemy
 						table.insert(self.m_Enemics, l_Enemy)
 					elseif l_Type == "CagedAutomaton" then
 						local l_Enemy = CCagedAutomatonEnemy(l_Atts)

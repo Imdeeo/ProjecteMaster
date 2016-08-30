@@ -36,3 +36,17 @@ function CheckIfFacing(_Player, _TriggerName)
 		_Player.m_IsCorrecting = true
 	end
 end
+
+function FogTriggerEnter(_Player, _TriggerName)
+	g_Engine:get_physX_manager():character_controller_teleport(m_CharacterManager.m_Fog.m_Name, Vect3f(8.4,0, 3.9))
+	m_CharacterManager.m_Fog.m_RenderableObject:set_visible(true)	
+	m_CharacterManager.m_Fog.m_Off = false
+end 
+
+function FogTriggerStay(_Player, _TriggerName)
+	--utils_log("stay")
+end 
+
+function FogTriggerExit(_Player, _TriggerName)
+	--utils_log("exit")
+end 
