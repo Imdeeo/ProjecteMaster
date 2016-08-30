@@ -75,7 +75,6 @@ PS_INPUT mainVS(VS_INPUT IN)
 		l_Position+=mul(l_TempPos, m_Bones[l_Indices.y]) * IN.Weight.y;
 		l_Position+=mul(l_TempPos, m_Bones[l_Indices.z]) * IN.Weight.z;
 		l_Position+=mul(l_TempPos, m_Bones[l_Indices.w]) * IN.Weight.w;
-
 		#ifdef HAS_NORMAL
 			float3x3 m;
 			m[0].xyz = m_Bones[l_Indices.x][0].xyz;
@@ -86,14 +85,15 @@ PS_INPUT mainVS(VS_INPUT IN)
 			m[1].xyz = m_Bones[l_Indices.y][1].xyz;
 			m[2].xyz = m_Bones[l_Indices.y][2].xyz;
 			l_Normal+=mul(IN.Normal.xyz, m)* IN.Weight.y;
-		#else
-			l_Normal = IN.Normal;
 		#endif
 
 		l_Output.Pos = mul(float4(l_Position, 1.0), m_World);
 	#else
-		l_Normal = IN.Normal;
+		#ifdef HAS_NORMAL			
+			l_Normal = IN.Normal;
+		#endif
 		l_Output.Pos = mul( float4(IN.Pos, 1.0), m_World );
+		//l_Output.Normal = normalize(mul(l_Normal, (float3x3)m_World));
 	#endif
 
 	l_Output.WorldPos = l_Output.Pos;
@@ -101,12 +101,13 @@ PS_INPUT mainVS(VS_INPUT IN)
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
 	l_Output.HPos = l_Output.Pos ;
 	l_Output.Normal = normalize(mul(l_Normal, (float3x3)m_World));
+	//l_Output.Normal=float3(1,0,1);
 	l_Output.UV = IN.UV;
 
 	#ifdef HAS_TANGENT
 		l_Output.WorldTangent = mul(IN.Tangent.xyz,(float3x3)m_World);
-		l_Output.WorldBinormal = mul(cross(IN.Tangent.xyz,IN.Normal),(float3x3)m_World);
-		l_Output.WorldNormal = mul(IN.Normal.xyz,(float3x3)m_World);
+		l_Output.WorldBinormal = mul(cross(IN.Tangent.xyz,l_Normal),(float3x3)m_World);
+		l_Output.WorldNormal = mul(l_Normal.xyz,(float3x3)m_World);
 	#endif
 
 	#ifdef HAS_UV2
