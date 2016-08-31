@@ -12,7 +12,7 @@ class CCameraKeyController : public CCameraController
 private:
 	std::vector<CCameraKey *> m_Keys;
 	size_t m_CurrentKey, m_NextKey;
-	float m_CurrentTime, m_TotalTime, m_FOV;
+	float m_CurrentTime, m_TotalTime;
 	Vect3f m_LookAt, m_Up;
 	bool m_Cycle, m_Reverse;
 	float m_ReverseDirection;

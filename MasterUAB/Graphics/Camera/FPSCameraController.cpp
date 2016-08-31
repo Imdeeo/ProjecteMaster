@@ -76,7 +76,7 @@ void CFPSCameraController::SetCamera(CCamera *Camera) const
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
 	Vect3f l_LookAt = GetUp();
-	UtilsLog("Cam Up: " + std::to_string(l_LookAt.x) + ", " + std::to_string(l_LookAt.y) + ", " + std::to_string(l_LookAt.z));
+	UtilsLog("Cam Up: " + std::to_string(l_LookAt.x) + ", " + std::to_string(l_LookAt.y) + ", " + std::to_string(l_LookAt.z) + ". Cam FOV: " + std::to_string(m_Fov));
 }
 
 void CFPSCameraController::Update(float ElapsedTime)

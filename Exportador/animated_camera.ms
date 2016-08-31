@@ -58,6 +58,7 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		local cameraTranslation = cameraTransform.translation
 		local cameraRotation
 		local cameraLookAt
+		local cameraFieldOfView
 		local cameraFileDir = "cameras\\"+CameraAnimationName.text+".xml"
 		format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"% % %\" filename=\"%\"/>\n" CameraAnimationName.text key cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraFileDir to:_file
 		
@@ -85,7 +86,9 @@ rollout CamAnim "Camera Animation" width:160 height:134
 			CustomToRH &cameraLookAt
 			AnimatedCameraToRH &cameraTranslation
 			swapXZ &CameraUp
-			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z (at time j Cam.fov) (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
+			cameraFieldOfView = at time j Cam.fov
+			deg2rad &cameraFieldOfView
+			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
 			j = at time j trackbar.getNextKeyTime()
 		) while j < CameraKeyEnd.value
 		select Cam
