@@ -194,7 +194,7 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 
 	#ifdef HAS_SPECULAR_MAP
 		float4 l_SpecularColor = T10Texture.Sample(S10Sampler, IN.UV);
-		l_specularFactor *= l_SpecularColor.w;
+		l_specularFactor *= max(l_SpecularColor.r, max(l_SpecularColor.g, l_SpecularColor.b));
 	#endif
 	// PBR modifications according to http://www.marmoset.co/toolbag/learn/pbr-theory
 	// PBR: fresnel (the formula is arbitrary, not based on any source, but the curve would look somewhat similar to the examples)
