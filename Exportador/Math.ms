@@ -1,3 +1,8 @@
+fn deg2rad &ret =
+(
+	ret = ret*PI/180
+)
+
 fn lerp minVal maxVal term &ret = 
 (
     ret = (maxVal - minVal) * term + minVal
