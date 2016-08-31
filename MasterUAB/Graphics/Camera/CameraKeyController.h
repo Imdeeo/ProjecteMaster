@@ -13,7 +13,7 @@ private:
 	std::vector<CCameraKey *> m_Keys;
 	size_t m_CurrentKey, m_NextKey;
 	float m_CurrentTime, m_TotalTime, m_FOV;
-	Vect3f m_LookAt;
+	Vect3f m_LookAt, m_Up;
 	bool m_Cycle, m_Reverse;
 	float m_ReverseDirection;
 	bool LoadXML(const std::string &FileName);
@@ -34,7 +34,7 @@ public:
 	void SetCamera(CCamera *Camera) const;
 
 	Vect3f GetLastLookAt();
-	void SetFirstKey(Vect3f _Forward, Vect3f _Pos, float _Fov);
+	void SetFirstKey(Vect3f _Forward, Vect3f _Pos, Vect3f _Up, float _Fov);
 	CCameraInfo* GetLastKey();
 
 	Vect3f m_PositionOffset;
