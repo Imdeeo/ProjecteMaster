@@ -32,6 +32,13 @@ CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed(TreeNode){
 	m_Preprocessor = TreeNode.GetPszProperty("preprocessor","");
 }
 
+CEffectShader::CEffectShader(tinyxml2::XMLElement* TreeNode) :CNamed(TreeNode){
+	m_Filename = TreeNode->GetPszProperty("file");
+	m_ShaderModel = TreeNode->GetPszProperty("shader_model");
+	m_EntryPoint = TreeNode->GetPszProperty("entry_point");
+	m_Preprocessor = TreeNode->GetPszProperty("preprocessor", "");
+}
+
 CEffectShader::~CEffectShader(void)
 {
 	for (size_t i = 0; i < m_ConstantBuffers.size(); i++)
@@ -204,6 +211,13 @@ CEffectVertexShader::CEffectVertexShader(const CXMLTreeNode &TreeNode):CEffectSh
 	m_VertexType = TreeNode.GetPszProperty("vertex_type");
 }
 
+CEffectVertexShader::CEffectVertexShader(tinyxml2::XMLElement* TreeNode) :CEffectShader(TreeNode),
+m_VertexShader(nullptr),
+m_VertexLayout(nullptr)
+{
+	m_VertexType = TreeNode->GetPszProperty("vertex_type");
+}
+
 void CEffectVertexShader::Destroy()
 {
 	CHECKED_RELEASE(m_VertexLayout);
@@ -306,6 +320,11 @@ CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShad
 {
 }
 
+CEffectPixelShader::CEffectPixelShader(tinyxml2::XMLElement* TreeNode) : CEffectShader(TreeNode),
+m_PixelShader(nullptr)
+{
+}
+
 void CEffectPixelShader::Destroy()
 {
 	CHECKED_RELEASE(m_PixelShader);
@@ -355,6 +374,10 @@ ID3D11PixelShader* CEffectPixelShader::GetPixelShader()
 
 // ----------------------------- GEOMETRY SHADER ----------------------------
 CEffectGeometryShader::CEffectGeometryShader(const CXMLTreeNode &TreeNode) :CEffectShader(TreeNode),
+m_GeometryShader(nullptr)
+{
+}
+CEffectGeometryShader::CEffectGeometryShader(tinyxml2::XMLElement* TreeNode) : CEffectShader(TreeNode),
 m_GeometryShader(nullptr)
 {
 }

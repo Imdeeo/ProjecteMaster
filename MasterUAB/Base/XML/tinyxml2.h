@@ -1222,6 +1222,141 @@ public:
         return f;
     }
 
+
+	// CHAPUZA DE URI PARA QUE TINYXML2 TENGA DEFAULT VALUES
+	int GetIntProperty(const char* _pszKey, int _iDefault = 0)
+	{
+		int iRet;
+
+		tinyxml2::XMLError eResult = QueryIntAttribute(_pszKey, &iRet);
+
+		if (eResult != tinyxml2::XML_SUCCESS)
+		{
+			iRet = _iDefault;
+		}
+
+		return iRet;
+	}
+
+	//----------------------------------------------------------------------------
+	// Returns a float param if found. Else a default value
+	//----------------------------------------------------------------------------
+	float GetFloatProperty(const char* _pszKey, float _fDefault = 0.0)
+	{
+		float fRet;
+
+		tinyxml2::XMLError eResult = QueryFloatAttribute(_pszKey, &fRet);
+
+		if (eResult != tinyxml2::XML_SUCCESS)
+		{
+			fRet = _fDefault;
+		}
+
+		return fRet;
+	}
+	//----------------------------------------------------------------------------
+	// Returns a boolean param if found. Else a default value
+	//----------------------------------------------------------------------------
+
+	bool GetBoolProperty(const char* _pszKey, bool _bDefault = false)
+	{
+		bool bRet;
+
+		tinyxml2::XMLError eResult = QueryBoolAttribute(_pszKey, &bRet);
+
+		if (eResult != tinyxml2::XML_SUCCESS)
+		{
+			bRet = _bDefault;
+		}
+
+		return bRet;
+	}
+
+	//----------------------------------------------------------------------------
+	// Returns an string param if found. Else a default value
+	//----------------------------------------------------------------------------
+	const char* GetPszProperty(const char* _pszKey, const char* _pszDefault ="")
+	{
+		const char* pszRet = nullptr;
+
+		pszRet = Attribute(_pszKey);
+		if (pszRet == nullptr)
+			pszRet = _pszDefault;
+
+		return pszRet;
+	}
+
+	//----------------------------------------------------------------------------
+	// Returns an Vect2f param if found. Else a default value
+	//----------------------------------------------------------------------------
+	/*Vect2f GetVect2fProperty(const char* _pszKey, const Vect2f& _Default)
+	{
+		Vect2f l_V2f(0.0f, 0.0f);
+		const char* pszRet = nullptr;
+
+		pszRet = Attribute(_pszKey);
+		if (pszRet == nullptr)
+			l_V2f = _Default;
+		else
+			sscanf_s(pszRet, "%f %f", &l_V2f.x, &l_V2f.y);
+
+		return l_V2f;
+	}
+
+	//----------------------------------------------------------------------------
+	// Returns an Vect3f param if found. Else a default value
+	//----------------------------------------------------------------------------
+	Vect3f GetVect3fProperty(const char* _pszKey, const Vect3f& _Default)
+	{
+		Vect3f l_V3f(0.0f, 0.0f, 0.0f);
+		const char* pszRet = nullptr;
+
+		pszRet = Attribute(_pszKey);
+		if (pszRet == nullptr)
+			l_V3f = _Default;
+		else
+			sscanf_s(pszRet, "%f %f %f", &l_V3f.x, &l_V3f.y, &l_V3f.z);
+
+		return l_V3f;
+	}
+
+	//----------------------------------------------------------------------------
+	// Returns an Vect4f param if found. Else a default value
+	//----------------------------------------------------------------------------
+	Vect4f GetVect4fProperty(const char* _pszKey, const Vect4f& _Default)
+	{
+		Vect4f l_V4f(0.0f, 0.0f, 0.0f, 0.0f);
+		const char* pszRet = nullptr;
+
+		pszRet = Attribute(_pszKey);
+		if (pszRet == nullptr)
+			l_V4f = _Default;
+		else
+			sscanf_s(pszRet, "%f %f %f %f", &l_V4f.x, &l_V4f.y, &l_V4f.z, &l_V4f.w);
+
+		return l_V4f;
+	}
+
+	//----------------------------------------------------------------------------
+	// Returns a Quatf param if found. Else a default value
+	//----------------------------------------------------------------------------
+	Quatf GetQuatfProperty(const char* _pszKey, const Quatf& _Default)
+	{
+		Quatf l_Qf(0.0f, 0.0f, 0.0f, 0.0f);
+		const char* pszRet = nullptr;
+
+		pszRet = Attribute(_pszKey);
+		if (pszRet == nullptr)
+			l_Qf = _Default;
+		else
+			sscanf_s(pszRet, "%f %f %f %f", &l_Qf.x, &l_Qf.y, &l_Qf.z, &l_Qf.w);
+
+		return l_Qf;
+	}*/
+
+	//FIN CHAPUZA DE URI
+
+
     /** Given an attribute name, QueryIntAttribute() returns
     	XML_NO_ERROR, XML_WRONG_ATTRIBUTE_TYPE if the conversion
     	can't be performed, or XML_NO_ATTRIBUTE if the attribute
