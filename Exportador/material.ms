@@ -157,6 +157,14 @@ fn createMaterials dir filename Objs copyTexture =
 						(
 							renderableTechnique = "radiosity_specularmap"
 						)
+						else if (hasDiffuse and hasReflection and hasBump and not hasLightmap and not hasRNM and hasGlossiness and hasSpecular) then
+						(
+							renderableTechnique = "bump_specularmap"
+						)
+						else if (hasDiffuse and hasReflection and hasBump and not hasLightmap and not hasRNM and hasGlossiness and not hasSpecular) then
+						(
+							renderableTechnique = "bump_metalnessmap"
+						)
 						else
 						(
 							renderableTechnique = "lights"
