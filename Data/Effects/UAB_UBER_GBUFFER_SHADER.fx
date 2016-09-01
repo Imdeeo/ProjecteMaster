@@ -194,7 +194,7 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 
 	#ifdef HAS_SPECULAR_MAP
 		float4 l_SpecularColor = T10Texture.Sample(S10Sampler, IN.UV);
-		l_specularFactor *= l_SpecularColor.w;
+		l_specularFactor *= max(l_SpecularColor.r, max(l_SpecularColor.g, l_SpecularColor.b));
 	#endif
 	// PBR modifications according to http://www.marmoset.co/toolbag/learn/pbr-theory
 	// PBR: fresnel (the formula is arbitrary, not based on any source, but the curve would look somewhat similar to the examples)
@@ -230,7 +230,7 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 	float4 l_AmbientIllumination = l_Albedo * l_AlbedoFactor * l_Ambient;
 	#ifdef HAS_REFLECTION
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, Nn));
-		float4 l_ReflectColor = T8Texture.SampleBias(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
+		float4 l_ReflectColor = T8Texture.SampleLevel(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
 		#ifdef HAS_SPECULAR_MAP
 			l_AmbientIllumination += float4(l_ReflectColor.xyz * l_specularFactor * m_ReflectionFactor * l_SpecularColor.xyz, 1);
 		#elif defined(HAS_METALNESS_MAP)
