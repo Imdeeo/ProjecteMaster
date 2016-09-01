@@ -1,6 +1,6 @@
 #include "Engine\UABEngine.h"
-#include "XML\XMLTreeNode.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
+#include "XML\tinyxml2.h"
 
 #include "Utils.h"
 
@@ -71,6 +71,7 @@ CUABEngine::CUABEngine(void)
 
 CUABEngine::~CUABEngine(void)
 {
+	CHECKED_DELETE(m_CinematicManager);
 	CHECKED_DELETE(m_SceneRendererCommandManager);
 	CHECKED_DELETE(m_TextureManager);
 	CHECKED_DELETE(m_RenderManager);
@@ -87,6 +88,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
 	CHECKED_DELETE(m_EffectManager);
 	CHECKED_DELETE(m_PhysXManager);
+	CHECKED_DELETE(m_GamePlayManager);
 	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_GUIManager)
 	CHECKED_DELETE(m_SoundManager);
@@ -94,7 +96,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_LevelManager);
 	CHECKED_DELETE(m_ManchasManager);
 	CHECKED_DELETE(m_AStarManager);
-	//CHECKED_DELETE(m_CinematicManager);
+	CHECKED_DELETE(m_InputManager);	
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -136,32 +138,26 @@ void CUABEngine::LoadScreen(const std::string _FileName)
 	CEffectVertexShader* l_EffectVertexShader;
 	CEffectPixelShader* l_EffectPixelShader;
 	CEffectTechnique* l_EffectTechnique;
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(_FileName.c_str()))
-	{
-		CXMLTreeNode l_Input = l_XML["load_screen"];
-		if (l_Input.Exists())
-		{
-			
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
-			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("vertex_shader"))
-				{
-					l_EffectVertexShader = new CEffectVertexShader(l_Element);
-					l_EffectVertexShader->Load();
-				}
-				else if (l_Element.GetName() == std::string("pixel_shader"))
-				{
-					l_EffectPixelShader = new CEffectPixelShader(l_Element);
-					l_EffectPixelShader->Load();
-				}			
-				else if (l_Element.GetName() == std::string("effect_technique"))
-				{
-					l_EffectName = l_Element.GetPszProperty("name");
-					l_EffectTechnique = new CEffectTechnique(l_EffectVertexShader, l_EffectPixelShader, nullptr, l_EffectName);
-				}
-			}
+	
+	tinyxml2::XMLDocument doc;
+	doc.LoadFile(_FileName.c_str());
+
+	tinyxml2::XMLElement* titleElement;
+	
+
+
+	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("vertex_shader");
+	l_EffectVertexShader = new CEffectVertexShader(titleElement);
+	l_EffectVertexShader->Load();
+
+	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("pixel_shader");
+	l_EffectPixelShader = new CEffectPixelShader(titleElement);
+	l_EffectPixelShader->Load();
+
+	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("effect_technique");
+	l_EffectName = titleElement->Attribute("name");
+	l_EffectTechnique = new CEffectTechnique(l_EffectVertexShader, l_EffectPixelShader, nullptr, l_EffectName);
+		//RENDER DEL LOADSCREEN
 			CTexture* l_Texture = new CTexture();
 			l_Texture->Load("Data\\GUI\\textures\\Carga.png");
 			CContextManager* l_ContextManager = m_RenderManager->GetContextManager();
@@ -173,8 +169,7 @@ void CUABEngine::LoadScreen(const std::string _FileName)
 			CEffectManager::SetSceneConstants(l_EffectTechnique);
 			m_RenderManager->DrawScreenQuad(l_EffectTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 			l_ContextManager->EndRender();
-		}
-	}
+	
 }
 
 void CUABEngine::Init()

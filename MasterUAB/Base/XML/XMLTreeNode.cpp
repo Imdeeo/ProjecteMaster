@@ -10,6 +10,7 @@ m_pNode(0), m_xmlDoc(0)
 
 CXMLTreeNode::~CXMLTreeNode()
 {	
+	//CHECKED_DELETE(m_xmlDoc);
 }
 
 bool CXMLTreeNode::LoadFile (const char* _pszFileName)
