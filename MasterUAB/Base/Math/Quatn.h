@@ -577,6 +577,66 @@ public:
 
 		return vprime;
 	}
+
+	/**
+	* @brief Sets quaternion to be _fwd axis with _up angle.
+	*/
+	void SetFromFwdUp(const Vector3<T>& _fwd, const Vector3<T>& _up) {
+		Vector3<T> l_V1 = _fwd.GetNormalized();
+		Vector3<T> l_V2 = (_up^l_V1).GetNormalized();
+		Vector3<T> l_V3 = l_V1^l_V2;
+
+		T m00 = l_V2.x;
+		T m10 = l_V2.y;
+		T m20 = l_V2.z;
+
+		T m01 = l_V3.x;
+		T m11 = l_V3.y;
+		T m21 = l_V3.z;
+
+		T m02 = l_V1.x;
+		T m12 = l_V1.y;
+		T m22 = l_V1.z;
+
+		T num8 = (m00 + m11) + m22;
+
+		if (num8 > 0.0)
+		{
+			T num = (T)sqrt(num8 + (T)1.0);
+			w = num * (T)0.5;
+			num = (T)0.5 / num;
+			x = (m12 - m21) * num;
+			y = (m20 - m02) * num;
+			z = (m01 - m10) * num;
+		}
+		else if ((m00 >= m11) && (m00 >= m22))
+		{
+			T num7 = (T)sqrt((((T)1.0 + m00) - m11) - m22);
+			T num4 = 0.5 / num7;
+			x = 0.5 * num7;
+			y = (m01 + m10) * num4;
+			z = (m02 + m20) * num4;
+			w = (m12 - m21) * num4;
+		}
+		else if (m11 > m22)
+		{
+			T num6 = (T)sqrt((((T)1.0 + m11) - m00) - m22);
+			T num3 = (T)0.5 / num6;
+			x = (m10 + m01) * num3;
+			y = (T)0.5 * num6;
+			z = (m21 + m12) * num3;
+			w = (m20 - m02) * num3;
+		}
+		else
+		{
+			T num5 = (T)sqrt((((T)1.0 + m22) - m00) - m11);
+			T num2 = (T)0.5 / num5;
+			x = (m20 + m02) * num2;
+			y = (m21 + m12) * num2;
+			z = (T)0.5 * num5;
+			w = (m01 - m10) * num2;
+		}
+	}
 };
 
 typedef Quatn<float> Quatf;
