@@ -3,20 +3,22 @@
 
 #include "XML\XMLTreeNode.h"
 
-CCinematic::CCinematic(CXMLTreeNode _Input) : CNamed(_Input)
+CCinematic::CCinematic(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode)
 {
 	m_Playing = false;
 	m_CurrentTime = 0.0f;
-	m_Name = _Input.GetPszProperty("name");
-	m_Duration = _Input.GetFloatProperty("duration", 0);
-	m_Cycle = _Input.GetBoolProperty("cycle", false);
-	for (int i = 0; i < _Input.GetNumChildren(); ++i)
+	m_Name = TreeNode->GetPszProperty("name");
+	m_Duration = TreeNode->GetFloatProperty("duration", 0);
+	m_Cycle = TreeNode->GetBoolProperty("cycle", false);
+
+	tinyxml2::XMLElement* l_Element = TreeNode->FirstChildElement();
+	while (l_Element != NULL)
 	{
-		CXMLTreeNode l_Element = _Input(i);
-		if (l_Element.GetName() == std::string("cinematic_object"))
+		if (l_Element->Name() == std::string("cinematic_object"))
 		{
 			AddCinematicObject(new CCinematicObject(l_Element));
 		}
+		l_Element = l_Element->NextSiblingElement();
 	}
 }
 

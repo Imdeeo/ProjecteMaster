@@ -114,6 +114,7 @@
 #include "GamePlayManager.h"
 
 #include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 #include "Utils.h"
 
 #include <string>
@@ -315,7 +316,8 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CActive>("CActive")
-			.def(constructor<const CXMLTreeNode&>())
+			//.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def(constructor<bool>())
 			.property("active", &CActive::GetActive, &CActive::SetActive)
 			.def("get_address", &CActive::GetLuaAdress)
@@ -406,7 +408,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<const Vect3f&, float, float, float>())
 			.def(constructor<const Quatf&>())
 			.def(constructor<float, float, float>())
-			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("set_position", &C3DElement::SetPosition)
 			.def("get_position", &C3DElement::GetPosition)
 			.def("get_prev_position", &C3DElement::GetPrevPosition)

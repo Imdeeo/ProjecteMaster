@@ -8,7 +8,6 @@
 class CEffectVertexShader;
 class CEffectPixelShader;
 class CEffectGeometryShader;
-class CXMLTreeNode;
 
 class CEffectTechnique: public CNamed
 {
@@ -20,7 +19,6 @@ private:
 	std::string m_PixelShaderName;
 	std::string m_GeometryShaderName;
 public:
-	CEffectTechnique(CXMLTreeNode &TreeNode);
 	CEffectTechnique(tinyxml2::XMLElement* TreeNode);
 	CEffectTechnique(CEffectVertexShader* _EffectVertexShader, CEffectPixelShader* _EffectPixelShader, CEffectGeometryShader* _EffectGeometryShader, const std::string _Name);
 	virtual ~CEffectTechnique();

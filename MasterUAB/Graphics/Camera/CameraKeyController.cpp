@@ -5,18 +5,17 @@
 #include "CameraKey.h"
 #include "Utils.h"
 #include <sstream>
-#include "XML\XMLTreeNode.h"
 
-CCameraKeyController::CCameraKeyController(const CXMLTreeNode & _TreeNode) : CCameraController(_TreeNode)
+CCameraKeyController::CCameraKeyController(tinyxml2::XMLElement* TreeNode) : CCameraController(TreeNode)
 {
 	ResetTime();
 	m_PositionOffset = Vect3f(0.0f, 0.0f, 0.0f);
-	m_TotalTime = _TreeNode.GetFloatProperty("total_time", 0, true);
+	m_TotalTime = TreeNode->GetFloatProperty("total_time", 0);
 	std::string l_Filename;
-	l_Filename = _TreeNode.GetPszProperty("filename");
+	l_Filename = TreeNode->GetPszProperty("filename");
 	LoadXML(l_Filename);
 
-	m_Reverse = _TreeNode.GetBoolProperty("reverse");
+	m_Reverse = TreeNode->GetBoolProperty("reverse");
 	m_ReverseDirection = 1;
 	m_Cycle = !m_Reverse;//*XMLTreeNode.GetPszProperty("cycle");
 }
@@ -34,24 +33,31 @@ bool CCameraKeyController::LoadXML(const std::string &FileName)
 {
 	float l_Time;
 
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(FileName.c_str()))
-	{
-		CXMLTreeNode l_Input = l_XML["camera_key_controller"];
-		if (l_Input.Exists())
-		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
-			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("key"))
-				{
-					l_Time = std::stof(l_Element.GetPszProperty("time"));
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(FileName.c_str());
 
-					CCameraInfo *l_CameraInfo = new CCameraInfo(l_Element);
+	tinyxml2::XMLElement* l_Element;
+	tinyxml2::XMLElement* l_ElementAux;
+
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
+	{
+		l_Element = doc.FirstChildElement("camera_key_controller");
+		if (l_Element != NULL)
+		{
+			l_ElementAux = l_Element->FirstChildElement();
+			while (l_ElementAux != NULL)
+			{
+				if (l_ElementAux->Name() == std::string("key"))
+				{
+					l_Time = std::stof(l_ElementAux->GetPszProperty("time"));
+
+					CCameraInfo *l_CameraInfo = new CCameraInfo(l_ElementAux);
 					CCameraKey *l_CameraKey = new CCameraKey(*l_CameraInfo, l_Time);
 
 					m_Keys.push_back(l_CameraKey);
 				}
+				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
 		}
 	}

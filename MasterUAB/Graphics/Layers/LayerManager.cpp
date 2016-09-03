@@ -2,8 +2,6 @@
 #include "RenderManager\RenderManager.h"
 #include "Utils.h"
 
-#include "XML\XMLTreeNode.h"
-
 #define DEFAULT_LAYER_INITIAL_NAME "default"
 
 CLayerManager::CLayerManager():m_DefaultLayer(nullptr)
@@ -29,36 +27,43 @@ void CLayerManager::Destroy()
 void CLayerManager::Load(const std::string &FileName)
 {
 	m_Filename = FileName;
-	CXMLTreeNode l_XML;
 	
-	if (l_XML.LoadFile(FileName.c_str()))
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(FileName.c_str());
+
+	tinyxml2::XMLElement* l_Element;
+	tinyxml2::XMLElement* l_ElementAux;
+
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Input = l_XML["renderable_objects"];
-		if (l_Input.Exists())
+		l_Element = doc.FirstChildElement("renderable_objects");
+		if (l_Element != NULL)
 		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			l_ElementAux = l_Element->FirstChildElement();
+			while (l_ElementAux != NULL)
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("layer"))
+				if (l_ElementAux->Name() == std::string("layer"))
 				{
-					AddLayer(l_Element);					
+					AddLayer(l_ElementAux);
 				}
-				else if (l_Element.GetName() == std::string("instance_mesh"))
+				else if (l_ElementAux->Name() == std::string("instance_mesh"))
 				{					
-					GetLayer(l_Element)->AddMeshInstance(l_Element);
+					GetLayer(l_ElementAux)->AddMeshInstance(l_ElementAux);
 				}
-				else if (l_Element.GetName() == std::string("animated_instance_mesh"))
+				else if (l_ElementAux->Name() == std::string("animated_instance_mesh"))
 				{
-					GetLayer(l_Element)->AddAnimatedInstanceModel(l_Element);
+					GetLayer(l_ElementAux)->AddAnimatedInstanceModel(l_ElementAux);
 				}
-				else if (l_Element.GetName() == std::string("particle_instance"))
+				else if (l_ElementAux->Name() == std::string("particle_instance"))
 				{
-					GetLayer(l_Element)->AddParticleSystemInstance(l_Element);
+					GetLayer(l_ElementAux)->AddParticleSystemInstance(l_ElementAux);
 				}
-				else if (l_Element.GetName() == std::string("manchas_instance"))
+				else if (l_ElementAux->Name() == std::string("manchas_instance"))
 				{
-					GetLayer(l_Element)->AddManchasSystemInstance(l_Element);
+					GetLayer(l_ElementAux)->AddManchasSystemInstance(l_ElementAux);
 				}
+				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
 		}
 	}
@@ -121,9 +126,9 @@ void CLayerManager::RenderDebug(CRenderManager *RenderManager, const std::string
 }
 #endif
 
-CRenderableObjectsManager* CLayerManager::GetLayer(CXMLTreeNode &Node)
+CRenderableObjectsManager* CLayerManager::GetLayer(tinyxml2::XMLElement* TreeNode)
 {
-	const char * l_layerExist = Node.GetPszProperty("layer");
+	const char * l_layerExist = TreeNode->GetPszProperty("layer");
 	if (l_layerExist != NULL)
 	{
 		return GetResource(l_layerExist);
@@ -144,11 +149,11 @@ CRenderableObjectsManager* CLayerManager::GetLayer()
 	return m_DefaultLayer;
 }
 
-CRenderableObjectsManager* CLayerManager::AddLayer(CXMLTreeNode &TreeNode, bool _Update)
+CRenderableObjectsManager* CLayerManager::AddLayer(tinyxml2::XMLElement* TreeNode, bool _Update)
 {
 	const char * l_existDefault;
-	std::string l_Name = TreeNode.GetPszProperty("name");
-	l_existDefault = TreeNode.GetPszProperty("default");
+	std::string l_Name = TreeNode->GetPszProperty("name");
+	l_existDefault = TreeNode->GetPszProperty("default");
 	CRenderableObjectsManager* l_auxROM;
 	if (l_existDefault != NULL)
 	{

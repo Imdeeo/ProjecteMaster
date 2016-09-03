@@ -144,8 +144,6 @@ void CUABEngine::LoadScreen(const std::string _FileName)
 
 	tinyxml2::XMLElement* titleElement;
 	
-
-
 	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("vertex_shader");
 	l_EffectVertexShader = new CEffectVertexShader(titleElement);
 	l_EffectVertexShader->Load();
@@ -157,19 +155,19 @@ void CUABEngine::LoadScreen(const std::string _FileName)
 	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("effect_technique");
 	l_EffectName = titleElement->Attribute("name");
 	l_EffectTechnique = new CEffectTechnique(l_EffectVertexShader, l_EffectPixelShader, nullptr, l_EffectName);
-		//RENDER DEL LOADSCREEN
-			CTexture* l_Texture = new CTexture();
-			l_Texture->Load("Data\\GUI\\textures\\Carga.png");
-			CContextManager* l_ContextManager = m_RenderManager->GetContextManager();
-			
-			l_ContextManager->BeginRender();			
-			m_RenderManager->SetMatrixViewProjection();
-			m_RenderManager->Clear(true, true);
-			m_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
-			CEffectManager::SetSceneConstants(l_EffectTechnique);
-			m_RenderManager->DrawScreenQuad(l_EffectTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
-			l_ContextManager->EndRender();
 	
+	//RENDER DEL LOADSCREEN
+	CTexture* l_Texture = new CTexture();
+	l_Texture->Load("Data\\GUI\\textures\\Carga.png");
+	CContextManager* l_ContextManager = m_RenderManager->GetContextManager();
+			
+	l_ContextManager->BeginRender();			
+	m_RenderManager->SetMatrixViewProjection();
+	m_RenderManager->Clear(true, true);
+	m_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
+	CEffectManager::SetSceneConstants(l_EffectTechnique);
+	m_RenderManager->DrawScreenQuad(l_EffectTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
+	l_ContextManager->EndRender();
 }
 
 void CUABEngine::Init()

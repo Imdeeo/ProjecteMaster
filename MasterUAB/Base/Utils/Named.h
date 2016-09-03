@@ -2,10 +2,10 @@
 #define _NAMED_H
 
 #include "XML\tinyxml2.h"
+#include "XML\XMLTreeNode.h"
 #include <string>
 #include "no_sillywarnings_please.h"
 
-class CXMLTreeNode;
 class CEmptyPointerClass;
 
 class CNamed

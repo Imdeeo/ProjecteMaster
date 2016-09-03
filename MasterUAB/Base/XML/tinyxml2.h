@@ -91,6 +91,8 @@ distribution.
 #   define TIXMLASSERT( x )               {}
 #endif
 
+#include "Math\Matrix44.h"
+#include "Math\Quatn.h"
 
 /* Versioning, past 1.0.14:
 	http://semver.org/
@@ -1289,7 +1291,7 @@ public:
 	//----------------------------------------------------------------------------
 	// Returns an Vect2f param if found. Else a default value
 	//----------------------------------------------------------------------------
-	/*Vect2f GetVect2fProperty(const char* _pszKey, const Vect2f& _Default)
+	Vect2f GetVect2fProperty(const char* _pszKey, const Vect2f& _Default)
 	{
 		Vect2f l_V2f(0.0f, 0.0f);
 		const char* pszRet = nullptr;
@@ -1352,7 +1354,7 @@ public:
 			sscanf_s(pszRet, "%f %f %f %f", &l_Qf.x, &l_Qf.y, &l_Qf.z, &l_Qf.w);
 
 		return l_Qf;
-	}*/
+	}
 
 	//FIN CHAPUZA DE URI
 

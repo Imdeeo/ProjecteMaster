@@ -9,19 +9,18 @@
 
 #include "Layers\LayerManager.h"
 
-#include "XML\XMLTreeNode.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-C3PersonCameraController::C3PersonCameraController(const CXMLTreeNode & _TreeNode) : CCameraController(_TreeNode)
+C3PersonCameraController::C3PersonCameraController(tinyxml2::XMLElement* TreeNode) : CCameraController(TreeNode)
 , m_YawSpeed(5.f)
 , m_PitchSpeed(10.f)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
-, m_Target(UABEngine.GetLayerManager()->GetResource(_TreeNode.GetPszProperty("layer"))->GetResource(_TreeNode.GetPszProperty("target")))
-, m_PositionOffset(Vect3f(.0f, _TreeNode.GetFloatProperty("position_offset", .0f, true), .0f))
-, m_RotationOffset(_TreeNode.GetVect3fProperty("rotation_offset", Vect3f(.0f, .0f, .0f), true))
+, m_Target(UABEngine.GetLayerManager()->GetResource(TreeNode->GetPszProperty("layer"))->GetResource(TreeNode->GetPszProperty("target")))
+, m_PositionOffset(Vect3f(.0f, TreeNode->GetFloatProperty("position_offset", .0f), .0f))
+, m_RotationOffset(TreeNode->GetVect3fProperty("rotation_offset", Vect3f(.0f, .0f, .0f)))
 {
 	m_Rotation.SetFromAngleAxis(m_RotationOffset, 0);
 	m_Position = m_Target->GetPosition() + m_PositionOffset + (GetForward()*m_RotationOffset.x) + (GetRight()*m_RotationOffset.z);

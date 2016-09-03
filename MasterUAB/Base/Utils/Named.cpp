@@ -1,17 +1,17 @@
 #include "Utils\Named.h"
-#include "XML\XMLTreeNode.h"
 #include "CEmptyPointerClass.h"
 
-
-CNamed::CNamed(const CXMLTreeNode &TreeNode)
-{
-	m_Name = TreeNode.GetPszProperty("name","");
-}
 
 CNamed::CNamed(tinyxml2::XMLElement* TreeNode)
 {
 	m_Name = TreeNode->GetPszProperty("name", "");
 }
+
+CNamed::CNamed(const CXMLTreeNode &TreeNode)
+{
+	m_Name = TreeNode.GetPszProperty("name", "");
+}
+
 
 CNamed::CNamed(const std::string &Name):m_Name(Name)
 {

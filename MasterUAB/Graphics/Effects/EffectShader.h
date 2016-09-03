@@ -41,7 +41,6 @@ protected:
 	bool CreateConstantBuffer(int IdBuffer, unsigned int BufferSize, bool Dynamic);
 	bool CreateConstantBuffer();
 public:
-	CEffectShader(const CXMLTreeNode &TreeNode);
 	CEffectShader(tinyxml2::XMLElement* TreeNode);
 	virtual ~CEffectShader();
 	virtual bool Load() = 0;
@@ -59,7 +58,6 @@ protected:
 
 	void Destroy();
 public:
-	CEffectVertexShader(const CXMLTreeNode &TreeNode);
 	CEffectVertexShader(tinyxml2::XMLElement* TreeNode);
 	virtual ~CEffectVertexShader() { Destroy(); }
 
@@ -77,7 +75,6 @@ protected:
 
 	void Destroy();
 public:
-	CEffectPixelShader(const CXMLTreeNode &TreeNode);
 	CEffectPixelShader(tinyxml2::XMLElement* TreeNode);
 	virtual ~CEffectPixelShader() { Destroy(); }
 	bool Reload();
@@ -94,7 +91,6 @@ protected:
 
 	void Destroy();
 public:
-	CEffectGeometryShader(const CXMLTreeNode &TreeNode);
 	CEffectGeometryShader(tinyxml2::XMLElement* TreeNode);
 	virtual ~CEffectGeometryShader(){ Destroy(); }
 	bool Reload();

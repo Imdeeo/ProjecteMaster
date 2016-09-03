@@ -5,23 +5,21 @@
 #include "RenderableObjects\RenderableObjectsManager.h"
 #include "Layers\LayerManager.h"
 
-#include "XML\XMLTreeNode.h"
-
-CCinematicObject::CCinematicObject(CXMLTreeNode &TreeNode):m_RenderableObject(nullptr)
+CCinematicObject::CCinematicObject(tinyxml2::XMLElement* TreeNode) :m_RenderableObject(nullptr)
 {
-	m_RenderableObject=UABEngine.GetLayerManager()->GetLayer(TreeNode)->GetResource(TreeNode.GetPszProperty("resource"));
+	m_RenderableObject=UABEngine.GetLayerManager()->GetLayer(TreeNode)->GetResource(TreeNode->GetPszProperty("resource"));
 
 	m_PivotPosition = m_RenderableObject->GetPosition();
 	m_PivotRotation = m_RenderableObject->GetRotation();
 	m_PivotScale = m_RenderableObject->GetScale();
-
-	for (int i = 0; i < TreeNode.GetNumChildren(); ++i)
+	tinyxml2::XMLElement *l_Element = TreeNode->FirstChildElement();
+	while (l_Element != NULL)
 	{
-		CXMLTreeNode l_Element = TreeNode(i);
-		if (l_Element.GetName() == std::string("cinematic_object_key_frame"))
+		if (l_Element->Name() == std::string("cinematic_object_key_frame"))
 		{
 			AddCinematicObjectKeyFrame(new CCinematicObjectKeyFrame(l_Element));
 		}
+		l_Element = l_Element->NextSiblingElement();
 	}
 	if (IsOk())
 	{

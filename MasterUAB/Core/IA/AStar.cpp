@@ -1,6 +1,7 @@
 #include "AStar.h"
 #include "DebugRender.h"
 #include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 #include "Utils.h"
 
 #ifdef _DEBUG
@@ -31,61 +32,61 @@ CAStar::~CAStar() {
 
 void CAStar::LoadMap(std::string _filename)
 {
-	CXMLTreeNode TreeNode = CXMLTreeNode();
-	if (TreeNode.LoadFile(_filename.c_str()))
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(_filename.c_str());
+
+	tinyxml2::XMLElement* l_Element;
+	tinyxml2::XMLElement* l_ElementAux;
+
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Input = TreeNode["path"];
-		if (l_Input.Exists())
+		TNode *l_node;
+		std::string nombreNodoActual;
+		std::string nombreNodoVecino;
+		l_Element = doc.FirstChildElement("path")->FirstChildElement();
+		while (l_Element != NULL)
 		{
-			TNode *l_node;
-			std::string nombreNodoActual;
-			std::string nombreNodoVecino;
-
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			if (l_Element->Name() == std::string("node"))
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("node"))
-				{
-					l_node = new TNode();
-					l_node->name = l_Element.GetPszProperty("name", "", true);
-					l_node->position = l_Element.GetVect3fProperty("pos", Vect3f(0, 0, 0), true);
-					m_map[l_node->name] = l_node;
-				}
-				else if (l_Element.GetName() == std::string("father"))
-				{
-					nombreNodoActual = l_Element.GetPszProperty("name", "", true);
+				l_node = new TNode();
+				l_node->name = l_Element->GetPszProperty("name", "");
+				l_node->position = l_Element->GetVect3fProperty("pos", Vect3f(0, 0, 0));
+				m_map[l_node->name] = l_node;
+			}
+			else if (l_Element->Name() == std::string("father"))
+			{
+				l_ElementAux = l_Element->FirstChildElement();
+				nombreNodoActual = l_ElementAux->GetPszProperty("name", "");
 
-					for (int i = 0; i < l_Element.GetNumChildren(); ++i)
-					{
-						CXMLTreeNode l_Element2 = l_Element(i);
-						if (l_Element2.GetName() == std::string("child"))
-						{
-							nombreNodoVecino = l_Element2.GetPszProperty("name");
-
-							m_map[nombreNodoActual]->neighbours.push_back(
-								(PNodeAndDistance(m_map[nombreNodoVecino], (m_map[nombreNodoActual]->position - m_map[nombreNodoVecino]->position).Length())));
-						}
-					}
-				}
-				else if (l_Element.GetName() == std::string("path_patrol"))
+				while (l_ElementAux != NULL)
 				{
-					TNodePatrol *l_nodeAux;
-					nombreNodoActual = l_Element.GetPszProperty("name", "", true);
-					std::vector<TNodePatrol*> l_Aux;
-					for (int i = 0; i < l_Element.GetNumChildren(); ++i)
-					{
-						CXMLTreeNode l_Element2 = l_Element(i);
-
-						l_nodeAux = new TNodePatrol();
-						l_nodeAux->node = m_map[l_Element2.GetPszProperty("name")];
-						l_nodeAux->wait = l_Element2.GetBoolProperty("wait");
-						l_nodeAux->time_to_wait = l_Element2.GetFloatProperty("time_to_wait");
-						l_Aux.push_back(l_nodeAux);
-					}
-					m_NodePatrolPath[nombreNodoActual] = l_Aux;
+					nombreNodoVecino = l_ElementAux->GetPszProperty("name");
+					m_map[nombreNodoActual]->neighbours.push_back((PNodeAndDistance(m_map[nombreNodoVecino], (m_map[nombreNodoActual]->position - m_map[nombreNodoVecino]->position).Length())));
+					l_ElementAux = l_ElementAux->NextSiblingElement();
 				}
 			}
+			else if (l_Element->Name() == std::string("path_patrol"))
+			{
+				l_ElementAux = l_Element->FirstChildElement();
+				TNodePatrol *l_nodeAux;
+				nombreNodoActual = l_ElementAux->GetPszProperty("name", "");
+				std::vector<TNodePatrol*> l_Aux;
+				while (l_ElementAux != NULL)
+				{
+					l_nodeAux = new TNodePatrol();
+					l_nodeAux->node = m_map[l_ElementAux->GetPszProperty("name")];
+					l_nodeAux->wait = l_ElementAux->GetBoolProperty("wait");
+					l_nodeAux->time_to_wait = l_ElementAux->GetFloatProperty("time_to_wait");
+					l_Aux.push_back(l_nodeAux);
+					l_ElementAux = l_ElementAux->NextSiblingElement();
+				}			
+				m_NodePatrolPath[nombreNodoActual] = l_Aux;
+			}			
+			l_Element = l_Element->NextSiblingElement();
 		}
+
+	
 	}
 }
 
