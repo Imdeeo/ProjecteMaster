@@ -1,6 +1,6 @@
 #include "LevelManager.h"
 
-#include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 #include "Engine\UABEngine.h"
 
 #include "Materials\MaterialManager.h"
@@ -27,27 +27,22 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 	m_LayerManagerArray = UABEngine.GetLayerManager();
 
 	m_LevelsFileName = _LevelsFilename;
-	CXMLTreeNode l_XML;
+	
+	tinyxml2::XMLDocument doc;
+	doc.LoadFile(_LevelsFilename.c_str());
 
-	if (l_XML.LoadFile(_LevelsFilename.c_str()))
+	tinyxml2::XMLElement* l_Element;
+	l_Element = doc.FirstChildElement("levels")->FirstChildElement("level");
+	
+	while (l_Element != NULL)
 	{
-		CXMLTreeNode l_Input = l_XML["levels"];
-		if (l_Input.Exists())
-		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
-			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("level"))
-				{
-					std::string l_LevelName = l_Element.GetPszProperty("name");
-					TLevelInfo l_LevelInfo;
-					l_LevelInfo.m_Loaded = false;
-					l_LevelInfo.m_ID = l_Element.GetPszProperty("id");
-					l_LevelInfo.m_Directory = l_Element.GetPszProperty("directory");
-					m_LevelsInfo[l_LevelName] = l_LevelInfo;
-				}
-			}
-		}
+		std::string l_LevelName = l_Element->GetPszProperty("name");
+		TLevelInfo l_LevelInfo;
+		l_LevelInfo.m_Loaded = false;
+		l_LevelInfo.m_ID = l_Element->GetPszProperty("id");
+		l_LevelInfo.m_Directory = l_Element->GetPszProperty("directory");
+		m_LevelsInfo[l_LevelName] = l_LevelInfo;
+		l_Element = l_Element->NextSiblingElement();
 	}
 }
 

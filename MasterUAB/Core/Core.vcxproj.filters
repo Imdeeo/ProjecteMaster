@@ -39,9 +39,6 @@
     <ClInclude Include="DebugHelper\DebugHelper.h">
       <Filter>DebugHelper</Filter>
     </ClInclude>
-    <ClInclude Include="IA\AStar.h">
-      <Filter>AI</Filter>
-    </ClInclude>
     <ClInclude Include="ScriptManager\ScriptManager.h">
       <Filter>ScriptManager</Filter>
     </ClInclude>
@@ -50,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="InputManager\KeyboardInput.h">
       <Filter>InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="IA\AStar.h">
+      <Filter>AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

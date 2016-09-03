@@ -1,8 +1,12 @@
 #include "Active.h"
-#include "XML\XMLTreeNode.h"
 #include "CEmptyPointerClass.h"
 
-CActive::CActive(const CXMLTreeNode &TreeNode)
+CActive::CActive(tinyxml2::XMLElement* TreeNode)
+{
+	m_Active = TreeNode->GetBoolProperty("active", true);
+}
+
+CActive::CActive(CXMLTreeNode TreeNode)
 {
 	m_Active = TreeNode.GetBoolProperty("active", true);
 }

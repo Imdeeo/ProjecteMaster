@@ -4,12 +4,10 @@
 
 #include "Utils.h"
 
-#include "XML\XMLTreeNode.h"
-
-CCameraController::CCameraController(const CXMLTreeNode & _TreeNode) : CNamed(_TreeNode)
+CCameraController::CCameraController(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode)
 , m_Rotation(Quatf(0, 0, 0, 1))
 , m_Position(0,0,0)
-, m_Fov(_TreeNode.GetFloatProperty("fov", .0f, true))
+, m_Fov(TreeNode->GetFloatProperty("fov", .0f))
 {
 }
 CCameraController::~CCameraController()

@@ -2,8 +2,7 @@
 #define H_CINEMATIC_OBJECT_KEY_FRAME_H
 
 #include "3DElement\3DElement.h"
-
-class CXMLTreeNode;
+#include "XML\tinyxml2.h"
 
 class CCinematicObjectKeyFrame : public C3DElement
 {
@@ -13,7 +12,7 @@ private:
 
 public:
 
-	CCinematicObjectKeyFrame(CXMLTreeNode &TreeNode);
+	CCinematicObjectKeyFrame(tinyxml2::XMLElement* TreeNode);
 	virtual ~CCinematicObjectKeyFrame();
 
 	float GetKeyFrameTime(){ return m_KeyFrameTime; }

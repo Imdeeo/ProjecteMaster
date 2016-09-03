@@ -1,5 +1,4 @@
 #include "Effects\EffectTechnique.h"
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "EffectManager.h"
 
@@ -8,15 +7,6 @@ CEffectTechnique::CEffectTechnique(tinyxml2::XMLElement* TreeNode) :CNamed(TreeN
 	m_VertexShaderName = TreeNode->GetPszProperty("vertex_shader");
 	m_PixelShaderName = TreeNode->GetPszProperty("pixel_shader");
 	m_GeometryShaderName = TreeNode->GetPszProperty("geometry_shader","");
-	m_VertexShader = UABEngine.GetEffectManager()->GetVertexShader(m_VertexShaderName);
-	m_PixelShader = UABEngine.GetEffectManager()->GetPixelShader(m_PixelShaderName);
-	m_GeometryShader = UABEngine.GetEffectManager()->GetGeometryShader(m_GeometryShaderName);
-}
-CEffectTechnique::CEffectTechnique(CXMLTreeNode &TreeNode) :CNamed(TreeNode)
-{
-	m_VertexShaderName = TreeNode.GetPszProperty("vertex_shader");
-	m_PixelShaderName = TreeNode.GetPszProperty("pixel_shader");
-	m_GeometryShaderName = TreeNode.GetPszProperty("geometry_shader", "");
 	m_VertexShader = UABEngine.GetEffectManager()->GetVertexShader(m_VertexShaderName);
 	m_PixelShader = UABEngine.GetEffectManager()->GetPixelShader(m_PixelShaderName);
 	m_GeometryShader = UABEngine.GetEffectManager()->GetGeometryShader(m_GeometryShaderName);

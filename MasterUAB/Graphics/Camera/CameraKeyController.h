@@ -2,6 +2,7 @@
 #define CAMERA_KEY_CONTROLLER_H
 
 #include "Camera\CameraController.h"
+#include "XML\tinyxml2.h"
 #include <vector>
 
 class CCameraKey;
@@ -19,7 +20,7 @@ private:
 	bool LoadXML(const std::string &FileName);
 	void GetCurrentKey();
 public:
-	CCameraKeyController(const CXMLTreeNode &XMLTreeNode);
+	CCameraKeyController(tinyxml2::XMLElement* TreeNode);
 	virtual ~CCameraKeyController();
 	void Update(float ElapsedTime);
 	void SetCurrentTime(float CurrentTime);

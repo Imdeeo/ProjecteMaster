@@ -6,6 +6,7 @@
 #include "RenderableObjects\RenderableObject.h"
 #include "CinematicPlayer.h"
 #include "Utils.h"
+#include "XML\tinyxml2.h"
 
 class CCinematicObject;
 
@@ -14,7 +15,7 @@ class CCinematic : public CCinematicPlayer, public CNamed
 protected:
 	std::vector<CCinematicObject *> m_CinematicObjects;
 public:
-	CCinematic(CXMLTreeNode _Input);
+	CCinematic(tinyxml2::XMLElement* TreeNode);
 	virtual ~CCinematic();
 	void AddCinematicObject(CCinematicObject *CinematicObject);
 	void Update(float _ElapsedTime);

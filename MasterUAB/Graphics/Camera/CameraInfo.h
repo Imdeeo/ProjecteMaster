@@ -2,8 +2,8 @@
 #define CAMERA_INFO_H
 
 #include "Math\Vector3.h"
+#include "XML\tinyxml2.h"
 
-class CXMLTreeNode;
 
 class CCameraInfo
 {	
@@ -13,7 +13,7 @@ public:
 
 	CCameraInfo();
 	CCameraInfo(const Vect3f &Eye, const Vect3f &LookAt, const Vect3f &Up, float NearPlane, float FarPlane, float FOV);
-	CCameraInfo(CXMLTreeNode &XMLTreeNode);
+	CCameraInfo(tinyxml2::XMLElement* TreeNode);
 	virtual ~CCameraInfo();
 };
 
