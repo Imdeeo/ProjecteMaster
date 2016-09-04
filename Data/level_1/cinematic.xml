@@ -19,20 +19,55 @@
 			<cinematic_object_key_frame time="3.66667" pos="0.00756836 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
-	<cinematic name="PickKey" duration="15.5" cycle="false">
+	<cinematic name="ForceTray" duration="2.5" cycle="false">
+		<cinematic_object resource="CajonComodaDerecha1" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.16667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.3" pos="-0.00940198 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.4" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.6" pos="-0.00541139 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.83333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.5" pos="-0.199439 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="OpenTrayR2" duration="1.83333" cycle="false">
+		<cinematic_object resource="CajonComodaDerecha2" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.16667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.83333" pos="-0.177185 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="CloseTrayR2" duration="0.3667" cycle="false">
+		<cinematic_object resource="CajonComodaDerecha2" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="-0.177185 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.3667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="OpenTrayL1" duration="10.2" cycle="false">
+		<cinematic_object resource="CajonComodaIzquierda1" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.16667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.83333" pos="-0.177185 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="CloseTrayL1" duration="0.3667" cycle="false">
+		<cinematic_object resource="CajonComodaIzquierda1" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="-0.177185 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.3667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="OpenTrayL2" duration="1.83333" cycle="false">
 		<cinematic_object resource="CajonComodaIzquierda2" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="1.16667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="1.83333" pos="-0.177185 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="9.83333" pos="-0.177185 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="10.2" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="14.1667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="14.3" pos="-0.00940198 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="14.4" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="14.6" pos="-0.00541139 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="14.8333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="15.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="15.5" pos="-0.199439 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="CloseTrayL2" duration="0.3667" cycle="false">
+		<cinematic_object resource="CajonComodaIzquierda2" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="-0.177185 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.3667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
 	<cinematic name="recibidor_engranajes" duration="6.66667" cycle="true">

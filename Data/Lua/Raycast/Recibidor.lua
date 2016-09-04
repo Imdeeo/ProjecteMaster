@@ -49,8 +49,8 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 			_Player.m_Target = l_Target
 			_Player.m_InteractingAnimation = 5
 			_Player.m_InteractingCinematic = "ForceTray"
-			_Player.m_CameraAnimation = "ForceTray"
-			_Player.m_CurrentAend = "ForceTray"
+			--_Player.m_CameraAnimation = "ForceTray"
+			--_Player.m_CurrentAend = "ForceTray"
 			_Player.m_IsInteracting = true
 			_Player.m_IsClimbing = false
 			_Player.m_IsCorrecting = true
@@ -74,8 +74,8 @@ function R1TrayR2Open(_Player, _Pos)
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "OpenTrayR2"
-		_Player.m_CameraAnimation = "OpenTrayR2"
-		_Player.m_CurrentAend = "OpenTrayR2"
+		--_Player.m_CameraAnimation = "OpenTrayR2"
+		--_Player.m_CurrentAend = "OpenTrayR2"
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -90,8 +90,8 @@ function R1TrayR2Open(_Player, _Pos)
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 4
 		_Player.m_InteractingCinematic = "CloseTrayR2"
-		_Player.m_CameraAnimation = "CloseTrayR2"
-		_Player.m_CurrentAend = "CloseTrayR2"
+		--_Player.m_CameraAnimation = "CloseTrayR2"
+		--_Player.m_CurrentAend = "CloseTrayR2"
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -114,8 +114,8 @@ function R1TrayL1Open(_Player, _Pos)
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "OpenTrayL1"
-		_Player.m_CameraAnimation = "OpenTrayL1"
-		_Player.m_CurrentAend = "OpenTrayL1"
+		--_Player.m_CameraAnimation = "OpenTrayL1"
+		--_Player.m_CurrentAend = "OpenTrayL1"
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -130,8 +130,8 @@ function R1TrayL1Close(_Player, _Pos)
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 4
 		_Player.m_InteractingCinematic = "CloseTrayL1"
-		_Player.m_CameraAnimation = "CloseTrayL1"
-		_Player.m_CurrentAend = "CloseTrayL1"
+		--_Player.m_CameraAnimation = "CloseTrayL1"
+		--_Player.m_CurrentAend = "CloseTrayL1"
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -154,8 +154,8 @@ function R1TrayL2Open(_Player, _Pos)
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "OpenTrayL2"
-		_Player.m_CameraAnimation = "OpenTrayL2"
-		_Player.m_CurrentAend = "OpenTrayL2"
+		--_Player.m_CameraAnimation = "OpenTrayL2"
+		--_Player.m_CurrentAend = "OpenTrayL2"
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -170,8 +170,8 @@ function R1TrayL2Close(_Player, _Pos)
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 4
 		_Player.m_InteractingCinematic = "CloseTrayL2"
-		_Player.m_CameraAnimation = "CloseTrayL2"
-		_Player.m_CurrentAend = "CloseTrayL2"
+		--_Player.m_CameraAnimation = "CloseTrayL2"
+		--_Player.m_CurrentAend = "CloseTrayL2"
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true

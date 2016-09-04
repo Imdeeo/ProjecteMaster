@@ -19,7 +19,7 @@ end
 function TriggerRaycast(_Player, _Pos)
 	--utils_log(_Player.m_ItemName)
 	l_LevelName = g_Engine:get_level_loaded()
-	if l_LevelName = "Recibidor" then
+	if l_LevelName == "Recibidor" then
 		if _Player.m_RaycastData.actor_name == "TriggerDoor" then
 			if _Player.m_ItemName == "LlaveRecibidor" then
 				R1Door(_Player, _Pos)

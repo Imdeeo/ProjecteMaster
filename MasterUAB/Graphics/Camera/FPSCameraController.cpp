@@ -76,7 +76,7 @@ void CFPSCameraController::SetCamera(CCamera *Camera) const
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
 	Vect3f l_LA = m_Position + l_Direction;
-	UtilsLog("Cam LA: " + std::to_string(l_LA.x) + ", " + std::to_string(l_LA.y) + ", " + std::to_string(l_LA.z));
+	//UtilsLog("Cam LA: " + std::to_string(l_LA.x) + ", " + std::to_string(l_LA.y) + ", " + std::to_string(l_LA.z));
 }
 
 void CFPSCameraController::Update(float ElapsedTime)
