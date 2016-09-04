@@ -35,4 +35,41 @@
 			<cinematic_object_key_frame time="15.5" pos="-0.199439 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
+	<cinematic name="recibidor_engranajes" duration="6.66667" cycle="true">
+		<cinematic_object resource="engranajederechavitrina" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.541892 0.840448" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.840448 0.541892" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.541892 -0.840448" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="engranajederechavitrina001" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.553301 -0.832981" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.856323 -0.51644" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.553301 0.832982" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="engranajeventana" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.471397 0.881921" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.86052 0.509417" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.471397 -0.881921" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="engranajevitrinaizq001" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.553301 0.832981" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.856323 -0.51644" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.553301 -0.832982" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="engranajearriba1" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.471397 0.881921" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.86052 -0.509417" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.471397 -0.881921" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="engranajearriba2" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.553301 -0.832981" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.856323 0.51644" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.553301 0.832982" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="engranajearriba3" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.471397 0.881921" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.86052 -0.509417" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.471397 -0.881921" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
 </cinematics>
