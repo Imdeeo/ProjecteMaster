@@ -6,11 +6,17 @@ class 'CTurretEnemy' (CEnemy)
 	function CTurretEnemy:__init(_TreeNode)
 		CEnemy.__init(self,_TreeNode)
 		
+		--HEAD_OBJECT_BONE_ID 31
+		self.m_HeadBoneId = 23
+		--BACK_OBJECT_BONE_ID 0
+		self.m_BackBoneId = 0
 		self.m_AngularSpeed = _TreeNode:get_float_property("angular_speed", 1000.0, false)
 		self.m_DistanceToAttack = _TreeNode:get_float_property("distance_attack", 2.0, false)
 		self.m_DistanceToKill = _TreeNode:get_float_property("distance_kill", 1.0, false)
 		self.m_TimerRotation = 0.0
 		self.m_TimerToStop = 0.0
+		
+		self.m_DefaultRotation = nil
 		
 		self:SetTurretStateMachine()
 		self.m_StateMachine:start()
