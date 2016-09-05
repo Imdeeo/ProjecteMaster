@@ -63,5 +63,9 @@
 	<static_mesh name="TriggerSheets" filename="Data\level_1\Meshes\TriggerSheets.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerTrayR2" filename="Data\level_1\Meshes\TriggerTrayR2.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerCanvas" filename="Data\level_1\Meshes\TriggerCanvas.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerTrayR1" filename="Data\level_1\Meshes\TriggerTrayR1.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerTrayL2" filename="Data\level_1\Meshes\TriggerTrayL2.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerTrayL1" filename="Data\level_1\Meshes\TriggerTrayL1.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerAnkh" filename="Data\level_1\Meshes\TriggerAnkh.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerKey" filename="Data\level_1\Meshes\TriggerKey.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
 </static_meshes>
