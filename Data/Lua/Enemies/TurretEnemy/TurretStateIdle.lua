@@ -3,17 +3,15 @@ function IdleFirstTurret(args)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
-	utils_log("IDLE ANIMACION ACTUAL: "..l_Enemy.m_ActualAnimation)
-	
 	if l_Enemy.m_ActualAnimation == 0 then
 		l_Enemy.m_ActualAnimation = 0
-	else
-		l_Enemy.m_ActualAnimation = 3
+	else		
 		if l_Enemy.m_ActualAnimation == 1 then
 			l_Owner:remove_action(l_Enemy.m_ActualAnimation)
 		elseif l_Enemy.m_ActualAnimation == 2 then
 			l_Owner:clear_cycle(l_Enemy.m_ActualAnimation,1.0)
 		end
+		l_Enemy.m_ActualAnimation = 3
 	end
 	l_Owner:execute_action(l_Enemy.m_ActualAnimation,0.5,0.5,1.0,true)
 	l_Enemy.m_TimerToStop = 0.0
@@ -37,8 +35,13 @@ function IdleUpdateTurret(args, _ElapsedTime)
 		
 		local l_PlayerForward = g_Player.m_CameraController:get_forward():get_normalized(1)
 		local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Direction, l_PlayerForward)		
+		if angle_to_turn == nil then
+			-- player is looking in the screen center
+			angle_to_turn = 0
+		end
 		
-		if angle_to_turn ~= nil and angle_to_turn >= -0.3 and angle_to_turn <= 0.3 then
+		if angle_to_turn >= -0.4 and angle_to_turn <= 0.4 then
+			utils_log("ANGLE: "..angle_to_turn)
 			-- playes has to lose sanity because he is looking the enemy
 			l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
 			l_Enemy:LoseSanity(l_Distance)
