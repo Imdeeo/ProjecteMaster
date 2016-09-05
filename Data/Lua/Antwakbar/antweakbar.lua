@@ -366,6 +366,7 @@ function RegisterParticleParameters(particle_name)
 	
 	ShowMaterialParameters(DebugHelper, UABEngine, Material.name)
 	
+	DebugHelper:add_variable("Emission Box Limit",CDebugHelper.bool,CDebugHelper.read_write,Particle:get_lua_emission_box_limit(),"")
 	DebugHelper:add_variable("Pos X",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_emission_box_position(0),"min=-100.0 max=100.0 step=0.01 group=\"Emission Box Position\"")
 	DebugHelper:add_variable("Pos Y",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_emission_box_position(1),"min=-100.0 max=100.0 step=0.01 group=\"Emission Box Position\"")
 	DebugHelper:add_variable("Pos Z",CDebugHelper.float,CDebugHelper.read_write,Particle:get_lua_emission_box_position(2),"min=-100.0 max=100.0 step=0.01 group=\"Emission Box Position\"")
