@@ -3,7 +3,6 @@ function AttackFirstTurret(args)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
-	utils_log("ATTACK ANIMACION ACTUAL: "..l_Enemy.m_ActualAnimation)
 	l_Owner:remove_action(l_Enemy.m_ActualAnimation)
 	l_Enemy.m_ActualAnimation = 1
 	l_Owner:execute_action(l_Enemy.m_ActualAnimation,0.5,0.5,1.0,true)
