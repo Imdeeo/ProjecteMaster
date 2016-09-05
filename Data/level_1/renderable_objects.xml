@@ -75,31 +75,31 @@
 	<particle_instance name="EmisorParticulaVitrinaDer1" layer="particles" type="SmokeParticle04" position="-1.200001 0.260000 1.030000" next_particle_emission="0.435867" awake="true" awake_timer="1.226250" emission_box_half_size="0.400000 0.000000 0.650000" visible="true"/>
 	<particle_instance name="EmisorParticulaVitrinaIzq1" layer="particles" type="SmokeParticle05" position="1.249760 0.264424 1.031981" next_particle_emission="0.325189" awake="true" awake_timer="0.959646" emission_box_half_size="0.400000 0.000000 0.650000" visible="true"/>
 	<manchas_instance name="manchas" layer="manchas" type="manchasCordura1" awake="false" visible="true"/>
-	<instance_mesh name="TriggerDoor" layer ="triggers" is_active="true" core_name="TriggerDoor" position="-0.50766 1.323 4.8855" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerDoor" layer ="triggers" on_trigger_enter="OnEnterTriggerDoor" on_trigger_exit="OnExitTriggerDoor" on_trigger_stay="OnStayTriggerDoor" is_active="true" core_name="TriggerDoor" position="-0.50766 1.323 4.8855" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerSheets" layer ="triggers" is_active="true" core_name="TriggerSheets" position="2.45109 1.14448 -2.28911" rotation="0.0 -0.173648 0.0 -0.984808" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerSheets" layer ="triggers" on_trigger_enter="OnEnterTriggerSheets" on_trigger_exit="OnExitTriggerSheets" on_trigger_stay="OnStayTriggerSheets" is_active="true" core_name="TriggerSheets" position="2.45109 1.14448 -2.28911" rotation="0.0 -0.173648 0.0 -0.984808" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerCanvas" layer ="triggers" is_active="true" core_name="TriggerCanvas" position="-2.93982 2.24752 -2.04231" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerTrayR2" layer ="triggers" on_trigger_enter="OnEnterTriggerTrayR2" on_trigger_exit="OnExitTriggerTrayR2" on_trigger_stay="OnStayTriggerTrayR2" is_active="true" core_name="TriggerTrayR2" position="-2.08422 1.02607 -1.05747" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerTrayR1" layer ="triggers" is_active="true" core_name="TriggerTrayR2" position="-2.08471 1.02607 -2.3834" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerCanvas" layer ="triggers" on_trigger_enter="OnEnterTriggerCanvas" on_trigger_exit="OnExitTriggerCanvas" on_trigger_stay="OnStayTriggerCanvas" is_active="true" core_name="TriggerCanvas" position="-2.93982 2.24752 -2.04231" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerTrayR2" layer ="triggers" is_active="true" core_name="TriggerTrayR2" position="-2.08422 1.02607 -1.05747" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerTrayR1" layer ="triggers" on_trigger_enter="OnEnterTriggerTrayR1" on_trigger_exit="OnExitTriggerTrayR1" on_trigger_stay="OnStayTriggerTrayR1" is_active="true" core_name="TriggerTrayR1" position="-2.08471 1.02607 -2.3834" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerTrayL1" layer ="triggers" is_active="true" core_name="TriggerTrayR2" position="2.0774 1.02607 -2.3834" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerTrayL2" layer ="triggers" on_trigger_enter="OnEnterTriggerTrayL2" on_trigger_exit="OnExitTriggerTrayL2" on_trigger_stay="OnStayTriggerTrayL2" is_active="true" core_name="TriggerTrayL2" position="2.06764 1.02607 -1.05747" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerTrayL2" layer ="triggers" is_active="true" core_name="TriggerTrayR2" position="2.06764 1.02607 -1.05747" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerTrayL1" layer ="triggers" on_trigger_enter="OnEnterTriggerTrayL1" on_trigger_exit="OnExitTriggerTrayL1" on_trigger_stay="OnStayTriggerTrayL1" is_active="true" core_name="TriggerTrayL1" position="2.0774 1.02607 -2.3834" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerAnkh" layer ="triggers" is_active="true" core_name="TriggerAnkh" position="2.28335 0.944526 -0.946455" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerAnkh" layer ="triggers" on_trigger_enter="OnEnterTriggerAnkh" on_trigger_exit="OnExitTriggerAnkh" on_trigger_stay="OnStayTriggerAnkh" is_active="true" core_name="TriggerAnkh" position="2.28335 0.944526 -0.946455" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerKey" layer ="triggers" is_active="true" core_name="TriggerAnkh" position="-2.51353 0.949409 -2.63023" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerKey" layer ="triggers" on_trigger_enter="OnEnterTriggerKey" on_trigger_exit="OnExitTriggerKey" on_trigger_stay="OnStayTriggerKey" is_active="true" core_name="TriggerKey" position="-2.51353 0.949409 -2.63023" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
 </renderable_objects>
