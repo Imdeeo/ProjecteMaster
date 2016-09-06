@@ -448,6 +448,12 @@ public:
 		AddActor(_name, _position, Quatf(0, 0, 0, 1), l_actor);
 	}
 
+	void ChangeRigidDynamicActorPhysxGroup(const std::string &_ActorName, const std::string &_group){
+		physx::PxShape* shape;
+		((physx::PxRigidDynamic*)m_Actors[m_ActorIndexs[_ActorName]])->getShapes(&shape, 1);
+		L_PutGroupToShape(shape, m_Groups[_group]);
+	}
+
 	bool LoadPhysx(const std::string &Filename)
 	{
 		m_Filename = Filename;
