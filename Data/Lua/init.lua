@@ -49,11 +49,7 @@ function mainLua()
 	deactivate_player_collisions()
 	--l_LevelManager:load_level("Recibidor")	
 	--l_LevelManager:load_level("Biblioteca")
-<<<<<<< HEAD
 	--l_LevelManager:load_level("Maquinas")	
-=======
-	l_LevelManager:load_level("Maquinas")	
->>>>>>> develop
 end
 
 function levelMainLua(level)
