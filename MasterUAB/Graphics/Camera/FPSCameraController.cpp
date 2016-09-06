@@ -1,4 +1,5 @@
 #include "Camera\FPSCameraController.h"
+#include "Camera\CameraInfo.h"
 #include "Camera\Camera.h"
 
 #include "Engine\UABEngine.h"
@@ -74,6 +75,8 @@ void CFPSCameraController::SetCamera(CCamera *Camera) const
 	Camera->SetLookAt(m_Position+l_Direction);
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
+	Vect3f l_LA = m_Position + l_Direction;
+	UtilsLog("Cam LA: " + std::to_string(l_LA.x) + ", " + std::to_string(l_LA.y) + ", " + std::to_string(l_LA.z));
 }
 
 void CFPSCameraController::Update(float ElapsedTime)
@@ -85,4 +88,11 @@ void CFPSCameraController::Update(float ElapsedTime)
 	AddPitch(l_InputManager->GetAxisY()*ElapsedTime);
 	AddYaw(l_InputManager->GetAxisX()*ElapsedTime);
 	l_InputManager->UpdateAxis(0, 0);
+}
+
+void CFPSCameraController::CopyFromKeyCamera(CCameraInfo* _CameraInfo)
+{
+	m_Fov = _CameraInfo->m_FOV;
+	Vect3f l_LookAt = _CameraInfo->m_LookAt - _CameraInfo->m_Eye;
+	m_Rotation.SetFromFwdUp(l_LookAt, _CameraInfo->m_Up);
 }

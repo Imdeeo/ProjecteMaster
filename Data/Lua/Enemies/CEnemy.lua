@@ -13,6 +13,7 @@ class 'CEnemy' (CLUAComponent)
 		
 		self.m_Timer = 0
 		self.m_DefaultPosition = Vect3f(self.m_RenderableObject:get_position().x, self.m_RenderableObject:get_position().y, self.m_RenderableObject:get_position().z)
+		--utils_log(self.m_Name.." POS X: "..self.m_DefaultPosition.x.." Y: "..self.m_DefaultPosition.y.." Z: "..self.m_DefaultPosition.z)
 		self.m_DefaultForward = self.m_RenderableObject:get_rotation():get_forward_vector()
 		self.m_State = "off"
 		self.m_Awake = _TreeNode:get_bool_property("awake", false, false)
@@ -79,32 +80,10 @@ class 'CEnemy' (CLUAComponent)
 		-- otherwise visible
 		self.m_BlockingObjectName = nil
 		return true
-	end
-	
-	function CEnemy:RotateEnemyHead(_Owner, _DesiredPos)
-		-- Seguimos al player con la mirada
-		local l_EnemyForward = _Owner:get_rotation():get_forward_vector():get_normalized(1)
-		local l_EnemyPos = _Owner:get_position()
-		
-		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)
-		local l_Angle = l_EnemyForward * l_Direction
-		if 1.0 - l_Angle < 0.01 then
-		  return
-		end
-		
-		local angle_to_turn = math.acos(l_Angle)
-		local cross = l_Direction ^ l_EnemyForward
-		if cross.y < 0.0 then
-		  angle_to_turn = -angle_to_turn
-		end
-		
-		local quat_to_turn = Quatf()
-		quat_to_turn:quat_from_yaw_pitch_roll(0.0, angle_to_turn, 0.0)		
-		_Owner:set_head_bone_rotation(quat_to_turn)
-	end
+	end	
 	
 	function CEnemy:LoseSanity(_Distance)
-		for i=1, table.maxn(self.m_LoseSanity) do
+		for i=1, table.maxn(self.m_LoseSanity)-1 do
 			if _Distance <= self.m_LoseSanity[i].x and _Distance > self.m_LoseSanity[i+1].x and self.m_Timer >= self.m_LoseSanity[i].y then
 				g_Player:ModifySanity(self.m_LoseSanity[i].z)
 				self.m_Timer = 0
@@ -112,4 +91,87 @@ class 'CEnemy' (CLUAComponent)
 			end
 		end
 	end
+	
+	function CEnemy:EnemyMove(_ElapsedTime)
+		local l_Owner = self.m_RenderableObject;
+		
+		-- Calculate the enemy speed
+		local l_PlayerDisplacement = Vect3f(self.m_Velocity.x, self.m_Velocity.y + self.m_Gravity * _ElapsedTime, self.m_Velocity.z)
+		
+		--// Move the character controller
+		local l_PreviousControllerPosition = self.m_PhysXManager:get_character_controler_pos(self.m_Name)
+		l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - g_StandingOffset
+		self.m_PhysXManager:character_controller_move(self.m_Name, l_PlayerDisplacement, _ElapsedTime)
+		
+		--// Assign to the character the controller's position
+		local l_NewControllerPosition = self.m_PhysXManager:get_character_controler_pos(self.m_Name)
+		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
+		l_Owner:set_position(l_NewControllerPosition)
+		
+		--// Save speed in last update so we can create acceleration
+		local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
+		self.m_Velocity = l_Displacement/_ElapsedTime
+	end
+	
+	function CEnemy:EnemyWalk(_DesiredPos, _MoveSpeed, _PercentRotation, _ElapsedTime)
+		-- enemy always walks in forward direction
+		local l_Owner = self.m_RenderableObject;
+		local l_EnemyForward = l_Owner:get_rotation():get_forward_vector():get_normalized(1)
+		local l_EnemyPos = l_Owner:get_position()
+		self.m_Velocity = Vect3f(l_EnemyForward.x * _MoveSpeed, self.m_Velocity.y, l_EnemyForward.z * _MoveSpeed)
+		
+		self:EnemyMove(_ElapsedTime)
+
+		-- with the rotation, the enemy chases to the player
+		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)
+		
+		local angle_to_turn = self:CalculateAngleRotation(l_EnemyForward, l_Direction)
+		if angle_to_turn ~= nil then
+			self:EnemyRotation(angle_to_turn, _PercentRotation)
+		end
+	end
+	
+	function CEnemy:EnemyRotation(_AngleToTurn, _PercentRotation)
+		local l_Owner = self.m_RenderableObject;
+		
+		local quat_to_turn = Quatf()
+		quat_to_turn:quat_from_yaw_pitch_roll(_AngleToTurn, 0.0, 0.0)
+
+		local target_quat = l_Owner:get_rotation():slerp(l_Owner:get_rotation() * quat_to_turn, _PercentRotation)
+		l_Owner:set_rotation(target_quat)
+	end
+	
+	function CEnemy:RotateEnemyBone(_Bone, _DesiredPos, _PercentRotation)
+		-- Seguimos al player con la mirada
+		local l_Owner = self.m_RenderableObject;
+		local l_EnemyPos = l_Owner:get_position()
+		local l_BoneRotation = l_Owner:get_bone_rotation(_Bone)
+		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)		
+		
+		local angle_to_turn = self:CalculateAngleRotation(self.m_DefaultForward, l_Direction)
+		if angle_to_turn == nil then
+			angle_to_turn = 0.0
+		end
+		
+		local quat_to_turn = Quatf()
+		quat_to_turn:quat_from_yaw_pitch_roll(0.0, angle_to_turn, 0.0)
+		
+		local target_quat = l_BoneRotation:slerp(quat_to_turn * l_BoneRotation, _PercentRotation)
+		l_Owner:set_bone_rotation(target_quat, _Bone)
+	end
+	
+	function CEnemy:CalculateAngleRotation(_EnemyForward, _Direction)
+		local l_Angle = _EnemyForward * _Direction
+		if 1.0 - l_Angle < 0.01 then
+			return nil
+		end
+		
+		local angle_to_turn = math.acos(l_Angle)
+		local cross = _Direction ^ _EnemyForward
+		if cross.y < 0.0 then
+		  angle_to_turn = -angle_to_turn
+		end	
+
+		return angle_to_turn		
+	end	
 --end

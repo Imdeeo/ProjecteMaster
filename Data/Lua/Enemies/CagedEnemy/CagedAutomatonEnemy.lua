@@ -6,7 +6,12 @@ class 'CCagedAutomatonEnemy' (CEnemy)
 	function CCagedAutomatonEnemy:__init(_TreeNode)
 		CEnemy.__init(self,_TreeNode)
 		self.m_Break = _TreeNode:get_bool_property("break", false, false)
+		self.m_AngularSpeed = _TreeNode:get_float_property("angular_speed", 1000.0, false)
+		self.m_TimerRotation = 0.0
 		self.m_TimerToStop = 0.0
+		--HEAD_OBJECT_BONE_ID 31
+		self.m_HeadBoneId = 31
+		
 		self:SetCagedAutomatonStateMachine()
 		self.m_StateMachine:start()
 	end

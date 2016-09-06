@@ -17,6 +17,7 @@ fn createCameras dir Objs =
 		local cameraPos
 		local cameraUp
 		local cameraLookAt
+		local cameraFieldOfView
 		local key
 		local cameraType
 		
@@ -32,7 +33,7 @@ fn createCameras dir Objs =
 				key = replace key key.count 1 ""
 				key = (key as float)/30		
 				dirExist (dir+"cameras\\")
-				cameraFileDir = "cameras\\"+Objs[i].name+".xml"
+				cameraFileDir = dir+"cameras\\"+Objs[i].name+".xml"
 				cameraType = getUserProp Objs[i] "camera_export_type"
 				TranslationToRH &cameraTranslation
 				format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"% % %\" filename=\"%\"/>\n" Objs[i].name key cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraFileDir to:file
@@ -59,7 +60,9 @@ fn createCameras dir Objs =
 					TranslationToRH &cameraUp
 					TranslationToRH &cameraLookAt
 					TranslationToRH &cameraTranslation
-					format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z (at time j Objs[i].fov) (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
+					cameraFieldOfView = at time j Objs[i].fov
+					deg2rad &cameraFieldOfView
+					format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView (at time j Objs[i].nearrange) (at time j Objs[i].farrange) to:cameraFile
 					j = at time j trackbar.getNextKeyTime()
 				) while j != firstframe
 				format "</camera_key_controller>\n" to:cameraFile		
@@ -78,7 +81,9 @@ fn createCameras dir Objs =
 				TranslationToRH &cameraUp
 				TranslationToRH &cameraLookAt
 				TranslationToRH &cameraTranslation
-				format "\t<camera name=\"%\" type=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" Objs[i].name cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z Objs[i].fov Objs[i].nearrange Objs[i].farrange to:file
+				cameraFieldOfView = Objs[i].fov
+				deg2rad &cameraFieldOfView
+				format "\t<camera name=\"%\" type=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" Objs[i].name cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView Objs[i].nearrange Objs[i].farrange to:file
 			)
 			max select none
 		)		

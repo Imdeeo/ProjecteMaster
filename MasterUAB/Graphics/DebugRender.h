@@ -44,6 +44,7 @@ public:
 	CRenderableVertexs * GetQuadRV() const { return m_DrawQuadRV; }
 
 	CRenderableVertexs * GetSPhere10() const { return m_Sphere_10Seg; }
+	CRenderableVertexs * GetSPhere10_2() const { return m_Sphere_10Seg2; }
 	CRenderableVertexs * GetCone() const { return m_Cone; }
 
 	float GetSimpleTriangleBSRadi() const { return m_SimpleTriangleBSRadi; }
@@ -89,6 +90,7 @@ private:
 	CRenderableVertexs				*m_DrawQuadRV;
 
 	CRenderableVertexs				*m_Sphere_10Seg;
+	CRenderableVertexs				*m_Sphere_10Seg2;
 	CRenderableVertexs				*m_Cone;
 
 	float m_SimpleTriangleBSRadi;

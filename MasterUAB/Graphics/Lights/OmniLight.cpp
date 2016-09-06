@@ -1,7 +1,8 @@
 #include "OmniLight.h"
+#include "XML\XMLTreeNode.h"
+#include "Camera\Frustum.h"
 
 #include <assert.h>
-#include "XML\XMLTreeNode.h"
 
 COmniLight::COmniLight():CLight(){}
 
@@ -15,6 +16,11 @@ COmniLight::COmniLight(CXMLTreeNode &TreeNode) : CLight(TreeNode){}
 void COmniLight::SetShadowMap(CRenderManager &RenderManager)
 {
 	assert(!"this method must not be called");
+}
+
+bool const COmniLight::GetInsideFrustum()
+{
+	return m_Frustum->SphereVisible(m_Position, m_EndRangeAttenuation);
 }
 
 void COmniLight::Save(FILE* _File)

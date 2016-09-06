@@ -25,7 +25,7 @@ class CRenderableVertexs;
 class CCamera;
 class CColor;
 
-#define MAX_RENDER_TARGETS 4
+#define MAX_RENDER_TARGETS 5
 
 class CContextManager
 {

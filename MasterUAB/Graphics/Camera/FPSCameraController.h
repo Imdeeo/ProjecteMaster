@@ -4,6 +4,7 @@
 #include "Camera\CameraController.h"
 
 class CCamera;
+class CCameraInfo;
 class CRenderableObject;
 
 class CFPSCameraController : public CCameraController
@@ -26,6 +27,7 @@ public:
 	void Update(float ElapsedTime);
 	void Lock(){ m_Locked = true; }
 	void Unlock(){ m_Locked = false; }
+	void CopyFromKeyCamera(CCameraInfo* _CameraInfo);
 };
 
 #endif

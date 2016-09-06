@@ -13,8 +13,6 @@ rollout CamAnim "Camera Animation" width:160 height:134
 	edittext CameraAnimationName "Name: " pos:[24,74] width:112 height:16 enabled:false visible:true
 	button ExportButton "Export" pos:[24,104] width:112 height:16 visible:true
 	
-	fn existFile fname = (getfiles fname).count != 0
-	
 	fn loadOK Obj =
 	(
 		CameraLabel.text = Obj.name
@@ -60,6 +58,7 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		local cameraTranslation = cameraTransform.translation
 		local cameraRotation
 		local cameraLookAt
+		local cameraFieldOfView
 		local cameraFileDir = "cameras\\"+CameraAnimationName.text+".xml"
 		format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"% % %\" filename=\"%\"/>\n" CameraAnimationName.text key cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraFileDir to:_file
 		
@@ -84,10 +83,12 @@ rollout CamAnim "Camera Animation" width:160 height:134
 				cameraLookAt.z *= -1
 				cameraLookAt += cameraTranslation
 			)
-			CustomToRH &cameraUp
 			CustomToRH &cameraLookAt
-			CustomToRH &cameraTranslation
-			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z (at time j Cam.fov) (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
+			AnimatedCameraToRH &cameraTranslation
+			swapXZ &CameraUp
+			cameraFieldOfView = at time j Cam.fov
+			deg2rad &cameraFieldOfView
+			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
 			j = at time j trackbar.getNextKeyTime()
 		) while j < CameraKeyEnd.value
 		select Cam

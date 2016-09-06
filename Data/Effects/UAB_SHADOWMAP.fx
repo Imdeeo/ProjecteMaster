@@ -50,10 +50,10 @@ PS_INPUT mainVS(VS_INPUT IN)
 		float4 l_TempPos=float4(IN.Pos.xyz, 1.0);
 		float3 l_Position= 0;
 		float4 l_Indices=IN.Indices;					
-		l_Position=mul(l_TempPos, m_Bones[l_Indices.x]) * IN.Weight.x;
-		l_Position+=mul(l_TempPos, m_Bones[l_Indices.y]) * IN.Weight.y;
-		l_Position+=mul(l_TempPos, m_Bones[l_Indices.z]) * IN.Weight.z;
-		l_Position+=mul(l_TempPos, m_Bones[l_Indices.w]) * IN.Weight.w;
+		l_Position=mul(l_TempPos, m_Bones[l_Indices.x]).xyz * IN.Weight.x;
+		l_Position+=mul(l_TempPos, m_Bones[l_Indices.y]).xyz * IN.Weight.y;
+		l_Position+=mul(l_TempPos, m_Bones[l_Indices.z]).xyz * IN.Weight.z;
+		l_Position+=mul(l_TempPos, m_Bones[l_Indices.w]).xyz * IN.Weight.w;
 		
 		#ifdef HAS_NORMAL
 			float3 l_Normal= 0;	

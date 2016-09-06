@@ -5,8 +5,9 @@
 #include "Effects\EffectManager.h"
 #include "RenderManager\RenderManager.h"
 #include "DebugRender.h"
-
+#include "Camera\Frustum.h"
 #include "Texture\DynamicTexture.h"
+#include "RenderableObjects\RenderableObjectsManager.h"
 
 CSpotLight::CSpotLight():CDirectionalLight(),m_Angle(0.0f),m_FallOff(0.0f){}
 
@@ -109,15 +110,23 @@ CRenderableVertexs* CSpotLight::GetShape(CRenderManager *_RenderManager)
 }
 #endif
 
+bool const CSpotLight::GetInsideFrustum()
+{
+	return m_Frustum->SphereVisible(m_Position + (m_Direction.GetNormalized() * m_EndRangeAttenuation) / 2, m_EndRangeAttenuation);
+}
+
 void CSpotLight::Save(FILE* _File)
 {
 	if (m_GenerateShadowMap)
 	{ 
 		fprintf_s(_File, "\t<light name=\"%s\" enabled=\"%s\" type=\"spot\" pos=\"%f %f %f\" dir=\"%f %f %f\" color=\"%f %f %f %f\" angle=\"%f\" fall_off=\"%f\" att_start_range=\"%f\" "
-			"att_end_range=\"%f\" intensity=\"%f\" generate_shadow_map=\"true\" shadow_map_width=\"%i\" shadow_map_height=\"%i\" shadow_map_format=\"%s\" shadow_texture_mask=\"%s\"/>\n",
+			"att_end_range=\"%f\" intensity=\"%f\" generate_shadow_map=\"true\" shadow_map_width=\"%i\" shadow_map_height=\"%i\" shadow_map_format=\"%s\" shadow_texture_mask=\"%s\">\n",
 			m_Name.c_str(), m_Enabled ? "true" : "false", m_Position.x, m_Position.y, m_Position.z, m_Direction.x, m_Direction.y, m_Direction.z, m_Color.GetRed(), m_Color.GetGreen(), m_Color.GetBlue(), m_Color.GetAlpha(),
 			m_Angle, m_FallOff, m_StartRangeAttenuation, m_EndRangeAttenuation, m_Intensity, m_ShadowMap->GetWidth(), m_ShadowMap->GetHeight(), m_ShadowMap->GetFormat().c_str(), 
 			m_ShadowMaskTexture != NULL ? m_ShadowMaskTexture->GetName().c_str() : "");
+		for (size_t i = 0; i < m_Layers.size(); ++i)
+			fprintf_s(_File, "\t\t<layer layer=\"%s\"/>\n", m_Layers[i]->GetName().c_str());
+		fprintf_s(_File, "\t</light>\n");
 	}
 	else
 	{

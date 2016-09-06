@@ -3,7 +3,7 @@ fileIn "utils.ms"
 
 fn createCinematicObjects dir filename Objs isCal3D =
 (	
-	if Objs != undefined then
+	if Objs != undefined and Objs.count > 0 then
 	(
 		file=createfile (dir+filename)
 		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
