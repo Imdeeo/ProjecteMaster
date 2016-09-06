@@ -285,18 +285,21 @@ fn processFaces arx Obj &prog=
 	free UABVtxsNormals
 	local VtxID = 0x0000
 	VtxID = PosID+ColorID+NmID+UVID+UV2ID+BnmID+TngID
-	print VtxID
-	print PosID
-	print ColorID
-	print NmID
-	print UVID
-	print UV2ID
-	print BnmID
-	print TngID
+	
+	print "Raw"
+	print BBMin
+	print BBMax
 	TranslationToRH &BBMin
 	TranslationToRH &BBMax
+	print "Translated"
+	print BBMin
+	print BBMax	
+	print "Vector"
+	print (BBMin-BBMax)
 	TranslationToRH &BSphere[1]
 	writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere
+	print "Vertex Type"
+	print VtxID
 	
 	if classof Obj != Editable_mesh then ( delete l_Obj )
 )
