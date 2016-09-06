@@ -5,6 +5,7 @@ dofile("Data\\Lua\\Characters\\CCharacterManager.lua")
 dofile("Data\\Lua\\Triggers.lua")
 dofile("Data\\Lua\\Sound\\VolumeController.lua")
 dofile("Data\\Lua\\Enemies\\VisionTestEnemy\\VisionTestEnemy.lua")
+dofile("Data\\Lua\\Commands.lua")
 
 m_cinematicManager = CUABCinematicsActionManager()
 m_CharacterManager = CCharacterManager()
@@ -42,9 +43,13 @@ function mainLua()
 	m_timerPause = 0
 	m_iniciando = true 
 	
+	l_LevelManager:load_level("Player")	
+	
+	deactivate_gravity()
+	deactivate_player_collisions()
 	--l_LevelManager:load_level("Recibidor")	
 	--l_LevelManager:load_level("Biblioteca")
-	l_LevelManager:load_level("Maquinas")	
+	--l_LevelManager:load_level("Maquinas")	
 end
 
 function levelMainLua(level)
