@@ -1,16 +1,9 @@
-function FacingRaycast(_Player, _Target, _Pos, _Distance)
-	--utils_log("Pos: ".._Pos.x..", ".._Pos.y..", ".._Pos.z)
-	--utils_log("Target: ".._Target.x..", ".._Target.y..", ".._Target.z)
-	--utils_log("Offset: ".._Player.m_TargetOffset.x..", ".._Player.m_TargetOffset.y..", ".._Player.m_TargetOffset.z)
-	--utils_log("Distance: "..(_Pos - _Target):length())
-	return ((_Pos - _Target):length() < _Distance)
-end
-
 dofile("Data\\Lua\\Raycast\\Recibidor.lua")
 
 function CheckRaycast(_Player, _Pos)
 	_Player.m_RaycastData = RaycastData()
-	_Player.m_PhysXManager:raycast(_Pos+_Player.m_CameraController:get_forward(), _Pos+(_Player.m_CameraController:get_forward()*2), 4, _Player.m_RaycastData)
+	_Player.m_PhysXManager:raycast(_Player.m_CameraController:get_position(), _Player.m_CameraController:get_position()+(_Player.m_CameraController:get_forward()*1.7), 4, _Player.m_RaycastData)
+	--utils_log(_Player.m_RaycastData.actor_name)
 	if _Player.m_RaycastData.actor_name ~= "" then
 		TriggerRaycast(_Player, _Pos)
 	end
@@ -18,8 +11,8 @@ end
 
 function TriggerRaycast(_Player, _Pos)
 	--utils_log(_Player.m_ItemName)
-	l_LevelName = g_Engine:get_level_loaded()
-	if l_LevelName == "Recibidor" then
+	l_LevelID = g_Engine:get_level_loaded()
+	if l_LevelID == "1" then
 		if _Player.m_RaycastData.actor_name == "TriggerDoor" then
 			if _Player.m_ItemName == "LlaveRecibidor" then
 				R1Door(_Player, _Pos)

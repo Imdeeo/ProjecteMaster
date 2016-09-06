@@ -69,9 +69,11 @@ function InteractingEnd(args)
 	utils_log("InteractingEnd start")
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
-	l_CameraControllerManager = CUABEngine.get_instance():get_camera_controller_manager()
-	l_CameraControllerManager:get_resource(l_Player.m_CameraControllerName):copy_from_key_camera(l_CameraControllerManager:get_main_camera():get_last_key())
-	l_CameraControllerManager:choose_main_camera(l_Player.m_CameraControllerName)
+	if l_Player.m_CameraAnimation ~= nil then
+		l_CameraControllerManager = CUABEngine.get_instance():get_camera_controller_manager()
+		l_CameraControllerManager:get_resource(l_Player.m_CameraControllerName):copy_from_key_camera(l_CameraControllerManager:get_main_camera():get_last_key())
+		l_CameraControllerManager:choose_main_camera(l_Player.m_CameraControllerName)
+	end
 	if l_Player.m_InteractingCinematic ~= nil then
 		l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):stop()
 	end
