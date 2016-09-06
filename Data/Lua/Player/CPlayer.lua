@@ -144,7 +144,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_JumpSoundEvent = SoundEvent()
 		self.m_JumpSoundEvent.event_name = "Jump"
 		self.m_Velocity = Vect3f(0.0, 0.0, 0.0)
-		self.m_Gravity = -9.81
+		self.m_Gravity = g_Gravity
 		self.m_Speed = 5.0
 		self.m_DefaultSpeed = 5.0
 		self.m_Sanity = 100.0
@@ -405,6 +405,10 @@ class 'CPlayer' (CLUAComponent)
 		
 		utils_log("End Set PlayerStateMachine")
 	end	
+	
+	function CPlayer:SetActiveStateMachineState(name,active)
+		self.m_StateMachine:activeState(name,active)
+	end
 --end
 
 function ANYToItselfCondition(args)
