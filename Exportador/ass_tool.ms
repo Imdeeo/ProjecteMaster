@@ -1,4 +1,5 @@
 fileIn "animated_camera.ms"
+fileIn "animated_end_position.ms"
 fileIn "camera.ms"
 fileIn "character.ms"
 fileIn "cinematic.ms"
@@ -59,6 +60,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		GroupBox LogicGroup "Logic" pos:[160,232] width:204 height:48
 			checkbox LogicGenerateBox "Generate" pos:[168,256] width:88 height:16
 			dropdownList LogicGenerateList "" pos:[264,254] width:88 height:21 items:#("stairs")
+		button AnimationEndButton "Animation End" pos:[166,304] width:192 height:32
 		button GetButton "Get" pos:[592,144] width:112 height:32
 		button SetButton "Set" pos:[592,184] width:112 height:32
 	GroupBox grp2 "Lights" pos:[152,8] width:432 height:358 visible:false
@@ -122,6 +124,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		LabelX.visible = bool
 		LabelY.visible = bool
 		LabelZ.visible = bool
+		AnimationEndButton.visible = bool
 	)
 	
 	fn toggleLightsGroup bool =
@@ -957,6 +960,13 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		dir
 	)
 	
+	fn getRawDir =
+	(
+		local dir = ""+ExportPathLabel.text+"\\" 
+		dirExist dir
+		dir
+	)
+	
 	fn exportLights dir =
 	(
 		local lightsToExport = #()
@@ -1121,6 +1131,11 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		callbacks.removeScripts #selectionSetChanged id:#checkCam
 		callbacks.addScript #selectionSetChanged "CamAnim.checkCam $" id:#checkCam persistent:false
 		createDialog CamAnim
+	)
+	
+	on AnimationEndButton pressed do
+	(
+		ExportAnimationEndPosition (getRawDir())
 	)
 	
 	on ASSTool open do

@@ -176,7 +176,7 @@ float4 PSHDAO(PS_INPUT IN) : SV_Target
 	float2 f2MirrorTexCoord;
 	float2 f2InvRTSize;
 	float fCenterZ;
-	float fOffsetCenterZ;
+	float fOffsetCenterZ = 0.0f;
 	float fCenterNormalZ;
 	float4 f4SampledZ[2];
 	float4 f4OffsetSampledZ[2];

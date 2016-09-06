@@ -8,8 +8,8 @@ function OffUpdateAutomaton(args, _ElapsedTime)
 	
 	l_Enemy:EnemyMove(_ElapsedTime)
 
-	if l_Enemy.m_Awake or l_Enemy:DetectPlayerNoise(1) then
-		l_Enemy.m_State = "idle"	
+	if l_Enemy.m_Awake then
+		l_Enemy.m_State = "idle"
 	end
 end
 

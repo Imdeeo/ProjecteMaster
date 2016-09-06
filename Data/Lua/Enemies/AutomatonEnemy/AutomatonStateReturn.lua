@@ -13,17 +13,13 @@ function ReturnFirstAutomaton(args)
 	l_Enemy.m_TimerRotation2 = 0.0
 	l_Enemy.m_IsReturn = false
 	l_Enemy.m_LastPositionPlayer = nil
-	l_Enemy.m_IsChasing = false
 end
 
 function ReturnUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]	
 	
-	if l_Enemy:PlayerVisible(l_Owner) then
-		l_Enemy.m_IsChasing = true
-		l_Enemy.m_State = "chase"	
-	elseif l_Enemy:DetectPlayerNoise(1) then
+	if l_Enemy:PlayerVisible(l_Owner) or l_Enemy:DetectPlayerNoise(1) then
 		l_Enemy.m_State = "chase"
 	else
 		l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime	

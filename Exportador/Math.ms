@@ -1,3 +1,8 @@
+fn deg2rad &ret =
+(
+	ret = ret*PI/180
+)
+
 fn lerp minVal maxVal term &ret = 
 (
     ret = (maxVal - minVal) * term + minVal
@@ -54,6 +59,11 @@ fn InverseQuat &q =
 fn CustomToRH &translation =
 (
 	translation = [-translation.y, translation.z, translation.x]
+)
+
+fn AnimatedCameraToRH &translation =
+(
+	translation = [translation.x, translation.z, -translation.y]
 )
 
 fn TranslationToRH &translation =

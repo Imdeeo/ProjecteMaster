@@ -1,6 +1,6 @@
-
 #include "Camera\CameraKeyController.h"
 #include "Camera\Camera.h"
+#include "Camera\CameraInfo.h"
 #include "Engine\UABEngine.h"
 #include "CameraKey.h"
 #include "Utils.h"
@@ -115,18 +115,23 @@ void CCameraKeyController::Update(float ElapsedTime)
 {
 	SetCurrentTime(m_CurrentTime + ElapsedTime);
 	GetCurrentKey();
+	
 	float l_CurrentTime;
+
 	float l_tI;
 	float l_tF;
+
 	Vect3f l_pI;
 	Vect3f l_pF;
-
 
 	float l_fI;
 	float l_fF;
 
 	Vect3f l_lI;
 	Vect3f l_lF;
+
+	Vect3f l_uI;
+	Vect3f l_uF;
 
 	if (IsCycle() || m_ReverseDirection == 1)
 	{
@@ -144,7 +149,8 @@ void CCameraKeyController::Update(float ElapsedTime)
 		l_lI = m_Keys[m_CurrentKey]->m_CameraInfo.m_LookAt;
 		l_lF = m_Keys[m_NextKey]->m_CameraInfo.m_LookAt;
 
-
+		l_uI = m_Keys[m_CurrentKey]->m_CameraInfo.m_Up;
+		l_uF = m_Keys[m_NextKey]->m_CameraInfo.m_Up;
 	}
 	else
 	{
@@ -161,12 +167,15 @@ void CCameraKeyController::Update(float ElapsedTime)
 
 		l_lI = m_Keys[m_NextKey]->m_CameraInfo.m_LookAt;
 		l_lF = m_Keys[m_CurrentKey]->m_CameraInfo.m_LookAt;
+
+		l_uI = m_Keys[m_NextKey]->m_CameraInfo.m_Up;
+		l_uF = m_Keys[m_CurrentKey]->m_CameraInfo.m_Up;
 	}
 
 	m_Position = (((l_pF - l_pI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pI;
-	m_FOV = (((l_fF - l_fI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_fI;
+	m_Fov = (((l_fF - l_fI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_fI;
 	m_LookAt = (((l_lF - l_lI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_lI;
-	
+	m_Up = (((l_uF - l_uI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_uI;
 }
 
 void CCameraKeyController::SetCurrentTime(float CurrentTime)
@@ -206,10 +215,34 @@ void CCameraKeyController::SetReverse(bool Reverse)
 
 void CCameraKeyController::SetCamera(CCamera *Camera) const
 {
-	Camera->SetFOV(m_FOV);
+	Camera->SetFOV(m_Fov);
 	Camera->SetAspectRatio(16.0f / 9.0f);
 	Camera->SetPosition(m_Position + m_PositionOffset);
 	Camera->SetLookAt(m_LookAt + m_PositionOffset);
-	Camera->SetUp(GetUp());
+	Camera->SetUp(m_Up);
 	Camera->SetMatrixs();
+	Vect3f l_LA = m_LookAt + m_PositionOffset;
+	UtilsLog("Cam LA: " + std::to_string(l_LA.x) + ", " + std::to_string(l_LA.y) + ", " + std::to_string(l_LA.z));
+}
+
+Vect3f CCameraKeyController::GetLastLookAt()
+{
+	return m_Keys[m_Keys.size()-1]->m_CameraInfo.m_LookAt;
+}
+
+void CCameraKeyController::SetFirstKey(Vect3f _Forward, Vect3f _Pos, Vect3f _Up, float _Fov)
+{
+	m_Fov = _Fov;
+	m_Position = _Pos - m_PositionOffset;
+	m_LookAt = _Forward + m_Position;
+	m_Up = _Up;
+	m_Keys[0]->m_CameraInfo.m_FOV = _Fov;
+	m_Keys[0]->m_CameraInfo.m_Eye = _Pos - m_PositionOffset;
+	m_Keys[0]->m_CameraInfo.m_LookAt = _Forward + m_Keys[0]->m_CameraInfo.m_Eye;
+	m_Keys[0]->m_CameraInfo.m_Up = _Up;
+}
+
+CCameraInfo* CCameraKeyController::GetLastKey()
+{
+	return &m_Keys[m_Keys.size()-1]->m_CameraInfo;
 }

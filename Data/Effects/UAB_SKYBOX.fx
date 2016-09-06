@@ -25,7 +25,7 @@ PS_INPUT mainVS(VS_INPUT IN)
 
 float4 mainPS(PS_INPUT IN) : SV_Target
 {	
-	float3 outColor = T8Texture.Sample(S8Sampler, IN.UV);
+	float3 outColor = T8Texture.Sample(S8Sampler, IN.UV).xyz;
 	//float3 outColor = tex3D(S8Sampler, IN.UV);
 	return float4(outColor,1);
 }

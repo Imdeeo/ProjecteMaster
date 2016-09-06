@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<camera_key_controller name="PickKey">
+	<key time="0.0" pos="-0.000433776 1.87888 -0.0291467" up="2.98669e-006 1.0 0.0" look_at="0.970853 1.87888 -0.000426539" fov="65.0" near_plane="0.0" far_plane="1000.0"/>
+	<key time="0.666667" pos="-0.000433776 1.87888 -0.0291467" up="0.691889 0.722004 0.0" look_at="0.692857 1.18699 -0.000426539" fov="65.0" near_plane="0.0" far_plane="1000.0"/>
+	<key time="10.6667" pos="-0.000433776 1.87888 -0.0291467" up="0.691889 0.722004 0.0" look_at="0.692857 1.18699 -0.000426539" fov="65.0" near_plane="0.0" far_plane="1000.0"/>
+</camera_key_controller>

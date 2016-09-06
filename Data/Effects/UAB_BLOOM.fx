@@ -99,7 +99,7 @@ PS_INPUT mainVS(VS_INPUT IN)
 	float4 AdjustSaturation(float4 Color, float Saturation)
 	{
 		// We define gray as the same color we used in the grayscale shader
-		float l_Grey=dot(Color, float3(0.3, 0.59, 0.11));
+		float l_Grey=dot(Color.xyz, float3(0.3, 0.59, 0.11));
 		return lerp(l_Grey, Color, Saturation);
 	}
 

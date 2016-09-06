@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <animated_models>
-	<animated_model name="Bruja" path="Data/AnimatedModels/Bruja/"/>
 	<animated_model name="Jaheem" path="Data/AnimatedModels/Jaheem/"/>
 	<animated_model name="Automaton" path="Data/AnimatedModels/Automaton/"/>
+	<animated_model name="TurretAutomaton" path="Data/AnimatedModels/TurretAutomaton/"/>
 	<animated_model name="CagedAutomaton" path="Data/AnimatedModels/CagedAutomaton/"/>
 </animated_models>

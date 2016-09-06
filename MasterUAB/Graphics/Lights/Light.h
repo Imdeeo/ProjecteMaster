@@ -14,6 +14,7 @@ class CRenderableVertexs;
 class CRenderManager;
 class CRenderableObjectsManager;
 class CXMLTreeNode;
+class CFrustum;
 
 class CLight : public CNamed, public C3DElement
 {
@@ -49,6 +50,9 @@ protected:
 	Mat44f m_ProjectionShadowMap;
 
 	CColor m_Color;
+
+	CFrustum *m_Frustum;
+
 	void Destroy();
 
 public:
@@ -115,6 +119,8 @@ public:
 	static TLightType GetLightTypeByName(const std::string &StrLightType);
 
 	virtual const Mat44f & GetTransform();
+
+	virtual const bool GetInsideFrustum();
 
 	// Shadowmap
 	void SetGenerateShadowMap(bool _GenerateShadowMap){ m_GenerateShadowMap = _GenerateShadowMap; }

@@ -17,7 +17,7 @@ public:
 	CSpotLight();
 	CSpotLight(std::string _name);
 	CSpotLight(CXMLTreeNode &TreeNode);
-
+	bool const GetInsideFrustum();
 	float GetAngle()const{ return m_Angle; }
 	float GetFallOff()const{ return m_FallOff; }
 	void SetAngle(float _Angle){ m_Angle = _Angle; }

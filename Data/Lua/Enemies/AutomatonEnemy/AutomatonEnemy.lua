@@ -14,6 +14,7 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_TotalNodes = 0
 		self.m_Patrol = _TreeNode:get_bool_property("patrol", false, false)
 		self.m_PatrolName = _TreeNode:get_psz_property("patrol_name", "", false)
+		self.m_DetectedSound = false
 		self.m_IsChasing = false
 		self.m_IsReturn = false
 		self.m_LastPositionPlayer = nil
@@ -98,70 +99,6 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_StateMachine:add_state("Attack", AttackState)
 	end
 	
-	function CAutomatonEnemy:EnemyMove(_ElapsedTime)
-		local l_Owner = self.m_RenderableObject;
-		
-		-- Calculate the enemy speed
-		local l_PlayerDisplacement = Vect3f(self.m_Velocity.x, self.m_Velocity.y + self.m_Gravity * _ElapsedTime, self.m_Velocity.z)
-		
-		--// Move the character controller
-		local l_PreviousControllerPosition = self.m_PhysXManager:get_character_controler_pos(self.m_Name)
-		l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - g_StandingOffset
-		self.m_PhysXManager:character_controller_move(self.m_Name, l_PlayerDisplacement, _ElapsedTime)
-		
-		--// Assign to the character the controller's position
-		local l_NewControllerPosition = self.m_PhysXManager:get_character_controler_pos(self.m_Name)
-		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
-		l_Owner:set_position(l_NewControllerPosition)
-		
-		--// Save speed in last update so we can create acceleration
-		local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
-		self.m_Velocity = l_Displacement/_ElapsedTime
-	end
-	
-	function CAutomatonEnemy:EnemyWalk(_DesiredPos, _MoveSpeed, _PercentRotation, _ElapsedTime)
-		-- enemy always walks in forward direction
-		local l_Owner = self.m_RenderableObject;
-		local l_EnemyForward = l_Owner:get_rotation():get_forward_vector():get_normalized(1)
-		local l_EnemyPos = l_Owner:get_position()
-		self.m_Velocity = Vect3f(l_EnemyForward.x * _MoveSpeed, self.m_Velocity.y, l_EnemyForward.z * _MoveSpeed)
-		
-		self:EnemyMove(_ElapsedTime)
-
-		-- with the rotation, the enemy chases to the player
-		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)	
-		
-		local angle_to_turn = self:CalculateAngleRotation(l_EnemyForward, l_Direction)
-		if angle_to_turn ~= nil then
-			self:EnemyRotation(angle_to_turn, _PercentRotation)
-		end
-	end
-	
-	function CAutomatonEnemy:EnemyRotation(_AngleToTurn, _PercentRotation)
-		local l_Owner = self.m_RenderableObject;
-		
-		local quat_to_turn = Quatf()
-		quat_to_turn:quat_from_yaw_pitch_roll(_AngleToTurn, 0.0, 0.0)
-
-		local target_quat = l_Owner:get_rotation():slerp(l_Owner:get_rotation() * quat_to_turn, _PercentRotation)
-		l_Owner:set_rotation(target_quat)
-	end
-	
-	function CAutomatonEnemy:CalculateAngleRotation(_EnemyForward, _Direction)
-		local l_Angle = _EnemyForward * _Direction
-		if 1.0 - l_Angle < 0.01 then
-			return nil
-		end
-		
-		local angle_to_turn = math.acos(l_Angle)
-		local cross = _Direction ^ _EnemyForward
-		if cross.y < 0.0 then
-		  angle_to_turn = -angle_to_turn
-		end	
-
-		return angle_to_turn		
-	end
-	
 	function CAutomatonEnemy:DetectPlayerNoise(_increment)
 		local l_Distance = g_Player.m_RenderableObject:get_position():distance(self.m_RenderableObject:get_position())
 		local l_Run = g_Player.m_InputManager:is_action_active("Run")
@@ -175,9 +112,11 @@ class 'CAutomatonEnemy' (CEnemy)
 			and ((not l_Crouch and not l_Run and l_Distance <= self.m_DistanceToActivateWalk * _increment)
 			or (l_Run and l_Distance <= self.m_DistanceToActivateRun * _increment)
 			or (l_Crouch and l_Distance <= self.m_DistanceToActivateCrouching * _increment)) then
-			return true
+			self.m_DetectedSound = true
 		else
-			return false
+			self.m_DetectedSound = false
 		end
+		
+		return self.m_DetectedSound
 	end
 --end

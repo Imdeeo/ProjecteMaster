@@ -78,7 +78,10 @@ fn processFaces arx Obj &prog=
 	The case of multimaterial should be handled properly.*/
 	if (classof l_Obj.material != MultiMaterial) then
 	(
-		if (classof l_Obj.material.bumpMap == Bitmaptexture) then
+		if l_Obj.material == undefined then
+		(
+			format "The object % has no material!\n" l_Obj.name
+		)else if (classof l_Obj.material.bumpMap == Bitmaptexture) then
 		(
 			if (classof l_Obj.material.bumpMap.bitmap == Bitmap) then
 			(
@@ -171,12 +174,12 @@ fn processFaces arx Obj &prog=
 		Vt1=(getVert l_Obj IdxsFace.x)*InvTransform
 		Vt2=(getVert l_Obj IdxsFace.y)*InvTransform
 		Vt3=(getVert l_Obj IdxsFace.z)*InvTransform
-		TranslationToRH &Vt1
-		TranslationToRH &Vt2
-		TranslationToRH &Vt3
 		getBoundingBox Vt1 &BBMax &BBMin
 		getBoundingBox Vt2 &BBMax &BBMin
 		getBoundingBox Vt3 &BBMax &BBMin
+		TranslationToRH &Vt1
+		TranslationToRH &Vt2
+		TranslationToRH &Vt3
 	)
 	
     lerp BBMin BBMax .5 &BSphere[1]
@@ -184,7 +187,6 @@ fn processFaces arx Obj &prog=
 	
 	for i=1 to nFaces do
 	(	
-		local l_IdMaterial = (mod ((getFaceMatID l_Obj i)-1) l_TotalMaterials)+1
 		local IdxsFace = getFace l_Obj i
 		local FaceNormal = getFaceNormal l_Obj i
 		local SmoothValue = getFaceSmoothGroup l_Obj i
@@ -192,12 +194,12 @@ fn processFaces arx Obj &prog=
 		Vt1=(getVert l_Obj IdxsFace.x)*InvTransform
 		Vt2=(getVert l_Obj IdxsFace.y)*InvTransform
 		Vt3=(getVert l_Obj IdxsFace.z)*InvTransform
-		TranslationToRH &Vt1
-		TranslationToRH &Vt2
-		TranslationToRH &Vt3
 		getBoundingSphere Vt1 &BSphere
 		getBoundingSphere Vt2 &BSphere
 		getBoundingSphere Vt3 &BSphere
+		TranslationToRH &Vt1
+		TranslationToRH &Vt2
+		TranslationToRH &Vt3
 		
 		UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal UABVtxsNormals &Nm1
 		UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal UABVtxsNormals &Nm2
@@ -210,7 +212,8 @@ fn processFaces arx Obj &prog=
 		TranslationToRH &Nm3
 		
 		if l_Obj.material != undefined then
-		(			
+		(
+			local l_IdMaterial = (mod ((getFaceMatID l_Obj i)-1) l_TotalMaterials)+1
 			local l_DiffMap = undefined
 			local l_LightMap  = undefined
 			local l_RefMap = undefined 
@@ -248,6 +251,7 @@ fn processFaces arx Obj &prog=
 			)
 			
 		) else (
+			local l_IdMaterial = 1
 			ColorID = 0x0002
 			defaultVCFaces l_Obj
 			local ColorFace = getVCFace l_Obj i
@@ -280,6 +284,9 @@ fn processFaces arx Obj &prog=
 	free UABVtxsNormals
 	local VtxID = 0x0000
 	VtxID = PosID+ColorID+NmID+UVID+UV2ID+BnmID+TngID
+	TranslationToRH &BBMin
+	TranslationToRH &BBMax
+	TranslationToRH &BSphere[1]
 	writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere
 	
 	if classof Obj != Editable_mesh then ( delete l_Obj )
@@ -300,14 +307,9 @@ fn createMeshFromObjects dir Objs &prog &progLabel =
 	
 	for l_Obj in Objs do
 	(
-		if l_Obj.material != undefined then
-		(
-			progLabel.text = l_Obj.name
-			file=fopen (dir+"\\Meshes\\"+l_Obj.name+".mesh") "wb"
-            writeMeshFromObject file l_Obj prog
-			FClose file
-		) else (
-			format "The object % has no material!\n" l_Obj.name
-		)
+		progLabel.text = l_Obj.name
+		file=fopen (dir+"\\Meshes\\"+l_Obj.name+".mesh") "wb"
+		writeMeshFromObject file l_Obj prog
+		FClose file
 	)
 )

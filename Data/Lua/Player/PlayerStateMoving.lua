@@ -30,7 +30,7 @@ function MovingUpdate(args, _ElapsedTime)
 	end
 	local l_Speed = l_Player.m_Speed
 
-	--// Detect if player is moving backwards, walking, or running, then assign animation accordingly.
+	--// Detect if player is moving backwards, walking, or running.
 	if l_Player.m_InputManager:is_action_active("MoveBackward") and not l_Player.m_InputManager:is_action_active("Run") then
 		l_Speed = l_Speed * 0.5
 	end
