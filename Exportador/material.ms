@@ -26,7 +26,7 @@ fn getMaterials arx Obj =
 	else
 	(
 		writeLong arx n_materials
-		WriteShort arx 1 #unsigned
+		WriteShort arx 11 #unsigned
 		writeString arx "no_material"
 	)
 )
