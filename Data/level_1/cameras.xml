@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cameras>
+	<camera name="DebugCamera" type="spherical" distance="50" fov="1.13"/>
+	<camera name="MainCamera" type="fps" target="Jaheem" layer="solid" offset="1.8" fov="1.13"/>
 	<camera name="PickKey" total_time="11.3333" type="key" undefined="true" pos="-0.000433776 0.0291467 1.87888" filename="Data\level_1\cameras\PickKey.xml"/>
 	<camera name="ForceBureau" total_time="2.5" type="key" undefined="true" pos="-0.000433776 0.0291467 1.87888" filename="Data\level_1\cameras\ForceBureau.xml"/>
 	<camera name="CrossDoor" total_time="3.66667" type="key" undefined="true" pos="0.603216 -1.40004 1.87888" filename="Data\level_1\cameras\CrossDoor.xml"/>
