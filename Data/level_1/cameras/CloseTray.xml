@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<camera_key_controller name="CloseTray">
+	<key time="0.0" pos="-0.000433776 1.87888 -0.00924921" up="0.691889 0.722004 0.0" look_at="0.712754 1.18699 -0.000426539" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
+	<key time="2.3" pos="-0.000433776 1.87888 -0.0291467" up="0.691889 0.722004 0.0" look_at="0.692857 1.18699 -0.000426539" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
+</camera_key_controller>

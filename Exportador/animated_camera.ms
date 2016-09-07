@@ -59,7 +59,7 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		local cameraRotation
 		local cameraLookAt
 		local cameraFieldOfView
-		local cameraFileDir = "cameras\\"+CameraAnimationName.text+".xml"
+		local cameraFileDir = g_Path+"cameras\\"+CameraAnimationName.text+".xml"
 		format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"% % %\" filename=\"%\"/>\n" CameraAnimationName.text key cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraFileDir to:_file
 		
 		cameraFile=createfile (g_Path+cameraFileDir)

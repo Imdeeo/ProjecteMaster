@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<camera_key_controller name="ForceBureau">
-	<key time="0.0" pos="-0.0291467 1.87888 -0.000433776" up="-1.0 2.98669e-006 0.0" look_at="0.970853 1.87888 -0.000426539" fov="65.0" near_plane="0.0" far_plane="1000.0"/>
-	<key time="0.666667" pos="-0.0291467 1.87888 -0.000433776" up="-0.722004 0.691889 0.0" look_at="0.692857 1.18699 -0.000426539" fov="65.0" near_plane="0.0" far_plane="1000.0"/>
-	<key time="2.0" pos="-0.0291467 1.87888 -0.000433776" up="-0.722004 0.691889 0.0" look_at="0.692857 1.18699 -0.000426539" fov="65.0" near_plane="0.0" far_plane="1000.0"/>
-</camera_key_controller>

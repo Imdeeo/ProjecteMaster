@@ -60,11 +60,25 @@ void CFPSCameraController::AddYaw(float Radians)
 }
 
 void CFPSCameraController::AddPitch(float Radians)
-{
+{ 
 	float l_Pitch = m_Rotation.EulerFromQuat().x;
+	//				80º						100º										-45º					-135º
 	if (((l_Pitch < 1.39626f || l_Pitch > 1.74533f) && Radians < .0f) || ((l_Pitch > -0.785398f || l_Pitch < -2.356194f) && Radians > .0f))
 		CCameraController::AddPitch(-Radians*m_PitchSpeed);
 }
+
+/*
+15º = 0.261799f
+30º = 0.523599f
+45º = 0.785398f
+60º = 1.0472f
+80º = 1.39626f
+100º = 1.74533f
+120º = 2.0944f
+135º = 2.356194f
+150º = 2.61799f
+165º = 2.87979f
+*/
 
 void CFPSCameraController::SetCamera(CCamera *Camera) const
 {
