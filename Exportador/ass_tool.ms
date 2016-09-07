@@ -40,7 +40,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 			edittext CinematicNameText "" pos:[264,166] width:88 height:24 enabled:false
 		GroupBox PhysicsGroup "Physics" pos:[372,56] width:204 height:304
 			checkbox PhysicsGenerateBox "Generate" pos:[380,80] width:80 height:16
-			dropdownList PhysicsGenerateList "" pos:[464,78] width:98 height:21 enabled:false items:#("triangle_mesh", "convex_shape", "box_shape", "sphere_shape", "plane_shape", "capsule_shape")
+			dropdownList PhysicsGenerateList "" pos:[464,78] width:98 height:21 enabled:false items:#("triangle_mesh", "convex_shape", "box_shape", "box_trigger", "sphere_shape", "plane_shape", "capsule_shape")
 			label PhysicsGroupLabel "Group" pos:[380,104] width:88 height:16 enabled:false
 			dropdownList PhysicsLayerList "" pos:[464,102] width:98 height:21 enabled:false items:#("plane", "objects", "triggers", "player")
 			edittext PhysicsMaterialText "Material" pos:[380,128] width:180 height:24 enabled:false
@@ -385,9 +385,9 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 			setUserProp Obj "logic_generate" false
 			setUserProp Obj "logic_generate_type" "stairs"
 			setUserProp Obj "cinematic_object" false
-			setUserProp Obj "on_trigger_enter" ("OnEnter"+Obj.name)
-			setUserProp Obj "on_trigger_exit" ("OnExit"+Obj.name)
-			setUserProp Obj "on_trigger_stay" ("OnStay"+Obj.name)
+			setUserProp Obj "on_trigger_enter" ("")
+			setUserProp Obj "on_trigger_exit" ("")
+			setUserProp Obj "on_trigger_stay" ("")
 			setUserProp Obj "plane_offset" 0
 			setUserProp Obj "plane_normal_x" 0
 			setUserProp Obj "plane_normal_y" 1
@@ -476,9 +476,10 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 					"triangle_mesh": PhysicsGenerateList.selection = 1
 					"convex_shape": PhysicsGenerateList.selection = 2
 					"box_shape": PhysicsGenerateList.selection = 3
-					"sphere_shape": PhysicsGenerateList.selection = 4
-					"plane_shape": PhysicsGenerateList.selection = 5
-					"capsule_shape": PhysicsGenerateList.selection = 6
+					"box_trigger": PhysicsGenerateList.selection = 4
+					"sphere_shape": PhysicsGenerateList.selection = 5
+					"plane_shape": PhysicsGenerateList.selection = 6
+					"capsule_shape": PhysicsGenerateList.selection = 7
 				)
 				
 				if getUserProp Objs[1] "physics_generate_type" == "plane_shape" then
@@ -617,6 +618,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 						"triangle_mesh": setUserProp Objs[i] "physics_generate_type" "triangle_mesh"
 						"convex_shape": setUserProp Objs[i] "physics_generate_type" "convex_shape"
 						"box_shape": setUserProp Objs[i] "physics_generate_type" "box_shape"
+						"box_trigger": setUserProp Objs[i] "physics_generate_type" "box_trigger"
 						"sphere_shape": setUserProp Objs[i] "physics_generate_type" "sphere_shape"
 						"plane_shape": setUserProp Objs[i] "physics_generate_type" "plane_shape"
 						"capsule_shape": setUserProp Objs[i] "physics_generate_type" "capsule_shape"
@@ -637,26 +639,9 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 						setUserProp Objs[i] "physics_material" PhysicsMaterialText.text
 					)
 					
-					if PhysicsTriggerEnter.text == "" then
-					(
-						setUserProp Objs[i] "on_trigger_enter" ("OnEnter"+Objs[i].name)
-					) else (
-						setUserProp Objs[i] "on_trigger_enter" PhysicsTriggerEnter.text
-					)
-					
-					if PhysicsTriggerExit.text == "" then
-					(
-						setUserProp Objs[i] "on_trigger_exit" ("OnExit"+Objs[i].name)
-					) else (
-						setUserProp Objs[i] "on_trigger_exit" PhysicsTriggerExit.text
-					)
-					
-					if PhysicsTriggerStay.text == "" then
-					(
-						setUserProp Objs[i] "on_trigger_stay" ("OnStay"+Objs[i].name)
-					) else (
-						setUserProp Objs[i] "on_trigger_stay" PhysicsTriggerStay.text
-					)
+					setUserProp Objs[i] "on_trigger_enter" PhysicsTriggerEnter.text
+					setUserProp Objs[i] "on_trigger_exit" PhysicsTriggerExit.text
+					setUserProp Objs[i] "on_trigger_stay" PhysicsTriggerStay.text
 					
 					setUserProp Objs[i] "plane_offset" PlaneOffset.value
 					setUserProp Objs[i] "plane_normal_x" PlaneX.value

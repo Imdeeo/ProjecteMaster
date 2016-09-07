@@ -1,8 +1,8 @@
 function FacingRaycast(_Offset, _Target, _Pos, _Distance)
-	utils_log("Pos: ".._Pos.x..", ".._Pos.y..", ".._Pos.z)
-	utils_log("Target: ".._Target.x..", ".._Target.y..", ".._Target.z)
+	--utils_log("Pos: ".._Pos.x..", ".._Pos.y..", ".._Pos.z)
+	--utils_log("Target: ".._Target.x..", ".._Target.y..", ".._Target.z)
 	--utils_log("Offset: ".._Offset.x..", ".._Offset.y..", ".._Offset.z)
-	utils_log("Distance: "..(_Pos - _Target):length())
+	--utils_log("Distance: "..(_Pos - _Target):length())
 	return ((_Pos - _Target):length() < _Distance)
 end
 
@@ -12,7 +12,6 @@ R1TrayL1IsClosed = true
 R1TrayL2IsClosed = true
 
 function R1Door(_Player, _Pos)
-	utils_log("R1Door")
 	_Player.m_TargetOffset = Vect3f(0.0, 0.0, -1.0)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerDoor"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.2) then
@@ -31,7 +30,6 @@ function R1Door(_Player, _Pos)
 end
 
 function R1Sheets(_Player, _Pos)
-utils_log("R1Sheets")
 	_Player.m_TargetOffset = Vect3f(0.5, 0.0, 0.0)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerSheets"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 0.5) then
@@ -53,16 +51,17 @@ utils_log("R1Canvas")
 end
 
 function R1TrayR1(_Player, _Pos) --This contains the key
-utils_log("R1TrayR1")
 	if R1TrayR1IsClosed then
-		_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
+		_Player.m_TargetOffset = Vect3f(0.4, 0.0, 0.0)
 		l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayR1"):get_position()
 		if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 			_Player.m_Target = l_Target
 			_Player.m_InteractingAnimation = 5
 			_Player.m_InteractingCinematic = "ForceTray"
-			--_Player.m_CameraAnimation = "ForceTray"
-			--_Player.m_CurrentAend = "ForceTray"
+			_Player.m_CameraAnimation = "ForceTray"
+			_Player.m_NewItemName = "LlaveRecibidor"
+			_Player.m_ItemTime = 1
+			_Player.m_CurrentAend = nil
 			_Player.m_IsInteracting = true
 			_Player.m_IsClimbing = false
 			_Player.m_IsCorrecting = true
@@ -72,17 +71,14 @@ utils_log("R1TrayR1")
 end
 
 function R1TrayR2Open(_Player, _Pos)
-	_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetOffset = Vect3f(0.4, 0.0, 0.0)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayR2"):get_position()
-	utils_log("Player: ".._Pos.x..", ".._Pos.z)
-	utils_log("Target: "..l_Target.x..", "..l_Target.z)
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
-	utils_log("facing target")
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "OpenTrayR2"
-		--_Player.m_CameraAnimation = "OpenTrayR2"
-		--_Player.m_CurrentAend = "OpenTrayR2"
+		_Player.m_CameraAnimation = "OpenTray"
+		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -91,17 +87,14 @@ function R1TrayR2Open(_Player, _Pos)
 end
 
 function R1TrayR2Close(_Player, _Pos)
-	_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetOffset = Vect3f(0.4, 0.0, 0.0)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayR2"):get_position()
-	utils_log("Player: ".._Pos.x..", ".._Pos.z)
-	utils_log("Target: "..l_Target.x..", "..l_Target.z)
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
-	utils_log("facing target")
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 4
 		_Player.m_InteractingCinematic = "CloseTrayR2"
-		--_Player.m_CameraAnimation = "CloseTrayR2"
-		--_Player.m_CurrentAend = "CloseTrayR2"
+		_Player.m_CameraAnimation = "CloseTray"
+		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -110,26 +103,22 @@ function R1TrayR2Close(_Player, _Pos)
 end
 
 function R1TrayR2(_Player, _Pos)
-utils_log("R1TrayR2")
-
 	if R1TrayR2IsClosed then
-	utils_log("closed")
 		R1TrayR2Open(_Player, _Pos)
 	else
-	utils_log("open")
 		R1TrayR2Close(_Player, _Pos)
 	end
 end
 
 function R1TrayL1Open(_Player, _Pos)
-	_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetOffset = Vect3f(-0.4, 0.0, 0.0)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL1"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "OpenTrayL1"
-		--_Player.m_CameraAnimation = "OpenTrayL1"
-		--_Player.m_CurrentAend = "OpenTrayL1"
+		_Player.m_CameraAnimation = "OpenTray"
+		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -138,14 +127,14 @@ function R1TrayL1Open(_Player, _Pos)
 end
 
 function R1TrayL1Close(_Player, _Pos)
-	_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetOffset = Vect3f(-0.4, 0.0, 0.0)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL1"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 4
 		_Player.m_InteractingCinematic = "CloseTrayL1"
-		--_Player.m_CameraAnimation = "CloseTrayL1"
-		--_Player.m_CurrentAend = "CloseTrayL1"
+		_Player.m_CameraAnimation = "CloseTray"
+		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -162,14 +151,14 @@ function R1TrayL1(_Player, _Pos)
 end
 
 function R1TrayL2Open(_Player, _Pos)
-	_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetOffset = Vect3f(-0.4, 0.0, 0.0)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "OpenTrayL2"
-		--_Player.m_CameraAnimation = "OpenTrayL2"
-		--_Player.m_CurrentAend = "OpenTrayL2"
+		_Player.m_CameraAnimation = "OpenTray"
+		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -178,14 +167,14 @@ function R1TrayL2Open(_Player, _Pos)
 end
 
 function R1TrayL2Close(_Player, _Pos)
-	_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetOffset = Vect3f(-0.4, 0.0, 0.0)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 4
 		_Player.m_InteractingCinematic = "CloseTrayL2"
-		--_Player.m_CameraAnimation = "CloseTrayL2"
-		--_Player.m_CurrentAend = "CloseTrayL2"
+		_Player.m_CameraAnimation = "CloseTray"
+		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -202,7 +191,7 @@ function R1TrayL2(_Player, _Pos) --This contains the ankh
 end
 
 function R1Ankh(_Player, _Pos)
-	_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetOffset = Vect3f(-1.0, 0.0, 0.0)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerAnkh"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
@@ -212,19 +201,20 @@ function R1Ankh(_Player, _Pos)
 end
 
 function R1Key(_Player, _Pos)
-	_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
-	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerKey"):get_position()
-	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
-		_Player.m_Target = l_Target
-		_Player.m_InteractingAnimation = 1
-		_Player.m_InteractingCinematic = "PickKey"
-		_Player.m_CameraAnimation = "PickKey"
-		_Player.m_NewItemName = "LlaveRecibidor"
-		_Player.m_ItemTime = 1.5
-		_Player.m_AnimationTime = 2.6
-		_Player.m_CurrentAend = nil
-		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
-		_Player.m_IsCorrecting = true
-	end
+	utils_log("<-Interacted with R1Key->")
+	--_Player.m_TargetOffset = Vect3f(1.0, 0.0, 0.0)
+	--l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerKey"):get_position()
+	--if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
+	--	_Player.m_Target = l_Target
+	--	_Player.m_InteractingAnimation = 1
+	--	_Player.m_InteractingCinematic = "PickKey"
+	--	_Player.m_CameraAnimation = "PickKey"
+	--	_Player.m_NewItemName = "LlaveRecibidor"
+	--	_Player.m_ItemTime = 1.5
+	--	_Player.m_AnimationTime = 2.6
+	--	_Player.m_CurrentAend = nil
+	--	_Player.m_IsInteracting = true
+	--	_Player.m_IsClimbing = false
+	--	_Player.m_IsCorrecting = true
+	--end
 end
