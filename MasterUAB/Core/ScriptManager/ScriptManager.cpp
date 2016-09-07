@@ -113,7 +113,6 @@
 #include "Application.h"
 #include "GamePlayManager.h"
 
-#include "XML\XMLTreeNode.h"
 #include "XML\tinyxml2.h"
 #include "Utils.h"
 
@@ -309,7 +308,7 @@ void CScriptManager::RegisterLUAFunctions()
 	// Utils-------------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CNamed>("CNamed")
-			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def(constructor<const std::string&>())
 			.def("get_name_address",&CNamed::GetLuaNameAddress)
 			.property("name", &CNamed::GetName, &CNamed::SetName)	];
@@ -457,6 +456,29 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_vect3f_property", &CXMLTreeNode::GetVect3fProperty)
 			.def("get_float_property", &CXMLTreeNode::GetFloatProperty)
 			.def("get_bool_property", &CXMLTreeNode::GetBoolProperty)
+	];
+
+	module(m_LS)[
+		class_<tinyxml2::XMLError>("XMLError")
+	];
+
+	module(m_LS)[
+		class_<tinyxml2::XMLDocument>("XMLDocument")
+			.def(constructor<>())
+			.def("load_file", (tinyxml2::XMLError(tinyxml2::XMLDocument::*)(const char*))&tinyxml2::XMLDocument::LoadFile)
+			.def("first_child_element", (tinyxml2::XMLElement*(tinyxml2::XMLDocument::*)(const char*))&tinyxml2::XMLDocument::FirstChildElement)
+	];
+
+	module(m_LS)[
+		class_<tinyxml2::XMLElement>("XMLElement")
+			//.def(constructor<>())
+			.def("get_name", &tinyxml2::XMLElement::Name)
+			.def("get_next", &tinyxml2::XMLElement::NextSiblingElement2)
+			.def("get_psz_property", &tinyxml2::XMLElement::GetPszProperty)
+			.def("get_vect3f_property", &tinyxml2::XMLElement::GetVect3fProperty)
+			.def("get_float_property", &tinyxml2::XMLElement::GetFloatProperty)
+			.def("get_bool_property", &tinyxml2::XMLElement::GetBoolProperty)
+			.def("first_child", &tinyxml2::XMLElement::FirstChildElement2)
 	];
 
 // CORE---------------------------------------------------------------------------------------------
@@ -666,9 +688,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<std::string>())
 			.def("update", &CRenderableObjectsManager::Update)
 			.def("render", &CRenderableObjectsManager::Render)
-			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&, bool))&CRenderableObjectsManager::AddMeshInstance)
+			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(tinyxml2::XMLElement*, bool))&CRenderableObjectsManager::AddMeshInstance)
 			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&, const Quatf, const float, const bool, bool))&CRenderableObjectsManager::AddMeshInstance)
-			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(CXMLTreeNode&, bool))&CRenderableObjectsManager::AddAnimatedInstanceModel)
+			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(tinyxml2::XMLElement*, bool))&CRenderableObjectsManager::AddAnimatedInstanceModel)
 			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&, bool))&CRenderableObjectsManager::AddAnimatedInstanceModel)
 			.def("get_resource", &CRenderableObjectsManager::GetResource)
 			//.def("clean_up", &CRenderableObjectsManager::CleanUp)
@@ -716,7 +738,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS) [
 		class_<CAnimatedInstanceModel, CRenderableObject>("CAnimatedInstanceModel")
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("initialize", &CAnimatedInstanceModel::Initialize)
 			.def("render", &CAnimatedInstanceModel::Render)
 			.def("update", &CAnimatedInstanceModel::Update)
@@ -813,7 +835,7 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CCameraInfo>("CCameraInfo")
 			.def(constructor<>())
 			.def(constructor<const Vect3f, const Vect3f, const Vect3f, float, float, float>())
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 	];
 
 	module(m_LS)[
@@ -823,7 +845,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCameraKeyController, CCameraController>("CCameraKeyController")
-			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("update", &CCameraKeyController::Update)
 			.def("set_current_time", &CCameraKeyController::SetCurrentTime)
 			.def("reset_time", &CCameraKeyController::ResetTime)
@@ -840,13 +862,13 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<C3PersonCameraController, CCameraController>("C3PersonCameraController")
-			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("get_direction",&C3PersonCameraController::GetDirection)
 	];
 
 	module(m_LS) [
 		class_<CFPSCameraController, CCameraController>("CFPSCameraController")
-			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			//.def("move", &CFPSCameraController::Move)
 			.def("set_camera", &CFPSCameraController::SetCamera)
 			.def("add_yaw", &CFPSCameraController::AddYaw)
@@ -866,7 +888,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS) [
 		class_<CSphericalCameraController, CCameraController>("CSphericalCameraController")
-			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("add_zoom", &CSphericalCameraController::AddZoom)
 			.def("set_zoom", &CSphericalCameraController::SetZoom)
 			.def("set_camera", &CSphericalCameraController::SetCamera)
@@ -890,7 +912,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCinematic, bases<CNamed, CCinematicPlayer>>("CCinematic")
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("add_cinematic_object", &CCinematic::AddCinematicObject)
 			.def("update", &CCinematic::Update)
 			.def("play",&CCinematic::Play)
@@ -902,7 +924,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCinematicObject, CCinematicPlayer>("CCinematicObject")
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("is_ok", &CCinematicObject::IsOk)
 			.def("add_cinematic_object_key_frame", &CCinematicObject::AddCinematicObjectKeyFrame)
 			.def("update", &CCinematicObject::Update)
@@ -919,7 +941,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCinematicObjectKeyFrame, C3DElement>("CCinematicObjectKeyFrame")
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("get_key_frame_time",&CCinematicObjectKeyFrame::GetKeyFrameTime)
 			.def("set_key_frame_time",&CCinematicObjectKeyFrame::SetKeyFrameTime)
 	];
@@ -972,7 +994,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CEffectVertexShader, CEffectShader>("CEffectVertexShader")
-			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("load", &CEffectVertexShader::Load)
 			.def("set_constant_buffer", &CEffectVertexShader::SetConstantBuffer)
 			.def("reload", &CEffectVertexShader::Reload)
@@ -983,7 +1005,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CEffectPixelShader, CEffectShader>("CEffectPixelShader")
-			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("reload", &CEffectPixelShader::Reload)
 			.def("load", &CEffectPixelShader::Load)
 			.def("set_constant_buffer", &CEffectPixelShader::SetConstantBuffer)
@@ -993,7 +1015,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CEffectGeometryShader, CEffectShader>("CEffectGeometryShader")
-			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("reload", &CEffectGeometryShader::Reload)
 			.def("load", &CEffectGeometryShader::Load)
 			.def("set_constant_buffer", &CEffectGeometryShader::SetConstantBuffer)
@@ -1003,7 +1025,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CEffectTechnique, CNamed>("CEffectTechnique")
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("get_vertex_shader", &CEffectTechnique::GetVertexShader)
 			.def("get_pixel_shader", &CEffectTechnique::GetPixelShader)
 			.def("get_geometry_shader", &CEffectTechnique::GetGeometryShader)
@@ -1098,13 +1120,13 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<COmniLight,CLight>("COmniLight")
 			.def(constructor<>())
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 	];
 
 	module(m_LS)[
 		class_<CDirectionalLight, CLight>("CDirectionalLight")
 			.def(constructor<>())
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("get_direction", &CDirectionalLight::GetDirection)
 			.def("set_direction", &CDirectionalLight::SetDirection)
 			.def("get_direction_lua_address", &CDirectionalLight::GetDirectionLuaAdress)
@@ -1114,7 +1136,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CSpotLight, CDirectionalLight>("CSpotLight")
 			.def(constructor<>())
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("get_angle", &CSpotLight::GetAngle)
 			.def("set_angle", &CSpotLight::SetAngle)
 			.def("get_fall_off", &CSpotLight::GetFallOff)
@@ -1145,7 +1167,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CMaterial, CNamed>("CMaterial")
-			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("apply", &CMaterial::Apply)
 			.def("get_next_parameter_adress", &CMaterial::GetNextParameterAddress)
 			.def("get_parameters", &CMaterial::GetParameters, luabind::return_stl_iterator)
@@ -1188,7 +1210,7 @@ void CScriptManager::RegisterLUAFunctions()
 	// StaticMesh-------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CInstanceMesh, CRenderableObject>("CInstanceMesh")
-			.def(constructor<const CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def(constructor<const std::string&, const std::string&>())
 			.def("render", &CInstanceMesh::Render)
 	];
@@ -1319,7 +1341,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 	class_<CParticleSystemInstance, CRenderableObject>("CParticleSystemInstance")
 		.def(constructor<>())
-		.def(constructor<CXMLTreeNode&>())
+		.def(constructor<tinyxml2::XMLElement*>())
 		.def("get_awake", &CParticleSystemInstance::GetAwake)
 		.def("set_awake", &CParticleSystemInstance::SetAwake)
 		.def("get_awake_timer", &CParticleSystemInstance::GetAwakeTimer)
@@ -1388,7 +1410,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CManchasSystemInstance, CRenderableObject>("CManchasSystemInstance")
-			.def(constructor<CXMLTreeNode&>())
+			.def(constructor<tinyxml2::XMLElement*>())
 			.def("get_type", &CManchasSystemInstance::GetType)
 			.def("get_awake", &CManchasSystemInstance::GetAwake)
 			.def("set_awake", &CManchasSystemInstance::SetAwake)

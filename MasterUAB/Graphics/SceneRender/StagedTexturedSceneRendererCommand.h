@@ -30,14 +30,14 @@ protected:
 	std::vector<ID3D11RenderTargetView*>	m_RenderTargetViews;
 
 public:
-	CStagedTexturedSceneRendererCommand(CXMLTreeNode & TreeNode);
+	CStagedTexturedSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CStagedTexturedSceneRendererCommand(void);
 
 	void CreateRenderTargetViewVector();
 	void ActivateTextures();
 	void AddStageTexture(unsigned int _StageId, CTexture* _Texture);
-	void AddDynamicTexture(CXMLTreeNode & TreeNode);
-	void AddCaptureFrameBufferTexture(CXMLTreeNode & TreeNode);
+	void AddDynamicTexture(tinyxml2::XMLElement* TreeNode);
+	void AddCaptureFrameBufferTexture(tinyxml2::XMLElement* TreeNode);
 	virtual void Execute(CRenderManager &_RenderManager) = 0;
 };
 

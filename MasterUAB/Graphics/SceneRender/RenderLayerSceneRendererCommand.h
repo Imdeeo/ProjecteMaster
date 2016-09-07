@@ -11,7 +11,7 @@ class CRenderLayerSceneRendererCommand : public CSceneRendererCommand
 private:
 	CRenderableObjectsManager *m_Layer;
 public:
-	CRenderLayerSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CRenderLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CRenderLayerSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };

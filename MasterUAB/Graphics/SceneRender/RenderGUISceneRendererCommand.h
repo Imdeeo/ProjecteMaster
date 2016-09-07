@@ -12,7 +12,7 @@ class CRenderGUISceneRendererCommand : public CSceneRendererCommand
 private:
 	CGUIManager *m_GUI;
 public:
-	CRenderGUISceneRendererCommand(CXMLTreeNode &TreeNode);
+	CRenderGUISceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CRenderGUISceneRendererCommand();
 	virtual void Execute(CRenderManager &RenderManager);
 };

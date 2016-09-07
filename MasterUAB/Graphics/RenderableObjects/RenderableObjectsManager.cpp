@@ -30,7 +30,7 @@ void CRenderableObjectsManager::RenderDebug(CRenderManager *RM)
 }
 
 
-CRenderableObject * CRenderableObjectsManager::AddMeshInstance(CXMLTreeNode &TreeNode, bool _Update)
+CRenderableObject * CRenderableObjectsManager::AddMeshInstance(tinyxml2::XMLElement* TreeNode, bool _Update)
 {
 	CInstanceMesh* instanceMesh = new CInstanceMesh(TreeNode);
 	if (_Update ? AddUpdateResource(instanceMesh->GetName(), instanceMesh) : AddResource(instanceMesh->GetName(), instanceMesh))
@@ -52,7 +52,7 @@ CRenderableObject * CRenderableObjectsManager::AddMeshInstance(const std::string
 		return nullptr;
 }
 
-CRenderableObject * CRenderableObjectsManager::AddAnimatedInstanceModel(CXMLTreeNode &TreeNode, bool _Update)
+CRenderableObject * CRenderableObjectsManager::AddAnimatedInstanceModel(tinyxml2::XMLElement* TreeNode, bool _Update)
 {
 	CAnimatedInstanceModel* l_AnimatedInstanceModel = new CAnimatedInstanceModel(TreeNode);
 	if (_Update ? AddUpdateResource(l_AnimatedInstanceModel->GetName(), l_AnimatedInstanceModel) : AddResource(l_AnimatedInstanceModel->GetName(), l_AnimatedInstanceModel))
@@ -75,7 +75,7 @@ CRenderableObjectsManager & CRenderableObjectsManager::operator=(CRenderableObje
 	return *this;
 }
 
-CRenderableObject * CRenderableObjectsManager::AddParticleSystemInstance(CXMLTreeNode &TreeNode)
+CRenderableObject * CRenderableObjectsManager::AddParticleSystemInstance(tinyxml2::XMLElement* TreeNode)
 {
 	CParticleSystemInstance* l_ParticleSystemInstance = new CParticleSystemInstance(TreeNode);
 	if (AddResource(l_ParticleSystemInstance->GetName(), l_ParticleSystemInstance))
@@ -84,7 +84,7 @@ CRenderableObject * CRenderableObjectsManager::AddParticleSystemInstance(CXMLTre
 		return nullptr;
 }
 
-CRenderableObject * CRenderableObjectsManager::AddManchasSystemInstance(CXMLTreeNode &TreeNode)
+CRenderableObject * CRenderableObjectsManager::AddManchasSystemInstance(tinyxml2::XMLElement* TreeNode)
 {
 	CManchasSystemInstance* l_ManchasSystemInstance = new CManchasSystemInstance(TreeNode);
 	if (AddResource(l_ManchasSystemInstance->GetName(), l_ManchasSystemInstance))

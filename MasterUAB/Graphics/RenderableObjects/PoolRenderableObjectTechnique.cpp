@@ -1,5 +1,4 @@
 #include "PoolRenderableObjectTechnique.h"
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "Effects\EffectManager.h"
 
@@ -21,7 +20,7 @@
 		}
 	}
 }*/
-CPoolRenderableObjectTechnique::CPoolRenderableObjectTechnique(CXMLTreeNode &TreeNode) :CNamed(TreeNode)
+CPoolRenderableObjectTechnique::CPoolRenderableObjectTechnique(tinyxml2::XMLElement* TreeNode) :CNamed(TreeNode)
 {}
 
 CPoolRenderableObjectTechnique::~CPoolRenderableObjectTechnique()

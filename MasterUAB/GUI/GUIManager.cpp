@@ -147,53 +147,62 @@ bool CGUIManager::Load(std::string _FileName)
 				m_Sliders[l_Element->GetPszProperty("name")] = new CSlider(&m_Sprites[l_Element->GetPszProperty("base")], &m_Sprites[l_Element->GetPszProperty("top")], &m_Sprites[l_Element->GetPszProperty("handle")], &m_Sprites[l_Element->GetPszProperty("pressed_handle")]);
 			else if (l_Element->Name() == std::string("font"))
 			{
-				CXMLTreeNode l_XMLfont;
 				std::string l_FontName = l_Element->GetPszProperty("name");
 				std::string l_FileName = l_Element->GetPszProperty("path");
-				if (l_XMLfont.LoadFile(l_FileName.c_str()))
+
+				tinyxml2::XMLDocument doc2;
+				l_Error = doc2.LoadFile(l_FileName.c_str());
+				if (l_Error == tinyxml2::XML_SUCCESS)
 				{
-					CXMLTreeNode l_InputFile = l_XMLfont["font"];
-					if (l_InputFile.Exists())
+					tinyxml2::XMLElement* l_Element2;
+					tinyxml2::XMLElement* l_ElementAux2;
+					tinyxml2::XMLElement* l_ElementAux3;
+					l_Element2 = doc2.FirstChildElement("font");
+					if (l_Element2!=NULL)
 					{
-						for (int k = 0; k < l_InputFile.GetNumChildren(); ++k)
+						l_ElementAux2 = l_Element2->FirstChildElement();
+						while (l_ElementAux2 != NULL)
 						{
-							CXMLTreeNode l_ElementFile = l_InputFile(k);
-							if (l_ElementFile.GetName() == std::string("common"))
+							if (l_ElementAux2->Name() == std::string("common"))
 							{
-								m_LineHeightPerFont[l_FontName] = l_ElementFile.GetIntProperty("lineHeight");
-								m_BasePerFont[l_FontName] = l_ElementFile.GetIntProperty("base");
+								m_LineHeightPerFont[l_FontName] = l_ElementAux2->GetIntProperty("lineHeight");
+								m_BasePerFont[l_FontName] = l_ElementAux2->GetIntProperty("base");
 							}
-							else if (l_ElementFile.GetName() == std::string("pages"))
+							else if (l_ElementAux2->Name() == std::string("pages"))
 							{
-								for (int l = 0; l < l_ElementFile.GetNumChildren(); ++l)
+								l_ElementAux3 = l_ElementAux2->FirstChildElement();
+								while (l_ElementAux3!=NULL)
 								{
-									CXMLTreeNode l_PagesFile = l_ElementFile(l);
-									if (l_PagesFile.GetName() == std::string("page"))
-										m_TexturePerFont[l_FontName].push_back(&m_Sprites[l_PagesFile.GetPszProperty("file")]);
+									if (l_ElementAux3->Name() == std::string("page"))
+										m_TexturePerFont[l_FontName].push_back(&m_Sprites[l_ElementAux3->GetPszProperty("file")]);
+									l_ElementAux3 = l_ElementAux3->NextSiblingElement();
 								}
 							}
-							else if (l_ElementFile.GetName() == std::string("chars"))
+							else if (l_ElementAux2->Name() == std::string("chars"))
 							{
-								for (int l = 0; l < l_ElementFile.GetNumChildren(); ++l)
+								l_ElementAux3 = l_ElementAux2->FirstChildElement();
+								while (l_ElementAux3 != NULL)
 								{
-									CXMLTreeNode l_CharFile = l_ElementFile(l);
-									if (l_CharFile.GetName() == std::string("char"))
+									if (l_ElementAux3->Name() == std::string("char"))
 									{
-										FontChar l_FontChar = { l_CharFile.GetIntProperty("x"), l_CharFile.GetIntProperty("y"), l_CharFile.GetIntProperty("width"), l_CharFile.GetIntProperty("height"),
-											l_CharFile.GetIntProperty("xoffset"), l_CharFile.GetIntProperty("yoffset"), l_CharFile.GetIntProperty("xadvance"), l_CharFile.GetIntProperty("page"), l_CharFile.GetIntProperty("chnl") };
-										m_CharactersPerFont[l_FontName][l_CharFile.GetIntProperty("id")] = l_FontChar;
+										FontChar l_FontChar = { l_ElementAux3->GetIntProperty("x"), l_ElementAux3->GetIntProperty("y"), l_ElementAux3->GetIntProperty("width"), l_ElementAux3->GetIntProperty("height"),
+											l_ElementAux3->GetIntProperty("xoffset"), l_ElementAux3->GetIntProperty("yoffset"), l_ElementAux3->GetIntProperty("xadvance"), l_ElementAux3->GetIntProperty("page"), l_ElementAux3->GetIntProperty("chnl") };
+										m_CharactersPerFont[l_FontName][l_ElementAux3->GetIntProperty("id")] = l_FontChar;
 									}
+									l_ElementAux3 = l_ElementAux3->NextSiblingElement();
 								}
 							}
-							else if (l_ElementFile.GetName() == std::string("kernings"))
+							else if (l_ElementAux2->Name() == std::string("kernings"))
 							{
-								for (int l = 0; l < l_ElementFile.GetNumChildren(); ++l)
+								l_ElementAux3 = l_ElementAux2->FirstChildElement();
+								while (l_ElementAux3 != NULL)
 								{
-									CXMLTreeNode l_KerningFile = l_ElementFile(l);
-									if (l_KerningFile.GetName() == std::string("kerning"))
-										m_KerningsPerFont[l_FontName][l_KerningFile.GetIntProperty("first")][l_KerningFile.GetIntProperty("second")] = l_KerningFile.GetIntProperty("second");
+									if (l_ElementAux3->Name() == std::string("kerning"))
+										m_KerningsPerFont[l_FontName][l_ElementAux3->GetIntProperty("first")][l_ElementAux3->GetIntProperty("second")] = l_ElementAux3->GetIntProperty("second");
+									l_ElementAux3 = l_ElementAux3->NextSiblingElement();
 								}
 							}
+							l_ElementAux2 = l_ElementAux2->NextSiblingElement();
 						}
 
 					}

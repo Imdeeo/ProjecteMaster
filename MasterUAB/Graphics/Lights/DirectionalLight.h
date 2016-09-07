@@ -11,7 +11,7 @@ protected:
 public:
 	CDirectionalLight();
 	CDirectionalLight(std::string _name);
-	CDirectionalLight(CXMLTreeNode &TreeNode);
+	CDirectionalLight(tinyxml2::XMLElement* TreeNode);
 	bool const GetInsideFrustum();
 	const Vect3f & GetDirection() const { return m_Direction; }
 	void SetDirection(Vect3f _Direction) { m_Direction = _Direction; }

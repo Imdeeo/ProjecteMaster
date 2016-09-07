@@ -1,5 +1,5 @@
 #include "ManchasManager.h"
-#include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 
 CManchasManager::CManchasManager(void){}
 
@@ -11,19 +11,24 @@ CManchasManager::~CManchasManager(void)
 
 void CManchasManager::Load(const std::string &Filename)
 {
-	CXMLTreeNode l_File;
 	m_Filename = Filename;
 
-	if (l_File.LoadFile(m_Filename.c_str()))
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(Filename.c_str());
+
+	tinyxml2::XMLElement* l_Element;
+	
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Meshes = l_File["manchas"];
-		for (int i = 0; i < l_Meshes.GetNumChildren(); ++i)
+		l_Element = doc.FirstChildElement("manchas")->FirstChildElement();
+		while (l_Element != NULL)
 		{
-			CManchasSystemType *l_ManchasSystemType = new CManchasSystemType(l_Meshes(i));
+			CManchasSystemType *l_ManchasSystemType = new CManchasSystemType(l_Element);
 			if (!AddResource(l_ManchasSystemType->GetName(), l_ManchasSystemType))
 			{
 				CHECKED_DELETE(l_ManchasSystemType);
 			}
+			l_Element = l_Element->NextSiblingElement();
 		}
 	}
 }

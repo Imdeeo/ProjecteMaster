@@ -69,29 +69,30 @@ bool CEffectManager::Load(const std::string &Filename)
 				if (l_ElementAux->Name() == std::string("vertex_shader"))
 				{
 					l_EffectName = l_ElementAux->GetPszProperty("name");
-					CEffectVertexShader *l_EffectVertexShader = new CEffectVertexShader(l_Element);
+					CEffectVertexShader *l_EffectVertexShader = new CEffectVertexShader(l_ElementAux);
 					l_EffectVertexShader->Load();
 					m_VertexShaders.AddResource(l_EffectName, l_EffectVertexShader);
-				} else if (l_Element->Name() == std::string("pixel_shader"))
+				} else if (l_ElementAux->Name() == std::string("pixel_shader"))
 				{
-					l_EffectName = l_Element->GetPszProperty("name");
-					CEffectPixelShader *l_EffectPixelShader = new CEffectPixelShader(l_Element);
+					l_EffectName = l_ElementAux->GetPszProperty("name");
+					CEffectPixelShader *l_EffectPixelShader = new CEffectPixelShader(l_ElementAux);
 					l_EffectPixelShader->Load();
 					m_PixelShaders.AddResource(l_EffectName, l_EffectPixelShader);
 				}
-				else if (l_Element->Name() == std::string("geometry_shader"))
+				else if (l_ElementAux->Name() == std::string("geometry_shader"))
 				{
-					l_EffectName = l_Element->GetPszProperty("name");
-					CEffectGeometryShader *l_EffectGeometryShader = new CEffectGeometryShader(l_Element);
+					l_EffectName = l_ElementAux->GetPszProperty("name");
+					CEffectGeometryShader *l_EffectGeometryShader = new CEffectGeometryShader(l_ElementAux);
 					l_EffectGeometryShader->Load();
 					m_GeometryShaders.AddResource(l_EffectName, l_EffectGeometryShader);
 				}
-				else if (l_Element->Name() == std::string("effect_technique"))
+				else if (l_ElementAux->Name() == std::string("effect_technique"))
 				{
-					l_EffectName = l_Element->GetPszProperty("name");
-					CEffectTechnique *l_EffectTechnique = new CEffectTechnique(l_Element);
+					l_EffectName = l_ElementAux->GetPszProperty("name");
+					CEffectTechnique *l_EffectTechnique = new CEffectTechnique(l_ElementAux);
 					AddResource(l_EffectName, l_EffectTechnique);
 				}
+				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
 		}
 	}

@@ -59,74 +59,74 @@ class 'CPlayer' (CLUAComponent)
 	function CPlayer:__init(_TreeNode)
 		self.m_AlreadyInitialized = false
 		local UABEngine = CUABEngine.get_instance()
-		self.m_Name = _TreeNode:get_psz_property("name", "", false)
-		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
-		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "", false)
+		self.m_Name = _TreeNode:get_psz_property("name", "")
+		self.m_LayerName = _TreeNode:get_psz_property("layer", "")
+		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "")
 		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
 		CLUAComponent.__init(self, self.m_Name, self.m_RenderableObject)
 	
-		self.m_CameraControllerName= _TreeNode:get_psz_property("camera_controller", "", false)
+		self.m_CameraControllerName= _TreeNode:get_psz_property("camera_controller", "")
 		self.m_CameraController = UABEngine:get_camera_controller_manager():get_resource(self.m_CameraControllerName)
-		self.m_LuaCommand = _TreeNode:get_psz_property("lua_command", "", false)
+		self.m_LuaCommand = _TreeNode:get_psz_property("lua_command", "")
 		
 		-- distance, time, sanity amount
 		self.m_SanityEffects = {}
-		for i = 0, _TreeNode:get_num_children()-1 do
-			local l_Param = _TreeNode:get_child(i)
+		l_Param = _TreeNode:first_child()
+		while l_Param ~= nil do
 			if l_Param:get_name() == "vortex" then
 				l_VortexEffects = {}
 				table.insert(l_VortexEffects, "vortex")
-				table.insert(l_VortexEffects, l_Param:get_psz_property("type","",false))
-				table.insert(l_VortexEffects, l_Param:get_float_property("start",0.0,false))
-				table.insert(l_VortexEffects, l_Param:get_float_property("end",0.0,false))
-				table.insert(l_VortexEffects, l_Param:get_psz_property("material","",false))
-				table.insert(l_VortexEffects, l_Param:get_float_property("variation",0.0,false))
-				table.insert(l_VortexEffects, l_Param:get_float_property("default_value",0.0,false))
+				table.insert(l_VortexEffects, l_Param:get_psz_property("type",""))
+				table.insert(l_VortexEffects, l_Param:get_float_property("start",0.0))
+				table.insert(l_VortexEffects, l_Param:get_float_property("end",0.0))
+				table.insert(l_VortexEffects, l_Param:get_psz_property("material",""))
+				table.insert(l_VortexEffects, l_Param:get_float_property("variation",0.0))
+				table.insert(l_VortexEffects, l_Param:get_float_property("default_value",0.0))
 				table.insert(self.m_SanityEffects, l_VortexEffects)
 			elseif l_Param:get_name() == "stain" then
 				l_StainEffects = {}
 				table.insert(l_StainEffects, "stain")
-				table.insert(l_StainEffects, l_Param:get_psz_property("type","",false))
-				table.insert(l_StainEffects, l_Param:get_float_property("start",0.0,false))
-				table.insert(l_StainEffects, l_Param:get_float_property("end",0.0,false))
-				table.insert(l_StainEffects, l_Param:get_psz_property("renderable_object","",false))
+				table.insert(l_StainEffects, l_Param:get_psz_property("type",""))
+				table.insert(l_StainEffects, l_Param:get_float_property("start",0.0))
+				table.insert(l_StainEffects, l_Param:get_float_property("end",0.0))
+				table.insert(l_StainEffects, l_Param:get_psz_property("renderable_object",""))
 				table.insert(self.m_SanityEffects, l_StainEffects)
 			elseif l_Param:get_name() == "vignetting" then
 				l_VignettinEffects = {}
 				table.insert(l_VignettinEffects, "vignetting")
-				table.insert(l_VignettinEffects, l_Param:get_psz_property("type","",false))
-				table.insert(l_VignettinEffects, l_Param:get_float_property("start",0.0,false))
-				table.insert(l_VignettinEffects, l_Param:get_float_property("end",0.0,false))
-				table.insert(l_VignettinEffects, l_Param:get_psz_property("material","",false))
-				table.insert(l_VignettinEffects, l_Param:get_float_property("default_value",0.0,false))
+				table.insert(l_VignettinEffects, l_Param:get_psz_property("type",""))
+				table.insert(l_VignettinEffects, l_Param:get_float_property("start",0.0))
+				table.insert(l_VignettinEffects, l_Param:get_float_property("end",0.0))
+				table.insert(l_VignettinEffects, l_Param:get_psz_property("material",""))
+				table.insert(l_VignettinEffects, l_Param:get_float_property("default_value",0.0))
 				table.insert(self.m_SanityEffects, l_VignettinEffects)
 			elseif l_Param:get_name() == "fov" then
 				l_FovEffects = {}
 				table.insert(l_FovEffects, "fov")
-				table.insert(l_FovEffects, l_Param:get_psz_property("type","",false))
-				table.insert(l_FovEffects, l_Param:get_float_property("start",0.0,false))
-				table.insert(l_FovEffects, l_Param:get_float_property("end",0.0,false))
-				table.insert(l_FovEffects, l_Param:get_float_property("start_value",0.0,false))
-				table.insert(l_FovEffects, l_Param:get_float_property("end_value",0.0,false))
-				table.insert(l_FovEffects, l_Param:get_float_property("default_value",0.0,false))
+				table.insert(l_FovEffects, l_Param:get_psz_property("type",""))
+				table.insert(l_FovEffects, l_Param:get_float_property("start",0.0))
+				table.insert(l_FovEffects, l_Param:get_float_property("end",0.0))
+				table.insert(l_FovEffects, l_Param:get_float_property("start_value",0.0))
+				table.insert(l_FovEffects, l_Param:get_float_property("end_value",0.0))
+				table.insert(l_FovEffects, l_Param:get_float_property("default_value",0.0))
 				table.insert(self.m_SanityEffects, l_FovEffects)
 			elseif l_Param:get_name() == "velocity" then
 				l_VelocityEffects = {}
 				table.insert(l_VelocityEffects, "velocity")
-				table.insert(l_VelocityEffects, l_Param:get_psz_property("type","",false))				
-				table.insert(l_VelocityEffects, l_Param:get_float_property("start",0.0,false))
-				table.insert(l_VelocityEffects, l_Param:get_float_property("end",0.0,false))
+				table.insert(l_VelocityEffects, l_Param:get_psz_property("type",""))				
+				table.insert(l_VelocityEffects, l_Param:get_float_property("start",0.0))
+				table.insert(l_VelocityEffects, l_Param:get_float_property("end",0.0))
 				table.insert(self.m_SanityEffects, l_VelocityEffects)
 			--[[elseif l_Param:get_name() == "control" then
 				l_ControlEffects = {}
 				table.insert(l_ControlEffects, "control")
-				table.insert(l_ControlEffects, l_Param:get_psz_property("type","",false))
-				table.insert(l_ControlEffects, l_Param:get_float_property("start",0.0,false))
-				table.insert(l_ControlEffects, l_Param:get_float_property("end",0.0,false))
+				table.insert(l_ControlEffects, l_Param:get_psz_property("type",""))
+				table.insert(l_ControlEffects, l_Param:get_float_property("start",0.0))
+				table.insert(l_ControlEffects, l_Param:get_float_property("end",0.0))
 				table.insert(self.m_SanityEffects, l_ControlEffects)]]
 			end
+			l_Param = l_Param:get_next()
 		end
-		utils_log("PARAMETROS CORDURA LEIDOS CORRECTAMENTE!!!")
 		
 		self.m_SoundManager = UABEngine:get_sound_manager()
 		if self.m_AlreadyInitialized then
@@ -173,22 +173,6 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_RaycastData = RaycastData()
 		
-		self.m_CurrentAend = nil
-		self.m_Aends = {}
-		local l_AendsXML = CXMLTreeNode()
-		local l_AendsLoaded = l_AendsXML:load_file("Data\\animation_ends.xml")
-		if l_AendsLoaded then
-			for i=0, l_AendsXML:get_num_children()-1 do
-				local l_Atts=l_AendsXML:get_child(i)
-				local l_ElemName=l_Atts:get_name()
-				if l_ElemName=="aend" then
-					self.m_Aends[l_Atts:get_psz_property("name", "", false)] = l_Atts:get_vect3f_property("pos", Vect3f(0.0,0.0,0.0), false)
-				end	
-			end
-		else
-			utils_log("Animation ends xml not correctly loaded.")
-		end
-		
 		self.m_StateMachine = StateMachine.create()
 		self:SetPlayerStateMachine()
 		self.m_StateMachine:start()
@@ -199,7 +183,6 @@ class 'CPlayer' (CLUAComponent)
 		end
 
 		self.m_AlreadyInitialized = true
-		utils_log("Player init finished")
 	end
 
 	function CPlayer:SetSanity(_amount, _override)
@@ -341,7 +324,6 @@ class 'CPlayer' (CLUAComponent)
 	end
 	
 	function CPlayer:SetPlayerStateMachine()
-		utils_log("Start Set PlayerStateMachine")
 		
 		IdleState = State.create(IdleUpdate)
 		IdleState:set_do_first_function(IdleFirst)
@@ -419,7 +401,6 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:add_state("Singing", SingingState)
 		self.m_StateMachine:add_state("Dead", DeadState)
 		
-		utils_log("End Set PlayerStateMachine")
 	end	
 --end
 

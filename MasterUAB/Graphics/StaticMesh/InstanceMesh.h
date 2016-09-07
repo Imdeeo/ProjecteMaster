@@ -2,8 +2,8 @@
 #define INSTANCE_MESH_H
 
 #include "RenderableObjects\RenderableObject.h"
+#include "XML\tinyxml2.h"
 
-class CXMLTreeNode;
 class CStaticMesh;
 class CFrustum;
 
@@ -20,7 +20,7 @@ private:
 	float m_PxOffset;
 	Vect3f m_PxNormals;
 public:
-	CInstanceMesh(const CXMLTreeNode &TreeNode);
+	CInstanceMesh(tinyxml2::XMLElement* TreeNode);
 	CInstanceMesh(const std::string &Name, const std::string &CoreName);
 	~CInstanceMesh();
 	void Render(CRenderManager *RM);

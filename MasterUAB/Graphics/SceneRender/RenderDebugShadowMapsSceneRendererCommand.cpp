@@ -9,12 +9,12 @@
 
 #include "XML\XMLTreeNode.h"
 
-CRenderDebugShadowMapsSceneRendererCommand::CRenderDebugShadowMapsSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
+CRenderDebugShadowMapsSceneRendererCommand::CRenderDebugShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
 {
 	//m_Offset = TreeNode.GetBoolProperty("offset");
 	//m_Width = TreeNode.GetBoolProperty("width");
 	
-	m_Light = TreeNode.GetIntProperty("light");
+	m_Light = TreeNode->GetIntProperty("light");
 
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("MV_POSITION4_NORMAL_TEXTURE_VERTEX");
 }

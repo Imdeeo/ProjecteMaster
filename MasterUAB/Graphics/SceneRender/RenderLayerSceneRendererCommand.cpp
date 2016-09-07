@@ -5,10 +5,10 @@
 #include "RenderableObjects\RenderableObjectsManager.h"
 #include "XML\XMLTreeNode.h"
 
-CRenderLayerSceneRendererCommand::CRenderLayerSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
+CRenderLayerSceneRendererCommand::CRenderLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
 {
 	m_Layer = UABEngine.GetLayerManager()->GetLayer(TreeNode);
-	SetActive(TreeNode.GetBoolProperty("active",false));
+	SetActive(TreeNode->GetBoolProperty("active",false));
 }
 
 CRenderLayerSceneRendererCommand::~CRenderLayerSceneRendererCommand(){}

@@ -5,7 +5,7 @@
 class CLightsSceneRendererCommand :	public CSceneRendererCommand
 {
 public:
-	CLightsSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CLightsSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CLightsSceneRendererCommand(){}
 
 	void Execute(CRenderManager &_RenderManager);

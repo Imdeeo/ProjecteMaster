@@ -1,5 +1,5 @@
 #include "Materials\MaterialManager.h"
-#include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 #include <stdio.h>
 
 CMaterialManager::CMaterialManager()
@@ -25,7 +25,6 @@ void CMaterialManager::Load(const std::string &LevelMaterialsFilename, const std
 void CMaterialManager::Reload()
 {
 	std::map<std::string, std::string> l_MaterialNames;
-	CXMLTreeNode l_XML;
 	if (m_DefaultMaterialsFilename != "") {
 		LoadMaterialsFromFile(m_DefaultMaterialsFilename, true, &l_MaterialNames);
 	}
@@ -35,30 +34,37 @@ void CMaterialManager::Reload()
 
 void CMaterialManager::LoadMaterialsFromFile(const std::string &Filename, bool Update, std::map<std::string, std::string> *UpdatedNames)
 {
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(Filename.c_str()))
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(Filename.c_str());
+
+	tinyxml2::XMLElement* l_Element;
+	tinyxml2::XMLElement* l_ElementAux;
+
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Input = l_XML["materials"];
-		if (l_Input.Exists())
+		l_Element = doc.FirstChildElement("materials");
+		if (l_Element != NULL)
 		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			l_ElementAux = l_Element->FirstChildElement();
+			while (l_ElementAux!=NULL)
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("material"))
+				if (l_ElementAux->Name() == std::string("material"))
 				{
-					CMaterial* l_Material = new CMaterial(l_Element);
+					CMaterial* l_Material = new CMaterial(l_ElementAux);
 					if (Update)
 					{
-						AddUpdateResource(l_Element.GetPszProperty("name"), l_Material);
+						AddUpdateResource(l_ElementAux->GetPszProperty("name"), l_Material);
 					}
 					else {
-						AddResource(l_Element.GetPszProperty("name"), l_Material);
+						AddResource(l_ElementAux->GetPszProperty("name"), l_Material);
 					}
 					if (UpdatedNames != nullptr)
 					{
-						(*UpdatedNames)[l_Element.GetPszProperty("name")] = "defined";
+						(*UpdatedNames)[l_ElementAux->GetPszProperty("name")] = "defined";
 					}
 				}
+				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
 		}
 	}
