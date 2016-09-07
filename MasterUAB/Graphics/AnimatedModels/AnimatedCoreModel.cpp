@@ -53,7 +53,7 @@ bool CAnimatedCoreModel::Load(const std::string &Path)
 	std::string l_AnimationFilename = Path;
 
 	tinyxml2::XMLDocument doc;
-	tinyxml2::XMLError l_Error = doc.LoadFile(Path.c_str());
+	tinyxml2::XMLError l_Error = doc.LoadFile(l_Filename.append("actor.xml").c_str());
 
 	tinyxml2::XMLElement* l_Element;
 	tinyxml2::XMLElement* l_ElementAux;
@@ -71,7 +71,7 @@ bool CAnimatedCoreModel::Load(const std::string &Path)
 		{			
 			if (l_ElementAux->Name() == std::string("material"))
 			{
-				result = result & UABEngine.GetMaterialManager()->AddResource(l_ElementAux->GetPszProperty("name"), new CMaterial(l_Element));
+				result = result & UABEngine.GetMaterialManager()->AddResource(l_ElementAux->GetPszProperty("name"), new CMaterial(l_ElementAux));
 				m_Materials.push_back(UABEngine.GetMaterialManager()->GetResource(l_ElementAux->GetPszProperty("name")));
 			}
 			if (l_ElementAux->Name() == std::string("skeleton"))
@@ -88,7 +88,7 @@ bool CAnimatedCoreModel::Load(const std::string &Path)
 				result = result & LoadAnimation(l_ElementAux->GetPszProperty("name"),
 				l_AnimationFilename.append(l_ElementAux->GetPszProperty("filename")));
 			}
-			l_ElementAux = l_ElementAux->FirstChildElement();
+			l_ElementAux = l_ElementAux->NextSiblingElement();
 		}
 	}
 

@@ -723,6 +723,10 @@ public:
         return const_cast<XMLElement*>(const_cast<const XMLNode*>(this)->FirstChildElement( name ));
     }
 
+	XMLElement* FirstChildElement2()	{
+		return FirstChildElement();
+	}
+
     /// Get the last child node, or null if none exists.
     const XMLNode*	LastChild() const						{
         return _lastChild;
@@ -772,6 +776,11 @@ public:
     XMLElement*	NextSiblingElement( const char* name = 0 )	{
         return const_cast<XMLElement*>(const_cast<const XMLNode*>(this)->NextSiblingElement( name ) );
     }
+
+	XMLElement* NextSiblingElement2()
+	{
+		return NextSiblingElement();
+	}
 
     /**
     	Add a child node as the last (right) child.

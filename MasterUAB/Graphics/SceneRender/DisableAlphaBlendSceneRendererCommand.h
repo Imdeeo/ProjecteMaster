@@ -7,7 +7,7 @@ class CDisableAlphaBlendSceneRendererCommand :
 {
 
 public:
-	CDisableAlphaBlendSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CDisableAlphaBlendSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CDisableAlphaBlendSceneRendererCommand();
 	virtual void Execute(CRenderManager &RenderManager);
 };

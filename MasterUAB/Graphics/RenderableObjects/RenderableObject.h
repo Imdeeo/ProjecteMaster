@@ -5,9 +5,9 @@
 
 #include "Utils\Named.h"
 #include "3DElement\3DElement.h"
+#include "XML\tinyxml2.h"
 
 class CUABComponentManager;
-class CXMLTreeNode;
 class CRenderManager;
 
 class CRenderableObject : public C3DElement, public CNamed
@@ -23,7 +23,7 @@ private:
 	bool m_DebugRender;
 public:
 	CRenderableObject();
-	CRenderableObject(const CXMLTreeNode &TreeNode);
+	CRenderableObject(tinyxml2::XMLElement* TreeNode);
 	virtual ~CRenderableObject();
 	virtual void Save(FILE* _File, std::string _layer){}
 	virtual void Update(float ElapsedTime){};

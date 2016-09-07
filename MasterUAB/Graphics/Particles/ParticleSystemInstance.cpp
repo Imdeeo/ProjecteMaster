@@ -1,6 +1,5 @@
 #include "ParticleSystemInstance.h"
 #include "ParticleManager.h"
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
 #include "ContextManager\ContextManager.h"
@@ -13,15 +12,14 @@
 #include "Camera\CameraControllerManager.h"
 #include "Math\MathUtils.h"
 
-CParticleSystemInstance::CParticleSystemInstance(CXMLTreeNode &TreeNode) : 
+CParticleSystemInstance::CParticleSystemInstance(tinyxml2::XMLElement* TreeNode) :
 	CRenderableObject(TreeNode), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
 {
-	CXMLTreeNode l_Element = TreeNode;
-	m_Type = UABEngine.GetInstance()->GetParticleManager()->GetResource(l_Element.GetPszProperty("type"));
-	m_NextParticleEmission = l_Element.GetFloatProperty("next_particle_emission", 1.0f);
-	m_Awake = l_Element.GetBoolProperty("awake", false);
-	m_AwakeTimer = l_Element.GetFloatProperty("awake_timer", 1.0f);
-	m_EmissionBoxHalfSize = l_Element.GetVect3fProperty("emission_box_half_size", Vect3f(1.0, 1.0, 1.0));
+	m_Type = UABEngine.GetInstance()->GetParticleManager()->GetResource(TreeNode->GetPszProperty("type"));
+	m_NextParticleEmission = TreeNode->GetFloatProperty("next_particle_emission", 1.0f);
+	m_Awake = TreeNode->GetBoolProperty("awake", false);
+	m_AwakeTimer = TreeNode->GetFloatProperty("awake_timer", 1.0f);
+	m_EmissionBoxHalfSize = TreeNode->GetVect3fProperty("emission_box_half_size", Vect3f(1.0, 1.0, 1.0));
 	m_EmissionVolume = m_EmissionBoxHalfSize.x * m_EmissionBoxHalfSize.y * m_EmissionBoxHalfSize.z * 8;
 	m_EmissionScaler = m_Type->GetEmitAbsolute() ? 1 : 1.0f / m_EmissionVolume;
 	m_ActiveParticles = 0;

@@ -2,6 +2,7 @@
 #define DYNAMIC_TEXTURE_H
 
 #include "Texture.h"
+#include "XML\tinyxml2.h"
 
 #include <string>
 
@@ -11,7 +12,6 @@ class ID3D11Texture2D;
 class ID3D11RenderTargetView;
 class ID3D11DepthStencilView;
 
-class CXMLTreeNode;
 
 class CDynamicTexture : public CTexture
 {
@@ -30,7 +30,7 @@ protected:
 	virtual bool CreateSamplerState();	
 public:
 	CDynamicTexture(const std::string &Name, int Width, int Height, bool CreateDepthStencilBuffer, const std::string &Format);
-	CDynamicTexture(const CXMLTreeNode &TreeNode);
+	CDynamicTexture(tinyxml2::XMLElement* TreeNode);
 	~CDynamicTexture();
 	bool Reload();
 	ID3D11RenderTargetView* GetRenderTargetView();

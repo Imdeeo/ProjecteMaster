@@ -9,46 +9,45 @@ class 'CCharacterManager'
 	function CCharacterManager:__init()
 		self.m_Enemics={}
 		self.m_Player={}
-		self.m_Fog = nil
 	end
 		
 	function CCharacterManager:LoadXML(Filename)
-		local l_XMLTreeNode=CXMLTreeNode()
-		local l_Loaded=l_XMLTreeNode:load_file(Filename)
+		local doc = XMLDocument()
+		local xmlError = doc:load_file(Filename)
 		local UABEngine = CUABEngine.get_instance()
-		--UABEngine:get_game_play_manager():destroy()
-		if l_Loaded then
-			for i=0, l_XMLTreeNode:get_num_children()-1 do
-				local l_Atts=l_XMLTreeNode:get_child(i)
-				local l_ElemName=l_Atts:get_name()
+		UABEngine:get_game_play_manager():destroy()
+		if xmlError == 0 then
+			local l_Element = doc:first_child_element("characters"):first_child()
+			while l_Element ~= nil do
+				local l_ElemName=l_Element:get_name()
 				if l_ElemName=="player" then
-					g_Player = CPlayer(l_Atts)
+					g_Player = CPlayer(l_Element)
 					UABEngine:get_game_play_manager():add_component(g_Player)
 					table.insert(self.m_Player, g_Player)
 				elseif l_ElemName == "enemy" then
-					local l_Type = l_Atts:get_psz_property("type", "", false)
+					local l_Type = l_Element:get_psz_property("type", "")
 					
 					if l_Type == "Automaton" then
-						local l_Enemy = CAutomatonEnemy(l_Atts)
+						local l_Enemy = CAutomatonEnemy(l_Element)
 						UABEngine:get_game_play_manager():add_component(l_Enemy)
 						table.insert(self.m_Enemics, l_Enemy)			
 					elseif l_Type == "FogAutomaton" then
-						local l_Enemy = CFogEnemy(l_Atts)
+						local l_Enemy = CFogEnemy(l_Element)
 						UABEngine:get_game_play_manager():add_component(l_Enemy)
-						self.m_Fog = l_Enemy
 						table.insert(self.m_Enemics, l_Enemy)
 					elseif l_Type == "CagedAutomaton" then
-						local l_Enemy = CCagedAutomatonEnemy(l_Atts)
+						local l_Enemy = CCagedAutomatonEnemy(l_Element)
 						UABEngine:get_game_play_manager():add_component(l_Enemy)
 						table.insert(self.m_Enemics, l_Enemy)	
 					elseif l_Type == "Turret" then
-						local l_Enemy = CTurretEnemy(l_Atts)
+						local l_Enemy = CTurretEnemy(l_Element)
 						UABEngine:get_game_play_manager():add_component(l_Enemy)
 						table.insert(self.m_Enemics, l_Enemy)
 					elseif l_Type == "Whisperer" then
 						utils_log("other")
 					end					
 				end	
+				l_Element = l_Element:get_next()
 			end
 		else
 			utils_log("File '"..Filename.."'not correctly loaded")

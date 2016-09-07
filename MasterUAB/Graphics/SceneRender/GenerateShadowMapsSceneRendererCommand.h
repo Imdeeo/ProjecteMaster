@@ -5,7 +5,7 @@ class CGenerateShadowMapsSceneRendererCommand :
 	public CSceneRendererCommand
 {
 public:
-	CGenerateShadowMapsSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CGenerateShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CGenerateShadowMapsSceneRendererCommand();
 
 	void Execute(CRenderManager &_RenderManager);

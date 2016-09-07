@@ -1,6 +1,6 @@
 class 'CUABCinematicsAction'
 	function CUABCinematicsAction:__init(XMLTreeNode)
-		self.m_Time=XMLTreeNode:get_float_property("time", 0.0, false)
+		self.m_Time=XMLTreeNode:get_float_property("time", 0.0)
 	end
 	
 	function CUABCinematicsAction:GetTime()

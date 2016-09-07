@@ -3,9 +3,9 @@
 
 #include "Utils\Named.h"
 #include "Utils\CEmptyPointerClass.h"
+#include "XML\tinyxml2.h"
 #include <string>
 
-class CXMLTreeNode;
 class CMaterial;
 
 class CMaterialParameter : public CNamed
@@ -22,7 +22,7 @@ public:
 protected:
 	TMaterialType m_MaterialType;
 public:
-	CMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode, CMaterialParameter::TMaterialType MaterialType) :CNamed(TreeNode),m_MaterialType(MaterialType){}
+	CMaterialParameter(CMaterial *Material, tinyxml2::XMLElement* TreeNode, CMaterialParameter::TMaterialType MaterialType) :CNamed(TreeNode), m_MaterialType(MaterialType){}
 	virtual ~CMaterialParameter(){}
 	virtual void Apply() = 0;
 	virtual void * GetValueAddress(int index = 0) const = 0;

@@ -38,7 +38,6 @@ void CAStar::LoadMap(std::string _filename)
 	tinyxml2::XMLElement* l_Element;
 	tinyxml2::XMLElement* l_ElementAux;
 
-
 	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
 		TNode *l_node;

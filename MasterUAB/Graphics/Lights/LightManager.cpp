@@ -4,8 +4,7 @@
 #include "SpotLight.h"
 #include "DirectionalLight.h"
 #include "RenderManager\RenderManager.h"
-
-#include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 
 CLightManager::CLightManager():m_AmbientLight(Vect4f(0.1f,0.1f,0.1f,1.0f)),m_RenderLights(false){}
 
@@ -14,35 +13,41 @@ CLightManager::~CLightManager(){}
 bool CLightManager::Load(const std::string &FileName){
 	m_FileName = FileName;
 	
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(m_FileName.c_str()))
-	{
-		CXMLTreeNode l_Input = l_XML["lights"];
-		if (l_Input.Exists())
-		{
-			m_AmbientLight = l_Input.GetVect4fProperty("ambient_light_color", Vect4f(0.1f, 0.1f, 0.1f, 1.0f));
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(FileName.c_str());
 
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+	tinyxml2::XMLElement* l_Element;
+	tinyxml2::XMLElement* l_ElementAux;
+
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
+	{
+		l_Element = doc.FirstChildElement("lights");
+		if (l_Element != NULL)
+		{
+			m_AmbientLight = l_Element->GetVect4fProperty("ambient_light_color", Vect4f(0.1f, 0.1f, 0.1f, 1.0f));
+			l_ElementAux = l_Element->FirstChildElement();
+			while (l_ElementAux!=NULL)
 			{				
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("light"))
+				if (l_ElementAux->Name() == std::string("light"))
 				{
-					CLight::TLightType type = CLight::GetLightTypeByName(l_Element.GetPszProperty("type"));
+					CLight::TLightType type = CLight::GetLightTypeByName(l_ElementAux->GetPszProperty("type"));
 					switch(type)
 					{
 					case CLight::LIGHT_TYPE_OMNI:
-						AddResource(l_Element.GetPszProperty("name"), new COmniLight(l_Element));
+						AddResource(l_ElementAux->GetPszProperty("name"), new COmniLight(l_ElementAux));
 						break;
 					case CLight::LIGHT_TYPE_DIRECTIONAL:
-						AddResource(l_Element.GetPszProperty("name"), new CDirectionalLight(l_Element));
+						AddResource(l_ElementAux->GetPszProperty("name"), new CDirectionalLight(l_ElementAux));
 						break;
 					case CLight::LIGHT_TYPE_SPOT:
-						AddResource(l_Element.GetPszProperty("name"), new CSpotLight(l_Element));
+						AddResource(l_ElementAux->GetPszProperty("name"), new CSpotLight(l_ElementAux));
 						break;
 					default:
 						return false;
 					}
 				}
+				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
 		}
 	}

@@ -7,7 +7,7 @@
 
 #include <d3d11.h>
 
-CSetRenderTargetSceneRendererCommand::CSetRenderTargetSceneRendererCommand(CXMLTreeNode &TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
+CSetRenderTargetSceneRendererCommand::CSetRenderTargetSceneRendererCommand(tinyxml2::XMLElement* TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
 {
 }
 

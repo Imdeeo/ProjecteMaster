@@ -8,7 +8,7 @@ class COmniLight : public CLight
 public:
 	COmniLight();
 	COmniLight(std::string _name);
-	COmniLight(CXMLTreeNode &TreeNode);
+	COmniLight(tinyxml2::XMLElement* TreeNode);
 	bool const GetInsideFrustum();
 	void SetShadowMap(CRenderManager &RenderManager);
 	void Save(FILE* _File);

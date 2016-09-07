@@ -7,7 +7,7 @@ CRenderableObject::CRenderableObject() :CNamed("") {
 	m_DebugRender = true;
 };
 
-CRenderableObject::CRenderableObject(const CXMLTreeNode &TreeNode) :C3DElement(TreeNode), CNamed(TreeNode){
+CRenderableObject::CRenderableObject(tinyxml2::XMLElement* TreeNode) :C3DElement(TreeNode), CNamed(TreeNode){
 	m_DebugRender = true;
 };
 

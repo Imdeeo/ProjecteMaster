@@ -71,7 +71,41 @@ void CLayerManager::Load(const std::string &FileName)
 
 void CLayerManager::Reload()
 {
-	CXMLTreeNode l_XML;
+	//Destroy();
+	//Load(m_Filename);
+
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(m_Filename.c_str());
+
+	tinyxml2::XMLElement* l_Element;
+	tinyxml2::XMLElement* l_ElementAux;
+
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
+	{
+		l_Element = doc.FirstChildElement("renderable_objects");
+		if (l_Element != NULL)
+		{
+			l_ElementAux = l_Element->FirstChildElement();
+			while (l_ElementAux != NULL)
+			{
+				if (l_ElementAux->Name() == std::string("layer"))
+				{
+					AddLayer(l_ElementAux);
+				}
+				else if (l_ElementAux->Name() == std::string("instance_mesh"))
+				{
+					GetLayer(l_ElementAux)->AddMeshInstance(l_ElementAux);
+				}
+				else if (l_ElementAux->Name() == std::string("animated_instance_mesh"))
+				{
+					GetLayer(l_ElementAux)->AddAnimatedInstanceModel(l_ElementAux);
+				}				
+				l_ElementAux = l_ElementAux->NextSiblingElement();
+			}
+		}
+	}
+	/*CXMLTreeNode l_XML;
 
 	if (l_XML.LoadFile(m_Filename.c_str()))
 	{
@@ -95,7 +129,7 @@ void CLayerManager::Reload()
 				}
 			}
 		}
-	}
+	}*/
 }
 
 void CLayerManager::Update(float ElapsedTime)
@@ -128,8 +162,8 @@ void CLayerManager::RenderDebug(CRenderManager *RenderManager, const std::string
 
 CRenderableObjectsManager* CLayerManager::GetLayer(tinyxml2::XMLElement* TreeNode)
 {
-	const char * l_layerExist = TreeNode->GetPszProperty("layer");
-	if (l_layerExist != NULL)
+	const char * l_layerExist = TreeNode->GetPszProperty("layer", "");
+	if (l_layerExist != "")
 	{
 		return GetResource(l_layerExist);
 	}
@@ -153,9 +187,9 @@ CRenderableObjectsManager* CLayerManager::AddLayer(tinyxml2::XMLElement* TreeNod
 {
 	const char * l_existDefault;
 	std::string l_Name = TreeNode->GetPszProperty("name");
-	l_existDefault = TreeNode->GetPszProperty("default");
+	l_existDefault = TreeNode->GetPszProperty("default", "");
 	CRenderableObjectsManager* l_auxROM;
-	if (l_existDefault != NULL)
+	if (l_existDefault != "")
 	{
 		ChageKeyName(m_DefaultLayer->GetName(), l_Name);
 		m_DefaultLayer->SetName(l_Name);

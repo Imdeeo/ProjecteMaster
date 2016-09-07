@@ -4,7 +4,6 @@
 #include "RenderManager\RenderManager.h"
 #include "ContextManager\ContextManager.h"
 
-#include "XML\XMLTreeNode.h"
 #include "Utils\Named.h"
 
 #include <d3d11.h>
@@ -19,25 +18,25 @@ m_Width(Width), m_Height(Height), m_CreateDepthStencilBuffer(CreateDepthStencilB
 	Init();
 }
 
-CDynamicTexture::CDynamicTexture(const CXMLTreeNode &TreeNode) : m_DepthStencilBuffer(nullptr), m_DepthStencilView(nullptr)
+CDynamicTexture::CDynamicTexture(tinyxml2::XMLElement* TreeNode) : m_DepthStencilBuffer(nullptr), m_DepthStencilView(nullptr)
 {
 	//<dynamic_texture name = "DepthMapTexture" texture_width_as_frame_buffer = "true" format_type = "R32F" / >
 	
-	std::string l_name = TreeNode.GetPszProperty("name");
-	std::string l_format = TreeNode.GetPszProperty("format_type");
+	std::string l_name = TreeNode->GetPszProperty("name");
+	std::string l_format = TreeNode->GetPszProperty("format_type");
 	SetName(l_name);
 	SetFormat(l_format);
-	if (TreeNode.GetBoolProperty("texture_width_as_frame_buffer"))
+	if (TreeNode->GetBoolProperty("texture_width_as_frame_buffer"))
 	{
 		m_Width = UABEngine.GetRenderManager()->GetContextManager()->GetWidth();
 		m_Height = UABEngine.GetRenderManager()->GetContextManager()->GetHeight();
 	}
 	else
 	{
-		m_Width = TreeNode.GetIntProperty("width");
-		m_Height = TreeNode.GetIntProperty("height");		
+		m_Width = TreeNode->GetIntProperty("width");
+		m_Height = TreeNode->GetIntProperty("height");		
 	}
-	m_CreateDepthStencilBuffer = TreeNode.GetBoolProperty("create_depth_stencil_buffer",false);
+	m_CreateDepthStencilBuffer = TreeNode->GetBoolProperty("create_depth_stencil_buffer",false);
 	Init();
 }
 

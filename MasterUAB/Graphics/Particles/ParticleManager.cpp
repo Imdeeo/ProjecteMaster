@@ -1,5 +1,5 @@
 #include "ParticleManager.h"
-#include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 
 CParticleManager::CParticleManager(void){}
 
@@ -11,20 +11,25 @@ CParticleManager::~CParticleManager(void)
 
 void CParticleManager::Load(const std::string &Filename)
 {
-	CXMLTreeNode l_File;
 	m_Filename = Filename;
 
-	if (l_File.LoadFile(m_Filename.c_str()))
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(Filename.c_str());
+
+	tinyxml2::XMLElement* l_Element;
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Meshes = l_File["particle_systems"];
-		for (int i = 0; i < l_Meshes.GetNumChildren(); ++i)
+		l_Element = doc.FirstChildElement("particle_systems")->FirstChildElement(); 
+		while (l_Element != NULL)
 		{
-			CParticleSystemType *l_ParticleSystemType = new CParticleSystemType(l_Meshes(i));
+			CParticleSystemType *l_ParticleSystemType = new CParticleSystemType(l_Element);
 			//if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType, "CParticleManager"))
 			if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType))
 			{
 				CHECKED_DELETE(l_ParticleSystemType);
 			}
+			l_Element = l_Element->NextSiblingElement();
 		}
 	}
 }

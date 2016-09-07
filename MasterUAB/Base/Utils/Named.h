@@ -2,7 +2,6 @@
 #define _NAMED_H
 
 #include "XML\tinyxml2.h"
-#include "XML\XMLTreeNode.h"
 #include <string>
 #include "no_sillywarnings_please.h"
 
@@ -13,7 +12,6 @@ class CNamed
 protected:
 	std::string m_Name;
 public:
-	CNamed(const CXMLTreeNode &TreeNode);
 	CNamed(tinyxml2::XMLElement* TreeNode);
 	CNamed(const std::string &Name);
 	virtual void SetName(const std::string &Name);

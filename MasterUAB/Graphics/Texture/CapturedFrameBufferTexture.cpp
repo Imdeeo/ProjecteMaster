@@ -2,15 +2,14 @@
 
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
-#include "XML\XMLTreeNode.h"
 #include "ContextManager\ContextManager.h"
 
 #include <d3d11.h>
 
-CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(const CXMLTreeNode &_TreeNode)
+CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(tinyxml2::XMLElement* TreeNode)
 {
-	m_Name = _TreeNode.GetPszProperty("name");
-	bool l_TextuerWidthAsFrameBuffer = _TreeNode.GetBoolProperty("texture_width_as_frame_buffer");
+	m_Name = TreeNode->GetPszProperty("name");
+	bool l_TextuerWidthAsFrameBuffer = TreeNode->GetBoolProperty("texture_width_as_frame_buffer");
 	if (l_TextuerWidthAsFrameBuffer)
 	{
 		m_Width = UABEngine.GetRenderManager()->GetContextManager()->GetWidth();
@@ -18,8 +17,8 @@ CCapturedFrameBufferTexture::CCapturedFrameBufferTexture(const CXMLTreeNode &_Tr
 	}
 	else
 	{
-		m_Width = _TreeNode.GetIntProperty("width");
-		m_Height = _TreeNode.GetIntProperty("height");		
+		m_Width = TreeNode->GetIntProperty("width");
+		m_Height = TreeNode->GetIntProperty("height");
 	}	
 	Init(m_Name,m_Width,m_Height);
 }
