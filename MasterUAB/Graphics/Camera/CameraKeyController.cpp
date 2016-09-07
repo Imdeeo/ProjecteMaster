@@ -227,7 +227,8 @@ void CCameraKeyController::SetCamera(CCamera *Camera) const
 	Camera->SetLookAt(m_LookAt + m_PositionOffset);
 	Camera->SetUp(m_Up);
 	Camera->SetMatrixs();
-	UtilsLog("Cam Up: " + std::to_string(m_Up.x) + ", " + std::to_string(m_Up.y) + ", " + std::to_string(m_Up.z) + ". Cam FOV: " + std::to_string(m_Fov));
+	Vect3f l_LA = m_LookAt + m_PositionOffset;
+	UtilsLog("Cam LA: " + std::to_string(l_LA.x) + ", " + std::to_string(l_LA.y) + ", " + std::to_string(l_LA.z));
 }
 
 Vect3f CCameraKeyController::GetLastLookAt()
@@ -238,12 +239,12 @@ Vect3f CCameraKeyController::GetLastLookAt()
 void CCameraKeyController::SetFirstKey(Vect3f _Forward, Vect3f _Pos, Vect3f _Up, float _Fov)
 {
 	m_Fov = _Fov;
-	m_LookAt = _Forward;
-	m_Position = _Pos;
+	m_Position = _Pos - m_PositionOffset;
+	m_LookAt = _Forward + m_Position;
 	m_Up = _Up;
 	m_Keys[0]->m_CameraInfo.m_FOV = _Fov;
-	m_Keys[0]->m_CameraInfo.m_LookAt = _Forward;
-	m_Keys[0]->m_CameraInfo.m_Eye = _Pos;
+	m_Keys[0]->m_CameraInfo.m_Eye = _Pos - m_PositionOffset;
+	m_Keys[0]->m_CameraInfo.m_LookAt = _Forward + m_Keys[0]->m_CameraInfo.m_Eye;
 	m_Keys[0]->m_CameraInfo.m_Up = _Up;
 }
 

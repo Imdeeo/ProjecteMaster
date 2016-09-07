@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cameras>
+	<camera name="DebugCamera" type="spherical" distance="50" fov="1.13"/>
+	<camera name="MainCamera" type="fps" target="Jaheem" layer="solid" offset="1.8" fov="1.13"/>
+</cameras>

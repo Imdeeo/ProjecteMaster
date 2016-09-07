@@ -333,19 +333,19 @@ Mat33f CAnimatedInstanceModel::GetLeftObjectTransform()
 	return Mat33f(l_BonePos.dxdx, l_BonePos.dydx, l_BonePos.dzdx, l_BonePos.dxdy, l_BonePos.dydy, l_BonePos.dzdy, l_BonePos.dxdz, l_BonePos.dydz, l_BonePos.dzdz);
 }
 
-Quatf CAnimatedInstanceModel::GetHeadBoneRotation()
+Quatf CAnimatedInstanceModel::GetBoneRotation(int _bone)
 {
-	CalQuaternion aux = m_CalModel->getSkeleton()->getBone(HEAD_OBJECT_BONE_ID)->getRotation();
+	CalQuaternion aux = m_CalModel->getSkeleton()->getBone(_bone)->getRotation();
 	return Quatf(aux.x, aux.y, aux.z, aux.w);
 }
 
-void CAnimatedInstanceModel::SetHeadBoneRotation(Quatf _rotation)
+void CAnimatedInstanceModel::SetBoneRotation(Quatf _rotation, int _bone)
 {
 	CalQuaternion aux;
 	aux.x = _rotation.x;
 	aux.y = _rotation.y;
 	aux.z = _rotation.z;
 	aux.w = _rotation.w;
-	m_CalModel->getSkeleton()->getBone(HEAD_OBJECT_BONE_ID)->setRotation(aux);
-	m_CalModel->getSkeleton()->getBone(HEAD_OBJECT_BONE_ID)->calculateState();
+	m_CalModel->getSkeleton()->getBone(_bone)->setRotation(aux);
+	m_CalModel->getSkeleton()->getBone(_bone)->calculateState();
 }

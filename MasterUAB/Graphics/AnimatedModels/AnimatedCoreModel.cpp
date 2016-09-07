@@ -110,8 +110,8 @@ bool CAnimatedCoreModel::LoadSkeleton(const std::string &Filename)
 {
 	if(!m_CalCoreModel->loadCoreSkeleton(Filename))
     {
-    CalError::printLastError();
-    return false;
+		CalError::printLastError();
+		return false;
     }
 	return true;
 }

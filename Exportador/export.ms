@@ -78,7 +78,10 @@ fn processFaces arx Obj &prog=
 	The case of multimaterial should be handled properly.*/
 	if (classof l_Obj.material != MultiMaterial) then
 	(
-		if (classof l_Obj.material.bumpMap == Bitmaptexture) then
+		if l_Obj.material == undefined then
+		(
+			format "The object % has no material!\n" l_Obj.name
+		)else if (classof l_Obj.material.bumpMap == Bitmaptexture) then
 		(
 			if (classof l_Obj.material.bumpMap.bitmap == Bitmap) then
 			(
@@ -184,7 +187,6 @@ fn processFaces arx Obj &prog=
 	
 	for i=1 to nFaces do
 	(	
-		local l_IdMaterial = (mod ((getFaceMatID l_Obj i)-1) l_TotalMaterials)+1
 		local IdxsFace = getFace l_Obj i
 		local FaceNormal = getFaceNormal l_Obj i
 		local SmoothValue = getFaceSmoothGroup l_Obj i
@@ -210,7 +212,8 @@ fn processFaces arx Obj &prog=
 		TranslationToRH &Nm3
 		
 		if l_Obj.material != undefined then
-		(			
+		(
+			local l_IdMaterial = (mod ((getFaceMatID l_Obj i)-1) l_TotalMaterials)+1
 			local l_DiffMap = undefined
 			local l_LightMap  = undefined
 			local l_RefMap = undefined 
@@ -248,6 +251,7 @@ fn processFaces arx Obj &prog=
 			)
 			
 		) else (
+			local l_IdMaterial = 1
 			ColorID = 0x0002
 			defaultVCFaces l_Obj
 			local ColorFace = getVCFace l_Obj i
@@ -303,14 +307,9 @@ fn createMeshFromObjects dir Objs &prog &progLabel =
 	
 	for l_Obj in Objs do
 	(
-		if l_Obj.material != undefined then
-		(
-			progLabel.text = l_Obj.name
-			file=fopen (dir+"\\Meshes\\"+l_Obj.name+".mesh") "wb"
-            writeMeshFromObject file l_Obj prog
-			FClose file
-		) else (
-			format "The object % has no material!\n" l_Obj.name
-		)
+		progLabel.text = l_Obj.name
+		file=fopen (dir+"\\Meshes\\"+l_Obj.name+".mesh") "wb"
+		writeMeshFromObject file l_Obj prog
+		FClose file
 	)
 )

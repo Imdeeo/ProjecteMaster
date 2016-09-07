@@ -74,8 +74,8 @@ void CFPSCameraController::SetCamera(CCamera *Camera) const
 	Camera->SetLookAt(m_Position+l_Direction);
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
-	Vect3f l_LookAt = GetUp();
-	UtilsLog("Cam Up: " + std::to_string(l_LookAt.x) + ", " + std::to_string(l_LookAt.y) + ", " + std::to_string(l_LookAt.z) + ". Cam FOV: " + std::to_string(m_Fov));
+	Vect3f l_LA = m_Position + l_Direction;
+	UtilsLog("Cam LA: " + std::to_string(l_LA.x) + ", " + std::to_string(l_LA.y) + ", " + std::to_string(l_LA.z));
 }
 
 void CFPSCameraController::Update(float ElapsedTime)
@@ -92,6 +92,6 @@ void CFPSCameraController::Update(float ElapsedTime)
 void CFPSCameraController::CopyFromKeyCamera(CCameraInfo* _CameraInfo)
 {
 	m_Fov = _CameraInfo->m_FOV;
-	Vect3f l_LookAt = _CameraInfo->m_LookAt;
-	m_Rotation.SetFromAngleAxis((l_LookAt - m_Position).GetNormalized(), 0);
+	Vect3f l_LookAt = _CameraInfo->m_LookAt - _CameraInfo->m_Eye;
+	m_Rotation.SetFromFwdUp(l_LookAt, _CameraInfo->m_Up);
 }

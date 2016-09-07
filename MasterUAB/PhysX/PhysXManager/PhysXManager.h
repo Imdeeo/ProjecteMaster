@@ -88,6 +88,7 @@ public:
 	void CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors, bool isActive = true);
 	
 	virtual void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, std::string _group) = 0;
+	virtual void ChangeRigidDynamicActorPhysxGroup(const std::string &_ActorName, const std::string &_group) = 0;
 
 	void CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime);
 	void CharacterControllerWarp(std::string _name, Vect3f _movement);
