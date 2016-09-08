@@ -393,6 +393,10 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 	
 	module(m_LS)[
+		class_<Mat33f>("Mat33f")
+	];
+
+	module(m_LS)[
 		class_<CColor>("CColor")
 			.def(constructor<float, float, float, float>())
 	];
