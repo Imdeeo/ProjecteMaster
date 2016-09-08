@@ -228,7 +228,6 @@ void CCameraKeyController::SetCamera(CCamera *Camera) const
 	Camera->SetUp(m_Up);
 	Camera->SetMatrixs();
 	Vect3f l_LA = m_LookAt + m_PositionOffset;
-	UtilsLog("Cam LA: " + std::to_string(l_LA.x) + ", " + std::to_string(l_LA.y) + ", " + std::to_string(l_LA.z));
 }
 
 Vect3f CCameraKeyController::GetLastLookAt()
