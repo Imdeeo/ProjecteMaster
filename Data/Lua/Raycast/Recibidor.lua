@@ -16,7 +16,7 @@ function R1Door(_Player, _Pos)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerDoor"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.2) then
 		_Player.m_Target = l_Target
-		_Player.m_InteractingAnimation = 2
+		_Player.m_InteractingAnimation = 1
 		_Player.m_InteractingCinematic = "CrossDoor"
 		_Player.m_CameraAnimation = "CrossDoor"
 		_Player.m_NewItemName = ""
@@ -56,7 +56,7 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 		l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayR1"):get_position()
 		if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 			_Player.m_Target = l_Target
-			_Player.m_InteractingAnimation = 5
+			_Player.m_InteractingAnimation = 4
 			_Player.m_InteractingCinematic = "ForceTray"
 			_Player.m_CameraAnimation = "ForceTray"
 			_Player.m_NewItemName = "LlaveRecibidor"
@@ -75,7 +75,7 @@ function R1TrayR2Open(_Player, _Pos)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayR2"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
-		_Player.m_InteractingAnimation = 3
+		_Player.m_InteractingAnimation = 2
 		_Player.m_InteractingCinematic = "OpenTrayR2"
 		_Player.m_CameraAnimation = "OpenTray"
 		_Player.m_CurrentAend = nil
@@ -91,7 +91,7 @@ function R1TrayR2Close(_Player, _Pos)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayR2"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
-		_Player.m_InteractingAnimation = 4
+		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "CloseTrayR2"
 		_Player.m_CameraAnimation = "CloseTray"
 		_Player.m_CurrentAend = nil
@@ -115,9 +115,9 @@ function R1TrayL1Open(_Player, _Pos)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL1"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
-		_Player.m_InteractingAnimation = 3
+		_Player.m_InteractingAnimation = 2
 		_Player.m_InteractingCinematic = "OpenTrayL1"
-		_Player.m_CameraAnimation = "OpenTray"
+		_Player.m_CameraAnimation = "OpenTrayInverse"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
@@ -131,9 +131,9 @@ function R1TrayL1Close(_Player, _Pos)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL1"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
-		_Player.m_InteractingAnimation = 4
+		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "CloseTrayL1"
-		_Player.m_CameraAnimation = "CloseTray"
+		_Player.m_CameraAnimation = "CloseTrayInverse"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
@@ -155,9 +155,9 @@ function R1TrayL2Open(_Player, _Pos)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
-		_Player.m_InteractingAnimation = 3
+		_Player.m_InteractingAnimation = 2
 		_Player.m_InteractingCinematic = "OpenTrayL2"
-		_Player.m_CameraAnimation = "OpenTray"
+		_Player.m_CameraAnimation = "OpenTrayInverse"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
@@ -171,9 +171,9 @@ function R1TrayL2Close(_Player, _Pos)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):get_position()
 	if FacingRaycast(_Player.m_TargetOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
-		_Player.m_InteractingAnimation = 4
+		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "CloseTrayL2"
-		_Player.m_CameraAnimation = "CloseTray"
+		_Player.m_CameraAnimation = "CloseTrayInverse"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
