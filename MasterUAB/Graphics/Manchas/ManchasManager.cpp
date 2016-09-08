@@ -20,15 +20,19 @@ void CManchasManager::Load(const std::string &Filename)
 	
 	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		l_Element = doc.FirstChildElement("manchas")->FirstChildElement();
-		while (l_Element != NULL)
+		l_Element = doc.FirstChildElement("manchas");
+		if (l_Element != NULL)
 		{
-			CManchasSystemType *l_ManchasSystemType = new CManchasSystemType(l_Element);
-			if (!AddResource(l_ManchasSystemType->GetName(), l_ManchasSystemType))
+			l_Element = l_Element->FirstChildElement();
+			while (l_Element != NULL)
 			{
-				CHECKED_DELETE(l_ManchasSystemType);
+				CManchasSystemType *l_ManchasSystemType = new CManchasSystemType(l_Element);
+				if (!AddResource(l_ManchasSystemType->GetName(), l_ManchasSystemType))
+				{
+					CHECKED_DELETE(l_ManchasSystemType);
+				}
+				l_Element = l_Element->NextSiblingElement();
 			}
-			l_Element = l_Element->NextSiblingElement();
 		}
 	}
 }
