@@ -384,6 +384,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("quat_from_yaw_pitch_roll", &Quatf::QuatFromYawPitchRoll)
 			.def("get_forward_vector", &Quatf::GetForwardVector)
 			.def("rotated_vector", &Quatf::RotateVectorByQuat)
+			.def("rotation_matrix", &Quatf::rotationMatrix)
 			.def("slerp", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&,float))&Quatf::slerp)
 			.scope[
 				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
@@ -823,11 +824,25 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<>())
 			.def(constructor<const Vect3f, const Vect3f, const Vect3f, float, float, float>())
 			.def(constructor<tinyxml2::XMLElement*>())
+			.def("set_near_plane", &CCameraInfo::SetNearPlane)
+			.def("get_near_plane", &CCameraInfo::GetNearPlane)
+			.def("set_far_plane", &CCameraInfo::SetFarPlane)
+			.def("get_far_plane", &CCameraInfo::GetFarPlane)
+			.def("set_fov", &CCameraInfo::SetFOV)
+			.def("get_fov", &CCameraInfo::GetFOV)
+			.def("set_eye", &CCameraInfo::SetEye)
+			.def("get_eye", &CCameraInfo::GetEye)
+			.def("set_look_at", &CCameraInfo::SetLookAt)
+			.def("get_look_at", &CCameraInfo::GetLookAt)
+			.def("set_up", &CCameraInfo::SetUp)
+			.def("get_up", &CCameraInfo::GetUp)
 	];
 
 	module(m_LS)[
 		class_<CCameraKey>("CCameraKey")
 			.def(constructor<CCameraInfo&, float>())
+			.def("set_camera_info", &CCameraKey::SetCameraInfo)
+			.def("get_camera_info", &CCameraKey::GetCameraInfo)
 	];
 
 	module(m_LS)[
@@ -844,7 +859,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_camera", &CCameraKeyController::SetCamera)
 			.def("set_first_key", &CCameraKeyController::SetFirstKey)
 			.def("get_last_key", &CCameraKeyController::GetLastKey)
+			.def("get_camera_key", &CCameraKeyController::GetCameraKey)
 			.def_readwrite("m_PositionOffset", &CCameraKeyController::m_PositionOffset)
+			.def_readwrite("m_LookAtOffset", &CCameraKeyController::m_LookAtOffset)
 	];
 
 	module(m_LS)[
