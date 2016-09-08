@@ -20,16 +20,20 @@ void CParticleManager::Load(const std::string &Filename)
 
 	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		l_Element = doc.FirstChildElement("particle_systems")->FirstChildElement(); 
-		while (l_Element != NULL)
+		l_Element = doc.FirstChildElement("particle_systems");
+		if (l_Element!=NULL)
 		{
-			CParticleSystemType *l_ParticleSystemType = new CParticleSystemType(l_Element);
-			//if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType, "CParticleManager"))
-			if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType))
+			l_Element = l_Element->FirstChildElement();
+			while (l_Element != NULL)
 			{
-				CHECKED_DELETE(l_ParticleSystemType);
+				CParticleSystemType *l_ParticleSystemType = new CParticleSystemType(l_Element);
+				//if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType, "CParticleManager"))
+				if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType))
+				{
+					CHECKED_DELETE(l_ParticleSystemType);
+				}
+				l_Element = l_Element->NextSiblingElement();
 			}
-			l_Element = l_Element->NextSiblingElement();
 		}
 	}
 }
