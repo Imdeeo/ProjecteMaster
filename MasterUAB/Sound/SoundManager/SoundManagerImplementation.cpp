@@ -241,8 +241,6 @@ bool CSoundManagerImplementation::LoadSoundBanksXML()
 	tinyxml2::XMLError l_Error = doc.LoadFile((m_Path + m_SoundBanksFilename).c_str());
 
 	tinyxml2::XMLElement* l_Element;
-	tinyxml2::XMLElement* l_ElementAux;
-
 
 	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
@@ -268,8 +266,6 @@ bool CSoundManagerImplementation::LoadSpeakersXML()
 	tinyxml2::XMLError l_Error = doc.LoadFile((m_Path + m_SpeakersFilename).c_str());
 
 	tinyxml2::XMLElement* l_Element;
-	tinyxml2::XMLElement* l_ElementAux;
-
 
 	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
