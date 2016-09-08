@@ -2,7 +2,6 @@
 #define H_ACTIVE_H
 
 #include "XML\tinyxml2.h"
-#include "XML\XMLTreeNode.h"
 
 class CEmptyPointerClass;
 
@@ -12,7 +11,6 @@ private:
 	bool m_Active;
 public:
 	CActive(tinyxml2::XMLElement* TreeNode);
-	CActive(CXMLTreeNode TreeNode);
 	CActive(bool l_active);
 	virtual ~CActive() {}
 	bool GetActive(){ return m_Active; }

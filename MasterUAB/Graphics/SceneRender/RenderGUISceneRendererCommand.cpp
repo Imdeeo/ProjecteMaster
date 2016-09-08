@@ -1,5 +1,4 @@
 #include "RenderGUISceneRendererCommand.h"
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "GUIManager.h"
 

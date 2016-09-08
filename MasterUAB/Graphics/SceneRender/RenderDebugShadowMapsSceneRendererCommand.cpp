@@ -4,10 +4,8 @@
 #include "Lights\LightManager.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "Texture\DynamicTexture.h"
-
 #include "RenderableObjects\RenderableObjectTechnique.h"
 
-#include "XML\XMLTreeNode.h"
 
 CRenderDebugShadowMapsSceneRendererCommand::CRenderDebugShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
 {

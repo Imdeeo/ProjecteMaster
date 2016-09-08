@@ -3,7 +3,6 @@
 #include "Engine\UABEngine.h"
 #include "Layers\LayerManager.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
-#include "XML\XMLTreeNode.h"
 
 CRenderLayerSceneRendererCommand::CRenderLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
 {

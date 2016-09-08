@@ -8,9 +8,6 @@
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "Materials\MaterialManager.h"
 #include "Utils.h"
-
-#include "XML\XMLTreeNode.h"
-
 #include "Math\Color.h"
 
 

@@ -1,8 +1,6 @@
 #include "Cinematic.h"
 #include "Cinematics\CinematicObject.h"
 
-#include "XML\XMLTreeNode.h"
-
 CCinematic::CCinematic(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode)
 {
 	m_Playing = false;

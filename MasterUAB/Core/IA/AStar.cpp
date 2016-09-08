@@ -1,6 +1,5 @@
 #include "AStar.h"
 #include "DebugRender.h"
-#include "XML\XMLTreeNode.h"
 #include "XML\tinyxml2.h"
 #include "Utils.h"
 

@@ -9,7 +9,6 @@
 #include "Materials\MaterialManager.h"
 #include "Utils.h"
 #include "VideoManager\VideoManager.h"
-#include "XML\XMLTreeNode.h"
 #include "theoraplayer\TheoraPlayer.h"
 #include "Texture\DynamicTexture.h"
 #include "Math\Color.h"
