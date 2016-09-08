@@ -1,6 +1,4 @@
 #include "RenderDebugLayerSceneRendererCommand.h"
-
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "Layers\LayerManager.h"
 #include "RenderableObjects\RenderableObjectsManager.h"

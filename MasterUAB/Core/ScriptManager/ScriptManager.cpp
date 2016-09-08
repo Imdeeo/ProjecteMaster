@@ -315,7 +315,6 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CActive>("CActive")
-			//.def(constructor<const CXMLTreeNode&>())
 			.def(constructor<tinyxml2::XMLElement*>())
 			.def(constructor<bool>())
 			.property("active", &CActive::GetActive, &CActive::SetActive)
@@ -444,19 +443,6 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CEmptyPointerClass>("CEmptyPointerClass")
-	];
-
-	module(m_LS)[
-		class_<CXMLTreeNode>("CXMLTreeNode")
-			.def(constructor<>())
-			.def("load_file", &CXMLTreeNode::LoadFile)
-			.def("get_num_children", &CXMLTreeNode::GetNumChildren)
-			.def("get_child", &CXMLTreeNode::operator())
-			.def("get_name", &CXMLTreeNode::GetName)
-			.def("get_psz_property", &CXMLTreeNode::GetPszProperty)
-			.def("get_vect3f_property", &CXMLTreeNode::GetVect3fProperty)
-			.def("get_float_property", &CXMLTreeNode::GetFloatProperty)
-			.def("get_bool_property", &CXMLTreeNode::GetBoolProperty)
 	];
 
 	module(m_LS)[
@@ -1149,7 +1135,6 @@ void CScriptManager::RegisterLUAFunctions()
 	// Materials--------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CMaterialParameter, CNamed>("CMaterialParameter")
-			//.def(constructor<CMaterial*, CXMLTreeNode&, CMaterialParameter::TMaterialType>())
 			.enum_("t_material_type")[
 				value("float",CMaterialParameter::FLOAT),
 				value("vect2f", CMaterialParameter::VECT2F),

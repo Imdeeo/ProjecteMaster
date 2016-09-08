@@ -1,7 +1,6 @@
 #include "3DElement\3DElement.h"
 #include "Utils\CEmptyPointerClass.h"
 #include <assert.h>
-#include "XML\XMLTreeNode.h"
 
 
 C3DElement::C3DElement(void):
@@ -88,48 +87,6 @@ C3DElement::C3DElement(tinyxml2::XMLElement* l_Element) :
 		m_Scale.x = abs(m_Scale.x);
 	}
 	m_Visible = l_Element->GetBoolProperty("visible", true);	
-}
-
-C3DElement::C3DElement(const CXMLTreeNode &l_Element) :
-m_Position(Vect3f(0, 0, 0)),
-m_Rotation(Quatf(0, 0, 0, 1)),
-m_IsCinematic(false)
-{
-
-	const char * existPos = l_Element.GetPszProperty("position");
-	if (existPos == nullptr)
-	{
-		m_Position = l_Element.GetVect3fProperty("pos", Vect3f(.0f, 0.0f, .0f));
-	}
-	else
-	{
-		m_Position = l_Element.GetVect3fProperty("position", Vect3f(.0f, .0f, .0f));
-	}
-	const char * existRotation = l_Element.GetPszProperty("rotation");
-	if (existRotation == nullptr)
-	{
-		m_Rotation.QuatFromYawPitchRoll(
-			l_Element.GetFloatProperty("yaw", .0f),
-			l_Element.GetFloatProperty("pitch", .0f),
-			l_Element.GetFloatProperty("roll", .0f));
-	}
-	else
-	{
-		m_Rotation = l_Element.GetQuatfProperty("rotation", Quatf(.0f, .0f, .0f, 1.f));
-	}
-	m_Rotation.normalize();
-
-	const char * existScale = l_Element.GetPszProperty("scale");
-	if (existScale == NULL)
-	{
-		m_Scale = Vect3f(1.f, 1.f, 1.f);
-	}
-	else
-	{
-		m_Scale = l_Element.GetVect3fProperty("scale", Vect3f(1.f, 1.f, 1.f));
-		m_Scale.x = abs(m_Scale.x);
-	}
-	m_Visible = l_Element.GetBoolProperty("visible", true);
 }
 
 C3DElement::~C3DElement(void)
