@@ -38,7 +38,13 @@ public:
 	void SetFirstKey(Vect3f _Forward, Vect3f _Pos, Vect3f _Up, float _Fov);
 	CCameraInfo* GetLastKey();
 
+	CCameraKey* GetCameraKey(int _index)
+	{
+		return m_Keys[_index];
+	}
+
 	Vect3f m_PositionOffset;
+	Mat33f m_LookAtOffset;
 };
 
 #endif

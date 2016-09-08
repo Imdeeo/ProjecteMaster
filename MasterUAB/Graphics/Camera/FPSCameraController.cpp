@@ -90,7 +90,7 @@ void CFPSCameraController::Update(float ElapsedTime)
 
 void CFPSCameraController::CopyFromKeyCamera(CCameraInfo* _CameraInfo)
 {
-	m_Fov = _CameraInfo->m_FOV;
-	Vect3f l_LookAt = _CameraInfo->m_LookAt - _CameraInfo->m_Eye;
-	m_Rotation.SetFromFwdUp(l_LookAt, _CameraInfo->m_Up);
+	m_Fov = _CameraInfo->GetFOV();
+	Vect3f l_LookAt = _CameraInfo->GetLookAt()- _CameraInfo->GetEye();
+	m_Rotation.SetFromFwdUp(l_LookAt, _CameraInfo->GetUp());
 }
