@@ -1,6 +1,5 @@
 #include "ParticleSystemInstance.h"
 #include "ParticleManager.h"
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
 #include "ContextManager\ContextManager.h"
@@ -13,7 +12,7 @@
 #include "Camera\CameraControllerManager.h"
 #include "Math\MathUtils.h"
 
-CParticleSystemInstance::CParticleSystemInstance(CXMLTreeNode &TreeNode) : 
+CParticleSystemInstance::CParticleSystemInstance(tinyxml2::XMLElement* TreeNode) :
 	CRenderableObject(TreeNode), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
 {
 	m_Type = UABEngine.GetInstance()->GetParticleManager()->GetResource(TreeNode->GetPszProperty("type"));
