@@ -5,11 +5,11 @@
 #include "Utils.h"
 #include "Math\Color.h"
 #include "RenderableObjects\VertexTypes.h"
+#include "XML\tinyxml2.h"
 
 #include <random>
 
 class CManchasSystemType;
-class CXMLTreeNode;
 class CRenderableVertexs;
 
 class CManchasSystemInstance : public CRenderableObject
@@ -38,7 +38,7 @@ private:
 	MV_POSITION4_COLOR_TEXTURE_VERTEX m_ManchasRenderableData[MAX_MANCHAS];
 	CRenderableVertexs *m_RenderableVertex;
 public:
-	CManchasSystemInstance(CXMLTreeNode &TreeNode);
+	CManchasSystemInstance(tinyxml2::XMLElement* TreeNode);
 	virtual ~CManchasSystemInstance(void);
 	void Destroy();
 

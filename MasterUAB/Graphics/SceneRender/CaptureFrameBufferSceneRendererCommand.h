@@ -6,7 +6,7 @@ class CCaptureFrameBufferSceneRendererCommand :
 	public CStagedTexturedSceneRendererCommand
 {
 public:
-	CCaptureFrameBufferSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CCaptureFrameBufferSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CCaptureFrameBufferSceneRendererCommand();
 
 	void Execute(CRenderManager &_RenderManager);

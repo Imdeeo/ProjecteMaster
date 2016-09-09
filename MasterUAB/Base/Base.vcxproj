@@ -45,7 +45,6 @@
     <ClInclude Include="Utils\TemplatedVectorMapManager.h" />
     <ClInclude Include="Utils\Types.h" />
     <ClInclude Include="XML\tinyxml2.h" />
-    <ClInclude Include="XML\XMLTreeNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DElement\3DElement.cpp" />
@@ -59,7 +58,6 @@
     <ClCompile Include="Utils\Active.cpp" />
     <ClCompile Include="Utils\Named.cpp" />
     <ClCompile Include="XML\tinyxml2.cpp" />
-    <ClCompile Include="XML\XMLTreeNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

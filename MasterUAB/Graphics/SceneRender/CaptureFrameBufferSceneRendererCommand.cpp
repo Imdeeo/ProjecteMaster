@@ -3,7 +3,7 @@
 #include "RenderManager\RenderManager.h"
 #include "Texture\CapturedFrameBufferTexture.h"
 #include "Engine\UABEngine.h"
-CCaptureFrameBufferSceneRendererCommand::CCaptureFrameBufferSceneRendererCommand(CXMLTreeNode &TreeNode) : CStagedTexturedSceneRendererCommand(TreeNode)
+CCaptureFrameBufferSceneRendererCommand::CCaptureFrameBufferSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CStagedTexturedSceneRendererCommand(TreeNode)
 {
 
 }

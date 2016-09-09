@@ -7,7 +7,7 @@
 #include "RenderableObjects\RenderableVertexs.h"
 #include "IA\AStar.h"
 
-CRenderPathFindingSceneRendererCommand::CRenderPathFindingSceneRendererCommand(CXMLTreeNode &TreeNode) :CSceneRendererCommand(TreeNode)
+CRenderPathFindingSceneRendererCommand::CRenderPathFindingSceneRendererCommand(tinyxml2::XMLElement* TreeNode) :CSceneRendererCommand(TreeNode)
 {
 }
 

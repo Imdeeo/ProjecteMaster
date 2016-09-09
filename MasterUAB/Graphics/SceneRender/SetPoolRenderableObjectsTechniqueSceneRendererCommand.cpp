@@ -4,11 +4,10 @@
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "RenderableObjects\PoolRenderableObjectTechnique.h"
 
-#include "XML\XMLTreeNode.h"
 
-CSetPoolRenderableObjectsTechniqueSceneRendererCommand::CSetPoolRenderableObjectsTechniqueSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
+CSetPoolRenderableObjectsTechniqueSceneRendererCommand::CSetPoolRenderableObjectsTechniqueSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
 {
-	m_Pool = UABEngine.GetRenderableObjectTechniqueManager()->GetPoolRenderableObjectTechniques().GetResource(TreeNode.GetPszProperty("pool"));
+	m_Pool = UABEngine.GetRenderableObjectTechniqueManager()->GetPoolRenderableObjectTechniques().GetResource(TreeNode->GetPszProperty("pool"));
 }
 
 CSetPoolRenderableObjectsTechniqueSceneRendererCommand::~CSetPoolRenderableObjectsTechniqueSceneRendererCommand(){}

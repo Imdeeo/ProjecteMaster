@@ -1,5 +1,5 @@
 #include "StaticMeshManager.h"
-#include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 
 CStaticMeshManager::CStaticMeshManager(void)
 {
@@ -18,20 +18,26 @@ bool CStaticMeshManager::Load(const std::string &FileName)
 	std::string l_MeshFileName;
 	std::string l_PhysxMeshDirectory;
 
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(FileName.c_str()))
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(FileName.c_str());
+
+	tinyxml2::XMLElement* l_Element;
+	tinyxml2::XMLElement* l_ElementAux;
+
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Input = l_XML["static_meshes"];
-		if (l_Input.Exists())
+		l_Element = doc.FirstChildElement("static_meshes");
+		if (l_Element != NULL)
 		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			l_ElementAux = l_Element->FirstChildElement();
+			while (l_ElementAux!=NULL)
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("static_mesh"))
+				if (l_ElementAux->Name() == std::string("static_mesh"))
 				{
-					l_MeshName = l_Element.GetPszProperty("name","", false);
-					l_MeshFileName = l_Element.GetPszProperty("filename", "", false);
-					l_PhysxMeshDirectory = l_Element.GetPszProperty("physx_mesh_directory", "", false);
+					l_MeshName = l_ElementAux->GetPszProperty("name", "");
+					l_MeshFileName = l_ElementAux->GetPszProperty("filename", "");
+					l_PhysxMeshDirectory = l_ElementAux->GetPszProperty("physx_mesh_directory", "");
 
 					CStaticMesh *l_StaticMesh = new CStaticMesh;
 					l_StaticMesh->SetName(l_MeshName);
@@ -40,6 +46,7 @@ bool CStaticMeshManager::Load(const std::string &FileName)
 
 					AddResource(l_MeshName, l_StaticMesh);
 				}
+				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
 		}
 	}

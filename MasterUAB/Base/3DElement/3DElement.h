@@ -4,6 +4,7 @@
 #include "Math\Matrix44.h"
 #include "Math\Quatn.h"
 #include "no_sillywarnings_please.h"
+#include "XML\tinyxml2.h"
 #include <d3d11.h>
 
 class CXMLTreeNode;
@@ -39,7 +40,8 @@ public:
 	C3DElement(const Vect3f &Position, float Yaw, float Pitch, float Roll);
 	C3DElement(const Quatf &Rotation);
 	C3DElement(float Yaw, float Pitch, float Roll);
-	C3DElement(const CXMLTreeNode &XMLTreeNode);
+	C3DElement(tinyxml2::XMLElement* TreeNode);
+	C3DElement(const CXMLTreeNode &TreeNode);
 	virtual ~C3DElement(void);
 	virtual void SetPosition(const Vect3f &Position);
 	inline const Vect3f & GetPosition() const{

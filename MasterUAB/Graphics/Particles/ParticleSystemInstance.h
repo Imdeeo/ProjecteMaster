@@ -5,11 +5,11 @@
 #include "Utils.h"
 #include "Math\Color.h"
 #include "RenderableObjects\VertexTypes.h"
+#include "XML\tinyxml2.h"
 
 #include <random>
 
 class CParticleSystemType;
-class CXMLTreeNode;
 class CRenderableVertexs;
 
 class CParticleSystemInstance : public CRenderableObject
@@ -49,7 +49,7 @@ private:
 	CRenderableVertexs *m_RenderableVertex;
 public:
 	CParticleSystemInstance(){};
-	CParticleSystemInstance(CXMLTreeNode &TreeNode);
+	CParticleSystemInstance(tinyxml2::XMLElement* TreeNode);
 	virtual ~CParticleSystemInstance(void);
 	void Destroy();
 

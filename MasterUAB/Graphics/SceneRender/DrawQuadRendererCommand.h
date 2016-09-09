@@ -11,7 +11,7 @@ class CDrawQuadRendererCommand : public CStagedTexturedSceneRendererCommand
 private:
 	CRenderableObjectTechnique* m_RenderableObjectTechnique;
 public:
-	CDrawQuadRendererCommand(CXMLTreeNode &TreeNode);
+	CDrawQuadRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CDrawQuadRendererCommand(void);
 
 	void Execute(CRenderManager &RenderManager);

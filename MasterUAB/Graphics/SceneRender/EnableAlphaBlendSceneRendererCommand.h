@@ -13,7 +13,7 @@ private:
 	int CheckBlendType(const std::string _type);
 	void Destroy();
 public:
-	CBlend(const CXMLTreeNode &TreeNode, const std::string _name);
+	CBlend(tinyxml2::XMLElement* TreeNode, const std::string _name);
 	virtual ~CBlend() { Destroy(); }
 	int GetBlend(){ return m_Blend; }
 };
@@ -26,7 +26,7 @@ private:
 	int CheckBlendOpType(const std::string _type);
 	void Destroy();
 public:
-	CBlendOp(const CXMLTreeNode &TreeNode, const std::string _name);
+	CBlendOp(tinyxml2::XMLElement* TreeNode, const std::string _name);
 	virtual ~CBlendOp() { Destroy(); }
 	int GetBlendOp(){ return m_BlendOp; }
 };
@@ -42,7 +42,7 @@ private:
 	CBlendOp m_OpAlphaBlend;
 	ID3D11BlendState *m_BlendState;
 public:
-	CEnableAlphaBlendSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CEnableAlphaBlendSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CEnableAlphaBlendSceneRendererCommand();
 
 	virtual void Execute(CRenderManager &RenderManager);

@@ -9,7 +9,6 @@
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
 #include "StaticMesh\InstanceMesh.h"
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "Camera\CameraControllerManager.h"
 #include "Texture\DynamicTexture.h"
@@ -26,13 +25,13 @@ CDirectionalLight::CDirectionalLight(std::string _name) : CLight(_name), m_Direc
 	m_ShadowMaskTexture = nullptr;
 }
 
-CDirectionalLight::CDirectionalLight(CXMLTreeNode &TreeNode) : CLight(TreeNode)
+CDirectionalLight::CDirectionalLight(tinyxml2::XMLElement* TreeNode) : CLight(TreeNode)
 {
-	m_Direction = TreeNode.GetVect3fProperty("dir",Vect3f(0.0,0.0,0.0));
+	m_Direction = TreeNode->GetVect3fProperty("dir",Vect3f(0.0,0.0,0.0));
 	m_Rotation.SetFromScaledAxis(m_Direction);
 	if (m_GenerateShadowMap)
 	{
-		m_OrthoShadowMapSize = TreeNode.GetVect2fProperty("ortho_size", Vect2f(50, 50), true);
+		m_OrthoShadowMapSize = TreeNode->GetVect2fProperty("ortho_size", Vect2f(50, 50));
 	}
 }
 

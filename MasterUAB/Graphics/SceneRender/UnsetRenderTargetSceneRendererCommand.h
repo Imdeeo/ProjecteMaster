@@ -6,7 +6,7 @@
 class CUnsetRenderTargetSceneRendererCommand : public CSceneRendererCommand
 {
 public:
-	CUnsetRenderTargetSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CUnsetRenderTargetSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CUnsetRenderTargetSceneRendererCommand(){};
 	void Execute(CRenderManager &RenderManager);
 };

@@ -16,7 +16,6 @@ class CSlider;
 class CMaterial;
 class CRenderableVertexs;
 class CRenderManager;
-class CXMLTreeNode;
 class CGUIPosition;
 class CSliderResult;
 

@@ -4,7 +4,7 @@
 #include "Camera\CameraKeyController.h"
 #include "Camera\CameraController.h"
 #include "Camera\3PersonCameraController.h"
-#include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 
 #include "RenderManager\RenderManager.h"
 #include "ContextManager\ContextManager.h"
@@ -41,37 +41,43 @@ void CCameraControllerManager::ChooseDebugCamera(std::string _CurrentCamera)
 bool CCameraControllerManager::Load(const std::string &FileName)
 {
 	m_Filename = FileName;
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(FileName.c_str());
 
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(FileName.c_str()))
+	tinyxml2::XMLElement* l_Element;
+	tinyxml2::XMLElement* l_ElementAux;
+
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Input = l_XML["cameras"];
-		if (l_Input.Exists())
+		l_Element = doc.FirstChildElement("cameras");
+		if (l_Element != NULL)
 		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			l_ElementAux = l_Element->FirstChildElement();
+			while (l_ElementAux != NULL)
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("camera"))
+				if (l_ElementAux->Name() == std::string("camera"))
 				{
-					CCamera::TCameraType l_Type = CCamera::GetCameraTypeByName(l_Element.GetPszProperty("type"));
+					CCamera::TCameraType l_Type = CCamera::GetCameraTypeByName(l_ElementAux->GetPszProperty("type"));
 					switch(l_Type)
 					{
 					case CCamera::CAMERA_TYPE_SPHERICAL:
-						AddResource(l_Element.GetPszProperty("name"), new CSphericalCameraController(l_Element));
+						AddResource(l_ElementAux->GetPszProperty("name"), new CSphericalCameraController(l_ElementAux));
 						break;
 					case CCamera::CAMERA_TYPE_FPS:
-						AddResource(l_Element.GetPszProperty("name"), new CFPSCameraController(l_Element));
+						AddResource(l_ElementAux->GetPszProperty("name"), new CFPSCameraController(l_ElementAux));
 						break;
 					case CCamera::CAMERA_TYPE_3PS:
-						AddResource(l_Element.GetPszProperty("name"), new C3PersonCameraController(l_Element));
+						AddResource(l_ElementAux->GetPszProperty("name"), new C3PersonCameraController(l_ElementAux));
 						break;
 					case CCamera::CAMERA_TYPE_KEY:
-						AddResource(l_Element.GetPszProperty("name"), new CCameraKeyController(l_Element));
+						AddResource(l_ElementAux->GetPszProperty("name"), new CCameraKeyController(l_ElementAux));
 						break;				
 					default:
 						return false;
 					}
 				}
+				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
 		}
 	}

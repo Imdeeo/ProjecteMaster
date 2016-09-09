@@ -1,7 +1,7 @@
 class 'CUABCinematicsActionSetCamera' (CUABCinematicsAction)
-	function CUABCinematicsActionSetCamera:__init(XMLTreeNode)
-		CUABCinematicsAction.__init(self, XMLTreeNode)
-		self.m_CameraName=XMLTreeNode:get_psz_property("name", "", false)
+	function CUABCinematicsActionSetCamera:__init(TreeNode)
+		CUABCinematicsAction.__init(self, TreeNode)
+		self.m_CameraName=TreeNode:get_psz_property("name", "")
 	end
 	
 	function CUABCinematicsActionSetCamera:Execute()

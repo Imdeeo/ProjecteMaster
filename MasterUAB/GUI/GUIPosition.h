@@ -4,7 +4,6 @@
 #include "Utils.h"
 #include "GUIManager.h"
 
-class CXMLTreeNode;
 class SpriteInfo;
 
 class CGUIPosition 
