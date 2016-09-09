@@ -58,6 +58,8 @@ float4 mainPS(PS_INPUT IN) : SV_Target
 	float4 lightmap = T1Texture.Sample(S1Sampler, IN.UV);
 	float4 l_SpecularMap = T4Texture.Sample(S4Sampler, IN.UV);
 	float l_SpecularPower = lightmap.w*100;
+	// PBR: interpret the specularPower/glossiness scale as logarithmic (an arbitrary choice)
+	l_SpecularPower = (pow(MAX_SPECULAR_POWER/MIN_SPECULAR_POWER, l_SpecularPower/100) * MIN_SPECULAR_POWER);
 	float4 l_Out = applyLights(l_WorldPosition, Nn, l_albedo, 0, l_SpecularPower, l_SpecularFactor, l_SpecularMap.a, l_SpecularMap.rgb);
 	return l_Out * shadowMapCalc(l_WorldPosition);
 }
