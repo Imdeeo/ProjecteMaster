@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <camera_key_controller name="OpenTray">
-	<key time="0.0" pos="0.0 1.9 0.0" up="0.0 1.0 0.0" look_at="1.0 1.9 0.0" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
-	<key time="0.666667" pos="0.0 1.9 0.0" up="0.691889 0.722004 0.0" look_at="0.722004 1.22411 0.0" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
-	<key time="1.16667" pos="0.0 1.9 0.0" up="0.691889 0.722004 0.0" look_at="0.722004 1.22411 0.0" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
-	<key time="1.83333" pos="0.0 1.9 0.0" up="0.773053 0.634341 0.0" look_at="0.634342 1.14295 0.0" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
-	<key time="3.33333" pos="0.0 1.9 0.0" up="0.773053 0.634341 0.0" look_at="0.634342 1.14295 0.0" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
+	<key time="0.0" pos="0.0 1.72677 0.0" up="0.0 1.0 0.0" look_at="1.0 1.72677 0.0" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
+	<key time="0.666667" pos="0.0 1.72677 0.0" up="0.691889 0.722004 0.0" look_at="0.722004 1.22411 0.0" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
+	<key time="1.16667" pos="0.0 1.72677 0.0" up="0.691889 0.722004 0.0" look_at="0.722004 1.22411 0.0" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
+	<key time="1.83333" pos="0.0 1.72677 0.0" up="0.773053 0.634341 0.0" look_at="0.634342 1.14295 0.0" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
+	<key time="3.33333" pos="0.0 1.72677 0.0" up="0.773053 0.634341 0.0" look_at="0.634342 1.14295 0.0" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
 </camera_key_controller>

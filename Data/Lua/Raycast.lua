@@ -1,5 +1,9 @@
 dofile("Data\\Lua\\Raycast\\Recibidor.lua")
 
+-- Distance conversion rates:
+-- 1,5834710743801652892561983471074(Max) -> 1,0(Engine)
+-- 1,0(Max) -> 0,63152400835073068893528183716077(Engine)
+
 function CheckRaycast(_Player, _Pos)
 	_Player.m_RaycastData = RaycastData()
 	_Player.m_PhysXManager:raycast(_Player.m_CameraController:get_position(), _Player.m_CameraController:get_position()+(_Player.m_CameraController:get_forward()*1.7), 4, _Player.m_RaycastData)
