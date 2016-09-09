@@ -13,7 +13,7 @@ private:
 	CRenderableObjectTechnique *m_RenderableObjectTechnique;
 	ID3D11BlendState *m_EnabledAlphaBlendState;
 public:
-	CDeferredShadingSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CDeferredShadingSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CDeferredShadingSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };

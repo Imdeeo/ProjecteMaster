@@ -9,7 +9,6 @@
 
 typedef std::vector< Vect3f > VPoints3;
 
-class CXMLTreeNode;
 class CRenderManager;
 class CRenderableVertexs;
 

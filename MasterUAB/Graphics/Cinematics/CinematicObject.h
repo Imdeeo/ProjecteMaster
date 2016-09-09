@@ -6,8 +6,8 @@
 #include "Cinematics\CinematicPlayer.h"
 #include <stdlib.h>
 #include <vector>
+#include "XML\tinyxml2.h"
 
-class CXMLTreeNode;
 class CCinematicObjectKeyFrame;
 class CRenderableObject;
 
@@ -24,7 +24,7 @@ private:
 
 	float calculateBestAngle(float _Current, float _Next);
 public:
-	CCinematicObject(CXMLTreeNode &TreeNode);
+	CCinematicObject(tinyxml2::XMLElement* TreeNode);
 	virtual ~CCinematicObject();
 	bool IsOk();
 	void AddCinematicObjectKeyFrame(CCinematicObjectKeyFrame *CinematicObjectKeyFrame);

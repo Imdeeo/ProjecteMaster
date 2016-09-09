@@ -6,7 +6,7 @@ class CRenderPathFindingSceneRendererCommand :
 	public CSceneRendererCommand
 {
 public:
-	CRenderPathFindingSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CRenderPathFindingSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CRenderPathFindingSceneRendererCommand();
 
 	void Execute(CRenderManager &RenderManager);

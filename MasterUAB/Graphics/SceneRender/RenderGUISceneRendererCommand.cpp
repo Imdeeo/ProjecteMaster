@@ -1,9 +1,8 @@
 #include "RenderGUISceneRendererCommand.h"
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "GUIManager.h"
 
-CRenderGUISceneRendererCommand::CRenderGUISceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
+CRenderGUISceneRendererCommand::CRenderGUISceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
 {
 	m_GUI = UABEngine.GetGUIManager();
 }

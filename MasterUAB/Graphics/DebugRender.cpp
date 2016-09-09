@@ -445,6 +445,7 @@ CDebugRender::~CDebugRender()
 	delete m_LongAxis;
 	delete m_DrawQuadRV;
 	delete m_Sphere_10Seg;
+	delete m_Sphere_10Seg2;
 	delete m_Cone;
 
 }

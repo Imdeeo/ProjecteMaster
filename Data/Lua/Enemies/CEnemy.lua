@@ -4,9 +4,9 @@ dofile("Data\\Lua\\Utils\\state_machine.lua")
 class 'CEnemy' (CLUAComponent)
 	function CEnemy:__init(_TreeNode)
 		local UABEngine = CUABEngine.get_instance()
-		self.m_Name = _TreeNode:get_psz_property("name", "", false)
-		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
-		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "", false)
+		self.m_Name = _TreeNode:get_psz_property("name", "")
+		self.m_LayerName = _TreeNode:get_psz_property("layer", "")
+		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "")
 		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
 		CLUAComponent.__init(self,self.m_Name, self.m_RenderableObject)
@@ -16,23 +16,25 @@ class 'CEnemy' (CLUAComponent)
 		--utils_log(self.m_Name.." POS X: "..self.m_DefaultPosition.x.." Y: "..self.m_DefaultPosition.y.." Z: "..self.m_DefaultPosition.z)
 		self.m_DefaultForward = self.m_RenderableObject:get_rotation():get_forward_vector()
 		self.m_State = "off"
-		self.m_Awake = _TreeNode:get_bool_property("awake", false, false)
+		self.m_Awake = _TreeNode:get_bool_property("awake", false)
 		self.m_ActualAnimation = 0
 		
 		-- TODO: get group numbers somehow
 		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
 		self.m_PhysXGroups = 2 + 8 -- objects and player
-		self.m_MaxDistance = _TreeNode:get_float_property("vision_distance", 5.0, false)
-		self.m_MaxAngle = _TreeNode:get_float_property("vision_angle", 0.25, false) * math.pi
+		self.m_MaxDistance = _TreeNode:get_float_property("vision_distance", 5.0)
+		self.m_MaxAngle = _TreeNode:get_float_property("vision_angle", 0.25) * math.pi
 		self.m_HeadOffset = Vect3f(0.0, g_EnemyHeight + g_EnemyRadius * 2, 0.0)
 		self.m_BlockingObjectName = nil
-		self.m_DistanceToKill = _TreeNode:get_float_property("distance_kill", 1.0, false)
+		self.m_DistanceToKill = _TreeNode:get_float_property("distance_kill", 1.0)
 		
 		-- distance, time, sanity amount
 		self.m_LoseSanity = {}
-		for i = 0, _TreeNode:get_num_children()-1 do
-			local l_Param = _TreeNode:get_child(i)
-			table.insert(self.m_LoseSanity, Vect3f(l_Param:get_float_property("distance",0.0,false), l_Param:get_float_property("time",0.0,false), l_Param:get_float_property("sanity_amount",0.0,false)))
+		
+		l_Param = _TreeNode:first_child()
+		while l_Param ~= nil do
+			table.insert(self.m_LoseSanity, Vect3f(l_Param:get_float_property("distance",0.0), l_Param:get_float_property("time",0.0), l_Param:get_float_property("sanity_amount",0.0)))
+			l_Param = l_Param:get_next()
 		end
 		
 		self.m_StateMachine = StateMachine.create()

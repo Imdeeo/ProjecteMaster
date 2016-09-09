@@ -5,9 +5,9 @@
 #include "Math\Vector3.h"
 #include "Utils\Named.h"
 #include "Math\Quatn.h"
+#include "XML\tinyxml2.h"
 
 class CCamera;
-class CXMLTreeNode;
 
 class CCameraController : public CNamed
 {
@@ -16,7 +16,7 @@ protected:
 	Quatf m_Rotation;
 	float m_Fov;
 public:
-	CCameraController(const CXMLTreeNode &);
+	CCameraController(tinyxml2::XMLElement* TreeNode);
 	virtual ~CCameraController();
 	virtual void SetCamera(CCamera *Camera) const = 0;
 	virtual void AddYaw(float Radians);

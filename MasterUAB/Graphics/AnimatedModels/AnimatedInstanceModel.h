@@ -3,14 +3,13 @@
 
 #include "RenderableObjects\RenderableObject.h"
 #include <map>
-
+#include "XML\tinyxml2.h"
 class CalModel;
 class CalHardwareModel;
 class CRenderManager;
 class CAnimatedCoreModel;
 class CMaterial;
 class CRenderableVertexs;
-class CXMLTreeNode;
 
 class CAnimatedInstanceModel : public CRenderableObject
 {
@@ -29,7 +28,7 @@ private:
 	void LoadMaterials();
 
 public:
-	CAnimatedInstanceModel(CXMLTreeNode &TreeNode);
+	CAnimatedInstanceModel(tinyxml2::XMLElement* TreeNode);
 	virtual ~CAnimatedInstanceModel();
 	void Initialize(CAnimatedCoreModel *AnimatedCoreModel);
 	void Render(CRenderManager *RenderManager);

@@ -3,14 +3,11 @@
 #include "RenderManager\RenderManager.h"
 #include "Engine\UABEngine.h"
 #include "ContextManager\ContextManager.h"
-
-#include "XML\XMLTreeNode.h"
-
 #include <d3d11.h>
 
 #include <assert.h>
 
-CEnableAlphaBlendSceneRendererCommand::CEnableAlphaBlendSceneRendererCommand(CXMLTreeNode &TreeNode) :CSceneRendererCommand(TreeNode),
+CEnableAlphaBlendSceneRendererCommand::CEnableAlphaBlendSceneRendererCommand(tinyxml2::XMLElement* TreeNode) :CSceneRendererCommand(TreeNode),
 	m_SrcBlend(TreeNode, "src"),
 	m_DestBlend(TreeNode, "dest"),
 	m_SrcAlphaBlend(TreeNode, "src_alpha"),
@@ -45,12 +42,12 @@ void CEnableAlphaBlendSceneRendererCommand::Execute(CRenderManager &_RenderManag
 }
 
 
-CBlend::CBlend(const CXMLTreeNode &TreeNode, const std::string _name):
+CBlend::CBlend(tinyxml2::XMLElement* TreeNode, const std::string _name) :
 	CNamed(_name),
 	m_Blend(D3D11_BLEND_ONE)
 {
 	const char *charName = _name.c_str();
-	m_Blend = CheckBlendType(TreeNode.GetPszProperty(charName));
+	m_Blend = CheckBlendType(TreeNode->GetPszProperty(charName));
 }
 
 void CBlend::Destroy()
@@ -82,12 +79,12 @@ int CBlend::CheckBlendType(const std::string _type)
 }
 
 
-CBlendOp::CBlendOp(const CXMLTreeNode &TreeNode, const std::string _name):
+CBlendOp::CBlendOp(tinyxml2::XMLElement* TreeNode, const std::string _name) :
 	CNamed(_name),
 	m_BlendOp(D3D11_BLEND_OP_ADD)
 {
 	const char *charName = _name.c_str();
-	m_BlendOp = CheckBlendOpType(TreeNode.GetPszProperty(charName));
+	m_BlendOp = CheckBlendOpType(TreeNode->GetPszProperty(charName));
 }
 
 void CBlendOp::Destroy()

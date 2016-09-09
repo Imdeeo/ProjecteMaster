@@ -1,6 +1,5 @@
 #include "SpotLight.h"
 
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "Effects\EffectManager.h"
 #include "RenderManager\RenderManager.h"
@@ -18,10 +17,10 @@ CSpotLight::CSpotLight(std::string _name) : CDirectionalLight(_name), m_Angle(0.
 	m_ShadowMaskTexture = nullptr;
 }
 
-CSpotLight::CSpotLight(CXMLTreeNode &TreeNode) : CDirectionalLight(TreeNode)
+CSpotLight::CSpotLight(tinyxml2::XMLElement* TreeNode) : CDirectionalLight(TreeNode)
 {
-	m_Angle = TreeNode.GetFloatProperty("angle",1.f);
-	m_FallOff = TreeNode.GetFloatProperty("fall_off", 1.2f);
+	m_Angle = TreeNode->GetFloatProperty("angle",1.f);
+	m_FallOff = TreeNode->GetFloatProperty("fall_off", 1.2f);
 	m_Rotation.SetFromScaledAxis(m_Direction);
 }
 

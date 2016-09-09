@@ -1,5 +1,5 @@
 #include <InputManager\InputManager.h>
-#include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 
 #ifndef HID_USAGE_PAGE_GENERIC
 #define HID_USAGE_PAGE_GENERIC         ((USHORT) 0x01)
@@ -106,46 +106,48 @@ void CInputManager::Load(std::string _file)
 	std::string l_Device;
 	std::string l_Key;
 
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(_file.c_str()))
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(_file.c_str());
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Input = l_XML["input"];
-		if (l_Input.Exists())
-		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+		tinyxml2::XMLElement* l_Element;
+		l_Element = doc.FirstChildElement("input");
+
+		l_Element = l_Element->FirstChildElement();
+		while (l_Element != NULL)
+		{		
+			if (l_Element->Name() == std::string("action"))
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("action"))
-				{
-					l_Name = l_Element.GetPszProperty("name");
-					l_Device = l_Element.GetPszProperty("device");
-					l_Key = l_Element.GetPszProperty("key");
+				l_Name = l_Element->GetPszProperty("name");
+				l_Device = l_Element->GetPszProperty("device");
+				l_Key = l_Element->GetPszProperty("key");
 
-					if (l_Device == "Keyboard")
-						m_Map->MapBool(GetAction(l_Name), *m_KeyboardId, GetInput(l_Key));
-					else if (l_Device == "Mouse")
-						m_Map->MapBool(GetAction(l_Name), *m_MouseId, GetInput(l_Key));
-					else if (l_Device == "Gamepad")
-						m_Map->MapBool(GetAction(l_Name), *m_GamepadId, GetInput(l_Key));
-					else
-						assert("This should not happen!");
-				}
-				else if (l_Element.GetName() == std::string("axis"))
-				{
-					l_Name = l_Element.GetPszProperty("name");
-					l_Device = l_Element.GetPszProperty("device");
-					l_Key = l_Element.GetPszProperty("key");
-
-					if (l_Device == "Keyboard")
-						m_Map->MapFloat(GetAction(l_Name), *m_KeyboardId, GetInput(l_Key));
-					else if (l_Device == "Mouse")
-						m_Map->MapFloat(GetAction(l_Name), *m_MouseId, GetInput(l_Key));
-					else if (l_Device == "Gamepad")
-						m_Map->MapFloat(GetAction(l_Name), *m_GamepadId, GetInput(l_Key));
-					else
-						assert("This should not happen!");
-				}
+				if (l_Device == "Keyboard")
+					m_Map->MapBool(GetAction(l_Name), *m_KeyboardId, GetInput(l_Key));
+				else if (l_Device == "Mouse")
+					m_Map->MapBool(GetAction(l_Name), *m_MouseId, GetInput(l_Key));
+				else if (l_Device == "Gamepad")
+					m_Map->MapBool(GetAction(l_Name), *m_GamepadId, GetInput(l_Key));
+				else
+					assert("This should not happen!");
 			}
+			else if (l_Element->Name() == std::string("axis"))
+			{
+				l_Name = l_Element->GetPszProperty("name");
+				l_Device = l_Element->GetPszProperty("device");
+				l_Key = l_Element->GetPszProperty("key");
+
+				if (l_Device == "Keyboard")
+					m_Map->MapFloat(GetAction(l_Name), *m_KeyboardId, GetInput(l_Key));
+				else if (l_Device == "Mouse")
+					m_Map->MapFloat(GetAction(l_Name), *m_MouseId, GetInput(l_Key));
+				else if (l_Device == "Gamepad")
+					m_Map->MapFloat(GetAction(l_Name), *m_GamepadId, GetInput(l_Key));
+				else
+					assert("This should not happen!");
+			}
+			l_Element = l_Element->NextSiblingElement();
 		}
 	}
 	else

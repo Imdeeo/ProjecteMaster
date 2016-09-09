@@ -5,7 +5,7 @@
 
 #include "Utils.h"
 
-CLightsSceneRendererCommand::CLightsSceneRendererCommand(CXMLTreeNode &TreeNode) :CSceneRendererCommand(TreeNode){}
+CLightsSceneRendererCommand::CLightsSceneRendererCommand(tinyxml2::XMLElement* TreeNode) :CSceneRendererCommand(TreeNode){}
 
 void CLightsSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 {

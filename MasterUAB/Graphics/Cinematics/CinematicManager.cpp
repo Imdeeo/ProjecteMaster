@@ -1,5 +1,5 @@
 #include "CinematicManager.h"
-#include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 
 CCinematicManager::CCinematicManager()
 {
@@ -13,18 +13,19 @@ CCinematicManager::~CCinematicManager()
 
 void CCinematicManager::LoadXML(const std::string &FileName)
 {
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(FileName.c_str()))
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(FileName.c_str());
+
+	tinyxml2::XMLElement* l_Element;
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Input = l_XML["cinematics"];
-		if (l_Input.Exists())
+		l_Element = doc.FirstChildElement("cinematics")->FirstChildElement();
+		while (l_Element != NULL)
 		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
-			{
-				CXMLTreeNode l_Element = l_Input(i);
-				CCinematic* l_Cinematic = new CCinematic(l_Element);
-				AddResource(l_Cinematic->GetName(), l_Cinematic);
-			}
+			CCinematic* l_Cinematic = new CCinematic(l_Element);
+			AddResource(l_Cinematic->GetName(), l_Cinematic);
+			l_Element = l_Element->NextSiblingElement();
 		}
 	}
 }

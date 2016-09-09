@@ -4,8 +4,7 @@
 
 #include "Materials\MaterialManager.h"
 
-#include "XML\XMLTreeNode.h"
-
+#include "XML\tinyxml2.h"
 
 #include <cal3d\cal3d.h>
 #include <cal3d/coretrack.h>
@@ -53,39 +52,43 @@ bool CAnimatedCoreModel::Load(const std::string &Path)
 	std::string l_SkeletonFilename = Path;
 	std::string l_AnimationFilename = Path;
 
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(l_Filename.append("actor.xml").c_str()))
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(l_Filename.append("actor.xml").c_str());
+
+	tinyxml2::XMLElement* l_Element;
+	tinyxml2::XMLElement* l_ElementAux;
+
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Input = l_XML["actor"];
-		if (l_Input.Exists())
-		{
-			SetName(l_Input.GetPszProperty("name"));
-			m_CalCoreModel = new CalCoreModel(m_Name);
-			m_BSRadius = l_Input.GetFloatProperty("radius_bs");
-			m_BSPosition = l_Input.GetVect3fProperty("pos_bs",Vect3f(0.f,0.f,0.f),true);
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+		l_Element = doc.FirstChildElement("actor");
+		SetName(l_Element->GetPszProperty("name"));
+		m_CalCoreModel = new CalCoreModel(m_Name);
+		m_BSRadius = l_Element->GetFloatProperty("radius_bs");
+		m_BSPosition = l_Element->GetVect3fProperty("pos_bs", Vect3f(0.f, 0.f, 0.f));
+		l_ElementAux = l_Element->FirstChildElement();
+		while (l_ElementAux != NULL)
+		{			
+			if (l_ElementAux->Name() == std::string("material"))
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("material"))
-				{
-					result = result & UABEngine.GetMaterialManager()->AddResource(l_Element.GetPszProperty("name"),new CMaterial(l_Element));
-					m_Materials.push_back(UABEngine.GetMaterialManager()->GetResource(l_Element.GetPszProperty("name")));
-				}
-				if (l_Element.GetName() == std::string("skeleton"))
-				{
-					result = result & LoadSkeleton(l_SkeletonFilename.append(l_Element.GetPszProperty("filename")));
-				}
-				if (l_Element.GetName() == std::string("mesh"))
-				{
-					result = result & LoadMesh(l_MeshFilename.append(l_Element.GetPszProperty("filename")));
-				}
-				if (l_Element.GetName() == std::string("animation"))
-				{
-					l_AnimationFilename = Path;
-					result = result & LoadAnimation(l_Element.GetPszProperty("name"),
-						l_AnimationFilename.append(l_Element.GetPszProperty("filename")));
-				}
+				result = result & UABEngine.GetMaterialManager()->AddResource(l_ElementAux->GetPszProperty("name"), new CMaterial(l_ElementAux));
+				m_Materials.push_back(UABEngine.GetMaterialManager()->GetResource(l_ElementAux->GetPszProperty("name")));
 			}
+			if (l_ElementAux->Name() == std::string("skeleton"))
+			{
+				result = result & LoadSkeleton(l_SkeletonFilename.append(l_ElementAux->GetPszProperty("filename")));
+			}
+			if (l_ElementAux->Name() == std::string("mesh"))
+			{
+				result = result & LoadMesh(l_MeshFilename.append(l_ElementAux->GetPszProperty("filename")));
+			}
+			if (l_ElementAux->Name() == std::string("animation"))
+			{
+				l_AnimationFilename = Path;
+				result = result & LoadAnimation(l_ElementAux->GetPszProperty("name"),
+				l_AnimationFilename.append(l_ElementAux->GetPszProperty("filename")));
+			}
+			l_ElementAux = l_ElementAux->NextSiblingElement();
 		}
 	}
 

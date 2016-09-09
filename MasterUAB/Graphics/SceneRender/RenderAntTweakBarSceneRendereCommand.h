@@ -8,7 +8,7 @@ class CRenderManager;
 class CRenderAntTweakBarSceneRendererCommand : public CSceneRendererCommand
 {
 public:
-	CRenderAntTweakBarSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CRenderAntTweakBarSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CRenderAntTweakBarSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };

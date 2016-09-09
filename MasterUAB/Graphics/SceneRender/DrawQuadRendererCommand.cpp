@@ -8,17 +8,13 @@
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "Materials\MaterialManager.h"
 #include "Utils.h"
-
-#include "XML\XMLTreeNode.h"
-
 #include "Math\Color.h"
 
 
-CDrawQuadRendererCommand::CDrawQuadRendererCommand(CXMLTreeNode &TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
+CDrawQuadRendererCommand::CDrawQuadRendererCommand(tinyxml2::XMLElement* TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
 {
-	CXMLTreeNode l_Element = TreeNode;
-	const char* c = l_Element.GetPszProperty("material");
-	if (c != NULL)
+	const char* c = TreeNode->GetPszProperty("material", "");
+	if (c != "")
 	{
 		m_Material = UABEngine.GetMaterialManager()->GetResource(std::string(c));
 		m_RenderableObjectTechnique = m_Material->GetRenderableObjectTechnique();
