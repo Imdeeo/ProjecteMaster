@@ -43,8 +43,9 @@ public:
 		return m_Keys[_index];
 	}
 
+	Vect3f m_PositionOffsetKey;
 	Vect3f m_PositionOffset;
-	Mat33f m_LookAtOffset;
+	Mat33f m_RotationOffset;
 };
 
 #endif
