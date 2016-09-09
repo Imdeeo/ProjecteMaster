@@ -14,7 +14,6 @@ function CheckRaycast(_Player, _Pos)
 end
 
 function TriggerRaycast(_Player, _Pos)
-	--utils_log(_Player.m_ItemName)
 	l_LevelID = g_Engine:get_level_loaded()
 	if l_LevelID == "1" then
 		if _Player.m_RaycastData.actor_name == "TriggerDoor" then
