@@ -5,12 +5,15 @@
 #include "CameraKey.h"
 #include "Utils.h"
 #include <sstream>
+#include "CameraControllerManager.h"
+#include "Math\Quatn.h"
 
 CCameraKeyController::CCameraKeyController(tinyxml2::XMLElement* TreeNode) : CCameraController(TreeNode)
 {
 	ResetTime();
+	m_PositionOffsetKey = Vect3f(0.0f, 0.0f, 0.0f);
 	m_PositionOffset = Vect3f(0.0f, 0.0f, 0.0f);
-	m_LookAtOffset = Mat33f();
+	m_RotationOffset = Mat33f(1, 0, 0, 0, 1, 0, 0, 0, 1);
 	m_TotalTime = TreeNode->GetFloatProperty("total_time", 0);
 	std::string l_Filename;
 	l_Filename = TreeNode->GetPszProperty("filename");
@@ -224,8 +227,8 @@ void CCameraKeyController::SetCamera(CCamera *Camera) const
 {
 	Camera->SetFOV(m_Fov);
 	Camera->SetAspectRatio(16.0f / 9.0f);
-	Camera->SetPosition(m_Position + m_PositionOffset);
-	Camera->SetLookAt(m_LookAtOffset * m_LookAt);
+	Camera->SetPosition(m_RotationOffset*(m_Position-m_PositionOffsetKey) + m_PositionOffset);
+	Camera->SetLookAt(m_RotationOffset*(m_LookAt - m_PositionOffsetKey) + m_PositionOffset);
 	Camera->SetUp(m_Up);
 	Camera->SetMatrixs();
 }
