@@ -394,6 +394,16 @@ void CScriptManager::RegisterLUAFunctions()
 	
 	module(m_LS)[
 		class_<Mat33f>("Mat33f")
+			.def(constructor<float, float, float, float, float, float, float, float, float>())
+			.def_readwrite("m00", &Mat33f::m00)
+			.def_readwrite("m01", &Mat33f::m01)
+			.def_readwrite("m02", &Mat33f::m02)
+			.def_readwrite("m10", &Mat33f::m10)
+			.def_readwrite("m11", &Mat33f::m11)
+			.def_readwrite("m12", &Mat33f::m12)
+			.def_readwrite("m20", &Mat33f::m20)
+			.def_readwrite("m21", &Mat33f::m21)
+			.def_readwrite("m22", &Mat33f::m22)
 	];
 
 	module(m_LS)[
@@ -864,8 +874,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_first_key", &CCameraKeyController::SetFirstKey)
 			.def("get_last_key", &CCameraKeyController::GetLastKey)
 			.def("get_camera_key", &CCameraKeyController::GetCameraKey)
+			.def_readwrite("m_PositionOffsetKey", &CCameraKeyController::m_PositionOffsetKey)
 			.def_readwrite("m_PositionOffset", &CCameraKeyController::m_PositionOffset)
-			.def_readwrite("m_LookAtOffset", &CCameraKeyController::m_LookAtOffset)
+			.def_readwrite("m_RotationOffset", &CCameraKeyController::m_RotationOffset)
 	];
 
 	module(m_LS)[
