@@ -13,10 +13,10 @@ function CorrectingUpdate(args, _ElapsedTime)
 	
 	--// Force the player face the target
 		--// Movement
-	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
+	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetPosOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
 	local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_FaceTargetDisplacement.y = 0.0
-	if l_FaceTargetDisplacement:length() <= 0.1 then
+	if l_FaceTargetDisplacement:length() <= 0.03 then
 		l_PosOK = true
 	else
 		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
@@ -26,7 +26,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 	l_CameraDirection.y = 0.0
 	l_CameraDirection:normalize(1)
 	--utils_log("Cam x: "..l_CameraDirection.x..", z:"..l_CameraDirection.z)
-	local l_Off = l_Player.m_TargetOffset
+	local l_Off = l_Player.m_TargetLookOffset
 	l_Off = l_Off * (-1.0)
 	l_Off.y = 0.0
 	l_Off:normalize(1)
@@ -59,6 +59,8 @@ function CorrectingUpdate(args, _ElapsedTime)
 	end
 		
 	if l_PosOK and l_AngleOK then
+		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement, _ElapsedTime)
+		l_Player.m_CameraController:add_yaw(l_Yaw)
 		CheckClimbingOrInteracting(l_Player)
 	end
 	
