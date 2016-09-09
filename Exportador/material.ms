@@ -87,7 +87,7 @@ fn createMaterials dir filename Objs copyTexture =
 						)
 						else if (hasDiffuse and hasReflection and not hasBump and not hasLightmap and not hasRNM and hasGlossiness and not hasSpecular) then
 						(
-							renderableTechnique = "metalnessmap"
+							renderableTechnique = "glossiness"
 						)
 						else if (hasDiffuse and hasReflection and not hasBump and not hasLightmap and not hasRNM and hasGlossiness and hasSpecular) then
 						(
@@ -115,7 +115,7 @@ fn createMaterials dir filename Objs copyTexture =
 						)
 						else if (hasDiffuse and hasReflection and not hasBump and hasLightmap and not hasRNM and hasGlossiness and not hasSpecular) then
 						(
-							renderableTechnique = "lightmap_metalnessmap"
+							renderableTechnique = "lightmap_glossiness"
 						)
 						else if (hasDiffuse and hasReflection and not hasBump and hasLightmap and not hasRNM and hasGlossiness and hasSpecular) then
 						(
@@ -123,7 +123,7 @@ fn createMaterials dir filename Objs copyTexture =
 						)
 						else if (hasDiffuse and hasReflection and hasBump and hasLightmap and not hasRNM and hasGlossiness and not hasSpecular) then
 						(
-							renderableTechnique = "lightmap_bump_metalnessmap"
+							renderableTechnique = "lightmap_bump_glossiness"
 						)
 						else if (hasDiffuse and not hasReflection and not hasBump and not hasLightmap and hasRNM and not hasGlossiness and not hasSpecular) then
 						(
@@ -143,7 +143,7 @@ fn createMaterials dir filename Objs copyTexture =
 						)
 						else if (hasDiffuse and hasReflection and hasBump and not hasLightmap and hasRNM and hasGlossiness and not hasSpecular) then
 						(
-							renderableTechnique = "radiosity_bump_metalnessmap"							
+							renderableTechnique = "radiosity_bump_glossiness"							
 						)
 						else if (hasDiffuse and hasReflection and hasBump and not hasLightmap and hasRNM and hasGlossiness and hasSpecular) then
 						(
@@ -151,7 +151,7 @@ fn createMaterials dir filename Objs copyTexture =
 						)
 						else if (hasDiffuse and hasReflection and not hasBump and not hasLightmap and hasRNM and hasGlossiness and not hasSpecular) then
 						(
-							renderableTechnique = "radiosity_metalnessmap"							
+							renderableTechnique = "radiosity_glossiness"							
 						)
 						else if (hasDiffuse and hasReflection and not hasBump and not hasLightmap and hasRNM and hasGlossiness and hasSpecular) then
 						(
@@ -163,7 +163,7 @@ fn createMaterials dir filename Objs copyTexture =
 						)
 						else if (hasDiffuse and hasReflection and hasBump and not hasLightmap and not hasRNM and hasGlossiness and not hasSpecular) then
 						(
-							renderableTechnique = "bump_metalnessmap"
+							renderableTechnique = "bump_glossiness"
 						)
 						else
 						(
@@ -343,6 +343,11 @@ fn createMaterials dir filename Objs copyTexture =
 							)							
 							format "\t\t<parameter type=\"float\" name=\"reflection\" value=\"1.0\" description=\"min=0.0 max=1.0 step=0.001\"/>\n" to:file
 							format "\t\t<parameter type=\"float\" name=\"ssr_reflection\" value=\"0.0\" description=\"min=0.0 max=1.0 step=0.001\"/>\n" to:file
+							if (not hasSpecular) then
+							(
+								format "\t\t<parameter type=\"float\" name=\"metalness\" value=\"0.0\" description=\"min=0.0 max=1.0 step=0.01\"/>\n" to:file
+								format "\t\t<parameter type=\"color\" name=\"metal_color\" value=\"1.0 1.0 1.0 0.0\" description=\"\"/>\n" to:file
+							)
 						)						
 						format "\t</material>\n" to:file 
 					)
