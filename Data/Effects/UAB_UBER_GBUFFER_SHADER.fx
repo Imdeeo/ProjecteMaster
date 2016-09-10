@@ -7,9 +7,10 @@ static float m_SpecularPower = m_RawDataArray[2];
 static float m_SpecularFactor = m_RawDataArray[3];
 static float m_ReflectionFactor = m_RawDataArray[4];
 static float m_SSRReflection = m_RawDataArray[5];
-static float m_MetalnessFactor = m_RawDataArray[6];
-static float3 m_MetalColor = float3(m_RawDataArray[7], m_RawDataArray[8], m_RawDataArray[9]);
-static float m_MetalColorWeight = m_RawDataArray[10];
+static float m_BumpFactor = m_RawDataArray[6];
+static float m_MetalnessFactor = m_RawDataArray[7];
+static float3 m_MetalColor = float3(m_RawDataArray[8], m_RawDataArray[9], m_RawDataArray[10]);
+static float m_MetalColorWeight = m_RawDataArray[11];
 
 struct VS_INPUT
 {
@@ -137,7 +138,7 @@ float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, S
 
 float3 CalcNormalMap(float3 Normal, float3 Tangent, float3 Binormal, float4 NormalMap)
 {
-	float g_Bump = 2.4;
+	float g_Bump = 2.4 * m_BumpFactor;
 	float3 bump=g_Bump*((NormalMap.xyz) - float3(0.5,0.5,0.5));
 	float3 Nn = Normal + bump.x*Tangent + bump.y*Binormal;
 	return normalize(Nn);
