@@ -343,6 +343,7 @@ fn createMaterials dir filename Objs copyTexture =
 							)							
 							format "\t\t<parameter type=\"float\" name=\"reflection\" value=\"1.0\" description=\"min=0.0 max=1.0 step=0.001\"/>\n" to:file
 							format "\t\t<parameter type=\"float\" name=\"ssr_reflection\" value=\"0.0\" description=\"min=0.0 max=1.0 step=0.001\"/>\n" to:file
+							format "\t\t<parameter type=\"float\" name=\"bump_factor\" value=\"1.0\" description=\"min=0.0 max=2.0 step=0.05\"/>\n" to:file
 							if (not hasSpecular) then
 							(
 								format "\t\t<parameter type=\"float\" name=\"metalness\" value=\"0.0\" description=\"min=0.0 max=1.0 step=0.01\"/>\n" to:file
