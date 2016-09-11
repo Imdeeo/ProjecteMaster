@@ -54,8 +54,8 @@ void CAStar::LoadMap(std::string _filename)
 			}
 			else if (l_Element->Name() == std::string("father"))
 			{
+				nombreNodoActual = l_Element->GetPszProperty("name");
 				l_ElementAux = l_Element->FirstChildElement();
-				nombreNodoActual = l_ElementAux->GetPszProperty("name", "");
 
 				while (l_ElementAux != NULL)
 				{
@@ -66,9 +66,9 @@ void CAStar::LoadMap(std::string _filename)
 			}
 			else if (l_Element->Name() == std::string("path_patrol"))
 			{
+				nombreNodoActual = l_Element->GetPszProperty("name");
 				l_ElementAux = l_Element->FirstChildElement();
-				TNodePatrol *l_nodeAux;
-				nombreNodoActual = l_ElementAux->GetPszProperty("name", "");
+				TNodePatrol *l_nodeAux;				
 				std::vector<TNodePatrol*> l_Aux;
 				while (l_ElementAux != NULL)
 				{
