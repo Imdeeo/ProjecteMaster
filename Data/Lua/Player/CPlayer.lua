@@ -15,45 +15,48 @@ dofile("Data\\Lua\\Player\\PlayerStateInteracting.lua")
 dofile("Data\\Lua\\Player\\PlayerStateSinging.lua")
 dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 
---Bone ID: 0. Name: CATRigHub001
---Bone ID: 1. Name: CATRigLArm1
---Bone ID: 2. Name: CATRigLArm2
---Bone ID: 3. Name: CATRigLArmPalm
---Bone ID: 4. Name: CATRigLArmDigit11
---Bone ID: 5. Name: CATRigLArmDigit12
---Bone ID: 6. Name: CATRigLArmDigit13
---Bone ID: 7. Name: CATRigLArmDigit21
---Bone ID: 8. Name: CATRigLArmDigit22
---Bone ID: 9. Name: CATRigLArmDigit23
---Bone ID: 10. Name: CATRigLArmDigit31
---Bone ID: 11. Name: CATRigLArmDigit32
---Bone ID: 12. Name: CATRigLArmDigit33
---Bone ID: 13. Name: CATRigLArmDigit41
---Bone ID: 14. Name: CATRigLArmDigit42
---Bone ID: 15. Name: CATRigLArmDigit43
---Bone ID: 16. Name: CATRigLArmDigit51
---Bone ID: 17. Name: CATRigLArmDigit52
---Bone ID: 18. Name: CATRigLArmDigit53
---Bone ID: 19. Name: CATRigObjeto
---Bone ID: 20. Name: CATRigRArm1
---Bone ID: 21. Name: CATRigRArm2
---Bone ID: 22. Name: CATRigRArmPalm
---Bone ID: 23. Name: CATRigRArmDigit11
---Bone ID: 24. Name: CATRigRArmDigit12
---Bone ID: 25. Name: CATRigRArmDigit13
---Bone ID: 26. Name: CATRigRArmDigit21
---Bone ID: 27. Name: CATRigRArmDigit22
---Bone ID: 28. Name: CATRigRArmDigit23
---Bone ID: 29. Name: CATRigRArmDigit31
---Bone ID: 30. Name: CATRigRArmDigit32
---Bone ID: 31. Name: CATRigRArmDigit33
---Bone ID: 32. Name: CATRigRArmDigit41
---Bone ID: 33. Name: CATRigRArmDigit42
---Bone ID: 34. Name: CATRigRArmDigit43
---Bone ID: 35. Name: CATRigRArmDigit51
---Bone ID: 36. Name: CATRigRArmDigit52
---Bone ID: 37. Name: CATRigRArmDigit53
---Bone ID: 38. Name: CATRigObjeto
+--Bone #0: BrazosJaheem
+--Bone #1: CATRigHub001
+--Bone #2: CATRigLArm1
+--Bone #3: CATRigLArm2
+--Bone #4: CATRigLArmPalm
+--Bone #5: CATRigLArmDigit11
+--Bone #6: CATRigLArmDigit12
+--Bone #7: CATRigLArmDigit13
+--Bone #8: CATRigLArmDigit21
+--Bone #9: CATRigLArmDigit22
+--Bone #10: CATRigLArmDigit23
+--Bone #11: CATRigLArmDigit31
+--Bone #12: CATRigLArmDigit32
+--Bone #13: CATRigLArmDigit33
+--Bone #14: CATRigLArmDigit41
+--Bone #15: CATRigLArmDigit42
+--Bone #16: CATRigLArmDigit43
+--Bone #17: CATRigLArmDigit51
+--Bone #18: CATRigLArmDigit52
+--Bone #19: CATRigLArmDigit53
+--Bone #20: CATRigObjetoIzq
+--Bone #21: CATRigRArm1
+--Bone #22: CATRigRArm2
+--Bone #23: CATRigRArmPalm
+--Bone #24: CATRigRArmDigit11
+--Bone #25: CATRigRArmDigit12
+--Bone #26: CATRigRArmDigit13
+--Bone #27: CATRigRArmDigit21
+--Bone #28: CATRigRArmDigit22
+--Bone #29: CATRigRArmDigit23
+--Bone #30: CATRigRArmDigit31
+--Bone #31: CATRigRArmDigit32
+--Bone #32: CATRigRArmDigit33
+--Bone #33: CATRigRArmDigit41
+--Bone #34: CATRigRArmDigit42
+--Bone #35: CATRigRArmDigit43
+--Bone #36: CATRigRArmDigit51
+--Bone #37: CATRigRArmDigit52
+--Bone #38: CATRigRArmDigit53
+--Bone #39: CATRigObjetoDcha
+--Bone #40: CATRig1Bone001
+--Bone #41: CATRig1Bone002
 
 class 'CPlayer' (CLUAComponent)
 	function CPlayer:__init(_TreeNode)
