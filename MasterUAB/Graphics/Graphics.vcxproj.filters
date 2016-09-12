@@ -248,6 +248,9 @@
     <ClCompile Include="SceneRender\RenderPathFindingSceneRendererCommand.cpp">
       <Filter>SceneRender</Filter>
     </ClCompile>
+    <ClCompile Include="LineRenderer\LineRenderer.cpp">
+      <Filter>LineRenderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -297,6 +300,9 @@
     </Filter>
     <Filter Include="Particles">
       <UniqueIdentifier>{60ebdd8f-8f9b-4458-86f3-1f6b978676ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LineRenderer">
+      <UniqueIdentifier>{b3ea894c-c212-46a0-83b5-b827f936fab8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -580,6 +586,9 @@
     </ClInclude>
     <ClInclude Include="SceneRender\RenderPathFindingSceneRendererCommand.h">
       <Filter>SceneRender</Filter>
+    </ClInclude>
+    <ClInclude Include="LineRenderer\LineRenderer.h">
+      <Filter>LineRenderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
