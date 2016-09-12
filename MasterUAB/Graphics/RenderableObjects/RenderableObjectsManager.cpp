@@ -3,6 +3,7 @@
 #include "AnimatedModels\AnimatedInstanceModel.h"
 #include "Particles\ParticleSystemInstance.h"
 #include "Manchas\ManchasSystemInstance.h"
+#include "LineRenderer\LineRenderer.h"
 
 CRenderableObjectsManager::CRenderableObjectsManager(std::string _Name):CNamed(_Name) {}
 CRenderableObjectsManager::~CRenderableObjectsManager()
@@ -89,6 +90,15 @@ CRenderableObject * CRenderableObjectsManager::AddManchasSystemInstance(tinyxml2
 	CManchasSystemInstance* l_ManchasSystemInstance = new CManchasSystemInstance(TreeNode);
 	if (AddResource(l_ManchasSystemInstance->GetName(), l_ManchasSystemInstance))
 		return l_ManchasSystemInstance;
+	else
+		return nullptr;
+}
+
+CRenderableObject * CRenderableObjectsManager::AddLineRendererSystemInstance(tinyxml2::XMLElement* TreeNode)
+{
+	CLineRenderer* l_LineRenderer = new CLineRenderer(TreeNode);
+	if (AddResource(l_LineRenderer->GetName(), l_LineRenderer))
+		return l_LineRenderer;
 	else
 		return nullptr;
 }
