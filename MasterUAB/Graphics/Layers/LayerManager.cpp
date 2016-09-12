@@ -63,6 +63,10 @@ void CLayerManager::Load(const std::string &FileName)
 				{
 					GetLayer(l_ElementAux)->AddManchasSystemInstance(l_ElementAux);
 				}
+				else if (l_ElementAux->Name() == std::string("line_renderer"))
+				{
+					GetLayer(l_ElementAux)->AddLineRendererSystemInstance(l_ElementAux);
+				}
 				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
 		}
