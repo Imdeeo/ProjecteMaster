@@ -165,6 +165,7 @@ function R1TrayL2Open(_Player, _Pos)
 	_Player.m_TargetPosOffset = Vect3f(-0.605, 0.0, -0.03958677)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):get_position()
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
+		CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):set_scale(Vect3f(1.0, 0.5, 1.0))
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 2
 		_Player.m_InteractingCinematic = "OpenTrayL2"
@@ -182,6 +183,7 @@ function R1TrayL2Close(_Player, _Pos)
 	_Player.m_TargetPosOffset = Vect3f(-0.605, 0.0, -0.03958677)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):get_position()
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
+		CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):set_scale(Vect3f(1.0, 1.0, 1.0))
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "CloseTrayL2"

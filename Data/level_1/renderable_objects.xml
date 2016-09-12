@@ -18,7 +18,7 @@
 	<instance_mesh name="hojaspapel" layer="solid" core_name="hojaspapel" position="2.418970 1.134690 -2.276730" rotation="0.000000 0.000000 0.000000 -1.000000" create_physics="false" visible="true"/>
 	<instance_mesh name="ventana_recibidor" layer="solid" core_name="ventana_recibidor" position="2.860710 2.283020 -1.505860" rotation="0.000000 0.000000 0.000000 -1.000000" create_physics="false" visible="true"/>
 	<instance_mesh name="CajonComodaDerecha1" layer="solid" core_name="CajonComodaDerecha1" position="-2.423140 1.000280 -2.373670" rotation="0.000000 0.000000 0.000000 -1.000000" create_physics="true" physics_type="triangle_mesh" physics_offset="0.000000" physics_normal="0.000000 0.000000 0.000000" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="LlaveRecibidor" layer="solid" core_name="LlaveRecibidor" position="-2.493380 0.909441 -2.639950" rotation="0.000000 0.000000 0.000000 -1.000000" create_physics="true" physics_type="triangle_mesh" physics_offset="0.000000" physics_normal="0.000000 0.000000 0.000000" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="LlaveRecibidor" layer="solid" core_name="LlaveRecibidor" position="-2.26176 0.921648 -2.24986" rotation="0.000000 0.000000 0.000000 -1.000000" create_physics="false" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajonComodaDerecha2" layer="solid" core_name="CajonComodaDerecha2" position="-2.423140 1.000280 -1.056070" rotation="0.000000 0.000000 0.000000 -1.000000" create_physics="true" physics_type="box_shape" physics_offset="0.000000" physics_normal="0.000000 0.000000 0.000000" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajonComodaIzquierda1" layer="solid" core_name="CajonComodaIzquierda1" position="2.420210 1.000280 -2.373670" rotation="0.000000 0.000000 0.000000 -1.000000" create_physics="true" physics_type="box_shape" physics_offset="0.000000" physics_normal="0.000000 0.000000 0.000000" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajonComodaIzquierda2" layer="solid" core_name="CajonComodaIzquierda2" position="2.408430 1.000280 -1.056070" rotation="0.000000 0.000000 0.000000 -1.000000" create_physics="true" physics_type="triangle_mesh" physics_offset="0.000000" physics_normal="0.000000 0.000000 0.000000" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
@@ -78,28 +78,25 @@
 	<instance_mesh name="TriggerDoor" layer="triggers" is_active="true" core_name="TriggerDoor" position="-0.50766 1.323 4.8855" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerTrayR2" layer="triggers" is_active="true" core_name="TriggerTrayR2" position="-2.0843 1.1853 -1.05747" rotation="0.0 0.0 -0.422618 -0.906308" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerTrayR2" layer="triggers" is_active="true" core_name="TriggerTrayR2" position="-2.15143 1.24162 -1.05747" rotation="0.0 0.0 -0.422618 -0.906308" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
 	<instance_mesh name="TriggerCanvas" layer="triggers" is_active="true" core_name="TriggerCanvas" position="-2.93982 2.24752 -2.04231" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerTrayR1" layer="triggers" is_active="true" core_name="TriggerTrayR1" position="-2.08462 1.18492 -2.3834" rotation="0.0 0.0 -0.422618 -0.906308" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerTrayR1" layer="triggers" is_active="true" core_name="TriggerTrayR1" position="-2.15174 1.24125 -2.3834" rotation="0.0 0.0 -0.422618 -0.906308" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerTrayL2" layer="triggers" is_active="true" core_name="TriggerTrayL2" position="2.06907 1.18856 -1.05747" rotation="0.0 0.0 0.382683 -0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerTrayL2" layer="triggers" is_active="true" core_name="TriggerTrayL2" position="2.11261 1.23211 -1.05747" rotation="0.0 0.0 0.382683 -0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerTrayL1" layer="triggers" is_active="true" core_name="TriggerTrayL1" position="2.07597 1.18166 -2.3834" rotation="0.0 0.0 0.382683 -0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerTrayL1" layer="triggers" is_active="true" core_name="TriggerTrayL1" position="2.11952 1.2252 -2.3834" rotation="0.0 0.0 0.382683 -0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerAnkh" layer="triggers" is_active="true" core_name="TriggerAnkh" position="2.28335 0.944526 -0.946455" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerAnkh" layer="triggers" is_active="true" core_name="TriggerAnkh" position="2.43464 1.00117 -1.11059" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerKey" layer="triggers" is_active="true" core_name="TriggerKey" position="-2.51353 0.949409 -2.63023" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
-		<active_actor actor_name="player"/>
-	</instance_mesh>
-	<instance_mesh name="TriggerSheets" layer="triggers" is_active="true" core_name="TriggerSheets" position="2.45109 1.14448 -2.28911" rotation="0.0 -0.173648 0.0 -0.984808" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerSheets" layer="triggers" is_active="true" core_name="TriggerSheets" position="2.48226 1.29963 -2.37334" rotation="0.0 0.0 -0.258819 -0.965926" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
 </renderable_objects>
