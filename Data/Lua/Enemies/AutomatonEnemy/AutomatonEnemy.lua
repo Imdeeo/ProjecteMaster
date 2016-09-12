@@ -10,10 +10,15 @@ class 'CAutomatonEnemy' (CEnemy)
 	function CAutomatonEnemy:__init(_TreeNode)
 		CEnemy.__init(self,_TreeNode)
 		
-		self.m_PathFindig = CUABEngine.get_instance():get_astar_manager()
+		self.m_PathFinding = CUABEngine.get_instance():get_astar_manager():get_resource("level_"..CUABEngine.get_instance():get_level_loaded())
 		self.m_TotalNodes = 0
+		self.m_IndexPoint = 0
+		self.m_IndexPathPatrolPoint = 0		
 		self.m_Patrol = _TreeNode:get_bool_property("patrol", false)
-		self.m_PatrolName = _TreeNode:get_psz_property("patrol_name", "")
+		if self.m_Patrol then
+			self.m_PatrolName = _TreeNode:get_psz_property("patrol_name", "")
+			self.m_TotalPatrolNodes = self.m_PathFinding:get_total_patrol_nodes(self.m_PatrolName)
+		end
 		self.m_DetectedSound = false
 		self.m_IsChasing = false
 		self.m_IsReturn = false
@@ -118,5 +123,31 @@ class 'CAutomatonEnemy' (CEnemy)
 		end
 		
 		return self.m_DetectedSound
+	end
+	
+	function CAutomatonEnemy:GetActualPatrolPoint()		
+		return self.m_PathFinding:get_patrol_point(self.m_PatrolName, self.m_IndexPathPatrolPoint)
+	end
+	
+	function CAutomatonEnemy:IncrementePatrolPointIndex()
+		if self.m_IndexPathPatrolPoint < self.m_TotalPatrolNodes - 1 then
+			self.m_IndexPathPatrolPoint = self.m_IndexPathPatrolPoint + 1
+		else
+			self.m_IndexPathPatrolPoint = 0
+		end
+	end
+	
+	function CAutomatonEnemy:SearchForPath(_DesiredPos)
+		self.m_IndexPoint = 0
+		self.m_TotalNodes = self.m_PathFinding:search_for_path(self.m_RenderableObject:get_position(),_DesiredPos, self.m_Name)
+	end
+	
+	function CAutomatonEnemy:IncrementPathPointIndex()
+		if self.m_IndexPoint < self.m_TotalNodes - 1 then
+			self.m_IndexPoint = self.m_IndexPoint + 1
+			return true
+		else
+			return false
+		end
 	end
 --end
