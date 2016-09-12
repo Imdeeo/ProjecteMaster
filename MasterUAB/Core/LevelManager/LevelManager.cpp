@@ -12,7 +12,7 @@
 #include "Cinematics\CinematicManager.h"
 #include "Particles\ParticleManager.h"
 #include "Manchas\ManchasManager.h"
-#include "IA\AStar.h"
+#include "IA\AStarManager.h"
 
 CLevelManager::CLevelManager()
 {
@@ -58,7 +58,7 @@ void CLevelManager::LoadLevel(const std::string &_LevelName)
 	UABEngine.GetLightManager()->Load(l_LevelDirectory + "\\lights.xml");
 	UABEngine.GetCinematicManager()->LoadXML(l_LevelDirectory + "\\cinematic.xml");
 	UABEngine.GetCameraControllerManager()->Load(l_LevelDirectory + "\\cameras.xml");
-	UABEngine.GetAStarManager()->LoadMap(l_LevelDirectory + "\\pathfinding.xml");
+	UABEngine.GetAStarManager()->Load(l_LevelDirectory + "\\pathfinding.xml");
 	std::string l_LevelDirectoryChangedSlashes = l_LevelDirectory;
 	std::replace(l_LevelDirectoryChangedSlashes.begin(), l_LevelDirectoryChangedSlashes.end(), '\\', '\/');
 	UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_LevelDirectoryChangedSlashes + "\")");
