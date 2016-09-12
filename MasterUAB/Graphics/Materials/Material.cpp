@@ -166,9 +166,6 @@ void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 					if (l_Frame)
 					{
 						D3D11_TEXTURE2D_DESC textureDesc;
-						HRESULT result;
-						D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
-						D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
 
 						// Initialize the render target texture description.
 						ZeroMemory(&textureDesc, sizeof(textureDesc));

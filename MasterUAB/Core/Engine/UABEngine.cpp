@@ -30,7 +30,7 @@
 #include "DebugHelper\DebugHelper.h"
 #include "ContextManager\ContextManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
-#include "IA\AStar.h"
+#include "IA\AStarManager.h"
 #ifdef _DEBUG
 #include "DebugRender.h"
 #else
@@ -65,7 +65,7 @@ CUABEngine::CUABEngine(void)
 	m_GamePlayManager = new CGamePlayManager();
 	m_LevelManager = new CLevelManager();
 	m_ManchasManager = new CManchasManager();
-	m_AStarManager = new CAStar();
+	m_AStarManager = new CAStarManager();
 	m_ActiveConsole = false;
 }
 
@@ -310,4 +310,4 @@ UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager *, GamePlayManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CLevelManager *, LevelManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CManchasManager *, ManchasManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CAStar *, AStarManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CAStarManager *, AStarManager)

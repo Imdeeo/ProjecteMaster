@@ -19,9 +19,9 @@
 #include <map>
 #include <stdlib.h>
 
-CAStar::CAStar() : m_IndexPoint(0), m_IndexPathPatrolPoint(0){}
+CAStar::CAStar(){}
 
-CAStar::CAStar(std::string _filename) : m_IndexPoint(0), m_IndexPathPatrolPoint(0){
+CAStar::CAStar(std::string _filename){
 	LoadMap(_filename);
 }
 
@@ -133,12 +133,16 @@ void CAStar::Render(CRenderManager *_RenderManager)
 		CEffectManager::m_SceneParameters.m_BaseColor = CColor(1, 0, 0, 1);
 		CEffectManager::m_SceneParameters.m_BaseColor.SetAlpha(1.f);
 
-		for (size_t i = 0; i < m_PathPoints.size(); ++i)
+		for (std::map<std::string, VPoints3>::iterator it = m_PathPoints.begin(); it != m_PathPoints.end(); ++it)
 		{
-			_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform(m_PathPoints[i]));
-			CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
-			CEffectManager::SetSceneConstants(l_EffectTechnique);
-			GetShape(_RenderManager)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+			VPoints3 l_Aux = it->second;
+			for (size_t i = 0; i < l_Aux.size(); ++i)
+			{
+				_RenderManager->GetContextManager()->SetWorldMatrix(GetTransform(l_Aux[i]));
+				CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
+				CEffectManager::SetSceneConstants(l_EffectTechnique);
+				GetShape(_RenderManager)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+			}
 		}
 	}
 }
@@ -302,54 +306,42 @@ CAStar::TNode *CAStar::GetNearestNode( const Vect3f &point ) {
 	return bestNode;
 }
 
-int CAStar::SearchForPath(const Vect3f &pointA, const Vect3f &pointB) {
+int CAStar::SearchForPath(const Vect3f &pointA, const Vect3f &pointB, const std::string _key) {
 	TNode *nodeA = GetNearestNode( pointA );
 	TNode *nodeB = GetNearestNode( pointB );
 	VNodes nodes = SearchNodePath( nodeA, nodeB );
 	
-	m_IndexPoint = 0;
-	m_PathPoints.clear();
+	std::map<std::string, VPoints3>::iterator iterator;
+	iterator = m_PathPoints.find(_key);
+	if (iterator != m_PathPoints.end())
+		m_PathPoints[_key].clear();
 
 	VNodes::const_iterator it;
 	for( it = nodes.begin(); it != nodes.end(); ++it ) {
 		TNode *currentNode = *it;
-		m_PathPoints.push_back( currentNode->position );
+		m_PathPoints[_key].push_back( currentNode->position );
 	}
 
-	return m_PathPoints.size();
+	return m_PathPoints[_key].size();
 }
 
-Vect3f CAStar::GetActualPoint()
+Vect3f CAStar::GetPoint(std::string _key, int _index)
 {
-	if (m_PathPoints.size() > 0 && m_IndexPoint < (int)m_PathPoints.size())
-		return m_PathPoints[m_IndexPoint];
+	if (m_PathPoints[_key].size() > 0 && _index < (int)m_PathPoints[_key].size())
+		return m_PathPoints[_key][_index];
 	else
 		return Vect3f(0.0f, 0.0f, 0.0f);
 }
 
-bool CAStar::IncrementActualPoint()
-{
-	if (m_IndexPoint < (int)m_PathPoints.size() - 1)
-	{
-		m_IndexPoint += 1;
-		return true;
-	}
-	else
-		return false;
-}
-
-CAStar::TNodePatrol* CAStar::GetActualPatrolPoint(std::string _patrolName)
+CAStar::TNodePatrol* CAStar::GetPatrolPoint(std::string _patrolName, int _index)
 {
 	if (m_NodePatrolPath.size() > 0)
-		return m_NodePatrolPath[_patrolName][m_IndexPathPatrolPoint];
+		return m_NodePatrolPath[_patrolName][_index];
 	else
 		return NULL;
 }
 
-void CAStar::IncrementActualPatrolPoint(std::string _patrolName)
+int CAStar::GetTotalPatrolNodes(std::string _patrolName)
 {
-	if (m_IndexPathPatrolPoint < (int)m_NodePatrolPath[_patrolName].size() - 1)
-		m_IndexPathPatrolPoint += 1;
-	else
-		m_IndexPathPatrolPoint = 0;
+	return m_NodePatrolPath[_patrolName].size();
 }

@@ -109,6 +109,7 @@
 #include "VideoManager\VideoManager.h"
 
 #include "IA\AStar.h"
+#include "IA\AStarManager.h"
 
 #include "Application.h"
 #include "GamePlayManager.h"
@@ -1592,10 +1593,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("load_map", &CAStar::LoadMap)
 			.def("destroy_map", &CAStar::DestroyMap)
 			.def("search_for_path", &CAStar::SearchForPath)
-			.def("get_actual_pos", &CAStar::GetActualPoint)
-			.def("increment_actual_point", &CAStar::IncrementActualPoint)
-			.def("get_actual_patrol_point", &CAStar::GetActualPatrolPoint)
-			.def("increment_actual_patrol_point", &CAStar::IncrementActualPatrolPoint)
+			.def("get_point", &CAStar::GetPoint)
+			.def("get_patrol_point", &CAStar::GetPatrolPoint)
+			.def("get_total_patrol_nodes", &CAStar::GetTotalPatrolNodes)
 			.scope[
 				class_<CAStar::TNode>("TNode")
 					.def_readwrite("name", &CAStar::TNode::name)
@@ -1606,6 +1606,16 @@ void CScriptManager::RegisterLUAFunctions()
 					.def_readwrite("time_to_wait", &CAStar::TNodePatrol::time_to_wait)
 			]
 	];
+
+	RegisterTemplatedMapManager<CAStar>(m_LS);
+
+	module(m_LS)[
+		class_<CAStarManager, CTemplatedMapManager<CAStar>>("CStarManager")
+			.def(constructor<>())
+			.def("load", &CManchasManager::Load)
+			.def("reload", &CManchasManager::Reload)
+	];
+
 // VIDEO
 	module(m_LS)[
 		class_<IVideoManager>("IVideoManager")
