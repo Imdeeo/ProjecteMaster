@@ -47,28 +47,28 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 			-- Obtenemos la ruta a seguir a partir de la posicion del enemigo y la ultima posicion del player conocida
 			if l_Enemy.m_LastPositionPlayer == nil then
 				l_Enemy.m_LastPositionPlayer = Vect3f(l_PlayerPos.x, l_PlayerPos.y, l_PlayerPos.z) 
-				l_Enemy.m_TotalNodes = l_Enemy.m_PathFindig:search_for_path(l_Enemy.m_RenderableObject:get_position(),l_Enemy.m_LastPositionPlayer)
+				l_Enemy:SearchForPath(l_Enemy.m_LastPositionPlayer)
 			end	
 			
 			-- Comprobamos si ha podido establecer una ruta
 			if l_Enemy.m_TotalNodes > 0 then
 				-- Actualizamos la posicion del enemigo
-				local l_PointPos = l_Enemy.m_PathFindig:get_actual_pos()
-				
-				l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime	
+				local l_PointPos = l_Enemy.m_PathFinding:get_point(l_Enemy.m_Name, l_Enemy.m_IndexPoint)
+
+				l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime
 				local l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularRunSpeed
-					
+
 				if l_PercentRotation > 1.0 then
 					l_PercentRotation = 1.0
 					l_Enemy.m_TimerRotation = 0
-				end 
+				end
 				
 				l_Enemy:EnemyWalk(l_PointPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
 				
 				-- Si la distancia entre el enemy y el punto es menor de 1 pasamos al siguiente punto
 				local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	
 				if l_Distance <= l_Enemy.m_DistanceToChangeNodeRunning then
-					if l_Enemy.m_PathFindig:increment_actual_point() == false then
+					if l_Enemy:IncrementPathPointIndex() == false then
 						-- no se ha podido pasar al siguiente punto porque era el ultimo, por tanto pasamos a alert ya que hemos perdido al player
 						l_Enemy.m_State = "alert"
 					end
