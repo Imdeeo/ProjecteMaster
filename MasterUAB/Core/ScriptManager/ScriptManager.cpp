@@ -737,6 +737,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_left_object_transform", &CAnimatedInstanceModel::GetLeftObjectTransform)
 			.def("get_bone_rotation", &CAnimatedInstanceModel::GetBoneRotation)
 			.def("set_bone_rotation", &CAnimatedInstanceModel::SetBoneRotation)
+			.def("print_bone_list", &CAnimatedInstanceModel::PrintBoneList)
 	];
 
 	module(m_LS) [

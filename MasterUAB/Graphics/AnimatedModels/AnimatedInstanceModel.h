@@ -56,7 +56,8 @@ public:
 	Quatf GetLeftObjectRotation();
 	Mat33f GetRightObjectTransform();
 	Mat33f GetLeftObjectTransform();
-	Quatf CAnimatedInstanceModel::GetBoneRotation(int _bone);
-	void CAnimatedInstanceModel::SetBoneRotation(Quatf _rotation, int _bone);
+	Quatf GetBoneRotation(int _bone);
+	void SetBoneRotation(Quatf _rotation, int _bone);
+	void PrintBoneList();
 };
 #endif //ANIMATED_INSTANCE_MODEL_H

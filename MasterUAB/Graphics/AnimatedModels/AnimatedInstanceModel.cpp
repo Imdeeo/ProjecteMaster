@@ -350,3 +350,11 @@ void CAnimatedInstanceModel::SetBoneRotation(Quatf _rotation, int _bone)
 	m_CalModel->getSkeleton()->getBone(_bone)->setRotation(aux);
 	m_CalModel->getSkeleton()->getBone(_bone)->calculateState();
 }
+
+void CAnimatedInstanceModel::PrintBoneList()
+{
+	std::vector<CalBone *> l_BoneList = m_CalModel->getSkeleton()->getVectorBone();
+	for (int i = 0; i < l_BoneList.size(); i++) {
+		UtilsLog("Bone #" + std::to_string(i) + ": " + l_BoneList[i]->getCoreBone()->getName());
+	}
+}
