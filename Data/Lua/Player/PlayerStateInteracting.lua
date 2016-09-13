@@ -56,7 +56,7 @@ function InteractingUpdate(args, _ElapsedTime)
 	if l_Player.m_Item ~= nil then
 		local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
 		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
-		local l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_Owner:get_right_object_position())
+		local l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_Owner:get_left_object_position())
 		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
 		l_ObjectPosition = l_ObjectPosition+l_NewControllerPosition
 		l_Player.m_Item:set_position(l_ObjectPosition)

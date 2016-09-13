@@ -44,7 +44,6 @@ function R1Sheets(_Player, _Pos)
 end
 
 function R1Canvas(_Player, _Pos)
-utils_log("R1Canvas")
 	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(-1.5, 0.0, 0.0)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerCanvas"):get_position()
@@ -72,6 +71,8 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 			_Player.m_IsClimbing = false
 			_Player.m_IsCorrecting = true
 			R1TrayR1IsClosed = false
+			--m_CharacterManager.m_Enemics[1].m_Awake = true
+			--m_CharacterManager.m_Enemics[2].m_Awake = true
 		end
 	end
 end
