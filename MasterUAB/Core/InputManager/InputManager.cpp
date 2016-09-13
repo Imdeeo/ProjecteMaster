@@ -156,6 +156,8 @@ void CInputManager::Load(std::string _file)
 		m_Map->MapBool(CInputManager::MiddleClick, *m_MouseId, gainput::MouseButtonMiddle);
 		m_Map->MapBool(CInputManager::WheelUp, *m_MouseId, gainput::MouseButtonWheelUp);
 		m_Map->MapBool(CInputManager::WheelDown, *m_MouseId, gainput::MouseButtonWheelDown);
+		m_Map->MapBool(CInputManager::Mouse3, *m_MouseId, gainput::MouseButton3);
+		m_Map->MapBool(CInputManager::Mouse4 , *m_MouseId, gainput::MouseButton4);
 		m_Map->MapFloat(CInputManager::AxisX, *m_MouseId, gainput::MouseAxisX);
 		m_Map->MapFloat(CInputManager::AxisY, *m_MouseId, gainput::MouseAxisY);
 		
@@ -211,6 +213,14 @@ int CInputManager::GetAction(std::string _name)
 		return CInputManager::RightClick;
 	else if (_name == "MiddleClick")
 		return CInputManager::MiddleClick;
+	else if (_name == "Mouse3")
+		return CInputManager::Mouse3;
+	else if (_name == "Mouse4")
+		return CInputManager::Mouse4;
+	else if (_name == "Mouse5")
+		return CInputManager::Mouse5;
+	else if (_name == "Mouse6")
+		return CInputManager::Mouse6;
 	else if (_name == "WheelUp")
 		return CInputManager::WheelUp;
 	else if (_name == "WheelDown")
@@ -301,6 +311,20 @@ int CInputManager::GetInput(std::string _name)
 		return gainput::MouseAxisY;
 	else if (_name == "KeySpace")
 		return gainput::KeySpace;
+	else if (_name == "MouseButton0")
+		return gainput::MouseButton0;
+	else if (_name == "MouseButton1")
+		return gainput::MouseButton1;
+	else if (_name == "MouseButton2")
+		return gainput::MouseButton2;
+	else if (_name == "MouseButton3")
+		return gainput::MouseButton3;
+	else if (_name == "MouseButton4")
+		return gainput::MouseButton4;
+	else if (_name == "MouseButton5")
+		return gainput::MouseButton5;
+	else if (_name == "MouseButton6")
+		return gainput::MouseButton6;
 	else if (_name == "KeyA")
 		return gainput::KeyA;
 	else if (_name == "KeyB")

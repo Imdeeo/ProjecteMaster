@@ -73,7 +73,7 @@ function MovingUpdate(args, _ElapsedTime)
 	
 	--// If player has an item, move it.
 	if l_Player.m_Item ~= nil then
-		local l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_Owner:get_right_object_position())
+		local l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_Owner:get_left_object_position())
 		--l_ObjectPosition = Vect3f(-l_ObjectPosition.x, l_ObjectPosition.z, l_ObjectPosition.y)
 		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
 		l_ObjectPosition = l_ObjectPosition+l_NewControllerPosition
