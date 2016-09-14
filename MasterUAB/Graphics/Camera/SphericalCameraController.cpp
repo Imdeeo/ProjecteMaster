@@ -7,7 +7,7 @@
 #include "XML\XMLTreeNode.h"
 
 CSphericalCameraController::CSphericalCameraController(const CXMLTreeNode & _TreeNode) : CCameraController(_TreeNode)
-, m_Zoom(_TreeNode.GetFloatProperty("zoom", 3.5f))
+, m_Zoom(_TreeNode.GetFloatProperty("zoom", 4.5f))
 , m_ZoomSpeed(2.f)
 , m_CameraPosition(m_Position - m_Zoom)
 {

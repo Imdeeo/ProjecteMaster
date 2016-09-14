@@ -191,8 +191,7 @@ public:
 	}
 
 	/**
-	* @brief Returns the norm ("magnitude") of the quaternion.
-	* @return The 2-norm of [ w(), x(), y(), z() ]<sup>T</sup>.
+	* @brief Normalizes the quaternion.
 	*/
 	void normalize() {
 		T norm = (T)sqrt(x*x + y*y + z*z + w*w);

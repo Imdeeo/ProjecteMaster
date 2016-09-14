@@ -13,7 +13,7 @@ R1TrayL2IsClosed = true
 
 function R1Door(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
-	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -1.0)
+	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.50143)
 	l_Target = Vect3f(0.0, 0.0, 0.0)
 	l_Target.x = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerDoor"):get_position().x
 	l_Target.z = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerDoor"):get_position().z
