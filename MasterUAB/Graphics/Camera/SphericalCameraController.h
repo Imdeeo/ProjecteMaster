@@ -11,7 +11,7 @@ private:
 	float						m_ZoomSpeed;
 	Vect3f						m_CameraPosition;
 public:
-	CSphericalCameraController(tinyxml2::XMLElement* TreeNode);
+	CSphericalCameraController(tinyxml2::XMLElement* _TreeNode);
 	virtual ~CSphericalCameraController();
 
 	void AddZoom(float Zoom) {m_Zoom+=Zoom;}
