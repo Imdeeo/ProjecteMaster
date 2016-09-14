@@ -203,8 +203,10 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 	// PBR modifications according to http://www.marmoset.co/toolbag/learn/pbr-theory
 	// PBR: fresnel (the formula is arbitrary, not based on any source, but the curve would look somewhat similar to the examples)
 	
-	float fresnel = pow(1 - dot(-l_EyeToWorldPosition, Nn), FRESNEL_POWER);
-	l_specularFactor += fresnel * (1-l_specularFactor);
+	#ifdef HAS_REFLECTION
+		float fresnel = pow(1 - dot(-l_EyeToWorldPosition, Nn), FRESNEL_POWER);
+		l_specularFactor += fresnel * (1-l_specularFactor);
+	#endif
 	// PBR: energy conservation: "reflection and diffusion are mutually exclusive"
 	// "This is easy to enforce in a shading system: one simply subtracts reflected light before allowing the diffuse shading to occur."
 	#ifdef HAS_SPECULAR_MAP
@@ -228,7 +230,10 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 
 	#ifdef HAS_UV2
 		#if defined(HAS_TANGENT) && defined(HAS_RNM)
-			l_Ambient = float4(GetRadiosityNormalMap(Texture2Normal(l_NormalMap.xyz), IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
+			// Pass l_NormalMap through CalcNormalMap just to take m_BumpFactor into account
+			//float3 l_VectorSpaceNormal = CalcNormalMap(float3(0, 0, 1), Tn, Bn, l_NormalMap);
+			float3 l_VectorSpaceNormal = CalcNormalMap(float3(0, 0, 1), float3(1, 0, 0), float3(0, 1, 0), l_NormalMap);
+			l_Ambient = float4(GetRadiosityNormalMap(l_VectorSpaceNormal, IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
 		#elif defined(HAS_RNM)
 			l_Ambient = float4(GetRadiosityNormalMap(float3(0,0,1), IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
 		#else
