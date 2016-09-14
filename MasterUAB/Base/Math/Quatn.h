@@ -191,8 +191,7 @@ public:
 	}
 
 	/**
-	* @brief Returns the norm ("magnitude") of the quaternion.
-	* @return The 2-norm of [ w(), x(), y(), z() ]<sup>T</sup>.
+	* @brief Normalizes the quaternion.
 	*/
 	void normalize() {
 		T norm = (T)sqrt(x*x + y*y + z*z + w*w);
@@ -612,7 +611,7 @@ public:
 		else if ((m00 >= m11) && (m00 >= m22))
 		{
 			T num7 = (T)sqrt((((T)1.0 + m00) - m11) - m22);
-			T num4 = 0.5 / num7;
+			T num4 = (T)0.5 / num7;
 			x = (T)0.5 * num7;
 			y = (m01 + m10) * num4;
 			z = (m02 + m20) * num4;

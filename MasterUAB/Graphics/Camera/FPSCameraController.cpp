@@ -59,11 +59,25 @@ void CFPSCameraController::AddYaw(float Radians)
 }
 
 void CFPSCameraController::AddPitch(float Radians)
-{
+{ 
 	float l_Pitch = m_Rotation.EulerFromQuat().x;
+	//				80�						100�										-45�					-135�
 	if (((l_Pitch < 1.39626f || l_Pitch > 1.74533f) && Radians < .0f) || ((l_Pitch > -0.785398f || l_Pitch < -2.356194f) && Radians > .0f))
 		CCameraController::AddPitch(-Radians*m_PitchSpeed);
 }
+
+/*
+15� = 0.261799f
+30� = 0.523599f
+45� = 0.785398f
+60� = 1.0472f
+80� = 1.39626f
+100� = 1.74533f
+120� = 2.0944f
+135� = 2.356194f
+150� = 2.61799f
+165� = 2.87979f
+*/
 
 void CFPSCameraController::SetCamera(CCamera *Camera) const
 {
@@ -74,7 +88,6 @@ void CFPSCameraController::SetCamera(CCamera *Camera) const
 	Camera->SetLookAt(m_Position+l_Direction);
 	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
-	Vect3f l_LA = m_Position + l_Direction;
 }
 
 void CFPSCameraController::Update(float ElapsedTime)
@@ -91,6 +104,6 @@ void CFPSCameraController::Update(float ElapsedTime)
 void CFPSCameraController::CopyFromKeyCamera(CCameraInfo* _CameraInfo)
 {
 	m_Fov = _CameraInfo->GetFOV();
-	Vect3f l_LookAt = _CameraInfo->GetLookAt()- _CameraInfo->GetEye();
+	Vect3f l_LookAt = _CameraInfo->GetLookAt() - _CameraInfo->GetEye();
 	m_Rotation.SetFromFwdUp(l_LookAt, _CameraInfo->GetUp());
 }

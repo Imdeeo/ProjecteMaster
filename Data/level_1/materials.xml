@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <materials>
+	<material name="no_material" renderable_object_technique="lights"/>
 	<material name="BloomBlurMaterial" renderable_object_technique="bloom_blur">
 		<parameter type="float" name="TextureSize" value="512.000000" description=""/>
 		<parameter type="float" name="BlurScale" value="1.000000" description=""/>

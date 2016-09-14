@@ -2,7 +2,10 @@
 <cameras>
 	<camera name="DebugCamera" type="spherical" distance="50" fov="1.13"/>
 	<camera name="MainCamera" type="fps" target="Jaheem" layer="solid" offset="1.8" fov="1.13"/>
-	<camera name="PickKey" total_time="11.3333" type="key" undefined="true" pos="-0.000433776 0.0291467 1.87888" filename="Data\level_1\cameras\PickKey.xml"/>
-	<camera name="ForceBureau" total_time="2.5" type="key" undefined="true" pos="-0.000433776 0.0291467 1.87888" filename="Data\level_1\cameras\ForceBureau.xml"/>
+	<camera name="OpenTray" total_time="3.33333" type="key" undefined="true" pos="0.0 1.9 0.0" filename="Data\level_1\cameras\OpenTray.xml"/>
+	<camera name="CloseTray" total_time="2.5" type="key" undefined="true" pos="0.0 1.9 0.0" filename="Data\level_1\cameras\CloseTray.xml"/>
+	<camera name="OpenTrayInverse" total_time="3.33333" type="key" undefined="true" pos="0.0 1.9 0.0" filename="Data\level_1\cameras\OpenTrayInverse.xml"/>
+	<camera name="CloseTrayInverse" total_time="2.5" type="key" undefined="true" pos="0.0 1.9 0.0" filename="Data\level_1\cameras\CloseTrayInverse.xml"/>
+	<camera name="ForceTray" total_time="8.66667" type="key" undefined="true" pos="0.0 1.9 0.0" filename="Data\level_1\cameras\ForceTray.xml"/>
 	<camera name="CrossDoor" total_time="3.66667" type="key" undefined="true" pos="0.603216 -1.40004 1.87888" filename="Data\level_1\cameras\CrossDoor.xml"/>
 </cameras>

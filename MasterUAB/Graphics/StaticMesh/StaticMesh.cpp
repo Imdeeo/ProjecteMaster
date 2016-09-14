@@ -111,7 +111,9 @@ bool CStaticMesh::Load(const std::string &FileName)
 					l_NumBytes = sizeof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX)*l_NumVertexs;
 				else if (l_VertexType == MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX::GetVertexType())
 					l_NumBytes = sizeof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX)*l_NumVertexs;
-				
+				else{
+					UtilsLog("Vertex type not recognized");
+				}
 				// Read Vertex Data
 				void *l_VertexData = NULL;
 				l_VertexData = malloc(l_NumBytes);
@@ -288,6 +290,7 @@ bool CStaticMesh::Load(const std::string &FileName)
 			}
 			else
 			{
+				assert("Mesh file unreadable!");
 				return false;
 			}
 		}
