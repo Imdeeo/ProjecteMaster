@@ -2,6 +2,7 @@
 #define UAB_ENGINE_H
 
 #include "Utils.h"
+#include <random>
 
 #define LEVEL "2"
 
@@ -28,12 +29,16 @@ class CGamePlayManager;
 class CLevelManager;
 class CManchasManager;
 class CAStarManager;
+class CColor;
 
 #include <string>
 
 class CUABEngine
 {
 private:
+	std::mt19937 m_RandomEngine;
+	std::uniform_real_distribution<float> m_UnitDistribution;
+	std::random_device rnd;
 	bool m_LuaReloaded = false;
 
 	static CUABEngine * m_Instance;
@@ -110,6 +115,10 @@ public:
 	void SetActiveConsole(bool _ActiveConsole);
 	bool GetLuaReloaded(){ return m_LuaReloaded; }
 	void LuaIsReloaded(){ m_LuaReloaded = true; }	
+	float GetRandomValue(float min, float max);
+	Vect3f GetRandomValue(Vect3f min, Vect3f max);
+	float GetRandomValue(Vect2f value);
+	CColor GetRandomValue(CColor min, CColor max);
 };
 
 #define UABEngine (*(CUABEngine::GetInstance()))

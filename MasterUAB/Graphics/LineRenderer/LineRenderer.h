@@ -38,6 +38,22 @@ public:
 	void Save(FILE* _File);
 	virtual void Update(float ElapsedTime);
 	virtual void Render(CRenderManager *RM);
+
+	//UAB
+	/*pos inicial
+		pos final
+		num puntos
+		offset x
+		offset y
+		tipo
+		max offset*/
+	UAB_BUILD_GET_SET(Vect3f, PosInicial);
+	UAB_BUILD_GET_SET(Vect3f, PosFinal);
+	UAB_BUILD_GET_SET(int, NumPuntos);
+	UAB_BUILD_GET_SET(float, OffsetX);
+	UAB_BUILD_GET_SET(float, OffsetY);
+	UAB_BUILD_GET_SET(int, Type);
+	UAB_BUILD_GET_SET(float, MaxOffsetY);
 };
 
 #endif //LINE_RENDERER_H

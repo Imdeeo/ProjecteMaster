@@ -25,6 +25,7 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_LastPositionPlayer = nil
 		self.m_StandardAlertTime = _TreeNode:get_float_property("alert_time", 1.0) * math.pi
 		self.m_LastPositionEnemy = nil
+		self.m_IsCorrected = false
 		
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
