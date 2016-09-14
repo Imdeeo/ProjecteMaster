@@ -4,6 +4,7 @@
 	<layer name="alpha_objects"/>
 	<layer name="alpha_blend_objects"/>
 	<layer name="particles"/>
+	<layer name="line_renderers"/>
 	<layer name="triggers"/>
 	<layer name="manchas"/>
 	<layer name="skybox"/>
