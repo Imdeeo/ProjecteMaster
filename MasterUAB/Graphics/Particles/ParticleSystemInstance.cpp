@@ -13,7 +13,7 @@
 #include "Math\MathUtils.h"
 
 CParticleSystemInstance::CParticleSystemInstance(tinyxml2::XMLElement* TreeNode) :
-	CRenderableObject(TreeNode), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
+	CRenderableObject(TreeNode)
 {
 	m_Type = UABEngine.GetInstance()->GetParticleManager()->GetResource(TreeNode->GetPszProperty("type"));
 	m_NextParticleEmission = TreeNode->GetFloatProperty("next_particle_emission", 1.0f);
@@ -45,40 +45,9 @@ float CParticleSystemInstance::GetDistanceToCamera(ParticleData *particle)
 	return P * aux->GetForward();
 }
 
-float CParticleSystemInstance::GetRandomValue(float min, float max)
-{
-	float a = m_UnitDistribution(m_RandomEngine);
-	float value = mathUtils::Lerp(min, max, a);
-	return value;
-}
-
-Vect3f CParticleSystemInstance::GetRandomValue(Vect3f min, Vect3f max)
-{
-	float a1 = m_UnitDistribution(m_RandomEngine);
-	float a2 = m_UnitDistribution(m_RandomEngine);
-	float a3 = m_UnitDistribution(m_RandomEngine);
-	Vect3f value;
-	value.x = mathUtils::Lerp(min.x, max.x, a1);
-	value.y = mathUtils::Lerp(min.y, max.y, a2);
-	value.z = mathUtils::Lerp(min.z, max.z, a3);
-	return value;
-}
-
-CColor CParticleSystemInstance::GetRandomValue(CColor min, CColor max)
-{
-	float a = m_UnitDistribution(m_RandomEngine);
-	CColor value = min.Lerp(max, a);
-	return value;
-}
-
-float CParticleSystemInstance::GetRandomValue(Vect2f value)
-{
-	return GetRandomValue(value.x, value.y);
-}
-
 float CParticleSystemInstance::ComputeTimeToNextParticle()
 {
-	float particlePerSecPerM3 = GetRandomValue(m_Type->GetEmitRate());
+	float particlePerSecPerM3 = UABEngine.GetRandomValue(m_Type->GetEmitRate());
 	return m_EmissionScaler / particlePerSecPerM3;
 }
 
@@ -88,7 +57,7 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 	while (m_AwakeTimer < 0)
 	{
 		m_Awake = !m_Awake;
-		m_AwakeTimer += GetRandomValue(m_Awake ? m_Type->GetAwakeTime() : m_Type->GetSleepTime());
+		m_AwakeTimer += UABEngine.GetRandomValue(m_Awake ? m_Type->GetAwakeTime() : m_Type->GetSleepTime());
 	}
 
 	if (m_Awake)
@@ -99,41 +68,41 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 			if (m_ActiveParticles < MAX_PARTICLE_PER_INSTANCE)
 			{
 				ParticleData particle = {};
-				particle.Position = GetRandomValue(-m_EmissionBoxHalfSize, m_EmissionBoxHalfSize)+m_Position;
-				particle.AngularSpeed = GetRandomValue(m_Type->GetStartingAngularSpeed()[0], m_Type->GetStartingAngularSpeed()[1]);
-				particle.AngularAcceleration = GetRandomValue(m_Type->GetAngularAcceleration()[0], m_Type->GetAngularAcceleration()[1]);
+				particle.Position = UABEngine.GetRandomValue(-m_EmissionBoxHalfSize, m_EmissionBoxHalfSize) + m_Position;
+				particle.AngularSpeed = UABEngine.GetRandomValue(m_Type->GetStartingAngularSpeed()[0], m_Type->GetStartingAngularSpeed()[1]);
+				particle.AngularAcceleration = UABEngine.GetRandomValue(m_Type->GetAngularAcceleration()[0], m_Type->GetAngularAcceleration()[1]);
 
 				particle.SizeControlPoint = 0;
 				particle.LastSizeControlTime = 0;
-				particle.LastSize = GetRandomValue(m_Type->m_ControlPointSizes[0].m_Size);
-				particle.NextSizeControlTime = m_Type->m_ControlPointSizes.size() < 2 ? particle.TotalLife : GetRandomValue(m_Type->m_ControlPointSizes[1].m_Time);
-				particle.NextSize = m_Type->m_ControlPointSizes.size() < 2 ? particle.LastSize : GetRandomValue(m_Type->m_ControlPointSizes[1].m_Size);
+				particle.LastSize = UABEngine.GetRandomValue(m_Type->m_ControlPointSizes[0].m_Size);
+				particle.NextSizeControlTime = m_Type->m_ControlPointSizes.size() < 2 ? particle.TotalLife : UABEngine.GetRandomValue(m_Type->m_ControlPointSizes[1].m_Time);
+				particle.NextSize = m_Type->m_ControlPointSizes.size() < 2 ? particle.LastSize : UABEngine.GetRandomValue(m_Type->m_ControlPointSizes[1].m_Size);
 
 				particle.ColorControlPoint = 0;
 				particle.LastColorControlTime = 0;
-				particle.LastColor = GetRandomValue(m_Type->m_ControlPointColors[0].m_Color1, m_Type->m_ControlPointColors[0].m_Color2);
-				particle.NextColorControlTime = m_Type->m_ControlPointColors.size() < 2 ? particle.TotalLife : GetRandomValue(m_Type->m_ControlPointColors[1].m_Time);
-				particle.NextColor = m_Type->m_ControlPointColors.size() < 2 ? particle.LastColor : GetRandomValue(m_Type->m_ControlPointColors[1].m_Color1, m_Type->m_ControlPointColors[1].m_Color2);
+				particle.LastColor = UABEngine.GetRandomValue(m_Type->m_ControlPointColors[0].m_Color1, m_Type->m_ControlPointColors[0].m_Color2);
+				particle.NextColorControlTime = m_Type->m_ControlPointColors.size() < 2 ? particle.TotalLife : UABEngine.GetRandomValue(m_Type->m_ControlPointColors[1].m_Time);
+				particle.NextColor = m_Type->m_ControlPointColors.size() < 2 ? particle.LastColor : UABEngine.GetRandomValue(m_Type->m_ControlPointColors[1].m_Color1, m_Type->m_ControlPointColors[1].m_Color2);
 				
 				particle.SpeedControlPoint = 0;
 				particle.LastSpeedControlTime = 0;
-				particle.LastSpeed = GetRandomValue(m_Type->m_ControlPointSpeeds[0].m_Speed1, m_Type->m_ControlPointSpeeds[0].m_Speed2);
-				particle.NextSpeedControlTime = m_Type->m_ControlPointSpeeds.size() < 2 ? particle.TotalLife : GetRandomValue(m_Type->m_ControlPointSpeeds[1].m_Time);
-				particle.NextSpeed = m_Type->m_ControlPointSpeeds.size() < 2 ? particle.LastSpeed : GetRandomValue(m_Type->m_ControlPointSpeeds[1].m_Speed1, m_Type->m_ControlPointSpeeds[1].m_Speed2);
+				particle.LastSpeed = UABEngine.GetRandomValue(m_Type->m_ControlPointSpeeds[0].m_Speed1, m_Type->m_ControlPointSpeeds[0].m_Speed2);
+				particle.NextSpeedControlTime = m_Type->m_ControlPointSpeeds.size() < 2 ? particle.TotalLife : UABEngine.GetRandomValue(m_Type->m_ControlPointSpeeds[1].m_Time);
+				particle.NextSpeed = m_Type->m_ControlPointSpeeds.size() < 2 ? particle.LastSpeed : UABEngine.GetRandomValue(m_Type->m_ControlPointSpeeds[1].m_Speed1, m_Type->m_ControlPointSpeeds[1].m_Speed2);
 
 				particle.AccelerationControlPoint = 0;
 				particle.LastAccelerationControlTime = 0;
-				particle.LastAcceleration = GetRandomValue(m_Type->m_ControlPointAccelerations[0].m_Acceleration1, m_Type->m_ControlPointAccelerations[0].m_Acceleration2);
-				particle.NextAccelerationControlTime = m_Type->m_ControlPointAccelerations.size() < 2 ? particle.TotalLife : GetRandomValue(m_Type->m_ControlPointAccelerations[1].m_Time);
-				particle.NextAcceleration = m_Type->m_ControlPointAccelerations.size() < 2 ? particle.LastAcceleration : GetRandomValue(m_Type->m_ControlPointAccelerations[1].m_Acceleration1, m_Type->m_ControlPointAccelerations[1].m_Acceleration2);
+				particle.LastAcceleration = UABEngine.GetRandomValue(m_Type->m_ControlPointAccelerations[0].m_Acceleration1, m_Type->m_ControlPointAccelerations[0].m_Acceleration2);
+				particle.NextAccelerationControlTime = m_Type->m_ControlPointAccelerations.size() < 2 ? particle.TotalLife : UABEngine.GetRandomValue(m_Type->m_ControlPointAccelerations[1].m_Time);
+				particle.NextAcceleration = m_Type->m_ControlPointAccelerations.size() < 2 ? particle.LastAcceleration : UABEngine.GetRandomValue(m_Type->m_ControlPointAccelerations[1].m_Acceleration1, m_Type->m_ControlPointAccelerations[1].m_Acceleration2);
 
-				particle.Angle = GetRandomValue(m_Type->GetStartingAngle().x, m_Type->GetStartingAngle().y);
+				particle.Angle = UABEngine.GetRandomValue(m_Type->GetStartingAngle().x, m_Type->GetStartingAngle().y);
 
 				particle.CurrentFrame = 0;
 				particle.TimeToNextFrame = m_Type->GetTimePerFrame();
 
 				particle.LifeTime = 0;
-				particle.TotalLife = GetRandomValue(m_Type->GetLife());
+				particle.TotalLife = UABEngine.GetRandomValue(m_Type->GetLife());
 
 				m_ParticleData[m_ActiveParticles] = particle;
 				++m_ActiveParticles;
@@ -179,8 +148,8 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 
 			if (particle->SizeControlPoint + 1 < (int)m_Type->m_ControlPointSizes.size())
 			{
-				particle->NextSize = GetRandomValue(m_Type->m_ControlPointSizes[particle->SizeControlPoint + 1].m_Size);
-				particle->NextSizeControlTime = GetRandomValue(m_Type->m_ControlPointSizes[particle->SizeControlPoint + 1].m_Time);
+				particle->NextSize = UABEngine.GetRandomValue(m_Type->m_ControlPointSizes[particle->SizeControlPoint + 1].m_Size);
+				particle->NextSizeControlTime = UABEngine.GetRandomValue(m_Type->m_ControlPointSizes[particle->SizeControlPoint + 1].m_Time);
 			}
 			else
 			{
@@ -197,9 +166,9 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 
 			if (particle->ColorControlPoint + 1 < (int)m_Type->m_ControlPointColors.size())
 			{
-				particle->NextColor = GetRandomValue(m_Type->m_ControlPointColors[particle->ColorControlPoint + 1].m_Color1, 
+				particle->NextColor = UABEngine.GetRandomValue(m_Type->m_ControlPointColors[particle->ColorControlPoint + 1].m_Color1,
 					m_Type->m_ControlPointColors[particle->ColorControlPoint + 1].m_Color2);
-				particle->NextColorControlTime = GetRandomValue(m_Type->m_ControlPointColors[particle->ColorControlPoint + 1].m_Time);
+				particle->NextColorControlTime = UABEngine.GetRandomValue(m_Type->m_ControlPointColors[particle->ColorControlPoint + 1].m_Time);
 			}
 			else
 			{
@@ -216,9 +185,9 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 
 			if (particle->SpeedControlPoint + 1 < (int)m_Type->m_ControlPointSpeeds.size())
 			{
-				particle->NextSpeed = GetRandomValue(m_Type->m_ControlPointSpeeds[particle->SpeedControlPoint + 1].m_Speed1,
+				particle->NextSpeed = UABEngine.GetRandomValue(m_Type->m_ControlPointSpeeds[particle->SpeedControlPoint + 1].m_Speed1,
 					m_Type->m_ControlPointSpeeds[particle->SpeedControlPoint + 1].m_Speed2);
-				particle->NextSpeedControlTime = GetRandomValue(m_Type->m_ControlPointSpeeds[particle->SpeedControlPoint + 1].m_Time);
+				particle->NextSpeedControlTime = UABEngine.GetRandomValue(m_Type->m_ControlPointSpeeds[particle->SpeedControlPoint + 1].m_Time);
 			}
 			else
 			{
@@ -235,9 +204,9 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 
 			if (particle->AccelerationControlPoint + 1 < (int)m_Type->m_ControlPointAccelerations.size())
 			{
-				particle->NextAcceleration = GetRandomValue(m_Type->m_ControlPointAccelerations[particle->AccelerationControlPoint + 1].m_Acceleration1,
+				particle->NextAcceleration = UABEngine.GetRandomValue(m_Type->m_ControlPointAccelerations[particle->AccelerationControlPoint + 1].m_Acceleration1,
 					m_Type->m_ControlPointAccelerations[particle->AccelerationControlPoint + 1].m_Acceleration2);
-				particle->NextAccelerationControlTime = GetRandomValue(m_Type->m_ControlPointAccelerations[particle->AccelerationControlPoint + 1].m_Time);
+				particle->NextAccelerationControlTime = UABEngine.GetRandomValue(m_Type->m_ControlPointAccelerations[particle->AccelerationControlPoint + 1].m_Time);
 			}
 			else
 			{

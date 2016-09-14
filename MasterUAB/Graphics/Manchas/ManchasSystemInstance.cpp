@@ -12,7 +12,7 @@
 #include "Camera\CameraControllerManager.h"
 #include "Math\MathUtils.h"
 
-CManchasSystemInstance::CManchasSystemInstance(tinyxml2::XMLElement* TreeNode) : CRenderableObject(TreeNode), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
+CManchasSystemInstance::CManchasSystemInstance(tinyxml2::XMLElement* TreeNode) : CRenderableObject(TreeNode)
 {
 	m_Awake = TreeNode->GetBoolProperty("awake");
 	m_ActiveManchas = 0;
@@ -32,42 +32,9 @@ void CManchasSystemInstance::Destroy()
 	//CHECKED_RELEASE(m_Type);
 }
 
-
-
-float CManchasSystemInstance::GetRandomValue(float min, float max)
-{
-	float a = m_UnitDistribution(m_RandomEngine);
-	float value = mathUtils::Lerp(min, max, a);
-	return value;
-}
-
-Vect3f CManchasSystemInstance::GetRandomValue(Vect3f min, Vect3f max)
-{
-	float a1 = m_UnitDistribution(m_RandomEngine);
-	float a2 = m_UnitDistribution(m_RandomEngine);
-	float a3 = m_UnitDistribution(m_RandomEngine);
-	Vect3f value;
-	value.x = mathUtils::Lerp(min.x, max.x, a1);
-	value.y = mathUtils::Lerp(min.y, max.y, a2);
-	value.z = mathUtils::Lerp(min.z, max.z, a3);
-	return value;
-}
-
-float CManchasSystemInstance::GetRandomValue(Vect2f value)
-{
-	return GetRandomValue(value.x, value.y);
-}
-
 float CManchasSystemInstance::ComputeTimeToNextMancha()
 {
-	return GetRandomValue(m_Type->GetEmitTime());
-}
-
-CColor CManchasSystemInstance::GetRandomValue(CColor min, CColor max)
-{
-	float a = m_UnitDistribution(m_RandomEngine);
-	CColor value = min.Lerp(max, a);
-	return value;
+	return UABEngine.GetRandomValue(m_Type->GetEmitTime());
 }
 
 void CManchasSystemInstance::Update(float ElapsedTime)
@@ -80,16 +47,16 @@ void CManchasSystemInstance::Update(float ElapsedTime)
 			if (m_ActiveManchas < MAX_MANCHAS)
 			{
 				ManchaData manchas = {};
-				manchas.Position.x = GetRandomValue(Vect2f(-1.0f,1.0f));
-				manchas.Position.y = GetRandomValue(Vect2f(-1.0f, 1.0f)); 
-				manchas.Frame = (int)GetRandomValue(0, (float)m_Type->GetFrames());
+				manchas.Position.x = UABEngine.GetRandomValue(Vect2f(-1.0f, 1.0f));
+				manchas.Position.y = UABEngine.GetRandomValue(Vect2f(-1.0f, 1.0f));
+				manchas.Frame = (int)UABEngine.GetRandomValue(0, (float)m_Type->GetFrames());
 				manchas.LifeTime = 0;
-				manchas.TotalLife = GetRandomValue(m_Type->GetLife());
+				manchas.TotalLife = UABEngine.GetRandomValue(m_Type->GetLife());
 				manchas.Opacity = 0;
-				manchas.MaxOpacity = GetRandomValue(m_Type->GetOpacity());
-				manchas.Size = GetRandomValue(m_Type->GetSize());
-				manchas.SizeSpeed = GetRandomValue(m_Type->GetSizeSpeed());
-				manchas.Color = GetRandomValue(m_Type->GetColor1(), m_Type->GetColor2());
+				manchas.MaxOpacity = UABEngine.GetRandomValue(m_Type->GetOpacity());
+				manchas.Size = UABEngine.GetRandomValue(m_Type->GetSize());
+				manchas.SizeSpeed = UABEngine.GetRandomValue(m_Type->GetSizeSpeed());
+				manchas.Color = UABEngine.GetRandomValue(m_Type->GetColor1(), m_Type->GetColor2());
 				m_ManchaData[m_ActiveManchas] = manchas;
 				++m_ActiveManchas;
 			}

@@ -31,13 +31,14 @@
 #include "ContextManager\ContextManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
 #include "IA\AStarManager.h"
+#include "Math\Color.h"
 #ifdef _DEBUG
 #include "DebugRender.h"
 #else
 #include "RenderHelper\RenderHelper.h"
 #endif
 
-CUABEngine::CUABEngine(void)
+CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
 {
 	m_TimeScale = 1;
 	m_CurrentCamera_vision = 1;
@@ -286,6 +287,37 @@ void CUABEngine::SetActiveConsole(bool _ActiveConsole)
 {
 	m_ActiveConsole = _ActiveConsole;
 	UABEngine.GetInputManager()->GetKeyBoard()->ConsumeLastChar();
+}
+
+float CUABEngine::GetRandomValue(float min, float max)
+{
+	float a = m_UnitDistribution(m_RandomEngine);
+	float value = mathUtils::Lerp(min, max, a);
+	return value;
+}
+
+Vect3f CUABEngine::GetRandomValue(Vect3f min, Vect3f max)
+{
+	float a1 = m_UnitDistribution(m_RandomEngine);
+	float a2 = m_UnitDistribution(m_RandomEngine);
+	float a3 = m_UnitDistribution(m_RandomEngine);
+	Vect3f value;
+	value.x = mathUtils::Lerp(min.x, max.x, a1);
+	value.y = mathUtils::Lerp(min.y, max.y, a2);
+	value.z = mathUtils::Lerp(min.z, max.z, a3);
+	return value;
+}
+
+float CUABEngine::GetRandomValue(Vect2f value)
+{
+	return GetRandomValue(value.x, value.y);
+}
+
+CColor CUABEngine::GetRandomValue(CColor min, CColor max)
+{
+	float a = m_UnitDistribution(m_RandomEngine);
+	CColor value = min.Lerp(max, a);
+	return value;
 }
 
 UAB_GET_PROPERTY_CPP(CUABEngine, CInputManager *, InputManager)

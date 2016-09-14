@@ -41,10 +41,6 @@ private:
 	int m_ActiveParticles;
 	ParticleData m_ParticleData[MAX_PARTICLE_PER_INSTANCE];
 
-	std::mt19937 m_RandomEngine;
-	std::uniform_real_distribution<float> m_UnitDistribution;
-	std::random_device rnd;
-
 	MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX m_ParticleRenderableData[MAX_PARTICLE_PER_INSTANCE];
 	CRenderableVertexs *m_RenderableVertex;
 public:
@@ -69,10 +65,6 @@ public:
 	}*/
 
 	float GetDistanceToCamera(ParticleData *particle);
-	float GetRandomValue(float min, float max);
-	Vect3f GetRandomValue(Vect3f min, Vect3f max);
-	CColor GetRandomValue(CColor min, CColor max);
-	float GetRandomValue(Vect2f value);
 	float ComputeTimeToNextParticle();
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
