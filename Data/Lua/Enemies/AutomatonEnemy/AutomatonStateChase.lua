@@ -11,6 +11,7 @@ function ChaseFirstAutomaton(args)
 	l_Enemy.m_TotalNodes = 0.0
 	l_Enemy.m_TimerRotation = 0.0
 	l_Enemy.m_LastPositionPlayer = nil
+	l_Enemy.m_IsCorrected = false
 end
 
 function ChaseUpdateAutomaton(args, _ElapsedTime)
@@ -53,24 +54,59 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 			-- Comprobamos si ha podido establecer una ruta
 			if l_Enemy.m_TotalNodes > 0 then
 				-- Actualizamos la posicion del enemigo
-				local l_PointPos = l_Enemy.m_PathFinding:get_point(l_Enemy.m_Name, l_Enemy.m_IndexPoint)
+				if not l_Enemy.m_IsCorrected then
+					if l_Enemy.m_IndexPoint == 0 then
+						-- primera correccion				
+						local l_FirstPointPos = l_Enemy.m_PathFinding:get_point(l_Enemy.m_Name, l_Enemy.m_IndexPoint)
+						local l_SecondPointPos = l_Enemy.m_PathFinding:get_point(l_Enemy.m_Name, l_Enemy.m_IndexPoint+1)
+						local l_EnemyPos = l_Owner:get_position()
+						local l_FirstDirection = (l_FirstPointPos - l_EnemyPos)
+						l_FirstDirection.y = 0
+						l_FirstDirection:normalize(1)
+						local l_SecondDirection = (l_EnemyPos - l_SecondPointPos)
+						l_SecondDirection.y = 0
+						l_SecondDirection:normalize(1)
+						
+						local angle_to_turn = l_Enemy:CalculateAngleRotation(l_FirstDirection, l_SecondDirection)
+						
+						if angle_to_turn == nil or l_FirstPointPos:distance(l_EnemyPos) <= l_Enemy.m_DistanceToChangeNodeRunning then
+							utils_log("INCREMENTANDO NODO!!!")
+							l_Enemy:IncrementPathPointIndex()
+						end
+					end
+					
+					local l_PointPos = l_Enemy.m_PathFinding:get_point(l_Enemy.m_Name, l_Enemy.m_IndexPoint)
+					local l_Direction = (l_PointPos - l_Owner:get_position())
+					l_Direction.y = 0
+					l_Direction:normalize(1)
+					
+					local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Owner:get_rotation():get_forward_vector(), l_Direction)
+					
+					if angle_to_turn ~= nil then
+						l_Enemy:EnemyRotation(angle_to_turn, _ElapsedTime)
+					else
+						l_Enemy.m_IsCorrected = true
+					end
+				else
+					local l_PointPos = l_Enemy.m_PathFinding:get_point(l_Enemy.m_Name, l_Enemy.m_IndexPoint)
 
-				l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime
-				local l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularRunSpeed
+					l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime
+					local l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularRunSpeed
 
-				if l_PercentRotation > 1.0 then
-					l_PercentRotation = 1.0
-					l_Enemy.m_TimerRotation = 0
-				end
-				
-				l_Enemy:EnemyWalk(l_PointPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
-				
-				-- Si la distancia entre el enemy y el punto es menor de 1 pasamos al siguiente punto
-				local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	
-				if l_Distance <= l_Enemy.m_DistanceToChangeNodeRunning then
-					if l_Enemy:IncrementPathPointIndex() == false then
-						-- no se ha podido pasar al siguiente punto porque era el ultimo, por tanto pasamos a alert ya que hemos perdido al player
-						l_Enemy.m_State = "alert"
+					if l_PercentRotation > 1.0 then
+						l_PercentRotation = 1.0
+						l_Enemy.m_TimerRotation = 0
+					end
+					
+					l_Enemy:EnemyWalk(l_PointPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
+					
+					-- Si la distancia entre el enemy y el punto es menor de 1 pasamos al siguiente punto
+					local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	
+					if l_Distance <= l_Enemy.m_DistanceToChangeNodeRunning then
+						if l_Enemy:IncrementPathPointIndex() == false then
+							-- no se ha podido pasar al siguiente punto porque era el ultimo, por tanto pasamos a alert ya que hemos perdido al player
+							l_Enemy.m_State = "alert"
+						end
 					end
 				end
 			else
