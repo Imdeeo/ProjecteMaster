@@ -10,7 +10,7 @@ public:
 	CCameraKey(CCameraInfo &CameraInfo, float Time);
 	virtual ~CCameraKey();
 
-	UAB_BUILD_GET_SET(CCameraInfo, CameraInfo);
+	UAB_BUILD_GET_SET(CCameraInfo*, CameraInfo);
 	UAB_BUILD_GET_SET(float, Time);
 };
 
