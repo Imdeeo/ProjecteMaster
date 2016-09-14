@@ -16,7 +16,7 @@ protected:
 public:
 	CSpotLight();
 	CSpotLight(std::string _name);
-	CSpotLight(CXMLTreeNode &TreeNode);
+	CSpotLight(tinyxml2::XMLElement* TreeNode);
 	bool const GetInsideFrustum();
 	float GetAngle()const{ return m_Angle; }
 	float GetFallOff()const{ return m_FallOff; }

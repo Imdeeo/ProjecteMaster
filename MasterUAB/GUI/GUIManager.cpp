@@ -10,7 +10,7 @@
 #include "RenderableObjects\RenderableVertexs.h"
 #include "InputManager\InputManager.h"
 #include "ContextManager\ContextManager.h"
-#include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 #include "RenderableObjects\TemplatedRenderableVertexs.h"
 #include "GUIPosition.h"
 #include "SliderResult.h"
@@ -99,103 +99,116 @@ bool CGUIManager::Load(std::string _FileName)
 	m_FileName = _FileName;
 	SpriteMapInfo l_spriteMapinfo;
 	SpriteInfo l_sprite;
-	CXMLTreeNode l_XML;
+
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(_FileName.c_str());
+
+	tinyxml2::XMLElement* l_Element;
+	tinyxml2::XMLElement* l_ElementAux;
+
 	float u1, u2, v1, v2, w, h;
-	if (l_XML.LoadFile(_FileName.c_str()))
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Input = l_XML["gui_elements"];
-		if (l_Input.Exists())
+		l_Element = doc.FirstChildElement("gui_elements")->FirstChildElement();
+		while (l_Element != NULL)
 		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			if (l_Element->Name() == std::string("gui_spritemap"))
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("gui_spritemap"))
+				std::string l_sprtieMapinfoname = l_Element->GetPszProperty("name");
+				l_spriteMapinfo = { m_Materials.size(), l_Element->GetIntProperty("width"), l_Element->GetIntProperty("height") };
+				m_SpriteMaps[l_sprtieMapinfoname] = l_spriteMapinfo;
+
+				l_ElementAux = l_Element->FirstChildElement();
+				while (l_ElementAux != NULL)
 				{
-					std::string l_sprtieMapinfoname = l_Element.GetPszProperty("name");
-					l_spriteMapinfo = { m_Materials.size(), l_Element.GetIntProperty("width"), l_Element.GetIntProperty("height") };
-					m_SpriteMaps[l_sprtieMapinfoname] = l_spriteMapinfo;
-					for (int j = 0; j < l_Element.GetNumChildren(); ++j)
+					if (l_ElementAux->Name() == std::string("material"))
 					{
-						CXMLTreeNode l_aux = l_Element(j);
-						if (l_aux.GetName() == std::string("material"))
-						{
-							m_Materials.push_back(new CMaterial(l_aux));
-							m_VertexBuffers.push_back(new CUABTrianglesListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(m_CurrentBufferData, MAX_VERTICES_PER_CALL, MAX_VERTICES_PER_CALL/3, true));
-						}
-						else if (l_aux.GetName() == std::string("sprite"))
-						{
-							w = (float)l_aux.GetIntProperty("w");
-							h = (float)l_aux.GetIntProperty("h");
-							u1 = (float)l_aux.GetIntProperty("x");
-							u2 = u1 + w;
-							v1 = (float)l_aux.GetIntProperty("y");
-							v2 = v1 + h;
-							l_sprite = { &m_SpriteMaps[l_sprtieMapinfoname], u1 / l_spriteMapinfo.w, u2 / l_spriteMapinfo.w, v1 / l_spriteMapinfo.h, v2 / l_spriteMapinfo.h };
-						
-							m_Sprites[l_aux.GetPszProperty("name")] = l_sprite;
-						}						
+						m_Materials.push_back(new CMaterial(l_ElementAux));
+						m_VertexBuffers.push_back(new CUABTrianglesListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(m_CurrentBufferData, MAX_VERTICES_PER_CALL, MAX_VERTICES_PER_CALL / 3, true));
 					}
-				
-				}
-				else if (l_Element.GetName() == std::string("button"))
-					m_Buttons[l_Element.GetPszProperty("name")] = new CButon(&m_Sprites[l_Element.GetPszProperty("normal")], &m_Sprites[l_Element.GetPszProperty("highlight")], &m_Sprites[l_Element.GetPszProperty("pressed")]);
-				else if (l_Element.GetName() == std::string("slider"))
-					m_Sliders[l_Element.GetPszProperty("name")] = new CSlider(&m_Sprites[l_Element.GetPszProperty("base")], &m_Sprites[l_Element.GetPszProperty("top")], &m_Sprites[l_Element.GetPszProperty("handle")], &m_Sprites[l_Element.GetPszProperty("pressed_handle")]);
-				else if (l_Element.GetName() == std::string("font"))
-				{
-					CXMLTreeNode l_XMLfont;
-					std::string l_FontName = l_Element.GetPszProperty("name");
-					std::string l_FileName = l_Element.GetPszProperty("path");
-					if (l_XMLfont.LoadFile(l_FileName.c_str()))
+					else if (l_ElementAux->Name() == std::string("sprite"))
 					{
-						CXMLTreeNode l_InputFile = l_XMLfont["font"];
-						if (l_InputFile.Exists())
+						w = (float)l_ElementAux->GetIntProperty("w");
+						h = (float)l_ElementAux->GetIntProperty("h");
+						u1 = (float)l_ElementAux->GetIntProperty("x");
+						u2 = u1 + w;
+						v1 = (float)l_ElementAux->GetIntProperty("y");
+						v2 = v1 + h;
+						l_sprite = { &m_SpriteMaps[l_sprtieMapinfoname], u1 / l_spriteMapinfo.w, u2 / l_spriteMapinfo.w, v1 / l_spriteMapinfo.h, v2 / l_spriteMapinfo.h };
+
+						m_Sprites[l_ElementAux->GetPszProperty("name")] = l_sprite;
+					}
+					l_ElementAux = l_ElementAux->NextSiblingElement();
+				}
+			}
+			else if (l_Element->Name() == std::string("button"))
+				m_Buttons[l_Element->GetPszProperty("name")] = new CButon(&m_Sprites[l_Element->GetPszProperty("normal")], &m_Sprites[l_Element->GetPszProperty("highlight")], &m_Sprites[l_Element->GetPszProperty("pressed")]);
+			else if (l_Element->Name() == std::string("slider"))
+				m_Sliders[l_Element->GetPszProperty("name")] = new CSlider(&m_Sprites[l_Element->GetPszProperty("base")], &m_Sprites[l_Element->GetPszProperty("top")], &m_Sprites[l_Element->GetPszProperty("handle")], &m_Sprites[l_Element->GetPszProperty("pressed_handle")]);
+			else if (l_Element->Name() == std::string("font"))
+			{
+				std::string l_FontName = l_Element->GetPszProperty("name");
+				std::string l_FileName = l_Element->GetPszProperty("path");
+
+				tinyxml2::XMLDocument doc2;
+				l_Error = doc2.LoadFile(l_FileName.c_str());
+				if (l_Error == tinyxml2::XML_SUCCESS)
+				{
+					tinyxml2::XMLElement* l_Element2;
+					tinyxml2::XMLElement* l_ElementAux2;
+					tinyxml2::XMLElement* l_ElementAux3;
+					l_Element2 = doc2.FirstChildElement("font");
+					if (l_Element2!=NULL)
+					{
+						l_ElementAux2 = l_Element2->FirstChildElement();
+						while (l_ElementAux2 != NULL)
 						{
-							for (int k = 0; k < l_InputFile.GetNumChildren(); ++k)
+							if (l_ElementAux2->Name() == std::string("common"))
 							{
-								CXMLTreeNode l_ElementFile = l_InputFile(k);
-								if (l_ElementFile.GetName() == std::string("common"))
+								m_LineHeightPerFont[l_FontName] = l_ElementAux2->GetIntProperty("lineHeight");
+								m_BasePerFont[l_FontName] = l_ElementAux2->GetIntProperty("base");
+							}
+							else if (l_ElementAux2->Name() == std::string("pages"))
+							{
+								l_ElementAux3 = l_ElementAux2->FirstChildElement();
+								while (l_ElementAux3!=NULL)
 								{
-									m_LineHeightPerFont[l_FontName] = l_ElementFile.GetIntProperty("lineHeight");
-									m_BasePerFont[l_FontName] = l_ElementFile.GetIntProperty("base");
-								}
-								else if (l_ElementFile.GetName() == std::string("pages"))
-								{
-									for (int l = 0; l < l_ElementFile.GetNumChildren(); ++l)
-									{
-										CXMLTreeNode l_PagesFile = l_ElementFile(l);
-										if (l_PagesFile.GetName() == std::string("page"))
-											m_TexturePerFont[l_FontName].push_back(&m_Sprites[l_PagesFile.GetPszProperty("file")]);									
-									}
-								}
-								else if (l_ElementFile.GetName() == std::string("chars"))
-								{
-									for (int l = 0; l < l_ElementFile.GetNumChildren(); ++l)
-									{
-										CXMLTreeNode l_CharFile = l_ElementFile(l);
-										if (l_CharFile.GetName() == std::string("char"))
-										{
-											FontChar l_FontChar = { l_CharFile.GetIntProperty("x"), l_CharFile.GetIntProperty("y"), l_CharFile.GetIntProperty("width"), l_CharFile.GetIntProperty("height"),
-												l_CharFile.GetIntProperty("xoffset"), l_CharFile.GetIntProperty("yoffset"), l_CharFile.GetIntProperty("xadvance"), l_CharFile.GetIntProperty("page"), l_CharFile.GetIntProperty("chnl") };
-											m_CharactersPerFont[l_FontName][l_CharFile.GetIntProperty("id")] = l_FontChar;
-										}
-									}
-								}
-								else if (l_ElementFile.GetName() == std::string("kernings"))
-								{
-									for (int l = 0; l < l_ElementFile.GetNumChildren(); ++l)
-									{
-										CXMLTreeNode l_KerningFile = l_ElementFile(l);
-										if (l_KerningFile.GetName() == std::string("kerning"))
-											m_KerningsPerFont[l_FontName][l_KerningFile.GetIntProperty("first")][l_KerningFile.GetIntProperty("second")] = l_KerningFile.GetIntProperty("second");
-									}
+									if (l_ElementAux3->Name() == std::string("page"))
+										m_TexturePerFont[l_FontName].push_back(&m_Sprites[l_ElementAux3->GetPszProperty("file")]);
+									l_ElementAux3 = l_ElementAux3->NextSiblingElement();
 								}
 							}
-
+							else if (l_ElementAux2->Name() == std::string("chars"))
+							{
+								l_ElementAux3 = l_ElementAux2->FirstChildElement();
+								while (l_ElementAux3 != NULL)
+								{
+									if (l_ElementAux3->Name() == std::string("char"))
+									{
+										FontChar l_FontChar = { l_ElementAux3->GetIntProperty("x"), l_ElementAux3->GetIntProperty("y"), l_ElementAux3->GetIntProperty("width"), l_ElementAux3->GetIntProperty("height"),
+											l_ElementAux3->GetIntProperty("xoffset"), l_ElementAux3->GetIntProperty("yoffset"), l_ElementAux3->GetIntProperty("xadvance"), l_ElementAux3->GetIntProperty("page"), l_ElementAux3->GetIntProperty("chnl") };
+										m_CharactersPerFont[l_FontName][l_ElementAux3->GetIntProperty("id")] = l_FontChar;
+									}
+									l_ElementAux3 = l_ElementAux3->NextSiblingElement();
+								}
+							}
+							else if (l_ElementAux2->Name() == std::string("kernings"))
+							{
+								l_ElementAux3 = l_ElementAux2->FirstChildElement();
+								while (l_ElementAux3 != NULL)
+								{
+									if (l_ElementAux3->Name() == std::string("kerning"))
+										m_KerningsPerFont[l_FontName][l_ElementAux3->GetIntProperty("first")][l_ElementAux3->GetIntProperty("second")] = l_ElementAux3->GetIntProperty("second");
+									l_ElementAux3 = l_ElementAux3->NextSiblingElement();
+								}
+							}
+							l_ElementAux2 = l_ElementAux2->NextSiblingElement();
 						}
+
 					}
 				}
 			}
+			l_Element = l_Element->NextSiblingElement();
 		}
 	}
 	else

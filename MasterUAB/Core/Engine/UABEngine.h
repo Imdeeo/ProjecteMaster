@@ -27,7 +27,7 @@ class IVideoManager;
 class CGamePlayManager;
 class CLevelManager;
 class CManchasManager;
-class CAStar;
+class CAStarManager;
 
 #include <string>
 
@@ -63,7 +63,7 @@ private:
 	CManchasManager* m_ManchasManager;
 	std::string m_LevelLoaded;
 	int m_CurrentCamera_vision;
-	CAStar* m_AStarManager;
+	CAStarManager* m_AStarManager;
 	bool m_ActiveConsole;
 
 public:
@@ -91,7 +91,7 @@ public:
 	std::string GetLevelLoaded()const{ return m_LevelLoaded; }
 	void SetLevelLoaded(std::string _id){ m_LevelLoaded = _id; }
 	CManchasManager * GetManchasManager() const;
-	CAStar * GetAStarManager() const;
+	CAStarManager * GetAStarManager() const;
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
 	void Destroy();

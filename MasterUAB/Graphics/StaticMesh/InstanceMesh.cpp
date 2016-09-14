@@ -8,26 +8,25 @@
 
 #include "StaticMesh.h"
 #include "RenderableObjects\RenderableVertexs.h"
-
-#include "XML\XMLTreeNode.h"
 #include "PhysXManager\PhysXManager.h"
 
 #include <d3d11.h>
 #include "Math\Matrix44.h"
 
 
-CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
+CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode) :CRenderableObject(TreeNode)
 {
-	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(TreeNode.GetPszProperty("core_name"));
+	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(TreeNode->GetPszProperty("core_name"));
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
-	m_Layer = TreeNode.GetPszProperty("layer");
-	m_GeneratePhysx = TreeNode.GetBoolProperty("create_physics");
+	m_Layer = TreeNode->GetPszProperty("layer");
+	m_GeneratePhysx = TreeNode->GetBoolProperty("create_physics");
+	tinyxml2::XMLElement* l_Element;
 	if (m_GeneratePhysx)
 	{
 		std::string l_Name = GetName();
-		m_PxType = TreeNode.GetPszProperty("physics_type");
-		m_PxMaterial = TreeNode.GetPszProperty("physics_material");
-		m_PxGroup = TreeNode.GetPszProperty("physics_group");
+		m_PxType = TreeNode->GetPszProperty("physics_type");
+		m_PxMaterial = TreeNode->GetPszProperty("physics_material");
+		m_PxGroup = TreeNode->GetPszProperty("physics_group");
 		m_PxOffset = 0.0f;
 		m_PxNormals = Vect3f(0.0f, 0.0f, 0.0f);
 
@@ -39,7 +38,7 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
 		if (m_PxType == "triangle_mesh")
 		{
-			bool l_FlipNormals = TreeNode.GetBoolProperty("physics_flip_normals");
+			bool l_FlipNormals = TreeNode->GetBoolProperty("physics_flip_normals");
 			l_PhysXManager->CreateStaticTriangleMesh(GetName(), m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}else if (m_PxType == "sphere_shape")
 		{
@@ -47,27 +46,27 @@ CInstanceMesh::CInstanceMesh(const CXMLTreeNode &TreeNode):CRenderableObject(Tre
 		}
 		else if (m_PxType == "plane_shape")
 		{
-			m_PxNormals = TreeNode.GetVect3fProperty("physics_normal", Vect3f(.0f, 1.f, .0f), true);
-			m_PxOffset = TreeNode.GetFloatProperty("physics_offset", .0f, true);
+			m_PxNormals = TreeNode->GetVect3fProperty("physics_normal", Vect3f(.0f, 1.f, .0f));
+			m_PxOffset = TreeNode->GetFloatProperty("physics_offset", .0f);
 			l_PhysXManager->CreateStaticPlane(l_Name, m_PxNormals, m_PxOffset, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
 		else if (m_PxType == "box_trigger" || m_PxType == "sphere_trigger")
 		{
-			std::string l_OnTriggerEnterLuaFunction = TreeNode.GetPszProperty("on_trigger_enter","");
-			std::string l_OnTriggerStayLuaFunction = TreeNode.GetPszProperty("on_trigger_stay","");
-			std::string l_OnTriggerExitLuaFunction = TreeNode.GetPszProperty("on_trigger_exit","");
+			std::string l_OnTriggerEnterLuaFunction = TreeNode->GetPszProperty("on_trigger_enter","");
+			std::string l_OnTriggerStayLuaFunction = TreeNode->GetPszProperty("on_trigger_stay","");
+			std::string l_OnTriggerExitLuaFunction = TreeNode->GetPszProperty("on_trigger_exit","");
 
-			bool l_IsTriggerActive = TreeNode.GetBoolProperty("is_active",true);
+			bool l_IsTriggerActive = TreeNode->GetBoolProperty("is_active",true);
 
 			std::vector<std::string> l_ActivateActors;
-			CXMLTreeNode l_Node = TreeNode;
-			for (int i = 0; i < l_Node.GetNumChildren(); ++i)
+			l_Element = TreeNode->FirstChildElement();
+			while (l_Element != NULL)
 			{
-				CXMLTreeNode l_Element = l_Node(i);
-				if (l_Element.GetName() == std::string("active_actor"))
+				if (l_Element->Name() == std::string("active_actor"))
 				{
-					l_ActivateActors.push_back(l_Element.GetPszProperty("actor_name"));
+					l_ActivateActors.push_back(l_Element->GetPszProperty("actor_name"));
 				}
+				l_Element = l_Element->NextSiblingElement();
 			}
 			if (m_PxType == "box_trigger")
 				l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction,l_OnTriggerStayLuaFunction,l_OnTriggerExitLuaFunction, l_ActivateActors,l_IsTriggerActive);

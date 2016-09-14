@@ -9,33 +9,31 @@
 #include "Texture\CapturedFrameBufferTexture.h"
 #include "Texture\Texture.h"
 
-#include "XML\XMLTreeNode.h"
-
 #include <d3d11.h>
 
-CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(CXMLTreeNode & TreeNode):CSceneRendererCommand(TreeNode)
+CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(tinyxml2::XMLElement* TreeNode) :CSceneRendererCommand(TreeNode)
 {
 	m_CapturedFrameBufferTexture = nullptr;
-	CXMLTreeNode l_Input = TreeNode;
-	for (int i = 0; i < l_Input.GetNumChildren(); i++)
+	tinyxml2::XMLElement* l_Element = TreeNode->FirstChildElement();
+	while (l_Element != NULL)
 	{
-		CXMLTreeNode l_Element = l_Input(i);
-		if (l_Element.GetName() == std::string("texture"))
+		if (l_Element->Name() == std::string("texture"))
 		{
-			unsigned int l_StagedId = l_Element.GetIntProperty("stage_id");
-			std::string l_TextureFile = l_Element.GetPszProperty("file");
+			unsigned int l_StagedId = l_Element->GetIntProperty("stage_id");
+			std::string l_TextureFile = l_Element->GetPszProperty("file");
 			//todo if load_file
 
 			AddStageTexture(l_StagedId,UABEngine.GetTextureManager()->GetTexture(l_TextureFile));
 		}
-		else if(l_Element.GetName() == std::string("dynamic_texture"))
+		else if(l_Element->Name() == std::string("dynamic_texture"))
 		{
 			AddDynamicTexture(l_Element);
 		}
-		else if(l_Element.GetName() == std::string("capture_texture"))
+		else if(l_Element->Name() == std::string("capture_texture"))
 		{
 			AddCaptureFrameBufferTexture(l_Element);
 		}
+		l_Element = l_Element->NextSiblingElement();
 	}
 	CreateRenderTargetViewVector();
 }
@@ -71,17 +69,17 @@ void CStagedTexturedSceneRendererCommand::AddStageTexture(unsigned int _StagedId
 	m_StagedTextures.push_back(CStagedTexture(_StagedId, _Texture));
 }
 
-void CStagedTexturedSceneRendererCommand::AddDynamicTexture(CXMLTreeNode & TreeNode)
+void CStagedTexturedSceneRendererCommand::AddDynamicTexture(tinyxml2::XMLElement* TreeNode)
 {
-	std::string l_Name = TreeNode.GetPszProperty("name");
-	if (TreeNode.GetPszProperty("material") != NULL)
-		m_Material = UABEngine.GetMaterialManager()->GetResource(TreeNode.GetPszProperty("material"));
+	std::string l_Name = TreeNode->GetPszProperty("name");
+	if (TreeNode->GetPszProperty("material") != NULL)
+		m_Material = UABEngine.GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
 	CDynamicTexture* l_DynamicTexture = new CDynamicTexture(TreeNode);
 	m_DynamicTextures.push_back(new CDynamicTextureManager(l_DynamicTexture,m_Material));
 	UABEngine.GetTextureManager()->AddResource(l_Name, l_DynamicTexture);
 }
 
-void CStagedTexturedSceneRendererCommand::AddCaptureFrameBufferTexture(CXMLTreeNode & TreeNode)
+void CStagedTexturedSceneRendererCommand::AddCaptureFrameBufferTexture(tinyxml2::XMLElement* TreeNode)
 {
 	m_CapturedFrameBufferTexture = new CCapturedFrameBufferTexture(TreeNode);
 	UABEngine.GetTextureManager()->AddUpdateResource(m_CapturedFrameBufferTexture->GetName(),m_CapturedFrameBufferTexture);

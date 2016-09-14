@@ -1,8 +1,8 @@
 #include "SoundManagerImplementation.h"
 #include "Math\Quatn.h"
 #include "Camera\Camera.h"
-#include "XML\XMLTreeNode.h"
 #include "3DElement\3DElement.h"
+#include "XML\tinyxml2.h"
 
 
 // Custom alloc/free functions. These are declared as "extern" in AkMemoryMgr.h
@@ -236,20 +236,23 @@ bool CSoundManagerImplementation::UnloadSoundBank(const std::string &bank)
 bool CSoundManagerImplementation::LoadSoundBanksXML()
 {
 	InitBanks();
+	
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile((m_Path + m_SoundBanksFilename).c_str());
 
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile((m_Path + m_SoundBanksFilename).c_str()))
+	tinyxml2::XMLElement* l_Element;
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_SoundBanks = l_XML["SoundBanks"];
-		if (l_SoundBanks.Exists())
+		l_Element = doc.FirstChildElement("SoundBanks")->FirstChildElement();
+		
+		while (l_Element != NULL)
 		{
-			for (int i = 0; i < l_SoundBanks.GetNumChildren(); ++i)
-			{
-				std::string l_Name = l_SoundBanks(i).GetPszProperty("name", "");
-				LoadSoundBank(l_Name);
-			}
+			std::string l_Name = l_Element->GetPszProperty("name", "");
+			LoadSoundBank(l_Name);
+			l_Element = l_Element->NextSiblingElement();
 		}
-	}
+	}	
 	else
 	{
 		return false;
@@ -259,33 +262,36 @@ bool CSoundManagerImplementation::LoadSoundBanksXML()
 
 bool CSoundManagerImplementation::LoadSpeakersXML()
 {
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile((m_Path + m_SpeakersFilename).c_str()))
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile((m_Path + m_SpeakersFilename).c_str());
+
+	tinyxml2::XMLElement* l_Element;
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Speakers = l_XML["Speakers"];
-		if (l_Speakers.Exists())
+		l_Element = doc.FirstChildElement("Speakers")->FirstChildElement();
+
+		while (l_Element != NULL)
 		{
-			for (int i = 0; i < l_Speakers.GetNumChildren(); ++i)
-			{
-				std::string l_Name = l_Speakers(i).GetPszProperty("name", "");
-				Vect3f l_Position = l_Speakers(i).GetVect3fProperty("position", Vect3f(0.f, 0.f, 0.f));
-				Vect3f l_Orientation = l_Speakers(i).GetVect3fProperty("orientation", Vect3f(0.f, 0.f, 0.f));
+			std::string l_Name = l_Element->GetPszProperty("name", "");
+			Vect3f l_Position = l_Element->GetVect3fProperty("position", Vect3f(0.f, 0.f, 0.f));
+			Vect3f l_Orientation = l_Element->GetVect3fProperty("orientation", Vect3f(0.f, 0.f, 0.f));
 
-				AkSoundPosition l_SoundPosition = {};
+			AkSoundPosition l_SoundPosition = {};
 
-				l_SoundPosition.Position.X = l_Position.x;
-				l_SoundPosition.Position.Y = l_Position.y;
-				l_SoundPosition.Position.Z = l_Position.z;
+			l_SoundPosition.Position.X = l_Position.x;
+			l_SoundPosition.Position.Y = l_Position.y;
+			l_SoundPosition.Position.Z = l_Position.z;
 
-				l_SoundPosition.Orientation.X = l_Orientation.x;
-				l_SoundPosition.Orientation.Y = l_Orientation.y;
-				l_SoundPosition.Orientation.Z = l_Orientation.z;
+			l_SoundPosition.Orientation.X = l_Orientation.x;
+			l_SoundPosition.Orientation.Y = l_Orientation.y;
+			l_SoundPosition.Orientation.Z = l_Orientation.z;
 
-				AkGameObjectID id = GenerateObjectID();
-				m_NamedSpeakers[l_Name] = id;
-				AK::SoundEngine::RegisterGameObj(id);
-				AK::SoundEngine::SetPosition(id, l_SoundPosition);
-			}
+			AkGameObjectID id = GenerateObjectID();
+			m_NamedSpeakers[l_Name] = id;
+			AK::SoundEngine::RegisterGameObj(id);
+			AK::SoundEngine::SetPosition(id, l_SoundPosition);
+			l_Element = l_Element->NextSiblingElement();
 		}
 	}
 	else
@@ -293,7 +299,6 @@ bool CSoundManagerImplementation::LoadSpeakersXML()
 		return false;
 	}
 	return true;
-
 }
 
 void CSoundManagerImplementation::Terminate()

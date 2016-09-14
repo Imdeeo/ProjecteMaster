@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include "Materials\MaterialParameter.h"
+#include "XML\tinyxml2.h"
 
 template<typename T>
 class CTemplatedMaterialParameter : public CMaterialParameter
@@ -12,7 +13,7 @@ private:
 	void *m_EffectAddress;
 	std::string m_Description;
 public:
-	CTemplatedMaterialParameter(CMaterial *Material, CXMLTreeNode &TreeNode, const T &Value, CMaterialParameter::TMaterialType MaterialType, std::string _Description):CMaterialParameter(Material,TreeNode,MaterialType)
+	CTemplatedMaterialParameter(CMaterial *Material, tinyxml2::XMLElement* TreeNode, const T &Value, CMaterialParameter::TMaterialType MaterialType, std::string _Description) :CMaterialParameter(Material, TreeNode, MaterialType)
 	{
 		m_EffectAddress = CEffectManager::AddMaterialParameter(MaterialType);
 		m_Value = Value;

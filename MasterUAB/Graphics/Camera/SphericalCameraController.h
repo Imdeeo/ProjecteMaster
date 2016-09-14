@@ -2,6 +2,7 @@
 #define INC_SPHERICALCAMERA_H_
 
 #include "Camera\CameraController.h"
+#include "XML\tinyxml2.h"
 
 class CSphericalCameraController : public CCameraController
 {
@@ -10,7 +11,7 @@ private:
 	float						m_ZoomSpeed;
 	Vect3f						m_CameraPosition;
 public:
-	CSphericalCameraController(const CXMLTreeNode & _TreeNode);
+	CSphericalCameraController(tinyxml2::XMLElement* TreeNode);
 	virtual ~CSphericalCameraController();
 
 	void AddZoom(float Zoom) {m_Zoom+=Zoom;}

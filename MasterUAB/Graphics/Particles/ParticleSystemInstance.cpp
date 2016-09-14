@@ -1,6 +1,5 @@
 #include "ParticleSystemInstance.h"
 #include "ParticleManager.h"
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
 #include "ContextManager\ContextManager.h"
@@ -13,15 +12,14 @@
 #include "Camera\CameraControllerManager.h"
 #include "Math\MathUtils.h"
 
-CParticleSystemInstance::CParticleSystemInstance(CXMLTreeNode &TreeNode) : 
+CParticleSystemInstance::CParticleSystemInstance(tinyxml2::XMLElement* TreeNode) :
 	CRenderableObject(TreeNode), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
 {
-	CXMLTreeNode l_Element = TreeNode;
-	m_Type = UABEngine.GetInstance()->GetParticleManager()->GetResource(l_Element.GetPszProperty("type"));
-	m_NextParticleEmission = l_Element.GetFloatProperty("next_particle_emission", 1.0f);
-	m_Awake = l_Element.GetBoolProperty("awake", false);
-	m_AwakeTimer = l_Element.GetFloatProperty("awake_timer", 1.0f);
-	m_EmissionBoxHalfSize = l_Element.GetVect3fProperty("emission_box_half_size", Vect3f(1.0, 1.0, 1.0));
+	m_Type = UABEngine.GetInstance()->GetParticleManager()->GetResource(TreeNode->GetPszProperty("type"));
+	m_NextParticleEmission = TreeNode->GetFloatProperty("next_particle_emission", 1.0f);
+	m_Awake = TreeNode->GetBoolProperty("awake", false);
+	m_AwakeTimer = TreeNode->GetFloatProperty("awake_timer", 1.0f);
+	m_EmissionBoxHalfSize = TreeNode->GetVect3fProperty("emission_box_half_size", Vect3f(1.0, 1.0, 1.0));
 	m_EmissionVolume = m_EmissionBoxHalfSize.x * m_EmissionBoxHalfSize.y * m_EmissionBoxHalfSize.z * 8;
 	m_EmissionScaler = m_Type->GetEmitAbsolute() ? 1 : 1.0f / m_EmissionVolume;
 	m_ActiveParticles = 0;
@@ -247,7 +245,7 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 			}
 		}
 
-		if (m_ParticleData[i].LifeTime > m_ParticleData[i].TotalLife)
+		if (m_ParticleData[i].LifeTime > m_ParticleData[i].TotalLife || !IsIntoLimit(m_ParticleData[i].Position))
 		{
 			--m_ActiveParticles;
 			m_ParticleData[i] = m_ParticleData[m_ActiveParticles];
@@ -257,6 +255,55 @@ void CParticleSystemInstance::Update(float ElapsedTime)
 
 	if (m_ActiveParticles > 1)
 		InsertSort(m_ParticleData, m_ActiveParticles);
+}
+
+bool CParticleSystemInstance::IsIntoLimit(Vect3f _position)
+{
+	if (m_EmissionBoxLimit)
+		if (m_EmissionBoxHalfSize.x == 0.0)
+		{
+			// es una cuadrado en profundidad
+			if (_position.y > m_Position.y + m_EmissionBoxHalfSize.y || _position.y < m_Position.y - m_EmissionBoxHalfSize.y)
+				return false;
+			else if (_position.z > m_Position.z + m_EmissionBoxHalfSize.z || _position.z < m_Position.z - m_EmissionBoxHalfSize.z)
+				return false;
+			else
+				return true;
+		}
+		else if (m_EmissionBoxHalfSize.y == 0.0)
+		{
+			// es una cuadrado vertical
+			if (_position.x > m_Position.x + m_EmissionBoxHalfSize.x || _position.x < m_Position.x - m_EmissionBoxHalfSize.x)
+				return false;
+			else if (_position.z > m_Position.z + m_EmissionBoxHalfSize.z || _position.z < m_Position.z - m_EmissionBoxHalfSize.z)
+				return false;
+			else
+				return true;
+		}
+		else if (m_EmissionBoxHalfSize.z == 0.0)
+		{
+			// es una cuadrado horizontal
+			if (_position.x > m_Position.x + m_EmissionBoxHalfSize.x || _position.x < m_Position.x - m_EmissionBoxHalfSize.x)
+				return false;
+			else if (_position.y > m_Position.y + m_EmissionBoxHalfSize.y || _position.y < m_Position.y - m_EmissionBoxHalfSize.y)
+				return false;
+			else
+				return true;
+		}
+		else
+		{
+			// es una caja/cubo
+			if (_position.x > m_Position.x + m_EmissionBoxHalfSize.x || _position.x < m_Position.x - m_EmissionBoxHalfSize.x)
+				return false;
+			else if (_position.y > m_Position.y + m_EmissionBoxHalfSize.y || _position.y < m_Position.y - m_EmissionBoxHalfSize.y)
+				return false;
+			else if (_position.z > m_Position.z + m_EmissionBoxHalfSize.z || _position.z < m_Position.z - m_EmissionBoxHalfSize.z)
+				return false;
+			else
+				return true;
+		}
+	else
+		return true;
 }
 
 void CParticleSystemInstance::Render(CRenderManager *RM)
@@ -316,8 +363,8 @@ void CParticleSystemInstance::InsertSort(ParticleData arr[], int length) {
 void CParticleSystemInstance::Save(FILE* _File, std::string _layer)
 {
 		fprintf_s(_File, "\t<particle_instance name=\"%s\" layer=\"%s\" type=\"%s\" position=\"%f %f %f\" "
-			"next_particle_emission=\"%f\" awake=\"%s\" awake_timer=\"%f\" emission_box_half_size=\"%f %f %f\" visible=\"%s\"/>\n",
+			"next_particle_emission=\"%f\" awake=\"%s\" awake_timer=\"%f\" emission_box_limit=\"%s\" emission_box_half_size=\"%f %f %f\" visible=\"%s\"/>\n",
 		m_Name.c_str(), _layer.c_str(), m_Type->GetName().c_str(), m_Position.x, m_Position.y, m_Position.z, 
-		m_NextParticleEmission, m_Awake ? "true" : "false", m_AwakeTimer, m_EmissionBoxHalfSize.x, m_EmissionBoxHalfSize.y, m_EmissionBoxHalfSize.z,
-		m_Visible ? "true" : "false");
+		m_NextParticleEmission, m_Awake ? "true" : "false", m_AwakeTimer, m_EmissionBoxLimit ? "true" : "false", m_EmissionBoxHalfSize.x, m_EmissionBoxHalfSize.y, 
+		m_EmissionBoxHalfSize.z, m_Visible ? "true" : "false");
 }

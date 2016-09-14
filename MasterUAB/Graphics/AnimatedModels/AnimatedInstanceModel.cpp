@@ -4,7 +4,6 @@
 #include "Math/Quatn.h"
 #include "Utils.h"
 
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "Effects\EffectManager.h"
 
@@ -20,9 +19,9 @@
 
 #include <cal3d\cal3d.h>
 
-CAnimatedInstanceModel::CAnimatedInstanceModel(CXMLTreeNode &TreeNode):CRenderableObject(TreeNode)
+CAnimatedInstanceModel::CAnimatedInstanceModel(tinyxml2::XMLElement* TreeNode) :CRenderableObject(TreeNode)
 {
-	Initialize(UABEngine.GetAnimatedModelsManager()->GetResource(TreeNode.GetPszProperty("core_name")));
+	Initialize(UABEngine.GetAnimatedModelsManager()->GetResource(TreeNode->GetPszProperty("core_name")));
 	/*m_AnimatedCoreModel = UABEngine.GetAnimatedModelsManager()->GetResource(l_Element.GetPszProperty("core_model_name"));
 	m_CalModel = new CalModel(m_AnimatedCoreModel->GetCalCoreModel());
 	m_CalHardwareModel = new CalHardwareModel(m_AnimatedCoreModel->GetCalCoreModel());*/

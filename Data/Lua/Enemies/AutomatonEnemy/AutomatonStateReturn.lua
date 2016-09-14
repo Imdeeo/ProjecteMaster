@@ -33,20 +33,20 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 		-- Obtenemos la ruta a seguir a partir de la posicion del punto inicial y la posicion actual
 		if not l_Enemy.m_IsReturn then
 			local pos = l_Enemy.m_RenderableObject:get_position()
-			l_Enemy.m_TotalNodes = l_Enemy.m_PathFindig:search_for_path(l_Enemy.m_RenderableObject:get_position(),l_Enemy.m_DefaultPosition)
+			l_Enemy:SearchForPath(l_Enemy.m_DefaultPosition)
 			l_Enemy.m_IsReturn = true
 		end
 		
 		-- Comprobamos si ha podido establecer una ruta
 		if l_Enemy.m_TotalNodes > 0 then
 			-- Actualizamos la posicion del enemigo
-			local l_PointPos = l_Enemy.m_PathFindig:get_actual_pos()
+			local l_PointPos = l_Enemy.m_PathFinding:get_point(l_Enemy.m_Name, l_Enemy.m_IndexPoint)
 			l_Enemy:EnemyWalk(l_PointPos, l_Enemy.m_WalkSpeed, l_PercentRotation, _ElapsedTime)
 			
 			-- Si la distancia entre el enemy y el punto es menor de un valor predeterminado pasamos al siguiente punto
 			local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	
 			if l_Distance <= l_Enemy.m_DistanceToChangeNodeWalking then
-				if l_Enemy.m_PathFindig:increment_actual_point() == false then
+				if l_Enemy:IncrementPathPointIndex() == false then
 					local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Owner:get_rotation():get_forward_vector(), l_Enemy.m_DefaultForward)
 					if angle_to_turn ~= nil and (angle_to_turn > 0.75 or angle_to_turn < 0.65) then
 						l_Enemy.m_TimerRotation2 = l_Enemy.m_TimerRotation2 + _ElapsedTime	

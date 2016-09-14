@@ -20,7 +20,7 @@
 	
 #include "RenderableObjects\RenderableVertexs.h"
 
-#include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
 
 #include <iostream>
 #include <fstream>
@@ -228,79 +228,76 @@ private :
 		m_CharacterControllers.clear();
 	}
 
-	bool LoadMaterials(const CXMLTreeNode _TreeNode){
+	bool LoadMaterials(tinyxml2::XMLElement* l_Input){
 
 		std::string l_EffectName;
 		float l_StaticFriction;
 		float l_DynamicFriction;
 		float l_Restitution;
 
-		CXMLTreeNode l_Input = _TreeNode;
-		if (l_Input.Exists())
+		tinyxml2::XMLElement* l_Element = l_Input->FirstChildElement();
+
+		while (l_Element != NULL)
 		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			if (l_Element->Name() == std::string("material"))
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("material"))
-				{
-					l_EffectName = l_Element.GetPszProperty("name");
-					l_StaticFriction = l_Element.GetFloatProperty("static_friction");
-					l_DynamicFriction = l_Element.GetFloatProperty("dynamic_friction");
-					l_Restitution = l_Element.GetFloatProperty("restitution");
-					RegisterMaterial(l_EffectName, l_StaticFriction, l_DynamicFriction, l_Restitution);
-				}
+				l_EffectName = l_Element->GetPszProperty("name");
+				l_StaticFriction = l_Element->GetFloatProperty("static_friction");
+				l_DynamicFriction = l_Element->GetFloatProperty("dynamic_friction");
+				l_Restitution = l_Element->GetFloatProperty("restitution");
+				RegisterMaterial(l_EffectName, l_StaticFriction, l_DynamicFriction, l_Restitution);
 			}
+			l_Element = l_Element->NextSiblingElement();
 		}
 		return true;
 	}
-	bool LoadCollisionGroups(const CXMLTreeNode _TreeNode){
-
+	bool LoadCollisionGroups(tinyxml2::XMLElement* l_Input)
+	{
 		std::string l_GroupName;
 		m_Groups.clear();
-		
-		CXMLTreeNode l_Input = _TreeNode;
-		if (l_Input.Exists())
+
+		tinyxml2::XMLElement* l_Element = l_Input->FirstChildElement();
+
+		while (l_Element != NULL)
 		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			if (l_Element->Name() == std::string("collision_group"))
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("collision_group"))
-				{
-					l_GroupName = l_Element.GetPszProperty("name");
-					m_Groups[l_GroupName] = (1 << m_Groups.size());
-				}
+				l_GroupName = l_Element->GetPszProperty("name");
+				m_Groups[l_GroupName] = (1 << m_Groups.size());
 			}
-		}
+			l_Element = l_Element->NextSiblingElement();
+		}		
 		return true;
 	}
-	bool LoadGroupsRelations(const CXMLTreeNode _TreeNode){
+	bool LoadGroupsRelations(tinyxml2::XMLElement* l_Input){
 
 		std::string l_GroupName;
 		physx::PxU32 l_Group;
 
-		CXMLTreeNode l_Input = _TreeNode;
-		if (l_Input.Exists())
+		tinyxml2::XMLElement* l_Element = l_Input->FirstChildElement();
+		tinyxml2::XMLElement* l_ElementAux;
+
+		while (l_Element != NULL)
 		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			if (l_Element->Name() == std::string("group"))
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("group"))
+				l_GroupName = l_Element->GetPszProperty("name");
+				l_Group = m_Groups[l_GroupName];
+				st_CollisionGroups[l_Group] = 0;
+				std::string l_Collision;
+
+				l_ElementAux = l_Element->FirstChildElement();
+				while (l_ElementAux != NULL)
 				{
-					l_GroupName = l_Element.GetPszProperty("name");
-					l_Group = m_Groups[l_GroupName];
-					st_CollisionGroups[l_Group] = 0;
-					for (int i = 0; i < l_Element.GetNumChildren(); ++i)
+					if (l_ElementAux->Name() == std::string("collides"))
 					{
-						CXMLTreeNode l_SubElement = l_Element(i);
-						std::string l_Collision;
-						if (l_SubElement.GetName() == std::string("collides"))
-						{
-							l_Collision = l_SubElement.GetPszProperty("name");
-							st_CollisionGroups[l_Group] |= m_Groups[l_Collision];
-						}
+						l_Collision = l_ElementAux->GetPszProperty("name");
+						st_CollisionGroups[l_Group] |= m_Groups[l_Collision];
 					}
+					l_ElementAux = l_ElementAux->NextSiblingElement();
 				}
 			}
+			l_Element = l_Element->NextSiblingElement();
 		}
 		return true;
 	}
@@ -448,32 +445,40 @@ public:
 		AddActor(_name, _position, Quatf(0, 0, 0, 1), l_actor);
 	}
 
+	void ChangeRigidDynamicActorPhysxGroup(const std::string &_ActorName, const std::string &_group){
+		physx::PxShape* shape;
+		((physx::PxRigidDynamic*)m_Actors[m_ActorIndexs[_ActorName]])->getShapes(&shape, 1);
+		L_PutGroupToShape(shape, m_Groups[_group]);
+	}
+
 	bool LoadPhysx(const std::string &Filename)
 	{
 		m_Filename = Filename;
 		
-		CXMLTreeNode l_XML;
-		if (l_XML.LoadFile(m_Filename.c_str()))
+		tinyxml2::XMLDocument doc;
+		tinyxml2::XMLError l_Error = doc.LoadFile(Filename.c_str());
+
+		tinyxml2::XMLElement* l_Element;
+
+		l_Element = doc.FirstChildElement("physx")->FirstChildElement();
+
+		if (l_Error == tinyxml2::XML_SUCCESS)
 		{
-			CXMLTreeNode l_Input = l_XML["physx"];
-			if (l_Input.Exists())
+			while (l_Element != NULL)
 			{
-				for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+				if (l_Element->Name() == std::string("materials"))
 				{
-					CXMLTreeNode l_Element = l_Input(i);
-					if (l_Element.GetName() == std::string("materials"))
-					{
-						LoadMaterials(l_Element);
-					}
-					if (l_Element.GetName() == std::string("collision_groups"))
-					{
-						LoadCollisionGroups(l_Element);
-					}
-					if (l_Element.GetName() == std::string("groups_relations"))
-					{
-						LoadGroupsRelations(l_Element);
-					}
+					LoadMaterials(l_Element);
 				}
+				if (l_Element->Name() == std::string("collision_groups"))
+				{
+					LoadCollisionGroups(l_Element);
+				}
+				if (l_Element->Name() == std::string("groups_relations"))
+				{
+					LoadGroupsRelations(l_Element);
+				}
+				l_Element = l_Element->NextSiblingElement();
 			}
 		}
 		else

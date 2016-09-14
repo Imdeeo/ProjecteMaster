@@ -1,19 +1,17 @@
 #include "ManchasSystemType.h"
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 
-CManchasSystemType::CManchasSystemType(CXMLTreeNode &TreeNode) : CNamed(TreeNode)
+CManchasSystemType::CManchasSystemType(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode)
 {
-	CXMLTreeNode l_Element = TreeNode;
-	m_Material = UABEngine.GetInstance()->GetMaterialManager()->GetResource(l_Element.GetPszProperty("material"));
-	m_Frames = l_Element.GetIntProperty("frames", 1);
-	m_Size = l_Element.GetVect2fProperty("size",Vect2f(0.0, 0.0));
-	m_SizeSpeed = l_Element.GetVect2fProperty("size_speed", Vect2f(0.0, 0.0));
-	m_EmitTime = l_Element.GetVect2fProperty("emit_time", Vect2f(0.0, 0.0));
-	m_Life = l_Element.GetVect2fProperty("life", Vect2f(0.0, 0.0));
-	m_Opacity = l_Element.GetVect2fProperty("opacity", Vect2f(0.0, 0.0));
-	m_Color1 = CColor(TreeNode.GetVect4fProperty("color_1", Vect4f(1.0, 1.0f, 1.0f, 1.0f)));
-	m_Color2 = CColor(TreeNode.GetVect4fProperty("color_2", Vect4f(1.0f, 1.0f, 1.0f, 1.0f)));
+	m_Material = UABEngine.GetInstance()->GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
+	m_Frames = TreeNode->GetIntProperty("frames", 1);
+	m_Size = TreeNode->GetVect2fProperty("size", Vect2f(0.0, 0.0));
+	m_SizeSpeed = TreeNode->GetVect2fProperty("size_speed", Vect2f(0.0, 0.0));
+	m_EmitTime = TreeNode->GetVect2fProperty("emit_time", Vect2f(0.0, 0.0));
+	m_Life = TreeNode->GetVect2fProperty("life", Vect2f(0.0, 0.0));
+	m_Opacity = TreeNode->GetVect2fProperty("opacity", Vect2f(0.0, 0.0));
+	m_Color1 = CColor(TreeNode->GetVect4fProperty("color_1", Vect4f(1.0, 1.0f, 1.0f, 1.0f)));
+	m_Color2 = CColor(TreeNode->GetVect4fProperty("color_2", Vect4f(1.0f, 1.0f, 1.0f, 1.0f)));
 }
 
 CManchasSystemType::~CManchasSystemType(void)

@@ -2,6 +2,8 @@
 #define EFFECT_TECHNIQUE_H
 
 #include "Utils\Named.h"
+#include "XML\tinyxml2.h"
+
 
 class CEffectVertexShader;
 class CEffectPixelShader;
@@ -17,7 +19,7 @@ private:
 	std::string m_PixelShaderName;
 	std::string m_GeometryShaderName;
 public:
-	CEffectTechnique(CXMLTreeNode &TreeNode);
+	CEffectTechnique(tinyxml2::XMLElement* TreeNode);
 	CEffectTechnique(CEffectVertexShader* _EffectVertexShader, CEffectPixelShader* _EffectPixelShader, CEffectGeometryShader* _EffectGeometryShader, const std::string _Name);
 	virtual ~CEffectTechnique();
 	

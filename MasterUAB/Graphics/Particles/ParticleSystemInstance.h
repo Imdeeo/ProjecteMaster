@@ -5,11 +5,11 @@
 #include "Utils.h"
 #include "Math\Color.h"
 #include "RenderableObjects\VertexTypes.h"
+#include "XML\tinyxml2.h"
 
 #include <random>
 
 class CParticleSystemType;
-class CXMLTreeNode;
 class CRenderableVertexs;
 
 class CParticleSystemInstance : public CRenderableObject
@@ -49,7 +49,7 @@ private:
 	CRenderableVertexs *m_RenderableVertex;
 public:
 	CParticleSystemInstance(){};
-	CParticleSystemInstance(CXMLTreeNode &TreeNode);
+	CParticleSystemInstance(tinyxml2::XMLElement* TreeNode);
 	virtual ~CParticleSystemInstance(void);
 	void Destroy();
 
@@ -60,6 +60,7 @@ public:
 	UAB_BUILD_GET_SET(Vect3f, EmissionBoxHalfSize);
 	UAB_BUILD_GET_SET(float, EmissionVolume);
 	UAB_BUILD_GET_SET(float, EmissionScaler);
+	UAB_BUILD_GET_SET(bool, EmissionBoxLimit);
 
 	TRenderableObjectType GetClassType() { return PARTICLE_EMITER; }
 	
@@ -76,6 +77,7 @@ public:
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
 	//void RenderDebug(CRenderManager *RM);
+	bool CParticleSystemInstance::IsIntoLimit(Vect3f _position);
 	void InsertSort(ParticleData arr[], int length);
 	void Save(FILE* _File, std::string _layer);
 	
@@ -87,6 +89,11 @@ public:
 	CEmptyPointerClass* GetLuaEmissionBoxHalfSize(int index = 0)
 	{
 		return (CEmptyPointerClass*)&m_EmissionBoxHalfSize[index];
+	}
+
+	CEmptyPointerClass* GetLuaEmissionBoxLimit()
+	{
+		return (CEmptyPointerClass*)&m_EmissionBoxLimit;
 	}
 };
 

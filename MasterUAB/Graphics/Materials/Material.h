@@ -4,6 +4,7 @@
 #include "Utils\Named.h"
 #include <vector>
 #include <string.h>
+#include "XML\tinyxml2.h"
 
 class CTexture;
 class CMaterialParameter;
@@ -20,7 +21,7 @@ private:
 	unsigned int m_CurrentParameterData;
 	void Destroy();
 public:
-	CMaterial(const CXMLTreeNode &TreeNode);
+	CMaterial(tinyxml2::XMLElement* TreeNode);
 	virtual ~CMaterial();
 	virtual void Apply(CRenderableObjectTechnique *RenderableObjectTechnique = NULL);
 	CRenderableObjectTechnique* GetRenderableObjectTechnique();

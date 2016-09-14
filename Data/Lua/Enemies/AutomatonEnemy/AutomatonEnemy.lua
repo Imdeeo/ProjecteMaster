@@ -10,29 +10,34 @@ class 'CAutomatonEnemy' (CEnemy)
 	function CAutomatonEnemy:__init(_TreeNode)
 		CEnemy.__init(self,_TreeNode)
 		
-		self.m_PathFindig = CUABEngine.get_instance():get_astar_manager()
+		self.m_PathFinding = CUABEngine.get_instance():get_astar_manager():get_resource("level_"..CUABEngine.get_instance():get_level_loaded())
 		self.m_TotalNodes = 0
-		self.m_Patrol = _TreeNode:get_bool_property("patrol", false, false)
-		self.m_PatrolName = _TreeNode:get_psz_property("patrol_name", "", false)
+		self.m_IndexPoint = 0
+		self.m_IndexPathPatrolPoint = 0		
+		self.m_Patrol = _TreeNode:get_bool_property("patrol", false)
+		if self.m_Patrol then
+			self.m_PatrolName = _TreeNode:get_psz_property("patrol_name", "")
+			self.m_TotalPatrolNodes = self.m_PathFinding:get_total_patrol_nodes(self.m_PatrolName)
+		end
 		self.m_DetectedSound = false
 		self.m_IsChasing = false
 		self.m_IsReturn = false
 		self.m_LastPositionPlayer = nil
-		self.m_StandardAlertTime = _TreeNode:get_float_property("alert_time", 1.0, false) * math.pi
+		self.m_StandardAlertTime = _TreeNode:get_float_property("alert_time", 1.0) * math.pi
 		self.m_LastPositionEnemy = nil
 		
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
-		self.m_WalkSpeed = _TreeNode:get_float_property("walk_speed", 1.0, false)
-		self.m_RunSpeed = _TreeNode:get_float_property("run_speed", 5.0, false)
-		self.m_AngularWalkSpeed = _TreeNode:get_float_property("angular_walk_speed", 1000.0, false)
-		self.m_AngularRunSpeed = _TreeNode:get_float_property("angular_run_speed", 250.0, false)
+		self.m_WalkSpeed = _TreeNode:get_float_property("walk_speed", 1.0)
+		self.m_RunSpeed = _TreeNode:get_float_property("run_speed", 5.0)
+		self.m_AngularWalkSpeed = _TreeNode:get_float_property("angular_walk_speed", 1000.0)
+		self.m_AngularRunSpeed = _TreeNode:get_float_property("angular_run_speed", 250.0)
 		
-		self.m_DistanceToActivateRun = _TreeNode:get_float_property("distance_activate_run", 25.0, false)
-		self.m_DistanceToActivateWalk = _TreeNode:get_float_property("distance_activate_walk", 15.0, false)
-		self.m_DistanceToActivateCrouching = _TreeNode:get_float_property("distance_activate_crouching", 5.0, false)
-		self.m_DistanceToChangeNodeWalking = _TreeNode:get_float_property("distance_change_node_walking", 2.0, false)
-		self.m_DistanceToChangeNodeRunning = _TreeNode:get_float_property("distance_change_node_running", 2.0, false)
+		self.m_DistanceToActivateRun = _TreeNode:get_float_property("distance_activate_run", 25.0)
+		self.m_DistanceToActivateWalk = _TreeNode:get_float_property("distance_activate_walk", 15.0)
+		self.m_DistanceToActivateCrouching = _TreeNode:get_float_property("distance_activate_crouching", 5.0)
+		self.m_DistanceToChangeNodeWalking = _TreeNode:get_float_property("distance_change_node_walking", 2.0)
+		self.m_DistanceToChangeNodeRunning = _TreeNode:get_float_property("distance_change_node_running", 2.0)
 		
 		self.m_TimerRotation = 0.0
 		self.m_TimerRotation2 = 0.0
@@ -118,5 +123,31 @@ class 'CAutomatonEnemy' (CEnemy)
 		end
 		
 		return self.m_DetectedSound
+	end
+	
+	function CAutomatonEnemy:GetActualPatrolPoint()		
+		return self.m_PathFinding:get_patrol_point(self.m_PatrolName, self.m_IndexPathPatrolPoint)
+	end
+	
+	function CAutomatonEnemy:IncrementePatrolPointIndex()
+		if self.m_IndexPathPatrolPoint < self.m_TotalPatrolNodes - 1 then
+			self.m_IndexPathPatrolPoint = self.m_IndexPathPatrolPoint + 1
+		else
+			self.m_IndexPathPatrolPoint = 0
+		end
+	end
+	
+	function CAutomatonEnemy:SearchForPath(_DesiredPos)
+		self.m_IndexPoint = 0
+		self.m_TotalNodes = self.m_PathFinding:search_for_path(self.m_RenderableObject:get_position(),_DesiredPos, self.m_Name)
+	end
+	
+	function CAutomatonEnemy:IncrementPathPointIndex()
+		if self.m_IndexPoint < self.m_TotalNodes - 1 then
+			self.m_IndexPoint = self.m_IndexPoint + 1
+			return true
+		else
+			return false
+		end
 	end
 --end

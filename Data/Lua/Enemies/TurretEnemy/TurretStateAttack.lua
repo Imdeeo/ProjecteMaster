@@ -3,11 +3,13 @@ function AttackFirstTurret(args)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
-	l_Owner:clear_cycle(l_Enemy.m_ActualAnimation,0.5)
-	--l_Enemy.m_ActualAnimation = 2
-	--l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
+	l_Owner:remove_action(l_Enemy.m_ActualAnimation)
+	l_Enemy.m_ActualAnimation = 1
+	l_Owner:execute_action(l_Enemy.m_ActualAnimation,0.5,0.5,1.0,true)
 	
 	l_Enemy.m_Timer = 0
+	l_Enemy.m_TimerToStop = 0
+	l_Enemy.m_TimerRotation = 0
 end
 
 function AttackUpdateTurret(args, _ElapsedTime)
@@ -16,43 +18,50 @@ function AttackUpdateTurret(args, _ElapsedTime)
 	
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	local l_EnemyPos = l_Enemy.m_RenderableObject:get_position()
-	local l_Distance = l_EnemyPos:distance(l_PlayerPos)
+	local l_Distance = l_EnemyPos:distance(l_PlayerPos)	
+	
+	l_Enemy.m_TimerToStop = l_Enemy.m_TimerToStop + _ElapsedTime
+	if l_Enemy.m_TimerToStop >= 1.33 and l_Enemy.m_ActualAnimation == 1 then
+		l_Owner:remove_action(l_Enemy.m_ActualAnimation)
+		l_Enemy.m_ActualAnimation = 2
+		l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
+	end
 	
 	l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
 	l_Enemy:LoseSanity(l_Distance)
 	
-	if l_Enemy:PlayerVisible(l_Owner) and l_Distance <= l_Enemy.m_DistanceToAttack then		
+	if l_Enemy:PlayerVisible(l_Owner) and l_Distance <= l_Enemy.m_DistanceToAttack then	
 		if l_Distance <= l_Enemy.m_DistanceToKill then
 			utils_log("ESTAS MUERTO!!!!")
 		else
-			local l_Direction = (l_PlayerPos - l_EnemyPos):get_normalized(1)	
-			local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Owner:get_rotation():get_forward_vector():get_normalized(1), l_Direction)
-			
-			if angle_to_turn ~= nil then
+			if l_Enemy.m_ActualAnimation == 2 then
+				-- the enemy rotates the body to player position
 				l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime	
-				l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularSpeed
+				local l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularSpeed
 					
 				if l_PercentRotation > 1.0 then
 					l_PercentRotation = 1.0
-					l_Enemy.m_TimerRotation = 0
+					l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation - _ElapsedTime
 				end
-				l_Enemy:EnemyRotation(angle_to_turn, l_PercentRotation)
+				
+				l_Enemy:RotateEnemyBone(l_Enemy.m_BackBoneId, l_PlayerPos, l_PercentRotation)
 			end
 		end
 	else
-		local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Owner:get_rotation():get_forward_vector():get_normalized(1), l_Enemy.m_DefaultForward)
-		if angle_to_turn ~= nil and (angle_to_turn <= 0.10 or angle_to_turn >= 0.15) then
-			l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime	
-			l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularSpeed
-				
-			if l_PercentRotation > 1.0 then
-				l_PercentRotation = 1.0
-				l_Enemy.m_TimerRotation = 0
-			end
-			l_Enemy:EnemyRotation(angle_to_turn, l_PercentRotation)
-		else
+		-- the enemy rotates the body to original position
+		l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation - _ElapsedTime	
+		local l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularSpeed
+			
+		if l_PercentRotation < 0.0 then
+			l_PercentRotation = 0.0
+			l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime
+		end
+		
+		l_Enemy:RotateEnemyBone(l_Enemy.m_BackBoneId, l_PlayerPos, l_PercentRotation)
+		
+		if l_PercentRotation == 0.0 then
 			l_Enemy.m_State = "idle"
-		end	
+		end
 	end
 end
 

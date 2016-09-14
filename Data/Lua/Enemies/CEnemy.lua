@@ -4,34 +4,37 @@ dofile("Data\\Lua\\Utils\\state_machine.lua")
 class 'CEnemy' (CLUAComponent)
 	function CEnemy:__init(_TreeNode)
 		local UABEngine = CUABEngine.get_instance()
-		self.m_Name = _TreeNode:get_psz_property("name", "", false)
-		self.m_LayerName = _TreeNode:get_psz_property("layer", "", false)
-		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "", false)
+		self.m_Name = _TreeNode:get_psz_property("name", "")
+		self.m_LayerName = _TreeNode:get_psz_property("layer", "")
+		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "")
 		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
 		CLUAComponent.__init(self,self.m_Name, self.m_RenderableObject)
 		
 		self.m_Timer = 0
 		self.m_DefaultPosition = Vect3f(self.m_RenderableObject:get_position().x, self.m_RenderableObject:get_position().y, self.m_RenderableObject:get_position().z)
+		--utils_log(self.m_Name.." POS X: "..self.m_DefaultPosition.x.." Y: "..self.m_DefaultPosition.y.." Z: "..self.m_DefaultPosition.z)
 		self.m_DefaultForward = self.m_RenderableObject:get_rotation():get_forward_vector()
 		self.m_State = "off"
-		self.m_Awake = _TreeNode:get_bool_property("awake", false, false)
+		self.m_Awake = _TreeNode:get_bool_property("awake", false)
 		self.m_ActualAnimation = 0
 		
 		-- TODO: get group numbers somehow
 		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
 		self.m_PhysXGroups = 2 + 8 -- objects and player
-		self.m_MaxDistance = _TreeNode:get_float_property("vision_distance", 5.0, false)
-		self.m_MaxAngle = _TreeNode:get_float_property("vision_angle", 0.25, false) * math.pi
+		self.m_MaxDistance = _TreeNode:get_float_property("vision_distance", 5.0)
+		self.m_MaxAngle = _TreeNode:get_float_property("vision_angle", 0.25) * math.pi
 		self.m_HeadOffset = Vect3f(0.0, g_EnemyHeight + g_EnemyRadius * 2, 0.0)
 		self.m_BlockingObjectName = nil
-		self.m_DistanceToKill = _TreeNode:get_float_property("distance_kill", 1.0, false)
+		self.m_DistanceToKill = _TreeNode:get_float_property("distance_kill", 1.0)
 		
 		-- distance, time, sanity amount
 		self.m_LoseSanity = {}
-		for i = 0, _TreeNode:get_num_children()-1 do
-			local l_Param = _TreeNode:get_child(i)
-			table.insert(self.m_LoseSanity, Vect3f(l_Param:get_float_property("distance",0.0,false), l_Param:get_float_property("time",0.0,false), l_Param:get_float_property("sanity_amount",0.0,false)))
+		
+		l_Param = _TreeNode:first_child()
+		while l_Param ~= nil do
+			table.insert(self.m_LoseSanity, Vect3f(l_Param:get_float_property("distance",0.0), l_Param:get_float_property("time",0.0), l_Param:get_float_property("sanity_amount",0.0)))
+			l_Param = l_Param:get_next()
 		end
 		
 		self.m_StateMachine = StateMachine.create()
@@ -79,28 +82,7 @@ class 'CEnemy' (CLUAComponent)
 		-- otherwise visible
 		self.m_BlockingObjectName = nil
 		return true
-	end
-	
-	function CEnemy:RotateEnemyHead(_Owner, _DesiredPos)
-		-- Seguimos al player con la mirada		
-		local l_EnemyPos = _Owner:get_position()
-		
-		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)
-		local l_Angle = self.m_DefaultForward * l_Direction
-		if 1.0 - l_Angle < 0.01 then
-			return
-		end
-		
-		local angle_to_turn = math.acos(l_Angle)
-		local cross = l_Direction ^ self.m_DefaultForward
-		if cross.y < 0.0 then
-		  angle_to_turn = -angle_to_turn
-		end
-		
-		local quat_to_turn = Quatf()
-		quat_to_turn:quat_from_yaw_pitch_roll(0.0, angle_to_turn, 0.0)		
-		_Owner:set_head_bone_rotation(quat_to_turn)
-	end
+	end	
 	
 	function CEnemy:LoseSanity(_Distance)
 		for i=1, table.maxn(self.m_LoseSanity)-1 do
@@ -159,6 +141,25 @@ class 'CEnemy' (CLUAComponent)
 
 		local target_quat = l_Owner:get_rotation():slerp(l_Owner:get_rotation() * quat_to_turn, _PercentRotation)
 		l_Owner:set_rotation(target_quat)
+	end
+	
+	function CEnemy:RotateEnemyBone(_Bone, _DesiredPos, _PercentRotation)
+		-- Seguimos al player con la mirada
+		local l_Owner = self.m_RenderableObject;
+		local l_EnemyPos = l_Owner:get_position()
+		local l_BoneRotation = l_Owner:get_bone_rotation(_Bone)
+		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)		
+		
+		local angle_to_turn = self:CalculateAngleRotation(self.m_DefaultForward, l_Direction)
+		if angle_to_turn == nil then
+			angle_to_turn = 0.0
+		end
+		
+		local quat_to_turn = Quatf()
+		quat_to_turn:quat_from_yaw_pitch_roll(0.0, angle_to_turn, 0.0)
+		
+		local target_quat = l_BoneRotation:slerp(quat_to_turn * l_BoneRotation, _PercentRotation)
+		l_Owner:set_bone_rotation(target_quat, _Bone)
 	end
 	
 	function CEnemy:CalculateAngleRotation(_EnemyForward, _Direction)

@@ -6,7 +6,7 @@
 #include "Effects\EffectManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
 
-CRenderAxisSceneRenderCommand::CRenderAxisSceneRenderCommand(CXMLTreeNode &TreeNode) :CSceneRendererCommand(TreeNode)
+CRenderAxisSceneRenderCommand::CRenderAxisSceneRenderCommand(tinyxml2::XMLElement* TreeNode) :CSceneRendererCommand(TreeNode)
 {
 }
 

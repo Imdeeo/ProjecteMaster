@@ -3,9 +3,9 @@
 
 #include "Utils\Named.h"
 #include "Utils\Active.h"
+#include "XML\tinyxml2.h"
 
 class CMaterial;
-class CXMLTreeNode;
 class CRenderManager;
 
 class CSceneRendererCommand :public CActive, public CNamed
@@ -13,7 +13,7 @@ class CSceneRendererCommand :public CActive, public CNamed
 protected:
 	CMaterial* m_Material;
 public:
-	CSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CSceneRendererCommand();
 	virtual void Execute(CRenderManager &RenderManager) = 0;
 };

@@ -8,7 +8,7 @@ class CRenderManager;
 class CSetMatricesSceneRendererCommand : public CSceneRendererCommand
 {
 public:
-	CSetMatricesSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CSetMatricesSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CSetMatricesSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };

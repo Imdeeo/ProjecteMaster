@@ -46,37 +46,38 @@ class 'CUABCinematicsActionManager'
 		self.m_Actions={}
 		self.m_CurrentAction=1
 		self.m_CurrentExecutedAction=1
-		local l_XMLTreeNode=CXMLTreeNode()
-		local l_Loaded=l_XMLTreeNode:load_file(Filename)
 		
-		if l_Loaded then
-			for i=0, l_XMLTreeNode:get_num_children() do
-				local l_Atts=l_XMLTreeNode:get_child(i)
-				local l_ElemName=l_Atts:get_name()
-				
-				if l_ElemName=="on" or
-					l_ElemName=="after_last_action" then
-					local l_ActionName=l_Atts:get_psz_property("action", "",false)
-					local l_Action=nil
-					
-					if l_ActionName=="set_camera" then
-						l_Action=CUABCinematicsActionSetCamera(l_Atts)
-					end
-					
-					if l_Action~=nil then
-						if l_ElemName=="after_last_action" then
-							local l_LastActionTime=0
-							local l_LastActionDuration=0
-							
-							if (#self.m_Actions)>0 then
-								l_LastActionTime=self.m_Actions[(#self.m_Actions)]:GetTime() 
-								l_LastActionDuration=self.m_Actions[(#self.m_Actions)]:GetDuration()
-							end
-							l_Action:SetTime(l_Action:GetTime()+l_LastActionTime+l_LastActionDuration)
-							self.m_MaxTime=l_Action:GetTime()+l_LastActionTime+l_LastActionDuration
+		local doc = XMLDocument()
+		local xmlError = doc:load_file(Filename)
+		if xmlError == 0 then
+			local l_Element = doc:first_child_element("characters")
+			if l_Element ~=nil then
+				l_Element = l_Element:first_child()
+				while l_Element ~= nil do
+					local l_ElemName=l_Element:get_name()					
+					if l_ElemName=="on" or l_ElemName=="after_last_action" then
+						local l_ActionName=l_Element:get_psz_property("action", "")
+						local l_Action=nil
+						
+						if l_ActionName=="set_camera" then
+							l_Action=CUABCinematicsActionSetCamera(l_Element)
 						end
-						table.insert(self.m_Actions, l_Action)
-						--sort actions by time
+						
+						if l_Action~=nil then
+							if l_ElemName=="after_last_action" then
+								local l_LastActionTime=0
+								local l_LastActionDuration=0
+								
+								if (#self.m_Actions)>0 then
+									l_LastActionTime=self.m_Actions[(#self.m_Actions)]:GetTime() 
+									l_LastActionDuration=self.m_Actions[(#self.m_Actions)]:GetDuration()
+								end
+								l_Action:SetTime(l_Action:GetTime()+l_LastActionTime+l_LastActionDuration)
+								self.m_MaxTime=l_Action:GetTime()+l_LastActionTime+l_LastActionDuration
+							end
+							table.insert(self.m_Actions, l_Action)
+							--sort actions by time
+						end
 					end
 				end
 			end
