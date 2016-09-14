@@ -11,7 +11,7 @@ namespace tinyxml2
 	class XMLElement;
 }
 
-#define MAX_LINE_LENGHT 200
+#define MAX_LINE_LENGHT 20
 
 class CMaterial;
 class CLineRendererParameter;
@@ -52,8 +52,27 @@ public:
 	UAB_BUILD_GET_SET(int, NumPuntos);
 	UAB_BUILD_GET_SET(float, OffsetX);
 	UAB_BUILD_GET_SET(float, OffsetY);
-	UAB_BUILD_GET_SET(int, Type);
-	UAB_BUILD_GET_SET(float, MaxOffsetY);
+
+	CEmptyPointerClass* GetLuaPosInciial(int index = 0)
+	{
+		return (CEmptyPointerClass*)&(m_PosInicial[index]);
+	}
+	CEmptyPointerClass* GetLuaPosFinal(int index = 0)
+	{
+		return (CEmptyPointerClass*)&(m_PosFinal[index]);
+	}
+	CEmptyPointerClass* GetLuaNumPuntos()
+	{
+		return (CEmptyPointerClass*)&m_NumPuntos;
+	}
+	CEmptyPointerClass* GetLuaOffsetX()
+	{
+		return (CEmptyPointerClass*)&m_OffsetX;
+	}
+	CEmptyPointerClass* GetLuaOffsetY()
+	{
+		return (CEmptyPointerClass*)&m_OffsetY;
+	}
 };
 
 #endif //LINE_RENDERER_H

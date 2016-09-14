@@ -15,6 +15,7 @@
 #include "AnimatedModels\AnimatedModelsManager.h"
 #include "ScriptManager\ScriptManager.h"
 #include "Camera\CameraControllerManager.h"
+#include "Camera\FPSCameraController.h"
 #include "Cinematics\CinematicManager.h"
 #include "PhysXManager\PhysXManager.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
@@ -278,7 +279,7 @@ void CUABEngine::Consola(float _x, float _y, float _w, float _h)
 		std::string command = text.substr(0, text.length() - 1);
 		m_ScriptManager->RunCode(command);
 		m_ActiveConsole = false;
-		m_Pause = false;
+		((CFPSCameraController*)m_CameraControllerManager->GetMainCamera())->Unlock();
 		text = "";
 	}
 }
