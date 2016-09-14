@@ -16,31 +16,12 @@ CLineRenderer::CLineRenderer(tinyxml2::XMLElement* TreeNode)
 	, m_Size(1.0f)
 {
 	ZeroMemory(&m_LineRenderableData, MAX_LINE_LENGHT*sizeof(MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX));
-	/*for (unsigned int i = 0; i < MAX_LINE_LENGHT; ++i )
-	{
-		m_LineRenderableData[i].Position = Vect3f(float(i), 1.0f, 0.0f);
-		m_LineRenderableData[i].Color = CColor(1.0f, 0.0f, 0.0f, 1.0f);
-	}*/
-/*
-	num puntos
-	offset x
-	offset y
-	tipo
-	max offset
-*/
+
 	m_PosInicial = TreeNode->GetVect3fProperty("posInicial", Vect3f(0, 0, 0));
 	m_PosFinal = TreeNode->GetVect3fProperty("posFinal", Vect3f(0, 0, 0));
 	m_NumPuntos = TreeNode->GetIntProperty("numPuntos", 1);
 	m_OffsetX = TreeNode->GetFloatProperty("offsetX", 1);
 	m_OffsetY = TreeNode->GetFloatProperty("offsetY", 1);
-	m_Type = TreeNode->GetIntProperty("type", 1);
-	m_MaxOffsetY = TreeNode->GetFloatProperty("maxOffsetY", 1);
-
-	
-	/*m_LineRenderableData[0].Position = Vect3f(1.0f, 0.0f, 0.0f);
-	m_LineRenderableData[0].Color = CColor(1.0f, 0.0f, 1.0f, 1.0f);
-	m_LineRenderableData[1].Position = Vect3f(1.0f, 4.0f, 0.0f);
-	m_LineRenderableData[1].Color = CColor(1.0f, 0.0f, 1.0f, 1.0f);*/
 	m_LinesCount = 1;
 	m_RenderableVertex = new CUABPointsListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_LineRenderableData, MAX_LINE_LENGHT, MAX_LINE_LENGHT, true);
 	m_Material = UABEngine.GetMaterialManager()->GetResource("Base");
@@ -84,19 +65,26 @@ void CLineRenderer::Save(FILE* _File)
 void CLineRenderer::Update(float ElapsedTime)
 {
 	Vect3f l_Dir = m_PosFinal - m_PosInicial;
-	float l_Distance = l_Dir.Length() / (m_NumPuntos + 2);
+	Vect3f l_PosI, l_PosF;
+	m_LinesCount = m_NumPuntos + 2;
+	float l_Distance = l_Dir.Length() / m_LinesCount;
 	l_Dir.Normalize();
-	m_LinesCount = m_NumPuntos + 1;
-	for (int i = 0; i < m_LinesCount; ++i)
+
+	l_PosF = m_PosInicial;
+
+	for (int i = 0; i < m_LinesCount-1; ++i)
 	{
-		Vect3f l_PosI = m_PosInicial + l_Dir*l_Distance*i;
-		l_PosI.y = UABEngine.GetRandomValue(l_PosI.y + m_OffsetY, l_PosI.y - m_OffsetY);
-		Vect3f l_PosF = m_PosInicial + l_Dir*l_Distance*(i+1);
+		l_PosI = l_PosF;
+		l_PosF = m_PosInicial + l_Dir*l_Distance*(i+1);
 		l_PosF.y = UABEngine.GetRandomValue(l_PosF.y + m_OffsetY, l_PosF.y - m_OffsetY);
 		m_LineRenderableData[i].Position = Vect4f(l_PosI, l_PosF.x);
 		m_LineRenderableData[i].UV = Vect2f(l_PosF.y, l_PosF.z);
 		m_LineRenderableData[i].Color = CColor(1.0f, 0.0f, 1.0f, 1.0f);
+		m_LineRenderableData[i+1].Position = Vect4f(l_PosF, 0);
 	}	
+	m_LineRenderableData[m_LinesCount-1].Position = Vect4f(l_PosF, m_PosFinal.x);
+	m_LineRenderableData[m_LinesCount-1].UV = Vect2f(m_PosFinal.y, m_PosFinal.z);
+	m_LineRenderableData[m_LinesCount-1].Color = CColor(1.0f, 0.0f, 1.0f, 1.0f);
 }
 
 void CLineRenderer::Render(CRenderManager *RM)

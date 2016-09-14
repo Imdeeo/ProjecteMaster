@@ -92,6 +92,7 @@
 #include "Particles\ParticleManager.h"
 #include "Particles\ParticleSystemType.h"
 #include "Particles\ParticleSystemInstance.h"
+#include "LineRenderer\LineRenderer.h"
 
 #include "Manchas\ManchasManager.h"
 #include "Manchas\ManchasSystemType.h"
@@ -1440,7 +1441,15 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_type", &CManchasSystemInstance::SetType)
 	];
 
-
+	//LINE RENDER
+	module(m_LS)[
+		class_<CLineRenderer, CRenderableObject>("CLineRenderer")
+			.def("get_pos_inicial", &CLineRenderer::GetLuaPosInciial)
+			.def("get_pos_final", &CLineRenderer::GetLuaPosFinal)
+			.def("get_num_puntos", &CLineRenderer::GetLuaNumPuntos)
+			.def("get_num_offsetX", &CLineRenderer::GetLuaOffsetX)
+			.def("get_num_offsetY", &CLineRenderer::GetLuaOffsetY)
+	];
 
 // GUI----------------------------------------------------------------------------------------------
 	module(m_LS)[	
