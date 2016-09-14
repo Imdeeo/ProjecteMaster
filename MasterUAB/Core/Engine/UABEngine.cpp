@@ -1,6 +1,6 @@
 #include "Engine\UABEngine.h"
-#include "XML\XMLTreeNode.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
+#include "XML\tinyxml2.h"
 
 #include "Utils.h"
 
@@ -30,7 +30,7 @@
 #include "DebugHelper\DebugHelper.h"
 #include "ContextManager\ContextManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
-#include "IA\AStar.h"
+#include "IA\AStarManager.h"
 #ifdef _DEBUG
 #include "DebugRender.h"
 #else
@@ -65,12 +65,13 @@ CUABEngine::CUABEngine(void)
 	m_GamePlayManager = new CGamePlayManager();
 	m_LevelManager = new CLevelManager();
 	m_ManchasManager = new CManchasManager();
-	m_AStarManager = new CAStar();
+	m_AStarManager = new CAStarManager();
 	m_ActiveConsole = false;
 }
 
 CUABEngine::~CUABEngine(void)
 {
+	CHECKED_DELETE(m_CinematicManager);
 	CHECKED_DELETE(m_SceneRendererCommandManager);
 	CHECKED_DELETE(m_TextureManager);
 	CHECKED_DELETE(m_RenderManager);
@@ -87,6 +88,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
 	CHECKED_DELETE(m_EffectManager);
 	CHECKED_DELETE(m_PhysXManager);
+	CHECKED_DELETE(m_GamePlayManager);
 	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_GUIManager)
 	CHECKED_DELETE(m_SoundManager);
@@ -94,7 +96,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_LevelManager);
 	CHECKED_DELETE(m_ManchasManager);
 	CHECKED_DELETE(m_AStarManager);
-	//CHECKED_DELETE(m_CinematicManager);
+	CHECKED_DELETE(m_InputManager);	
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
@@ -136,45 +138,36 @@ void CUABEngine::LoadScreen(const std::string _FileName)
 	CEffectVertexShader* l_EffectVertexShader;
 	CEffectPixelShader* l_EffectPixelShader;
 	CEffectTechnique* l_EffectTechnique;
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(_FileName.c_str()))
-	{
-		CXMLTreeNode l_Input = l_XML["load_screen"];
-		if (l_Input.Exists())
-		{
+	
+	tinyxml2::XMLDocument doc;
+	doc.LoadFile(_FileName.c_str());
+
+	tinyxml2::XMLElement* titleElement;
+	
+	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("vertex_shader");
+	l_EffectVertexShader = new CEffectVertexShader(titleElement);
+	l_EffectVertexShader->Load();
+
+	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("pixel_shader");
+	l_EffectPixelShader = new CEffectPixelShader(titleElement);
+	l_EffectPixelShader->Load();
+
+	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("effect_technique");
+	l_EffectName = titleElement->Attribute("name");
+	l_EffectTechnique = new CEffectTechnique(l_EffectVertexShader, l_EffectPixelShader, nullptr, l_EffectName);
+	
+	//RENDER DEL LOADSCREEN
+	CTexture* l_Texture = new CTexture();
+	l_Texture->Load("Data\\GUI\\textures\\Carga.png");
+	CContextManager* l_ContextManager = m_RenderManager->GetContextManager();
 			
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
-			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("vertex_shader"))
-				{
-					l_EffectVertexShader = new CEffectVertexShader(l_Element);
-					l_EffectVertexShader->Load();
-				}
-				else if (l_Element.GetName() == std::string("pixel_shader"))
-				{
-					l_EffectPixelShader = new CEffectPixelShader(l_Element);
-					l_EffectPixelShader->Load();
-				}			
-				else if (l_Element.GetName() == std::string("effect_technique"))
-				{
-					l_EffectName = l_Element.GetPszProperty("name");
-					l_EffectTechnique = new CEffectTechnique(l_EffectVertexShader, l_EffectPixelShader, nullptr, l_EffectName);
-				}
-			}
-			CTexture* l_Texture = new CTexture();
-			l_Texture->Load("Data\\GUI\\textures\\Carga.png");
-			CContextManager* l_ContextManager = m_RenderManager->GetContextManager();
-			
-			l_ContextManager->BeginRender();			
-			m_RenderManager->SetMatrixViewProjection();
-			m_RenderManager->Clear(true, true);
-			m_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
-			CEffectManager::SetSceneConstants(l_EffectTechnique);
-			m_RenderManager->DrawScreenQuad(l_EffectTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
-			l_ContextManager->EndRender();
-		}
-	}
+	l_ContextManager->BeginRender();			
+	m_RenderManager->SetMatrixViewProjection();
+	m_RenderManager->Clear(true, true);
+	m_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
+	CEffectManager::SetSceneConstants(l_EffectTechnique);
+	m_RenderManager->DrawScreenQuad(l_EffectTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
+	l_ContextManager->EndRender();
 }
 
 void CUABEngine::Init()
@@ -317,4 +310,4 @@ UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager *, GamePlayManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CLevelManager *, LevelManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CManchasManager *, ManchasManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CAStar *, AStarManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CAStarManager *, AStarManager)

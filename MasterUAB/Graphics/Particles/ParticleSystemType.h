@@ -7,11 +7,11 @@
 #include "Math\Color.h"
 #include "Materials\MaterialManager.h"
 #include "Texture\Texture.h"
+#include "XML\tinyxml2.h"
 
 #include <string>
 #include <vector>
 
-class CXMLTreeNode;
 
 class CParticleSystemType : public CNamed
 {
@@ -39,7 +39,7 @@ private:
 		Vect3f m_Acceleration1, m_Acceleration2;
 	};
 public:
-	CParticleSystemType(CXMLTreeNode &TreeNode);
+	CParticleSystemType(tinyxml2::XMLElement* TreeNode);
 	virtual ~CParticleSystemType(void);
 	void Destroy();
 	void Save(FILE* _File);

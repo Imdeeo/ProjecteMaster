@@ -6,7 +6,7 @@ class CSetRenderTargetSceneRendererCommand :
 	public CStagedTexturedSceneRendererCommand
 {
 public:
-	CSetRenderTargetSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CSetRenderTargetSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CSetRenderTargetSceneRendererCommand();
 
 	void Execute(CRenderManager &_RenderManager);

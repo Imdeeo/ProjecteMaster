@@ -5,18 +5,17 @@
 #include "Engine\UABEngine.h"
 
 #include "InputManager\InputManager.h"
-#include "XML\XMLTreeNode.h"
 
 #include "Layers\LayerManager.h"
 
-CFPSCameraController::CFPSCameraController(const CXMLTreeNode & _TreeNode) :CCameraController(_TreeNode)
+CFPSCameraController::CFPSCameraController(tinyxml2::XMLElement* TreeNode) :CCameraController(TreeNode)
 , m_Locked(false)
 , m_YawSpeed(2.5f)
 , m_PitchSpeed(2.f)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
-, m_Target(UABEngine.GetLayerManager()->GetResource(_TreeNode.GetPszProperty("layer"))->GetResource(_TreeNode.GetPszProperty("target")))
-, m_Offset(Vect3f(.0f, _TreeNode.GetFloatProperty("offset", .0f, true), .0f))
+, m_Target(UABEngine.GetLayerManager()->GetResource(TreeNode->GetPszProperty("layer"))->GetResource(TreeNode->GetPszProperty("target")))
+, m_Offset(Vect3f(.0f, TreeNode->GetFloatProperty("offset", .0f), .0f))
 {
 	m_Rotation.SetFromAngleAxis(m_Offset, 0);
 	m_Position = m_Target->GetPosition() + m_Offset;
@@ -62,22 +61,22 @@ void CFPSCameraController::AddYaw(float Radians)
 void CFPSCameraController::AddPitch(float Radians)
 { 
 	float l_Pitch = m_Rotation.EulerFromQuat().x;
-	//				80º						100º										-45º					-135º
+	//				80ï¿½						100ï¿½										-45ï¿½					-135ï¿½
 	if (((l_Pitch < 1.39626f || l_Pitch > 1.74533f) && Radians < .0f) || ((l_Pitch > -0.785398f || l_Pitch < -2.356194f) && Radians > .0f))
 		CCameraController::AddPitch(-Radians*m_PitchSpeed);
 }
 
 /*
-15º = 0.261799f
-30º = 0.523599f
-45º = 0.785398f
-60º = 1.0472f
-80º = 1.39626f
-100º = 1.74533f
-120º = 2.0944f
-135º = 2.356194f
-150º = 2.61799f
-165º = 2.87979f
+15ï¿½ = 0.261799f
+30ï¿½ = 0.523599f
+45ï¿½ = 0.785398f
+60ï¿½ = 1.0472f
+80ï¿½ = 1.39626f
+100ï¿½ = 1.74533f
+120ï¿½ = 2.0944f
+135ï¿½ = 2.356194f
+150ï¿½ = 2.61799f
+165ï¿½ = 2.87979f
 */
 
 void CFPSCameraController::SetCamera(CCamera *Camera) const
@@ -104,7 +103,7 @@ void CFPSCameraController::Update(float ElapsedTime)
 
 void CFPSCameraController::CopyFromKeyCamera(CCameraInfo* _CameraInfo)
 {
-	m_Fov = _CameraInfo->m_FOV;
-	Vect3f l_LookAt = _CameraInfo->m_LookAt - _CameraInfo->m_Eye;
-	m_Rotation.SetFromFwdUp(l_LookAt, _CameraInfo->m_Up);
+	m_Fov = _CameraInfo->GetFOV();
+	Vect3f l_LookAt = _CameraInfo->GetLookAt()- _CameraInfo->GetEye();
+	m_Rotation.SetFromFwdUp(l_LookAt, _CameraInfo->GetUp());
 }

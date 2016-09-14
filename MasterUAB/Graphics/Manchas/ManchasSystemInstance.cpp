@@ -1,6 +1,5 @@
 #include "ManchasSystemInstance.h"
 #include "ManchasManager.h"
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
 #include "ContextManager\ContextManager.h"
@@ -13,14 +12,14 @@
 #include "Camera\CameraControllerManager.h"
 #include "Math\MathUtils.h"
 
-CManchasSystemInstance::CManchasSystemInstance(CXMLTreeNode &TreeNode) : CRenderableObject(TreeNode), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
+CManchasSystemInstance::CManchasSystemInstance(tinyxml2::XMLElement* TreeNode) : CRenderableObject(TreeNode), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
 {
-	m_Awake = TreeNode.GetBoolProperty("awake");
+	m_Awake = TreeNode->GetBoolProperty("awake");
 	m_ActiveManchas = 0;
-	m_Type = UABEngine.GetInstance()->GetManchasManager()->GetResource(TreeNode.GetPszProperty("type"));
+	m_Type = UABEngine.GetInstance()->GetManchasManager()->GetResource(TreeNode->GetPszProperty("type"));
 	m_RenderableVertex = new CUABPointsListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(m_ManchasRenderableData, MAX_MANCHAS, MAX_MANCHAS, true);
 	m_NextParticleEmission = ComputeTimeToNextMancha();
-	m_Name = TreeNode.GetPszProperty("name");
+	m_Name = TreeNode->GetPszProperty("name");
 }
 
 CManchasSystemInstance::~CManchasSystemInstance(void)

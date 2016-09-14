@@ -7,7 +7,7 @@
 #include "Texture\DynamicTexture.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 
-CGenerateShadowMapsSceneRendererCommand::CGenerateShadowMapsSceneRendererCommand(CXMLTreeNode &TreeNode) :CSceneRendererCommand(TreeNode)
+CGenerateShadowMapsSceneRendererCommand::CGenerateShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode) :CSceneRendererCommand(TreeNode)
 {
 }
 

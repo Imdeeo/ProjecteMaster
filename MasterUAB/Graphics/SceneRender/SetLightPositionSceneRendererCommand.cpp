@@ -1,5 +1,4 @@
 #include "SetLightPositionSceneRendererCommand.h"
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
 #include "Lights\LightManager.h"
@@ -7,10 +6,10 @@
 
 #include "Materials\MaterialParameter.h"
 
-CSetLightPositionSceneRendererCommand::CSetLightPositionSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
+CSetLightPositionSceneRendererCommand::CSetLightPositionSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
 {
-	m_MaterialName = TreeNode.GetPszProperty("material");
-	m_LightName = TreeNode.GetPszProperty("light");
+	m_MaterialName = TreeNode->GetPszProperty("material");
+	m_LightName = TreeNode->GetPszProperty("light");
 }
 
 CSetLightPositionSceneRendererCommand::~CSetLightPositionSceneRendererCommand(){}

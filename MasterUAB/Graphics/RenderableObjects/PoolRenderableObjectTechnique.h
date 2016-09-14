@@ -3,10 +3,8 @@
 
 #include "Utils\Named.h"
 #include "RenderableObjectTechnique.h"
-
+#include "XML\tinyxml2.h"
 #include <vector>
-
-class CXMLTreeNode;
 
 class CPoolRenderableObjectTechnique : public CNamed
 {
@@ -21,7 +19,7 @@ private:
 	};
 	std::vector<CPoolRenderableObjectTechniqueElement *> m_RenderableObjectTechniqueElements;
 public:
-	CPoolRenderableObjectTechnique(CXMLTreeNode &TreeNode);
+	CPoolRenderableObjectTechnique(tinyxml2::XMLElement* TreeNode);
 	
 	virtual ~CPoolRenderableObjectTechnique();
 	void Destroy();

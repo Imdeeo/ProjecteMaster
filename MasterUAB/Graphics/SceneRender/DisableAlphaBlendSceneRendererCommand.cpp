@@ -3,7 +3,7 @@
 #include "RenderManager\RenderManager.h"
 
 
-CDisableAlphaBlendSceneRendererCommand::CDisableAlphaBlendSceneRendererCommand(CXMLTreeNode &TreeNode) : CSceneRendererCommand(TreeNode)
+CDisableAlphaBlendSceneRendererCommand::CDisableAlphaBlendSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
 {
 }
 

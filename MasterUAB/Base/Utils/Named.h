@@ -1,19 +1,18 @@
 #ifndef _NAMED_H
 #define _NAMED_H
 
-
-class CXMLTreeNode;
-class CEmptyPointerClass;
-
+#include "XML\tinyxml2.h"
 #include <string>
 #include "no_sillywarnings_please.h"
+
+class CEmptyPointerClass;
 
 class CNamed
 {
 protected:
 	std::string m_Name;
 public:
-	CNamed(const CXMLTreeNode &TreeNode);
+	CNamed(tinyxml2::XMLElement* TreeNode);
 	CNamed(const std::string &Name);
 	virtual void SetName(const std::string &Name);
 	virtual const std::string &GetName();

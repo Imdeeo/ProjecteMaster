@@ -8,13 +8,13 @@ class 'CFogEnemy' (CEnemy)
 		
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
-		self.m_RunSpeed = _TreeNode:get_float_property("run_speed", 5.0, false)
-		self.m_AngularRunSpeed = _TreeNode:get_float_property("angular_run_speed", 250.0, false)
+		self.m_RunSpeed = _TreeNode:get_float_property("run_speed", 5.0)
+		self.m_AngularRunSpeed = _TreeNode:get_float_property("angular_run_speed", 250.0)
 		
-		self.m_TimeToTeleport = _TreeNode:get_float_property("time_teleport", 1.0, false)
-		self.m_TeleportDistance = _TreeNode:get_float_property("teleport_distance", 5.0, false)
-		self.m_TimeNotLook = _TreeNode:get_float_property("time_not_look", 1.5, false)
-		self.m_AngleToTeleport = _TreeNode:get_float_property("angle_teleport", 0.35, false)
+		self.m_TimeToTeleport = _TreeNode:get_float_property("time_teleport", 1.0)
+		self.m_TeleportDistance = _TreeNode:get_float_property("teleport_distance", 5.0)
+		self.m_TimeNotLook = _TreeNode:get_float_property("time_not_look", 1.5)
+		self.m_AngleToTeleport = _TreeNode:get_float_property("angle_teleport", 0.35)
 		self.m_TeleportTimer = 0
 		self.m_StopTimer = 0		
 		self.m_TimerRotation = 0.0		

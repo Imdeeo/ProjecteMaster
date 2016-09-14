@@ -10,6 +10,7 @@ function State.create(update_function)
 	stt.n_conditions = 0
 	stt.conditions = {}
 	stt.is_first = false
+	stt.activate = true
 	return stt
 end
 
@@ -68,16 +69,24 @@ function StateMachine:update(args, elapsed_time)
 
 	local change = false
 	local prev_state
+	
 	for i = 0, state.n_conditions - 1 do
 		local cond = state.conditions[i]
-		if cond.condition(args) then
-			change = true
-			prev_state = self.actual_state
-			self.actual_state = cond.state2go
-			self.states[self.actual_state].is_first = true
+		if self.states[cond.state2go].activate then
+			if cond.condition(args) then
+				change = true
+				prev_state = self.actual_state
+				self.actual_state = cond.state2go
+				utils_log("self.actual_state"..self.actual_state)
+				self.states[self.actual_state].is_first = true
+			end
 		end
 	end
 	if(change)then
 		self.states[prev_state].do_end_function(args)
 	end
+end
+
+function StateMachine:activeState(state_name,active)
+	self.states[state_name].activate = active
 end

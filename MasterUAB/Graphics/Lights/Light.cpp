@@ -13,7 +13,6 @@
 #include "Texture\DynamicTexture.h"
 #include "Camera\Frustum.h"
 
-#include "XML\XMLTreeNode.h"
 //#include "RenderManager\RenderManager.h"
 
 CLight::CLight() : CNamed(""), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false), m_GenerateShadowMap(false), m_ShadowMap(nullptr)
@@ -26,28 +25,28 @@ CLight::CLight(std::string _name) : CNamed(_name), C3DElement(Vect3f(0, 0, 0)), 
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 }
 
-CLight::CLight(CXMLTreeNode &TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)
+CLight::CLight(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode), C3DElement(TreeNode)
 {
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
-	m_Type = GetLightTypeByName(TreeNode.GetPszProperty("type"));
+	m_Type = GetLightTypeByName(TreeNode->GetPszProperty("type"));
 	//m_Position = TreeNode.GetVect3fProperty("pos", Vect3f(0.0f, 0.0f, 0.0f), true);
-	m_Color = CColor(TreeNode.GetVect4fProperty("color", Vect4f(255.0f, 255.0f, 255.0f, 1.0f), true));
-	m_StartRangeAttenuation = TreeNode.GetFloatProperty("att_start_range");
-	m_EndRangeAttenuation = TreeNode.GetFloatProperty("att_end_range");
-	m_Intensity = TreeNode.GetFloatProperty("intensity");
-	m_Enabled = TreeNode.GetBoolProperty("enabled");
-	m_GenerateShadowMap = TreeNode.GetBoolProperty("generate_shadow_map");
+	m_Color = CColor(TreeNode->GetVect4fProperty("color", Vect4f(255.0f, 255.0f, 255.0f, 1.0f)));
+	m_StartRangeAttenuation = TreeNode->GetFloatProperty("att_start_range");
+	m_EndRangeAttenuation = TreeNode->GetFloatProperty("att_end_range");
+	m_Intensity = TreeNode->GetFloatProperty("intensity");
+	m_Enabled = TreeNode->GetBoolProperty("enabled");
+	m_GenerateShadowMap = TreeNode->GetBoolProperty("generate_shadow_map");
 	
 	if (m_GenerateShadowMap){
-		CXMLTreeNode l_Input = TreeNode["layer"];
-		if (l_Input.Exists())
+		tinyxml2::XMLElement* l_Element = TreeNode->FirstChildElement("layer");
+		if (l_Element!=NULL)
 		{
-			if (l_Input.GetName() == std::string("layer"))
+			if (l_Element->Name() == std::string("layer"))
 			{
-				m_Layers.push_back(UABEngine.GetLayerManager()->GetResource(l_Input.GetPszProperty("layer")));
+				m_Layers.push_back(UABEngine.GetLayerManager()->GetResource(l_Element->GetPszProperty("layer")));
 			}
 		}
-		m_ShadowMap = new CDynamicTexture("shadowmap", (int)TreeNode.GetFloatProperty("shadow_map_width"), (int)TreeNode.GetFloatProperty("shadow_map_height"), true, TreeNode.GetPszProperty("shadow_map_format"));
+		m_ShadowMap = new CDynamicTexture("shadowmap", (int)TreeNode->GetFloatProperty("shadow_map_width"), (int)TreeNode->GetFloatProperty("shadow_map_height"), true, TreeNode->GetPszProperty("shadow_map_format"));
 		//m_ShadowMaskTexture = new CTexture();
 		m_ShadowMaskTexture = nullptr;
 	}

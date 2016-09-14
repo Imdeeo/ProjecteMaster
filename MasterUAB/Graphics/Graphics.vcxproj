@@ -47,6 +47,7 @@
     <ClCompile Include="Lights\LightManager.cpp" />
     <ClCompile Include="Lights\OmniLight.cpp" />
     <ClCompile Include="Lights\SpotLight.cpp" />
+    <ClCompile Include="LineRenderer\LineRenderer.cpp" />
     <ClCompile Include="Manchas\ManchasManager.cpp" />
     <ClCompile Include="Manchas\ManchasSystemInstance.cpp" />
     <ClCompile Include="Manchas\ManchasSystemType.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="Effects\EffectTechnique.h" />
     <ClInclude Include="Effects\LightEffectParameters.h" />
     <ClInclude Include="Effects\SceneEffectParameters.h" />
+    <ClInclude Include="LineRenderer\LineRenderer.h" />
     <ClInclude Include="Manchas\ManchasManager.h" />
     <ClInclude Include="Manchas\ManchasSystemInstance.h" />
     <ClInclude Include="Manchas\ManchasSystemType.h" />

@@ -22,12 +22,12 @@ function PatrolUpdateAutomaton(args, _ElapsedTime)
 		l_Enemy.m_IsChasing = true
 		l_Enemy.m_State = "chase"
 	else
-		local l_NodePoint = l_Enemy.m_PathFindig:get_actual_patrol_point(l_Enemy.m_PatrolName)
+		local l_NodePoint = l_Enemy:GetActualPatrolPoint()
 		local l_PointPos = l_NodePoint.node.position
 		local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	
 		
 		if l_Distance <= l_Enemy.m_DistanceToChangeNodeWalking and l_NodePoint.wait == false then
-			l_Enemy.m_PathFindig:increment_actual_patrol_point(l_Enemy.m_PatrolName)
+			l_Enemy:IncrementePatrolPointIndex()
 			l_Enemy.m_TimerRotation = 0.0
 		elseif l_Distance <= 0.3 and l_NodePoint.wait then
 			l_Enemy.m_State = "alert"

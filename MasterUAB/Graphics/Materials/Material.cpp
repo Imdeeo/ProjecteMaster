@@ -1,6 +1,4 @@
 #include "Material.h"
-
-#include "XML\XMLTreeNode.h"
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "Effects\EffectManager.h"
@@ -23,23 +21,23 @@
 #define INDEX_CUBEMAP_TEXTURE 8
 #define INDEX_SPECULAR_TEXTURE 10
 
-CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0)
+CMaterial::CMaterial(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0)
 {
-	std::string l_RenderableObjectTechnique = TreeNode.GetPszProperty("renderable_object_technique","");
+	std::string l_RenderableObjectTechnique = TreeNode->GetPszProperty("renderable_object_technique","");
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_RenderableObjectTechnique);
-	CXMLTreeNode material = TreeNode;
+
+	tinyxml2::XMLElement* l_Element = TreeNode->FirstChildElement();
 	CEffectManager::m_RawDataCount = 0;
 	for (size_t i = 0; i < MAX_TEXTURES; i++)
 	{
 		m_Textures[i] = nullptr;
 	}
-	for (int i = 0; i < material.GetNumChildren(); ++i)
+	while (l_Element != NULL)
 	{
-		CXMLTreeNode l_Child = TreeNode(i);
-		if (l_Child.GetName() == std::string("texture"))
+		if (l_Element->Name() == std::string("texture"))
 		{
-			std::string l_TextureType = l_Child.GetPszProperty("type", "diffuse", true);
-			std::string l_FileName = l_Child.GetPszProperty("filename");
+			std::string l_TextureType = l_Element->GetPszProperty("type", "diffuse");
+			std::string l_FileName = l_Element->GetPszProperty("filename");
 			if (l_TextureType == "video")
 			{
 				IVideoManager* l_VideoManager = UABEngine.GetVideoManager(); 
@@ -88,47 +86,48 @@ CMaterial::CMaterial(const CXMLTreeNode &TreeNode) : CNamed(TreeNode), m_Current
 				}
 			}			
 		}
-		if (l_Child.GetName() == std::string("parameter"))
+		if (l_Element->Name() == std::string("parameter"))
 		{
-			CMaterialParameter::TMaterialType l_type = CMaterialParameter::GetTypeFromString(l_Child.GetPszProperty("type"));
+			CMaterialParameter::TMaterialType l_type = CMaterialParameter::GetTypeFromString(l_Element->GetPszProperty("type"));
 			std::string l_Description;
-			const char * l_existDescription = l_Child.GetPszProperty("description");
+			const char * l_existDescription = l_Element->GetPszProperty("description");
 			if (l_existDescription == NULL)
 			{
 				l_Description = "";
 			}
 			else
 			{
-				l_Description = l_Child.GetPszProperty("description");
+				l_Description = l_Element->GetPszProperty("description");
 			}
 			if (l_type == CMaterialParameter::FLOAT)
 			{
-				float Value = l_Child.GetFloatProperty("value");
+				float Value = l_Element->GetFloatProperty("value");
 				
-				m_Parameters.push_back(new CTemplatedMaterialParameter<float>(this, l_Child, Value, l_type, l_Description));
+				m_Parameters.push_back(new CTemplatedMaterialParameter<float>(this, l_Element, Value, l_type, l_Description));
 			}
 			if (l_type == CMaterialParameter::VECT2F)
 			{
-				Vect2f Value = l_Child.GetVect2fProperty("value",Vect2f(1.0f,1.0f));
-				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect2f>(this, l_Child, Value, l_type, l_Description));
+				Vect2f Value = l_Element->GetVect2fProperty("value", Vect2f(1.0f, 1.0f));
+				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect2f>(this, l_Element, Value, l_type, l_Description));
 			}
 			if (l_type == CMaterialParameter::VECT3F)
 			{
-				Vect3f Value = l_Child.GetVect3fProperty("value",Vect3f(1.0f,1.0f,1.0f));
-				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect3f>(this, l_Child, Value, l_type, l_Description));
+				Vect3f Value = l_Element->GetVect3fProperty("value", Vect3f(1.0f, 1.0f, 1.0f));
+				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect3f>(this, l_Element, Value, l_type, l_Description));
 			}
 			if (l_type == CMaterialParameter::VECT4F)
 			{
-				Vect4f Value = l_Child.GetVect4fProperty("value",Vect4f(1.0f,1.0f,1.0f,1.0f));
-				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect4f>(this, l_Child, Value, l_type, l_Description));
+				Vect4f Value = l_Element->GetVect4fProperty("value", Vect4f(1.0f, 1.0f, 1.0f, 1.0f));
+				m_Parameters.push_back(new CTemplatedMaterialParameter<Vect4f>(this, l_Element, Value, l_type, l_Description));
 			}
 			if (l_type == CMaterialParameter::COLOR)
 			{
-				Vect4f Value = l_Child.GetVect4fProperty("value", Vect4f(1.0f, 1.0f, 1.0f, 1.0f));
+				Vect4f Value = l_Element->GetVect4fProperty("value", Vect4f(1.0f, 1.0f, 1.0f, 1.0f));
 				CColor l_Aux(Value.x, Value.y, Value.z, Value.w);
-				m_Parameters.push_back(new CTemplatedMaterialParameter<CColor>(this, l_Child, l_Aux, l_type, l_Description));
+				m_Parameters.push_back(new CTemplatedMaterialParameter<CColor>(this, l_Element, l_Aux, l_type, l_Description));
 			}
 		}
+		l_Element = l_Element->NextSiblingElement();
 	}
 }
 
@@ -167,9 +166,6 @@ void CMaterial::Apply(CRenderableObjectTechnique *RenderableObjectTechnique)
 					if (l_Frame)
 					{
 						D3D11_TEXTURE2D_DESC textureDesc;
-						HRESULT result;
-						D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
-						D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
 
 						// Initialize the render target texture description.
 						ZeroMemory(&textureDesc, sizeof(textureDesc));

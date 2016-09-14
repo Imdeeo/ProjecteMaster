@@ -3,11 +3,10 @@
 
 #include "Utils\TemplatedVectorMapManager.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
-
+#include "XML\tinyxml2.h"
 #include <string>
 
 class CRenderManager;
-class CXMLTreeNode;
 
 class CLayerManager : public CTemplatedVectorMapManager<CRenderableObjectsManager>
 {
@@ -16,7 +15,7 @@ private:
 	CRenderableObjectsManager *m_DefaultLayer;
 	
 	
-	CRenderableObjectsManager * AddLayer(CXMLTreeNode &TreeNode, bool _Update = false);
+	CRenderableObjectsManager * AddLayer(tinyxml2::XMLElement* TreeNode, bool _Update = false);
 public:
 	CLayerManager();
 	virtual ~CLayerManager();
@@ -32,7 +31,7 @@ public:
 #endif
 	CRenderableObjectsManager * GetLayer();
 	CRenderableObjectsManager * GetLayer(std::string _layer);
-	CRenderableObjectsManager * GetLayer(CXMLTreeNode &Node);	
+	CRenderableObjectsManager * GetLayer(tinyxml2::XMLElement* TreeNode);
 };
 
 #endif //H_LAYER_MANAGER_H

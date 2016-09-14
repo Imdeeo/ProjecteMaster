@@ -2,6 +2,7 @@
 #define EFFECT_SHADER_H
 
 #include "Utils\Named.h"
+#include "XML\tinyxml2.h"
 #include <vector>
 
 #define SCENE_CONSTANT_BUFFER_ID	0
@@ -40,7 +41,7 @@ protected:
 	bool CreateConstantBuffer(int IdBuffer, unsigned int BufferSize, bool Dynamic);
 	bool CreateConstantBuffer();
 public:
-	CEffectShader(const CXMLTreeNode &TreeNode);
+	CEffectShader(tinyxml2::XMLElement* TreeNode);
 	virtual ~CEffectShader();
 	virtual bool Load() = 0;
 	virtual bool Reload() = 0;
@@ -57,7 +58,7 @@ protected:
 
 	void Destroy();
 public:
-	CEffectVertexShader(const CXMLTreeNode &TreeNode);
+	CEffectVertexShader(tinyxml2::XMLElement* TreeNode);
 	virtual ~CEffectVertexShader() { Destroy(); }
 
 	bool Load();
@@ -74,7 +75,7 @@ protected:
 
 	void Destroy();
 public:
-	CEffectPixelShader(const CXMLTreeNode &TreeNode);
+	CEffectPixelShader(tinyxml2::XMLElement* TreeNode);
 	virtual ~CEffectPixelShader() { Destroy(); }
 	bool Reload();
 	bool Load();
@@ -90,7 +91,7 @@ protected:
 
 	void Destroy();
 public:
-	CEffectGeometryShader(const CXMLTreeNode &TreeNode);
+	CEffectGeometryShader(tinyxml2::XMLElement* TreeNode);
 	virtual ~CEffectGeometryShader(){ Destroy(); }
 	bool Reload();
 	bool Load();

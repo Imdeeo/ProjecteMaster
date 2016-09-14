@@ -2,6 +2,7 @@
 #define INC_CAMERAFPSHOOTER_H_
 
 #include "Camera\CameraController.h"
+#include "XML\tinyxml2.h"
 
 class CCamera;
 class CCameraInfo;
@@ -18,7 +19,7 @@ private:
 	CRenderableObject*			m_Target;
 	Vect3f						m_Offset;
 public:
-	CFPSCameraController(const CXMLTreeNode & _TreeNode);
+	CFPSCameraController(tinyxml2::XMLElement* TreeNode);
 	virtual ~CFPSCameraController();
 	
 	void SetCamera(CCamera *Camera) const;

@@ -1,7 +1,7 @@
 #ifndef CAPTURED_FRAME_BUFFER_TEXTURE_H
 #define CAPTURED_FRAME_BUFFER_TEXTURE_H
 #include "Texture.h"
-
+#include "XML\tinyxml2.h"
 class ID3D11Texture2D;
 
 class CCapturedFrameBufferTexture :
@@ -18,7 +18,7 @@ protected:
 	bool CreateSamplerState();
 public:
 	bool Reload();
-	CCapturedFrameBufferTexture(const CXMLTreeNode &_TreeNode);
+	CCapturedFrameBufferTexture(tinyxml2::XMLElement* TreeNode);
 	CCapturedFrameBufferTexture(const std::string &_Name, unsigned int _Width, unsigned int _Height);
 	virtual ~CCapturedFrameBufferTexture();
 

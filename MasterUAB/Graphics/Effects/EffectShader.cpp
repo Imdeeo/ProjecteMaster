@@ -11,8 +11,6 @@
 #include "RenderableObjects\VertexTypes.h"
 #include "Utils.h"
 
-#include "XML\XMLTreeNode.h"
-
 #include <assert.h>
 
 #include <d3dcommon.h>
@@ -25,11 +23,11 @@
 
 #include <D3Dcompiler.h>
 
-CEffectShader::CEffectShader(const CXMLTreeNode &TreeNode):CNamed(TreeNode){
-	m_Filename = TreeNode.GetPszProperty("file");
-	m_ShaderModel = TreeNode.GetPszProperty("shader_model");
-	m_EntryPoint = TreeNode.GetPszProperty("entry_point");
-	m_Preprocessor = TreeNode.GetPszProperty("preprocessor","");
+CEffectShader::CEffectShader(tinyxml2::XMLElement* TreeNode) :CNamed(TreeNode){
+	m_Filename = TreeNode->GetPszProperty("file");
+	m_ShaderModel = TreeNode->GetPszProperty("shader_model");
+	m_EntryPoint = TreeNode->GetPszProperty("entry_point");
+	m_Preprocessor = TreeNode->GetPszProperty("preprocessor", "");
 }
 
 CEffectShader::~CEffectShader(void)
@@ -197,11 +195,11 @@ ID3D11Buffer * CEffectShader::GetConstantBuffer(unsigned int IdBuffer)
 }
 
 // ----------------------------- VERTEX SHADER ----------------------------
-CEffectVertexShader::CEffectVertexShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode),
-	m_VertexShader(nullptr),
-	m_VertexLayout(nullptr)	
+CEffectVertexShader::CEffectVertexShader(tinyxml2::XMLElement* TreeNode) :CEffectShader(TreeNode),
+m_VertexShader(nullptr),
+m_VertexLayout(nullptr)
 {
-	m_VertexType = TreeNode.GetPszProperty("vertex_type");
+	m_VertexType = TreeNode->GetPszProperty("vertex_type");
 }
 
 void CEffectVertexShader::Destroy()
@@ -301,8 +299,8 @@ ID3D11InputLayout*  CEffectVertexShader::GetVertexLayout()
 }
 
 // ----------------------------- PIXEL SHADER ----------------------------
-CEffectPixelShader::CEffectPixelShader(const CXMLTreeNode &TreeNode):CEffectShader(TreeNode),
-	m_PixelShader(nullptr)
+CEffectPixelShader::CEffectPixelShader(tinyxml2::XMLElement* TreeNode) : CEffectShader(TreeNode),
+m_PixelShader(nullptr)
 {
 }
 
@@ -354,7 +352,7 @@ ID3D11PixelShader* CEffectPixelShader::GetPixelShader()
 }
 
 // ----------------------------- GEOMETRY SHADER ----------------------------
-CEffectGeometryShader::CEffectGeometryShader(const CXMLTreeNode &TreeNode) :CEffectShader(TreeNode),
+CEffectGeometryShader::CEffectGeometryShader(tinyxml2::XMLElement* TreeNode) : CEffectShader(TreeNode),
 m_GeometryShader(nullptr)
 {
 }

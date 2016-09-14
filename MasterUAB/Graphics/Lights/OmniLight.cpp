@@ -1,5 +1,4 @@
 #include "OmniLight.h"
-#include "XML\XMLTreeNode.h"
 #include "Camera\Frustum.h"
 
 #include <assert.h>
@@ -11,7 +10,7 @@ COmniLight::COmniLight(std::string _name) : CLight(_name)
 	m_Type = GetLightTypeByName("omni");
 }
 
-COmniLight::COmniLight(CXMLTreeNode &TreeNode) : CLight(TreeNode){}
+COmniLight::COmniLight(tinyxml2::XMLElement* TreeNode) : CLight(TreeNode){}
 
 void COmniLight::SetShadowMap(CRenderManager &RenderManager)
 {

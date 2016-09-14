@@ -9,13 +9,12 @@
 #include "Materials\MaterialManager.h"
 #include "Utils.h"
 #include "VideoManager\VideoManager.h"
-#include "XML\XMLTreeNode.h"
 #include "theoraplayer\TheoraPlayer.h"
 #include "Texture\DynamicTexture.h"
 #include "Math\Color.h"
 #include "D3D11.h"
 
-CDrawVideoQuadRendererCommand::CDrawVideoQuadRendererCommand(CXMLTreeNode &TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
+CDrawVideoQuadRendererCommand::CDrawVideoQuadRendererCommand(tinyxml2::XMLElement* TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
 {
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("MV_POSITION4_NORMAL_TEXTURE_VERTEX");
 	m_Texture = new CDynamicTexture("pepe", 360, 400, false, "r8u");

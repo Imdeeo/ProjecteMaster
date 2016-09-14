@@ -12,7 +12,7 @@ private:
 	std::string m_MaterialName;
 	std::string m_LightName;
 public:
-	CSetLightPositionSceneRendererCommand(CXMLTreeNode &TreeNode);
+	CSetLightPositionSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CSetLightPositionSceneRendererCommand();
 	virtual void Execute(CRenderManager &RenderManager);
 };

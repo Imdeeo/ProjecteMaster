@@ -3,7 +3,7 @@
 
 #include "Utils\Named.h"
 #include "3DElement\3DElement.h"
-
+#include "XML\tinyxml2.h"
 #include <vector>
 
 #include "Math\Color.h"
@@ -13,7 +13,6 @@ class CTexture;
 class CRenderableVertexs;
 class CRenderManager;
 class CRenderableObjectsManager;
-class CXMLTreeNode;
 class CFrustum;
 
 class CLight : public CNamed, public C3DElement
@@ -57,7 +56,7 @@ protected:
 
 public:
 
-	CLight(CXMLTreeNode &TreeNode);
+	CLight(tinyxml2::XMLElement* TreeNode);
 	CLight(std::string _name);
 	CLight();
 	virtual ~CLight();

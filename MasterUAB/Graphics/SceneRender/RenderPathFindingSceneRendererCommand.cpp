@@ -5,9 +5,9 @@
 #include "DebugRender.h"
 #include "Effects\EffectManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
-#include "IA\AStar.h"
+#include "IA\AStarManager.h"
 
-CRenderPathFindingSceneRendererCommand::CRenderPathFindingSceneRendererCommand(CXMLTreeNode &TreeNode) :CSceneRendererCommand(TreeNode)
+CRenderPathFindingSceneRendererCommand::CRenderPathFindingSceneRendererCommand(tinyxml2::XMLElement* TreeNode) :CSceneRendererCommand(TreeNode)
 {
 }
 
@@ -18,6 +18,6 @@ CRenderPathFindingSceneRendererCommand::~CRenderPathFindingSceneRendererCommand(
 void CRenderPathFindingSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
 #ifdef _DEBUG
-	UABEngine.GetInstance()->GetAStarManager()->Render(&RenderManager);
+	UABEngine.GetInstance()->GetAStarManager()->GetResource("level_" + UABEngine.GetLevelLoaded())->Render(&RenderManager);
 #endif
 }

@@ -28,6 +28,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="COBRE2" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_mueble_cobre.dds"/>
@@ -43,6 +46,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="COMPO_ORNAM" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\puertarecibidor_DIFF.dds"/>
@@ -59,6 +63,7 @@
 		<parameter type="float" name="specular_factor" value="0.510000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.100000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="COMPO_ORNAMENTO" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\puertarecibidor_DIFF.dds"/>
@@ -75,6 +80,7 @@
 		<parameter type="float" name="specular_factor" value="0.500000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.100000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Cable" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_cable.dds"/>
@@ -87,6 +93,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="Carpet" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_carpet_roja.dds"/>
@@ -99,6 +108,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="CobreClaro" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_distinto.dds"/>
@@ -115,6 +127,7 @@
 		<parameter type="float" name="specular_factor" value="0.500000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="CobreOscuro" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_distintooscuro.dds"/>
@@ -131,6 +144,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="CobreTuboGeneral" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_oscuro.dds"/>
@@ -147,6 +161,7 @@
 		<parameter type="float" name="specular_factor" value="0.720000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="0.847000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Cobre_BordesyEncimera" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_mueble_cobre.dds"/>
@@ -163,6 +178,7 @@
 		<parameter type="float" name="specular_factor" value="0.560000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.500000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Cobre_Clavijas" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_distinto.dds"/>
@@ -175,6 +191,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="Cobre_Columnas" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_mueble_cobre.dds"/>
@@ -191,6 +210,7 @@
 		<parameter type="float" name="specular_factor" value="0.830000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="0.612000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Cobre_Detalles" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_mueble_cobre.dds"/>
@@ -203,6 +223,9 @@
 		<parameter type="float" name="specular_factor" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="Cobre_Pomos" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_distinto.dds"/>
@@ -215,6 +238,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="ColorGradingMaterial" renderable_object_technique="colorgrading">
 		<parameter type="float" name="ColorGradingActive" value="1.000000" description=""/>
@@ -238,6 +264,7 @@
 		<parameter type="float" name="specular_factor" value="0.400000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.100000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="FlareBlurMaterial" renderable_object_technique="flare_blur">
 		<parameter type="float" name="TextureSize" value="256.000000" description=""/>
@@ -282,6 +309,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="HDAOMaterial" renderable_object_technique="hdao">
 		<parameter type="float" name="HDAOActive" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
@@ -307,6 +335,9 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="MADERA_PUERTA" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_madera_caoba1.dds"/>
@@ -323,6 +354,7 @@
 		<parameter type="float" name="specular_factor" value="0.360000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.103000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Madera" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_madera_caoba.dds"/>
@@ -339,6 +371,7 @@
 		<parameter type="float" name="specular_factor" value="0.520000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.106000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="MaderaCajones" renderable_object_technique="bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_madera_caoba1.dds"/>
@@ -352,6 +385,7 @@
 		<parameter type="float" name="specular_factor" value="0.510000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.098000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Madera_Cajones" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_madera_caoba1.dds"/>
@@ -368,6 +402,7 @@
 		<parameter type="float" name="specular_factor" value="0.710000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.116000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Madera_TechoBase" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_madera_caoba1.dds"/>
@@ -384,6 +419,7 @@
 		<parameter type="float" name="specular_factor" value="0.660000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.433000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Material #0" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_distintooscuro.dds"/>
@@ -400,6 +436,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Material #1" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_distinto.dds"/>
@@ -416,6 +453,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Metal" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_metal_negro.dds"/>
@@ -431,6 +469,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.359000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Metal Clavijas" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_oscuro.dds"/>
@@ -446,6 +485,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Metal Lampara" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_distinto.dds"/>
@@ -461,6 +501,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Metal Tubos Satelite" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre.dds"/>
@@ -476,6 +517,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Metal_Negro_Base" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_metal_negro.dds"/>
@@ -491,6 +533,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.545000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Metal_Negro_Cuerpo" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_metal_negro.dds"/>
@@ -506,6 +549,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.189000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="NoiseAndVignettingMaterial" renderable_object_technique="noise_and_vignetting">
 		<texture type="diffuse" filename="Data\GUI\Textures\vignetting.png"/>
@@ -525,6 +569,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="Pinturas" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\Recibidor_Pinturas.dds"/>
@@ -537,6 +584,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="Pomo" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\puerta_cobre_recibidor.dds"/>
@@ -552,6 +602,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="0.482000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="PomoPuertaAnimada" renderable_object_technique="specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\puerta_cobre_recibidor.dds"/>
@@ -564,6 +615,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Pomos" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_metal_gris_brillante.dds"/>
@@ -576,6 +628,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="PomosCajones" renderable_object_technique="bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_mueble_cobre.dds"/>
@@ -589,6 +644,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="RecibidorMarcoCuadroSimple" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\cuadro_simple1_DIFF.dds"/>
@@ -605,6 +661,7 @@
 		<parameter type="float" name="specular_factor" value="0.460000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Reloj" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\lampara_techo_gauge_recibidor.dds"/>
@@ -617,6 +674,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="SSRMaterial" renderable_object_technique="ssr">
 		<parameter type="float" name="enabled" value="1.000000" description=""/>
@@ -641,6 +701,7 @@
 		<parameter type="float" name="specular_factor" value="0.660000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Suelo" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_marmol_verde.dds"/>
@@ -656,6 +717,7 @@
 		<parameter type="float" name="specular_factor" value="0.360000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="0.747000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.247000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Techo" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\techo_recibidor_DIF.dds"/>
@@ -672,6 +734,7 @@
 		<parameter type="float" name="specular_factor" value="0.470000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="0.359000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Terciopelo_Lila_Interior" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_vitrina_terciopelo.dds"/>
@@ -684,6 +747,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="TuboReforzado" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_oscuro.dds"/>
@@ -699,6 +765,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Tubo_Aeracion" renderable_object_technique="radiosity_bump">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_aeracion.dds"/>
@@ -712,6 +779,9 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="Tubo_Centro" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_distinto.dds"/>
@@ -728,6 +798,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="0.690000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="Tubo_Detalle" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_cobre_marron.dds"/>
@@ -744,6 +815,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="TubosColumnasOtros" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_ventana.dds"/>
@@ -760,6 +832,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="VidrioSubmarino" renderable_object_technique="glossiness">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_ventana_submarino.dds"/>
@@ -771,6 +844,9 @@
 		<parameter type="float" name="specular_factor" value="0.750000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="VidrioVitrinaDerecha" renderable_object_technique="glossiness">
 		<texture type="diffuse" filename="Data\level_1\Textures\Vitrina_Vidrio_Transparente_Manchas.dds"/>
@@ -782,6 +858,9 @@
 		<parameter type="float" name="specular_factor" value="0.750000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="VidrioVitrinaIzquierda" renderable_object_technique="glossiness">
 		<texture type="diffuse" filename="Data\level_1\Textures\Vitrina_Vidrio_Transparente_Manchas.dds"/>
@@ -793,6 +872,9 @@
 		<parameter type="float" name="specular_factor" value="0.750000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="VortexMaterial" renderable_object_technique="vortex">
 		<parameter type="float" name="enabled" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
@@ -817,6 +899,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="automaton_material_2" renderable_object_technique="animated_glow">
 		<texture type="diffuse" filename="Data/AnimatedModels/Automaton/Automata_Ojos.dds"/>
@@ -826,6 +911,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="caged_automaton_material_1" renderable_object_technique="animated_specular">
 		<texture type="diffuse" filename="Data/AnimatedModels/CagedAutomaton/automata.dds"/>
@@ -839,6 +927,7 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="caged_automaton_material_2" renderable_object_technique="animated_glow">
 		<texture type="diffuse" filename="Data/AnimatedModels/CagedAutomaton/Automata_Ojos.dds"/>
@@ -848,6 +937,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="clavos" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\puerta_cobre_recibidor.dds"/>
@@ -864,6 +956,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="cobre_ventana_submarino" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_columna.dds"/>
@@ -880,6 +973,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="engranajesgrandes" renderable_object_technique="bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_distinto2.dds"/>
@@ -893,6 +987,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="hojapapel1" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_hojaspapel.dds"/>
@@ -905,6 +1000,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="hojapapel2" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_hojaspapel2.dds"/>
@@ -917,6 +1015,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="hojapapel3" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\blueprintlorerecibidor.dds"/>
@@ -929,6 +1030,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="hueso" renderable_object_technique="lights">
 		<texture type="diffuse" filename="Data\level_1\Textures\HuesoColgante.dds"/>
@@ -941,6 +1045,9 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="jaheem_material" renderable_object_technique="animated_bump">
 		<texture type="diffuse" filename="Data/AnimatedModels/Jaheem/brazosjaheem.dds"/>
@@ -951,6 +1058,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="lampara_techo_cobre" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\puerta_cobre_recibidor.dds"/>
@@ -966,6 +1076,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="0.776000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="lampara_techo_luz_recibidor" renderable_object_technique="lights_glow">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_bombilla_temporal.dds"/>
@@ -975,6 +1086,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="lampara_techo_medidor_recibidor" renderable_object_technique="radiosity">
 		<texture type="diffuse" filename="Data\level_1\Textures\lampara_techo_gauge_recibidor.dds"/>
@@ -987,6 +1101,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="lampara_techo_metal_recibidor" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_metal_negro.dds"/>
@@ -1002,6 +1119,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="marcoremaches" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_ventana.dds"/>
@@ -1017,6 +1135,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.024000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="ms_manchas1" renderable_object_technique="manchas">
 		<texture type="diffuse" filename="Data\Particles\stains.png"/>
@@ -1033,6 +1152,9 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="pedestal" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_metal_negro.dds"/>
@@ -1048,6 +1170,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.367000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="perpetuum_base" renderable_object_technique="bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_perpetuum_madera.dds"/>
@@ -1061,6 +1184,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="perpetuum_bolas" renderable_object_technique="lights">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_metal_negro.dds"/>
@@ -1070,6 +1194,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="perpetuum_rueda" renderable_object_technique="bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\puerta_cobre_recibidor.dds"/>
@@ -1083,6 +1210,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="ps_polvo_material" renderable_object_technique="particle">
 		<texture type="diffuse" filename="Data\Particles\PolvoSingular.png"/>
@@ -1111,6 +1239,7 @@
 		<parameter type="float" name="specular_factor" value="0.440000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="reflejoluz" renderable_object_technique="alpha_blend">
 		<texture type="diffuse" filename="Data\level_1\Textures\lampara_techo_reflejos1.png"/>
@@ -1120,6 +1249,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="shackles_material" renderable_object_technique="animated_bump">
 		<texture type="diffuse" filename="Data/AnimatedModels/Jaheem/brazosjaheem.dds"/>
@@ -1130,6 +1262,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="tubocentral" renderable_object_technique="radiosity_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_distinto.dds"/>
@@ -1145,6 +1280,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="tuboscolumna" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_columna2.dds"/>
@@ -1161,6 +1297,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="tubosventana" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_ventana.dds"/>
@@ -1177,6 +1314,7 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="turret_material_1" renderable_object_technique="animated">
 		<texture type="diffuse" filename="Data/AnimatedModels/TurretAutomaton/Torreta.dds"/>
@@ -1186,6 +1324,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="turret_material_2" renderable_object_technique="animated">
 		<texture type="diffuse" filename="Data/AnimatedModels/TurretAutomaton/recibidor_metal_negro.dds"/>
@@ -1195,6 +1336,9 @@
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
 	</material>
 	<material name="valvula1" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\puerta_cobre_recibidor.dds"/>
@@ -1211,6 +1355,7 @@
 		<parameter type="float" name="specular_factor" value="0.540000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 	<material name="valvula3" renderable_object_technique="radiosity_bump_specularmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_columna2.dds"/>
@@ -1227,5 +1372,6 @@
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
 	</material>
 </materials>
