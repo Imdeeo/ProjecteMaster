@@ -39,11 +39,11 @@ void CSphericalCameraController::Update(float ElapsedTime)
 		cameraMovement.y = -UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisY);
 		Rotate(cameraMovement);
 	}
-	if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::Mouse3))
+	if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::Mouse5))
 	{
 		m_Zoom -= 0.1f;
 	}
-	else if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::Mouse4))
+	else if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::Mouse6))
 	{
 		m_Zoom += 0.1f;
 	}

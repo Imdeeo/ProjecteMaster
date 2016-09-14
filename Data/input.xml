@@ -5,6 +5,10 @@
 	<action name="MiddleClick" device="Mouse" key="MouseButtonMiddle"/>
 	<action name="WheelUp" device="Mouse" key="MouseButtonWheelUp"/>
 	<action name="WheelDown" device="Mouse" key="MouseButtonWheelDown"/>
+	<action name="Mouse3" device="Mouse" key="MouseButton3"/>
+	<action name="Mouse4" device="Mouse" key="MouseButton4"/>
+	<action name="Mouse5" device="Mouse" key="MouseButton5"/>
+	<action name="Mouse6" device="Mouse" key="MouseButton6"/>
 	
 	<axis name="AxisX" device="Mouse" key="MouseAxisX"/>
 	<axis name="AxisY" device="Mouse" key="MouseAxisY"/>
