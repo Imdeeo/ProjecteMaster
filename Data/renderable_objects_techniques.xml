@@ -3,6 +3,7 @@
 	<pool_renderable_object_technique name="forward_shading">		
 		<renderable_object_technique name="debug_lights" technique="render_lights_technique"/>
 		<renderable_object_technique name="debug_grid" technique="debug_render_technique"/>		
+		<renderable_object_technique name="line_renderer" technique="line_render_technique"/>
 		<renderable_object_technique name="animated" technique="animated_technique"/>
 		<renderable_object_technique name="animated_bump" technique="animated_bump_technique"/>
 		<renderable_object_technique name="lights" technique="lights_technique"/>
@@ -40,7 +41,6 @@
 		<renderable_object_technique name="animated_glow" technique="animated_glow_deferred_technique"/>
 		<renderable_object_technique name="animated_specular" technique="animated_bump_specular_def_technique"/>
 		<renderable_object_technique name="glossiness" technique="env_glossiness_deferred_technique"/>
-		<renderable_object_technique name="bump_glossiness" technique="bump_env_glossiness_deferred_technique"/>
 		<renderable_object_technique name="specularmap" technique="env_specularmap_deferred_technique"/>
 		<renderable_object_technique name="metalnessmap" technique="env_metalnessmap_deferred_technique"/>
 		<renderable_object_technique name="bump_metalnessmap" technique="bump_env_metalnessmap_deferred_technique"/>
@@ -49,8 +49,6 @@
 		<renderable_object_technique name="bump_specularmap" technique="bump_env_specularmap_deferred_technique"/>
 		<renderable_object_technique name="radiosity_bump_specularmap" technique="radiosity_bump_env_specularmap_deferred_technique"/>
 		<renderable_object_technique name="radiosity_specularmap" technique="radiosity_env_specularmap_deferred_technique"/>
-		<renderable_object_technique name="radiosity_bump_glossiness" technique="radiosity_bump_env_glossiness_deferred_technique"/>
-		<renderable_object_technique name="radiosity_glossiness" technique="radiosity_env_glossiness_deferred_technique"/>
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_deferred_technique"/>
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="generate_shadowmap_pool">
@@ -69,7 +67,6 @@
 		<renderable_object_technique name="animated_bump" technique="generate_shadowmap_animated_technique"/>
 		<renderable_object_technique name="animated_specular" technique="generate_shadowmap_animated_technique"/>
 		<renderable_object_technique name="glossiness" technique="generate_shadowmap_bump_technique"/>
-		<renderable_object_technique name="bump_glossiness" technique="generate_shadowmap_bump_technique"/>
 		<renderable_object_technique name="specularmap" technique="generate_shadowmap_bump_technique"/>
 		<renderable_object_technique name="metalnessmap" technique="generate_shadowmap_bump_technique"/>
 		<renderable_object_technique name="bump_metalnessmap" technique="generate_shadowmap_bump_technique"/>
@@ -78,9 +75,6 @@
 		<renderable_object_technique name="bump_specularmap" technique="generate_shadowmap_bump_technique"/>
 		<renderable_object_technique name="radiosity_bump_specularmap" technique="generate_shadowmap_bump_technique"/>
 		<renderable_object_technique name="radiosity_specularmap" technique="generate_shadowmap_bump_technique"/>
-		<renderable_object_technique name="radiosity_bump_glossiness" technique="generate_shadowmap_bump_technique"/>
-		<renderable_object_technique name="radiosity_glossiness" technique="generate_shadowmap_technique"/>
-		
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="deferred_shading_lighting">
 		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="deff_technique"/>	
