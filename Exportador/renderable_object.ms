@@ -30,7 +30,28 @@ fn createInstanceMesh dir filename Objs=
 			if (getUserProp Objs[i] "render_layer") == "triggers" then
 			(
 				core = (getUserProp Objs[i] "core_name")
-				format "\t<instance_mesh name=\"%\" layer =\"triggers\" on_trigger_enter=\"%\" on_trigger_exit=\"%\" on_trigger_stay=\"%\" is_active=\"true\" core_name=\"%\" position=\"% % %\" rotation=\"% % % %\" create_physics=\"true\" physics_type=\"%\" physics_material=\"%\" physics_group=\"%\" visible=\"%\">\n" Objs[i].name (getUserProp Objs[i] "on_trigger_enter") (getUserProp Objs[i] "on_trigger_exit") (getUserProp Objs[i] "on_trigger_stay") core pos[1] pos[2] pos[3] rot.x rot.y rot.z rot.w (getUserProp Objs[i] "physics_generate_type") (getUserProp Objs[i] "physics_material") (getUserProp Objs[i] "physics_layer") true to:file
+				local l_TriggerEnterString
+				local l_TriggerExitString
+				local l_TriggerStayString
+				if (getUserProp Objs[i] "on_trigger_enter") == "" then
+				(
+					l_TriggerEnterString = ""
+				) else (
+					l_TriggerEnterString = "on_trigger_enter=\""+(getUserProp Objs[i] "on_trigger_enter")+"\" "
+				)
+				if (getUserProp Objs[i] "on_trigger_exit") == ""  then
+				(
+					l_TriggerExitString = ""
+				) else (
+					l_TriggerExitString = "on_trigger_exit=\""+(getUserProp Objs[i] "on_trigger_exit")+"\" "
+				)
+				if (getUserProp Objs[i] "on_trigger_stay") == "" then
+				(
+					l_TriggerStayString = ""
+				) else (
+					l_TriggerStayString = "on_trigger_stay=\""+(getUserProp Objs[i] "on_trigger_stay")+"\" "
+				)
+				format "\t<instance_mesh name=\"%\" layer=\"triggers\" %%%is_active=\"true\" core_name=\"%\" position=\"% % %\" rotation=\"% % % %\" create_physics=\"true\" physics_type=\"%\" physics_material=\"%\" physics_group=\"%\" visible=\"%\">\n" Objs[i].name l_TriggerEnterString l_TriggerExitString l_TriggerStayString core pos[1] pos[2] pos[3] rot.x rot.y rot.z rot.w (getUserProp Objs[i] "physics_generate_type") (getUserProp Objs[i] "physics_material") (getUserProp Objs[i] "physics_layer") true to:file
 				format "\t\t<active_actor actor_name=\"player\"/>\n" to:file
 				format "\t</instance_mesh>\n" to:file
 			) else (

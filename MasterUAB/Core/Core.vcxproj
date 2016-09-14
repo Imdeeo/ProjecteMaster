@@ -27,7 +27,9 @@
     <ClCompile Include="InputManager\InputManager.cpp" />
     <ClCompile Include="InputManager\KeyboardInput.cpp" />
     <ClCompile Include="LevelManager\LevelManager.cpp" />
-    <ClCompile Include="ScriptManager\ScriptManager.cpp" />
+    <ClCompile Include="ScriptManager\ScriptManager.cpp">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugHelper\DebugHelper.h" />

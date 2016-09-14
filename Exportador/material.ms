@@ -18,14 +18,16 @@ fn getMaterials arx Obj =
 		)
 		else
 		(
-			writeLong arx 1
+			writeLong arx n_materials
 			WriteShort arx Obj.material.name.count #unsigned
 			writeString arx Obj.material.name
 		)
 	)
 	else
 	(
-		n_materials = 0
+		writeLong arx n_materials
+		WriteShort arx 11 #unsigned
+		writeString arx "no_material"
 	)
 )
 
@@ -36,6 +38,7 @@ fn createMaterials dir filename Objs copyTexture =
 	file=createfile (dir+filename)
 	format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 	format "<materials>\n" to:file
+	format "\t<material name=\"no_material\" renderable_object_technique=\"lights\"/>\n" to:file
 	if Objs != undefined then
 	(
 		materialsDictionary = dotNetObject "System.Collections.Hashtable"

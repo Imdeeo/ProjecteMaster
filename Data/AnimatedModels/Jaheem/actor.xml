@@ -10,9 +10,8 @@
 		<parameter type="float" name="specular_power" value="30.0" description="min=0.0 max=100.0 step=0.1"/>
 		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
 	</material>
-	<material name="shackles_material" renderable_object_technique="animated_bump">
+	<material name="jaheem_shackle" renderable_object_technique="animated_bump">
 		<texture type="diffuse" filename="Data/AnimatedModels/Jaheem/brazosjaheem.dds"/>
 		<texture type="normal" filename="Data/AnimatedModels/Jaheem/brazosjaheemNormalsMap.dds"/>
 		<parameter type="float" name="active" value="1.0"/>
@@ -20,10 +19,10 @@
 		<parameter type="float" name="specular_power" value="30.0" description="min=0.0 max=100.0 step=0.1"/>
 		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
 	</material>
 	<animation name="idle" filename="Idle.CAF" />
-	<animation name="pick_key" filename="PickKey.CAF" />
-	<animation name="cross_door" filename="CrossDoor.CAF" />
-	<animation name="force_bureau" filename="ForceBureau.CAF" />
+	<animation name="cross_door" filename="CrossDoor.CAF"/>
+	<animation name="open_tray" filename="OpenTray.CAF"/>
+	<animation name="close_tray" filename="CloseTray.CAF"/>
+	<animation name="force_tray" filename="ForceTray.CAF"/>
 </actor>

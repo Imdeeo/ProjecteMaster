@@ -54,13 +54,12 @@ function InteractingUpdate(args, _ElapsedTime)
 	
 	--// If player has an item, move it.
 	if l_Player.m_Item ~= nil then
-		local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
-		local l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_Owner:get_right_object_position())
+		local l_ObjectPosition = l_Owner:get_left_object_position()
+		l_ObjectPosition.x = l_ObjectPosition.x * (-1.0)
 		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
-		l_ObjectPosition = l_ObjectPosition+l_NewControllerPosition
-		l_Player.m_Item:set_position(l_ObjectPosition)
-		local l_ObjectRotation = l_Owner:get_right_object_rotation()*l_Owner:get_rotation()
+		l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_ObjectPosition)
+		l_Player.m_Item:set_position(l_ObjectPosition + l_Owner:get_position())
+		local l_ObjectRotation = l_Owner:get_left_object_rotation()*l_Owner:get_rotation()
 		l_Player.m_Item:set_rotation(l_ObjectRotation)
 	end
 end
@@ -69,9 +68,11 @@ function InteractingEnd(args)
 	utils_log("InteractingEnd start")
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
-	l_CameraControllerManager = CUABEngine.get_instance():get_camera_controller_manager()
-	l_CameraControllerManager:get_resource(l_Player.m_CameraControllerName):copy_from_key_camera(l_CameraControllerManager:get_main_camera():get_last_key())
-	l_CameraControllerManager:choose_main_camera(l_Player.m_CameraControllerName)
+	if l_Player.m_CameraAnimation ~= nil then
+		l_CameraControllerManager = CUABEngine.get_instance():get_camera_controller_manager()
+		l_CameraControllerManager:get_resource(l_Player.m_CameraControllerName):copy_from_key_camera(l_CameraControllerManager:get_main_camera():get_last_key())
+		l_CameraControllerManager:choose_main_camera(l_Player.m_CameraControllerName)
+	end
 	if l_Player.m_InteractingCinematic ~= nil then
 		l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):stop()
 	end
