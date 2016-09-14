@@ -323,6 +323,9 @@ void CScriptManager::RegisterLUAFunctions()
 
 
 	luabind::module(m_LS)[ luabind::def("utils_log", &UtilsLog) ];
+	luabind::module(m_LS)[luabind::def("utils_log_v2", &UtilsLogV2)];
+	luabind::module(m_LS)[luabind::def("utils_log_v3", &UtilsLogV3)];
+	luabind::module(m_LS)[luabind::def("utils_log_q", &UtilsLogQ)];
 
 	module(m_LS)[
 		class_<Vect3f>("Vect3f")
@@ -371,6 +374,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(const_self * const_self)
 			.def(const_self * other<const float>())
 			.def(const_self / other<const float>())
+			.def("normalize", &Quatf::normalize)
 			.def("decouple_x", &Quatf::decoupleX)
 			.def("decouple_y", &Quatf::decoupleY)
 			.def("decouple_z", &Quatf::decoupleZ)
@@ -735,6 +739,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_left_object_rotation", &CAnimatedInstanceModel::GetLeftObjectRotation)
 			.def("get_right_object_transform", &CAnimatedInstanceModel::GetRightObjectTransform)
 			.def("get_left_object_transform", &CAnimatedInstanceModel::GetLeftObjectTransform)
+			.def("get_bone_position", &CAnimatedInstanceModel::GetBonePosition)
 			.def("get_bone_rotation", &CAnimatedInstanceModel::GetBoneRotation)
 			.def("set_bone_rotation", &CAnimatedInstanceModel::SetBoneRotation)
 			.def("print_bone_list", &CAnimatedInstanceModel::PrintBoneList)

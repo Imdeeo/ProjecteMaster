@@ -56,6 +56,7 @@ public:
 	Quatf GetLeftObjectRotation();
 	Mat33f GetRightObjectTransform();
 	Mat33f GetLeftObjectTransform();
+	Vect3f GetBonePosition(int _bone);
 	Quatf GetBoneRotation(int _bone);
 	void SetBoneRotation(Quatf _rotation, int _bone);
 	void PrintBoneList();

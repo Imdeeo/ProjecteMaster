@@ -334,6 +334,12 @@ Mat33f CAnimatedInstanceModel::GetLeftObjectTransform()
 	return Mat33f(l_BonePos.dxdx, l_BonePos.dydx, l_BonePos.dzdx, l_BonePos.dxdy, l_BonePos.dydy, l_BonePos.dzdy, l_BonePos.dxdz, l_BonePos.dydz, l_BonePos.dzdz);
 }
 
+Vect3f CAnimatedInstanceModel::GetBonePosition(int _bone)
+{
+	CalVector aux = m_CalModel->getSkeleton()->getBone(_bone)->getTranslationAbsolute();
+	return Vect3f(aux.x, aux.y, aux.z);
+}
+
 Quatf CAnimatedInstanceModel::GetBoneRotation(int _bone)
 {
 	CalQuaternion aux = m_CalModel->getSkeleton()->getBone(_bone)->getRotation();
@@ -354,7 +360,7 @@ void CAnimatedInstanceModel::SetBoneRotation(Quatf _rotation, int _bone)
 void CAnimatedInstanceModel::PrintBoneList()
 {
 	std::vector<CalBone *> l_BoneList = m_CalModel->getSkeleton()->getVectorBone();
-	for (int i = 0; i < l_BoneList.size(); i++) {
+	for (size_t i = 0; i < l_BoneList.size(); i++) {
 		UtilsLog("Bone #" + std::to_string(i) + ": " + l_BoneList[i]->getCoreBone()->getName());
 	}
 }
