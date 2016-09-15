@@ -78,12 +78,11 @@ rollout CamAnim "Camera Animation" width:160 height:134
 				select Cam.target
 				cameraLookAt = at time j Cam.target.pos
 			) else (	
-				print cameraLookAt
 				mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
 				swapYZ &cameraLookAt				
-				cameraLookAt.z *= -1
+				--cameraLookAt.z *= -1
 				cameraLookAt += cameraTranslation				
-				--print cameraLookAt
+				--print cameraTranslation
 			)
 			TranslationToRH &cameraLookAt
 			--print cameraLookAt
