@@ -77,17 +77,20 @@ rollout CamAnim "Camera Animation" width:160 height:134
 			(
 				select Cam.target
 				cameraLookAt = at time j Cam.target.pos
-			) else (
+			) else (	
+				print cameraLookAt
 				mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
-				swapYZ &cameraLookAt
+				swapYZ &cameraLookAt				
 				cameraLookAt.z *= -1
-				cameraLookAt += cameraTranslation
+				cameraLookAt += cameraTranslation				
+				--print cameraLookAt
 			)
-			CustomToRH &cameraLookAt
-			AnimatedCameraToRH &cameraTranslation
-			swapXZ &CameraUp
+			TranslationToRH &cameraLookAt
+			--print cameraLookAt
+			TranslationToRH &cameraTranslation
+			--swapXZ &CameraUp
 			cameraFieldOfView = at time j Cam.fov
-			deg2rad &cameraFieldOfView
+			deg2rad &cameraFieldOfView			
 			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
 			j = at time j trackbar.getNextKeyTime()
 		) while j < CameraKeyEnd.value
