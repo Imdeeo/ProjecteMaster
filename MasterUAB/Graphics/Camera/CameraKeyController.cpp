@@ -227,9 +227,11 @@ void CCameraKeyController::SetCamera(CCamera *Camera) const
 {
 	Camera->SetFOV(m_Fov);
 	Camera->SetAspectRatio(16.0f / 9.0f);
-	Camera->SetPosition(m_RotationOffset*(m_Position-m_PositionOffsetKey) + m_PositionOffset);
+	Camera->SetPosition(m_RotationOffset*(m_Position - m_PositionOffsetKey) + m_PositionOffset);
+	//Camera->SetPosition(Vect3f(0, 1.8, 0));
 	Camera->SetLookAt(m_RotationOffset*(m_LookAt - m_PositionOffsetKey) + m_PositionOffset);
-	Camera->SetUp(m_Up);
+	//Camera->SetLookAt(m_RotationOffset * (m_LookAt - m_PositionOffsetKey) + Vect3f(0, 1.8, 0));
+	Camera->SetUp(m_RotationOffset * m_Up);
 	Camera->SetMatrixs();
 }
 
