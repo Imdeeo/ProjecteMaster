@@ -1455,6 +1455,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_num_puntos", &CLineRenderer::GetLuaNumPuntos)
 			.def("get_num_offsetX", &CLineRenderer::GetLuaOffsetX)
 			.def("get_num_offsetY", &CLineRenderer::GetLuaOffsetY)
+			.def("get_size", &CLineRenderer::GetLuaSize)
+			.def("get_size_offset", &CLineRenderer::GetLuaSizeOffset)
+			.def("get_color", &CLineRenderer::GetLuaColor)
 	];
 
 // GUI----------------------------------------------------------------------------------------------
