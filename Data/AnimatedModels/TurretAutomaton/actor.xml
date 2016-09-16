@@ -20,5 +20,18 @@
 		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
 	</material>
-	<animation name="idle" filename="TurretAutomatonIdle.CAF" />
+	<material name="turret_material_3" renderable_object_technique="animated_glow">
+		<texture type="diffuse" filename="Data/AnimatedModels/TurretAutomaton/Automata_Ojos.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.082" description="min=0.0 max=3.0 step=0.001"/>
+		<parameter type="float" name="specular_power" value="30.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<animation name="off_to_idle" filename="TurretAutomatonOffToIdle.CAF" />
+	<animation name="idle_to_attack" filename="TurretAutomatonIdleToAttack.CAF" />
+	<animation name="attack" filename="TurretAutomatonAttack.CAF" />
+	<animation name="attack_to_idle" filename="TurretAutomatonAttackToIdle.CAF" />
+	<animation name="kill" filename="TurretAutomatonKill.CAF" />
 </actor>
