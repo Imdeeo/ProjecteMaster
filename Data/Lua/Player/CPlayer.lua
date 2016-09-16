@@ -1,5 +1,5 @@
 --// Global Variables
-dofile("Data\\Lua\\Player\\GVars.lua")
+dofile("Data\\Lua\\Utils\\GVars.lua")
 --// RaycastData
 dofile("Data\\Lua\\Raycast.lua")
 --// StateMachine
