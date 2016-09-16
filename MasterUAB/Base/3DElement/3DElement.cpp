@@ -150,7 +150,7 @@ void C3DElement::SetAnimatedScale(const Vect3f &Scale)
 	m_AnimatedScale = Scale;
 }
 
-float C3DElement::GetVisible() const
+bool C3DElement::GetVisible() const
 {
 	return m_Visible;
 }
