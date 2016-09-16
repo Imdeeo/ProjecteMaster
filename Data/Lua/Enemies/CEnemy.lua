@@ -1,4 +1,3 @@
-dofile("Data\\Lua\\Utils\\GVars.lua") --// Global Variables
 dofile("Data\\Lua\\Utils\\state_machine.lua")
 
 class 'CEnemy' (CLUAComponent)
