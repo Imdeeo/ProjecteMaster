@@ -27,8 +27,15 @@ private:
 	CRenderableVertexs *m_RenderableVertex;
 	CRenderableObjectTechnique *m_RenderableObjectTechnique;
 	CMaterial*					m_Material;
-	float						m_Size;
 	unsigned int				m_LinesCount;
+	Vect3f m_PosInicial;
+	Vect3f m_PosFinal;
+	int m_NumPuntos;
+	float m_OffsetX;
+	float m_OffsetY;
+	float m_Size;
+	float m_SizeOffset;
+	CColor m_Color;
 
 public:
 	CLineRenderer(tinyxml2::XMLElement* TreeNode);
@@ -47,11 +54,7 @@ public:
 		offset y
 		tipo
 		max offset*/
-	UAB_BUILD_GET_SET(Vect3f, PosInicial);
-	UAB_BUILD_GET_SET(Vect3f, PosFinal);
-	UAB_BUILD_GET_SET(int, NumPuntos);
-	UAB_BUILD_GET_SET(float, OffsetX);
-	UAB_BUILD_GET_SET(float, OffsetY);
+
 
 	CEmptyPointerClass* GetLuaPosInciial(int index = 0)
 	{
@@ -72,6 +75,18 @@ public:
 	CEmptyPointerClass* GetLuaOffsetY()
 	{
 		return (CEmptyPointerClass*)&m_OffsetY;
+	}
+	CEmptyPointerClass* GetLuaSize()
+	{
+		return (CEmptyPointerClass*)&m_Size;
+	}
+	CEmptyPointerClass* GetLuaSizeOffset()
+	{
+		return (CEmptyPointerClass*)&m_SizeOffset;
+	}
+	CEmptyPointerClass* GetLuaColor()
+	{
+		return (CEmptyPointerClass*)&m_Color;
 	}
 };
 
