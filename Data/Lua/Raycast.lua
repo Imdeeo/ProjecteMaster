@@ -1,5 +1,5 @@
 dofile("Data\\Lua\\Raycast\\Recibidor.lua")
-
+dofile("Data\\Lua\\Raycast\\Biblioteca.lua")
 -- Distance conversion rates:
 -- 1,5834710743801652892561983471074(Max) -> 1,0(Engine)
 -- 1,0(Max) -> 0,63152400835073068893528183716077(Engine)
@@ -39,5 +39,7 @@ function TriggerRaycast(_Player, _Pos)
 				R1Key(_Player, _Pos)
 			end
 		end
+	elseif l_LevelID == "2" then
+		utils_log("Trigger: ".._Player.m_RaycastData.actor_name)
 	end
 end

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<path>
+	<node name="nodoA" pos="0.0 0.0 -25.0"/>
+	<node name="nodoB" pos="0.0 0.0 -15.0"/>
+	<node name="nodoC" pos="-10.0 0.0 -5.0"/>
+	<node name="nodoD" pos="10.0 0.0 -5.0"/>
+	<node name="nodoE" pos="0.0 0.0 0.0"/>
+	<node name="nodoF" pos="0.0 0.0 10.0"/>
+	<node name="nodoG" pos="0.0 0.0 20.0"/>
+	<node name="nodoH" pos="0.0 0.0 30.0"/>	
+	<node name="nodoO" pos="0.0 0.0 -6.0"/>
+	<node name="nodoI" pos="0.0 0.0 -3.0"/>
+	<node name="nodoJ" pos="3.0 0.0 -3.0"/>
+	<node name="nodoK" pos="-3.0 0.0 -3.0"/>
+	<node name="nodoL" pos="3.0 0.0 3.0"/>
+	<node name="nodoM" pos="-3.0 0.0 3.0"/>
+	<node name="nodoN" pos="0.0 0.0 3.0"/>
+	<node name="nodoP" pos="0.0 0.0 6.0"/>
+
+	<father name="nodoA">
+		<child name="nodoB"/>
+	</father>
+	<father name="nodoB">
+		<child name="nodoA"/>
+		<child name="nodoC"/>
+		<child name="nodoD"/>
+	</father>
+	<father name="nodoC">
+		<child name="nodoB"/>
+		<child name="nodoE"/>
+	</father>
+	<father name="nodoD">
+		<child name="nodoB"/>
+		<child name="nodoE"/>
+	</father>
+	<father name="nodoE">
+		<child name="nodoC"/>
+		<child name="nodoD"/>
+		<child name="nodoF"/>
+		<child name="nodoO"/>
+	</father>
+	<father name="nodoF">
+		<child name="nodoE"/>
+		<child name="nodoG"/>
+	</father>
+	<father name="nodoG">
+		<child name="nodoF"/>
+		<child name="nodoH"/>
+	</father>
+	<father name="nodoH">
+		<child name="nodoF"/>
+	</father>	
+	<father name="nodoO">
+		<child name="nodoB"/>
+		<child name="nodoI"/>
+	</father>
+	<father name="nodoI">
+		<child name="nodoJ"/>
+		<child name="nodoK"/>
+	</father>
+	<father name="nodoJ">
+		<child name="nodoI"/>
+		<child name="nodoL"/>
+	</father>
+	<father name="nodoK">
+		<child name="nodoI"/>
+		<child name="nodoM"/>
+	</father>
+	<father name="nodoL">
+		<child name="nodoJ"/>
+		<child name="nodoN"/>
+	</father>
+	<father name="nodoM">
+		<child name="nodoK"/>
+		<child name="nodoN"/>
+	</father>
+	<father name="nodoN">
+		<child name="nodoL"/>
+		<child name="nodoM"/>
+	</father>
+	<father name="nodoP">
+		<child name="nodoL"/>
+		<child name="nodoM"/>
+		<child name="nodoN"/>
+	</father>
+	
+	<path_patrol name="path1">
+		<node name="nodoA" wait="false"/>
+		<node name="nodoB" wait="true" time_to_wait="5.0f"/>
+		<node name="nodoC" wait="false"/>
+		<node name="nodoE" wait="true" time_to_wait="10.0f"/>
+		<node name="nodoD" wait="false"/>
+		<node name="nodoB" wait="false"/>
+		<node name="nodoA" wait="true" time_to_wait="5.0f"/>
+	</path_patrol>
+</path>
