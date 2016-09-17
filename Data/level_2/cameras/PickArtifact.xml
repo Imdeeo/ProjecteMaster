@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<camera_key_controller name="PickArtifact">
+	<key time="0.0" pos="0.0 1.87894 0.0" up="0.0 1.0 -9.47216e-007" look_at="0.0 1.87894 -1.0" fov="1.69496" near_plane="0.0" far_plane="1000.0"/>
+	<key time="1.0" pos="0.0 1.87894 0.0" up="0.0 0.989178 0.14672" look_at="0.0 2.02566 -0.989178" fov="1.69496" near_plane="0.0" far_plane="1000.0"/>
+	<key time="2.0" pos="0.0 1.87894 0.0" up="0.0 0.989178 0.14672" look_at="0.0 2.02566 -0.989178" fov="1.69496" near_plane="0.0" far_plane="1000.0"/>
+	<key time="3.0" pos="0.0 1.87894 0.0" up="0.0 0.989178 0.14672" look_at="0.0 2.02566 -0.989178" fov="1.69496" near_plane="0.0" far_plane="1000.0"/>
+	<key time="4.0" pos="0.0 1.87894 0.0" up="0.0 0.989178 0.14672" look_at="0.0 2.02566 -0.989178" fov="1.69496" near_plane="0.0" far_plane="1000.0"/>
+</camera_key_controller>
