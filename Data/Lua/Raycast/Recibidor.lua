@@ -28,7 +28,7 @@ function R1Door(_Player, _Pos)
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
-		--CUABEngine.get_instance():get_level_manager():load_level("Biblioteca")
+		--CUABEngine.get_instance():get_level_manager():load_level("2")
 	end
 end
 

@@ -296,7 +296,7 @@
 	<static_mesh name="TriggerPipeOrgan" filename="Data\level_2\Meshes\TriggerPipeOrgan.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerArtifact" filename="Data\level_2\Meshes\TriggerArtifact.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerArtifactInput" filename="Data\level_2\Meshes\TriggerArtifactInput.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
-	<static_mesh name="TriggerDoor" filename="Data\level_2\Meshes\TriggerDoor.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerArtifactDoor" filename="Data\level_2\Meshes\TriggerArtifactDoor.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerClue" filename="Data\level_2\Meshes\TriggerClue.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerBook" filename="Data\level_2\Meshes\TriggerBook.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 </static_meshes>
