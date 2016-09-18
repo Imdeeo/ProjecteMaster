@@ -40,6 +40,23 @@ function TriggerRaycast(_Player, _Pos)
 			end
 		end
 	elseif l_LevelID == "2" then
-		utils_log("Trigger: ".._Player.m_RaycastData.actor_name)
+	utils_log("Trigger: ".._Player.m_RaycastData.actor_name)
+		if _Player.m_RaycastData.actor_name == "TriggerPipeOrgan" then
+			R2PipeOrgan(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerArtifact" then
+			if R2PuzzleCleared then
+				R2Artifact(_Player, _Pos)
+			end
+		elseif _Player.m_RaycastData.actor_name == "TriggerArtifactInput" then
+			R2ArtifactInput(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerArtifactDoor" then
+			if _Player.m_ItemName == "Artilufacto" then
+				R2ArtifactDoor(_Player, _Pos)
+			end
+		elseif _Player.m_RaycastData.actor_name == "TriggerClue" then
+			R2Clue(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerBook" then
+			R2Book(_Player, _Pos)
+		end
 	end
 end

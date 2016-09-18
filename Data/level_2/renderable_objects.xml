@@ -312,7 +312,7 @@
 	<instance_mesh name="TriggerArtifactInput" layer="triggers" is_active="true" core_name="TriggerArtifactInput" position="16.8035 5.07628 27.0514" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerDoor" layer="triggers" is_active="true" core_name="TriggerDoor" position="16.0872 5.07628 27.0514" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerArtifactDoor" layer="triggers" is_active="true" core_name="TriggerDoor" position="16.0872 5.07628 27.0514" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 	</instance_mesh>
 	<instance_mesh name="TriggerClue" layer="triggers" is_active="true" core_name="TriggerClue" position="12.0715 1.2716 15.2575" rotation="0.0 0.0 -0.0871557 -0.996195" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
