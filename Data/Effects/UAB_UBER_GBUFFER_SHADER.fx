@@ -231,7 +231,7 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 	#ifdef HAS_UV2
 		#if defined(HAS_TANGENT) && defined(HAS_RNM)
 			// Pass l_NormalMap through CalcNormalMap just to take m_BumpFactor into account
-			//float3 l_VectorSpaceNormal = CalcNormalMap(float3(0, 0, 1), Tn, Bn, l_NormalMap);
+			//float3 l_TangentSpaceNormalSpaceNormal = CalcNormalMap(float3(0, 0, 1), Tn, Bn, l_NormalMap);
 			float3 l_TangentSpaceNormal = CalcNormalMap(float3(0, 0, 1), float3(1, 0, 0), float3(0, 1, 0), l_NormalMap);
 			l_Ambient = float4(GetRadiosityNormalMap(l_TangentSpaceNormal, IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
 		#elif defined(HAS_RNM)
