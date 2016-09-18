@@ -204,7 +204,7 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 	// PBR: fresnel (the formula is arbitrary, not based on any source, but the curve would look somewhat similar to the examples)
 	
 	#ifdef HAS_REFLECTION
-		float fresnel = pow(1 - dot(-l_EyeToWorldPosition, Nn), FRESNEL_POWER);
+		float fresnel = pow(1 - saturate(dot(-l_EyeToWorldPosition, Nn)), FRESNEL_POWER);
 		l_specularFactor += fresnel * (1-l_specularFactor);
 	#endif
 	// PBR: energy conservation: "reflection and diffusion are mutually exclusive"
