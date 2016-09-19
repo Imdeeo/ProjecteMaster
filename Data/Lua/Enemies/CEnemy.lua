@@ -13,7 +13,8 @@ class 'CEnemy' (CLUAComponent)
 		self.m_Timer = 0
 		self.m_DefaultPosition = Vect3f(self.m_RenderableObject:get_position().x, self.m_RenderableObject:get_position().y, self.m_RenderableObject:get_position().z)
 		--utils_log(self.m_Name.." POS X: "..self.m_DefaultPosition.x.." Y: "..self.m_DefaultPosition.y.." Z: "..self.m_DefaultPosition.z)
-		self.m_DefaultForward = self.m_RenderableObject:get_rotation():get_forward_vector()
+		self.m_DefaultRotation = self.m_RenderableObject:get_rotation()
+		self.m_DefaultForward = self.m_DefaultRotation:get_forward_vector()
 		self.m_State = "off"
 		self.m_Awake = _TreeNode:get_bool_property("awake", false)
 		self.m_ActualAnimation = 0
