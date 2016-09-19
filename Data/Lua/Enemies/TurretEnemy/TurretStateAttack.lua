@@ -39,7 +39,7 @@ function AttackUpdateTurret(args, _ElapsedTime)
 				
 				l_Enemy.m_TimerRotation = 0
 				g_Player.m_CameraController:lock()
-				g_Player:CalculateRotation("JaheemDies", l_EnemyPos)
+				g_Player:CalculateCameraPositionRotation("JaheemDies", l_EnemyPos)
 			else
 				if l_Enemy.m_ActualAnimation == 2 then
 					-- the enemy rotates the body to player position
