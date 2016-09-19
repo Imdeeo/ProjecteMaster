@@ -1,6 +1,7 @@
 dofile("Data\\Lua\\Enemies\\TurretEnemy\\TurretStateOff.lua")
 dofile("Data\\Lua\\Enemies\\TurretEnemy\\TurretStateIdle.lua")
 dofile("Data\\Lua\\Enemies\\TurretEnemy\\TurretStateAttack.lua")
+dofile("Data\\Lua\\Enemies\\TurretEnemy\\TurretStateKill.lua")
 
 class 'CTurretEnemy' (CEnemy)
 	function CTurretEnemy:__init(_TreeNode)
@@ -15,9 +16,9 @@ class 'CTurretEnemy' (CEnemy)
 		self.m_DistanceToKill = _TreeNode:get_float_property("distance_kill", 1.0)
 		self.m_TimerRotation = 0.0
 		self.m_TimerToStop = 0.0
-		
-		self.m_DefaultRotation = nil
-		
+		self.m_IsKilling = false
+		self.m_InitialCameraRotation = nil
+		self.m_FinalCameraRotation = nil
 		self:SetTurretStateMachine()
 		self.m_StateMachine:start()
 	end
@@ -44,9 +45,17 @@ class 'CTurretEnemy' (CEnemy)
 		AttackState:set_do_first_function(AttackFirstTurret)
 		AttackState:set_do_end_function(AttackEndTurret)
 		AttackState:add_condition(AttackToIdleConditionTurret, "Idle")
+		AttackState:add_condition(AttackToKillConditionTurret, "Kill")
+		
+		KillState = State.create(KillUpdateTurret)
+		KillState:set_do_first_function(KillFirstTurret)
+		KillState:set_do_end_function(KillEndTurret)
+		KillState:add_condition(KillToIdleConditionTurret, "Idle")
+		KillState:add_condition(KillToOffConditionTurret, "Off")
 		
 		self.m_StateMachine:add_state("Off", OffState)
 		self.m_StateMachine:add_state("Idle", IdleState)
 		self.m_StateMachine:add_state("Attack", AttackState)
+		self.m_StateMachine:add_state("Kill", KillState)
 	end
 --end

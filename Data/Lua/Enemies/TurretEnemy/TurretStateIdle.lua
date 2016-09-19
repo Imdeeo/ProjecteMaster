@@ -41,7 +41,6 @@ function IdleUpdateTurret(args, _ElapsedTime)
 		end
 		
 		if angle_to_turn >= -0.4 and angle_to_turn <= 0.4 then
-			utils_log("ANGLE: "..angle_to_turn)
 			-- playes has to lose sanity because he is looking the enemy
 			l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
 			l_Enemy:LoseSanity(l_Distance)
