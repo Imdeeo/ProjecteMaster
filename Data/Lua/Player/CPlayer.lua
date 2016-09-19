@@ -174,6 +174,8 @@ class 'CPlayer' (CLUAComponent)
 		self.m_InteractingCinematic = nil
 		self.m_CameraAnimation = nil
 		self.m_AnimationTime = 0
+		self.m_InitialCameraRotation = nil
+		self.m_FinalCameraRotation = nil
 		
 		self.m_RaycastData = RaycastData()
 		
@@ -426,6 +428,50 @@ class 'CPlayer' (CLUAComponent)
 	
 	function CPlayer:SetActiveStateMachineState(name,active)
 		self.m_StateMachine:activeState(name,active)
+	end
+
+	function CPlayer:SetAnimationCamera(_CameraName)
+		local l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
+		local l_FPSCamera = l_CameraManager:get_main_camera()
+		local l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
+		local l_CameraKey = l_AnimatedCamera:get_camera_key(0)
+		local l_CameraInfo = l_CameraKey:get_camera_info()
+		local l_CameraInfoPos = l_CameraInfo:get_eye()
+		local l_CameraInfoLookAt = l_CameraInfo:get_look_at()
+		l_AnimatedCamera.m_PositionOffsetKey = l_CameraInfoPos
+		l_AnimatedCamera.m_PositionOffset = l_FPSCamera:get_position()
+		local l_Forward = l_FPSCamera:get_rotation():get_forward_vector()
+		l_Forward.y = 0
+		l_Forward.x = l_Forward.x * -1.0
+		l_Forward:normalize(1)
+		local aux = Quatf()
+		aux:set_from_fwd_up(l_Forward, Vect3f(0,1,0))
+		l_AnimatedCamera.m_RotationOffset = aux:rotation_matrix()
+		l_AnimatedCamera:reset_time()
+		l_CameraManager:choose_main_camera(_CameraName)
+	end
+	
+	function CPlayer:CalculateRotation(_CameraName, _DesiredPosition)
+		local l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
+		l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
+		local l_CameraInfoPosLength = l_AnimatedCamera:get_camera_key(0):get_camera_info():get_eye()
+		l_CameraInfoPosLength.y = 0
+		l_CameraInfoPosLength = l_CameraInfoPosLength:length()
+		
+		local l_AuxPos = self.m_PhysXManager:get_character_controler_pos(self.m_Name)
+		local l_auxTarget = l_AuxPos - _DesiredPosition
+		l_auxTarget.y = 0
+		self.m_Target = l_auxTarget:get_normalized(1) * l_CameraInfoPosLength + _DesiredPosition
+		
+		self.m_InitialCameraRotation = self.m_CameraController:get_rotation()
+		
+		local l_CameraDirection = (_DesiredPosition - l_AuxPos)
+		l_CameraDirection.y = 0
+		l_CameraDirection = l_CameraDirection:get_normalized(1)
+						
+		local quat_to_turn = Quatf()
+		quat_to_turn:set_from_fwd_up(l_CameraDirection, Vect3f(0,1,0))
+		self.m_FinalCameraRotation = quat_to_turn
 	end
 --end
 

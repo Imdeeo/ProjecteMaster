@@ -16,9 +16,7 @@ class 'CTurretEnemy' (CEnemy)
 		self.m_DistanceToKill = _TreeNode:get_float_property("distance_kill", 1.0)
 		self.m_TimerRotation = 0.0
 		self.m_TimerToStop = 0.0
-		self.m_IsKilling = false
-		self.m_InitialCameraRotation = nil
-		self.m_FinalCameraRotation = nil
+		self.m_IsKilling = false		
 		self:SetTurretStateMachine()
 		self.m_StateMachine:start()
 	end
