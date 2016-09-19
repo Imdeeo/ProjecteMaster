@@ -451,7 +451,7 @@ class 'CPlayer' (CLUAComponent)
 		l_CameraManager:choose_main_camera(_CameraName)
 	end
 	
-	function CPlayer:CalculateRotation(_CameraName, _DesiredPosition)
+	function CPlayer:CalculateCameraPositionRotation(_CameraName, _DesiredPosition)
 		local l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
 		l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
 		local l_CameraInfoPosLength = l_AnimatedCamera:get_camera_key(0):get_camera_info():get_eye()
