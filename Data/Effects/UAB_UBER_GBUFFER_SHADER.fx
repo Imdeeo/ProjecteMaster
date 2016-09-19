@@ -204,7 +204,7 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 	// PBR: fresnel (the formula is arbitrary, not based on any source, but the curve would look somewhat similar to the examples)
 	
 	#ifdef HAS_REFLECTION
-		float fresnel = pow(1 - dot(-l_EyeToWorldPosition, Nn), FRESNEL_POWER);
+		float fresnel = pow(1 - saturate(dot(-l_EyeToWorldPosition, Nn)), FRESNEL_POWER);
 		l_specularFactor += fresnel * (1-l_specularFactor);
 	#endif
 	// PBR: energy conservation: "reflection and diffusion are mutually exclusive"
@@ -231,9 +231,9 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 	#ifdef HAS_UV2
 		#if defined(HAS_TANGENT) && defined(HAS_RNM)
 			// Pass l_NormalMap through CalcNormalMap just to take m_BumpFactor into account
-			//float3 l_VectorSpaceNormal = CalcNormalMap(float3(0, 0, 1), Tn, Bn, l_NormalMap);
-			float3 l_VectorSpaceNormal = CalcNormalMap(float3(0, 0, 1), float3(1, 0, 0), float3(0, 1, 0), l_NormalMap);
-			l_Ambient = float4(GetRadiosityNormalMap(l_VectorSpaceNormal, IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
+			//float3 l_TangentSpaceNormalSpaceNormal = CalcNormalMap(float3(0, 0, 1), Tn, Bn, l_NormalMap);
+			float3 l_TangentSpaceNormal = CalcNormalMap(float3(0, 0, 1), float3(1, 0, 0), float3(0, 1, 0), l_NormalMap);
+			l_Ambient = float4(GetRadiosityNormalMap(l_TangentSpaceNormal, IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
 		#elif defined(HAS_RNM)
 			l_Ambient = float4(GetRadiosityNormalMap(float3(0,0,1), IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
 		#else
