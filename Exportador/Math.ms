@@ -1,3 +1,10 @@
+fn checkZeroes &ret =
+(
+	if ret.x < 0.00001 and ret.x > -0.00001 then( ret.x = 0 )
+	if ret.y < 0.00001 and ret.y > -0.00001 then( ret.y = 0 )
+	if ret.z < 0.00001 and ret.z > -0.00001 then( ret.z = 0 )
+)
+
 fn deg2rad &ret =
 (
 	ret = ret*PI/180

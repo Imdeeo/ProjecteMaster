@@ -430,10 +430,13 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:activeState(name,active)
 	end
 
-	function CPlayer:SetAnimationCamera(_CameraName)
+	function CPlayer:SetAnimationCamera(_CameraName, _CopyFirstFrame)
 		local l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
 		local l_FPSCamera = l_CameraManager:get_main_camera()
 		local l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
+		if (_CopyFirstFrame) then
+			l_AnimatedCamera:set_first_key(l_FPSCamera:get_forward(), l_FPSCamera:get_position(), l_FPSCamera:get_up(), l_FPSCamera:get_fov())
+		end
 		local l_CameraKey = l_AnimatedCamera:get_camera_key(0)
 		local l_CameraInfo = l_CameraKey:get_camera_info()
 		local l_CameraInfoPos = l_CameraInfo:get_eye()

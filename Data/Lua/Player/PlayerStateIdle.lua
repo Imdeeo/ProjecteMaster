@@ -3,14 +3,6 @@ function IdleFirst(args)
 	local l_Player = args["self"]
 	l_Owner:blend_cycle(0,1.0,0.1)
 	l_Player.m_PhysXManager:set_character_controller_height("player", g_Height)
-	local l_P = l_Owner:get_left_object_position()
-	utils_log("Bone pos: ("..l_P.x..", "..l_P.y..", "..l_P.z..")")
-	local l_Q = l_Owner:get_position()
-	utils_log("Owner pos: ("..l_Q.x..", "..l_Q.y..", "..l_Q.z..")")
-	local l_R = l_Owner:get_rotation():rotated_vector(l_P)
-	utils_log("Rotated bone pos: ("..l_R.x..", "..l_R.y..", "..l_R.z..")")
-	local l_H = l_Owner:get_bone_position(1)
-	utils_log("Hub pos: ("..l_H.x..", "..l_H.y..", "..l_H.z..")")
 end
 
 function IdleUpdate(args, _ElapsedTime)

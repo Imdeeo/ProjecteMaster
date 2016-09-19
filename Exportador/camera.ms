@@ -49,11 +49,13 @@ fn createCameras dir Objs =
 					cameraTranslation = cameraTransform.translation
 					cameraRotation = cameraTransform as eulerangles
 					mat3xvect3 cameraTransform z_axis &cameraUp
+					checkZeroes &CameraUp
 					if(Objs[i].target != undefined) then
 					(
 						cameraLookAt = at time j Objs[i].target.pos
 					) else (
 						mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
+						checkZeroes &cameraLookAt
 						swapYZ &cameraLookAt
 						cameraLookAt += cameraTranslation
 					)
@@ -69,11 +71,13 @@ fn createCameras dir Objs =
 				close cameraFile
 			) else (
 				mat3xvect3 cameraTransform z_axis &cameraUp
+				checkZeroes &CameraUp
 				if(Objs[i].target != undefined) then
 				(
 					cameraLookAt = Objs[i].target.pos
 				) else (
 					mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
+					checkZeroes &cameraLookAt
 					swapYZ &cameraLookAt
 					cameraLookAt += cameraTranslation
 				)
