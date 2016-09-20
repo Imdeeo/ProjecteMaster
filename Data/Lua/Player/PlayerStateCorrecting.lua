@@ -16,8 +16,10 @@ function CorrectingUpdate(args, _ElapsedTime)
 	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetPosOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
 	local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_FaceTargetDisplacement.y = 0.0
+	utils_log("Distance: "..l_FaceTargetDisplacement:length())
 	if l_FaceTargetDisplacement:length() <= 0.03 then
 		l_PosOK = true
+		utils_log("Pos OK")
 	else
 		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
 	end
@@ -53,6 +55,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 	
 	if l_Yaw <= 0.01 and l_Yaw >= -0.01 then
 		l_AngleOK = true
+		utils_log("Angle OK")
 	else
 		l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
 		--utils_log("Yaw: "..l_Yaw)

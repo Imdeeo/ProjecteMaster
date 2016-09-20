@@ -25,4 +25,8 @@
 	<animation name="open_tray" filename="OpenTray.CAF"/>
 	<animation name="close_tray" filename="CloseTray.CAF"/>
 	<animation name="force_tray" filename="ForceTray.CAF"/>
+	<animation name="cross_artifact_door" filename="CrossArtifactDoor.CAF"/>
+	<animation name="pick_artifact" filename="PickArtifact.CAF"/>
+	<animation name="pick_clue" filename="PickClue.CAF"/>
+	<animation name="pull_book" filename="PullBook.CAF"/>
 </actor>
