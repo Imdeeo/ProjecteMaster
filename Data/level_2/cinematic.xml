@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cinematics>
-	<cinematic name="PickArtifact" duration="0.0333333" cycle="false">
+	<!--<cinematic name="PickArtifact" duration="0.0333333" cycle="false">
 		<cinematic_object resource="Artilufacto" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="0.0333333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="0.0487461 0.0487461 0.0487461"/>
 		</cinematic_object>
-	</cinematic>
+	</cinematic>-->
 	<cinematic name="CrossAritfactDoor" duration="8.7" cycle="false">
 		<cinematic_object resource="PuertaBiblio" layer="solid">
 			<cinematic_object_key_frame time="5.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
@@ -22,11 +22,11 @@
 			<cinematic_object_key_frame time="4.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.819152 -0.573577" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="5.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 1.0 0.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
-		<cinematic_object resource="Artilufacto001" layer="solid">
+		<!--<cinematic_object resource="Artilufacto001" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="0.0333333" pos="-3.62098e-005 -0.0006181 5.4121e-005" rotation="0.0 0.0 0.0 1.0" scale="22.0334 22.0334 22.0334"/>
 			<cinematic_object_key_frame time="0.366667" pos="-3.59118e-005 0.00158411 -0.00348634" rotation="0.0153588 0.0 0.0 0.999882" scale="22.0335 22.0334 22.0335"/>
-		</cinematic_object>
+		</cinematic_object>-->
 	</cinematic>
 	<cinematic name="PickBook" duration="0.666667" cycle="false">
 		<cinematic_object resource="LibroEspecial" layer="solid">
