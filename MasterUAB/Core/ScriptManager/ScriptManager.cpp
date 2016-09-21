@@ -410,6 +410,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def_readwrite("m20", &Mat33f::m20)
 			.def_readwrite("m21", &Mat33f::m21)
 			.def_readwrite("m22", &Mat33f::m22)
+			.def(const_self * other<const Vect3f>())
 	];
 
 	module(m_LS)[
