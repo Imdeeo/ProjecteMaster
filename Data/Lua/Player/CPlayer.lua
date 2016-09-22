@@ -159,6 +159,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_IsCorrecting = false
 		self.m_IsClimbing = false
 		self.m_IsInteracting = false
+		self.m_IsDead = false
 		
 		self.m_Target = nil
 		self.m_TargetPosOffset = Vect3f(1.0, 0.0, 0.0)
@@ -174,6 +175,8 @@ class 'CPlayer' (CLUAComponent)
 		self.m_InteractingCinematic = nil
 		self.m_CameraAnimation = nil
 		self.m_AnimationTime = 0
+		self.m_InitialCameraRotation = nil
+		self.m_FinalCameraRotation = nil
 		
 		self.m_RaycastData = RaycastData()
 		
@@ -355,6 +358,7 @@ class 'CPlayer' (CLUAComponent)
 		IdleState:add_condition(ANYToFallingCondition, "Falling")
 		IdleState:add_condition(ANYToCorrectingCondition, "Correcting")
 		IdleState:add_condition(ANYToSingingCondition, "Singing")
+		IdleState:add_condition(ANYToDeadCondition, "Dead")
 		
 		MovingState = State.create(MovingUpdate)
 		MovingState:set_do_first_function(MovingFirst)
@@ -366,12 +370,14 @@ class 'CPlayer' (CLUAComponent)
 		MovingState:add_condition(ANYToFallingCondition, "Falling")
 		MovingState:add_condition(ANYToCorrectingCondition, "Correcting")
 		MovingState:add_condition(ANYToSingingCondition, "Singing")
+		MovingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		CorrectingState = State.create(CorrectingUpdate)
 		CorrectingState:set_do_first_function(CorrectingFirst)
 		CorrectingState:set_do_end_function(CorrectingEnd)
 		CorrectingState:add_condition(CorrectingToClimbingCondition, "Climbing")
 		CorrectingState:add_condition(CorrectingToInteractingCondition, "Interacting")
+		CorrectingState:add_condition(ANYToDeadCondition, "Dead")
 
 		CrouchingState = State.create(CrouchingUpdate)
 		CrouchingState:set_do_first_function(CrouchingFirst)
@@ -380,32 +386,38 @@ class 'CPlayer' (CLUAComponent)
 		CrouchingState:add_condition(ANYToItselfCondition, "Crouching")
 		CrouchingState:add_condition(ANYToFallingCondition, "Falling")
 		CrouchingState:add_condition(ANYToCorrectingCondition, "Correcting")
+		CrouchingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		ClimbingState = State.create(ClimbingUpdate)
 		ClimbingState:set_do_first_function(ClimbingFirst)
 		ClimbingState:set_do_end_function(ClimbingEnd)
 		ClimbingState:add_condition(ClimbingToFallingCondition, "Falling")
+		ClimbingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		JumpingState = State.create(JumpingUpdate)
 		JumpingState:set_do_first_function(JumpingFirst)
 		JumpingState:set_do_end_function(JumpingEnd)
 		JumpingState:add_condition(ANYToFallingCondition, "Falling")
+		JumpingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		FallingState = State.create(FallingUpdate)
 		FallingState:set_do_first_function(FallingFirst)
 		FallingState:set_do_end_function(FallingEnd)
 		FallingState:add_condition(FallingToIdleCondition, "Idle")
+		FallingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		InteractingState = State.create(InteractingUpdate)
 		InteractingState:set_do_first_function(InteractingFirst)
 		InteractingState:set_do_end_function(InteractingEnd)
 		InteractingState:add_condition(InteractingToFallingCondition, "Falling")
+		InteractingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		SingingState = State.create(SingingUpdate)
 		SingingState:set_do_first_function(SingingFirst)
 		SingingState:set_do_end_function(SingingEnd)
 		SingingState:add_condition(SingingToFallingCondition, "Falling")
 		SingingState:add_condition(SingingToItselfCondition, "Singing")
+		SingingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		DeadState = State.create(DeadUpdate)
 		DeadState:set_do_first_function(DeadFirst)
@@ -427,9 +439,58 @@ class 'CPlayer' (CLUAComponent)
 	function CPlayer:SetActiveStateMachineState(name,active)
 		self.m_StateMachine:activeState(name,active)
 	end
+
+	function CPlayer:SetAnimationCamera(_CameraName)
+		local l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
+		local l_FPSCamera = l_CameraManager:get_main_camera()
+		local l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
+		local l_CameraKey = l_AnimatedCamera:get_camera_key(0)
+		local l_CameraInfo = l_CameraKey:get_camera_info()
+		local l_CameraInfoPos = l_CameraInfo:get_eye()
+		local l_CameraInfoLookAt = l_CameraInfo:get_look_at()
+		l_AnimatedCamera.m_PositionOffsetKey = l_CameraInfoPos
+		l_AnimatedCamera.m_PositionOffset = l_FPSCamera:get_position()
+		local l_Forward = l_FPSCamera:get_rotation():get_forward_vector()
+		l_Forward.y = 0
+		l_Forward.x = l_Forward.x * -1.0
+		l_Forward:normalize(1)
+		local aux = Quatf()
+		aux:set_from_fwd_up(l_Forward, Vect3f(0,1,0))
+		l_AnimatedCamera.m_RotationOffset = aux:rotation_matrix()
+		l_AnimatedCamera:reset_time()
+		l_CameraManager:choose_main_camera(_CameraName)
+	end
+	
+	function CPlayer:CalculateCameraPositionRotation(_CameraName, _DesiredPosition)
+		local l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
+		l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
+		local l_CameraInfoPosLength = l_AnimatedCamera:get_camera_key(0):get_camera_info():get_eye()
+		l_CameraInfoPosLength.y = 0
+		l_CameraInfoPosLength = l_CameraInfoPosLength:length()
+		
+		local l_AuxPos = self.m_PhysXManager:get_character_controler_pos(self.m_Name)
+		local l_auxTarget = l_AuxPos - _DesiredPosition
+		l_auxTarget.y = 0
+		self.m_Target = l_auxTarget:get_normalized(1) * l_CameraInfoPosLength + _DesiredPosition
+		
+		self.m_InitialCameraRotation = self.m_CameraController:get_rotation()
+		
+		local l_CameraDirection = (_DesiredPosition - l_AuxPos)
+		l_CameraDirection.y = 0
+		l_CameraDirection = l_CameraDirection:get_normalized(1)
+						
+		local quat_to_turn = Quatf()
+		quat_to_turn:set_from_fwd_up(l_CameraDirection, Vect3f(0,1,0))
+		self.m_FinalCameraRotation = quat_to_turn
+	end
 --end
 
 function ANYToItselfCondition(args)
 	local l_Player = args["self"]
 	return not (l_Player.m_LastAnimation == l_Player.m_CurrentAnimation)
+end
+
+function ANYToDeadCondition(args)
+	local l_Player = args["self"]
+	return l_Player.m_IsDead
 end

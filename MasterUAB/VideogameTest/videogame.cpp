@@ -22,6 +22,8 @@
 #include "Effects\Effect.h"
 #include "Camera\Camera.h"
 
+#include "Brofiler.h"
+
 #pragma comment(lib, "Winmm.lib")
 
 #define APPLICATION_NAME "VIDEOGAME"
@@ -202,6 +204,7 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 
 	while (!doExit)
 	{
+		BROFILER_FRAME("Application")
 		l_InputManager->Update();
 
 		MSG msg;

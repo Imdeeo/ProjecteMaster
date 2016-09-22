@@ -183,9 +183,12 @@ void CCameraKeyController::Update(float ElapsedTime)
 	}
 
 	m_Position = (((l_pF - l_pI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pI;
+	m_Position = m_RotationOffset*(m_Position - m_PositionOffsetKey) + m_PositionOffset;
 	m_Fov = (((l_fF - l_fI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_fI;
 	m_LookAt = (((l_lF - l_lI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_lI;
+	m_LookAt = m_RotationOffset*(m_LookAt - m_PositionOffsetKey) + m_PositionOffset;
 	m_Up = (((l_uF - l_uI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_uI;
+	m_Up = m_RotationOffset * m_Up;
 }
 
 void CCameraKeyController::SetCurrentTime(float CurrentTime)
@@ -227,11 +230,11 @@ void CCameraKeyController::SetCamera(CCamera *Camera) const
 {
 	Camera->SetFOV(m_Fov);
 	Camera->SetAspectRatio(16.0f / 9.0f);
-	Camera->SetPosition(m_RotationOffset*(m_Position - m_PositionOffsetKey) + m_PositionOffset);
+	Camera->SetPosition(m_Position);
 	//Camera->SetPosition(Vect3f(0, 1.8, 0));
-	Camera->SetLookAt(m_RotationOffset*(m_LookAt - m_PositionOffsetKey) + m_PositionOffset);
+	Camera->SetLookAt(m_LookAt);
 	//Camera->SetLookAt(m_RotationOffset * (m_LookAt - m_PositionOffsetKey) + Vect3f(0, 1.8, 0));
-	Camera->SetUp(m_RotationOffset * m_Up);
+	Camera->SetUp(m_Up);
 	Camera->SetMatrixs();
 }
 
