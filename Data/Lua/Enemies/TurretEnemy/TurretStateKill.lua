@@ -20,9 +20,17 @@ function KillFirstTurret(args)
 	g_Player:SetAnimationCamera("JaheemDies")
 	
 	l_Enemy.m_TimerToStop = 0
-	
-	--local UABEngine = CUABEngine.get_instance()
-	--UABEngine:get_layer_manager():get_layer("particles"):get_resource("EmisorParticulaTorreta"):set_visible(true)
+
+	local UABEngine = CUABEngine.get_instance()
+	local l_TurretParticle = UABEngine:get_layer_manager():get_layer("particles"):get_resource("EmisorParticulaTorreta")
+	l_TurretParticle:set_start(true)
+	l_TurretParticle:set_visible(true)
+	local l_EnemyPos = l_Owner:get_position()
+	local l_HeadPos = l_Owner:get_bone_position(l_Enemy.m_HeadBoneId) + Vect3f(0,-0.05,0.1)
+	l_HeadPos = l_Owner:get_rotation():rotation_matrix() * l_HeadPos
+	l_HeadPos.x = l_HeadPos.x * -1
+	local l_Aux = (l_EnemyPos + l_HeadPos) / 2
+	l_TurretParticle:set_position(l_Aux)
 end
 
 function KillUpdateTurret(args, _ElapsedTime)
@@ -30,13 +38,19 @@ function KillUpdateTurret(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	
-
-	--l_Enemy:RotateEnemyBone(l_Enemy.m_BackBoneId, l_PlayerPos, 1.0)
-	
 	l_Enemy.m_TimerToStop = l_Enemy.m_TimerToStop + _ElapsedTime
 	if l_Enemy.m_TimerToStop >= 6.0 then
 		l_Enemy.m_State = "off"
 	end
+	
+	local UABEngine = CUABEngine.get_instance()
+	local l_TurretParticle = UABEngine:get_layer_manager():get_layer("particles"):get_resource("EmisorParticulaTorreta")
+	local l_EnemyPos = l_Owner:get_position()
+	local l_HeadPos = l_Owner:get_bone_position(l_Enemy.m_HeadBoneId) + Vect3f(0,-0.05,0.1)
+	l_HeadPos = l_Owner:get_rotation():rotation_matrix() * l_HeadPos
+	l_HeadPos.x = l_HeadPos.x * -1
+	local l_Aux = (l_EnemyPos + l_HeadPos) / 2
+	l_TurretParticle:set_position(l_Aux)
 end
 
 function KillEndTurret(args)
@@ -47,6 +61,10 @@ function KillEndTurret(args)
 	l_CameraManager:choose_main_camera("MainCamera")
 	l_CameraManager:get_main_camera():unlock()
 	l_Owner:set_rotation(l_Enemy.m_DefaultRotation)
+	local UABEngine = CUABEngine.get_instance()
+	local l_TurretParticle = UABEngine:get_layer_manager():get_layer("particles"):get_resource("EmisorParticulaTorreta")
+	l_TurretParticle:set_visible(false)
+	l_TurretParticle:set_start(false)
 end
 
 function KillToIdleConditionTurret(args)	

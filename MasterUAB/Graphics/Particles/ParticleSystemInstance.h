@@ -51,6 +51,7 @@ public:
 
 	UAB_BUILD_GET_SET(CParticleSystemType *, Type);
 	UAB_BUILD_GET_SET(float, NextParticleEmission);
+	UAB_BUILD_GET_SET(bool, Start);
 	UAB_BUILD_GET_SET(bool, Awake);
 	UAB_BUILD_GET_SET(float, AwakeTimer);
 	UAB_BUILD_GET_SET(Vect3f, EmissionBoxHalfSize);

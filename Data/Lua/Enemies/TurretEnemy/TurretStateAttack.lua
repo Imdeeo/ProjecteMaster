@@ -40,6 +40,7 @@ function AttackUpdateTurret(args, _ElapsedTime)
 				l_Enemy.m_TimerRotation = 0
 				g_Player.m_CameraController:lock()
 				g_Player:CalculateCameraPositionRotation("JaheemDies", l_EnemyPos)
+				g_Player.m_IsDead = true
 			else
 				if l_Enemy.m_ActualAnimation == 2 then
 					-- the enemy rotates the body to player position
@@ -94,13 +95,12 @@ function AttackUpdateTurret(args, _ElapsedTime)
 		if l_Enemy.m_TimerRotation <= 2.0 then
 			local target_quat = g_Player.m_InitialCameraRotation:slerp(g_Player.m_FinalCameraRotation, l_PercentRotation)
 			g_Player.m_CameraController:set_rotation(target_quat)
+			--g_Player.m_RenderableObject:set_rotation(target_quat)
 		else
 			l_AngleOK = true
 		end		
 
 		if l_PosOK and l_AngleOK then
-			--g_Player.m_CameraController:unlock()		
-			--g_Player.m_CameraController:set_up(Vect3f(0,1,0))
 			l_Enemy.m_State = "kill"
 		end
 	end
