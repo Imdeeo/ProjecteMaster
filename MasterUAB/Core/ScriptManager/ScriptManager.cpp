@@ -410,6 +410,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def_readwrite("m20", &Mat33f::m20)
 			.def_readwrite("m21", &Mat33f::m21)
 			.def_readwrite("m22", &Mat33f::m22)
+			.def(const_self * other<const Vect3f>())
 	];
 
 	module(m_LS)[
@@ -1368,6 +1369,8 @@ void CScriptManager::RegisterLUAFunctions()
 	class_<CParticleSystemInstance, CRenderableObject>("CParticleSystemInstance")
 		.def(constructor<>())
 		.def(constructor<tinyxml2::XMLElement*>())
+		.def("get_start", &CParticleSystemInstance::GetStart)
+		.def("set_start", &CParticleSystemInstance::SetStart)
 		.def("get_awake", &CParticleSystemInstance::GetAwake)
 		.def("set_awake", &CParticleSystemInstance::SetAwake)
 		.def("get_awake_timer", &CParticleSystemInstance::GetAwakeTimer)
