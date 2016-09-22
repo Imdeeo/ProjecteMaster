@@ -223,7 +223,7 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 		l_AlbedoFactor *= 1 - l_specularFactor;
 		float l_MetalColorRatio = l_Metalness * m_MetalColorWeight;
 		float3 l_ReflectionColor = l_MetalColorRatio * m_MetalColor + (1-l_MetalColorRatio) * l_Albedo.rgb;
-		float4 l_SpecularColor = float4(l_ReflectionColor + (1.0f-l_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_ReflectionColor), 1);
+		float4 l_SpecularColor = float4(l_ReflectionColor + (1.0f-l_Metalness)*(DEFAULT_SPEC_COLOR-l_ReflectionColor), 1);
 		// If gbuffer doesn't have a channel for specular color, we can get almost the same effect by setting albedo to reflection color.
 		// l_Albedo = float4(l_ReflectionColor, 1);
 	#endif

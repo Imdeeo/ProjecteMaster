@@ -9,6 +9,7 @@
 #define MIN_SPECULAR_POWER 3
 #define SPECULAR_DIMMING_POWER 0.7
 #define METAL_SPECFACTOR 0.85
+#define DEFAULT_SPEC_COLOR float3(0.7f, 0.7f, 0.7f)
 
 #define FRESNEL_POWER 5
 
