@@ -399,6 +399,10 @@ int CInputManager::GetInput(std::string _name)
 		return gainput::Key8;
 	else if (_name == "Key9")
 		return gainput::Key9;
+	else if (_name == "KeyComma")
+		return gainput::KeyComma;
+	else if (_name == "KeyPeriod")
+		return gainput::KeyPeriod;
 	else if (_name == "PadButtonRightStickX")
 		return gainput::PadButtonRightStickX;
 	else if (_name == "PadButtonRightStickY")
