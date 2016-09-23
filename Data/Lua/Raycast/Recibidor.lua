@@ -13,7 +13,7 @@ R1TrayL2IsClosed = true
 
 function R1Door(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
-	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.50143)
+	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.55)
 	l_Target = Vect3f(0.0, 0.0, 0.0)
 	l_Target.x = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerDoor"):get_position().x
 	l_Target.z = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerDoor"):get_position().z
@@ -57,7 +57,7 @@ end
 function R1TrayR1(_Player, _Pos) --This contains the key
 	if R1TrayR1IsClosed then
 		_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
-		_Player.m_TargetPosOffset = Vect3f(0.605, 0.0, 0.03958677)
+		_Player.m_TargetPosOffset = Vect3f(0.728, 0.0, 0.03958677)
 		l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayR1"):get_position()
 		if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 			_Player.m_Target = l_Target
@@ -79,7 +79,7 @@ end
 
 function R1TrayR2Open(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
-	_Player.m_TargetPosOffset = Vect3f(0.605, 0.0, 0.03958677)
+	_Player.m_TargetPosOffset = Vect3f(0.705, 0.0, 0.03958677)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayR2"):get_position()
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
@@ -96,7 +96,7 @@ end
 
 function R1TrayR2Close(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
-	_Player.m_TargetPosOffset = Vect3f(0.605, 0.0, 0.03958677)
+	_Player.m_TargetPosOffset = Vect3f(0.705, 0.0, 0.03958677)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayR2"):get_position()
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
@@ -121,7 +121,7 @@ end
 
 function R1TrayL1Open(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
-	_Player.m_TargetPosOffset = Vect3f(-0.605, 0.0, -0.03958677)
+	_Player.m_TargetPosOffset = Vect3f(-0.705, 0.0, -0.03958677)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL1"):get_position()
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
@@ -138,7 +138,7 @@ end
 
 function R1TrayL1Close(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
-	_Player.m_TargetPosOffset = Vect3f(-0.605, 0.0, -0.03958677)
+	_Player.m_TargetPosOffset = Vect3f(-0.705, 0.0, -0.03958677)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL1"):get_position()
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
@@ -163,7 +163,7 @@ end
 
 function R1TrayL2Open(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
-	_Player.m_TargetPosOffset = Vect3f(-0.605, 0.0, -0.03958677)
+	_Player.m_TargetPosOffset = Vect3f(-0.705, 0.0, -0.03958677)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):get_position()
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):set_scale(Vect3f(1.0, 0.5, 1.0))
@@ -181,7 +181,7 @@ end
 
 function R1TrayL2Close(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
-	_Player.m_TargetPosOffset = Vect3f(-0.605, 0.0, -0.03958677)
+	_Player.m_TargetPosOffset = Vect3f(-0.705, 0.0, -0.03958677)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):get_position()
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):set_scale(Vect3f(1.0, 1.0, 1.0))

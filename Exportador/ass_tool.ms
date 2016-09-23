@@ -22,8 +22,9 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		button ExportNavButton "Navmesh" pos:[14,124] width:112 height:32 visible:true
 		button ExportXMLButton "XML" pos:[14,164] width:112 height:32 visible:true
 		button ExportMeshButton "Mesh" pos:[14,204] width:112 height:32 visible:true
-		checkbox ExportMeshCheck "Meshes" pos:[10,286] width:56 height:16
-		checkbox ExportTexturesCheck "Textures" pos:[70,286] width:64 height:16
+		checkbox ExportMaterialCheck "Materials" pos:[40,244] width:60 height:16 checked:true
+		checkbox ExportMeshCheck "Meshes" pos:[40,264] width:56 height:16
+		checkbox ExportTexturesCheck "Textures" pos:[40,284] width:64 height:16
 		button ExportSceneButton "Scene" pos:[14,304] width:112 height:32 visible:true
 		label SelectionLabel "Nothing selected" pos:[160,32] width:416 height:24
 	GroupBox grp1 "Geometry" pos:[152,8] width:432 height:358
@@ -1073,9 +1074,12 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 		exportLights dir
 		exportCameras dir
 		createCharacters dir
-		exportMaterials dir (ExportTexturesCheck.checked)
 		exportStaticMesh dir false
 		exportRenderableObject dir
+		if ExportMaterialCheck.checked then
+		(
+			exportMaterials dir (ExportTexturesCheck.checked)
+		)
 	)
 	
 	on ExportSceneButton pressed do
