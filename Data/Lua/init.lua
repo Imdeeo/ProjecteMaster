@@ -47,8 +47,8 @@ function mainLua()
 	
 	--deactivate_gravity()
 	--deactivate_player_collisions()
-	--l_LevelManager:load_level("Recibidor")	
-	l_LevelManager:load_level("Biblioteca")
+	l_LevelManager:load_level("Recibidor")	
+	--l_LevelManager:load_level("Biblioteca")
 	--l_LevelManager:load_level("Maquinas")	
 end
 
