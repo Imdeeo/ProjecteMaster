@@ -1,96 +1,248 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <path>
-	<node name="nodoA" pos="0.0 0.0 -25.0"/>
-	<node name="nodoB" pos="0.0 0.0 -15.0"/>
-	<node name="nodoC" pos="-10.0 0.0 -5.0"/>
-	<node name="nodoD" pos="10.0 0.0 -5.0"/>
-	<node name="nodoE" pos="0.0 0.0 0.0"/>
-	<node name="nodoF" pos="0.0 0.0 10.0"/>
-	<node name="nodoG" pos="0.0 0.0 20.0"/>
-	<node name="nodoH" pos="0.0 0.0 30.0"/>	
-	<node name="nodoO" pos="0.0 0.0 -6.0"/>
-	<node name="nodoI" pos="0.0 0.0 -3.0"/>
-	<node name="nodoJ" pos="3.0 0.0 -3.0"/>
-	<node name="nodoK" pos="-3.0 0.0 -3.0"/>
-	<node name="nodoL" pos="3.0 0.0 3.0"/>
-	<node name="nodoM" pos="-3.0 0.0 3.0"/>
-	<node name="nodoN" pos="0.0 0.0 3.0"/>
-	<node name="nodoP" pos="0.0 0.0 6.0"/>
-
-	<father name="nodoA">
-		<child name="nodoB"/>
+	<node name="node1" pos="-19.0 0.0 25.0"/>
+	<node name="node2" pos="-13.0 0.0 25.0"/>
+	<node name="node3" pos="-13.0 0.0 26.3"/>
+	<node name="node4" pos="-9.6 0.0 26.3"/>
+	<node name="node5" pos="-9.6 0.0 20.9"/>
+	<node name="node6" pos="-16.2 0.0 20.9"/>
+	<node name="node7" pos="-16.2 0.0 17.3"/>
+	<node name="node8" pos="-11.7 0.0 17.3"/>
+	<node name="node9" pos="-11.7 0.0 13.7"/>
+	<node name="node10" pos="-16.3 0.0 13.7"/>
+	<node name="node11" pos="-8.8 0.0 10.4"/>
+	<node name="node12" pos="-8.8 0.0 6.4"/>
+	<node name="node13" pos="-19.7 0.0 6.4"/>
+	<node name="node14" pos="-19.7 0.0 10.4"/>
+	<node name="node15" pos="-16.3 0.0 10.4"/>
+	<node name="node16" pos="-19.0 0.0 13.7"/>
+	<node name="node17" pos="-9.1 0.0 13.7"/>
+	<node name="node18" pos="-9.1 0.0 17.3"/>
+	<node name="node19" pos="-19.5 0.0 20.9"/>
+	<node name="node20" pos="-8.8 0.0 8.4"/>
+	<node name="node21" pos="5.0 0.0 9.5"/>
+	<node name="node22" pos="-4.5 0.0 9.5"/>
+	<node name="node23" pos="5.0 0.0 13.0"/>
+	<node name="node24" pos="-4.5 0.0 13.0"/>
+	<node name="node25" pos="16.5 0.0 20.3"/>
+	<node name="node26" pos="9.5 0.0 20.3"/>
+	<node name="node27" pos="16.5 0.0 24.6"/>
+	<node name="node28" pos="9.5 0.0 24.6"/>
+	<node name="node29" pos="16.5 0.0 12.9"/>
+	<node name="node30" pos="9.5 0.0 12.9"/>
+	<node name="node31" pos="16.4 3.9 24.6"/>
+	<node name="node32" pos="16.4 3.9 19.4"/>
+	<node name="node33" pos="16.4 3.9 13.2"/>
+	<node name="node34" pos="16.4 3.9 6.3"/>
+	<node name="node35" pos="13.7 3.9 6.3"/>
+	<node name="node36" pos="9.0 1.3 6.3"/>
+	<father name="node1">
+		<child name="node2"/>
 	</father>
-	<father name="nodoB">
-		<child name="nodoA"/>
-		<child name="nodoC"/>
-		<child name="nodoD"/>
+	<father name="node2">
+		<child name="node1"/>
+		<child name="node3"/>
 	</father>
-	<father name="nodoC">
-		<child name="nodoB"/>
-		<child name="nodoE"/>
+	<father name="node3">
+		<child name="node2"/>
+		<child name="node4"/>
 	</father>
-	<father name="nodoD">
-		<child name="nodoB"/>
-		<child name="nodoE"/>
+	<father name="node4">
+		<child name="node3"/>
+		<child name="node5"/>
 	</father>
-	<father name="nodoE">
-		<child name="nodoC"/>
-		<child name="nodoD"/>
-		<child name="nodoF"/>
-		<child name="nodoO"/>
+	<father name="node5">
+		<child name="node4"/>
+		<child name="node6"/>
 	</father>
-	<father name="nodoF">
-		<child name="nodoE"/>
-		<child name="nodoG"/>
+	<father name="node6">
+		<child name="node5"/>
+		<child name="node19"/>
 	</father>
-	<father name="nodoG">
-		<child name="nodoF"/>
-		<child name="nodoH"/>
+	<father name="node7">
+		<child name="node6"/>
+		<child name="node8"/>
 	</father>
-	<father name="nodoH">
-		<child name="nodoF"/>
-	</father>	
-	<father name="nodoO">
-		<child name="nodoB"/>
-		<child name="nodoI"/>
+	<father name="node8">
+		<child name="node7"/>
+		<child name="node9"/>
+		<child name="node18"/>
 	</father>
-	<father name="nodoI">
-		<child name="nodoJ"/>
-		<child name="nodoK"/>
+	<father name="node9">
+		<child name="node17"/>
+		<child name="node8"/>
+		<child name="node10"/>
 	</father>
-	<father name="nodoJ">
-		<child name="nodoI"/>
-		<child name="nodoL"/>
+	<father name="node10">
+		<child name="node9"/>
+		<child name="node16"/>
+		<child name="node15"/>
 	</father>
-	<father name="nodoK">
-		<child name="nodoI"/>
-		<child name="nodoM"/>
+	<father name="node11">
+		<child name="node12"/>
+		<child name="node15"/>
 	</father>
-	<father name="nodoL">
-		<child name="nodoJ"/>
-		<child name="nodoN"/>
+	<father name="node12">
+		<child name="node11"/>
+		<child name="node13"/>
 	</father>
-	<father name="nodoM">
-		<child name="nodoK"/>
-		<child name="nodoN"/>
+	<father name="node13">
+		<child name="node12"/>
+		<child name="node14"/>
 	</father>
-	<father name="nodoN">
-		<child name="nodoL"/>
-		<child name="nodoM"/>
+	<father name="node14">
+		<child name="node13"/>
+		<child name="node15"/>
 	</father>
-	<father name="nodoP">
-		<child name="nodoL"/>
-		<child name="nodoM"/>
-		<child name="nodoN"/>
+	<father name="node15">
+		<child name="node14"/>
+		<child name="node11"/>
+		<child name="node10"/>
 	</father>
-	
-	<path_patrol name="path1">
-		<node name="nodoA" wait="false"/>
-		<node name="nodoB" wait="true" time_to_wait="5.0f"/>
-		<node name="nodoC" wait="false"/>
-		<node name="nodoE" wait="true" time_to_wait="10.0f"/>
-		<node name="nodoD" wait="false"/>
-		<node name="nodoB" wait="false"/>
-		<node name="nodoA" wait="true" time_to_wait="5.0f"/>
+	<father name="node16">
+		<child name="node10"/>
+	</father>
+	<father name="node17">
+		<child name="node9"/>
+		<child name="node18"/>
+	</father>
+	<father name="node18">
+		<child name="node8"/>
+		<child name="node17"/>
+	</father>
+	<father name="node19">
+		<child name="node6"/>
+	</father>
+	<father name="node20">
+		<child name="node11"/>
+		<child name="node12"/>
+		<child name="node22"/>
+	</father>
+	<father name="node21">
+		<child name="node23"/>
+		<child name="node22"/>
+		<child name="node30"/>
+		<child name="node36"/>
+	</father>
+	<father name="node22">
+		<child name="node24"/>
+		<child name="node21"/>
+		<child name="node20"/>
+	</father>
+	<father name="node23">
+		<child name="node21"/>
+		<child name="node24"/>
+		<child name="node30"/>
+	</father>
+	<father name="node24">
+		<child name="node23"/>
+		<child name="node22"/>
+	</father>
+	<father name="node25">
+		<child name="node27"/>
+		<child name="node26"/>
+		<child name="node29"/>
+	</father>
+	<father name="node26">
+		<child name="node28"/>
+		<child name="node25"/>
+		<child name="node30"/>
+	</father>
+	<father name="node27">
+		<child name="node25"/>
+		<child name="node28"/>
+	</father>
+	<father name="node28">
+		<child name="node27"/>
+		<child name="node26"/>
+	</father>
+	<father name="node29">
+		<child name="node25"/>
+		<child name="node30"/>
+	</father>
+	<father name="node30">
+		<child name="node26"/>
+		<child name="node29"/>
+		<child name="node23"/>
+		<child name="node21"/>
+	</father>
+	<father name="node31">
+		<child name="node32"/>
+	</father>
+	<father name="node32">
+		<child name="node33"/>		
+		<child name="node31"/>		
+	</father>
+	<father name="node33">
+		<child name="node34"/>
+		<child name="node32"/>
+	</father>
+	<father name="node34">
+		<child name="node35"/>		
+		<child name="node33"/>		
+	</father>
+	<father name="node35">
+		<child name="node36"/>
+		<child name="node34"/>
+	</father>
+	<father name="node36">
+		<child name="node35"/>
+		<child name="node21"/>
+	</father>
+	<path_patrol name="path_right">
+		<node name="node10" wait="false"/>
+		<node name="node15" wait="false"/>
+		<node name="node11" wait="false"/>
+		<node name="node20" wait="true" time_to_wait="3.0f"/>
+		<node name="node12" wait="false"/>
+		<node name="node13" wait="false"/>
+		<node name="node14" wait="false"/>
+		<node name="node15" wait="false"/>
+		<node name="node10" wait="false"/>
+		<node name="node9" wait="true" time_to_wait="2.0f"/>
+		<node name="node17" wait="false"/>
+		<node name="node18" wait="false"/>
+		<node name="node8" wait="false"/>
+		<node name="node7" wait="false"/>
+		<node name="node6" wait="false"/>
+		<node name="node5" wait="false"/>
+		<node name="node4" wait="false"/>
+		<node name="node3" wait="false"/>
+		<node name="node2" wait="true" time_to_wait="3.0f"/>
+		<node name="node3" wait="false"/>
+		<node name="node4" wait="false"/>
+		<node name="node5" wait="false"/>
+		<node name="node6" wait="false"/>
+		<node name="node7" wait="false"/>
+		<node name="node8" wait="false"/>
+		<node name="node9" wait="false"/>
+		<node name="node10" wait="true" time_to_wait="2.0f"/>
+	</path_patrol>
+	<path_patrol name="path_left">
+		<node name="node31" wait="false"/>
+		<node name="node32" wait="false"/>
+		<node name="node33" wait="false"/>
+		<node name="node34" wait="false"/>	
+		<node name="node35" wait="false"/>
+		<node name="node36" wait="false"/>
+		<node name="node21" wait="true" time_to_wait="3.0f"/>
+		<node name="node22" wait="false"/>
+		<node name="node24" wait="false"/>
+		<node name="node23" wait="false"/>
+		<node name="node30" wait="true" time_to_wait="2.0f"/>
+		<node name="node29" wait="false"/>
+		<node name="node25" wait="false"/>
+		<node name="node26" wait="false"/>
+		<node name="node28" wait="false"/>
+		<node name="node27" wait="false"/>
+		<node name="node25" wait="true" time_to_wait="3.0f"/>
+		<node name="node26" wait="false"/>
+		<node name="node30" wait="false"/>
+		<node name="node21" wait="false"/>
+		<node name="node36" wait="false"/>
+		<node name="node35" wait="false"/>
+		<node name="node34" wait="false"/>
+		<node name="node33" wait="false"/>
+		<node name="node32" wait="false"/>
 	</path_patrol>
 </path>
