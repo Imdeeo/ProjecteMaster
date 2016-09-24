@@ -9,7 +9,7 @@ CParticleManager::~CParticleManager(void)
 }
 
 
-void CParticleManager::Load(const std::string &Filename)
+void CParticleManager::Load(const std::string &Filename, const std::string &_LevelId)
 {
 	m_Filename = Filename;
 
@@ -28,7 +28,7 @@ void CParticleManager::Load(const std::string &Filename)
 			{
 				CParticleSystemType *l_ParticleSystemType = new CParticleSystemType(l_Element);
 				//if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType, "CParticleManager"))
-				if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType))
+				if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType,_LevelId))
 				{
 					CHECKED_DELETE(l_ParticleSystemType);
 				}
@@ -41,7 +41,7 @@ void CParticleManager::Load(const std::string &Filename)
 void CParticleManager::Reload()
 {
 	Destroy();
-	Load(m_Filename);
+	//Load(m_Filename);
 }
 
 void CParticleManager::Save()

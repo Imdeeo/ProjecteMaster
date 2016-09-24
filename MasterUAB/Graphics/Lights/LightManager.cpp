@@ -10,7 +10,7 @@ CLightManager::CLightManager():m_AmbientLight(Vect4f(0.1f,0.1f,0.1f,1.0f)),m_Ren
 
 CLightManager::~CLightManager(){}
 
-bool CLightManager::Load(const std::string &FileName){
+bool CLightManager::Load(const std::string &FileName, const std::string &_LevelId){
 	m_FileName = FileName;
 	
 	tinyxml2::XMLDocument doc;
@@ -35,13 +35,13 @@ bool CLightManager::Load(const std::string &FileName){
 					switch(type)
 					{
 					case CLight::LIGHT_TYPE_OMNI:
-						AddResource(l_ElementAux->GetPszProperty("name"), new COmniLight(l_ElementAux));
+						AddResource(l_ElementAux->GetPszProperty("name"), new COmniLight(l_ElementAux),_LevelId);
 						break;
 					case CLight::LIGHT_TYPE_DIRECTIONAL:
-						AddResource(l_ElementAux->GetPszProperty("name"), new CDirectionalLight(l_ElementAux));
+						AddResource(l_ElementAux->GetPszProperty("name"), new CDirectionalLight(l_ElementAux),_LevelId);
 						break;
 					case CLight::LIGHT_TYPE_SPOT:
-						AddResource(l_ElementAux->GetPszProperty("name"), new CSpotLight(l_ElementAux));
+						AddResource(l_ElementAux->GetPszProperty("name"), new CSpotLight(l_ElementAux),_LevelId);
 						break;
 					default:
 						return false;
@@ -60,22 +60,22 @@ bool CLightManager::Load(const std::string &FileName){
 
 bool CLightManager::Reload(){
 	Destroy();
-	return Load(m_FileName);
+	return Load(m_FileName,"");
 }
 
-bool CLightManager::CreateNewLight(std::string _name, std::string _type)
+bool CLightManager::CreateNewLight(std::string _name, std::string _type , const std::string &_LevelId)
 {
 	CLight::TLightType type = CLight::GetLightTypeByName(_type);
 	switch (type)
 	{
 	case CLight::LIGHT_TYPE_OMNI:
-		AddResource(_name, new COmniLight(_name));
+		AddResource(_name, new COmniLight(_name), _LevelId);
 		return true;
 	case CLight::LIGHT_TYPE_DIRECTIONAL:
-		AddResource(_name, new CDirectionalLight(_name));
+		AddResource(_name, new CDirectionalLight(_name), _LevelId);
 		return true;
 	case CLight::LIGHT_TYPE_SPOT:
-		AddResource(_name, new CSpotLight(_name));
+		AddResource(_name, new CSpotLight(_name), _LevelId);
 		return true;
 	default:
 		return false;

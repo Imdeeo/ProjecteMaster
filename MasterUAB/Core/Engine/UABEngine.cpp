@@ -1,3 +1,4 @@
+
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 #include "XML\tinyxml2.h"
@@ -187,7 +188,7 @@ void CUABEngine::Init()
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
 	m_MaterialManager->Load("Data\\default_effect_materials.xml");
-	m_LayerManager->Load("Data\\layers.xml");
+	m_LayerManager->Load("Data\\layers.xml","");
 	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
 #ifdef _DEBUG
 	m_RenderManager->GetDebugRender()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));

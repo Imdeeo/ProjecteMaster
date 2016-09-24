@@ -10,16 +10,16 @@ CMaterialManager::~CMaterialManager()
 {
 
 }
-void CMaterialManager::Load(const std::string &LevelMaterialsFilename, const std::string &DefaultMaterialsFilename)
+void CMaterialManager::Load(const std::string &LevelMaterialsFilename, const std::string &DefaultMaterialsFilename, const std::string &_LevelId)
 {
 	m_LevelMaterialsFilename = LevelMaterialsFilename;
 	m_DefaultMaterialsFilename = DefaultMaterialsFilename;
 
 	//Destroy();
 
-	LoadMaterialsFromFile(LevelMaterialsFilename);
+	LoadMaterialsFromFile(LevelMaterialsFilename,false,nullptr, _LevelId);
 	if (DefaultMaterialsFilename != "")
-		LoadMaterialsFromFile(DefaultMaterialsFilename);
+		LoadMaterialsFromFile(DefaultMaterialsFilename,false,nullptr, _LevelId);
 }
 
 void CMaterialManager::Reload()
@@ -32,7 +32,7 @@ void CMaterialManager::Reload()
 	//RemoveAllBut(l_MaterialNames);
 }
 
-void CMaterialManager::LoadMaterialsFromFile(const std::string &Filename, bool Update, std::map<std::string, std::string> *UpdatedNames)
+void CMaterialManager::LoadMaterialsFromFile(const std::string &Filename, bool Update, std::map<std::string, std::string> *UpdatedNames, const std::string &_LevelId)
 {
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLError l_Error = doc.LoadFile(Filename.c_str());
@@ -57,7 +57,7 @@ void CMaterialManager::LoadMaterialsFromFile(const std::string &Filename, bool U
 						AddUpdateResource(l_ElementAux->GetPszProperty("name"), l_Material);
 					}
 					else {
-						AddResource(l_ElementAux->GetPszProperty("name"), l_Material);
+						AddResource(l_ElementAux->GetPszProperty("name"), l_Material, _LevelId);
 					}
 					if (UpdatedNames != nullptr)
 					{

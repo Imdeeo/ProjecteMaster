@@ -6,6 +6,8 @@
 #include "XML\tinyxml2.h"
 #include <vector>
 
+#include "Utils\LevelInfo.h"
+
 #include "Math\Color.h"
 
 class CDynamicTexture;
@@ -15,7 +17,7 @@ class CRenderManager;
 class CRenderableObjectsManager;
 class CFrustum;
 
-class CLight : public CNamed, public C3DElement
+class CLight : public CNamed, public C3DElement, public CLevelInfo
 {
 
 public:

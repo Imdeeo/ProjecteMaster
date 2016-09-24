@@ -6,6 +6,8 @@
 #include <map>
 #include "Utils.h"
 
+#include "Utils\LevelInfo.h"
+
 #include <luabind/luabind.hpp>
 #include <luabind/function.hpp>
 #include <luabind/class.hpp>
@@ -44,7 +46,7 @@ public:
 		return m_Resources[Name];
 	}
 
-	virtual bool AddResource(const std::string &Name, T *Resource)
+	virtual bool AddResource(const std::string &Name, T *Resource,std::string _LevelId="")
 	{
 		if (Resource == nullptr)
 		{
@@ -143,6 +145,53 @@ public:
 			}
 		}
 		return *this;
+	}
+
+};
+
+template<class T>
+class CTemplatedLevelMapManager :public CTemplatedMapManager<T>
+{
+public:
+	void RemoveResourceFromLevel(const std::string &Name, const std::string &_Level)
+	{
+		((CLevelInfo*)m_Resources[Name])->RemoveLevel(_Level);
+		if (!((CLevelInfo*)m_Resources[Name])->HasAnyLevel())
+		{
+			RemoveResource(Name);
+		}
+	}
+
+	void RemoveAllResourcesFromLevel(const std::string &_Level)
+	{
+		typedef TMapResource::iterator it_type;
+		for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
+		{
+			((CLevelInfo*)iterator->second)->RemoveLevel(_Level);
+			if (!((CLevelInfo*)iterator->second)->HasAnyLevel())
+			{
+				RemoveResource(iterator->first);
+			}
+		}
+	}
+
+	virtual bool AddResource(const std::string &Name, T *Resource, std::string _LevelId)
+	{
+		if (Resource == nullptr)
+		{
+			printf("CMapManager error: Recurs NULL\n");
+			return false;
+		}
+		if (m_Resources.find(Name) != m_Resources.end())
+		{
+			*(m_Resources[Name]) = *(Resource);
+			((CLevelInfo*)m_Resources[Name])->AddLevel(_LevelId);
+			CHECKED_DELETE(Resource);
+			return true;
+		}
+		m_Resources[Name] = Resource;
+		((CLevelInfo*)m_Resources[Name])->AddLevel(_LevelId);
+		return true;
 	}
 
 };

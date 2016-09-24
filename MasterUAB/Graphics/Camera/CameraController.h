@@ -6,10 +6,11 @@
 #include "Utils\Named.h"
 #include "Math\Quatn.h"
 #include "XML\tinyxml2.h"
+#include "Utils\LevelInfo.h"
 
 class CCamera;
 
-class CCameraController : public CNamed
+class CCameraController : public CNamed, public CLevelInfo
 {
 protected:
 	Vect3f m_Position;
