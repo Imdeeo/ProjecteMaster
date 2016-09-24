@@ -5,10 +5,14 @@ dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateChase.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateAlert.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateReturn.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateAttack.lua")
+dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateKill.lua")
 
 class 'CAutomatonEnemy' (CEnemy)
 	function CAutomatonEnemy:__init(_TreeNode)
 		CEnemy.__init(self,_TreeNode)
+		
+		--HEAD_OBJECT_BONE_ID 31
+		self.m_HeadBoneId = 31
 		
 		self.m_PathFinding = CUABEngine.get_instance():get_astar_manager():get_resource("level_"..CUABEngine.get_instance():get_level_loaded())
 		self.m_TotalNodes = 0
@@ -95,6 +99,12 @@ class 'CAutomatonEnemy' (CEnemy)
 		AttackState = State.create(AttackUpdateAutomaton)
 		AttackState:set_do_first_function(AttackFirstAutomaton)
 		AttackState:set_do_end_function(AttackEndAutomaton)
+		AttackState:add_condition(AttackToKillConditionAutomaton, "Kill")
+		
+		KillState = State.create(KillUpdateAutomaton)
+		KillState:set_do_first_function(KillFirstAutomaton)
+		KillState:set_do_end_function(KillEndAutomaton)
+		KillState:add_condition(KillToOffConditionAutomaton, "Off")
 		
 		self.m_StateMachine:add_state("Off", OffState)
 		self.m_StateMachine:add_state("Idle", IdleState)
@@ -103,6 +113,7 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_StateMachine:add_state("Alert", AlertState)
 		self.m_StateMachine:add_state("Return", ReturnState)
 		self.m_StateMachine:add_state("Attack", AttackState)
+		self.m_StateMachine:add_state("Kill", KillState)
 	end
 	
 	function CAutomatonEnemy:DetectPlayerNoise(_increment)

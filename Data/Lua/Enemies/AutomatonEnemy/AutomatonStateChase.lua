@@ -34,7 +34,7 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 			l_Enemy.m_TimerRotation = 0.0
 		end 
 		
-		l_Enemy:EnemyWalk(l_PlayerPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)		
+		l_Enemy:EnemyWalk(l_PlayerPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
 		
 		-- Si la distancia entre el enemy y el player es menor a lo establecido pasamos a attack
 		if l_Distance < l_Enemy.m_DistanceToKill then

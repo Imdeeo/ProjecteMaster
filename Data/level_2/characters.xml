@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <characters>
-	<player name="player" renderable_object="Jaheem" layer="solid" camera_controller="MainCamera"/>
-	<enemy name="EnemyLeft" renderable_object="Automaton" layer="solid" type="Automaton" patrol="false"/>
-	<enemy name="EnemyRight" renderable_object="Automaton2" layer="solid" type="Automaton" patrol="false"/>
-	<!--<player name="player" renderable_object="Jaheem" layer="solid" camera_controller="MainCamera">
-		<velocity type="run" start="50.0" end="25.0"/>
-		<velocity type="walk" start="24.0" end="0.0"/>
-		<stain type="manchasCordura1" start="50.0" end="0.0" renderable_object="manchas"/>
-		<fov type="lineal" start="50.0" end="0.0" start_value="1.13" end_value="1.75" default_value="1.13"/>
-		<vignetting type="lineal" start="50.0" end="0.0" default_value="0.1" material="NoiseAndVignettingMaterial"/>
-		<vortex type="lineal" start="75.0" end="0.0" default_value="0.0" material="VortexMaterial"/>
-	</player>-->
+	<enemy name="EnemyLeft" renderable_object="Automaton" layer="solid" type="Automaton" awake="true" vision_distance="10.0" vision_angle="0.30" distance_activate_run="15.0" distance_activate_walk="8.0" distance_activate_crouching="3.0" distance_kill="1.5" distance_change_node_walking="1.5" distance_change_node_running="1.0" walk_speed="0.6" run_speed="1.2" angular_walk_speed="80.0" angular_run_speed="50.0" alert_time="3.0" patrol="true" patrol_name="path_left">
+		<param distance="5.0" time="3.0" sanity_amount="-5.0"/>
+		<param distance="3.0" time="2.0" sanity_amount="-5.0"/>
+		<param distance="2.0" time="1.0" sanity_amount="-5.0"/>
+		<param distance="0.5" time="0.5" sanity_amount="0.0"/>
+	</enemy>
+	<enemy name="EnemyRight" renderable_object="Automaton2" layer="solid" type="Automaton" awake="true" vision_distance="10.0" vision_angle="0.35" distance_activate_run="15.0" distance_activate_walk="8.0" distance_activate_crouching="3.0" distance_kill="1.5" distance_change_node_walking="1.5" distance_change_node_running="0.5" walk_speed="0.6" run_speed="1.2" angular_walk_speed="80.0" angular_run_speed="50.0" alert_time="3.0" patrol="true" patrol_name="path_right">
+		<param distance="5.0" time="3.0" sanity_amount="-5.0"/>
+		<param distance="3.0" time="2.0" sanity_amount="-5.0"/>
+		<param distance="2.0" time="1.0" sanity_amount="-5.0"/>
+		<param distance="0.5" time="0.5" sanity_amount="0.0"/>
+	</enemy>
+	<enemy name="EnemyTurret" renderable_object="TurretAutomaton" layer="solid" type="Turret" awake="true" vision_distance="20.0" vision_angle="0.5" distance_attack="3.0" distance_kill="1.5" angular_speed="2.0">
+		<param distance="20.0" time="1.0" sanity_amount="-5.0"/>
+		<param distance="10.0" time="1.0" sanity_amount="-2.0"/>
+		<param distance="5.0" time="1.0" sanity_amount="-3.0"/>
+		<param distance="2.0" time="0.5" sanity_amount="0.0"/>
+	</enemy>
 </characters>
