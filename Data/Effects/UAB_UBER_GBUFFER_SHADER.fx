@@ -231,7 +231,7 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 	#ifdef HAS_UV2
 		#if defined(HAS_TANGENT) && defined(HAS_RNM)
 			// Pass l_NormalMap through CalcNormalMap just to take m_BumpFactor into account
-			//float3 l_TangentSpaceNormalSpaceNormal = CalcNormalMap(float3(0, 0, 1), Tn, Bn, l_NormalMap);
+			//float3 l_TangentSpaceNormal = CalcNormalMap(float3(0, 0, 1), Tn, Bn, l_NormalMap);
 			float3 l_TangentSpaceNormal = CalcNormalMap(float3(0, 0, 1), float3(1, 0, 0), float3(0, 1, 0), l_NormalMap);
 			l_Ambient = float4(GetRadiosityNormalMap(l_TangentSpaceNormal, IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
 		#elif defined(HAS_RNM)
@@ -243,8 +243,16 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 
 	float4 l_AmbientIllumination = l_Albedo * l_AlbedoFactor * l_Ambient;
 	#ifdef HAS_REFLECTION
+		// Calculate mip level depending on the cube map size
+		// for efficiency, l_NumMipLevels could be stored in the constant buffer instead
+		uint l_NumMipLevels;
+		uint _Dummy;
+		T8Texture.GetDimensions(0, _Dummy, _Dummy, l_NumMipLevels);
+		float l_MipLevel = (100 - m_SpecularPower) / GLOSS_UNITS_PER_MIP_LEVEL;
+		l_MipLevel = l_MipLevel + l_NumMipLevels - NUM_LEVELS_CUBE512;
+
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, Nn));
-		float4 l_ReflectColor = T8Texture.SampleLevel(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
+		float4 l_ReflectColor = T8Texture.SampleLevel(S8Sampler, l_ReflectVector, l_MipLevel);
 		#ifdef HAS_SPECULAR_MAP
 			l_AmbientIllumination += float4(l_ReflectColor.xyz * l_specularFactor * m_ReflectionFactor * l_SpecularColor.xyz, 1);
 		#else
