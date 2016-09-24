@@ -165,6 +165,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
 		self.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource("LlaveRecibidor")
 		self.m_ItemName = "LlaveRecibidor"
+		self.m_LeftHanded = false
 		self.m_NewItemName = ""
 		self.m_ItemTime = 0
 		

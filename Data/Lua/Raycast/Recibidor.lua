@@ -13,7 +13,7 @@ R1TrayL2IsClosed = true
 
 function R1Door(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
-	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.55)
+	_Player.m_TargetPosOffset = Vect3f(0.048, 0.0, -0.55)
 	l_Target = Vect3f(0.0, 0.0, 0.0)
 	l_Target.x = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerDoor"):get_position().x
 	l_Target.z = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerDoor"):get_position().z
@@ -23,12 +23,12 @@ function R1Door(_Player, _Pos)
 		_Player.m_InteractingCinematic = "CrossDoor"
 		_Player.m_CameraAnimation = "CrossDoor"
 		_Player.m_NewItemName = ""
-		_Player.m_ItemTime = 1
+		_Player.m_ItemTime = 1.5
 		_Player.m_CurrentAend = "CrossDoor"
+		_Player.m_LeftHanded = false
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
-		--CUABEngine.get_instance():get_level_manager():load_level("2")
 	end
 end
 
@@ -66,6 +66,7 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 			_Player.m_CameraAnimation = "ForceTray"
 			_Player.m_NewItemName = "LlaveRecibidor"
 			_Player.m_ItemTime = 4.06666
+			_Player.m_LeftHanded = true
 			_Player.m_CurrentAend = nil
 			_Player.m_IsInteracting = true
 			_Player.m_IsClimbing = false
