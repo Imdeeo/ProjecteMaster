@@ -4,14 +4,14 @@
 #include "Utils\TemplatedMapManager.h"
 #include "ManchasSystemType.h"
 
-class CManchasManager : public CTemplatedMapManager<CManchasSystemType>
+class CManchasManager : public CTemplatedLevelMapManager<CManchasSystemType>
 {
 private:
 	std::string m_Filename;
 public:
 	CManchasManager(void);
 	virtual ~CManchasManager(void);
-	void Load(const std::string &Filename);
+	void Load(const std::string &Filename, const std::string &_LevelId);
 	void Reload();
 	void Save();
 };

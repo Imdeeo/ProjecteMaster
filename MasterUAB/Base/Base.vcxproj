@@ -40,6 +40,7 @@
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Utils\Active.h" />
     <ClInclude Include="Utils\CEmptyPointerClass.h" />
+    <ClInclude Include="Utils\LevelInfo.h" />
     <ClInclude Include="Utils\Named.h" />
     <ClInclude Include="Utils\TemplatedMapManager.h" />
     <ClInclude Include="Utils\TemplatedVectorMapManager.h" />
@@ -56,6 +57,7 @@
     <ClCompile Include="Math\MathConstants.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Utils\Active.cpp" />
+    <ClCompile Include="Utils\LevelInfo.cpp" />
     <ClCompile Include="Utils\Named.cpp" />
     <ClCompile Include="XML\tinyxml2.cpp" />
   </ItemGroup>

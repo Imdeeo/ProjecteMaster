@@ -1,12 +1,13 @@
 #include "RenderLayerSceneRendererCommand.h"
 #include "RenderManager\RenderManager.h"
 #include "Engine\UABEngine.h"
-#include "Layers\LayerManager.h"
+#include "LevelManager\LevelManager.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 
 CRenderLayerSceneRendererCommand::CRenderLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
 {
-	m_Layer = UABEngine.GetLayerManager()->GetLayer(TreeNode);
+	const char * l_layerExist = TreeNode->GetPszProperty("layer", "");
+	m_Layer = UABEngine.GetLevelManager()->GetCompleteLayer(l_layerExist);
 	SetActive(TreeNode->GetBoolProperty("active",false));
 }
 
@@ -14,5 +15,8 @@ CRenderLayerSceneRendererCommand::~CRenderLayerSceneRendererCommand(){}
 
 void CRenderLayerSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
-	m_Layer->Render(&RenderManager);
+	for (size_t i = 0; i < m_Layer.size(); i++)
+	{
+		m_Layer[i]->Render(&RenderManager);
+	}
 }

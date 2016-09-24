@@ -14,6 +14,7 @@
 #include "Manchas\ManchasManager.h"
 #include "IA\AStar.h"
 
+
 CLevelManager::CLevelManager()
 {
 }
@@ -48,21 +49,18 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 
 void CLevelManager::LoadLevel(const std::string &_LevelName)
 {
-	UABEngine.SetLevelLoaded(m_LevelsInfo[_LevelName].m_ID);
-	std::string l_LevelDirectory = m_LevelsInfo[_LevelName].m_Directory;
-	UABEngine.GetMaterialManager()->Load(l_LevelDirectory + "\\materials.xml");
-	UABEngine.GetParticleManager()->Load(l_LevelDirectory + "\\particles.xml");
-	UABEngine.GetManchasManager()->Load(l_LevelDirectory + "\\cordura.xml");
-	UABEngine.GetStaticMeshManager()->Load(l_LevelDirectory + "\\static_meshes.xml");
-	UABEngine.GetLayerManager()->Load(l_LevelDirectory + "\\renderable_objects.xml");
-	UABEngine.GetLightManager()->Load(l_LevelDirectory + "\\lights.xml");
-	UABEngine.GetCinematicManager()->LoadXML(l_LevelDirectory + "\\cinematic.xml");
-	UABEngine.GetCameraControllerManager()->Load(l_LevelDirectory + "\\cameras.xml");
-	UABEngine.GetAStarManager()->LoadMap(l_LevelDirectory + "\\pathfinding.xml");
-	std::string l_LevelDirectoryChangedSlashes = l_LevelDirectory;
-	std::replace(l_LevelDirectoryChangedSlashes.begin(), l_LevelDirectoryChangedSlashes.end(), '\\', '\/');
-	UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_LevelDirectoryChangedSlashes + "\")");
-	m_LevelsInfo[_LevelName].m_Loaded = true;
+	if (m_LevelsInfo[_LevelName].m_Loaded)
+	{
+		ReloadLevel(_LevelName);
+	}
+	else
+	{
+		UABEngine.SetLevelLoaded(m_LevelsInfo[_LevelName].m_ID);
+		CLevel * l_Level = new CLevel(_LevelName);
+		l_Level->Load();
+		AddResource(_LevelName, l_Level);
+		m_LevelsInfo[_LevelName].m_Loaded = true;
+	}
 }
 
 void CLevelManager::ReloadLevel(const std::string &_LevelName)
@@ -83,7 +81,22 @@ void CLevelManager::ReloadAllLua()
 		{
 			std::string l_Directory = l_iterator->second.m_Directory;
 			std::replace(l_Directory.begin(), l_Directory.end(), '\\', '\/');
-			UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_Directory + "\")");
+			UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_Directory + "\",\"" + l_iterator->second.m_ID + "\")");
 		}
 	}
+}
+
+TLevelInfo CLevelManager::GetLevelInfo(std::string &_LevelName)
+{
+	return m_LevelsInfo[_LevelName];
+}
+
+std::vector<CRenderableObjectsManager*> CLevelManager::GetCompleteLayer(const std::string &_LayerName)
+{
+	std::vector<CRenderableObjectsManager*> l_RenderableObjectVector;
+	for (size_t i = 0; i < m_ResourcesVector.size(); i++)
+	{
+		l_RenderableObjectVector.push_back(m_ResourcesVector[i]->GetLayer(_LayerName));
+	}
+	return l_RenderableObjectVector;
 }

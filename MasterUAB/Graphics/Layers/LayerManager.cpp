@@ -24,7 +24,7 @@ void CLayerManager::Destroy()
 	CTemplatedVectorMapManager::Destroy();
 }
 
-void CLayerManager::Load(const std::string &FileName)
+void CLayerManager::Load(const std::string &FileName, const std::string &_LevelId)
 {
 	m_Filename = FileName;
 	
@@ -49,19 +49,19 @@ void CLayerManager::Load(const std::string &FileName)
 				}
 				else if (l_ElementAux->Name() == std::string("instance_mesh"))
 				{					
-					GetLayer(l_ElementAux)->AddMeshInstance(l_ElementAux);
+					GetLayer(l_ElementAux)->AddMeshInstance(l_ElementAux, _LevelId);
 				}
 				else if (l_ElementAux->Name() == std::string("animated_instance_mesh"))
 				{
-					GetLayer(l_ElementAux)->AddAnimatedInstanceModel(l_ElementAux);
+					GetLayer(l_ElementAux)->AddAnimatedInstanceModel(l_ElementAux, _LevelId);
 				}
 				else if (l_ElementAux->Name() == std::string("particle_instance"))
 				{
-					GetLayer(l_ElementAux)->AddParticleSystemInstance(l_ElementAux);
+					GetLayer(l_ElementAux)->AddParticleSystemInstance(l_ElementAux, _LevelId);
 				}
 				else if (l_ElementAux->Name() == std::string("manchas_instance"))
 				{
-					GetLayer(l_ElementAux)->AddManchasSystemInstance(l_ElementAux);
+					GetLayer(l_ElementAux)->AddManchasSystemInstance(l_ElementAux, _LevelId);
 				}
 				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
@@ -95,11 +95,11 @@ void CLayerManager::Reload()
 				}
 				else if (l_ElementAux->Name() == std::string("instance_mesh"))
 				{
-					GetLayer(l_ElementAux)->AddMeshInstance(l_ElementAux);
+					GetLayer(l_ElementAux)->AddMeshInstance(l_ElementAux, "");
 				}
 				else if (l_ElementAux->Name() == std::string("animated_instance_mesh"))
 				{
-					GetLayer(l_ElementAux)->AddAnimatedInstanceModel(l_ElementAux);
+					GetLayer(l_ElementAux)->AddAnimatedInstanceModel(l_ElementAux, "");
 				}				
 				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}

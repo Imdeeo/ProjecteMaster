@@ -2,6 +2,7 @@
 #define PARTICLE_SYSTEM_TYPE_H
 
 #include "Utils\Named.h"
+#include "Utils\LevelInfo.h"
 #include "Utils.h"
 #include "Math\Matrix44.h"
 #include "Math\Color.h"
@@ -13,7 +14,7 @@
 #include <vector>
 
 
-class CParticleSystemType : public CNamed
+class CParticleSystemType : public CNamed,public CLevelInfo
 {
 private:
 	struct ControlPointColor
