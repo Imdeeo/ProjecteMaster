@@ -168,6 +168,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_LeftHanded = false
 		self.m_NewItemName = ""
 		self.m_ItemTime = 0
+		self.m_DropItemTime = 9999
 		
 		self.m_CurrentAnimation = "none"
 		self.m_LastAnimation = "none"
