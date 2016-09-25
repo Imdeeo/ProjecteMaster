@@ -1,3 +1,5 @@
+dofile("Data\\Lua\\Raycast\\PipeOrgan.lua")
+
 function FacingRaycast(_Offset, _Target, _Pos, _Distance)
 	--utils_log("Pos: ".._Pos.x..", ".._Pos.y..", ".._Pos.z)
 	--utils_log("Target: ".._Target.x..", ".._Target.y..", ".._Target.z)
@@ -6,10 +8,34 @@ function FacingRaycast(_Offset, _Target, _Pos, _Distance)
 	return ((_Pos - _Target):length() < _Distance)
 end
 
-R2PuzzleCleared = false
+function R2TriggerOrganKeyA(_Player, _Pos)
+	--play key sound
+	R2PushOrganKey("A", _Player)
+end
 
-function R2PipeOrgan(_Player, _Pos)
-	
+function R2TriggerOrganKeyB(_Player, _Pos)
+	--play key sound
+	R2PushOrganKey("B", _Player)
+end
+
+function R2TriggerOrganKeyC(_Player, _Pos)
+	--play key sound
+	R2PushOrganKey("C", _Player)
+end
+
+function R2TriggerOrganKeyD(_Player, _Pos)
+	--play key sound
+	R2PushOrganKey("D", _Player)
+end
+
+function R2TriggerOrganKeyE(_Player, _Pos)
+	--play key sound
+	R2PushOrganKey("E", _Player)
+end
+
+function R2TriggerOrganKeyF(_Player, _Pos)
+	--play key sound
+	R2PushOrganKey("F", _Player)
 end
 
 function R2Artifact(_Player, _Pos)
