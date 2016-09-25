@@ -13,6 +13,7 @@ CCinematicManager::~CCinematicManager()
 
 void CCinematicManager::LoadXML(const std::string &FileName)
 {
+	m_FileName = FileName;
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLError l_Error = doc.LoadFile(FileName.c_str());
 
@@ -34,6 +35,11 @@ void CCinematicManager::LoadXML(const std::string &FileName)
 	}
 }
 
+void CCinematicManager::Reload()
+{
+	Destroy();
+	LoadXML(m_FileName);
+}
 
 void CCinematicManager::Update(float _ElapsedTime)
 {
