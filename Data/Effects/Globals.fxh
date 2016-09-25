@@ -11,6 +11,12 @@
 #define METAL_SPECFACTOR 0.85
 #define DEFAULT_SPEC_COLOR float3(0.7f, 0.7f, 0.7f)
 
+// difference in glossiness (specular power) that corresponds to one mip level
+// with 12, max mip level (glossiness 0) is 8.33, suitable for a cube map of size 512x512
+#define GLOSS_UNITS_PER_MIP_LEVEL 12.0
+// number of mip levels (including level 0) for a cube map of size 512x512
+#define NUM_LEVELS_CUBE512 10.0
+
 #define FRESNEL_POWER 5
 
 cbuffer SceneConstantBuffer : register( b0 )
