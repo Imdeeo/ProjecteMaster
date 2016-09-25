@@ -48,7 +48,12 @@ fn swapXY &vect =
 
 fn QuatToRH &q =
 (
-	q = [-q.x, q.z, -q.y, -q.w]
+	q = [q.x, q.z, -q.y, q.w]
+)
+
+fn CustomQuatToRH &q =
+(
+	q = [q.x,q.z, -q.y, -q.w]
 )
 
 fn InverseQuat &q =
@@ -179,6 +184,13 @@ fn stahp uv =
 	( 
 		uv.y -= floor(uv.y)
 	)
+)
+
+function asd =
+(
+	local aux = $.rotation
+	QuatToRH &aux
+	return aux
 )
 
 /*fn equalVertex vt1 vt2 =

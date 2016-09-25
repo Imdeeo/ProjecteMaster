@@ -18,10 +18,6 @@ private:
 	size_t m_CurrentKeyFrame;
 	CRenderableObject *m_RenderableObject;
 
-	Vect3f m_PivotPosition;
-	Quatf  m_PivotRotation;
-	Vect3f m_PivotScale;
-
 	float calculateBestAngle(float _Current, float _Next);
 public:
 	CCinematicObject(tinyxml2::XMLElement* TreeNode);
@@ -32,14 +28,6 @@ public:
 	void OnRestartCycle();
 	void GetCurrentKey();
 	bool IsFinished();
-
-	void SetPivotPosition(Vect3f _PivotPosition);
-	void SetPivotRotation(Quatf _PivotRotation);
-	void SetPivotScale(Vect3f _PivotScale);
-
-	Vect3f GetPivotPosition();
-	Quatf GetPivotRotation();
-	Vect3f GetPivotScale();
 };
 
 #endif H_CINEMATIC_OBJECT_H

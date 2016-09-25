@@ -380,6 +380,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("decouple_x", &Quatf::decoupleX)
 			.def("decouple_y", &Quatf::decoupleY)
 			.def("decouple_z", &Quatf::decoupleZ)
+			.def("conjugate", &Quatf::conjugate)
 			.def("get_yaw", &Quatf::GetYaw)
 			.def("get_pitch", &Quatf::GetPitch)
 			.def("get_roll", &Quatf::GetRoll)
@@ -395,6 +396,10 @@ void CScriptManager::RegisterLUAFunctions()
 			.scope[
 				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
 			]
+			.def("slerpJU", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&, float))&Quatf::slerpJU)
+			/*.scope[
+				def("slerp", (Quatn<float>(*)(const Quatn<float> &, const Quatn<float> &, float))&Quatn<float>::slerp)
+			]*/
 			.def("compare", &Quatf::Compare)
 	];
 	
@@ -958,12 +963,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update", &CCinematicObject::Update)
 			.def("on_restart_cycle", &CCinematicObject::OnRestartCycle)
 			.def("get_current_key", &CCinematicObject::GetCurrentKey)
-			.def("get_pivot_position", &CCinematicObject::GetPivotPosition)
-			.def("set_pivot_position", &CCinematicObject::SetPivotPosition)
-			.def("get_pivot_rotation", &CCinematicObject::GetPivotRotation)
-			.def("set_pivot_rotation", &CCinematicObject::SetPivotRotation)
-			.def("get_pivot_scale", &CCinematicObject::GetPivotScale)
-			.def("set_pivot_scale", &CCinematicObject::SetPivotScale)
 			.def("is_finished", &CCinematicObject::IsFinished)
 	];
 
@@ -980,6 +979,7 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CCinematicManager, bases<CRenderableObject, CTemplatedMapManager<CCinematic>>>("CCinematicManager")
 			.def(constructor<>())
 			.def("load_xml", &CCinematicManager::LoadXML)
+			.def("reload", &CCinematicManager::Reload)
 			.def("update", &CCinematicManager::Update)
 			.def("render", &CCinematicManager::Render)
 	];
