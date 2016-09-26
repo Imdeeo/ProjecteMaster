@@ -4,7 +4,7 @@
 	<pixel_shader name="carga_ps"	file="UAB_2Ddeferred.fx" shader_model="ps_4_0"	entry_point="mainPS" preprocessor=""/>
 	<effect_technique name="carga_technique" vertex_shader="carga_vs" pixel_shader="carga_ps"/>
 </load_screen>
-<effects>	
+<effects>
 	<!--GEOMETRY SHADER-->
 	<vertex_shader name="particle_vs" file="UAB_GEOMETRY_SHADER.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX" preprocessor=""/>
 	<geometry_shader name="particle_gs" file="UAB_GEOMETRY_SHADER.fx" shader_model="gs_4_0" entry_point="mainGS" preprocessor=""/>
@@ -48,10 +48,18 @@
 	<pixel_shader name="animated_glow_ps" file="UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_WEIGHT_INDICES;HAS_NORMAL;HAS_UV;HAS_TANGENT;HAS_GLOW;HAS_LIGHTS"/>
 	<effect_technique name="animated_glow_deferred_technique" vertex_shader="animated_glow_vs" pixel_shader="animated_glow_ps"/>
 	
-	<!--EFECTOS -->
+	<!--EFECTOS -->		
+	<vertex_shader name="lightscattering_vs" file="UAB_LIGHT_SCATTERING.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_LIGHTSCATTERING"/>
+	<pixel_shader name="lightscattering_ps" file="UAB_LIGHT_SCATTERING.fx" shader_model="ps_4_0" entry_point="PSLightScattering" preprocessor="HAS_LIGHTSCATTERING"/>
+	<effect_technique name="lightscattering_technique" vertex_shader="lightscattering_vs" pixel_shader="lightscattering_ps"/>
+	
+	<vertex_shader name="lightscattering_combine_vs" file="UAB_LIGHT_SCATTERING.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_COMBINE"/>
+	<pixel_shader name="lightscattering_combine_ps" file="UAB_LIGHT_SCATTERING.fx" shader_model="ps_4_0" entry_point="PSLightScatteringCombine" preprocessor="HAS_COMBINE"/>
+	<effect_technique name="lightscattering_combine_technique" vertex_shader="lightscattering_combine_vs" pixel_shader="lightscattering_combine_ps"/>	
+		
 	<vertex_shader name="color_grading_vs" file="UAB_COLOR_GRADING.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="color_grading_ps" file="UAB_COLOR_GRADING.fx" shader_model="ps_4_0" entry_point="PSGUIColorGrading"/>
-	<effect_technique name="color_grading_technique" vertex_shader="color_grading_vs" pixel_shader="color_grading_ps"/>	
+	<effect_technique name="color_grading_technique" vertex_shader="color_grading_vs" pixel_shader="color_grading_ps"/>
 	
 	<vertex_shader name="noise_and_vignetting_vs" file="UAB_NOISE_AND_VIGNETTING.fx" shader_model="vs_4_0" entry_point="NoiseAndVignettingVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="noise_and_vignetting_ps" file="UAB_NOISE_AND_VIGNETTING.fx" shader_model="ps_4_0" entry_point="NoiseAndVignettingPS"/>
