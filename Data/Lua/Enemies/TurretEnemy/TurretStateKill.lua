@@ -20,17 +20,8 @@ function KillFirstTurret(args)
 	g_Player:SetAnimationCamera("JaheemDies")
 	
 	l_Enemy.m_TimerToStop = 0
-
-	local UABEngine = CUABEngine.get_instance()
-	local l_TurretParticle = UABEngine:get_layer_manager():get_layer("particles"):get_resource("EmisorParticulaTorreta")
-	l_TurretParticle:set_start(true)
-	l_TurretParticle:set_visible(true)
-	local l_EnemyPos = l_Owner:get_position()
-	local l_HeadPos = l_Owner:get_bone_position(l_Enemy.m_HeadBoneId) + Vect3f(0,-0.05,0.1)
-	l_HeadPos = l_Owner:get_rotation():rotation_matrix() * l_HeadPos
-	l_HeadPos.x = l_HeadPos.x * -1
-	local l_Aux = (l_EnemyPos + l_HeadPos) / 2
-	l_TurretParticle:set_position(l_Aux)
+	
+	l_Enemy:ShowParticles("EmisorParticulaTorreta", true)
 end
 
 function KillUpdateTurret(args, _ElapsedTime)
@@ -43,14 +34,7 @@ function KillUpdateTurret(args, _ElapsedTime)
 		l_Enemy.m_State = "off"
 	end
 	
-	local UABEngine = CUABEngine.get_instance()
-	local l_TurretParticle = UABEngine:get_layer_manager():get_layer("particles"):get_resource("EmisorParticulaTorreta")
-	local l_EnemyPos = l_Owner:get_position()
-	local l_HeadPos = l_Owner:get_bone_position(l_Enemy.m_HeadBoneId) + Vect3f(0,-0.05,0.1)
-	l_HeadPos = l_Owner:get_rotation():rotation_matrix() * l_HeadPos
-	l_HeadPos.x = l_HeadPos.x * -1
-	local l_Aux = (l_EnemyPos + l_HeadPos) / 2
-	l_TurretParticle:set_position(l_Aux)
+	l_Enemy:ShowParticles("EmisorParticulaTorreta", false)
 end
 
 function KillEndTurret(args)

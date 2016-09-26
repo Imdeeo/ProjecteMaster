@@ -20,7 +20,7 @@ function AttackUpdateTurret(args, _ElapsedTime)
 	local l_EnemyPos = l_Enemy.m_RenderableObject:get_position()
 	
 	if not l_Enemy.m_IsKilling then
-		local l_Distance = l_EnemyPos:distance(l_PlayerPos)	
+		local l_Distance = l_EnemyPos:distance(l_PlayerPos)
 		
 		l_Enemy.m_TimerToStop = l_Enemy.m_TimerToStop + _ElapsedTime
 		if l_Enemy.m_TimerToStop >= 1.33 and l_Enemy.m_ActualAnimation == 1 then
@@ -33,9 +33,15 @@ function AttackUpdateTurret(args, _ElapsedTime)
 		l_Enemy:LoseSanity(l_Distance)	
 	
 		if l_Enemy:PlayerVisible(l_Owner) and l_Distance <= l_Enemy.m_DistanceToAttack then	
-			if l_Distance <= l_Enemy.m_DistanceToKill and l_Enemy.m_ActualAnimation == 2 then
+			if l_Distance <= l_Enemy.m_DistanceToKill then
 				utils_log("ESTAS MUERTO!!!!")				
 				l_Enemy.m_IsKilling = true
+				
+				if l_Enemy.m_ActualAnimation == 1 then
+					l_Owner:remove_action(l_Enemy.m_ActualAnimation)
+					l_Enemy.m_ActualAnimation = 2
+					l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
+				end
 				
 				l_Enemy.m_TimerRotation = 0
 				g_Player.m_CameraController:lock()
@@ -78,7 +84,7 @@ function AttackUpdateTurret(args, _ElapsedTime)
 			l_PercentRotation = 1.0
 		end
 		
-		l_Enemy:RotateEnemyBone(l_Enemy.m_BackBoneId, l_PlayerPos, l_PercentRotation)
+		l_Enemy:RotateEnemyBone(l_Enemy.m_BackBoneId, l_PlayerPos, 1)
 		
 		local l_AngleOK = false
 		local l_PosOK = false
@@ -93,9 +99,8 @@ function AttackUpdateTurret(args, _ElapsedTime)
 		end		
 		
 		if l_Enemy.m_TimerRotation <= 2.0 then
-			local target_quat = g_Player.m_InitialCameraRotation:slerp(g_Player.m_FinalCameraRotation, l_PercentRotation)
+			local target_quat = g_Player.m_InitialCameraRotation:slerpJU(g_Player.m_FinalCameraRotation, l_PercentRotation)
 			g_Player.m_CameraController:set_rotation(target_quat)
-			--g_Player.m_RenderableObject:set_rotation(target_quat)
 		else
 			l_AngleOK = true
 		end		

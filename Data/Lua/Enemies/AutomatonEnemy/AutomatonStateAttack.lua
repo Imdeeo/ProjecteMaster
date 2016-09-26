@@ -35,7 +35,7 @@ function AttackUpdateAutomaton(args, _ElapsedTime)
 	end		
 	
 	if l_Enemy.m_TimerRotation <= 2.0 then
-		local target_quat = g_Player.m_InitialCameraRotation:slerp(g_Player.m_FinalCameraRotation, l_PercentRotation)
+		local target_quat = g_Player.m_InitialCameraRotation:slerpJU(g_Player.m_FinalCameraRotation, l_PercentRotation)
 		g_Player.m_CameraController:set_rotation(target_quat)
 	else
 		l_AngleOK = true
