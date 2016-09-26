@@ -56,7 +56,7 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 					
 					local angle_to_turn = l_Enemy:CalculateAngleRotation(l_FirstDirection, l_SecondDirection)
 					
-					if angle_to_turn == nil or l_FirstPointPos:distance(l_EnemyPos) <= l_Enemy.m_DistanceToChangeNodeRunning then
+					if angle_to_turn == 0.0 or l_FirstPointPos:distance(l_EnemyPos) <= l_Enemy.m_DistanceToChangeNodeRunning then
 						utils_log("INCREMENTANDO NODO!!!")
 						l_Enemy:IncrementPathPointIndex()
 					end
@@ -69,7 +69,7 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 				
 				local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Owner:get_rotation():get_forward_vector(), l_Direction)
 				
-				if angle_to_turn ~= nil then
+				if angle_to_turn ~= 0.0 then
 					l_Enemy:EnemyRotation(angle_to_turn, _ElapsedTime)
 				else
 					l_Enemy.m_IsCorrected = true
@@ -83,7 +83,7 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 				if l_Distance <= l_Enemy.m_DistanceToChangeNodeWalking then
 					if l_Enemy:IncrementPathPointIndex() == false then
 						local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Owner:get_rotation():get_forward_vector(), l_Enemy.m_DefaultForward)
-						if angle_to_turn ~= nil and (angle_to_turn > 0.75 or angle_to_turn < 0.65) then
+						if angle_to_turn ~= 0.0 and (angle_to_turn > 0.75 or angle_to_turn < 0.65) then
 							l_Enemy.m_TimerRotation2 = l_Enemy.m_TimerRotation2 + _ElapsedTime	
 							l_PercentRotation = l_Enemy.m_TimerRotation2 / l_Enemy.m_AngularWalkSpeed * 5
 								
