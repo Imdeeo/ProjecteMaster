@@ -7,11 +7,9 @@ rollout CamAnim "Camera Animation" width:160 height:134
 (
 	label CameraLabel "Nothing selected" pos:[24,12] width:232 height:24 visible:true
 	spinner CameraKeyStart pos:[24,48] width:42 range:[0,1000,0] type:#integer scale:1 enabled:false visible:true
-	spinner CameraKeyEnd pos:[74,48] width:42 range:[0,1000,0] type:#integer scale:1 enabled:false visible:true
-	checkbox SwapXZCheck "" pos:[131,48] width:16 height:16 checked:false
+	spinner CameraKeyEnd pos:[94,48] width:42 range:[0,1000,0] type:#integer scale:1 enabled:false visible:true
 	label CameraLabelStart "start" pos:[31,32] width:42 height:12 enabled:false visible:true
-	label CameraLabelEnd "end" pos:[82,32] width:42 height:12 enabled:false visible:true
-	label SwapXZLabel "swap" pos:[125,32] width:42 height:12 enabled:false visible:true
+	label CameraLabelEnd "end" pos:[102,32] width:42 height:12 enabled:false visible:true
 	edittext CameraAnimationName "Name: " pos:[24,74] width:112 height:16 enabled:false visible:true
 	button ExportButton "Export" pos:[24,104] width:112 height:16 visible:true
 	
@@ -23,8 +21,6 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		CameraLabelStart.enabled = true
 		CameraLabelEnd.enabled = true
 		CameraAnimationName.enabled = true
-		SwapXZCheck.enabled = true
-		SwapXZLabel.enabled = true
 		ExportButton.enabled = true
 	)
 	
@@ -41,8 +37,6 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		CameraLabelStart.enabled = false
 		CameraLabelEnd.enabled = false
 		CameraAnimationName.enabled = false
-		SwapXZCheck.enabled = false
-		SwapXZLabel.enabled = false
 		ExportButton.enabled = false
 	)
 	
@@ -79,30 +73,19 @@ rollout CamAnim "Camera Animation" width:160 height:134
 			cameraTranslation = cameraTransform.translation
 			cameraRotation = cameraTransform as eulerangles
 			mat3xvect3 cameraTransform z_axis &cameraUp
-			checkZeroes &CameraUp
+			checkZeroes &cameraUp
 			if(Cam.target != undefined) then
 			(
 				select Cam.target
 				cameraLookAt = at time j Cam.target.pos
 			) else (	
 				mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
-				cameraLookAt.y = -cameraLookAt.y
 				checkZeroes &cameraLookAt
-				swapYZ &cameraLookAt
-				cameraLookAt += cameraTranslation
+				swapYZ &cameraLookAt				
+				cameraLookAt += cameraTranslation				
 			)
-			TranslationToRH &cameraUp
 			TranslationToRH &cameraLookAt
 			TranslationToRH &cameraTranslation
-			if SwapXZCheck.checked then
-			(
-				cameraTranslation.x = -cameraTranslation.x
-				cameraTranslation.z = -cameraTranslation.z
-				swapYZ &cameraUp
-				cameraUp.z = -cameraUp.z
-				cameraLookAt.x = -cameraLookAt.x
-				cameraLookAt.z = -cameraLookAt.z
-			)
 			cameraFieldOfView = at time j Cam.fov
 			deg2rad &cameraFieldOfView			
 			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
@@ -113,41 +96,29 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		key = ((CameraKeyEnd.value as float) - CameraKeyStart.value)/30
 		cameraTransform = at time j Cam.transform
 		cameraTranslation = cameraTransform.translation
-		checkZeroes &cameraTranslation
 		cameraRotation = cameraTransform as eulerangles
 		mat3xvect3 cameraTransform z_axis &cameraUp
-		checkZeroes &CameraUp
+		checkZeroes &cameraUp
 		if(Cam.target != undefined) then
 		(
 			select Cam.target
 			cameraLookAt = at time j Cam.target.pos
 		) else (	
 			mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
-			cameraLookAt.y = -cameraLookAt.y
 			checkZeroes &cameraLookAt
-			swapYZ &cameraLookAt
-			cameraLookAt += cameraTranslation
+			swapYZ &cameraLookAt				
+			cameraLookAt += cameraTranslation				
 		)
-		TranslationToRH &cameraUp
 		TranslationToRH &cameraLookAt
 		TranslationToRH &cameraTranslation
-		if SwapXZCheck.checked then
-			(
-				cameraTranslation.x = -cameraTranslation.x
-				cameraTranslation.z = -cameraTranslation.z
-				swapYZ &cameraUp
-				cameraUp.z = -cameraUp.z
-				cameraLookAt.x = -cameraLookAt.x
-				cameraLookAt.z = -cameraLookAt.z
-			)
 		cameraFieldOfView = at time j Cam.fov
 		deg2rad &cameraFieldOfView			
 		format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
-		
-		select Cam
+			
 		format "</camera_key_controller>\n" to:cameraFile
 		close cameraFile
-	) 
+		select Cam
+	)
 	
 	on CamAnim open do
 	(
