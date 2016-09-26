@@ -3,9 +3,6 @@ function KillFirstAutomaton(args)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 		
-	utils_log_v3(l_Owner:get_position())
-	utils_log_v3(g_Player.m_RenderableObject:get_position())
-	
 	l_Owner:clear_cycle(l_Enemy.m_ActualAnimation,1.0)
 	l_Enemy.m_ActualAnimation = 4
 	l_Owner:execute_action(l_Enemy.m_ActualAnimation,0.5,0.5,1.0,true)
@@ -28,9 +25,16 @@ function KillUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	
+	l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
 	l_Enemy.m_TimerToStop = l_Enemy.m_TimerToStop + _ElapsedTime
 	if l_Enemy.m_TimerToStop >= 5.5 then
 		l_Enemy.m_State = "off"
+	end
+	
+	local l_LoseSanityValue = g_Player.m_Sanity / (6.0 - l_Enemy.m_TimerToStop)
+	if l_Enemy.m_Timer >= 0.5 then
+		g_Player:ModifySanity(-l_LoseSanityValue)
+		l_Enemy.m_Timer = 0
 	end
 	
 	l_Enemy:ShowParticles("EmisorParticulaTorreta", false)
