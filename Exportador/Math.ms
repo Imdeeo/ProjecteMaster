@@ -1,13 +1,18 @@
 fn checkZeroes &ret =
 (
-	if ret.x < 0.00001 and ret.x > -0.00001 then( ret.x = 0 )
-	if ret.y < 0.00001 and ret.y > -0.00001 then( ret.y = 0 )
-	if ret.z < 0.00001 and ret.z > -0.00001 then( ret.z = 0 )
+	if ret.x < 0.0001 and ret.x > -0.0001 then( ret.x = 0 )
+	if ret.y < 0.0001 and ret.y > -0.0001 then( ret.y = 0 )
+	if ret.z < 0.0001 and ret.z > -0.0001 then( ret.z = 0 )
 )
 
 fn deg2rad &ret =
 (
 	ret = ret*PI/180
+)
+
+fn verticalizeFov &ret =
+(
+	ret *= 0.66931440580841338505245880369832
 )
 
 fn lerp minVal maxVal term &ret = 
@@ -23,6 +28,14 @@ fn mat3xvect3 mat vect &res =
     res.z = (mat.row3.x*vect.x) + (mat.row3.y*vect.y) + (mat.row3.z*vect.z)
 )
 
+fn mat3xvect3Alternate mat vect &res =
+( 
+	res = [0, 0, 0]
+    res.x = (mat.row1.x*vect.x) + (mat.row2.x*vect.y) + (mat.row3.x*vect.z)
+    res.y = (mat.row1.y*vect.x) + (mat.row2.y*vect.y) + (mat.row3.y*vect.z)
+    res.z = (mat.row1.z*vect.x) + (mat.row2.z*vect.y) + (mat.row3.z*vect.z)
+)
+
 fn mat4xvect3 mat vect w &res =
 ( 
     -- w=1 -> Translate // w=0 -> Rotate
@@ -30,6 +43,12 @@ fn mat4xvect3 mat vect w &res =
     res.x = (mat.row1.x*vect.x) + (mat.row2.x*vect.y) + (mat.row3.x*vect.z) + (mat.row4.x*vect.w)
     res.y = (mat.row1.y*vect.x) + (mat.row2.y*vect.y) + (mat.row3.y*vect.z) + (mat.row4.y*vect.w)
     res.z = (mat.row1.z*vect.x) + (mat.row2.z*vect.y) + (mat.row3.z*vect.z) + (mat.row4.z*vect.w)
+)
+
+fn negateXZ &vect =
+(
+	vect.x = -vect.x
+	vect.z = -vect.z
 )
 
 fn swapYZ &vect =

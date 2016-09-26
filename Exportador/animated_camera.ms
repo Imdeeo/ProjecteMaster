@@ -7,9 +7,11 @@ rollout CamAnim "Camera Animation" width:160 height:134
 (
 	label CameraLabel "Nothing selected" pos:[24,12] width:232 height:24 visible:true
 	spinner CameraKeyStart pos:[24,48] width:42 range:[0,1000,0] type:#integer scale:1 enabled:false visible:true
-	spinner CameraKeyEnd pos:[94,48] width:42 range:[0,1000,0] type:#integer scale:1 enabled:false visible:true
+	spinner CameraKeyEnd pos:[74,48] width:42 range:[0,1000,0] type:#integer scale:1 enabled:false visible:true
+	checkbox NegateCheck "" pos:[131,48] width:16 height:16 checked:false
 	label CameraLabelStart "start" pos:[31,32] width:42 height:12 enabled:false visible:true
-	label CameraLabelEnd "end" pos:[102,32] width:42 height:12 enabled:false visible:true
+	label CameraLabelEnd "end" pos:[82,32] width:42 height:12 enabled:false visible:true
+	label NegateLabel "-1" pos:[139,37] width:42 height:12 enabled:false visible:true 
 	edittext CameraAnimationName "Name: " pos:[24,74] width:112 height:16 enabled:false visible:true
 	button ExportButton "Export" pos:[24,104] width:112 height:16 visible:true
 	
@@ -21,6 +23,8 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		CameraLabelStart.enabled = true
 		CameraLabelEnd.enabled = true
 		CameraAnimationName.enabled = true
+		NegateCheck.enabled = true
+		NegateLabel.enabled = true
 		ExportButton.enabled = true
 	)
 	
@@ -37,6 +41,8 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		CameraLabelStart.enabled = false
 		CameraLabelEnd.enabled = false
 		CameraAnimationName.enabled = false
+		NegateCheck.enabled = false
+		NegateLabel.enabled = false
 		ExportButton.enabled = false
 	)
 	
@@ -71,7 +77,13 @@ rollout CamAnim "Camera Animation" width:160 height:134
 			key = ((key as float) - CameraKeyStart.value)/30
 			cameraTransform = at time j Cam.transform
 			cameraTranslation = cameraTransform.translation
-			cameraRotation = cameraTransform as eulerangles
+			checkZeroes &cameraTranslation
+			if NegateCheck.checked then
+			(
+				rotateX cameraTransform 90
+			) else (
+				rotateX cameraTransform -90
+			)
 			mat3xvect3 cameraTransform z_axis &cameraUp
 			checkZeroes &cameraUp
 			if(Cam.target != undefined) then
@@ -79,14 +91,19 @@ rollout CamAnim "Camera Animation" width:160 height:134
 				select Cam.target
 				cameraLookAt = at time j Cam.target.pos
 			) else (	
-				mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
+				mat3xvect3 cameraTransform y_axis &cameraLookAt
+				if NegateCheck.checked then
+				(
+					cameraLookAt.z = -cameraLookAt.z
+				)
 				checkZeroes &cameraLookAt
-				swapYZ &cameraLookAt				
-				cameraLookAt += cameraTranslation				
+				cameraLookAt += cameraTranslation
 			)
+			TranslationToRH &cameraUp
 			TranslationToRH &cameraLookAt
 			TranslationToRH &cameraTranslation
 			cameraFieldOfView = at time j Cam.fov
+			verticalizeFov &cameraFieldOfView
 			deg2rad &cameraFieldOfView			
 			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
 			j = at time j trackbar.getNextKeyTime()
@@ -96,7 +113,13 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		key = ((CameraKeyEnd.value as float) - CameraKeyStart.value)/30
 		cameraTransform = at time j Cam.transform
 		cameraTranslation = cameraTransform.translation
-		cameraRotation = cameraTransform as eulerangles
+		checkZeroes &cameraTranslation
+		if NegateCheck.checked then
+		(
+			rotateX cameraTransform 90
+		) else (
+			rotateX cameraTransform -90
+		)
 		mat3xvect3 cameraTransform z_axis &cameraUp
 		checkZeroes &cameraUp
 		if(Cam.target != undefined) then
@@ -104,14 +127,19 @@ rollout CamAnim "Camera Animation" width:160 height:134
 			select Cam.target
 			cameraLookAt = at time j Cam.target.pos
 		) else (	
-			mat3xvect3 cameraTransform (-y_axis) &cameraLookAt
+			mat3xvect3 cameraTransform y_axis &cameraLookAt
+			if NegateCheck.checked then
+			(
+				cameraLookAt.z = -cameraLookAt.z
+			)
 			checkZeroes &cameraLookAt
-			swapYZ &cameraLookAt				
-			cameraLookAt += cameraTranslation				
+			cameraLookAt += cameraTranslation
 		)
+		TranslationToRH &cameraUp
 		TranslationToRH &cameraLookAt
 		TranslationToRH &cameraTranslation
 		cameraFieldOfView = at time j Cam.fov
+		verticalizeFov &cameraFieldOfView
 		deg2rad &cameraFieldOfView			
 		format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
 			
@@ -154,4 +182,4 @@ rollout CamAnim "Camera Animation" width:160 height:134
 	)
 )
 
---createDialog CamAnim
+createDialog CamAnim
