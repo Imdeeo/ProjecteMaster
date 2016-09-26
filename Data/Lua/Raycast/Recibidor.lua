@@ -128,7 +128,7 @@ function R1TrayL1Open(_Player, _Pos)
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 2
 		_Player.m_InteractingCinematic = "OpenTrayL1"
-		_Player.m_CameraAnimation = "OpenTrayInverse"
+		_Player.m_CameraAnimation = "OpenTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
@@ -145,7 +145,7 @@ function R1TrayL1Close(_Player, _Pos)
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "CloseTrayL1"
-		_Player.m_CameraAnimation = "CloseTrayInverse"
+		_Player.m_CameraAnimation = "CloseTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
@@ -171,7 +171,7 @@ function R1TrayL2Open(_Player, _Pos)
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 2
 		_Player.m_InteractingCinematic = "OpenTrayL2"
-		_Player.m_CameraAnimation = "OpenTrayInverse"
+		_Player.m_CameraAnimation = "OpenTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
@@ -189,7 +189,7 @@ function R1TrayL2Close(_Player, _Pos)
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "CloseTrayL2"
-		_Player.m_CameraAnimation = "CloseTrayInverse"
+		_Player.m_CameraAnimation = "CloseTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
