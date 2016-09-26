@@ -149,7 +149,7 @@ class 'CEnemy' (CLUAComponent)
 		local l_Direction = (_DesiredPos - l_EnemyPos)
 		l_Direction.y = 0
 		l_Direction:normalize(1)
-		utils_log_v3(l_Direction)
+		
 		local angle_to_turn = self:CalculateAngleRotation(self.m_DefaultForward, l_Direction)
 		
 		if angle_to_turn ~= 0 then
