@@ -12,16 +12,8 @@ function InteractingFirst(args)
 	m_Timer = 0.0
 	
 	if l_Player.m_CameraAnimation ~= nil then
-		--l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, false)
+		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, true)
 		utils_log("Animated Camera: "..l_Player.m_CameraAnimation)
-		l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
-		l_FPSCamera = l_CameraManager:get_main_camera()
-		l_AnimatedCamera = l_CameraManager:get_resource(l_Player.m_CameraAnimation)
-		l_AnimatedCamera.m_PositionOffset = l_Player.m_CameraController:get_position()
-		l_AnimatedCamera.m_PositionOffset.y = 0
-		l_AnimatedCamera:set_first_key(l_FPSCamera:get_forward(), l_FPSCamera:get_position(), l_FPSCamera:get_up(), l_FPSCamera:get_fov())
-		l_AnimatedCamera:reset_time()
-		l_CameraManager:choose_main_camera(l_Player.m_CameraAnimation)
 	else
 		utils_log("Animated Camera: Null")
 	end

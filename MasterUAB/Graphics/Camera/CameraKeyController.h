@@ -35,7 +35,7 @@ public:
 	void SetCamera(CCamera *Camera) const;
 
 	Vect3f GetLastLookAt();
-	void SetFirstKey(Vect3f _Forward, Vect3f _Pos, Vect3f _Up, float _Fov);
+	void SetFirstKey(Vect3f _Forward, Vect3f _Up, float _Fov);
 	CCameraInfo* GetLastKey();
 
 	CCameraKey* GetCameraKey(int _index)

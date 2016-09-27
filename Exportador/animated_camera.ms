@@ -102,6 +102,12 @@ rollout CamAnim "Camera Animation" width:160 height:134
 			TranslationToRH &cameraUp
 			TranslationToRH &cameraLookAt
 			TranslationToRH &cameraTranslation
+			if NegateCheck.checked then
+			(
+				negateXZ &cameraUp
+				negateXZ &cameraLookAt
+				negateXZ &cameraTranslation
+			)
 			cameraFieldOfView = at time j Cam.fov
 			verticalizeFov &cameraFieldOfView
 			deg2rad &cameraFieldOfView			
@@ -138,6 +144,12 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		TranslationToRH &cameraUp
 		TranslationToRH &cameraLookAt
 		TranslationToRH &cameraTranslation
+		if NegateCheck.checked then
+		(
+			negateXZ &cameraUp
+			negateXZ &cameraLookAt
+			negateXZ &cameraTranslation
+		)
 		cameraFieldOfView = at time j Cam.fov
 		verticalizeFov &cameraFieldOfView
 		deg2rad &cameraFieldOfView			
