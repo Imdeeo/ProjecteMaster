@@ -240,14 +240,12 @@ Vect3f CCameraKeyController::GetLastLookAt()
 	return m_Keys[m_Keys.size()-1]->GetCameraInfo()->GetLookAt();
 }
 
-void CCameraKeyController::SetFirstKey(Vect3f _Forward, Vect3f _Pos, Vect3f _Up, float _Fov)
+void CCameraKeyController::SetFirstKey(Vect3f _Forward, Vect3f _Up, float _Fov)
 {
 	m_Fov = _Fov;
-	m_Position = _Pos - m_PositionOffset;
 	m_LookAt = _Forward + m_Position;
 	m_Up = _Up;
 	m_Keys[0]->GetCameraInfo()->SetFOV(_Fov);
-	m_Keys[0]->GetCameraInfo()->SetEye(_Pos - m_PositionOffset);
 	m_Keys[0]->GetCameraInfo()->SetLookAt(_Forward + m_Keys[0]->GetCameraInfo()->GetEye());
 	m_Keys[0]->GetCameraInfo()->SetUp(_Up);
 }
