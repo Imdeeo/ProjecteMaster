@@ -138,7 +138,7 @@
 	</render_draw_quad>		
 	
 	<!-- Particles -->
-	<set_depth_stencil_state name="set depth stencil TF Particles" enable_z_test="true" write_z_buffer="true" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF Particles" enable_z_test="true" write_z_buffer="false" active="true"/>
 	<enable_alpha_blend name="enable alpha blend AAZZOO Particles" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
 	<render_layer name="render layer particles" layer="particles" active="true"/>
 	<render_layer name="render layer line renderers" layer="line_renderers" active="true"/>
