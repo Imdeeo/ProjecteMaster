@@ -145,6 +145,9 @@ public:
 
   // Operaciones angulares
   inline T GetAngleWith(const Vector3<T>& otro);
+
+  // Absolutizar vector
+  inline Vector3<T> GetAbsolute();
 };
 
 //////////////////////////////////////////////
