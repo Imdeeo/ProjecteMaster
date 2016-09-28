@@ -56,7 +56,7 @@
 	<enable_alpha_blend name="enable alpha blend AAZZOO Alpha Blend" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
 	<set_depth_stencil_state name="set depth stencil TF Alpha Blend" enable_z_test="true" write_z_buffer="false" active="true"/>
 	<set_pool_renderable_objects_technique name="set pool Alpha Blend" pool="forward_shading" active="true"/>
-	<render_layer name="render layer Alpha Blend" layer="alpha_blend_objects" active="false"/>
+	<render_layer name="render layer Alpha Blend" layer="alpha_blend_objects" active="true"/>
 	<disable_alpha_blend name="disable alpha blend Alpha Blend" active="true"/>
 		
 	<!-- FOG -->
@@ -150,7 +150,7 @@
 	<render_layer name="render layer skybox" layer="skybox" active="true"/>	
 	
 	<!-- LIGHTSCATTERING AND SKYBOX -->
-	<capture_frame_buffer name="capture_frame_LIGHTSCATTERING" active="true">
+	<!--<capture_frame_buffer name="capture_frame_LIGHTSCATTERING" active="true">
 		<capture_texture name="CapturedLightScatteringTexture" texture_width_as_frame_buffer="true"/>
 	</capture_frame_buffer>
 	
@@ -184,7 +184,7 @@
 	<render_draw_quad name="lightscattering_render_draw_quad2" material="LightScatteringCombineMaterial" active="true">		
 		<texture file="CapturedLightScatteringTexture" stage_id="0" load_file="false"/>
 		<texture file="CapturedLightScatteringTexture2" stage_id="1" load_file="false"/>
-	</render_draw_quad>	
+	</render_draw_quad>	-->
 		
 	<!-- SSR -->
 	<capture_frame_buffer name="capture frame SSR" active="true">
@@ -196,7 +196,37 @@
 		<texture load_file="false" file="CapturedTextureSSR" stage_id="0"/>
 		<texture load_file="false" file="NormalMapTexture" stage_id="1"/>
 		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
-	</render_draw_quad>		
+	</render_draw_quad>
+	
+	<!-- INTERACTUABLE OBJECTS -->
+	<capture_frame_buffer name="capture_frame_interactuable_objects" active="true">
+		<capture_texture name="CapturedInteractuableObjectsTexture" texture_width_as_frame_buffer="true"/>
+	</capture_frame_buffer>
+	
+	<set_render_target name="interactuable_objects_render_target" active="true">
+		<dynamic_texture name="InteractuableObjectsTexture" texture_width_as_frame_buffer="true" create_depth_stencil_buffer="false" format_type="rgba8"/>
+	</set_render_target>
+	
+	<set_pool_renderable_objects_technique name="set pool interactuable_objects" pool="interactuable_objects" active="true"/>
+	<clear name="interactuable_objects_clear" render_target="true" depth_stencil="false" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF Skybox interactuable_objects" enable_z_test="true" write_z_buffer="false" active="true"/>
+	<render_layer name="render layer interactuable_objects" layer="interactuable_objects" active="true"/>
+	
+	<apply_filters name="interactuable_objects_filters" active="true">
+		<texture stage_id="0" file="InteractuableObjectsTexture"/>
+		<dynamic_texture name="InteractuableObjectsTextureBlurred2" width="512" height="512" material="BloomBlurMaterial" format_type="rgba8"/>
+		<dynamic_texture name="InteractuableObjectsTextureBlurred1" width="512" height="512" material="BlurMaterial" format_type="rgba8"/>
+		<dynamic_texture name="InteractuableObjectsTextureBlurred" width="512" height="512" material="BlurMaterial" format_type="rgba8"/>
+	</apply_filters>
+	
+	<unset_render_target name="interactuable_objects_unset_render_target" active="true"/>
+	
+	<set_pool_renderable_objects_technique name="set pool COMBINE" pool="combine_pool" active="true"/>
+	<render_draw_quad name="interactuable_objects_render_draw_quad2" material="CombineMaterial" active="true">
+		<texture file="CapturedInteractuableObjectsTexture" stage_id="0" load_file="false"/>
+		<texture file="InteractuableObjectsTextureBlurred" stage_id="1" load_file="false"/>
+		<texture file="InteractuableObjectsTexture" stage_id="2" load_file="false"/>
+	</render_draw_quad>
 		
 	<!-- COLOR GRADING -->	
 	<capture_frame_buffer name="capture frame ColorGrading" active="true">
