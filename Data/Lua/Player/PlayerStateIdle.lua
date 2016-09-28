@@ -4,13 +4,9 @@ function IdleFirst(args)
 	l_Owner:blend_cycle(0,1.0,0.1)
 	l_Player.m_PhysXManager:set_character_controller_height("player", g_Height)
 	local l_P = l_Owner:get_left_object_position()
-	utils_log("Bone pos: ("..l_P.x..", "..l_P.y..", "..l_P.z..")")
 	local l_Q = l_Owner:get_position()
-	utils_log("Owner pos: ("..l_Q.x..", "..l_Q.y..", "..l_Q.z..")")
 	local l_R = l_Owner:get_rotation():rotated_vector(l_P)
-	utils_log("Rotated bone pos: ("..l_R.x..", "..l_R.y..", "..l_R.z..")")
 	local l_H = l_Owner:get_bone_position(1)
-	utils_log("Hub pos: ("..l_H.x..", "..l_H.y..", "..l_H.z..")")
 end
 
 function IdleUpdate(args, _ElapsedTime)
@@ -31,9 +27,9 @@ function IdleUpdate(args, _ElapsedTime)
 	l_Owner:set_position(l_NewControllerPosition)
 	
 	--// Raycast
-	if l_Player.m_InputManager:is_action_active("Interact") then
+	--if l_Player.m_InputManager:is_action_active("Interact") then
 		CheckRaycast(l_Player, l_NewControllerPosition)
-	end
+	--end
 	
 	--// Save speed in last update so we can create acceleration
 	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
