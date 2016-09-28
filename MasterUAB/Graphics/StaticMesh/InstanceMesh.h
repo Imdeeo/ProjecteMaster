@@ -3,6 +3,7 @@
 
 #include "RenderableObjects\RenderableObject.h"
 #include "XML\tinyxml2.h"
+#include "Utils.h"
 
 class CStaticMesh;
 class CFrustum;
@@ -27,6 +28,7 @@ public:
 	void Save(FILE* _File, std::string _layer);
 	bool GetInsideFrustum();
 
+	UAB_BUILD_GET_SET(std::string, InteractuableObject);
 #ifdef _DEBUG
 	void RenderDebug(CRenderManager *RM);
 #endif

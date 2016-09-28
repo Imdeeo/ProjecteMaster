@@ -1240,6 +1240,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<tinyxml2::XMLElement*>())
 			.def(constructor<const std::string&, const std::string&>())
 			.def("render", &CInstanceMesh::Render)
+			.def("get_interactuable_object_name", &CInstanceMesh::GetInteractuableObject)
 	];
 
 	module(m_LS)[
