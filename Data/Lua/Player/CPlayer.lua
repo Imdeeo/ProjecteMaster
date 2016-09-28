@@ -202,8 +202,8 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:start()
 		
 		if(not UABEngine:get_lua_reloaded())then
-			self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
-			self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Player")
+			self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.3)
+			self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 90, self.m_RenderableObject:get_position(),"FisicasAux", "Player")
 		end
 
 		self.m_AlreadyInitialized = true
@@ -280,7 +280,6 @@ class 'CPlayer' (CLUAComponent)
 					MainCamera:set_fov(l_Fov_Value)
 					--CameraControllerManager:choose_main_camera("MainCamera")
 				elseif l_EffectAux[1] == "velocity" then
-					utils_log("TYPE: "..l_EffectAux[2])
 					if l_EffectAux[2] == "run" then
 						if self.m_CurrentAnimation == "run" then
 							self.m_Speed = self.m_DefaultSpeed - ((self.m_DefaultSpeed / 2)* (l_EffectAux[3] - self.m_Sanity) / (l_EffectAux[3] - l_EffectAux[4]))
@@ -293,8 +292,6 @@ class 'CPlayer' (CLUAComponent)
 							self.m_Speed = self.m_Speed / 2
 						end
 					end
-					--utils_log("STATE: "..self.m_CurrentAnimation..", SPEED: "..self.m_Speed)
-				--elseif l_EffectAux[1] == "control" then					
 				end
 			else
 				if l_EffectAux[1] == "vortex" then
