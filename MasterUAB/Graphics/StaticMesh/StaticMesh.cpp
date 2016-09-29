@@ -209,16 +209,16 @@ bool CStaticMesh::Load(const std::string &FileName)
 				}
 				else if (l_VertexType == MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX::GetVertexType())
 				{
-					CalcTangentsAndBinormals(l_VertexData,										//void *VtxsData, 
-						(unsigned short*)l_IndexData,											//unsigned short *IdxsData, 
-						l_NumVertexs,															//size_t VtxCount, 
-						l_NumIndexs,															//size_t IdxCount, 
-						sizeof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX),				//size_t VertexStride, 
-						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, Position),	//size_t GeometryStride, 
-						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, Normal),	//size_t NormalStride, 
-						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, Tangent),	//size_t TangentStride,
-						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, Binormal),	//size_t BiNormalStride,
-						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, UV));		//size_t TextureCoordsStride
+					CalcTangentsAndBinormals(l_VertexData,													//void *VtxsData, 
+						(unsigned short*)l_IndexData,														//unsigned short *IdxsData, 
+						l_NumVertexs,																		//size_t VtxCount, 
+						l_NumIndexs,																		//size_t IdxCount, 
+						sizeof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX),							//size_t VertexStride, 
+						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, Position),				//size_t GeometryStride, 
+						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, Normal),				//size_t NormalStride, 
+						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, Tangent),				//size_t TangentStride,
+						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, Binormal),				//size_t BiNormalStride,
+						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, UV));					//size_t TextureCoordsStride
 
 					
 					if (l_IndexType == 16)
@@ -228,16 +228,16 @@ bool CStaticMesh::Load(const std::string &FileName)
 				}
 				else if (l_VertexType == MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX::GetVertexType())
 				{	
-					CalcTangentsAndBinormals(l_VertexData,										//void *VtxsData, 
-						(unsigned short*)l_IndexData,											//unsigned short *IdxsData, 
-						l_NumVertexs,															//size_t VtxCount, 
-						l_NumIndexs,															//size_t IdxCount, 
+					CalcTangentsAndBinormals(l_VertexData,													//void *VtxsData, 
+						(unsigned short*)l_IndexData,														//unsigned short *IdxsData, 
+						l_NumVertexs,																		//size_t VtxCount, 
+						l_NumIndexs,																		//size_t IdxCount, 
 						sizeof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX),				//size_t VertexStride, 
 						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, Position),	//size_t GeometryStride, 
-						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, Normal),	//size_t NormalStride, 
-						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, Tangent),	//size_t TangentStride,
+						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, Normal),		//size_t NormalStride, 
+						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, Tangent),		//size_t TangentStride,
 						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, Binormal),	//size_t BiNormalStride,
-						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, UV));		//size_t TextureCoordsStride
+						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, UV));			//size_t TextureCoordsStride
 
 					if (l_IndexType == 16)
 						l_RV = new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
