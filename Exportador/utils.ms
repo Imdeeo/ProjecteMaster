@@ -83,10 +83,15 @@ struct PerformanceTester
     
     function report =
     (
-        format "Average processing on % iteration(s) took:\n" iCycle
-        format "% seconds\n" (iResTime / iCycle)
-        format "% Kbytes\n\n" (iResMem / iCycle)
-
+		
+		format "\n------------CLOCK----------------\n"
+        format "Total: %sec & %Kb\n" iResTime iResMem
+		if iCycle > 1 then
+		(
+			format "Avg: %sec & %Kb (% its)\n" (iResTime / iCycle) (iResMem / iCycle) iCycle
+		)
+        format "---------------------------------\n\n"
+		
         iCycle = 0
     
         iResTime = 0

@@ -101,7 +101,6 @@ fn processFaces arx Obj &prog=
 	(
 		for i=1 to l_Obj.material.numsubs do
 		(
-			
 			if (classof l_Obj.material[i].bumpMap == Bitmaptexture) then
 			(
 				if (classof l_Obj.material[i].bumpMap.bitmap == Bitmap) then
@@ -185,7 +184,7 @@ fn processFaces arx Obj &prog=
 	
     lerp BBMin BBMax .5 &BSphere[1]
     BSphere[2] = 0
-	
+	local l_Mat2 = 0
 	for i=1 to nFaces do
 	(	
 		local IdxsFace = getFace l_Obj i
@@ -215,6 +214,10 @@ fn processFaces arx Obj &prog=
 			TranslationToRH &Nm3
 			
 			local l_IdMaterial = (mod ((getFaceMatID l_Obj i)-1) l_TotalMaterials)+1
+			if l_IdMaterial == 2 then
+			(
+				l_Mat2 = l_Mat2 + 1
+			)
 			local l_DiffMap = undefined
 			local l_LightMap  = undefined
 			local l_RefMap = undefined 
@@ -286,20 +289,10 @@ fn processFaces arx Obj &prog=
 	local VtxID = 0x0000
 	VtxID = PosID+ColorID+NmID+UVID+UV2ID+BnmID+TngID
 	
-	print "Raw"
-	print BBMin
-	print BBMax
 	TranslationToRH &BBMin
 	TranslationToRH &BBMax
-	print "Translated"
-	print BBMin
-	print BBMax	
-	print "Vector"
-	print (BBMin-BBMax)
 	TranslationToRH &BSphere[1]
 	writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere
-	print "Vertex Type"
-	print VtxID
 	
 	if classof Obj != Editable_mesh then ( delete l_Obj )
 )
