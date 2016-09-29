@@ -168,7 +168,12 @@ fn getIndex vertexVect vertex IdMaterial vertexsDictionary &vtxN =
 	(
 		vtxN = vertexsDictionary.Item[vtxStr]
 	) else (
-		vtxN = vertexVect[IdMaterial].count
+		vtxN = 0
+		for vect in vertexVect do
+		(
+			vtxN = vtxN + vect.count
+		)
+		--vtxN = vertexVect[IdMaterial].count
 		vertexsDictionary.Add vtxStr vtxN
 		append vertexVect[IdMaterial] vertex
 	)
