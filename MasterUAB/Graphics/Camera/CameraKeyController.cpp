@@ -187,8 +187,12 @@ void CCameraKeyController::Update(float ElapsedTime)
 	m_Fov = (((l_fF - l_fI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_fI;
 	m_LookAt = (((l_lF - l_lI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_lI;
 	m_LookAt = m_RotationOffset*(m_LookAt - m_PositionOffsetKey) + m_PositionOffset;
+	Vect3f l_Forward = (m_LookAt - m_Position).GetNormalized();
 	m_Up = (((l_uF - l_uI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_uI;
 	m_Up = m_RotationOffset * m_Up;
+	Quatf l_auxRotation = Quatf();
+	l_auxRotation.SetFromFwdUp(l_Forward, m_Up);
+	m_Rotation = l_auxRotation;
 }
 
 void CCameraKeyController::SetCurrentTime(float CurrentTime)
