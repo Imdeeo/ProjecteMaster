@@ -48,10 +48,22 @@
 	<pixel_shader name="animated_glow_ps" file="UAB_UBER_GBUFFER_SHADER.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor="HAS_WEIGHT_INDICES;HAS_NORMAL;HAS_UV;HAS_TANGENT;HAS_GLOW;HAS_LIGHTS"/>
 	<effect_technique name="animated_glow_deferred_technique" vertex_shader="animated_glow_vs" pixel_shader="animated_glow_ps"/>
 	
-	<!--EFECTOS -->
+	<!--EFECTOS -->		
+	<vertex_shader name="combine_vs" file="UAB_COMBINE_TEXTURES.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="combine_ps" file="UAB_COMBINE_TEXTURES.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
+	<effect_technique name="combine_technique" vertex_shader="combine_vs" pixel_shader="combine_ps"/>
+	
+	<vertex_shader name="lightscattering_vs" file="UAB_LIGHT_SCATTERING.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_LIGHTSCATTERING"/>
+	<pixel_shader name="lightscattering_ps" file="UAB_LIGHT_SCATTERING.fx" shader_model="ps_4_0" entry_point="PSLightScattering" preprocessor="HAS_LIGHTSCATTERING"/>
+	<effect_technique name="lightscattering_technique" vertex_shader="lightscattering_vs" pixel_shader="lightscattering_ps"/>
+	
+	<vertex_shader name="lightscattering_combine_vs" file="UAB_LIGHT_SCATTERING.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor="HAS_COMBINE"/>
+	<pixel_shader name="lightscattering_combine_ps" file="UAB_LIGHT_SCATTERING.fx" shader_model="ps_4_0" entry_point="PSLightScatteringCombine" preprocessor="HAS_COMBINE"/>
+	<effect_technique name="lightscattering_combine_technique" vertex_shader="lightscattering_combine_vs" pixel_shader="lightscattering_combine_ps"/>	
+	
 	<vertex_shader name="color_grading_vs" file="UAB_COLOR_GRADING.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="color_grading_ps" file="UAB_COLOR_GRADING.fx" shader_model="ps_4_0" entry_point="PSGUIColorGrading"/>
-	<effect_technique name="color_grading_technique" vertex_shader="color_grading_vs" pixel_shader="color_grading_ps"/>	
+	<effect_technique name="color_grading_technique" vertex_shader="color_grading_vs" pixel_shader="color_grading_ps"/>
 	
 	<vertex_shader name="noise_and_vignetting_vs" file="UAB_NOISE_AND_VIGNETTING.fx" shader_model="vs_4_0" entry_point="NoiseAndVignettingVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
 	<pixel_shader name="noise_and_vignetting_ps" file="UAB_NOISE_AND_VIGNETTING.fx" shader_model="ps_4_0" entry_point="NoiseAndVignettingPS"/>
@@ -112,6 +124,11 @@
     <vertex_shader name="vortex_effect_vs" file="UAB_VORTEX_EFFECT.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION4_COLOR_TEXTURE_VERTEX" preprocessor=""/>
     <pixel_shader name="vortex_effect_ps" file="UAB_VORTEX_EFFECT.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
     <effect_technique name="vortex_effect_technique" vertex_shader="vortex_effect_vs" pixel_shader="vortex_effect_ps"/>
+	
+	<!-- INTERACTUABLE_OBJECTS -->
+	<vertex_shader name="interactuable_objects_vs" file="UAB_INTERACTUABLE_OBJECTS.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor=""/>
+	<pixel_shader name="interactuable_objects_ps"	file="UAB_INTERACTUABLE_OBJECTS.fx" shader_model="ps_4_0" entry_point="mainPS" preprocessor=""/>
+	<effect_technique name="interactuable_objects_technique" vertex_shader="interactuable_objects_vs" pixel_shader="interactuable_objects_ps"/>
 				
 	<!-- FORWARD --> 	
 	<vertex_shader name="skybox_vs" file="UAB_SKYBOX.fx" shader_model="vs_4_0" entry_point="mainVS" vertex_type="MV_POSITION_NORMAL_TEXTURE_VERTEX" preprocessor=""/>

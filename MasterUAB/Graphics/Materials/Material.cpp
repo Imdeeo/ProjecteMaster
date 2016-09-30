@@ -41,7 +41,7 @@ CMaterial::CMaterial(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode), m_Curre
 			if (l_TextureType == "video")
 			{
 				IVideoManager* l_VideoManager = UABEngine.GetVideoManager(); 
-				TheoraVideoClip* l_Clip =  l_VideoManager->LoadVideoClip(l_FileName, false);
+				TheoraVideoClip* l_Clip = l_VideoManager->LoadVideoClip(l_FileName, l_Element->GetBoolProperty("loop", false));
 				CDynamicTexture* l_DynamicTexture = new CDynamicTexture(l_FileName, l_Clip->getWidth(), l_Clip->getHeight(), false, "r8u");
 				l_DynamicTexture->SetType(l_TextureType);
 				m_Textures[INDEX_DIFFUSE_TEXTURE] = l_DynamicTexture;

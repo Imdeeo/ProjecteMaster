@@ -20,7 +20,6 @@
 #include "LevelManager\LevelManager.h"
 #include "GamePlayManager.h"
 #include "IA\AStarManager.h"
-
 #include "no_sillywarnings_please.h"
 
 CApplication::CApplication( CContextManager *_ContextManager)

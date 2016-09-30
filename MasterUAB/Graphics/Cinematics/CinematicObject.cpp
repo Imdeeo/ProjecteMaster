@@ -9,15 +9,27 @@ CCinematicObject::CCinematicObject(tinyxml2::XMLElement* TreeNode) :m_Renderable
 {
 	m_RenderableObject=UABEngine.GetLayerManager()->GetLayer(TreeNode)->GetResource(TreeNode->GetPszProperty("resource"));
 
-	m_PivotPosition = m_RenderableObject->GetPosition();
-	m_PivotRotation = m_RenderableObject->GetRotation();
-	m_PivotScale = m_RenderableObject->GetScale();
+	//m_PivotPosition = m_RenderableObject->GetPosition();
+	//m_PivotRotation = m_RenderableObject->GetRotation();
+	//m_PivotScale = m_RenderableObject->GetScale();
+	Quatf l_qi = m_RenderableObject->GetRotation().conjugate();
+	//Quatf l_qlast = l_qi;
+	//Quatf l_qf2;
+	//l_qi.conjugate();
+	Quatf l_qf, l_qAux;
+	//bool l_xIgual, l_wIgual;
 	tinyxml2::XMLElement *l_Element = TreeNode->FirstChildElement();
 	while (l_Element != NULL)
 	{
 		if (l_Element->Name() == std::string("cinematic_object_key_frame"))
 		{
-			AddCinematicObjectKeyFrame(new CCinematicObjectKeyFrame(l_Element));
+			CCinematicObjectKeyFrame* l_CinematicKeyFrame = new CCinematicObjectKeyFrame(l_Element);
+			l_qf = l_CinematicKeyFrame->GetRotation();
+			
+			l_qAux = l_qf*l_qi;
+			l_CinematicKeyFrame->SetRotation(l_qAux);
+			AddCinematicObjectKeyFrame(l_CinematicKeyFrame);
+			//l_qlast = l_qf;
 		}
 		l_Element = l_Element->NextSiblingElement();
 	}
@@ -80,7 +92,7 @@ void CCinematicObject::Update(float _ElapsedTime)
 
 
 			Vect3f l_RelPos = (((l_pF - l_pI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pI;
-			Quatf l_RelRot = l_RI.slerp(l_RF, ((m_CurrentTime - l_tI) / (l_tF - l_tI)));
+			Quatf l_RelRot = l_RI.slerpJU(l_RF, ((m_CurrentTime - l_tI) / (l_tF - l_tI)));
 			Vect3f l_RelSca = (((l_scaleF - l_scaleI)*(m_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_scaleI;
 			
 			m_RenderableObject->SetIsCinematic(true);
@@ -148,36 +160,6 @@ void CCinematicObject::GetCurrentKey()
 			return;
 		}
 	}	
-}
-
-void CCinematicObject::SetPivotPosition(Vect3f _PivotPosition)
-{
-	m_PivotPosition = _PivotPosition;
-}
-
-void CCinematicObject::SetPivotRotation(Quatf _PivotRotation)
-{
-	m_PivotRotation = _PivotRotation;
-}
-
-void CCinematicObject::SetPivotScale(Vect3f _PivotScale)
-{
-	m_PivotScale = _PivotScale;
-}
-
-Vect3f CCinematicObject::GetPivotPosition()
-{
-	return m_PivotPosition;
-}
-
-Quatf CCinematicObject::GetPivotRotation()
-{
-	return m_PivotRotation;
-}
-
-Vect3f CCinematicObject::GetPivotScale()
-{
-	return m_PivotScale;
 }
 
 bool CCinematicObject::IsFinished()

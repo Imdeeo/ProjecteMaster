@@ -130,7 +130,7 @@ public:
 	* @return The quaternion (*this) / s.
 	*/
 	Quatn operator/(T s) const {
-		assert(s == 0);
+		assert(s != 0);
 		return Quatn(GetComplex() / s, GetReal() / s);
 	}
 
@@ -529,6 +529,49 @@ public:
 			q0.z * st0 + q1.z * st1,
 			q0.w * st0 + q1.w * st1
 			);
+	}
+
+
+	// MIERDA JONATHAN URI DESESPERADOS
+	static inline float dot(const Quatn&q1, const Quatn&q2)
+	{
+		Vect3f l_auxv1 = Vect3f(q1.x, q1.y, q1.z);
+		Vect3f l_auxv2 = Vect3f(q2.x, q2.y, q2.z);
+		return l_auxv1*l_auxv2 + q1.w*q2.w;
+	}
+
+	static Quatn lerp(const Quatn &q1, const Quatn &q2, float t)
+	{
+		Quatn l_aux = q1*(1 - t) + q2*t;
+		l_aux.normalize();
+		return l_aux;
+	}
+
+	Quatn slerpJU(const Quatn& q1, T t) {
+		return slerpJU(*this, q1, t);
+	}
+
+	static Quatn slerpJU(const Quatn& q1, const Quatn& q2, T t)
+	{
+		Quatn l_q3;
+		float l_dot = Quatn::dot(q1, q2);
+		if (l_dot < 0)
+		{
+			l_dot = -l_dot;
+			l_q3 = -q2;
+		}
+		else
+		{
+			l_q3 = q2;
+		}
+		
+		if (l_dot < 0.95f)
+		{
+			float angle = acosf(l_dot);
+			return (q1*sinf(angle*(1 - t)) + l_q3*sinf(angle*t)) / sinf(angle);
+		}
+		else // if the angle is small, use linear interpolation        
+			return slerp(q1, l_q3, t);
 	}
 
 	/**

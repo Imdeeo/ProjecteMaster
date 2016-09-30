@@ -44,7 +44,7 @@ public:
 		CMapResourceValue l_ResourceValue = m_ResourcesMap[Name];
 		size_t index = l_ResourceValue.m_Id;
 		delete m_ResourcesVector[index];
-		//delete m_ResourcesMap[Name];
+		
 		m_ResourcesMap.erase(Name);
 		m_ResourcesVector.erase(m_ResourcesVector.begin()+index);
 		for (TMapResources::iterator l_iterator = m_ResourcesMap.begin(); l_iterator != m_ResourcesMap.end(); l_iterator++)
@@ -102,12 +102,15 @@ public:
 		return true;
 	}
 
-	virtual void Destroy()
+	virtual void Destroy(bool _deleteObjects = true)
 	{
-		for(size_t i = 0; i<m_ResourcesVector.size();i++)
+		if (_deleteObjects)
 		{
-			CHECKED_DELETE(m_ResourcesVector[i]);
-		}
+			for (size_t i = 0; i<m_ResourcesVector.size(); i++)
+			{
+				CHECKED_DELETE(m_ResourcesVector[i]);
+			}
+		}	
 
 		m_ResourcesMap.clear();
 		m_ResourcesVector.clear();

@@ -89,6 +89,7 @@ fn createCinematicObjects dir filename Objs isCal3D =
 					
 						tform = at time l_key l_Obj.transform
 						pos = tform.translation
+						--pos = pos*(rot as matrix3)
 						pos.x = pos.x-l_Obj.transform.translation.x
 						pos.y = pos.y-l_Obj.transform.translation.y
 						pos.z = pos.z-l_Obj.transform.translation.z
@@ -101,12 +102,14 @@ fn createCinematicObjects dir filename Objs isCal3D =
 						)else(
 							TranslationToRH &pos
 						)
-						
+						rot = l_Obj.transform.rotation
+						local auxMat = rot as matrix3
+						pos = pos*auxMat
 						rot = tform.rotation
-						inversrot = l_Obj.transform.rotation
-						InverseQuat &inversrot
-						rot = rot * inversrot
-						QuatToRH &rot
+						--inversrot = l_Obj.transform.rotation
+						--InverseQuat &inversrot
+						--rot = rot * inversrot
+						CustomQuatToRH &rot
 						
 						format "\t\t\t<cinematic_object_key_frame time=\"%\" pos=\"% % %\" rotation=\"% % % %\" scale=\"% % %\"/>\n" key pos.x pos.y pos.z rot.x rot.y rot.z rot.w scl.x scl.y scl.z to:file
 					)
