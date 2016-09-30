@@ -381,6 +381,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("decouple_x", &Quatf::decoupleX)
 			.def("decouple_y", &Quatf::decoupleY)
 			.def("decouple_z", &Quatf::decoupleZ)
+			.def("conjugate", &Quatf::conjugate)
 			.def("get_yaw", &Quatf::GetYaw)
 			.def("get_pitch", &Quatf::GetPitch)
 			.def("get_roll", &Quatf::GetRoll)
@@ -396,6 +397,10 @@ void CScriptManager::RegisterLUAFunctions()
 			.scope[
 				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
 			]
+			.def("slerpJU", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&, float))&Quatf::slerpJU)
+			/*.scope[
+				def("slerp", (Quatn<float>(*)(const Quatn<float> &, const Quatn<float> &, float))&Quatn<float>::slerp)
+			]*/
 			.def("compare", &Quatf::Compare)
 	];
 	
@@ -411,6 +416,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def_readwrite("m20", &Mat33f::m20)
 			.def_readwrite("m21", &Mat33f::m21)
 			.def_readwrite("m22", &Mat33f::m22)
+			.def(const_self * other<const Vect3f>())
 	];
 
 	module(m_LS)[
@@ -958,12 +964,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update", &CCinematicObject::Update)
 			.def("on_restart_cycle", &CCinematicObject::OnRestartCycle)
 			.def("get_current_key", &CCinematicObject::GetCurrentKey)
-			.def("get_pivot_position", &CCinematicObject::GetPivotPosition)
-			.def("set_pivot_position", &CCinematicObject::SetPivotPosition)
-			.def("get_pivot_rotation", &CCinematicObject::GetPivotRotation)
-			.def("set_pivot_rotation", &CCinematicObject::SetPivotRotation)
-			.def("get_pivot_scale", &CCinematicObject::GetPivotScale)
-			.def("set_pivot_scale", &CCinematicObject::SetPivotScale)
 			.def("is_finished", &CCinematicObject::IsFinished)
 	];
 
@@ -980,6 +980,7 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CCinematicManager, bases<CRenderableObject, CTemplatedMapManager<CCinematic>>>("CCinematicManager")
 			.def(constructor<>())
 			.def("load_xml", &CCinematicManager::LoadXML)
+			.def("reload", &CCinematicManager::Reload)
 			.def("update", &CCinematicManager::Update)
 			.def("render", &CCinematicManager::Render)
 	];
@@ -1240,6 +1241,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<tinyxml2::XMLElement*>())
 			.def(constructor<const std::string&, const std::string&>())
 			.def("render", &CInstanceMesh::Render)
+			.def("get_interactuable_object_name", &CInstanceMesh::GetInteractuableObject)
 	];
 
 	module(m_LS)[
@@ -1369,6 +1371,8 @@ void CScriptManager::RegisterLUAFunctions()
 	class_<CParticleSystemInstance, CRenderableObject>("CParticleSystemInstance")
 		.def(constructor<>())
 		.def(constructor<tinyxml2::XMLElement*>())
+		.def("get_start", &CParticleSystemInstance::GetStart)
+		.def("set_start", &CParticleSystemInstance::SetStart)
 		.def("get_awake", &CParticleSystemInstance::GetAwake)
 		.def("set_awake", &CParticleSystemInstance::SetAwake)
 		.def("get_awake_timer", &CParticleSystemInstance::GetAwakeTimer)

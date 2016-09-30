@@ -1,13 +1,9 @@
-function KillFirstTurret(args)
+function KillFirstAutomaton(args)
 	utils_log("KillFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
-	
-	if l_Enemy.m_ActualAnimation == 1 then
-		l_Owner:remove_action(l_Enemy.m_ActualAnimation)
-	else
-		l_Owner:clear_cycle(l_Enemy.m_ActualAnimation,1.0)
-	end
+		
+	l_Owner:clear_cycle(l_Enemy.m_ActualAnimation,1.0)
 	l_Enemy.m_ActualAnimation = 4
 	l_Owner:execute_action(l_Enemy.m_ActualAnimation,0.5,0.5,1.0,true)
 	
@@ -17,21 +13,21 @@ function KillFirstTurret(args)
 	local auxQuatf = Quatf()
 	auxQuatf:set_from_fwd_up(l_Dir,Vect3f(0,1,0))
 	l_Owner:set_rotation(auxQuatf)
-	g_Player:SetAnimationCamera("JaheemDies")
+	g_Player:SetAnimationCamera("JaheemDies2")
 	
 	l_Enemy.m_TimerToStop = 0
 	
 	l_Enemy:ShowParticles("EmisorParticulaTorreta", true)
 end
 
-function KillUpdateTurret(args, _ElapsedTime)
+function KillUpdateAutomaton(args, _ElapsedTime)
 	local l_Enemy = args["self"]	
 	local l_Owner = args["owner"]
-	local l_PlayerPos = g_Player.m_RenderableObject:get_position()	
+	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	
 	l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
 	l_Enemy.m_TimerToStop = l_Enemy.m_TimerToStop + _ElapsedTime
-	if l_Enemy.m_TimerToStop >= 6.0 then
+	if l_Enemy.m_TimerToStop >= 5.5 then
 		l_Enemy.m_State = "off"
 	end
 	
@@ -44,7 +40,7 @@ function KillUpdateTurret(args, _ElapsedTime)
 	l_Enemy:ShowParticles("EmisorParticulaTorreta", false)
 end
 
-function KillEndTurret(args)
+function KillEndAutomaton(args)
 	utils_log("KillEnd")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
@@ -58,12 +54,8 @@ function KillEndTurret(args)
 	l_TurretParticle:set_start(false)
 end
 
-function KillToIdleConditionTurret(args)	
+function KillToOffConditionAutomaton(args)
 	local l_Enemy = args["self"]
-	return l_Enemy.m_State == "idle"
-end
-
-function KillToOffConditionTurret(args)
-	local l_Enemy = args["self"]
+	l_Enemy.m_Awake = false
 	return l_Enemy.m_State == "off"
 end

@@ -159,6 +159,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_IsCorrecting = false
 		self.m_IsClimbing = false
 		self.m_IsInteracting = false
+		self.m_IsDead = false
 		
 		self.m_Target = nil
 		self.m_TargetPosOffset = Vect3f(1.0, 0.0, 0.0)
@@ -203,8 +204,8 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:start()
 		
 		if(not UABEngine:get_lua_reloaded())then
-			self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.1)
-			self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Player")
+			self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.3)
+			self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 90, self.m_RenderableObject:get_position(),"FisicasAux", "Player")
 		end
 
 		self.m_AlreadyInitialized = true
@@ -281,7 +282,6 @@ class 'CPlayer' (CLUAComponent)
 					MainCamera:set_fov(l_Fov_Value)
 					--CameraControllerManager:choose_main_camera("MainCamera")
 				elseif l_EffectAux[1] == "velocity" then
-					utils_log("TYPE: "..l_EffectAux[2])
 					if l_EffectAux[2] == "run" then
 						if self.m_CurrentAnimation == "run" then
 							self.m_Speed = self.m_DefaultSpeed - ((self.m_DefaultSpeed / 2)* (l_EffectAux[3] - self.m_Sanity) / (l_EffectAux[3] - l_EffectAux[4]))
@@ -294,8 +294,6 @@ class 'CPlayer' (CLUAComponent)
 							self.m_Speed = self.m_Speed / 2
 						end
 					end
-					--utils_log("STATE: "..self.m_CurrentAnimation..", SPEED: "..self.m_Speed)
-				--elseif l_EffectAux[1] == "control" then					
 				end
 			else
 				if l_EffectAux[1] == "vortex" then
@@ -359,6 +357,7 @@ class 'CPlayer' (CLUAComponent)
 		IdleState:add_condition(ANYToFallingCondition, "Falling")
 		IdleState:add_condition(ANYToCorrectingCondition, "Correcting")
 		IdleState:add_condition(ANYToSingingCondition, "Singing")
+		IdleState:add_condition(ANYToDeadCondition, "Dead")
 		
 		MovingState = State.create(MovingUpdate)
 		MovingState:set_do_first_function(MovingFirst)
@@ -370,12 +369,14 @@ class 'CPlayer' (CLUAComponent)
 		MovingState:add_condition(ANYToFallingCondition, "Falling")
 		MovingState:add_condition(ANYToCorrectingCondition, "Correcting")
 		MovingState:add_condition(ANYToSingingCondition, "Singing")
+		MovingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		CorrectingState = State.create(CorrectingUpdate)
 		CorrectingState:set_do_first_function(CorrectingFirst)
 		CorrectingState:set_do_end_function(CorrectingEnd)
 		CorrectingState:add_condition(CorrectingToClimbingCondition, "Climbing")
 		CorrectingState:add_condition(CorrectingToInteractingCondition, "Interacting")
+		CorrectingState:add_condition(ANYToDeadCondition, "Dead")
 
 		CrouchingState = State.create(CrouchingUpdate)
 		CrouchingState:set_do_first_function(CrouchingFirst)
@@ -384,32 +385,38 @@ class 'CPlayer' (CLUAComponent)
 		CrouchingState:add_condition(ANYToItselfCondition, "Crouching")
 		CrouchingState:add_condition(ANYToFallingCondition, "Falling")
 		CrouchingState:add_condition(ANYToCorrectingCondition, "Correcting")
+		CrouchingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		ClimbingState = State.create(ClimbingUpdate)
 		ClimbingState:set_do_first_function(ClimbingFirst)
 		ClimbingState:set_do_end_function(ClimbingEnd)
 		ClimbingState:add_condition(ClimbingToFallingCondition, "Falling")
+		ClimbingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		JumpingState = State.create(JumpingUpdate)
 		JumpingState:set_do_first_function(JumpingFirst)
 		JumpingState:set_do_end_function(JumpingEnd)
 		JumpingState:add_condition(ANYToFallingCondition, "Falling")
+		JumpingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		FallingState = State.create(FallingUpdate)
 		FallingState:set_do_first_function(FallingFirst)
 		FallingState:set_do_end_function(FallingEnd)
 		FallingState:add_condition(FallingToIdleCondition, "Idle")
+		FallingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		InteractingState = State.create(InteractingUpdate)
 		InteractingState:set_do_first_function(InteractingFirst)
 		InteractingState:set_do_end_function(InteractingEnd)
 		InteractingState:add_condition(InteractingToFallingCondition, "Falling")
+		InteractingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		SingingState = State.create(SingingUpdate)
 		SingingState:set_do_first_function(SingingFirst)
 		SingingState:set_do_end_function(SingingEnd)
 		SingingState:add_condition(SingingToFallingCondition, "Falling")
 		SingingState:add_condition(SingingToItselfCondition, "Singing")
+		SingingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		DeadState = State.create(DeadUpdate)
 		DeadState:set_do_first_function(DeadFirst)
@@ -483,4 +490,9 @@ class 'CPlayer' (CLUAComponent)
 function ANYToItselfCondition(args)
 	local l_Player = args["self"]
 	return not (l_Player.m_LastAnimation == l_Player.m_CurrentAnimation)
+end
+
+function ANYToDeadCondition(args)
+	local l_Player = args["self"]
+	return l_Player.m_IsDead
 end

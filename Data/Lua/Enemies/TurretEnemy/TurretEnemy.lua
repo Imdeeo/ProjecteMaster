@@ -7,7 +7,7 @@ class 'CTurretEnemy' (CEnemy)
 	function CTurretEnemy:__init(_TreeNode)
 		CEnemy.__init(self,_TreeNode)
 		
-		--HEAD_OBJECT_BONE_ID 31
+		--HEAD_OBJECT_BONE_ID 23
 		self.m_HeadBoneId = 23
 		--BACK_OBJECT_BONE_ID 0
 		self.m_BackBoneId = 0
