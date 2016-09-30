@@ -1,10 +1,10 @@
 dofile("Data\\Lua\\Raycast\\PipeOrgan.lua")
 
 function FacingRaycast(_Offset, _Target, _Pos, _Distance)
-	--utils_log("Pos: ".._Pos.x..", ".._Pos.y..", ".._Pos.z)
-	--utils_log("Target: ".._Target.x..", ".._Target.y..", ".._Target.z)
-	--utils_log("Offset: ".._Offset.x..", ".._Offset.y..", ".._Offset.z)
-	--utils_log("Distance: "..(_Pos - _Target):length())
+	utils_log("Pos: ".._Pos.x..", ".._Pos.y..", ".._Pos.z)
+	utils_log("Target: ".._Target.x..", ".._Target.y..", ".._Target.z)
+	utils_log("Offset: ".._Offset.x..", ".._Offset.y..", ".._Offset.z)
+	utils_log("Distance: "..(_Pos - _Target):length())
 	return ((_Pos - _Target):length() < _Distance)
 end
 
@@ -97,9 +97,9 @@ end
 
 function R2Book(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
-	_Player.m_TargetPosOffset = Vect3f(-0.86, 0.0, 0.0)
+	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.86)
 	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerBook"):get_position()
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.6) then
+	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 7
 		_Player.m_InteractingCinematic = "PullBook"

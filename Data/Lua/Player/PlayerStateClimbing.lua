@@ -47,7 +47,14 @@ function ClimbingUpdate(args, _ElapsedTime)
 	
 	--// If player has an item, move it.
 	if l_Player.m_Item ~= nil then
-		local l_ObjectPosition = l_Owner:get_left_object_position()
+		local l_ObjectPosition
+		if l_Player.m_LeftHanded == false then 
+			l_ObjectPosition = l_Owner:get_right_object_position()
+		else
+			l_ObjectPosition = l_Owner:get_left_object_position()
+		end
+		l_ObjectPosition.x = l_ObjectPosition.x * (-1.0)
+		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
 		l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_ObjectPosition)
 		l_Player.m_Item:set_position(l_ObjectPosition + l_Owner:get_position())
 		local l_ObjectRotation = l_Owner:get_left_object_rotation()*l_Owner:get_rotation()
