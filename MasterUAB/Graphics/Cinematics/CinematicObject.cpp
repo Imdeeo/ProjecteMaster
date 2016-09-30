@@ -25,39 +25,7 @@ CCinematicObject::CCinematicObject(tinyxml2::XMLElement* TreeNode) :m_Renderable
 		{
 			CCinematicObjectKeyFrame* l_CinematicKeyFrame = new CCinematicObjectKeyFrame(l_Element);
 			l_qf = l_CinematicKeyFrame->GetRotation();
-			/*l_qf2 = Quatf(-l_qf.x, l_qf.y, l_qf.z, -l_qf.w);
-			if (l_qf.x != 0)
-			{
-				if (l_qf.w != 0)
-				{
-					l_xIgual = l_qf.x == 0 (l_qf.x >= 0 && l_qlast.x >= 0 || l_qf.x < 0 && l_qlast.x < 0);
-					l_wIgual = l_qf.w >= 0 && l_qlast.w >= 0 || l_qf.w < 0 && l_qlast.w < 0;
-				}
-				else
-				{
-					l_xIgual = abs(l_qf.x - l_qlast.x) < abs(-l_qf.x - l_qlast.x);
-					l_wIgual = false;
-				}
-			}
-			else
-			{
-				if (l_qf.w != 0)
-				{
-					l_xIgual = false;
-					l_wIgual = abs(l_qf.w - l_qlast.w) < abs (- l_qf.w - l_qlast.w);
-
-				}
-				else
-				{
-					l_xIgual = true;
-					l_wIgual = true;
-				}
-			}
-
-			if (!l_xIgual && !l_wIgual)
-			{
-				l_qf = l_qf2;
-			}*/
+			
 			l_qAux = l_qf*l_qi;
 			l_CinematicKeyFrame->SetRotation(l_qAux);
 			AddCinematicObjectKeyFrame(l_CinematicKeyFrame);
