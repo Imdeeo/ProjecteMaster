@@ -23,9 +23,7 @@ function IdleUpdate(args, _ElapsedTime)
 	l_Owner:set_position(l_NewControllerPosition)
 	
 	--// Raycast
-	if l_Player.m_InputManager:is_action_active("Interact") then
-		CheckRaycast(l_Player, l_NewControllerPosition)
-	end
+	CheckRaycast(l_Player, l_NewControllerPosition)
 	
 	--// Save speed in last update so we can create acceleration
 	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
