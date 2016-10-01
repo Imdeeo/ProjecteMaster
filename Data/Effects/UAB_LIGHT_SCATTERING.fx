@@ -93,9 +93,16 @@ PS_INPUT mainVS(VS_INPUT IN)
 	{
 		if(!m_Active)
 			return float4(0,0,0,0);
+			
+		//m_LightScatteringPosition=float2(0.5, 1.3);
+		m_LightScatteringPosition.y=1.0-m_LightScatteringPosition.y;
 		
 		float2 l_LightScatteringPosition=ClampLightScatteringPosition(IN.UV, m_LightScatteringPosition);
 		float2 l_DeltaTextCoord=IN.UV-l_LightScatteringPosition;
+		
+		/*if(length(IN.UV-m_LightScatteringPosition)<0.1)
+			return float4(1,0,0,0.3);
+		clip(-1);*/
 		float2 l_TextCoo=IN.UV;
 		l_DeltaTextCoord *= 1.0/float(m_NumSamples) * m_Density;
 		float l_IlluminationDecay=1.0;
@@ -118,11 +125,11 @@ PS_INPUT mainVS(VS_INPUT IN)
 	{
 		if(m_ShowLightScattering==0.0)
 		{
-			float4 l_BloomColor=T1Texture.Sample(S1Sampler, IN.UV);
+			float4 l_LightScatteringColor=T1Texture.Sample(S1Sampler, IN.UV);
 			// Get our original pixel from ColorMap
 			float4 l_OriginalColor=T0Texture.Sample(S0Sampler, IN.UV);
 			// Combine the two images.
-			return l_OriginalColor+l_BloomColor;
+			return l_OriginalColor+l_LightScatteringColor;
 		}
 		else
 		{
