@@ -58,6 +58,8 @@
 	<static_mesh name="TubosPequesDerecha" filename="Data\level_1\Meshes\TubosPequesDerecha.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
 	<static_mesh name="TubosGaugeParedDerecha" filename="Data\level_1\Meshes\TubosGaugeParedDerecha.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
 	<static_mesh name="ComodaIzquierdaBIEN" filename="Data\level_1\Meshes\ComodaIzquierdaBIEN.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
+	<static_mesh name="PlaneExteriorLadoIzquierdo" filename="Data\level_1\Meshes\PlaneExteriorLadoIzquierdo.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
+	<static_mesh name="PlaneExteriorLadoDerecho" filename="Data\level_1\Meshes\PlaneExteriorLadoDerecho.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
 	<static_mesh name="reflejoluz004" filename="Data\level_1\Meshes\reflejoluz004.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerDoor" filename="Data\level_1\Meshes\TriggerDoor.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerSheets" filename="Data\level_1\Meshes\TriggerSheets.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
