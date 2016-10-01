@@ -266,5 +266,5 @@ CCameraInfo* CCameraKeyController::GetLastKey()
 
 CCameraInfo CCameraKeyController::GetCameraAsInfo()
 {
-	return CCameraInfo((m_RotationOffset*(m_Position - m_PositionOffsetKey) + m_PositionOffset), (m_RotationOffset*(m_LookAt - m_PositionOffsetKey) + m_PositionOffset), (m_RotationOffset * m_Up), m_Fov);
+	return CCameraInfo(m_Position, m_LookAt, m_Up, m_Fov);
 }
