@@ -8,4 +8,5 @@
 	<layer name="triggers"/>
 	<layer name="manchas"/>
 	<layer name="skybox"/>
+	<layer name="interactuable_objects"/>
 </renderable_objects>
