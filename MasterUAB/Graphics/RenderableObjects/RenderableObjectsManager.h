@@ -29,6 +29,7 @@ public:
 
 	CRenderableObjectsManager & CRenderableObjectsManager::operator=(CRenderableObjectsManager&);
 	CRenderableObject * AddParticleSystemInstance(tinyxml2::XMLElement* TreeNode);
+	CRenderableObject * AddBilboardSystemInstance(tinyxml2::XMLElement* TreeNode);
 	CRenderableObject * AddManchasSystemInstance(tinyxml2::XMLElement* TreeNode);
 	CRenderableObject * AddLineRendererSystemInstance(tinyxml2::XMLElement* TreeNode);
 };
