@@ -21,6 +21,7 @@
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "SceneRender\SceneRendererCommandManager.h"
 #include "Particles\ParticleManager.h"
+#include "Bilboards\BilboardManager.h"
 #include "GUIManager.h"
 #include "GUIPosition.h"
 #include "SoundManager\SoundManager.h"
@@ -50,6 +51,7 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 	m_TextureManager = new CTextureManager();
 	m_RenderManager = new CRenderManager();
 	m_ParticleManager = new CParticleManager();
+	m_BilboardManager = new CBilboardManager();
 	m_StaticMeshManager = new CStaticMeshManager();
 	m_LightManager = new CLightManager();
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
@@ -86,6 +88,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_LayerManager);
 	CHECKED_DELETE(m_RenderManager);
 	CHECKED_DELETE(m_ParticleManager);
+	CHECKED_DELETE(m_BilboardManager);
 	CHECKED_DELETE(m_MaterialManager);
 	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
 	CHECKED_DELETE(m_EffectManager);
@@ -337,6 +340,7 @@ UAB_GET_PROPERTY_CPP(CUABEngine, CPhysXManager *, PhysXManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CSceneRendererCommandManager *, SceneRendererCommandManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CBilboardManager*, BilboardManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, ISoundManager *, SoundManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)

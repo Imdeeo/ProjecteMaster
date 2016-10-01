@@ -30,6 +30,7 @@ class CLevelManager;
 class CManchasManager;
 class CAStarManager;
 class CColor;
+class CBilboardManager;
 
 #include <string>
 
@@ -60,6 +61,7 @@ private:
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
 	CSceneRendererCommandManager* m_SceneRendererCommandManager;
 	CParticleManager* m_ParticleManager;
+	CBilboardManager* m_BilboardManager;
 	CGUIManager* m_GUIManager;
 	ISoundManager* m_SoundManager;
 	IVideoManager* m_VideoManager;
@@ -88,6 +90,7 @@ public:
 	CRenderableObjectTechniqueManager * GetRenderableObjectTechniqueManager() const;
 	CSceneRendererCommandManager * GetSceneRendererCommandManager() const;
 	CParticleManager * GetParticleManager() const;
+	CBilboardManager * GetBilboardManager() const;
 	CGUIManager * GetGUIManager() const;
 	ISoundManager * GetSoundManager() const;
 	IVideoManager * GetVideoManager() const;

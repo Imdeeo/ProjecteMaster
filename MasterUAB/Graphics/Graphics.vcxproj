@@ -22,6 +22,9 @@
     <ClCompile Include="AnimatedModels\AnimatedCoreModel.cpp" />
     <ClCompile Include="AnimatedModels\AnimatedInstanceModel.cpp" />
     <ClCompile Include="AnimatedModels\AnimatedModelsManager.cpp" />
+    <ClCompile Include="Bilboards\BilboardManager.cpp" />
+    <ClCompile Include="Bilboards\BilboardSystemInstance.cpp" />
+    <ClCompile Include="Bilboards\BilboardSystemType.cpp" />
     <ClCompile Include="Camera\3PersonCameraController.cpp" />
     <ClCompile Include="Camera\CameraController.cpp" />
     <ClCompile Include="Camera\CameraControllerManager.cpp" />
@@ -108,6 +111,9 @@
     <ClInclude Include="AnimatedModels\AnimatedCoreModel.h" />
     <ClInclude Include="AnimatedModels\AnimatedInstanceModel.h" />
     <ClInclude Include="AnimatedModels\AnimatedModelsManager.h" />
+    <ClInclude Include="Bilboards\BilboardManager.h" />
+    <ClInclude Include="Bilboards\BilboardSystemInstance.h" />
+    <ClInclude Include="Bilboards\BilboardSystemType.h" />
     <ClInclude Include="Camera\3PersonCameraController.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\CameraController.h" />
