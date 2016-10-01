@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cameras>
-	<camera name="DebugCamera" type="spherical" distance="50" fov="1.13"/>
-	<camera name="MainCamera" type="fps" target="Jaheem" layer="solid" offset="1.8" fov="1.13"/>
 	<camera name="OpenTray" total_time="3.33333" type="key" undefined="true" pos="0.0 1.9 0.0" filename="Data\level_1\cameras\OpenTray.xml"/>
 	<camera name="CloseTray" total_time="2.5" type="key" undefined="true" pos="0.0 1.9 0.0" filename="Data\level_1\cameras\CloseTray.xml"/>
 	<camera name="ForceTray" total_time="8.66667" type="key" undefined="true" pos="0.0 1.9 0.0" filename="Data\level_1\cameras\ForceTray.xml"/>
