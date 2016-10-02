@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <characters>
 	<enemy name="CagedEnemyLeft" renderable_object="CagedAutomatonLeft" layer="solid" type="CagedAutomaton" break="true"/>
-	<enemy name="CagedEnemyRight" renderable_object="CagedAutomatonRight" layer="solid" type="CagedAutomaton" break="false">
+	<enemy name="CagedEnemyRight" renderable_object="CagedAutomatonRight" layer="solid" type="CagedAutomaton" break="false" angular_speed="2.0">
 		<param distance="5.0" time="10.0" sanity_amount="-1.0"/>
 		<param distance="3.0" time="8.0" sanity_amount="-1.0"/>
 		<param distance="2.0" time="3.0" sanity_amount="-1.0"/>

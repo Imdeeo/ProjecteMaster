@@ -11,6 +11,7 @@
 
 class CParticleSystemType;
 class CRenderableVertexs;
+class CFrustum;
 
 class CParticleSystemInstance : public CRenderableObject
 {
@@ -43,6 +44,8 @@ private:
 
 	MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX m_ParticleRenderableData[MAX_PARTICLE_PER_INSTANCE];
 	CRenderableVertexs *m_RenderableVertex;
+
+	CFrustum *m_Frustum;
 public:
 	CParticleSystemInstance(){};
 	CParticleSystemInstance(tinyxml2::XMLElement* TreeNode);
@@ -70,6 +73,7 @@ public:
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
 	//void RenderDebug(CRenderManager *RM);
+	const bool GetInsideFrustum();
 	bool CParticleSystemInstance::IsIntoLimit(Vect3f _position);
 	void InsertSort(ParticleData arr[], int length);
 	void Save(FILE* _File, std::string _layer);
