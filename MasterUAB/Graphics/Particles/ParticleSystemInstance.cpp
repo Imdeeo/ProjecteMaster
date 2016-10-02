@@ -11,10 +11,12 @@
 #include "Effects\EffectManager.h"
 #include "Camera\CameraControllerManager.h"
 #include "Math\MathUtils.h"
+#include "Camera\Frustum.h"
 
 CParticleSystemInstance::CParticleSystemInstance(tinyxml2::XMLElement* TreeNode) :
 	CRenderableObject(TreeNode)
 {
+	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 	m_Type = UABEngine.GetInstance()->GetParticleManager()->GetResource(TreeNode->GetPszProperty("type"));
 	m_NextParticleEmission = TreeNode->GetFloatProperty("next_particle_emission", 1.0f);
 	m_Start = TreeNode->GetBoolProperty("start", true);
@@ -282,7 +284,7 @@ bool CParticleSystemInstance::IsIntoLimit(Vect3f _position)
 
 void CParticleSystemInstance::Render(CRenderManager *RM)
 {
-	if (m_Visible)
+	if (m_Visible && GetInsideFrustum())
 	{
 		RM->GetContextManager()->SetWorldMatrix(GetTransform());
 		CRenderableObject::Render(RM);
@@ -318,6 +320,22 @@ void CParticleSystemInstance::Render(CRenderManager *RM)
 			m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData(), m_ActiveParticles);
 		}
 	}
+}
+
+const bool CParticleSystemInstance::GetInsideFrustum()
+{
+	Vect3f l_AuxPosition = Vect3f(0,0,0);
+	float aux = 0.0;
+	for (size_t i = 0; i < m_Type->GetSpeedsControlPointSize(); ++i)
+	{
+		if (i + 1 >= m_Type->GetSpeedsControlPointSize())
+			aux = ((m_Type->GetLife()[0] + m_Type->GetLife()[1]) / 2 - (m_Type->m_ControlPointSpeeds[i].m_Time[0] + m_Type->m_ControlPointSpeeds[i].m_Time[1]) / 2);
+		else
+			aux = ((m_Type->m_ControlPointSpeeds[i+1].m_Time[0] + m_Type->m_ControlPointSpeeds[i+1].m_Time[1]) / 2 - (m_Type->m_ControlPointSpeeds[i].m_Time[0] + m_Type->m_ControlPointSpeeds[i].m_Time[1]) / 2);
+		l_AuxPosition += aux * ((m_Type->m_ControlPointSpeeds[i].m_Speed1 + m_Type->m_ControlPointSpeeds[i].m_Speed2) / 2);
+	}
+	float l_Radius = ((m_EmissionBoxHalfSize * 2) + l_AuxPosition).Length();
+	return m_Frustum->SphereVisible(m_Position, l_Radius);
 }
 
 void CParticleSystemInstance::InsertSort(ParticleData arr[], int length) {
