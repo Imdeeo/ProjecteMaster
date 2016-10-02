@@ -7,16 +7,10 @@
 class CLevelInfo
 {
 public:
-	CLevelInfo();
+	CLevelInfo(const std::string &_LevelId);
 	virtual ~CLevelInfo();
 
-	bool IsInLevel(std::string _LevelId);
-	void AddLevel(std::string _LevelId);
-	void RemoveLevel(std::string _LevelId);
-	bool HasAnyLevel();
-
-private:
-	std::vector<std::string> m_Levels;
+	std::string m_Level;
 };
 
 #endif

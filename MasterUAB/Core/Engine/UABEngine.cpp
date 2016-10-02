@@ -124,6 +124,7 @@ void CUABEngine::Update(float _ElapsedTime)
 		m_CinematicManager->Update(l_ElapsedTime);
 		m_ScriptManager->RunCode("luaUpdate(" + std::to_string(l_ElapsedTime) + ")");
 		m_GamePlayManager->Update(l_ElapsedTime);
+		m_LevelManager->Update(l_ElapsedTime);
 	}
 	if (m_ActiveConsole)
 		Consola(10, 300, 700, 70);

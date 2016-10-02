@@ -38,7 +38,7 @@ private:
 	MV_POSITION4_COLOR_TEXTURE_VERTEX m_ManchasRenderableData[MAX_MANCHAS];
 	CRenderableVertexs *m_RenderableVertex;
 public:
-	CManchasSystemInstance(tinyxml2::XMLElement* TreeNode);
+	CManchasSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId = "");
 	virtual ~CManchasSystemInstance(void);
 	void Destroy();
 

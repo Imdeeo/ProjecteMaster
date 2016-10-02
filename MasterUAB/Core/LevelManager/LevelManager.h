@@ -16,11 +16,12 @@ typedef struct SLevelInfo
 	std::string	m_Directory;
 } TLevelInfo;
 
-class CLevelManager: CTemplatedVectorMapManager<CLevel>
+class CLevelManager: public CTemplatedVectorMapManager<CLevel>
 {
 private:
 	std::map<std::string, TLevelInfo> m_LevelsInfo;
-	CLayerManager* m_LayerManagerArray;
+
+	std::map<std::string,std::vector<CRenderableObjectsManager*>> m_LayersMap;
 
 	std::string m_LevelsFileName;
 public:
@@ -34,10 +35,9 @@ public:
 	void ReloadLevel(const std::string &_LevelName);
 	void UnloadLevel(const std::string &_LevelName);
 
-	std::vector<CRenderableObjectsManager*>GetCompleteLayer(const std::string &_LayerName);
+	std::vector<CRenderableObjectsManager*>* GetCompleteLayer(const std::string &_LayerName);
 
 	void ReloadAllLua();
 
 	void Update(float _ElapsedTime);
 };
-

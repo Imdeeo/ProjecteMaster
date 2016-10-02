@@ -11,7 +11,6 @@ class CStaticMeshManager;
 class CLayerManager;
 class CLightManager;
 class CCinematicManager;
-class CCameraControllerManager;
 class CAStarManager;
 class CGamePlayManager;
 class CRenderableObjectsManager;
@@ -28,7 +27,6 @@ private:
 	CLayerManager* m_LayerManager;
 	CLightManager* m_LightManager;
 	CCinematicManager* m_CinematicManager;
-	CCameraControllerManager* m_CameraControllerManager;
 	//CAStarManager* m_AStarManager;     per quan hi hagi un manager
 	CAStar* m_AStarManager;
 	CGamePlayManager* m_GamePlayManager;
@@ -40,6 +38,18 @@ public:
 	void Load();
 	void Reload();
 	void Unload();
+	
+	void Update(float _ElapsedTime);
+
+	CStaticMeshManager * GetStaticMeshManager() const;
+	CLayerManager * GetLayerManager() const;
+	CMaterialManager * GetMaterialManager() const;
+	CLightManager * GetLightManager() const;
+	CCinematicManager * GetCinematicManager() const;
+	CParticleManager * GetParticleManager() const;
+	CGamePlayManager * GetGamePlayManager()const;
+	CManchasManager * GetManchasManager() const;
+	CAStar * GetAStarManager() const;
 
 	CRenderableObjectsManager* GetLayer(const std::string& _LayerName);
 };

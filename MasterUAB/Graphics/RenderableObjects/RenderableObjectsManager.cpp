@@ -32,7 +32,7 @@ void CRenderableObjectsManager::RenderDebug(CRenderManager *RM)
 
 CRenderableObject * CRenderableObjectsManager::AddMeshInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId, bool _Update)
 {
-	CInstanceMesh* instanceMesh = new CInstanceMesh(TreeNode);
+	CInstanceMesh* instanceMesh = new CInstanceMesh(TreeNode,_LevelId);
 	if (_Update ? AddUpdateResource(instanceMesh->GetName(), instanceMesh) : AddResource(instanceMesh->GetName(), instanceMesh,_LevelId))
 		return instanceMesh;
 	else
@@ -77,7 +77,7 @@ CRenderableObjectsManager & CRenderableObjectsManager::operator=(CRenderableObje
 
 CRenderableObject * CRenderableObjectsManager::AddParticleSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId)
 {
-	CParticleSystemInstance* l_ParticleSystemInstance = new CParticleSystemInstance(TreeNode);
+	CParticleSystemInstance* l_ParticleSystemInstance = new CParticleSystemInstance(TreeNode, _LevelId);
 	if (AddResource(l_ParticleSystemInstance->GetName(), l_ParticleSystemInstance,_LevelId))
 		return l_ParticleSystemInstance;
 	else
@@ -86,7 +86,7 @@ CRenderableObject * CRenderableObjectsManager::AddParticleSystemInstance(tinyxml
 
 CRenderableObject * CRenderableObjectsManager::AddManchasSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId)
 {
-	CManchasSystemInstance* l_ManchasSystemInstance = new CManchasSystemInstance(TreeNode);
+	CManchasSystemInstance* l_ManchasSystemInstance = new CManchasSystemInstance(TreeNode,_LevelId);
 	if (AddResource(l_ManchasSystemInstance->GetName(), l_ManchasSystemInstance,_LevelId))
 		return l_ManchasSystemInstance;
 	else

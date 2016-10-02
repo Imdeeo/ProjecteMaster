@@ -45,7 +45,7 @@ function InteractingUpdate(args, _ElapsedTime)
 		l_Player.m_ItemName = l_Player.m_NewItemName
 		l_Player.m_NewItemName = ""
 		if l_Player.m_ItemName ~= "" then
-			l_Player.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
+			l_Player.m_Item = CUABEngine.get_instance():get_level_manager():get_level(l_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
 		else
 			l_Player.m_Item = nil
 		end

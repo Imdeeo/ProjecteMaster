@@ -26,7 +26,8 @@ public:
 	bool Reload();
 	void Update(float _ElapsedTime);
 
-	CCameraController* GetMainCamera(){ return m_MainCamera; };
+	CCameraController* 
+		GetMainCamera(){ return m_MainCamera; };
 	CCameraController* GetDebugCamera(){ return m_DebugCamera; };
 	UAB_BUILD_GET_SET(int, CurrentCameraControl)
 private:

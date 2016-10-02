@@ -11,12 +11,13 @@
 #include "Effects\EffectManager.h"
 #include "Camera\CameraControllerManager.h"
 #include "Math\MathUtils.h"
+#include "LevelManager\LevelManager.h"
 
-CManchasSystemInstance::CManchasSystemInstance(tinyxml2::XMLElement* TreeNode) : CRenderableObject(TreeNode), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
+CManchasSystemInstance::CManchasSystemInstance(tinyxml2::XMLElement* TreeNode,const std::string &_LevelId) : CRenderableObject(TreeNode,_LevelId), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
 {
 	m_Awake = TreeNode->GetBoolProperty("awake");
 	m_ActiveManchas = 0;
-	m_Type = UABEngine.GetInstance()->GetManchasManager()->GetResource(TreeNode->GetPszProperty("type"));
+	m_Type = UABEngine.GetInstance()->GetLevelManager()->GetResource(_LevelId)->GetManchasManager()->GetResource(TreeNode->GetPszProperty("type"));
 	m_RenderableVertex = new CUABPointsListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(m_ManchasRenderableData, MAX_MANCHAS, MAX_MANCHAS, true);
 	m_NextParticleEmission = ComputeTimeToNextMancha();
 	m_Name = TreeNode->GetPszProperty("name");

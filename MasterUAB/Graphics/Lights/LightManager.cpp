@@ -35,13 +35,13 @@ bool CLightManager::Load(const std::string &FileName, const std::string &_LevelI
 					switch(type)
 					{
 					case CLight::LIGHT_TYPE_OMNI:
-						AddResource(l_ElementAux->GetPszProperty("name"), new COmniLight(l_ElementAux),_LevelId);
+						AddResource(l_ElementAux->GetPszProperty("name"), new COmniLight(l_ElementAux,_LevelId),_LevelId);
 						break;
 					case CLight::LIGHT_TYPE_DIRECTIONAL:
-						AddResource(l_ElementAux->GetPszProperty("name"), new CDirectionalLight(l_ElementAux),_LevelId);
+						AddResource(l_ElementAux->GetPszProperty("name"), new CDirectionalLight(l_ElementAux,_LevelId),_LevelId);
 						break;
 					case CLight::LIGHT_TYPE_SPOT:
-						AddResource(l_ElementAux->GetPszProperty("name"), new CSpotLight(l_ElementAux),_LevelId);
+						AddResource(l_ElementAux->GetPszProperty("name"), new CSpotLight(l_ElementAux,_LevelId),_LevelId);
 						break;
 					default:
 						return false;

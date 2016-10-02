@@ -13,7 +13,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-C3PersonCameraController::C3PersonCameraController(tinyxml2::XMLElement* TreeNode) : CCameraController(TreeNode)
+C3PersonCameraController::C3PersonCameraController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CCameraController(TreeNode,_LevelId)
 , m_YawSpeed(5.f)
 , m_PitchSpeed(10.f)
 , m_Speed(5.0f)

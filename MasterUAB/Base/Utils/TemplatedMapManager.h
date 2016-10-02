@@ -185,12 +185,12 @@ public:
 		if (m_Resources.find(Name) != m_Resources.end())
 		{
 			*(m_Resources[Name]) = *(Resource);
-			((CLevelInfo*)m_Resources[Name])->AddLevel(_LevelId);
+			//((CLevelInfo*)m_Resources[Name])->AddLevel(_LevelId);
 			CHECKED_DELETE(Resource);
 			return true;
 		}
 		m_Resources[Name] = Resource;
-		((CLevelInfo*)m_Resources[Name])->AddLevel(_LevelId);
+		//((CLevelInfo*)m_Resources[Name])->AddLevel(_LevelId);
 		return true;
 	}
 

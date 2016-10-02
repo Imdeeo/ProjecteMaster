@@ -10,7 +10,7 @@ class CRenderableObjectsManager;
 class CRenderLayerSceneRendererCommand : public CSceneRendererCommand
 {
 private:
-	std::vector<CRenderableObjectsManager*> m_Layer;
+	std::vector<CRenderableObjectsManager*> *m_Layer;
 public:
 	CRenderLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
 	virtual ~CRenderLayerSceneRendererCommand();

@@ -25,7 +25,7 @@ private:
 	bool m_DebugRender;
 public:
 	CRenderableObject();
-	CRenderableObject(tinyxml2::XMLElement* TreeNode);
+	CRenderableObject(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId = "");
 	virtual ~CRenderableObject();
 	virtual void Save(FILE* _File, std::string _layer){}
 	virtual void Update(float ElapsedTime){};

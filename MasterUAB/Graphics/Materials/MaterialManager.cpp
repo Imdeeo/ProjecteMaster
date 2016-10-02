@@ -51,7 +51,7 @@ void CMaterialManager::LoadMaterialsFromFile(const std::string &Filename, bool U
 			{
 				if (l_ElementAux->Name() == std::string("material"))
 				{
-					CMaterial* l_Material = new CMaterial(l_ElementAux);
+					CMaterial* l_Material = new CMaterial(l_ElementAux,_LevelId);
 					if (Update)
 					{
 						AddUpdateResource(l_ElementAux->GetPszProperty("name"), l_Material);
