@@ -8,7 +8,7 @@
 #include "CameraControllerManager.h"
 #include "Math\Quatn.h"
 
-CCameraKeyController::CCameraKeyController(tinyxml2::XMLElement* TreeNode) : CCameraController(TreeNode)
+CCameraKeyController::CCameraKeyController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CCameraController(TreeNode,_LevelId)
 {
 	ResetTime();
 	m_PositionOffsetKey = Vect3f(0.0f, 0.0f, 0.0f);

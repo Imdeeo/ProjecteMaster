@@ -40,7 +40,7 @@ private:
 		Vect3f m_Acceleration1, m_Acceleration2;
 	};
 public:
-	CParticleSystemType(tinyxml2::XMLElement* TreeNode);
+	CParticleSystemType(tinyxml2::XMLElement* TreeNode,const std::string &_LevelId);
 	virtual ~CParticleSystemType(void);
 	void Destroy();
 	void Save(FILE* _File);

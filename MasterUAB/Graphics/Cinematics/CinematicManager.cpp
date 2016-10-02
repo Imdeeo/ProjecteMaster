@@ -23,7 +23,7 @@ void CCinematicManager::LoadXML(const std::string &FileName, const std::string &
 		l_Element = doc.FirstChildElement("cinematics")->FirstChildElement();
 		while (l_Element != NULL)
 		{
-			CCinematic* l_Cinematic = new CCinematic(l_Element);
+			CCinematic* l_Cinematic = new CCinematic(l_Element,_LevelId);
 			AddResource(l_Cinematic->GetName(), l_Cinematic,_LevelId);
 			l_Element = l_Element->NextSiblingElement();
 		}

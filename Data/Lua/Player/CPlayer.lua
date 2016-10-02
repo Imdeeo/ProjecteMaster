@@ -57,12 +57,15 @@ dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 
 class 'CPlayer' (CLUAComponent)
 	function CPlayer:__init(_TreeNode)
+		utils_log("init player")
+		self.m_ActualLevel = "Player"
 		self.m_AlreadyInitialized = false
 		local UABEngine = CUABEngine.get_instance()
+		local l_Level = CUABEngine.get_instance():get_level_manager():get_level("Player")
 		self.m_Name = _TreeNode:get_psz_property("name", "")
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "")
 		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "")
-		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
+		self.m_RenderableObject = l_Level:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
 		CLUAComponent.__init(self, self.m_Name, self.m_RenderableObject)
 	
 		self.m_CameraControllerName= _TreeNode:get_psz_property("camera_controller", "")
@@ -134,7 +137,7 @@ class 'CPlayer' (CLUAComponent)
 			self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
 		end
 		
-		self.m_CinematicManager = UABEngine:get_cinematic_manager()
+		self.m_CinematicManager = l_Level:get_cinematic_manager()
 		self.m_InputManager = UABEngine:get_input_manager()
 		self.m_PhysXManager = UABEngine:get_physX_manager()
 		if(not UABEngine:get_lua_reloaded())then
@@ -183,6 +186,7 @@ class 'CPlayer' (CLUAComponent)
 		end
 
 		self.m_AlreadyInitialized = true
+		utils_log("end init player")
 	end
 
 	function CPlayer:SetSanity(_amount, _override)
@@ -200,14 +204,26 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Sanity = math.max(math.min(self.m_Sanity + _amount, self.m_MaxSanity),0)
 	end
 	
+	function CPlayer:SetActualLevel(_LevelId)
+		self.m_ActualLevel = _LevelId
+	end
+	
+	function CPlayer:GetActualLevel()
+		return self.m_ActualLevel
+	end
+	
 	function CPlayer:UpdateSanityEffects(_ElapsedTime)
+		utils_log("Update Sanity")
 		local UABEngine = CUABEngine.get_instance()
+		local l_Level = CUABEngine.get_instance():get_level_manager():get_level("Player")
 		
 		for i=1, table.maxn(self.m_SanityEffects) do
+			utils_log("aqui")
 			l_EffectAux = self.m_SanityEffects[i]
 			
 			if self.m_Sanity <= l_EffectAux[3] and self.m_Sanity >= l_EffectAux[4] then
 				if l_EffectAux[1] == "vortex" then
+					utils_log("vortex")
 					l_Material = UABEngine:get_material_manager():get_resource(l_EffectAux[5])
 					
 					local l_Value = 0.0
@@ -228,13 +244,15 @@ class 'CPlayer' (CLUAComponent)
 					l_Value = l_Previous + (l_Value-l_Previous)*_ElapsedTime
 					l_Material:set_value(1,l_Value)
 				elseif l_EffectAux[1] == "stain" then
-					local l_Layer = UABEngine:get_layer_manager():get_layer("manchas")
+					utils_log("stain")
+					local l_Layer = l_Level:get_layer_manager():get_layer("manchas")
 					local l_Mancha = l_Layer:get_resource(l_EffectAux[5])
 					local l_ManchaType = UABEngine:get_manchas_manager():get_resource(l_EffectAux[2])
 					
 					l_Mancha:set_type(l_ManchaType)
 					l_Mancha:set_awake(true)
 				elseif l_EffectAux[1] == "vignetting" then
+					utils_log("vignetting")
 					l_Material = UABEngine:get_material_manager():get_resource(l_EffectAux[5])
 					
 					local l_Value = 0.0
@@ -247,6 +265,7 @@ class 'CPlayer' (CLUAComponent)
 					l_Value = l_Previous + (l_Value-l_Previous)*_ElapsedTime
 					l_Material:set_value(1,l_Value)
 				elseif l_EffectAux[1] == "fov" then
+					utils_log("fov")
 					local CameraControllerManager = UABEngine:get_camera_controller_manager()
 					local MainCamera = CameraControllerManager:get_main_camera()
 					local l_Fov_Value = l_EffectAux[5] + (l_EffectAux[6] - l_EffectAux[5]) * (l_EffectAux[3] - self.m_Sanity) / (l_EffectAux[3] - l_EffectAux[4])
@@ -256,6 +275,7 @@ class 'CPlayer' (CLUAComponent)
 					MainCamera:set_fov(l_Fov_Value)
 					--CameraControllerManager:choose_main_camera("MainCamera")
 				elseif l_EffectAux[1] == "velocity" then
+					utils_log("velocity")
 					utils_log("TYPE: "..l_EffectAux[2])
 					if l_EffectAux[2] == "run" then
 						if self.m_CurrentAnimation == "run" then
@@ -274,6 +294,7 @@ class 'CPlayer' (CLUAComponent)
 				end
 			else
 				if l_EffectAux[1] == "vortex" then
+					utils_log("vortex 2")
 					l_Material = UABEngine:get_material_manager():get_resource(l_EffectAux[5])
 					
 					local l_Previous = l_Material:get_value(1)
@@ -282,13 +303,15 @@ class 'CPlayer' (CLUAComponent)
 						l_Material:set_value(1, l_Value)
 					end
 				elseif l_EffectAux[1] == "stain" then
-					local l_Layer = UABEngine:get_layer_manager():get_layer("manchas")
+					utils_log("stain 2")
+					local l_Layer = l_Level:get_layer_manager():get_layer("manchas")
 					local l_Mancha = l_Layer:get_resource(l_EffectAux[5])
 
 					if l_Mancha:get_awake() then
 						l_Mancha:set_awake(false)
 					end
 				elseif l_EffectAux[1] == "vignetting" then
+					utils_log("vignetting 2")
 					l_Material = UABEngine:get_material_manager():get_resource(l_EffectAux[5])
 					
 					local l_Previous = l_Material:get_value(1)
@@ -297,6 +320,7 @@ class 'CPlayer' (CLUAComponent)
 						l_Material:set_value(1, l_Value)
 					end
 				elseif l_EffectAux[1] == "fov" then
+					utils_log("fov 2")
 					local CameraControllerManager = UABEngine:get_camera_controller_manager()
 					local MainCamera = CameraControllerManager:get_main_camera()
 					local l_Previous_fov = MainCamera:get_fov()
@@ -309,6 +333,7 @@ class 'CPlayer' (CLUAComponent)
 				end
 			end
 		end
+		utils_log("End Update Sanity")
 	end
 	
 	--[[function CPlayer:RecoverSanity()
@@ -317,10 +342,13 @@ class 'CPlayer' (CLUAComponent)
 	
 	function CPlayer:Update(_ElapsedTime)
 		local args = {}
+		utils_log("Player Update")
 		args["owner"] = self.m_RenderableObject
 		args["self"] = self
 		self.m_StateMachine:update(args, _ElapsedTime)
+		utils_log("Player pene Update")
 		self:UpdateSanityEffects(_ElapsedTime)
+		utils_log("Player End Update")
 	end
 	
 	function CPlayer:SetPlayerStateMachine()

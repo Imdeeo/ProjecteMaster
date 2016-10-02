@@ -17,7 +17,7 @@
 class CManchasSystemType : public CNamed, public CLevelInfo
 {
 public:
-	CManchasSystemType(tinyxml2::XMLElement* TreeNode);
+	CManchasSystemType(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CManchasSystemType(void);
 	void Destroy();
 	void Save(FILE* _File);

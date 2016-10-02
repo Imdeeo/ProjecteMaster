@@ -25,8 +25,6 @@ CLevelManager::~CLevelManager()
 
 void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 {
-	m_LayerManagerArray = UABEngine.GetLayerManager();
-
 	m_LevelsFileName = _LevelsFilename;
 	
 	tinyxml2::XMLDocument doc;
@@ -57,9 +55,19 @@ void CLevelManager::LoadLevel(const std::string &_LevelName)
 	{
 		UABEngine.SetLevelLoaded(m_LevelsInfo[_LevelName].m_ID);
 		CLevel * l_Level = new CLevel(_LevelName);
-		l_Level->Load();
 		AddResource(_LevelName, l_Level);
+		l_Level->Load();
 		m_LevelsInfo[_LevelName].m_Loaded = true;
+		std::vector<CRenderableObjectsManager*> l_LayerVector = l_Level->GetLayerManager()->GetResourcesVector();
+		for (size_t i = 0; i < l_LayerVector.size(); i++)
+		{
+			std::string  l_LayerName = l_LayerVector[i]->GetName();
+			if (m_LayersMap.find(l_LayerName) == m_LayersMap.end())
+			{
+				m_LayersMap[l_LayerName] = std::vector<CRenderableObjectsManager*>();
+			}
+			m_LayersMap[l_LayerName].push_back(l_LayerVector[i]);
+		}
 	}
 }
 
@@ -70,6 +78,14 @@ void CLevelManager::ReloadLevel(const std::string &_LevelName)
 void CLevelManager::UnloadLevel(const std::string &_LevelName)
 {
 
+}
+
+void CLevelManager::Update(float _ElapsedTime)
+{
+	for (size_t i = 0; i < m_ResourcesVector.size(); i++)
+	{
+		m_ResourcesVector[i]->Update(_ElapsedTime);
+	}
 }
 
 void CLevelManager::ReloadAllLua()
@@ -91,12 +107,7 @@ TLevelInfo CLevelManager::GetLevelInfo(std::string &_LevelName)
 	return m_LevelsInfo[_LevelName];
 }
 
-std::vector<CRenderableObjectsManager*> CLevelManager::GetCompleteLayer(const std::string &_LayerName)
+std::vector<CRenderableObjectsManager*>* CLevelManager::GetCompleteLayer(const std::string &_LayerName)
 {
-	std::vector<CRenderableObjectsManager*> l_RenderableObjectVector;
-	for (size_t i = 0; i < m_ResourcesVector.size(); i++)
-	{
-		l_RenderableObjectVector.push_back(m_ResourcesVector[i]->GetLayer(_LayerName));
-	}
-	return l_RenderableObjectVector;
+	return &(m_LayersMap[_LayerName]);
 }

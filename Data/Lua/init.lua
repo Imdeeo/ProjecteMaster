@@ -45,17 +45,17 @@ function mainLua()
 	
 	l_LevelManager:load_level("Player")	
 	
-	deactivate_gravity()
-	deactivate_player_collisions()
-	--l_LevelManager:load_level("Recibidor")	
+	--deactivate_gravity()
+	--deactivate_player_collisions()
+	l_LevelManager:load_level("Recibidor")	
 	--l_LevelManager:load_level("Biblioteca")
 	--l_LevelManager:load_level("Maquinas")	
 end
 
-function levelMainLua(level)
+function levelMainLua(level,level_id)
 	level = string.gsub(level,"\/","\\")
 	
-	m_CharacterManager:LoadXML(level.."\\characters.xml")
+	m_CharacterManager:LoadXML(level.."\\characters.xml",level_id)
 end
 
 function luaUpdate(_ElapsedTime)

@@ -2,12 +2,15 @@ dofile("Data\\Lua\\Utils\\GVars.lua") --// Global Variables
 dofile("Data\\Lua\\Utils\\state_machine.lua")
 
 class 'CEnemy' (CLUAComponent)
-	function CEnemy:__init(_TreeNode)
+	function CEnemy:__init(_TreeNode,_LevelId)
 		local UABEngine = CUABEngine.get_instance()
+		utils_log("Enemy before get level")
+		local l_Level = CUABEngine.get_instance():get_level_manager():get_level(_LevelId)
+		utils_log("Enemy after get level")
 		self.m_Name = _TreeNode:get_psz_property("name", "")
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "")
 		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "")
-		self.m_RenderableObject = UABEngine:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
+		self.m_RenderableObject = l_Level:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
 		self.m_PhysXManager = CUABEngine.get_instance():get_physX_manager()
 		CLUAComponent.__init(self,self.m_Name, self.m_RenderableObject)
 		

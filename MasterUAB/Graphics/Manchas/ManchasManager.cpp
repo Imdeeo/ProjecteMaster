@@ -26,7 +26,7 @@ void CManchasManager::Load(const std::string &Filename, const std::string &_Leve
 			l_Element = l_Element->FirstChildElement();
 			while (l_Element != NULL)
 			{
-				CManchasSystemType *l_ManchasSystemType = new CManchasSystemType(l_Element);
+				CManchasSystemType *l_ManchasSystemType = new CManchasSystemType(l_Element,_LevelId);
 				if (!AddResource(l_ManchasSystemType->GetName(), l_ManchasSystemType, _LevelId))
 				{
 					CHECKED_DELETE(l_ManchasSystemType);

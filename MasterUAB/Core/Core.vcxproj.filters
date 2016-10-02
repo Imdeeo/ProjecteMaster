@@ -25,7 +25,9 @@
     <ClCompile Include="InputManager\KeyboardInput.cpp">
       <Filter>InputManager</Filter>
     </ClCompile>
-    <ClCompile Include="LevelManager\Level.cpp" />
+    <ClCompile Include="LevelManager\Level.cpp">
+      <Filter>LevelManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\UABEngine.h">
@@ -52,7 +54,9 @@
     <ClInclude Include="IA\AStar.h">
       <Filter>AI</Filter>
     </ClInclude>
-    <ClInclude Include="LevelManager\Level.h" />
+    <ClInclude Include="LevelManager\Level.h">
+      <Filter>LevelManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

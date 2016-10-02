@@ -1,4 +1,5 @@
 function IdleFirst(args)
+	utils_log("Player Idle First")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Owner:blend_cycle(0,1.0,0.1)
@@ -8,6 +9,8 @@ end
 function IdleUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
+	
+	utils_log("Player Idle Update")
 	
 	--// Calculate the player speed
 	local l_PlayerDisplacement = Vect3f(0, l_Player.m_Velocity.y + l_Player.m_Gravity * _ElapsedTime, 0)

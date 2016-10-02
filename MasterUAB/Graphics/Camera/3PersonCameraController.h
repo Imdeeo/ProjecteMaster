@@ -20,7 +20,7 @@ private:
 	Vect3f						m_PositionOffset;
 	Vect3f						m_RotationOffset;
 public:
-	C3PersonCameraController(tinyxml2::XMLElement* TreeNode);
+	C3PersonCameraController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~C3PersonCameraController();
 	
 	void Move(Vect3f _newPos, float ElapsedTime);

@@ -21,7 +21,7 @@
 #define INDEX_CUBEMAP_TEXTURE 8
 #define INDEX_SPECULAR_TEXTURE 10
 
-CMaterial::CMaterial(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode), m_CurrentParameterData(0)
+CMaterial::CMaterial(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CNamed(TreeNode), CLevelInfo(_LevelId), m_CurrentParameterData(0)
 {
 	std::string l_RenderableObjectTechnique = TreeNode->GetPszProperty("renderable_object_technique","");
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource(l_RenderableObjectTechnique);

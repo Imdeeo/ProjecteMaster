@@ -26,7 +26,6 @@ CLevel::CLevel() :CNamed("")
 	m_StaticMeshManager = new CStaticMeshManager();
 	m_LightManager = new CLightManager();
 	m_LayerManager = new CLayerManager();
-	m_CameraControllerManager = new CCameraControllerManager();
 	m_CinematicManager = new CCinematicManager();
 	m_GamePlayManager = new CGamePlayManager();
 	m_ManchasManager = new CManchasManager();
@@ -40,7 +39,6 @@ CLevel::CLevel(const std::string &_Name) :CNamed(_Name)
 	m_StaticMeshManager = new CStaticMeshManager();
 	m_LightManager = new CLightManager();
 	m_LayerManager = new CLayerManager();
-	m_CameraControllerManager = new CCameraControllerManager();
 	m_CinematicManager = new CCinematicManager();
 	m_GamePlayManager = new CGamePlayManager();
 	m_ManchasManager = new CManchasManager();
@@ -62,22 +60,66 @@ void CLevel::Load()
 	m_LayerManager->Load(l_LevelDirectory + "\\renderable_objects.xml", m_Name);
 	m_LightManager->Load(l_LevelDirectory + "\\lights.xml", m_Name);
 	m_CinematicManager->LoadXML(l_LevelDirectory + "\\cinematic.xml", m_Name);
-	m_CameraControllerManager->Load(l_LevelDirectory + "\\cameras.xml", m_Name);
+	UABEngine.GetCameraControllerManager()->Load(l_LevelDirectory + "\\cameras.xml", m_Name);
 	m_AStarManager->LoadMap(l_LevelDirectory + "\\pathfinding.xml");
 	std::string l_LevelDirectoryChangedSlashes = l_LevelDirectory;
 	std::replace(l_LevelDirectoryChangedSlashes.begin(), l_LevelDirectoryChangedSlashes.end(), '\\', '\/');
 	UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_LevelDirectoryChangedSlashes + "\",\"" + m_Name + "\")");
 }
 
-void Reload()
+void CLevel::Reload()
 {
 }
 
-void Unload()
+void CLevel::Unload()
 {
+}
+
+void CLevel::Update(float _ElapsedTime)
+{
+	m_LayerManager->Update(_ElapsedTime);
+	m_CinematicManager->Update(_ElapsedTime);
+	m_GamePlayManager->Update(_ElapsedTime);
 }
 
 CRenderableObjectsManager* CLevel::GetLayer(const std::string &_LayerName)
 {
 	return m_LayerManager->GetLayer(_LayerName);
+}
+
+CStaticMeshManager * CLevel::GetStaticMeshManager() const
+{
+	return m_StaticMeshManager;
+}
+CLayerManager * CLevel::GetLayerManager() const
+{
+	return m_LayerManager;
+}
+CMaterialManager * CLevel::GetMaterialManager() const
+{
+	return m_MaterialManager;
+}
+CLightManager * CLevel::GetLightManager() const
+{
+	return m_LightManager;
+}
+CCinematicManager * CLevel::GetCinematicManager() const
+{
+	return m_CinematicManager;
+}
+CParticleManager * CLevel::GetParticleManager() const
+{
+	return m_ParticleManager;
+}
+CGamePlayManager * CLevel::GetGamePlayManager()const
+{
+	return m_GamePlayManager;
+}
+CManchasManager * CLevel::GetManchasManager() const
+{
+	return m_ManchasManager;
+}
+CAStar * CLevel::GetAStarManager() const
+{
+	return m_AStarManager;
 }

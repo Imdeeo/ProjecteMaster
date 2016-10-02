@@ -12,10 +12,12 @@
 #include "Camera\CameraControllerManager.h"
 #include "Math\MathUtils.h"
 
-CParticleSystemInstance::CParticleSystemInstance(tinyxml2::XMLElement* TreeNode) :
+#include "LevelManager\LevelManager.h"
+
+CParticleSystemInstance::CParticleSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :
 	CRenderableObject(TreeNode), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
 {
-	m_Type = UABEngine.GetInstance()->GetParticleManager()->GetResource(TreeNode->GetPszProperty("type"));
+	m_Type = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetParticleManager()->GetResource(TreeNode->GetPszProperty("type"));
 	m_NextParticleEmission = TreeNode->GetFloatProperty("next_particle_emission", 1.0f);
 	m_Awake = TreeNode->GetBoolProperty("awake", false);
 	m_AwakeTimer = TreeNode->GetFloatProperty("awake_timer", 1.0f);

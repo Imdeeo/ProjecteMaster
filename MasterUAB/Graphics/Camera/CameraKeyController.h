@@ -20,7 +20,7 @@ private:
 	bool LoadXML(const std::string &FileName);
 	void GetCurrentKey();
 public:
-	CCameraKeyController(tinyxml2::XMLElement* TreeNode);
+	CCameraKeyController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CCameraKeyController();
 	void Update(float ElapsedTime);
 	void SetCurrentTime(float CurrentTime);

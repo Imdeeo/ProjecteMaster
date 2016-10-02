@@ -8,16 +8,16 @@
 #include "Texture\DynamicTexture.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 
-CSpotLight::CSpotLight():CDirectionalLight(),m_Angle(0.0f),m_FallOff(0.0f){}
+CSpotLight::CSpotLight(const std::string &_LevelId) :CDirectionalLight(_LevelId), m_Angle(0.0f), m_FallOff(0.0f){}
 
-CSpotLight::CSpotLight(std::string _name) : CDirectionalLight(_name), m_Angle(0.0f), m_FallOff(0.0f)
+CSpotLight::CSpotLight(std::string _name, const std::string &_LevelId) : CDirectionalLight(_name,_LevelId), m_Angle(0.0f), m_FallOff(0.0f)
 {
 	m_Type = GetLightTypeByName("spot");
 	m_ShadowMap = new CDynamicTexture("shadowmap", 512, 512, true, "r32");
 	m_ShadowMaskTexture = nullptr;
 }
 
-CSpotLight::CSpotLight(tinyxml2::XMLElement* TreeNode) : CDirectionalLight(TreeNode)
+CSpotLight::CSpotLight(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CDirectionalLight(TreeNode,_LevelId)
 {
 	m_Angle = TreeNode->GetFloatProperty("angle",1.f);
 	m_FallOff = TreeNode->GetFloatProperty("fall_off", 1.2f);

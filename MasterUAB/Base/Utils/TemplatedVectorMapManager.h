@@ -197,7 +197,7 @@ public:
 	{
 		if (m_ResourcesMap.find(Name) != m_ResourcesMap.end())
 		{
-			((CLevelInfo*)m_ResourcesMap[Name].m_Value)->AddLevel(_LevelId);
+			//((CLevelInfo*)m_ResourcesMap[Name].m_Value)->AddLevel(_LevelId);
 			CHECKED_DELETE(_Resource);
 			return false;
 		}
@@ -205,7 +205,7 @@ public:
 		m_ResourcesMap.insert(std::pair<std::string, CMapResourceValue>(Name, CMapResourceValue(_Resource, m_ResourcesVector.size())));
 		m_ResourcesVector.push_back(_Resource);
 		
-		((CLevelInfo*)m_ResourcesMap[Name].m_Value)->AddLevel(_LevelId);
+		//((CLevelInfo*)m_ResourcesMap[Name].m_Value)->AddLevel(_LevelId);
 		return true;
 	}
 };

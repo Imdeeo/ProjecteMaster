@@ -49,7 +49,7 @@ private:
 	CRenderableVertexs *m_RenderableVertex;
 public:
 	CParticleSystemInstance(){};
-	CParticleSystemInstance(tinyxml2::XMLElement* TreeNode);
+	CParticleSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId = "");
 	virtual ~CParticleSystemInstance(void);
 	void Destroy();
 

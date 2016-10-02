@@ -10,6 +10,8 @@
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
 #include "RenderableObjects\RenderableObjectTechnique.h"
 
+#include "LevelManager\LevelManager.h"
+
 #include "Utils.h"
 
 #include <iostream>
@@ -21,7 +23,7 @@
 #define HEADER 65109
 #define FOOTER 22014
 
-CStaticMesh::CStaticMesh(void):CNamed(""),
+CStaticMesh::CStaticMesh(const std::string &_LevelId):CNamed(""),CLevelInfo(_LevelId),
 	m_BoundingSphereRadius(0.f)
 {	
 }
@@ -77,7 +79,7 @@ bool CStaticMesh::Load(const std::string &FileName)
 					l_BufferString.append(&l_BufferChar, sizeof(l_BufferChar));
 				}
 				l_File.read(&l_BufferChar, sizeof(l_BufferChar));
- 				m_Materials.push_back(UABEngine.GetMaterialManager()->GetResource(l_BufferString));
+ 				m_Materials.push_back(UABEngine.GetLevelManager()->GetResource(m_Level)->GetMaterialManager()->GetResource(l_BufferString));
 			}
 
 			for(int i=0; i<l_NumMaterials; i++)

@@ -26,7 +26,7 @@ protected:
 
 	std::string m_PhysxMeshesDirectory;
 public:
-	CStaticMesh();
+	CStaticMesh(const std::string &_LevelId);
 	virtual ~CStaticMesh();
 	bool Load (const std::string &FileName);
 	bool Reload ();

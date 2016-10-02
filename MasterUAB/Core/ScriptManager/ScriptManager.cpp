@@ -611,13 +611,47 @@ void CScriptManager::RegisterLUAFunctions()
 	
 
 	module(m_LS)[
-		class_<CLevelManager>("CLevelManager")
+		class_<TLevelInfo>("TLevelInfo")
+			.def_readwrite("id", &TLevelInfo::m_ID)
+			.def_readwrite("loaded", &TLevelInfo::m_Loaded)
+			.def_readwrite("directory", &TLevelInfo::m_Directory)
+	];
+
+	module(m_LS)[
+		class_<CLevel, CNamed>("CLevel")
+			.def(constructor<>())
+			.def(constructor<std::string>())
+			.def("load", &CLevel::Load)
+			.def("unload", &CLevel::Unload)
+			.def("reload", &CLevel::Reload)
+			.def("get_static_mesh_manager", &CLevel::GetStaticMeshManager)
+			.def("get_layer_manager", &CLevel::GetLayerManager)
+			.def("get_material_manager", &CLevel::GetMaterialManager)
+			.def("get_light_manager", &CLevel::GetLightManager)
+			.def("get_cinematic_manager", &CLevel::GetCinematicManager)
+			.def("get_particle_manager", &CLevel::GetParticleManager)
+			.def("get_game_play_manager", &CLevel::GetGamePlayManager)
+			.def("get_manchas_manager", &CLevel::GetManchasManager)
+			.def("get_a_star_manager", &CLevel::GetAStarManager)
+	];
+
+	RegisterTemplatedVectorMapManager<CLevel>(m_LS);
+
+	module(m_LS)[
+		class_<CLevelManager, CTemplatedVectorMapManager<CLevel>>("CLevelManager")
+			.def("update", &CLevelManager::Update)
+			.def("get_level", &CLevelManager::GetResource)
+			.def("get_resource_by_id", &CLevelManager::GetResourceById)
+			.def("get_resource_map", &CLevelManager::GetResourcesMap)
+			.def("get_resource_vector", &CLevelManager::GetResourcesVector)
+			.def("get_level_info",&CLevelManager::GetLevelInfo)
 			.def("load_file",&CLevelManager::LoadFile)
-			.def("load_level",&CLevelManager::LoadLevel)
-			.def("reload_level",&CLevelManager::ReloadLevel)
-			.def("unload_level",&CLevelManager::UnloadLevel)
-			.def("reload_all_lua",&CLevelManager::ReloadAllLua)
-			
+			.def("load_level", &CLevelManager::LoadLevel)
+			.def("unload_level", &CLevelManager::UnloadLevel)
+			.def("reload_level", &CLevelManager::ReloadLevel)
+			.def("get_complete_layer", &CLevelManager::GetCompleteLayer)
+			.def("reload_all_lua", &CLevelManager::ReloadAllLua)
+			.def("load_file", &CLevelManager::LoadFile)
 	];
 
 // GRAPHICS-----------------------------------------------------------------------------------------
@@ -861,7 +895,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCameraKeyController, CCameraController>("CCameraKeyController")
-			.def(constructor<tinyxml2::XMLElement*>())
+			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
 			.def("update", &CCameraKeyController::Update)
 			.def("set_current_time", &CCameraKeyController::SetCurrentTime)
 			.def("reset_time", &CCameraKeyController::ResetTime)
@@ -881,13 +915,13 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<C3PersonCameraController, CCameraController>("C3PersonCameraController")
-			.def(constructor<tinyxml2::XMLElement*>())
+			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
 			.def("get_direction",&C3PersonCameraController::GetDirection)
 	];
 
 	module(m_LS) [
 		class_<CFPSCameraController, CCameraController>("CFPSCameraController")
-			.def(constructor<tinyxml2::XMLElement*>())
+			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
 			//.def("move", &CFPSCameraController::Move)
 			.def("set_camera", &CFPSCameraController::SetCamera)
 			.def("add_yaw", &CFPSCameraController::AddYaw)
@@ -907,7 +941,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS) [
 		class_<CSphericalCameraController, CCameraController>("CSphericalCameraController")
-			.def(constructor<tinyxml2::XMLElement*>())
+			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
 			.def("add_zoom", &CSphericalCameraController::AddZoom)
 			.def("set_zoom", &CSphericalCameraController::SetZoom)
 			.def("set_camera", &CSphericalCameraController::SetCamera)
@@ -1138,14 +1172,14 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<COmniLight,CLight>("COmniLight")
-			.def(constructor<>())
-			.def(constructor<tinyxml2::XMLElement*>())
+			.def(constructor<const std::string &>())
+			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
 	];
 
 	module(m_LS)[
 		class_<CDirectionalLight, CLight>("CDirectionalLight")
-			.def(constructor<>())
-			.def(constructor<tinyxml2::XMLElement*>())
+			.def(constructor<const std::string &>())
+			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
 			.def("get_direction", &CDirectionalLight::GetDirection)
 			.def("set_direction", &CDirectionalLight::SetDirection)
 			.def("get_direction_lua_address", &CDirectionalLight::GetDirectionLuaAdress)
@@ -1154,8 +1188,8 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CSpotLight, CDirectionalLight>("CSpotLight")
-			.def(constructor<>())
-			.def(constructor<tinyxml2::XMLElement*>())
+			.def(constructor<const std::string &>())
+			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
 			.def("get_angle", &CSpotLight::GetAngle)
 			.def("set_angle", &CSpotLight::SetAngle)
 			.def("get_fall_off", &CSpotLight::GetFallOff)
@@ -1185,7 +1219,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CMaterial, CNamed>("CMaterial")
-			.def(constructor<tinyxml2::XMLElement*>())
+			.def(constructor<tinyxml2::XMLElement*,const std::string &>())
 			.def("apply", &CMaterial::Apply)
 			.def("get_next_parameter_adress", &CMaterial::GetNextParameterAddress)
 			.def("get_parameters", &CMaterial::GetParameters, luabind::return_stl_iterator)
@@ -1235,7 +1269,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CStaticMesh, CNamed>("CStaticMesh")
-			.def(constructor<>())
+			.def(constructor<const std::string &>())
 			.def("load", &CStaticMesh::Load)
 			.def("reload", &CStaticMesh::Reload)
 			.def("render", &CStaticMesh::Render)
