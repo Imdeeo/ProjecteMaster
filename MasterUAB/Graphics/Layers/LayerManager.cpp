@@ -59,9 +59,17 @@ void CLayerManager::Load(const std::string &FileName, const std::string &_LevelI
 				{
 					GetLayer(l_ElementAux)->AddParticleSystemInstance(l_ElementAux, _LevelId);
 				}
+				else if (l_ElementAux->Name() == std::string("bilboard_instance"))
+				{
+					GetLayer(l_ElementAux)->AddBilboardSystemInstance(l_ElementAux);
+				}
 				else if (l_ElementAux->Name() == std::string("manchas_instance"))
 				{
 					GetLayer(l_ElementAux)->AddManchasSystemInstance(l_ElementAux, _LevelId);
+				}
+				else if (l_ElementAux->Name() == std::string("line_renderer"))
+				{
+					GetLayer(l_ElementAux)->AddLineRendererSystemInstance(l_ElementAux);
 				}
 				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}

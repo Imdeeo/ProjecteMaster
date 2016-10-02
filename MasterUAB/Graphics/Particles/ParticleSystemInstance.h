@@ -11,6 +11,7 @@
 
 class CParticleSystemType;
 class CRenderableVertexs;
+class CFrustum;
 
 class CParticleSystemInstance : public CRenderableObject
 {
@@ -41,12 +42,10 @@ private:
 	int m_ActiveParticles;
 	ParticleData m_ParticleData[MAX_PARTICLE_PER_INSTANCE];
 
-	std::mt19937 m_RandomEngine;
-	std::uniform_real_distribution<float> m_UnitDistribution;
-	std::random_device rnd;
-
 	MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX m_ParticleRenderableData[MAX_PARTICLE_PER_INSTANCE];
 	CRenderableVertexs *m_RenderableVertex;
+
+	CFrustum *m_Frustum;
 public:
 	CParticleSystemInstance(){};
 	CParticleSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId = "");
@@ -55,6 +54,7 @@ public:
 
 	UAB_BUILD_GET_SET(CParticleSystemType *, Type);
 	UAB_BUILD_GET_SET(float, NextParticleEmission);
+	UAB_BUILD_GET_SET(bool, Start);
 	UAB_BUILD_GET_SET(bool, Awake);
 	UAB_BUILD_GET_SET(float, AwakeTimer);
 	UAB_BUILD_GET_SET(Vect3f, EmissionBoxHalfSize);
@@ -69,14 +69,11 @@ public:
 	}*/
 
 	float GetDistanceToCamera(ParticleData *particle);
-	float GetRandomValue(float min, float max);
-	Vect3f GetRandomValue(Vect3f min, Vect3f max);
-	CColor GetRandomValue(CColor min, CColor max);
-	float GetRandomValue(Vect2f value);
 	float ComputeTimeToNextParticle();
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
 	//void RenderDebug(CRenderManager *RM);
+	const bool GetInsideFrustum();
 	bool CParticleSystemInstance::IsIntoLimit(Vect3f _position);
 	void InsertSort(ParticleData arr[], int length);
 	void Save(FILE* _File, std::string _layer);

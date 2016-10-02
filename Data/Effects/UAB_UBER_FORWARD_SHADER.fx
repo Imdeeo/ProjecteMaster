@@ -6,6 +6,10 @@ static float m_Exposure = m_RawDataArray[1];
 static float m_SpecularPower = m_RawDataArray[2];
 static float m_SpecularFactor = m_RawDataArray[3];
 static float m_ReflectionFactor = m_RawDataArray[4];
+static float m_BumpFactor = m_RawDataArray[6];
+static float m_MetalnessFactor = m_RawDataArray[7];
+static float3 m_MetalColor = float3(m_RawDataArray[8], m_RawDataArray[9], m_RawDataArray[10]);
+static float m_MetalColorWeight = m_RawDataArray[11];
 
 #ifndef HAS_UV
 	#ifndef HAS_COLOR
@@ -190,7 +194,6 @@ float4 applyAllLights(TVertexPS IN, float3 Nn, float SpecularFactor, float4 Albe
 float4 mainPS(TVertexPS IN) : SV_Target
 {
 	float4 Out = float4(1,1,1,1);
-	float4 l_SpecularColor = float4(1, 1, 1, 1);
 
 	#ifdef HAS_COLOR
 		Out = IN.Color;
@@ -201,9 +204,13 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	#endif
 
 	#if defined(HAS_LIGHTS) || defined(HAS_REFLECTION)
+		float4 l_Albedo = float4(1,1,1,1);
+		#ifdef HAS_UV
+			l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
+		#endif
 		float l_SpecularFactor = 1.0;
 		#ifdef HAS_TANGENT
-			float g_Bump = 2.4;
+			float g_Bump = 2.4 * m_BumpFactor;
 
 			float3 Tn=normalize(IN.WorldTangent);
 			float3 Bn=normalize(IN.WorldBinormal);
@@ -214,22 +221,29 @@ float4 mainPS(TVertexPS IN) : SV_Target
 			l_SpecularFactor *= auxNormal.w;
 		#endif
 		float3 l_EyeToWorldPosition = normalize(IN.Pixelpos-m_InverseView[3].xyz);
+		
+		#ifdef HAS_SPECULAR_MAP
+			float4 l_SpecularColor = T10Texture.Sample(S10Sampler, IN.UV);
+			l_SpecularFactor *= max(l_SpecularColor.r, max(l_SpecularColor.g, l_SpecularColor.b));
+		#endif
 		float l_Fresnel = pow(1 - dot(-l_EyeToWorldPosition, Nn), FRESNEL_POWER);
 		l_SpecularFactor *= m_SpecularFactor + l_Fresnel * (1-m_SpecularFactor);
 		
 		#if defined(HAS_SPECULAR_MAP)
 			float l_AlbedoFactor = 1 - l_SpecularFactor;
 			float l_Metalness = 0.0f;
-			l_SpecularColor = T10Texture.Sample(S10Sampler, IN.UV);
-			l_SpecularFactor *= l_SpecularColor.a;
-		#elif defined(HAS_METALNESS_MAP)
-			float l_Metalness = T10Texture.Sample(S10Sampler, IN.UV).x;
-			l_SpecularFactor = l_SpecularFactor + l_Metalness * (1-l_SpecularFactor);
-			float l_AlbedoFactor = 1 - l_Metalness;
-			l_AlbedoFactor *= 1 - l_SpecularFactor;
 		#else
-			float l_AlbedoFactor = 1-l_SpecularFactor;
-			float l_Metalness = 0.0f;
+			#ifdef HAS_METALNESS_MAP
+				float l_Metalness = T10Texture.Sample(S10Sampler, IN.UV).x * m_MetalnessFactor;
+			#else
+				float l_Metalness = m_MetalnessFactor;
+			#endif
+			l_SpecularFactor = l_SpecularFactor + l_Metalness * max(0, METAL_SPECFACTOR-l_SpecularFactor);
+			float l_AlbedoFactor = 1 - METAL_SPECFACTOR*l_Metalness;
+			l_AlbedoFactor *= 1 - l_SpecularFactor;
+			float l_MetalColorRatio = l_Metalness * m_MetalColorWeight;
+			float3 l_ReflectionColor = l_MetalColorRatio * m_MetalColor + (1-l_MetalColorRatio) * l_Albedo.rgb;
+			float4 l_SpecularColor = float4(l_ReflectionColor + (1.0f-l_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_ReflectionColor), 1);
 		#endif
 		
 		#ifdef HAS_GLOSSINESS_MAP
@@ -239,10 +253,6 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	#endif
 
 	#ifdef HAS_LIGHTS
-		float4 l_Albedo = float4(1,1,1,1);
-		#ifdef HAS_UV
-			l_Albedo = T0Texture.Sample(S0Sampler, IN.UV);
-		#endif
 		#ifdef HAS_METALNESS_MAP
 			l_SpecularColor = float4(l_Albedo.rgb + (1.0f-l_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_Albedo.rgb), 1);
 		#endif
@@ -262,15 +272,7 @@ float4 mainPS(TVertexPS IN) : SV_Target
 	#ifdef HAS_REFLECTION
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, Nn));
 		float4 l_ReflectColor = T8Texture.SampleBias(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
-		#if defined(HAS_SPECULAR_MAP)
-			Out += float4(l_ReflectColor.rgb * l_SpecularColor.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
-		#elif defined(HAS_METALNESS_MAP)
-			Out += float4(l_ReflectColor.rgb * l_SpecularColor.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
-		#elif defined(HAS_LIGHTS)
-			Out += float4(l_ReflectColor.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
-		#else
-			Out += float4(l_ReflectColor.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
-		#endif
+		Out += float4(l_ReflectColor.rgb * l_SpecularColor.rgb * l_SpecularFactor * m_ReflectionFactor, 0);
 	#endif
 	#ifdef HAS_TRIGGER
 		return float4(0,1,0,0.5);

@@ -43,7 +43,7 @@ function mainLua()
 	m_timerPause = 0
 	m_iniciando = true 
 	
-	l_LevelManager:load_level("Player")	
+	--l_LevelManager:load_level("Player")	
 	
 	--deactivate_gravity()
 	--deactivate_player_collisions()
@@ -97,7 +97,7 @@ function luaUpdate(_ElapsedTime)
 			g_Engine:set_frustum_active(not g_Engine:get_frustum_active())		
 		end
 		if l_InputManager:is_action_released("DebugConsole") then
-            g_Engine:set_pause(true)
+            CUABEngine.get_instance():get_camera_controller_manager():get_main_camera():lock()
             g_Engine:set_active_console(true)    
         end    
 

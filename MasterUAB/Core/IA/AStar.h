@@ -20,7 +20,7 @@ public:
 	~CAStar();
 	void LoadMap(std::string _filename);
 	void DestroyMap();
-	int SearchForPath(const Vect3f &pointA, const Vect3f &pointB);
+	int SearchForPath(const Vect3f &pointA, const Vect3f &pointB, const std::string _key);
 
 #ifdef _DEBUG
 	void Render(CRenderManager *_RenderManager);
@@ -51,21 +51,18 @@ public:
 		float time_to_wait;
 	};
 
-	Vect3f GetActualPoint();
-	bool IncrementActualPoint();
-	TNodePatrol* GetActualPatrolPoint(std::string _patrolName);
-	void IncrementActualPatrolPoint(std::string _patrolName);
+	Vect3f GetPoint(std::string _key, int _index);
+	TNodePatrol* GetPatrolPoint(std::string _patrolName, int _index);
+	int GetTotalPatrolNodes(std::string _patrolName);
 	void GetRenderNodes(bool _RenderNodes){ m_RenderNodes = _RenderNodes; }
 	bool SwitchRenderNodes(){ m_RenderNodes = !m_RenderNodes; return m_RenderNodes; }
 private:
 	bool m_RenderNodes = false;
-	int m_IndexPoint;
-	VPoints3 m_PathPoints;	
+	std::map<std::string, VPoints3> m_PathPoints;
 	
 	typedef std::map<std::string, TNode*> TNodeMap;
 	TNodeMap m_map;	
 
-	int m_IndexPathPatrolPoint;
 	typedef std::map<std::string, std::vector<TNodePatrol*>> TNodePatrolPath;
 	TNodePatrolPath m_NodePatrolPath;
 

@@ -7,6 +7,10 @@ static float m_SpecularPower = m_RawDataArray[2];
 static float m_SpecularFactor = m_RawDataArray[3];
 static float m_ReflectionFactor = m_RawDataArray[4];
 static float m_SSRReflection = m_RawDataArray[5];
+static float m_BumpFactor = m_RawDataArray[6];
+static float m_MetalnessFactor = m_RawDataArray[7];
+static float3 m_MetalColor = float3(m_RawDataArray[8], m_RawDataArray[9], m_RawDataArray[10]);
+static float m_MetalColorWeight = m_RawDataArray[11];
 
 struct VS_INPUT
 {
@@ -134,7 +138,7 @@ float3 GetRadiosityNormalMap(float3 Nn, float2 UV, Texture2D LightmapXTexture, S
 
 float3 CalcNormalMap(float3 Normal, float3 Tangent, float3 Binormal, float4 NormalMap)
 {
-	float g_Bump = 2.4;
+	float g_Bump = 2.4 * m_BumpFactor;
 	float3 bump=g_Bump*((NormalMap.xyz) - float3(0.5,0.5,0.5));
 	float3 Nn = Normal + bump.x*Tangent + bump.y*Binormal;
 	return normalize(Nn);
@@ -199,27 +203,37 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 	// PBR modifications according to http://www.marmoset.co/toolbag/learn/pbr-theory
 	// PBR: fresnel (the formula is arbitrary, not based on any source, but the curve would look somewhat similar to the examples)
 	
-	float fresnel = pow(1 - dot(-l_EyeToWorldPosition, Nn), FRESNEL_POWER);
-	l_specularFactor += fresnel * (1-l_specularFactor);
+	#ifdef HAS_REFLECTION
+		float fresnel = pow(1 - saturate(dot(-l_EyeToWorldPosition, Nn)), FRESNEL_POWER);
+		l_specularFactor += fresnel * (1-l_specularFactor);
+	#endif
 	// PBR: energy conservation: "reflection and diffusion are mutually exclusive"
 	// "This is easy to enforce in a shading system: one simply subtracts reflected light before allowing the diffuse shading to occur."
 	#ifdef HAS_SPECULAR_MAP
 		float l_AlbedoFactor = 1 - l_specularFactor;
 		float l_Metalness = 0.0f;
-	#elif defined(HAS_METALNESS_MAP)
-		float l_Metalness = T10Texture.Sample(S10Sampler, IN.UV).x;
-		l_specularFactor = l_specularFactor + l_Metalness * (1-l_specularFactor);
-		float l_AlbedoFactor = 1 - l_Metalness;
-		l_AlbedoFactor *= 1 - l_specularFactor;
-		float4 l_SpecularColor = float4(l_Albedo.rgb + (1.0f-l_Metalness)*(float3(1.0f, 1.0f, 1.0f)-l_Albedo.rgb), 1);
 	#else
-		float l_AlbedoFactor = 1-l_specularFactor;
-		float l_Metalness = 0.0f;
+		#ifdef HAS_METALNESS_MAP
+			float l_Metalness = T10Texture.Sample(S10Sampler, IN.UV).x * m_MetalnessFactor;
+		#else
+			float l_Metalness = m_MetalnessFactor;
+		#endif
+		l_specularFactor = l_specularFactor + l_Metalness * max(0, METAL_SPECFACTOR-l_specularFactor);
+		float l_AlbedoFactor = 1 - METAL_SPECFACTOR*l_Metalness;
+		l_AlbedoFactor *= 1 - l_specularFactor;
+		float l_MetalColorRatio = l_Metalness * m_MetalColorWeight;
+		float3 l_ReflectionColor = l_MetalColorRatio * m_MetalColor + (1-l_MetalColorRatio) * l_Albedo.rgb;
+		float4 l_SpecularColor = float4(l_ReflectionColor + (1.0f-l_Metalness)*(DEFAULT_SPEC_COLOR-l_ReflectionColor), 1);
+		// If gbuffer doesn't have a channel for specular color, we can get almost the same effect by setting albedo to reflection color.
+		// l_Albedo = float4(l_ReflectionColor, 1);
 	#endif
 
 	#ifdef HAS_UV2
 		#if defined(HAS_TANGENT) && defined(HAS_RNM)
-			l_Ambient = float4(GetRadiosityNormalMap(l_NormalMap.xyz, IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
+			// Pass l_NormalMap through CalcNormalMap just to take m_BumpFactor into account
+			//float3 l_TangentSpaceNormal = CalcNormalMap(float3(0, 0, 1), Tn, Bn, l_NormalMap);
+			float3 l_TangentSpaceNormal = CalcNormalMap(float3(0, 0, 1), float3(1, 0, 0), float3(0, 1, 0), l_NormalMap);
+			l_Ambient = float4(GetRadiosityNormalMap(l_TangentSpaceNormal, IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
 		#elif defined(HAS_RNM)
 			l_Ambient = float4(GetRadiosityNormalMap(float3(0,0,1), IN.UV2, T1Texture, S1Sampler, T3Texture, S3Sampler, T4Texture, S4Sampler), 1.0);
 		#else
@@ -229,14 +243,20 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 
 	float4 l_AmbientIllumination = l_Albedo * l_AlbedoFactor * l_Ambient;
 	#ifdef HAS_REFLECTION
+		// Calculate mip level depending on the cube map size
+		// for efficiency, l_NumMipLevels could be stored in the constant buffer instead
+		uint l_NumMipLevels;
+		uint _Dummy;
+		T8Texture.GetDimensions(0, _Dummy, _Dummy, l_NumMipLevels);
+		float l_MipLevel = (100 - m_SpecularPower) / GLOSS_UNITS_PER_MIP_LEVEL;
+		l_MipLevel = l_MipLevel + l_NumMipLevels - NUM_LEVELS_CUBE512;
+
 		float3 l_ReflectVector = normalize(reflect(l_EyeToWorldPosition, Nn));
-		float4 l_ReflectColor = T8Texture.SampleLevel(S8Sampler, l_ReflectVector, (100 - m_SpecularPower) / 12);
+		float4 l_ReflectColor = T8Texture.SampleLevel(S8Sampler, l_ReflectVector, l_MipLevel);
 		#ifdef HAS_SPECULAR_MAP
 			l_AmbientIllumination += float4(l_ReflectColor.xyz * l_specularFactor * m_ReflectionFactor * l_SpecularColor.xyz, 1);
-		#elif defined(HAS_METALNESS_MAP)
-			l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor * l_SpecularColor;
 		#else
-			l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor;
+			l_AmbientIllumination += l_ReflectColor * l_specularFactor * m_ReflectionFactor * l_SpecularColor;
 		#endif
 	#endif
 
@@ -250,11 +270,8 @@ PS_OUTPUT mainPS(PS_INPUT IN)
 	#endif
 	l_Out.Target2 = float4(Normal2Texture(Nn), m_SSRReflection);
 	l_Out.Target3 = float4(l_Depth,l_Depth,l_Depth, 1.0f);
-	#if defined(HAS_SPECULAR_MAP) || defined(HAS_METALNESS_MAP)
-		l_Out.Target4 = float4(l_SpecularColor.rgb, l_Metalness);
-	#else
-		l_Out.Target4 = float4(1, 1, 1, 0);
-	#endif
+	l_Out.Target4 = float4(l_SpecularColor.rgb, l_Metalness);
+
 
 	return l_Out;
 }

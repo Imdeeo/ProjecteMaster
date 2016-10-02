@@ -7,8 +7,6 @@
 #include "RenderableObjects\VertexTypes.h"
 #include "XML\tinyxml2.h"
 
-#include <random>
-
 class CManchasSystemType;
 class CRenderableVertexs;
 
@@ -31,10 +29,6 @@ private:
 	int m_ActiveManchas;
 	ManchaData m_ManchaData[MAX_MANCHAS];
 
-	std::mt19937 m_RandomEngine;
-	std::uniform_real_distribution<float> m_UnitDistribution;
-	std::random_device rnd;
-
 	MV_POSITION4_COLOR_TEXTURE_VERTEX m_ManchasRenderableData[MAX_MANCHAS];
 	CRenderableVertexs *m_RenderableVertex;
 public:
@@ -52,10 +46,6 @@ public:
 		return PARTICLE_EMITER;
 	}*/
 
-	float GetRandomValue(float min, float max);
-	Vect3f GetRandomValue(Vect3f min, Vect3f max);
-	CColor GetRandomValue(CColor min, CColor max);
-	float GetRandomValue(Vect2f value);
 	float ComputeTimeToNextMancha();
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);

@@ -16,11 +16,13 @@
 #include "AnimatedModels\AnimatedModelsManager.h"
 #include "ScriptManager\ScriptManager.h"
 #include "Camera\CameraControllerManager.h"
+#include "Camera\FPSCameraController.h"
 #include "Cinematics\CinematicManager.h"
 #include "PhysXManager\PhysXManager.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "SceneRender\SceneRendererCommandManager.h"
 #include "Particles\ParticleManager.h"
+#include "Bilboards\BilboardManager.h"
 #include "GUIManager.h"
 #include "GUIPosition.h"
 #include "SoundManager\SoundManager.h"
@@ -31,14 +33,15 @@
 #include "DebugHelper\DebugHelper.h"
 #include "ContextManager\ContextManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
-#include "IA\AStar.h"
+#include "IA\AStarManager.h"
+#include "Math\Color.h"
 #ifdef _DEBUG
 #include "DebugRender.h"
 #else
 #include "RenderHelper\RenderHelper.h"
 #endif
 
-CUABEngine::CUABEngine(void)
+CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
 {
 	m_TimeScale = 1;
 	m_CurrentCamera_vision = 1;
@@ -49,6 +52,7 @@ CUABEngine::CUABEngine(void)
 	m_TextureManager = new CTextureManager();
 	m_RenderManager = new CRenderManager();
 	m_ParticleManager = new CParticleManager();
+	m_BilboardManager = new CBilboardManager();
 	m_StaticMeshManager = new CStaticMeshManager();
 	m_LightManager = new CLightManager();
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
@@ -66,7 +70,7 @@ CUABEngine::CUABEngine(void)
 	m_GamePlayManager = new CGamePlayManager();
 	m_LevelManager = new CLevelManager();
 	m_ManchasManager = new CManchasManager();
-	m_AStarManager = new CAStar();
+	m_AStarManager = new CAStarManager();
 	m_ActiveConsole = false;
 }
 
@@ -85,6 +89,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_LayerManager);
 	CHECKED_DELETE(m_RenderManager);
 	CHECKED_DELETE(m_ParticleManager);
+	CHECKED_DELETE(m_BilboardManager);
 	CHECKED_DELETE(m_MaterialManager);
 	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
 	CHECKED_DELETE(m_EffectManager);
@@ -279,7 +284,7 @@ void CUABEngine::Consola(float _x, float _y, float _w, float _h)
 		std::string command = text.substr(0, text.length() - 1);
 		m_ScriptManager->RunCode(command);
 		m_ActiveConsole = false;
-		m_Pause = false;
+		((CFPSCameraController*)m_CameraControllerManager->GetMainCamera())->Unlock();
 		text = "";
 	}
 }
@@ -288,6 +293,37 @@ void CUABEngine::SetActiveConsole(bool _ActiveConsole)
 {
 	m_ActiveConsole = _ActiveConsole;
 	UABEngine.GetInputManager()->GetKeyBoard()->ConsumeLastChar();
+}
+
+float CUABEngine::GetRandomValue(float min, float max)
+{
+	float a = m_UnitDistribution(m_RandomEngine);
+	float value = mathUtils::Lerp(min, max, a);
+	return value;
+}
+
+Vect3f CUABEngine::GetRandomValue(Vect3f min, Vect3f max)
+{
+	float a1 = m_UnitDistribution(m_RandomEngine);
+	float a2 = m_UnitDistribution(m_RandomEngine);
+	float a3 = m_UnitDistribution(m_RandomEngine);
+	Vect3f value;
+	value.x = mathUtils::Lerp(min.x, max.x, a1);
+	value.y = mathUtils::Lerp(min.y, max.y, a2);
+	value.z = mathUtils::Lerp(min.z, max.z, a3);
+	return value;
+}
+
+float CUABEngine::GetRandomValue(Vect2f value)
+{
+	return GetRandomValue(value.x, value.y);
+}
+
+CColor CUABEngine::GetRandomValue(CColor min, CColor max)
+{
+	float a = m_UnitDistribution(m_RandomEngine);
+	CColor value = min.Lerp(max, a);
+	return value;
 }
 
 UAB_GET_PROPERTY_CPP(CUABEngine, CInputManager *, InputManager)
@@ -306,10 +342,11 @@ UAB_GET_PROPERTY_CPP(CUABEngine, CPhysXManager *, PhysXManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CSceneRendererCommandManager *, SceneRendererCommandManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CBilboardManager*, BilboardManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, ISoundManager *, SoundManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager *, GamePlayManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CLevelManager *, LevelManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CManchasManager *, ManchasManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CAStar *, AStarManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CAStarManager *, AStarManager)

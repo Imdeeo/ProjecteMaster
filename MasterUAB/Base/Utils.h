@@ -14,10 +14,11 @@
 #define MAX_LIGHTS_BY_SHADER 4
 #define UAB_ID_SHADOW_MAP 0
 #define MAX_PARTICLE_PER_INSTANCE 200
+#define MAX_BILBOARDS_PER_INSTANCE 20
 #define MAX_MANCHAS 10
 #define MAX_VERTICES_PER_CALL 200
-#define RIGHT_OBJECT_BONE_ID 38
-#define LEFT_OBJECT_BONE_ID 19
+#define RIGHT_OBJECT_BONE_ID 39
+#define LEFT_OBJECT_BONE_ID 20
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 #define HALF_WIDTH 640
@@ -78,6 +79,21 @@ static void UtilsLog(const std::string& text)
 {
 // TODO: OPCIONAL esto va bien tenerlo escribiendo en un fichero
 	OutputDebugString(("LOG: " + text + "\n").c_str());
+}
+
+static void UtilsLogV2(const Vect2f& vect)
+{
+	OutputDebugString(("LOG: Vector2(" + std::to_string(vect.x) + ", " + std::to_string(vect.y) + ")\n").c_str());
+}
+
+static void UtilsLogV3(const Vect3f& vect)
+{
+	OutputDebugString(("LOG: Vector3(" + std::to_string(vect.x) + ", " + std::to_string(vect.y) + ", " + std::to_string(vect.z) + ")\n").c_str());
+}
+
+static void UtilsLogQ(const Quatf& quat)
+{
+	OutputDebugString(("LOG: Quaternion(" + std::to_string(quat.x) + ", " + std::to_string(quat.y) + ", " + std::to_string(quat.z) + ", " + std::to_string(quat.w) + ")\n").c_str());
 }
 
 std::vector<std::string> &SplitString(const std::string &s, char delim, std::vector<std::string> &elems);

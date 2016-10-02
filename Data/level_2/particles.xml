@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<particle_systems>
+	<particle name="TurretSmokeParticle01" material="ps_vapor_material" frames="1" time="1.000000" loop="true" emit_absolute="true" start_dir_angle="0.970000" start_acc_angle="0.970000" emit_rate="50.000000 70.000000" awake_time="2.999998 5.999994" sleep_time="0.000000 0.000000" life="0.600000 2.000000" start_angle="0.000000 1.570000" start_angular_speed="0.000000 1.000000" angular_acc="0.000000 1.000000">
+		<control_point type="color" time="0.000000 0.000000" color1="0.588235 0.588235 0.588235 0.784314" color2="0.588235 0.588235 0.588235 0.784314"/>
+		<control_point type="color" time="1.000000 1.700000" color1="0.588235 0.588235 0.588235 0.784314" color2="0.588235 0.588235 0.588235 0.784314"/>
+		<control_point type="color" time="1.700000 2.000000" color1="0.196078 0.196078 0.196078 0.784314" color2="0.000000 0.000000 0.000000 0.784314"/>
+		<control_point type="size" time="0.000000 0.700000" size="0.100000 0.150000"/>
+		<control_point type="size" time="0.500000 1.700000" size="0.200000 0.250000"/>
+		<control_point type="size" time="1.700000 2.000000" size="0.300000 0.350000"/>
+		<control_point type="speed" time="0.000000 0.000000" speed_1="0.000000 0.100000 -0.250000" speed_2="0.000000 0.100000 0.250000"/>
+		<control_point type="acceleration" time="0.000000 20.000000" acceleration_1="0.000000 0.000000 0.200000" acceleration_2="0.000000 0.000000 0.200000"/>
+	</particle>
+</particle_systems>

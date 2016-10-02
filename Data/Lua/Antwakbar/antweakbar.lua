@@ -20,6 +20,7 @@ function RegisterMainBar()
 	DebugHelper:add_lua_button("Lights","RegisterLightsBar()","");
 	DebugHelper:add_lua_button("Particles","RegisterParticlesBar()","");
 	DebugHelper:add_lua_button("Manchas","RegisterManchasBar()","");
+	DebugHelper:add_lua_button("LineRender","RegisterLineRenderBar()","");
 	
 	DebugHelper:register_bar()
 	
@@ -499,4 +500,50 @@ function RegisterManchasParameters(manchas_name)
 	DebugHelper:add_variable("Color 2",CDebugHelper.color,CDebugHelper.read_write,ManchasType:get_lua_color2(),"")
 
 	DebugHelper:register_bar()
+end
+
+function RegisterLineRenderBar()
+
+	local UABEngine = CUABEngine.get_instance()
+	local DebugHelper = CDebugHelper.get_debug_helper()
+	
+	DebugHelper:remove_bar("MainBar")
+	DebugHelper:start_register_bar("LineRender")
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"LineRender\");RegisterMainBar()","");
+	
+	local LineRenderLayer = UABEngine:get_layer_manager():get_layer("line_renderers") --get_address
+	
+	local LineRenderers = LineRenderLayer:get_elements_array()
+	
+	for i = 0,LineRenderLayer:size()-1 do
+		DebugHelper:add_lua_button(LineRenderers[i].name,"RegisterLineRendererParameters(\""..LineRenderers[i].name.."\")","");
+	end
+	
+	DebugHelper:register_bar()
+end
+
+function RegisterLineRendererParameters(line_renderer_name)
+	local UABEngine = CUABEngine.get_instance()
+	local DebugHelper = CDebugHelper.get_debug_helper()
+	
+	local bar_name = "LineRender: "..line_renderer_name
+	
+	DebugHelper:remove_bar("LineRender")
+	DebugHelper:start_register_bar(bar_name)
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\""..bar_name.."\");RegisterLineRenderBar()","");
+	
+	local line_renderer = UABEngine:get_layer_manager():get_layer("line_renderers"):get_resource(line_renderer_name)
+	
+	DebugHelper:add_variable("Pos Inicial X",CDebugHelper.float,CDebugHelper.read_write,line_renderer:get_pos_inicial(0),"min=-100.0 max=100.0 step=0.01")
+	DebugHelper:add_variable("Pos Inicial Y",CDebugHelper.float,CDebugHelper.read_write,line_renderer:get_pos_inicial(1),"min=-100.0 max=100.0 step=0.01")
+	DebugHelper:add_variable("Pos Inicial Z",CDebugHelper.float,CDebugHelper.read_write,line_renderer:get_pos_inicial(2),"min=-100.0 max=100.0 step=0.01")
+	DebugHelper:add_variable("Pos Final X",CDebugHelper.float,CDebugHelper.read_write,line_renderer:get_pos_final(0),"min=-100.0 max=100.0 step=0.01")
+	DebugHelper:add_variable("Pos Final Y",CDebugHelper.float,CDebugHelper.read_write,line_renderer:get_pos_final(1),"min=-100.0 max=100.0 step=0.01")
+	DebugHelper:add_variable("Pos Final Z",CDebugHelper.float,CDebugHelper.read_write,line_renderer:get_pos_final(2),"min=-100.0 max=100.0 step=0.01")
+	DebugHelper:add_variable("Num Puntos",CDebugHelper.int,CDebugHelper.read_write,line_renderer:get_num_puntos(),"min=1.0 max=15.0 step=1.0")
+	DebugHelper:add_variable("OffsetX",CDebugHelper.float,CDebugHelper.read_write,line_renderer:get_num_offsetX(),"min=0.0 max=2.0 step=0.1")
+	DebugHelper:add_variable("OffsetY",CDebugHelper.float,CDebugHelper.read_write,line_renderer:get_num_offsetY(),"min=0.0 max=2.0 step=0.1")
+	DebugHelper:register_bar();
 end

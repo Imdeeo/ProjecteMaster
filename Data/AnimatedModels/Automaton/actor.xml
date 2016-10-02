@@ -25,4 +25,5 @@
 	<animation name="patrol" filename="AutomatonPatrol.CAF" />
 	<animation name="chase" filename="AutomatonChase.CAF" />
 	<animation name="chase" filename="AutomatonAlert.CAF" />
+	<animation name="chase" filename="AutomatonKill.CAF" />
 </actor>

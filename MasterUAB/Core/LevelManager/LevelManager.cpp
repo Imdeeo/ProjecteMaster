@@ -11,8 +11,9 @@
 #include "Camera\CameraControllerManager.h"
 #include "Cinematics\CinematicManager.h"
 #include "Particles\ParticleManager.h"
+#include "Bilboards\BilboardManager.h"
 #include "Manchas\ManchasManager.h"
-#include "IA\AStar.h"
+#include "IA\AStarManager.h"
 
 
 CLevelManager::CLevelManager()
@@ -47,6 +48,7 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 
 void CLevelManager::LoadLevel(const std::string &_LevelName)
 {
+<<<<<<< HEAD
 	if (m_LevelsInfo[_LevelName].m_Loaded)
 	{
 		ReloadLevel(_LevelName);
@@ -69,6 +71,24 @@ void CLevelManager::LoadLevel(const std::string &_LevelName)
 			m_LayersMap[l_LayerName].push_back(l_LayerVector[i]);
 		}
 	}
+=======
+	UABEngine.SetLevelLoaded(m_LevelsInfo[_LevelName].m_ID);
+	std::string l_LevelDirectory = m_LevelsInfo[_LevelName].m_Directory;
+	UABEngine.GetMaterialManager()->Load(l_LevelDirectory + "\\materials.xml");
+	UABEngine.GetParticleManager()->Load(l_LevelDirectory + "\\particles.xml");
+	UABEngine.GetBilboardManager()->Load(l_LevelDirectory + "\\particles.xml");
+	UABEngine.GetManchasManager()->Load(l_LevelDirectory + "\\cordura.xml");
+	UABEngine.GetStaticMeshManager()->Load(l_LevelDirectory + "\\static_meshes.xml");
+	UABEngine.GetLayerManager()->Load(l_LevelDirectory + "\\renderable_objects.xml");
+	UABEngine.GetLightManager()->Load(l_LevelDirectory + "\\lights.xml");
+	UABEngine.GetCinematicManager()->LoadXML(l_LevelDirectory + "\\cinematic.xml");
+	UABEngine.GetCameraControllerManager()->Load(l_LevelDirectory + "\\cameras.xml");
+	UABEngine.GetAStarManager()->Load(l_LevelDirectory + "\\pathfinding.xml");
+	std::string l_LevelDirectoryChangedSlashes = l_LevelDirectory;
+	std::replace(l_LevelDirectoryChangedSlashes.begin(), l_LevelDirectoryChangedSlashes.end(), '\\', '\/');
+	UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_LevelDirectoryChangedSlashes + "\")");
+	m_LevelsInfo[_LevelName].m_Loaded = true;
+>>>>>>> develop
 }
 
 void CLevelManager::ReloadLevel(const std::string &_LevelName)

@@ -2,7 +2,9 @@
 #include "StaticMesh\InstanceMesh.h"
 #include "AnimatedModels\AnimatedInstanceModel.h"
 #include "Particles\ParticleSystemInstance.h"
+#include "Bilboards\BilboardSystemInstance.h"
 #include "Manchas\ManchasSystemInstance.h"
+#include "LineRenderer\LineRenderer.h"
 
 CRenderableObjectsManager::CRenderableObjectsManager(std::string _Name):CNamed(_Name) {}
 CRenderableObjectsManager::~CRenderableObjectsManager()
@@ -84,11 +86,33 @@ CRenderableObject * CRenderableObjectsManager::AddParticleSystemInstance(tinyxml
 		return nullptr;
 }
 
+<<<<<<< HEAD
 CRenderableObject * CRenderableObjectsManager::AddManchasSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId)
+=======
+CRenderableObject * CRenderableObjectsManager::AddBilboardSystemInstance(tinyxml2::XMLElement* TreeNode)
+{
+	CBilboardSystemInstance * l_BilboardSystemInstance = new CBilboardSystemInstance(TreeNode);
+	if (AddResource(l_BilboardSystemInstance->GetName(), l_BilboardSystemInstance))
+		return l_BilboardSystemInstance;
+	else
+		return nullptr;
+}
+
+CRenderableObject * CRenderableObjectsManager::AddManchasSystemInstance(tinyxml2::XMLElement* TreeNode)
+>>>>>>> develop
 {
 	CManchasSystemInstance* l_ManchasSystemInstance = new CManchasSystemInstance(TreeNode,_LevelId);
 	if (AddResource(l_ManchasSystemInstance->GetName(), l_ManchasSystemInstance,_LevelId))
 		return l_ManchasSystemInstance;
+	else
+		return nullptr;
+}
+
+CRenderableObject * CRenderableObjectsManager::AddLineRendererSystemInstance(tinyxml2::XMLElement* TreeNode)
+{
+	CLineRenderer* l_LineRenderer = new CLineRenderer(TreeNode);
+	if (AddResource(l_LineRenderer->GetName(), l_LineRenderer))
+		return l_LineRenderer;
 	else
 		return nullptr;
 }

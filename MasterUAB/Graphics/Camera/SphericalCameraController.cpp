@@ -5,8 +5,13 @@
 #include "Utils.h"
 #include "InputManager\InputManager.h"
 
+<<<<<<< HEAD
 CSphericalCameraController::CSphericalCameraController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CCameraController(TreeNode,_LevelId)
 , m_Zoom(TreeNode->GetFloatProperty("zoom", 50.f))
+=======
+CSphericalCameraController::CSphericalCameraController(tinyxml2::XMLElement* _TreeNode) : CCameraController(_TreeNode)
+, m_Zoom(_TreeNode->GetFloatProperty("zoom", 4.5f))
+>>>>>>> develop
 , m_ZoomSpeed(2.f)
 , m_CameraPosition(m_Position - m_Zoom)
 {
@@ -34,18 +39,18 @@ void CSphericalCameraController::Update(float ElapsedTime)
 	if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::RightClick))
 	{
 		Vect3f cameraMovement(0, 0, 0);
-		cameraMovement.x = UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisX);//->GetAxis("X_AXIS") * ElapsedTime * .5f;
-		cameraMovement.y = -UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisY);//GetAxis("Y_AXIS") * ElapsedTime * -.5f;
+		cameraMovement.x = UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisX);
+		cameraMovement.y = -UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisY);
 		Rotate(cameraMovement);
 	}
-	if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::WheelUp))
+	if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::Mouse5))
 	{
 		m_Zoom -= 0.1f;
 	}
-	else if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::WheelDown))
+	else if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::Mouse6))
 	{
 		m_Zoom += 0.1f;
 	}
-	if (m_Zoom < 1){ m_Zoom = 1; }
+	if (m_Zoom < 0.1f){ m_Zoom = 0.1f; }
 	m_CameraPosition = m_Position - (GetForward()*m_Zoom);
 }

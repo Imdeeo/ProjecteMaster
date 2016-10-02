@@ -1,4 +1,3 @@
-dofile("Data\\Lua\\Utils\\GVars.lua") --// Global Variables
 dofile("Data\\Lua\\Utils\\state_machine.lua")
 
 class 'CEnemy' (CLUAComponent)
@@ -17,7 +16,8 @@ class 'CEnemy' (CLUAComponent)
 		self.m_Timer = 0
 		self.m_DefaultPosition = Vect3f(self.m_RenderableObject:get_position().x, self.m_RenderableObject:get_position().y, self.m_RenderableObject:get_position().z)
 		--utils_log(self.m_Name.." POS X: "..self.m_DefaultPosition.x.." Y: "..self.m_DefaultPosition.y.." Z: "..self.m_DefaultPosition.z)
-		self.m_DefaultForward = self.m_RenderableObject:get_rotation():get_forward_vector()
+		self.m_DefaultRotation = self.m_RenderableObject:get_rotation()
+		self.m_DefaultForward = self.m_DefaultRotation:get_forward_vector()
 		self.m_State = "off"
 		self.m_Awake = _TreeNode:get_bool_property("awake", false)
 		self.m_ActualAnimation = 0
@@ -131,9 +131,7 @@ class 'CEnemy' (CLUAComponent)
 		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)
 		
 		local angle_to_turn = self:CalculateAngleRotation(l_EnemyForward, l_Direction)
-		if angle_to_turn ~= nil then
-			self:EnemyRotation(angle_to_turn, _PercentRotation)
-		end
+		self:EnemyRotation(angle_to_turn, _PercentRotation)
 	end
 	
 	function CEnemy:EnemyRotation(_AngleToTurn, _PercentRotation)
@@ -142,33 +140,34 @@ class 'CEnemy' (CLUAComponent)
 		local quat_to_turn = Quatf()
 		quat_to_turn:quat_from_yaw_pitch_roll(_AngleToTurn, 0.0, 0.0)
 
-		local target_quat = l_Owner:get_rotation():slerp(l_Owner:get_rotation() * quat_to_turn, _PercentRotation)
+		local target_quat = l_Owner:get_rotation():slerpJU(l_Owner:get_rotation() * quat_to_turn, _PercentRotation)
 		l_Owner:set_rotation(target_quat)
 	end
 	
 	function CEnemy:RotateEnemyBone(_Bone, _DesiredPos, _PercentRotation)
 		-- Seguimos al player con la mirada
 		local l_Owner = self.m_RenderableObject;
-		local l_EnemyPos = l_Owner:get_position()
+		local l_EnemyPos = l_Owner:get_bone_position(_Bone) + l_Owner:get_position()
 		local l_BoneRotation = l_Owner:get_bone_rotation(_Bone)
-		local l_Direction = (_DesiredPos - l_EnemyPos):get_normalized(1)		
+		local l_Direction = (_DesiredPos - l_EnemyPos)
+		l_Direction.y = 0
+		l_Direction:normalize(1)
 		
 		local angle_to_turn = self:CalculateAngleRotation(self.m_DefaultForward, l_Direction)
-		if angle_to_turn == nil then
-			angle_to_turn = 0.0
+		
+		if angle_to_turn ~= 0 then
+			local quat_to_turn = Quatf()
+			quat_to_turn:quat_from_yaw_pitch_roll(0.0, angle_to_turn, 0.0)		
+			
+			local target_quat = l_BoneRotation:slerpJU(quat_to_turn * l_BoneRotation, _PercentRotation)
+			l_Owner:set_bone_rotation(target_quat, _Bone)
 		end
-		
-		local quat_to_turn = Quatf()
-		quat_to_turn:quat_from_yaw_pitch_roll(0.0, angle_to_turn, 0.0)
-		
-		local target_quat = l_BoneRotation:slerp(quat_to_turn * l_BoneRotation, _PercentRotation)
-		l_Owner:set_bone_rotation(target_quat, _Bone)
 	end
 	
 	function CEnemy:CalculateAngleRotation(_EnemyForward, _Direction)
 		local l_Angle = _EnemyForward * _Direction
-		if 1.0 - l_Angle < 0.01 then
-			return nil
+		if 1.0 - l_Angle < 0.01 then			
+			return 0.0
 		end
 		
 		local angle_to_turn = math.acos(l_Angle)
@@ -177,6 +176,24 @@ class 'CEnemy' (CLUAComponent)
 		  angle_to_turn = -angle_to_turn
 		end	
 
-		return angle_to_turn		
+		return angle_to_turn
 	end	
+	
+	function CEnemy:ShowParticles(_ParticleName, _IsStart)
+		local l_Owner = self.m_RenderableObject;
+		local UABEngine = CUABEngine.get_instance()
+		local l_Particle = UABEngine:get_layer_manager():get_layer("particles"):get_resource(_ParticleName)
+		
+		if _IsStart then
+			l_Particle:set_start(true)
+			l_Particle:set_visible(true)
+		end
+		
+		local l_EnemyPos = l_Owner:get_position()
+		local l_HeadPos = l_Owner:get_bone_position(self.m_HeadBoneId) + Vect3f(0,-0.05,0.1)
+		l_HeadPos = l_Owner:get_rotation():rotation_matrix() * l_HeadPos
+		l_HeadPos.x = l_HeadPos.x * -1
+		local l_Aux = (l_EnemyPos + l_HeadPos) / 2
+		l_Particle:set_position(l_Aux)
+	end
 --end

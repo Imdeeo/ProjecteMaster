@@ -150,17 +150,17 @@ void CCameraKeyController::Update(float ElapsedTime)
 		l_tI = m_Keys[m_CurrentKey]->GetTime();
 		l_tF = m_Keys[m_NextKey]->GetTime();
 
-		l_pI = m_Keys[m_CurrentKey]->GetCameraInfo().GetEye();
-		l_pF = m_Keys[m_NextKey]->GetCameraInfo().GetEye();
+		l_pI = m_Keys[m_CurrentKey]->GetCameraInfo()->GetEye();
+		l_pF = m_Keys[m_NextKey]->GetCameraInfo()->GetEye();
 
-		l_fI = m_Keys[m_CurrentKey]->GetCameraInfo().GetFOV();
-		l_fF = m_Keys[m_NextKey]->GetCameraInfo().GetFOV();
+		l_fI = m_Keys[m_CurrentKey]->GetCameraInfo()->GetFOV();
+		l_fF = m_Keys[m_NextKey]->GetCameraInfo()->GetFOV();
 
-		l_lI = m_Keys[m_CurrentKey]->GetCameraInfo().GetLookAt();
-		l_lF = m_Keys[m_NextKey]->GetCameraInfo().GetLookAt();
+		l_lI = m_Keys[m_CurrentKey]->GetCameraInfo()->GetLookAt();
+		l_lF = m_Keys[m_NextKey]->GetCameraInfo()->GetLookAt();
 
-		l_uI = m_Keys[m_CurrentKey]->GetCameraInfo().GetUp();
-		l_uF = m_Keys[m_NextKey]->GetCameraInfo().GetUp();
+		l_uI = m_Keys[m_CurrentKey]->GetCameraInfo()->GetUp();
+		l_uF = m_Keys[m_NextKey]->GetCameraInfo()->GetUp();
 	}
 	else
 	{
@@ -169,23 +169,30 @@ void CCameraKeyController::Update(float ElapsedTime)
 		l_tI = m_Keys[m_NextKey]->GetTime();
 		l_tF = m_Keys[m_CurrentKey]->GetTime();
 
-		l_pI = m_Keys[m_NextKey]->GetCameraInfo().GetEye();
-		l_pF = m_Keys[m_CurrentKey]->GetCameraInfo().GetEye();
+		l_pI = m_Keys[m_NextKey]->GetCameraInfo()->GetEye();
+		l_pF = m_Keys[m_CurrentKey]->GetCameraInfo()->GetEye();
 
-		l_fI = m_Keys[m_NextKey]->GetCameraInfo().GetFOV();
-		l_fF = m_Keys[m_CurrentKey]->GetCameraInfo().GetFOV();
+		l_fI = m_Keys[m_NextKey]->GetCameraInfo()->GetFOV();
+		l_fF = m_Keys[m_CurrentKey]->GetCameraInfo()->GetFOV();
 
-		l_lI = m_Keys[m_NextKey]->GetCameraInfo().GetLookAt();
-		l_lF = m_Keys[m_CurrentKey]->GetCameraInfo().GetLookAt();
+		l_lI = m_Keys[m_NextKey]->GetCameraInfo()->GetLookAt();
+		l_lF = m_Keys[m_CurrentKey]->GetCameraInfo()->GetLookAt();
 
-		l_uI = m_Keys[m_NextKey]->GetCameraInfo().GetUp();
-		l_uF = m_Keys[m_CurrentKey]->GetCameraInfo().GetUp();
+		l_uI = m_Keys[m_NextKey]->GetCameraInfo()->GetUp();
+		l_uF = m_Keys[m_CurrentKey]->GetCameraInfo()->GetUp();
 	}
 
 	m_Position = (((l_pF - l_pI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_pI;
+	m_Position = m_RotationOffset*(m_Position - m_PositionOffsetKey) + m_PositionOffset;
 	m_Fov = (((l_fF - l_fI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_fI;
 	m_LookAt = (((l_lF - l_lI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_lI;
+	m_LookAt = m_RotationOffset*(m_LookAt - m_PositionOffsetKey) + m_PositionOffset;
+	Vect3f l_Forward = (m_LookAt - m_Position).GetNormalized();
 	m_Up = (((l_uF - l_uI)*(l_CurrentTime - l_tI)) / (l_tF - l_tI)) + l_uI;
+	m_Up = m_RotationOffset * m_Up;
+	Quatf l_auxRotation = Quatf();
+	l_auxRotation.SetFromFwdUp(l_Forward, m_Up);
+	m_Rotation = l_auxRotation;
 }
 
 void CCameraKeyController::SetCurrentTime(float CurrentTime)
@@ -227,30 +234,37 @@ void CCameraKeyController::SetCamera(CCamera *Camera) const
 {
 	Camera->SetFOV(m_Fov);
 	Camera->SetAspectRatio(16.0f / 9.0f);
-	Camera->SetPosition(m_RotationOffset*(m_Position-m_PositionOffsetKey) + m_PositionOffset);
-	Camera->SetLookAt(m_RotationOffset*(m_LookAt - m_PositionOffsetKey) + m_PositionOffset);
+	Camera->SetPosition(m_Position);
+	//Camera->SetPosition(Vect3f(0, 1.8, 0));
+	Camera->SetLookAt(m_LookAt);
+	//Camera->SetLookAt(m_RotationOffset * (m_LookAt - m_PositionOffsetKey) + Vect3f(0, 1.8, 0));
 	Camera->SetUp(m_Up);
 	Camera->SetMatrixs();
 }
 
 Vect3f CCameraKeyController::GetLastLookAt()
 {
-	return m_Keys[m_Keys.size()-1]->GetCameraInfo().GetLookAt();
+	return m_Keys[m_Keys.size()-1]->GetCameraInfo()->GetLookAt();
 }
 
-void CCameraKeyController::SetFirstKey(Vect3f _Forward, Vect3f _Pos, Vect3f _Up, float _Fov)
+void CCameraKeyController::SetFirstKey(Vect3f _Forward, Vect3f _Up, float _Fov)
 {
+	Vect3f l_LookAt = m_Keys[0]->GetCameraInfo()->GetLookAt();
 	m_Fov = _Fov;
-	m_Position = _Pos - m_PositionOffset;
-	m_LookAt = _Forward + m_Position;
-	m_Up = _Up;
-	m_Keys[0]->GetCameraInfo().SetFOV(_Fov);
-	m_Keys[0]->GetCameraInfo().SetEye(_Pos - m_PositionOffset);
-	m_Keys[0]->GetCameraInfo().SetLookAt(_Forward + m_Keys[0]->GetCameraInfo().GetEye());
-	m_Keys[0]->GetCameraInfo().SetUp(_Up);
+	m_LookAt.y += _Forward.y;
+	l_LookAt.y += _Forward.y;
+	//m_Up = _Up;
+	m_Keys[0]->GetCameraInfo()->SetFOV(_Fov);
+	m_Keys[0]->GetCameraInfo()->SetLookAt(l_LookAt);
+	//m_Keys[0]->GetCameraInfo()->SetUp(_Up);
 }
 
 CCameraInfo* CCameraKeyController::GetLastKey()
 {
-	return &m_Keys[m_Keys.size()-1]->GetCameraInfo();
+	return m_Keys[m_Keys.size()-1]->GetCameraInfo();
+}
+
+CCameraInfo CCameraKeyController::GetCameraAsInfo()
+{
+	return CCameraInfo(m_Position, m_LookAt, m_Up, m_Fov);
 }

@@ -34,14 +34,9 @@ function IdleUpdateTurret(args, _ElapsedTime)
 		local l_Distance = l_Enemy.m_DefaultPosition:distance(l_PlayerPos)		
 		
 		local l_PlayerForward = g_Player.m_CameraController:get_forward():get_normalized(1)
-		local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Direction, l_PlayerForward)		
-		if angle_to_turn == nil then
-			-- player is looking in the screen center
-			angle_to_turn = 0
-		end
+		local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Direction, l_PlayerForward)
 		
 		if angle_to_turn >= -0.4 and angle_to_turn <= 0.4 then
-			utils_log("ANGLE: "..angle_to_turn)
 			-- playes has to lose sanity because he is looking the enemy
 			l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
 			l_Enemy:LoseSanity(l_Distance)
