@@ -92,6 +92,7 @@
 #include "Particles\ParticleManager.h"
 #include "Particles\ParticleSystemType.h"
 #include "Particles\ParticleSystemInstance.h"
+#include "LineRenderer\LineRenderer.h"
 
 #include "Manchas\ManchasManager.h"
 #include "Manchas\ManchasSystemType.h"
@@ -109,6 +110,7 @@
 #include "VideoManager\VideoManager.h"
 
 #include "IA\AStar.h"
+#include "IA\AStarManager.h"
 
 #include "Application.h"
 #include "GamePlayManager.h"
@@ -323,6 +325,9 @@ void CScriptManager::RegisterLUAFunctions()
 
 
 	luabind::module(m_LS)[ luabind::def("utils_log", &UtilsLog) ];
+	luabind::module(m_LS)[luabind::def("utils_log_v2", &UtilsLogV2)];
+	luabind::module(m_LS)[luabind::def("utils_log_v3", &UtilsLogV3)];
+	luabind::module(m_LS)[luabind::def("utils_log_q", &UtilsLogQ)];
 
 	module(m_LS)[
 		class_<Vect3f>("Vect3f")
@@ -337,6 +342,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(const_self * other<const float>())
 			.def(const_self / other<const float>())
 			.def("set", &Vect3f::Set)
+			.def("get_absolute", &Vect3f::GetAbsolute)
 			.def("normalize", &Vector3<float>::Normalize)
 			.def("get_normalized", &Vector3<float>::GetNormalized)
 			.def("distance", &Vect3f::Distance)
@@ -371,9 +377,11 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(const_self * const_self)
 			.def(const_self * other<const float>())
 			.def(const_self / other<const float>())
+			.def("normalize", &Quatf::normalize)
 			.def("decouple_x", &Quatf::decoupleX)
 			.def("decouple_y", &Quatf::decoupleY)
 			.def("decouple_z", &Quatf::decoupleZ)
+			.def("conjugate", &Quatf::conjugate)
 			.def("get_yaw", &Quatf::GetYaw)
 			.def("get_pitch", &Quatf::GetPitch)
 			.def("get_roll", &Quatf::GetRoll)
@@ -389,6 +397,10 @@ void CScriptManager::RegisterLUAFunctions()
 			.scope[
 				def("slerp", (Quatn<float>(*)(const Quatn<float> &,const Quatn<float> &, float))&Quatn<float>::slerp)
 			]
+			.def("slerpJU", (Quatn<float>(Quatn<float>::*)(const Quatn<float>&, float))&Quatf::slerpJU)
+			/*.scope[
+				def("slerp", (Quatn<float>(*)(const Quatn<float> &, const Quatn<float> &, float))&Quatn<float>::slerp)
+			]*/
 			.def("compare", &Quatf::Compare)
 	];
 	
@@ -404,6 +416,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def_readwrite("m20", &Mat33f::m20)
 			.def_readwrite("m21", &Mat33f::m21)
 			.def_readwrite("m22", &Mat33f::m22)
+			.def(const_self * other<const Vect3f>())
 	];
 
 	module(m_LS)[
@@ -794,8 +807,10 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_left_object_rotation", &CAnimatedInstanceModel::GetLeftObjectRotation)
 			.def("get_right_object_transform", &CAnimatedInstanceModel::GetRightObjectTransform)
 			.def("get_left_object_transform", &CAnimatedInstanceModel::GetLeftObjectTransform)
+			.def("get_bone_position", &CAnimatedInstanceModel::GetBonePosition)
 			.def("get_bone_rotation", &CAnimatedInstanceModel::GetBoneRotation)
 			.def("set_bone_rotation", &CAnimatedInstanceModel::SetBoneRotation)
+			.def("print_bone_list", &CAnimatedInstanceModel::PrintBoneList)
 	];
 
 	module(m_LS) [
@@ -870,12 +885,12 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CCameraInfo>("CCameraInfo")
 			.def(constructor<>())
-			.def(constructor<const Vect3f, const Vect3f, const Vect3f, float, float, float>())
+			.def(constructor<const Vect3f, const Vect3f, const Vect3f, /*float, float,*/ float>())
 			.def(constructor<tinyxml2::XMLElement*>())
-			.def("set_near_plane", &CCameraInfo::SetNearPlane)
-			.def("get_near_plane", &CCameraInfo::GetNearPlane)
-			.def("set_far_plane", &CCameraInfo::SetFarPlane)
-			.def("get_far_plane", &CCameraInfo::GetFarPlane)
+			//.def("set_near_plane", &CCameraInfo::SetNearPlane)
+			//.def("get_near_plane", &CCameraInfo::GetNearPlane)
+			//.def("set_far_plane", &CCameraInfo::SetFarPlane)
+			//.def("get_far_plane", &CCameraInfo::GetFarPlane)
 			.def("set_fov", &CCameraInfo::SetFOV)
 			.def("get_fov", &CCameraInfo::GetFOV)
 			.def("set_eye", &CCameraInfo::SetEye)
@@ -906,7 +921,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_reverse", &CCameraKeyController::SetReverse)
 			.def("set_camera", &CCameraKeyController::SetCamera)
 			.def("set_first_key", &CCameraKeyController::SetFirstKey)
-			.def("get_last_key", &CCameraKeyController::GetLastKey)
+			.def("get_camera_as_info", &CCameraKeyController::GetCameraAsInfo)
 			.def("get_camera_key", &CCameraKeyController::GetCameraKey)
 			.def_readwrite("m_PositionOffsetKey", &CCameraKeyController::m_PositionOffsetKey)
 			.def_readwrite("m_PositionOffset", &CCameraKeyController::m_PositionOffset)
@@ -983,12 +998,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("update", &CCinematicObject::Update)
 			.def("on_restart_cycle", &CCinematicObject::OnRestartCycle)
 			.def("get_current_key", &CCinematicObject::GetCurrentKey)
-			.def("get_pivot_position", &CCinematicObject::GetPivotPosition)
-			.def("set_pivot_position", &CCinematicObject::SetPivotPosition)
-			.def("get_pivot_rotation", &CCinematicObject::GetPivotRotation)
-			.def("set_pivot_rotation", &CCinematicObject::SetPivotRotation)
-			.def("get_pivot_scale", &CCinematicObject::GetPivotScale)
-			.def("set_pivot_scale", &CCinematicObject::SetPivotScale)
 			.def("is_finished", &CCinematicObject::IsFinished)
 	];
 
@@ -1005,6 +1014,7 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CCinematicManager, bases<CRenderableObject, CTemplatedMapManager<CCinematic>>>("CCinematicManager")
 			.def(constructor<>())
 			.def("load_xml", &CCinematicManager::LoadXML)
+			.def("reload", &CCinematicManager::Reload)
 			.def("update", &CCinematicManager::Update)
 			.def("render", &CCinematicManager::Render)
 	];
@@ -1265,6 +1275,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<tinyxml2::XMLElement*>())
 			.def(constructor<const std::string&, const std::string&>())
 			.def("render", &CInstanceMesh::Render)
+			.def("get_interactuable_object_name", &CInstanceMesh::GetInteractuableObject)
 	];
 
 	module(m_LS)[
@@ -1394,6 +1405,8 @@ void CScriptManager::RegisterLUAFunctions()
 	class_<CParticleSystemInstance, CRenderableObject>("CParticleSystemInstance")
 		.def(constructor<>())
 		.def(constructor<tinyxml2::XMLElement*>())
+		.def("get_start", &CParticleSystemInstance::GetStart)
+		.def("set_start", &CParticleSystemInstance::SetStart)
 		.def("get_awake", &CParticleSystemInstance::GetAwake)
 		.def("set_awake", &CParticleSystemInstance::SetAwake)
 		.def("get_awake_timer", &CParticleSystemInstance::GetAwakeTimer)
@@ -1473,7 +1486,18 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_type", &CManchasSystemInstance::SetType)
 	];
 
-
+	//LINE RENDER
+	module(m_LS)[
+		class_<CLineRenderer, CRenderableObject>("CLineRenderer")
+			.def("get_pos_inicial", &CLineRenderer::GetLuaPosInciial)
+			.def("get_pos_final", &CLineRenderer::GetLuaPosFinal)
+			.def("get_num_puntos", &CLineRenderer::GetLuaNumPuntos)
+			.def("get_num_offsetX", &CLineRenderer::GetLuaOffsetX)
+			.def("get_num_offsetY", &CLineRenderer::GetLuaOffsetY)
+			.def("get_size", &CLineRenderer::GetLuaSize)
+			.def("get_size_offset", &CLineRenderer::GetLuaSizeOffset)
+			.def("get_color", &CLineRenderer::GetLuaColor)
+	];
 
 // GUI----------------------------------------------------------------------------------------------
 	module(m_LS)[	
@@ -1536,6 +1560,8 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CPhysXManager>("CPhysXManager")
 			.def("get_texture", &CTextureManager::GetTexture)
 			.def("reload", &CTextureManager::Reload)
+			.def("enable_trigger", &CPhysXManager::EnableTrigger)
+			.def("disable_trigger", &CPhysXManager::DisableTrigger)
 			.def("create_character_controller", &CPhysXManager::CreateCharacterController)
 			.def("character_controller_move", &CPhysXManager::CharacterControllerMove)
 			.def("character_controller_warp", &CPhysXManager::CharacterControllerWarp)
@@ -1626,10 +1652,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("load_map", &CAStar::LoadMap)
 			.def("destroy_map", &CAStar::DestroyMap)
 			.def("search_for_path", &CAStar::SearchForPath)
-			.def("get_actual_pos", &CAStar::GetActualPoint)
-			.def("increment_actual_point", &CAStar::IncrementActualPoint)
-			.def("get_actual_patrol_point", &CAStar::GetActualPatrolPoint)
-			.def("increment_actual_patrol_point", &CAStar::IncrementActualPatrolPoint)
+			.def("get_point", &CAStar::GetPoint)
+			.def("get_patrol_point", &CAStar::GetPatrolPoint)
+			.def("get_total_patrol_nodes", &CAStar::GetTotalPatrolNodes)
 			.scope[
 				class_<CAStar::TNode>("TNode")
 					.def_readwrite("name", &CAStar::TNode::name)
@@ -1640,6 +1665,16 @@ void CScriptManager::RegisterLUAFunctions()
 					.def_readwrite("time_to_wait", &CAStar::TNodePatrol::time_to_wait)
 			]
 	];
+
+	RegisterTemplatedMapManager<CAStar>(m_LS);
+
+	module(m_LS)[
+		class_<CAStarManager, CTemplatedMapManager<CAStar>>("CStarManager")
+			.def(constructor<>())
+			.def("load", &CManchasManager::Load)
+			.def("reload", &CManchasManager::Reload)
+	];
+
 // VIDEO
 	module(m_LS)[
 		class_<IVideoManager>("IVideoManager")

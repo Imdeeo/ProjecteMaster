@@ -20,8 +20,8 @@ function AlertUpdateAutomaton(args, _ElapsedTime)
 	if l_Enemy:PlayerVisible(l_Owner) or l_Enemy:DetectPlayerNoise(1.5) then
 		-- the enemy has heard to player. How the enemy is in alert he hears more far away
 		if l_Enemy.m_Patrol and not l_Enemy.m_IsChasing then
-			l_Enemy.m_PathFindig:increment_actual_patrol_point(l_Enemy.m_PatrolName)
-			local l_NodePoint = l_Enemy.m_PathFindig:get_actual_patrol_point(l_Enemy.m_PatrolName)
+			l_Enemy:IncrementePatrolPointIndex()
+			local l_NodePoint = l_Enemy:GetActualPatrolPoint()
 			l_Enemy.m_DefaultPosition = l_NodePoint.node.position
 		end
 		l_Enemy.m_alert_timer = 0.0
@@ -31,7 +31,7 @@ function AlertUpdateAutomaton(args, _ElapsedTime)
 		local l_Timer = 0
 		
 		if l_Enemy.m_Patrol and not l_Enemy.m_IsChasing then
-			local l_NodePoint = l_Enemy.m_PathFindig:get_actual_patrol_point(l_Enemy.m_PatrolName)
+			local l_NodePoint = l_Enemy:GetActualPatrolPoint()
 			l_Timer = l_NodePoint.time_to_wait
 		else
 			l_Timer = l_Enemy.m_StandardAlertTime
@@ -42,7 +42,7 @@ function AlertUpdateAutomaton(args, _ElapsedTime)
 		if l_Enemy.m_alert_timer > l_Timer then
 			l_Enemy.m_alert_timer = 0.0
 			if l_Enemy.m_Patrol and not l_Enemy.m_IsChasing then
-				l_Enemy.m_PathFindig:increment_actual_patrol_point(l_Enemy.m_PatrolName)
+				l_Enemy:IncrementePatrolPointIndex()
 				l_Enemy.m_State = "patrol"
 			else
 				l_Enemy.m_State = "return"

@@ -68,6 +68,10 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string &
 				{
 					l_ActivateActors.push_back(l_Element->GetPszProperty("actor_name"));
 				}
+				else if (l_Element->Name() == std::string("interactuable_object"))
+				{
+					m_InteractuableObject = l_Element->GetPszProperty("actor_name");
+				}
 				l_Element = l_Element->NextSiblingElement();
 			}
 			if (m_PxType == "box_trigger")

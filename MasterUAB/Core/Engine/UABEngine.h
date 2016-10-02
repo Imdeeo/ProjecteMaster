@@ -2,6 +2,7 @@
 #define UAB_ENGINE_H
 
 #include "Utils.h"
+#include <random>
 
 #define LEVEL "2"
 
@@ -27,13 +28,18 @@ class IVideoManager;
 class CGamePlayManager;
 class CLevelManager;
 class CManchasManager;
-class CAStar;
+class CAStarManager;
+class CColor;
+class CBilboardManager;
 
 #include <string>
 
 class CUABEngine
 {
 private:
+	std::mt19937 m_RandomEngine;
+	std::uniform_real_distribution<float> m_UnitDistribution;
+	std::random_device rnd;
 	bool m_LuaReloaded = false;
 
 	static CUABEngine * m_Instance;
@@ -55,6 +61,7 @@ private:
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
 	CSceneRendererCommandManager* m_SceneRendererCommandManager;
 	CParticleManager* m_ParticleManager;
+	CBilboardManager* m_BilboardManager;
 	CGUIManager* m_GUIManager;
 	ISoundManager* m_SoundManager;
 	IVideoManager* m_VideoManager;
@@ -63,7 +70,7 @@ private:
 	CManchasManager* m_ManchasManager;
 	std::string m_LevelLoaded;
 	int m_CurrentCamera_vision;
-	CAStar* m_AStarManager;
+	CAStarManager* m_AStarManager;
 	bool m_ActiveConsole;
 
 public:
@@ -83,6 +90,7 @@ public:
 	CRenderableObjectTechniqueManager * GetRenderableObjectTechniqueManager() const;
 	CSceneRendererCommandManager * GetSceneRendererCommandManager() const;
 	CParticleManager * GetParticleManager() const;
+	CBilboardManager * GetBilboardManager() const;
 	CGUIManager * GetGUIManager() const;
 	ISoundManager * GetSoundManager() const;
 	IVideoManager * GetVideoManager() const;
@@ -91,7 +99,7 @@ public:
 	std::string GetLevelLoaded()const{ return m_LevelLoaded; }
 	void SetLevelLoaded(std::string _id){ m_LevelLoaded = _id; }
 	CManchasManager * GetManchasManager() const;
-	CAStar * GetAStarManager() const;
+	CAStarManager * GetAStarManager() const;
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
 	void Destroy();
@@ -110,6 +118,10 @@ public:
 	void SetActiveConsole(bool _ActiveConsole);
 	bool GetLuaReloaded(){ return m_LuaReloaded; }
 	void LuaIsReloaded(){ m_LuaReloaded = true; }	
+	float GetRandomValue(float min, float max);
+	Vect3f GetRandomValue(Vect3f min, Vect3f max);
+	float GetRandomValue(Vect2f value);
+	CColor GetRandomValue(CColor min, CColor max);
 };
 
 #define UABEngine (*(CUABEngine::GetInstance()))

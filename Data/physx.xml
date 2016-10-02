@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <physx>
 	<materials>
-		<material name="FisicasAux" static_friction="0.5" dynamic_friction="0.5" restitution="0.1"/>
+		<material name="FisicasPlayer" static_friction="0.0" dynamic_friction="0.0" restitution="0.0"/>
+		<material name="FisicasObjects" static_friction="1.0" dynamic_friction="1.0" restitution="0.7"/>
+		<material name="FisicasAux" static_friction="1.0" dynamic_friction="1.0" restitution="0.0"/>
 	</materials>
 	<collision_groups>
 		<collision_group name="Plane"/>

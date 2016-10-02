@@ -28,8 +28,15 @@ public:
 		const std::string &InstanceModelName, const Vect3f &Position, const std::string &_LevelId, bool _Update = false);
 
 	CRenderableObjectsManager & CRenderableObjectsManager::operator=(CRenderableObjectsManager&);
+<<<<<<< HEAD
 	CRenderableObject * AddParticleSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	CRenderableObject * AddManchasSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+=======
+	CRenderableObject * AddParticleSystemInstance(tinyxml2::XMLElement* TreeNode);
+	CRenderableObject * AddBilboardSystemInstance(tinyxml2::XMLElement* TreeNode);
+	CRenderableObject * AddManchasSystemInstance(tinyxml2::XMLElement* TreeNode);
+	CRenderableObject * AddLineRendererSystemInstance(tinyxml2::XMLElement* TreeNode);
+>>>>>>> develop
 };
 
 #endif

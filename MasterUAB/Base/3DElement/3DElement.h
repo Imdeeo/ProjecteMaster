@@ -71,7 +71,7 @@ public:
 	}
 	virtual void Render(CRenderManager *RenderManager);
 	const Mat44f & GetTransform();
-	float GetVisible() const;
+	bool GetVisible() const;
 	virtual void SetVisible(bool newVisible);
 
 	virtual CEmptyPointerClass*  GetPositionX();

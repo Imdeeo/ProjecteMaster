@@ -1,0 +1,1064 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<materials>
+	<material name="Techo_Biblioteca" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\Techo.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\Techo_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Alfombra" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\Alfombra.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\AlfombraLarga_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MaderaInterior" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\puerta_maderaoscura_recibidor.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Madera Generica" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_madera_caoba.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="TubosCobre" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Bordillos" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\puerta_maderaoscura_recibidor.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Mesa" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_mueble_cobre.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_mueble_cobre_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MetalBrillanteOro" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\puerta_cobre_recibidor.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\puerta_cobre_recibidor_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="PalabrasGravadas" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\MesaEntradaFiorituras.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\MesaEntradaFiorituras_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Ventanas" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Vitrina_Vidrio_Transparente.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Ojos" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\OjoMesaEntrada.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\OjoMesaEntrada_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Escalera_Madera" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_madera_caoba.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Escalera_Carpet" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\CompoAlfombraEscalera.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\Alfombra_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Escalera_SujetaCarpet" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_mueble_cobre.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MetalJaula_Negro" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_metal_negro.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_metal_negro_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MetalJaula_Marron" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Cristal" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Vitrina_Vidrio_Transparente.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Serpiente" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_mueble_cobre.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_mueble_cobre_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="BombillaCompoGrande" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\CompoArana.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\CompoArana_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="BombillasPequenas" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\CompoArana.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\CompoArana_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MetalSeparador" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_metal_negro.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_metal_negro_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MetalPrincipalArana" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MetalSecundarioArana" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="VidrioArana" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\VidrioArana.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\VidrioArana_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Cable" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Cable.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="caballete" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_madera_caoba.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MesaTorretaCraneo" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\CraneoCompo.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MesaTorretaMaderaClara" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\MaderaOscura.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\MaderaOscura_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MesaTorretaCobre" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MesaTorretaDientes" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_cobre_gris.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MesaTorretaCobreOscuro" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Velvet" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\Tela.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\Tela_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Madera" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_cobre_gris.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\TextuMetal_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="EstanteriaGrande" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\puerta_maderaoscura_recibidor.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="PlanosLibros1" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\PLANOSLIBROS.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="PlanosLibros2" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\PLANOSLIBROS2.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="PlanosLibros3" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\PLANOSLIBROS3.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MesaGenericaTop" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MesaGenericaBordes" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MesaGenericaPomos" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\puerta_cobre_recibidor.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MesaGenericaDiamantesMadera" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_cobre_gris.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MesaGenericaMaderaPatas" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\MaderaOscura.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\MaderaOscura_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MesaGenericaPatasMetal" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="EstanteriaFina" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\puerta_maderaoscura_recibidor.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Zocalo" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_madera_caoba.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="26.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Barandilla" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_tubo_cobre_oscuro.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_tubo_cobre_oscuro_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="PlanosTop" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\BarandillaAlfa.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="SofaGrande" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\CompoSofaGrande.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="storeproyector" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\storeproyector.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\storeproyector_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="madera" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\biblio_madera_chimenea2.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\biblio_madera_chimenea2_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="tubos" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\puerta_cobre_recibidor.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\puerta_cobre_recibidor_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="23.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="embellecedores" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="CojinSilla" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\Tela.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\Tela_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="maderatecladosilla" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\MaderaNegra.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\MaderaNegra_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="UnwrapearConFiorituras" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\Organo_Fiorituras.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\Organo_Fiorituras_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="UnwrapEmbellecedores" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\UnwrapEmbellecedores_DIF.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\UnwrapEmbellecedores_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="teclas" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\PianoCompo.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="TeclaBlanca" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\TeclaBlanca.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="TeclaNegra" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\TeclaNegra.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Fiorituras" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\textuchimenea.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\TextuChimenea_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="40.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="ColumnaChimenea" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\ColumnaChimenea_DIFF.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\ColumnaChimenea_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Emblema" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\heraldic shield (1).dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="keropared" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\CobreLamparaPared.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="33.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="unwrapmetal" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\lamparaparedkero1.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="12.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Material #12" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Vitrina_Vidrio_Transparente.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="maderalamparakero" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_madera_caoba1.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="lamparakerometal" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\CobreLamparaPared.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="28.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="bombillakeromesera" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Vitrina_Vidrio_Transparente.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="luzyornamentos" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\lamparamesatextudefi.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="0.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="metal" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\metallamparakeroseno.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="21.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Suelo_Biblioteca" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\Suelo.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\Suelo_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Paredes_Biblioteca" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\PapelPared2.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="SofaChair" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\SillaCompo_DIFF.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\SillaCompo_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="PlanosLibrosPeques" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\PLANOSLIBROS4.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="PlanosLibrosPeque2" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\PLANOSLIBROS5.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Libros1" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\CompoLibros.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\CompoLibros_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Libros2" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\CompoLibros2.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\CompoLibros2_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="TapaLibro" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Covers.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="PaginasLibro" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\TopLibros.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Pomo" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\puerta_cobre_recibidor.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="COMPO_ORNAMENTO" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\puertarecibidor_DIFF.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\puertarecibidor_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MaderaPlanaBalconcito" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\puerta_maderaoscura_recibidor.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="UnwrapBalconcito" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\UnwrapBalconcin.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\UnwrapBalconcin_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Pinturas1" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Cuadros_Biblioteca_1.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="recibidor_marcocuadro_cobre" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\marcocuadro_cobre_recibidor_DIFF.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\marcocuadro_recibidor_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="RecibidorMarcoCuadroSimple" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\cuadro_simple1_DIFF.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\cuadro_simple1_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="AtrasCuadro" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\AtrasCuadro.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Pinturas2" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Cuadros_Biblioteca_2.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="maderaproyector" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\biblio_madera_chimenea2.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\biblio_madera_chimenea2_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="cintas" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Cable.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="cobre" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="bombilla" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Bombillas.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Unwrap" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\Compofonotelefote.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\Compofonotelefote_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MetalDiverso" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MaderaSoportes" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\puerta_maderaoscura_recibidor.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="negrogramo" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Cable.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="cobregramo" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="maderagramo" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_madera_caoba.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="UnwrapGramofono" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\CompoGramofono.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\CompoGramofono_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MetalNegroPrincipal" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_metal_negro.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_metal_negro_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="DoradoValvulaVentana" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\puerta_cobre_recibidor.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\puerta_cobre_recibidor_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Ventana" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\VentanaOpaca.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="36.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="GiraPuerta" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_cobre_gris.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="UnwrapOjo" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\CompoReceptaculoArtillufacto.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\CompoReceptaculoArtillufacto_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="PuertaSecretaMetal" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="PuertaSecretaMetalNegro" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_metal_negro.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\recibidor_metal_negro_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MosaicosPuertaSecretaRubi" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Rubi.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="MosaicosPuertaSecretaSafiro" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\Safiro.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Libro" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_2\Textures\librodiff.dds"/>
+		<texture type="normal" filename="Data\level_2\Textures\libro_NRM4.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="Pistabiblio" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_2\Textures\PistaBiblio.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+</materials>

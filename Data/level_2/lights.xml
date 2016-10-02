@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<lights ambient_light_color="0.3 0.3 0.3 1.0">
+	<light name="Omni006" enabled="true" type="omni" pos="-3.009 2.04384 5.37227" color="1.0 1.0 1.0 1" att_start_range="1.0" att_end_range="2.0" intensity="0.5"/>
+	<light name="Omni008" enabled="true" type="omni" pos="-0.452204 1.96675 11.266" color="0.333333 0.145098 0.145098 1" att_start_range="2.81677" att_end_range="5.71144" intensity="1.0"/>
+	<light name="Omni011" enabled="true" type="omni" pos="0.768342 1.97222 11.266" color="0.333333 0.145098 0.145098 1" att_start_range="2.81677" att_end_range="5.71144" intensity="1.0"/>
+	<light name="Omni014" enabled="true" type="omni" pos="3.04668 2.05458 5.41172" color="1.0 1.0 1.0 1" att_start_range="1.0" att_end_range="2.0" intensity="0.5"/>
+	<light name="Omni015" enabled="true" type="omni" pos="7.61561 3.31454 5.67128" color="1.0 1.0 1.0 1" att_start_range="1.0" att_end_range="2.0" intensity="0.5"/>
+	<light name="Omni016" enabled="true" type="omni" pos="11.9304 4.9158 5.67128" color="1.0 1.0 1.0 1" att_start_range="1.0" att_end_range="2.0" intensity="0.5"/>
+	<light name="Omni022" enabled="true" type="omni" pos="6.48301 2.14212 21.6107" color="0.976471 0.639216 0.368627 1" att_start_range="1.0" att_end_range="2.7" intensity="1.0"/>
+	<light name="Omni023" enabled="true" type="omni" pos="11.8761 2.04023 23.687" color="0.560784 0.403922 0.0627451 1" att_start_range="1.0" att_end_range="3.0" intensity="1.0"/>
+	<light name="Omni034" enabled="true" type="omni" pos="15.0093 6.2059 5.67128" color="1.0 1.0 1.0 1" att_start_range="1.0" att_end_range="2.0" intensity="0.5"/>
+	<light name="Omni039" enabled="true" type="omni" pos="-14.2991 3.01259 7.62036" color="0.862745 0.580392 0.0901961 1" att_start_range="1.0" att_end_range="4.0" intensity="0.8"/>
+	<light name="Omni047" enabled="true" type="omni" pos="17.9084 6.58257 9.48245" color="1.0 1.0 1.0 1" att_start_range="0.7" att_end_range="3.0" intensity="1.0"/>
+	<light name="Omni048" enabled="true" type="omni" pos="17.9084 6.58257 13.0106" color="1.0 1.0 1.0 1" att_start_range="0.7" att_end_range="3.0" intensity="1.0"/>
+	<light name="Omni049" enabled="true" type="omni" pos="17.9084 6.58257 16.4531" color="1.0 1.0 1.0 1" att_start_range="0.7" att_end_range="3.0" intensity="1.0"/>
+	<light name="Omni050" enabled="true" type="omni" pos="17.9084 6.58257 19.9216" color="1.0 1.0 1.0 1" att_start_range="0.7" att_end_range="3.0" intensity="1.0"/>
+	<light name="Omni051" enabled="true" type="omni" pos="17.9084 6.58257 23.3247" color="1.0 1.0 1.0 1" att_start_range="0.7" att_end_range="3.0" intensity="1.0"/>
+	<light name="Omni052" enabled="true" type="omni" pos="12.4967 7.30213 23.1572" color="1.0 1.0 1.0 1" att_start_range="2.0" att_end_range="7.0" intensity="0.5"/>
+	<light name="Omni053" enabled="true" type="omni" pos="12.4749 7.34403 16.9499" color="1.0 1.0 1.0 1" att_start_range="2.0" att_end_range="7.0" intensity="0.5"/>
+	<light name="Omni065" enabled="true" type="omni" pos="17.7944 2.26732 9.92329" color="1.0 1.0 1.0 1" att_start_range="1.0" att_end_range="3.0" intensity="1.0"/>
+	<light name="Omni066" enabled="true" type="omni" pos="17.7944 2.26732 13.4514" color="1.0 1.0 1.0 1" att_start_range="1.0" att_end_range="3.0" intensity="1.0"/>
+	<light name="Omni067" enabled="true" type="omni" pos="17.7944 2.26732 20.3624" color="1.0 1.0 1.0 1" att_start_range="1.0" att_end_range="3.0" intensity="1.0"/>
+	<light name="Omni068" enabled="true" type="omni" pos="17.7944 2.26732 16.8939" color="1.0 1.0 1.0 1" att_start_range="1.0" att_end_range="3.0" intensity="1.0"/>
+	<light name="Omni069" enabled="true" type="omni" pos="17.7944 2.26732 23.7655" color="1.0 1.0 1.0 1" att_start_range="1.0" att_end_range="3.0" intensity="1.0"/>
+	<light name="Omni072" enabled="true" type="omni" pos="-0.452204 2.58133 11.266" color="0.333333 0.145098 0.145098 1" att_start_range="2.81677" att_end_range="5.71144" intensity="1.0"/>
+	<light name="Omni073" enabled="true" type="omni" pos="0.768342 2.5868 11.266" color="0.333333 0.145098 0.145098 1" att_start_range="2.81677" att_end_range="5.71144" intensity="1.0"/>
+	<light name="Omni074" enabled="true" type="omni" pos="12.6826 2.34095 15.4702" color="0.976471 0.639216 0.368627 1" att_start_range="1.0" att_end_range="2.04" intensity="1.0"/>
+	<light name="Omni075" enabled="true" type="omni" pos="-14.8873 3.01259 12.4296" color="0.862745 0.580392 0.0901961 1" att_start_range="1.0" att_end_range="4.0" intensity="0.8"/>
+	<light name="Omni076" enabled="true" type="omni" pos="-8.178 3.01259 15.8712" color="0.862745 0.580392 0.0901961 1" att_start_range="1.0" att_end_range="4.0" intensity="0.8"/>
+	<light name="Omni077" enabled="true" type="omni" pos="-15.1763 3.01259 19.0167" color="0.862745 0.580392 0.0901961 1" att_start_range="1.0" att_end_range="4.0" intensity="0.8"/>
+	<light name="Omni078" enabled="true" type="omni" pos="-10.0693 3.01259 24.4892" color="0.862745 0.580392 0.0901961 1" att_start_range="1.0" att_end_range="4.0" intensity="0.8"/>
+	<light name="Omni081" enabled="true" type="omni" pos="-10.0449 3.01259 10.9287" color="0.862745 0.580392 0.0901961 1" att_start_range="1.0" att_end_range="4.0" intensity="0.8"/>
+	<light name="Omni082" enabled="true" type="omni" pos="-19.6258 3.01259 24.0782" color="0.862745 0.580392 0.0901961 1" att_start_range="1.0" att_end_range="4.0" intensity="0.8"/>
+</lights>

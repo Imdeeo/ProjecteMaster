@@ -19,6 +19,7 @@ void CSetLightPositionSceneRendererCommand::Execute(CRenderManager &RenderManage
 	CLight* l_Light = UABEngine.GetInstance()->GetLightManager()->GetResource(m_LightName);
 	std::vector<CMaterialParameter *> l_Parameters = UABEngine.GetInstance()->GetMaterialManager()->GetResource(m_MaterialName)->GetParameters();
 	Vect2f l_2DPos = UABEngine.GetInstance()->GetRenderManager()->GetScreenPosFrom3D(l_Light->GetPosition());
+	l_2DPos.y = 0.2;
 	for (size_t i = 0; i<l_Parameters.size(); i++)
 	{
 		if (l_Parameters[i]->GetName() == "light_position")

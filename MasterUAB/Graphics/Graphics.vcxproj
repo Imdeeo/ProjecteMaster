@@ -22,6 +22,9 @@
     <ClCompile Include="AnimatedModels\AnimatedCoreModel.cpp" />
     <ClCompile Include="AnimatedModels\AnimatedInstanceModel.cpp" />
     <ClCompile Include="AnimatedModels\AnimatedModelsManager.cpp" />
+    <ClCompile Include="Bilboards\BilboardManager.cpp" />
+    <ClCompile Include="Bilboards\BilboardSystemInstance.cpp" />
+    <ClCompile Include="Bilboards\BilboardSystemType.cpp" />
     <ClCompile Include="Camera\3PersonCameraController.cpp" />
     <ClCompile Include="Camera\CameraController.cpp" />
     <ClCompile Include="Camera\CameraControllerManager.cpp" />
@@ -47,6 +50,7 @@
     <ClCompile Include="Lights\LightManager.cpp" />
     <ClCompile Include="Lights\OmniLight.cpp" />
     <ClCompile Include="Lights\SpotLight.cpp" />
+    <ClCompile Include="LineRenderer\LineRenderer.cpp" />
     <ClCompile Include="Manchas\ManchasManager.cpp" />
     <ClCompile Include="Manchas\ManchasSystemInstance.cpp" />
     <ClCompile Include="Manchas\ManchasSystemType.cpp" />
@@ -107,6 +111,9 @@
     <ClInclude Include="AnimatedModels\AnimatedCoreModel.h" />
     <ClInclude Include="AnimatedModels\AnimatedInstanceModel.h" />
     <ClInclude Include="AnimatedModels\AnimatedModelsManager.h" />
+    <ClInclude Include="Bilboards\BilboardManager.h" />
+    <ClInclude Include="Bilboards\BilboardSystemInstance.h" />
+    <ClInclude Include="Bilboards\BilboardSystemType.h" />
     <ClInclude Include="Camera\3PersonCameraController.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\CameraController.h" />
@@ -132,6 +139,7 @@
     <ClInclude Include="Effects\EffectTechnique.h" />
     <ClInclude Include="Effects\LightEffectParameters.h" />
     <ClInclude Include="Effects\SceneEffectParameters.h" />
+    <ClInclude Include="LineRenderer\LineRenderer.h" />
     <ClInclude Include="Manchas\ManchasManager.h" />
     <ClInclude Include="Manchas\ManchasSystemInstance.h" />
     <ClInclude Include="Manchas\ManchasSystemType.h" />

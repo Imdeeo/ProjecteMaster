@@ -26,9 +26,7 @@ function IdleUpdate(args, _ElapsedTime)
 	l_Owner:set_position(l_NewControllerPosition)
 	
 	--// Raycast
-	if l_Player.m_InputManager:is_action_active("Interact") then
-		CheckRaycast(l_Player, l_NewControllerPosition)
-	end
+	CheckRaycast(l_Player, l_NewControllerPosition)
 	
 	--// Save speed in last update so we can create acceleration
 	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
@@ -43,11 +41,17 @@ function IdleUpdate(args, _ElapsedTime)
 	
 	--// If player has an item, move it.
 	if l_Player.m_Item ~= nil then
-		local l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_Owner:get_right_object_position())
+		local l_ObjectPosition
+		if l_Player.m_LeftHanded == false then 
+			l_ObjectPosition = l_Owner:get_right_object_position()
+		else
+			l_ObjectPosition = l_Owner:get_left_object_position()
+		end
+		l_ObjectPosition.x = l_ObjectPosition.x * (-1.0)
 		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
-		l_ObjectPosition = l_ObjectPosition+l_NewControllerPosition
-		l_Player.m_Item:set_position(l_ObjectPosition)
-		local l_ObjectRotation = l_Owner:get_right_object_rotation()*l_Owner:get_rotation()
+		l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_ObjectPosition)
+		l_Player.m_Item:set_position(l_ObjectPosition + l_Owner:get_position())
+		local l_ObjectRotation = l_Owner:get_left_object_rotation()*l_Owner:get_rotation()
 		l_Player.m_Item:set_rotation(l_ObjectRotation)
 	end
 end

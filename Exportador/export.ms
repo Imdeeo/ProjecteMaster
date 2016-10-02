@@ -69,7 +69,7 @@ fn processFaces arx Obj &prog=
 	
 	local PosID = 0x0001
 	local ColorID = 0x0000
-	local NmID = 0x0004
+	local NmID = 0x0000
 	local UVID = 0x0000
 	local UV2ID = 0x0000
 	local BnmID = 0x0000
@@ -101,7 +101,6 @@ fn processFaces arx Obj &prog=
 	(
 		for i=1 to l_Obj.material.numsubs do
 		(
-			
 			if (classof l_Obj.material[i].bumpMap == Bitmaptexture) then
 			(
 				if (classof l_Obj.material[i].bumpMap.bitmap == Bitmap) then
@@ -143,6 +142,7 @@ fn processFaces arx Obj &prog=
 	
 	if l_Obj.material != undefined then
 	(	
+		NmID = 0x0004
 		local l_HasMultimaterial = classof l_Obj.material == Multimaterial
 		local l_TotalMaterials = 1
 		if l_HasMultimaterial then
@@ -184,7 +184,7 @@ fn processFaces arx Obj &prog=
 	
     lerp BBMin BBMax .5 &BSphere[1]
     BSphere[2] = 0
-	
+	local l_Mat2 = 0
 	for i=1 to nFaces do
 	(	
 		local IdxsFace = getFace l_Obj i
@@ -201,19 +201,23 @@ fn processFaces arx Obj &prog=
 		TranslationToRH &Vt2
 		TranslationToRH &Vt3
 		
-		UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal UABVtxsNormals &Nm1
-		UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal UABVtxsNormals &Nm2
-		UABGetVertexNormal l_Obj IdxsFace.z SmoothValue FaceNormal UABVtxsNormals &Nm3
-		Nm1 = normalize(Nm1)
-		Nm2 = normalize(Nm2)
-		Nm3 = normalize(Nm3)
-		TranslationToRH &Nm1
-		TranslationToRH &Nm2
-		TranslationToRH &Nm3
-		
 		if l_Obj.material != undefined then
 		(
+			UABGetVertexNormal l_Obj IdxsFace.x SmoothValue FaceNormal UABVtxsNormals &Nm1
+			UABGetVertexNormal l_Obj IdxsFace.y SmoothValue FaceNormal UABVtxsNormals &Nm2
+			UABGetVertexNormal l_Obj IdxsFace.z SmoothValue FaceNormal UABVtxsNormals &Nm3
+			Nm1 = normalize(Nm1)
+			Nm2 = normalize(Nm2)
+			Nm3 = normalize(Nm3)
+			TranslationToRH &Nm1
+			TranslationToRH &Nm2
+			TranslationToRH &Nm3
+			
 			local l_IdMaterial = (mod ((getFaceMatID l_Obj i)-1) l_TotalMaterials)+1
+			if l_IdMaterial == 2 then
+			(
+				l_Mat2 = l_Mat2 + 1
+			)
 			local l_DiffMap = undefined
 			local l_LightMap  = undefined
 			local l_RefMap = undefined 
@@ -284,6 +288,7 @@ fn processFaces arx Obj &prog=
 	free UABVtxsNormals
 	local VtxID = 0x0000
 	VtxID = PosID+ColorID+NmID+UVID+UV2ID+BnmID+TngID
+	
 	TranslationToRH &BBMin
 	TranslationToRH &BBMax
 	TranslationToRH &BSphere[1]

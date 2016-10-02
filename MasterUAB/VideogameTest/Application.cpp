@@ -19,8 +19,7 @@
 #include "Camera\CameraControllerManager.h"
 #include "LevelManager\LevelManager.h"
 #include "GamePlayManager.h"
-#include "IA\AStar.h"
-
+#include "IA\AStarManager.h"
 #include "no_sillywarnings_please.h"
 
 CApplication::CApplication( CContextManager *_ContextManager)
@@ -62,7 +61,7 @@ void CApplication::Update(float _ElapsedTime)
 
 		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderAStar))
 		{
-			UABEngine.GetAStarManager()->SwitchRenderNodes();
+			UABEngine.GetAStarManager()->GetResource("level_" + UABEngine.GetLevelLoaded())->SwitchRenderNodes();
 		}
 
 		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCamera))

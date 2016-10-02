@@ -1,17 +1,33 @@
 dofile("Data\\Lua\\Raycast\\Recibidor.lua")
+dofile("Data\\Lua\\Raycast\\Biblioteca.lua")
+-- Distance conversion rates:
+-- 1,5834710743801652892561983471074(Max) -> 1,0(Engine)
+-- 1,0(Max) -> 0,63152400835073068893528183716077(Engine)
 
 function CheckRaycast(_Player, _Pos)
 	_Player.m_RaycastData = RaycastData()
-	_Player.m_PhysXManager:raycast(_Pos+_Player.m_CameraController:get_forward(), _Pos+(_Player.m_CameraController:get_forward()*2), 4, _Player.m_RaycastData)
+	_Player.m_PhysXManager:raycast(_Player.m_CameraController:get_position(), _Player.m_CameraController:get_position()+(_Player.m_CameraController:get_forward()*1.7), 4, _Player.m_RaycastData)
+	--utils_log(_Player.m_RaycastData.actor_name)
+	local l_LayerManager = g_Engine:get_layer_manager()
 	if _Player.m_RaycastData.actor_name ~= "" then
-		TriggerRaycast(_Player, _Pos)
+		local l_Trigger = l_LayerManager:get_layer("triggers"):get_resource(_Player.m_RaycastData.actor_name)
+		
+		if l_LayerManager:get_layer("interactuable_objects"):get_resource(l_Trigger:get_interactuable_object_name()) == nil then
+			local l_InteractuableObject = l_LayerManager:get_layer("solid"):get_resource(l_Trigger:get_interactuable_object_name())
+			l_LayerManager:get_layer("interactuable_objects"):add_resource(l_InteractuableObject.name, l_InteractuableObject)
+		end
+		
+		if _Player.m_InputManager:is_action_active("Interact") then
+			TriggerRaycast(_Player, _Pos)
+		end
+	else
+		l_LayerManager:get_layer("interactuable_objects"):destroy(false)
 	end
 end
 
 function TriggerRaycast(_Player, _Pos)
-	--utils_log(_Player.m_ItemName)
-	l_LevelName = g_Engine:get_level_loaded()
-	if l_LevelName == "Recibidor" then
+	l_LevelID = g_Engine:get_level_loaded()
+	if l_LevelID == "1" then
 		if _Player.m_RaycastData.actor_name == "TriggerDoor" then
 			if _Player.m_ItemName == "LlaveRecibidor" then
 				R1Door(_Player, _Pos)
@@ -35,13 +51,34 @@ function TriggerRaycast(_Player, _Pos)
 				R1Key(_Player, _Pos)
 			end
 		end
+	elseif l_LevelID == "2" then
+	utils_log("Trigger: ".._Player.m_RaycastData.actor_name)
+		if _Player.m_RaycastData.actor_name == "TriggerOrganKeyA" then
+			R2TriggerOrganKeyA(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyB" then
+			R2TriggerOrganKeyB(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyC" then
+			R2TriggerOrganKeyC(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyD" then
+			R2TriggerOrganKeyD(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyE" then
+			R2TriggerOrganKeyE(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyF" then
+			R2TriggerOrganKeyF(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerArtifact" then
+			if R2PuzzleCleared then
+				R2Artifact(_Player, _Pos)
+			end
+		elseif _Player.m_RaycastData.actor_name == "TriggerArtifactInput" then
+			R2ArtifactInput(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerArtifactDoor" then
+			if _Player.m_ItemName == "Artilufacto" then
+				R2ArtifactDoor(_Player, _Pos)
+			end
+		elseif _Player.m_RaycastData.actor_name == "TriggerClue" then
+			R2Clue(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerBook" then
+			R2Book(_Player, _Pos)
+		end
 	end
-end
-
-function FacingRaycast(_Player, _Target, _Pos, _Distance)
-	--utils_log("Pos: ".._Pos.x..", ".._Pos.y..", ".._Pos.z)
-	--utils_log("Target: ".._Target.x..", ".._Target.y..", ".._Target.z)
-	--utils_log("Offset: ".._Player.m_TargetOffset.x..", ".._Player.m_TargetOffset.y..", ".._Player.m_TargetOffset.z)
-	--utils_log("Distance: "..(_Pos - _Target):length())
-	return ((_Pos - _Target):length() < _Distance)
 end

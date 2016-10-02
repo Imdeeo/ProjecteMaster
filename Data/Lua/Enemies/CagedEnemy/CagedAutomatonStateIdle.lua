@@ -1,4 +1,5 @@
 function IdleFirstCagedAutomaton(args)
+	utils_log("IdleFirstCagedAutomaton")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -21,6 +22,7 @@ function IdleUpdateCagedAutomaton(args, _ElapsedTime)
 end
 
 function IdleEndCagedAutomaton(args)
+	utils_log("IdleEndCagedAutomaton")
 end
 
 function IdleToAttackConditionCagedAutomaton(args)	

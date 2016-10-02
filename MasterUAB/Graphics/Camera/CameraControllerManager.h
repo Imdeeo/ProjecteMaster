@@ -34,8 +34,6 @@ private:
 	void UpdateMainCamera(float _ElapsedTime);
 	void UpdateDebugCamera(float _ElapsedTime);
 	void Init();
-	
-
 };
 
 #endif //CAMERA_CONTROLLER_MANAGER_H

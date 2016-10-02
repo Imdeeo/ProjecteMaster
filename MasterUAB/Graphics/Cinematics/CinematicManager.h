@@ -11,10 +11,16 @@ class CCinematicManager : public CRenderableObject, public CTemplatedLevelMapMan
 {
 protected:
 	std::vector<CCinematicObject *> m_CinematicObjects;
+	std::string m_FileName;
 public:
 	CCinematicManager();
 	virtual ~CCinematicManager();
+<<<<<<< HEAD
 	void LoadXML(const std::string &FileName, const std::string &_LevelId);
+=======
+	void LoadXML(const std::string &FileName);
+	void Reload();
+>>>>>>> develop
 	void Update(float _ElapsedTime);
 	virtual void Render(CRenderManager *RenderManager){};
 };

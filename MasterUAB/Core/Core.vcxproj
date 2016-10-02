@@ -23,17 +23,21 @@
     <ClCompile Include="DebugHelper\DebugHelperImplementation.cpp" />
     <ClCompile Include="Engine\UABEngine.cpp" />
     <ClCompile Include="IA\AStar.cpp" />
+    <ClCompile Include="IA\AStarManager.cpp" />
     <ClCompile Include="InputManager\InputManager.cpp" />
     <ClCompile Include="InputManager\KeyboardInput.cpp" />
     <ClCompile Include="LevelManager\Level.cpp" />
     <ClCompile Include="LevelManager\LevelManager.cpp" />
-    <ClCompile Include="ScriptManager\ScriptManager.cpp" />
+    <ClCompile Include="ScriptManager\ScriptManager.cpp">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugHelper\DebugHelper.h" />
     <ClInclude Include="DebugHelper\DebugHelperImplementation.h" />
     <ClInclude Include="Engine\UABEngine.h" />
     <ClInclude Include="IA\AStar.h" />
+    <ClInclude Include="IA\AStarManager.h" />
     <ClInclude Include="InputManager\InputManager.h" />
     <ClInclude Include="InputManager\KeyboardInput.h" />
     <ClInclude Include="LevelManager\Level.h" />
