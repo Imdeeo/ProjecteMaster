@@ -103,6 +103,8 @@ fn createCinematicObjects dir filename Objs isCal3D =
 							TranslationToRH &pos
 						)
 						rot = l_Obj.transform.rotation
+						QuatToRH &rot
+						rot = (quat rot.x rot.y rot.z rot.w)
 						local auxMat = rot as matrix3
 						pos = pos*auxMat
 						rot = tform.rotation
