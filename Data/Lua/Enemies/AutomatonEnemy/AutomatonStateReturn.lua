@@ -82,7 +82,7 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 				local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)	
 				if l_Distance <= l_Enemy.m_DistanceToChangeNodeWalking then
 					if l_Enemy:IncrementPathPointIndex() == false then
-						local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Owner:get_rotation():get_forward_vector(), l_Enemy.m_DefaultForward)
+						--[[local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Owner:get_rotation():get_forward_vector(), l_Enemy.m_DefaultForward)
 						if angle_to_turn ~= 0.0 and (angle_to_turn > 0.75 or angle_to_turn < 0.65) then
 							l_Enemy.m_TimerRotation2 = l_Enemy.m_TimerRotation2 + _ElapsedTime	
 							l_PercentRotation = l_Enemy.m_TimerRotation2 / l_Enemy.m_AngularWalkSpeed * 5
@@ -91,9 +91,9 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 								l_PercentRotation = 1.0
 							end
 							l_Enemy:EnemyRotation(angle_to_turn, l_PercentRotation)
-						else
+						else]]
 							l_Enemy.m_State = "idle"
-						end
+						--end
 					end
 				end
 			end

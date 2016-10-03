@@ -50,15 +50,16 @@ class 'CEnemy' (CLUAComponent)
 	function CEnemy:PlayerVisible(_Owner)
 		local l_OwnerHeadPos = _Owner:get_position() + self.m_HeadOffset
 		local l_PlayerPos = self.m_PhysXManager:get_character_controler_pos("player")
+		l_AuxPos = Vect3f(l_PlayerPos.x, 0, l_PlayerPos.z)
 		
 		-- not visible if too far
-		local l_Dist = l_PlayerPos:distance(l_OwnerHeadPos)
+		local l_Dist = l_AuxPos:distance(l_OwnerHeadPos)
 		if l_Dist > self.m_MaxDistance then
 			return false
 		end
 
 		-- not visible if out of angle
-		local l_PlayerDirection = l_PlayerPos - l_OwnerHeadPos
+		local l_PlayerDirection = l_AuxPos - l_OwnerHeadPos
 		l_PlayerDirection:normalize(1.0)
 		local l_Forward = _Owner:get_rotation():get_forward_vector()
 		local l_Dot = l_Forward * l_PlayerDirection
@@ -70,7 +71,7 @@ class 'CEnemy' (CLUAComponent)
 		-- TODO: some raycasts from enemy's head to different parts of player
 		local l_RaycastData = RaycastData()
 		local l_Hit = self.m_PhysXManager:raycast(
-			l_OwnerHeadPos, l_PlayerPos,
+			l_OwnerHeadPos, l_AuxPos,
 			self.m_PhysXGroups, l_RaycastData
 		)
 		
