@@ -40,7 +40,8 @@ public:
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
 	//void RenderDebug(CRenderManager *RM);
-	
+	std::string GetTipo(){ return "BilboardInstance"; };
+
 	CEmptyPointerClass* GetLuaEmissionBoxPosition(int index = 0)
 	{
 		return (CEmptyPointerClass*)&m_Position[index];
