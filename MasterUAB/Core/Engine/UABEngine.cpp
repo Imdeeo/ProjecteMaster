@@ -1,9 +1,7 @@
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 #include "XML\tinyxml2.h"
-
 #include "Utils.h"
-
 #include "InputManager\InputManager.h"
 #include "Effects\EffectManager.h"
 #include "Materials\MaterialManager.h"
@@ -322,6 +320,16 @@ CColor CUABEngine::GetRandomValue(CColor min, CColor max)
 	float a = m_UnitDistribution(m_RandomEngine);
 	CColor value = min.Lerp(max, a);
 	return value;
+}
+
+int CUABEngine::GetTypeParticle(CRenderableObject* _RO)
+{
+	std::string l_type = _RO->GetTipo();
+	if (l_type == "ParticleInstance")
+	{
+		return 0;
+	}
+	return 1;
 }
 
 UAB_GET_PROPERTY_CPP(CUABEngine, CInputManager *, InputManager)
