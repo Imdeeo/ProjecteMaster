@@ -72,8 +72,9 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 			_Player.m_IsClimbing = false
 			_Player.m_IsCorrecting = true
 			R1TrayR1IsClosed = false
-			--m_CharacterManager.m_Enemics[1].m_Awake = true
-			--m_CharacterManager.m_Enemics[2].m_Awake = true
+			m_CharacterManager.m_Enemics[1].m_Awake = true
+			m_CharacterManager.m_Enemics[2].m_Awake = true
+			g_Engine:get_cinematic_manager():get_resource("recibidor_engranajes"):play()
 		end
 	end
 end
