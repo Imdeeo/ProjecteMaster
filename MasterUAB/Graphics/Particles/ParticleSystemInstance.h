@@ -77,7 +77,8 @@ public:
 	bool CParticleSystemInstance::IsIntoLimit(Vect3f _position);
 	void InsertSort(ParticleData arr[], int length);
 	void Save(FILE* _File, std::string _layer);
-	
+	std::string GetTipo(){ return "ParticleInstance"; };
+
 	CEmptyPointerClass* GetLuaEmissionBoxPosition(int index = 0)
 	{
 		return (CEmptyPointerClass*)&m_Position[index];
