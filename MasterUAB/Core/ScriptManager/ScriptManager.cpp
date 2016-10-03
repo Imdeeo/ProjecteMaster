@@ -608,6 +608,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_lua_reloaded", &CUABEngine::GetLuaReloaded)		
 			.def("get_active_console", &CUABEngine::GetActiveConsole)
 			.def("set_active_console", &CUABEngine::SetActiveConsole)
+			.def("get_type_particle", &CUABEngine::GetTypeParticle)
 	];
 
 	// InputManager-------------------------------------------------------------------------------------

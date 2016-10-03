@@ -27,6 +27,7 @@ public:
 	void Render(CRenderManager *RM);
 	void Save(FILE* _File, std::string _layer);
 	bool GetInsideFrustum();
+	std::string GetTipo(){ return "InstanceMesh"; };
 
 	UAB_BUILD_GET_SET(std::string, InteractuableObject);
 #ifdef _DEBUG
