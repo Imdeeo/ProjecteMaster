@@ -2,6 +2,7 @@ dofile("Data\\Lua\\Cinematics\\CUABCinematicsActionManager.lua")
 dofile("Data\\Lua\\Videogame\\componentsEnemy.lua")
 dofile("Data\\Lua\\Antwakbar\\antweakbar.lua")
 dofile("Data\\Lua\\Characters\\CCharacterManager.lua")
+dofile("Data\\Lua\\Reload\\CReloadManager.lua")
 dofile("Data\\Lua\\Triggers.lua")
 dofile("Data\\Lua\\Sound\\VolumeController.lua")
 dofile("Data\\Lua\\Enemies\\VisionTestEnemy\\VisionTestEnemy.lua")
@@ -9,6 +10,7 @@ dofile("Data\\Lua\\Commands.lua")
 
 m_cinematicManager = CUABCinematicsActionManager()
 m_CharacterManager = CCharacterManager()
+g_ReloadManager = CReloadManager()
 m_menu = true
 m_credits = false
 m_options = false
@@ -43,7 +45,7 @@ function mainLua()
 	m_timerPause = 0
 	m_iniciando = true 
 	
-	--l_LevelManager:load_level("Player")	
+	l_LevelManager:load_level("Player")	
 	
 	--deactivate_gravity()
 	--deactivate_player_collisions()
@@ -54,7 +56,6 @@ end
 
 function levelMainLua(level)
 	level = string.gsub(level,"\/","\\")
-	
 	m_CharacterManager:LoadXML(level.."\\characters.xml")
 end
 
@@ -82,11 +83,11 @@ function luaUpdate(_ElapsedTime)
 			end
 		end
 		if l_InputManager:is_action_released("DebugSanityUp") then
-			utils_log("DebugSanityUp")
+			--utils_log("DebugSanityUp")
 			m_CharacterManager.m_Player[1]:ModifySanity(10)
 		end
 		if l_InputManager:is_action_released("DebugSanityDown") then
-			utils_log("DebugSanityDown")
+			--utils_log("DebugSanityDown")
 			m_CharacterManager.m_Player[1]:ModifySanity(-10)
 		end
 		if l_InputManager:is_action_released("Pause") then

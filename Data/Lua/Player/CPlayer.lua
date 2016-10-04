@@ -60,7 +60,6 @@ dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 
 class 'CPlayer' (CLUAComponent)
 	function CPlayer:__init(_TreeNode)
-		self.m_AlreadyInitialized = false
 		local UABEngine = CUABEngine.get_instance()
 		self.m_Name = _TreeNode:get_psz_property("name", "")
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "")
@@ -132,10 +131,8 @@ class 'CPlayer' (CLUAComponent)
 		end
 		
 		self.m_SoundManager = UABEngine:get_sound_manager()
-		if self.m_AlreadyInitialized then
-			-- unregister old speaker before assigning new renderable object
-			self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
-		end
+		-- unregister old speaker before assigning new renderable object
+		--self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
 		
 		self.m_CinematicManager = UABEngine:get_cinematic_manager()
 		self.m_InputManager = UABEngine:get_input_manager()
@@ -203,12 +200,7 @@ class 'CPlayer' (CLUAComponent)
 		self:SetPlayerStateMachine()
 		self.m_StateMachine:start()
 		
-		if(not UABEngine:get_lua_reloaded())then
-			self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.3)
-			self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 90, self.m_RenderableObject:get_position(),"FisicasAux", "Player")
-		end
-
-		self.m_AlreadyInitialized = true
+		self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 90, self.m_RenderableObject:get_position(),"FisicasAux", "Player")
 	end
 
 	function CPlayer:SetSanity(_amount, _override)
@@ -224,6 +216,10 @@ class 'CPlayer' (CLUAComponent)
 	
 	function CPlayer:ModifySanity(_amount)
 		self.m_Sanity = math.max(math.min(self.m_Sanity + _amount, self.m_MaxSanity),0)
+		
+		if self.m_Sanity <= 0 then
+			g_ReloadManager:ReloadGame(1)
+		end
 	end
 	
 	function CPlayer:UpdateSanityEffects(_ElapsedTime)
