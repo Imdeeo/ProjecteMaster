@@ -363,3 +363,15 @@ void CAnimatedInstanceModel::PrintBoneList()
 		UtilsLog("Bone #" + std::to_string(i) + ": " + l_BoneList[i]->getCoreBone()->getName());
 	}
 }
+
+void CAnimatedInstanceModel::RemoveAnimations()
+{
+	if (m_ActualActionAnimation != -1)
+	{
+		RemoveAction(m_ActualActionAnimation);
+	}
+	if (m_ActualCycleAnimation != -1)
+	{
+		ClearCycle(m_ActualCycleAnimation, 0.0);
+	}
+}

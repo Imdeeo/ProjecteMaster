@@ -450,6 +450,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_lua_pos_x", &C3DElement::GetPositionX)
 			.def("get_lua_pos_y", &C3DElement::GetPositionY)
 			.def("get_lua_pos_z", &C3DElement::GetPositionZ)
+			.def("reset_animated_values", &C3DElement::ResetAnimatedValues)
 	];
 
 	module(m_LS)[
@@ -495,6 +496,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_vect4f_property", &tinyxml2::XMLElement::GetVect4fProperty)
 			.def("get_float_property", &tinyxml2::XMLElement::GetFloatProperty)
 			.def("get_bool_property", &tinyxml2::XMLElement::GetBoolProperty)
+			.def("get_quat_property", &tinyxml2::XMLElement::GetQuatfProperty)
 			.def("first_child", &tinyxml2::XMLElement::FirstChildElement2)
 	];
 
@@ -609,6 +611,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_active_console", &CUABEngine::GetActiveConsole)
 			.def("set_active_console", &CUABEngine::SetActiveConsole)
 			.def("get_type_particle", &CUABEngine::GetTypeParticle)
+			.def("reload_lua", &CUABEngine::ReloadLUA)
 	];
 
 	// InputManager-------------------------------------------------------------------------------------
@@ -765,6 +768,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("remove_action", &CAnimatedInstanceModel::RemoveAction)
 			.def("blend_cycle", &CAnimatedInstanceModel::BlendCycle)
 			.def("clear_cycle", &CAnimatedInstanceModel::ClearCycle)
+			.def("remove_animations", &CAnimatedInstanceModel::RemoveAnimations)
 			.def("is_cycle_animation_active", &CAnimatedInstanceModel::IsCycleAnimationActive)
 			.def("is_action_animation_active", &CAnimatedInstanceModel::IsActionAnimationActive)
 			.def("is_action_animation_ended", &CAnimatedInstanceModel::IsActionAnimationEnded)
@@ -1544,6 +1548,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_character_controler_lua_pos_z", &CPhysXManager::GetCharacterControllersPositionZ)
 			.def("set_character_controller_height", &CPhysXManager::SetCharacterControllersHeight)
 			.def("change_rigid_dynamic_actor_group", &CPhysXManager::ChangeRigidDynamicActorPhysxGroup)
+			.def("remove_actor", &CPhysXManager::RemoveActor)
 	];
 
 	

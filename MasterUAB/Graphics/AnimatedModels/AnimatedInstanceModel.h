@@ -59,6 +59,7 @@ public:
 	Quatf GetBoneRotation(int _bone);
 	void SetBoneRotation(Quatf _rotation, int _bone);
 	void PrintBoneList();
+	void RemoveAnimations();
 	std::string GetTipo(){ return "AnimatedInstanceModel"; };
 };
 #endif //ANIMATED_INSTANCE_MODEL_H

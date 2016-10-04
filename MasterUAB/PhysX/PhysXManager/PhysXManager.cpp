@@ -399,7 +399,9 @@ public:
 	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, std::string _group)
 	{
 		//SACADA DE SAMPLES
-		assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
+		//assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
+		if (m_CharacterControllers.find(_name) != m_CharacterControllers.end())
+			RemoveActor(_name);
 
 		physx::PxMaterial* l_Material = m_Materials[_MaterialName];
 		size_t l_index = m_CharacterControllers.size();
@@ -935,8 +937,7 @@ void CPhysXManager::Update(float _dt)
 #define MAX_SHAPES_PER_ACTOR 16
 
 void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime)
-{
-	
+{	
 	static MyQueryFilterCallback s_MyQueryFilterCallback;
 
 	physx::PxController* cct = m_CharacterControllers[_name];
@@ -1046,21 +1047,35 @@ void CPhysXManager::RemoveActor(const std::string _ActorName)
 	}
 	if (m_Actors.size() > 1)
 	{
-		m_Actors[l_index] = m_Actors[m_Actors.size() - 1];
-		m_Actors.resize(m_Actors.size() - 1);
+		if (l_index < m_Actors.size() - 1)
+		{
+			m_Actors[l_index] = m_Actors[m_Actors.size() - 1];
+			m_Actors.resize(m_Actors.size() - 1);
 
-		m_ActorNames[l_index] = m_ActorNames[m_Actors.size()];
-		m_ActorNames.resize(m_Actors.size());
+			m_ActorNames[l_index] = m_ActorNames[m_Actors.size()];
+			m_ActorNames.resize(m_Actors.size());
 
-		m_ActorPositions[l_index] = m_ActorPositions[m_Actors.size()];
-		m_ActorPositions.resize(m_Actors.size());
+			m_ActorPositions[l_index] = m_ActorPositions[m_Actors.size()];
+			m_ActorPositions.resize(m_Actors.size());
 
-		m_ActorOrientations[l_index] = m_ActorOrientations[m_Actors.size()];
-		m_ActorOrientations.resize(m_Actors.size());
+			m_ActorOrientations[l_index] = m_ActorOrientations[m_Actors.size()];
+			m_ActorOrientations.resize(m_Actors.size());
+		
+			m_ActorIndexs[m_ActorNames[l_index]] = l_index;
+			m_Actors[l_index]->userData = (void *)l_index;
+		}
+		else
+		{
+			m_Actors.resize(m_Actors.size() - 1);
 
-		m_ActorIndexs[m_ActorNames[l_index]] = l_index;
+			m_ActorNames.resize(m_Actors.size());
+
+			m_ActorPositions.resize(m_Actors.size());
+
+			m_ActorOrientations.resize(m_Actors.size());
+		}
+
 		m_ActorIndexs.erase(m_ActorIndexs.find(_ActorName));
-		m_Actors[l_index]->userData = (void *)l_index;
 	}
 	else
 	{

@@ -150,6 +150,13 @@ void C3DElement::SetVisible(bool newVisible)
 	m_Visible = newVisible;
 }
 
+void C3DElement::ResetAnimatedValues()
+{
+	m_AnimatedPosition = Vect3f(0.0f, 0.0f, 0.0f);
+	m_AnimatedRotation = Quatf(0.0f, 0.0f, 0.0f, 1.0f);
+	m_AnimatedScale = Vect3f(1.0f, 1.0f, 1.0f);
+}
+
 CEmptyPointerClass*  C3DElement::GetPositionX()
 {
 	return (CEmptyPointerClass*)(&m_Position.x);

@@ -38,9 +38,8 @@ class 'CEnemy' (CLUAComponent)
 		end
 		
 		self.m_StateMachine = StateMachine.create()
-		if (not UABEngine:get_lua_reloaded()) then
-			self.m_PhysXManager:create_character_controller(self.m_Name, g_EnemyHeight, g_EnemyRadius, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Enemy")
-		end
+		
+		self.m_PhysXManager:create_character_controller(self.m_Name, g_EnemyHeight, g_EnemyRadius, 0.5, self.m_RenderableObject:get_position(),"FisicasAux", "Enemy")
 	end
 	
 	function CEnemy:Update(_ElapsedTime)
