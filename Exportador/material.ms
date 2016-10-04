@@ -292,11 +292,8 @@ fn createMaterials dir filename Objs copyTexture =
 								nomTextura = filenameFromPath (mat[j].glossinessMap.bitmap.filename)	
 								pathfile = (dir + "Textures\\" + nomTextura)
 								relativePathfile = pathfile
-								relativePathfile2 = (dir + "Textures\\white.dds")
 								getRelativePath &relativePathFile
-								getRelativePath &relativePathFile2
 								format "\t\t<texture type=\"glossiness\" filename=\"%\"/>\n" relativePathfile to:file
-								format "\t\t<texture type=\"specular\" filename=\"%\"/>\n" relativePathfile2 to:file
 								if copyTexture == true then
 								(
 									dirExist (dir+"Textures")
