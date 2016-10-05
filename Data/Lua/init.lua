@@ -119,9 +119,9 @@ end
 
 function luaGui()
 	local gui_manager = g_Engine:get_gui_manager()
-	gui_position = CGUIPosition(580, 50, 500, 30, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+	--gui_position = CGUIPosition(0, 0, 1280, 720, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 	--m_Cordura = gui_manager:do_slider("Cordura", "mad_slider", gui_position,0, m_CharacterManager.m_Player[1].m_MaxSanity, m_CharacterManager.m_Player[1].m_Sanity, false)
-			
+	
 	if m_fps then
 		local color = CColor(1,0.2,0.2,1)
 		local coord = Vect2f(1000, 10)
@@ -130,9 +130,11 @@ function luaGui()
 	end
 
 	if m_menu then
+		gui_position = CGUIPosition(0, 0, 1280, 720, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+		gui_manager:do_panel("mainMenuFondo", "fondo1", gui_position)		
 		local color = CColor(1,1,1,1)
 		local coord = Vect2f(500,100)
-		local gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+		gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 		
 		if m_credits then
 			coord = Vect2f(500,100)

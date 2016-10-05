@@ -3,27 +3,34 @@
 
 	<gui_spritemap name="gui1" width="1024" height="1024">
 		<material name="gui1" renderable_object_technique="MV_POSITION4_NORMAL_TEXTURE_VERTEX">
-			<texture filename="Data\\GUI\\textures\\buttons.png"/>
+			<texture filename="Data\\GUI\\MainMenuImages\\buttons.png"/>
 		</material>
-		<sprite name="buttonPlay_idle" x="45" y="196" w="255" h="90" pX="0.5" pY="0.5"/>
-		<sprite name="buttonPlay_over" x="386" y="196" w="255" h="90" pX="0.5" pY="0.5"/>
-		<sprite name="buttonPlay_pressed" x="710" y="196" w="255" h="90" pX="0.5" pY="0.5"/>
+		<sprite name="buttonPlay_idle" x="0" y="30" w="329" h="83" pX="0.5" pY="0.5"/>
+		<sprite name="buttonPlay_over" x="329" y="30" w="329" h="83" pX="0.5" pY="0.5"/>
+		<sprite name="buttonPlay_pressed" x="660" y="32" w="329" h="83" pX="0.5" pY="0.5"/>
 		
-		<sprite name="buttonOptions_idle" x="45" y="342" w="255" h="90" pX="0.5" pY="0.5"/>
-		<sprite name="buttonOptions_over" x="386" y="342" w="255" h="90" pX="0.5" pY="0.5"/>
-		<sprite name="buttonOptions_pressed" x="710" y="342" w="255" h="90" pX="0.5" pY="0.5"/>
+		<sprite name="buttonLoad_idle" x="0" y="113" w="329" h="83" pX="0.5" pY="0.5"/>
+		<sprite name="buttonLoad_over" x="329" y="113" w="329" h="83" pX="0.5" pY="0.5"/>
+		<sprite name="buttonLoad_pressed" x="660" y="115" w="329" h="83" pX="0.5" pY="0.5"/>
 		
-		<sprite name="buttonCredits_idle" x="45" y="467" w="255" h="90" pX="0.5" pY="0.5"/>
-		<sprite name="buttonCredits_over" x="386" y="467" w="255" h="90" pX="0.5" pY="0.5"/>
-		<sprite name="buttonCredits_pressed" x="710" y="467" w="255" h="90" pX="0.5" pY="0.5"/>
+		<sprite name="buttonOptions_idle" x="0" y="196" w="329" h="83" pX="0.5" pY="0.5"/>
+		<sprite name="buttonOptions_over" x="329" y="196" w="329" h="83" pX="0.5" pY="0.5"/>
+		<sprite name="buttonOptions_pressed" x="660" y="196" w="329" h="83" pX="0.5" pY="0.5"/>
 		
-		<sprite name="buttonBack_idle" x="45" y="616" w="255" h="90" pX="0.5" pY="0.5"/>
-		<sprite name="buttonBack_over" x="386" y="616" w="255" h="90" pX="0.5" pY="0.5"/>
-		<sprite name="buttonBack_pressed" x="710" y="616" w="255" h="90" pX="0.5" pY="0.5"/>
+		<sprite name="buttonCredits_idle" x="0" y="279" w="329" h="83" pX="0.5" pY="0.5"/>
+		<sprite name="buttonCredits_over" x="329" y="279" w="329" h="83" pX="0.5" pY="0.5"/>
+		<sprite name="buttonCredits_pressed" x="660" y="281" w="329" h="83" pX="0.5" pY="0.5"/>
 		
-		<sprite name="buttonExit_idle" x="45" y="763" w="255" h="90" pX="0.5" pY="0.5"/>
-		<sprite name="buttonExit_over" x="386" y="763" w="255" h="90" pX="0.5" pY="0.5"/>
-		<sprite name="buttonExit_pressed" x="710" y="763" w="255" h="90" pX="0.5" pY="0.5"/>
+		<sprite name="buttonExit_idle" x="0" y="365" w="329" h="83" pX="0.5" pY="0.5"/>
+		<sprite name="buttonExit_over" x="329" y="365" w="329" h="83" pX="0.5" pY="0.5"/>
+		<sprite name="buttonExit_pressed" x="660" y="367" w="329" h="83" pX="0.5" pY="0.5"/>
+	</gui_spritemap>
+	
+	<gui_spritemap name="gui2" width="1920" height="1080">
+		<material name="gui2" renderable_object_technique="MV_POSITION4_NORMAL_TEXTURE_VERTEX">
+			<texture filename="Data\\GUI\\MainMenuImages\\fondo.dds"/>
+		</material>
+		<sprite name="fondoMainMenu" x="0" y="0" w="1920" h="1080" pX="0.5" pY="0.5"/>
 	</gui_spritemap>
 
 	<gui_spritemap name="guisliders" width="512" height="512">
@@ -46,12 +53,13 @@
 	</gui_spritemap>
 	
 	<button name="play_button" normal="buttonPlay_idle" highlight="buttonPlay_over" pressed="buttonPlay_pressed"/>
+	<button name="load_button" normal="buttonLoad_idle" highlight="buttonLoad_over" pressed="buttonLoad_pressed"/>
 	<button name="options_button" normal="buttonOptions_idle" highlight="buttonOptions_over" pressed="buttonOptions_pressed"/>
 	<button name="credits_button" normal="buttonCredits_idle" highlight="buttonCredits_over" pressed="buttonCredits_pressed"/>
-	<button name="back_button" normal="buttonBack_idle" highlight="buttonBack_over" pressed="buttonBack_pressed"/>
 	<button name="exit_button" normal="buttonExit_idle" highlight="buttonExit_over" pressed="buttonExit_pressed"/>
 	<font name="fontTest" path="Data\\Fonts\\fontTest.fnt" />
 	<slider name="volume_slider" base="slider_base" top="slider_top" handle="slider_handle" pressed_handle="slider_pressed_handle"/>
 	<slider name="mad_slider" base="slider_base" top="slider_top_mad" handle="slider_handle" pressed_handle="slider_pressed_handle"/>
+	<panel name="fondo1" normal="fondoMainMenu"/>
 </gui_elements>
 		

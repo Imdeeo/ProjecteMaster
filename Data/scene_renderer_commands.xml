@@ -209,7 +209,7 @@
 	
 	<set_pool_renderable_objects_technique name="set pool interactuable_objects" pool="interactuable_objects" active="true"/>
 	<clear name="interactuable_objects_clear" render_target="true" depth_stencil="false" active="true"/>
-	<set_depth_stencil_state name="set depth stencil TF Skybox interactuable_objects" enable_z_test="true" write_z_buffer="false" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF interactuable_objects" enable_z_test="true" write_z_buffer="false" active="true"/>
 	<render_layer name="render layer interactuable_objects" layer="interactuable_objects" active="true"/>
 	
 	<apply_filters name="interactuable_objects_filters" active="true">
@@ -253,12 +253,6 @@
 	<set_pool_renderable_objects_technique name="set pool triggers" pool="triggers_pool" active="false"/>
 	<render_layer name="render layer triggers" layer="triggers" active="false"/>
 	
-	<!-- GUI -->
-	<enable_alpha_blend name="enable alpha blend GUI" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
-	<set_pool_renderable_objects_technique name="set pool forward GUI" pool="forward_shading" active="true"/>
-	<render_gui name="render GUI" active="true"/>
-	<disable_alpha_blend name="disable alpha blend GUI" active="true"/>	
-	
 	<!-- NOISE AND VIGNETTING -->
 	<enable_alpha_blend name="enable alpha blend AAZZOO N and V" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
 	<set_pool_renderable_objects_technique name="set pool forward N and V" pool="forward_shading" active="true"/>
@@ -267,6 +261,12 @@
 		<texture stage_id="1" file="Data/GUI/textures/vignetting.dds" load_file="true"/>
 	</render_draw_quad>
 	<disable_alpha_blend name="disable alpha blend N and V" active="true"/>
+
+	<!-- GUI -->
+	<enable_alpha_blend name="enable alpha blend GUI" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<set_pool_renderable_objects_technique name="set pool forward GUI" pool="forward_shading" active="true"/>
+	<render_gui name="render GUI" active="true"/>
+	<disable_alpha_blend name="disable alpha blend GUI" active="true"/>	
 	
 	<!-- MANCHAS -->
 	<enable_alpha_blend name="enable alpha blend AAZZOO Manchas" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
