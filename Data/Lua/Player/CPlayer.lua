@@ -137,9 +137,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_CinematicManager = UABEngine:get_cinematic_manager()
 		self.m_InputManager = UABEngine:get_input_manager()
 		self.m_PhysXManager = UABEngine:get_physX_manager()
-		if(not UABEngine:get_lua_reloaded())then
-			self.m_SoundManager:register_speaker(self.m_RenderableObject)
-		end
+		self.m_SoundManager:register_speaker(self.m_RenderableObject)
 		
 		self.m_JumpSoundEvent = SoundEvent()
 		self.m_JumpSoundEvent.event_name = "Jump"
@@ -218,7 +216,8 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Sanity = math.max(math.min(self.m_Sanity + _amount, self.m_MaxSanity),0)
 		
 		if self.m_Sanity <= 0 then
-			g_ReloadManager:ReloadGame(1)
+			utils_log("ESTAS MUERTO!!!")
+			g_ReloadManager:ReloadGame(2)
 		end
 	end
 	

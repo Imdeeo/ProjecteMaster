@@ -48,6 +48,10 @@ end
 
 function AttackEndAutomaton(args)
 	utils_log("AttackEnd")
+	local l_Enemy = args["self"]
+	if l_Enemy.m_State == "kill" then 
+		g_Player.m_CameraController:unlock()
+	end
 end
 
 function AttackToKillConditionAutomaton(args)

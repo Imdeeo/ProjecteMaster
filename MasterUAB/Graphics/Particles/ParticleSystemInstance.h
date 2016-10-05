@@ -39,7 +39,6 @@ private:
 		Vect3f LastSpeed, LastAcceleration, NextSpeed, NextAcceleration;
 	};
 
-	int m_ActiveParticles;
 	ParticleData m_ParticleData[MAX_PARTICLE_PER_INSTANCE];
 
 	MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX m_ParticleRenderableData[MAX_PARTICLE_PER_INSTANCE];
@@ -52,6 +51,7 @@ public:
 	virtual ~CParticleSystemInstance(void);
 	void Destroy();
 
+	UAB_BUILD_GET_SET(int, ActiveParticles)
 	UAB_BUILD_GET_SET(CParticleSystemType *, Type);
 	UAB_BUILD_GET_SET(float, NextParticleEmission);
 	UAB_BUILD_GET_SET(bool, Start);
