@@ -3,7 +3,6 @@
 
 #include "Utils.h"
 
-class CXMLTreeNode;
 class SpriteInfo;
 
 class CButon 
