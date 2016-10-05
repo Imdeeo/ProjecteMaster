@@ -62,6 +62,7 @@ private:
 	std::map<std::string, CPanel*> m_Panels;
 	std::map<std::string, CSlider*> m_Sliders;
 	std::vector<GUICommand> m_Commands;
+	std::vector<GUICommand> m_PanelCommands;
 	std::string m_FileName;
 	std::unordered_map< std::string, int16 > m_LineHeightPerFont;
 	std::unordered_map< std::string, int16 > m_BasePerFont;
