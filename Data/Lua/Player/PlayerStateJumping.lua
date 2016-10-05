@@ -65,3 +65,8 @@ function JumpingEnd(args)
 	local l_Owner = args["owner"]
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
 end
+
+function JumpToIdleCondition(args)
+	local l_Player = args["self"]
+	return l_Player.m_Velocity.y == 0
+end

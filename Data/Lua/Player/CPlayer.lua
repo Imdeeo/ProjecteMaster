@@ -193,7 +193,7 @@ class 'CPlayer' (CLUAComponent)
 				l_Aend = l_Aend:get_next()
 			end
 		else
-			utils_log("Animation ends xml not correctly loaded.")
+			--utils_log("Animation ends xml not correctly loaded.")
 		end
 		
 		self.m_StateMachine = StateMachine.create()
@@ -393,6 +393,7 @@ class 'CPlayer' (CLUAComponent)
 		JumpingState:set_do_first_function(JumpingFirst)
 		JumpingState:set_do_end_function(JumpingEnd)
 		JumpingState:add_condition(ANYToFallingCondition, "Falling")
+		JumpingState:add_condition(JumpToIdleCondition, "Idle")
 		JumpingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		FallingState = State.create(FallingUpdate)
