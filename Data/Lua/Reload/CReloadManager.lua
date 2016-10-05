@@ -4,6 +4,7 @@ class 'CReloadManager'
 	end
 
 	function CReloadManager:ReloadGame(_level)
+		utils_log("PREPARANDO MUERTE!!!")
 		self:removeTable(self.m_Resources)
 		self:loadXML ("Data\\Lua\\Reload\\XML\\level_".._level..".xml")
 
@@ -15,7 +16,27 @@ class 'CReloadManager'
 		
 		for i=1, table.maxn(self.m_Resources) do
 			l_Aux = self.m_Resources[i]
-			if l_Aux[1] ~= "cinematic" then
+			if l_Aux[1] == "cinematic" then
+				l_Resource = g_Engine:get_cinematic_manager():get_resource(l_Aux[2])
+				if l_Aux[3] then
+					l_Resource:play()
+				elseif l_Aux[4] then
+					l_Resource:stop()
+				elseif l_Aux[5] then
+					l_Resource:pause()					
+				end
+			elseif l_Aux[1] == "particle" then
+				l_Resource = g_Engine:get_layer_manager():get_layer(l_Aux[2]):get_resource(l_Aux[3])
+				l_Resource:set_position(l_Aux[4])
+				l_Resource:set_start(l_Aux[5])
+				l_Resource:set_awake(l_Aux[6])
+				l_Resource:set_visible(l_Aux[7])
+				l_Resource:set_active_particles(0)
+			elseif l_Aux[1] == "light" then
+				l_Resource = g_Engine:get_light_manager():get_resource(l_Aux[2])
+				l_Resource:set_position(l_Aux[3])
+				l_Resource:set_enabled(l_Aux[4])
+			else
 				l_Resource = g_Engine:get_layer_manager():get_layer(l_Aux[2]):get_resource(l_Aux[3])
 				l_Resource:set_position(l_Aux[4])
 				l_Resource:set_rotation(l_Aux[5])
@@ -25,6 +46,7 @@ class 'CReloadManager'
 				if l_Aux[1] == "player" then
 					local quat_to_turn = Quatf()
 					quat_to_turn:set_from_fwd_up(l_Resource:get_rotation():get_forward_vector(), Vect3f(0,1,0))
+					g_Engine:get_camera_controller_manager():choose_main_camera("MainCamera")
 					g_Engine:get_camera_controller_manager():get_main_camera():set_rotation(quat_to_turn)
 					self:removeTable(m_CharacterManager.m_Player)
 					l_Resource:remove_animations()
@@ -35,8 +57,6 @@ class 'CReloadManager'
 					end
 					l_Resource:remove_animations()
 				end
-			else
-				g_Engine:get_cinematic_manager():get_resource(l_Aux[3]):stop()
 			end
 		end
 		
@@ -83,9 +103,28 @@ class 'CReloadManager'
 				elseif l_Type == "cinematic" then
 					l_Cinematic = {}
 					table.insert(l_Cinematic, l_Type)
-					table.insert(l_Cinematic, l_Element:get_psz_property("layer",""))
 					table.insert(l_Cinematic, l_Element:get_psz_property("name",""))
+					table.insert(l_Cinematic, l_Element:get_bool_property("play",false))
+					table.insert(l_Cinematic, l_Element:get_bool_property("stop",false))
+					table.insert(l_Cinematic, l_Element:get_bool_property("pause",false))
 					table.insert(self.m_Resources, l_Cinematic)
+				elseif l_Type == "particle" then
+					l_Particle = {}
+					table.insert(l_Particle, l_Type)
+					table.insert(l_Particle, l_Element:get_psz_property("layer",""))
+					table.insert(l_Particle, l_Element:get_psz_property("name",""))
+					table.insert(l_Particle, l_Element:get_vect3f_property("position",Vect3f(0,0,0)))
+					table.insert(l_Particle, l_Element:get_bool_property("start",false))
+					table.insert(l_Particle, l_Element:get_bool_property("awake",false))
+					table.insert(l_Particle, l_Element:get_bool_property("visible",false))
+					table.insert(self.m_Resources, l_Particle)
+				elseif l_Type == "light" then
+					l_Light = {}
+					table.insert(l_Light, l_Type)
+					table.insert(l_Light, l_Element:get_psz_property("name",""))
+					table.insert(l_Light, l_Element:get_vect3f_property("position",Vect3f(0,0,0)))
+					table.insert(l_Light, l_Element:get_bool_property("visible", true))
+					table.insert(self.m_Resources, l_Light)
 				end	
 				l_Element = l_Element:get_next()
 			end

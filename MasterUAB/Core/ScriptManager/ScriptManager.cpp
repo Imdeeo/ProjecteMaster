@@ -1108,7 +1108,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	// Lights-----------------------------------------------------------------------------------------
-	
+
 	module(m_LS)[
 		class_<CLight, CNamed>("CLight")
 			.def("get_position", &CLight::GetPosition)
@@ -1382,6 +1382,8 @@ void CScriptManager::RegisterLUAFunctions()
 	class_<CParticleSystemInstance, CRenderableObject>("CParticleSystemInstance")
 		.def(constructor<>())
 		.def(constructor<tinyxml2::XMLElement*>())
+		.def("set_active_particles", &CParticleSystemInstance::SetActiveParticles)
+		.def("get_active_particles", &CParticleSystemInstance::GetActiveParticles)
 		.def("get_start", &CParticleSystemInstance::GetStart)
 		.def("set_start", &CParticleSystemInstance::SetStart)
 		.def("get_awake", &CParticleSystemInstance::GetAwake)
