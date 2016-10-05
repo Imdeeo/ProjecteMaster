@@ -144,6 +144,8 @@ bool CGUIManager::Load(std::string _FileName)
 			}
 			else if (l_Element->Name() == std::string("button"))
 				m_Buttons[l_Element->GetPszProperty("name")] = new CButon(&m_Sprites[l_Element->GetPszProperty("normal")], &m_Sprites[l_Element->GetPszProperty("highlight")], &m_Sprites[l_Element->GetPszProperty("pressed")]);
+			else if (l_Element->Name() == std::string("panel"))
+				m_Panels[l_Element->GetPszProperty("name")] = new CPanel(&m_Sprites[l_Element->GetPszProperty("normal")]);
 			else if (l_Element->Name() == std::string("slider"))
 				m_Sliders[l_Element->GetPszProperty("name")] = new CSlider(&m_Sprites[l_Element->GetPszProperty("base")], &m_Sprites[l_Element->GetPszProperty("top")], &m_Sprites[l_Element->GetPszProperty("handle")], &m_Sprites[l_Element->GetPszProperty("pressed_handle")]);
 			else if (l_Element->Name() == std::string("font"))
