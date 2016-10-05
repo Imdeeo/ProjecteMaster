@@ -110,6 +110,8 @@ CUABEngine* CUABEngine::GetInstance()
 	{
 		m_Instance = new  CUABEngine();
 	}
+	//DWORD dwWidth = GetSystemMetrics(SM_CXSCREEN);
+	//DWORD dwHeight = GetSystemMetrics(SM_CYSCREEN);
 	return m_Instance;
 }
 

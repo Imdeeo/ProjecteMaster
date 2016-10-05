@@ -695,7 +695,7 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStat
 	}
 }
 
-void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, bool _FlipNormals)
+void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Directory, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, bool _FlipNormals)
 {
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
@@ -705,7 +705,7 @@ void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CSta
 		physx::PxU32 l_Size;
 
 		char l_FileName[256] = "";
-		sprintf_s(l_FileName, "%s\\%s_%u.tmesh", _Mesh->GetPhysxMeshesDirectory().c_str(), _name.c_str(), i);
+		sprintf_s(l_FileName, "%s\\%s_%u.tmesh", _Directory.c_str(), _name.c_str(), i);
 
 		if (LoadMeshFile(l_FileName,&l_Data,&l_Size)){
 
