@@ -59,6 +59,7 @@ void CGUIManager::Destroy()
 	m_SpriteMaps.clear();
 	m_Sprites.clear();
 	m_Commands.clear();
+	m_PanelCommands.clear();
 }
 
 void CGUIManager::SetActive(const std::string& id)
@@ -295,7 +296,7 @@ void CGUIManager::DoPanel(const std::string& guiID, const std::string& panelID, 
 		l_sprite,position.Getx(), position.Gety(), position.Getx() + position.Getwidth(), position.Gety() + position.Getheight(),
 		0, 0, 1, 1,
 		CColor(1, 1, 1, 1) };
-	m_Commands.push_back(command);
+	m_PanelCommands.push_back(command);
 
 	//return l_result;
 }
@@ -565,9 +566,9 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 {
 	int currentVertex = 0;
 	SpriteMapInfo *currentSpriteMap = nullptr;
-	for (size_t i = 0; i < m_Commands.size(); ++i)  //commandsExecutionOrder.size()
+	for (size_t i = 0; i < m_PanelCommands.size(); ++i)  //commandsExecutionOrder.size()
 	{
-		GUICommand &command = m_Commands[i];
+		GUICommand &command = m_PanelCommands[i];
 		assert(command.x1 <= command.x2);
 		assert(command.y2 <= command.y2);
 
@@ -609,6 +610,51 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 		m_CurrentBufferData[currentVertex++] = { Vect4f(x2, y2, 0.f, 1.f), command.color, Vect2f(u2, v2) };
 		m_CurrentBufferData[currentVertex++] = { Vect4f(x2, y1, 0.f, 1.f), command.color, Vect2f(u2, v1) };
 	}
+
+	for (size_t i = 0; i < m_Commands.size(); ++i)  //commandsExecutionOrder.size()
+	{
+		GUICommand &command = m_Commands[i];
+		assert(command.x1 <= command.x2);
+		assert(command.y2 <= command.y2);
+
+		SpriteInfo *commandSprite = command.sprite;
+		SpriteMapInfo *commandSpriteMap = commandSprite->SpriteMap;
+
+		if (currentSpriteMap != commandSpriteMap || currentVertex + 6 >= MAX_VERTICES_PER_CALL)
+		{
+			if (currentVertex > 0)
+			{
+				//TODO log a warning if we get here by "currentVertex == s_MaxVerticesPerCall"
+				//TODO draw all c urrent vertex in the currentBuffer
+				CRenderableObjectTechnique* l_technique = m_Materials[currentSpriteMap->MaterialIndex]->GetRenderableObjectTechnique();
+				m_Materials[currentSpriteMap->MaterialIndex]->Apply(l_technique);
+				m_VertexBuffers[currentSpriteMap->MaterialIndex]->UpdateVertexs(m_CurrentBufferData, currentVertex);
+				m_VertexBuffers[currentSpriteMap->MaterialIndex]->Render(RenderManager, l_technique->GetEffectTechnique(), &CEffectManager::m_SceneParameters, currentVertex);
+			}
+			currentVertex = 0;
+			currentSpriteMap = commandSpriteMap;
+		}
+		int l_Height = RenderManager->GetContextManager()->GetHeight();
+		int l_Width = RenderManager->GetContextManager()->GetWidth();
+		float x1 = (command.x1 / (l_Width * 0.5f)) - 1.0f;
+		float x2 = (command.x2 / (l_Width * 0.5f)) - 1.0f;
+		float y1 = 1.0f - (command.y1 / (l_Height * 0.5f));
+		float y2 = 1.0f - (command.y2 / (l_Height * 0.5f));
+
+		float u1 = commandSprite->u1 * (1.0f - command.u1) + commandSprite->u2 * command.u1;
+		float u2 = commandSprite->u1 * (1.0f - command.u2) + commandSprite->u2 * command.u2;
+		float v1 = commandSprite->v1 * (1.0f - command.v1) + commandSprite->v2 * command.v1;
+		float v2 = commandSprite->v1 * (1.0f - command.v2) + commandSprite->v2 * command.v2;
+
+		assert(MAX_VERTICES_PER_CALL > currentVertex + 6);
+		m_CurrentBufferData[currentVertex++] = { Vect4f(x1, y2, 0.f, 1.f), command.color, Vect2f(u1, v2) };
+		m_CurrentBufferData[currentVertex++] = { Vect4f(x2, y2, 0.f, 1.f), command.color, Vect2f(u2, v2) };
+		m_CurrentBufferData[currentVertex++] = { Vect4f(x1, y1, 0.f, 1.f), command.color, Vect2f(u1, v1) };
+
+		m_CurrentBufferData[currentVertex++] = { Vect4f(x1, y1, 0.f, 1.f), command.color, Vect2f(u1, v1) };
+		m_CurrentBufferData[currentVertex++] = { Vect4f(x2, y2, 0.f, 1.f), command.color, Vect2f(u2, v2) };
+		m_CurrentBufferData[currentVertex++] = { Vect4f(x2, y1, 0.f, 1.f), command.color, Vect2f(u2, v1) };
+	}
 	if (currentVertex > 0)
 	{
 		CRenderableObjectTechnique* l_technique = m_Materials[currentSpriteMap->MaterialIndex]->GetRenderableObjectTechnique();
@@ -617,6 +663,7 @@ void CGUIManager::Render(CRenderManager *RenderManager)
 		m_VertexBuffers[currentSpriteMap->MaterialIndex]->Render(RenderManager, l_technique->GetEffectTechnique(), &CEffectManager::m_SceneParameters, currentVertex);
 	}
 	m_Commands.clear();
+	m_PanelCommands.clear();
 	m_InputUpToDate = false;
 }
 
