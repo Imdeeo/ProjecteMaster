@@ -6,6 +6,7 @@
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="GUIPosition.cpp" />
     <ClCompile Include="SliderResult.cpp" />
+    <ClCompile Include="Panel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIManager.h" />
@@ -13,5 +14,6 @@
     <ClInclude Include="Slider.h" />
     <ClInclude Include="GUIPosition.h" />
     <ClInclude Include="SliderResult.h" />
+    <ClInclude Include="Panel.h" />
   </ItemGroup>
 </Project>

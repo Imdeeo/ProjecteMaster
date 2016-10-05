@@ -2,6 +2,7 @@
 #include "Materials\Material.h"
 #include "Buton.h"
 #include "Slider.h"
+#include "Panel.h"
 #include "RenderManager\RenderManager.h"
 #include "RenderableObjects\RenderableObjectTechnique.h"
 #include "Materials\Material.h"
@@ -281,6 +282,20 @@ bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID
 	m_Commands.push_back(command);
 	
 	return l_result;
+}
+
+void CGUIManager::DoPanel(const std::string& guiID, const std::string& panelID, const CGUIPosition& position)
+{
+	SpriteInfo* l_sprite = m_Panels[panelID]->GetNormal();
+	CheckInput();
+
+	GUICommand command = {
+		l_sprite,position.Getx(), position.Gety(), position.Getx() + position.Getwidth(), position.Gety() + position.Getheight(),
+		0, 0, 1, 1,
+		CColor(1, 1, 1, 1) };
+	m_Commands.push_back(command);
+
+	//return l_result;
 }
 
 
