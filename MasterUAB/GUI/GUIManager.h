@@ -13,6 +13,7 @@
 
 class CButon;
 class CSlider;
+class CPanel;
 class CMaterial;
 class CRenderableVertexs;
 class CRenderManager;
@@ -58,6 +59,7 @@ private:
 	std::map<std::string, SpriteMapInfo> m_SpriteMaps; 
 	std::map<std::string, SpriteInfo> m_Sprites;
 	std::map<std::string, CButon*> m_Buttons;
+	std::map<std::string, CPanel*> m_Panels;
 	std::map<std::string, CSlider*> m_Sliders;
 	std::vector<GUICommand> m_Commands;
 	std::string m_FileName;
@@ -113,13 +115,14 @@ public:
 	void Render(CRenderManager *RenderManager);
 
 	bool DoButton(const std::string& guiID, const std::string& buttonID, const CGUIPosition& position);
+	void DoPanel(const std::string& guiID, const std::string& panelID, const CGUIPosition& position);
 	CSliderResult DoSlider(const std::string& guiID, const std::string& sliderID, const CGUIPosition& position, float minValue, float maxValue, float currentValue, bool _Interactuable);
 	int FillCommandQueueWithTextAux(const std::string& _font, const std::string& _text, 
 		const CColor& _color = CColor(1, 1, 1, 1), Vect4f *textBox_ = nullptr);
 	void FillCommandQueueWithText(const std::string& _font, const std::string& _text,
 		Vect2f coord, GUIAnchor anchor = GUIAnchor::BOTTOM_LEFT, const CColor& _color = CColor(1, 1, 1, 1));
 	std::string DoTextBox(const std::string& guiID, const std::string& _font, const std::string& currentText, CGUIPosition position);
-
+	//void DoPanel(const std::string& guiID, );
 
 	UAB_BUILD_GET_SET(bool, InputUpToDate)
 	UAB_BUILD_GET_SET(int, MouseX)
