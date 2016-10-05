@@ -5,6 +5,8 @@
 #include "Materials\MaterialManager.h"
 
 #include "Materials\MaterialParameter.h"
+#include "Camera\CameraControllerManager.h"
+#include "Lights\DirectionalLight.h"
 
 CSetLightPositionSceneRendererCommand::CSetLightPositionSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
 {
@@ -16,10 +18,9 @@ CSetLightPositionSceneRendererCommand::~CSetLightPositionSceneRendererCommand(){
 
 void CSetLightPositionSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
-	CLight* l_Light = UABEngine.GetInstance()->GetLightManager()->GetResource(m_LightName);
+	CDirectionalLight* l_Light = (CDirectionalLight*) UABEngine.GetLightManager()->GetResource(m_LightName);
 	std::vector<CMaterialParameter *> l_Parameters = UABEngine.GetInstance()->GetMaterialManager()->GetResource(m_MaterialName)->GetParameters();
-	Vect2f l_2DPos = UABEngine.GetInstance()->GetRenderManager()->GetScreenPosFrom3D(l_Light->GetPosition());
-	l_2DPos.y = 0.2;
+	Vect2f l_2DPos = UABEngine.GetInstance()->GetRenderManager()->GetScreenPosFrom3D(UABEngine.GetCameraControllerManager()->GetMainCamera()->GetPosition() - l_Light->GetDirection() * 100);
 	for (size_t i = 0; i<l_Parameters.size(); i++)
 	{
 		if (l_Parameters[i]->GetName() == "light_position")

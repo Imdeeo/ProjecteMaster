@@ -19,7 +19,9 @@ g_Engine = CUABEngine.get_instance()
 m_MusicSliderResult = CSliderResult(50.0, 50.0)
 m_FxSliderResult = CSliderResult(50.0, 50.0)
 m_Cordura = CSliderResult(50.0, 50.0)
-
+m_ScreenResolution = Vect2f(1280.0, 720.0)
+m_ScreenFactorX = 1.0
+m_ScreenFactorY = 1.0
 
 function mainLua()
 	InitAntweakBar()
@@ -49,9 +51,12 @@ function mainLua()
 	
 	--deactivate_gravity()
 	--deactivate_player_collisions()
-	l_LevelManager:load_level("Recibidor")	
-	--l_LevelManager:load_level("Biblioteca")
+	--l_LevelManager:load_level("Recibidor")	
+	l_LevelManager:load_level("Biblioteca")
 	--l_LevelManager:load_level("Maquinas")	
+	
+	m_ScreenFactorX = m_ScreenResolution.x / 1920
+	m_ScreenFactorY = m_ScreenResolution.y / 1080
 end
 
 function levelMainLua(level)
@@ -167,21 +172,28 @@ function luaGui()
 				m_options = false
 			end	
 		else
-			gui_manager:do_text("fontTest", "A SIMPLE SONG", coord, CGUIManager.mid_center, color)
-			gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_PosX = 145 * m_ScreenFactorX
+			local l_PosY = 450 * m_ScreenFactorY
+			local l_Width = 330 * m_ScreenFactorX
+			local l_Height = 83 * m_ScreenFactorY
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY, l_Width, l_Height, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local b_play = gui_manager:do_button("Play", "play_button", gui_position)
 			if b_play then
 				m_menu = false
 				g_Engine:set_pause(false)
 			end 
 			
-			gui_position = CGUIPosition(500, 460, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_Height, l_Width, l_Height, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			m_options = gui_manager:do_button("Options", "load_button", gui_position)
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_Height * 2, l_Width, l_Height, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			m_options = gui_manager:do_button("Options", "options_button", gui_position)
 		
-			gui_position = CGUIPosition(500, 520, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_Height * 3, l_Width, l_Height, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			m_credits = gui_manager:do_button("Credits", "credits_button", gui_position)
 			
-			gui_position = CGUIPosition(500, 580, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_Height * 4, l_Width, l_Height, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local b_exit = gui_manager:do_button("Exit", "exit_button", gui_position)
 			if b_exit then
 				g_Engine:quit()
