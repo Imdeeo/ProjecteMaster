@@ -17,9 +17,9 @@
 		<sprite name="buttonCredits_over" x="386" y="467" w="255" h="90" pX="0.5" pY="0.5"/>
 		<sprite name="buttonCredits_pressed" x="710" y="467" w="255" h="90" pX="0.5" pY="0.5"/>
 		
-		<sprite name="buttonBack_idle" x="45" y="616" w="255" h="90" pX="0.5" pY="0.5"/>
-		<sprite name="buttonBack_over" x="386" y="616" w="255" h="90" pX="0.5" pY="0.5"/>
-		<sprite name="buttonBack_pressed" x="710" y="616" w="255" h="90" pX="0.5" pY="0.5"/>
+		<sprite name="buttonLoad_idle" x="45" y="616" w="255" h="90" pX="0.5" pY="0.5"/>
+		<sprite name="buttonLoad_over" x="386" y="616" w="255" h="90" pX="0.5" pY="0.5"/>
+		<sprite name="buttonLoad_pressed" x="710" y="616" w="255" h="90" pX="0.5" pY="0.5"/>
 		
 		<sprite name="buttonExit_idle" x="45" y="763" w="255" h="90" pX="0.5" pY="0.5"/>
 		<sprite name="buttonExit_over" x="386" y="763" w="255" h="90" pX="0.5" pY="0.5"/>
@@ -48,7 +48,7 @@
 	<button name="play_button" normal="buttonPlay_idle" highlight="buttonPlay_over" pressed="buttonPlay_pressed"/>
 	<button name="options_button" normal="buttonOptions_idle" highlight="buttonOptions_over" pressed="buttonOptions_pressed"/>
 	<button name="credits_button" normal="buttonCredits_idle" highlight="buttonCredits_over" pressed="buttonCredits_pressed"/>
-	<button name="back_button" normal="buttonBack_idle" highlight="buttonBack_over" pressed="buttonBack_pressed"/>
+	<button name="load_button" normal="buttonLoad_idle" highlight="buttonLoad_over" pressed="buttonLoad_pressed"/>
 	<button name="exit_button" normal="buttonExit_idle" highlight="buttonExit_over" pressed="buttonExit_pressed"/>
 	<font name="fontTest" path="Data\\Fonts\\fontTest.fnt" />
 	<slider name="volume_slider" base="slider_base" top="slider_top" handle="slider_handle" pressed_handle="slider_pressed_handle"/>
