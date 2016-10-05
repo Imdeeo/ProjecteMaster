@@ -92,6 +92,9 @@
 #include "Particles\ParticleManager.h"
 #include "Particles\ParticleSystemType.h"
 #include "Particles\ParticleSystemInstance.h"
+#include "Bilboards\BilboardManager.h"
+#include "Bilboards\BilboardSystemInstance.h"
+#include "Bilboards\BilboardSystemType.h"
 #include "LineRenderer\LineRenderer.h"
 
 #include "Manchas\ManchasManager.h"
@@ -580,6 +583,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_effect_manager", &CUABEngine::GetEffectManager)
 			.def("get_light_manager", &CUABEngine::GetLightManager)
 			.def("get_particle_manager", &CUABEngine::GetParticleManager)
+			.def("get_bilboard_manager", &CUABEngine::GetBilboardManager)
 			.def("get_manchas_manager", &CUABEngine::GetManchasManager)
 			.def("get_render_manager", &CUABEngine::GetRenderManager)
 			.def("get_animated_models_manager", &CUABEngine::GetAnimatedModelsManager)
@@ -1410,6 +1414,33 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("get_lua_emission_box_limit", &CParticleSystemInstance::GetLuaEmissionBoxLimit)
 		.def("get_lua_emission_box_position", &CParticleSystemInstance::GetLuaEmissionBoxPosition)
 		.def("get_lua_emission_box_half_size", &CParticleSystemInstance::GetLuaEmissionBoxHalfSize)
+	];
+
+	module(m_LS)[
+		class_<CBilboardSystemType, CNamed>("CBilboardSystemType")
+		.def("get_lua_num_frames", &CBilboardSystemType::GetLuaNumFrames)
+		.def("get_lua_time_per_frame", &CBilboardSystemType::GetLuaTimePerFrame)
+		.def("get_material", &CBilboardSystemType::GetMaterial)
+	];
+
+	RegisterTemplatedMapManager<CBilboardSystemType>(m_LS);
+
+	module(m_LS)[
+		class_<CBilboardManager, CTemplatedMapManager<CBilboardSystemType>>("CBilboardManager")
+		.def(constructor<>())
+		.def("load", &CBilboardManager::Load)
+		.def("reload", &CBilboardManager::Reload)
+	];
+
+	module(m_LS)[
+		class_<CBilboardSystemInstance, CRenderableObject>("CBilboardSystemInstance")
+		.def(constructor<>())
+		.def("get_lua_size", &CBilboardSystemInstance::GetLuaSize)
+		.def("get_lua_size_offset", &CBilboardSystemInstance::GetLuaSizeOffset)
+		.def("get_lua_color", &CBilboardSystemInstance::GetLuaColor)
+		.def("get_type", &CBilboardSystemInstance::GetType)
+		.def("get_active_bilboards", &CBilboardSystemInstance::GetActiveBilboards)
+		.def("get_position_lua_address", &CBilboardSystemInstance::GetLuaPosition)
 	];
 
 	// Manchas-----------------------------------------------------------------------------------------
