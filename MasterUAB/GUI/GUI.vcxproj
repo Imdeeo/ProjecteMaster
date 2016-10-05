@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buton.cpp" />
-    <ClCompile Include="dummy.cpp" />
     <ClCompile Include="GUIManager.cpp" />
     <ClCompile Include="GUIPosition.cpp" />
     <ClCompile Include="Slider.cpp" />
