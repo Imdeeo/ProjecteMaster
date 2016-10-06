@@ -134,7 +134,7 @@ void CUABEngine::Update(float _ElapsedTime)
 	m_VideoManager->Update(l_ElapsedTime);
 	const CCamera *l_CurrentCamera = m_RenderManager->GetCurrentCamera();
 	//GetSoundManager()->Update(l_CurrentCamera);
-	m_ScriptManager->RunCode("luaGui()");
+	m_ScriptManager->RunCode("luaGui(" + std::to_string(l_ElapsedTime) + ")");
 }
 
 void CUABEngine::LoadScreen(const std::string _FileName)

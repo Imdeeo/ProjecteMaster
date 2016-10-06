@@ -287,14 +287,14 @@ bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID
 	return l_result;
 }
 
-void CGUIManager::DoPanel(const std::string& guiID, const std::string& panelID, const CGUIPosition& position)
+void CGUIManager::DoPanel(const std::string& guiID, const std::string& panelID, const CGUIPosition& position, const float offsetX)
 {
 	SpriteInfo* l_sprite = m_Panels[panelID]->GetNormal();
 	CheckInput();
 
 	GUICommand command = {
 		l_sprite,position.Getx(), position.Gety(), position.Getx() + position.Getwidth(), position.Gety() + position.Getheight(),
-		0, 0, 1, 1,
+		-offsetX, 0, 1-offsetX, 1,
 		CColor(1, 1, 1, 1) };
 	m_PanelCommands.push_back(command);
 
