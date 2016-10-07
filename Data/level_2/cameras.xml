@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cameras>
-	<camera name="DebugCamera" type="spherical" distance="50" fov="1.13"/>
-	<camera name="MainCamera" type="fps" target="Jaheem" layer="solid" offset="1.8" fov="1.13"/>
-	<camera name="CrossArtifactDoor" total_time="11.0" type="key" undefined="true" pos="0.0 0.0 1.87894" filename="Data\level_2\cameras\CrossArtifactDoor.xml"/>
-	<camera name="PullBook" total_time="3.0" type="key" undefined="true" pos="-0.000433567 0.0291477 1.87894" filename="Data\level_2\cameras\PullBook.xml"/>
-	<camera name="PickClue" total_time="7.0" type="key" undefined="true" pos="-0.000433567 0.0291477 1.87894" filename="Data\level_2\cameras\PickClue.xml"/>
-	<camera name="PickArtifact" total_time="5.0" type="key" undefined="true" pos="0.0 0.0 1.87894" filename="Data\level_2\cameras\PickArtifact.xml"/>
+	<camera name="PullBook" total_time="3.0" type="key" undefined="true" pos="0.0 0.0 1.8" filename="Data\level_2\cameras\PullBook.xml"/>
+	<camera name="PickClue" total_time="7.0" type="key" undefined="true" pos="0.0 0.0 1.8" filename="Data\level_2\cameras\PickClue.xml"/>
+	<camera name="PickArtifact" total_time="5.0" type="key" undefined="true" pos="0.0 0.0 1.8" filename="Data\level_2\cameras\PickArtifact.xml"/>
+	<camera name="CrossArtifactDoor" total_time="11.0" type="key" undefined="true" pos="0.0 0.0 1.8" filename="Data\level_2\cameras\CrossArtifactDoor.xml"/>
+	<camera name="JaheemDies" total_time="6.0" type="key" reverse="false" pos="0.00586972 1.8 -1.44996" filename="Data\level_2\cameras\JaheemDies.xml"/>
+	<camera name="JaheemDies2" total_time="5.5" type="key" reverse="false" pos="0.0 1.8 -1.12657" filename="Data\level_2\cameras\JaheemDies2.xml"/>
 </cameras>

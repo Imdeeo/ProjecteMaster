@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <characters>
-	<enemy name="EnemyLeft" renderable_object="Automaton" layer="solid" type="Automaton" awake="true" vision_distance="10.0" vision_angle="0.30" distance_activate_run="15.0" distance_activate_walk="8.0" distance_activate_crouching="3.0" distance_kill="1.5" distance_change_node_walking="1.5" distance_change_node_running="1.0" walk_speed="0.6" run_speed="1.2" angular_walk_speed="80.0" angular_run_speed="50.0" alert_time="3.0" patrol="true" patrol_name="path_left">
+	<enemy name="EnemyLeft" renderable_object="Automaton" layer="solid" type="Automaton" awake="false" vision_distance="10.0" vision_angle="0.30" distance_activate_run="15.0" distance_activate_walk="8.0" distance_activate_crouching="3.0" distance_kill="1.5" distance_change_node_walking="1.5" distance_change_node_running="1.0" walk_speed="0.6" run_speed="1.2" angular_walk_speed="80.0" angular_run_speed="50.0" alert_time="3.0" patrol="true" patrol_name="path_left">
 		<param distance="5.0" time="3.0" sanity_amount="-5.0"/>
 		<param distance="3.0" time="2.0" sanity_amount="-5.0"/>
 		<param distance="2.0" time="1.0" sanity_amount="-5.0"/>
 		<param distance="0.5" time="0.5" sanity_amount="0.0"/>
 	</enemy>
-	<enemy name="EnemyRight" renderable_object="Automaton2" layer="solid" type="Automaton" awake="true" vision_distance="10.0" vision_angle="0.35" distance_activate_run="15.0" distance_activate_walk="8.0" distance_activate_crouching="3.0" distance_kill="1.5" distance_change_node_walking="1.5" distance_change_node_running="0.5" walk_speed="0.6" run_speed="1.2" angular_walk_speed="80.0" angular_run_speed="50.0" alert_time="3.0" patrol="true" patrol_name="path_right">
+	<enemy name="EnemyRight" renderable_object="Automaton2" layer="solid" type="Automaton" awake="false" vision_distance="10.0" vision_angle="0.35" distance_activate_run="15.0" distance_activate_walk="8.0" distance_activate_crouching="3.0" distance_kill="1.5" distance_change_node_walking="1.5" distance_change_node_running="0.5" walk_speed="0.6" run_speed="1.2" angular_walk_speed="80.0" angular_run_speed="50.0" alert_time="3.0" patrol="true" patrol_name="path_right">
 		<param distance="5.0" time="3.0" sanity_amount="-5.0"/>
 		<param distance="3.0" time="2.0" sanity_amount="-5.0"/>
 		<param distance="2.0" time="1.0" sanity_amount="-5.0"/>

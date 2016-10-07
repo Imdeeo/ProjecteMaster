@@ -43,12 +43,12 @@ function mainLua()
 	m_timerPause = 0
 	m_iniciando = true 
 	
-	--l_LevelManager:load_level("Player")	
+	l_LevelManager:load_level("Player")	
 	
 	--deactivate_gravity()
 	--deactivate_player_collisions()
-	l_LevelManager:load_level("Recibidor")	
-	--l_LevelManager:load_level("Biblioteca")
+	--l_LevelManager:load_level("Recibidor")	
+	l_LevelManager:load_level("Biblioteca")
 	--l_LevelManager:load_level("Maquinas")	
 end
 

@@ -1,12 +1,5 @@
 dofile("Data\\Lua\\Raycast\\PipeOrgan.lua")
-
-function FacingRaycast(_Offset, _Target, _Pos, _Distance)
-	utils_log("Pos: ".._Pos.x..", ".._Pos.y..", ".._Pos.z)
-	utils_log("Target: ".._Target.x..", ".._Target.y..", ".._Target.z)
-	utils_log("Offset: ".._Offset.x..", ".._Offset.y..", ".._Offset.z)
-	utils_log("Distance: "..(_Pos - _Target):length())
-	return ((_Pos - _Target):length() < _Distance)
-end
+dofile("Data\\Lua\\Raycast\\Helpers.lua")
 
 function R2TriggerOrganKeyA(_Player, _Pos)
 	--play key sound
@@ -40,12 +33,15 @@ end
 
 function R2Artifact(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
-	_Player.m_TargetPosOffset = Vect3f(-0.86, 0.0, 0.0)
-	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerArtifact"):get_position()
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.6) then
+	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.6)
+	utils_log("1")
+	l_Target = GetTriggerPos("TriggerArtifact")
+	utils_log("2")
+	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
 		_Player.m_Target = l_Target
+		_Player.m_AnimationTime = 5
 		_Player.m_InteractingAnimation = 6
-		_Player.m_InteractingCinematic = "PickArtifact"
+		_Player.m_InteractingCinematic = nil
 		_Player.m_CameraAnimation = "PickArtifact"
 		_Player.m_NewItemName = "Artilufacto"
 		_Player.m_ItemTime = 1
@@ -58,10 +54,8 @@ end
 
 function R2ArtifactDoor(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
-	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.50143)
-	l_Target = Vect3f(0.0, 0.0, 0.0)
-	l_Target.x = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerArtifactDoor"):get_position().x
-	l_Target.z = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerArtifactDoor"):get_position().z
+	_Player.m_TargetPosOffset = Vect3f(0.5, 0.0, -0.5)
+	l_Target = GetTriggerPos("TriggerArtifactDoor")
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.2) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 5
@@ -69,7 +63,7 @@ function R2ArtifactDoor(_Player, _Pos)
 		_Player.m_CameraAnimation = "CrossArtifactDoor"
 		_Player.m_NewItemName = ""
 		_Player.m_ItemTime = 1.6667
-		_Player.m_CurrentAend = "CrossArtifactDoor"
+		--_Player.m_CurrentAend = "CrossArtifactDoor"
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
@@ -79,7 +73,7 @@ end
 function R2Clue(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(-0.86, 0.0, 0.0)
-	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerClue"):get_position()
+	l_Target = GetTriggerPos("TriggerClue")
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.6) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 7
@@ -98,7 +92,7 @@ end
 function R2Book(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.86)
-	l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerBook"):get_position()
+	l_Target = GetTriggerPos("TriggerBook")
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 7

@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cinematics>
-	<!--<cinematic name="PickArtifact" duration="0.0333333" cycle="false">
-		<cinematic_object resource="Artilufacto" layer="solid">
-			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="0.0333333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="0.0487461 0.0487461 0.0487461"/>
+	<cinematic name="fonotelefote" duration="1.33333" cycle="false">
+		<cinematic_object resource="RuedasBottomFonotelefote" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="-0.92388 0.0 0.0 -0.382683" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="1.50996e-007 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
-	</cinematic>-->
-	<cinematic name="CrossAritfactDoor" duration="8.7" cycle="false">
-		<cinematic_object resource="PuertaBiblio" layer="solid">
+		<cinematic_object resource="RuedasTopFonotelefote" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="1.50996e-007 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="open_secret_chamber" duration="6.66667" cycle="false">
+		<cinematic_object resource="puertalaberintooficial" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.16667" pos="0.1296 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.6 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.6 0.0 0.0" rotation="0.0 0.704434 0.0 -0.709769" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="CrossArtifactDoor" duration="8.7" cycle="false">
+		<cinematic_object resource="PuertaSalaMaquinas" layer="solid">
 			<cinematic_object_key_frame time="5.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="6.36667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="7.36667" pos="0.0 0.0 0.0" rotation="0.0 -0.571513 0.0 -0.820593" scale="1.0 1.0 1.0"/>
@@ -22,13 +36,13 @@
 			<cinematic_object_key_frame time="4.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.819152 -0.573577" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="5.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 1.0 0.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
-		<!--<cinematic_object resource="Artilufacto001" layer="solid">
+		<cinematic_object resource="Artilufacto" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="0.0333333" pos="-3.62098e-005 -0.0006181 5.4121e-005" rotation="0.0 0.0 0.0 1.0" scale="22.0334 22.0334 22.0334"/>
-			<cinematic_object_key_frame time="0.366667" pos="-3.59118e-005 0.00158411 -0.00348634" rotation="0.0153588 0.0 0.0 0.999882" scale="22.0335 22.0334 22.0335"/>
-		</cinematic_object>-->
+			<cinematic_object_key_frame time="0.0333333" pos="-3.62098e-005 -0.0006181 5.4121e-005" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.366667" pos="-3.59118e-005 0.00158411 -0.00348634" rotation="0.0153588 0.0 0.0 0.999882" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
 	</cinematic>
-	<cinematic name="PickBook" duration="0.666667" cycle="false">
+	<cinematic name="PullBook" duration="0.666667" cycle="false">
 		<cinematic_object resource="LibroEspecial" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="-0.243672 0.0 0.0 0.969858" scale="1.0 1.0 1.0"/>
