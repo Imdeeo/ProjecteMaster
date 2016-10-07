@@ -358,6 +358,9 @@ void CStaticMesh::CalcTangentsAndBinormals(void *VtxsData, unsigned short *IdxsD
 		unsigned short i1 = IdxsData[b];
 		unsigned short i2 = IdxsData[b + 1];
 		unsigned short i3 = IdxsData[b + 2];
+		if (i1 >= VtxCount || i2 >= VtxCount || i3 >= VtxCount){
+			UtilsLog("Gonna crash!");
+		}
 		Vect3f *v1 = (Vect3f *)&l_VtxAddress[i1*VertexStride + GeometryStride];
 		Vect3f *v2 = (Vect3f *)&l_VtxAddress[i2*VertexStride + GeometryStride];
 		Vect3f *v3 = (Vect3f *)&l_VtxAddress[i3*VertexStride + GeometryStride];
