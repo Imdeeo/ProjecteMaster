@@ -103,4 +103,5 @@ function R2Book(_Player, _Pos)
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 	end
+	-- activate projector -> launch cinematic, activate lights and particles
 end

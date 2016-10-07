@@ -348,7 +348,7 @@
 	<instance_mesh name="EstanteriaGrandeLaberinto041" layer ="solid" core_name="EstanteriaGrandeLaberinto041" position="-8.06774 6.23387 17.896" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="TriggerPipeOrgan" layer="triggers" is_active="true" core_name="TriggerPipeOrgan" position="0.367395 1.12704 15.0313" rotation="0.173648 0.0 0.0 -0.984808" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
-		<interactuable_object actor_name="OrganoBueno"/>
+		<interactuable_object actor_name="Organo"/>
 	</instance_mesh>
 	<instance_mesh name="TriggerArtifact" layer="triggers" is_active="true" core_name="TriggerArtifact" position="-17.0552 1.66966 28.9583" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>

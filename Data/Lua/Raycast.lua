@@ -65,9 +65,7 @@ function TriggerRaycast(_Player, _Pos)
 		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyF" then
 			R2TriggerOrganKeyF(_Player, _Pos)
 		elseif _Player.m_RaycastData.actor_name == "TriggerArtifact" then
-			--if R2PuzzleCleared then
-				R2Artifact(_Player, _Pos)
-			--end
+			R2Artifact(_Player, _Pos)
 		elseif _Player.m_RaycastData.actor_name == "TriggerArtifactDoor" then
 			if _Player.m_ItemName == "Artilufacto" then
 				R2ArtifactDoor(_Player, _Pos)
