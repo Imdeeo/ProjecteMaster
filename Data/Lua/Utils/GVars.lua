@@ -18,6 +18,7 @@ g_Radius = 0.3
 g_CrouchingHeight = 0.4
 g_StandingOffset = (g_Height*0.5)+g_Radius+CONTACT_OFFSET
 g_CrouchingOffset = (g_CrouchingHeight*0.5)+g_Radius+CONTACT_OFFSET
+g_TotalHeight = g_Height+(g_Radius*2)
 
 --// ENEMIES
 g_EnemyHeight = 1.2
