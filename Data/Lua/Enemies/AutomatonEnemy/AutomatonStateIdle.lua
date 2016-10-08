@@ -17,16 +17,21 @@ function IdleUpdateAutomaton(args, _ElapsedTime)
 	
 	l_Enemy:EnemyMove(_ElapsedTime)
 	
-	if l_Enemy.m_Patrol then	
+	if l_Enemy.m_Patrol then
 		l_Enemy.m_State = "patrol"		
 	else
-		if l_Enemy:PlayerVisible(l_Owner) or l_Enemy:DetectPlayerNoise(1) then
+		if (l_Enemy:PlayerVisible(l_Owner) or l_Enemy:DetectPlayerNoise(1)) then
+			if l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToKill) then
+				l_Enemy.m_State = "attack"
+			end
+		else
 			l_Enemy.m_State = "chase"
 		end
 	end
 end
 
 function IdleEndAutomaton(args)
+	utils_log("IdleEnd")
 end
 
 function IdleToPatrolConditionAutomaton(args)
