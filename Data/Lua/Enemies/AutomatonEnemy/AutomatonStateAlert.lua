@@ -19,7 +19,9 @@ function AlertUpdateAutomaton(args, _ElapsedTime)
 	
 	if l_Enemy:PlayerVisible(l_Owner) or l_Enemy:DetectPlayerNoise(1.5) then
 		-- the enemy has heard to player. How the enemy is in alert he hears more far away
-		if l_Enemy.m_Patrol and not l_Enemy.m_IsChasing then
+		if l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToKill) then
+			l_Enemy.m_State = "attack"
+		elseif l_Enemy.m_Patrol and not l_Enemy.m_IsChasing then
 			l_Enemy:IncrementePatrolPointIndex()
 			local l_NodePoint = l_Enemy:GetActualPatrolPoint()
 			l_Enemy.m_DefaultPosition = l_NodePoint.node.position
