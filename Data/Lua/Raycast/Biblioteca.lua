@@ -31,12 +31,34 @@ function R2TriggerOrganKeyF(_Player, _Pos)
 	R2PushOrganKey("F", _Player)
 end
 
+function R2TriggerOrganKeyG(_Player, _Pos)
+	--play key sound
+	R2PushOrganKey("G", _Player)
+end
+
+function R2TriggerPipeOrgan(_Player, _Pos)
+	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
+	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.9)
+	l_Target = GetTriggerPos("TriggerPipeOrgan")
+	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
+		_Player.m_Target = l_Target
+		_Player.m_AnimationTime = 0.6667
+		_Player.m_InteractingAnimation = 8
+		_Player.m_InteractingCinematic = nil
+		_Player.m_CameraAnimation = "PipeOrganStart"
+		_Player.m_CurrentAend = nil
+		_Player.m_IsInteracting = true
+		_Player.m_IsClimbing = false
+		_Player.m_IsCorrecting = true
+		_Player.m_IsPuzzle = true
+		_Player.m_PhysXManager:disable_trigger("TriggerPipeOrgan")
+	end
+end
+
 function R2Artifact(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.6)
-	utils_log("1")
 	l_Target = GetTriggerPos("TriggerArtifact")
-	utils_log("2")
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
 		_Player.m_Target = l_Target
 		_Player.m_AnimationTime = 5

@@ -7,6 +7,6 @@
 	<layer name="triggers"/>
 	<layer name="manchas"/>
 	<layer name="skybox"/>
-	<animated_instance_mesh name="Jaheem" layer="solid" core_name="Jaheem" position="-17.034624099731 2.0 26.731231689453" rotation="-0.000000 0.703490 -0.000000 0.710705" create_physics="false" visible="true"/>
+	<animated_instance_mesh name="Jaheem" layer="solid" core_name="Jaheem" position="4.8796510696411 2.0 11.498070716858" rotation="-0.000000 0.703490 -0.000000 0.710705" create_physics="false" visible="true"/>
 	<manchas_instance name="manchas" layer="manchas" type="manchasCordura1" awake="(null)" visible="true"/>
 </renderable_objects>
