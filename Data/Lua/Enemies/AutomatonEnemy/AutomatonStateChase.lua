@@ -24,21 +24,20 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 	l_Enemy:LoseSanity(l_Distance)
 	
 	if l_Enemy:PlayerVisible(l_Owner) then
-		l_Enemy.m_LastPositionPlayer = nil
-		l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime
-		
-		local l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularRunSpeed
-			
-		if l_PercentRotation > 1.0 then
-			l_PercentRotation = 1.0
-			l_Enemy.m_TimerRotation = 0.0
-		end 
-		
-		l_Enemy:EnemyWalk(l_PlayerPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
-		
-		-- Si la distancia entre el enemy y el player es menor a lo establecido pasamos a attack
-		if l_Distance < l_Enemy.m_DistanceToKill then
+		if l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToKill) then
 			l_Enemy.m_State = "attack"
+		else
+			l_Enemy.m_LastPositionPlayer = nil
+			l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime
+
+			local l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularRunSpeed
+
+			if l_PercentRotation > 1.0 then
+				l_PercentRotation = 1.0
+				l_Enemy.m_TimerRotation = 0.0
+			end 
+			
+			l_Enemy:EnemyWalk(l_PlayerPos, l_Enemy.m_RunSpeed, l_PercentRotation, _ElapsedTime)
 		end
 	else
 		if l_Enemy.m_BlockingObjectName == nil and not l_Enemy.m_DetectedSound then
@@ -49,32 +48,31 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 			if l_Enemy.m_LastPositionPlayer == nil then
 				l_Enemy.m_LastPositionPlayer = Vect3f(l_PlayerPos.x, l_PlayerPos.y, l_PlayerPos.z) 
 				l_Enemy:SearchForPath(l_Enemy.m_LastPositionPlayer)
+				
+				local l_FirstPointPos = l_Enemy.m_PathFinding:get_point(l_Enemy.m_Name, l_Enemy.m_IndexPoint)
+				local l_SecondPointPos = l_Enemy.m_PathFinding:get_point(l_Enemy.m_Name, l_Enemy.m_IndexPoint+1)
+				
+				local l_EnemyPos = l_Owner:get_position()
+				local l_DistanceFirstToSecondPoint = l_EnemyPos:distance(l_FirstPointPos) + l_FirstPointPos:distance(l_SecondPointPos)
+				local l_DistanceToSecondPoint = l_EnemyPos:distance(l_FirstPointPos)
+				local l_RaycastData = RaycastData()
+				local l_Hit = l_Enemy.m_PhysXManager:raycast(l_EnemyPos + l_Enemy.m_HeadOffset, l_SecondPointPos, l_Enemy.m_PhysXGroups, l_RaycastData)
+				
+				if l_Hit then
+					utils_log("OBJETO: "..l_RaycastData.actor_name)
+				else
+					utils_log("No ha habido hit")
+				end
+				
+				if l_DistanceToSecondPoint < l_DistanceFirstToSecondPoint and not l_Hit then
+					l_Enemy:IncrementPathPointIndex()
+				end
 			end	
 			
 			-- Comprobamos si ha podido establecer una ruta
 			if l_Enemy.m_TotalNodes > 0 then
 				-- Actualizamos la posicion del enemigo
 				if not l_Enemy.m_IsCorrected then
-					if l_Enemy.m_IndexPoint == 0 then
-						-- primera correccion				
-						local l_FirstPointPos = l_Enemy.m_PathFinding:get_point(l_Enemy.m_Name, l_Enemy.m_IndexPoint)
-						local l_SecondPointPos = l_Enemy.m_PathFinding:get_point(l_Enemy.m_Name, l_Enemy.m_IndexPoint+1)
-						local l_EnemyPos = l_Owner:get_position()
-						local l_FirstDirection = (l_FirstPointPos - l_EnemyPos)
-						l_FirstDirection.y = 0
-						l_FirstDirection:normalize(1)
-						local l_SecondDirection = (l_EnemyPos - l_SecondPointPos)
-						l_SecondDirection.y = 0
-						l_SecondDirection:normalize(1)
-						
-						local angle_to_turn = l_Enemy:CalculateAngleRotation(l_FirstDirection, l_SecondDirection)
-						
-						if angle_to_turn == 0.0 or l_FirstPointPos:distance(l_EnemyPos) <= l_Enemy.m_DistanceToChangeNodeRunning then
-							utils_log("INCREMENTANDO NODO!!!")
-							l_Enemy:IncrementPathPointIndex()
-						end
-					end
-					
 					local l_PointPos = l_Enemy.m_PathFinding:get_point(l_Enemy.m_Name, l_Enemy.m_IndexPoint)
 					local l_Direction = (l_PointPos - l_Owner:get_position())
 					l_Direction.y = 0
