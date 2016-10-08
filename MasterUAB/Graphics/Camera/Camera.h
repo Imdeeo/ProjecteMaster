@@ -74,6 +74,12 @@ public:
 	{
 		return m_Up;
 	}
+	const Vect3f & GetRightVector() const
+	{
+		Vect3f l_Forward = m_LookAt - m_Position;
+		l_Forward.Normalize();
+		return m_Up^l_Forward;
+	}
 
 
 	const Mat44f & GetView() const { return m_View; }
