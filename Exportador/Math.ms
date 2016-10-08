@@ -185,22 +185,22 @@ fn createVertex pos col norm textcoord1 textcoord2 binormal tangent &vertex =
 	)
 )
 
-fn getIndex vertexVect vertex IdMaterial vertexsDictionary &vtxN =
+fn getIndex vertexVect vertex IdMaterial vertexsDictionary &indice =
 (
 	local vtxStr = vertex as string
 	local doContain = vertexsDictionary[IdMaterial].ContainsKey vtxStr
 
     if doContain then
 	(
-		vtxN = vertexsDictionary[IdMaterial].Item[vtxStr]
+		indice = vertexsDictionary[IdMaterial].Item[vtxStr]
 	) else (
-		vtxN = 0
+		indice = 0
 		for vect in vertexVect do
 		(
-			vtxN = vtxN + vect.count
+			indice = indice + vect.count
 		)
-		--vtxN = vertexVect[IdMaterial].count
-		vertexsDictionary[IdMaterial].Add vtxStr vtxN
+		indice = vertexVect[IdMaterial].count
+		vertexsDictionary[IdMaterial].Add vtxStr indice
 		append vertexVect[IdMaterial] vertex
 	)
 )
