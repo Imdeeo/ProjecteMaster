@@ -28,5 +28,13 @@
 	<animation name="cross_artifact_door" filename="CrossArtifactDoor.CAF"/>
 	<animation name="pick_artifact" filename="PickArtifact.CAF"/>
 	<animation name="pick_clue" filename="PickClue.CAF"/>
-	<animation name="pull_book" filename="PullBook.CAF"/>
+	<animation name="pipe_organ_start" filename="PipeOrganStart.CAF"/>
+	<animation name="pipe_organ_end" filename="PipeOrganEnd.CAF"/>
+	<animation name="pipe_organ_key_a" filename="PipeOrganKeyA.CAF"/>
+	<animation name="pipe_organ_key_b" filename="PipeOrganKeyB.CAF"/>
+	<animation name="pipe_organ_key_c" filename="PipeOrganKeyC.CAF"/>
+	<animation name="pipe_organ_key_d" filename="PipeOrganKeyD.CAF"/>
+	<animation name="pipe_organ_key_e" filename="PipeOrganKeyE.CAF"/>
+	<animation name="pipe_organ_key_f" filename="PipeOrganKeyF.CAF"/>
+	<animation name="pipe_organ_key_g" filename="PipeOrganKeyG.CAF"/>
 </actor>

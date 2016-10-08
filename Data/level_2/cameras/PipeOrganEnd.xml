@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<camera_key_controller name="PipeOrganEnd">
+	<key time="0.0" pos="-0.0310059 1.42907 0.605375" up="0.0 0.562742 0.826633" look_at="-0.0310059 0.602438 1.16812" fov="0.759313" near_plane="0.0" far_plane="1000.0"/>
+	<key time="0.666667" pos="-0.0310059 1.42907 0.605375" up="0.0 0.947369 0.320145" look_at="-0.0310059 1.10893 1.55274" fov="0.759313" near_plane="0.0" far_plane="1000.0"/>
+</camera_key_controller>

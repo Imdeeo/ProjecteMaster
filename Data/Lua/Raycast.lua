@@ -26,6 +26,7 @@ function CheckRaycast(_Player, _Pos)
 end
 
 function TriggerRaycast(_Player, _Pos)
+	utils_log(_Player.m_RaycastData.actor_name)
 	l_LevelID = g_Engine:get_level_loaded()
 	if l_LevelID == "1" then
 		if _Player.m_RaycastData.actor_name == "TriggerDoor" then
@@ -64,6 +65,10 @@ function TriggerRaycast(_Player, _Pos)
 			R2TriggerOrganKeyE(_Player, _Pos)
 		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyF" then
 			R2TriggerOrganKeyF(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyG" then
+			R2TriggerOrganKeyG(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerPipeOrgan" then
+			R2TriggerPipeOrgan(_Player, _Pos)
 		elseif _Player.m_RaycastData.actor_name == "TriggerArtifact" then
 			R2Artifact(_Player, _Pos)
 		elseif _Player.m_RaycastData.actor_name == "TriggerArtifactDoor" then

@@ -1,24 +1,23 @@
-m_OrganLastKey = nil
-m_OrganNewKey = nil
-m_OrganKeyCount = 1
-m_OrganKeyOrder = {"A", "B", "C", "D", "E", "F"}
-
 function R2PushOrganKey(_Key, _Player)
-	if m_OrganKeyOrder[m_OrganKeyCount] == _Key then
-		m_OrganKeyCount = m_OrganKeyCount + 1
+	if _Player.m_OrganKeyOrder[_Player.m_OrganKeyCount] == _Key then
+		_Player.m_OrganKeyCount = m_OrganKeyCount + 1
+	elseif _Player.m_OrganKeyOrder[1] == _Key then
+		_Player.m_OrganKeyCount = 2
 	else
-		m_OrganKeyCount = 2
+		_Player.m_OrganKeyCount = 1
 	end
-	m_OrganLastKey = m_OrganNewKey
-	m_OrganNewKey = _Key
 	
 	if m_OrganKeyCount > m_OrganKeyOrder:size() then
-		_Player.m_CinematicManager:get_resource("ResolvePuzzle"):play()
+		_Player.m_IsPuzzle = false
+		_Player.m_Timer = 0.0
+		_Player.m_InteractingAnimation = 9
+		_Player.m_CameraAnimation = "PipeOrganEnd"
 		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyA")
 		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyB")
 		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyC")
 		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyD")
 		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyE")
 		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyF")
+		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyG")
 	end
 end

@@ -347,4 +347,5 @@
 	<static_mesh name="TriggerArtifactDoor" filename="Data\level_2\Meshes\TriggerArtifactDoor.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerClue" filename="Data\level_2\Meshes\TriggerClue.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerBook" filename="Data\level_2\Meshes\TriggerBook.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerOrganKeyA" filename="Data\level_2\Meshes\TriggerOrganKeyA.mesh" physx_mesh_directory="Data\level_1\Meshes\PhysXMeshes"/>
 </static_meshes>

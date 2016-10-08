@@ -14,6 +14,7 @@ dofile("Data\\Lua\\Player\\PlayerStateFalling.lua")
 dofile("Data\\Lua\\Player\\PlayerStateInteracting.lua")
 dofile("Data\\Lua\\Player\\PlayerStateSinging.lua")
 dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
+dofile("Data\\Lua\\Player\\PlayerStatePuzzle.lua")
 
 --Bone #0: BrazosJaheem
 --Bone #1: CATRigHub001
@@ -159,6 +160,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_IsCorrecting = false
 		self.m_IsClimbing = false
 		self.m_IsInteracting = false
+		self.m_IsPuzzle = false
 		self.m_IsDead = false
 		
 		self.m_Target = nil
@@ -181,6 +183,12 @@ class 'CPlayer' (CLUAComponent)
 		self.m_FinalCameraRotation = nil
 		
 		self.m_RaycastData = RaycastData()
+		
+		self.m_Timer = 0.0
+		
+		self.m_OrganKeyCount = 1
+		self.m_OrganKeyOrder = {"A", "G"}
+		--{"A", "B", "C", "D", "E", "F", "G"}
 		
 		self.m_CurrentAend = nil
 		self.m_Aends = {}
@@ -374,6 +382,7 @@ class 'CPlayer' (CLUAComponent)
 		CorrectingState = State.create(CorrectingUpdate)
 		CorrectingState:set_do_first_function(CorrectingFirst)
 		CorrectingState:set_do_end_function(CorrectingEnd)
+		CorrectingState:add_condition(CorrectingToPuzzleCondition, "Puzzle")
 		CorrectingState:add_condition(CorrectingToClimbingCondition, "Climbing")
 		CorrectingState:add_condition(CorrectingToInteractingCondition, "Interacting")
 		CorrectingState:add_condition(ANYToDeadCondition, "Dead")
@@ -422,6 +431,12 @@ class 'CPlayer' (CLUAComponent)
 		DeadState:set_do_first_function(DeadFirst)
 		DeadState:set_do_end_function(DeadEnd)
 		
+		PuzzleState = State.create(PuzzleUpdate)
+		PuzzleState:set_do_first_function(PuzzleFirst)
+		PuzzleState:set_do_end_function(PuzzleEnd)
+		PuzzleState:add_condition(PuzzleToFallingCondition, "Falling")
+		PuzzleState:add_condition(ANYToDeadCondition, "Dead")
+		
 		self.m_StateMachine:add_state("Idle", IdleState)
 		self.m_StateMachine:add_state("Moving", MovingState)
 		self.m_StateMachine:add_state("Correcting", CorrectingState)
@@ -432,6 +447,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:add_state("Interacting", InteractingState)
 		self.m_StateMachine:add_state("Singing", SingingState)
 		self.m_StateMachine:add_state("Dead", DeadState)
+		self.m_StateMachine:add_state("Puzzle", PuzzleState)
 		
 	end	
 	

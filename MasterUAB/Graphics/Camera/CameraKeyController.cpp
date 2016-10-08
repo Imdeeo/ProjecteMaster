@@ -21,7 +21,7 @@ CCameraKeyController::CCameraKeyController(tinyxml2::XMLElement* TreeNode) : CCa
 
 	m_Reverse = TreeNode->GetBoolProperty("reverse");
 	m_ReverseDirection = 1;
-	m_Cycle = !m_Reverse;//*XMLTreeNode.GetPszProperty("cycle");
+	m_Cycle = /*!m_Reverse;//*/TreeNode->GetBoolProperty("cycle");
 }
 
 CCameraKeyController::~CCameraKeyController()
@@ -125,6 +125,23 @@ void CCameraKeyController::Update(float ElapsedTime)
 {
 	SetCurrentTime(m_CurrentTime + ElapsedTime);
 	GetCurrentKey();
+
+	if ((m_CurrentKey + 1) >= m_Keys.size() && !IsCycle() && !IsReverse())
+	{
+		m_Position = m_Keys[m_CurrentKey]->GetCameraInfo()->GetEye();
+		m_Position = m_RotationOffset*(m_Position - m_PositionOffsetKey) + m_PositionOffset;
+		m_Fov = m_Keys[m_CurrentKey]->GetCameraInfo()->GetFOV();
+		m_LookAt = m_Keys[m_CurrentKey]->GetCameraInfo()->GetLookAt();
+		m_LookAt = m_RotationOffset*(m_LookAt - m_PositionOffsetKey) + m_PositionOffset;
+		Vect3f l_Forward = (m_LookAt - m_Position).GetNormalized();
+		m_Up = m_Keys[m_CurrentKey]->GetCameraInfo()->GetUp();
+		m_Up = m_RotationOffset * m_Up;
+		Quatf l_auxRotation = Quatf();
+		l_auxRotation.SetFromFwdUp(l_Forward, m_Up);
+		m_Rotation = l_auxRotation;
+		return;
+	}
+		
 	
 	float l_CurrentTime;
 

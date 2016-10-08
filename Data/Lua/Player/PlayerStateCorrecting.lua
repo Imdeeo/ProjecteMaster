@@ -113,12 +113,17 @@ function ANYToCorrectingCondition(args)
 	return l_Player.m_IsCorrecting
 end
 
+function CorrectingToPuzzleCondition(args)
+	local l_Player = args["self"]
+	return (l_Player.m_IsPuzzle and ((l_Player.m_IsInteracting and l_Player.m_IsClimbing) or (not l_Player.m_IsInteracting and not l_Player.m_IsClimbing)))
+end
+
 function CorrectingToInteractingCondition(args)
 	local l_Player = args["self"]
-	return (l_Player.m_IsInteracting and l_Player.m_IsClimbing)
+	return (not l_Player.m_IsPuzzle and l_Player.m_IsInteracting and l_Player.m_IsClimbing)
 end
 
 function CorrectingToClimbingCondition(args)
 	local l_Player = args["self"]
-	return (not l_Player.m_IsInteracting and not l_Player.m_IsClimbing)
+	return (not l_Player.m_IsPuzzle and not l_Player.m_IsInteracting and not l_Player.m_IsClimbing)
 end

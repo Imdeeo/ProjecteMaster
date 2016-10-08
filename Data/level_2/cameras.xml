@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cameras>
-	<camera name="PullBook" total_time="3.0" type="key" undefined="true" pos="0.0 0.0 1.8" filename="Data\level_2\cameras\PullBook.xml"/>
-	<camera name="PickClue" total_time="7.0" type="key" undefined="true" pos="0.0 0.0 1.8" filename="Data\level_2\cameras\PickClue.xml"/>
-	<camera name="PickArtifact" total_time="5.0" type="key" undefined="true" pos="0.0 0.0 1.8" filename="Data\level_2\cameras\PickArtifact.xml"/>
-	<camera name="CrossArtifactDoor" total_time="11.0" type="key" undefined="true" pos="0.0 0.0 1.8" filename="Data\level_2\cameras\CrossArtifactDoor.xml"/>
-	<camera name="JaheemDies" total_time="6.0" type="key" reverse="false" pos="0.00586972 1.8 -1.44996" filename="Data\level_2\cameras\JaheemDies.xml"/>
-	<camera name="JaheemDies2" total_time="5.5" type="key" reverse="false" pos="0.0 1.8 -1.12657" filename="Data\level_2\cameras\JaheemDies2.xml"/>
+	<camera name="PullBook" total_time="3.0" type="key" reverse="true" cycle="false" pos="0.0 0.0 1.8" filename="Data\level_2\cameras\PullBook.xml"/>
+	<camera name="PickClue" total_time="7.0" type="key" reverse="true" cycle="false" pos="0.0 0.0 1.8" filename="Data\level_2\cameras\PickClue.xml"/>
+	<camera name="PickArtifact" total_time="5.0" type="key" reverse="true" cycle="false" pos="0.0 0.0 1.8" filename="Data\level_2\cameras\PickArtifact.xml"/>
+	<camera name="CrossArtifactDoor" total_time="11.0" type="key" reverse="true" cycle="false" pos="0.0 0.0 1.8" filename="Data\level_2\cameras\CrossArtifactDoor.xml"/>
+	<camera name="JaheemDies" total_time="6.0" type="key" reverse="false" cycle="false" pos="0.00586972 1.8 -1.44996" filename="Data\level_2\cameras\JaheemDies.xml"/>
+	<camera name="JaheemDies2" total_time="5.5" type="key" reverse="false" cycle="false" pos="0.0 1.8 -1.12657" filename="Data\level_2\cameras\JaheemDies2.xml"/>
+	<camera name="PipeOrganEnd" total_time="0.666667" type="key" reverse="false" cycle="false" pos="-0.0310059 -0.605375 1.42907" filename="Data\level_2\cameras\PipeOrganEnd.xml"/>
+	<camera name="PipeOrganStart" total_time="0.666667" type="key" reverse="false" cycle="false" pos="-0.0310059 -0.605375 1.42907" filename="Data\level_2\cameras\PipeOrganStart.xml"/>
 </cameras>
