@@ -36,7 +36,19 @@ class 'CReloadManager'
 				l_Resource = g_Engine:get_light_manager():get_resource(l_Aux[2])
 				l_Resource:set_position(l_Aux[3])
 				l_Resource:set_enabled(l_Aux[4])
+			elseif l_Aux[1] == "trigger" then
+				l_Resource = g_Engine:get_layer_manager():get_layer(l_Aux[2]):get_resource(l_Aux[3])
+				l_Resource:set_position(l_Aux[4])
+				l_Resource:set_rotation(l_Aux[5])
+				l_Resource:set_visible(l_Aux[7])
+				
+				--[[if l_Aux[6] then
+					g_Engine:get_physX_manager():enable_trigger(l_Aux[3])
+				else
+					g_Engine:get_physX_manager():disable_trigger(l_Aux[3])
+				end]]
 			else
+				utils_log("OBJETO: "..l_Aux[3])
 				l_Resource = g_Engine:get_layer_manager():get_layer(l_Aux[2]):get_resource(l_Aux[3])
 				l_Resource:set_position(l_Aux[4])
 				l_Resource:set_rotation(l_Aux[5])
@@ -125,6 +137,16 @@ class 'CReloadManager'
 					table.insert(l_Light, l_Element:get_vect3f_property("position",Vect3f(0,0,0)))
 					table.insert(l_Light, l_Element:get_bool_property("visible", true))
 					table.insert(self.m_Resources, l_Light)
+				elseif l_Type == "trigger" then
+					l_Trigger = {}
+					table.insert(l_Trigger, l_Type)
+					table.insert(l_Trigger, l_Element:get_psz_property("layer",""))
+					table.insert(l_Trigger, l_Element:get_psz_property("name",""))
+					table.insert(l_Trigger, l_Element:get_vect3f_property("position",Vect3f(0,0,0)))
+					table.insert(l_Trigger, l_Element:get_quat_property("rotation",Quatf(0,0,0,1)))
+					table.insert(l_Trigger, l_Element:get_bool_property("enable",false))
+					table.insert(l_Trigger, l_Element:get_bool_property("visible", true))
+					table.insert(self.m_Resources, l_Trigger)
 				end	
 				l_Element = l_Element:get_next()
 			end
