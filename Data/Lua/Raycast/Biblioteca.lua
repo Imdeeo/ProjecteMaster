@@ -38,7 +38,7 @@ end
 
 function R2TriggerPipeOrgan(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
-	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.9)
+	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -1.0)
 	l_Target = GetTriggerPos("TriggerPipeOrgan")
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
 		_Player.m_Target = l_Target
@@ -71,6 +71,7 @@ function R2Artifact(_Player, _Pos)
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
+		_Player.m_IsPuzzle = false
 	end
 end
 
@@ -89,6 +90,7 @@ function R2ArtifactDoor(_Player, _Pos)
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
+		_Player.m_IsPuzzle = false
 	end
 end
 
@@ -108,6 +110,7 @@ function R2Clue(_Player, _Pos)
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
+		_Player.m_IsPuzzle = false
 	end
 end
 
@@ -117,13 +120,14 @@ function R2Book(_Player, _Pos)
 	l_Target = GetTriggerPos("TriggerBook")
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
 		_Player.m_Target = l_Target
-		_Player.m_InteractingAnimation = 7
+		_Player.m_InteractingAnimation = 17
 		_Player.m_InteractingCinematic = "PullBook"
 		_Player.m_CameraAnimation = "PullBook"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
+		_Player.m_IsPuzzle = false
 	end
 	-- activate projector -> launch cinematic, activate lights and particles
 end

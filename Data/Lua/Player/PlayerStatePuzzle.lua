@@ -17,18 +17,16 @@ function PuzzleUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	
-	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
+	--// Raycast
+	local l_CameraPos = l_Player.m_PhysXManager:get_character_controler_pos("player")
+	CheckRaycast(l_Player, l_CameraPos)
 	
+	--// Resolve state
 	if l_Player.m_IsPuzzle then
-		if l_Player.m_Timer > l_Player.m_AnimationTime then
-			if l_Player.m_CameraAnimation ~= nil then
-				--l_CameraControllerManager = CUABEngine.get_instance():get_camera_controller_manager()
-				--l_CameraControllerManager:get_resource(l_Player.m_CameraControllerName):copy_from_key_camera(l_CameraControllerManager:get_main_camera():get_camera_as_info())
-				--l_CameraControllerManager:choose_main_camera(l_Player.m_CameraControllerName)
-				l_Player.m_CameraAnimation = nil
-				--l_Player.m_CameraController:unlock()
-			end
-			-- move camera horizontally
+		if l_Player.m_CameraAnimation ~= nil then
+			CUABEngine.get_instance():get_camera_controller_manager():get_resource(l_Player.m_CameraAnimation):force_update_yaw(_ElapsedTime)
+		else
+			CUABEngine.get_instance():get_camera_controller_manager():get_resource(l_Player.m_CameraControllerName):add_yaw(_ElapsedTime)
 		end
 	else
 		if l_Player.m_Timer == 0.0 then
@@ -41,6 +39,7 @@ function PuzzleUpdate(args, _ElapsedTime)
 				utils_log("Animated Camera: Null")
 			end
 		end
+		l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	end
 end
 
