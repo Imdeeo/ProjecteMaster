@@ -9,5 +9,6 @@
 	<resource layer="solid" name="CajonComodaDerecha2" type="object" position="-2.423140 1.000280 -1.056070" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
 	<resource layer="solid" name="CajonComodaIzquierda1" type="object" position="2.420210 1.000280 -2.373670" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
 	<resource layer="solid" name="CajonComodaIzquierda2" type="object" position="2.408430 1.000280 -1.056070" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
+	<resource layer="triggers" name="TriggerTrayR1" type="trigger" position="-2.15174 1.24125 -2.3834" rotation="0.0 0.0 -0.422618 -0.906308" enable="true" visible="true"/>
 	<resource name="recibidor_engranajes" type="cinematic" play="false" stop="true" pause="false"/>
 </resources>
