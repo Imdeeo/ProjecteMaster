@@ -20,8 +20,6 @@ function AttackUpdateTurret(args, _ElapsedTime)
 	local l_EnemyPos = l_Enemy.m_RenderableObject:get_position()
 	
 	if not l_Enemy.m_IsKilling then
-		local l_Distance = l_EnemyPos:distance(l_PlayerPos)
-		
 		l_Enemy.m_TimerToStop = l_Enemy.m_TimerToStop + _ElapsedTime
 		if l_Enemy.m_TimerToStop >= 1.33 and l_Enemy.m_ActualAnimation == 1 then
 			l_Owner:remove_action(l_Enemy.m_ActualAnimation)
@@ -29,11 +27,12 @@ function AttackUpdateTurret(args, _ElapsedTime)
 			l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
 		end
 		
+		local l_Distance = l_EnemyPos:distance(l_PlayerPos)
 		l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
-		l_Enemy:LoseSanity(l_Distance)	
+		l_Enemy:LoseSanity(l_Distance)
 	
-		if l_Enemy:PlayerVisible(l_Owner) and l_Distance <= l_Enemy.m_DistanceToAttack then	
-			if l_Distance <= l_Enemy.m_DistanceToKill then
+		if l_Enemy:PlayerVisible(l_Owner) then
+			if l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToKill) then
 				utils_log("ESTAS MUERTO!!!!")				
 				l_Enemy.m_IsKilling = true
 				
@@ -47,6 +46,7 @@ function AttackUpdateTurret(args, _ElapsedTime)
 				g_Player.m_CameraController:lock()
 				g_Player:CalculateCameraPositionRotation("JaheemDies", l_EnemyPos)
 				g_Player.m_IsDead = true
+				g_Engine:get_physX_manager():change_rigid_dynamic_actor_group("player","PlayerNoPhyxs")
 			else
 				if l_Enemy.m_ActualAnimation == 2 then
 					-- the enemy rotates the body to player position
