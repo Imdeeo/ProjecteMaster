@@ -1,3 +1,4 @@
+dofile("Data\\Lua\\Utils\\Utils.lua")
 dofile("Data\\Lua\\Cinematics\\CUABCinematicsActionManager.lua")
 dofile("Data\\Lua\\Videogame\\componentsEnemy.lua")
 dofile("Data\\Lua\\Antwakbar\\antweakbar.lua")

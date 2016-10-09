@@ -11,6 +11,7 @@
 		<collision_group name="Triggers"/>
 		<collision_group name="Player"/>
 		<collision_group name="Enemy"/>
+		<collision_group name="Disabled"/>
 	</collision_groups>
 	<groups_relations>
 		<group name="Plane">
