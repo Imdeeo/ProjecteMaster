@@ -189,6 +189,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_OrganKeyCount = 1
 		self.m_OrganKeyOrder = {"A", "G"}
 		--{"A", "B", "C", "D", "E", "F", "G"}
+		--table:setn(self.m_OrganKeyOrder, 2)
 		
 		self.m_CurrentAend = nil
 		self.m_Aends = {}
