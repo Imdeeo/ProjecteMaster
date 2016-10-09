@@ -37,4 +37,5 @@
 	<animation name="pipe_organ_key_e" filename="PipeOrganKeyE.CAF"/>
 	<animation name="pipe_organ_key_f" filename="PipeOrganKeyF.CAF"/>
 	<animation name="pipe_organ_key_g" filename="PipeOrganKeyG.CAF"/>
+	<animation name="pull_book" filename="PullBook.CAF"/>
 </actor>

@@ -9,7 +9,6 @@ function R2PushOrganKey(_Key, _Player)
 	
 	if m_OrganKeyCount > m_OrganKeyOrder:size() then
 		_Player.m_IsPuzzle = false
-		_Player.m_Timer = 0.0
 		_Player.m_InteractingAnimation = 9
 		_Player.m_CameraAnimation = "PipeOrganEnd"
 		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyA")

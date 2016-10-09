@@ -781,14 +781,12 @@ void CPhysXManager::CreateTrigger(const std::string _name, physx::PxShape* shape
 
 void CPhysXManager::EnableTrigger(const std::string _name)
 {
-	size_t index = m_ActorIndexs[_name];
-	m_TriggerIsActive[index] = true;
+	ChangeRigidDynamicActorPhysxGroup(_name, "2");
 }
 
 void CPhysXManager::DisableTrigger(const std::string _name)
 {
-	size_t index = m_ActorIndexs[_name];
-	m_TriggerIsActive[index] = false;
+	ChangeRigidDynamicActorPhysxGroup(_name, "5");
 }
 
 void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors,bool isActive)
