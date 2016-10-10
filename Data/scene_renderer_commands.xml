@@ -40,6 +40,20 @@
 		<texture stage_id="4" file="SpecularMapTexture" load_file="false"/>
 	</render_deferred_shading>
 	
+	<!-- Particles -->
+	<set_depth_stencil_state name="set depth stencil TF Particles" enable_z_test="true" write_z_buffer="false" active="true"/>
+	<enable_alpha_blend name="enable alpha blend AAZZOO Particles" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<render_layer name="render layer particles" layer="particles" active="true"/>
+	<render_layer name="render layer line renderers" layer="line_renderers" active="true"/>
+	<disable_alpha_blend name="disable alpha blend Particles" active="true"/>	
+	
+	<!-- ALPHA BLEND OBJECTS LAYER -->
+	<enable_alpha_blend name="enable alpha blend AAZZOO Alpha Blend" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF Alpha Blend" enable_z_test="true" write_z_buffer="false" active="true"/>
+	<set_pool_renderable_objects_technique name="set pool Alpha Blend" pool="forward_shading" active="true"/>
+	<render_layer name="render layer Alpha Blend" layer="alpha_blend_objects" active="true"/>
+	<disable_alpha_blend name="disable alpha blend Alpha Blend" active="true"/>
+			
 	<!-- HDAO -->
 	<capture_frame_buffer name="capture frame HDAO" active="true">
 		<capture_texture name="CapturedTexture" texture_width_as_frame_buffer="true"/>
@@ -51,13 +65,6 @@
 		<texture load_file="false" file="NormalMapTexture" stage_id="1"/>
 		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
 	</render_draw_quad>
-	
-	<!-- ALPHA BLEND OBJECTS LAYER -->
-	<enable_alpha_blend name="enable alpha blend AAZZOO Alpha Blend" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
-	<set_depth_stencil_state name="set depth stencil TF Alpha Blend" enable_z_test="true" write_z_buffer="false" active="true"/>
-	<set_pool_renderable_objects_technique name="set pool Alpha Blend" pool="forward_shading" active="true"/>
-	<render_layer name="render layer Alpha Blend" layer="alpha_blend_objects" active="true"/>
-	<disable_alpha_blend name="disable alpha blend Alpha Blend" active="true"/>
 		
 	<!-- FOG -->
 	<set_pool_renderable_objects_technique name="set pool fog_pool" pool="fog_pool" active="true"/>
@@ -135,14 +142,7 @@
 		<texture load_file="false" file="CapturedZBlurTexture" stage_id="0"/>
 		<texture load_file="false" file="ZBlur" stage_id="1"/>
 		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
-	</render_draw_quad>		
-	
-	<!-- Particles -->
-	<set_depth_stencil_state name="set depth stencil TF Particles" enable_z_test="true" write_z_buffer="false" active="true"/>
-	<enable_alpha_blend name="enable alpha blend AAZZOO Particles" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
-	<render_layer name="render layer particles" layer="particles" active="true"/>
-	<render_layer name="render layer line renderers" layer="line_renderers" active="true"/>
-	<disable_alpha_blend name="disable alpha blend Particles" active="true"/>	
+	</render_draw_quad>
 	
 	<!-- SKYBOX -->
 	<set_depth_stencil_state name="set depth stencil TF Skybox" enable_z_test="true" write_z_buffer="false" active="true"/>
@@ -172,7 +172,7 @@
 	
 	<enable_alpha_blend name="enable alpha blend lightscattering" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
 	<set_pool_renderable_objects_technique name="lightscattering_set_pool" pool="light_scattering_pool" active="true"/>
-	<set_light_position light="Direct001" material="LightScatteringMaterial"/>
+	<set_light_position light="LuzExteriorJaulaCristal" material="LightScatteringMaterial"/>
 	<render_draw_quad name="lightscattering_render_draw_quad" material="LightScatteringMaterial" active="true">		
 		<texture file="LightScatteringTextureSkyboxBlurred" stage_id="0" load_file="false"/>
 	</render_draw_quad>
@@ -184,7 +184,7 @@
 	<render_draw_quad name="lightscattering_render_draw_quad2" material="LightScatteringCombineMaterial" active="true">		
 		<texture file="CapturedLightScatteringTexture" stage_id="0" load_file="false"/>
 		<texture file="CapturedLightScatteringTexture2" stage_id="1" load_file="false"/>
-	</render_draw_quad>	-->
+	</render_draw_quad>-->
 		
 	<!-- SSR -->
 	<capture_frame_buffer name="capture frame SSR" active="true">
@@ -192,11 +192,13 @@
 	</capture_frame_buffer>
 
 	<set_pool_renderable_objects_technique name="set pool ssr_pool" pool="ssr_pool" active="true"/>
+	<enable_alpha_blend name="enable alpha blend lightscattering2" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
 	<render_draw_quad name="draw quad SSR" material="SSRMaterial" active="true">
 		<texture load_file="false" file="CapturedTextureSSR" stage_id="0"/>
 		<texture load_file="false" file="NormalMapTexture" stage_id="1"/>
 		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
 	</render_draw_quad>
+	<disable_alpha_blend name="disable alpha ssr" active="true"/>	
 	
 	<!-- INTERACTUABLE OBJECTS -->
 	<capture_frame_buffer name="capture_frame_interactuable_objects" active="true">
@@ -209,7 +211,7 @@
 	
 	<set_pool_renderable_objects_technique name="set pool interactuable_objects" pool="interactuable_objects" active="true"/>
 	<clear name="interactuable_objects_clear" render_target="true" depth_stencil="false" active="true"/>
-	<set_depth_stencil_state name="set depth stencil TF interactuable_objects" enable_z_test="true" write_z_buffer="false" active="true"/>
+	<set_depth_stencil_state name="set depth stencil TF Skybox interactuable_objects" enable_z_test="true" write_z_buffer="false" active="true"/>
 	<render_layer name="render layer interactuable_objects" layer="interactuable_objects" active="true"/>
 	
 	<apply_filters name="interactuable_objects_filters" active="true">
@@ -261,12 +263,6 @@
 		<texture stage_id="1" file="Data/GUI/textures/vignetting.dds" load_file="true"/>
 	</render_draw_quad>
 	<disable_alpha_blend name="disable alpha blend N and V" active="true"/>
-
-	<!-- GUI -->
-	<enable_alpha_blend name="enable alpha blend GUI" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
-	<set_pool_renderable_objects_technique name="set pool forward GUI" pool="forward_shading" active="true"/>
-	<render_gui name="render GUI" active="true"/>
-	<disable_alpha_blend name="disable alpha blend GUI" active="true"/>	
 	
 	<!-- MANCHAS -->
 	<enable_alpha_blend name="enable alpha blend AAZZOO Manchas" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
@@ -279,6 +275,12 @@
 	<set_depth_stencil_state name="set depth stencil video" enable_z_test="false" write_z_buffer="false"/>
 	<render_video name="draw video" active="true"/> 
 	
+	<!-- GUI -->
+	<enable_alpha_blend name="enable alpha blend GUI" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
+	<set_pool_renderable_objects_technique name="set pool forward GUI" pool="forward_shading" active="true"/>
+	<render_gui name="render GUI" active="true"/>
+	<disable_alpha_blend name="disable alpha blend GUI" active="true"/>	
+
 	<set_depth_stencil_state name="set depth stencil debug" enable_z_test="true" write_z_buffer="true" active="true"/>
 	<render_debug_lights name="render debug lights"/>
 	<render_debug_pathfinding name="render debug pathfinding"/>
