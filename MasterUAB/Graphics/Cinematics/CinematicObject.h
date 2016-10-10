@@ -20,7 +20,7 @@ private:
 
 	float calculateBestAngle(float _Current, float _Next);
 public:
-	CCinematicObject(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId = "");
+	CCinematicObject(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CCinematicObject();
 	bool IsOk();
 	void AddCinematicObjectKeyFrame(CCinematicObjectKeyFrame *CinematicObjectKeyFrame);

@@ -43,7 +43,7 @@ CRenderableObject * CRenderableObjectsManager::AddMeshInstance(tinyxml2::XMLElem
 
 CRenderableObject * CRenderableObjectsManager::AddMeshInstance(const std::string &CoreMeshName, const std::string &InstanceName, const Vect3f &Position, const std::string &_LevelId, const Quatf _Rotation, const float _Scale, const bool _Visible, bool _Update)
 {
-	CInstanceMesh* instanceMesh = new CInstanceMesh(InstanceName, CoreMeshName);
+	CInstanceMesh* instanceMesh = new CInstanceMesh(InstanceName, CoreMeshName,_LevelId);
 	instanceMesh->SetPosition(Position);
 	instanceMesh->SetRotation(_Rotation);
 	instanceMesh->SetScale(_Scale);
@@ -56,7 +56,7 @@ CRenderableObject * CRenderableObjectsManager::AddMeshInstance(const std::string
 
 CRenderableObject * CRenderableObjectsManager::AddAnimatedInstanceModel(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId, bool _Update)
 {
-	CAnimatedInstanceModel* l_AnimatedInstanceModel = new CAnimatedInstanceModel(TreeNode);
+	CAnimatedInstanceModel* l_AnimatedInstanceModel = new CAnimatedInstanceModel(TreeNode,_LevelId);
 	if (_Update ? AddUpdateResource(l_AnimatedInstanceModel->GetName(), l_AnimatedInstanceModel) : AddResource(l_AnimatedInstanceModel->GetName(), l_AnimatedInstanceModel, _LevelId))
 		return l_AnimatedInstanceModel;
 	else
@@ -88,7 +88,7 @@ CRenderableObject * CRenderableObjectsManager::AddParticleSystemInstance(tinyxml
 
 CRenderableObject * CRenderableObjectsManager::AddBilboardSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId)
 {
-	CBilboardSystemInstance * l_BilboardSystemInstance = new CBilboardSystemInstance(TreeNode);
+	CBilboardSystemInstance * l_BilboardSystemInstance = new CBilboardSystemInstance(TreeNode,_LevelId);
 	if (AddResource(l_BilboardSystemInstance->GetName(), l_BilboardSystemInstance,_LevelId))
 		return l_BilboardSystemInstance;
 	else
@@ -106,7 +106,7 @@ CRenderableObject * CRenderableObjectsManager::AddManchasSystemInstance(tinyxml2
 
 CRenderableObject * CRenderableObjectsManager::AddLineRendererSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId)
 {
-	CLineRenderer* l_LineRenderer = new CLineRenderer(TreeNode);
+	CLineRenderer* l_LineRenderer = new CLineRenderer(TreeNode,_LevelId);
 	if (AddResource(l_LineRenderer->GetName(), l_LineRenderer,_LevelId))
 		return l_LineRenderer;
 	else

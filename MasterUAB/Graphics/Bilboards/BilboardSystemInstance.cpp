@@ -12,8 +12,8 @@
 #include "Math\MathUtils.h"
 
 
-CBilboardSystemInstance::CBilboardSystemInstance(tinyxml2::XMLElement* TreeNode) :
-	CRenderableObject(TreeNode)
+CBilboardSystemInstance::CBilboardSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :
+	CRenderableObject(TreeNode,_LevelId)
 {
 	m_Type = UABEngine.GetInstance()->GetBilboardManager()->GetResource(TreeNode->GetPszProperty("type"));
 	m_ActiveBilboards = 0;

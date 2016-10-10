@@ -10,29 +10,30 @@ CMaterialManager::~CMaterialManager()
 {
 
 }
-void CMaterialManager::Load(const std::string &LevelMaterialsFilename, const std::string &DefaultMaterialsFilename, const std::string &_LevelId)
+void CMaterialManager::Load(const std::string &LevelMaterialsFilename, const std::string &_LevelId, const std::string &DefaultMaterialsFilename)
 {
 	m_LevelMaterialsFilename = LevelMaterialsFilename;
 	m_DefaultMaterialsFilename = DefaultMaterialsFilename;
 
+	m_LevelId = _LevelId;
 	//Destroy();
 
-	LoadMaterialsFromFile(LevelMaterialsFilename,false,nullptr, _LevelId);
+	LoadMaterialsFromFile(LevelMaterialsFilename, _LevelId, false, nullptr);
 	if (DefaultMaterialsFilename != "")
-		LoadMaterialsFromFile(DefaultMaterialsFilename,false,nullptr, _LevelId);
+		LoadMaterialsFromFile(DefaultMaterialsFilename,_LevelId,false,nullptr);
 }
 
 void CMaterialManager::Reload()
 {
 	std::map<std::string, std::string> l_MaterialNames;
 	if (m_DefaultMaterialsFilename != "") {
-		LoadMaterialsFromFile(m_DefaultMaterialsFilename, true, &l_MaterialNames);
+		LoadMaterialsFromFile(m_DefaultMaterialsFilename, m_LevelId , true, &l_MaterialNames);
 	}
-	LoadMaterialsFromFile(m_LevelMaterialsFilename, true, &l_MaterialNames);
+	LoadMaterialsFromFile(m_LevelMaterialsFilename, m_LevelId, true, &l_MaterialNames);
 	//RemoveAllBut(l_MaterialNames);
 }
 
-void CMaterialManager::LoadMaterialsFromFile(const std::string &Filename, bool Update, std::map<std::string, std::string> *UpdatedNames, const std::string &_LevelId)
+void CMaterialManager::LoadMaterialsFromFile(const std::string &Filename, const std::string &_LevelId, bool Update, std::map<std::string, std::string> *UpdatedNames)
 {
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLError l_Error = doc.LoadFile(Filename.c_str());

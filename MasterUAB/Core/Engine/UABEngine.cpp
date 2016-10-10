@@ -171,7 +171,7 @@ void CUABEngine::Init()
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
-	m_MaterialManager->Load("Data\\default_effect_materials.xml");
+	m_MaterialManager->Load("Data\\default_effect_materials.xml","");
 #ifdef _DEBUG
 	m_RenderManager->GetDebugRender()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
 #else
