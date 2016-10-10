@@ -9,7 +9,7 @@ class CRenderManager;
 class CRenderDebugLightsSceneRendererCommand : public CSceneRendererCommand
 {
 public:
-	CRenderDebugLightsSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
+	CRenderDebugLightsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CRenderDebugLightsSceneRendererCommand(){}
 	virtual void Execute(CRenderManager &RenderManager);
 };

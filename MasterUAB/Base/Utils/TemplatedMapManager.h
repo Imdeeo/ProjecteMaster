@@ -16,8 +16,9 @@
 template<class T>
 class CTemplatedMapManager
 {
-protected:
+public:
 	typedef std::map<std::string, T*> TMapResource;
+protected:
 	TMapResource m_Resources;
 public:
 	virtual ~CTemplatedMapManager()

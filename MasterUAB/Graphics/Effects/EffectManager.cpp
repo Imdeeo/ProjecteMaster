@@ -7,6 +7,8 @@
 
 #include "Texture\DynamicTexture.h"
 
+#include "LevelManager\LevelManager.h"
+
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
 #include "Lights\LightManager.h"
@@ -188,10 +190,11 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 	}
 }
 
-void CEffectManager::SetLightsConstants(unsigned int MaxLights)
+void CEffectManager::SetLightsConstants(unsigned int MaxLights,const std::string &_LevelId)
 {
-	int n_lights = UABEngine.GetLightManager()->GetResourcesVector().size();
-	m_LightParameters.m_LightAmbient = UABEngine.GetLightManager()->GetAmbientLight();
+	CLightManager *l_LightManager = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetLightManager();
+	int n_lights = l_LightManager->GetResourcesVector().size();
+	m_LightParameters.m_LightAmbient = l_LightManager->GetAmbientLight();
 	for (size_t i = 0; i < MaxLights; i++)
 	{
 		if((size_t)n_lights<=i)
@@ -204,7 +207,7 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights)
 		}
 		else
 		{
-			SetLightConstants(i, UABEngine.GetLightManager()->GetResourceById(i));
+			SetLightConstants(i, l_LightManager->GetResourceById(i));
 		}
 	}
 	

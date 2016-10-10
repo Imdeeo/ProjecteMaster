@@ -48,7 +48,7 @@ CMaterial::CMaterial(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId
 			}
 			else
 			{
-				CTexture* l_texture = CUABEngine::GetInstance()->GetTextureManager()->GetTexture(l_FileName);
+				CTexture* l_texture = CUABEngine::GetInstance()->GetTextureManager()->GetTexture(l_FileName,_LevelId);
 
 				l_texture->SetType(l_TextureType);
 

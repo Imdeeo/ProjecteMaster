@@ -11,9 +11,10 @@ class CRenderManager;
 class CSceneRendererCommand :public CActive, public CNamed
 {
 protected:
+	std::string m_LevelId;
 	CMaterial* m_Material;
 public:
-	CSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
+	CSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CSceneRendererCommand();
 	virtual void Execute(CRenderManager &RenderManager) = 0;
 };

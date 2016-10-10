@@ -15,11 +15,14 @@ class CAStarManager;
 class CGamePlayManager;
 class CRenderableObjectsManager;
 
-class CAStar; //DeMoment
+class CAStarManager;
 
 class CLevel :	public CNamed
 {
 private:
+	bool m_HasToUpdate;
+	bool m_Visible;
+
 	CMaterialManager* m_MaterialManager;
 	CParticleManager* m_ParticleManager;
 	CManchasManager* m_ManchasManager;
@@ -27,8 +30,7 @@ private:
 	CLayerManager* m_LayerManager;
 	CLightManager* m_LightManager;
 	CCinematicManager* m_CinematicManager;
-	//CAStarManager* m_AStarManager;     per quan hi hagi un manager
-	CAStar* m_AStarManager;
+	CAStarManager* m_AStarManager;
 	CGamePlayManager* m_GamePlayManager;
 public:
 	CLevel();
@@ -41,6 +43,11 @@ public:
 	
 	void Update(float _ElapsedTime);
 
+	bool* IsVisible();
+	bool* HasToUpdate();
+	void SetVisible(bool _Visible);
+	void SetHasToUpdate(bool _HasToUpdate);
+
 	CStaticMeshManager * GetStaticMeshManager() const;
 	CLayerManager * GetLayerManager() const;
 	CMaterialManager * GetMaterialManager() const;
@@ -49,7 +56,7 @@ public:
 	CParticleManager * GetParticleManager() const;
 	CGamePlayManager * GetGamePlayManager()const;
 	CManchasManager * GetManchasManager() const;
-	CAStar * GetAStarManager() const;
+	CAStarManager * GetAStarManager() const;
 
 	CRenderableObjectsManager* GetLayer(const std::string& _LayerName);
 };

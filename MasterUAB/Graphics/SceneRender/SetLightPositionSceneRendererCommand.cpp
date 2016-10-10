@@ -4,9 +4,11 @@
 #include "Lights\LightManager.h"
 #include "Materials\MaterialManager.h"
 
+#include "LevelManager\LevelManager.h"
+
 #include "Materials\MaterialParameter.h"
 
-CSetLightPositionSceneRendererCommand::CSetLightPositionSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
+CSetLightPositionSceneRendererCommand::CSetLightPositionSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CSceneRendererCommand(TreeNode,_LevelId)
 {
 	m_MaterialName = TreeNode->GetPszProperty("material");
 	m_LightName = TreeNode->GetPszProperty("light");
@@ -16,8 +18,8 @@ CSetLightPositionSceneRendererCommand::~CSetLightPositionSceneRendererCommand(){
 
 void CSetLightPositionSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
-	CLight* l_Light = UABEngine.GetInstance()->GetLightManager()->GetResource(m_LightName);
-	std::vector<CMaterialParameter *> l_Parameters = UABEngine.GetInstance()->GetMaterialManager()->GetResource(m_MaterialName)->GetParameters();
+	CLight* l_Light = UABEngine.GetLevelManager()->GetResource(m_LevelId)->GetLightManager()->GetResource(m_LightName);
+	std::vector<CMaterialParameter *> l_Parameters = UABEngine.GetLevelManager()->GetResource(m_LevelId)->GetMaterialManager()->GetResource(m_MaterialName)->GetParameters();
 	Vect2f l_2DPos = UABEngine.GetInstance()->GetRenderManager()->GetScreenPosFrom3D(l_Light->GetPosition());
 	l_2DPos.y = 0.2;
 	for (size_t i = 0; i<l_Parameters.size(); i++)

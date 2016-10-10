@@ -11,7 +11,7 @@ class CSetPoolRenderableObjectsTechniqueSceneRendererCommand : public CSceneRend
 private:
 	CPoolRenderableObjectTechnique *m_Pool;
 public:
-	CSetPoolRenderableObjectsTechniqueSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
+	CSetPoolRenderableObjectsTechniqueSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CSetPoolRenderableObjectsTechniqueSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };

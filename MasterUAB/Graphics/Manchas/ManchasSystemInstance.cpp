@@ -13,11 +13,7 @@
 #include "Math\MathUtils.h"
 #include "LevelManager\LevelManager.h"
 
-<<<<<<< HEAD
-CManchasSystemInstance::CManchasSystemInstance(tinyxml2::XMLElement* TreeNode,const std::string &_LevelId) : CRenderableObject(TreeNode,_LevelId), m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
-=======
-CManchasSystemInstance::CManchasSystemInstance(tinyxml2::XMLElement* TreeNode) : CRenderableObject(TreeNode)
->>>>>>> develop
+CManchasSystemInstance::CManchasSystemInstance(tinyxml2::XMLElement* TreeNode,const std::string &_LevelId) : CRenderableObject(TreeNode,_LevelId)
 {
 	m_Awake = TreeNode->GetBoolProperty("awake");
 	m_ActiveManchas = 0;

@@ -11,6 +11,8 @@
 #include "SceneRender\SceneRendererCommandManager.h"
 #include "Effects\EffectManager.h"
 
+#include "LevelManager\LevelManager.h"
+
 #include "Effects\EffectTechnique.h"
 #include "Texture\Texture.h"
 
@@ -126,7 +128,8 @@ void CRenderManager::Render()
 
 	m_ContextManager->BeginRender();
 
-	UABEngine.GetSceneRendererCommandManager()->Execute(this);
+	UABEngine.GetLevelManager()->ExecuteSceneCommands(this);
+
 	m_ContextManager->EndRender();
 }
 
