@@ -23,6 +23,7 @@ class IVideoManager;
 class CLevelManager;
 class CColor;
 class CBilboardManager;
+class CRenderableObject;
 
 #include <string>
 
@@ -96,6 +97,7 @@ public:
 	Vect3f GetRandomValue(Vect3f min, Vect3f max);
 	float GetRandomValue(Vect2f value);
 	CColor GetRandomValue(CColor min, CColor max);
+	int GetTypeParticle(CRenderableObject* _RO);
 };
 
 #define UABEngine (*(CUABEngine::GetInstance()))

@@ -399,7 +399,9 @@ public:
 	void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, std::string _group)
 	{
 		//SACADA DE SAMPLES
-		assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
+		//assert(m_CharacterControllers.find(_name) == m_CharacterControllers.end());
+		if (m_CharacterControllers.find(_name) != m_CharacterControllers.end())
+			RemoveActor(_name);
 
 		physx::PxMaterial* l_Material = m_Materials[_MaterialName];
 		size_t l_index = m_CharacterControllers.size();
@@ -693,7 +695,7 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStat
 	}
 }
 
-void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, bool _FlipNormals)
+void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Directory, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, bool _FlipNormals)
 {
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
@@ -703,7 +705,7 @@ void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CSta
 		physx::PxU32 l_Size;
 
 		char l_FileName[256] = "";
-		sprintf_s(l_FileName, "%s\\%s_%u.tmesh", _Mesh->GetPhysxMeshesDirectory().c_str(), _name.c_str(), i);
+		sprintf_s(l_FileName, "%s\\%s_%u.tmesh", _Directory.c_str(), _name.c_str(), i);
 
 		if (LoadMeshFile(l_FileName,&l_Data,&l_Size)){
 
@@ -935,8 +937,7 @@ void CPhysXManager::Update(float _dt)
 #define MAX_SHAPES_PER_ACTOR 16
 
 void CPhysXManager::CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime)
-{
-	
+{	
 	static MyQueryFilterCallback s_MyQueryFilterCallback;
 
 	physx::PxController* cct = m_CharacterControllers[_name];
@@ -1046,21 +1047,35 @@ void CPhysXManager::RemoveActor(const std::string _ActorName)
 	}
 	if (m_Actors.size() > 1)
 	{
-		m_Actors[l_index] = m_Actors[m_Actors.size() - 1];
-		m_Actors.resize(m_Actors.size() - 1);
+		if (l_index < m_Actors.size() - 1)
+		{
+			m_Actors[l_index] = m_Actors[m_Actors.size() - 1];
+			m_Actors.resize(m_Actors.size() - 1);
 
-		m_ActorNames[l_index] = m_ActorNames[m_Actors.size()];
-		m_ActorNames.resize(m_Actors.size());
+			m_ActorNames[l_index] = m_ActorNames[m_Actors.size()];
+			m_ActorNames.resize(m_Actors.size());
 
-		m_ActorPositions[l_index] = m_ActorPositions[m_Actors.size()];
-		m_ActorPositions.resize(m_Actors.size());
+			m_ActorPositions[l_index] = m_ActorPositions[m_Actors.size()];
+			m_ActorPositions.resize(m_Actors.size());
 
-		m_ActorOrientations[l_index] = m_ActorOrientations[m_Actors.size()];
-		m_ActorOrientations.resize(m_Actors.size());
+			m_ActorOrientations[l_index] = m_ActorOrientations[m_Actors.size()];
+			m_ActorOrientations.resize(m_Actors.size());
+		
+			m_ActorIndexs[m_ActorNames[l_index]] = l_index;
+			m_Actors[l_index]->userData = (void *)l_index;
+		}
+		else
+		{
+			m_Actors.resize(m_Actors.size() - 1);
 
-		m_ActorIndexs[m_ActorNames[l_index]] = l_index;
+			m_ActorNames.resize(m_Actors.size());
+
+			m_ActorPositions.resize(m_Actors.size());
+
+			m_ActorOrientations.resize(m_Actors.size());
+		}
+
 		m_ActorIndexs.erase(m_ActorIndexs.find(_ActorName));
-		m_Actors[l_index]->userData = (void *)l_index;
 	}
 	else
 	{

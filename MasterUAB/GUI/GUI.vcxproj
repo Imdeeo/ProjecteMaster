@@ -20,9 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buton.cpp" />
-    <ClCompile Include="dummy.cpp" />
     <ClCompile Include="GUIManager.cpp" />
     <ClCompile Include="GUIPosition.cpp" />
+    <ClCompile Include="Panel.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SliderResult.cpp" />
   </ItemGroup>
@@ -30,6 +30,7 @@
     <ClInclude Include="Buton.h" />
     <ClInclude Include="GUIManager.h" />
     <ClInclude Include="GUIPosition.h" />
+    <ClInclude Include="Panel.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="SliderResult.h" />
   </ItemGroup>

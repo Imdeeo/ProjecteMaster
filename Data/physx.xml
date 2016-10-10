@@ -6,15 +6,20 @@
 		<material name="FisicasAux" static_friction="1.0" dynamic_friction="1.0" restitution="0.0"/>
 	</materials>
 	<collision_groups>
-		<collision_group name="Plane"/>
+		<collision_group name="Floor"/>
 		<collision_group name="Objects"/>
 		<collision_group name="Triggers"/>
 		<collision_group name="Player"/>
+		<collision_group name="DeadPlayer"/>
 		<collision_group name="Enemy"/>
+		<collision_group name="EnemyStairs"/>
+		<collision_group name="PlayerStairs"/>
+		<collision_group name="NoCollision"/>
 	</collision_groups>
 	<groups_relations>
-		<group name="Plane">
+		<group name="Floor">
 			<collides name="Player"/>
+			<collides name="DeadPlayer"/>
 			<collides name="Enemy"/>
 		</group>
 		<group name="Objects">
@@ -25,15 +30,32 @@
 			<collides name="Player"/>
 		</group>
 		<group name="Player">
-			<collides name="Plane"/>
+			<collides name="Floor"/>
 			<collides name="Objects"/>
 			<collides name="Triggers"/>
 			<collides name="Enemy"/>
+			<collides name="PlayerStairs"/>
+		</group>
+		<group name="DeadPlayer">
+			<collides name="Floor"/>
+			<collides name="Enemy"/>
+			<collides name="PlayerStairs"/>
 		</group>
 		<group name="Enemy">
-			<collides name="Plane"/>
+			<collides name="Floor"/>
 			<collides name="Objects"/>
 			<collides name="Player"/>
+			<collides name="DeadPlayer"/>
+			<collides name="EnemyStairs"/>
+		</group>
+		<group name="PlayerStairs">
+			<collides name="Player"/>
+			<collides name="DeadPlayer"/>
+		</group>
+		<group name="EnemyStairs">
+			<collides name="Enemy"/>
+		</group>
+		<group name="NoCollision">
 		</group>
 	</groups_relations>
 </physx>

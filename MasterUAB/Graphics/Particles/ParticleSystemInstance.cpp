@@ -337,7 +337,7 @@ const bool CParticleSystemInstance::GetInsideFrustum()
 		l_AuxPosition += aux * ((m_Type->m_ControlPointSpeeds[i].m_Speed1 + m_Type->m_ControlPointSpeeds[i].m_Speed2) / 2);
 	}
 	float l_Radius = ((m_EmissionBoxHalfSize * 2) + l_AuxPosition).Length();
-	return m_Frustum->SphereVisible(m_Position, l_Radius);
+	return m_Frustum->SphereVisible(m_Position * 2, l_Radius);
 }
 
 void CParticleSystemInstance::InsertSort(ParticleData arr[], int length) {

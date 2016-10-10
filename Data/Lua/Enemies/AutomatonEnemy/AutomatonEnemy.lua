@@ -70,12 +70,14 @@ class 'CAutomatonEnemy' (CEnemy)
 		IdleState:set_do_end_function(IdleEndAutomaton)
 		IdleState:add_condition(IdleToPatrolConditionAutomaton, "Patrol")
 		IdleState:add_condition(IdleToChaseConditionAutomaton, "Chase")
+		IdleState:add_condition(ANYToAttackConditionAutomaton, "Attack")
 		
 		PatrolState = State.create(PatrolUpdateAutomaton)
 		PatrolState:set_do_first_function(PatrolFirstAutomaton)
 		PatrolState:set_do_end_function(PatrolEndAutomaton)
 		PatrolState:add_condition(PatrolToChaseConditionAutomaton, "Chase")
 		PatrolState:add_condition(PatrolToAlertConditionAutomaton, "Alert")
+		PatrolState:add_condition(ANYToAttackConditionAutomaton, "Attack")
 		
 		ChaseState = State.create(ChaseUpdateAutomaton)
 		ChaseState:set_do_first_function(ChaseFirstAutomaton)
@@ -89,12 +91,14 @@ class 'CAutomatonEnemy' (CEnemy)
 		AlertState:add_condition(AlertToChaseConditionAutomaton, "Chase")
 		AlertState:add_condition(AlertToReturnConditionAutomaton, "Return")
 		AlertState:add_condition(AlertToPatrolConditionAutomaton, "Patrol")
+		AlertState:add_condition(ANYToAttackConditionAutomaton, "Attack")
 		
 		ReturnState = State.create(ReturnUpdateAutomaton)
 		ReturnState:set_do_first_function(ReturnFirstAutomaton)
 		ReturnState:set_do_end_function(ReturnEndAutomaton)
 		ReturnState:add_condition(ReturnToIdleConditionAutomaton, "Idle")
 		ReturnState:add_condition(ReturnToChaseConditionAutomaton, "Chase")
+		ReturnState:add_condition(ANYToAttackConditionAutomaton, "Attack")
 		
 		AttackState = State.create(AttackUpdateAutomaton)
 		AttackState:set_do_first_function(AttackFirstAutomaton)
@@ -114,6 +118,11 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_StateMachine:add_state("Return", ReturnState)
 		self.m_StateMachine:add_state("Attack", AttackState)
 		self.m_StateMachine:add_state("Kill", KillState)
+	end
+	
+	function ANYToAttackConditionAutomaton(args)
+		local l_Enemy = args["self"]
+		return l_Enemy.m_State == "attack"
 	end
 	
 	function CAutomatonEnemy:DetectPlayerNoise(_increment)

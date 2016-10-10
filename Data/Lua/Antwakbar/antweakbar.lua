@@ -263,7 +263,7 @@ function RegisterLightParameters(light_name)
 	local Light = LightsManager:get_resource(light_name)
 
 	DebugHelper:add_variable("Enable",CDebugHelper.bool,CDebugHelper.read_write,Light:get_enable_lua_address(),"")
-	DebugHelper:add_variable("Intensity",CDebugHelper.float,CDebugHelper.read_write,Light:get_intensity_lua_address(),"min=0.0 max=1.0 step=0.1")
+	DebugHelper:add_variable("Intensity",CDebugHelper.float,CDebugHelper.read_write,Light:get_intensity_lua_address(),"min=0.0 max=5.0 step=0.1")
 	DebugHelper:add_variable("Shadow Map",CDebugHelper.bool,CDebugHelper.read_write,Light:get_generate_shadowmap_lua_address(),"")
 	DebugHelper:add_variable("Color",CDebugHelper.color,CDebugHelper.read_write,Light:get_color_lua_address(),"")
 	DebugHelper:add_variable("Start",CDebugHelper.float,CDebugHelper.read_write,Light:get_start_range_attenuation_lua_address(),"min=0.0 max=500.0 step=0.1 group=\"Range Attenuation\"")
@@ -332,12 +332,54 @@ function RegisterParticlesBar()
 	local Particles = ParticlesLayer:get_elements_array()
 	
 	for i = 0,ParticlesLayer:size()-1 do
-		DebugHelper:add_lua_button(Particles[i].name,"RegisterParticleParameters(\""..Particles[i].name.."\")","");
+		if UABEngine:get_type_particle(Particles[i]) == 1 then
+			DebugHelper:add_lua_button(Particles[i].name,"RegisterBilboardParameters(\""..Particles[i].name.."\")","");
+		else
+			DebugHelper:add_lua_button(Particles[i].name,"RegisterParticleParameters(\""..Particles[i].name.."\")","");
+		end
 	end
 	
 	DebugHelper:register_bar()
 	
 end
+
+function RegisterBilboardParameters(bilboard_name)
+	local UABEngine = CUABEngine.get_instance()
+	local DebugHelper = CDebugHelper.get_debug_helper()
+	local LayerBilboardsManager = UABEngine:get_layer_manager()
+	
+	local bar_name = "bilboard: "..bilboard_name
+	
+	DebugHelper:remove_bar("Particles")
+	DebugHelper:start_register_bar(bar_name)
+	
+	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\""..bar_name.."\");RegisterParticlesBar()","");
+	
+	local Bilboard = LayerBilboardsManager:get_layer("particles"):get_resource(bilboard_name)
+	local BilboardType = Bilboard:get_type()
+	local Material = BilboardType:get_material()
+	
+	DebugHelper:add_variable("Num frames",CDebugHelper.int,CDebugHelper.read_write,BilboardType:get_lua_num_frames(),"min=0.0 max=100.0 step=1.0")
+	DebugHelper:add_variable("Time per frame",CDebugHelper.float,CDebugHelper.read_write,BilboardType:get_lua_time_per_frame(),"min=0.0 max=1.0 step=0.01")	
+		
+	ShowMaterialParameters(DebugHelper, UABEngine, Material.name)
+	
+	DebugHelper:add_variable("Size",CDebugHelper.float,CDebugHelper.read_write,Bilboard:get_lua_size(),"min=-100.0 max=100.0 step=0.01")
+	DebugHelper:add_variable("Size offset",CDebugHelper.float,CDebugHelper.read_write,Bilboard:get_lua_size_offset(),"min=-1.0 max=1.0 step=0.01")
+	DebugHelper:add_variable("Color",CDebugHelper.color,CDebugHelper.read_write,Bilboard:get_lua_color(),"")
+		
+	for i=0, Bilboard:get_active_bilboards()-1 do
+		DebugHelper:add_variable("Pos X"..i.." :",CDebugHelper.float,CDebugHelper.read_write,Bilboard:get_position_lua_address(i,0),"min=-100.0 max=100.0 step=0.01 group=\"Pos "..(i).."\"")
+		DebugHelper:add_variable("Pos Y"..i.." :",CDebugHelper.float,CDebugHelper.read_write,Bilboard:get_position_lua_address(i,1),"min=-100.0 max=100.0 step=0.01 group=\"Pos "..(i).."\"")
+		DebugHelper:add_variable("Pos Z"..i.." :",CDebugHelper.float,CDebugHelper.read_write,Bilboard:get_position_lua_address(i,2),"min=-100.0 max=100.0 step=0.01 group=\"Pos "..(i).."\"")
+	end
+	
+	DebugHelper:register_bar()
+	
+end
+
+
+
 
 function RegisterParticleParameters(particle_name)
 	local UABEngine = CUABEngine.get_instance()

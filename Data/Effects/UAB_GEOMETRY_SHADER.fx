@@ -3,7 +3,6 @@
 
 static float sprite_sheet_width = m_RawDataArray[0];
 static float sprite_sheet_height = m_RawDataArray[1];
-static float lerp_sprite = m_RawDataArray[2];
 static float ratio_y = m_RawDataArray[2];
 static float du = 1.0 / sprite_sheet_width;
 static float dv = 1.0 / sprite_sheet_height;
@@ -109,8 +108,10 @@ void mainGS( point GS_INPUT input[1], inout TriangleStream<PS_INPUT> OutputStrea
 	float spriteIndex2Y = floor(spriteIndex2 * du);
 	
 	l_Output.TextureBlendFactor = input[0].SpriteIndex - spriteIndex1;
-	float x = 1.41421356237 * cos(input[0].Angle + 3.14159265359 * 0.25);
-	float y = 1.41421356237 * sin(input[0].Angle + 3.14159265359 * 0.25) * ratio_y;
+	float x=-1;
+	float y=-1;
+	x = 1.41421356237 * cos(input[0].Angle + 3.14159265359 * 0.25);
+	y = 1.41421356237 * sin(input[0].Angle + 3.14159265359 * 0.25) * ratio_y;
 	
 	l_Output.Color = input[0].Color;
 	l_Output.Pos = mul( pos + halfSize * float4(-x, -y, 0.0, 0.0), m_Projection );
@@ -144,6 +145,5 @@ float4 mainPS( PS_INPUT IN) : SV_Target
 	float4 t1 = T0Texture.Sample( S0Sampler, IN.UV );
 	float4 t2 = T0Texture.Sample( S0Sampler, IN.UV2 );
 	float a = IN.TextureBlendFactor;
-	
 	return IN.Color * lerp(t1, t2, float4(a, a, a, a));
 }

@@ -22,8 +22,6 @@ private:
 		int CurrentFrame;
 		float TimeToNextFrame;
 	};
-
-	int m_ActiveBilboards;
 	BilboardData m_BilboardData[MAX_BILBOARDS_PER_INSTANCE];
 	MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX m_BilboardRenderableData[MAX_BILBOARDS_PER_INSTANCE];
 	CRenderableVertexs *m_RenderableVertex;
@@ -40,15 +38,13 @@ public:
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
 	//void RenderDebug(CRenderManager *RM);
-	
-	CEmptyPointerClass* GetLuaEmissionBoxPosition(int index = 0)
-	{
-		return (CEmptyPointerClass*)&m_Position[index];
-	}
+	std::string GetTipo(){ return "BilboardInstance"; };
+
 	UAB_BUILD_GET_SET(bool, Start);
 	UAB_BUILD_GET_SET(float, Size);
 	UAB_BUILD_GET_SET(float, offsetSize);
 	UAB_BUILD_GET_SET(CColor, Color);
+	UAB_BUILD_GET_SET(int, ActiveBilboards);
 	CEmptyPointerClass* GetLuaSize()
 	{
 		return (CEmptyPointerClass*)&m_Size;
@@ -60,6 +56,10 @@ public:
 	CEmptyPointerClass* GetLuaColor()
 	{
 		return (CEmptyPointerClass*)&m_Color;
+	}
+	CEmptyPointerClass* GetLuaPosition(int index = 0, int index2 = 0)
+	{
+		return (CEmptyPointerClass*)&(m_BilboardData[index].Position[index2]);
 	}
 };
 
