@@ -60,12 +60,8 @@ dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 
 class 'CPlayer' (CLUAComponent)
 	function CPlayer:__init(_TreeNode)
-<<<<<<< HEAD
-		utils_log("init player")
 		self.m_ActualLevel = "Player"
 		self.m_AlreadyInitialized = false
-=======
->>>>>>> develop
 		local UABEngine = CUABEngine.get_instance()
 		local l_Level = CUABEngine.get_instance():get_level_manager():get_level("Player")
 		self.m_Name = _TreeNode:get_psz_property("name", "")
@@ -205,17 +201,7 @@ class 'CPlayer' (CLUAComponent)
 		self:SetPlayerStateMachine()
 		self.m_StateMachine:start()
 		
-<<<<<<< HEAD
-		if(not UABEngine:get_lua_reloaded())then
-			self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.3)
-			self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 90, self.m_RenderableObject:get_position(),"FisicasAux", "Player")
-		end
-
-		self.m_AlreadyInitialized = true
-		utils_log("end init player")
-=======
 		self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 90, self.m_RenderableObject:get_position(),"FisicasAux", "Player")
->>>>>>> develop
 	end
 
 	function CPlayer:SetSanity(_amount, _override)
@@ -311,11 +297,6 @@ class 'CPlayer' (CLUAComponent)
 					MainCamera:set_fov(l_Fov_Value)
 					--CameraControllerManager:choose_main_camera("MainCamera")
 				elseif l_EffectAux[1] == "velocity" then
-<<<<<<< HEAD
-					utils_log("velocity")
-					utils_log("TYPE: "..l_EffectAux[2])
-=======
->>>>>>> develop
 					if l_EffectAux[2] == "run" then
 						if self.m_CurrentAnimation == "run" then
 							self.m_Speed = self.m_DefaultSpeed - ((self.m_DefaultSpeed / 2)* (l_EffectAux[3] - self.m_Sanity) / (l_EffectAux[3] - l_EffectAux[4]))

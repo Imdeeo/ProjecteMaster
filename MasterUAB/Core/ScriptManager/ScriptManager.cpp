@@ -581,16 +581,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)
 			.def("get_texture_manager", &CUABEngine::GetTextureManager)
 			.def("get_effect_manager", &CUABEngine::GetEffectManager)
-<<<<<<< HEAD
-			//.def("get_light_manager", &CUABEngine::GetLightManager)
-			//.def("get_particle_manager", &CUABEngine::GetParticleManager)
-			//.def("get_manchas_manager", &CUABEngine::GetManchasManager)
-=======
-			.def("get_light_manager", &CUABEngine::GetLightManager)
-			.def("get_particle_manager", &CUABEngine::GetParticleManager)
 			.def("get_bilboard_manager", &CUABEngine::GetBilboardManager)
-			.def("get_manchas_manager", &CUABEngine::GetManchasManager)
->>>>>>> develop
 			.def("get_render_manager", &CUABEngine::GetRenderManager)
 			.def("get_animated_models_manager", &CUABEngine::GetAnimatedModelsManager)
 			.def("get_script_manager", &CUABEngine::GetScriptManager)
