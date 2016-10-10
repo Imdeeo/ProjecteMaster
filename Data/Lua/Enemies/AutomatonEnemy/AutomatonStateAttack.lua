@@ -13,7 +13,7 @@ function AttackUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
-	g_Engine:get_physX_manager():change_rigid_dynamic_actor_group("player","PlayerNoPhyxs")
+	g_Engine:get_physX_manager():change_rigid_dynamic_actor_group("player","DeadPlayer")
 	
 	l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime
 	local l_PercentRotation = l_Enemy.m_TimerRotation / 2.0

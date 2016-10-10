@@ -19,6 +19,7 @@
 	<groups_relations>
 		<group name="Floor">
 			<collides name="Player"/>
+			<collides name="DeadPlayer"/>
 			<collides name="Enemy"/>
 		</group>
 		<group name="Objects">
@@ -44,10 +45,12 @@
 			<collides name="Floor"/>
 			<collides name="Objects"/>
 			<collides name="Player"/>
+			<collides name="DeadPlayer"/>
 			<collides name="EnemyStairs"/>
 		</group>
 		<group name="PlayerStairs">
 			<collides name="Player"/>
+			<collides name="DeadPlayer"/>
 		</group>
 		<group name="EnemyStairs">
 			<collides name="Enemy"/>

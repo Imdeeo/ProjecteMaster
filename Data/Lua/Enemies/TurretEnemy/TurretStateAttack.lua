@@ -46,7 +46,7 @@ function AttackUpdateTurret(args, _ElapsedTime)
 				g_Player.m_CameraController:lock()
 				g_Player:CalculateCameraPositionRotation("JaheemDies", l_EnemyPos)
 				g_Player.m_IsDead = true
-				g_Engine:get_physX_manager():change_rigid_dynamic_actor_group("player","PlayerNoPhyxs")
+				g_Engine:get_physX_manager():change_rigid_dynamic_actor_group("player","DeadPlayer")
 			else
 				if l_Enemy.m_ActualAnimation == 2 then
 					-- the enemy rotates the body to player position
