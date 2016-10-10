@@ -24,19 +24,13 @@ void CCinematicManager::LoadXML(const std::string &FileName, const std::string &
 		l_Element = doc.FirstChildElement("cinematics");
 		if (l_Element != NULL)
 		{
-<<<<<<< HEAD
-			CCinematic* l_Cinematic = new CCinematic(l_Element,_LevelId);
-			AddResource(l_Cinematic->GetName(), l_Cinematic,_LevelId);
-			l_Element = l_Element->NextSiblingElement();
-=======
 			l_Element = l_Element->FirstChildElement();
 			while (l_Element != NULL)
 			{
-				CCinematic* l_Cinematic = new CCinematic(l_Element);
-				AddResource(l_Cinematic->GetName(), l_Cinematic);
+				CCinematic* l_Cinematic = new CCinematic(l_Element, _LevelId);
+				AddResource(l_Cinematic->GetName(), l_Cinematic, _LevelId);
 				l_Element = l_Element->NextSiblingElement();
 			}
->>>>>>> develop
 		}
 	}
 }
@@ -44,7 +38,7 @@ void CCinematicManager::LoadXML(const std::string &FileName, const std::string &
 void CCinematicManager::Reload()
 {
 	Destroy();
-	LoadXML(m_FileName);
+//	LoadXML(m_FileName);
 }
 
 void CCinematicManager::Update(float _ElapsedTime)

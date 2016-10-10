@@ -7,7 +7,7 @@
 
 #include <assert.h>
 
-CEnableAlphaBlendSceneRendererCommand::CEnableAlphaBlendSceneRendererCommand(tinyxml2::XMLElement* TreeNode) :CSceneRendererCommand(TreeNode),
+CEnableAlphaBlendSceneRendererCommand::CEnableAlphaBlendSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CSceneRendererCommand(TreeNode,_LevelId),
 	m_SrcBlend(TreeNode, "src"),
 	m_DestBlend(TreeNode, "dest"),
 	m_SrcAlphaBlend(TreeNode, "src_alpha"),

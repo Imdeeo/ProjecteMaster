@@ -12,6 +12,7 @@
 
 #include "Texture\DynamicTexture.h"
 #include "Camera\Frustum.h"
+#include "LevelManager\LevelManager.h"
 
 //#include "RenderManager\RenderManager.h"
 
@@ -43,7 +44,7 @@ CLight::CLight(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CN
 		{
 			if (l_Element->Name() == std::string("layer"))
 			{
-				m_Layers.push_back(UABEngine.GetLayerManager()->GetResource(l_Element->GetPszProperty("layer")));
+				m_Layers.push_back(UABEngine.GetLevelManager()->GetResource(_LevelId)->GetLayerManager()->GetResource(l_Element->GetPszProperty("layer")));
 			}
 		}
 		m_ShadowMap = new CDynamicTexture("shadowmap", (int)TreeNode->GetFloatProperty("shadow_map_width"), (int)TreeNode->GetFloatProperty("shadow_map_height"), true, TreeNode->GetPszProperty("shadow_map_format"));

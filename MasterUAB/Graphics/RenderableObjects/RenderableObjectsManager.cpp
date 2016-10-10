@@ -86,20 +86,16 @@ CRenderableObject * CRenderableObjectsManager::AddParticleSystemInstance(tinyxml
 		return nullptr;
 }
 
-<<<<<<< HEAD
-CRenderableObject * CRenderableObjectsManager::AddManchasSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId)
-=======
-CRenderableObject * CRenderableObjectsManager::AddBilboardSystemInstance(tinyxml2::XMLElement* TreeNode)
+CRenderableObject * CRenderableObjectsManager::AddBilboardSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId)
 {
 	CBilboardSystemInstance * l_BilboardSystemInstance = new CBilboardSystemInstance(TreeNode);
-	if (AddResource(l_BilboardSystemInstance->GetName(), l_BilboardSystemInstance))
+	if (AddResource(l_BilboardSystemInstance->GetName(), l_BilboardSystemInstance,_LevelId))
 		return l_BilboardSystemInstance;
 	else
 		return nullptr;
 }
 
-CRenderableObject * CRenderableObjectsManager::AddManchasSystemInstance(tinyxml2::XMLElement* TreeNode)
->>>>>>> develop
+CRenderableObject * CRenderableObjectsManager::AddManchasSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId)
 {
 	CManchasSystemInstance* l_ManchasSystemInstance = new CManchasSystemInstance(TreeNode,_LevelId);
 	if (AddResource(l_ManchasSystemInstance->GetName(), l_ManchasSystemInstance,_LevelId))
@@ -108,10 +104,10 @@ CRenderableObject * CRenderableObjectsManager::AddManchasSystemInstance(tinyxml2
 		return nullptr;
 }
 
-CRenderableObject * CRenderableObjectsManager::AddLineRendererSystemInstance(tinyxml2::XMLElement* TreeNode)
+CRenderableObject * CRenderableObjectsManager::AddLineRendererSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId)
 {
 	CLineRenderer* l_LineRenderer = new CLineRenderer(TreeNode);
-	if (AddResource(l_LineRenderer->GetName(), l_LineRenderer))
+	if (AddResource(l_LineRenderer->GetName(), l_LineRenderer,_LevelId))
 		return l_LineRenderer;
 	else
 		return nullptr;

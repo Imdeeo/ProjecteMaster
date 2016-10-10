@@ -42,7 +42,7 @@ private:
 	CBlendOp m_OpAlphaBlend;
 	ID3D11BlendState *m_BlendState;
 public:
-	CEnableAlphaBlendSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
+	CEnableAlphaBlendSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CEnableAlphaBlendSceneRendererCommand();
 
 	virtual void Execute(CRenderManager &RenderManager);

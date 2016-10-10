@@ -7,28 +7,20 @@
 #define LEVEL "2"
 
 class CInputManager;
-class CStaticMeshManager;
-class CLayerManager;
 class CMaterialManager;
 class CEffectManager;
 class CTextureManager;
-class CLightManager;
 class CRenderManager;
 class CAnimatedModelsManager;
 class CScriptManager;
 class CCameraControllerManager;
-class CCinematicManager;
 class CPhysXManager;
 class CRenderableObjectTechniqueManager;
 class CSceneRendererCommandManager;
-class CParticleManager;
 class CGUIManager;
 class ISoundManager;
 class IVideoManager;
-class CGamePlayManager;
 class CLevelManager;
-class CManchasManager;
-class CAStarManager;
 class CColor;
 class CBilboardManager;
 
@@ -46,60 +38,42 @@ private:
 	CUABEngine(void);
 
 	CInputManager * m_InputManager;
-	CStaticMeshManager * m_StaticMeshManager;
-	CLayerManager * m_LayerManager;
 	CMaterialManager * m_MaterialManager;
 	CEffectManager * m_EffectManager;
 	CTextureManager * m_TextureManager;
-	CLightManager * m_LightManager;
 	CRenderManager * m_RenderManager;
 	CAnimatedModelsManager * m_AnimatedModelsManager;
 	CScriptManager * m_ScriptManager;
 	CCameraControllerManager * m_CameraControllerManager;
-	CCinematicManager * m_CinematicManager;
 	CPhysXManager * m_PhysXManager;
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
 	CSceneRendererCommandManager* m_SceneRendererCommandManager;
-	CParticleManager* m_ParticleManager;
 	CBilboardManager* m_BilboardManager;
 	CGUIManager* m_GUIManager;
 	ISoundManager* m_SoundManager;
 	IVideoManager* m_VideoManager;
-	CGamePlayManager* m_GamePlayManager;
 	CLevelManager* m_LevelManager;
-	CManchasManager* m_ManchasManager;
 	std::string m_LevelLoaded;
 	int m_CurrentCamera_vision;
-	CAStarManager* m_AStarManager;
 	bool m_ActiveConsole;
 
 public:
 	CInputManager * GetInputManager() const;
-	CStaticMeshManager * GetStaticMeshManager() const;
-	CLayerManager * GetLayerManager() const;
 	CMaterialManager * GetMaterialManager() const;
 	CEffectManager * GetEffectManager() const;
 	CTextureManager * GetTextureManager() const;
-	CLightManager * GetLightManager() const;
 	CRenderManager * GetRenderManager() const;
 	CAnimatedModelsManager * GetAnimatedModelsManager() const;
 	CScriptManager * GetScriptManager() const;
 	CCameraControllerManager * GetCameraControllerManager() const;
-	CCinematicManager * GetCinematicManager() const;
 	CPhysXManager * GetPhysXManager() const;
 	CRenderableObjectTechniqueManager * GetRenderableObjectTechniqueManager() const;
 	CSceneRendererCommandManager * GetSceneRendererCommandManager() const;
-	CParticleManager * GetParticleManager() const;
 	CBilboardManager * GetBilboardManager() const;
 	CGUIManager * GetGUIManager() const;
 	ISoundManager * GetSoundManager() const;
 	IVideoManager * GetVideoManager() const;
-	CGamePlayManager * GetGamePlayManager()const;
 	CLevelManager * GetLevelManager()const;
-	std::string GetLevelLoaded()const{ return m_LevelLoaded; }
-	void SetLevelLoaded(std::string _id){ m_LevelLoaded = _id; }
-	CManchasManager * GetManchasManager() const;
-	CAStarManager * GetAStarManager() const;
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
 	void Destroy();

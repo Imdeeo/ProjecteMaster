@@ -13,8 +13,9 @@
 #include "Lights\LightManager.h"
 #include "GamePlayManager.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
+#include "SceneRender\SceneRendererCommandManager.h"
 
-#include "IA\AStar.h"
+#include "IA\AStarManager.h"
 
 #include "LevelManager\LevelManager.h"
 
@@ -29,7 +30,7 @@ CLevel::CLevel() :CNamed("")
 	m_CinematicManager = new CCinematicManager();
 	m_GamePlayManager = new CGamePlayManager();
 	m_ManchasManager = new CManchasManager();
-	m_AStarManager = new CAStar();
+	m_AStarManager = new CAStarManager();
 }
 
 CLevel::CLevel(const std::string &_Name) :CNamed(_Name)
@@ -42,7 +43,7 @@ CLevel::CLevel(const std::string &_Name) :CNamed(_Name)
 	m_CinematicManager = new CCinematicManager();
 	m_GamePlayManager = new CGamePlayManager();
 	m_ManchasManager = new CManchasManager();
-	m_AStarManager = new CAStar();
+	m_AStarManager = new CAStarManager();
 }
 
 
@@ -61,9 +62,12 @@ void CLevel::Load()
 	m_LightManager->Load(l_LevelDirectory + "\\lights.xml", m_Name);
 	m_CinematicManager->LoadXML(l_LevelDirectory + "\\cinematic.xml", m_Name);
 	UABEngine.GetCameraControllerManager()->Load(l_LevelDirectory + "\\cameras.xml", m_Name);
-	m_AStarManager->LoadMap(l_LevelDirectory + "\\pathfinding.xml");
+	m_AStarManager->Load(l_LevelDirectory + "\\pathfinding.xml",m_Name);
 	std::string l_LevelDirectoryChangedSlashes = l_LevelDirectory;
 	std::replace(l_LevelDirectoryChangedSlashes.begin(), l_LevelDirectoryChangedSlashes.end(), '\\', '\/');
+	CSceneRendererCommandManager* l_SceneRendererCommandManager = new CSceneRendererCommandManager();
+	l_SceneRendererCommandManager->Load(l_LevelDirectory + "\\scene_renderer_commands.xml", m_Name);
+	UABEngine.GetLevelManager()->AddSceneCommandsManager(m_Name,l_SceneRendererCommandManager);
 	UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_LevelDirectoryChangedSlashes + "\",\"" + m_Name + "\")");
 }
 
@@ -119,7 +123,27 @@ CManchasManager * CLevel::GetManchasManager() const
 {
 	return m_ManchasManager;
 }
-CAStar * CLevel::GetAStarManager() const
+CAStarManager * CLevel::GetAStarManager() const
 {
 	return m_AStarManager;
+}
+
+bool* CLevel::IsVisible()
+{
+	return &m_Visible;
+}
+
+bool* CLevel::HasToUpdate()
+{
+	return &m_HasToUpdate;
+}
+
+void CLevel::SetVisible(bool _Visible)
+{
+	m_Visible = _Visible;
+}
+
+void CLevel::SetHasToUpdate(bool _HasToUpdate)
+{
+	m_HasToUpdate = _HasToUpdate;
 }

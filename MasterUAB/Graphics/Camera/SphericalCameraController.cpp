@@ -5,13 +5,8 @@
 #include "Utils.h"
 #include "InputManager\InputManager.h"
 
-<<<<<<< HEAD
 CSphericalCameraController::CSphericalCameraController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CCameraController(TreeNode,_LevelId)
-, m_Zoom(TreeNode->GetFloatProperty("zoom", 50.f))
-=======
-CSphericalCameraController::CSphericalCameraController(tinyxml2::XMLElement* _TreeNode) : CCameraController(_TreeNode)
-, m_Zoom(_TreeNode->GetFloatProperty("zoom", 4.5f))
->>>>>>> develop
+, m_Zoom(TreeNode->GetFloatProperty("zoom", 4.5f))
 , m_ZoomSpeed(2.f)
 , m_CameraPosition(m_Position - m_Zoom)
 {

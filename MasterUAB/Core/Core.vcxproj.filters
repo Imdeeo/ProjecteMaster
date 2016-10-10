@@ -25,13 +25,11 @@
     <ClCompile Include="InputManager\KeyboardInput.cpp">
       <Filter>InputManager</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="LevelManager\Level.cpp">
       <Filter>LevelManager</Filter>
-=======
+	</ClCompile>
     <ClCompile Include="IA\AStarManager.cpp">
       <Filter>AI</Filter>
->>>>>>> develop
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,13 +57,11 @@
     <ClInclude Include="IA\AStar.h">
       <Filter>AI</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="LevelManager\Level.h">
       <Filter>LevelManager</Filter>
-=======
+	</ClInclude>
     <ClInclude Include="IA\AStarManager.h">
       <Filter>AI</Filter>
->>>>>>> develop
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
