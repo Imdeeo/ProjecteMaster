@@ -217,7 +217,9 @@ class 'CPlayer' (CLUAComponent)
 		
 		if self.m_Sanity <= 0 then
 			utils_log("ESTAS MUERTO!!!")
-			g_ReloadManager:ReloadGame(2)
+			g_Engine:set_pause(true)
+			m_retry = true
+			m_menu = true
 		end
 	end
 	

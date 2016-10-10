@@ -15,6 +15,7 @@ m_menu = true
 m_credits = false
 m_options = false
 m_pause = false
+m_confirm = false
 m_fps = true
 g_Engine = CUABEngine.get_instance()
 g_VolumeController = VolumeController()
@@ -125,7 +126,7 @@ function luaGui()
 		local color = CColor(1,0.2,0.2,1)
 		local coord = Vect2f(1000, 10)
 		local l_FPSText = string.format("%.1f fps", g_Engine:get_render_manager():get_frame_rate())
-		gui_manager:do_text("fontTest", l_FPSText, coord, CGUIManager.top, color)
+		gui_manager:do_text("fontTest", l_FPSText, coord, CGUIManager.top_left, color)
 	end
 
 	if m_menu then
@@ -164,12 +165,77 @@ function luaGui()
 			if b_back then
 				m_credits = false
 			end
+		elseif m_confirm then
+			gui_manager:do_panel("standardMenuFondo", "fondo2", gui_position, 0.0)
+			local l_newPosX = m_ScreenResolution.x / 2
+			local l_newPosY = m_ScreenResolution.y / 2
+			
+			coord = Vect2f(l_newPosX, l_newPosY)
+			gui_manager:do_text("fontTest", "Estas seguro que deseas salir?", coord, CGUIManager.mid_center, color)
+			
+			gui_position = CGUIPosition(l_newPosX, l_newPosY + l_HeightButton, l_WidthButton, l_HeightButton, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_YesButton = gui_manager:do_button("Yes", "yes_button", gui_position)
+			if l_YesButton then
+				m_confirm = false
+				if m_pause then
+					m_pause = false
+				elseif m_retry then
+					m_retry = false
+				else
+					g_Engine:quit()
+				end
+			end 
+			
+			gui_position = CGUIPosition(l_newPosX, l_newPosY + l_HeightButton * 2, l_WidthButton, l_HeightButton, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_NoButton = gui_manager:do_button("No", "no_button", gui_position)
+			if l_NoButton then
+				m_confirm = false
+			end
+		elseif m_retry then
+			gui_manager:do_panel("mainMenuFondo", "fondo2", gui_position, 0.0)
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_RetryButton = gui_manager:do_button("Retry", "retry_button", gui_position)
+			if l_RetryButton then
+				m_menu = false
+				m_retry = false
+				g_Engine:set_pause(false)
+				g_ReloadManager:ReloadGame(1)
+			end 
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_ExitButton = gui_manager:do_button("Exit", "exit_button", gui_position)
+			if l_ExitButton then
+				m_confirm = true
+			end
+		elseif m_options then
+			gui_manager:do_panel("optionsMenuFondo", "fondo2", gui_position, 0.0)
+		
+			coord = Vect2f(l_PosXSlider, l_PosYSlider - l_HeightButton * 2)
+			gui_manager:do_text("fontTest", "Opciones", coord, CGUIManager.top_left, color)
+			coord = Vect2f(l_PosXSlider,l_PosYSlider)
+			gui_manager:do_text("fontTest", "Musica", coord, CGUIManager.top_left, color)
+			gui_position = CGUIPosition(l_PosXSlider, l_PosYSlider + l_HeightSlider, l_WidthSlider, l_HeightSlider, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			m_MusicSliderResult = gui_manager:do_slider("MusicSlider", "volume_slider", gui_position, 0, 100, m_MusicSliderResult.real, true)
+			g_VolumeController:SetMusicVolume(m_MusicSliderResult.real)
+			
+			coord = Vect2f(l_PosXSlider,l_PosYSlider + l_HeightButton * 2)
+			gui_manager:do_text("fontTest", "Efectos", coord, CGUIManager.top_left, color)
+			gui_position = CGUIPosition(l_PosXSlider, l_PosYSlider + l_HeightSlider + l_HeightButton * 2, l_WidthSlider, l_HeightSlider, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			m_FxSliderResult = gui_manager:do_slider("FxSlider", "volume_slider", gui_position, 0, 100, m_FxSliderResult.real, true)
+			g_VolumeController:SetFXVolume(m_FxSliderResult.real)
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton * 4, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_ExitButton = gui_manager:do_button("Exit", "exit_button", gui_position)
+			if l_ExitButton then
+				m_options = false				
+			end 	
 		elseif m_pause then
 			gui_manager:do_panel("mainMenuFondo", "fondo2", gui_position, 0.0)
 			
 			gui_position = CGUIPosition(l_PosX, l_PosY, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			local l_PlayButton = gui_manager:do_button("Play", "play_button", gui_position)
-			if l_PlayButton then
+			local l_ResumeButton = gui_manager:do_button("Resume", "resume_button", gui_position)
+			if l_ResumeButton then
 				m_menu = false
 				m_pause = false
 				g_Engine:set_pause(false)
@@ -179,37 +245,13 @@ function luaGui()
 			local l_OptionsButton = gui_manager:do_button("Options", "options_button", gui_position)
 			if l_OptionsButton then
 				m_options = true
-				m_pause = false
 			end
 			
 			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton * 2, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local l_ExitButton = gui_manager:do_button("Exit", "exit_button", gui_position)
 			if l_ExitButton then
-				m_options = false
-				m_pause = false
+				m_confirm = true
 			end
-		elseif m_options then
-			gui_manager:do_panel("optionsMenuFondo", "fondo2", gui_position, 0.0)
-		
-			coord = Vect2f(l_PosXSlider, l_PosYSlider - l_HeightButton * 2)
-			gui_manager:do_text("fontTest", "Opciones", coord, CGUIManager.mid_center, color)
-			coord = Vect2f(l_PosXSlider,l_PosYSlider)
-			gui_manager:do_text("fontTest", "Musica", coord, CGUIManager.mid_center, color)
-			gui_position = CGUIPosition(l_PosXSlider, l_PosYSlider + l_HeightSlider, l_WidthSlider, l_HeightSlider, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			m_MusicSliderResult = gui_manager:do_slider("MusicSlider", "volume_slider", gui_position, 0, 100, m_MusicSliderResult.real, true)
-			g_VolumeController:SetMusicVolume(m_MusicSliderResult.real)
-			
-			coord = Vect2f(l_PosXSlider,l_PosYSlider + l_HeightButton * 2)
-			gui_manager:do_text("fontTest", "Efectos", coord, CGUIManager.mid_center, color)
-			gui_position = CGUIPosition(l_PosXSlider, l_PosYSlider + l_HeightSlider + l_HeightButton * 2, l_WidthSlider, l_HeightSlider, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			m_FxSliderResult = gui_manager:do_slider("FxSlider", "volume_slider", gui_position, 0, 100, m_FxSliderResult.real, true)
-			g_VolumeController:SetFXVolume(m_FxSliderResult.real)
-			
-			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton * 4, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			local l_ExitButton = gui_manager:do_button("Exit", "exit_button", gui_position)
-			if l_ExitButton then
-				m_options = false
-			end	
 		else			
 			gui_manager:do_panel("mainMenuFondo", "fondo1", gui_position, 0.0)
 			
@@ -235,7 +277,7 @@ function luaGui()
 			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton * 4, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local l_ExitButton = gui_manager:do_button("Exit", "exit_button", gui_position)
 			if l_ExitButton then
-				g_Engine:quit()
+				m_confirm = true
 			end
 		end	
 	end 	 

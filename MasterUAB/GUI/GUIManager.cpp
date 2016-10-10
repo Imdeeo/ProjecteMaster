@@ -469,8 +469,8 @@ int CGUIManager::FillCommandQueueWithTextAux(const std::string& _font, const std
 
 				if (command.x1 < textBox_->x) textBox_->x = (float)command.x1;
 				if (command.y1 < textBox_->y) textBox_->y = (float)command.y1;
-				if (command.x2 < textBox_->z) textBox_->z = (float)command.x2;
-				if (command.y2 < textBox_->w) textBox_->w = (float)command.y2;
+				if (command.x2 > textBox_->z) textBox_->z = (float)command.x2;
+				if (command.y2 > textBox_->w) textBox_->w = (float)command.y2;
 			}
 		}
 	}
@@ -493,6 +493,15 @@ void CGUIManager::FillCommandQueueWithText(const std::string& _font, const std::
 		adjustment.y -= (textSizes.y + textSizes.w) * 0.5f;
 	else if ((int)_anchor & (int)GUIAnchor::BOTTOM)
 		adjustment.y -= textSizes.w;
+	else
+		assert(false);
+
+	if ((int)_anchor & (int)GUIAnchor::LEFT)
+		adjustment.x -= textSizes.x;
+	else if ((int)_anchor & (int)GUIAnchor::CENTER)
+		adjustment.x -= (textSizes.x + textSizes.z) * 0.5f;
+	else if ((int)_anchor & (int)GUIAnchor::RIGHT)
+		adjustment.x -= textSizes.z;
 	else
 		assert(false);
 
