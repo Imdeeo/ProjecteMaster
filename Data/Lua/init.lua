@@ -61,12 +61,7 @@ end
 
 function levelMainLua(level,level_id)
 	level = string.gsub(level,"\/","\\")
-<<<<<<< HEAD
-	
 	m_CharacterManager:LoadXML(level.."\\characters.xml",level_id)
-=======
-	m_CharacterManager:LoadXML(level.."\\characters.xml")
->>>>>>> develop
 end
 
 function luaUpdate(_ElapsedTime)
