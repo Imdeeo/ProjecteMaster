@@ -35,7 +35,7 @@ public:
 	CManchasSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId = "");
 	virtual ~CManchasSystemInstance(void);
 	void Destroy();
-
+	std::string GetTipo(){ return "ManchasInstance"; };
 	UAB_BUILD_GET_SET(CManchasSystemType *, Type);
 	UAB_BUILD_GET_SET(float, NextParticleEmission);
 	UAB_BUILD_GET_SET(bool, Awake);

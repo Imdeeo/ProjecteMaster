@@ -2,9 +2,7 @@
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 #include "XML\tinyxml2.h"
-
 #include "Utils.h"
-
 #include "InputManager\InputManager.h"
 #include "Effects\EffectManager.h"
 #include "Materials\MaterialManager.h"
@@ -95,6 +93,8 @@ CUABEngine* CUABEngine::GetInstance()
 	{
 		m_Instance = new  CUABEngine();
 	}
+	//DWORD dwWidth = GetSystemMetrics(SM_CXSCREEN);
+	//DWORD dwHeight = GetSystemMetrics(SM_CYSCREEN);
 	return m_Instance;
 }
 
@@ -115,7 +115,7 @@ void CUABEngine::Update(float _ElapsedTime)
 	m_VideoManager->Update(l_ElapsedTime);
 	const CCamera *l_CurrentCamera = m_RenderManager->GetCurrentCamera();
 	//GetSoundManager()->Update(l_CurrentCamera);
-	m_ScriptManager->RunCode("luaGui()");
+	m_ScriptManager->RunCode("luaGui(" + std::to_string(l_ElapsedTime) + ")");
 }
 
 void CUABEngine::LoadScreen(const std::string _FileName)
@@ -301,6 +301,16 @@ CColor CUABEngine::GetRandomValue(CColor min, CColor max)
 	float a = m_UnitDistribution(m_RandomEngine);
 	CColor value = min.Lerp(max, a);
 	return value;
+}
+
+int CUABEngine::GetTypeParticle(CRenderableObject* _RO)
+{
+	std::string l_type = _RO->GetTipo();
+	if (l_type == "ParticleInstance")
+	{
+		return 0;
+	}
+	return 1;
 }
 
 UAB_GET_PROPERTY_CPP(CUABEngine, CInputManager *, InputManager)

@@ -32,7 +32,9 @@ public:
 	virtual void Render(CRenderManager *RM){};
 	void SetDebugRender(bool _DebugRender){ m_DebugRender = _DebugRender;}
 	bool GetDebugRender(){ return m_DebugRender; }
-
+	virtual std::string GetTipo() {
+		return "RenderableObject";
+	};
 	virtual CRenderableObject& CRenderableObject::operator=(CRenderableObject&);
 };
 

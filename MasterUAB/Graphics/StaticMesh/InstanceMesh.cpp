@@ -41,7 +41,12 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string &
 		if (m_PxType == "triangle_mesh")
 		{
 			bool l_FlipNormals = TreeNode->GetBoolProperty("physics_flip_normals");
-			l_PhysXManager->CreateStaticTriangleMesh(GetName(), m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			std::string l_auxDirectoty = TreeNode->GetPszProperty("physx_mesh_directory", "");
+			if (l_auxDirectoty  == "")
+			{
+				l_auxDirectoty = m_StaticMesh->GetPhysxMeshesDirectory();
+			}
+			l_PhysXManager->CreateStaticTriangleMesh(GetName(), m_StaticMesh, l_auxDirectoty, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}else if (m_PxType == "sphere_shape")
 		{
 			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
@@ -176,5 +181,35 @@ bool CInstanceMesh::GetInsideFrustum()
 	if (m_Layer == "skybox")
 		return true;
 	//Vect3f l_TransformedPosition = C3DElement::GetTransform() * m_Position; //Se carga las posiciones de las instancias.
-	return m_Frustum->SphereVisible(m_Position, m_StaticMesh->GetBoundingSphereRadius());
+	if (m_IsCinematic)
+	{
+		m_ScaleMatrix.SetIdentity();
+		m_ScaleMatrix.Scale(m_Scale.x, m_Scale.y, m_Scale.z);
+
+		m_RotationMatrix.SetIdentity();
+		m_RotationMatrix = m_Rotation.rotationMatrix();
+
+		m_TranslationMatrix.SetIdentity();
+		m_TranslationMatrix.SetPos(m_Position.x, m_Position.y, m_Position.z);
+
+		m_TransformMatrix = m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
+
+		m_AnimatedScaleMatrix.SetIdentity();
+		m_AnimatedScaleMatrix.Scale(m_AnimatedScale.x, m_AnimatedScale.y, m_AnimatedScale.z);
+
+		m_AnimatedRotationMatrix.SetIdentity();
+		m_AnimatedRotationMatrix = m_AnimatedRotation.rotationMatrix();
+
+		m_AnimatedTranslationMatrix.SetIdentity();
+		m_AnimatedTranslationMatrix.SetPos(m_AnimatedPosition.x, m_AnimatedPosition.y, m_AnimatedPosition.z);
+
+		m_TransformMatrix = m_AnimatedScaleMatrix * m_AnimatedRotationMatrix * m_AnimatedTranslationMatrix * m_TransformMatrix;
+		
+		Vect3f l_Position = m_TransformMatrix.GetPos();
+		return m_Frustum->SphereVisible(l_Position, m_StaticMesh->GetBoundingSphereRadius());
+	}
+	else
+	{
+		return m_Frustum->SphereVisible(m_Position, m_StaticMesh->GetBoundingSphereRadius());
+	}
 }

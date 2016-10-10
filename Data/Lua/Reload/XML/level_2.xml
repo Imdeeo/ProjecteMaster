@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<resources>
+	<resource layer="solid" name="Jaheem" type="player" position="0.0 0.9 5.5" rotation="0.0 0.0 0.0 1.0" visible="true"/>
+	<resource layer="solid" name="AutomatonLeft" type="enemy" position="15.199900 4.933401 26.689301" rotation="0.000000 1.000000 0.000000 0.000000" awake="false" visible="true"/>
+	<resource layer="solid" name="AutomatonRight" type="enemy" position="-2.547590 0.500000 2.078260" rotation="0.000000 0.707107 0.000000 -0.707107" awake="false" visible="true"/>
+	<resource layer="solid" name="TurretAutomaton" type="enemy" position="12.528900 0.700000 23.473000" rotation="0.000000 1.000000 0.000000 0.000000" awake="false" visible="true"/>
+	<resource layer="solid" name="Artilufacto" type="object" position="-17.0552 1.66966 28.9583" rotation="0.573577 0.0 0.0 0.819152" visible="true"/>	
+	<resource layer="solid" name="puertalaberintooficial" type="object" position="-7.60604 -7.7486e-007 9.55606" rotation="0.0 0.0 0.0 1.0" visible="true"/>	
+	<!--<resource layer="solid" name="LibrosEntradaLaberinto006" type="object" position="-7.2935 1.34372 8.36332" rotation="0.0 0.0 0.0 1.0" visible="true"/>	
+	<resource layer="solid" name="planelibropuertalaboficial" type="object" position="-7.31191 4.56333 8.30693" rotation="0.0 0.0 0.0 1.0" visible="true"/>	-->
+	<resource layer="solid" name="LibroEspecial" type="object" position="15.5708 1.52933 26.3092" rotation="0.0 0.0 0.0 1.0" visible="true"/>	
+	<resource layer="alpha_blend_objects" name="reflejoluz3" type="object" position="16.0246 2.00381 8.17719" rotation="-0.866025 0.0 0.0 0.5" visible="false"/>
+	<resource layer="particles" name="EmisorParticulaTorreta" type="particle" position="5.915472 0.966247 11.680963" start="false" awake="false" visible="false"/>
+	<resource name="fonotelefote" type="cinematic" play="false" stop="true" pause="false"/>
+	<resource name="LuzProyector" type="light" position="16.026501 1.417260 9.191570" visible="false"/>
+</resources>

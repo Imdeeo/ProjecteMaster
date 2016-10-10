@@ -31,10 +31,12 @@ function KillUpdateAutomaton(args, _ElapsedTime)
 		l_Enemy.m_State = "off"
 	end
 	
-	local l_LoseSanityValue = g_Player.m_Sanity / (6.0 - l_Enemy.m_TimerToStop)
-	if l_Enemy.m_Timer >= 0.5 then
-		g_Player:ModifySanity(-l_LoseSanityValue)
-		l_Enemy.m_Timer = 0
+	if g_Player.m_Sanity > 0 then
+		local l_LoseSanityValue = g_Player.m_Sanity / (6.0 - l_Enemy.m_TimerToStop)
+		if l_Enemy.m_Timer >= 0.5 then
+			g_Player:ModifySanity(-l_LoseSanityValue)
+			l_Enemy.m_Timer = 0
+		end
 	end
 	
 	l_Enemy:ShowParticles("EmisorParticulaTorreta", false)

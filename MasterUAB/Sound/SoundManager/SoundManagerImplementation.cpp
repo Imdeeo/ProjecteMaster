@@ -128,7 +128,10 @@ AkGameObjectID CSoundManagerImplementation::GenerateObjectID()
 
 void CSoundManagerImplementation::RegisterSpeaker(const C3DElement* _speaker)
 {
-	assert(m_GameObjectSpeakers.find(_speaker) == m_GameObjectSpeakers.end());
+	//assert(m_GameObjectSpeakers.find(_speaker) == m_GameObjectSpeakers.end());
+	if (m_GameObjectSpeakers.find(_speaker) != m_GameObjectSpeakers.end())
+		UnregisterSpeaker(_speaker);
+
 	AkGameObjectID id = GenerateObjectID();
 	m_GameObjectSpeakers[_speaker] = id;
 

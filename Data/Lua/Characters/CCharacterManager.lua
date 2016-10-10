@@ -16,6 +16,7 @@ class 'CCharacterManager'
 		local xmlError = doc:load_file(Filename)
 		local l_game_play_manager = CUABEngine.get_instance():get_level_manager():get_level(level_id):get_game_play_manager()
 		--UABEngine:get_game_play_manager():destroy()
+
 		if xmlError == 0 then
 			local l_Element = doc:first_child_element("characters"):first_child()
 			while l_Element ~= nil do

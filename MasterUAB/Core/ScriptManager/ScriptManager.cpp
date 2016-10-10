@@ -92,6 +92,9 @@
 #include "Particles\ParticleManager.h"
 #include "Particles\ParticleSystemType.h"
 #include "Particles\ParticleSystemInstance.h"
+#include "Bilboards\BilboardManager.h"
+#include "Bilboards\BilboardSystemInstance.h"
+#include "Bilboards\BilboardSystemType.h"
 #include "LineRenderer\LineRenderer.h"
 
 #include "Manchas\ManchasManager.h"
@@ -450,6 +453,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_lua_pos_x", &C3DElement::GetPositionX)
 			.def("get_lua_pos_y", &C3DElement::GetPositionY)
 			.def("get_lua_pos_z", &C3DElement::GetPositionZ)
+			.def("reset_animated_values", &C3DElement::ResetAnimatedValues)
 	];
 
 	module(m_LS)[
@@ -490,9 +494,12 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_name", &tinyxml2::XMLElement::Name)
 			.def("get_next", &tinyxml2::XMLElement::NextSiblingElement2)
 			.def("get_psz_property", &tinyxml2::XMLElement::GetPszProperty)
+			.def("get_vect2f_property", &tinyxml2::XMLElement::GetVect2fProperty)
 			.def("get_vect3f_property", &tinyxml2::XMLElement::GetVect3fProperty)
+			.def("get_vect4f_property", &tinyxml2::XMLElement::GetVect4fProperty)
 			.def("get_float_property", &tinyxml2::XMLElement::GetFloatProperty)
 			.def("get_bool_property", &tinyxml2::XMLElement::GetBoolProperty)
+			.def("get_quat_property", &tinyxml2::XMLElement::GetQuatfProperty)
 			.def("first_child", &tinyxml2::XMLElement::FirstChildElement2)
 	];
 
@@ -574,9 +581,16 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)
 			.def("get_texture_manager", &CUABEngine::GetTextureManager)
 			.def("get_effect_manager", &CUABEngine::GetEffectManager)
+<<<<<<< HEAD
 			//.def("get_light_manager", &CUABEngine::GetLightManager)
 			//.def("get_particle_manager", &CUABEngine::GetParticleManager)
 			//.def("get_manchas_manager", &CUABEngine::GetManchasManager)
+=======
+			.def("get_light_manager", &CUABEngine::GetLightManager)
+			.def("get_particle_manager", &CUABEngine::GetParticleManager)
+			.def("get_bilboard_manager", &CUABEngine::GetBilboardManager)
+			.def("get_manchas_manager", &CUABEngine::GetManchasManager)
+>>>>>>> develop
 			.def("get_render_manager", &CUABEngine::GetRenderManager)
 			.def("get_animated_models_manager", &CUABEngine::GetAnimatedModelsManager)
 			.def("get_script_manager", &CUABEngine::GetScriptManager)
@@ -606,6 +620,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_lua_reloaded", &CUABEngine::GetLuaReloaded)		
 			.def("get_active_console", &CUABEngine::GetActiveConsole)
 			.def("set_active_console", &CUABEngine::SetActiveConsole)
+			.def("get_type_particle", &CUABEngine::GetTypeParticle)
+			.def("reload_lua", &CUABEngine::ReloadLUA)
 	];
 
 	// InputManager-------------------------------------------------------------------------------------
@@ -798,6 +814,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("remove_action", &CAnimatedInstanceModel::RemoveAction)
 			.def("blend_cycle", &CAnimatedInstanceModel::BlendCycle)
 			.def("clear_cycle", &CAnimatedInstanceModel::ClearCycle)
+			.def("remove_animations", &CAnimatedInstanceModel::RemoveAnimations)
 			.def("is_cycle_animation_active", &CAnimatedInstanceModel::IsCycleAnimationActive)
 			.def("is_action_animation_active", &CAnimatedInstanceModel::IsActionAnimationActive)
 			.def("is_action_animation_ended", &CAnimatedInstanceModel::IsActionAnimationEnded)
@@ -1133,7 +1150,7 @@ void CScriptManager::RegisterLUAFunctions()
 	];
 
 	// Lights-----------------------------------------------------------------------------------------
-	
+
 	module(m_LS)[
 		class_<CLight, CNamed>("CLight")
 			.def("get_position", &CLight::GetPosition)
@@ -1410,6 +1427,8 @@ void CScriptManager::RegisterLUAFunctions()
 	class_<CParticleSystemInstance, CRenderableObject>("CParticleSystemInstance")
 		.def(constructor<>())
 		.def(constructor<tinyxml2::XMLElement*>())
+		.def("set_active_particles", &CParticleSystemInstance::SetActiveParticles)
+		.def("get_active_particles", &CParticleSystemInstance::GetActiveParticles)
 		.def("get_start", &CParticleSystemInstance::GetStart)
 		.def("set_start", &CParticleSystemInstance::SetStart)
 		.def("get_awake", &CParticleSystemInstance::GetAwake)
@@ -1440,6 +1459,33 @@ void CScriptManager::RegisterLUAFunctions()
 		.def("get_lua_emission_box_limit", &CParticleSystemInstance::GetLuaEmissionBoxLimit)
 		.def("get_lua_emission_box_position", &CParticleSystemInstance::GetLuaEmissionBoxPosition)
 		.def("get_lua_emission_box_half_size", &CParticleSystemInstance::GetLuaEmissionBoxHalfSize)
+	];
+
+	module(m_LS)[
+		class_<CBilboardSystemType, CNamed>("CBilboardSystemType")
+		.def("get_lua_num_frames", &CBilboardSystemType::GetLuaNumFrames)
+		.def("get_lua_time_per_frame", &CBilboardSystemType::GetLuaTimePerFrame)
+		.def("get_material", &CBilboardSystemType::GetMaterial)
+	];
+
+	RegisterTemplatedMapManager<CBilboardSystemType>(m_LS);
+
+	module(m_LS)[
+		class_<CBilboardManager, CTemplatedMapManager<CBilboardSystemType>>("CBilboardManager")
+		.def(constructor<>())
+		.def("load", &CBilboardManager::Load)
+		.def("reload", &CBilboardManager::Reload)
+	];
+
+	module(m_LS)[
+		class_<CBilboardSystemInstance, CRenderableObject>("CBilboardSystemInstance")
+		.def(constructor<>())
+		.def("get_lua_size", &CBilboardSystemInstance::GetLuaSize)
+		.def("get_lua_size_offset", &CBilboardSystemInstance::GetLuaSizeOffset)
+		.def("get_lua_color", &CBilboardSystemInstance::GetLuaColor)
+		.def("get_type", &CBilboardSystemInstance::GetType)
+		.def("get_active_bilboards", &CBilboardSystemInstance::GetActiveBilboards)
+		.def("get_position_lua_address", &CBilboardSystemInstance::GetLuaPosition)
 	];
 
 	// Manchas-----------------------------------------------------------------------------------------
@@ -1509,6 +1555,7 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CGUIManager>("CGUIManager")
 			.def("do_button", &CGUIManager::DoButton)
 			.def("do_slider", &CGUIManager::DoSlider)
+			.def("do_panel", &CGUIManager::DoPanel)
 			.def("do_text", &CGUIManager::FillCommandQueueWithText)
 			.enum_("gui_anchor")[
 				value("top", CGUIManager::GUIAnchor::TOP),
@@ -1580,6 +1627,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_character_controler_lua_pos_z", &CPhysXManager::GetCharacterControllersPositionZ)
 			.def("set_character_controller_height", &CPhysXManager::SetCharacterControllersHeight)
 			.def("change_rigid_dynamic_actor_group", &CPhysXManager::ChangeRigidDynamicActorPhysxGroup)
+			.def("remove_actor", &CPhysXManager::RemoveActor)
 	];
 
 	

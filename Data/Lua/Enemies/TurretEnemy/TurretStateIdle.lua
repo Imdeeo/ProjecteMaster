@@ -3,9 +3,7 @@ function IdleFirstTurret(args)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
-	if l_Enemy.m_ActualAnimation == 0 then
-		l_Enemy.m_ActualAnimation = 0
-	else		
+	if l_Enemy.m_ActualAnimation ~= 0 then
 		if l_Enemy.m_ActualAnimation == 1 then
 			l_Owner:remove_action(l_Enemy.m_ActualAnimation)
 		elseif l_Enemy.m_ActualAnimation == 2 then
@@ -30,31 +28,35 @@ function IdleUpdateTurret(args, _ElapsedTime)
 	if ((l_Enemy.m_ActualAnimation == 0 and l_Enemy.m_TimerToStop >= 4.43) 
 		or (l_Enemy.m_ActualAnimation == 3 and l_Enemy.m_TimerToStop >= 3.33))
 		and l_Enemy:PlayerVisible(l_Owner) then
-		-- check if player is looking to enemy		
-		local l_Distance = l_Enemy.m_DefaultPosition:distance(l_PlayerPos)		
-		
-		local l_PlayerForward = g_Player.m_CameraController:get_forward():get_normalized(1)
-		local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Direction, l_PlayerForward)
-		
-		if angle_to_turn >= -0.4 and angle_to_turn <= 0.4 then
-			-- playes has to lose sanity because he is looking the enemy
-			l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
-			l_Enemy:LoseSanity(l_Distance)
-		end		
-		
-		if l_Distance <= l_Enemy.m_DistanceToAttack then
+		if l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToKill) then
 			l_Enemy.m_State = "attack"
 		else
-			-- the enemy rotates the head bone to player position
-			l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime	
-			local l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularSpeed
-				
-			if l_PercentRotation > 1.0 then
-				l_PercentRotation = 1.0
-				l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation - _ElapsedTime
-			end
+			-- check if player is looking to enemy		
+			local l_Distance = l_Enemy.m_DefaultPosition:distance(l_PlayerPos)		
 			
-			l_Enemy:RotateEnemyBone(l_Enemy.m_HeadBoneId, l_PlayerPos, l_PercentRotation)
+			local l_PlayerForward = g_Player.m_CameraController:get_forward():get_normalized(1)
+			local angle_to_turn = l_Enemy:CalculateAngleRotation(l_Direction, l_PlayerForward)
+			
+			if angle_to_turn >= -0.4 and angle_to_turn <= 0.4 then
+				-- playes has to lose sanity because he is looking the enemy
+				l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
+				l_Enemy:LoseSanity(l_Distance)
+			end		
+			
+			if l_Distance <= l_Enemy.m_DistanceToAttack then
+				l_Enemy.m_State = "attack"
+			else
+				-- the enemy rotates the head bone to player position
+				l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime	
+				local l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularSpeed
+					
+				if l_PercentRotation > 1.0 then
+					l_PercentRotation = 1.0
+					l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation - _ElapsedTime
+				end
+				
+				l_Enemy:RotateEnemyBone(l_Enemy.m_HeadBoneId, l_PlayerPos, l_PercentRotation)
+			end
 		end
 	else
 		-- the enemy rotates the head bone to original head position

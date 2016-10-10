@@ -101,6 +101,10 @@ void C3DElement::Render(CRenderManager *RenderManager)
 
 const Mat44f & C3DElement::GetTransform()
 {
+	if (m_IsCinematic)
+	{
+		return m_TransformMatrix;
+	}
 	m_ScaleMatrix.SetIdentity();
 	m_ScaleMatrix.Scale(m_Scale.x, m_Scale.y, m_Scale.z);
 
@@ -111,21 +115,7 @@ const Mat44f & C3DElement::GetTransform()
 	m_TranslationMatrix.SetPos(m_Position.x, m_Position.y, m_Position.z);
 
 	m_TransformMatrix = m_ScaleMatrix*m_RotationMatrix*m_TranslationMatrix;
-
-	if (m_IsCinematic)
-	{
-		m_AnimatedScaleMatrix.SetIdentity();
-		m_AnimatedScaleMatrix.Scale(m_AnimatedScale.x, m_AnimatedScale.y, m_AnimatedScale.z);
-
-		m_AnimatedRotationMatrix.SetIdentity();
-		m_AnimatedRotationMatrix = m_AnimatedRotation.rotationMatrix();
-		
-		m_AnimatedTranslationMatrix.SetIdentity();
-		m_AnimatedTranslationMatrix.SetPos(m_AnimatedPosition.x, m_AnimatedPosition.y, m_AnimatedPosition.z);
-
-		m_TransformMatrix = m_AnimatedScaleMatrix * m_AnimatedRotationMatrix * m_AnimatedTranslationMatrix * m_TransformMatrix;
-	}
-
+	
 	return m_TransformMatrix;
 }
 
@@ -158,6 +148,13 @@ bool C3DElement::GetVisible() const
 void C3DElement::SetVisible(bool newVisible)
 {
 	m_Visible = newVisible;
+}
+
+void C3DElement::ResetAnimatedValues()
+{
+	m_AnimatedPosition = Vect3f(0.0f, 0.0f, 0.0f);
+	m_AnimatedRotation = Quatf(0.0f, 0.0f, 0.0f, 1.0f);
+	m_AnimatedScale = Vect3f(1.0f, 1.0f, 1.0f);
 }
 
 CEmptyPointerClass*  C3DElement::GetPositionX()

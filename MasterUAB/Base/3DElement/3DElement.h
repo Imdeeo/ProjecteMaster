@@ -82,6 +82,8 @@ public:
 	{
 		m_IsCinematic = _IsCinematic;
 	}
+
+	void ResetAnimatedValues();
 };
 
 #endif //C3D_ELEMENT_H
