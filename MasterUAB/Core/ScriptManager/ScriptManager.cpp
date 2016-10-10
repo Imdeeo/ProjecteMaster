@@ -796,7 +796,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS) [
 		class_<CAnimatedInstanceModel, CRenderableObject>("CAnimatedInstanceModel")
-			.def(constructor<tinyxml2::XMLElement*>())
+			.def(constructor<tinyxml2::XMLElement*,const std::string&>())
 			.def("initialize", &CAnimatedInstanceModel::Initialize)
 			.def("render", &CAnimatedInstanceModel::Render)
 			.def("update", &CAnimatedInstanceModel::Update)
@@ -990,7 +990,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCinematic, bases<CNamed, CCinematicPlayer>>("CCinematic")
-			.def(constructor<tinyxml2::XMLElement*>())
+			.def(constructor<tinyxml2::XMLElement*, const std::string&>())
 			.def("add_cinematic_object", &CCinematic::AddCinematicObject)
 			.def("update", &CCinematic::Update)
 			.def("play",&CCinematic::Play)
@@ -1002,7 +1002,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCinematicObject, CCinematicPlayer>("CCinematicObject")
-			.def(constructor<tinyxml2::XMLElement*>())
+			.def(constructor<tinyxml2::XMLElement*, const std::string&>())
 			.def("is_ok", &CCinematicObject::IsOk)
 			.def("add_cinematic_object_key_frame", &CCinematicObject::AddCinematicObjectKeyFrame)
 			.def("update", &CCinematicObject::Update)
@@ -1282,8 +1282,8 @@ void CScriptManager::RegisterLUAFunctions()
 	// StaticMesh-------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CInstanceMesh, CRenderableObject>("CInstanceMesh")
-			.def(constructor<tinyxml2::XMLElement*>())
-			.def(constructor<const std::string&, const std::string&>())
+			.def(constructor<tinyxml2::XMLElement*, const std::string&>())
+			.def(constructor<const std::string&, const std::string&, const std::string&>())
 			.def("render", &CInstanceMesh::Render)
 			.def("get_interactuable_object_name", &CInstanceMesh::GetInteractuableObject)
 	];
@@ -1417,7 +1417,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 	class_<CParticleSystemInstance, CRenderableObject>("CParticleSystemInstance")
 		.def(constructor<>())
-		.def(constructor<tinyxml2::XMLElement*>())
+		.def(constructor<tinyxml2::XMLElement*, const std::string&>())
 		.def("set_active_particles", &CParticleSystemInstance::SetActiveParticles)
 		.def("get_active_particles", &CParticleSystemInstance::GetActiveParticles)
 		.def("get_start", &CParticleSystemInstance::GetStart)
@@ -1471,6 +1471,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CBilboardSystemInstance, CRenderableObject>("CBilboardSystemInstance")
 		.def(constructor<>())
+		.def(constructor<tinyxml2::XMLElement*, const std::string&>())
 		.def("get_lua_size", &CBilboardSystemInstance::GetLuaSize)
 		.def("get_lua_size_offset", &CBilboardSystemInstance::GetLuaSizeOffset)
 		.def("get_lua_color", &CBilboardSystemInstance::GetLuaColor)
@@ -1520,7 +1521,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CManchasSystemInstance, CRenderableObject>("CManchasSystemInstance")
-			.def(constructor<tinyxml2::XMLElement*>())
+			.def(constructor<tinyxml2::XMLElement*, const std::string&>())
 			.def("get_type", &CManchasSystemInstance::GetType)
 			.def("get_awake", &CManchasSystemInstance::GetAwake)
 			.def("set_awake", &CManchasSystemInstance::SetAwake)

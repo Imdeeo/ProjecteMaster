@@ -47,7 +47,7 @@ private:
 	CFrustum *m_Frustum;
 public:
 	CParticleSystemInstance(){};
-	CParticleSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId = "");
+	CParticleSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CParticleSystemInstance(void);
 	void Destroy();
 

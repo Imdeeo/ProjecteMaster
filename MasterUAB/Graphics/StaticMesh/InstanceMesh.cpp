@@ -16,7 +16,7 @@
 #include "Math\Matrix44.h"
 
 
-CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string & _LevelId) :CRenderableObject(TreeNode)
+CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string & _LevelId) :CRenderableObject(TreeNode,_LevelId)
 {
 	m_StaticMesh = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetStaticMeshManager()->GetResource(TreeNode->GetPszProperty("core_name"));
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
