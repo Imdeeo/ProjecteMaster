@@ -76,6 +76,7 @@ function R2Artifact(_Player, _Pos)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
 		_Player.m_Target = l_Target
 		_Player.m_AnimationTime = 5
+		_Player.m_LeftHanded = true
 		_Player.m_InteractingAnimation = 6
 		_Player.m_InteractingCinematic = nil
 		_Player.m_CameraAnimation = "PickArtifact"
