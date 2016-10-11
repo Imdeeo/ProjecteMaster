@@ -21,13 +21,14 @@ public:
 	CRenderableVertexs * GetQuadRV() const { return m_DrawQuadRV; }
 
 	CEffectTechnique *	GetDebugTechnique() const;
-
+	CRenderableVertexs * GetSPhere10() const { return m_Sphere_10Seg; }
 private:
-	CRenderableObjectTechnique		*m_EffectTechnique;
+	//CRenderableObjectTechnique		*m_EffectTechnique;
 
 	CRenderableVertexs				*m_DrawQuadRV;
 
 	UAB_BUILD_GET_SET(CRenderableObjectTechnique *, EffectTechnique);
+	CRenderableVertexs				*m_Sphere_10Seg;
 
 };
 

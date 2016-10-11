@@ -82,18 +82,21 @@ bool CLightManager::CreateNewLight(std::string _name, std::string _type)
 	}
 }
 
-#ifdef _DEBUG
-bool CLightManager::Render(CRenderManager *_RenderManager){
+bool CLightManager::RenderAux(CRenderManager *_RenderManager){
 	if (m_RenderLights)
 	{
-		for (size_t i = 0; i < GetResourcesVector().size(); i++)
-		{
-			GetResourcesVector()[i]->Render(_RenderManager);
-		}
+		Render(_RenderManager);
 	}
 	return true;
 }
-#endif
+
+bool CLightManager::Render(CRenderManager *_RenderManager){
+	for (size_t i = 0; i < GetResourcesVector().size(); i++)
+	{
+		GetResourcesVector()[i]->Render(_RenderManager);
+	}	
+	return true;
+}
 
 void CLightManager::Save()
 {
