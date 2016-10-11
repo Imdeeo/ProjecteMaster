@@ -22,9 +22,7 @@ public:
 		return (CEmptyPointerClass*)&m_Direction[index];
 	}
 
-#ifdef _DEBUG
 	virtual void Render(CRenderManager *RenderManager);
-#endif
 
 	void SetShadowMap(CRenderManager &RenderManager);
 	void Save(FILE* _File);
