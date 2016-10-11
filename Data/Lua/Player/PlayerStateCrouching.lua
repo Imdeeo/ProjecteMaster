@@ -69,16 +69,19 @@ function CrouchingUpdate(args, _ElapsedTime)
 	--// If player has an item, move it.
 	if l_Player.m_Item ~= nil then
 		local l_ObjectPosition
+		local l_ObjectRotation
 		if l_Player.m_LeftHanded == false then 
 			l_ObjectPosition = l_Owner:get_right_object_position()
+			l_ObjectRotation = l_Owner:get_right_object_rotation()
 		else
 			l_ObjectPosition = l_Owner:get_left_object_position()
+			l_ObjectRotation = l_Owner:get_left_object_rotation()
 		end
-		l_ObjectPosition.x = l_ObjectPosition.x * (-1.0)
+		l_ObjectRotation= l_ObjectRotation*l_Owner:get_rotation()
 		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
 		l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_ObjectPosition)
+		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
 		l_Player.m_Item:set_position(l_ObjectPosition + l_Owner:get_position())
-		local l_ObjectRotation = l_Owner:get_left_object_rotation()*l_Owner:get_rotation()
 		l_Player.m_Item:set_rotation(l_ObjectRotation)
 	end
 	

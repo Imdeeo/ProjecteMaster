@@ -4,6 +4,7 @@
 #include "Camera\Camera.h"
 #include "Utils.h"
 #include "InputManager\InputManager.h"
+#include "Layers\LayerManager.h"
 
 CSphericalCameraController::CSphericalCameraController(tinyxml2::XMLElement* _TreeNode) : CCameraController(_TreeNode)
 , m_Zoom(_TreeNode->GetFloatProperty("zoom", 4.5f))
@@ -47,5 +48,6 @@ void CSphericalCameraController::Update(float ElapsedTime)
 		m_Zoom += 0.1f;
 	}
 	if (m_Zoom < 0.1f){ m_Zoom = 0.1f; }
+	m_Position = UABEngine.GetLayerManager()->GetLayer("solid")->GetResource("Jaheem")->GetPosition();
 	m_CameraPosition = m_Position - (GetForward()*m_Zoom);
 }

@@ -18,6 +18,25 @@ function DeadUpdate(args, _ElapsedTime)
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 	l_Owner:set_position(l_NewControllerPosition)
+	
+	--// If player has an item, move it.
+	if l_Player.m_Item ~= nil then
+		local l_ObjectPosition
+		local l_ObjectRotation
+		if l_Player.m_LeftHanded == false then 
+			l_ObjectPosition = l_Owner:get_right_object_position()
+			l_ObjectRotation = l_Owner:get_right_object_rotation()
+		else
+			l_ObjectPosition = l_Owner:get_left_object_position()
+			l_ObjectRotation = l_Owner:get_left_object_rotation()
+		end
+		l_ObjectRotation= l_ObjectRotation*l_Owner:get_rotation()
+		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
+		l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_ObjectPosition)
+		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
+		l_Player.m_Item:set_position(l_ObjectPosition + l_Owner:get_position())
+		l_Player.m_Item:set_rotation(l_ObjectRotation)
+	end
 end
 
 function DeadEnd(args)
