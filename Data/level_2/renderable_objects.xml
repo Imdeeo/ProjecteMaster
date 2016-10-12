@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <renderable_objects>
-	<particle_instance name="EmisorParticulaTorreta" layer="particles" type="TurretSmokeParticle01" position="5.915472 0.966247 11.680963" next_particle_emission="0.008655" start="false" awake="false" awake_timer="2.663002" emission_box_limit="false" emission_box_half_size="0.000000 0.000000 0.000000" visible="false"/>-->
-	<animated_instance_mesh name="Automaton" layer="solid" core_name="Automaton" position="15.199900 4.933401 26.689301" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
-	<animated_instance_mesh name="Automaton2" layer="solid" core_name="Automaton" position="-18.960800 0.917577 13.832300" rotation="0.000000 0.707107 0.000000 -0.707107" create_physics="false" visible="true"/>
+	<particle_instance name="EmisorParticulaTorreta" layer="particles" type="TurretSmokeParticle01" position="5.915472 0.966247 11.680963" next_particle_emission="0.008655" start="false" awake="false" awake_timer="2.663002" emission_box_limit="false" emission_box_half_size="0.000000 0.000000 0.000000" visible="false"/>
+	<animated_instance_mesh name="AutomatonLeft" layer="solid" core_name="Automaton" position="15.199900 4.933401 26.689301" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
+	<animated_instance_mesh name="AutomatonRight" layer="solid" core_name="Automaton" position="-18.960800 0.917577 13.832300" rotation="0.000000 0.707107 0.000000 -0.707107" create_physics="false" visible="true"/>
 	<animated_instance_mesh name="TurretAutomaton" layer="solid" core_name="TurretAutomaton" position="12.528900 0.700000 23.473000" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
 	<instance_mesh name="BaseTorreta" layer="solid" core_name="BaseTorreta" position="12.528900 0.750000 23.423000" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
 	<instance_mesh name="ParedesExterioresBiblioteca" layer ="solid" core_name="ParedesExterioresBiblioteca" position="0.300422 6.25211 21.3165" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
@@ -23,7 +23,7 @@
 	<instance_mesh name="Arana008" layer ="solid" core_name="Arana008" position="5.0515 10.016 9.77584" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="Arana009" layer ="solid" core_name="Arana009" position="-4.8729 10.016 9.77584" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="Arana010" layer ="solid" core_name="Arana010" position="-16.481 10.016 11.7765" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="Arana011" layer ="solid" core_name="Arana011" position="-16.5214 10.016 19.1358" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="Arana011" layer ="solid" core_name="Arana011" position="-16.48 10.016 19.1358" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="EscudoChimenea" layer ="solid" core_name="EscudoChimenea" position="11.7287 9.34905 26.8181" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="lamparakeroparedBIEN" layer ="solid" core_name="lamparakeroparedBIEN" position="18.1496 2.74911 9.9151" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="biblioluzkerosenoBIEN" layer ="solid" core_name="biblioluzkerosenoBIEN" position="0.759877 1.50523 11.2945" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
@@ -58,13 +58,13 @@
 	<instance_mesh name="ParedCentroIzquierdaBiblioteca" layer ="solid" core_name="ParedCentroIzquierdaBiblioteca" position="8.42844 9.42287 21.3165" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="PlanosLibrosEstudios004" layer ="solid" core_name="PlanosLibrosEstudios004" position="18.3327 10.433 19.3725" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosEstudios003" layer ="solid" core_name="PlanosLibrosEstudios003" position="18.3327 10.4349 13.5461" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="SofaUnipersonal001" layer ="solid" core_name="SofaUnipersonal001" position="-3.23027 0.882862 7.01715" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="SofaUnipersonal001" layer ="solid" core_name="SofaUnipersonal001" position="-3.26228 0.882862 7.0191" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="SofaUnipersonal002" layer ="solid" core_name="SofaUnipersonal002" position="-5.45135 0.882862 14.2208" rotation="0.0 0.173648 0.0 0.984808" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="SofaUnipersonal003" layer ="solid" core_name="SofaUnipersonal003" position="17.4334 0.882862 11.4315" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="lamparakeroparedBIEN022" layer ="solid" core_name="lamparakeroparedBIEN022" position="-14.6252 3.08802 12.4411" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="lamparakeroparedBIEN023" layer ="solid" core_name="lamparakeroparedBIEN023" position="-19.0769 3.08802 8.36975" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="lamparakeroparedBIEN025" layer ="solid" core_name="lamparakeroparedBIEN025" position="-15.4041 3.08802 19.1465" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="lamparakeroparedBIEN026" layer ="solid" core_name="lamparakeroparedBIEN026" position="-11.3533 3.08802 25.4756" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="lamparakeroparedBIEN026" layer ="solid" core_name="lamparakeroparedBIEN026" position="-11.5559 3.08802 25.4756" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="ZocaloParedPisoArriba" layer ="solid" core_name="ZocaloParedPisoArriba" position="19.0021 4.69871 5.98877" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="ArcosBarandillas" layer ="solid" core_name="ArcosBarandillas" position="16.5226 7.46024 15.4679" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="LibrosEstudioAbajo1" layer ="solid" core_name="LibrosEstudioAbajo1" position="18.5596 1.81926 8.74379" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
@@ -93,10 +93,10 @@
 	<instance_mesh name="DivanGrande010" layer ="solid" core_name="DivanGrande010" position="13.9594 0.860326 18.2816" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="DivanGrande011" layer ="solid" core_name="DivanGrande011" position="15.0978 0.860326 15.2522" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="reflejoluz3" layer ="alpha_blend_objects" core_name="reflejoluz3" position="16.0246 2.00381 8.17719" rotation="-0.866025 0.0 0.0 0.5" create_physics="false" visible="true"/>
-	<instance_mesh name="DivanGrande012" layer ="solid" core_name="DivanGrande012" position="6.48993 0.860326 23.2141" rotation="0.0 -0.0871557 0.0 0.996195" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="DivanGrande013" layer ="solid" core_name="DivanGrande013" position="3.07631 0.860326 23.2141" rotation="0.0 -0.34202 0.0 0.939693" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="DivanGrande014" layer ="solid" core_name="DivanGrande014" position="3.82998 0.860326 19.0691" rotation="0.0 -0.996195 0.0 -0.0871557" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="lamparakeroparedBIEN029" layer ="solid" core_name="lamparakeroparedBIEN029" position="0.26103 2.36899 15.1037" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="DivanGrande012" layer ="solid" core_name="DivanGrande012" position="6.48993 0.860326 23.2141" rotation="0.0 0.130526 0.0 -0.991445" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="DivanGrande013" layer ="solid" core_name="DivanGrande013" position="3.07457 0.860326 23.172" rotation="0.0 -0.130526 0.0 -0.991445" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="DivanGrande014" layer ="solid" core_name="DivanGrande014" position="3.83129 0.860326 19.0696" rotation="0.0 -0.130526 0.0 0.991445" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="lamparakeroparedBIEN029" layer ="solid" core_name="lamparakeroparedBIEN029" position="0.111879 2.36899 15.2379" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="chimenea" layer ="solid" core_name="chimenea" position="11.727 0.0746634 26.1561" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="vidriolamparaspared" layer ="alpha_blend_objects" core_name="vidriolamparaspared" position="15.0083 6.17701 5.21873" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="vidriolamparaspared001" layer ="alpha_blend_objects" core_name="vidriolamparaspared001" position="11.915 5.20065 5.21873" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
@@ -105,7 +105,7 @@
 	<instance_mesh name="vidriolamparaspared004" layer ="alpha_blend_objects" core_name="vidriolamparaspared004" position="-3.00308 2.07935 5.21873" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="vidriolamparaspared005" layer ="alpha_blend_objects" core_name="vidriolamparaspared005" position="-9.51756 3.08802 8.24442" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="vidriolamparaspared006" layer ="alpha_blend_objects" core_name="vidriolamparaspared006" position="-14.6252 3.08802 12.4411" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="vidriolamparaspared007" layer ="alpha_blend_objects" core_name="vidriolamparaspared007" position="-11.3533 3.08802 25.4756" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="vidriolamparaspared007" layer ="alpha_blend_objects" core_name="vidriolamparaspared007" position="-11.5559 3.08802 25.4756" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="vidriolamparaspared008" layer ="alpha_blend_objects" core_name="vidriolamparaspared008" position="18.1496 6.71909 9.50507" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="vidriolamparaspared009" layer ="alpha_blend_objects" core_name="vidriolamparaspared009" position="18.1496 6.71909 12.9518" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="vidriolamparaspared010" layer ="alpha_blend_objects" core_name="vidriolamparaspared010" position="18.1496 6.71909 16.4295" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
@@ -164,23 +164,23 @@
 	<instance_mesh name="PlanosLibrosLaberintoGrande026" layer ="solid" core_name="PlanosLibrosLaberintoGrande026" position="-10.0503 8.52285 19.9675" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberintoGrande027" layer ="solid" core_name="PlanosLibrosLaberintoGrande027" position="-13.5416 8.52285 19.9819" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberintoGrande029" layer ="solid" core_name="PlanosLibrosLaberintoGrande029" position="-13.4773 8.52285 21.7605" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="EstPequeDentroLaberinto005" layer ="solid" core_name="EstPequeDentroLaberinto005" position="-11.353 6.33682 24.211" rotation="0.0 -1.74846e-007 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="EstPequeDentroLaberinto005" layer ="solid" core_name="EstPequeDentroLaberinto005" position="-11.5556 6.33682 24.2453" rotation="0.0 -1.74846e-007 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberintoGrande034" layer ="solid" core_name="PlanosLibrosLaberintoGrande034" position="-8.21363 8.30062 25.4135" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberintoGrande033" layer ="solid" core_name="PlanosLibrosLaberintoGrande033" position="-8.21363 8.31344 21.9733" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberintoGrande031" layer ="solid" core_name="PlanosLibrosLaberintoGrande031" position="-8.21363 8.30508 17.942" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="lamparakeroparedBIEN024" layer ="solid" core_name="lamparakeroparedBIEN024" position="-8.17593 3.06136 15.4617" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberintoGrande001" layer ="solid" core_name="PlanosLibrosLaberintoGrande001" position="-9.41452 8.32944 5.45513" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberintoGrande002" layer ="solid" core_name="PlanosLibrosLaberintoGrande002" position="-12.9251 8.29556 5.45513" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="PlanoLibroPequeDentroLaberinto008" layer ="solid" core_name="PlanoLibroPequeDentroLaberinto008" position="-11.6355 7.67261 24.2099" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="PlanoLibroPequeDentroLaberinto009" layer ="solid" core_name="PlanoLibroPequeDentroLaberinto009" position="-14.244 7.67798 27.1133" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="PlanoLibroPequeDentroLaberinto008" layer ="solid" core_name="PlanoLibroPequeDentroLaberinto008" position="-11.6355 7.67261 24.2442" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="PlanoLibroPequeDentroLaberinto009" layer ="solid" core_name="PlanoLibroPequeDentroLaberinto009" position="-14.244 7.67798 27.1062" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="ZocaloParedOrgano" layer ="solid" core_name="ZocaloParedOrgano" position="0.280985 0.754073 15.4939" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="ZocaloParedLaberintoIzquierda" layer ="solid" core_name="ZocaloParedLaberintoIzquierda" position="-7.89721 0.754073 17.277" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LibrosEntradaLaberinto001" layer ="solid" core_name="LibrosEntradaLaberinto001" position="-7.22096 1.34538 12.4711" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LibrosEntradaLaberinto002" layer ="solid" core_name="LibrosEntradaLaberinto002" position="-7.16608 1.34372 6.11561" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LibrosEntradaLaberinto003" layer ="solid" core_name="LibrosEntradaLaberinto003" position="-7.42092 1.34372 6.13116" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LibrosEntradaLaberinto004" layer ="solid" core_name="LibrosEntradaLaberinto004" position="-7.43988 1.34538 12.3752" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="LibrosPequeLaberinto007" layer ="solid" core_name="LibrosPequeLaberinto007" position="-11.4975 1.33878 24.2258" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="LibrosPequeLaberinto008" layer ="solid" core_name="LibrosPequeLaberinto008" position="-11.2643 1.33941 24.2094" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="LibrosPequeLaberinto007" layer ="solid" core_name="LibrosPequeLaberinto007" position="-11.7001 1.33878 24.2542" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="LibrosPequeLaberinto008" layer ="solid" core_name="LibrosPequeLaberinto008" position="-11.4669 1.33941 24.2482" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LibrosPequeLaberinto009" layer ="solid" core_name="LibrosPequeLaberinto009" position="-17.9665 1.34372 18.4187" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LibrosPequeLaberinto010" layer ="solid" core_name="LibrosPequeLaberinto010" position="-17.9855 1.34372 18.3627" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LibrosGrandesLaberinto001" layer ="solid" core_name="LibrosGrandesLaberinto001" position="-9.41978 1.81926 5.30136" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
@@ -208,7 +208,7 @@
 	<instance_mesh name="LibrosGrandesLaberinto040" layer ="solid" core_name="LibrosGrandesLaberinto040" position="-10.1832 1.8182 28.4805" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LibrosGrandesLaberinto042" layer ="solid" core_name="LibrosGrandesLaberinto042" position="-19.4793 1.79971 28.5129" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LibrosGrandesLaberinto033" layer ="solid" core_name="LibrosGrandesLaberinto033" position="-19.9016 1.8182 22.8403" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="EstPequeDentroLaberinto006" layer ="solid" core_name="EstPequeDentroLaberinto006" position="-14.3357 6.33682 27.1438" rotation="0.0 -1.74846e-007 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="EstPequeDentroLaberinto006" layer ="solid" core_name="EstPequeDentroLaberinto006" position="-14.3357 6.33682 27.1366" rotation="0.0 -1.74846e-007 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="EstPequeDentroLaberinto007" layer ="solid" core_name="EstPequeDentroLaberinto007" position="-17.9978 6.33682 18.3659" rotation="0.0 -1.74846e-007 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="LibrosGrandesLaberinto022" layer ="solid" core_name="LibrosGrandesLaberinto022" position="-21.9122 1.82021 14.5453" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LibrosGrandesLaberinto011" layer ="solid" core_name="LibrosGrandesLaberinto011" position="-16.6475 1.81926 8.09404" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
@@ -227,7 +227,7 @@
 	<instance_mesh name="PlanosLibrosLaberintoGrande030" layer ="solid" core_name="PlanosLibrosLaberintoGrande030" position="-13.4702 8.53809 23.4537" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberintoGrande020" layer ="solid" core_name="PlanosLibrosLaberintoGrande020" position="-15.3196 8.52285 16.6867" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanoLibroPequeDentroLaberinto010" layer ="solid" core_name="PlanoLibroPequeDentroLaberinto010" position="-14.5753 7.67261 26.9904" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="PlanoLibroPequeDentroLaberinto011" layer ="solid" core_name="PlanoLibroPequeDentroLaberinto011" position="-11.0778 7.67798 24.2217" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="PlanoLibroPequeDentroLaberinto011" layer ="solid" core_name="PlanoLibroPequeDentroLaberinto011" position="-11.0778 7.67798 24.256" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanoLibroPequeDentroLaberinto012" layer ="solid" core_name="PlanoLibroPequeDentroLaberinto012" position="-10.2686 7.67798 16.0746" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanoLibroPequeDentroLaberinto013" layer ="solid" core_name="PlanoLibroPequeDentroLaberinto013" position="-18.2201 7.67798 18.4055" rotation="0.0 -1.0 0.0 -1.62921e-007" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberintoGrande024" layer ="solid" core_name="PlanosLibrosLaberintoGrande024" position="-13.5048 8.52285 18.2313" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
@@ -245,14 +245,11 @@
 	<instance_mesh name="PlanosLibrosLaberintoGrande028" layer ="solid" core_name="PlanosLibrosLaberintoGrande028" position="-18.7007 8.52285 21.7884" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberintoGrande017" layer ="solid" core_name="PlanosLibrosLaberintoGrande017" position="-19.9323 8.52285 14.7521" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberintoGrande019" layer ="solid" core_name="PlanosLibrosLaberintoGrande019" position="-19.9483 8.52285 16.6983" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="vidriolamparakeroparedbien29" layer ="alpha_blend_objects" core_name="vidriolamparakeroparedbien29" position="0.260684 2.42941 15.0913" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="vidriolamparakeroparedbien29" layer ="alpha_blend_objects" core_name="vidriolamparakeroparedbien29" position="0.111533 2.42941 15.2254" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="vidriolamparakerosenobien24" layer ="alpha_blend_objects" core_name="vidriolamparakerosenobien24" position="-8.17649 3.15887 15.4416" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberinto009" layer ="solid" core_name="PlanosLibrosLaberinto009" position="-7.09807 7.67261 8.3367" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="EstPequeEntradaLaberinto005" layer ="solid" core_name="EstPequeEntradaLaberinto005" position="-7.30604 6.33682 8.32806" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberinto010" layer ="solid" core_name="PlanosLibrosLaberinto010" position="-7.52575 7.67798 8.34955" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="puertalaberintooficial" layer ="solid" core_name="puertalaberintooficial" position="-7.60604 -7.7486e-007 9.55606" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="LibrosEntradaLaberinto006" layer ="solid" core_name="LibrosEntradaLaberinto006" position="-7.2935 1.34372 8.36332" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="planelibropuertalaboficial" layer ="solid" core_name="planelibropuertalaboficial" position="-7.31191 4.56333 8.30693" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PuertaRecibidor" layer ="solid" core_name="PuertaRecibidor" position="-0.00078094 2.7592 5.14266" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="EstPequeDentroLaberinto008" layer ="solid" core_name="EstPequeDentroLaberinto008" position="-8.10583 6.33682 27.7725" rotation="0.0 -1.74846e-007 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="PlanoLibroPequeDentroLaberinto016" layer ="solid" core_name="PlanoLibroPequeDentroLaberinto016" position="-8.33858 7.67798 27.7727" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
@@ -265,8 +262,6 @@
 	<instance_mesh name="CuadroMadDoctor" layer ="solid" core_name="CuadroMadDoctor" position="0.126832 2.59072 11.6227" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="Pantalla" layer ="solid" core_name="Pantalla" position="16.0263 2.57861 5.10804" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="VidriosMesaEntrada" layer ="alpha_blend_objects" core_name="VidriosMesaEntrada" position="0.137207 0.625571 11.5737" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="Organo" layer ="solid" core_name="Organo" position="0.329806 5.82811 14.3973" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="TeclasAnimadasBIEN" layer ="solid" core_name="TeclasAnimadasBIEN" position="0.343157 1.45093 14.6834" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="vidriolamparaspared018" layer ="alpha_blend_objects" core_name="vidriolamparaspared018" position="-17.072 2.67137 28.643" rotation="0.0 -1.0 0.0 0.0" create_physics="false" visible="true"/>
 	<instance_mesh name="lamparakeroparedBIEN030" layer ="solid" core_name="lamparakeroparedBIEN030" position="-17.072 2.67137 28.643" rotation="0.0 -1.0 0.0 0.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TubosGrandesTOP" layer ="solid" core_name="TubosGrandesTOP" position="12.1658 6.19589 20.8733" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
@@ -340,12 +335,25 @@
 	<instance_mesh name="EstanteriaGrandeLaberinto038" layer ="solid" core_name="EstanteriaGrandeLaberinto038" position="-10.1805 6.29264 27.9953" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="LibrosGrandesLaberinto041" layer ="solid" core_name="LibrosGrandesLaberinto041" position="-13.6895 1.81926 28.538" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="EstanteriaGrandeLaberinto039" layer ="solid" core_name="EstanteriaGrandeLaberinto039" position="-17.7112 6.29264 27.9953" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="EstanteriaGrandeLaberinto040" layer ="solid" core_name="EstanteriaGrandeLaberinto040" position="-21.3363 6.23387 27.2002" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="LibrosGrandesLaberinto043" layer ="solid" core_name="LibrosGrandesLaberinto043" position="-21.3214 1.81926 27.1918" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="EstanteriaGrandeLaberinto040" layer ="solid" core_name="EstanteriaGrandeLaberinto040" position="-21.3493 6.23387 27.1297" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="LibrosGrandesLaberinto043" layer ="solid" core_name="LibrosGrandesLaberinto043" position="-21.3344 1.81926 27.1213" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanosLibrosLaberintoGrande038" layer ="solid" core_name="PlanosLibrosLaberintoGrande038" position="-21.2202 8.31344 27.1157" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="EstanteriaGrandeLaberinto011" layer ="solid" core_name="EstanteriaGrandeLaberinto011" position="-9.32512 6.29264 13.4533" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="EstanteriaGrandeLaberinto009" layer ="solid" core_name="EstanteriaGrandeLaberinto009" position="-12.8251 6.29264 13.4533" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="EstanteriaGrandeLaberinto041" layer ="solid" core_name="EstanteriaGrandeLaberinto041" position="-8.06774 6.23387 17.896" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="Organo" layer ="solid" core_name="Organo" position="0.111706 5.82811 14.5253" rotation="0.0 -1.50996e-007 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="TeclasAnimadasBIEN" layer ="solid" core_name="TeclasAnimadasBIEN" position="0.125057 1.45093 14.8115" rotation="0.0 -1.50996e-007 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="1tecla" layer ="solid" core_name="1tecla" position="0.235907 1.4032 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="3tecla" layer ="solid" core_name="3tecla" position="0.160579 1.4032 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="4tecla" layer ="solid" core_name="4tecla" position="0.124282 1.4032 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="5tecla" layer ="solid" core_name="5tecla" position="0.0874811 1.4032 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="6tecla" layer ="solid" core_name="6tecla" position="0.0508976 1.4032 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="7tecla" layer ="solid" core_name="7tecla" position="0.0142078 1.4032 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="2tecla" layer ="solid" core_name="2tecla" position="0.198314 1.4032 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="pianoseparado" layer ="solid" core_name="pianoseparado" position="0.111706 5.82811 14.5253" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="puertalaberintooficial" layer ="solid" core_name="puertalaberintooficial" position="-7.28345 3.2257 8.30054" rotation="-0.00377238 -1.49012e-007 0.0 0.999993" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="planelibropuertalaboficial" layer ="solid" core_name="planelibropuertalaboficial" position="-7.28931 4.56333 8.29549" rotation="0.0 -1.49012e-007 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="LibrosEntradaLaberinto006" layer ="solid" core_name="LibrosEntradaLaberinto006" position="-7.27091 1.34372 8.35188" rotation="0.0 -1.49012e-007 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TriggerPipeOrgan" layer="triggers" is_active="true" core_name="TriggerPipeOrgan" position="0.367395 1.12704 15.0313" rotation="0.173648 0.0 0.0 -0.984808" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="TeclasAnimadasBIEN"/>
@@ -368,30 +376,30 @@
 	</instance_mesh>
 		<instance_mesh name="TriggerOrganKeyA" layer ="triggers" core_name="TriggerOrganKeyA" position="0.453936 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
 		<active_actor actor_name="player"/> 
-		<interactuable_object actor_name="TeclasAnimadasBIEN"/> 
+		<interactuable_object actor_name="1tecla"/> 
 	</instance_mesh> 
 	<instance_mesh name="TriggerOrganKeyB" layer ="triggers" core_name="TriggerOrganKeyA" position="0.416705 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
 		<active_actor actor_name="player"/> 
-		<interactuable_object actor_name="TeclasAnimadasBIEN"/> 
+		<interactuable_object actor_name="2tecla"/> 
 	</instance_mesh> 
 	<instance_mesh name="TriggerOrganKeyC" layer ="triggers" core_name="TriggerOrganKeyA" position="0.379664 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
 		<active_actor actor_name="player"/> 
-		<interactuable_object actor_name="TeclasAnimadasBIEN"/> 
+		<interactuable_object actor_name="3tecla"/> 
 	</instance_mesh> 
 	<instance_mesh name="TriggerOrganKeyD" layer ="triggers" core_name="TriggerOrganKeyA" position="0.342364 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
 		<active_actor actor_name="player"/> 
-		<interactuable_object actor_name="TeclasAnimadasBIEN"/> 
+		<interactuable_object actor_name="4tecla"/> 
 	</instance_mesh> 
 	<instance_mesh name="TriggerOrganKeyE" layer ="triggers" core_name="TriggerOrganKeyA" position="0.305651 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
 		<active_actor actor_name="player"/> 
-		<interactuable_object actor_name="TeclasAnimadasBIEN"/> 
+		<interactuable_object actor_name="5tecla"/> 
 	</instance_mesh> 
 	<instance_mesh name="TriggerOrganKeyF" layer ="triggers" core_name="TriggerOrganKeyA" position="0.268938 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
 		<active_actor actor_name="player"/> 
-		<interactuable_object actor_name="TeclasAnimadasBIEN"/> 
+		<interactuable_object actor_name="6tecla"/> 
 	</instance_mesh> 
 	<instance_mesh name="TriggerOrganKeyG" layer ="triggers" core_name="TriggerOrganKeyA" position="0.233004 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
 		<active_actor actor_name="player"/> 
-		<interactuable_object actor_name="TeclasAnimadasBIEN"/> 
+		<interactuable_object actor_name="7tecla"/> 
 	</instance_mesh> 
 </renderable_objects>
