@@ -48,4 +48,21 @@
 			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="-0.243672 0.0 0.0 0.969858" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
+	<cinematic name="ResolvePuzzle" duration="5.0" cycle="false">
+		<cinematic_object resource="puertalaberintooficial" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.155774 -1.89556 1.329" rotation="0.00377233 1.50641e-007 0.0 -0.999993" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.0" pos="0.0890452 -1.13284 1.329" rotation="0.00377233 1.50641e-007 0.0 -0.999993" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="0.0 0.0 0.0" rotation="0.00254858 -0.737272 -0.00278122 -0.675586" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="planelibropuertalaboficial" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.16588 -1.89602 1.31771" rotation="0.0 1.503e-007 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.0" pos="0.0991516 -1.13331 1.31771" rotation="0.0 1.503e-007 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="0.0 0.0 0.0" rotation="0.0 -0.737277 0.0 -0.67559" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="LibrosEntradaLaberinto006" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.169032 -1.93205 1.39735" rotation="0.0 1.503e-007 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.0" pos="0.102304 -1.16934 1.39735" rotation="0.0 1.503e-007 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="0.0 0.0 0.0" rotation="0.0 -0.737277 0.0 -0.67559" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
 </cinematics>

@@ -40,6 +40,7 @@ function IdleUpdate(args, _ElapsedTime)
 	
 	--// If player has an item, move it.
 	if l_Player.m_Item ~= nil then
+		local l_CameraDirection = l_Player.m_CameraController:get_forward()
 		local l_ObjectPosition
 		local l_ObjectRotation
 		if l_Player.m_LeftHanded == false then 
@@ -49,7 +50,14 @@ function IdleUpdate(args, _ElapsedTime)
 			l_ObjectPosition = l_Owner:get_left_object_position()
 			l_ObjectRotation = l_Owner:get_left_object_rotation()
 		end
-		l_ObjectRotation= l_ObjectRotation*l_Owner:get_rotation()
+		if math.abs(l_CameraDirection.x) > math.abs(l_CameraDirection.z) then
+			l_ObjectRotation = rotate_quat_in_x_by_270(l_ObjectRotation)
+			l_ObjectRotation = rotate_quat_in_y_by_180(l_ObjectRotation)
+		else
+			l_ObjectRotation = rotate_quat_in_z_by_180(l_ObjectRotation)
+			l_ObjectRotation = rotate_quat_in_x_by_270(l_ObjectRotation)
+		end
+		l_ObjectRotation = l_ObjectRotation*l_Owner:get_rotation()
 		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
 		l_ObjectPosition = l_Owner:get_rotation():rotated_vector(l_ObjectPosition)
 		l_ObjectPosition.z = l_ObjectPosition.z * (-1.0)
