@@ -246,9 +246,6 @@
 	<static_mesh name="PlanosLibrosLaberinto009" filename="Data\level_2\Meshes\PlanosLibrosLaberinto009.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="EstPequeEntradaLaberinto005" filename="Data\level_2\Meshes\EstPequeEntradaLaberinto005.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="PlanosLibrosLaberinto010" filename="Data\level_2\Meshes\PlanosLibrosLaberinto010.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
-	<static_mesh name="puertalaberintooficial" filename="Data\level_2\Meshes\puertalaberintooficial.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
-	<static_mesh name="LibrosEntradaLaberinto006" filename="Data\level_2\Meshes\LibrosEntradaLaberinto006.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
-	<static_mesh name="planelibropuertalaboficial" filename="Data\level_2\Meshes\planelibropuertalaboficial.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="PuertaRecibidor" filename="Data\level_2\Meshes\PuertaRecibidor.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="EstPequeDentroLaberinto008" filename="Data\level_2\Meshes\EstPequeDentroLaberinto008.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="PlanoLibroPequeDentroLaberinto016" filename="Data\level_2\Meshes\PlanoLibroPequeDentroLaberinto016.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
@@ -261,8 +258,6 @@
 	<static_mesh name="CuadroMadDoctor" filename="Data\level_2\Meshes\CuadroMadDoctor.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="Pantalla" filename="Data\level_2\Meshes\Pantalla.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="VidriosMesaEntrada" filename="Data\level_2\Meshes\VidriosMesaEntrada.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
-	<static_mesh name="Organo" filename="Data\level_2\Meshes\Organo.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
-	<static_mesh name="TeclasAnimadasBIEN" filename="Data\level_2\Meshes\TeclasAnimadasBIEN.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="vidriolamparaspared018" filename="Data\level_2\Meshes\vidriolamparaspared018.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="lamparakeroparedBIEN030" filename="Data\level_2\Meshes\lamparakeroparedBIEN030.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="TubosGrandesTOP" filename="Data\level_2\Meshes\TubosGrandesTOP.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
@@ -342,6 +337,19 @@
 	<static_mesh name="EstanteriaGrandeLaberinto011" filename="Data\level_2\Meshes\EstanteriaGrandeLaberinto011.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="EstanteriaGrandeLaberinto009" filename="Data\level_2\Meshes\EstanteriaGrandeLaberinto009.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="EstanteriaGrandeLaberinto041" filename="Data\level_2\Meshes\EstanteriaGrandeLaberinto041.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="Organo" filename="Data\level_2\Meshes\Organo.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="TeclasAnimadasBIEN" filename="Data\level_2\Meshes\TeclasAnimadasBIEN.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="1tecla" filename="Data\level_2\Meshes\1tecla.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="3tecla" filename="Data\level_2\Meshes\3tecla.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="4tecla" filename="Data\level_2\Meshes\4tecla.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="5tecla" filename="Data\level_2\Meshes\5tecla.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="6tecla" filename="Data\level_2\Meshes\6tecla.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="7tecla" filename="Data\level_2\Meshes\7tecla.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="2tecla" filename="Data\level_2\Meshes\2tecla.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="pianoseparado" filename="Data\level_2\Meshes\pianoseparado.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="puertalaberintooficial" filename="Data\level_2\Meshes\puertalaberintooficial.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="planelibropuertalaboficial" filename="Data\level_2\Meshes\planelibropuertalaboficial.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
+	<static_mesh name="LibrosEntradaLaberinto006" filename="Data\level_2\Meshes\LibrosEntradaLaberinto006.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerPipeOrgan" filename="Data\level_2\Meshes\TriggerPipeOrgan.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerArtifact" filename="Data\level_2\Meshes\TriggerArtifact.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerArtifactDoor" filename="Data\level_2\Meshes\TriggerArtifactDoor.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
