@@ -14,6 +14,7 @@ function R2PushOrganKey(_Key, _Player)
 		_Player.m_IsPuzzle = false
 		_Player.m_InteractingAnimation = 9
 		_Player.m_CameraAnimation = "PipeOrganEnd"
+		_Player.m_CinematicManager:get_resource("ResolvePuzzle"):play()
 		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyA")
 		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyB")
 		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyC")

@@ -170,8 +170,8 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Item = nil--CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(self.m_ItemName)
 		self.m_LeftHanded = false
 		self.m_NewItemName = ""
-		self.m_ItemTime = 0
-		self.m_DropItemTime = 9999
+		self.m_ItemTime = 0.0
+		self.m_ItemDropTime = -1.0
 		
 		self.m_CurrentAnimation = "none"
 		self.m_LastAnimation = "none"

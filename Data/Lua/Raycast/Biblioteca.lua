@@ -82,6 +82,7 @@ function R2Artifact(_Player, _Pos)
 		_Player.m_CameraAnimation = "PickArtifact"
 		_Player.m_NewItemName = "Artilufacto"
 		_Player.m_ItemTime = 1
+		_Player.m_ItemDropTime = -1.0
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
@@ -101,6 +102,7 @@ function R2ArtifactDoor(_Player, _Pos)
 		_Player.m_CameraAnimation = "CrossArtifactDoor"
 		_Player.m_NewItemName = ""
 		_Player.m_ItemTime = 1.6667
+		_Player.m_ItemDropTime = -1.0
 		--_Player.m_CurrentAend = "CrossArtifactDoor"
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
@@ -119,8 +121,10 @@ function R2Clue(_Player, _Pos)
 		_Player.m_InteractingCinematic = nil
 		_Player.m_AnimationTime = 7
 		_Player.m_CameraAnimation = "PickClue"
-		_Player.m_NewItemName = "hojaspapel"
-		_Player.m_ItemTime = 1.1
+		_Player.m_NewItemName = "PistaBiblio"
+		_Player.m_LeftHanded = true
+		_Player.m_ItemTime = 1
+		_Player.m_ItemDropTime = 6.5
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false

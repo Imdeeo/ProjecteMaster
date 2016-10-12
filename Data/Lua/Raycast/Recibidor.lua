@@ -15,6 +15,7 @@ function R1Door(_Player, _Pos)
 		_Player.m_CameraAnimation = "CrossDoor"
 		_Player.m_NewItemName = ""
 		_Player.m_ItemTime = 1.5
+		_Player.m_ItemDropTime = -1.0
 		_Player.m_CurrentAend = "CrossDoor"
 		_Player.m_LeftHanded = false
 		_Player.m_IsInteracting = true
@@ -57,6 +58,7 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 		_Player.m_CameraAnimation = "ForceTray"
 		_Player.m_NewItemName = "LlaveRecibidor"
 		_Player.m_ItemTime = 4.06666
+		_Player.m_ItemDropTime = -1.0
 		_Player.m_LeftHanded = true
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
@@ -225,6 +227,7 @@ function R1Key(_Player, _Pos)
 	--	_Player.m_CameraAnimation = "PickKey"
 	--	_Player.m_NewItemName = "LlaveRecibidor"
 	--	_Player.m_ItemTime = 1.5
+	--	_Player.m_ItemDropTime = -1.0
 	--	_Player.m_AnimationTime = 2.6
 	--	_Player.m_CurrentAend = nil
 	--	_Player.m_IsInteracting = true

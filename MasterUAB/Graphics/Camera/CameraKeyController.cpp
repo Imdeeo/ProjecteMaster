@@ -285,8 +285,8 @@ void CCameraKeyController::ForceUpdateYaw(float _ElapsedTime)
 	float l_Radians = l_InputManager->GetAxisX()*_ElapsedTime;
 	Vect3f l_ASD = m_Rotation.EulerFromQuat();
 	float l_Yaw = m_Rotation.EulerFromQuat().z;
-	//				10						170										-10					-170
-	if (((l_Yaw < 0.174533f || l_Yaw > 2.96706f) && l_Radians < .0f) || ((l_Yaw > -0.174533f || l_Yaw < -2.96706f) && l_Radians > .0f))
+	//				15						165										-15					-165
+	if (((l_Yaw < 0.261799f || l_Yaw > 2.87979f) && l_Radians < .0f) || ((l_Yaw > -0.261799f || l_Yaw < -2.87979f) && l_Radians > .0f))
 	{
 		Quatf l_YawRotation = Quatf(0, 0, 0, 1);
 		l_YawRotation.SetFromScaledAxis(Vect3f(0, l_Radians, 0));
