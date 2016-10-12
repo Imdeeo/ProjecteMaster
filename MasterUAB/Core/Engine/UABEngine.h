@@ -32,6 +32,7 @@ class CAStarManager;
 class CColor;
 class CBilboardManager;
 class CRenderableObject;
+class CEffectTechnique;
 
 #include <string>
 
@@ -73,6 +74,18 @@ private:
 	int m_CurrentCamera_vision;
 	CAStarManager* m_AStarManager;
 	bool m_ActiveConsole;
+	CEffectTechnique* m_LoadTechnique;
+
+	struct TLoadScreen {
+		std::string name;
+		float time;
+		std::string file;
+	};
+
+	std::vector<TLoadScreen*> m_LoadScreens;
+
+	void LoadScreensXML(std::string _filename);
+	void RenderLoadScreen(std::string _file);
 
 public:
 	CInputManager * GetInputManager() const;

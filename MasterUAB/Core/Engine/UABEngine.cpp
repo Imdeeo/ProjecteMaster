@@ -137,12 +137,41 @@ void CUABEngine::Update(float _ElapsedTime)
 	m_ScriptManager->RunCode("luaGui(" + std::to_string(l_ElapsedTime) + ")");
 }
 
+void CUABEngine::LoadScreensXML(std::string _filename)
+{
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(_filename.c_str());
+
+	tinyxml2::XMLElement* l_Element;
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
+	{
+		TLoadScreen* l_screen;
+
+		l_Element = doc.FirstChildElement("load_screens")->FirstChildElement();
+		while (l_Element != NULL)
+		{
+			if (l_Element->Name() == std::string("screen"))
+			{
+				l_screen = new TLoadScreen();
+				l_screen->name = l_Element->GetPszProperty("name", "");
+				l_screen->time = l_Element->GetFloatProperty("time", 1.0);
+				l_screen->file= l_Element->GetPszProperty("file", "");
+
+				m_LoadScreens.push_back(l_screen);
+			}
+			l_Element = l_Element->NextSiblingElement();
+		}
+	}
+
+	LoadScreen("Data\\effects.xml");
+}
+
 void CUABEngine::LoadScreen(const std::string _FileName)
 {
 	std::string l_EffectName;
 	CEffectVertexShader* l_EffectVertexShader;
 	CEffectPixelShader* l_EffectPixelShader;
-	CEffectTechnique* l_EffectTechnique;
 	
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile(_FileName.c_str());
@@ -159,19 +188,24 @@ void CUABEngine::LoadScreen(const std::string _FileName)
 
 	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("effect_technique");
 	l_EffectName = titleElement->Attribute("name");
-	l_EffectTechnique = new CEffectTechnique(l_EffectVertexShader, l_EffectPixelShader, nullptr, l_EffectName);
-	
+	m_LoadTechnique = new CEffectTechnique(l_EffectVertexShader, l_EffectPixelShader, nullptr, l_EffectName);
+
+	RenderLoadScreen(m_LoadScreens[0]->file);
+}
+
+void CUABEngine::RenderLoadScreen(std::string _file)
+{
 	//RENDER DEL LOADSCREEN
 	CTexture* l_Texture = new CTexture();
-	l_Texture->Load("Data\\GUI\\textures\\Carga.png");
+	l_Texture->Load(_file);
 	CContextManager* l_ContextManager = m_RenderManager->GetContextManager();
-			
-	l_ContextManager->BeginRender();			
+
+	l_ContextManager->BeginRender();
 	m_RenderManager->SetMatrixViewProjection();
 	m_RenderManager->Clear(true, true);
 	m_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
-	CEffectManager::SetSceneConstants(l_EffectTechnique);
-	m_RenderManager->DrawScreenQuad(l_EffectTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
+	CEffectManager::SetSceneConstants(m_LoadTechnique);
+	m_RenderManager->DrawScreenQuad(m_LoadTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	l_ContextManager->EndRender();
 }
 
@@ -180,12 +214,13 @@ void CUABEngine::Init()
 	m_RenderManager->Init();
 	m_SoundManager->SetPath("Data\\Sounds\\");
 	m_SoundManager->Init();
-	LoadScreen("Data\\effects.xml");	
+	LoadScreensXML("Data\\load_screen.xml");
 	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
 	m_InputManager->Load("Data\\input.xml");
 	m_LevelManager->LoadFile("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
 	m_EffectManager->Load("Data\\effects.xml");
+	RenderLoadScreen(m_LoadScreens[1]->file);
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
 	//m_LevelManager->LoadLevel("Biblioteca");
@@ -199,6 +234,7 @@ void CUABEngine::Init()
 #else
 	m_RenderManager->GetRenderHelper()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
 #endif
+	RenderLoadScreen(m_LoadScreens[2]->file);
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	UABEngine.GetScriptManager()->RunCode("mainLua()");
 	//m_LevelManager->ReloadAllLua();
