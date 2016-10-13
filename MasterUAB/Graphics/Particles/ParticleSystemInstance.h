@@ -11,6 +11,7 @@
 
 class CParticleSystemType;
 class CRenderableVertexs;
+class CFrustum;
 
 class CParticleSystemInstance : public CRenderableObject
 {
@@ -38,17 +39,19 @@ private:
 		Vect3f LastSpeed, LastAcceleration, NextSpeed, NextAcceleration;
 	};
 
-	int m_ActiveParticles;
 	ParticleData m_ParticleData[MAX_PARTICLE_PER_INSTANCE];
 
 	MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX m_ParticleRenderableData[MAX_PARTICLE_PER_INSTANCE];
 	CRenderableVertexs *m_RenderableVertex;
+
+	CFrustum *m_Frustum;
 public:
 	CParticleSystemInstance(){};
 	CParticleSystemInstance(tinyxml2::XMLElement* TreeNode);
 	virtual ~CParticleSystemInstance(void);
 	void Destroy();
 
+	UAB_BUILD_GET_SET(int, ActiveParticles)
 	UAB_BUILD_GET_SET(CParticleSystemType *, Type);
 	UAB_BUILD_GET_SET(float, NextParticleEmission);
 	UAB_BUILD_GET_SET(bool, Start);
@@ -70,10 +73,12 @@ public:
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
 	//void RenderDebug(CRenderManager *RM);
+	const bool GetInsideFrustum();
 	bool CParticleSystemInstance::IsIntoLimit(Vect3f _position);
 	void InsertSort(ParticleData arr[], int length);
 	void Save(FILE* _File, std::string _layer);
-	
+	std::string GetTipo(){ return "ParticleInstance"; };
+
 	CEmptyPointerClass* GetLuaEmissionBoxPosition(int index = 0)
 	{
 		return (CEmptyPointerClass*)&m_Position[index];

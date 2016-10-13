@@ -6,14 +6,16 @@ global isDebug = false
 
 fn writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere=
 (
-	format "Materials: %\n" vertexs.count
+	--por material
 	for i=1 to vertexs.count do
 	(
 		format "#% -> % vertexes\n" i vertexs[i].count
 		writeShort arx VtxID #unsigned
 		writeLong arx vertexs[i].count
+		-- por cara
 		for j = 1 to vertexs[i].count do
 		(
+			-- por vertice
 			for k = 1 to vertexs[i][j].count do
 			(
 				writeFloat arx vertexs[i][j][k]
@@ -129,8 +131,9 @@ fn processFaces arx Obj &prog=
 	local nFaces = getNumFaces l_Obj
 	local vertexs = #()
 	local indexs = #()
-	local vertexsDictionary = dotnetobject "System.Collections.Generic.Dictionary`2[System.String, System.UInt32]"
+	local vertexsDictionary = #()
 	
+
 	local UABVtxsNormals = #()
 	for b = 1 to NumVtxs do 
 	( 
@@ -155,10 +158,12 @@ fn processFaces arx Obj &prog=
 			--l_Obj.Material.MaterialList[i].DiffuseMap.Coords.V_Mirror = true
 			append vertexs #()
 			append indexs #()
+			append vertexsDictionary (dotnetobject "System.Collections.Generic.Dictionary`2[System.String, System.UInt32]")
 		)		
 	) else (
 		append vertexs #()
 		append indexs #()
+		append vertexsDictionary (dotnetobject "System.Collections.Generic.Dictionary`2[System.String, System.UInt32]")
 	)
 	
 	local BBFace = getFace l_Obj 1

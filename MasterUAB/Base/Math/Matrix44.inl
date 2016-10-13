@@ -1416,7 +1416,7 @@ inline Matrix44<T> Matrix44<T>::Get44Scale() const
 template<typename T>
 inline Vector3<T> Matrix44<T>::GetPos() const
 {
-	return Vector3<T>(m03, m13, m23);
+	return Vector3<T>(m30, m31, m32);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

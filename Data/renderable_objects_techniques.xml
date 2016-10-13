@@ -162,6 +162,7 @@
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="particles_pool">
 		<renderable_object_technique name="particle" technique="particle_technique"/>
+		<renderable_object_technique name="bilboard" technique="bilboard_technique"/>
 	</pool_renderable_object_technique>
 	<pool_renderable_object_technique name="manchas_pool">
 		<renderable_object_technique name="manchas" technique="manchas_technique"/>

@@ -59,6 +59,10 @@ void CLayerManager::Load(const std::string &FileName)
 				{
 					GetLayer(l_ElementAux)->AddParticleSystemInstance(l_ElementAux);
 				}
+				else if (l_ElementAux->Name() == std::string("bilboard_instance"))
+				{
+					GetLayer(l_ElementAux)->AddBilboardSystemInstance(l_ElementAux);
+				}
 				else if (l_ElementAux->Name() == std::string("manchas_instance"))
 				{
 					GetLayer(l_ElementAux)->AddManchasSystemInstance(l_ElementAux);

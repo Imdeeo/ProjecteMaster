@@ -36,6 +36,7 @@ CRenderManager::CRenderManager()
 	m_DepthStencilView(nullptr)	*/
 {
 	m_LastFPSMeasurementTime = (float)timeGetTime();
+
 }
 
 CRenderManager::~CRenderManager()
@@ -161,14 +162,14 @@ void CRenderManager::SetMatrixViewProjection()
 		m_ContextManager->SetCamera(m_DebugCamera);		
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition = m_DebugCamera.GetPosition();
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector = m_DebugCamera.GetUp();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = Vect4f(1, 1, 1, 1);
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = m_CurrentCamera.GetRightVector();
 	}
 	else
 	{
 		m_ContextManager->SetCamera(m_CurrentCamera);
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition = m_CurrentCamera.GetPosition();
 		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector = m_CurrentCamera.GetUp();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = Vect4f(1, 1, 1, 1);
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = m_CurrentCamera.GetRightVector();
 	}
 	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseView = UABEngine.GetEffectManager()->m_SceneParameters.m_View;
 	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseView.Invert();
@@ -234,6 +235,8 @@ CContextManager* CRenderManager::GetContextManager()const
 void CRenderManager::SetContextManager(CContextManager* _ContextManager)
 {
 	m_ContextManager = _ContextManager;
+	m_ContextManager->GetDeviceContext()->RSSetState(m_ContextManager->GetRasterizerState(CContextManager::RS_SOLID_BACK_CULL));
+	//m_ContextManager->GetDeviceContext()->OMSetBlendState(NULL, NULL, 0xffffffff);
 }
 
 ID3D11Device* CRenderManager::GetDevice()

@@ -12,6 +12,9 @@ public:
 	bool const GetInsideFrustum();
 	void SetShadowMap(CRenderManager &RenderManager);
 	void Save(FILE* _File);
+	void Render(CRenderManager *RenderManager);
+	CRenderableVertexs* GetShape(CRenderManager *_RenderManager);
+	const Mat44f & GetTransform();
 };
 
 #endif //OMNI_LIGHT_H
