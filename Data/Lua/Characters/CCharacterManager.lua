@@ -4,11 +4,13 @@ dofile("Data\\Lua\\Enemies\\FogEnemy\\FogEnemy.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonEnemy.lua")
 dofile("Data\\Lua\\Enemies\\CagedEnemy\\CagedAutomatonEnemy.lua")
 dofile("Data\\Lua\\Enemies\\TurretEnemy\\TurretEnemy.lua")
+dofile("Data\\Lua\\CLuz.lua")
 
 class 'CCharacterManager'
 	function CCharacterManager:__init()
 		self.m_Enemics={}
 		self.m_Player={}
+		self.m_Lights={}
 	end
 		
 	function CCharacterManager:LoadXML(Filename)
@@ -46,7 +48,11 @@ class 'CCharacterManager'
 						table.insert(self.m_Enemics, l_Enemy)
 					elseif l_Type == "Whisperer" then
 						utils_log("other")
-					end					
+					end
+				elseif l_ElemName == "light" then
+					local l_Light = CLuz(l_Element)
+					UABEngine:get_game_play_manager():add_component(l_Light)
+					table.insert(self.m_Lights, l_Light)
 				end	
 				l_Element = l_Element:get_next()
 			end
