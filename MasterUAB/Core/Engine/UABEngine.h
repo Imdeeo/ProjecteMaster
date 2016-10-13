@@ -33,6 +33,7 @@ class CColor;
 class CBilboardManager;
 class CRenderableObject;
 class CEffectTechnique;
+class CLoadScreenManager;
 
 #include <string>
 
@@ -70,6 +71,7 @@ private:
 	CGamePlayManager* m_GamePlayManager;
 	CLevelManager* m_LevelManager;
 	CManchasManager* m_ManchasManager;
+	CLoadScreenManager* m_LoadScreenManager;
 	std::string m_LevelLoaded;
 	int m_CurrentCamera_vision;
 	CAStarManager* m_AStarManager;
