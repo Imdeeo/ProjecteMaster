@@ -350,13 +350,13 @@
 	<instance_mesh name="6tecla" layer ="solid" core_name="6tecla" position="0.0508976 1.4032 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="7tecla" layer ="solid" core_name="7tecla" position="0.0142078 1.4032 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="2tecla" layer ="solid" core_name="2tecla" position="0.198314 1.4032 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="pianoseparado" layer ="solid" core_name="pianoseparado" position="0.111706 5.82811 14.5253" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="pianoseparado" layer ="solid" core_name="pianoseparado" position="0.11149 1.11467 15.1198" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="puertalaberintooficial" layer ="solid" core_name="puertalaberintooficial" position="-7.28345 3.2257 8.30054" rotation="-0.00377238 -1.49012e-007 0.0 0.999993" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="planelibropuertalaboficial" layer ="solid" core_name="planelibropuertalaboficial" position="-7.28931 4.56333 8.29549" rotation="0.0 -1.49012e-007 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LibrosEntradaLaberinto006" layer ="solid" core_name="LibrosEntradaLaberinto006" position="-7.27091 1.34372 8.35188" rotation="0.0 -1.49012e-007 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="TriggerPipeOrgan" layer="triggers" is_active="true" core_name="TriggerPipeOrgan" position="0.367395 1.12704 15.0313" rotation="0.173648 0.0 0.0 -0.984808" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerPipeOrgan" layer="triggers" is_active="true" core_name="TriggerPipeOrgan" position="0.136758 1.12704 15.1529" rotation="-0.173648 0.0 0.0 0.984808" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
-		<interactuable_object actor_name="TeclasAnimadasBIEN"/>
+		<interactuable_object actor_name="pianoseparado"/>
 	</instance_mesh>
 	<instance_mesh name="TriggerArtifact" layer="triggers" is_active="true" core_name="TriggerArtifact" position="-17.0552 1.66966 28.9583" rotation="0.0 0.0 0.0 -1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
@@ -374,31 +374,31 @@
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="LibroEspecial"/>
 	</instance_mesh>
-		<instance_mesh name="TriggerOrganKeyA" layer ="triggers" core_name="TriggerOrganKeyA" position="0.453936 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
+	<instance_mesh name="TriggerOrganKeyA" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.235907 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="1tecla"/> 
 	</instance_mesh> 
-	<instance_mesh name="TriggerOrganKeyB" layer ="triggers" core_name="TriggerOrganKeyA" position="0.416705 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
+	<instance_mesh name="TriggerOrganKeyB" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.198314 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="2tecla"/> 
 	</instance_mesh> 
-	<instance_mesh name="TriggerOrganKeyC" layer ="triggers" core_name="TriggerOrganKeyA" position="0.379664 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
+	<instance_mesh name="TriggerOrganKeyC" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.160579 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="3tecla"/> 
 	</instance_mesh> 
-	<instance_mesh name="TriggerOrganKeyD" layer ="triggers" core_name="TriggerOrganKeyA" position="0.342364 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
+	<instance_mesh name="TriggerOrganKeyD" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.124282 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="4tecla"/> 
 	</instance_mesh> 
-	<instance_mesh name="TriggerOrganKeyE" layer ="triggers" core_name="TriggerOrganKeyA" position="0.305651 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
+	<instance_mesh name="TriggerOrganKeyE" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.0874811 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="5tecla"/> 
 	</instance_mesh> 
-	<instance_mesh name="TriggerOrganKeyF" layer ="triggers" core_name="TriggerOrganKeyA" position="0.268938 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
+	<instance_mesh name="TriggerOrganKeyF" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.0508976 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="6tecla"/> 
 	</instance_mesh> 
-	<instance_mesh name="TriggerOrganKeyG" layer ="triggers" core_name="TriggerOrganKeyA" position="0.233004 1.421 14.6444" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true"> 
+	<instance_mesh name="TriggerOrganKeyG" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.0142078 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="7tecla"/> 
 	</instance_mesh> 
