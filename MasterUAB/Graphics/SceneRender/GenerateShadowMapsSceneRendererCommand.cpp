@@ -6,8 +6,9 @@
 #include "ContextManager\ContextManager.h"
 #include "Texture\DynamicTexture.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
+#include "LevelManager\LevelManager.h"
 
-CGenerateShadowMapsSceneRendererCommand::CGenerateShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode) :CSceneRendererCommand(TreeNode)
+CGenerateShadowMapsSceneRendererCommand::CGenerateShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CSceneRendererCommand(TreeNode,_LevelId)
 {
 }
 
@@ -18,7 +19,7 @@ CGenerateShadowMapsSceneRendererCommand::~CGenerateShadowMapsSceneRendererComman
 
 void CGenerateShadowMapsSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 {
-	CLightManager *l_LightManager=UABEngine.GetLightManager();
+	CLightManager *l_LightManager=UABEngine.GetLevelManager()->GetResource(m_LevelId)->GetLightManager();
 	int n_lights = l_LightManager->GetResourcesVector().size();
 	int count = 0;
 

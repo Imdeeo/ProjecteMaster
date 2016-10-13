@@ -12,7 +12,7 @@ class CRenderDebugLayerSceneRendererCommand : public CSceneRendererCommand
 private:
 CRenderableObjectsManager *m_Layer;
 public:
-	CRenderDebugLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
+	CRenderDebugLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 virtual ~CRenderDebugLayerSceneRendererCommand();
 void Execute(CRenderManager &RenderManager);
 };

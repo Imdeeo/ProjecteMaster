@@ -71,7 +71,7 @@ bool CAnimatedCoreModel::Load(const std::string &Path)
 		{			
 			if (l_ElementAux->Name() == std::string("material"))
 			{
-				result = result & UABEngine.GetMaterialManager()->AddResource(l_ElementAux->GetPszProperty("name"), new CMaterial(l_ElementAux));
+				result = result & UABEngine.GetMaterialManager()->AddResource(l_ElementAux->GetPszProperty("name"), new CMaterial(l_ElementAux,""),"");
 				m_Materials.push_back(UABEngine.GetMaterialManager()->GetResource(l_ElementAux->GetPszProperty("name")));
 			}
 			if (l_ElementAux->Name() == std::string("skeleton"))

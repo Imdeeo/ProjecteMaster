@@ -5,9 +5,10 @@
 #include "Utils.h"
 #include "InputManager\InputManager.h"
 #include "Layers\LayerManager.h"
+#include "LevelManager\LevelManager.h"
 
-CSphericalCameraController::CSphericalCameraController(tinyxml2::XMLElement* _TreeNode) : CCameraController(_TreeNode)
-, m_Zoom(_TreeNode->GetFloatProperty("zoom", 4.5f))
+CSphericalCameraController::CSphericalCameraController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CCameraController(TreeNode,_LevelId)
+, m_Zoom(TreeNode->GetFloatProperty("zoom", 4.5f))
 , m_ZoomSpeed(2.f)
 , m_CameraPosition(m_Position - m_Zoom)
 {
@@ -48,6 +49,6 @@ void CSphericalCameraController::Update(float ElapsedTime)
 		m_Zoom += 0.1f;
 	}
 	if (m_Zoom < 0.1f){ m_Zoom = 0.1f; }
-	m_Position = UABEngine.GetLayerManager()->GetLayer("solid")->GetResource("Jaheem")->GetPosition();
+	m_Position = UABEngine.GetLevelManager()->GetResource("Player")->GetLayerManager()->GetLayer("solid")->GetResource("Jaheem")->GetPosition();
 	m_CameraPosition = m_Position - (GetForward()*m_Zoom);
 }

@@ -6,6 +6,8 @@
 #include "DebugRender.h"
 #include "StaticMeshManager.h"
 
+#include "LevelManager\LevelManager.h"
+
 #include "StaticMesh.h"
 #include "RenderableObjects\RenderableVertexs.h"
 #include "PhysXManager\PhysXManager.h"
@@ -14,9 +16,9 @@
 #include "Math\Matrix44.h"
 
 
-CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode) :CRenderableObject(TreeNode)
+CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string & _LevelId) :CRenderableObject(TreeNode,_LevelId)
 {
-	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(TreeNode->GetPszProperty("core_name"));
+	m_StaticMesh = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetStaticMeshManager()->GetResource(TreeNode->GetPszProperty("core_name"));
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 	m_Layer = TreeNode->GetPszProperty("layer");
 	m_GeneratePhysx = TreeNode->GetBoolProperty("create_physics");
@@ -105,10 +107,10 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode) :CRenderableObject(
 	}
 }
 
-CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreName) :CRenderableObject()
+CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreName, const std::string & _LevelId) :CRenderableObject()
 {
 	SetName(Name);
-	m_StaticMesh = UABEngine.GetStaticMeshManager()->GetResource(CoreName);
+	m_StaticMesh = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetStaticMeshManager()->GetResource(CoreName);
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 }
 

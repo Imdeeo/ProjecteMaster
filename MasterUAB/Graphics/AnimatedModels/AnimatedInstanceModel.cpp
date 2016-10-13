@@ -19,7 +19,7 @@
 
 #include <cal3d\cal3d.h>
 
-CAnimatedInstanceModel::CAnimatedInstanceModel(tinyxml2::XMLElement* TreeNode) :CRenderableObject(TreeNode)
+CAnimatedInstanceModel::CAnimatedInstanceModel(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CRenderableObject(TreeNode, _LevelId)
 {
 	Initialize(UABEngine.GetAnimatedModelsManager()->GetResource(TreeNode->GetPszProperty("core_name")));
 	/*m_AnimatedCoreModel = UABEngine.GetAnimatedModelsManager()->GetResource(l_Element.GetPszProperty("core_model_name"));
