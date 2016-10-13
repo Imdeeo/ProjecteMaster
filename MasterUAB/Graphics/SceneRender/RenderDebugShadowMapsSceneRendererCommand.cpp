@@ -5,9 +5,10 @@
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "Texture\DynamicTexture.h"
 #include "RenderableObjects\RenderableObjectTechnique.h"
+#include "LevelManager\LevelManager.h"
 
 
-CRenderDebugShadowMapsSceneRendererCommand::CRenderDebugShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
+CRenderDebugShadowMapsSceneRendererCommand::CRenderDebugShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CSceneRendererCommand(TreeNode,_LevelId)
 {
 	//m_Offset = TreeNode.GetBoolProperty("offset");
 	//m_Width = TreeNode.GetBoolProperty("width");
@@ -22,6 +23,6 @@ CRenderDebugShadowMapsSceneRendererCommand::~CRenderDebugShadowMapsSceneRenderer
 }
 
 void CRenderDebugShadowMapsSceneRendererCommand::Execute(CRenderManager & _RenderManager){
-	UABEngine.GetLightManager()->GetResourcesVector()[m_Light]->GetShadowMap()->Activate(0);
+	UABEngine.GetLevelManager()->GetResource(m_LevelId)->GetLightManager()->GetResourcesVector()[m_Light]->GetShadowMap()->Activate(0);
 	_RenderManager.DrawScreenQuad(m_RenderableObjectTechnique->GetEffectTechnique(), NULL, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 }

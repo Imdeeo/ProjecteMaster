@@ -3,8 +3,8 @@ dofile("Data\\Lua\\Enemies\\FogEnemy\\FogStateChase.lua")
 dofile("Data\\Lua\\Enemies\\FogEnemy\\FogStateAttack.lua")
 
 class 'CFogEnemy' (CEnemy)
-	function CFogEnemy:__init(_TreeNode)
-		CEnemy.__init(self,_TreeNode)
+	function CFogEnemy:__init(_TreeNode,_LevelId)
+		CEnemy.__init(self,_TreeNode,_LevelId)
 		
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81

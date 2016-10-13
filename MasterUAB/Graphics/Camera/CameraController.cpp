@@ -4,7 +4,7 @@
 
 #include "Utils.h"
 
-CCameraController::CCameraController(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode)
+CCameraController::CCameraController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CNamed(TreeNode), CLevelInfo(_LevelId)
 , m_Rotation(Quatf(0, 0, 0, 1))
 , m_Position(0,0,0)
 , m_Fov(TreeNode->GetFloatProperty("fov", .0f))

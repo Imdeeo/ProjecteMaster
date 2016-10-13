@@ -2,6 +2,7 @@
 #define MANCHAS_SYSTEM_TYPE_H
 
 #include "Utils\Named.h"
+#include "Utils\LevelInfo.h"
 #include "Utils.h"
 #include "Math\Matrix44.h"
 #include "Math\Color.h"
@@ -13,10 +14,10 @@
 #include <vector>
 
 
-class CManchasSystemType : public CNamed
+class CManchasSystemType : public CNamed, public CLevelInfo
 {
 public:
-	CManchasSystemType(tinyxml2::XMLElement* TreeNode);
+	CManchasSystemType(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CManchasSystemType(void);
 	void Destroy();
 	void Save(FILE* _File);

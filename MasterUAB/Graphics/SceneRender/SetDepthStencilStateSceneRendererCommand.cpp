@@ -5,7 +5,7 @@
 
 #include "Utils.h"
 
-CSetDepthStencilStateSceneRendererCommand::CSetDepthStencilStateSceneRendererCommand(tinyxml2::XMLElement* TreeNode) : CSceneRendererCommand(TreeNode)
+CSetDepthStencilStateSceneRendererCommand::CSetDepthStencilStateSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CSceneRendererCommand(TreeNode,_LevelId)
 {
 	D3D11_DEPTH_STENCIL_DESC l_DepthStencilStateDescription;
 	ZeroMemory(&l_DepthStencilStateDescription,sizeof(D3D11_DEPTH_STENCIL_DESC));

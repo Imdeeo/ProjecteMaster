@@ -2,6 +2,7 @@
 #define MATERIAL_H
 
 #include "Utils\Named.h"
+#include "Utils\LevelInfo.h"
 #include <vector>
 #include <string.h>
 #include "XML\tinyxml2.h"
@@ -12,7 +13,7 @@ class CRenderableObjectTechnique;
 
 #define MAX_TEXTURES 11
 
-class CMaterial : public CNamed
+class CMaterial : public CNamed,public CLevelInfo
 {
 private:
 	CTexture* m_Textures[MAX_TEXTURES];
@@ -21,7 +22,7 @@ private:
 	unsigned int m_CurrentParameterData;
 	void Destroy();
 public:
-	CMaterial(tinyxml2::XMLElement* TreeNode);
+	CMaterial(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CMaterial();
 	virtual void Apply(CRenderableObjectTechnique *RenderableObjectTechnique = NULL);
 	CRenderableObjectTechnique* GetRenderableObjectTechnique();

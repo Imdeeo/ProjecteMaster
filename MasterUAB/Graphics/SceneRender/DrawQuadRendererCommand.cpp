@@ -11,7 +11,7 @@
 #include "Math\Color.h"
 
 
-CDrawQuadRendererCommand::CDrawQuadRendererCommand(tinyxml2::XMLElement* TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
+CDrawQuadRendererCommand::CDrawQuadRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CStagedTexturedSceneRendererCommand(TreeNode,_LevelId)
 {
 	const char* c = TreeNode->GetPszProperty("material", "");
 	if (c != "")

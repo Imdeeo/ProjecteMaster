@@ -10,10 +10,11 @@ class CAStarManager : public CTemplatedMapManager<CAStar>
 {
 private:
 	std::string m_Filename;
+	std::string m_LevelId;
 public:
 	CAStarManager(void);
 	virtual ~CAStarManager(void);
-	bool Load(const std::string &FileName);
+	bool Load(const std::string &FileName, const std::string &_LevelId);
 	bool Reload();
 };
 

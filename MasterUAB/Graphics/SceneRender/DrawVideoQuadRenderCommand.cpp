@@ -14,7 +14,7 @@
 #include "Math\Color.h"
 #include "D3D11.h"
 
-CDrawVideoQuadRendererCommand::CDrawVideoQuadRendererCommand(tinyxml2::XMLElement* TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
+CDrawVideoQuadRendererCommand::CDrawVideoQuadRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CStagedTexturedSceneRendererCommand(TreeNode,_LevelId)
 {
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("MV_POSITION4_NORMAL_TEXTURE_VERTEX");
 	m_Texture = new CDynamicTexture("pepe", 360, 400, false, "r8u");
