@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <gui_elements>
-
 	<gui_spritemap name="gui1" width="1024" height="1024">
 		<material name="gui1" renderable_object_technique="MV_POSITION4_NORMAL_TEXTURE_VERTEX">
 			<texture filename="Data\\GUI\\buttons_and_sliders.png"/>
@@ -53,6 +52,13 @@
 		<sprite name="fondoMainMenu" x="0" y="0" w="1920" h="1080" pX="0.5" pY="0.5"/>
 	</gui_spritemap>
 	
+	<gui_spritemap name="gui_animated" width="1920" height="1080">
+		<material name="gui_animated" renderable_object_technique="MV_POSITION4_NORMAL_TEXTURE_VERTEX">
+			<texture filename="Data\\GUI\\MainMenuImages\\fondo_animado.png"/>
+		</material>
+		<sprite name="fondoMainMenuAnimado" x="0" y="0" w="1920" h="1080" pX="0.5" pY="0.5"/>
+	</gui_spritemap>
+	
 	<gui_spritemap name="gui_options" width="1920" height="1080">
 		<material name="gui_options" renderable_object_technique="MV_POSITION4_NORMAL_TEXTURE_VERTEX">
 			<texture filename="Data\\GUI\\OptionsMenuImages\\fondo_opciones.dds"/>
@@ -88,6 +94,7 @@
 	<slider name="volume_slider" base="slider_base" top="slider_top" handle="slider_handle" pressed_handle="slider_handle"/>
 	<slider name="mad_slider" base="slider_base" top="slider_top" handle="slider_handle" pressed_handle="slider_handle"/>
 	<panel name="fondo1" normal="fondoMainMenu"/>
+	<panel name="fondo1_1" normal="fondoMainMenuAnimado"/>
 	<panel name="fondo2" normal="fondoOptionsMenu"/>
 	<panel name="fondo3" normal="fondoStandardMenu"/>
 </gui_elements>

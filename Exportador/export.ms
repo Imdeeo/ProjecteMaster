@@ -9,6 +9,7 @@ fn writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere=
 	--por material
 	for i=1 to vertexs.count do
 	(
+		format "#% -> % vertexes\n" i vertexs[i].count
 		writeShort arx VtxID #unsigned
 		writeLong arx vertexs[i].count
 		-- por cara
@@ -24,6 +25,7 @@ fn writeMesh arx VtxID vertexs indexs BBMin BBMax BSphere=
 		writeLong arx indexs[i].count
 		for j = 1 to indexs[i].count do
 		(
+			--format "idx #% -> vtx #%\n" j indexs[i][j]
 			writeShort arx indexs[i][j] #unsigned
 		)
 	)
