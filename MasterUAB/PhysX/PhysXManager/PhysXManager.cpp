@@ -788,7 +788,7 @@ void CPhysXManager::EnableTrigger(const std::string _name)
 
 void CPhysXManager::DisableTrigger(const std::string _name)
 {
-	ChangeRigidDynamicActorPhysxGroup(_name, "5");
+	ChangeRigidDynamicActorPhysxGroup(_name, "9");
 }
 
 void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors,bool isActive)
