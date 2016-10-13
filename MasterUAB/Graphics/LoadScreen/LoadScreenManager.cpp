@@ -9,8 +9,10 @@
 
 #include <Windows.h>
 
-CLoadScreenManager::CLoadScreenManager(void) : m_Count(0), m_Timer(0.0f) {}
-CLoadScreenManager::CLoadScreenManager(const std::string &Filename) : m_Filename(Filename),  m_Count(0), m_Timer(0.0f) {}
+CLoadScreenManager::CLoadScreenManager(const std::string &Filename) : m_Filename(Filename),  m_Count(0), m_Timer(0.0f), m_Angle(0), m_LoadTechnique(nullptr), m_Loading(true) {
+	m_Texture = nullptr;
+	m_EffectAddress = CEffectManager::AddMaterialParameter(CMaterialParameter::TMaterialType::FLOAT);
+}
 
 CLoadScreenManager::~CLoadScreenManager(void)
 {
@@ -37,6 +39,7 @@ void CLoadScreenManager::Load()
 				l_screen->name = l_Element->GetPszProperty("name", "");
 				l_screen->time = l_Element->GetFloatProperty("time", 1.0);
 				l_screen->file = l_Element->GetPszProperty("file", "");
+				l_screen->animated = l_Element->GetBoolProperty("animated", false);
 
 				m_LoadScreens.push_back(l_screen);
 			}
@@ -76,17 +79,18 @@ void CLoadScreenManager::LoadScreen(const std::string _FileName)
 
 void CLoadScreenManager::RenderLoadScreen()
 {
+	m_Texture = new CTexture();
 	CRenderManager * _RenderManager = UABEngine.GetRenderManager();
+	_RenderManager->EnableAlphaBlendState();
 	CContextManager* l_ContextManager = _RenderManager->GetContextManager();
-	CTexture* l_Texture = new CTexture();
-	l_Texture->Load(m_LoadScreens[m_Count]->file);
+	m_Texture->Load(m_LoadScreens[m_Count]->file);
 	//RENDER DEL LOADSCREEN		
 	l_ContextManager->BeginRender();
 	_RenderManager->SetMatrixViewProjection();
 	_RenderManager->Clear(true, true);
 	_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
 	CEffectManager::SetSceneConstants(m_LoadTechnique);
-	_RenderManager->DrawScreenQuad(m_LoadTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
+	_RenderManager->DrawScreenQuad(m_LoadTechnique, m_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
 	l_ContextManager->EndRender();
 
 	SYSTEMTIME st;
@@ -94,35 +98,37 @@ void CLoadScreenManager::RenderLoadScreen()
 	float time_s = st.wHour * 3600 + st.wMinute * 60 + st.wSecond;
 	float time_s2;
 	
-	bool l_Bucle = true;
-	while (l_Bucle)
+	while (m_Loading)
 	{
 		GetSystemTime(&st);
 		time_s2 = st.wHour * 3600 + st.wMinute * 60 + st.wSecond;
 		m_Timer = time_s2 - time_s;
-		
-		for (size_t i = m_Count; i < m_LoadScreens.size(); ++i)
+		if (m_Timer > m_LoadScreens[m_Count]->time && m_Count < m_LoadScreens.size()-1)
 		{
-			if (m_Timer > m_LoadScreens[i]->time && m_Count != i)
-			{
-				m_Count = i;
-				l_Texture->Load(m_LoadScreens[m_Count]->file);
-				//RENDER DEL LOADSCREEN		
-				l_ContextManager->BeginRender();
-				_RenderManager->SetMatrixViewProjection();
-				_RenderManager->Clear(true, true);
-				_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
-				CEffectManager::SetSceneConstants(m_LoadTechnique);
-				_RenderManager->DrawScreenQuad(m_LoadTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
-				l_ContextManager->EndRender();
-
-				if (m_Count == m_LoadScreens.size() - 1)
-					l_Bucle = false;
-
-				break;
-			}
-		}		
+			++m_Count;
+			m_Texture->Load(m_LoadScreens[m_Count]->file);
+		}
+		l_ContextManager->BeginRender();
+		_RenderManager->SetMatrixViewProjection();
+		_RenderManager->Clear(true, true);
+		_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
+		CEffectManager::SetSceneConstants(m_LoadTechnique);
+		if (m_LoadScreens[m_Count]->animated)
+		{
+			m_Angle = -m_Timer*0.2f;
+			memcpy(m_EffectAddress, &m_Angle, sizeof(float));
+			_RenderManager->DrawScreenQuad(m_LoadTechnique, m_Texture, 0.88, 0.8, 0.09, 0.16, CColor(1.f, 1.f, 1.f, 1.f));
+		}
+		else
+		{
+			m_Angle = 0;
+			memcpy(m_EffectAddress, &m_Angle, sizeof(float));
+			_RenderManager->DrawScreenQuad(m_LoadTechnique, m_Texture, 0.0, 0.0, 1.0, 1.0, CColor(1.f, 1.f, 1.f, 1.f));
+		}
+	
+		l_ContextManager->EndRender();
 	}
+	_RenderManager->EnableAlphaBlendState();
 }
 
 void CLoadScreenManager::Reload()
@@ -139,5 +145,6 @@ void CLoadScreenManager::Destroy()
 	}
 
 	m_LoadScreens.clear();
-	m_LoadTechnique = nullptr;
+	CHECKED_DELETE(m_LoadTechnique);
+	//CHECKED_DELETE(m_Texture);
 }

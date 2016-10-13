@@ -111,7 +111,15 @@ bool CEffectShader::LoadShader(const std::string &Filename, const std::string &E
 	ID3DBlob* pErrorBlob = nullptr;
 	std::wstring wFilename;
 	wFilename.assign(l_Filename.begin(), l_Filename.end());
-	HRESULT hr = D3DCompileFromFile(wFilename.c_str(), m_ShaderMacros, D3D_COMPILE_STANDARD_FILE_INCLUDE, EntryPoint.c_str(), ShaderModel.c_str(), dwShaderFlags, 0, BlobOut, &pErrorBlob);
+	HRESULT hr;
+	if (strstr(l_Filename.c_str(), ".fxo"))
+	{
+		hr = D3DReadFileToBlob(wFilename.c_str(), BlobOut);
+	}
+	else
+	{
+		hr = D3DCompileFromFile(wFilename.c_str(), m_ShaderMacros, D3D_COMPILE_STANDARD_FILE_INCLUDE, EntryPoint.c_str(), ShaderModel.c_str(), dwShaderFlags, 0, BlobOut, &pErrorBlob);
+	}
 	if (hr == S_OK)
 	{
 		l_WCompiledName.assign(l_CompiledName.begin(), l_CompiledName.end());
