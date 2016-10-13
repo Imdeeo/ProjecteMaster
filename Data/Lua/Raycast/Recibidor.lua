@@ -6,6 +6,7 @@ function FacingRaycast(_Offset, _Target, _Pos, _Distance)
 	return ((_Pos - _Target):length() < _Distance)
 end
 
+R1TrayR1IsClosed = true
 R1TrayR2IsClosed = true
 R1TrayL1IsClosed = true
 R1TrayL2IsClosed = true
@@ -54,6 +55,7 @@ function R1Canvas(_Player, _Pos)
 end
 
 function R1TrayR1(_Player, _Pos) --This contains the key
+	if R1TrayR1IsClosed then
 		_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
 		_Player.m_TargetPosOffset = Vect3f(0.728, 0.0, 0.03958677)
 		l_Target = CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayR1"):get_position()
@@ -69,11 +71,11 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 			_Player.m_IsInteracting = true
 			_Player.m_IsClimbing = false
 			_Player.m_IsCorrecting = true
-			m_CharacterManager.m_Enemics[1].m_Awake = true
-			m_CharacterManager.m_Enemics[2].m_Awake = true
-			g_Engine:get_cinematic_manager():get_resource("recibidor_engranajes"):play()
-			_Player.m_PhysXManager:disable_trigger("TriggerTrayR1")
+			R1TrayR1IsClosed = false
+			--m_CharacterManager.m_Enemics[1].m_Awake = true
+			--m_CharacterManager.m_Enemics[2].m_Awake = true
 		end
+	end
 end
 
 function R1TrayR2Open(_Player, _Pos)

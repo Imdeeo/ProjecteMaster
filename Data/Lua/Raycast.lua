@@ -5,29 +5,38 @@ dofile("Data\\Lua\\Raycast\\Biblioteca.lua")
 -- 1,0(Max) -> 0,63152400835073068893528183716077(Engine)
 
 function CheckRaycast(_Player, _Pos)
+	utils_log("CheckRaycast")
 	_Player.m_RaycastData = RaycastData()
+	utils_log("CheckRaycast1")
 	_Player.m_PhysXManager:raycast(_Player.m_CameraController:get_position(), _Player.m_CameraController:get_position()+(_Player.m_CameraController:get_forward()*1.7), 4, _Player.m_RaycastData)
+	utils_log("CheckRaycast2 level: ".._Player.m_ActualLevel)
 	--utils_log(_Player.m_RaycastData.actor_name)
-	local l_LayerManager = g_Engine:get_layer_manager()
+	local l_LayerManager = g_Engine:get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager()
+	utils_log("CheckRaycast3: ".._Player.m_RaycastData.actor_name)
 	if _Player.m_RaycastData.actor_name ~= "" then
+		utils_log("CheckRaycast4")
 		local l_Trigger = l_LayerManager:get_layer("triggers"):get_resource(_Player.m_RaycastData.actor_name)
-		
+		utils_log("CheckRaycast5")
 		if l_LayerManager:get_layer("interactuable_objects"):get_resource(l_Trigger:get_interactuable_object_name()) == nil then
 			local l_InteractuableObject = l_LayerManager:get_layer("solid"):get_resource(l_Trigger:get_interactuable_object_name())
 			l_LayerManager:get_layer("interactuable_objects"):add_resource(l_InteractuableObject.name, l_InteractuableObject)
 		end
-		
+		utils_log("CheckRaycast6")
 		if _Player.m_InputManager:is_action_active("Interact") then
 			TriggerRaycast(_Player, _Pos)
 		end
+		utils_log("CheckRaycast7")
 	else
+	utils_log("CheckRaycast8")
 		l_LayerManager:get_layer("interactuable_objects"):destroy(false)
 	end
+	utils_log("CheckRaycastend")
 end
 
 function TriggerRaycast(_Player, _Pos)
-	l_LevelID = g_Engine:get_level_loaded()
-	if l_LevelID == "1" then
+	utils_log("triggers_raycast")
+	l_LevelID = _Player.m_ActualLevel
+	if l_LevelID == "Player" then
 		if _Player.m_RaycastData.actor_name == "TriggerDoor" then
 			if _Player.m_ItemName == "LlaveRecibidor" then
 				R1Door(_Player, _Pos)
@@ -51,7 +60,7 @@ function TriggerRaycast(_Player, _Pos)
 				R1Key(_Player, _Pos)
 			end
 		end
-	elseif l_LevelID == "2" then
+	elseif l_LevelID == "Biblioteca" then
 	utils_log("Trigger: ".._Player.m_RaycastData.actor_name)
 		if _Player.m_RaycastData.actor_name == "TriggerOrganKeyA" then
 			R2TriggerOrganKeyA(_Player, _Pos)

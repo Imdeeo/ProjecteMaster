@@ -42,6 +42,7 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 		l_LevelInfo.m_Loaded = false;
 		l_LevelInfo.m_ID = l_Element->GetPszProperty("id");
 		l_LevelInfo.m_Directory = l_Element->GetPszProperty("directory");
+		l_LevelInfo.m_LevelInitLuaFunction = l_Element->GetPszProperty("init_function");
 		m_LevelsInfo[l_LevelName] = l_LevelInfo;
 		l_Element = l_Element->NextSiblingElement();
 	}
