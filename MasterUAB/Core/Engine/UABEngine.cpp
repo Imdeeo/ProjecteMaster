@@ -1,6 +1,5 @@
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
-#include "XML\tinyxml2.h"
 #include "Utils.h"
 #include "InputManager\InputManager.h"
 #include "Effects\EffectManager.h"
@@ -32,11 +31,14 @@
 #include "RenderableObjects\RenderableVertexs.h"
 #include "IA\AStarManager.h"
 #include "Math\Color.h"
+#include "LoadScreen\LoadScreenManager.h"
 #ifdef _DEBUG
 #include "DebugRender.h"
 #else
 #include "RenderHelper\RenderHelper.h"
 #endif
+
+#include <thread>
 
 CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
 {
@@ -137,93 +139,21 @@ void CUABEngine::Update(float _ElapsedTime)
 	m_ScriptManager->RunCode("luaGui(" + std::to_string(l_ElapsedTime) + ")");
 }
 
-void CUABEngine::LoadScreensXML(std::string _filename)
-{
-	tinyxml2::XMLDocument doc;
-	tinyxml2::XMLError l_Error = doc.LoadFile(_filename.c_str());
-
-	tinyxml2::XMLElement* l_Element;
-
-	if (l_Error == tinyxml2::XML_SUCCESS)
-	{
-		TLoadScreen* l_screen;
-
-		l_Element = doc.FirstChildElement("load_screens")->FirstChildElement();
-		while (l_Element != NULL)
-		{
-			if (l_Element->Name() == std::string("screen"))
-			{
-				l_screen = new TLoadScreen();
-				l_screen->name = l_Element->GetPszProperty("name", "");
-				l_screen->time = l_Element->GetFloatProperty("time", 1.0);
-				l_screen->file= l_Element->GetPszProperty("file", "");
-
-				m_LoadScreens.push_back(l_screen);
-			}
-			l_Element = l_Element->NextSiblingElement();
-		}
-	}
-
-	LoadScreen("Data\\effects.xml");
-}
-
-void CUABEngine::LoadScreen(const std::string _FileName)
-{
-	std::string l_EffectName;
-	CEffectVertexShader* l_EffectVertexShader;
-	CEffectPixelShader* l_EffectPixelShader;
-	
-	tinyxml2::XMLDocument doc;
-	doc.LoadFile(_FileName.c_str());
-
-	tinyxml2::XMLElement* titleElement;
-	
-	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("vertex_shader");
-	l_EffectVertexShader = new CEffectVertexShader(titleElement);
-	l_EffectVertexShader->Load();
-
-	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("pixel_shader");
-	l_EffectPixelShader = new CEffectPixelShader(titleElement);
-	l_EffectPixelShader->Load();
-
-	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("effect_technique");
-	l_EffectName = titleElement->Attribute("name");
-	m_LoadTechnique = new CEffectTechnique(l_EffectVertexShader, l_EffectPixelShader, nullptr, l_EffectName);
-
-	RenderLoadScreen(m_LoadScreens[0]->file);
-}
-
-void CUABEngine::RenderLoadScreen(std::string _file)
-{
-	//RENDER DEL LOADSCREEN
-	CTexture* l_Texture = new CTexture();
-	l_Texture->Load(_file);
-	CContextManager* l_ContextManager = m_RenderManager->GetContextManager();
-
-	l_ContextManager->BeginRender();
-	m_RenderManager->SetMatrixViewProjection();
-	m_RenderManager->Clear(true, true);
-	m_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
-	CEffectManager::SetSceneConstants(m_LoadTechnique);
-	m_RenderManager->DrawScreenQuad(m_LoadTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
-	l_ContextManager->EndRender();
-}
-
 void CUABEngine::Init()
 {	
 	m_RenderManager->Init();
+
+	std::thread t(&CLoadScreenManager::Load, CLoadScreenManager("Data\\load_screen.xml"));	
+
 	m_SoundManager->SetPath("Data\\Sounds\\");
 	m_SoundManager->Init();
-	LoadScreensXML("Data\\load_screen.xml");
 	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
 	m_InputManager->Load("Data\\input.xml");
 	m_LevelManager->LoadFile("Data\\level.xml");
 	m_PhysXManager->LoadPhysx("Data\\physx.xml");
 	m_EffectManager->Load("Data\\effects.xml");
-	RenderLoadScreen(m_LoadScreens[1]->file);
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
-	//m_LevelManager->LoadLevel("Biblioteca");
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
 	m_MaterialManager->Load("Data\\default_effect_materials.xml");
@@ -234,43 +164,10 @@ void CUABEngine::Init()
 #else
 	m_RenderManager->GetRenderHelper()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
 #endif
-	RenderLoadScreen(m_LoadScreens[2]->file);
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	UABEngine.GetScriptManager()->RunCode("mainLua()");
-	//m_LevelManager->ReloadAllLua();
-	// INICIO TIEMPO TEST LECTURA XML
-	//float l_StartTime = (float)timeGetTime();
-	/*LoadLevelXML("Data\\level.xml");
-	m_InputManager->Load("Data\\input.xml");
-	m_PhysXManager->LoadPhysx("Data\\physx.xml");
-	m_EffectManager->Load("Data\\effects.xml");
-	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
-	m_MaterialManager->Load("Data\\level_" + m_LevelLoaded + "\\materials.xml", "Data\\default_effect_materials.xml");
-	m_ParticleManager->Load("Data\\level_" + m_LevelLoaded + "\\particles.xml");
-	m_ManchasManager->Load("Data\\level_" + m_LevelLoaded + "\\cordura.xml");
-	m_StaticMeshManager->Load("Data\\level_" + m_LevelLoaded + "\\static_meshes.xml");
-	m_AnimatedModelsManager->Load("Data\\animated_models.xml");	
-	m_LayerManager->Load("Data\\level_" + m_LevelLoaded + "\\renderable_objects.xml");	
-	m_LightManager->Load("Data\\level_"+m_LevelLoaded+"\\lights.xml");	
-	m_CinematicManager->LoadXML("Data\\level_" + m_LevelLoaded + "\\cinematic.xml");
-	m_LayerManager->GetLayer()->AddResource("Cinematic", m_CinematicManager);
-	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
-	m_ScriptManager->Initialize();
-	m_CameraControllerManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
-	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
-	m_RenderManager->Init();
-	m_SoundManager->SetPath("Data\\Sounds\\");
-	m_SoundManager->Init();
-	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
-	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
-	m_ScriptManager->RunCode("mainLua(\""+m_LevelLoaded+"\")");*/
-	// TEST LECTURA XML
-	/*float l_EndTime = (float)timeGetTime();
-	float l_LoadTimer = l_EndTime - l_StartTime;
-	std::ostringstream ss;
-	ss << l_LoadTimer;
-	std::string s(ss.str());
-	CDebugHelper::GetDebugHelper()->Log(s);*/
+	
+	t.join();
 }
 
 void CUABEngine::Destroy()
