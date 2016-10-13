@@ -74,18 +74,6 @@ private:
 	int m_CurrentCamera_vision;
 	CAStarManager* m_AStarManager;
 	bool m_ActiveConsole;
-	CEffectTechnique* m_LoadTechnique;
-
-	struct TLoadScreen {
-		std::string name;
-		float time;
-		std::string file;
-	};
-
-	std::vector<TLoadScreen*> m_LoadScreens;
-
-	void LoadScreensXML(std::string _filename);
-	void RenderLoadScreen(std::string _file);
 
 public:
 	CInputManager * GetInputManager() const;
@@ -117,7 +105,6 @@ public:
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
 	void Destroy();
-	void LoadScreen(const std::string _FileName);
 	void Init();
 	void Update(float _ElapsedTime);
 	void SwitchCamera();
