@@ -135,7 +135,7 @@ public:
 	ID3D11RenderTargetView* const* GetCurrentRenderTargetViews();
 	ID3D11DepthStencilView* GetCurrentDepthStencilView();
 	ID3D11DepthStencilView* GetDepthStencilView();
-	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.0f, .0f, .0f));
+	void Clear(bool renderTarget, bool depthStencil, CColor backgroundColor = CColor(.0f, .0f, .0f, .0f));
 	void UnsetRenderTargets();
 	void SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_RenderTargetViews, ID3D11DepthStencilView *_DepthStencilView);
 };

@@ -24,7 +24,6 @@ CSpotLight::CSpotLight(tinyxml2::XMLElement* TreeNode, const std::string &_Level
 	m_Rotation.SetFromScaledAxis(m_Direction);
 }
 
-#ifdef _DEBUG
 void CSpotLight::Render(CRenderManager *_RenderManager)
 {
 	if (GetEnabled())
@@ -32,7 +31,6 @@ void CSpotLight::Render(CRenderManager *_RenderManager)
 		CDirectionalLight::Render(_RenderManager);
 	}
 }
-#endif
 
 
 void getYawPitch(Vect3f v1, double &_Yaw, double &_Pitch, double &_Roll)
@@ -108,7 +106,6 @@ CRenderableVertexs* CSpotLight::GetShape(CRenderManager *_RenderManager)
 	return _RenderManager->GetDebugRender()->GetCone();
 }
 #endif
-
 bool const CSpotLight::GetInsideFrustum()
 {
 	return m_Frustum->SphereVisible(m_Position + (m_Direction.GetNormalized() * m_EndRangeAttenuation) / 2, m_EndRangeAttenuation);

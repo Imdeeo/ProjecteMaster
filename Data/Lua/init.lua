@@ -1,3 +1,4 @@
+dofile("Data\\Lua\\Utils\\Utils.lua")
 dofile("Data\\Lua\\Cinematics\\CUABCinematicsActionManager.lua")
 dofile("Data\\Lua\\Videogame\\componentsEnemy.lua")
 dofile("Data\\Lua\\Antwakbar\\antweakbar.lua")
@@ -53,10 +54,15 @@ function mainLua()
 	
 	--deactivate_gravity()
 	--deactivate_player_collisions()
+<<<<<<< HEAD
 	l_LevelManager:load_level("Recibidor")
 	l_LevelManager:choose_scene_command_level("Recibidor")
 	g_Player:SetActualLevel("Recibidor")
 	--l_LevelManager:load_level("Biblioteca")
+=======
+	--l_LevelManager:load_level("Recibidor")	
+	l_LevelManager:load_level("Biblioteca")
+>>>>>>> develop
 	--l_LevelManager:load_level("Maquinas")	
 end
 

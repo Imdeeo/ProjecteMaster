@@ -4,12 +4,18 @@ dofile("Data\\Lua\\Raycast\\Biblioteca.lua")
 -- 1,5834710743801652892561983471074(Max) -> 1,0(Engine)
 -- 1,0(Max) -> 0,63152400835073068893528183716077(Engine)
 
+<<<<<<< HEAD
 function CheckRaycast(_Player, _Pos)
 	utils_log("CheckRaycast")
 	_Player.m_RaycastData = RaycastData()
 	utils_log("CheckRaycast1")
 	_Player.m_PhysXManager:raycast(_Player.m_CameraController:get_position(), _Player.m_CameraController:get_position()+(_Player.m_CameraController:get_forward()*1.7), 4, _Player.m_RaycastData)
 	utils_log("CheckRaycast2 level: ".._Player.m_ActualLevel)
+=======
+function CheckRaycast(_Player, _Pos, _Camera, _Owner)
+	_Player.m_RaycastData = RaycastData()
+	_Player.m_PhysXManager:raycast(_Camera:get_position(), _Camera:get_position()+(_Camera:get_forward()*1.7), 4, _Player.m_RaycastData)
+>>>>>>> develop
 	--utils_log(_Player.m_RaycastData.actor_name)
 	local l_LayerManager = g_Engine:get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager()
 	utils_log("CheckRaycast3: ".._Player.m_RaycastData.actor_name)
@@ -23,7 +29,7 @@ function CheckRaycast(_Player, _Pos)
 		end
 		utils_log("CheckRaycast6")
 		if _Player.m_InputManager:is_action_active("Interact") then
-			TriggerRaycast(_Player, _Pos)
+			TriggerRaycast(_Player, _Pos, _Owner)
 		end
 		utils_log("CheckRaycast7")
 	else
@@ -33,10 +39,17 @@ function CheckRaycast(_Player, _Pos)
 	utils_log("CheckRaycastend")
 end
 
+<<<<<<< HEAD
 function TriggerRaycast(_Player, _Pos)
 	utils_log("triggers_raycast")
 	l_LevelID = _Player.m_ActualLevel
 	if l_LevelID == "Player" then
+=======
+function TriggerRaycast(_Player, _Pos, _Owner)
+	utils_log(_Player.m_RaycastData.actor_name)
+	l_LevelID = g_Engine:get_level_loaded()
+	if l_LevelID == "1" then
+>>>>>>> develop
 		if _Player.m_RaycastData.actor_name == "TriggerDoor" then
 			if _Player.m_ItemName == "LlaveRecibidor" then
 				R1Door(_Player, _Pos)
@@ -60,26 +73,30 @@ function TriggerRaycast(_Player, _Pos)
 				R1Key(_Player, _Pos)
 			end
 		end
+<<<<<<< HEAD
 	elseif l_LevelID == "Biblioteca" then
 	utils_log("Trigger: ".._Player.m_RaycastData.actor_name)
+=======
+	elseif l_LevelID == "2" then
+>>>>>>> develop
 		if _Player.m_RaycastData.actor_name == "TriggerOrganKeyA" then
-			R2TriggerOrganKeyA(_Player, _Pos)
+			R2TriggerOrganKeyA(_Player, _Owner)
 		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyB" then
-			R2TriggerOrganKeyB(_Player, _Pos)
+			R2TriggerOrganKeyB(_Player, _Owner)
 		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyC" then
-			R2TriggerOrganKeyC(_Player, _Pos)
+			R2TriggerOrganKeyC(_Player, _Owner)
 		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyD" then
-			R2TriggerOrganKeyD(_Player, _Pos)
+			R2TriggerOrganKeyD(_Player, _Owner)
 		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyE" then
-			R2TriggerOrganKeyE(_Player, _Pos)
+			R2TriggerOrganKeyE(_Player, _Owner)
 		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyF" then
-			R2TriggerOrganKeyF(_Player, _Pos)
+			R2TriggerOrganKeyF(_Player, _Owner)
+		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyG" then
+			R2TriggerOrganKeyG(_Player, _Owner)
+		elseif _Player.m_RaycastData.actor_name == "TriggerPipeOrgan" then
+			R2TriggerPipeOrgan(_Player, _Pos)
 		elseif _Player.m_RaycastData.actor_name == "TriggerArtifact" then
-			if R2PuzzleCleared then
-				R2Artifact(_Player, _Pos)
-			end
-		elseif _Player.m_RaycastData.actor_name == "TriggerArtifactInput" then
-			R2ArtifactInput(_Player, _Pos)
+			R2Artifact(_Player, _Pos)
 		elseif _Player.m_RaycastData.actor_name == "TriggerArtifactDoor" then
 			if _Player.m_ItemName == "Artilufacto" then
 				R2ArtifactDoor(_Player, _Pos)

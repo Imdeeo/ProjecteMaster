@@ -33,6 +33,7 @@ public:
 	bool IsReverse() const;
 	void SetReverse(bool Reverse);
 	void SetCamera(CCamera *Camera) const;
+	void ForceUpdateYaw(float _ElapsedTime);
 
 	Vect3f GetLastLookAt();
 	void SetFirstKey(Vect3f _Forward, Vect3f _Up, float _Fov);

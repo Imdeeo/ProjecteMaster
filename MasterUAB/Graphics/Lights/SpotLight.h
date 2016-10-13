@@ -33,9 +33,7 @@ public:
 		return (CEmptyPointerClass*)&m_FallOff;
 	}
 
-#ifdef _DEBUG
 	void Render(CRenderManager *_RenderManager);
-#endif
 
 	virtual const Mat44f & GetTransform();
 

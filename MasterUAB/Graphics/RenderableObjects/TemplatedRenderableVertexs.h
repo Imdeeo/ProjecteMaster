@@ -74,8 +74,8 @@ public:
 		l_DeviceContext->VSSetShader(l_EffectVertexShader->GetVertexShader(), NULL, 0);
 
 		//OJO CUIDAO! Añadido por Uri y Jonathan pq creen que faltaba!!!
-		CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
-		l_DeviceContext->RSSetState(l_ContextManager->GetRasterizerState(CContextManager::RS_SOLID_BACK_CULL));
+		//CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
+		//l_DeviceContext->RSSetState(l_ContextManager->GetRasterizerState(CContextManager::RS_SOLID_BACK_CULL));
 
 
 		ID3D11Buffer *l_SceneConstantBufferVS=l_EffectVertexShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
