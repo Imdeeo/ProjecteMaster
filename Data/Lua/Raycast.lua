@@ -75,7 +75,7 @@ function TriggerRaycast(_Player, _Pos, _Owner)
 			if _Player.m_ItemName == "Artilufacto" then
 				R2ArtifactDoor(_Player, _Pos)
 			end
-		elseif _Player.m_RaycastData.actor_name == "TriggerClue" then
+		elseif _Player.m_RaycastData.actor_name == "TriggerClue"  and _Player.m_Item == nil then
 			R2Clue(_Player, _Pos)
 		elseif _Player.m_RaycastData.actor_name == "TriggerBook" then
 			R2Book(_Player, _Pos)

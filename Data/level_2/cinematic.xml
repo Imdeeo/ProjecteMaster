@@ -34,10 +34,11 @@
 			<cinematic_object_key_frame time="0.366667" pos="-3.59118e-005 0.00158411 -0.00348634" rotation="0.0153588 0.0 0.0 0.999882" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
-	<cinematic name="PullBook" duration="0.666667" cycle="false">
+	<cinematic name="PullBook" duration="1.66667" cycle="false">
 		<cinematic_object resource="LibroEspecial" layer="solid">
-			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="-0.243672 0.0 0.0 0.969858" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.66667" pos="0.0 0.0 0.0" rotation="-0.243672 0.0 0.0 -0.969858" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
 	<cinematic name="ResolvePuzzle" duration="5.0" cycle="false">

@@ -57,6 +57,13 @@ function FallingUpdate(args, _ElapsedTime)
 		l_Player.m_Item:set_position(l_ObjectPosition + l_Owner:get_position())
 		l_Player.m_Item:set_rotation(l_ObjectRotation)
 	end
+	--// Only for debug, tp's to start with space when falling.
+	if l_Player.m_InputManager:is_action_active("Jump") then
+		l_Player.m_PhysXManager:character_controller_teleport("player", Vect3f(0.0, 2.0, 8.0))
+		local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
+		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
+		l_Owner:set_position(l_NewControllerPosition)
+	end
 end
 
 function FallingEnd(args)

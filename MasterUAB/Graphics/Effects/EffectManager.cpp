@@ -243,7 +243,7 @@ void* CEffectManager::AddMaterialParameter(CMaterialParameter::TMaterialType _Ma
 	if(_MaterialType == CMaterialParameter::VECT4F)
 		m_RawDataCount = m_RawDataCount + 4;
 	if (_MaterialType == CMaterialParameter::COLOR)
-		m_RawDataCount == m_RawDataCount + 4;
+		m_RawDataCount = m_RawDataCount + 4;
 	return l_Adress;
 }
 
