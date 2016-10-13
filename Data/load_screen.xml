@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <load_screens>
-	<screen name="logos" time="3.0" file="Data\GUI\LoadImages\logos_fondo.dds"/>
-	<screen name="ass" time="3.0" file="Data\GUI\LoadImages\ass_fondo.dds"/>
-	<screen name="load" time="3.0" file="Data\GUI\LoadImages\cargando_fondo.dds"/>
+	<screen name="logos" time="5.0" file="Data\GUI\LoadImages\logos_fondo.dds"/>
+	<screen name="ass" time="10.0" file="Data\GUI\LoadImages\ass_fondo.dds"/>
+	<screen name="load" time="15.0" file="Data\GUI\LoadImages\cargando_fondo.dds"/>
 </load_screens>
