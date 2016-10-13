@@ -9,7 +9,7 @@ CManchasManager::~CManchasManager(void)
 }
 
 
-void CManchasManager::Load(const std::string &Filename)
+void CManchasManager::Load(const std::string &Filename, const std::string &_LevelId)
 {
 	m_Filename = Filename;
 
@@ -26,8 +26,8 @@ void CManchasManager::Load(const std::string &Filename)
 			l_Element = l_Element->FirstChildElement();
 			while (l_Element != NULL)
 			{
-				CManchasSystemType *l_ManchasSystemType = new CManchasSystemType(l_Element);
-				if (!AddResource(l_ManchasSystemType->GetName(), l_ManchasSystemType))
+				CManchasSystemType *l_ManchasSystemType = new CManchasSystemType(l_Element,_LevelId);
+				if (!AddResource(l_ManchasSystemType->GetName(), l_ManchasSystemType, _LevelId))
 				{
 					CHECKED_DELETE(l_ManchasSystemType);
 				}
@@ -40,7 +40,7 @@ void CManchasManager::Load(const std::string &Filename)
 void CManchasManager::Reload()
 {
 	Destroy();
-	Load(m_Filename);
+//	Load(m_Filename);
 }
 
 void CManchasManager::Save()

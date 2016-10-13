@@ -19,7 +19,7 @@ private:
 	CRenderableObject*			m_Target;
 	Vect3f						m_Offset;
 public:
-	CFPSCameraController(tinyxml2::XMLElement* TreeNode);
+	CFPSCameraController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CFPSCameraController();
 	
 	void SetCamera(CCamera *Camera) const;

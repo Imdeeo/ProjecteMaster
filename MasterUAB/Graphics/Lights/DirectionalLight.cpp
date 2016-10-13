@@ -14,18 +14,18 @@
 #include "Texture\DynamicTexture.h"
 #include "Math\Vector3.h"
 
-CDirectionalLight::CDirectionalLight() : CLight(), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
+CDirectionalLight::CDirectionalLight(const std::string &_LevelId) : CLight(_LevelId), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
 {
 }
 
-CDirectionalLight::CDirectionalLight(std::string _name) : CLight(_name), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
+CDirectionalLight::CDirectionalLight(std::string _name, const std::string &_LevelId) : CLight(_name,_LevelId), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
 {
 	m_Type = GetLightTypeByName("directional");
 	m_ShadowMap = new CDynamicTexture("shadowmap", 512, 512, true, "r32");
 	m_ShadowMaskTexture = nullptr;
 }
 
-CDirectionalLight::CDirectionalLight(tinyxml2::XMLElement* TreeNode) : CLight(TreeNode)
+CDirectionalLight::CDirectionalLight(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CLight(TreeNode,_LevelId)
 {
 	m_Direction = TreeNode->GetVect3fProperty("dir",Vect3f(0.0,0.0,0.0));
 	m_Rotation.SetFromScaledAxis(m_Direction);

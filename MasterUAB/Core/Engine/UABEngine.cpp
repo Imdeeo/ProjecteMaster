@@ -1,3 +1,4 @@
+
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 #include "Utils.h"
@@ -50,15 +51,10 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 	m_MaterialManager = new CMaterialManager();
 	m_TextureManager = new CTextureManager();
 	m_RenderManager = new CRenderManager();
-	m_ParticleManager = new CParticleManager();
 	m_BilboardManager = new CBilboardManager();
-	m_StaticMeshManager = new CStaticMeshManager();
-	m_LightManager = new CLightManager();
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
-	m_LayerManager = new CLayerManager();
 	m_ScriptManager = new CScriptManager();
 	m_CameraControllerManager = new CCameraControllerManager();
-	m_CinematicManager = new CCinematicManager();
 	m_PhysXManager = CPhysXManager::CreatePhysXManager();
 	m_RenderableObjectTechniqueManager = new CRenderableObjectTechniqueManager();
 	m_SceneRendererCommandManager = new CSceneRendererCommandManager();
@@ -66,41 +62,28 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 	m_SoundManager = ISoundManager::InstantiateSoundManager();
 	m_VideoManager = IVideoManager::InstantiateVideoManager();
 	m_FrustumActive = true;
-	m_GamePlayManager = new CGamePlayManager();
 	m_LevelManager = new CLevelManager();
-	m_ManchasManager = new CManchasManager();
-	m_AStarManager = new CAStarManager();
 	m_ActiveConsole = false;
 }
 
 CUABEngine::~CUABEngine(void)
 {
-	CHECKED_DELETE(m_CinematicManager);
 	CHECKED_DELETE(m_SceneRendererCommandManager);
 	CHECKED_DELETE(m_TextureManager);
 	CHECKED_DELETE(m_RenderManager);
-	//CHECKED_DELETE(m_Cinematic);
-	CHECKED_DELETE(m_LightManager);
 	CHECKED_DELETE(m_AnimatedModelsManager);
 	CHECKED_DELETE(m_CameraControllerManager);
-	CHECKED_DELETE(m_LightManager);
-	CHECKED_DELETE(m_StaticMeshManager);
-	CHECKED_DELETE(m_LayerManager);
 	CHECKED_DELETE(m_RenderManager);
-	CHECKED_DELETE(m_ParticleManager);
 	CHECKED_DELETE(m_BilboardManager);
 	CHECKED_DELETE(m_MaterialManager);
 	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
 	CHECKED_DELETE(m_EffectManager);
 	CHECKED_DELETE(m_PhysXManager);
-	CHECKED_DELETE(m_GamePlayManager);
 	CHECKED_DELETE(m_ScriptManager);
 	CHECKED_DELETE(m_GUIManager)
 	CHECKED_DELETE(m_SoundManager);
 	CHECKED_DELETE(m_VideoManager);
 	CHECKED_DELETE(m_LevelManager);
-	CHECKED_DELETE(m_ManchasManager);
-	CHECKED_DELETE(m_AStarManager);
 	CHECKED_DELETE(m_InputManager);	
 }
 
@@ -125,11 +108,9 @@ void CUABEngine::Update(float _ElapsedTime)
 		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 		m_PhysXManager->Update(l_ElapsedTime);
 		m_CameraControllerManager->Update(l_ElapsedTime);
-		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);	
-		m_LayerManager->Update(l_ElapsedTime);
-		m_CinematicManager->Update(l_ElapsedTime);
+		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
 		m_ScriptManager->RunCode("luaUpdate(" + std::to_string(l_ElapsedTime) + ")");
-		m_GamePlayManager->Update(l_ElapsedTime);
+		m_LevelManager->Update(l_ElapsedTime);
 	}
 	if (m_ActiveConsole)
 		Consola(10, 300, 700, 70);
@@ -156,9 +137,7 @@ void CUABEngine::Init()
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
-	m_MaterialManager->Load("Data\\default_effect_materials.xml");
-	m_LayerManager->Load("Data\\layers.xml");
-	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
+	m_MaterialManager->Load("Data\\default_effect_materials.xml","");
 #ifdef _DEBUG
 	m_RenderManager->GetDebugRender()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
 #else
@@ -198,7 +177,7 @@ void CUABEngine::ReloadLUA()
 {
 	LuaIsReloaded();
 	m_ScriptManager->Destroy();
-	m_GamePlayManager->Clear();
+	//m_GamePlayManager->Clear();
 	m_ScriptManager->Initialize();
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	UtilsLog("Reloading Lua");
@@ -269,26 +248,18 @@ int CUABEngine::GetTypeParticle(CRenderableObject* _RO)
 }
 
 UAB_GET_PROPERTY_CPP(CUABEngine, CInputManager *, InputManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CStaticMeshManager *, StaticMeshManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CLayerManager *, LayerManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CMaterialManager *, MaterialManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CEffectManager *, EffectManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CTextureManager *, TextureManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CLightManager *, LightManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CRenderManager *, RenderManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CAnimatedModelsManager *, AnimatedModelsManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CScriptManager *, ScriptManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CCameraControllerManager *, CameraControllerManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CCinematicManager *, CinematicManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CPhysXManager *, PhysXManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CSceneRendererCommandManager *, SceneRendererCommandManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CBilboardManager*, BilboardManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, ISoundManager *, SoundManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CGamePlayManager *, GamePlayManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CLevelManager *, LevelManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CManchasManager *, ManchasManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CAStarManager *, AStarManager)

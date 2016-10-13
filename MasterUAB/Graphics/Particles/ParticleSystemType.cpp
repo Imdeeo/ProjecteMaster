@@ -1,9 +1,10 @@
 #include "ParticleSystemType.h"
 #include "Engine\UABEngine.h"
+#include "LevelManager\LevelManager.h"
 
-CParticleSystemType::CParticleSystemType(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode)
+CParticleSystemType::CParticleSystemType(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CNamed(TreeNode), CLevelInfo(_LevelId)
 {
-	m_Material = UABEngine.GetInstance()->GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
+	m_Material = UABEngine.GetLevelManager()->GetResource(m_Level)->GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
 	m_NumFrames = TreeNode->GetIntProperty("frames", 1);
 	m_TimePerFrame = TreeNode->GetFloatProperty("time", 1.0f);
 	m_LoopFrames = TreeNode->GetBoolProperty("loop", false);

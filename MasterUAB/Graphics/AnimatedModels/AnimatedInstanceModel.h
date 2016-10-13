@@ -28,7 +28,7 @@ private:
 	void LoadMaterials();
 
 public:
-	CAnimatedInstanceModel(tinyxml2::XMLElement* TreeNode);
+	CAnimatedInstanceModel(tinyxml2::XMLElement* TreeNode,const std::string &_LevelId);
 	virtual ~CAnimatedInstanceModel();
 	void Initialize(CAnimatedCoreModel *AnimatedCoreModel);
 	void Render(CRenderManager *RenderManager);

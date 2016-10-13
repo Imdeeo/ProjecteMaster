@@ -13,7 +13,7 @@ private:
 	int m_Light;
 	CRenderableObjectTechnique	*m_RenderableObjectTechnique;
 public:
-	CRenderDebugShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
+	CRenderDebugShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CRenderDebugShadowMapsSceneRendererCommand();
 
 	void Execute(CRenderManager &RenderManager);

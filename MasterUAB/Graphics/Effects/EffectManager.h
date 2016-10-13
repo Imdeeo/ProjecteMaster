@@ -55,7 +55,7 @@ public:
 
 	static void SetSceneConstants(CEffectTechnique* _EffectTechnique);
 	void SetLightConstants(unsigned int IdLight, CLight *Light);
-	void SetLightsConstants(unsigned int MaxLights = MAX_LIGHTS_BY_SHADER);
+	void SetLightsConstants(unsigned int MaxLights ,const std::string &_LevelId);
 
 	luabind::object GetEffectsNames(lua_State *L);
 };
