@@ -11,8 +11,8 @@
 #include "Materials/MaterialManager.h"
 #include "DebugRender.h"
 
-CLineRenderer::CLineRenderer(tinyxml2::XMLElement* TreeNode)
-	: CRenderableObject(TreeNode)
+CLineRenderer::CLineRenderer(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId)
+	: CRenderableObject(TreeNode,_LevelId)
 	, m_Size(1.0f)
 {
 	ZeroMemory(&m_LineRenderableData, MAX_LINE_LENGHT*sizeof(MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX));

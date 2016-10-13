@@ -6,17 +6,18 @@
 #include "Utils\Named.h"
 #include "Math\Quatn.h"
 #include "XML\tinyxml2.h"
+#include "Utils\LevelInfo.h"
 
 class CCamera;
 
-class CCameraController : public CNamed
+class CCameraController : public CNamed, public CLevelInfo
 {
 protected:
 	Vect3f m_Position;
 	Quatf m_Rotation;
 	float m_Fov;
 public:
-	CCameraController(tinyxml2::XMLElement* TreeNode);
+	CCameraController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CCameraController();
 	virtual void SetCamera(CCamera *Camera) const = 0;
 	virtual void AddYaw(float Radians);

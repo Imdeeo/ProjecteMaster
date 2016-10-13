@@ -8,7 +8,7 @@ class CRenderManager;
 class CPresentSceneRendererCommand : public CSceneRendererCommand
 {
 public:
-	CPresentSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
+	CPresentSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CPresentSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };

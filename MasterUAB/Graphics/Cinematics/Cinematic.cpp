@@ -1,7 +1,7 @@
 #include "Cinematic.h"
 #include "Cinematics\CinematicObject.h"
 
-CCinematic::CCinematic(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode)
+CCinematic::CCinematic(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CNamed(TreeNode), CLevelInfo(_LevelId)
 {
 	m_Playing = false;
 	m_CurrentTime = 0.0f;
@@ -14,7 +14,7 @@ CCinematic::CCinematic(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode)
 	{
 		if (l_Element->Name() == std::string("cinematic_object"))
 		{
-			AddCinematicObject(new CCinematicObject(l_Element));
+			AddCinematicObject(new CCinematicObject(l_Element, _LevelId));
 		}
 		l_Element = l_Element->NextSiblingElement();
 	}

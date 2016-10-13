@@ -11,7 +11,7 @@ CCinematicManager::~CCinematicManager()
 	Destroy();
 }
 
-void CCinematicManager::LoadXML(const std::string &FileName)
+void CCinematicManager::LoadXML(const std::string &FileName, const std::string &_LevelId)
 {
 	m_FileName = FileName;
 	tinyxml2::XMLDocument doc;
@@ -27,8 +27,8 @@ void CCinematicManager::LoadXML(const std::string &FileName)
 			l_Element = l_Element->FirstChildElement();
 			while (l_Element != NULL)
 			{
-				CCinematic* l_Cinematic = new CCinematic(l_Element);
-				AddResource(l_Cinematic->GetName(), l_Cinematic);
+				CCinematic* l_Cinematic = new CCinematic(l_Element, _LevelId);
+				AddResource(l_Cinematic->GetName(), l_Cinematic, _LevelId);
 				l_Element = l_Element->NextSiblingElement();
 			}
 		}
@@ -38,7 +38,7 @@ void CCinematicManager::LoadXML(const std::string &FileName)
 void CCinematicManager::Reload()
 {
 	Destroy();
-	LoadXML(m_FileName);
+//	LoadXML(m_FileName);
 }
 
 void CCinematicManager::Update(float _ElapsedTime)

@@ -8,8 +8,8 @@ dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateAttack.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateKill.lua")
 
 class 'CAutomatonEnemy' (CEnemy)
-	function CAutomatonEnemy:__init(_TreeNode)
-		CEnemy.__init(self,_TreeNode)
+	function CAutomatonEnemy:__init(_TreeNode,_LevelId)
+		CEnemy.__init(self,_TreeNode,_LevelId)
 		
 		--HEAD_OBJECT_BONE_ID 31
 		self.m_HeadBoneId = 31
