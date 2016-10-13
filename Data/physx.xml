@@ -15,6 +15,7 @@
 		<collision_group name="EnemyStairs"/>
 		<collision_group name="PlayerStairs"/>
 		<collision_group name="NoCollision"/>
+		<collision_group name="Disabled"/>
 	</collision_groups>
 	<groups_relations>
 		<group name="Floor">
