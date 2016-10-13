@@ -11,7 +11,7 @@ CStaticMeshManager::~CStaticMeshManager(void)
 	Destroy();
 }
 
-bool CStaticMeshManager::Load(const std::string &FileName)
+bool CStaticMeshManager::Load(const std::string &FileName, const std::string &_LevelId)
 {
 	m_Filename = FileName;
 	std::string l_MeshName;
@@ -39,12 +39,12 @@ bool CStaticMeshManager::Load(const std::string &FileName)
 					l_MeshFileName = l_ElementAux->GetPszProperty("filename", "");
 					l_PhysxMeshDirectory = l_ElementAux->GetPszProperty("physx_mesh_directory", "");
 
-					CStaticMesh *l_StaticMesh = new CStaticMesh;
+					CStaticMesh *l_StaticMesh = new CStaticMesh(_LevelId);
 					l_StaticMesh->SetName(l_MeshName);
 					l_StaticMesh->SetPhysxMeshesDirectory(l_PhysxMeshDirectory);
 					l_StaticMesh->Load(l_MeshFileName);
 
-					AddResource(l_MeshName, l_StaticMesh);
+					AddResource(l_MeshName, l_StaticMesh,_LevelId);
 				}
 				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}

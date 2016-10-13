@@ -1,9 +1,11 @@
 #include "ManchasSystemType.h"
 #include "Engine\UABEngine.h"
 
-CManchasSystemType::CManchasSystemType(tinyxml2::XMLElement* TreeNode) : CNamed(TreeNode)
+#include "LevelManager\LevelManager.h"
+
+CManchasSystemType::CManchasSystemType(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CNamed(TreeNode), CLevelInfo(_LevelId)
 {
-	m_Material = UABEngine.GetInstance()->GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
+	m_Material = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
 	m_Frames = TreeNode->GetIntProperty("frames", 1);
 	m_Size = TreeNode->GetVect2fProperty("size", Vect2f(0.0, 0.0));
 	m_SizeSpeed = TreeNode->GetVect2fProperty("size_speed", Vect2f(0.0, 0.0));

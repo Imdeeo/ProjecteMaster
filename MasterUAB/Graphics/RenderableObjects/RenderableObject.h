@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "Utils\LevelInfo.h"
+
 #include "Utils\Named.h"
 #include "3DElement\3DElement.h"
 #include "XML\tinyxml2.h"
@@ -10,7 +12,7 @@
 class CUABComponentManager;
 class CRenderManager;
 
-class CRenderableObject : public C3DElement, public CNamed
+class CRenderableObject : public C3DElement, public CNamed, public CLevelInfo
 {
 public:
 	enum TRenderableObjectType
@@ -23,7 +25,7 @@ private:
 	bool m_DebugRender;
 public:
 	CRenderableObject();
-	CRenderableObject(tinyxml2::XMLElement* TreeNode);
+	CRenderableObject(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CRenderableObject();
 	virtual void Save(FILE* _File, std::string _layer){}
 	virtual void Update(float ElapsedTime){};

@@ -7,15 +7,16 @@
 #include "CinematicPlayer.h"
 #include "Utils.h"
 #include "XML\tinyxml2.h"
+#include "Utils\LevelInfo.h"
 
 class CCinematicObject;
 
-class CCinematic : public CCinematicPlayer, public CNamed
+class CCinematic : public CCinematicPlayer, public CNamed, public CLevelInfo
 {
 protected:
 	std::vector<CCinematicObject *> m_CinematicObjects;
 public:
-	CCinematic(tinyxml2::XMLElement* TreeNode);
+	CCinematic(tinyxml2::XMLElement* TreeNode,const std::string &_LevelId);
 	virtual ~CCinematic();
 	void AddCinematicObject(CCinematicObject *CinematicObject);
 	void Update(float _ElapsedTime);

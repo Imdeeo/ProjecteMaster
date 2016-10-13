@@ -5,10 +5,10 @@
 
 #include "Utils.h"
 
-CLightsSceneRendererCommand::CLightsSceneRendererCommand(tinyxml2::XMLElement* TreeNode) :CSceneRendererCommand(TreeNode){}
+CLightsSceneRendererCommand::CLightsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CSceneRendererCommand(TreeNode,_LevelId){}
 
 void CLightsSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 {
-	UABEngine.GetEffectManager()->SetLightsConstants(MAX_LIGHTS_BY_SHADER);
+	UABEngine.GetEffectManager()->SetLightsConstants(MAX_LIGHTS_BY_SHADER,m_LevelId);
 
 }

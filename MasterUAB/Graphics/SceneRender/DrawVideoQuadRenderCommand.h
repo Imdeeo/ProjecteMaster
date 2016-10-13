@@ -13,7 +13,7 @@ private:
 	CRenderableObjectTechnique* m_RenderableObjectTechnique;
 	CDynamicTexture *m_Texture;
 public:
-	CDrawVideoQuadRendererCommand(tinyxml2::XMLElement* TreeNode);
+	CDrawVideoQuadRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CDrawVideoQuadRendererCommand(void);
 
 	void Execute(CRenderManager &RenderManager);
