@@ -88,6 +88,7 @@ function R2Artifact(_Player, _Pos)
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
+		_Player.m_PhysXManager:disable_trigger("TriggerArtifact")
 	end
 end
 
@@ -147,6 +148,8 @@ function R2Book(_Player, _Pos)
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
+		g_Engine:get_video_manager():play_clip("bunny.ogv") -- launch projector video
+		-- launch cinematic, activate lights and particles
+		_Player.m_PhysXManager:disable_trigger("TriggerBook")
 	end
-	-- activate projector -> launch cinematic, activate lights and particles
 end
