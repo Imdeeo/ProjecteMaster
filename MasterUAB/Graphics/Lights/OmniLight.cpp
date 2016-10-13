@@ -12,14 +12,14 @@
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
 
-COmniLight::COmniLight():CLight(){}
+COmniLight::COmniLight(const std::string &_LevelId) :CLight(_LevelId){}
 
-COmniLight::COmniLight(std::string _name) : CLight(_name)
+COmniLight::COmniLight(std::string _name, const std::string &_LevelId) : CLight(_name,_LevelId)
 {
 	m_Type = GetLightTypeByName("omni");
 }
 
-COmniLight::COmniLight(tinyxml2::XMLElement* TreeNode) : CLight(TreeNode){}
+COmniLight::COmniLight(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CLight(TreeNode,_LevelId){}
 
 void COmniLight::SetShadowMap(CRenderManager &RenderManager)
 {

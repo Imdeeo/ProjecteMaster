@@ -3,8 +3,8 @@ dofile("Data\\Lua\\Enemies\\CagedEnemy\\CagedAutomatonStateIdle.lua")
 dofile("Data\\Lua\\Enemies\\CagedEnemy\\CagedAutomatonStateAttack.lua")
 
 class 'CCagedAutomatonEnemy' (CEnemy)
-	function CCagedAutomatonEnemy:__init(_TreeNode)
-		CEnemy.__init(self,_TreeNode)
+	function CCagedAutomatonEnemy:__init(_TreeNode,_LevelId)
+		CEnemy.__init(self,_TreeNode,_LevelId)
 		self.m_Break = _TreeNode:get_bool_property("break", false)
 		self.m_AngularSpeed = _TreeNode:get_float_property("angular_speed", 1000.0)
 		self.m_TimerRotation = 0.0

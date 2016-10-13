@@ -4,8 +4,8 @@ dofile("Data\\Lua\\Enemies\\TurretEnemy\\TurretStateAttack.lua")
 dofile("Data\\Lua\\Enemies\\TurretEnemy\\TurretStateKill.lua")
 
 class 'CTurretEnemy' (CEnemy)
-	function CTurretEnemy:__init(_TreeNode)
-		CEnemy.__init(self,_TreeNode)
+	function CTurretEnemy:__init(_TreeNode,_LevelId)
+		CEnemy.__init(self,_TreeNode,_LevelId)
 		
 		--HEAD_OBJECT_BONE_ID 23
 		self.m_HeadBoneId = 23

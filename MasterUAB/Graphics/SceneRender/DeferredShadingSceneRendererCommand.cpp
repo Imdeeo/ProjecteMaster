@@ -6,11 +6,13 @@
 #include "Lights\LightManager.h"
 #include "Effects\EffectManager.h"
 
+#include "LevelManager\LevelManager.h"
+
 #include "RenderableObjects\RenderableObjectTechnique.h"
 
 #include <d3d11.h>
 
-CDeferredShadingSceneRendererCommand::CDeferredShadingSceneRendererCommand(tinyxml2::XMLElement* TreeNode) :CStagedTexturedSceneRendererCommand(TreeNode)
+CDeferredShadingSceneRendererCommand::CDeferredShadingSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CStagedTexturedSceneRendererCommand(TreeNode,_LevelId)
 {
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("MV_POSITION4_NORMAL_TEXTURE_VERTEX");
 }
@@ -33,9 +35,9 @@ void CDeferredShadingSceneRendererCommand::Execute(CRenderManager &_RenderManage
 
 	int count = 0;
 
-	for (size_t j = 0; j < UABEngine.GetLightManager()->GetResourcesVector().size(); ++j)
+	for (size_t j = 0; j < UABEngine.GetLevelManager()->GetResource(m_LevelId)->GetLightManager()->GetResourcesVector().size(); ++j)
 	{
-		CLight *l_Light = UABEngine.GetLightManager()->GetResourceById(j);
+		CLight *l_Light = UABEngine.GetLevelManager()->GetResource(m_LevelId)->GetLightManager()->GetResourceById(j);
 		if (!l_Light->GetEnabled() || !l_Light->GetInsideFrustum()) {
 			continue;
 		}

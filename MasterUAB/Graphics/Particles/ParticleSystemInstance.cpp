@@ -13,11 +13,13 @@
 #include "Math\MathUtils.h"
 #include "Camera\Frustum.h"
 
-CParticleSystemInstance::CParticleSystemInstance(tinyxml2::XMLElement* TreeNode) :
-	CRenderableObject(TreeNode)
+#include "LevelManager\LevelManager.h"
+
+CParticleSystemInstance::CParticleSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :
+	CRenderableObject(TreeNode,_LevelId)
 {
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
-	m_Type = UABEngine.GetInstance()->GetParticleManager()->GetResource(TreeNode->GetPszProperty("type"));
+	m_Type = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetParticleManager()->GetResource(TreeNode->GetPszProperty("type"));
 	m_NextParticleEmission = TreeNode->GetFloatProperty("next_particle_emission", 1.0f);
 	m_Start = TreeNode->GetBoolProperty("start", true);
 	m_Awake = TreeNode->GetBoolProperty("awake", false);

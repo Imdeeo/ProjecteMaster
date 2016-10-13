@@ -125,7 +125,7 @@ bool CGUIManager::Load(std::string _FileName)
 				{
 					if (l_ElementAux->Name() == std::string("material"))
 					{
-						m_Materials.push_back(new CMaterial(l_ElementAux));
+						m_Materials.push_back(new CMaterial(l_ElementAux,"GUI"));
 						m_VertexBuffers.push_back(new CUABTrianglesListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(m_CurrentBufferData, MAX_VERTICES_PER_CALL, MAX_VERTICES_PER_CALL / 3, true));
 					}
 					else if (l_ElementAux->Name() == std::string("sprite"))

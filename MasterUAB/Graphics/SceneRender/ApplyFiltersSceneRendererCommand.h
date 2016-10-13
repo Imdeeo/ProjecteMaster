@@ -8,7 +8,7 @@ class CRenderManager;
 class CApplyFiltersSceneRendererCommand : public CStagedTexturedSceneRendererCommand
 {
 public:
-	CApplyFiltersSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
+	CApplyFiltersSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CApplyFiltersSceneRendererCommand(){}
 	virtual void Execute(CRenderManager &RenderManager);
 };

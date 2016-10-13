@@ -9,7 +9,7 @@
 
 class CRenderManager;
 
-class CLightManager : public CTemplatedVectorMapManager<CLight>
+class CLightManager : public CTemplatedLevelVectorMapManager<CLight>
 {
 private:
 	std::string	m_FileName;
@@ -19,8 +19,8 @@ private:
 public:
 	CLightManager();
 	virtual ~CLightManager();
-	bool Load(const std::string &FileName);
-	bool CreateNewLight(std::string _name, std::string _type);
+	bool Load(const std::string &FileName, const std::string &_LevelId);
+	bool CreateNewLight(std::string _name, std::string _type, const std::string &_LevelId);
 
 	bool RenderAux(CRenderManager *RenderManager);
 	bool Render(CRenderManager *RenderManager);

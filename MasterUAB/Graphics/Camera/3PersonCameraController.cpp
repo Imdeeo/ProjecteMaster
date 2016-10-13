@@ -8,17 +8,18 @@
 #include "InputManager\InputManager.h"
 
 #include "Layers\LayerManager.h"
+#include "LevelManager\LevelManager.h"
 
 
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-C3PersonCameraController::C3PersonCameraController(tinyxml2::XMLElement* TreeNode) : CCameraController(TreeNode)
+C3PersonCameraController::C3PersonCameraController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CCameraController(TreeNode,_LevelId)
 , m_YawSpeed(5.f)
 , m_PitchSpeed(10.f)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
-, m_Target(UABEngine.GetLayerManager()->GetResource(TreeNode->GetPszProperty("layer"))->GetResource(TreeNode->GetPszProperty("target")))
+, m_Target(UABEngine.GetLevelManager()->GetResource(_LevelId)->GetLayerManager()->GetResource(TreeNode->GetPszProperty("layer"))->GetResource(TreeNode->GetPszProperty("target")))
 , m_PositionOffset(Vect3f(.0f, TreeNode->GetFloatProperty("position_offset", .0f), .0f))
 , m_RotationOffset(TreeNode->GetVect3fProperty("rotation_offset", Vect3f(.0f, .0f, .0f)))
 {
