@@ -35,21 +35,21 @@ CDirectionalLight::CDirectionalLight(tinyxml2::XMLElement* TreeNode, const std::
 	}
 }
 
-#ifdef _DEBUG
 void CDirectionalLight::Render(CRenderManager *RenderManager)
 {
-	if (m_Enabled)
-	{
-		CLight::Render(RenderManager);
-		CRenderableVertexs* l_Line = RenderManager->GetDebugRender()->GetLine(m_Position, m_Position + (GetDirection() * GetEndRangeAttenuation()));
-		RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
-		CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
-		CEffectManager::SetSceneConstants(l_EffectTechnique);
-		l_Line->RenderIndexed(RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
-		delete l_Line;
-	}
+	#ifdef _DEBUG
+		if (m_Enabled)
+		{
+			CLight::Render(RenderManager);
+			CRenderableVertexs* l_Line = RenderManager->GetDebugRender()->GetLine(m_Position, m_Position + (GetDirection() * GetEndRangeAttenuation()));
+			RenderManager->GetContextManager()->SetWorldMatrix(GetTransform());
+			CEffectTechnique* l_EffectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_lights")->GetEffectTechnique();
+			CEffectManager::SetSceneConstants(l_EffectTechnique);
+			l_Line->RenderIndexed(RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
+			delete l_Line;
+		}
+	#endif
 }
-#endif
 
 const Mat44f & CDirectionalLight::GetTransform()
 {

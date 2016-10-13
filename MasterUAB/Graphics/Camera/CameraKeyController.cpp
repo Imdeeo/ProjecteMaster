@@ -6,6 +6,7 @@
 #include "Utils.h"
 #include <sstream>
 #include "CameraControllerManager.h"
+#include "InputManager\InputManager.h"
 #include "Math\Quatn.h"
 
 CCameraKeyController::CCameraKeyController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CCameraController(TreeNode,_LevelId)
@@ -21,7 +22,7 @@ CCameraKeyController::CCameraKeyController(tinyxml2::XMLElement* TreeNode, const
 
 	m_Reverse = TreeNode->GetBoolProperty("reverse");
 	m_ReverseDirection = 1;
-	m_Cycle = !m_Reverse;//*XMLTreeNode.GetPszProperty("cycle");
+	m_Cycle = /*!m_Reverse;//*/TreeNode->GetBoolProperty("cycle");
 }
 
 CCameraKeyController::~CCameraKeyController()
@@ -125,6 +126,15 @@ void CCameraKeyController::Update(float ElapsedTime)
 {
 	SetCurrentTime(m_CurrentTime + ElapsedTime);
 	GetCurrentKey();
+
+	if ((m_CurrentKey + 1) >= m_Keys.size() && !IsCycle() && !IsReverse())
+	{
+		m_Position = m_Keys[m_CurrentKey]->GetCameraInfo()->GetEye();
+		m_Position = m_RotationOffset*(m_Position - m_PositionOffsetKey) + m_PositionOffset;
+		m_Fov = m_Keys[m_CurrentKey]->GetCameraInfo()->GetFOV();
+		return;
+	}
+		
 	
 	float l_CurrentTime;
 
@@ -267,4 +277,21 @@ CCameraInfo* CCameraKeyController::GetLastKey()
 CCameraInfo CCameraKeyController::GetCameraAsInfo()
 {
 	return CCameraInfo(m_Position, m_LookAt, m_Up, m_Fov);
+}
+
+void CCameraKeyController::ForceUpdateYaw(float _ElapsedTime)
+{
+	CInputManager* l_InputManager = UABEngine.GetInputManager();
+	float l_Radians = l_InputManager->GetAxisX()*_ElapsedTime;
+	Vect3f l_ASD = m_Rotation.EulerFromQuat();
+	float l_Yaw = m_Rotation.EulerFromQuat().z;
+	//				15						165										-15					-165
+	if (((l_Yaw < 0.261799f || l_Yaw > 2.87979f) && l_Radians < .0f) || ((l_Yaw > -0.261799f || l_Yaw < -2.87979f) && l_Radians > .0f))
+	{
+		Quatf l_YawRotation = Quatf(0, 0, 0, 1);
+		l_YawRotation.SetFromScaledAxis(Vect3f(0, l_Radians, 0));
+		m_Rotation = m_Rotation*l_YawRotation;
+		l_InputManager->UpdateAxis(0, 0);
+		m_LookAt = m_Position + GetForward();
+	}
 }

@@ -38,6 +38,7 @@ CRenderManager::CRenderManager()
 	m_DepthStencilView(nullptr)	*/
 {
 	m_LastFPSMeasurementTime = (float)timeGetTime();
+
 }
 
 CRenderManager::~CRenderManager()
@@ -237,6 +238,8 @@ CContextManager* CRenderManager::GetContextManager()const
 void CRenderManager::SetContextManager(CContextManager* _ContextManager)
 {
 	m_ContextManager = _ContextManager;
+	m_ContextManager->GetDeviceContext()->RSSetState(m_ContextManager->GetRasterizerState(CContextManager::RS_SOLID_BACK_CULL));
+	//m_ContextManager->GetDeviceContext()->OMSetBlendState(NULL, NULL, 0xffffffff);
 }
 
 ID3D11Device* CRenderManager::GetDevice()

@@ -35,9 +35,9 @@ protected:
 	CTexture *m_ShadowMaskTexture;
 	std::vector<CRenderableObjectsManager *> m_Layers;
 
-#ifdef _DEBUG
+
 	virtual CRenderableVertexs* GetShape(CRenderManager *_RenderManager);
-#endif
+
 
 	float m_Intensity;
 	float m_StartRangeAttenuation;

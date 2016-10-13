@@ -354,7 +354,7 @@
 		<node name="node16" wait="false"/>
 		<node name="node17" wait="false"/>
 		<node name="node18" wait="false"/>
-		<node name="node18" wait="false"/>
+		<node name="node19" wait="false"/>
 		<node name="node20" wait="false"/>
 		<node name="node21" wait="false"/>
 		<node name="node12" wait="true" time_to_wait="2.0f"/>

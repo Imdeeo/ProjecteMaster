@@ -24,6 +24,8 @@ class CLevelManager;
 class CColor;
 class CBilboardManager;
 class CRenderableObject;
+class CEffectTechnique;
+class CLoadScreenManager;
 
 #include <string>
 
@@ -54,6 +56,11 @@ private:
 	ISoundManager* m_SoundManager;
 	IVideoManager* m_VideoManager;
 	CLevelManager* m_LevelManager;
+<<<<<<< HEAD
+=======
+	CManchasManager* m_ManchasManager;
+	CLoadScreenManager* m_LoadScreenManager;
+>>>>>>> develop
 	std::string m_LevelLoaded;
 	int m_CurrentCamera_vision;
 	bool m_ActiveConsole;
@@ -78,7 +85,6 @@ public:
 	static CUABEngine * GetInstance();
 	virtual ~CUABEngine(void);
 	void Destroy();
-	void LoadScreen(const std::string _FileName);
 	void Init();
 	void Update(float _ElapsedTime);
 	void SwitchCamera();

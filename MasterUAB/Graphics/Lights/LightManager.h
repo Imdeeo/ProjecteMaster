@@ -22,9 +22,8 @@ public:
 	bool Load(const std::string &FileName, const std::string &_LevelId);
 	bool CreateNewLight(std::string _name, std::string _type, const std::string &_LevelId);
 
-#ifdef _DEBUG
+	bool RenderAux(CRenderManager *RenderManager);
 	bool Render(CRenderManager *RenderManager);
-#endif
 
 	bool Reload();
 	Vect4f GetAmbientLight(){ return m_AmbientLight; }	

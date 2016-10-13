@@ -54,10 +54,10 @@ float4 mainPS(PS_INPUT IN) : SV_Target
 	float4 l_NormalMap = T2Texture.Sample(S2Sampler, IN.UV);
 	float3 Nn=Texture2Normal(l_NormalMap.xyz);
 	float4 l_albedo = T0Texture.Sample(S0Sampler, IN.UV);
-	float l_SpecularFactor = l_albedo.w;
+	float l_SpecularPower = l_albedo.w*100;
 	float4 lightmap = T1Texture.Sample(S1Sampler, IN.UV);
+	float l_SpecularFactor = lightmap.w;
 	float4 l_SpecularMap = T4Texture.Sample(S4Sampler, IN.UV);
-	float l_SpecularPower = lightmap.w*100;
 	// PBR: interpret the specularPower/glossiness scale as logarithmic (an arbitrary choice)
 	l_SpecularPower = (pow(MAX_SPECULAR_POWER/MIN_SPECULAR_POWER, l_SpecularPower/100) * MIN_SPECULAR_POWER);
 	float4 l_Out = applyLights(l_WorldPosition, Nn, l_albedo, 0, l_SpecularPower, l_SpecularFactor, l_SpecularMap.a, l_SpecularMap.rgb);
