@@ -2,6 +2,7 @@
 #include "StaticMesh\InstanceMesh.h"
 #include "AnimatedModels\AnimatedInstanceModel.h"
 #include "Particles\ParticleSystemInstance.h"
+#include "Bilboards\BilboardSystemInstance.h"
 #include "Manchas\ManchasSystemInstance.h"
 #include "LineRenderer\LineRenderer.h"
 
@@ -81,6 +82,15 @@ CRenderableObject * CRenderableObjectsManager::AddParticleSystemInstance(tinyxml
 	CParticleSystemInstance* l_ParticleSystemInstance = new CParticleSystemInstance(TreeNode);
 	if (AddResource(l_ParticleSystemInstance->GetName(), l_ParticleSystemInstance))
 		return l_ParticleSystemInstance;
+	else
+		return nullptr;
+}
+
+CRenderableObject * CRenderableObjectsManager::AddBilboardSystemInstance(tinyxml2::XMLElement* TreeNode)
+{
+	CBilboardSystemInstance * l_BilboardSystemInstance = new CBilboardSystemInstance(TreeNode);
+	if (AddResource(l_BilboardSystemInstance->GetName(), l_BilboardSystemInstance))
+		return l_BilboardSystemInstance;
 	else
 		return nullptr;
 }

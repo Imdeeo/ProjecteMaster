@@ -61,7 +61,6 @@ dofile("Data\\Lua\\Player\\PlayerStatePuzzle.lua")
 
 class 'CPlayer' (CLUAComponent)
 	function CPlayer:__init(_TreeNode)
-		self.m_AlreadyInitialized = false
 		local UABEngine = CUABEngine.get_instance()
 		self.m_Name = _TreeNode:get_psz_property("name", "")
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "")
@@ -133,17 +132,13 @@ class 'CPlayer' (CLUAComponent)
 		end
 		
 		self.m_SoundManager = UABEngine:get_sound_manager()
-		if self.m_AlreadyInitialized then
-			-- unregister old speaker before assigning new renderable object
-			self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
-		end
+		-- unregister old speaker before assigning new renderable object
+		--self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
 		
 		self.m_CinematicManager = UABEngine:get_cinematic_manager()
 		self.m_InputManager = UABEngine:get_input_manager()
 		self.m_PhysXManager = UABEngine:get_physX_manager()
-		if(not UABEngine:get_lua_reloaded())then
-			self.m_SoundManager:register_speaker(self.m_RenderableObject)
-		end
+		self.m_SoundManager:register_speaker(self.m_RenderableObject)
 		
 		self.m_JumpSoundEvent = SoundEvent()
 		self.m_JumpSoundEvent.event_name = "Jump"
@@ -205,19 +200,14 @@ class 'CPlayer' (CLUAComponent)
 				l_Aend = l_Aend:get_next()
 			end
 		else
-			utils_log("Animation ends xml not correctly loaded.")
+			--utils_log("Animation ends xml not correctly loaded.")
 		end
 		
 		self.m_StateMachine = StateMachine.create()
 		self:SetPlayerStateMachine()
 		self.m_StateMachine:start()
 		
-		if(not UABEngine:get_lua_reloaded())then
-			self.m_PhysXManager:register_material("controllerMaterial", 0.5, 0.5, 0.3)
-			self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 90, self.m_RenderableObject:get_position(),"FisicasAux", "Player")
-		end
-
-		self.m_AlreadyInitialized = true
+		self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 90, self.m_RenderableObject:get_position(),"FisicasAux", "Player")
 	end
 
 	function CPlayer:SetSanity(_amount, _override)
@@ -233,6 +223,13 @@ class 'CPlayer' (CLUAComponent)
 	
 	function CPlayer:ModifySanity(_amount)
 		self.m_Sanity = math.max(math.min(self.m_Sanity + _amount, self.m_MaxSanity),0)
+		
+		if self.m_Sanity <= 0 then
+			utils_log("ESTAS MUERTO!!!")
+			g_Engine:set_pause(true)
+			m_retry = true
+			m_menu = true
+		end
 	end
 	
 	function CPlayer:UpdateSanityEffects(_ElapsedTime)
@@ -407,6 +404,7 @@ class 'CPlayer' (CLUAComponent)
 		JumpingState:set_do_first_function(JumpingFirst)
 		JumpingState:set_do_end_function(JumpingEnd)
 		JumpingState:add_condition(ANYToFallingCondition, "Falling")
+		JumpingState:add_condition(JumpToIdleCondition, "Idle")
 		JumpingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		FallingState = State.create(FallingUpdate)

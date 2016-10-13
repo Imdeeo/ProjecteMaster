@@ -1,9 +1,6 @@
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
-#include "XML\tinyxml2.h"
-
 #include "Utils.h"
-
 #include "InputManager\InputManager.h"
 #include "Effects\EffectManager.h"
 #include "Materials\MaterialManager.h"
@@ -21,6 +18,7 @@
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "SceneRender\SceneRendererCommandManager.h"
 #include "Particles\ParticleManager.h"
+#include "Bilboards\BilboardManager.h"
 #include "GUIManager.h"
 #include "GUIPosition.h"
 #include "SoundManager\SoundManager.h"
@@ -33,11 +31,14 @@
 #include "RenderableObjects\RenderableVertexs.h"
 #include "IA\AStarManager.h"
 #include "Math\Color.h"
+#include "LoadScreen\LoadScreenManager.h"
 #ifdef _DEBUG
 #include "DebugRender.h"
 #else
 #include "RenderHelper\RenderHelper.h"
 #endif
+
+#include <thread>
 
 CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1.0f)
 {
@@ -50,6 +51,7 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 	m_TextureManager = new CTextureManager();
 	m_RenderManager = new CRenderManager();
 	m_ParticleManager = new CParticleManager();
+	m_BilboardManager = new CBilboardManager();
 	m_StaticMeshManager = new CStaticMeshManager();
 	m_LightManager = new CLightManager();
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
@@ -86,6 +88,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_LayerManager);
 	CHECKED_DELETE(m_RenderManager);
 	CHECKED_DELETE(m_ParticleManager);
+	CHECKED_DELETE(m_BilboardManager);
 	CHECKED_DELETE(m_MaterialManager);
 	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
 	CHECKED_DELETE(m_EffectManager);
@@ -109,6 +112,8 @@ CUABEngine* CUABEngine::GetInstance()
 	{
 		m_Instance = new  CUABEngine();
 	}
+	//DWORD dwWidth = GetSystemMetrics(SM_CXSCREEN);
+	//DWORD dwHeight = GetSystemMetrics(SM_CYSCREEN);
 	return m_Instance;
 }
 
@@ -131,53 +136,17 @@ void CUABEngine::Update(float _ElapsedTime)
 	m_VideoManager->Update(l_ElapsedTime);
 	const CCamera *l_CurrentCamera = m_RenderManager->GetCurrentCamera();
 	//GetSoundManager()->Update(l_CurrentCamera);
-	m_ScriptManager->RunCode("luaGui()");
-}
-
-void CUABEngine::LoadScreen(const std::string _FileName)
-{
-	std::string l_EffectName;
-	CEffectVertexShader* l_EffectVertexShader;
-	CEffectPixelShader* l_EffectPixelShader;
-	CEffectTechnique* l_EffectTechnique;
-	
-	tinyxml2::XMLDocument doc;
-	doc.LoadFile(_FileName.c_str());
-
-	tinyxml2::XMLElement* titleElement;
-	
-	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("vertex_shader");
-	l_EffectVertexShader = new CEffectVertexShader(titleElement);
-	l_EffectVertexShader->Load();
-
-	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("pixel_shader");
-	l_EffectPixelShader = new CEffectPixelShader(titleElement);
-	l_EffectPixelShader->Load();
-
-	titleElement = doc.FirstChildElement("load_screen")->FirstChildElement("effect_technique");
-	l_EffectName = titleElement->Attribute("name");
-	l_EffectTechnique = new CEffectTechnique(l_EffectVertexShader, l_EffectPixelShader, nullptr, l_EffectName);
-	
-	//RENDER DEL LOADSCREEN
-	CTexture* l_Texture = new CTexture();
-	l_Texture->Load("Data\\GUI\\textures\\Carga.png");
-	CContextManager* l_ContextManager = m_RenderManager->GetContextManager();
-			
-	l_ContextManager->BeginRender();			
-	m_RenderManager->SetMatrixViewProjection();
-	m_RenderManager->Clear(true, true);
-	m_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
-	CEffectManager::SetSceneConstants(l_EffectTechnique);
-	m_RenderManager->DrawScreenQuad(l_EffectTechnique, l_Texture, 0, 0, 1, 1, CColor(1.f, 1.f, 1.f, 1.f));
-	l_ContextManager->EndRender();
+	m_ScriptManager->RunCode("luaGui(" + std::to_string(l_ElapsedTime) + ")");
 }
 
 void CUABEngine::Init()
 {	
 	m_RenderManager->Init();
+
+	std::thread t(&CLoadScreenManager::Load, CLoadScreenManager("Data\\load_screen.xml"));	
+
 	m_SoundManager->SetPath("Data\\Sounds\\");
 	m_SoundManager->Init();
-	LoadScreen("Data\\effects.xml");	
 	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
 	m_InputManager->Load("Data\\input.xml");
 	m_LevelManager->LoadFile("Data\\level.xml");
@@ -185,7 +154,6 @@ void CUABEngine::Init()
 	m_EffectManager->Load("Data\\effects.xml");
 	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
-	//m_LevelManager->LoadLevel("Biblioteca");
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
 	m_MaterialManager->Load("Data\\default_effect_materials.xml");
@@ -198,40 +166,8 @@ void CUABEngine::Init()
 #endif
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	UABEngine.GetScriptManager()->RunCode("mainLua()");
-	//m_LevelManager->ReloadAllLua();
-	// INICIO TIEMPO TEST LECTURA XML
-	//float l_StartTime = (float)timeGetTime();
-	/*LoadLevelXML("Data\\level.xml");
-	m_InputManager->Load("Data\\input.xml");
-	m_PhysXManager->LoadPhysx("Data\\physx.xml");
-	m_EffectManager->Load("Data\\effects.xml");
-	m_RenderableObjectTechniqueManager->Load("Data\\renderable_objects_techniques.xml");
-	m_MaterialManager->Load("Data\\level_" + m_LevelLoaded + "\\materials.xml", "Data\\default_effect_materials.xml");
-	m_ParticleManager->Load("Data\\level_" + m_LevelLoaded + "\\particles.xml");
-	m_ManchasManager->Load("Data\\level_" + m_LevelLoaded + "\\cordura.xml");
-	m_StaticMeshManager->Load("Data\\level_" + m_LevelLoaded + "\\static_meshes.xml");
-	m_AnimatedModelsManager->Load("Data\\animated_models.xml");	
-	m_LayerManager->Load("Data\\level_" + m_LevelLoaded + "\\renderable_objects.xml");	
-	m_LightManager->Load("Data\\level_"+m_LevelLoaded+"\\lights.xml");	
-	m_CinematicManager->LoadXML("Data\\level_" + m_LevelLoaded + "\\cinematic.xml");
-	m_LayerManager->GetLayer()->AddResource("Cinematic", m_CinematicManager);
-	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
-	m_ScriptManager->Initialize();
-	m_CameraControllerManager->Load("Data\\level_"+m_LevelLoaded+"\\cameras.xml");
-	m_SceneRendererCommandManager->Load("Data\\scene_renderer_commands.xml");
-	m_RenderManager->Init();
-	m_SoundManager->SetPath("Data\\Sounds\\");
-	m_SoundManager->Init();
-	m_SoundManager->Load("soundbanks.xml", "speakers.xml");
-	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
-	m_ScriptManager->RunCode("mainLua(\""+m_LevelLoaded+"\")");*/
-	// TEST LECTURA XML
-	/*float l_EndTime = (float)timeGetTime();
-	float l_LoadTimer = l_EndTime - l_StartTime;
-	std::ostringstream ss;
-	ss << l_LoadTimer;
-	std::string s(ss.str());
-	CDebugHelper::GetDebugHelper()->Log(s);*/
+	
+	t.join();
 }
 
 void CUABEngine::Destroy()
@@ -321,6 +257,16 @@ CColor CUABEngine::GetRandomValue(CColor min, CColor max)
 	return value;
 }
 
+int CUABEngine::GetTypeParticle(CRenderableObject* _RO)
+{
+	std::string l_type = _RO->GetTipo();
+	if (l_type == "ParticleInstance")
+	{
+		return 0;
+	}
+	return 1;
+}
+
 UAB_GET_PROPERTY_CPP(CUABEngine, CInputManager *, InputManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CStaticMeshManager *, StaticMeshManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CLayerManager *, LayerManager)
@@ -337,6 +283,7 @@ UAB_GET_PROPERTY_CPP(CUABEngine, CPhysXManager *, PhysXManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CSceneRendererCommandManager *, SceneRendererCommandManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CParticleManager*, ParticleManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CBilboardManager*, BilboardManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, ISoundManager *, SoundManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)

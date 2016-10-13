@@ -38,9 +38,8 @@ class 'CEnemy' (CLUAComponent)
 		end
 		
 		self.m_StateMachine = StateMachine.create()
-		if (not UABEngine:get_lua_reloaded()) then
-			self.m_PhysXManager:create_character_controller(self.m_Name, g_EnemyHeight, g_EnemyRadius, 0.5, self.m_RenderableObject:get_position(),"controllerMaterial", "Enemy")
-		end
+		
+		self.m_PhysXManager:create_character_controller(self.m_Name, g_EnemyHeight, g_EnemyRadius, 0.5, self.m_RenderableObject:get_position(),"FisicasAux", "Enemy")
 	end
 	
 	function CEnemy:Update(_ElapsedTime)
@@ -50,15 +49,17 @@ class 'CEnemy' (CLUAComponent)
 	function CEnemy:PlayerVisible(_Owner)
 		local l_OwnerHeadPos = _Owner:get_position() + self.m_HeadOffset
 		local l_PlayerPos = self.m_PhysXManager:get_character_controler_pos("player")
+		--l_AuxPos = Vect3f(l_PlayerPos.x, l_PlayerPos.y - g_StandingOffset, l_PlayerPos.z)
+		l_AuxPos = Vect3f(l_PlayerPos.x, l_PlayerPos.y, l_PlayerPos.z)
 		
 		-- not visible if too far
-		local l_Dist = l_PlayerPos:distance(l_OwnerHeadPos)
+		local l_Dist = l_AuxPos:distance(l_OwnerHeadPos)
 		if l_Dist > self.m_MaxDistance then
 			return false
 		end
 
 		-- not visible if out of angle
-		local l_PlayerDirection = l_PlayerPos - l_OwnerHeadPos
+		local l_PlayerDirection = l_AuxPos - l_OwnerHeadPos
 		l_PlayerDirection:normalize(1.0)
 		local l_Forward = _Owner:get_rotation():get_forward_vector()
 		local l_Dot = l_Forward * l_PlayerDirection
@@ -70,7 +71,7 @@ class 'CEnemy' (CLUAComponent)
 		-- TODO: some raycasts from enemy's head to different parts of player
 		local l_RaycastData = RaycastData()
 		local l_Hit = self.m_PhysXManager:raycast(
-			l_OwnerHeadPos, l_PlayerPos,
+			l_OwnerHeadPos, l_AuxPos,
 			self.m_PhysXGroups, l_RaycastData
 		)
 		
@@ -192,5 +193,16 @@ class 'CEnemy' (CLUAComponent)
 		l_HeadPos.x = l_HeadPos.x * -1
 		local l_Aux = (l_EnemyPos + l_HeadPos) / 2
 		l_Particle:set_position(l_Aux)
+	end
+	
+	function CEnemy:CheckPlayerDistance(_DesiredDistance)
+		local l_PlayerPos = g_Player.m_RenderableObject:get_position()
+		local l_Distance = l_PlayerPos:distance(self.m_RenderableObject:get_position())
+		
+		if l_Distance <= _DesiredDistance then
+			return true
+		else
+			return false
+		end
 	end
 --end

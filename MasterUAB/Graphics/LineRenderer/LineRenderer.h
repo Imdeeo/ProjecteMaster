@@ -45,6 +45,7 @@ public:
 	void Save(FILE* _File);
 	virtual void Update(float ElapsedTime);
 	virtual void Render(CRenderManager *RM);
+	std::string GetTipo(){ return "LineRendererInstance"; };
 
 	//UAB
 	/*pos inicial

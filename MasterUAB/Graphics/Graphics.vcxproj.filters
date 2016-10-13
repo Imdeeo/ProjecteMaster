@@ -251,6 +251,18 @@
     <ClCompile Include="LineRenderer\LineRenderer.cpp">
       <Filter>LineRenderer</Filter>
     </ClCompile>
+    <ClCompile Include="Bilboards\BilboardManager.cpp">
+      <Filter>Bilboards</Filter>
+    </ClCompile>
+    <ClCompile Include="Bilboards\BilboardSystemInstance.cpp">
+      <Filter>Bilboards</Filter>
+    </ClCompile>
+    <ClCompile Include="Bilboards\BilboardSystemType.cpp">
+      <Filter>Bilboards</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadScreen\LoadScreenManager.cpp">
+      <Filter>LoadScreen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -303,6 +315,12 @@
     </Filter>
     <Filter Include="LineRenderer">
       <UniqueIdentifier>{b3ea894c-c212-46a0-83b5-b827f936fab8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bilboards">
+      <UniqueIdentifier>{6297f210-528d-41e0-b33d-0322aabb25fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LoadScreen">
+      <UniqueIdentifier>{136029f0-fb56-4291-92db-abbc78a30385}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -589,6 +607,18 @@
     </ClInclude>
     <ClInclude Include="LineRenderer\LineRenderer.h">
       <Filter>LineRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Bilboards\BilboardManager.h">
+      <Filter>Bilboards</Filter>
+    </ClInclude>
+    <ClInclude Include="Bilboards\BilboardSystemInstance.h">
+      <Filter>Bilboards</Filter>
+    </ClInclude>
+    <ClInclude Include="Bilboards\BilboardSystemType.h">
+      <Filter>Bilboards</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadScreen\LoadScreenManager.h">
+      <Filter>LoadScreen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@ dofile("Data\\Lua\\Cinematics\\CUABCinematicsActionManager.lua")
 dofile("Data\\Lua\\Videogame\\componentsEnemy.lua")
 dofile("Data\\Lua\\Antwakbar\\antweakbar.lua")
 dofile("Data\\Lua\\Characters\\CCharacterManager.lua")
+dofile("Data\\Lua\\Reload\\CReloadManager.lua")
 dofile("Data\\Lua\\Triggers.lua")
 dofile("Data\\Lua\\Sound\\VolumeController.lua")
 dofile("Data\\Lua\\Enemies\\VisionTestEnemy\\VisionTestEnemy.lua")
@@ -10,15 +11,21 @@ dofile("Data\\Lua\\Commands.lua")
 
 m_cinematicManager = CUABCinematicsActionManager()
 m_CharacterManager = CCharacterManager()
+g_ReloadManager = CReloadManager()
 m_menu = true
 m_credits = false
 m_options = false
+m_pause = false
+m_confirm = false
 m_fps = true
 g_Engine = CUABEngine.get_instance()
+g_VolumeController = VolumeController()
 m_MusicSliderResult = CSliderResult(50.0, 50.0)
 m_FxSliderResult = CSliderResult(50.0, 50.0)
 m_Cordura = CSliderResult(50.0, 50.0)
-
+m_ScreenResolution = Vect2f(1280.0, 720.0)
+m_ScreenFactorX = m_ScreenResolution.x / 1920
+m_ScreenFactorY = m_ScreenResolution.y / 1080
 
 function mainLua()
 	InitAntweakBar()
@@ -38,8 +45,7 @@ function mainLua()
 	local l_switchvalue = SoundSwitchValue()
 	l_switchvalue.sound_switch = l_switch
 	l_switchvalue.value_name = "exploration"
-	--g_Player.m_SoundManager:set_switch(l_switchvalue)
-	g_VolumeController = VolumeController()
+	--g_Player.m_SoundManager:set_switch(l_switchvalue)	
 	g_VolumeController:SetMusicVolume(50)
 	m_timerPause = 0
 	m_iniciando = true 
@@ -55,7 +61,6 @@ end
 
 function levelMainLua(level)
 	level = string.gsub(level,"\/","\\")
-	
 	m_CharacterManager:LoadXML(level.."\\characters.xml")
 end
 
@@ -65,7 +70,7 @@ function luaUpdate(_ElapsedTime)
 			m_timerPause = m_timerPause + _ElapsedTime
 			if m_timerPause >= 0.2 then
 				m_iniciando = false
-				CUABEngine.get_instance():set_pause(true)
+				g_Engine:set_pause(true)
 			end		
 		end
 	
@@ -83,16 +88,17 @@ function luaUpdate(_ElapsedTime)
 			end
 		end
 		if l_InputManager:is_action_released("DebugSanityUp") then
-			utils_log("DebugSanityUp")
+			--utils_log("DebugSanityUp")
 			m_CharacterManager.m_Player[1]:ModifySanity(10)
 		end
 		if l_InputManager:is_action_released("DebugSanityDown") then
-			utils_log("DebugSanityDown")
+			--utils_log("DebugSanityDown")
 			m_CharacterManager.m_Player[1]:ModifySanity(-10)
 		end
 		if l_InputManager:is_action_released("Pause") then
 			m_menu = true
-			CUABEngine.get_instance():set_pause(true)
+			m_pause = true
+			g_Engine:set_pause(true)
 		end
 		if l_InputManager:is_action_released("DebugToggleFrustum") then
 			g_Engine:set_frustum_active(not g_Engine:get_frustum_active())		
@@ -114,20 +120,31 @@ end
 
 function luaGui()
 	local gui_manager = g_Engine:get_gui_manager()
-	gui_position = CGUIPosition(580, 50, 500, 30, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+	--gui_position = CGUIPosition(0, 0, 1280, 720, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 	--m_Cordura = gui_manager:do_slider("Cordura", "mad_slider", gui_position,0, m_CharacterManager.m_Player[1].m_MaxSanity, m_CharacterManager.m_Player[1].m_Sanity, false)
-			
+	
 	if m_fps then
 		local color = CColor(1,0.2,0.2,1)
 		local coord = Vect2f(1000, 10)
 		local l_FPSText = string.format("%.1f fps", g_Engine:get_render_manager():get_frame_rate())
-		gui_manager:do_text("fontTest", l_FPSText, coord, CGUIManager.top, color)
+		gui_manager:do_text("fontTest", l_FPSText, coord, CGUIManager.top_left, color)
 	end
 
 	if m_menu then
+		local l_PosX = 145 * m_ScreenFactorX
+		local l_PosY = 450 * m_ScreenFactorY
+		local l_WidthButton = 330 * m_ScreenFactorX
+		local l_HeightButton = 83 * m_ScreenFactorY
+		
+		local l_PosXSlider = 250 * m_ScreenFactorX
+		local l_PosYSlider = 450 * m_ScreenFactorY
+		local l_WidthSlider = 500 * m_ScreenFactorX
+		local l_HeightSlider = 42 * m_ScreenFactorY
+	
+		gui_position = CGUIPosition(0, 0, 1280, 720, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)		
 		local color = CColor(1,1,1,1)
 		local coord = Vect2f(500,100)
-		local gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+		--gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 		
 		if m_credits then
 			coord = Vect2f(500,100)
@@ -148,43 +165,120 @@ function luaGui()
 			local b_back = gui_manager:do_button("Back", "back_button", gui_position)
 			if b_back then
 				m_credits = false
-			end	
+			end
+		elseif m_confirm then
+			gui_manager:do_panel("standardMenuFondo", "fondo2", gui_position, 0.0)
+			local l_newPosX = m_ScreenResolution.x / 2
+			local l_newPosY = m_ScreenResolution.y / 2
+			
+			coord = Vect2f(l_newPosX, l_newPosY)
+			gui_manager:do_text("fontTest", "Estas seguro que deseas salir?", coord, CGUIManager.mid_center, color)
+			
+			gui_position = CGUIPosition(l_newPosX, l_newPosY + l_HeightButton, l_WidthButton, l_HeightButton, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_YesButton = gui_manager:do_button("Yes", "yes_button", gui_position)
+			if l_YesButton then
+				m_confirm = false
+				if m_pause then
+					m_pause = false
+				elseif m_retry then
+					m_retry = false
+				else
+					g_Engine:quit()
+				end
+			end 
+			
+			gui_position = CGUIPosition(l_newPosX, l_newPosY + l_HeightButton * 2, l_WidthButton, l_HeightButton, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_NoButton = gui_manager:do_button("No", "no_button", gui_position)
+			if l_NoButton then
+				m_confirm = false
+			end
+		elseif m_retry then
+			gui_manager:do_panel("mainMenuFondo", "fondo2", gui_position, 0.0)
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_RetryButton = gui_manager:do_button("Retry", "retry_button", gui_position)
+			if l_RetryButton then
+				m_menu = false
+				m_retry = false
+				g_Engine:set_pause(false)
+				g_ReloadManager:ReloadGame(1)
+			end 
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_ExitButton = gui_manager:do_button("Exit", "exit_button", gui_position)
+			if l_ExitButton then
+				m_confirm = true
+			end
 		elseif m_options then
-			coord = Vect2f(500,150)
-			gui_manager:do_text("fontTest", "Music volume", coord, CGUIManager.mid_center, color)
-			gui_position = CGUIPosition(580, 200, 500, 30, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			m_MusicSliderResult = gui_manager:do_slider("MusicSlider", "volume_slider", gui_position,0, 100, m_MusicSliderResult.real, true)
+			gui_manager:do_panel("optionsMenuFondo", "fondo2", gui_position, 0.0)
+		
+			coord = Vect2f(l_PosXSlider, l_PosYSlider - l_HeightButton * 2)
+			gui_manager:do_text("fontTest", "Opciones", coord, CGUIManager.top_left, color)
+			coord = Vect2f(l_PosXSlider,l_PosYSlider)
+			gui_manager:do_text("fontTest", "Musica", coord, CGUIManager.top_left, color)
+			gui_position = CGUIPosition(l_PosXSlider, l_PosYSlider + l_HeightSlider, l_WidthSlider, l_HeightSlider, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			m_MusicSliderResult = gui_manager:do_slider("MusicSlider", "volume_slider", gui_position, 0, 100, m_MusicSliderResult.real, true)
 			g_VolumeController:SetMusicVolume(m_MusicSliderResult.real)
 			
-			coord = Vect2f(500,350)
-			gui_manager:do_text("fontTest", "Fx volume", coord, CGUIManager.mid_center, color)
-			gui_position = CGUIPosition(580, 400, 500, 30, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			m_FxSliderResult = gui_manager:do_slider("FxSlider", "volume_slider", gui_position,0, 100, m_FxSliderResult.real, true)
+			coord = Vect2f(l_PosXSlider,l_PosYSlider + l_HeightButton * 2)
+			gui_manager:do_text("fontTest", "Efectos", coord, CGUIManager.top_left, color)
+			gui_position = CGUIPosition(l_PosXSlider, l_PosYSlider + l_HeightSlider + l_HeightButton * 2, l_WidthSlider, l_HeightSlider, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			m_FxSliderResult = gui_manager:do_slider("FxSlider", "volume_slider", gui_position, 0, 100, m_FxSliderResult.real, true)
 			g_VolumeController:SetFXVolume(m_FxSliderResult.real)
-			gui_position = CGUIPosition(500, 580, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			local b_back = gui_manager:do_button("Back", "back_button", gui_position)
-			if b_back then
-				m_options = false
-			end	
-		else
-			gui_manager:do_text("fontTest", "A SIMPLE SONG", coord, CGUIManager.mid_center, color)
-			gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			local b_play = gui_manager:do_button("Play", "play_button", gui_position)
-			if b_play then
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton * 4, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_ExitButton = gui_manager:do_button("Exit", "exit_button", gui_position)
+			if l_ExitButton then
+				m_options = false				
+			end 	
+		elseif m_pause then
+			gui_manager:do_panel("mainMenuFondo", "fondo2", gui_position, 0.0)
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_ResumeButton = gui_manager:do_button("Resume", "resume_button", gui_position)
+			if l_ResumeButton then
+				m_menu = false
+				m_pause = false
+				g_Engine:set_pause(false)
+			end 
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_OptionsButton = gui_manager:do_button("Options", "options_button", gui_position)
+			if l_OptionsButton then
+				m_options = true
+			end
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton * 2, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_ExitButton = gui_manager:do_button("Exit", "exit_button", gui_position)
+			if l_ExitButton then
+				m_confirm = true
+			end
+		else			
+			gui_manager:do_panel("mainMenuFondo", "fondo1", gui_position, 0.0)
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_PlayButton = gui_manager:do_button("Play", "play_button", gui_position)
+			if l_PlayButton then
 				m_menu = false
 				g_Engine:set_pause(false)
 			end 
 			
-			gui_position = CGUIPosition(500, 460, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			m_options = gui_manager:do_button("Options", "options_button", gui_position)
-		
-			gui_position = CGUIPosition(500, 520, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			m_credits = gui_manager:do_button("Credits", "credits_button", gui_position)
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_LoadButton = gui_manager:do_button("Cargar", "load_button", gui_position)
 			
-			gui_position = CGUIPosition(500, 580, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-			local b_exit = gui_manager:do_button("Exit", "exit_button", gui_position)
-			if b_exit then
-				g_Engine:quit()
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton * 2, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_OptionsButton = gui_manager:do_button("Options", "options_button", gui_position)
+			if l_OptionsButton then
+				m_options = true
+			end
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton * 3, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_CreditsButton = gui_manager:do_button("Credits", "credits_button", gui_position)
+			
+			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton * 4, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
+			local l_ExitButton = gui_manager:do_button("Exit", "exit_button", gui_position)
+			if l_ExitButton then
+				m_confirm = true
 			end
 		end	
 	end 	 

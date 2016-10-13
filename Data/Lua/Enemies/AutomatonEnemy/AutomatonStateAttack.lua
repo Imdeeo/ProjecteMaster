@@ -13,6 +13,8 @@ function AttackUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
+	g_Engine:get_physX_manager():change_rigid_dynamic_actor_group("player","DeadPlayer")
+	
 	l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime
 	local l_PercentRotation = l_Enemy.m_TimerRotation / 2.0
 	if l_PercentRotation > 1.0 then
@@ -48,6 +50,10 @@ end
 
 function AttackEndAutomaton(args)
 	utils_log("AttackEnd")
+	local l_Enemy = args["self"]
+	if l_Enemy.m_State == "kill" then 
+		g_Player.m_CameraController:unlock()
+	end
 end
 
 function AttackToKillConditionAutomaton(args)

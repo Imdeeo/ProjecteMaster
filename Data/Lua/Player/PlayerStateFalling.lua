@@ -66,7 +66,8 @@ end
 
 function ANYToFallingCondition(args)
 	local l_Player = args["self"]
-	return l_Player.m_Velocity.y < -0.25
+	--return false
+	return l_Player.m_Velocity.y < -8
 end
 
 function FallingToIdleCondition(args)
