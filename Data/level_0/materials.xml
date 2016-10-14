@@ -13,6 +13,13 @@
 		<parameter type="float2" name="center" value="0.500000 0.500000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float2" name="redius" value="0.400000 0.400000" description="min=0.0 max=1.0 step=0.01"/>
 	</material>
+	<material name="NoiseAndVignettingMaterial" renderable_object_technique="noise_and_vignetting">
+		<texture type="diffuse" filename="Data\GUI\Textures\noise.dds"/>
+		<texture type="diffuse" filename="Data\GUI\Textures\vignetting.png"/>
+		<parameter type="float" name="NoisePct" value="1" description="min=0.0 max=50.0 step=0.05"/>
+		<parameter type="float" name="VignettingPct" value="0.1" description="min=0.0 max=50.0 step=0.05"/>
+		<parameter type="float" name="NoiseAmount" value="0.10" description="min=0.0 max=1.0 step=0.05"/>
+	</material>	
 	<material name="ms_manchas1" renderable_object_technique="manchas">
 		<texture filename="Data\Particles\stains.png" type="diffuse"/>
 		<parameter name="sprite_size" type="float2" value="3 3"/>
