@@ -148,6 +148,7 @@ void CUABEngine::Init()
 
 	m_LoadScreenManager->SetLoading(false);
 	t.join();
+	CHECKED_DELETE(m_LoadScreenManager);
 }
 
 void CUABEngine::Destroy()
