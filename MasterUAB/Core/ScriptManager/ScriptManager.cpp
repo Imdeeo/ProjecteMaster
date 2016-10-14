@@ -674,6 +674,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("load_file", &CLevelManager::LoadFile)
 			.def("choose_scene_command_level",&CLevelManager::ChooseSceneRenderLevel)
 			.def("execute_scene_commands",&CLevelManager::ExecuteSceneCommands)
+			.def("get_actual_level", &CLevelManager::GetActualLevel)
+			.def("set_actual_level", &CLevelManager::SetActualLevel)
 	];
 
 // GRAPHICS-----------------------------------------------------------------------------------------
