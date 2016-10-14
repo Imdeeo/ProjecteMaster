@@ -12,16 +12,6 @@
 		<parameter type="float" name="lerp_sprite" value="1.000000" description=""/>
 		<parameter type="float" name="ratio_y" value="1.000000" description=""/>
 	</material>
-	<material name="VortexMaterial" renderable_object_technique="vortex">
-		<parameter type="float" name="enabled" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
-		<parameter type="float" name="angle" value="0.000000" description="min=-1.0 max=1.0 step=0.01"/>
-		<parameter type="float2" name="center" value="0.500000 0.500000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float2" name="redius" value="0.400000 0.400000" description="min=0.0 max=1.0 step=0.01"/>
-	</material>
-	<material name="ms_manchas1" renderable_object_technique="manchas">
-		<texture filename="Data\Particles\stains.png" type="diffuse"/>
-		<parameter name="sprite_size" type="float2" value="3 3"/>
-	</material>
 	<material name="CombineMaterial" renderable_object_technique="combine">
 		<parameter type="float" name="ShowTexture" value="0.0" description="min=0.0 max=1.0 step=1.0"/>
 	</material>
