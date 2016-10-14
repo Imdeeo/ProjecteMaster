@@ -18,7 +18,6 @@ void CCinematicManager::LoadXML(const std::string &FileName, const std::string &
 	tinyxml2::XMLError l_Error = doc.LoadFile(FileName.c_str());
 
 	tinyxml2::XMLElement* l_Element;
-
 	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
 		l_Element = doc.FirstChildElement("cinematics");
