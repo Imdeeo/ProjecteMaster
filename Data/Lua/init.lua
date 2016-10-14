@@ -51,7 +51,8 @@ function mainLua()
 	m_iniciando = true 
 	
 	l_LevelManager:load_level("Player")	
-	
+	l_LevelManager:choose_scene_command_level("Player")
+	g_Player:SetActualLevel("Player")
 	--deactivate_gravity()
 	--deactivate_player_collisions()
 	l_LevelManager:load_level("Recibidor")

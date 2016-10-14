@@ -177,7 +177,10 @@ void CUABEngine::ReloadLUA()
 {
 	LuaIsReloaded();
 	m_ScriptManager->Destroy();
-	//m_GamePlayManager->Clear();
+	for (size_t i = 0; i < m_LevelManager->GetResourcesVector().size(); ++i)
+	{
+		m_LevelManager->GetResourcesVector()[i]->GetGamePlayManager()->Clear();
+	}
 	m_ScriptManager->Initialize();
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	UtilsLog("Reloading Lua");
