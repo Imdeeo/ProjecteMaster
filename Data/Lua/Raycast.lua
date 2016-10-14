@@ -8,7 +8,7 @@ function CheckRaycast(_Player, _Pos, _Camera, _Owner)
 	_Player.m_RaycastData = RaycastData()
 	_Player.m_PhysXManager:raycast(_Camera:get_position(), _Camera:get_position()+(_Camera:get_forward()*1.7), 4, _Player.m_RaycastData)
 	
-	local l_LayerManager = g_Engine:get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager()utils_log("CheckRaycast3: ".._Player.m_RaycastData.actor_name)
+	local l_LayerManager = g_Engine:get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager()--utils_log("CheckRaycast3: ".._Player.m_RaycastData.actor_name)
 	if _Player.m_RaycastData.actor_name ~= "" then
 		local l_Trigger = l_LayerManager:get_layer("triggers"):get_resource(_Player.m_RaycastData.actor_name)
 		if l_LayerManager:get_layer("interactuable_objects"):get_resource(l_Trigger:get_interactuable_object_name()) == nil then
@@ -26,7 +26,7 @@ end
 function TriggerRaycast(_Player, _Pos, _Owner)
 	utils_log("triggers_raycast")
 	l_LevelID = _Player.m_ActualLevel
-	if l_LevelID == "Player" then
+	if l_LevelID == "Recibidor" then
 		if _Player.m_RaycastData.actor_name == "TriggerDoor" then
 			if _Player.m_ItemName == "LlaveRecibidor" then
 				R1Door(_Player, _Pos)
