@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <renderable_objects>
+	<layer name="solid" default="true"/>
+	<layer name="alpha_objects"/>
+	<layer name="alpha_blend_objects"/>
+	<layer name="particles"/>
+	<layer name="line_renderers"/>
+	<layer name="triggers"/>
+	<layer name="manchas"/>
+	<layer name="skybox"/>
+	<layer name="interactuable_objects"/>
 	<animated_instance_mesh name="CagedAutomatonLeft" layer="solid" core_name="CagedAutomaton" position="2.522870 0.500000 2.073650" rotation="0.000000 -0.707107 0.000000 -0.707107" create_physics="false" visible="true"/>
 	<animated_instance_mesh name="CagedAutomatonRight" layer="solid" core_name="CagedAutomaton" position="-2.547590 0.500000 2.078260" rotation="0.000000 0.707107 0.000000 -0.707107" create_physics="false" visible="true"/>
 	<instance_mesh name="Zocaloentrada" layer="solid" core_name="Zocaloentrada" position="-0.001024 0.543080 -4.946360" rotation="0.000000 0.000000 0.000000 -1.000000" create_physics="false" visible="true"/>
