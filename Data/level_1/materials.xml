@@ -7,6 +7,16 @@
 		<parameter type="float" name="specular_power" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.1"/>
 	</material>
+	<material name="VortexMaterial" renderable_object_technique="vortex">
+		<parameter type="float" name="enabled" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="angle" value="0.000000" description="min=-1.0 max=1.0 step=0.01"/>
+		<parameter type="float2" name="center" value="0.500000 0.500000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float2" name="redius" value="0.400000 0.400000" description="min=0.0 max=1.0 step=0.01"/>
+	</material>
+	<material name="ms_manchas1" renderable_object_technique="manchas">
+		<texture filename="Data\Particles\stains.png" type="diffuse"/>
+		<parameter name="sprite_size" type="float2" value="3 3"/>
+	</material>
 	<material name="BloomBlurMaterial" renderable_object_technique="bloom_blur">
 		<parameter type="float" name="TextureSize" value="512.000000" description=""/>
 		<parameter type="float" name="BlurScale" value="2.000000" description=""/>
@@ -1040,12 +1050,6 @@
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
 	</material>
-	<material name="VortexMaterial" renderable_object_technique="vortex">
-		<parameter type="float" name="enabled" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
-		<parameter type="float" name="angle" value="0.000000" description="min=-1.0 max=1.0 step=0.01"/>
-		<parameter type="float2" name="center" value="0.500000 0.500000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float2" name="redius" value="0.400000 0.400000" description="min=0.0 max=1.0 step=0.01"/>
-	</material>
 	<material name="ZBlurMaterial" renderable_object_technique="zblur">
 		<parameter type="float" name="ZBlurActive" value="1.000000" description=""/>
 		<parameter type="float" name="ZBlurShowDepths" value="1.000000" description=""/>
@@ -1305,10 +1309,6 @@
 		<parameter type="float" name="bump_factor" value="0.250000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 0.643137 0.227451 0.392157" description=""/>
-	</material>
-	<material name="ms_manchas1" renderable_object_technique="manchas">
-		<texture type="diffuse" filename="Data\Particles\stains.png"/>
-		<parameter type="float2" name="sprite_size" value="3.000000 3.000000" description=""/>
 	</material>
 	<material name="oro" renderable_object_technique="reflection">
 		<texture type="diffuse" filename="Data\level_1\Textures\Oro_Colgante.dds"/>
