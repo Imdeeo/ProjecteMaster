@@ -63,8 +63,13 @@ function mainLua()
 end
 
 function levelMainLua(level,level_id)
+	--utils_log("ASD")
 	level = string.gsub(level,"\/","\\")
 	m_CharacterManager:LoadXML(level.."\\characters.xml",level_id)
+end
+
+function auxReloadLua(level_id) -- Establece el level en el player
+	g_Player:SetActualLevelAux(level_id)
 end
 
 function luaUpdate(_ElapsedTime)

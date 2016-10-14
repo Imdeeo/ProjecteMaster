@@ -57,4 +57,6 @@ public:
 	void ReloadAllLua();
 
 	void Update(float _ElapsedTime);
+
+	UAB_BUILD_GET_SET(std::string, ActualLevel);
 };

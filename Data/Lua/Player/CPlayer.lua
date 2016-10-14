@@ -237,8 +237,12 @@ class 'CPlayer' (CLUAComponent)
 	end
 	
 	function CPlayer:SetActualLevel(_LevelId)
+		g_Engine:get_level_manager():set_actual_level(_LevelId)
+		g_Player:SetActualLevelAux(_LevelId)
+	end
+	function CPlayer:SetActualLevelAux(_LevelId)
 		self.m_ActualLevel = _LevelId		
-		self.m_CinematicManager = g_Engine:get_level_manager():get_level(self.m_ActualLevel):get_cinematic_manager()
+		self.m_CinematicManager = g_Engine:get_level_manager():get_level(self.m_ActualLevel):get_cinematic_manager()		
 	end
 	
 	function CPlayer:GetActualLevel()
