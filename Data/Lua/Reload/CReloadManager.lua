@@ -79,6 +79,7 @@ class 'CReloadManager'
 		
 		levelMainLua("Data\\level_0", "Player")		
 		levelMainLua("Data\\level_"..g_Engine:get_level_manager():get_level_info(_level).id, _level)
+		g_Player:SetActualLevelAux(_level)
 	end
 
 	function CReloadManager:loadXML(Filename)
