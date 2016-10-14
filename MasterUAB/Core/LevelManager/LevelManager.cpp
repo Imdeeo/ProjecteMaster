@@ -105,6 +105,7 @@ void CLevelManager::ReloadAllLua()
 			UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_Directory + "\",\"" + l_iterator->first + "\")");
 		}
 	}
+	UABEngine.GetScriptManager()->RunCode("auxReloadLua(\"" + m_ActualLevel + "\")");
 }
 
 TLevelInfo CLevelManager::GetLevelInfo(const std::string &_LevelName)
