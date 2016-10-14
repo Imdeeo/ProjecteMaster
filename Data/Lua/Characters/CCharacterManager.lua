@@ -14,9 +14,10 @@ class 'CCharacterManager'
 	end
 		
 	function CCharacterManager:LoadXML(Filename,level_id)
+		utils_log("CARGANDO LEVEL "..level_id)
 		local doc = XMLDocument()
 		local xmlError = doc:load_file(Filename)
-		local l_game_play_manager = CUABEngine.get_instance():get_level_manager():get_level(level_id):get_game_play_manager()
+		local l_game_play_manager = g_Engine:get_level_manager():get_level(level_id):get_game_play_manager()
 		--UABEngine:get_game_play_manager():destroy()
 		if xmlError == 0 then
 			local l_Element = doc:first_child_element("characters"):first_child()
@@ -46,7 +47,7 @@ class 'CCharacterManager'
 						l_game_play_manager:add_component(l_Enemy)
 						table.insert(self.m_Enemics, l_Enemy)
 					elseif l_Type == "Whisperer" then
-						utils_log("other")
+						--utils_log("other")
 					end
 				elseif l_ElemName == "light" then
 					local l_Light = CLuz(l_Element)
@@ -56,7 +57,7 @@ class 'CCharacterManager'
 				l_Element = l_Element:get_next()
 			end
 		else
-			utils_log("File '"..Filename.."'not correctly loaded")
+			--utils_log("File '"..Filename.."'not correctly loaded")
 		end
 	end
 --end
