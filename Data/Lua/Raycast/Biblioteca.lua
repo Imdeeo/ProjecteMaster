@@ -81,14 +81,14 @@ function R2Artifact(_Player, _Pos)
 		_Player.m_InteractingCinematic = nil
 		_Player.m_CameraAnimation = "PickArtifact"
 		_Player.m_NewItemName = "Artilufacto"
-		_Player.m_ItemTime = 1
+		_Player.m_ItemTime = 1.01
 		_Player.m_ItemDropTime = -1.0
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
-		_Player.m_PhysXManager:disable_trigger("TriggerArtifact")
+		--_Player.m_PhysXManager:disable_trigger("TriggerArtifact")
 	end
 end
 
@@ -149,7 +149,9 @@ function R2Book(_Player, _Pos)
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		g_Engine:get_video_manager():play_clip("bunny.ogv") -- launch projector video
-		-- launch cinematic, activate lights and particles
-		_Player.m_PhysXManager:disable_trigger("TriggerBook")
+		_Player.m_CinematicManager:get_resource("fonotelefote"):play() -- launch projector cinematic
+		g_Engine:get_light_manager():get_resource("LuzProyector"):set_enabled(true) -- activate lights
+		-- activate particles
+		--_Player.m_PhysXManager:disable_trigger("TriggerBook")
 	end
 end
