@@ -1,5 +1,7 @@
 #include "CinematicManager.h"
 #include "XML\tinyxml2.h"
+#include "Engine\UABEngine.h"
+#include "LevelManager\LevelManager.h"
 
 CCinematicManager::CCinematicManager()
 {
@@ -37,7 +39,7 @@ void CCinematicManager::LoadXML(const std::string &FileName, const std::string &
 void CCinematicManager::Reload()
 {
 	Destroy();
-//	LoadXML(m_FileName);
+	LoadXML(m_FileName, UABEngine.GetLevelManager()->GetActualLevel());
 }
 
 void CCinematicManager::Update(float _ElapsedTime)
