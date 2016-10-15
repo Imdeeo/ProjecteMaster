@@ -652,7 +652,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_particle_manager", &CLevel::GetParticleManager)
 			.def("get_game_play_manager", &CLevel::GetGamePlayManager)
 			.def("get_manchas_manager", &CLevel::GetManchasManager)
-			.def("get_a_star_manager", &CLevel::GetAStarManager)
+			.def("get_astar_manager", &CLevel::GetAStarManager)
 	];
 
 	RegisterTemplatedVectorMapManager<CLevel>(m_LS);

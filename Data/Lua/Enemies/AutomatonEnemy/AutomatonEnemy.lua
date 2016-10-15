@@ -14,7 +14,8 @@ class 'CAutomatonEnemy' (CEnemy)
 		--HEAD_OBJECT_BONE_ID 31
 		self.m_HeadBoneId = 31
 		
-		self.m_PathFinding = CUABEngine.get_instance():get_astar_manager():get_resource("level_"..CUABEngine.get_instance():get_level_loaded())
+		local l_Level = g_Engine:get_level_manager():get_level(_LevelId)
+		self.m_PathFinding = l_Level:get_astar_manager():get_resource(_LevelId)
 		self.m_TotalNodes = 0
 		self.m_IndexPoint = 0
 		self.m_IndexPathPatrolPoint = 0		

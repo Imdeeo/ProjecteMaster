@@ -486,7 +486,7 @@ class 'CPlayer' (CLUAComponent)
 	end
 
 	function CPlayer:SetAnimationCamera(_CameraName, _CopyFirstFrame)
-		local l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
+		local l_CameraManager = g_Engine:get_camera_controller_manager()
 		local l_FPSCamera = l_CameraManager:get_main_camera()
 		local l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
 		if (_CopyFirstFrame) then

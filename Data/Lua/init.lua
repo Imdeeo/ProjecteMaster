@@ -50,16 +50,24 @@ function mainLua()
 	m_timerPause = 0
 	m_iniciando = true 
 	
+	--deactivate_gravity()
+	--deactivate_player_collisions()
+	
 	l_LevelManager:load_level("Player")	
 	l_LevelManager:choose_scene_command_level("Player")
 	g_Player:SetActualLevel("Player")
-	--deactivate_gravity()
-	--deactivate_player_collisions()
-	l_LevelManager:load_level("Recibidor")
-	l_LevelManager:choose_scene_command_level("Recibidor")
-	g_Player:SetActualLevel("Recibidor")
-	--l_LevelManager:load_level("Biblioteca")
-	--l_LevelManager:load_level("Maquinas")	
+	
+	--l_LevelManager:load_level("Recibidor")
+	--l_LevelManager:choose_scene_command_level("Recibidor")
+	--g_Player:SetActualLevel("Recibidor")
+	
+	l_LevelManager:load_level("Biblioteca")
+	l_LevelManager:choose_scene_command_level("Biblioteca")
+	g_Player:SetActualLevel("Biblioteca")
+	
+	--l_LevelManager:load_level("Maquinas")
+	--l_LevelManager:choose_scene_command_level("Maquinas")
+	--g_Player:SetActualLevel("Maquinas")
 end
 
 function levelMainLua(level,level_id)
