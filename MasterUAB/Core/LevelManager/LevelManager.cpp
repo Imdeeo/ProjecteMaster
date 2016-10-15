@@ -132,3 +132,8 @@ void CLevelManager::AddSceneCommandsManager(const std::string &_LevelId,CSceneRe
 {
 	m_SceneRenderCommandsManager[_LevelId] = _SceneRendererCommandManager;
 }
+
+CSceneRendererCommandManager * CLevelManager::GetSceneRendererCommandManager(const std::string _levelId)
+{
+	return m_SceneRenderCommandsManager[_levelId];
+}

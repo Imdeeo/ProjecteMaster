@@ -45,6 +45,7 @@ public:
 
 	void ChooseSceneRenderLevel(const std::string &_LevelId);
 	void AddSceneCommandsManager(const std::string &_LevelId, CSceneRendererCommandManager* _SceneRendererCommandManager);
+	CSceneRendererCommandManager * GetSceneRendererCommandManager(const std::string _levelId);
 	void ExecuteSceneCommands(CRenderManager* _RenderManager);
 
 	void LoadFile(const std::string &_LevelsFilename);
