@@ -590,7 +590,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_sound_manager", &CUABEngine::GetSoundManager)
 			.def("get_video_manager", &CUABEngine::GetVideoManager)
 			//.def("get_cinematic_manager", &CUABEngine::GetCinematicManager)
-			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
 			.def("get_gui_manager", &CUABEngine::GetGUIManager)
 			.def("get_level_manager", &CUABEngine::GetLevelManager)
 			//.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
@@ -676,6 +675,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("execute_scene_commands",&CLevelManager::ExecuteSceneCommands)
 			.def("get_actual_level", &CLevelManager::GetActualLevel)
 			.def("set_actual_level", &CLevelManager::SetActualLevel)
+			.def("get_scene_command_manager", &CLevelManager::GetSceneRendererCommandManager)
 	];
 
 // GRAPHICS-----------------------------------------------------------------------------------------

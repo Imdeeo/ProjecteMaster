@@ -69,13 +69,13 @@ bool CLightManager::CreateNewLight(std::string _name, std::string _type , const 
 	switch (type)
 	{
 	case CLight::LIGHT_TYPE_OMNI:
-		AddResource(_name, new COmniLight(_name), _LevelId);
+		AddResource(_name, new COmniLight(_name, _LevelId), _LevelId);
 		return true;
 	case CLight::LIGHT_TYPE_DIRECTIONAL:
-		AddResource(_name, new CDirectionalLight(_name), _LevelId);
+		AddResource(_name, new CDirectionalLight(_name, _LevelId), _LevelId);
 		return true;
 	case CLight::LIGHT_TYPE_SPOT:
-		AddResource(_name, new CSpotLight(_name), _LevelId);
+		AddResource(_name, new CSpotLight(_name, _LevelId), _LevelId);
 		return true;
 	default:
 		return false;
