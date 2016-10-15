@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <camera_key_controller name="PipeOrganStart">
-	<key time="0.0" pos="0.0 1.8 0.0" up="0.0 1.0 0.0" look_at="0.0 1.45798 0.939693" fov="0.759313" near_plane="0.0" far_plane="1000.0"/>
+	<key time="0.0" pos="0.0 1.8 0.0" up="0.0 1.0 0.0" look_at="0.0 1.45798 0.939693" fov="1.13" near_plane="0.0" far_plane="1000.0"/>
 	<key time="0.5" pos="0.0 1.98007 0.1" up="0.0 1.0 0.0" look_at="0.0 1.33728 0.9" fov="0.759313" near_plane="0.0" far_plane="1000.0"/>
 	<key time="0.666667" pos="0.0 2.06946 0.2" up="0.0 1.0 0.0" look_at="0.0 1.25031 0.8" fov="0.759313" near_plane="0.0" far_plane="1000.0"/>
 </camera_key_controller>

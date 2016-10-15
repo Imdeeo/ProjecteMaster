@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cinematics>
-	<cinematic name="fonotelefote" duration="1.33333" cycle="false">
+	<cinematic name="fonotelefote" duration="1.33333" cycle="true" reverse="false">
 		<cinematic_object resource="RuedasBottomFonotelefote" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="-0.92388 0.0 0.0 -0.382683" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 0.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="1.50996e-007 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 		<cinematic_object resource="RuedasTopFonotelefote" layer="solid">
@@ -12,7 +12,7 @@
 			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="1.50996e-007 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
-	<cinematic name="CrossArtifactDoor" duration="8.7" cycle="false">
+	<cinematic name="CrossArtifactDoor" duration="8.7" cycle="false" reverse="false">
 		<cinematic_object resource="PuertaSalaMaquinas" layer="solid">
 			<cinematic_object_key_frame time="5.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="6.36667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
@@ -34,14 +34,15 @@
 			<cinematic_object_key_frame time="0.366667" pos="-3.59118e-005 0.00158411 -0.00348634" rotation="0.0153588 0.0 0.0 0.999882" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
-	<cinematic name="PullBook" duration="1.66667" cycle="false">
+	<cinematic name="PullBook" duration="3.0" cycle="false" reverse="false">
 		<cinematic_object resource="LibroEspecial" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="1.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="1.66667" pos="0.0 0.0 0.0" rotation="-0.243672 0.0 0.0 -0.969858" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.0" pos="0.0 0.0 0.0" rotation="-0.243672 0.0 0.0 -0.969858" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
-	<cinematic name="ResolvePuzzle" duration="5.0" cycle="false">
+	<cinematic name="ResolvePuzzle" duration="5.0" cycle="false" reverse="false">
 		<cinematic_object resource="puertalaberintooficial" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.00377233 1.50641e-007 0.0 -0.999993" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="2.0" pos="0.765625 -2.30939e-007 0.0" rotation="0.00377233 1.50641e-007 0.0 -0.999993" scale="1.0 1.0 1.0"/>
