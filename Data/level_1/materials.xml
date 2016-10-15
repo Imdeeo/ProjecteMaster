@@ -1,11 +1,109 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <materials>
+	<!-- effect materials -->
 	<material name="20 - Default" renderable_object_technique="skybox">
 		<texture type="reflection" filename="Data\level_0\Textures\KGSkyBox2.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
 		<parameter type="float" name="specular_power" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
 		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.1"/>
+	</material>
+	<material name="ps_polvo_material" renderable_object_technique="particle">
+		<texture type="diffuse" filename="Data\Particles\PolvoSingular.png"/>
+		<parameter type="float2" name="sprite_size" value="1.000000 1.000000" description=""/>
+		<parameter type="float" name="lerp_sprite" value="1.000000" description=""/>
+		<parameter type="float" name="ratio_y" value="1.000000" description=""/>
+	</material>
+	<material name="ps_vapor_material" renderable_object_technique="particle">
+		<texture type="diffuse" filename="Data\Particles\Vapor1.png"/>
+		<parameter type="float2" name="sprite_size" value="1.000000 1.000000" description=""/>
+		<parameter type="float" name="lerp_sprite" value="1.000000" description=""/>
+		<parameter type="float" name="ratio_y" value="1.000000" description=""/>
+	</material>
+	<material name="ZBlurMaterial" renderable_object_technique="zblur">
+		<parameter type="float" name="ZBlurActive" value="1.000000" description=""/>
+		<parameter type="float" name="ZBlurShowDepths" value="1.000000" description=""/>
+		<parameter type="float" name="ZBlurConstantBlur" value="0.000000" description=""/>
+		<parameter type="float" name="ZBlurFocalStart" value="1.000000" description=""/>
+		<parameter type="float" name="ZBlurFocalEnd" value="25.000000" description=""/>
+		<parameter type="float" name="ZBlurEnd" value="50.000000" description=""/>
+	</material>
+	<material name="SSRMaterial" renderable_object_technique="ssr">
+		<parameter type="float" name="enabled" value="1.000000" description=""/>
+		<parameter type="float" name="ssr_opacity" value="0.300000" description="min=0.0 max=1.0 step=0.1"/>
+		<parameter type="float" name="ssr_offset_screen" value="0.000000" description="min=0.0 max=1.0 step=0.02"/>
+	</material>
+	<material name="NoiseAndVignettingMaterial" renderable_object_technique="noise_and_vignetting">
+		<texture type="diffuse" filename="Data\GUI\Textures\vignetting.png"/>
+		<parameter type="float" name="NoisePct" value="1.000000" description="min=0.0 max=50.0 step=0.05"/>
+		<parameter type="float" name="VignettingPct" value="0.100000" description="min=0.0 max=50.0 step=0.05"/>
+		<parameter type="float" name="NoiseAmount" value="0.100000" description="min=0.0 max=1.0 step=0.05"/>
+	</material>
+	<material name="HDAOMaterial" renderable_object_technique="hdao">
+		<parameter type="float" name="HDAOActive" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="HDAOShowNormals" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="HDAOShowAO" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="HDAOUseNormals" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float2" name="RTSize" value="1280.000000 720.000000" description=""/>
+		<parameter type="float" name="AcceptAngle" value="0.700000" description="min=0.0 max=1.5 step=0.001"/>
+		<parameter type="float" name="HDAOIntensity" value="0.550000" description="min=0.0 max=5.0 step=0.001"/>
+		<parameter type="float" name="NormalScale" value="0.150000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="HDAORejectRadius" value="0.400000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="HDAOAcceptRadius" value="0.005000" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="LightScatteringCombineMaterial" renderable_object_technique="lightscattering_combine">
+		<parameter type="float" name="ShowLightScattering" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+	</material>
+	<material name="LightScatteringMaterial" renderable_object_technique="lightscattering">
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
+		<parameter type="float" name="decay" value="0.945000" description="min=0.0 max=3.0 step=0.005"/>
+		<parameter type="float" name="density" value="0.890000" description="min=0.0 max=3.0 step=0.005"/>
+		<parameter type="float" name="weight" value="1.000000" description="min=0.0 max=3.0 step=0.005"/>
+		<parameter type="float" name="num_samples" value="20.000000" description=""/>
+		<parameter type="float2" name="light_position" value="0.500000 0.500000" description=""/>
+	</material>
+	<material name="FlareBlurMaterial" renderable_object_technique="flare_blur">
+		<parameter type="float" name="TextureSize" value="256.000000" description=""/>
+		<parameter type="float" name="BlurScale" value="2.000000" description=""/>
+		<parameter type="color" name="Color" value="1.000000 0.800000 0.000000 1.000000" description=""/>
+	</material>
+	<material name="FlareBrightpassMaterial" renderable_object_technique="flare_brightpass">
+		<parameter type="float" name="Threshold" value="0.980000" description="min=0.0 max=1.0 step=0.01"/>
+	</material>
+	<material name="FlareCombineMaterial" renderable_object_technique="flare_combine">
+		<parameter type="float" name="FlareActive" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="FlareIntensity" value="1.650000" description="min=-100 max=100 step=0.05"/>
+		<parameter type="float" name="OriginalIntensity" value="1.350000" description="min=-100 max=100 step=0.05"/>
+		<parameter type="float" name="ShowFlare" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+	</material>
+	<material name="FlareDownloadingMaterial" renderable_object_technique="flare_downsampling">
+		<parameter type="float" name="TextureSize" value="256.000000" description=""/>
+	</material>
+	<material name="FogMaterial" renderable_object_technique="fog">
+		<parameter type="float" name="Enable" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="Type" value="4.000000" description="min=1.0 max=4.0 step=1.0"/>
+		<parameter type="float" name="Start_Fog (type 1)" value="3.000000" description="min=0.0 max=100.0 step=1.0"/>
+		<parameter type="float" name="End_Fog (type 1)" value="21.000000" description="min=0.0 max=100.0 step=1.0"/>
+		<parameter type="float" name="Max_Attenuation (type 1)" value="1.000000" description="min=0.0 max=100.0 step=1.0"/>
+		<parameter type="float" name="Density" value="0.200000" description="min=0.0 max=10.0 step=0.1"/>
+		<parameter type="float" name="Height" value="0.100000" description="min=0.0 max=10.0 step=0.1"/>
+		<parameter type="color" name="Fog_Color" value="0.784314 0.784314 0.784314 1.000000" description=""/>
+	</material>
+	<material name="GUIMaterial" renderable_object_technique="gui">
+	</material>
+	<material name="ColorGradingMaterial" renderable_object_technique="colorgrading">
+		<parameter type="float" name="ColorGradingActive" value="1.000000" description=""/>
+		<parameter type="float" name="BrownSepiaColorGrading" value="0.000000" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter type="float" name="GreenSepiaColorGrading" value="0.000000" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter type="float" name="BlueSepiaColorGrading" value="0.000000" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter type="float" name="MonochromeColorGrading" value="2.350000" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter type="float" name="ColorColorGrading" value="2.800000" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter type="float" name="ContrastColorGrading" value="0.150000" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter type="float" name="BrightnessColorGrading" value="0.000000" description="min=-100 max=100 step=0.05"/>
+	</material>
+	<material name="CombineMaterial" renderable_object_technique="combine">
+		<parameter type="float" name="ShowTexture" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
 	</material>
 	<material name="VortexMaterial" renderable_object_technique="vortex">
 		<parameter type="float" name="enabled" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
@@ -43,6 +141,7 @@
 		<parameter type="float" name="texture_size" value="1280.000000" description=""/>
 		<parameter type="float" name="blur_scale" value="2.000000" description=""/>
 	</material>
+	<!-- level materials -->
 	<material name="Bombilla" renderable_object_technique="lights_glow">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_bombilla_temporal.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
@@ -296,19 +395,6 @@
 		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 0.568627 0.262745 0.352941" description=""/>
 	</material>
-	<material name="ColorGradingMaterial" renderable_object_technique="colorgrading">
-		<parameter type="float" name="ColorGradingActive" value="1.000000" description=""/>
-		<parameter type="float" name="BrownSepiaColorGrading" value="0.000000" description="min=-100.0 max=100.0 step=0.05"/>
-		<parameter type="float" name="GreenSepiaColorGrading" value="0.000000" description="min=-100.0 max=100.0 step=0.05"/>
-		<parameter type="float" name="BlueSepiaColorGrading" value="0.000000" description="min=-100.0 max=100.0 step=0.05"/>
-		<parameter type="float" name="MonochromeColorGrading" value="2.350000" description="min=-100.0 max=100.0 step=0.05"/>
-		<parameter type="float" name="ColorColorGrading" value="2.800000" description="min=-100.0 max=100.0 step=0.05"/>
-		<parameter type="float" name="ContrastColorGrading" value="0.150000" description="min=-100.0 max=100.0 step=0.05"/>
-		<parameter type="float" name="BrightnessColorGrading" value="0.000000" description="min=-100 max=100 step=0.05"/>
-	</material>
-	<material name="CombineMaterial" renderable_object_technique="combine">
-		<parameter type="float" name="ShowTexture" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
-	</material>
 	<material name="CuerpoPuertaAnimada" renderable_object_technique="bump_glossiness">
 		<texture type="diffuse" filename="Data\level_1\Textures\puertarecibidor_DIFF.dds"/>
 		<texture type="normal" filename="Data\level_1\Textures\puertarecibidor_NRM.dds"/>
@@ -323,35 +409,6 @@
 		<parameter type="float" name="bump_factor" value="0.100000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
-	</material>
-	<material name="FlareBlurMaterial" renderable_object_technique="flare_blur">
-		<parameter type="float" name="TextureSize" value="256.000000" description=""/>
-		<parameter type="float" name="BlurScale" value="2.000000" description=""/>
-		<parameter type="color" name="Color" value="1.000000 0.800000 0.000000 1.000000" description=""/>
-	</material>
-	<material name="FlareBrightpassMaterial" renderable_object_technique="flare_brightpass">
-		<parameter type="float" name="Threshold" value="0.980000" description="min=0.0 max=1.0 step=0.01"/>
-	</material>
-	<material name="FlareCombineMaterial" renderable_object_technique="flare_combine">
-		<parameter type="float" name="FlareActive" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
-		<parameter type="float" name="FlareIntensity" value="1.650000" description="min=-100 max=100 step=0.05"/>
-		<parameter type="float" name="OriginalIntensity" value="1.350000" description="min=-100 max=100 step=0.05"/>
-		<parameter type="float" name="ShowFlare" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
-	</material>
-	<material name="FlareDownloadingMaterial" renderable_object_technique="flare_downsampling">
-		<parameter type="float" name="TextureSize" value="256.000000" description=""/>
-	</material>
-	<material name="FogMaterial" renderable_object_technique="fog">
-		<parameter type="float" name="Enable" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
-		<parameter type="float" name="Type" value="4.000000" description="min=1.0 max=4.0 step=1.0"/>
-		<parameter type="float" name="Start_Fog (type 1)" value="3.000000" description="min=0.0 max=100.0 step=1.0"/>
-		<parameter type="float" name="End_Fog (type 1)" value="21.000000" description="min=0.0 max=100.0 step=1.0"/>
-		<parameter type="float" name="Max_Attenuation (type 1)" value="1.000000" description="min=0.0 max=100.0 step=1.0"/>
-		<parameter type="float" name="Density" value="0.200000" description="min=0.0 max=10.0 step=0.1"/>
-		<parameter type="float" name="Height" value="0.100000" description="min=0.0 max=10.0 step=0.1"/>
-		<parameter type="color" name="Fog_Color" value="0.784314 0.784314 0.784314 1.000000" description=""/>
-	</material>
-	<material name="GUIMaterial" renderable_object_technique="gui">
 	</material>
 	<material name="Grifo" renderable_object_technique="radiosity_glossiness">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_cobre_marron.dds"/>
@@ -369,30 +426,6 @@
 		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 0.913726 0.568627 0.784314" description=""/>
-	</material>
-	<material name="HDAOMaterial" renderable_object_technique="hdao">
-		<parameter type="float" name="HDAOActive" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
-		<parameter type="float" name="HDAOShowNormals" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
-		<parameter type="float" name="HDAOShowAO" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
-		<parameter type="float" name="HDAOUseNormals" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
-		<parameter type="float2" name="RTSize" value="1280.000000 720.000000" description=""/>
-		<parameter type="float" name="AcceptAngle" value="0.700000" description="min=0.0 max=1.5 step=0.001"/>
-		<parameter type="float" name="HDAOIntensity" value="0.550000" description="min=0.0 max=5.0 step=0.001"/>
-		<parameter type="float" name="NormalScale" value="0.150000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="HDAORejectRadius" value="0.400000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="HDAOAcceptRadius" value="0.005000" description="min=0.0 max=1.0 step=0.001"/>
-	</material>
-	<material name="LightScatteringCombineMaterial" renderable_object_technique="lightscattering_combine">
-		<parameter type="float" name="ShowLightScattering" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
-	</material>
-	<material name="LightScatteringMaterial" renderable_object_technique="lightscattering">
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="decay" value="0.945000" description="min=0.0 max=3.0 step=0.005"/>
-		<parameter type="float" name="density" value="0.890000" description="min=0.0 max=3.0 step=0.005"/>
-		<parameter type="float" name="weight" value="1.000000" description="min=0.0 max=3.0 step=0.005"/>
-		<parameter type="float" name="num_samples" value="20.000000" description=""/>
-		<parameter type="float2" name="light_position" value="0.500000 0.500000" description=""/>
 	</material>
 	<material name="LlaveRecibidor" renderable_object_technique="glossiness">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_tubo_cobre_distinto2.dds"/>
@@ -635,12 +668,6 @@
 		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.098039" description=""/>
 	</material>
-	<material name="NoiseAndVignettingMaterial" renderable_object_technique="noise_and_vignetting">
-		<texture type="diffuse" filename="Data\GUI\Textures\vignetting.png"/>
-		<parameter type="float" name="NoisePct" value="1.000000" description="min=0.0 max=50.0 step=0.05"/>
-		<parameter type="float" name="VignettingPct" value="0.100000" description="min=0.0 max=50.0 step=0.05"/>
-		<parameter type="float" name="NoiseAmount" value="0.100000" description="min=0.0 max=1.0 step=0.05"/>
-	</material>
 	<material name="Paredes" renderable_object_technique="radiosity_bump">
 		<texture type="diffuse" filename="Data\level_1\Textures\recibidor_wallpaper_verde_deformado.dds"/>
 		<texture type="lightmap" filename="Data\level_1\Textures\RNMSala_X.dds"/>
@@ -779,11 +806,6 @@
 		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
-	</material>
-	<material name="SSRMaterial" renderable_object_technique="ssr">
-		<parameter type="float" name="enabled" value="1.000000" description=""/>
-		<parameter type="float" name="ssr_opacity" value="0.300000" description="min=0.0 max=1.0 step=0.1"/>
-		<parameter type="float" name="ssr_offset_screen" value="0.000000" description="min=0.0 max=1.0 step=0.02"/>
 	</material>
 	<material name="SofaChair" renderable_object_technique="radiosity_bump_metalnessmap">
 		<texture type="diffuse" filename="Data\level_1\Textures\SillaCompo_DIFF.dds"/>
@@ -1057,58 +1079,6 @@
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
 	</material>
-	<material name="ZBlurMaterial" renderable_object_technique="zblur">
-		<parameter type="float" name="ZBlurActive" value="1.000000" description=""/>
-		<parameter type="float" name="ZBlurShowDepths" value="1.000000" description=""/>
-		<parameter type="float" name="ZBlurConstantBlur" value="0.000000" description=""/>
-		<parameter type="float" name="ZBlurFocalStart" value="1.000000" description=""/>
-		<parameter type="float" name="ZBlurFocalEnd" value="25.000000" description=""/>
-		<parameter type="float" name="ZBlurEnd" value="50.000000" description=""/>
-	</material>
-	<material name="automaton_material_1" renderable_object_technique="animated_bump">
-		<texture type="diffuse" filename="Data/AnimatedModels/Automaton/automata.dds"/>
-		<texture type="normal" filename="Data/AnimatedModels/Automaton/automata_NRM.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-	</material>
-	<material name="automaton_material_2" renderable_object_technique="animated_glow">
-		<texture type="diffuse" filename="Data/AnimatedModels/Automaton/Automata_Ojos.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-	</material>
-	<material name="caged_automaton_material_1" renderable_object_technique="animated_metalness">
-		<texture type="diffuse" filename="Data/AnimatedModels/CagedAutomaton/automata_DIFF.dds"/>
-		<texture type="normal" filename="Data/AnimatedModels/CagedAutomaton/automata_NRM.dds"/>
-		<texture type="glossiness" filename="Data/AnimatedModels/CagedAutomaton/automata_GLOSS.dds"/>
-		<texture type="reflection" filename="Data/AnimatedModels/CagedAutomaton/Cubemap_Generico_Vitrinas.dds"/>
-		<texture type="specular" filename="Data/AnimatedModels/CagedAutomaton/automata_METAL.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="40.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="bump_factor" value="0.600000" description="min=0.0 max=2.0 step=0.05"/>
-		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="color" name="metal_color" value="1.000000 0.749020 0.000000 0.000000" description=""/>
-	</material>
-	<material name="caged_automaton_material_2" renderable_object_technique="animated_glow">
-		<texture type="diffuse" filename="Data/AnimatedModels/CagedAutomaton/Automata_Ojos.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-	</material>
 	<material name="clavos" renderable_object_technique="radiosity_bump_glossiness">
 		<texture type="diffuse" filename="Data\level_1\Textures\puerta_cobre_recibidor.dds"/>
 		<texture type="lightmap" filename="Data\level_1\Textures\RNMSillaZocaloetc_X.dds"/>
@@ -1219,24 +1189,6 @@
 		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
-	</material>
-	<material name="jaheem_material" renderable_object_technique="animated_bump">
-		<texture type="diffuse" filename="Data/AnimatedModels/Jaheem/brazosjaheem.dds"/>
-		<texture type="normal" filename="Data/AnimatedModels/Jaheem/brazosjaheemNormalsMap.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-	</material>
-	<material name="jaheem_shackle" renderable_object_technique="animated_bump">
-		<texture type="diffuse" filename="Data/AnimatedModels/Jaheem/brazosjaheem.dds"/>
-		<texture type="normal" filename="Data/AnimatedModels/Jaheem/brazosjaheemNormalsMap.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 	</material>
 	<material name="lampara_techo_cobre" renderable_object_technique="radiosity_glossiness">
 		<texture type="diffuse" filename="Data\level_1\Textures\puerta_cobre_recibidor.dds"/>
@@ -1389,19 +1341,7 @@
 		<parameter type="float" name="bump_factor" value="0.100000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 0.576471 0.000000 0.286275" description=""/>
-	</material>
-	<material name="ps_polvo_material" renderable_object_technique="particle">
-		<texture type="diffuse" filename="Data\Particles\PolvoSingular.png"/>
-		<parameter type="float2" name="sprite_size" value="1.000000 1.000000" description=""/>
-		<parameter type="float" name="lerp_sprite" value="1.000000" description=""/>
-		<parameter type="float" name="ratio_y" value="1.000000" description=""/>
-	</material>
-	<material name="ps_vapor_material" renderable_object_technique="particle">
-		<texture type="diffuse" filename="Data\Particles\Vapor1.png"/>
-		<parameter type="float2" name="sprite_size" value="1.000000 1.000000" description=""/>
-		<parameter type="float" name="lerp_sprite" value="1.000000" description=""/>
-		<parameter type="float" name="ratio_y" value="1.000000" description=""/>
-	</material>
+	</material>	
 	<material name="recibidor_marcocuadro_cobre" renderable_object_technique="radiosity_bump_glossiness">
 		<texture type="diffuse" filename="Data\level_1\Textures\marcocuadro_cobre_recibidor_DIFF.dds"/>
 		<texture type="lightmap" filename="Data\level_1\Textures\RNMCuadroHojas_X.dds"/>
@@ -1425,19 +1365,6 @@
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="specular_power" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
-		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
-	</material>
-	<material name="shackles_material" renderable_object_technique="animated_bump">
-		<texture type="diffuse" filename="Data/AnimatedModels/Jaheem/brazosjaheem.dds"/>
-		<texture type="normal" filename="Data/AnimatedModels/Jaheem/brazosjaheemNormalsMap.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
 		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
@@ -1515,33 +1442,6 @@
 		<parameter type="float" name="bump_factor" value="0.200000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 0.827451 0.176471 0.658824" description=""/>
-	</material>
-	<material name="turret_material_1" renderable_object_technique="animated">
-		<texture type="diffuse" filename="Data/AnimatedModels/TurretAutomaton/Torreta.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-	</material>
-	<material name="turret_material_2" renderable_object_technique="animated">
-		<texture type="diffuse" filename="Data/AnimatedModels/TurretAutomaton/recibidor_metal_negro.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-	</material>
-	<material name="turret_material_3" renderable_object_technique="animated_glow">
-		<texture type="diffuse" filename="Data/AnimatedModels/TurretAutomaton/Automata_Ojos.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
 	</material>
 	<material name="valvula1" renderable_object_technique="radiosity_bump_glossiness">
 		<texture type="diffuse" filename="Data\level_1\Textures\puerta_cobre_recibidor.dds"/>

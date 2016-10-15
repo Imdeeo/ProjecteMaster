@@ -33,7 +33,7 @@ function AttackUpdateTurret(args, _ElapsedTime)
 	
 		if l_Enemy:PlayerVisible(l_Owner) then
 			if l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToKill) then
-				utils_log("ESTAS MUERTO!!!!")				
+				--utils_log("ESTAS MUERTO!!!!")				
 				l_Enemy.m_IsKilling = true
 				
 				if l_Enemy.m_ActualAnimation == 1 then
