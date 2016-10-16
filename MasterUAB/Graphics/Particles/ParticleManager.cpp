@@ -1,5 +1,7 @@
 #include "ParticleManager.h"
 #include "XML\tinyxml2.h"
+#include "Engine\UABEngine.h"
+#include "LevelManager\LevelManager.h"
 
 CParticleManager::CParticleManager(void){}
 
@@ -41,7 +43,7 @@ void CParticleManager::Load(const std::string &Filename, const std::string &_Lev
 void CParticleManager::Reload()
 {
 	Destroy();
-	//Load(m_Filename);
+	Load(m_Filename, UABEngine.GetLevelManager()->GetActualLevel());
 }
 
 void CParticleManager::Save()
