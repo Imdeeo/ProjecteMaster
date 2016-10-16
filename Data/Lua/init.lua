@@ -26,6 +26,7 @@ m_Cordura = CSliderResult(50.0, 50.0)
 m_ScreenResolution = Vect2f(1280.0, 720.0)
 m_ScreenFactorX = m_ScreenResolution.x / 1920
 m_ScreenFactorY = m_ScreenResolution.y / 1080
+m_Timer = 0.0
 
 function mainLua()
 	InitAntweakBar()
@@ -48,26 +49,34 @@ function mainLua()
 	--g_Player.m_SoundManager:set_switch(l_switchvalue)	
 	g_VolumeController:SetMusicVolume(50)
 	m_timerPause = 0
-	m_iniciando = true 
-	
-	--deactivate_gravity()
-	--deactivate_player_collisions()
+	m_iniciando = true 	
 	
 	l_LevelManager:load_level("Player")	
 	l_LevelManager:choose_scene_command_level("Player")
-	g_Player:SetActualLevel("Player")
+	g_Player:SetActualLevel("Player")	
+	
+	deactivate_gravity()
+	deactivate_player_collisions()
 	
 	--l_LevelManager:load_level("Recibidor")
 	--l_LevelManager:choose_scene_command_level("Recibidor")
 	--g_Player:SetActualLevel("Recibidor")
 	
-	l_LevelManager:load_level("Biblioteca")
-	l_LevelManager:choose_scene_command_level("Biblioteca")
-	g_Player:SetActualLevel("Biblioteca")
+	--l_LevelManager:load_level("Biblioteca")
+	--l_LevelManager:choose_scene_command_level("Biblioteca")
+	--g_Player:SetActualLevel("Biblioteca")
 	
 	--l_LevelManager:load_level("Maquinas")
 	--l_LevelManager:choose_scene_command_level("Maquinas")
 	--g_Player:SetActualLevel("Maquinas")
+	
+	--l_LevelManager:load_level("Pasillo")
+	--l_LevelManager:choose_scene_command_level("Pasillo")
+	--g_Player:SetActualLevel("Pasillo")
+	
+	--l_LevelManager:load_level("Boss")
+	--l_LevelManager:choose_scene_command_level("Boss")
+	--g_Player:SetActualLevel("Boss")
 end
 
 function levelMainLua(level,level_id)
@@ -132,7 +141,7 @@ function luaUpdate(_ElapsedTime)
 	end
 end
 
-function luaGui()
+function luaGui(_ElapsedTime)
 	local gui_manager = g_Engine:get_gui_manager()
 	
 	if m_fps then
@@ -266,7 +275,10 @@ function luaGui()
 				m_confirm = true
 			end
 		else			
+			m_Timer = m_Timer + _ElapsedTime / 50.0
+			
 			gui_manager:do_panel("mainMenuFondo", "fondo1", gui_position, 0.0)
+			gui_manager:do_panel("mainMenuFondoAnimado", "fondo1_1", gui_position, m_Timer)
 			
 			gui_position = CGUIPosition(l_PosX, l_PosY, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local l_PlayButton = gui_manager:do_button("Play", "play_button", gui_position)
