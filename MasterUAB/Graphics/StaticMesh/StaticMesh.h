@@ -5,10 +5,12 @@
 #include "Math\Matrix44.h"
 #include "Materials\Material.h"
 
+#include "Utils\LevelInfo.h"
+
 class CRenderableVertexs;
 class CRenderManager;
 
-class CStaticMesh :	public CNamed
+class CStaticMesh :	public CNamed, public CLevelInfo
 {
 protected:
 	std::vector<CRenderableVertexs *> m_RVs;
@@ -24,7 +26,7 @@ protected:
 
 	std::string m_PhysxMeshesDirectory;
 public:
-	CStaticMesh();
+	CStaticMesh(const std::string &_LevelId);
 	virtual ~CStaticMesh();
 	bool Load (const std::string &FileName);
 	bool Reload ();

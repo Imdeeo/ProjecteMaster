@@ -7,6 +7,8 @@
 #include <assert.h>
 #include "Utils.h"
 
+#include "Utils\LevelInfo.h"
+
 #include <luabind/luabind.hpp>
 #include <luabind/function.hpp>
 #include <luabind/class.hpp>
@@ -166,6 +168,49 @@ public:
 		return *this;
 	}
 
+};
+
+template<class T>
+class CTemplatedLevelVectorMapManager : public CTemplatedVectorMapManager<T>
+{
+public:
+	void RemoveResourceFromLevel(const std::string &Name, const std::string &_Level)
+	{
+		((CLevelInfo*)m_Resources[Name].m_Value)->RemoveLevel(_Level);
+		if (!((CLevelInfo*)m_Resources[Name].m_Value)->HasAnyLevel())
+		{
+			RemoveResource(Name);
+		}
+	}
+
+	void RemoveAllResourcesFromLevel(const std::string &_Level)
+	{
+		typedef TMapResource::iterator it_type;
+		for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
+		{
+			((CLevelInfo*)iterator->second)->RemoveLevel(_Level);
+			if (!((CLevelInfo*)iterator->second)->HasAnyLevel())
+			{
+				RemoveResource(iterator->first);
+			}
+		}
+	}
+
+	virtual bool AddResource(const std::string &Name, T *_Resource, std::string _LevelId)
+	{
+		if (m_ResourcesMap.find(Name) != m_ResourcesMap.end())
+		{
+			//((CLevelInfo*)m_ResourcesMap[Name].m_Value)->AddLevel(_LevelId);
+			CHECKED_DELETE(_Resource);
+			return false;
+		}
+
+		m_ResourcesMap.insert(std::pair<std::string, CMapResourceValue>(Name, CMapResourceValue(_Resource, m_ResourcesVector.size())));
+		m_ResourcesVector.push_back(_Resource);
+		
+		//((CLevelInfo*)m_ResourcesMap[Name].m_Value)->AddLevel(_LevelId);
+		return true;
+	}
 };
 
 #endif

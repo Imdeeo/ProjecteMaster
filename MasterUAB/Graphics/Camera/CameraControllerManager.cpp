@@ -10,6 +10,7 @@
 #include "ContextManager\ContextManager.h"
 
 #include "Engine\UABEngine.h"
+#include "LevelManager\LevelManager.h"
 
 CCameraControllerManager::CCameraControllerManager():
 	m_CurrentCamera(),
@@ -38,7 +39,7 @@ void CCameraControllerManager::ChooseDebugCamera(std::string _CurrentCamera)
 }
 
 
-bool CCameraControllerManager::Load(const std::string &FileName)
+bool CCameraControllerManager::Load(const std::string &FileName, const std::string &_LevelId)
 {
 	m_Filename = FileName;
 	tinyxml2::XMLDocument doc;
@@ -62,16 +63,16 @@ bool CCameraControllerManager::Load(const std::string &FileName)
 					switch(l_Type)
 					{
 					case CCamera::CAMERA_TYPE_SPHERICAL:
-						AddResource(l_ElementAux->GetPszProperty("name"), new CSphericalCameraController(l_ElementAux));
+						AddResource(l_ElementAux->GetPszProperty("name"), new CSphericalCameraController(l_ElementAux,_LevelId),_LevelId);
 						break;
 					case CCamera::CAMERA_TYPE_FPS:
-						AddResource(l_ElementAux->GetPszProperty("name"), new CFPSCameraController(l_ElementAux));
+						AddResource(l_ElementAux->GetPszProperty("name"), new CFPSCameraController(l_ElementAux,_LevelId),_LevelId);
 						break;
 					case CCamera::CAMERA_TYPE_3PS:
-						AddResource(l_ElementAux->GetPszProperty("name"), new C3PersonCameraController(l_ElementAux));
+						AddResource(l_ElementAux->GetPszProperty("name"), new C3PersonCameraController(l_ElementAux,_LevelId),_LevelId);
 						break;
 					case CCamera::CAMERA_TYPE_KEY:
-						AddResource(l_ElementAux->GetPszProperty("name"), new CCameraKeyController(l_ElementAux));
+						AddResource(l_ElementAux->GetPszProperty("name"), new CCameraKeyController(l_ElementAux,_LevelId),_LevelId);
 						break;				
 					default:
 						return false;
@@ -98,7 +99,7 @@ void CCameraControllerManager::Init()
 bool CCameraControllerManager::Reload()
 {
 	Destroy();
-	bool l_loadResult = Load(m_Filename);
+	bool l_loadResult = Load(m_Filename,"");
 	return l_loadResult;
 }
 

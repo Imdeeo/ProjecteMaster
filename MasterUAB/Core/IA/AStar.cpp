@@ -82,9 +82,7 @@ void CAStar::LoadMap(std::string _filename)
 				m_NodePatrolPath[nombreNodoActual] = l_Aux;
 			}			
 			l_Element = l_Element->NextSiblingElement();
-		}
-
-	
+		}	
 	}
 }
 

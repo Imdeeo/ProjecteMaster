@@ -1,4 +1,5 @@
 function IdleFirst(args)
+	utils_log("Player Idle First")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Owner:blend_cycle(0,1.0,0.1)
@@ -11,34 +12,45 @@ function IdleUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	
+	utils_log("Player Idle Update")
+	
 	--// Calculate the player speed
 	local l_PlayerDisplacement = Vect3f(0, l_Player.m_Velocity.y + l_Player.m_Gravity * _ElapsedTime, 0)
 	
 	--// Move the character controller
 	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
+	
 	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - g_StandingOffset
+	
 	l_Player.m_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
+	
 	
 	--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
+	
 	l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
+	
 	l_Owner:set_position(l_NewControllerPosition)
 	
 	--// Raycast
 	CheckRaycast(l_Player, l_NewControllerPosition, l_Player.m_CameraController, l_Owner)
 	
+	
 	--// Save speed in last update so we can create acceleration
 	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
+	
 	l_Player.m_Velocity = l_Displacement/_ElapsedTime
-	if l_Player.m_Velocity.y > 0 then
-		l_Player.m_Velocity.y = 0
-	end
+	
 	
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
+	
 	l_RotationY = Quatf()
+	
 	l_Rotation = l_Player.m_CameraController:get_rotation()
+	
 	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
+	
 	l_Owner:set_rotation(l_RotationY)
 	
 	--// If player has an item, move it.

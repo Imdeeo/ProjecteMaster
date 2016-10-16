@@ -6,6 +6,8 @@
 #include "XML\tinyxml2.h"
 #include <vector>
 
+#include "Utils\LevelInfo.h"
+
 #include "Math\Color.h"
 
 class CDynamicTexture;
@@ -15,7 +17,7 @@ class CRenderManager;
 class CRenderableObjectsManager;
 class CFrustum;
 
-class CLight : public CNamed, public C3DElement
+class CLight : public CNamed, public C3DElement, public CLevelInfo
 {
 
 public:
@@ -56,9 +58,9 @@ protected:
 
 public:
 
-	CLight(tinyxml2::XMLElement* TreeNode);
-	CLight(std::string _name);
-	CLight();
+	CLight(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CLight(std::string _name, const std::string &_LevelId);
+	CLight(const std::string &_LevelId);
 	virtual ~CLight();
 	//UAB_BUILD_GET_SET_BY_REFERENCE(Vect3f, Position);
 	const CColor & GetColor() const{ return m_Color; }
