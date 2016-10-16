@@ -125,4 +125,10 @@
 	<static_mesh name="TrituradoraTechoCubierta" filename="Data\level_3\Meshes\TrituradoraTechoCubierta.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="CablesSalaMaquinas" filename="Data\level_3\Meshes\CablesSalaMaquinas.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="FisicasCintas" filename="Data\level_3\Meshes\FisicasCintas.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerStairsLower" filename="Data\level_3\Meshes\TriggerStairsLower.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerStairsUpper" filename="Data\level_3\Meshes\TriggerStairsUpper.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerValve" filename="Data\level_3\Meshes\TriggerValve.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerValveInput" filename="Data\level_3\Meshes\TriggerValveInput.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerValveDoor" filename="Data\level_3\Meshes\TriggerValveDoor.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerWindow" filename="Data\level_3\Meshes\TriggerWindow.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 </static_meshes>

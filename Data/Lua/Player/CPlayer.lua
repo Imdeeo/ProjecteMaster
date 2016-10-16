@@ -374,13 +374,10 @@ class 'CPlayer' (CLUAComponent)
 	
 	function CPlayer:Update(_ElapsedTime)
 		local args = {}
-		--utils_log("Player Update")
 		args["owner"] = self.m_RenderableObject
 		args["self"] = self
 		self.m_StateMachine:update(args, _ElapsedTime)
-		--utils_log("Player pene Update")
 		self:UpdateSanityEffects(_ElapsedTime)
-		--utils_log("Player End Update")
 	end
 	
 	function CPlayer:SetPlayerStateMachine()
@@ -395,6 +392,7 @@ class 'CPlayer' (CLUAComponent)
 		IdleState:add_condition(ANYToCorrectingCondition, "Correcting")
 		IdleState:add_condition(ANYToSingingCondition, "Singing")
 		IdleState:add_condition(ANYToDeadCondition, "Dead")
+		IdleState:add_condition(ANYToClimbingCondition, "Climbing")
 		
 		MovingState = State.create(MovingUpdate)
 		MovingState:set_do_first_function(MovingFirst)
@@ -407,12 +405,12 @@ class 'CPlayer' (CLUAComponent)
 		MovingState:add_condition(ANYToCorrectingCondition, "Correcting")
 		MovingState:add_condition(ANYToSingingCondition, "Singing")
 		MovingState:add_condition(ANYToDeadCondition, "Dead")
+		MovingState:add_condition(ANYToClimbingCondition, "Climbing")
 		
 		CorrectingState = State.create(CorrectingUpdate)
 		CorrectingState:set_do_first_function(CorrectingFirst)
 		CorrectingState:set_do_end_function(CorrectingEnd)
 		CorrectingState:add_condition(CorrectingToPuzzleCondition, "Puzzle")
-		CorrectingState:add_condition(CorrectingToClimbingCondition, "Climbing")
 		CorrectingState:add_condition(CorrectingToInteractingCondition, "Interacting")
 		CorrectingState:add_condition(ANYToDeadCondition, "Dead")
 

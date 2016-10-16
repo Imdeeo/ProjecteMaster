@@ -57,8 +57,6 @@ function PuzzleEnd(args)
 	l_Player.m_AnimationTime = 0
 	l_Player.m_CameraController:unlock()
 	l_Owner:remove_action(l_Owner:get_actual_action_animation())
-	
-	utils_log("PuzzleEnd")
 end
 
 function PuzzleToFallingCondition(args)

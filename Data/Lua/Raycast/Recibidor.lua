@@ -22,7 +22,6 @@ function R1Door(_Player, _Pos)
 		_Player.m_CurrentAend = "CrossDoor"
 		_Player.m_LeftHanded = false
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 	end
@@ -65,7 +64,6 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 		_Player.m_LeftHanded = true
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		m_CharacterManager.m_Enemics[1].m_Awake = true
@@ -87,7 +85,6 @@ function R1TrayR2Open(_Player, _Pos)
 		_Player.m_CameraAnimation = "OpenTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		R1TrayR2IsClosed = false
@@ -105,7 +102,6 @@ function R1TrayR2Close(_Player, _Pos)
 		_Player.m_CameraAnimation = "CloseTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		R1TrayR2IsClosed = true
@@ -131,7 +127,6 @@ function R1TrayL1Open(_Player, _Pos)
 		_Player.m_CameraAnimation = "OpenTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		R1TrayL1IsClosed = false
@@ -149,7 +144,6 @@ function R1TrayL1Close(_Player, _Pos)
 		_Player.m_CameraAnimation = "CloseTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		R1TrayL1IsClosed = true
@@ -177,7 +171,6 @@ function R1TrayL2Open(_Player, _Pos)
 		_Player.m_CameraAnimation = "OpenTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		R1TrayL2IsClosed = false
@@ -197,7 +190,6 @@ function R1TrayL2Close(_Player, _Pos)
 		_Player.m_CameraAnimation = "CloseTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		R1TrayL2IsClosed = true
@@ -219,7 +211,6 @@ function R1Ankh(_Player, _Pos)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
 		-- Play Sound
-		--utils_log("<-Interacted with R1Ankh->")
 	end
 end
 
@@ -239,7 +230,6 @@ function R1Key(_Player, _Pos)
 	--	_Player.m_CurrentAend = nil
 	--	_Player.m_IsInteracting = true
 	--	_Player.m_IsClimbing = false
-	--	_Player.m_IsCorrecting = true
 	--	_Player.m_IsPuzzle = false
 	--end
 end
