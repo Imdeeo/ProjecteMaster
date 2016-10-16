@@ -1,6 +1,8 @@
 #include "LayerManager.h"
 #include "RenderManager\RenderManager.h"
 #include "Utils.h"
+#include "Engine\UABEngine.h"
+#include "LevelManager\LevelManager.h"
 
 #define DEFAULT_LAYER_INITIAL_NAME "default"
 
@@ -79,10 +81,11 @@ void CLayerManager::Load(const std::string &FileName, const std::string &_LevelI
 
 void CLayerManager::Reload()
 {
-	//Destroy();
+	Destroy();
+	Load(m_Filename, UABEngine.GetLevelManager()->GetActualLevel()); 
 	//Load(m_Filename);
 
-	tinyxml2::XMLDocument doc;
+	/*tinyxml2::XMLDocument doc;
 	tinyxml2::XMLError l_Error = doc.LoadFile(m_Filename.c_str());
 
 	tinyxml2::XMLElement* l_Element;
@@ -112,7 +115,7 @@ void CLayerManager::Reload()
 				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
 		}
-	}
+	}*/
 	/*CXMLTreeNode l_XML;
 
 	if (l_XML.LoadFile(m_Filename.c_str()))

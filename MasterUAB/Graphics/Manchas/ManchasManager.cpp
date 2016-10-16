@@ -1,5 +1,7 @@
 #include "ManchasManager.h"
 #include "XML\tinyxml2.h"
+#include "Engine\UABEngine.h"
+#include "LevelManager\LevelManager.h"
 
 CManchasManager::CManchasManager(void){}
 
@@ -40,7 +42,7 @@ void CManchasManager::Load(const std::string &Filename, const std::string &_Leve
 void CManchasManager::Reload()
 {
 	Destroy();
-//	Load(m_Filename);
+	Load(m_Filename, UABEngine.GetLevelManager()->GetActualLevel());
 }
 
 void CManchasManager::Save()
