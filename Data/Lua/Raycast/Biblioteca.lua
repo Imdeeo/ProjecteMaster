@@ -63,8 +63,7 @@ function R2TriggerPipeOrgan(_Player, _Pos)
 		_Player.m_InteractingCinematic = nil
 		_Player.m_CameraAnimation = "PipeOrganStart"
 		_Player.m_CurrentAend = nil
-		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
+		_Player.m_IsInteracting = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = true
 		_Player.m_PhysXManager:disable_trigger("TriggerPipeOrgan")
@@ -87,7 +86,6 @@ function R2Artifact(_Player, _Pos)
 		_Player.m_ItemDropTime = -1.0
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		--_Player.m_PhysXManager:disable_trigger("TriggerArtifact")
@@ -108,7 +106,6 @@ function R2ArtifactDoor(_Player, _Pos)
 		_Player.m_ItemDropTime = -1.0
 		--_Player.m_CurrentAend = "CrossArtifactDoor"
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 	end
@@ -130,7 +127,6 @@ function R2Clue(_Player, _Pos)
 		_Player.m_ItemDropTime = 6.5
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 	end
@@ -147,7 +143,6 @@ function R2Book(_Player, _Pos)
 		_Player.m_CameraAnimation = "PullBook"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		g_Engine:get_video_manager():play_clip("bunny.ogv") -- launch projector video
