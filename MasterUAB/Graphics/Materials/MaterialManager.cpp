@@ -19,16 +19,16 @@ void CMaterialManager::Load(const std::string &LevelMaterialsFilename, const std
 	//Destroy();
 
 	LoadMaterialsFromFile(LevelMaterialsFilename, _LevelId, false, nullptr);
-	if (DefaultMaterialsFilename != "")
-		LoadMaterialsFromFile(DefaultMaterialsFilename,_LevelId,false,nullptr);
+	/*if (DefaultMaterialsFilename != "")
+		LoadMaterialsFromFile(DefaultMaterialsFilename,_LevelId,false,nullptr);*/
 }
 
 void CMaterialManager::Reload()
 {
 	std::map<std::string, std::string> l_MaterialNames;
-	if (m_DefaultMaterialsFilename != "") {
+	/*if (m_DefaultMaterialsFilename != "") {
 		LoadMaterialsFromFile(m_DefaultMaterialsFilename, m_LevelId , true, &l_MaterialNames);
-	}
+	}*/
 	LoadMaterialsFromFile(m_LevelMaterialsFilename, m_LevelId, true, &l_MaterialNames);
 	//RemoveAllBut(l_MaterialNames);
 }
