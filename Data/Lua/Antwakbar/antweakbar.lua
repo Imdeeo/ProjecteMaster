@@ -125,8 +125,8 @@ function RegisterMaterialsBar()
 	local MaterialsManager = l_LevelManager:get_material_manager()
 	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Materials\");RegisterMainBar()","");
-	DebugHelper:add_lua_button("Reload All","MaterialsManager:reload();CDebugHelper.get_debug_helper():remove_bar(\"Materials\");RegisterMaterialsBar()","");
-	DebugHelper:add_lua_button("Save","MaterialsManager:save()","");
+	DebugHelper:add_lua_button("Reload All","g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_material_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Materials\");RegisterMaterialsBar()","");
+	DebugHelper:add_lua_button("Save","g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_material_manager():save()","");
 	
 
 	local Materials = MaterialsManager:get_elements_array()
@@ -138,7 +138,7 @@ function RegisterMaterialsBar()
 	
 end
 
-function ReloadMaterial(MaterialName)
+--[[function ReloadMaterial(MaterialName)
 
 	local UABEngine = CUABEngine.get_instance()
 	
@@ -168,7 +168,7 @@ function RegisterReloadBar()
 	
 	DebugHelper:register_bar()
 	
-end
+end]]
 
 function RegisterSceneRendererCommandsBar()
 
@@ -179,7 +179,7 @@ function RegisterSceneRendererCommandsBar()
 	local SceneRendererCommandsManager = g_Engine:get_level_manager():get_scene_command_manager(g_Player.m_ActualLevel)
 	local RendererCommands = SceneRendererCommandsManager:get_vector() --get_address
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Scene Renderer Commands\");RegisterMainBar()","");
-	DebugHelper:add_lua_button("Reload All","SceneRendererCommandsManager:reload();CDebugHelper.get_debug_helper():remove_bar(\"Scene Renderer Commands\");RegisterSceneRendererCommandsBar()","");
+	DebugHelper:add_lua_button("Reload All","g_Engine:get_level_manager():get_scene_command_manager(g_Player.m_ActualLevel):reload();CDebugHelper.get_debug_helper():remove_bar(\"Scene Renderer Commands\");RegisterSceneRendererCommandsBar()","");
 
 	
 	for command in RendererCommands do
@@ -192,7 +192,7 @@ function RegisterSceneRendererCommandsBar()
 	
 end
 
-function RegisterCamerasBar()
+--[[function RegisterCamerasBar()
 
 	local UABEngine = CUABEngine.get_instance()
 	local DebugHelper = CDebugHelper.get_debug_helper()
@@ -222,7 +222,7 @@ function RegisterCamerasBar()
 	
 	DebugHelper:register_bar()
 	
-end
+end]]
 
 function RegisterLightsBar()
 
@@ -236,8 +236,8 @@ function RegisterLightsBar()
 	local LightControllerManager = l_LevelManager:get_light_manager()
 	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Lights\");RegisterMainBar()","")
-	DebugHelper:add_lua_button("Reload All","LightControllerManager:reload();CDebugHelper.get_debug_helper():remove_bar(\"Lights\");RegisterLightsBar()","")
-	DebugHelper:add_lua_button("Save","LightControllerManager:save()","")
+	DebugHelper:add_lua_button("Reload All","g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_light_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Lights\");RegisterLightsBar()","")
+	DebugHelper:add_lua_button("Save","g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_light_manager():save()","")
 	DebugHelper:add_lua_button("--------------------------------------","","")
 	DebugHelper:add_lua_button("Add New Omni","CreateNewLight(1)","")
 	DebugHelper:add_lua_button("Add New Spot","CreateNewLight(2)","")
