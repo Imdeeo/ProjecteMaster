@@ -1,10 +1,7 @@
 function InteractingFirst(args)
-	utils_log("InteractingFirst")
-	
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	
-	l_Player.m_IsClimbing = false
 	l_Owner:execute_action(l_Player.m_InteractingAnimation, 0.1, 0.1, 1.0, true)
 	
 	if l_Player.m_InteractingCinematic ~= nil then
@@ -72,8 +69,6 @@ function InteractingUpdate(args, _ElapsedTime)
 end
 
 function InteractingEnd(args)
-	utils_log("InteractingEnd")
-	
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	if l_Player.m_CameraAnimation ~= nil then
@@ -97,6 +92,7 @@ function InteractingEnd(args)
 	l_Player.m_InteractingCinematic = nil
 	l_Player.m_CameraAnimation = nil
 	l_Player.m_IsInteracting = false
+	l_Player.m_IsPuzzle = false
 	l_Player.m_IsClimbing = false
 	l_Player.m_IsCorrecting = false
 	l_Player.m_AnimationTime = 0

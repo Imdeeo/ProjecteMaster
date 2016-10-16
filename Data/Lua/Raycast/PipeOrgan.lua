@@ -11,6 +11,7 @@ function R2PushOrganKey(_Key, _Player)
 	end
 
 	if _Player.m_OrganKeyCount > table_length(_Player.m_OrganKeyOrder) then
+	utils_log("Puzzle cleared")
 		_Player.m_IsPuzzle = false
 		_Player.m_InteractingAnimation = 9
 		_Player.m_CameraAnimation = "PipeOrganEnd"
@@ -23,5 +24,4 @@ function R2PushOrganKey(_Key, _Player)
 		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyF")
 		_Player.m_PhysXManager:disable_trigger("TriggerOrganKeyG")
 	end
-	utils_log("R2PushOrganKey OK")
 end
