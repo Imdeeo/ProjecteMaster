@@ -283,7 +283,6 @@ void CCameraKeyController::ForceUpdateYaw(float _ElapsedTime)
 {
 	CInputManager* l_InputManager = UABEngine.GetInputManager();
 	float l_Radians = l_InputManager->GetAxisX()*_ElapsedTime;
-	Vect3f l_ASD = m_Rotation.EulerFromQuat();
 	float l_Yaw = m_Rotation.EulerFromQuat().z;
 	//				15						165										-15					-165
 	if (((l_Yaw < 0.261799f || l_Yaw > 2.87979f) && l_Radians < .0f) || ((l_Yaw > -0.261799f || l_Yaw < -2.87979f) && l_Radians > .0f))

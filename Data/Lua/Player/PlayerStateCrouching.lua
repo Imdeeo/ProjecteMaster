@@ -1,11 +1,13 @@
 function CrouchingFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
+	
 	--// Only for debug, flashes forward on crouch.
 	l_Player.m_PhysXManager:character_controller_warp("player", l_Player.m_CameraController:get_forward()*2.0)
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 	l_Owner:set_position(l_NewControllerPosition)
+	
 	l_Player.m_PhysXManager:set_character_controller_height("player", g_CrouchingHeight)
 	if l_Player.m_CurrentAnimation == "crouch_move" then
 		l_Owner:blend_cycle(2,1.0,0.1)

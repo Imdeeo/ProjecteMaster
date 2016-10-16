@@ -3,7 +3,7 @@
 	<skeleton filename="CagedAutomatonSkeleton.CSF"/>
 	<mesh filename="CagedAutomatonMesh.CMF"/>
 	<material name="caged_automaton_material_1" renderable_object_technique="animated_metalness">
-		<texture type="diffuse" filename="Data/AnimatedModels/CagedAutomaton/automata_metal_DIFF.dds"/>
+		<texture type="diffuse" filename="Data/AnimatedModels/CagedAutomaton/automata_DIFF.dds"/>
 		<texture type="normal" filename="Data/AnimatedModels/CagedAutomaton/automata_NRM.dds"/>
 		<texture type="glossiness" filename="Data/AnimatedModels/CagedAutomaton/automata_GLOSS.dds"/>
 		<texture type="reflection" filename="Data/AnimatedModels/CagedAutomaton/Cubemap_Generico_Vitrinas.dds"/>

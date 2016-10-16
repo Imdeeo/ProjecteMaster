@@ -1,13 +1,54 @@
 function ClimbingFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	l_Player.m_IsClimbing = true
-	l_Owner:blend_cycle(1,1.0,0.1);
+	l_Player.m_CameraController:lock()
+	l_Owner:blend_cycle(1,1.0,0.1)
 end
 
 function ClimbingUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
+	local l_PlayerDisplacement = Vect3f(0.0, 0.0, 0.0)
+	
+	--// Force the player face the target
+		--// Movement
+	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetPosOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
+	local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
+	utils_log_v3(l_Pos)
+	utils_log_v3(l_Player.m_Target)
+	l_FaceTargetDisplacement.y = 0.0
+	if l_FaceTargetDisplacement:length() > 0.03 then
+		l_PlayerDisplacement = l_PlayerDisplacement + l_FaceTargetDisplacement:get_normalized(1)
+	end
+	
+		--// Rotation
+	--[[local l_CameraDirection = l_Player.m_CameraController:get_forward()
+	l_CameraDirection.y = 0.0
+	l_CameraDirection:normalize(1)
+	local l_Off = l_Player.m_TargetLookOffset
+	l_Off = l_Off * (-1.0)
+	l_Off.y = 0.0
+	l_Off:normalize(1)
+	local l_Yaw = l_CameraDirection:get_angle_with(l_Off)
+	local l_OriginYaw
+	if math.abs(l_Off.x) > math.abs(l_Off.z) then
+		l_OriginYaw = math.atan2(l_CameraDirection.z, l_CameraDirection.x)
+		if l_OriginYaw > 0 then
+			l_Yaw = -l_Yaw
+		end
+		if (l_Off.x < 0) then
+			l_Yaw = -l_Yaw
+		end
+	else
+		l_OriginYaw = math.atan2(l_CameraDirection.x, l_CameraDirection.z)
+		if l_OriginYaw < 0 then
+			l_Yaw = -l_Yaw
+		end
+		if (l_Off.x > 0) then
+			l_Yaw = -l_Yaw
+		end
+	end]]
+	
 	local l_ForwardMovement = 0
 	if l_Player.m_InputManager:is_action_active("MoveForward") then 
 		l_ForwardMovement = l_ForwardMovement+1
@@ -22,7 +63,7 @@ function ClimbingUpdate(args, _ElapsedTime)
 	end
 	
 	--// Move player vertically
-	local l_PlayerDisplacement = Vect3f(0, l_Speed * l_ForwardMovement * _ElapsedTime, 0)
+	l_PlayerDisplacement.y = l_PlayerDisplacement.y + (l_Speed * l_ForwardMovement * _ElapsedTime)
 	
 	--// Move the character controller
 	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
@@ -77,11 +118,13 @@ function ClimbingEnd(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_Target = nil
-	l_Player.m_IsInteracting = false
-	l_Player.m_IsClimbing = false
-	l_Player.m_IsCorrecting = false
 	l_Player.m_CameraController:unlock()
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
+end
+
+function ANYToClimbingCondition(args)
+	local l_Player = args["self"]
+	return l_Player.m_IsClimbing
 end
 
 function ClimbingToFallingCondition(args)

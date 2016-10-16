@@ -1,7 +1,6 @@
 function CorrectingFirst(args)
 	local l_Player = args["self"]
 	l_Player.m_CameraController:lock()
-	utils_log("CorrectingFirst")
 end
 
 function CorrectingUpdate(args, _ElapsedTime)
@@ -16,23 +15,20 @@ function CorrectingUpdate(args, _ElapsedTime)
 	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetPosOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
 	local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_FaceTargetDisplacement.y = 0.0
-	utils_log("Distance: "..l_FaceTargetDisplacement:length())
 	if l_FaceTargetDisplacement:length() <= 0.03 then
 		l_PosOK = true
-		utils_log("Pos OK")
 	else
 		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
 	end
+	
 		--// Rotation
 	local l_CameraDirection = l_Player.m_CameraController:get_forward()
 	l_CameraDirection.y = 0.0
 	l_CameraDirection:normalize(1)
-	--utils_log("Cam x: "..l_CameraDirection.x..", z:"..l_CameraDirection.z)
 	local l_Off = l_Player.m_TargetLookOffset
 	l_Off = l_Off * (-1.0)
 	l_Off.y = 0.0
 	l_Off:normalize(1)
-	--utils_log("Off x: "..l_Off.x..", z:"..l_Off.z)
 	local l_Yaw = l_CameraDirection:get_angle_with(l_Off)
 	local l_OriginYaw
 	if math.abs(l_Off.x) > math.abs(l_Off.z) then
@@ -55,16 +51,14 @@ function CorrectingUpdate(args, _ElapsedTime)
 	
 	if l_Yaw <= 0.01 and l_Yaw >= -0.01 then
 		l_AngleOK = true
-		utils_log("Angle OK")
 	else
 		l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
-		--utils_log("Yaw: "..l_Yaw)
 	end
 		
 	if l_PosOK and l_AngleOK then
 		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement, _ElapsedTime)
 		l_Player.m_CameraController:add_yaw(l_Yaw)
-		CheckClimbingOrInteracting(l_Player)
+		l_Player.m_IsCorrecting = false
 	end
 	
 	--// Assign to the character the controller's position
@@ -108,15 +102,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 end
 
 function CorrectingEnd(args)
-	utils_log("CorrectingEnd")
-end
-
-function CheckClimbingOrInteracting(_Player)
-	if (_Player.m_IsInteracting) then
-		_Player.m_IsClimbing = true
-	else
-		_Player.m_IsClimbing = false
-	end
+	
 end
 
 function ANYToCorrectingCondition(args)
@@ -126,15 +112,10 @@ end
 
 function CorrectingToPuzzleCondition(args)
 	local l_Player = args["self"]
-	return (l_Player.m_IsPuzzle and ((l_Player.m_IsInteracting and l_Player.m_IsClimbing) or (not l_Player.m_IsInteracting and not l_Player.m_IsClimbing)))
+	return l_Player.m_IsPuzzle and not l_Player.m_IsCorrecting
 end
 
 function CorrectingToInteractingCondition(args)
 	local l_Player = args["self"]
-	return (not l_Player.m_IsPuzzle and l_Player.m_IsInteracting and l_Player.m_IsClimbing)
-end
-
-function CorrectingToClimbingCondition(args)
-	local l_Player = args["self"]
-	return (not l_Player.m_IsPuzzle and not l_Player.m_IsInteracting and not l_Player.m_IsClimbing)
+	return l_Player.m_IsInteracting and not l_Player.m_IsCorrecting
 end

@@ -1,5 +1,4 @@
 function MovingFirst(args)
-	utils_log("Player Moving First")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	if l_Player.m_CurrentAnimation == "move" then
@@ -13,7 +12,6 @@ function MovingFirst(args)
 end
 
 function MovingUpdate(args, _ElapsedTime)
-	utils_log("Player Moving Update")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	local l_ForwardMovement = 0
@@ -102,7 +100,6 @@ function MovingUpdate(args, _ElapsedTime)
 end
 
 function MovingEnd(args)
-	utils_log("Player Moving End")
 	local l_Owner = args["owner"]
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
 end

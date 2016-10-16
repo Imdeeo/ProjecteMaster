@@ -67,20 +67,20 @@ function StateMachine:update(args, elapsed_time)
 	end
 	state.update_function(args,elapsed_time)
 
-	utils_log("end update function")
+	--utils_log("end update function")
 	
 	local change = false
 	local prev_state
 	
 	for i = 0, state.n_conditions - 1 do
 		local cond = state.conditions[i]
-		utils_log("condition "..cond.state2go)
+		--utils_log("condition "..cond.state2go)
 		if self.states[cond.state2go].activate then
 			if cond.condition(args) then
 				change = true
 				prev_state = self.actual_state
 				self.actual_state = cond.state2go
-				utils_log("self.actual_state"..self.actual_state)
+				--utils_log("self.actual_state"..self.actual_state)
 				self.states[self.actual_state].is_first = true
 			end
 		end
