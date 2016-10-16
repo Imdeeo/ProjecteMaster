@@ -1,7 +1,7 @@
 function OnEnterStairsUpper(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		local l_Player = m_CharacterManager.m_Player[1]
-		l_Player.m_TargetLookOffset = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
+		l_Player.m_TargetLookOffset = Vect3f(-0.70710678118654752440084436210485, 0.0, -0.70710678118654752440084436210485)
 		l_Player.m_TargetPosOffset = Vect3f(0.4, 0.0, 0.4)
 		l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
 		if l_Player.m_IsClimbing then

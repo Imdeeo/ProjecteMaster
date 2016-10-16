@@ -3,6 +3,7 @@ function ClimbingFirst(args)
 	local l_Player = args["self"]
 	l_Player.m_CameraController:lock()
 	l_Owner:blend_cycle(1,1.0,0.1)
+	utils_log_v3(l_Player.m_CameraController:get_forward())
 end
 
 function ClimbingUpdate(args, _ElapsedTime)
@@ -14,40 +15,28 @@ function ClimbingUpdate(args, _ElapsedTime)
 		--// Movement
 	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetPosOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
 	local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	utils_log_v3(l_Pos)
-	utils_log_v3(l_Player.m_Target)
 	l_FaceTargetDisplacement.y = 0.0
 	if l_FaceTargetDisplacement:length() > 0.03 then
 		l_PlayerDisplacement = l_PlayerDisplacement + l_FaceTargetDisplacement:get_normalized(1)
 	end
 	
 		--// Rotation
-	--[[local l_CameraDirection = l_Player.m_CameraController:get_forward()
+	local l_CameraDirection = l_Player.m_CameraController:get_forward()
 	l_CameraDirection.y = 0.0
 	l_CameraDirection:normalize(1)
 	local l_Off = l_Player.m_TargetLookOffset
-	l_Off = l_Off * (-1.0)
-	l_Off.y = 0.0
-	l_Off:normalize(1)
 	local l_Yaw = l_CameraDirection:get_angle_with(l_Off)
-	local l_OriginYaw
-	if math.abs(l_Off.x) > math.abs(l_Off.z) then
-		l_OriginYaw = math.atan2(l_CameraDirection.z, l_CameraDirection.x)
-		if l_OriginYaw > 0 then
-			l_Yaw = -l_Yaw
-		end
-		if (l_Off.x < 0) then
-			l_Yaw = -l_Yaw
-		end
-	else
-		l_OriginYaw = math.atan2(l_CameraDirection.x, l_CameraDirection.z)
-		if l_OriginYaw < 0 then
-			l_Yaw = -l_Yaw
-		end
-		if (l_Off.x > 0) then
-			l_Yaw = -l_Yaw
-		end
-	end]]
+	
+	local l_OriginYaw = math.atan2(l_CameraDirection.z, l_CameraDirection.x)
+	utils_log("Origin Yaw: "..l_OriginYaw)
+	if l_OriginYaw > -2.36 and l_OriginYaw < 0.0 then
+		l_Yaw = l_Yaw * (-1.0)
+	end
+	utils_log("Yaw: "..l_Yaw)
+	
+	if l_Yaw > 0.01 or l_Yaw < -0.01 then
+		l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
+	end
 	
 	local l_ForwardMovement = 0
 	if l_Player.m_InputManager:is_action_active("MoveForward") then 
