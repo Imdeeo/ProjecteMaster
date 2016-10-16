@@ -7,7 +7,7 @@
 #include "Utils\TemplatedMapManager.h"
 #include "Cinematic.h"
 
-class CCinematicManager : public CRenderableObject, public CTemplatedMapManager<CCinematic>
+class CCinematicManager : public CRenderableObject, public CTemplatedLevelMapManager<CCinematic>
 {
 protected:
 	std::vector<CCinematicObject *> m_CinematicObjects;
@@ -15,7 +15,7 @@ protected:
 public:
 	CCinematicManager();
 	virtual ~CCinematicManager();
-	void LoadXML(const std::string &FileName);
+	void LoadXML(const std::string &FileName, const std::string &_LevelId);
 	void Reload();
 	void Update(float _ElapsedTime);
 	virtual void Render(CRenderManager *RenderManager){};

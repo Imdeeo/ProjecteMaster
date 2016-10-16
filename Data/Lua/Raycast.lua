@@ -7,16 +7,14 @@ dofile("Data\\Lua\\Raycast\\Biblioteca.lua")
 function CheckRaycast(_Player, _Pos, _Camera, _Owner)
 	_Player.m_RaycastData = RaycastData()
 	_Player.m_PhysXManager:raycast(_Camera:get_position(), _Camera:get_position()+(_Camera:get_forward()*1.7), 4, _Player.m_RaycastData)
-	--utils_log(_Player.m_RaycastData.actor_name)
-	local l_LayerManager = g_Engine:get_layer_manager()
+	
+	local l_LayerManager = g_Engine:get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager()--utils_log("CheckRaycast3: ".._Player.m_RaycastData.actor_name)
 	if _Player.m_RaycastData.actor_name ~= "" then
 		local l_Trigger = l_LayerManager:get_layer("triggers"):get_resource(_Player.m_RaycastData.actor_name)
-		
 		if l_LayerManager:get_layer("interactuable_objects"):get_resource(l_Trigger:get_interactuable_object_name()) == nil then
 			local l_InteractuableObject = l_LayerManager:get_layer("solid"):get_resource(l_Trigger:get_interactuable_object_name())
 			l_LayerManager:get_layer("interactuable_objects"):add_resource(l_InteractuableObject.name, l_InteractuableObject)
 		end
-		
 		if _Player.m_InputManager:is_action_active("Interact") then
 			TriggerRaycast(_Player, _Pos, _Owner)
 		end
@@ -26,9 +24,9 @@ function CheckRaycast(_Player, _Pos, _Camera, _Owner)
 end
 
 function TriggerRaycast(_Player, _Pos, _Owner)
-	utils_log(_Player.m_RaycastData.actor_name)
-	l_LevelID = g_Engine:get_level_loaded()
-	if l_LevelID == "1" then
+	utils_log("triggers_raycast")
+	l_LevelID = _Player.m_ActualLevel
+	if l_LevelID == "Recibidor" then
 		if _Player.m_RaycastData.actor_name == "TriggerDoor" then
 			if _Player.m_ItemName == "LlaveRecibidor" then
 				R1Door(_Player, _Pos)
@@ -52,7 +50,7 @@ function TriggerRaycast(_Player, _Pos, _Owner)
 				R1Key(_Player, _Pos)
 			end
 		end
-	elseif l_LevelID == "2" then
+	elseif l_LevelID == "Biblioteca" then
 		if _Player.m_RaycastData.actor_name == "TriggerOrganKeyA" then
 			R2TriggerOrganKeyA(_Player, _Owner)
 		elseif _Player.m_RaycastData.actor_name == "TriggerOrganKeyB" then

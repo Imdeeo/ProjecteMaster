@@ -6,7 +6,7 @@ class CRenderAxisSceneRenderCommand :
 	public CSceneRendererCommand
 {
 public:
-	CRenderAxisSceneRenderCommand(tinyxml2::XMLElement* TreeNode);
+	CRenderAxisSceneRenderCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CRenderAxisSceneRenderCommand();
 
 	void Execute(CRenderManager &RenderManager);

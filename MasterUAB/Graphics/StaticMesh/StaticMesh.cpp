@@ -10,6 +10,8 @@
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
 #include "RenderableObjects\RenderableObjectTechnique.h"
 
+#include "LevelManager\LevelManager.h"
+
 #include "Utils.h"
 
 #include <iostream>
@@ -21,7 +23,7 @@
 #define HEADER 65109
 #define FOOTER 22014
 
-CStaticMesh::CStaticMesh(void):CNamed(""),
+CStaticMesh::CStaticMesh(const std::string &_LevelId):CNamed(""),CLevelInfo(_LevelId),
 	m_BoundingSphereRadius(0.f)
 {	
 }
@@ -77,7 +79,7 @@ bool CStaticMesh::Load(const std::string &FileName)
 					l_BufferString.append(&l_BufferChar, sizeof(l_BufferChar));
 				}
 				l_File.read(&l_BufferChar, sizeof(l_BufferChar));
- 				m_Materials.push_back(UABEngine.GetMaterialManager()->GetResource(l_BufferString));
+ 				m_Materials.push_back(UABEngine.GetLevelManager()->GetResource(m_Level)->GetMaterialManager()->GetResource(l_BufferString));
 			}
 
 			for(int i=0; i<l_NumMaterials; i++)
@@ -259,9 +261,6 @@ bool CStaticMesh::Load(const std::string &FileName)
 			l_BoundingBox = malloc(l_NumBytes);
 			l_File.read((char *) l_BoundingBox, l_NumBytes);
 
-			if (m_Name == "TriggerOrganKeyA")
-				UtilsLog("Stahp");
-			
 			m_BoundingBoxMin.x = ((float*)l_BoundingBox)[0];
 			m_BoundingBoxMin.y = ((float*)l_BoundingBox)[1];
 			m_BoundingBoxMin.z = ((float*)l_BoundingBox)[2];

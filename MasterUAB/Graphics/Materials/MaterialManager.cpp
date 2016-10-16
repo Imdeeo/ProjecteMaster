@@ -10,29 +10,30 @@ CMaterialManager::~CMaterialManager()
 {
 
 }
-void CMaterialManager::Load(const std::string &LevelMaterialsFilename, const std::string &DefaultMaterialsFilename)
+void CMaterialManager::Load(const std::string &LevelMaterialsFilename, const std::string &_LevelId, const std::string &DefaultMaterialsFilename)
 {
 	m_LevelMaterialsFilename = LevelMaterialsFilename;
 	m_DefaultMaterialsFilename = DefaultMaterialsFilename;
 
+	m_LevelId = _LevelId;
 	//Destroy();
 
-	LoadMaterialsFromFile(LevelMaterialsFilename);
+	LoadMaterialsFromFile(LevelMaterialsFilename, _LevelId, false, nullptr);
 	if (DefaultMaterialsFilename != "")
-		LoadMaterialsFromFile(DefaultMaterialsFilename);
+		LoadMaterialsFromFile(DefaultMaterialsFilename,_LevelId,false,nullptr);
 }
 
 void CMaterialManager::Reload()
 {
 	std::map<std::string, std::string> l_MaterialNames;
 	if (m_DefaultMaterialsFilename != "") {
-		LoadMaterialsFromFile(m_DefaultMaterialsFilename, true, &l_MaterialNames);
+		LoadMaterialsFromFile(m_DefaultMaterialsFilename, m_LevelId , true, &l_MaterialNames);
 	}
-	LoadMaterialsFromFile(m_LevelMaterialsFilename, true, &l_MaterialNames);
+	LoadMaterialsFromFile(m_LevelMaterialsFilename, m_LevelId, true, &l_MaterialNames);
 	//RemoveAllBut(l_MaterialNames);
 }
 
-void CMaterialManager::LoadMaterialsFromFile(const std::string &Filename, bool Update, std::map<std::string, std::string> *UpdatedNames)
+void CMaterialManager::LoadMaterialsFromFile(const std::string &Filename, const std::string &_LevelId, bool Update, std::map<std::string, std::string> *UpdatedNames)
 {
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLError l_Error = doc.LoadFile(Filename.c_str());
@@ -51,13 +52,13 @@ void CMaterialManager::LoadMaterialsFromFile(const std::string &Filename, bool U
 			{
 				if (l_ElementAux->Name() == std::string("material"))
 				{
-					CMaterial* l_Material = new CMaterial(l_ElementAux);
+					CMaterial* l_Material = new CMaterial(l_ElementAux,_LevelId);
 					if (Update)
 					{
 						AddUpdateResource(l_ElementAux->GetPszProperty("name"), l_Material);
 					}
 					else {
-						AddResource(l_ElementAux->GetPszProperty("name"), l_Material);
+						AddResource(l_ElementAux->GetPszProperty("name"), l_Material, _LevelId);
 					}
 					if (UpdatedNames != nullptr)
 					{

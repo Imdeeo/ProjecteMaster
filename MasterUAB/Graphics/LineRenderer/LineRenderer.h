@@ -38,7 +38,7 @@ private:
 	CColor m_Color;
 
 public:
-	CLineRenderer(tinyxml2::XMLElement* TreeNode);
+	CLineRenderer(tinyxml2::XMLElement* TreeNode,const std::string &_LevelId);
 	virtual ~CLineRenderer();
 
 	CRenderableObjectTechnique* GetRenderableObjectTechnique();

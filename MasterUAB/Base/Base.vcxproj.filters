@@ -73,6 +73,9 @@
     <ClInclude Include="XML\tinyxml2.h">
       <Filter>XML</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\LevelInfo.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -122,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="XML\tinyxml2.cpp">
       <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\LevelInfo.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -56,12 +56,20 @@ void CApplication::Update(float _ElapsedTime)
 
 		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderLights))
 		{
-			UABEngine.GetLightManager()->SwitchRenderLights();
+			for (size_t i = 0; i < UABEngine.GetLevelManager()->GetResourcesVector().size(); i++)
+			{
+				if(UABEngine.GetLevelManager()->GetResourcesVector()[i]->IsVisible())
+					UABEngine.GetLevelManager()->GetResourcesVector()[i]->GetLightManager()->SwitchRenderLights();
+			}
 		}
 
 		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugToggleRenderAStar))
 		{
-			UABEngine.GetAStarManager()->GetResource("level_" + UABEngine.GetLevelLoaded())->SwitchRenderNodes();
+			for (size_t i = 0; i < UABEngine.GetLevelManager()->GetResourcesVector().size(); i++)
+			{
+				if (UABEngine.GetLevelManager()->GetResourcesVector()[i]->IsVisible())
+					UABEngine.GetLevelManager()->GetResourcesVector()[i]->GetAStarManager()->GetResource(UABEngine.GetLevelManager()->GetResourcesVector()[i]->GetName())->SwitchRenderNodes();
+			}
 		}
 
 		if (l_InputMap->GetBoolWasDown(CInputManager::Actions::DebugChangeCamera))

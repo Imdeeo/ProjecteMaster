@@ -1,6 +1,8 @@
 dofile("Data\\Lua\\Raycast\\PipeOrgan.lua")
 dofile("Data\\Lua\\Raycast\\Helpers.lua")
 
+local l_LevelId = "Biblioteca"
+
 function R2TriggerOrganKeyA(_Player, _Owner)
 	--play key sound
 	_Owner:remove_action(_Owner:get_actual_action_animation())
@@ -53,7 +55,7 @@ end
 function R2TriggerPipeOrgan(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -1.0)
-	l_Target = GetTriggerPos("TriggerPipeOrgan")
+	l_Target = GetTriggerPos("TriggerPipeOrgan",l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
 		_Player.m_Target = l_Target
 		_Player.m_AnimationTime = 0.6667
@@ -72,7 +74,7 @@ end
 function R2Artifact(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.6)
-	l_Target = GetTriggerPos("TriggerArtifact")
+	l_Target = GetTriggerPos("TriggerArtifact",l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
 		_Player.m_Target = l_Target
 		_Player.m_AnimationTime = 5
@@ -95,7 +97,7 @@ end
 function R2ArtifactDoor(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
 	_Player.m_TargetPosOffset = Vect3f(0.5, 0.0, -0.5)
-	l_Target = GetTriggerPos("TriggerArtifactDoor")
+	l_Target = GetTriggerPos("TriggerArtifactDoor",l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.2) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 5
@@ -115,7 +117,7 @@ end
 function R2Clue(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(-0.86, 0.0, 0.0)
-	l_Target = GetTriggerPos("TriggerClue")
+	l_Target = GetTriggerPos("TriggerClue",l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.6) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 7
@@ -137,7 +139,7 @@ end
 function R2Book(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.86)
-	l_Target = GetTriggerPos("TriggerBook")
+	l_Target = GetTriggerPos("TriggerBook",l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 17

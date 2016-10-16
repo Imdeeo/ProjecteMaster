@@ -8,13 +8,15 @@
 
 #include "Layers\LayerManager.h"
 
-CFPSCameraController::CFPSCameraController(tinyxml2::XMLElement* TreeNode) :CCameraController(TreeNode)
+#include "LevelManager\LevelManager.h"
+
+CFPSCameraController::CFPSCameraController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CCameraController(TreeNode,_LevelId)
 , m_Locked(false)
 , m_YawSpeed(2.5f)
 , m_PitchSpeed(2.f)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
-, m_Target(UABEngine.GetLayerManager()->GetResource(TreeNode->GetPszProperty("layer"))->GetResource(TreeNode->GetPszProperty("target")))
+, m_Target(UABEngine.GetLevelManager()->GetResource("Player")->GetLayerManager()->GetResource(TreeNode->GetPszProperty("layer"))->GetResource(TreeNode->GetPszProperty("target")))
 , m_Offset(Vect3f(.0f, TreeNode->GetFloatProperty("offset", .0f), .0f))
 {
 	m_Rotation.SetFromAngleAxis(m_Offset, 0);

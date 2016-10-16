@@ -1,4 +1,6 @@
 function InteractingFirst(args)
+	utils_log("InteractingFirst")
+	
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	
@@ -13,11 +15,7 @@ function InteractingFirst(args)
 	
 	if l_Player.m_CameraAnimation ~= nil then
 		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, true)
-		utils_log("Animated Camera: "..l_Player.m_CameraAnimation)
-	else
-		utils_log("Animated Camera: Null")
 	end
-	utils_log("InteractingFirst")
 end
 
 function InteractingUpdate(args, _ElapsedTime)
@@ -38,7 +36,7 @@ function InteractingUpdate(args, _ElapsedTime)
 		l_Player.m_ItemName = l_Player.m_NewItemName
 		l_Player.m_NewItemName = ""
 		if l_Player.m_ItemName ~= "" then
-			l_Player.m_Item = CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
+			l_Player.m_Item = CUABEngine.get_instance():get_level_manager():get_level(l_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
 		else
 			l_Player.m_Item = nil
 		end
@@ -74,7 +72,8 @@ function InteractingUpdate(args, _ElapsedTime)
 end
 
 function InteractingEnd(args)
-	utils_log("InteractingEnd start")
+	utils_log("InteractingEnd")
+	
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	if l_Player.m_CameraAnimation ~= nil then
@@ -103,7 +102,6 @@ function InteractingEnd(args)
 	l_Player.m_AnimationTime = 0
 	l_Player.m_CameraController:unlock()
 	l_Owner:remove_action(l_Owner:get_actual_action_animation())
-	utils_log("InteractingEnd completed")
 end
 
 function InteractingToFallingCondition(args)

@@ -1,7 +1,7 @@
 #include "LoadScreenManager.h"
 #include "XML\tinyxml2.h"
 #include "Effects\EffectManager.h"
-#include "Texture\TextureManager.h"
+#include "Texture\Texture.h"
 #include "ContextManager\ContextManager.h"
 #include "RenderManager\RenderManager.h"
 #include "Utils.h"
@@ -107,26 +107,13 @@ void CLoadScreenManager::RenderLoadScreen()
 		{
 			++m_Count;
 			m_Texture->Load(m_LoadScreens[m_Count]->file);
-		}
-		l_ContextManager->BeginRender();
-		_RenderManager->SetMatrixViewProjection();
-		_RenderManager->Clear(true, true);
-		_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
-		CEffectManager::SetSceneConstants(m_LoadTechnique);
-		if (m_LoadScreens[m_Count]->animated)
-		{
-			m_Angle = -m_Timer*0.2f;
-			memcpy(m_EffectAddress, &m_Angle, sizeof(float));
-			_RenderManager->DrawScreenQuad(m_LoadTechnique, m_Texture, 0.88, 0.8, 0.09, 0.16, CColor(1.f, 1.f, 1.f, 1.f));
-		}
-		else
-		{
-			m_Angle = 0;
-			memcpy(m_EffectAddress, &m_Angle, sizeof(float));
+			l_ContextManager->BeginRender();
+			_RenderManager->SetMatrixViewProjection();
+			_RenderManager->Clear(true, true);
+			_RenderManager->GetContextManager()->SetWorldMatrix(m44fIDENTITY);
 			_RenderManager->DrawScreenQuad(m_LoadTechnique, m_Texture, 0.0, 0.0, 1.0, 1.0, CColor(1.f, 1.f, 1.f, 1.f));
+			l_ContextManager->EndRender();
 		}
-	
-		l_ContextManager->EndRender();
 	}
 	_RenderManager->EnableAlphaBlendState();
 }
@@ -146,5 +133,5 @@ void CLoadScreenManager::Destroy()
 
 	m_LoadScreens.clear();
 	CHECKED_DELETE(m_LoadTechnique);
-	//CHECKED_DELETE(m_Texture);
+	CHECKED_DELETE(m_Texture);
 }

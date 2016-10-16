@@ -30,7 +30,7 @@ protected:
 	std::vector<ID3D11RenderTargetView*>	m_RenderTargetViews;
 
 public:
-	CStagedTexturedSceneRendererCommand(tinyxml2::XMLElement* TreeNode);
+	CStagedTexturedSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CStagedTexturedSceneRendererCommand(void);
 
 	void CreateRenderTargetViewVector();
