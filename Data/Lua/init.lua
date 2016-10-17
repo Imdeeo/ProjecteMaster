@@ -275,7 +275,7 @@ function luaGui(_ElapsedTime)
 				m_confirm = true
 			end
 		else			
-			m_Timer = m_Timer + _ElapsedTime / 50.0
+			m_Timer = m_Timer + _ElapsedTime * 0.02
 			
 			gui_manager:do_panel("mainMenuFondo", "fondo1", gui_position, 0.0)
 			gui_manager:do_panel("mainMenuFondoAnimado", "fondo1_1", gui_position, m_Timer)
