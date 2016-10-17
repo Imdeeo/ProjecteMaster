@@ -333,7 +333,7 @@ function RegisterParticlesBar()
 	local LayerParticleControllerManager = l_LevelManager:get_layer_manager()
 	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Particles\");RegisterMainBar()","");
-	DebugHelper:add_lua_button("Reload All","LayerParticleControllerManager:reload();CDebugHelper.get_debug_helper():remove_bar(\"Particles\");RegisterParticlesBar()","");
+	DebugHelper:add_lua_button("Reload All","g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Particles\");RegisterParticlesBar()","");
 	DebugHelper:add_lua_button("Save","SaveParticles()","");
 	
 	local ParticlesLayer = LayerParticleControllerManager:get_layer("particles") --get_address
@@ -444,9 +444,10 @@ function RegisterParticleParameters(particle_name)
 end
 
 function SaveParticles()
-	CUABEngine.get_instance():get_particle_manager():save()
-	CUABEngine.get_instance():get_material_manager():save()
-	CUABEngine.get_instance():get_layer_manager():save()
+	local l_LevelManager = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
+	l_LevelManager:get_particle_manager():save()
+	l_LevelManager:get_material_manager():save()
+	l_LevelManager:get_layer_manager():save()
 end 
 
 function ReloadParticle(_textureName)
@@ -462,12 +463,12 @@ function RegisterManchasBar()
 	DebugHelper:remove_bar("MainBar")
 	DebugHelper:start_register_bar("Manchas")
 	
-	local l_LevelManager = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
+	local l_LevelManager = g_Engine:get_level_manager():get_level("Player")
 	local LayerManchasControllerManager = l_LevelManager:get_layer_manager()
 	
 	DebugHelper:add_lua_button("Back","CDebugHelper.get_debug_helper():remove_bar(\"Manchas\");RegisterMainBar()","");
-	DebugHelper:add_lua_button("Reload All","CUABEngine.get_instance():get_manchas_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Manchas\");RegisterManchasBar()","");
-	--DebugHelper:add_lua_button("Save","SaveManchas()","");
+	DebugHelper:add_lua_button("Reload All","g_Engine:get_level_manager():get_level(\"Player\"):get_manchas_manager():reload();CDebugHelper.get_debug_helper():remove_bar(\"Manchas\");RegisterManchasBar()","");
+	DebugHelper:add_lua_button("Save","SaveManchas()","");
 	
 	local ManchasLayer = LayerManchasControllerManager:get_layer("manchas") --get_address
 	
@@ -484,7 +485,7 @@ function RegisterManchasParameters(manchas_name)
 	local UABEngine = CUABEngine.get_instance()
 	local DebugHelper = CDebugHelper.get_debug_helper()
 	
-	local l_LevelManager = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
+	local l_LevelManager = g_Engine:get_level_manager():get_level("Player")
 	local LayerManchasControllerManager = l_LevelManager:get_layer_manager()
 	
 	local bar_name = "Mancha: "..manchas_name
@@ -515,6 +516,13 @@ function RegisterManchasParameters(manchas_name)
 
 	DebugHelper:register_bar()
 end
+
+function SaveManchas()
+	local l_LevelManager = g_Engine:get_level_manager():get_level("Player")
+	l_LevelManager:get_manchas_manager():save()
+	l_LevelManager:get_material_manager():save()
+	l_LevelManager:get_layer_manager():save()
+end 
 
 function RegisterLineRenderBar()
 

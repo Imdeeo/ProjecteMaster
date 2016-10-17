@@ -1519,7 +1519,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<>())
 			.def("load", &CManchasManager::Load)
 			.def("reload", &CManchasManager::Reload)
-			//.def("save", &CManchasManager::Save)
+			.def("save", &CManchasManager::Save)
 	];
 
 	module(m_LS)[
