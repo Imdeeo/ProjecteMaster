@@ -99,8 +99,10 @@ void CCameraControllerManager::Init()
 bool CCameraControllerManager::Reload()
 {
 	Destroy();
-	bool l_loadResult = Load(m_Filename,"");
-	return l_loadResult;
+	TLevelInfo l_LevelDirectory = UABEngine.GetLevelManager()->GetLevelInfo(UABEngine.GetLevelManager()->GetActualLevel());
+	Load("Data\\level_0\\cameras.xml", "Player");
+	Load(l_LevelDirectory.m_Directory + "\\cameras.xml", UABEngine.GetLevelManager()->GetActualLevel());
+	return true;
 }
 
 void CCameraControllerManager::UpdateMainCamera(float _ElapsedTime)
