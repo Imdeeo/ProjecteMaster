@@ -225,7 +225,6 @@ class 'CPlayer' (CLUAComponent)
 	
 	function CPlayer:ModifySanity(_amount)
 		self.m_Sanity = math.max(math.min(self.m_Sanity + _amount, self.m_MaxSanity),0)
-		utils_log("CORDURA: "..self.m_Sanity)
 		if self.m_Sanity <= 0 then
 			utils_log("ESTAS MUERTO!!!")
 			g_Engine:set_pause(true)

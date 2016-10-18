@@ -63,6 +63,10 @@ function MovingUpdate(args, _ElapsedTime)
 	--// Save speed in last update so we can create acceleration
 	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
 	l_Player.m_Velocity = l_Displacement/_ElapsedTime
+    if l_Player.m_Velocity.y > 0 then
+        l_Player.m_Velocity.y = 0
+    end
+
 	
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()

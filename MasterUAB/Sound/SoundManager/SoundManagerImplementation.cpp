@@ -141,11 +141,11 @@ void CSoundManagerImplementation::RegisterSpeaker(const C3DElement* _speaker)
 
 	AkSoundPosition l_SoundPosition = {};
 
-	l_SoundPosition.Position.X = l_Position.x;
+	l_SoundPosition.Position.X = -l_Position.x;
 	l_SoundPosition.Position.Y = l_Position.y;
 	l_SoundPosition.Position.Z = l_Position.z;
 
-	l_SoundPosition.Orientation.X = l_Orientation.x;
+	l_SoundPosition.Orientation.X = -l_Orientation.x;
 	l_SoundPosition.Orientation.Y = l_Orientation.y;
 	l_SoundPosition.Orientation.Z = l_Orientation.z;
 
@@ -282,11 +282,11 @@ bool CSoundManagerImplementation::LoadSpeakersXML()
 
 			AkSoundPosition l_SoundPosition = {};
 
-			l_SoundPosition.Position.X = l_Position.x;
+			l_SoundPosition.Position.X = -l_Position.x;
 			l_SoundPosition.Position.Y = l_Position.y;
 			l_SoundPosition.Position.Z = l_Position.z;
 
-			l_SoundPosition.Orientation.X = l_Orientation.x;
+			l_SoundPosition.Orientation.X = -l_Orientation.x;
 			l_SoundPosition.Orientation.Y = l_Orientation.y;
 			l_SoundPosition.Orientation.Z = l_Orientation.z;
 
@@ -334,11 +334,11 @@ void CSoundManagerImplementation::Update(const CCamera *camera)
 
 		AkSoundPosition l_SoundPosition = {};
 
-		l_SoundPosition.Position.X = l_Position.x;
+		l_SoundPosition.Position.X = -l_Position.x;
 		l_SoundPosition.Position.Y = l_Position.y;
 		l_SoundPosition.Position.Z = l_Position.z;
 
-		l_SoundPosition.Orientation.X = l_Orientation.x;
+		l_SoundPosition.Orientation.X = -l_Orientation.x;
 		l_SoundPosition.Orientation.Y = l_Orientation.y;
 		l_SoundPosition.Orientation.Z = l_Orientation.z;
 
@@ -351,20 +351,20 @@ void CSoundManagerImplementation::Update(const CCamera *camera)
 void CSoundManagerImplementation::SetListenerPosition(const CCamera *camera)
 {
 	Vect3f l_Position = camera->GetPosition();
-	Vect3f l_Orientation = camera->GetLookAt();
+	Vect3f l_Orientation = (camera->GetLookAt() - camera->GetPosition()).Normalize();
 	Vect3f l_VectorUp = camera->GetUp();
 
 	AkListenerPosition l_ListenerPosition = {};
 
-	l_ListenerPosition.Position.X = l_Position.x;
+	l_ListenerPosition.Position.X = -l_Position.x;
 	l_ListenerPosition.Position.Y = l_Position.y;
 	l_ListenerPosition.Position.Z = l_Position.z;
 
-	l_ListenerPosition.OrientationFront.X = l_Orientation.x;
+	l_ListenerPosition.OrientationFront.X = -l_Orientation.x;
 	l_ListenerPosition.OrientationFront.Y = l_Orientation.y;
 	l_ListenerPosition.OrientationFront.Z = l_Orientation.z;
 
-	l_ListenerPosition.OrientationTop.X = l_VectorUp.x;
+	l_ListenerPosition.OrientationTop.X = -l_VectorUp.x;
 	l_ListenerPosition.OrientationTop.Y = l_VectorUp.y;
 	l_ListenerPosition.OrientationTop.Z = l_VectorUp.z;
 
