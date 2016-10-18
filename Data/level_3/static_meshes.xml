@@ -84,6 +84,7 @@
 	<static_mesh name="PlanchaCinta2_001" filename="Data\level_3\Meshes\PlanchaCinta2_001.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="PlanchaCinta4_001" filename="Data\level_3\Meshes\PlanchaCinta4_001.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="Aplastador_21gramos" filename="Data\level_3\Meshes\Aplastador_21gramos.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="EngTritIZQ_21gramos" filename="Data\level_3\Meshes\EngTritIZQ_21gramos.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="EngTritDER_21gramos" filename="Data\level_3\Meshes\EngTritDER_21gramos.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="Centrifugador_21gramos" filename="Data\level_3\Meshes\Centrifugador_21gramos.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="Pendulo" filename="Data\level_3\Meshes\Pendulo.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>

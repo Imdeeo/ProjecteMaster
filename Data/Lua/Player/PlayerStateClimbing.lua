@@ -1,3 +1,5 @@
+dofile("Data\\Lua\\Player\\Helpers.lua")
+
 function ClimbingFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
@@ -28,11 +30,9 @@ function ClimbingUpdate(args, _ElapsedTime)
 	local l_Yaw = l_CameraDirection:get_angle_with(l_Off)
 	
 	local l_OriginYaw = math.atan2(l_CameraDirection.z, l_CameraDirection.x)
-	utils_log("Origin Yaw: "..l_OriginYaw)
 	if l_OriginYaw > -2.36 and l_OriginYaw < 0.0 then
 		l_Yaw = l_Yaw * (-1.0)
 	end
-	utils_log("Yaw: "..l_Yaw)
 	
 	if l_Yaw > 0.01 or l_Yaw < -0.01 then
 		l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
@@ -106,7 +106,12 @@ end
 function ClimbingEnd(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	l_Player.m_Target = nil
+
+	--// Aend thing, this should be done after interacting
+	ClearPlayerAend(l_Player)
+	
+	ClearPlayerTarget(l_Player)
+	l_Player.m_IsClimbing = false
 	l_Player.m_CameraController:unlock()
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
 end
@@ -114,6 +119,11 @@ end
 function ANYToClimbingCondition(args)
 	local l_Player = args["self"]
 	return l_Player.m_IsClimbing
+end
+
+function ClimbingToInteractingCondition(args)
+	local l_Player = args["self"]
+	return l_Player.m_IsInteracting
 end
 
 function ClimbingToFallingCondition(args)

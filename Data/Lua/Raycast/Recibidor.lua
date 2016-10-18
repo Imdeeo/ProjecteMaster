@@ -1,4 +1,4 @@
-dofile("Data\\Lua\\Raycast\\Helpers.lua")
+dofile("Data\\Lua\\Player\\Helpers.lua")
 
 R1TrayR1IsClosed = true
 R1TrayR2IsClosed = true
