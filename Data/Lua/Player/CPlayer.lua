@@ -162,10 +162,10 @@ class 'CPlayer' (CLUAComponent)
 		self.m_IsDead = false
 		
 		self.m_Target = nil
-		self.m_TargetPosOffset = Vect3f(1.0, 0.0, 0.0)
-		self.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
-		self.m_ItemName = ""--"Artilufacto"
-		self.m_Item = nil--CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(self.m_ItemName)
+		self.m_TargetPosOffset = Vect3f(0.0, 0.0, 0.0)
+		self.m_TargetLookOffset = Vect3f(0.0, 0.0, 0.0)
+		self.m_ItemName = ""
+		self.m_Item = nil
 		self.m_LeftHanded = false
 		self.m_NewItemName = ""
 		self.m_ItemTime = 0.0
@@ -187,7 +187,6 @@ class 'CPlayer' (CLUAComponent)
 		self.m_OrganKeyCount = 1
 		self.m_OrganKeyOrder = {"A", "G"}
 		--{"A", "B", "C", "D", "E", "F", "G"}
-		--table:setn(self.m_OrganKeyOrder, 2)
 		
 		self.m_CurrentAend = nil
 		self.m_Aends = {}
@@ -428,6 +427,7 @@ class 'CPlayer' (CLUAComponent)
 		ClimbingState:set_do_end_function(ClimbingEnd)
 		ClimbingState:add_condition(ClimbingToFallingCondition, "Falling")
 		ClimbingState:add_condition(ANYToDeadCondition, "Dead")
+		ClimbingState:add_condition(ClimbingToInteractingCondition, "Interacting")
 		
 		JumpingState = State.create(JumpingUpdate)
 		JumpingState:set_do_first_function(JumpingFirst)

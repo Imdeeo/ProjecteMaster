@@ -152,7 +152,7 @@
 	<instance_mesh name="PlanchaCinta5_025" layer ="solid" core_name="PlanchaCinta5_001" position="15.8288 -0.242812 16.2054" rotation="-0.903625 -3.49685e-007 1.81091e-007 -0.428325" create_physics="false" visible="true"/>
 	<instance_mesh name="PlanchaCinta5_026" layer ="solid" core_name="PlanchaCinta5_001" position="15.8288 -0.0369702 16.1243" rotation="0.623799 2.49249e-007 -3.12295e-007 0.781585" create_physics="false" visible="true"/>
 	<instance_mesh name="Aplastador_21gramos" layer ="solid" core_name="Aplastador_21gramos" position="10.2933 2.83732 0.450068" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="EngTritIZQ_21gramos" layer ="solid" core_name="EngTritDER_21gramos" position="12.456 0.209341 0.721361" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="EngTritIZQ_21gramos" layer ="solid" core_name="EngTritIZQ_21gramos" position="12.456 0.209341 0.721361" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="EngTritDER_21gramos" layer ="solid" core_name="EngTritDER_21gramos" position="14.3183 0.209341 0.72196" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="Centrifugador_21gramos" layer ="solid" core_name="Centrifugador_21gramos" position="16.3746 0.0769965 0.740508" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="Pendulo" layer ="solid" core_name="Pendulo" position="-3.31889 11.2307 12.7124" rotation="0.107567 -0.698877 -0.107567 0.698877" create_physics="false" visible="true"/>
@@ -377,11 +377,11 @@
 	<instance_mesh name="TrituradoraParedCubierta" layer ="solid" core_name="TrituradoraParedCubierta" position="-4.64847 9.34105 12.6921" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TrituradoraTechoCubierta" layer ="solid" core_name="TrituradoraParedCubierta" position="8.41702 13.1 8.88564" rotation="0.70711 -0.70711 0.0 0.0" create_physics="false" visible="true"/>
 	<instance_mesh name="CablesSalaMaquinas" layer ="solid" core_name="CablesSalaMaquinas" position="11.5829 4.15192 2.29367" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="TriggerStairsLower" layer="triggers" on_trigger_enter="OnEnterStairsLower" is_active="true" core_name="TriggerStairsLower" position="5.67795 -0.739736 1.03263" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerStairsLower" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsLower" is_active="true" core_name="TriggerStairsLower" position="5.67795 -0.739736 1.03263" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="TubosParedTanqueAguaArribajo001"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerStairsUpper" layer="triggers" on_trigger_enter="OnEnterStairsUpper" is_active="true" core_name="TriggerStairsUpper" position="5.80997 5.37022 1.16465" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerStairsUpper" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsUpper" is_active="true" core_name="TriggerStairsUpper" position="5.80997 5.37022 1.16465" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="TubosParedTanqueAguaArribajo001"/>
 	</instance_mesh>
