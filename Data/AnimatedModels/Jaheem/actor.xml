@@ -47,4 +47,8 @@
 	<animation name="pipe_organ_key_f" filename="PipeOrganKeyF.CAF"/>
 	<animation name="pipe_organ_key_g" filename="PipeOrganKeyG.CAF"/>
 	<animation name="pull_book" filename="PullBook.CAF"/>
+	<animation name="stairs_start" filename="StairsStart.CAF"/>
+	<animation name="stairs_loop" filename="StairsLoop.CAF"/>
+	<animation name="stairs_loop_inverse" filename="StairsLoopInverse.CAF"/>
+	<animation name="stairs_end" filename="StairsEnd.CAF"/>
 </actor>
