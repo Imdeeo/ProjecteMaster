@@ -86,7 +86,7 @@ bool CEffectShader::LoadShader(const std::string &Filename, const std::string &E
 {
 	std::string l_CompiledName = m_CompiledPath + Filename;
 	std::string l_Filename = m_Path + Filename;
-	std::wstring l_WCompiledName;
+	std::wstring wFilename;
 #ifdef WIN7
 	// D3DX
 	HRESULT hr = S_OK;
@@ -109,22 +109,24 @@ bool CEffectShader::LoadShader(const std::string &Filename, const std::string &E
 	//HRESULT hr = D3DReadFileToBlob(l_Str.c_str(), BlobOut);
 	const D3D_SHADER_MACRO defines[] = { "EXAMPLE_DEFINE", "1", NULL, NULL };
 	ID3DBlob* pErrorBlob = nullptr;
-	std::wstring wFilename;
-	wFilename.assign(l_Filename.begin(), l_Filename.end());
+
+	
 	HRESULT hr;
 	if (strstr(l_Filename.c_str(), ".fxo"))
 	{
+		wFilename.assign(l_CompiledName.begin(), l_CompiledName.end());
 		hr = D3DReadFileToBlob(wFilename.c_str(), BlobOut);
 	}
 	else
 	{
+		wFilename.assign(l_Filename.begin(), l_Filename.end());
 		hr = D3DCompileFromFile(wFilename.c_str(), m_ShaderMacros, D3D_COMPILE_STANDARD_FILE_INCLUDE, EntryPoint.c_str(), ShaderModel.c_str(), dwShaderFlags, 0, BlobOut, &pErrorBlob);
 	}
-	if (hr == S_OK)
+	/*if (hr == S_OK)
 	{
 		l_WCompiledName.assign(l_CompiledName.begin(), l_CompiledName.end());
 		D3DWriteBlobToFile(*BlobOut, l_WCompiledName.c_str(), true);
-	}
+	}*/
 #endif
 	
 	if (FAILED(hr))
