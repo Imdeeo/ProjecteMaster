@@ -581,7 +581,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)
 			.def("get_texture_manager", &CUABEngine::GetTextureManager)
 			.def("get_effect_manager", &CUABEngine::GetEffectManager)
-			.def("get_bilboard_manager", &CUABEngine::GetBilboardManager)
 			.def("get_render_manager", &CUABEngine::GetRenderManager)
 			.def("get_animated_models_manager", &CUABEngine::GetAnimatedModelsManager)
 			.def("get_script_manager", &CUABEngine::GetScriptManager)
@@ -653,6 +652,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_game_play_manager", &CLevel::GetGamePlayManager)
 			.def("get_manchas_manager", &CLevel::GetManchasManager)
 			.def("get_a_star_manager", &CLevel::GetAStarManager)
+			.def("get_bilboard_manager", &CLevel::GetBilboardManager)
 	];
 
 	RegisterTemplatedVectorMapManager<CLevel>(m_LS);
@@ -1743,6 +1743,8 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CGamePlayManager>("CGamePlayManager")
 			.def("add_component", &CGamePlayManager::AddComponent)
 			.def("destroy", &CGamePlayManager::Destroy)
+			.def("size", &CGamePlayManager::Size)
+			.def("get_component",&CGamePlayManager::GetComponent)
 	];
 }
 

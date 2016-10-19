@@ -52,6 +52,10 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_StateMachine:start()
 	end
 
+	function CAutomatonEnemy.Destroy(self)
+		CEnemy.Destroy(self)
+	end
+	
 	function CAutomatonEnemy:Update(_ElapsedTime)
 		local args = {}
 		args["owner"] = self.m_RenderableObject

@@ -1032,56 +1032,59 @@ bool CPhysXManager::Raycast(const Vect3f _origin, const Vect3f _end, int _GROUPS
 
 void CPhysXManager::RemoveActor(const std::string _ActorName)
 {
-	size_t l_index = m_ActorIndexs[_ActorName];
-	auto it_controller = m_CharacterControllers.find(_ActorName);
-	if (it_controller != m_CharacterControllers.end())
+	if (m_ActorIndexs.find(_ActorName) != m_ActorIndexs.end())
 	{
-		CHECKED_RELEASE(it_controller->second);
-		m_CharacterControllers.erase(it_controller);
-	}
-	else
-	{
-		m_Actors[l_index]->release();
-	}
-	if (m_Actors.size() > 1)
-	{
-		if (l_index < m_Actors.size() - 1)
+		size_t l_index = m_ActorIndexs[_ActorName];
+		auto it_controller = m_CharacterControllers.find(_ActorName);
+		if (it_controller != m_CharacterControllers.end())
 		{
-			m_Actors[l_index] = m_Actors[m_Actors.size() - 1];
-			m_Actors.resize(m_Actors.size() - 1);
-
-			m_ActorNames[l_index] = m_ActorNames[m_Actors.size()];
-			m_ActorNames.resize(m_Actors.size());
-
-			m_ActorPositions[l_index] = m_ActorPositions[m_Actors.size()];
-			m_ActorPositions.resize(m_Actors.size());
-
-			m_ActorOrientations[l_index] = m_ActorOrientations[m_Actors.size()];
-			m_ActorOrientations.resize(m_Actors.size());
-		
-			m_ActorIndexs[m_ActorNames[l_index]] = l_index;
-			m_Actors[l_index]->userData = (void *)l_index;
+			CHECKED_RELEASE(it_controller->second);
+			m_CharacterControllers.erase(it_controller);
 		}
 		else
 		{
-			m_Actors.resize(m_Actors.size() - 1);
-
-			m_ActorNames.resize(m_Actors.size());
-
-			m_ActorPositions.resize(m_Actors.size());
-
-			m_ActorOrientations.resize(m_Actors.size());
+			m_Actors[l_index]->release();
 		}
+		if (m_Actors.size() > 1)
+		{
+			if (l_index < m_Actors.size() - 1)
+			{
+				m_Actors[l_index] = m_Actors[m_Actors.size() - 1];
+				m_Actors.resize(m_Actors.size() - 1);
 
-		m_ActorIndexs.erase(m_ActorIndexs.find(_ActorName));
-	}
-	else
-	{
-		m_Actors.resize(0);
-		m_ActorNames.resize(0);
-		m_ActorPositions.resize(0);
-		m_ActorOrientations.resize(0);
-		m_ActorIndexs.clear();
+				m_ActorNames[l_index] = m_ActorNames[m_Actors.size()];
+				m_ActorNames.resize(m_Actors.size());
+
+				m_ActorPositions[l_index] = m_ActorPositions[m_Actors.size()];
+				m_ActorPositions.resize(m_Actors.size());
+
+				m_ActorOrientations[l_index] = m_ActorOrientations[m_Actors.size()];
+				m_ActorOrientations.resize(m_Actors.size());
+
+				m_ActorIndexs[m_ActorNames[l_index]] = l_index;
+				m_Actors[l_index]->userData = (void *)l_index;
+			}
+			else
+			{
+				m_Actors.resize(m_Actors.size() - 1);
+
+				m_ActorNames.resize(m_Actors.size());
+
+				m_ActorPositions.resize(m_Actors.size());
+
+				m_ActorOrientations.resize(m_Actors.size());
+			}
+
+			m_ActorIndexs.erase(m_ActorIndexs.find(_ActorName));
+		}
+		else
+		{
+			m_Actors.resize(0);
+			m_ActorNames.resize(0);
+			m_ActorPositions.resize(0);
+			m_ActorOrientations.resize(0);
+			m_ActorIndexs.clear();
+		}
 	}
 	
 }

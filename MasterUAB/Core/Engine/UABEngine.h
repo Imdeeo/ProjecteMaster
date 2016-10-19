@@ -51,7 +51,6 @@ private:
 	CPhysXManager * m_PhysXManager;
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
 	CSceneRendererCommandManager* m_SceneRendererCommandManager;
-	CBilboardManager* m_BilboardManager;
 	CGUIManager* m_GUIManager;
 	ISoundManager* m_SoundManager;
 	IVideoManager* m_VideoManager;
@@ -73,7 +72,6 @@ public:
 	CPhysXManager * GetPhysXManager() const;
 	CRenderableObjectTechniqueManager * GetRenderableObjectTechniqueManager() const;
 	CSceneRendererCommandManager * GetSceneRendererCommandManager() const;
-	CBilboardManager * GetBilboardManager() const;
 	CGUIManager * GetGUIManager() const;
 	ISoundManager * GetSoundManager() const;
 	IVideoManager * GetVideoManager() const;
