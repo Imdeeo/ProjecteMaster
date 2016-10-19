@@ -3,6 +3,7 @@
 
 #include "Utils.h"
 #include "Utils\Named.h"
+#include "Utils\LevelInfo.h"
 #include "XML\tinyxml2.h"
 
 #include <string>
@@ -10,11 +11,11 @@
 
 class CMaterial;
 
-class CBilboardSystemType : public CNamed
+class CBilboardSystemType : public CNamed, CLevelInfo
 {
 private:
 public:
-	CBilboardSystemType(tinyxml2::XMLElement* TreeNode);
+	CBilboardSystemType(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CBilboardSystemType(void);
 	void Destroy();
 	void Save(FILE* _File);

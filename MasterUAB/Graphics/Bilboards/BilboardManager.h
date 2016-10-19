@@ -11,7 +11,7 @@ private:
 public:
 	CBilboardManager(void);
 	virtual ~CBilboardManager(void);
-	void Load(const std::string &Filename);
+	void Load(const std::string &Filename, const std::string &_LevelId);
 	void Reload();
 };
 
