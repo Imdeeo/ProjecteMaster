@@ -8,10 +8,11 @@ class CBilboardManager : public CTemplatedMapManager<CBilboardSystemType>
 {
 private:
 	std::string m_Filename;
+	std::string m_LevelId;
 public:
 	CBilboardManager(void);
 	virtual ~CBilboardManager(void);
-	void Load(const std::string &Filename, const std::string &_LevelId);
+	void Load(const std::string &_Filename, const std::string &_LevelId);
 	void Reload();
 };
 

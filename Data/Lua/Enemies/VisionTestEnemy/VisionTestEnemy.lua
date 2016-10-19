@@ -26,6 +26,10 @@ class "CVisionTestEnemy"
     end
     self.m_StateMachine = CVisionTestEnemySM(l_Box)
   end
+  
+  function CVisionTestEnemy.Destroy(self)
+		CEnemy.Destroy(self)
+	end
 
   function CVisionTestEnemy:UpdateEnemy(_owner, _ElapsedTime)
     local args = {}

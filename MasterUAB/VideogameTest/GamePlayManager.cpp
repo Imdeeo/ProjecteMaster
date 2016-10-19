@@ -24,9 +24,10 @@ void CGamePlayManager::Update(float ElapsedTime)
 
 void CGamePlayManager::Destroy()
 {
+	UtilsLog("Destroying GamePlayManager");
 	for (size_t i = 0; i < m_Resources.size(); ++i)
 	{
-		//CHECKED_DELETE(m_Resources[i]);
+//		CHECKED_DELETE(m_Resources[i]);
 	}
 	Clear();
 }
@@ -39,4 +40,9 @@ void CGamePlayManager::Clear()
 void CGamePlayManager::AddComponent(CLUAComponent* _LUAComponent)
 {
 	m_Resources.push_back(_LUAComponent);
+}
+
+CLUAComponent* CGamePlayManager::GetComponent(size_t _id)
+{
+	return m_Resources[_id];
 }
