@@ -78,11 +78,18 @@ void CLevelManager::LoadLevel(const std::string &_LevelName)
 
 void CLevelManager::ReloadLevel(const std::string &_LevelName)
 {
-
+	UnloadLevel(_LevelName);
+	LoadLevel(_LevelName);
 }
 void CLevelManager::UnloadLevel(const std::string &_LevelName)
 {
-
+	std::map<std::string, std::vector<TLevelLayers*>>::iterator it = m_LayersMap.begin();
+	for (; it != m_LayersMap.end(); it++)
+	{
+		it->second.erase(it->second.begin() + m_ResourcesMap[_LevelName].m_Id);
+	}
+	RemoveResource(_LevelName);
+	m_LevelsInfo[_LevelName].m_Loaded = false;
 }
 
 void CLevelManager::Update(float _ElapsedTime)

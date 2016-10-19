@@ -15,7 +15,11 @@ class 'CCagedAutomatonEnemy' (CEnemy)
 		self:SetCagedAutomatonStateMachine()
 		self.m_StateMachine:start()
 	end
-
+	
+	function CCagedAutomatonEnemy.Destroy(self)
+		CEnemy.Destroy(self)
+	end
+	
 	function CCagedAutomatonEnemy:Update(_ElapsedTime)
 		local args = {}
 		args["owner"] = self.m_RenderableObject

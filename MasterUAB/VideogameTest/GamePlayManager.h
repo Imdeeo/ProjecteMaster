@@ -17,6 +17,8 @@ public:
 	void Destroy();
 	void Clear();
 	void AddComponent(CLUAComponent* _LUAComponent);
+	size_t Size(){ return m_Resources.size(); }
+	CLUAComponent* GetComponent(size_t _id);
 };
 
 #endif //H_GAME_PLAY_MANAGER_H
