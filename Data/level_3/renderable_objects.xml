@@ -24,12 +24,12 @@
 	<instance_mesh name="TubosCaldera001" layer ="solid" core_name="TubosCaldera001" position="17.2429 7.53851 17.8826" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="tanqueaguagrandeArriba" layer ="solid" core_name="tanqueaguagrandeArriba" position="11.0908 6.52129 17.4511" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajaTubos001" layer ="solid" core_name="CajaTubos001" position="4.15488 4.42243 9.74235" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="PisoSuperior" layer ="solid" core_name="PisoSuperior" position="10.3563 3.57016 9.6989" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="PisoSuperior" layer ="alpha_objects" core_name="PisoSuperior" position="10.3563 3.57016 9.6989" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="maquinaelectricidad" layer ="solid" core_name="maquinaelectricidad" position="21.511 2.85041 0.440752" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="LamparaMecanica002" layer ="solid" core_name="LamparaMecanica002" position="11.8714 2.8707 -0.0887916" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LamparaMecanica003" layer ="solid" core_name="LamparaMecanica003" position="22.7901 2.86547 9.82362" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="Ventana_HaciaBoss_001" layer ="solid" core_name="Ventana_HaciaBoss_001" position="0.571789 6.51367 5.9193" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="VidriosFarolasCaldera" layer ="solid" core_name="VidriosFarolasCaldera" position="13.6351 5.83913 11.9345" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="VidriosFarolasCaldera" layer ="alpha_blend_objects" core_name="VidriosFarolasCaldera" position="13.6351 5.83913 11.9345" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TechoSalaMaquinas" layer ="solid" core_name="TechoSalaMaquinas" position="10.9207 11.6894 9.69225" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="ParedVentanas" layer ="solid" core_name="ParedVentanas" position="1.42498 5.34982 5.02398" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="ParedHaciaTaller" layer ="solid" core_name="ParedHaciaTaller" position="-3.32872 5.34982 14.9694" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
@@ -51,15 +51,15 @@
 	<instance_mesh name="Ventana_HaciaBoss_002" layer ="solid" core_name="Ventana_HaciaBoss_002" position="4.54729 8.72115 1.58302" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="Ventana_HaciaBoss_003" layer ="solid" core_name="Ventana_HaciaBoss_003" position="2.74324 2.11212 3.57417" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="Ventana_HaciaBoss_004" layer ="solid" core_name="Ventana_HaciaBoss_004" position="-0.957093 1.48352 7.70505" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="Vidrio_Ventana_HaciaBoss_001" layer ="solid" core_name="Vidrio_Ventana_HaciaBoss_001" position="0.71027 6.51367 5.9758" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="Vidrio_Ventana_HaciaBoss_002" layer ="solid" core_name="Vidrio_Ventana_HaciaBoss_002" position="4.62621 8.72115 1.61522" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="Vidrio_Ventana_HaciaBoss_004" layer ="solid" core_name="Vidrio_Ventana_HaciaBoss_004" position="-0.890966 1.48352 7.73203" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="Vidrio_Ventana_HaciaBoss_003" layer ="solid" core_name="Vidrio_Ventana_HaciaBoss_003" position="2.79373 2.11212 3.59477" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="RejillaSueloSalaMaquinas" layer ="solid" core_name="RejillaSueloSalaMaquinas" position="12.2832 -0.979263 9.69948" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="Vidrio_Ventana_HaciaBoss_001" layer ="alpha_blend_objects" core_name="Vidrio_Ventana_HaciaBoss_001" position="0.71027 6.51367 5.9758" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="Vidrio_Ventana_HaciaBoss_002" layer ="alpha_blend_objects" core_name="Vidrio_Ventana_HaciaBoss_002" position="4.62621 8.72115 1.61522" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="Vidrio_Ventana_HaciaBoss_004" layer ="alpha_blend_objects" core_name="Vidrio_Ventana_HaciaBoss_004" position="-0.890966 1.48352 7.73203" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="Vidrio_Ventana_HaciaBoss_003" layer ="alpha_blend_objects" core_name="Vidrio_Ventana_HaciaBoss_003" position="2.79373 2.11212 3.59477" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="RejillaSueloSalaMaquinas" layer ="alpha_objects" core_name="RejillaSueloSalaMaquinas" position="12.2832 -0.979263 9.69948" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="SubterraneoSalaMaquinas" layer ="solid" core_name="SubterraneoSalaMaquinas" position="12.2832 -1.90906 9.69949" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="tanqueaguagrandeArriba2" layer ="solid" core_name="tanqueaguagrandeArriba2" position="5.79174 6.52129 17.4511" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="LamparaMecanica004" layer ="solid" core_name="LamparaMecanica004" position="3.71684 1.12907 19.4496" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="VidriosMaquinaElectricidad" layer ="solid" core_name="VidriosMaquinaElectricidad" position="21.4199 3.48476 0.761098" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="VidriosMaquinaElectricidad" layer ="alpha_blend_objects" core_name="VidriosMaquinaElectricidad" position="21.4199 3.48476 0.761098" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LamparaMaquinaElectricidad" layer ="solid" core_name="LamparaMaquinaElectricidad" position="22.4632 2.44613 0.454911" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="CilindroMueveCintas3_001" layer ="solid" core_name="CilindroMueveCintas3_001" position="9.36479 -0.0625198 14.8296" rotation="-3.01992e-007 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="CintasBordes3" layer ="solid" core_name="CintasBordes3" position="9.3648 -0.0625489 15.9251" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
@@ -161,7 +161,7 @@
 	<instance_mesh name="TrituradoraTechoClara" layer ="solid" core_name="TrituradoraTechoClara" position="8.41702 11.9641 8.88564" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TrituradoraTechoOscura" layer ="solid" core_name="TrituradoraTechoOscura" position="8.41702 11.9641 8.88564" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="maquinacinta" layer ="solid" core_name="maquinacinta" position="-0.299435 0.308624 19.0422" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="Vidrios21gramos" layer ="solid" core_name="Vidrios21gramos" position="15.405 1.07358 0.72641" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="Vidrios21gramos" layer ="alpha_blend_objects" core_name="Vidrios21gramos" position="15.405 1.07358 0.72641" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TubosParedTanqueAguaArriba002" layer ="solid" core_name="TubosParedTanqueAguaArriba002" position="14.0163 7.03675 19.1669" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TubosParedTanqueAguaArriba001" layer ="solid" core_name="TubosParedTanqueAguaArriba001" position="4.63209 8.24582 19.5294" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TubosParedTanqueAguaAbajo002" layer ="solid" core_name="TubosParedTanqueAguaAbajo002" position="-2.86999 3.30884 19.5039" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
@@ -377,7 +377,7 @@
 	<instance_mesh name="TrituradoraParedCubierta" layer ="solid" core_name="TrituradoraParedCubierta" position="-4.64847 9.34105 12.6921" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TrituradoraTechoCubierta" layer ="solid" core_name="TrituradoraParedCubierta" position="8.41702 13.1 8.88564" rotation="0.70711 -0.70711 0.0 0.0" create_physics="false" visible="true"/>
 	<instance_mesh name="CablesSalaMaquinas" layer ="solid" core_name="CablesSalaMaquinas" position="11.5829 4.15192 2.29367" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="TriggerStairsLower" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsLower" is_active="true" core_name="TriggerStairsLower" position="5.67795 -0.739736 1.03263" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<!--<instance_mesh name="TriggerStairsLower" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsLower" is_active="true" core_name="TriggerStairsLower" position="5.67795 -0.739736 1.03263" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="TubosParedTanqueAguaArribajo001"/>
 	</instance_mesh>
@@ -400,5 +400,5 @@
 	<instance_mesh name="TriggerWindow" layer="triggers" on_trigger_enter="OnEnterWindow" is_active="true" core_name="TriggerWindow" position="5.71402 3.80625 3.98397" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="TubosParedTanqueAguaArribajo001"/>
-	</instance_mesh>
+	</instance_mesh>-->
 </renderable_objects>
