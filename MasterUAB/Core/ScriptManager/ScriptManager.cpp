@@ -589,7 +589,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_sound_manager", &CUABEngine::GetSoundManager)
 			.def("get_video_manager", &CUABEngine::GetVideoManager)
 			//.def("get_cinematic_manager", &CUABEngine::GetCinematicManager)
-			.def("get_scene_command_manager", &CUABEngine::GetSceneRendererCommandManager)
 			.def("get_gui_manager", &CUABEngine::GetGUIManager)
 			.def("get_level_manager", &CUABEngine::GetLevelManager)
 			//.def("get_level_loaded", &CUABEngine::GetLevelLoaded)
@@ -649,10 +648,15 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_light_manager", &CLevel::GetLightManager)
 			.def("get_cinematic_manager", &CLevel::GetCinematicManager)
 			.def("get_particle_manager", &CLevel::GetParticleManager)
+			.def("get_bilboard_manager", &CLevel::GetBilboardManager)
 			.def("get_game_play_manager", &CLevel::GetGamePlayManager)
 			.def("get_manchas_manager", &CLevel::GetManchasManager)
+<<<<<<< HEAD
 			.def("get_a_star_manager", &CLevel::GetAStarManager)
 			.def("get_bilboard_manager", &CLevel::GetBilboardManager)
+=======
+			.def("get_astar_manager", &CLevel::GetAStarManager)
+>>>>>>> develop
 	];
 
 	RegisterTemplatedVectorMapManager<CLevel>(m_LS);
@@ -674,6 +678,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("load_file", &CLevelManager::LoadFile)
 			.def("choose_scene_command_level",&CLevelManager::ChooseSceneRenderLevel)
 			.def("execute_scene_commands",&CLevelManager::ExecuteSceneCommands)
+			.def("get_actual_level", &CLevelManager::GetActualLevel)
+			.def("set_actual_level", &CLevelManager::SetActualLevel)
+			.def("get_scene_command_manager", &CLevelManager::GetSceneRendererCommandManager)
 	];
 
 // GRAPHICS-----------------------------------------------------------------------------------------
@@ -1517,7 +1524,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<>())
 			.def("load", &CManchasManager::Load)
 			.def("reload", &CManchasManager::Reload)
-			//.def("save", &CManchasManager::Save)
+			.def("save", &CManchasManager::Save)
 	];
 
 	module(m_LS)[

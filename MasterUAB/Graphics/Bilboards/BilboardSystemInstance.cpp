@@ -10,6 +10,7 @@
 #include "RenderableObjects\TemplatedRenderableVertexs.h"
 #include "Effects\EffectManager.h"
 #include "Math\MathUtils.h"
+#include "LevelManager\LevelManager.h"
 
 #include "LevelManager\LevelManager.h"
 

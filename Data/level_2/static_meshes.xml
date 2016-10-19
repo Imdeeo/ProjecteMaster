@@ -132,7 +132,6 @@
 	<static_mesh name="VidrioLamparakeroparedBien23" filename="Data\level_2\Meshes\VidrioLamparakeroparedBien23.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="VidriolamparajeroparedBien25" filename="Data\level_2\Meshes\VidriolamparajeroparedBien25.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="VidriolamparakeroparedBIEN28" filename="Data\level_2\Meshes\VidriolamparakeroparedBIEN28.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
-	<static_mesh name="PlanosLibrosLaberintoGrande031" filename="Data\level_2\Meshes\PlanosLibrosLaberintoGrande031.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="EstPequeEntradaLaberinto004" filename="Data\level_2\Meshes\EstPequeEntradaLaberinto004.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="Zocalo" filename="Data\level_2\Meshes\Zocalo.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="PlanosLibrosLaberintoGrande013" filename="Data\level_2\Meshes\PlanosLibrosLaberintoGrande013.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
@@ -206,7 +205,6 @@
 	<static_mesh name="LibrosGrandesLaberinto033" filename="Data\level_2\Meshes\LibrosGrandesLaberinto033.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="EstPequeDentroLaberinto006" filename="Data\level_2\Meshes\EstPequeDentroLaberinto006.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="EstPequeDentroLaberinto007" filename="Data\level_2\Meshes\EstPequeDentroLaberinto007.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
-	<static_mesh name="LibrosGrandesLaberinto022" filename="Data\level_2\Meshes\LibrosGrandesLaberinto022.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="LibrosGrandesLaberinto011" filename="Data\level_2\Meshes\LibrosGrandesLaberinto011.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="LibrosGrandesLaberinto008" filename="Data\level_2\Meshes\LibrosGrandesLaberinto008.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="LibrosGrandesLaberinto017" filename="Data\level_2\Meshes\LibrosGrandesLaberinto017.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>

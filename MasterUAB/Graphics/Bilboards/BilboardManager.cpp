@@ -1,5 +1,7 @@
 #include "BilboardManager.h"
 #include "XML\tinyxml2.h"
+#include "Engine\UABEngine.h"
+#include "LevelManager\LevelManager.h"
 
 CBilboardManager::CBilboardManager(void){}
 
@@ -26,8 +28,13 @@ void CBilboardManager::Load(const std::string &Filename, const std::string &_Lev
 			l_Element = l_Element->FirstChildElement();
 			while (l_Element != NULL)
 			{
+<<<<<<< HEAD
 				CBilboardSystemType *l_BilboardSystemType = new CBilboardSystemType(l_Element,_LevelId);
 				if (!AddResource(l_BilboardSystemType->GetName(), l_BilboardSystemType))
+=======
+				CBilboardSystemType *l_BilboardSystemType = new CBilboardSystemType(l_Element, _LevelId);
+				if (!AddResource(l_BilboardSystemType->GetName(), l_BilboardSystemType, _LevelId))
+>>>>>>> develop
 				{
 					CHECKED_DELETE(l_BilboardSystemType);
 				}
@@ -40,5 +47,9 @@ void CBilboardManager::Load(const std::string &Filename, const std::string &_Lev
 void CBilboardManager::Reload()
 {
 	Destroy();
+<<<<<<< HEAD
 	Load(m_Filename,m_LevelId);
+=======
+	Load(m_Filename, UABEngine.GetLevelManager()->GetActualLevel());
+>>>>>>> develop
 }

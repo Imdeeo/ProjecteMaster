@@ -5,6 +5,8 @@
 #include "DirectionalLight.h"
 #include "RenderManager\RenderManager.h"
 #include "XML\tinyxml2.h"
+#include "Engine\UABEngine.h"
+#include "LevelManager\LevelManager.h"
 
 CLightManager::CLightManager():m_AmbientLight(Vect4f(0.1f,0.1f,0.1f,1.0f)),m_RenderLights(false){}
 
@@ -60,7 +62,7 @@ bool CLightManager::Load(const std::string &FileName, const std::string &_LevelI
 
 bool CLightManager::Reload(){
 	Destroy();
-	return Load(m_FileName,"");
+	return Load(m_FileName, UABEngine.GetLevelManager()->GetActualLevel());
 }
 
 bool CLightManager::CreateNewLight(std::string _name, std::string _type , const std::string &_LevelId)
@@ -69,13 +71,13 @@ bool CLightManager::CreateNewLight(std::string _name, std::string _type , const 
 	switch (type)
 	{
 	case CLight::LIGHT_TYPE_OMNI:
-		AddResource(_name, new COmniLight(_name), _LevelId);
+		AddResource(_name, new COmniLight(_name, _LevelId), _LevelId);
 		return true;
 	case CLight::LIGHT_TYPE_DIRECTIONAL:
-		AddResource(_name, new CDirectionalLight(_name), _LevelId);
+		AddResource(_name, new CDirectionalLight(_name, _LevelId), _LevelId);
 		return true;
 	case CLight::LIGHT_TYPE_SPOT:
-		AddResource(_name, new CSpotLight(_name), _LevelId);
+		AddResource(_name, new CSpotLight(_name, _LevelId), _LevelId);
 		return true;
 	default:
 		return false;

@@ -1,26 +1,59 @@
-function OnChapelEnter(a, b)
-	m_CharacterManager.m_Enemics[1].m_off = false
+dofile("Data\\Lua\\Player\\Helpers.lua")
+
+function OnEnterStairs(_TriggerName, _ColliderName)
+	if(_ColliderName == "player") then
+		local l_Player = m_CharacterManager.m_Player[1]
+		if not l_Player.m_IsClimbing then
+			l_Player.m_TargetLookOffset = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
+			l_Player.m_TargetPosOffset = Vect3f(0.4, 0.0, 0.4)
+			l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
+			l_Player.m_IsClimbing = true
+		end
+	end
 end
 
-function OnChapelExit(a, b)
-	m_CharacterManager.m_Enemics[1].m_off = true
-end
-
-function OnChapelStay(a, b)
-
-end
-
-function OnExitClimbing(_TriggerName, _ColliderName)
+function OnExitStairs(_TriggerName, _ColliderName)
+	if(_ColliderName == "player") then
 	local l_Player = m_CharacterManager.m_Player[1]
-	l_Player.m_IsInteracting = false
-	l_Player.m_IsClimbing = false
-	l_Player.m_IsCorrecting = false
+		if not l_Player.m_IsClimbing then
+			ClearPlayerTarget(l_Player)
+			l_Player.m_IsClimbing = false
+		end
+	end
 end
 
-function OnStayClimbing(_TriggerName, _ColliderName)
-	local l_Player = m_CharacterManager.m_Player[1]
-	if (_ColliderName == l_Player.m_Name and l_Player.m_InputManager:is_action_active("INTERACT") and not l_Player.m_IsCorrecting) then
-		CheckIfFacing(l_Player, _TriggerName)
+function OnStayStairsLower(_TriggerName, _ColliderName)
+	if(_ColliderName == "player") then
+		local l_Player = m_CharacterManager.m_Player[1]
+		if l_Player.m_InputManager:is_action_active("MoveBackward") and l_Player.m_IsClimbing then
+			l_Player.m_IsInteracting = false
+			l_Player.m_IsClimbing = false
+		end
+	end
+end
+
+function OnStayStairsUpper(_TriggerName, _ColliderName)
+	if(_ColliderName == "player") then
+		local l_Player = m_CharacterManager.m_Player[1]
+		if l_Player.m_InputManager:is_action_active("MoveForward") and l_Player.m_IsClimbing then
+			l_Player.m_CurrentAend = "LeaveStairs"
+			l_Player.m_InteractingAnimation = 0
+			l_Player.m_InteractingCinematic = nil
+			l_Player.m_CameraAnimation = "LeaveStairs"
+			l_Player.m_AnimationTime = 1.0
+			l_Player.m_IsInteracting = true
+			l_Player.m_IsClimbing = false
+		end
+	end
+end
+
+function OnEnterStairsLower(_TriggerName, _ColliderName)
+	if(_ColliderName == "player") then
+		local l_Player = m_CharacterManager.m_Player[1]
+		l_Player.m_TargetLookOffset = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
+		l_Player.m_TargetPosOffset = Vect3f(0.4, 0.0, 0.4)
+		l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
+		l_Player.m_IsClimbing = not l_Player.m_IsClimbing
 	end
 end
 
@@ -50,3 +83,7 @@ end
 function FogTriggerExit(_Player, _TriggerName)
 	--utils_log("exit")
 end 
+
+function OnEnterWindow(_TriggerName, _ColliderName)
+	utils_log("entered windows trigger")
+end
