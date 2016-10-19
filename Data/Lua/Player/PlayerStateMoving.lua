@@ -67,6 +67,13 @@ function MovingUpdate(args, _ElapsedTime)
         l_Player.m_Velocity.y = 0
     end
 
+	--// After moving a distance of one step, play step sound event
+	l_Player.m_DistanceFromLastStep = l_Player.m_DistanceFromLastStep + l_Displacement:length()
+	if l_Player.m_DistanceFromLastStep > l_Player.m_StepLength then
+		l_Player.m_DistanceFromLastStep = 0
+		l_Player.m_SoundManager:play_event(l_Player.m_StepSoundEvent, l_Player.m_RenderableObject)
+	end
+
 	
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()

@@ -7,6 +7,16 @@ R1TrayL2IsClosed = true
 
 local l_LevelId = "Recibidor"
 
+function RegisterSpeakersRecibidor()
+	local l_SoundManager = UABEngine:get_sound_manager()
+	local l_LayerManager = g_Engine:get_level_manager():get_level("Recibidor"):get_layer_manager()
+	local l_SolidLayer = l_LayerManager:get_layer("solid")
+	local l_DrawerR1 = l_SolidLayer:get_resource("CajonComodaDerecha1")
+	l_SoundManager:register_speaker(l_DrawerR1)
+end
+
+RegisterSpeakersRecibidor()
+
 function R1Door(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
 	_Player.m_TargetPosOffset = Vect3f(0.048, 0.0, -0.55)
@@ -72,6 +82,9 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 		l_Level:get_cinematic_manager():get_resource("recibidor_engranajes"):play()
 		_Player.m_PhysXManager:disable_trigger("TriggerTrayR1")
 	end
+	local l_LayerManager = g_Engine:get_level_manager():get_level("Recibidor"):get_layer_manager()
+	local l_SolidLayer = l_LayerManager:get_layer("solid")
+	_Player.m_InteractionSoundSpeaker = l_SolidLayer:get_resource("CajonComodaDerecha1")
 end
 
 function R1TrayR2Open(_Player, _Pos)
