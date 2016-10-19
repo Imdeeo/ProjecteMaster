@@ -179,6 +179,7 @@ void CUABEngine::ReloadLUA()
 	m_ScriptManager->Initialize();
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	UtilsLog("Reloading Lua");
+	m_LevelManager->ReloadAllLua();
 }
 
 void CUABEngine::Consola(float _x, float _y, float _w, float _h)
