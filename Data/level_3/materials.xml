@@ -364,8 +364,8 @@
 		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_marron_GLOSS.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="glossiness" value="54.999996" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="80.000008" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.700000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
@@ -418,12 +418,12 @@
 		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="glossiness" value="42.799999" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="reflectivity" value="0.150000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="79.999992" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.700000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
-		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="bump_factor" value="0.100000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
 	</material>
 	<material name="SM_Caldera_UnwrapCuerpoCaldera" renderable_object_technique="radiosity_bump_glossiness">
@@ -454,12 +454,12 @@
 		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="glossiness" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="70.000038" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
-		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
 	</material>
 	<material name="SM_Caldera_Valvulas" renderable_object_technique="radiosity_bump_glossiness">
@@ -1028,13 +1028,13 @@
 		<texture type="reflection" filename="Data\level_3\Textures\Cubemap_Ventanas.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="glossiness" value="60.800003" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="39.999996" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
-		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.372549" description=""/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.352941 0.141176 0.466667" description=""/>
 	</material>
 	<material name="SM_Pendulo_CobreDientesOscuro" renderable_object_technique="bump_glossiness">
 		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_distintooscuro.dds"/>
@@ -1138,11 +1138,11 @@
 		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="specular_power" value="85.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_power" value="25.000000" description="min=0.0 max=100.0 step=0.1"/>
 		<parameter type="float" name="specular_factor" value="0.750000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="0.900000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="bump_factor" value="0.250000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.784314" description=""/>
 	</material>
@@ -1228,11 +1228,11 @@
 		<texture type="reflection" filename="Data\level_3\Textures\Cubemap_Ventanas.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="specular_power" value="50.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="specular_power" value="79.999992" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.700000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.100000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="bump_factor" value="0.100000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="bump_factor" value="0.200000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
 	</material>
