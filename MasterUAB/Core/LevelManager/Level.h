@@ -35,7 +35,6 @@ private:
 	CCinematicManager* m_CinematicManager;
 	CAStarManager* m_AStarManager;
 	CGamePlayManager* m_GamePlayManager;
-	CBilboardManager* m_BilboardManager;
 public:
 	CLevel();
 	CLevel(const std::string &_Name);
@@ -62,7 +61,6 @@ public:
 	CGamePlayManager * GetGamePlayManager()const;
 	CManchasManager * GetManchasManager() const;
 	CAStarManager * GetAStarManager() const;
-	CBilboardManager * GetBilboardManager() const;
 
 	CRenderableObjectsManager* GetLayer(const std::string& _LayerName);
 };

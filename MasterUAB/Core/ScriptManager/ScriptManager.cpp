@@ -651,12 +651,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_bilboard_manager", &CLevel::GetBilboardManager)
 			.def("get_game_play_manager", &CLevel::GetGamePlayManager)
 			.def("get_manchas_manager", &CLevel::GetManchasManager)
-<<<<<<< HEAD
-			.def("get_a_star_manager", &CLevel::GetAStarManager)
 			.def("get_bilboard_manager", &CLevel::GetBilboardManager)
-=======
 			.def("get_astar_manager", &CLevel::GetAStarManager)
->>>>>>> develop
 	];
 
 	RegisterTemplatedVectorMapManager<CLevel>(m_LS);

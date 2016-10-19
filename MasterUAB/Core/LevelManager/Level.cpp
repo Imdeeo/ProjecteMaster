@@ -153,10 +153,6 @@ CAStarManager * CLevel::GetAStarManager() const
 {
 	return m_AStarManager;
 }
-CBilboardManager * CLevel::GetBilboardManager() const
-{
-	return m_BilboardManager;
-}
 
 bool* CLevel::IsVisible()
 {
