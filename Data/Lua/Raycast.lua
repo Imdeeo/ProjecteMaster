@@ -5,11 +5,9 @@ dofile("Data\\Lua\\Raycast\\Biblioteca.lua")
 -- 1,0(Max)		->	0,63152400835073068893528183716077(Engine)
 
 function CheckRaycast(_Player, _Pos, _Camera, _Owner)
-	utils_log("CheckRaycast")
 	_Player.m_RaycastData = RaycastData()
 	
 	local didHit = _Player.m_PhysXManager:raycast(_Camera:get_position(), _Camera:get_position()+(_Camera:get_forward()*1.7), 4, _Player.m_RaycastData)
-	utils_log("CheckRaycast: Actual Level :".._Player.m_ActualLevel)
 	local l_LayerManager = g_Engine:get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager()
 	
 	if didHit then
@@ -22,10 +20,8 @@ function CheckRaycast(_Player, _Pos, _Camera, _Owner)
 			TriggerRaycast(_Player, _Pos, _Owner)
 		end
 	else
-		utils_log("CheckRaycast8")
 		l_LayerManager:get_layer("interactuable_objects"):destroy(false)
 	end
-	utils_log("CheckRaycastEnd")
 end
 
 function TriggerRaycast(_Player, _Pos, _Owner)
