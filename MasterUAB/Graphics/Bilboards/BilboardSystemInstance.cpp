@@ -10,12 +10,13 @@
 #include "RenderableObjects\TemplatedRenderableVertexs.h"
 #include "Effects\EffectManager.h"
 #include "Math\MathUtils.h"
+#include "LevelManager\LevelManager.h"
 
 
 CBilboardSystemInstance::CBilboardSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :
 	CRenderableObject(TreeNode,_LevelId)
 {
-	m_Type = UABEngine.GetInstance()->GetBilboardManager()->GetResource(TreeNode->GetPszProperty("type"));
+	m_Type = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetBilboardManager()->GetResource(TreeNode->GetPszProperty("type"));
 	m_ActiveBilboards = 0;
 	tinyxml2::XMLElement* l_Element = TreeNode->FirstChildElement();
 	while (l_Element != nullptr)
