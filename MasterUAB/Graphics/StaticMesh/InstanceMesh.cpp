@@ -129,13 +129,15 @@ CInstanceMesh::~CInstanceMesh(void)
 			for (size_t i = 0; i < l_NunMeshes; i++)
 			{
 				char l_ActorName[256] = "";
-				sprintf_s(l_ActorName, "%s_%u", GetName().c_str(), i);
+				sprintf_s(l_ActorName, "%s_%s_%u",m_Level.c_str() ,GetName().c_str(), i);
 				l_PhysXManager->RemoveActor(l_ActorName);
 			}
 		}
 		else
 		{
-			l_PhysXManager->RemoveActor(GetName());
+			char l_ActorName[256] = "";
+			sprintf_s(l_ActorName, "%s_%s", m_Level.c_str(), GetName().c_str());
+			l_PhysXManager->RemoveActor(l_ActorName);
 		}
 	}
 	CRenderableObject::~CRenderableObject();
