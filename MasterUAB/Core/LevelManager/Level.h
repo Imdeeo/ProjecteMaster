@@ -15,6 +15,7 @@ class CCinematicManager;
 class CAStarManager;
 class CGamePlayManager;
 class CRenderableObjectsManager;
+class CBilboardManager;
 
 class CAStarManager;
 

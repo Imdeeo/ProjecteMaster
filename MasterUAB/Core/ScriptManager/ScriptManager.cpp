@@ -651,6 +651,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_bilboard_manager", &CLevel::GetBilboardManager)
 			.def("get_game_play_manager", &CLevel::GetGamePlayManager)
 			.def("get_manchas_manager", &CLevel::GetManchasManager)
+			.def("get_bilboard_manager", &CLevel::GetBilboardManager)
 			.def("get_astar_manager", &CLevel::GetAStarManager)
 	];
 
@@ -1745,6 +1746,8 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CGamePlayManager>("CGamePlayManager")
 			.def("add_component", &CGamePlayManager::AddComponent)
 			.def("destroy", &CGamePlayManager::Destroy)
+			.def("size", &CGamePlayManager::Size)
+			.def("get_component",&CGamePlayManager::GetComponent)
 	];
 }
 

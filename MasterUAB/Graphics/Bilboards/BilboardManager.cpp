@@ -13,6 +13,7 @@ CBilboardManager::~CBilboardManager(void)
 void CBilboardManager::Load(const std::string &Filename, const std::string &_LevelId)
 {
 	m_Filename = Filename;
+	m_LevelId = _LevelId;
 
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLError l_Error = doc.LoadFile(Filename.c_str());
@@ -41,5 +42,5 @@ void CBilboardManager::Load(const std::string &Filename, const std::string &_Lev
 void CBilboardManager::Reload()
 {
 	Destroy();
-	Load(m_Filename, UABEngine.GetLevelManager()->GetActualLevel());
+	Load(m_Filename, m_LevelId);
 }
