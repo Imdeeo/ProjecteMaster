@@ -1,0 +1,1546 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<materials>
+	<material name="20 - Default" renderable_object_technique="skybox">
+		<texture type="reflection" filename="Data\level_0\Textures\KGSkyBox2.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
+		<parameter type="float" name="specular_power" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.1"/>
+	</material>
+	<material name="BloomBlurMaterial" renderable_object_technique="bloom_blur">
+		<parameter type="float" name="TextureSize" value="512.000000" description=""/>
+		<parameter type="float" name="BlurScale" value="2.000000" description=""/>
+	</material>
+	<material name="BloomCombineMaterial" renderable_object_technique="bloom_combine">
+		<parameter type="float" name="BloomActive" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="BloomIntensity" value="1.900000" description="min=-100 max=100 step=0.05"/>
+		<parameter type="float" name="OriginalIntensity" value="1.500000" description="min=-100 max=100 step=0.05"/>
+		<parameter type="float" name="BloomSaturation" value="1.250000" description="min=-100 max=100 step=0.05"/>
+		<parameter type="float" name="OriginalSaturation" value="0.750000" description="min=-100 max=100 step=0.05"/>
+		<parameter type="float" name="ShowBloom" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+	</material>
+	<material name="BloomMaterial" renderable_object_technique="bloom">
+		<parameter type="float" name="Threshold" value="0.990000" description="min=0.0 max=1.0 step=0.01"/>
+	</material>
+	<material name="BlurMaterial" renderable_object_technique="blur">
+		<parameter type="float" name="texture_size" value="1280.000000" description=""/>
+		<parameter type="float" name="blur_scale" value="2.000000" description=""/>
+	</material>
+	<material name="ColorGradingMaterial" renderable_object_technique="colorgrading">
+		<parameter type="float" name="ColorGradingActive" value="1.000000" description=""/>
+		<parameter type="float" name="BrownSepiaColorGrading" value="0.000000" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter type="float" name="GreenSepiaColorGrading" value="0.000000" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter type="float" name="BlueSepiaColorGrading" value="0.000000" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter type="float" name="MonochromeColorGrading" value="2.350000" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter type="float" name="ColorColorGrading" value="2.800000" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter type="float" name="ContrastColorGrading" value="0.200000" description="min=-100.0 max=100.0 step=0.05"/>
+		<parameter type="float" name="BrightnessColorGrading" value="0.000000" description="min=-100 max=100 step=0.05"/>
+	</material>
+	<material name="CombineMaterial" renderable_object_technique="combine">
+		<parameter type="float" name="ShowTexture" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+	</material>
+	<material name="FlareBlurMaterial" renderable_object_technique="flare_blur">
+		<parameter type="float" name="TextureSize" value="256.000000" description=""/>
+		<parameter type="float" name="BlurScale" value="2.000000" description=""/>
+		<parameter type="color" name="Color" value="1.000000 0.800000 0.000000 1.000000" description=""/>
+	</material>
+	<material name="FlareBrightpassMaterial" renderable_object_technique="flare_brightpass">
+		<parameter type="float" name="Threshold" value="0.980000" description="min=0.0 max=1.0 step=0.01"/>
+	</material>
+	<material name="FlareCombineMaterial" renderable_object_technique="flare_combine">
+		<parameter type="float" name="FlareActive" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="FlareIntensity" value="1.650000" description="min=-100 max=100 step=0.05"/>
+		<parameter type="float" name="OriginalIntensity" value="1.350000" description="min=-100 max=100 step=0.05"/>
+		<parameter type="float" name="ShowFlare" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+	</material>
+	<material name="FlareDownloadingMaterial" renderable_object_technique="flare_downsampling">
+		<parameter type="float" name="TextureSize" value="256.000000" description=""/>
+	</material>
+	<material name="FogMaterial" renderable_object_technique="fog">
+		<parameter type="float" name="Enable" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="Type" value="4.000000" description="min=1.0 max=4.0 step=1.0"/>
+		<parameter type="float" name="Start_Fog (type 1)" value="3.000000" description="min=0.0 max=100.0 step=1.0"/>
+		<parameter type="float" name="End_Fog (type 1)" value="21.000000" description="min=0.0 max=100.0 step=1.0"/>
+		<parameter type="float" name="Max_Attenuation (type 1)" value="1.000000" description="min=0.0 max=100.0 step=1.0"/>
+		<parameter type="float" name="Density" value="0.200000" description="min=0.0 max=10.0 step=0.1"/>
+		<parameter type="float" name="Height" value="0.100000" description="min=0.0 max=10.0 step=0.1"/>
+		<parameter type="color" name="Fog_Color" value="0.784314 0.784314 0.784314 1.000000" description=""/>
+	</material>
+	<material name="GUIMaterial" renderable_object_technique="gui">
+	</material>
+	<material name="HDAOMaterial" renderable_object_technique="hdao">
+		<parameter type="float" name="HDAOActive" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="HDAOShowNormals" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="HDAOShowAO" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="HDAOUseNormals" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float2" name="RTSize" value="1280.000000 720.000000" description=""/>
+		<parameter type="float" name="AcceptAngle" value="0.700000" description="min=0.0 max=1.5 step=0.001"/>
+		<parameter type="float" name="HDAOIntensity" value="0.550000" description="min=0.0 max=5.0 step=0.001"/>
+		<parameter type="float" name="NormalScale" value="0.150000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="HDAORejectRadius" value="0.400000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="HDAOAcceptRadius" value="0.005000" description="min=0.0 max=1.0 step=0.001"/>
+	</material>
+	<material name="LightScatteringCombineMaterial" renderable_object_technique="lightscattering_combine">
+		<parameter type="float" name="ShowLightScattering" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+	</material>
+	<material name="LightScatteringMaterial" renderable_object_technique="lightscattering">
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
+		<parameter type="float" name="decay" value="0.945000" description="min=0.0 max=3.0 step=0.005"/>
+		<parameter type="float" name="density" value="0.890000" description="min=0.0 max=3.0 step=0.005"/>
+		<parameter type="float" name="weight" value="1.000000" description="min=0.0 max=3.0 step=0.005"/>
+		<parameter type="float" name="num_samples" value="20.000000" description=""/>
+		<parameter type="float2" name="light_position" value="0.500000 0.500000" description=""/>
+	</material>
+	<material name="NoiseAndVignettingMaterial" renderable_object_technique="noise_and_vignetting">
+		<texture type="diffuse" filename="Data\GUI\Textures\vignetting.png"/>
+		<parameter type="float" name="NoisePct" value="1.000000" description="min=0.0 max=50.0 step=0.05"/>
+		<parameter type="float" name="VignettingPct" value="0.100000" description="min=0.0 max=50.0 step=0.05"/>
+		<parameter type="float" name="NoiseAmount" value="0.100000" description="min=0.0 max=1.0 step=0.05"/>
+	</material>
+	<material name="SM_21g_CobreClaro" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_mueble_cobre.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_mueble_cobre_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_mueble_cobre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="39.999996" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.352941 0.141176 0.466667" description=""/>
+	</material>
+	<material name="SM_21g_CobreOscuro" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_distintooscuro.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="40.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="0.203922 0.172549 0.054902 0.678431" description=""/>
+	</material>
+	<material name="SM_21g_CobreReforzado" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_gris.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_gris_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="40.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.500000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_21g_Liquido" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\Sangre.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\Sangre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="75.000015" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.700000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.250000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="0.250980 0.007843 0.007843 1.000000" description=""/>
+	</material>
+	<material name="SM_21g_MetalGris" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\puerta_cobre_recibidor.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_perpetuum_cobre_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\puerta_cobre_recibidor_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="50.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.721569 0.000000 0.792157" description=""/>
+	</material>
+	<material name="SM_21g_UnwrapCentrifugadorCalentador" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\CentrifugadorTrituradora.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\CentrifugadorTrituradora_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\CentrifugadorTrituradora_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="90.000015" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.100000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="0.956863 0.572549 0.047059 0.443137" description=""/>
+	</material>
+	<material name="SM_21g_UnwrapTrituradorDestrozador" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\EngranajesCompresor.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\EngranajesCompresor_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\EngranajesCompresor_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="50.000008" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="0.729412 0.619608 0.000000 0.600000" description=""/>
+	</material>
+	<material name="SM_BarandillaEscaleras" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCajasBarandillas_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCajasBarandillas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCajasBarandillas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_marron_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="80.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.700000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.725490 0.364706 0.615686" description=""/>
+	</material>
+	<material name="SM_Cables" renderable_object_technique="radiosity">
+		<texture type="diffuse" filename="Data\level_3\Textures\Cable.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Z.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_CajaEngr_BordesCaja" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_marron_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="54.999996" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.725490 0.364706 0.615686" description=""/>
+	</material>
+	<material name="SM_CajaEngr_CarasCaja" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_mueble_cobre.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_mueble_cobre_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_mueble_cobre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="18.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.320000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.400000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.521569 0.227451 0.678431" description=""/>
+	</material>
+	<material name="SM_CajaEngr_EngranajesGigantes" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_gris.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_gris_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="54.999996" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="0.686275 0.686275 0.686275 0.615686" description=""/>
+	</material>
+	<material name="SM_CajaTub_CuerpoCaja" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_mueble_cobre.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCajasBarandillas_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_mueble_cobre_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCajasBarandillas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCajasBarandillas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_mueble_cobre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="60.800003" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.623529" description=""/>
+	</material>
+	<material name="SM_CajaTub_TubosNormalCaja" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_distintooscuro.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCajasBarandillas_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCajasBarandillas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCajasBarandillas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="18.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.320000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.400000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.521569 0.227451 0.678431" description=""/>
+	</material>
+	<material name="SM_CajaTub_TubosReforzadosCaja" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCajasBarandillas_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCajasBarandillas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCajasBarandillas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_marron_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="54.999996" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.725490 0.364706 0.615686" description=""/>
+	</material>
+	<material name="SM_Caldera_DetallesCobre" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_marron_GLOSS.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="54.999996" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="0.203922 0.172549 0.054902 0.615686" description=""/>
+	</material>
+	<material name="SM_Caldera_DetallesCobre2" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_mueble_cobre.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_mueble_cobre_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_mueble_cobre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="37.400002" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.717647 0.141176 0.466667" description=""/>
+	</material>
+	<material name="SM_Caldera_TubosCables" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\CobreTubos.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\CobreTubos_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\CobreTubos_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="60.800003" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.372549" description=""/>
+	</material>
+	<material name="SM_Caldera_Tuercas" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_gris.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_gris_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="42.799999" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.150000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_Caldera_UnwrapCuerpoCaldera" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\CalderaCuerpo.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\CalderaCuerpo_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\CalderaCuerpo_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="60.800003" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.623529" description=""/>
+	</material>
+	<material name="SM_Caldera_UnwrapVarios" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\DetallesCaldera.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\DetallesCaldera_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\DetallesCaldera_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_Caldera_Valvulas" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_distintooscuro.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="60.800003" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.372549" description=""/>
+	</material>
+	<material name="SM_CintasFijas_Cobre" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_mueble_cobre.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_mueble_cobre_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_mueble_cobre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="37.400002" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.717647 0.141176 0.466667" description=""/>
+	</material>
+	<material name="SM_CintasFijas_Cuero" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\CobreTubos.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\CobreTubos_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\CobreTubos_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="50.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.721569 0.000000 0.792157" description=""/>
+	</material>
+	<material name="SM_CintasFijas_EsferasMagicas" renderable_object_technique="radiosity">
+		<texture type="diffuse" filename="Data\level_3\Textures\EsferasMagicas.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Z.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.200000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_CintasFijas_MetalNegro" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_metal_negro.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_metal_negro_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="50.000004" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.110000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.300000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.243137" description=""/>
+	</material>
+	<material name="SM_Cintas_Cuero" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\CobreTubos.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\CobreTubos_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\CobreTubos_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="50.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.721569 0.000000 0.792157" description=""/>
+	</material>
+	<material name="SM_Cintas_MaterialEspecial" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_3\Textures\EsferasMagicas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.200000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_Cintas_PlanchasMadera" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\CintaMaderaPlanchas.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\CintaMaderaPlanchas_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\CintaMaderaPlanchas_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="50.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.700000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.600000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_Cintas_RollosMetalDiferente" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_mueble_cobre.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_mueble_cobre_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_mueble_cobre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="50.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.721569 0.000000 0.792157" description=""/>
+	</material>
+	<material name="SM_Cintas_RollosMetalGenerico" renderable_object_technique="glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_metal_negro.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_metal_negro_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="45.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.300000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.862745 0.262745 0.431373" description=""/>
+	</material>
+	<material name="SM_Cintas_TornillosVarios" renderable_object_technique="glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\TextuMetal.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\TextuMetal_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="45.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.300000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.862745 0.262745 0.431373" description=""/>
+	</material>
+	<material name="SM_Lamp_Bombilla" renderable_object_technique="lights_glow">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_bombilla_temporal.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_Lamp_Madera" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\biblio_madera_chimenea2.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\biblio_madera_chimenea2_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="80.000061" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.500000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_Lamp_MetalClavijas" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_distintooscuro.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="75.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.700000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.400000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.686275 0.227451 0.678431" description=""/>
+	</material>
+	<material name="SM_Lamp_MetalLampara" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="80.000008" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.700000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.772549 0.043137 0.372549" description=""/>
+	</material>
+	<material name="SM_Lamp_MetalTubosSatelite" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_oscuro_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="78.900002" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.784314 0.000000 0.909804" description=""/>
+	</material>
+	<material name="SM_LamparasTransparentes" renderable_object_technique="glossiness">
+		<texture type="diffuse" filename="Data\level_1\Textures\Vitrina_Vidrio_Transparente_Manchas.dds"/>
+		<texture type="glossiness" filename="Data\level_1\Textures\Vitrina_Vidrio_Transparente_Manchas_gloss.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="80.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.750000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_MaqElec_EsferasMagicas" renderable_object_technique="radiosity">
+		<texture type="diffuse" filename="Data\level_3\Textures\EsferasMagicas.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.200000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_MaqElec_EspejosSalaMaquina" renderable_object_technique="glossiness">
+		<texture type="diffuse" filename="Data\level_1\Textures\Vitrina_Vidrio_Transparente_Manchas.dds"/>
+		<texture type="glossiness" filename="Data\level_1\Textures\Vitrina_Vidrio_Transparente_Manchas_gloss.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapMaquinaElectrica.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="80.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.750000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_MaqElec_MetalAlternativo" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_perpetuum_cobre.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\puerta_cobre_recibidor_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapMaquinaElectrica.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="60.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.925490 0.000000 1.000000" description=""/>
+	</material>
+	<material name="SM_MaqElec_MetalDominante" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapMaquinaElectrica.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="60.800003" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.372549" description=""/>
+	</material>
+	<material name="SM_MaqElec_MetalReforzado" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_marron_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapMaquinaElectrica.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="54.999996" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.725490 0.364706 0.615686" description=""/>
+	</material>
+	<material name="SM_MaqElec_OtroMetal" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_metal_negro.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_metal_negro_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapMaquinaElectrica.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="50.000004" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.110000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.300000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.243137" description=""/>
+	</material>
+	<material name="SM_MaqElec_UnwrapMaquinaElectricidad" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\CompoMaquinaElectrica.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\CompoMaquinaElectrica_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapMaquinaElectrica.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.200000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_MaquinaCinta_UnwrapAcordeon" renderable_object_technique="glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\UnwrapMaquinaCinta.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\puerta_cobre_recibidor_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_MaquinaCinta_acordeones_fuelles" renderable_object_technique="glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\CueroFuelles.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\CobreTubos_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_MaquinaCinta_cobre" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_perpetuum_cobre_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\puerta_cobre_recibidor_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="78.900002" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.784314 0.000000 0.909804" description=""/>
+	</material>
+	<material name="SM_MaquinaCinta_hierrooscuro" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_marron_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="55.500000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.458824 0.227451 0.537255" description=""/>
+	</material>
+	<material name="SM_NewCom_CobreDorado" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\puerta_cobre_recibidor.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\puerta_cobre_recibidor_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapMaquinaElectrica.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="60.000011" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.400000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.831373 0.639216 0.858824" description=""/>
+	</material>
+	<material name="SM_NewCom_ContenidoMagico" renderable_object_technique="radiosity">
+		<texture type="diffuse" filename="Data\level_3\Textures\EsferasMagicas.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="15.000001" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.700000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_NewCom_goma" renderable_object_technique="radiosity">
+		<texture type="diffuse" filename="Data\level_3\Textures\Cable.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_NewCom_hierro" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_perpetuum_metal.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_metal_negro_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_metal_negro_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapMaquinaElectrica.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="80.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.300000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_NewCom_ladrillochime" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\Bricks_Newcommen.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\Bricks_Newcommen_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\Bricks_Newcommen_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapMaquinaElectrica.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_NewCom_madera" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\MaderaOscura.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\MaderaOscura_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapMaquinaElectrica.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="50.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.100000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_NewCom_metal" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasMaqPrincipales_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_marron_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapMaquinaElectrica.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="80.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.400000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.458824 0.227451 0.537255" description=""/>
+	</material>
+	<material name="SM_Pendulo_CobreDientesClaro" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap_Ventanas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="60.800003" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.372549" description=""/>
+	</material>
+	<material name="SM_Pendulo_CobreDientesOscuro" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_distintooscuro.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap_Ventanas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="60.800003" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.372549" description=""/>
+	</material>
+	<material name="SM_Pendulo_CobrePendulo" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_mueble_cobre.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_mueble_cobre_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_mueble_cobre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap_Ventanas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="60.800003" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.372549" description=""/>
+	</material>
+	<material name="SM_Pendulo_CobrePendulo2" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_marron_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap_Ventanas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="60.800003" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.372549" description=""/>
+	</material>
+	<material name="SM_PuertaTaller_CobrePrincipal" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\UnwrapPuertaCobre.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\UnwrapPuertaCobre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="90.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.200000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="0.686275 0.352941 0.098039 0.466667" description=""/>
+	</material>
+	<material name="SM_PuertaTaller_Detalles/Tuercas" renderable_object_technique="bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_marron_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="90.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.700000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.100000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="0.654902 0.674510 0.082353 0.490196" description=""/>
+	</material>
+	<material name="SM_Sala_LiquidoExtraño" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\Sangre.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinas_Sala_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinas_Sala_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinas_Sala_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\Sangre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="100.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.250000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.500000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.000000 0.000000 1.000000" description=""/>
+	</material>
+	<material name="SM_Sala_Paredes" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\ParedSalaMaquinas.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinas_Sala_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\ParedSalaMaquinas_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinas_Sala_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinas_Sala_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\ParedSalaMaquinas_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="85.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.750000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.900000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.784314" description=""/>
+	</material>
+	<material name="SM_Sala_ParedesSubterraneas" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\ParedesSubterraneas.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinas_Sala_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\ParedesSubterraneas_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinas_Sala_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinas_Sala_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\ParedesSubterraneas_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="70.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.750000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.100000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.750000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.784314" description=""/>
+	</material>
+	<material name="SM_Sala_RejillaBot" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\RejillasBot.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinas_Sala_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\RejillasBotNRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinas_Sala_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinas_Sala_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\RejillasBot_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="60.800003" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.600000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.250000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.623529" description=""/>
+	</material>
+	<material name="SM_Sala_RejillaTop" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\RejillasSuelo.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinas_Sala_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\RejillasSuelo_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinas_Sala_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinas_Sala_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\RejillasSuelo_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="80.000008" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.250000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.250000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="0.588235 0.588235 0.588235 0.623529" description=""/>
+	</material>
+	<material name="SM_Sala_SueloBot" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\SueloSalaMaquinas.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinas_Sala_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\SueloSalaMaquinas_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinas_Sala_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinas_Sala_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\SueloSalaMaquinas_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="80.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.750000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.250000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.784314" description=""/>
+	</material>
+	<material name="SM_Sala_Techo" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\TechoSalaMaquinas.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinas_Sala_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\TechoSalaMaquinas_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinas_Sala_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinas_Sala_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\TechoSalaMaquinas_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap_Ventanas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="50.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.100000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SM_TanquesAgua_DetallesTanquesAgua" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_oscuro.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_oscuro_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="60.800003" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.372549" description=""/>
+	</material>
+	<material name="SM_TanquesAgua_SoporteTanquePrincipal" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_oscuro.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_oscuro_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="22.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.300000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.572549 0.227451 0.945098" description=""/>
+	</material>
+	<material name="SM_TanquesAgua_TubosReforzadosTanquesAgua" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_distintooscuro.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="54.999996" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="0.203922 0.172549 0.054902 0.615686" description=""/>
+	</material>
+	<material name="SM_TanquesAgua_TubosTanquesAgua" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_mueble_cobre.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_mueble_cobre_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_mueble_cobre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="39.999996" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.200000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.352941 0.141176 0.466667" description=""/>
+	</material>
+	<material name="SM_TanquesAgua_TuercasSoporte" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_cobre_marron_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_marron_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="55.500000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.200000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.458824 0.227451 0.537255" description=""/>
+	</material>
+	<material name="SM_TanquesAgua_UnwrapTanque" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\TanqueAgua.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\TanqueAgua_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\TanqueAgua_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="75.000008" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.400000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.458824 0.227451 0.470588" description=""/>
+	</material>
+	<material name="SM_TanquesAgua_Valvulas" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_mueble_cobre.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_mueble_cobre_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_mueble_cobre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="37.400002" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.100000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.050000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.717647 0.141176 0.466667" description=""/>
+	</material>
+	<material name="SM_TubOscuro" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_distintooscuro.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasTubos_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasTubos_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasTubos_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="88.999992" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.700000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="0.376471 0.172549 0.054902 0.615686" description=""/>
+	</material>
+	<material name="SM_TuboClaros" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasTubos_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasTubos_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasTubos_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_cobre_distinto_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="70.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.750000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.200000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.352941 0.141176 0.466667" description=""/>
+	</material>
+	<material name="SM_Valv_Alrededor" renderable_object_technique="glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_marron.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_marron_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="45.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.300000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.862745 0.262745 0.431373" description=""/>
+	</material>
+	<material name="SM_Valv_Centro" renderable_object_technique="glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_mueble_cobre.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_mueble_cobre_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="45.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.300000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.862745 0.262745 0.431373" description=""/>
+	</material>
+	<material name="SM_Valv_CentroAtachable" renderable_object_technique="glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_cobre_gris.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_cobre_gris_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap21Gramos.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="45.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.300000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.862745 0.262745 0.431373" description=""/>
+	</material>
+	<material name="SM_Ventanas_BronceVentanaSubmarino" renderable_object_technique="radiosity_bump_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\recibidor_tubo_columna.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_X.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\recibidor_tubo_columna1_NRM.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\recibidor_tubo_ventana_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap_Ventanas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="31.500000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.500000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.592157 0.043137 0.549020" description=""/>
+	</material>
+	<material name="SM_Ventanas_TornillosVentanaSumbarino" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\puerta_cobre_recibidor.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasVentanasLamparas_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\puerta_cobre_recibidor_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap_Ventanas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="20.200001" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 0.831373 0.639216 0.858824" description=""/>
+	</material>
+	<material name="SM_Ventanas_VidrioVentanaSubmarino" renderable_object_technique="glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\azul_ventana_recibidor.dds"/>
+		<texture type="glossiness" filename="Data\level_1\Textures\Vitrina_Vidrio_Transparente_Manchas_gloss.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\Cubemap_Ventanas.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="80.000008" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.500000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.500000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="SSRMaterial" renderable_object_technique="ssr">
+		<parameter type="float" name="enabled" value="1.000000" description=""/>
+		<parameter type="float" name="ssr_opacity" value="0.300000" description="min=0.0 max=1.0 step=0.1"/>
+		<parameter type="float" name="ssr_offset_screen" value="0.000000" description="min=0.0 max=1.0 step=0.02"/>
+	</material>
+	<material name="VidrioCaldera" renderable_object_technique="radiosity_glossiness">
+		<texture type="diffuse" filename="Data\level_3\Textures\VentanaOpaca.dds"/>
+		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
+		<texture type="lightmap2" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Y.dds"/>
+		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
+		<texture type="glossiness" filename="Data\level_3\Textures\VentanaOpaca_GLOSS.dds"/>
+		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<parameter type="float" name="active" value="1.000000" description=""/>
+		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="25.000000" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="VortexMaterial" renderable_object_technique="vortex">
+		<parameter type="float" name="enabled" value="1.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="angle" value="0.000000" description="min=-1.0 max=1.0 step=0.01"/>
+		<parameter type="float2" name="center" value="0.500000 0.500000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float2" name="redius" value="0.400000 0.400000" description="min=0.0 max=1.0 step=0.01"/>
+	</material>
+	<material name="ZBlurMaterial" renderable_object_technique="zblur">
+		<parameter type="float" name="ZBlurActive" value="1.000000" description=""/>
+		<parameter type="float" name="ZBlurShowDepths" value="1.000000" description=""/>
+		<parameter type="float" name="ZBlurConstantBlur" value="0.000000" description=""/>
+		<parameter type="float" name="ZBlurFocalStart" value="1.000000" description=""/>
+		<parameter type="float" name="ZBlurFocalEnd" value="25.000000" description=""/>
+		<parameter type="float" name="ZBlurEnd" value="50.000000" description=""/>
+	</material>
+	<material name="ms_manchas1" renderable_object_technique="manchas">
+		<texture type="diffuse" filename="Data\Particles\stains.png"/>
+		<parameter type="float2" name="sprite_size" value="3.000000 3.000000" description=""/>
+	</material>
+	<material name="no_material" renderable_object_technique="lights">
+	</material>
+	<material name="ps_polvo_material" renderable_object_technique="particle">
+		<texture type="diffuse" filename="Data\Particles\PolvoSingular.png"/>
+		<parameter type="float2" name="sprite_size" value="1.000000 1.000000" description=""/>
+		<parameter type="float" name="lerp_sprite" value="1.000000" description=""/>
+		<parameter type="float" name="ratio_y" value="1.000000" description=""/>
+	</material>
+	<material name="ps_vapor_material" renderable_object_technique="particle">
+		<texture type="diffuse" filename="Data\Particles\Vapor1.png"/>
+		<parameter type="float2" name="sprite_size" value="1.000000 1.000000" description=""/>
+		<parameter type="float" name="lerp_sprite" value="1.000000" description=""/>
+		<parameter type="float" name="ratio_y" value="1.000000" description=""/>
+	</material>
+</materials>

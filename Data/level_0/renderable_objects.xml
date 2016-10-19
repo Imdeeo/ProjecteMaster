@@ -4,9 +4,12 @@
 	<layer name="alpha_objects"/>
 	<layer name="alpha_blend_objects"/>
 	<layer name="particles"/>
+	<layer name="line_renderers"/>
 	<layer name="triggers"/>
 	<layer name="manchas"/>
 	<layer name="skybox"/>
-	<animated_instance_mesh name="Jaheem" layer="solid" core_name="Jaheem" position="-15.0 2.0 27.0" rotation="-0.000000 0.703490 -0.000000 0.710705" create_physics="false" visible="true"/>
-	<manchas_instance name="manchas" layer="manchas" type="manchasCordura1" awake="(null)" visible="true"/>
+	<layer name="interactuable_objects"/>
+	<animated_instance_mesh name="Jaheem" layer="solid" core_name="Jaheem" position="0.0 0.9 5.5" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="Skybox" visible="true" create_physics="false" rotation="0.0 0.0 0.0 -1.0" position="0.0 0.0 0.0" core_name="Skybox" layer="skybox"/>
+	<manchas_instance name="manchas" layer="manchas" type="manchasCordura1" awake="false" visible="true"/>
 </renderable_objects>

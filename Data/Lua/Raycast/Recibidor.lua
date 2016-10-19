@@ -1,4 +1,4 @@
-dofile("Data\\Lua\\Raycast\\Helpers.lua")
+dofile("Data\\Lua\\Player\\Helpers.lua")
 
 R1TrayR1IsClosed = true
 R1TrayR2IsClosed = true
@@ -10,7 +10,7 @@ local l_LevelId = "Recibidor"
 function R1Door(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
 	_Player.m_TargetPosOffset = Vect3f(0.048, 0.0, -0.55)
-	l_Target = GetTriggerPos("TriggerDoor")
+	l_Target = GetTriggerPos("TriggerDoor", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.2) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 1
@@ -22,7 +22,6 @@ function R1Door(_Player, _Pos)
 		_Player.m_CurrentAend = "CrossDoor"
 		_Player.m_LeftHanded = false
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 	end
@@ -31,29 +30,29 @@ end
 function R1Sheets(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(0.5, 0.0, 0.0)
-	l_Target = GetTriggerPos("TriggerSheets")
+	l_Target = GetTriggerPos("TriggerSheets", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 0.5) then
 		_Player.m_Target = l_Target
 		-- Play Sound
-		utils_log("<-Interacted with R1Sheets->")
+		--utils_log("<-Interacted with R1Sheets->")
 	end
 end
 
 function R1Canvas(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(-1.5, 0.0, 0.0)
-	l_Target = GetTriggerPos("TriggerCanvas")
+	l_Target = GetTriggerPos("TriggerCanvas", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 2.0) then
 		_Player.m_Target = l_Target
 		-- Play Sound
-		utils_log("<-Interacted with R1Canvas->")
+		--utils_log("<-Interacted with R1Canvas->")
 	end
 end
 
 function R1TrayR1(_Player, _Pos) --This contains the key
 	_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(0.728, 0.0, 0.03958677)
-	l_Target = GetTriggerPos("TriggerTrayR1",l_LevelId)
+	l_Target = GetTriggerPos("TriggerTrayR1", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 4
@@ -65,12 +64,12 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 		_Player.m_LeftHanded = true
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
-		--m_CharacterManager.m_Enemics[1].m_Awake = true
-		--m_CharacterManager.m_Enemics[2].m_Awake = true
-		g_Engine:get_cinematic_manager():get_resource("recibidor_engranajes"):play()
+		m_CharacterManager.m_Enemics[1].m_Awake = true
+		m_CharacterManager.m_Enemics[2].m_Awake = true
+		local l_Level = g_Engine:get_level_manager():get_level(l_LevelId)
+		l_Level:get_cinematic_manager():get_resource("recibidor_engranajes"):play()
 		_Player.m_PhysXManager:disable_trigger("TriggerTrayR1")
 	end
 end
@@ -78,7 +77,7 @@ end
 function R1TrayR2Open(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(0.705, 0.0, 0.03958677)
-	l_Target = GetTriggerPos("TriggerTrayR2",l_LevelId)
+	l_Target = GetTriggerPos("TriggerTrayR2", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 2
@@ -86,7 +85,6 @@ function R1TrayR2Open(_Player, _Pos)
 		_Player.m_CameraAnimation = "OpenTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		R1TrayR2IsClosed = false
@@ -96,7 +94,7 @@ end
 function R1TrayR2Close(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(0.705, 0.0, 0.03958677)
-	l_Target = GetTriggerPos("TriggerTrayR2",l_LevelId)
+	l_Target = GetTriggerPos("TriggerTrayR2", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
@@ -104,7 +102,6 @@ function R1TrayR2Close(_Player, _Pos)
 		_Player.m_CameraAnimation = "CloseTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		R1TrayR2IsClosed = true
@@ -122,7 +119,7 @@ end
 function R1TrayL1Open(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(-0.705, 0.0, -0.03958677)
-	l_Target = GetTriggerPos("TriggerTrayL1",l_LevelId)
+	l_Target = GetTriggerPos("TriggerTrayL1", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 2
@@ -130,7 +127,6 @@ function R1TrayL1Open(_Player, _Pos)
 		_Player.m_CameraAnimation = "OpenTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		R1TrayL1IsClosed = false
@@ -140,7 +136,7 @@ end
 function R1TrayL1Close(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(-0.705, 0.0, -0.03958677)
-	l_Target = GetTriggerPos("TriggerTrayL1",l_LevelId)
+	l_Target = GetTriggerPos("TriggerTrayL1", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
@@ -148,7 +144,6 @@ function R1TrayL1Close(_Player, _Pos)
 		_Player.m_CameraAnimation = "CloseTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		R1TrayL1IsClosed = true
@@ -166,16 +161,16 @@ end
 function R1TrayL2Open(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(-0.705, 0.0, -0.03958677)
-	l_Target = GetTriggerPos("TriggerTrayL2",l_LevelId)
+	l_Target = GetTriggerPos("TriggerTrayL2", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
-		CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):set_scale(Vect3f(1.0, 0.5, 1.0))
+		local l_Level = g_Engine:get_level_manager():get_level(l_LevelId)
+		l_Level:get_layer_manager():get_layer("triggers"):get_resource("TriggerTrayL2"):set_scale(Vect3f(1.0, 0.5, 1.0))
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 2
 		_Player.m_InteractingCinematic = "OpenTrayL2"
 		_Player.m_CameraAnimation = "OpenTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		R1TrayL2IsClosed = false
@@ -185,16 +180,16 @@ end
 function R1TrayL2Close(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(-0.705, 0.0, -0.03958677)
-	l_Target = GetTriggerPos("TriggerTrayL2",l_LevelId)
+	l_Target = GetTriggerPos("TriggerTrayL2", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
-		CUABEngine.get_instance():get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):set_scale(Vect3f(1.0, 1.0, 1.0))
+		local l_Level = g_Engine:get_level_manager():get_level(l_LevelId)
+		l_Level:get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):set_scale(Vect3f(1.0, 1.0, 1.0))
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "CloseTrayL2"
 		_Player.m_CameraAnimation = "CloseTray"
 		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
-		_Player.m_IsClimbing = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		R1TrayL2IsClosed = true
@@ -216,12 +211,11 @@ function R1Ankh(_Player, _Pos)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 		_Player.m_Target = l_Target
 		-- Play Sound
-		utils_log("<-Interacted with R1Ankh->")
 	end
 end
 
 function R1Key(_Player, _Pos)
-	utils_log("<-Interacted with R1Key->")
+	--utils_log("<-Interacted with R1Key->")
 	--_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
 	--l_Target = GetTriggerPos("TriggerKey")
 	--if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
@@ -236,7 +230,6 @@ function R1Key(_Player, _Pos)
 	--	_Player.m_CurrentAend = nil
 	--	_Player.m_IsInteracting = true
 	--	_Player.m_IsClimbing = false
-	--	_Player.m_IsCorrecting = true
 	--	_Player.m_IsPuzzle = false
 	--end
 end

@@ -3,6 +3,7 @@
 
 #include "Utils.h"
 #include "Utils\Named.h"
+#include "Utils\LevelInfo.h"
 #include "XML\tinyxml2.h"
 
 #include <string>
@@ -10,7 +11,7 @@
 
 class CMaterial;
 
-class CBilboardSystemType : public CNamed
+class CBilboardSystemType : public CNamed, CLevelInfo
 {
 private:
 	std::string m_LevelId;

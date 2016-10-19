@@ -261,9 +261,6 @@ bool CStaticMesh::Load(const std::string &FileName)
 			l_BoundingBox = malloc(l_NumBytes);
 			l_File.read((char *) l_BoundingBox, l_NumBytes);
 
-			if (m_Name == "TriggerOrganKeyA")
-				UtilsLog("Stahp");
-			
 			m_BoundingBoxMin.x = ((float*)l_BoundingBox)[0];
 			m_BoundingBoxMin.y = ((float*)l_BoundingBox)[1];
 			m_BoundingBoxMin.z = ((float*)l_BoundingBox)[2];

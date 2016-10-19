@@ -1,19 +1,16 @@
 function IdleFirst(args)
-	utils_log("Player Idle First")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Owner:blend_cycle(0,1.0,0.1)
 	l_Player.m_PhysXManager:set_character_controller_height("player", g_Height)
-	local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	utils_log("Pos: "..l_Pos.x..", "..l_Pos.y..", "..l_Pos.z)
+	--local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
+	--utils_log("Pos: "..l_Pos.x..", "..l_Pos.y..", "..l_Pos.z)
 end
 
 function IdleUpdate(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	
-	utils_log("Player Idle Update")
-	
+		
 	--// Calculate the player speed
 	local l_PlayerDisplacement = Vect3f(0, l_Player.m_Velocity.y + l_Player.m_Gravity * _ElapsedTime, 0)
 	
@@ -38,11 +35,17 @@ function IdleUpdate(args, _ElapsedTime)
 	
 	
 	--// Save speed in last update so we can create acceleration
-	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
-	
+	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition	
 	l_Player.m_Velocity = l_Displacement/_ElapsedTime
+<<<<<<< HEAD
 	
 	utils_log("Player Idle Update Middle")
+=======
+    if l_Player.m_Velocity.y > 0 then
+        l_Player.m_Velocity.y = 0
+    end	
+	
+>>>>>>> develop
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
 	

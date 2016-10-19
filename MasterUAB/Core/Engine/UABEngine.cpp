@@ -17,9 +17,7 @@
 #include "Cinematics\CinematicManager.h"
 #include "PhysXManager\PhysXManager.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
-#include "SceneRender\SceneRendererCommandManager.h"
 #include "Particles\ParticleManager.h"
-#include "Bilboards\BilboardManager.h"
 #include "GUIManager.h"
 #include "GUIPosition.h"
 #include "SoundManager\SoundManager.h"
@@ -56,7 +54,6 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 	m_CameraControllerManager = new CCameraControllerManager();
 	m_PhysXManager = CPhysXManager::CreatePhysXManager();
 	m_RenderableObjectTechniqueManager = new CRenderableObjectTechniqueManager();
-	m_SceneRendererCommandManager = new CSceneRendererCommandManager();
 	m_GUIManager = new CGUIManager();
 	m_SoundManager = ISoundManager::InstantiateSoundManager();
 	m_VideoManager = IVideoManager::InstantiateVideoManager();
@@ -67,9 +64,12 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 
 CUABEngine::~CUABEngine(void)
 {
+<<<<<<< HEAD
 
 	CHECKED_DELETE(m_LevelManager);
 	CHECKED_DELETE(m_SceneRendererCommandManager);
+=======
+>>>>>>> develop
 	CHECKED_DELETE(m_TextureManager);
 	CHECKED_DELETE(m_RenderManager);
 	CHECKED_DELETE(m_AnimatedModelsManager);
@@ -136,7 +136,7 @@ void CUABEngine::Init()
 	m_AnimatedModelsManager->Load("Data\\animated_models.xml");
 	m_GUIManager->Load("Data\\GUI\\gui_elements.xml");
 	m_ScriptManager->Initialize();
-	m_MaterialManager->Load("Data\\default_effect_materials.xml","");
+	//m_MaterialManager->Load("Data\\default_effect_materials.xml","");
 #ifdef _DEBUG
 	m_RenderManager->GetDebugRender()->SetEffectTechnique(UABEngine.GetRenderableObjectTechniqueManager()->GetResource("debug_grid"));
 #else
@@ -146,7 +146,12 @@ void CUABEngine::Init()
 	UABEngine.GetScriptManager()->RunCode("mainLua()");
 
 	m_LoadScreenManager->SetLoading(false);
+<<<<<<< HEAD
 	//t.join();
+=======
+	t.join();
+	CHECKED_DELETE(m_LoadScreenManager);
+>>>>>>> develop
 }
 
 void CUABEngine::Destroy()
@@ -176,7 +181,10 @@ void CUABEngine::ReloadLUA()
 {
 	LuaIsReloaded();
 	m_ScriptManager->Destroy();
-	//m_GamePlayManager->Clear();
+	for (size_t i = 0; i < m_LevelManager->GetResourcesVector().size(); ++i)
+	{
+		m_LevelManager->GetResourcesVector()[i]->GetGamePlayManager()->Clear();
+	}
 	m_ScriptManager->Initialize();
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	UtilsLog("Reloading Lua");
@@ -255,7 +263,10 @@ UAB_GET_PROPERTY_CPP(CUABEngine, CScriptManager *, ScriptManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CCameraControllerManager *, CameraControllerManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CPhysXManager *, PhysXManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
+<<<<<<< HEAD
 UAB_GET_PROPERTY_CPP(CUABEngine, CSceneRendererCommandManager *, SceneRendererCommandManager)
+=======
+>>>>>>> develop
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, ISoundManager *, SoundManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)

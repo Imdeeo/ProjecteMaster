@@ -26,6 +26,7 @@ m_Cordura = CSliderResult(50.0, 50.0)
 m_ScreenResolution = Vect2f(1280.0, 720.0)
 m_ScreenFactorX = m_ScreenResolution.x / 1920
 m_ScreenFactorY = m_ScreenResolution.y / 1080
+m_Timer = 0.0
 
 function mainLua()
 	InitAntweakBar()
@@ -48,10 +49,20 @@ function mainLua()
 	--g_Player.m_SoundManager:set_switch(l_switchvalue)	
 	g_VolumeController:SetMusicVolume(50)
 	m_timerPause = 0
-	m_iniciando = true 
+	m_iniciando = true 	
 	
 	l_LevelManager:load_level("Player")	
+	l_LevelManager:choose_scene_command_level("Player")
+	g_Player:SetActualLevel("Player")	
 	
+	deactivate_gravity()
+	deactivate_player_collisions()
+	
+	--l_LevelManager:load_level("Recibidor")
+	--l_LevelManager:choose_scene_command_level("Recibidor")
+	--g_Player:SetActualLevel("Recibidor")
+	
+<<<<<<< HEAD
 	--deactivate_gravity()
 	--deactivate_player_collisions()
 	l_LevelManager:load_level("Recibidor")
@@ -63,11 +74,33 @@ function mainLua()
 	--l_LevelManager:load_level("Maquinas")	
 	
 	--l_LevelManager:unload_level("Recibidor")
+=======
+	--l_LevelManager:load_level("Biblioteca")
+	--l_LevelManager:choose_scene_command_level("Biblioteca")
+	--g_Player:SetActualLevel("Biblioteca")
+	
+	l_LevelManager:load_level("Maquinas")
+	l_LevelManager:choose_scene_command_level("Maquinas")
+	g_Player:SetActualLevel("Maquinas")
+	
+	--l_LevelManager:load_level("Pasillo")
+	--l_LevelManager:choose_scene_command_level("Pasillo")
+	--g_Player:SetActualLevel("Pasillo")
+	
+	--l_LevelManager:load_level("Boss")
+	--l_LevelManager:choose_scene_command_level("Boss")
+	--g_Player:SetActualLevel("Boss")
+>>>>>>> develop
 end
 
 function levelMainLua(level,level_id)
+	--utils_log("ASD")
 	level = string.gsub(level,"\/","\\")
 	m_CharacterManager:LoadXML(level.."\\characters.xml",level_id)
+end
+
+function auxReloadLua(level_id) -- Establece el level en el player
+	g_Player:SetActualLevelAux(level_id)
 end
 
 function luaUpdate(_ElapsedTime)
@@ -82,23 +115,23 @@ function luaUpdate(_ElapsedTime)
 	
 		local l_InputManager = g_Engine:get_input_manager()
 		if l_InputManager:is_action_released("DebugSpeedUp") then
-			utils_log("DebugSpeedUp")
+			--utils_log("DebugSpeedUp")
 			if g_Engine:get_time_scale() < 11 then
 				g_Engine:set_time_scale(g_Engine:get_time_scale()+1)
 			end
 		end
 		if l_InputManager:is_action_released("DebugSpeedDown") then
-			utils_log("DebugSpeedDown")
+			--utils_log("DebugSpeedDown")
 			if g_Engine:get_time_scale() > 1 then
 				g_Engine:set_time_scale(g_Engine:get_time_scale()-1)
 			end
 		end
 		if l_InputManager:is_action_released("DebugSanityUp") then
-			--utils_log("DebugSanityUp")
+			----utils_log("DebugSanityUp")
 			m_CharacterManager.m_Player[1]:ModifySanity(10)
 		end
 		if l_InputManager:is_action_released("DebugSanityDown") then
-			--utils_log("DebugSanityDown")
+			----utils_log("DebugSanityDown")
 			m_CharacterManager.m_Player[1]:ModifySanity(-10)
 		end
 		if l_InputManager:is_action_released("Pause") then
@@ -117,17 +150,13 @@ function luaUpdate(_ElapsedTime)
 		if l_InputManager:is_action_released("DebugToggleLoadVideo") then
 			local l_videoManager = g_Engine:get_video_manager()
 			l_videoManager:play_clip("bunny.ogv")
-			--l_videoManager:load_clip("bunny.ogv",false)
-			--l_videoManager:render_screen_clip("bunny.ogv")
 		end
 		--g_VolumeController:CheckVolumeKeys()	
 	end
 end
 
-function luaGui()
+function luaGui(_ElapsedTime)
 	local gui_manager = g_Engine:get_gui_manager()
-	--gui_position = CGUIPosition(0, 0, 1280, 720, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
-	--m_Cordura = gui_manager:do_slider("Cordura", "mad_slider", gui_position,0, m_CharacterManager.m_Player[1].m_MaxSanity, m_CharacterManager.m_Player[1].m_Sanity, false)
 	
 	if m_fps then
 		local color = CColor(1,0.2,0.2,1)
@@ -207,7 +236,7 @@ function luaGui()
 				m_menu = false
 				m_retry = false
 				g_Engine:set_pause(false)
-				g_ReloadManager:ReloadGame(1)
+				g_ReloadManager:ReloadGame(g_Player.m_ActualLevel)
 			end 
 			
 			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
@@ -260,7 +289,10 @@ function luaGui()
 				m_confirm = true
 			end
 		else			
+			m_Timer = m_Timer + _ElapsedTime * 0.02
+			
 			gui_manager:do_panel("mainMenuFondo", "fondo1", gui_position, 0.0)
+			gui_manager:do_panel("mainMenuFondoAnimado", "fondo1_1", gui_position, m_Timer)
 			
 			gui_position = CGUIPosition(l_PosX, l_PosY, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local l_PlayButton = gui_manager:do_button("Play", "play_button", gui_position)
@@ -295,7 +327,7 @@ function iniciar()
 end
 
 function pos_player()
-	utils_log("Pos x:"..g_Player.m_RenderableObject:get_position().x)
-	utils_log("Pos y:"..g_Player.m_RenderableObject:get_position().y)
-	utils_log("Pos z:"..g_Player.m_RenderableObject:get_position().z)
+	--utils_log("Pos x:"..g_Player.m_RenderableObject:get_position().x)
+	--utils_log("Pos y:"..g_Player.m_RenderableObject:get_position().y)
+	--utils_log("Pos z:"..g_Player.m_RenderableObject:get_position().z)
 end

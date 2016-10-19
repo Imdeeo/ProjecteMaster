@@ -16,13 +16,11 @@ class CScriptManager;
 class CCameraControllerManager;
 class CPhysXManager;
 class CRenderableObjectTechniqueManager;
-class CSceneRendererCommandManager;
 class CGUIManager;
 class ISoundManager;
 class IVideoManager;
 class CLevelManager;
 class CColor;
-class CBilboardManager;
 class CRenderableObject;
 class CEffectTechnique;
 class CLoadScreenManager;
@@ -50,7 +48,10 @@ private:
 	CCameraControllerManager * m_CameraControllerManager;
 	CPhysXManager * m_PhysXManager;
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
+<<<<<<< HEAD
 	CSceneRendererCommandManager* m_SceneRendererCommandManager;
+=======
+>>>>>>> develop
 	CGUIManager* m_GUIManager;
 	ISoundManager* m_SoundManager;
 	IVideoManager* m_VideoManager;
@@ -71,7 +72,10 @@ public:
 	CCameraControllerManager * GetCameraControllerManager() const;
 	CPhysXManager * GetPhysXManager() const;
 	CRenderableObjectTechniqueManager * GetRenderableObjectTechniqueManager() const;
+<<<<<<< HEAD
 	CSceneRendererCommandManager * GetSceneRendererCommandManager() const;
+=======
+>>>>>>> develop
 	CGUIManager * GetGUIManager() const;
 	ISoundManager * GetSoundManager() const;
 	IVideoManager * GetVideoManager() const;

@@ -109,9 +109,10 @@ void CLevelManager::ReloadAllLua()
 		{
 			std::string l_Directory = l_iterator->second.m_Directory;
 			std::replace(l_Directory.begin(), l_Directory.end(), '\\', '\/');
-			UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_Directory + "\",\"" + l_iterator->second.m_ID + "\")");
+			UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_Directory + "\",\"" + l_iterator->first + "\")");
 		}
 	}
+	UABEngine.GetScriptManager()->RunCode("auxReloadLua(\"" + m_ActualLevel + "\")");
 }
 
 TLevelInfo CLevelManager::GetLevelInfo(const std::string &_LevelName)
@@ -137,4 +138,9 @@ void CLevelManager::ExecuteSceneCommands(CRenderManager* _RenderManager)
 void CLevelManager::AddSceneCommandsManager(const std::string &_LevelId,CSceneRendererCommandManager* _SceneRendererCommandManager)
 {
 	m_SceneRenderCommandsManager[_LevelId] = _SceneRendererCommandManager;
+}
+
+CSceneRendererCommandManager * CLevelManager::GetSceneRendererCommandManager(const std::string _levelId)
+{
+	return m_SceneRenderCommandsManager[_levelId];
 }

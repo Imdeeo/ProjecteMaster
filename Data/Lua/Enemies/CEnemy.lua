@@ -3,9 +3,9 @@ dofile("Data\\Lua\\Utils\\state_machine.lua")
 class 'CEnemy' (CLUAComponent)
 	function CEnemy:__init(_TreeNode,_LevelId)
 		local UABEngine = CUABEngine.get_instance()
-		utils_log("Enemy before get level")
+		--utils_log("Enemy before get level")
 		local l_Level = CUABEngine.get_instance():get_level_manager():get_level(_LevelId)
-		utils_log("Enemy after get level")
+		--utils_log("Enemy after get level")
 		self.m_Name = _TreeNode:get_psz_property("name", "")
 		self.m_LayerName = _TreeNode:get_psz_property("layer", "")
 		self.m_RenderableObjectName = _TreeNode:get_psz_property("renderable_object", "")
@@ -15,7 +15,7 @@ class 'CEnemy' (CLUAComponent)
 		
 		self.m_Timer = 0
 		self.m_DefaultPosition = Vect3f(self.m_RenderableObject:get_position().x, self.m_RenderableObject:get_position().y, self.m_RenderableObject:get_position().z)
-		--utils_log(self.m_Name.." POS X: "..self.m_DefaultPosition.x.." Y: "..self.m_DefaultPosition.y.." Z: "..self.m_DefaultPosition.z)
+		----utils_log(self.m_Name.." POS X: "..self.m_DefaultPosition.x.." Y: "..self.m_DefaultPosition.y.." Z: "..self.m_DefaultPosition.z)
 		self.m_DefaultRotation = self.m_RenderableObject:get_rotation()
 		self.m_DefaultForward = self.m_DefaultRotation:get_forward_vector()
 		self.m_State = "off"
@@ -53,7 +53,7 @@ class 'CEnemy' (CLUAComponent)
 	end
 	
 	function CEnemy:Update(_ElapsedTime)
-		utils_log("CEnemy:Update")
+		--utils_log("CEnemy:Update")
 	end
 	
 	function CEnemy:PlayerVisible(_Owner)
@@ -189,8 +189,8 @@ class 'CEnemy' (CLUAComponent)
 	
 	function CEnemy:ShowParticles(_ParticleName, _IsStart)
 		local l_Owner = self.m_RenderableObject;
-		local UABEngine = CUABEngine.get_instance()
-		local l_Particle = UABEngine:get_layer_manager():get_layer("particles"):get_resource(_ParticleName)
+		local l_Level = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
+		local l_Particle = l_Level:get_layer_manager():get_layer("particles"):get_resource(_ParticleName)
 		
 		if _IsStart then
 			l_Particle:set_start(true)

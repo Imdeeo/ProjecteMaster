@@ -9,14 +9,14 @@
 #include "Materials\MaterialManager.h"
 #include "Utils.h"
 #include "Math\Color.h"
-
+#include "LevelManager\LevelManager.h"
 
 CDrawQuadRendererCommand::CDrawQuadRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CStagedTexturedSceneRendererCommand(TreeNode,_LevelId)
 {
 	const char* c = TreeNode->GetPszProperty("material", "");
 	if (c != "")
 	{
-		m_Material = UABEngine.GetMaterialManager()->GetResource(std::string(c));
+		m_Material = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetMaterialManager()->GetResource(std::string(c));
 		m_RenderableObjectTechnique = m_Material->GetRenderableObjectTechnique();
 	}
 	else
