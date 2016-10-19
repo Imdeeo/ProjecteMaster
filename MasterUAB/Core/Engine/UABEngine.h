@@ -48,6 +48,7 @@ private:
 	CCameraControllerManager * m_CameraControllerManager;
 	CPhysXManager * m_PhysXManager;
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
+
 	CGUIManager* m_GUIManager;
 	ISoundManager* m_SoundManager;
 	IVideoManager* m_VideoManager;

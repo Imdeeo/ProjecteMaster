@@ -25,6 +25,10 @@ class 'CFogEnemy' (CEnemy)
 		self.m_Attack = false
 		self.m_OffPos = Vect3f(13.5, 0.1, 13.9)
 	end
+	
+	function CFogEnemy.Destroy(self)
+		CEnemy.Destroy(self)
+	end
 
 	function CFogEnemy:Update(_ElapsedTime)
 		local args = {}

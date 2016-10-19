@@ -7,6 +7,16 @@ function load_level(name)
 	l_LevelManager:load_level(name)
 end
 
+function unload_level(name)
+	local l_LevelManager = g_Engine:get_level_manager()	
+	l_LevelManager:unload_level(name)
+end
+
+function set_commands_level(name)
+	local l_LevelManager = g_Engine:get_level_manager()	
+	l_LevelManager:choose_scene_command_level(name)
+end
+
 function activate_gravity()
 	g_Player:SetActiveStateMachineState("Jumping",true)
 	g_Player:SetActiveStateMachineState("Falling",true)
