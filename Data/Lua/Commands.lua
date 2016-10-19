@@ -76,3 +76,7 @@ function ja()
 	local l_FPSCamera = l_CameraManager:get_main_camera()
 	utils_log_v3(l_FPSCamera:get_position())
 end
+
+function rl()
+	CUABEngine.get_instance():get_camera_controller_manager():reload()
+end
