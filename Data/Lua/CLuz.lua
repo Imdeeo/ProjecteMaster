@@ -13,10 +13,16 @@
 		self.m_Luz = l_Level:get_light_manager():get_resource(self.m_RenderableObjectName)
 		self.m_Swap = false
 		self.m_Luz:set_intensity(3)
+		self.m_Timer = 0
 	end
 	
 	function CLuz:Update(_ElapsedTime)
-		if not self.m_Swap then
+		self.m_Timer = self.m_Timer + _ElapsedTime
+		if self.m_Timer >= 0.08 then 
+			self.m_Timer = 0
+			self.m_Luz:set_intensity(2.5+(math.random()/2))
+		end
+		--[[if not self.m_Swap then
 			local l_swap = math.random()
 			utils_log(""..l_swap)
 			if l_swap > 0.2 then
@@ -32,8 +38,9 @@
 			end		
 		else
 			self.m_Swap = false
-		end
+		end]]
 		
 		--self.m_Luz:set_intensity(math.random())
 		--self.m_Luz:set_intensity(2)
+		
 	end

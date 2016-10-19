@@ -374,7 +374,8 @@ function RegisterBilboardParameters(bilboard_name)
 		
 	ShowMaterialParameters(DebugHelper, UABEngine, Material.name)
 	
-	DebugHelper:add_variable("Size",CDebugHelper.float,CDebugHelper.read_write,Bilboard:get_lua_size(),"min=-100.0 max=100.0 step=0.01")
+	DebugHelper:add_variable("SizeX",CDebugHelper.float,CDebugHelper.read_write,Bilboard:get_lua_sizeX(),"min=-100.0 max=100.0 step=0.01")
+	DebugHelper:add_variable("SizeY",CDebugHelper.float,CDebugHelper.read_write,Bilboard:get_lua_sizeY(),"min=-100.0 max=100.0 step=0.01")
 	DebugHelper:add_variable("Size offset",CDebugHelper.float,CDebugHelper.read_write,Bilboard:get_lua_size_offset(),"min=-1.0 max=1.0 step=0.01")
 	DebugHelper:add_variable("Color",CDebugHelper.color,CDebugHelper.read_write,Bilboard:get_lua_color(),"")
 		
