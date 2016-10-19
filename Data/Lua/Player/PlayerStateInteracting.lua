@@ -8,7 +8,7 @@ function InteractingFirst(args)
 		l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):play()
 	end
 	
-	m_Timer = 0.0
+	l_Player.m_Timer = 0.0
 	
 	if l_Player.m_CameraAnimation ~= nil then
 		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, true)
@@ -19,17 +19,17 @@ function InteractingUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	
-	m_Timer = m_Timer + _ElapsedTime
+	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	
 	--// Ends the state after the animation duration has passed
 	if l_Player.m_InteractingCinematic ~= nil then
 		l_Player.m_IsInteracting = not l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):is_finished()
 	else
-		l_Player.m_IsInteracting = (m_Timer < l_Player.m_AnimationTime)
+		l_Player.m_IsInteracting = (l_Player.m_Timer < l_Player.m_AnimationTime)
 	end
 	
 	--// Change old to new item
-	if m_Timer >= l_Player.m_ItemTime and l_Player.m_ItemTime >= 0.0 then
+	if l_Player.m_Timer >= l_Player.m_ItemTime and l_Player.m_ItemTime >= 0.0 then
 		l_Player.m_ItemName = l_Player.m_NewItemName
 		l_Player.m_NewItemName = ""
 		if l_Player.m_ItemName ~= "" then
@@ -71,14 +71,17 @@ end
 function InteractingEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
+	
 	ClearPlayerTarget(l_Player)
 	ClearPlayerStates(l_Player)
-	ClearPlayerAend(l_Player)
+	ClearPlayerAend(l_Player, l_Owner)
 	ClearPlayerCinematic(l_Player)
 	ClearPlayerCamera(l_Player)
+	
 	l_Player.m_InteractingAnimation = 0
 	l_Player.m_AnimationTime = 0
 	l_Player.m_CameraController:unlock()
+	
 	l_Owner:remove_action(l_Owner:get_actual_action_animation())
 end
 

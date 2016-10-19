@@ -17,42 +17,34 @@ function ClearPlayerTarget(_Player)
 end
 
 function ClearPlayerCamera(_Player)
-utils_log("ClearPlayerCamera")
 	if _Player.m_CameraAnimation ~= nil then
 		l_CameraControllerManager = CUABEngine.get_instance():get_camera_controller_manager()
 		l_CameraControllerManager:get_resource(_Player.m_CameraControllerName):copy_from_key_camera(l_CameraControllerManager:get_main_camera():get_camera_as_info())
 		l_CameraControllerManager:choose_main_camera(_Player.m_CameraControllerName)
 	end
 	_Player.m_CameraAnimation = nil
-	utils_log("ClearPlayerCamera2")
 end
 
 function ClearPlayerCinematic(_Player)
-utils_log("ClearPlayerCinematic")
 	if _Player.m_InteractingCinematic ~= nil then
 		_Player.m_CinematicManager:get_resource(_Player.m_InteractingCinematic):stop()
 	end
 	_Player.m_InteractingCinematic = nil
-	utils_log("ClearPlayerCinematic2")
 end
 
-function ClearPlayerAend(_Player)
-utils_log("ClearPlayerAend")
+function ClearPlayerAend(_Player, _Owner)
 	if _Player.m_CurrentAend ~= nil then
 		_Player.m_PhysXManager:character_controller_warp("player", _Player.m_Aends[_Player.m_CurrentAend])
 		local l_NewControllerPosition = _Player.m_PhysXManager:get_character_controler_pos("player")
 		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
-		l_Owner:set_position(l_NewControllerPosition)
+		_Owner:set_position(l_NewControllerPosition)
 	end
 	_Player.m_CurrentAend = nil
-	utils_log("ClearPlayerAend2")
 end
 
 function ClearPlayerStates(_Player)
-utils_log("ClearPlayerStates")
 	_Player.m_IsInteracting = false
 	_Player.m_IsPuzzle = false
 	_Player.m_IsClimbing = false
 	_Player.m_IsCorrecting = false
-	utils_log("ClearPlayerStates2")
 end
