@@ -10,10 +10,12 @@
 
 #include "LevelManager\LevelManager.h"
 
+#include <string>
+
 CFPSCameraController::CFPSCameraController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CCameraController(TreeNode,_LevelId)
 , m_Locked(false)
-, m_YawSpeed(2.5f)
-, m_PitchSpeed(2.f)
+, m_YawSpeed(1.0f)
+, m_PitchSpeed(0.5f)
 , m_Speed(5.0f)
 , m_FastSpeed(10.0f)
 , m_Target(UABEngine.GetLevelManager()->GetResource("Player")->GetLayerManager()->GetResource(TreeNode->GetPszProperty("layer"))->GetResource(TreeNode->GetPszProperty("target")))
@@ -62,10 +64,13 @@ void CFPSCameraController::AddYaw(float Radians)
 
 void CFPSCameraController::AddPitch(float Radians)
 { 
-	float l_Pitch = m_Rotation.EulerFromQuat().x;
+	//float l_Pitch = m_Rotation.EulerFromQuat().x;
+	float l_Pitch = m_Rotation.GetPitch();
 	//				80�						100�										-45�					-135�
 	if (((l_Pitch < 1.39626f || l_Pitch > 1.74533f) && Radians < .0f) || ((l_Pitch > -0.785398f || l_Pitch < -2.356194f) && Radians > .0f))
 		CCameraController::AddPitch(-Radians*m_PitchSpeed);
+	//UtilsLog("Pitch: " + std::to_string(l_Pitch));
+
 }
 
 /*
