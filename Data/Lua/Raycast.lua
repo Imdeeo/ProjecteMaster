@@ -22,10 +22,8 @@ function CheckRaycast(_Player, _Pos, _Camera, _Owner)
 			TriggerRaycast(_Player, _Pos, _Owner)
 		end
 	else
-		utils_log("CheckRaycast8")
 		l_LayerManager:get_layer("interactuable_objects"):destroy(false)
 	end
-	utils_log("CheckRaycastEnd")
 end
 
 function TriggerRaycast(_Player, _Pos, _Owner)
