@@ -40,12 +40,20 @@ function PuzzleEnd(args)
 		l_Player.m_OrganKeyCount = 1
 	end
 	
-	ClearPlayerCamera(l_Player)
-	ClearPlayerTarget(l_Player)
-	ClearPlayerStates(l_Player)
-	l_Player.m_InteractingCinematic = nil
+	l_CameraControllerManager = CUABEngine.get_instance():get_camera_controller_manager()
+	l_CameraControllerManager:get_resource(l_Player.m_CameraControllerName):copy_from_key_camera(l_CameraControllerManager:get_main_camera():get_camera_as_info())
+	l_CameraControllerManager:choose_main_camera(l_Player.m_CameraControllerName)
+		
 	l_Player.m_CurrentAend = nil
+	l_Player.m_Target = nil
+	l_Player.m_TargetOffset = Vect3f(0.0, 0.0, 0.0)
 	l_Player.m_InteractingAnimation = 0
+	l_Player.m_InteractingCinematic = nil
+	l_Player.m_CameraAnimation = nil
+	l_Player.m_IsInteracting = false
+	l_Player.m_IsClimbing = false
+	l_Player.m_IsCorrecting = false
+	l_Player.m_IsPuzzle = false
 	l_Player.m_AnimationTime = 0
 	l_Player.m_CameraController:unlock()
 	l_Owner:remove_action(l_Owner:get_actual_action_animation())

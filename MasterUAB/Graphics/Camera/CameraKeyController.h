@@ -36,7 +36,7 @@ public:
 	void ForceUpdateYaw(float _ElapsedTime);
 
 	Vect3f GetLastLookAt();
-	void SetFirstKey(Vect3f _Forward, Vect3f _Up, float _Fov);
+	void SetFirstKey(Vect3f _LookAt, Vect3f _Up, float _Fov);
 	CCameraInfo* GetLastKey();
 	CCameraInfo GetCameraAsInfo();
 

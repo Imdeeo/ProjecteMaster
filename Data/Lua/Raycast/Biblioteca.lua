@@ -1,5 +1,5 @@
 dofile("Data\\Lua\\Raycast\\PipeOrgan.lua")
-dofile("Data\\Lua\\Player\\Helpers.lua")
+dofile("Data\\Lua\\Raycast\\Helpers.lua")
 
 local l_LevelId = "Biblioteca"
 
@@ -94,14 +94,13 @@ end
 
 function R2ArtifactDoor(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
-	_Player.m_TargetPosOffset = Vect3f(0.45, 0.0, -0.57)
+	_Player.m_TargetPosOffset = Vect3f(0.5, 0.0, -0.5)
 	l_Target = GetTriggerPos("TriggerArtifactDoor",l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.6) then
+	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.2) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 5
 		_Player.m_InteractingCinematic = "CrossArtifactDoor"
 		_Player.m_CameraAnimation = "CrossArtifactDoor"
-		_Player.m_LeftHanded = false
 		_Player.m_NewItemName = ""
 		_Player.m_ItemTime = 1.6667
 		_Player.m_ItemDropTime = -1.0
@@ -148,7 +147,7 @@ function R2Book(_Player, _Pos)
 		_Player.m_IsPuzzle = false
 		g_Engine:get_video_manager():play_clip("bunny.ogv") -- launch projector video
 		_Player.m_CinematicManager:get_resource("fonotelefote"):play() -- launch projector cinematic
-		g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_light_manager():get_resource("LuzProyector"):set_enabled(true) -- activate lights
+		g_Engine:get_light_manager():get_resource("LuzProyector"):set_enabled(true) -- activate lights
 		-- activate particles
 		--_Player.m_PhysXManager:disable_trigger("TriggerBook")
 	end

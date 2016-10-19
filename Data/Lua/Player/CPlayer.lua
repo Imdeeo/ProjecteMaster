@@ -146,9 +146,9 @@ class 'CPlayer' (CLUAComponent)
 		self.m_JumpSoundEvent = SoundEvent()
 		self.m_JumpSoundEvent.event_name = "Jump"
 		self.m_Velocity = Vect3f(0.0, 0.0, 0.0)
-		self.m_Gravity = g_Gravity
-		self.m_Speed = 5.0
-		self.m_DefaultSpeed = 5.0
+		self.m_Gravity = g_Gravity		
+		self.m_DefaultSpeed = 3.0
+		self.m_Speed = self.m_DefaultSpeed
 		self.m_Sanity = 100.0
 		self.m_MaxSanity = 100.0
 		self.m_TimerVortex = 0
@@ -162,10 +162,13 @@ class 'CPlayer' (CLUAComponent)
 		self.m_IsDead = false
 		
 		self.m_Target = nil
-		self.m_TargetPosOffset = Vect3f(0.0, 0.0, 0.0)
-		self.m_TargetLookOffset = Vect3f(0.0, 0.0, 0.0)
-		self.m_ItemName = ""
-		self.m_Item = nil
+		self.m_TargetPosOffset = Vect3f(1.0, 0.0, 0.0)
+		self.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
+		self.m_TargetPosition = Vect3f(1.0, 0.0, 0.0)
+		self.m_ForwardCamera = Vect3f(1.0,0.0,0.0)
+		self.m_UpCamera = Vect3f(1.0,0.0,0.0)
+		self.m_ItemName = ""--"Artilufacto"
+		self.m_Item = nil--CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(self.m_ItemName)
 		self.m_LeftHanded = false
 		self.m_NewItemName = ""
 		self.m_ItemTime = 0.0
@@ -183,10 +186,11 @@ class 'CPlayer' (CLUAComponent)
 		self.m_RaycastData = RaycastData()
 		
 		self.m_Timer = 0.0
-		
+		self.m_TimerRotation = 0.0
 		self.m_OrganKeyCount = 1
 		self.m_OrganKeyOrder = {"A", "G"}
 		--{"A", "B", "C", "D", "E", "F", "G"}
+		--table:setn(self.m_OrganKeyOrder, 2)
 		
 		self.m_CurrentAend = nil
 		self.m_Aends = {}
@@ -225,6 +229,7 @@ class 'CPlayer' (CLUAComponent)
 	
 	function CPlayer:ModifySanity(_amount)
 		self.m_Sanity = math.max(math.min(self.m_Sanity + _amount, self.m_MaxSanity),0)
+		utils_log("CORDURA: "..self.m_Sanity)
 		if self.m_Sanity <= 0 then
 			utils_log("ESTAS MUERTO!!!")
 			g_Engine:set_pause(true)
@@ -426,7 +431,6 @@ class 'CPlayer' (CLUAComponent)
 		ClimbingState:set_do_end_function(ClimbingEnd)
 		ClimbingState:add_condition(ClimbingToFallingCondition, "Falling")
 		ClimbingState:add_condition(ANYToDeadCondition, "Dead")
-		ClimbingState:add_condition(ClimbingToInteractingCondition, "Interacting")
 		
 		JumpingState = State.create(JumpingUpdate)
 		JumpingState:set_do_first_function(JumpingFirst)
@@ -487,7 +491,8 @@ class 'CPlayer' (CLUAComponent)
 		local l_FPSCamera = l_CameraManager:get_main_camera()
 		local l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
 		if (_CopyFirstFrame) then
-			l_AnimatedCamera:set_first_key(l_FPSCamera:get_forward(), l_FPSCamera:get_up(), l_FPSCamera:get_fov())
+			local l_lookAt = l_FPSCamera:get_forward() + l_FPSCamera:get_position()
+			l_AnimatedCamera:set_first_key(l_lookAt, l_FPSCamera:get_up(), l_FPSCamera:get_fov())
 		end
 		local l_CameraKey = l_AnimatedCamera:get_camera_key(0)
 		local l_CameraInfo = l_CameraKey:get_camera_info()

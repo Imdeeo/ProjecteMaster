@@ -50,8 +50,8 @@ class 'CCharacterManager'
 						--utils_log("other")
 					end
 				elseif l_ElemName == "light" then
-					local l_Light = CLuz(l_Element)
-					UABEngine:get_game_play_manager():add_component(l_Light)
+					local l_Light = CLuz(l_Element, level_id)
+					l_game_play_manager:add_component(l_Light)
 					table.insert(self.m_Lights, l_Light)
 				end	
 				l_Element = l_Element:get_next()
