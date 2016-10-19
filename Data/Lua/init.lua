@@ -55,14 +55,6 @@ function mainLua()
 	l_LevelManager:choose_scene_command_level("Player")
 	g_Player:SetActualLevel("Player")	
 	
-	deactivate_gravity()
-	deactivate_player_collisions()
-	
-	--l_LevelManager:load_level("Recibidor")
-	--l_LevelManager:choose_scene_command_level("Recibidor")
-	--g_Player:SetActualLevel("Recibidor")
-	
-<<<<<<< HEAD
 	--deactivate_gravity()
 	--deactivate_player_collisions()
 	l_LevelManager:load_level("Recibidor")
@@ -73,15 +65,13 @@ function mainLua()
 	l_LevelManager:choose_scene_command_level("Biblioteca")
 	--l_LevelManager:load_level("Maquinas")	
 	
-	--l_LevelManager:unload_level("Recibidor")
-=======
 	--l_LevelManager:load_level("Biblioteca")
 	--l_LevelManager:choose_scene_command_level("Biblioteca")
 	--g_Player:SetActualLevel("Biblioteca")
 	
-	l_LevelManager:load_level("Maquinas")
-	l_LevelManager:choose_scene_command_level("Maquinas")
-	g_Player:SetActualLevel("Maquinas")
+	--l_LevelManager:load_level("Maquinas")
+	--l_LevelManager:choose_scene_command_level("Maquinas")
+	--g_Player:SetActualLevel("Maquinas")
 	
 	--l_LevelManager:load_level("Pasillo")
 	--l_LevelManager:choose_scene_command_level("Pasillo")
@@ -90,7 +80,6 @@ function mainLua()
 	--l_LevelManager:load_level("Boss")
 	--l_LevelManager:choose_scene_command_level("Boss")
 	--g_Player:SetActualLevel("Boss")
->>>>>>> develop
 end
 
 function levelMainLua(level,level_id)

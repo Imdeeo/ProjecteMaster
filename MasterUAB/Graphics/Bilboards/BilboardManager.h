@@ -12,11 +12,7 @@ private:
 public:
 	CBilboardManager(void);
 	virtual ~CBilboardManager(void);
-<<<<<<< HEAD
 	void Load(const std::string &_Filename, const std::string &_LevelId);
-=======
-	void Load(const std::string &Filename, const std::string &_LevelId);
->>>>>>> develop
 	void Reload();
 };
 

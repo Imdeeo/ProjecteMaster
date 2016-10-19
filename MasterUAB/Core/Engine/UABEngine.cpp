@@ -64,12 +64,7 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 
 CUABEngine::~CUABEngine(void)
 {
-<<<<<<< HEAD
-
 	CHECKED_DELETE(m_LevelManager);
-	CHECKED_DELETE(m_SceneRendererCommandManager);
-=======
->>>>>>> develop
 	CHECKED_DELETE(m_TextureManager);
 	CHECKED_DELETE(m_RenderManager);
 	CHECKED_DELETE(m_AnimatedModelsManager);
@@ -146,12 +141,8 @@ void CUABEngine::Init()
 	UABEngine.GetScriptManager()->RunCode("mainLua()");
 
 	m_LoadScreenManager->SetLoading(false);
-<<<<<<< HEAD
 	//t.join();
-=======
-	t.join();
 	CHECKED_DELETE(m_LoadScreenManager);
->>>>>>> develop
 }
 
 void CUABEngine::Destroy()
@@ -263,10 +254,6 @@ UAB_GET_PROPERTY_CPP(CUABEngine, CScriptManager *, ScriptManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CCameraControllerManager *, CameraControllerManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CPhysXManager *, PhysXManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
-<<<<<<< HEAD
-UAB_GET_PROPERTY_CPP(CUABEngine, CSceneRendererCommandManager *, SceneRendererCommandManager)
-=======
->>>>>>> develop
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, ISoundManager *, SoundManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)
