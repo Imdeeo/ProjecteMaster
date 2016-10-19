@@ -7,6 +7,12 @@ function InteractingFirst(args)
 	if l_Player.m_InteractingCinematic ~= nil then
 		l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):play()
 	end
+
+	local l_AnimationSoundEvent = l_Player.m_SoundEvents[l_Player.m_InteractingAnimation]
+	if l_AnimationSoundEvent ~= nil then
+		l_Player.m_SoundManager:play_event(l_AnimationSoundEvent, l_Player.m_InteractionSoundSpeaker)
+		--l_Player.m_SoundManager:play_event(l_Player.m_StopBeatSoundEvent, l_Owner)
+	end
 	
 	m_Timer = 0.0
 	
