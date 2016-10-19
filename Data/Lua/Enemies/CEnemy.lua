@@ -43,6 +43,13 @@ class 'CEnemy' (CLUAComponent)
 		self.m_StateMachine = StateMachine.create()
 		
 		self.m_PhysXManager:create_character_controller(self.m_Name, g_EnemyHeight, g_EnemyRadius, 0.5, self.m_RenderableObject:get_position(),"FisicasAux", "Enemy")
+		utils_log("CEnemy __init Name: "..self.m_Name)
+	end
+	
+	function CEnemy.Destroy(self)
+		utils_log("Delete Enemy Name: "..self.m_Name)
+		local l_PhysXManager = CUABEngine.get_instance():get_physX_manager()
+		l_PhysXManager:remove_actor(self.m_Name)
 	end
 	
 	function CEnemy:Update(_ElapsedTime)

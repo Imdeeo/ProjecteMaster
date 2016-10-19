@@ -57,8 +57,12 @@ function mainLua()
 	l_LevelManager:load_level("Recibidor")
 	l_LevelManager:choose_scene_command_level("Recibidor")
 	g_Player:SetActualLevel("Recibidor")
-	--l_LevelManager:load_level("Biblioteca")
+	l_LevelManager:load_level("Biblioteca")
+	g_Player:SetActualLevel("Biblioteca")
+	l_LevelManager:choose_scene_command_level("Biblioteca")
 	--l_LevelManager:load_level("Maquinas")	
+	
+	--l_LevelManager:unload_level("Recibidor")
 end
 
 function levelMainLua(level,level_id)

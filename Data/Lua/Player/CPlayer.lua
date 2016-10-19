@@ -212,7 +212,16 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 90, self.m_RenderableObject:get_position(),"FisicasAux", "Player")
 	end
+	
+	function CPlayer:Destroy()
+		utils_log("Delete Player")
+		self.m_PhysXManager:remove_actor(self.m_Name)
+	end
 
+	function CPlayer:__gc()
+		utils_log("Delete Player")
+	end
+	
 	function CPlayer:SetSanity(_amount, _override)
 		self.m_Sanity = _amount
 		if _override then

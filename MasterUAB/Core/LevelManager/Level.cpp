@@ -14,6 +14,7 @@
 #include "GamePlayManager.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 #include "SceneRender\SceneRendererCommandManager.h"
+#include "Bilboards\BilboardManager.h"
 
 #include "IA\AStarManager.h"
 
@@ -39,6 +40,7 @@ CLevel::CLevel(const std::string &_Name) :CNamed(_Name)
 	m_ParticleManager = new CParticleManager();
 	m_StaticMeshManager = new CStaticMeshManager();
 	m_LightManager = new CLightManager();
+	m_BilboardManager = new CBilboardManager();
 	m_LayerManager = new CLayerManager();
 	m_CinematicManager = new CCinematicManager();
 	m_GamePlayManager = new CGamePlayManager();
@@ -49,6 +51,21 @@ CLevel::CLevel(const std::string &_Name) :CNamed(_Name)
 
 CLevel::~CLevel()
 {
+	UtilsLog("\n\n\n\n");
+	UtilsLog("Destroy Level");
+	UABEngine.GetScriptManager()->RunCode("DestroyLevelGamePlayManager(\""+m_Name+"\")");
+	CHECKED_DELETE(m_GamePlayManager);
+	CHECKED_DELETE(m_AStarManager);
+	CHECKED_DELETE(m_CinematicManager);
+	CHECKED_DELETE(m_LightManager);
+	CHECKED_DELETE(m_LayerManager);
+	CHECKED_DELETE(m_StaticMeshManager);
+	CHECKED_DELETE(m_BilboardManager);
+	CHECKED_DELETE(m_ManchasManager);
+	CHECKED_DELETE(m_ParticleManager);
+	CHECKED_DELETE(m_MaterialManager);
+	UtilsLog("End Destroy Level");
+	UtilsLog("\n\n\n\n");
 }
 
 void CLevel::Load()
@@ -57,6 +74,7 @@ void CLevel::Load()
 	m_MaterialManager->Load(l_LevelDirectory + "\\materials.xml", "", m_Name);
 	m_ParticleManager->Load(l_LevelDirectory + "\\particles.xml", m_Name);
 	m_ManchasManager->Load(l_LevelDirectory + "\\cordura.xml", m_Name);
+	m_BilboardManager->Load(l_LevelDirectory + "\\particles.xml", m_Name);
 	m_StaticMeshManager->Load(l_LevelDirectory + "\\static_meshes.xml", m_Name);
 	m_LayerManager->Load(l_LevelDirectory + "\\renderable_objects.xml", m_Name);
 	m_LightManager->Load(l_LevelDirectory + "\\lights.xml", m_Name);
@@ -126,6 +144,10 @@ CManchasManager * CLevel::GetManchasManager() const
 CAStarManager * CLevel::GetAStarManager() const
 {
 	return m_AStarManager;
+}
+CBilboardManager * CLevel::GetBilboardManager() const
+{
+	return m_BilboardManager;
 }
 
 bool* CLevel::IsVisible()

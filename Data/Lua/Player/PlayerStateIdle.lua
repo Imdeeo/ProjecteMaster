@@ -20,10 +20,11 @@ function IdleUpdate(args, _ElapsedTime)
 	--// Move the character controller
 	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
 	
+	utils_log("Player Idle Update Velocity y: "..l_Player.m_Velocity.y)
+	
 	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - g_StandingOffset
 	
 	l_Player.m_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
-	
 	
 	--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
@@ -41,7 +42,7 @@ function IdleUpdate(args, _ElapsedTime)
 	
 	l_Player.m_Velocity = l_Displacement/_ElapsedTime
 	
-	
+	utils_log("Player Idle Update Middle")
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
 	
@@ -79,6 +80,7 @@ function IdleUpdate(args, _ElapsedTime)
 		l_Player.m_Item:set_position(l_ObjectPosition + l_Owner:get_position())
 		l_Player.m_Item:set_rotation(l_ObjectRotation)
 	end
+	utils_log("Player Idle Update End")
 end
 
 function IdleEnd(args)

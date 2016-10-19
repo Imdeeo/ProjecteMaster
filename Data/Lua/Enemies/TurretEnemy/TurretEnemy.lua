@@ -20,6 +20,10 @@ class 'CTurretEnemy' (CEnemy)
 		self:SetTurretStateMachine()
 		self.m_StateMachine:start()
 	end
+	
+	function CTurretEnemy.Destroy(self)
+		CEnemy.Destroy(self)
+	end
 
 	function CTurretEnemy:Update(_ElapsedTime)
 		local args = {}
