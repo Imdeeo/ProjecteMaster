@@ -65,11 +65,17 @@ void CFPSCameraController::AddYaw(float Radians)
 void CFPSCameraController::AddPitch(float Radians)
 { 
 	//float l_Pitch = m_Rotation.EulerFromQuat().x;
-	float l_Pitch = m_Rotation.GetPitch();
 	//				80�						100�										-45�					-135�
-	if (((l_Pitch < 1.39626f || l_Pitch > 1.74533f) && Radians < .0f) || ((l_Pitch > -0.785398f || l_Pitch < -2.356194f) && Radians > .0f))
+	//if (((l_Pitch < 1.39626f || l_Pitch > 1.74533f) && Radians < .0f) || ((l_Pitch > -0.785398f || l_Pitch < -2.356194f) && Radians > .0f))
+	
+	
+	float l_ForwardY = m_Rotation.GetForwardVector().y;
+
+	if (l_ForwardY >= -0.7 && l_ForwardY <= 0.7 || l_ForwardY > 0.7 && Radians > 0 || l_ForwardY < -0.7 && Radians < 0)
+	{
 		CCameraController::AddPitch(-Radians*m_PitchSpeed);
-	//UtilsLog("Pitch: " + std::to_string(l_Pitch));
+	}
+//	UtilsLog("Forward: " + std::to_string(l_Forward.y));
 
 }
 
