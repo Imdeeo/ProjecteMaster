@@ -109,6 +109,8 @@ public:
 	void EnableTrigger(const std::string _name);
 	void DisableTrigger(const std::string _name);
 
+	void ChangeActorName(const std::string &_ActorName, const std::string _NewActorName);
+
 protected:
 
 	std::string						m_Filename;

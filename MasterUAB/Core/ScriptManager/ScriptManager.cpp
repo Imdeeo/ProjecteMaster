@@ -677,6 +677,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_actual_level", &CLevelManager::GetActualLevel)
 			.def("set_actual_level", &CLevelManager::SetActualLevel)
 			.def("get_scene_command_manager", &CLevelManager::GetSceneRendererCommandManager)
+			.def("change_object_level", &CLevelManager::ChangeObjectLevel)
 	];
 
 // GRAPHICS-----------------------------------------------------------------------------------------
@@ -1290,6 +1291,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<const std::string&, const std::string&, const std::string&>())
 			.def("render", &CInstanceMesh::Render)
 			.def("get_interactuable_object_name", &CInstanceMesh::GetInteractuableObject)
+			.def("change_level",&CInstanceMesh::ChangeLevel)
 	];
 
 	module(m_LS)[
@@ -1624,6 +1626,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_character_controller_height", &CPhysXManager::SetCharacterControllersHeight)
 			.def("change_rigid_dynamic_actor_group", &CPhysXManager::ChangeRigidDynamicActorPhysxGroup)
 			.def("remove_actor", &CPhysXManager::RemoveActor)
+			.def("change_actor_name", &CPhysXManager::ChangeActorName)
 	];
 
 	
