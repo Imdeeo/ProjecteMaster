@@ -284,3 +284,41 @@ CTexture * CMaterial::GetTexture(int index)
 {
 	return m_Textures[index];
 }
+
+void CMaterial::CopyParameters(std::vector<CMaterialParameter *>_NewParameters, bool _destroy)
+{
+	if (_destroy)
+	{
+		for (size_t i = 0; i < m_Parameters.size(); i++)
+		{
+			CHECKED_DELETE(m_Parameters[i]);
+		}
+	}
+	m_Parameters.clear();
+
+	for (size_t i = 0; i < _NewParameters.size(); i++)
+	{
+		CMaterialParameter* l_MaterialParameter = _NewParameters[i];
+		CMaterialParameter::TMaterialType l_type = l_MaterialParameter->getMaterialType();
+		if (l_type == CMaterialParameter::FLOAT)
+		{
+			m_Parameters.push_back(new CTemplatedMaterialParameter<float>(*((CTemplatedMaterialParameter<float>*)l_MaterialParameter)));
+		}
+		if (l_type == CMaterialParameter::VECT2F)
+		{
+			m_Parameters.push_back(new CTemplatedMaterialParameter<Vect2f>(*((CTemplatedMaterialParameter<Vect2f>*)l_MaterialParameter)));
+		}
+		if (l_type == CMaterialParameter::VECT3F)
+		{
+			m_Parameters.push_back(new CTemplatedMaterialParameter<Vect3f>(*((CTemplatedMaterialParameter<Vect3f>*)l_MaterialParameter)));
+		}
+		if (l_type == CMaterialParameter::VECT4F)
+		{
+			m_Parameters.push_back(new CTemplatedMaterialParameter<Vect4f>(*((CTemplatedMaterialParameter<Vect4f>*)l_MaterialParameter)));
+		}
+		if (l_type == CMaterialParameter::COLOR)
+		{
+			m_Parameters.push_back(new CTemplatedMaterialParameter<CColor>(*((CTemplatedMaterialParameter<CColor>*)l_MaterialParameter)));
+		}
+	}
+}
