@@ -6,4 +6,5 @@
 	<light name="Luz_neon_03" enabled="true" type="omni" pos="3.701340 1.103560 18.961800" color="0.400000 0.678431 0.807843 1.000000" att_start_range="0.670000" att_end_range="5.000000" intensity="5.000000"/>
 	<light name="Luz_neon_04" enabled="true" type="omni" pos="-2.843560 1.402900 14.723300" color="0.400000 0.611765 0.756863 1.000000" att_start_range="0.910000" att_end_range="3.840900" intensity="5.000000"/>
 	<light name="Luz_trituradora_01" enabled="true" type="omni" pos="8.437350 12.156000 8.870600" color="0.317647 0.086274 0.086274 1.000000" att_start_range="1.000000" att_end_range="2.000000" intensity="1.000000"/>
+	<light name="tesla_grande" enabled="true" type="omni" pos="21.400002 6.400000 1.500000" color="0.164706 0.164706 1.000000 1.000000" att_start_range="0.000000" att_end_range="5.200000" intensity="2.750000"/>
 </lights>
