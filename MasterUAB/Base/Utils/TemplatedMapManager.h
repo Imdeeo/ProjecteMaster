@@ -26,13 +26,14 @@ public:
 		Destroy();
 	}
 
-	void RemoveResource(const std::string &Name)
+	void RemoveResource(const std::string &Name, bool _delete = true)
 	{
 		TMapResource::iterator it;	
 		it = m_Resources.find(Name);
 		if(it!=m_Resources.end())
 		{
-			delete it->second;
+			if (_delete)
+				delete it->second;
 			m_Resources.erase(it);          
 		}
 	}

@@ -35,7 +35,6 @@ public:
 		VtxCount, size_t IdxCount, size_t VertexStride, size_t GeometryStride, size_t
 		NormalStride, size_t TangentStride, size_t BiNormalStride, size_t TextureCoordsStride);
 
-
 	Vect3f GetBoundingBoxMax(){ return m_BoundingBoxMax; }
 	Vect3f GetBoundingBoxMin(){ return m_BoundingBoxMin; }
 	Vect3f GetBoundingSphereCenter(){ return m_BoundingSphereCenter; }
@@ -47,6 +46,7 @@ public:
 	const std::vector<CRenderableVertexs *> &GetRenderableVertexs() const { return m_RVs; }
 
 	std::vector<CMaterial *> GetMaterials()const;
+	void SetMaterials(std::vector<CMaterial *>);
 	
 private:
 	bool Destroy ();
