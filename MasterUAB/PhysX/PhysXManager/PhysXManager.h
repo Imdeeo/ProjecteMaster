@@ -74,12 +74,12 @@ public:
 	void CreateStaticBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
 	void CreateStaticSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
 	void CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneDistance, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
-	void CreateStaticConvexMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
-	void CreateStaticTriangleMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Directory, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, bool _FlipNormals = false);
+	void CreateStaticConvexMesh(const std::string _name, const std::string _LevelId, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
+	void CreateStaticTriangleMesh(const std::string _name, const std::string _LevelId, const CStaticMesh* _Mesh, const std::string _Directory, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, bool _FlipNormals = false);
 	void CreateRigidStatic(const std::string &Name, const Vect3f Size, const Vect3f &Position, const Quatf &Orientation, const std::string &MaterialName);
 	void CreateDynamicBox(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
 	void CreateDynamicSphere(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
-	void CreateDynamicConvexMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
+	void CreateDynamicConvexMesh(const std::string _name, const std::string _LevelId, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
 
 	//void CreateComplexDinamicShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic = false);
 	//void CreateComplexStaticShape(const std::string _name, std::vector<Vect3f> _vertices, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group);
