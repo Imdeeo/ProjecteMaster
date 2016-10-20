@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <materials>
 	<material name="TeslaMaterial" renderable_object_technique="line_renderer">
-		<texture type="diffuse" filename="Data\level_3\Textures\rayobeam.png"/>
+		<texture type="diffuse" filename="Data\Particles\rayobeam.png"/>
 	</material>
 	<material name="20 - Default" renderable_object_technique="skybox">
 		<texture type="reflection" filename="Data\level_0\Textures\KGSkyBox2.dds"/>
