@@ -574,5 +574,8 @@ function RegisterLineRendererParameters(line_renderer_name)
 	DebugHelper:add_variable("Num Puntos",CDebugHelper.int,CDebugHelper.read_write,line_renderer:get_num_puntos(),"min=1.0 max=15.0 step=1.0")
 	DebugHelper:add_variable("OffsetX",CDebugHelper.float,CDebugHelper.read_write,line_renderer:get_num_offsetX(),"min=0.0 max=2.0 step=0.1")
 	DebugHelper:add_variable("OffsetY",CDebugHelper.float,CDebugHelper.read_write,line_renderer:get_num_offsetY(),"min=0.0 max=2.0 step=0.1")
+	DebugHelper:add_variable("Size",CDebugHelper.float,CDebugHelper.read_write,line_renderer:get_size(),"min=0.0 max=2.0 step=0.01")
+	DebugHelper:add_variable("SizeOffset",CDebugHelper.float,CDebugHelper.read_write,line_renderer:get_size_offset(),"min=0.0 max=2.0 step=0.001")
+	DebugHelper:add_variable("Color",CDebugHelper.color,CDebugHelper.read_write,line_renderer:get_color(),"")	
 	DebugHelper:register_bar();
 end
