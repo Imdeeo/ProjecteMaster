@@ -65,8 +65,9 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		local cameraRotation
 		local cameraLookAt
 		local cameraFieldOfView
-		local cameraFileDir = g_Path+"cameras\\"+CameraAnimationName.text+".xml"
-		format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"% % %\" filename=\"%\"/>\n" CameraAnimationName.text key cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraFileDir to:_file
+		local cameraFileDir = g_Path+"\\cameras\\"+CameraAnimationName.text+".xml"
+		local cameraDataDir = "Data\\level_x\\cameras\\"+CameraAnimationName.text+".xml"
+		format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"% % %\" filename=\"%\"/>\n" CameraAnimationName.text key cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraDataDir to:_file
 		
 		cameraFile = createfile cameraFileDir
 		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
@@ -173,18 +174,18 @@ rollout CamAnim "Camera Animation" width:160 height:134
 	on ExportButton pressed do
 	(
 		dirExist g_Path
-		dirExist (g_Path+"cameras\\")
+		dirExist (g_Path+"\\cameras\\")
 		local file
-		if existFile (g_Path+"cameras.xml") then
+		if existFile (g_Path+"\\cameras.xml") then
 		(
-			file=openFile (g_Path+"cameras.xml") mode:"r+"
+			file=openFile (g_Path+"\\cameras.xml") mode:"r+"
 			seek file #eof
 			seek file (filepos file - 12)
 			AddCameraAnimation file
 			format "</cameras>\n" to:file
 			close file
 		) else (
-			file=createFile (g_Path+"cameras.xml")
+			file=createFile (g_Path+"\\cameras.xml")
 			format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 			format "<cameras>\n" to:file
 			AddCameraAnimation file

@@ -3,4 +3,5 @@
 	<aend name="CrossDoor" pos="3.0 0.0 2.0"/>
 	<!--<aend name="CrossDoor" pos="1.37091 0.0 0.604106"/>-->
 	<aend name="CrossArtifactDoor" pos="-0.515359 -0.155331 2.29644"/>
+	<aend name="LeaveStairs" pos="1.0 0.0 1.0"/>
 </aends>
