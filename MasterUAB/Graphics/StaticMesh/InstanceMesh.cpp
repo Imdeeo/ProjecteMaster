@@ -50,7 +50,7 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string &
 			{
 				l_auxDirectoty = m_StaticMesh->GetPhysxMeshesDirectory();
 			}
-			l_PhysXManager->CreateStaticTriangleMesh(l_ActorName, m_StaticMesh, l_auxDirectoty, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			l_PhysXManager->CreateStaticTriangleMesh(l_ActorName, _LevelId, m_StaticMesh, l_auxDirectoty, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}else if (m_PxType == "sphere_shape")
 		{
 			l_PhysXManager->CreateStaticSphere(l_ActorName, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
@@ -90,7 +90,7 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string &
 		}
 		else if (m_PxType == "convex_mesh")
 		{
-			l_PhysXManager->CreateStaticConvexMesh(l_ActorName, m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			l_PhysXManager->CreateStaticConvexMesh(l_ActorName, _LevelId, m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
 		else if (m_PxType == "box_shape")
 		{
