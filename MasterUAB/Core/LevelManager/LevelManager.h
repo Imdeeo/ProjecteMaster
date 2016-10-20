@@ -53,6 +53,8 @@ public:
 	void ReloadLevel(const std::string &_LevelName);
 	void UnloadLevel(const std::string &_LevelName);
 
+	void ChangeObjectLevel(const std::string &_OldLevelName, const std::string &_NewLevelName, const std::string &_LayerName, const std::string &_ObjectName);
+
 	std::vector<TLevelLayers*>* GetCompleteLayer(const std::string &_LayerName);
 
 	void ReloadAllLua();

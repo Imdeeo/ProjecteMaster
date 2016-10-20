@@ -33,8 +33,11 @@ public:
 #ifdef _DEBUG
 	void RenderDebug(CRenderManager *RM);
 #endif
+	void ChangeLevel(const std::string _NewLevel);
 
 	CInstanceMesh & CInstanceMesh::operator=(CInstanceMesh &);
+
+	std::string GetCoreName();
 };
 
 #endif //INSTANCE_MESH_H

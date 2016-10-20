@@ -29,6 +29,11 @@ function deactivate_gravity()
 	g_Player.m_Gravity = 0
 end
 
+function change_object_level(level,newlevel,layer,object)
+	utils_log("Change Object Level")
+	g_Engine:get_level_manager():change_object_level(level,newlevel,layer,object)
+end
+
 function activate_player_collisions()
 	g_Engine:get_physX_manager():change_rigid_dynamic_actor_group("player","Player")
 end
