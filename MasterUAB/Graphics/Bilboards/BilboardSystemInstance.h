@@ -41,13 +41,18 @@ public:
 	std::string GetTipo(){ return "BilboardInstance"; };
 
 	UAB_BUILD_GET_SET(bool, Start);
-	UAB_BUILD_GET_SET(float, Size);
+	UAB_BUILD_GET_SET(float, SizeX);
+	UAB_BUILD_GET_SET(float, SizeY);
 	UAB_BUILD_GET_SET(float, offsetSize);
 	UAB_BUILD_GET_SET(CColor, Color);
 	UAB_BUILD_GET_SET(int, ActiveBilboards);
-	CEmptyPointerClass* GetLuaSize()
+	CEmptyPointerClass* GetLuaSizeX()
 	{
-		return (CEmptyPointerClass*)&m_Size;
+		return (CEmptyPointerClass*)&m_SizeX;
+	}
+	CEmptyPointerClass* GetLuaSizeY()
+	{
+		return (CEmptyPointerClass*)&m_SizeY;
 	}
 	CEmptyPointerClass* GetLuaSizeOffset()
 	{
