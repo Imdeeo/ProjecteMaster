@@ -8,7 +8,10 @@ dofile("Data\\Lua\\Player\\PlayerStateIdle.lua")
 dofile("Data\\Lua\\Player\\PlayerStateMoving.lua")
 dofile("Data\\Lua\\Player\\PlayerStateCorrecting.lua")
 dofile("Data\\Lua\\Player\\PlayerStateCrouching.lua")
-dofile("Data\\Lua\\Player\\PlayerStateClimbing.lua")
+dofile("Data\\Lua\\Player\\PlayerStateClimbingStart.lua")
+dofile("Data\\Lua\\Player\\PlayerStateClimbingIdle.lua")
+dofile("Data\\Lua\\Player\\PlayerStateClimbingUp.lua")
+dofile("Data\\Lua\\Player\\PlayerStateClimbingDown.lua")
 dofile("Data\\Lua\\Player\\PlayerStateJumping.lua")
 dofile("Data\\Lua\\Player\\PlayerStateFalling.lua")
 dofile("Data\\Lua\\Player\\PlayerStateInteracting.lua")
@@ -146,9 +149,9 @@ class 'CPlayer' (CLUAComponent)
 		self.m_JumpSoundEvent = SoundEvent()
 		self.m_JumpSoundEvent.event_name = "Jump"
 		self.m_Velocity = Vect3f(0.0, 0.0, 0.0)
-		self.m_Gravity = g_Gravity
-		self.m_Speed = 5.0
-		self.m_DefaultSpeed = 5.0
+		self.m_Gravity = g_Gravity		
+		self.m_DefaultSpeed = 3.0
+		self.m_Speed = self.m_DefaultSpeed
 		self.m_Sanity = 100.0
 		self.m_MaxSanity = 100.0
 		self.m_TimerVortex = 0
@@ -157,15 +160,20 @@ class 'CPlayer' (CLUAComponent)
 		self.m_IsWindedUp = false
 		self.m_IsCorrecting = false
 		self.m_IsClimbing = false
+		self.m_ClimbingUp = false
+		self.m_ClimbingDown = false
 		self.m_IsInteracting = false
 		self.m_IsPuzzle = false
 		self.m_IsDead = false
 		
 		self.m_Target = nil
-		self.m_TargetPosOffset = Vect3f(0.0, 0.0, 0.0)
-		self.m_TargetLookOffset = Vect3f(0.0, 0.0, 0.0)
-		self.m_ItemName = ""
-		self.m_Item = nil
+		self.m_TargetPosOffset = Vect3f(1.0, 0.0, 0.0)
+		self.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
+		self.m_TargetPosition = Vect3f(1.0, 0.0, 0.0)
+		self.m_ForwardCamera = Vect3f(1.0,0.0,0.0)
+		self.m_UpCamera = Vect3f(1.0,0.0,0.0)
+		self.m_ItemName = ""--"Artilufacto"
+		self.m_Item = nil--CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(self.m_ItemName)
 		self.m_LeftHanded = false
 		self.m_NewItemName = ""
 		self.m_ItemTime = 0.0
@@ -183,10 +191,11 @@ class 'CPlayer' (CLUAComponent)
 		self.m_RaycastData = RaycastData()
 		
 		self.m_Timer = 0.0
-		
+		self.m_TimerRotation = 0.0
 		self.m_OrganKeyCount = 1
 		self.m_OrganKeyOrder = {"A", "G"}
 		--{"A", "B", "C", "D", "E", "F", "G"}
+		--table:setn(self.m_OrganKeyOrder, 2)
 		
 		self.m_CurrentAend = nil
 		self.m_Aends = {}
@@ -399,7 +408,7 @@ class 'CPlayer' (CLUAComponent)
 		IdleState:add_condition(ANYToCorrectingCondition, "Correcting")
 		IdleState:add_condition(ANYToSingingCondition, "Singing")
 		IdleState:add_condition(ANYToDeadCondition, "Dead")
-		IdleState:add_condition(ANYToClimbingCondition, "Climbing")
+		IdleState:add_condition(ANYToClimbingCondition, "ClimbingStart")
 		
 		MovingState = State.create(MovingUpdate)
 		MovingState:set_do_first_function(MovingFirst)
@@ -412,7 +421,7 @@ class 'CPlayer' (CLUAComponent)
 		MovingState:add_condition(ANYToCorrectingCondition, "Correcting")
 		MovingState:add_condition(ANYToSingingCondition, "Singing")
 		MovingState:add_condition(ANYToDeadCondition, "Dead")
-		MovingState:add_condition(ANYToClimbingCondition, "Climbing")
+		MovingState:add_condition(ANYToClimbingCondition, "ClimbingStart")
 		
 		CorrectingState = State.create(CorrectingUpdate)
 		CorrectingState:set_do_first_function(CorrectingFirst)
@@ -429,13 +438,34 @@ class 'CPlayer' (CLUAComponent)
 		CrouchingState:add_condition(ANYToFallingCondition, "Falling")
 		CrouchingState:add_condition(ANYToCorrectingCondition, "Correcting")
 		CrouchingState:add_condition(ANYToDeadCondition, "Dead")
+
+		ClimbingStartState = State.create(ClimbingStartUpdate)
+		ClimbingStartState:set_do_first_function(ClimbingStartFirst)
+		ClimbingStartState:set_do_end_function(ClimbingStartEnd)
+		ClimbingStartState:add_condition(ClimbingStartToClimbingIdleCondition, "ClimbingIdle")
+		ClimbingStartState:add_condition(ANYToDeadCondition, "Dead")
 		
-		ClimbingState = State.create(ClimbingUpdate)
-		ClimbingState:set_do_first_function(ClimbingFirst)
-		ClimbingState:set_do_end_function(ClimbingEnd)
-		ClimbingState:add_condition(ClimbingToFallingCondition, "Falling")
-		ClimbingState:add_condition(ANYToDeadCondition, "Dead")
-		ClimbingState:add_condition(ClimbingToInteractingCondition, "Interacting")
+		ClimbingIdleState = State.create(ClimbingIdleUpdate)
+		ClimbingIdleState:set_do_first_function(ClimbingIdleFirst)
+		ClimbingIdleState:set_do_end_function(ClimbingIdleEnd)
+		ClimbingIdleState:add_condition(ClimbingIdleToInteractingCondition, "Interacting")
+		ClimbingIdleState:add_condition(ClimbingIdleToClimbingUpCondition, "ClimbingUp")
+		ClimbingIdleState:add_condition(ClimbingIdleToClimbingDownCondition, "ClimbingDown")
+		ClimbingIdleState:add_condition(ClimbingIdleToFallingCondition, "Falling")
+		ClimbingIdleState:add_condition(ANYToDeadCondition, "Dead")
+		
+		ClimbingUpState = State.create(ClimbingUpUpdate)
+		ClimbingUpState:set_do_first_function(ClimbingUpFirst)
+		ClimbingUpState:set_do_end_function(ClimbingUpEnd)
+		ClimbingUpState:add_condition(ClimbingUpToClimbingIdleCondition, "ClimbingIdle")
+		ClimbingUpState:add_condition(ANYToDeadCondition, "Dead")
+		
+		ClimbingDownState = State.create(ClimbingDownUpdate)
+		ClimbingDownState:set_do_first_function(ClimbingDownFirst)
+		ClimbingDownState:set_do_end_function(ClimbingDownEnd)
+		ClimbingDownState:add_condition(ClimbingDownToClimbingIdleCondition, "ClimbingIdle")
+		ClimbingDownState:add_condition(ClimbingDownToFallingCondition, "Falling")
+		ClimbingDownState:add_condition(ANYToDeadCondition, "Dead")
 		
 		JumpingState = State.create(JumpingUpdate)
 		JumpingState:set_do_first_function(JumpingFirst)
@@ -477,7 +507,10 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:add_state("Moving", MovingState)
 		self.m_StateMachine:add_state("Correcting", CorrectingState)
 		self.m_StateMachine:add_state("Crouching", CrouchingState)
-		self.m_StateMachine:add_state("Climbing", ClimbingState)
+		self.m_StateMachine:add_state("ClimbingStart", ClimbingStartState)
+		self.m_StateMachine:add_state("ClimbingIdle", ClimbingIdleState)
+		self.m_StateMachine:add_state("ClimbingUp", ClimbingUpState)
+		self.m_StateMachine:add_state("ClimbingDown", ClimbingDownState)
 		self.m_StateMachine:add_state("Jumping", JumpingState)
 		self.m_StateMachine:add_state("Falling", FallingState)
 		self.m_StateMachine:add_state("Interacting", InteractingState)
@@ -496,7 +529,8 @@ class 'CPlayer' (CLUAComponent)
 		local l_FPSCamera = l_CameraManager:get_main_camera()
 		local l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
 		if (_CopyFirstFrame) then
-			l_AnimatedCamera:set_first_key(l_FPSCamera:get_forward(), l_FPSCamera:get_up(), l_FPSCamera:get_fov())
+			local l_lookAt = l_FPSCamera:get_forward() + l_FPSCamera:get_position()
+			l_AnimatedCamera:set_first_key(l_lookAt, l_FPSCamera:get_up(), l_FPSCamera:get_fov())
 		end
 		local l_CameraKey = l_AnimatedCamera:get_camera_key(0)
 		local l_CameraInfo = l_CameraKey:get_camera_info()

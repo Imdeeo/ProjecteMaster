@@ -26,9 +26,10 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string &
 	if (m_GeneratePhysx)
 	{
 		std::string l_Name = GetName();
-		char l_ActorName[256] = "";
-		sprintf_s(l_ActorName, "%s_%s", _LevelId.c_str(), l_Name.c_str());
+		//char l_ActorName[256] = "";
+		//sprintf_s(l_ActorName, "%s_%s", _LevelId.c_str(), l_Name.c_str());
 
+		std::string l_ActorName = l_Name;
 		m_PxType = TreeNode->GetPszProperty("physics_type");
 		m_PxMaterial = TreeNode->GetPszProperty("physics_material");
 		m_PxGroup = TreeNode->GetPszProperty("physics_group");
