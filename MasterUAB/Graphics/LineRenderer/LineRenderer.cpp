@@ -10,6 +10,8 @@
 #include "RenderableObjects\TemplatedRenderableVertexs.h"
 #include "Materials/MaterialManager.h"
 #include "DebugRender.h"
+#include "Engine/UABEngine.h"
+#include "LevelManager/LevelManager.h"
 
 CLineRenderer::CLineRenderer(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId)
 	: CRenderableObject(TreeNode,_LevelId)
@@ -27,7 +29,7 @@ CLineRenderer::CLineRenderer(tinyxml2::XMLElement* TreeNode, const std::string &
 	m_SizeOffset = TreeNode->GetFloatProperty("size_ofset", 0.005);
 	m_LinesCount = 1;
 	m_RenderableVertex = new CUABPointsListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_LineRenderableData, MAX_LINE_LENGHT, MAX_LINE_LENGHT, true);
-	m_Material = UABEngine.GetMaterialManager()->GetResource("Base");
+	m_Material = UABEngine.GetLevelManager()->GetResource(m_Level)->GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
 }
 
 CLineRenderer::~CLineRenderer()
@@ -76,7 +78,7 @@ void CLineRenderer::Update(float ElapsedTime)
 	l_Dir.Normalize();
 
 	l_PosF = m_PosInicial;
-	l_PosF.y = UABEngine.GetRandomValue(m_PosInicial.y + m_OffsetY, m_PosInicial.y - m_OffsetY);
+	//l_PosF.y = UABEngine.GetRandomValue(m_PosInicial.y + m_OffsetY, m_PosInicial.y - m_OffsetY);
 	sizeF = UABEngine.GetRandomValue(m_Size + m_SizeOffset, m_Size - m_SizeOffset);
 	for (int i = 0; i < m_LinesCount-1; ++i)
 	{
@@ -91,8 +93,9 @@ void CLineRenderer::Update(float ElapsedTime)
 		m_LineRenderableData[i].Color = m_Color;
 	}	
 	m_LineRenderableData[m_LinesCount-1].Position = Vect4f(l_PosF, m_PosFinal.x);
-	m_LineRenderableData[m_LinesCount-1].UV = Vect2f(UABEngine.GetRandomValue(m_PosFinal.y + m_OffsetY, m_PosFinal.y - m_OffsetY), m_PosFinal.z);
-	m_LineRenderableData[m_LinesCount-1].UV2 = Vect2f(sizeF, UABEngine.GetRandomValue(m_Size + m_SizeOffset, m_Size - m_SizeOffset));
+	//m_LineRenderableData[m_LinesCount-1].UV = Vect2f(UABEngine.GetRandomValue(m_PosFinal.y + m_OffsetY, m_PosFinal.y - m_OffsetY), m_PosFinal.z);
+	m_LineRenderableData[m_LinesCount-1].UV = Vect2f(m_PosFinal.y, m_PosFinal.z);
+	m_LineRenderableData[m_LinesCount - 1].UV2 = Vect2f(sizeF, UABEngine.GetRandomValue(m_Size + m_SizeOffset, m_Size - m_SizeOffset));
 	m_LineRenderableData[m_LinesCount-1].Color = m_Color;
 }
 
