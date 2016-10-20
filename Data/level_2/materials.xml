@@ -2817,24 +2817,6 @@
 		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.372549" description=""/>
 	</material>
-	<material name="jaheem_material" renderable_object_technique="animated_bump">
-		<texture type="diffuse" filename="Data/AnimatedModels/Jaheem/brazosjaheem.dds"/>
-		<texture type="normal" filename="Data/AnimatedModels/Jaheem/brazosjaheemNormalsMap.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-	</material>
-	<material name="jaheem_shackle" renderable_object_technique="animated_bump">
-		<texture type="diffuse" filename="Data/AnimatedModels/Jaheem/brazosjaheem.dds"/>
-		<texture type="normal" filename="Data/AnimatedModels/Jaheem/brazosjaheemNormalsMap.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-	</material>
 	<material name="maderagramo" renderable_object_technique="bump_glossiness">
 		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_madera_caoba.dds"/>
 		<texture type="normal" filename="Data\level_2\Textures\recibidor_madera_caoba_NRM.dds"/>

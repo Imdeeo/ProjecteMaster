@@ -50,5 +50,6 @@
 	<animation name="stairs_start" filename="StairsStart.CAF"/>
 	<animation name="stairs_loop" filename="StairsLoop.CAF"/>
 	<animation name="stairs_loop_inverse" filename="StairsLoopInverse.CAF"/>
+	<animation name="stairs_idle" filename="StairsIdle.CAF"/>
 	<animation name="stairs_end" filename="StairsEnd.CAF"/>
 </actor>
