@@ -120,5 +120,14 @@ end
 
 function MovingToJumpingCondition(args)
 	local l_Player = args["self"]
-	return l_Player.m_InputManager:is_action_active("Jump")
+	if l_Player.m_InputManager:is_action_active("Jump") then
+		if l_Player.m_InputManager:is_action_active("Run") then
+			l_Player.m_Velocity.y = 4.9
+		else
+			l_Player.m_Velocity.y = 4.0
+		end
+		return true
+	else
+		return false
+	end
 end
