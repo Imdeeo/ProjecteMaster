@@ -3,10 +3,14 @@ dofile("Data\\Lua\\Player\\Helpers.lua")
 function OnEnterStairs(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		local l_Player = m_CharacterManager.m_Player[1]
-		if not l_Player.m_IsClimbing then
+		if not l_Player.m_IsClimbing and l_Player.m_Item == nil then
 			l_Player.m_TargetLookOffset = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
 			l_Player.m_TargetPosOffset = Vect3f(0.4, 0.0, 0.4)
+			l_Player.m_InteractingCinematic = nil
+			l_Player.m_CameraAnimation = nil
+			l_Player.m_AnimationTime = 0.666667
 			l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
+			l_Player.m_InteractingAnimation = 18
 			l_Player.m_IsClimbing = true
 		end
 	end
@@ -17,7 +21,7 @@ function OnExitStairs(_TriggerName, _ColliderName)
 	local l_Player = m_CharacterManager.m_Player[1]
 		if not l_Player.m_IsClimbing then
 			ClearPlayerTarget(l_Player)
-			l_Player.m_IsClimbing = false
+			ClearPlayerStates(l_Player)
 		end
 	end
 end
@@ -25,9 +29,13 @@ end
 function OnStayStairsLower(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		local l_Player = m_CharacterManager.m_Player[1]
-		if l_Player.m_InputManager:is_action_active("MoveBackward") and l_Player.m_IsClimbing then
-			l_Player.m_IsInteracting = false
+		if l_Player.m_ClimbingDown then
+			l_Player.m_CurrentAend = nil
 			l_Player.m_IsClimbing = false
+			l_Player.m_InteractingAnimation = 21
+			l_Player.m_InteractingCinematic = nil
+			l_Player.m_CameraAnimation = nil
+			l_Player.m_AnimationTime = 1.5
 		end
 	end
 end
@@ -35,11 +43,11 @@ end
 function OnStayStairsUpper(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		local l_Player = m_CharacterManager.m_Player[1]
-		if l_Player.m_InputManager:is_action_active("MoveForward") and l_Player.m_IsClimbing then
+		if l_Player.m_ClimbingUp then
 			l_Player.m_CurrentAend = "LeaveStairs"
 			l_Player.m_InteractingAnimation = 0
 			l_Player.m_InteractingCinematic = nil
-			l_Player.m_CameraAnimation = "LeaveStairs"
+			l_Player.m_CameraAnimation = nil--"LeaveStairs"
 			l_Player.m_AnimationTime = 1.0
 			l_Player.m_IsInteracting = true
 			l_Player.m_IsClimbing = false

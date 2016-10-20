@@ -118,7 +118,7 @@ void CUABEngine::Init()
 {	
 	m_RenderManager->Init();
 	m_LoadScreenManager = new CLoadScreenManager("Data\\load_screen.xml");
-	//std::thread t(&CLoadScreenManager::Load, m_LoadScreenManager);// , CLoadScreenManager("Data\\load_screen.xml"));
+	std::thread t(&CLoadScreenManager::Load, m_LoadScreenManager);// , CLoadScreenManager("Data\\load_screen.xml"));
 
 	m_SoundManager->SetPath("Data\\Sounds\\");
 	m_SoundManager->Init();
@@ -141,7 +141,7 @@ void CUABEngine::Init()
 	UABEngine.GetScriptManager()->RunCode("mainLua()");
 
 	m_LoadScreenManager->SetLoading(false);
-	//t.join();
+	t.join();
 	CHECKED_DELETE(m_LoadScreenManager);
 }
 
@@ -179,6 +179,7 @@ void CUABEngine::ReloadLUA()
 	m_ScriptManager->Initialize();
 	m_ScriptManager->RunFile("Data\\Lua\\init.lua");
 	UtilsLog("Reloading Lua");
+	m_LevelManager->ReloadAllLua();
 }
 
 void CUABEngine::Consola(float _x, float _y, float _w, float _h)
