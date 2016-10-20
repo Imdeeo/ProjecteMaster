@@ -1152,3 +1152,16 @@ void CPhysXManager::SetCharacterControllersHeight(const std::string _name, float
 	physx::PxController* aux = m_CharacterControllers[_name];
 	aux->resize((physx::PxReal)_value);
 }
+
+void CPhysXManager::ChangeActorName(const std::string &_ActorName, const std::string _NewActorName)
+{
+	if (m_ActorIndexs.find(_ActorName) != m_ActorIndexs.end())
+	{
+		size_t l_index = m_ActorIndexs[_ActorName];
+
+		m_ActorNames[l_index] = _NewActorName;
+
+		m_ActorIndexs[_NewActorName] = l_index;
+		m_ActorIndexs.erase(_ActorName);
+	}
+}

@@ -239,3 +239,37 @@ bool CInstanceMesh::GetInsideFrustum()
 		return m_Frustum->SphereVisible(m_Position, m_StaticMesh->GetBoundingSphereRadius());
 	}
 }
+
+void CInstanceMesh::ChangeLevel(const std::string _NewLevel)
+{
+	CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
+	if (m_GeneratePhysx)
+	{
+		if (m_PxType == "convex_mesh" || m_PxType == "triangle_mesh")
+		{
+			size_t l_NunMeshes = m_StaticMesh->GetRenderableVertexs().size();
+			for (size_t i = 0; i < l_NunMeshes; i++)
+			{
+				char l_ActorName[256] = "";
+				char l_NewActorName[256] = "";
+				sprintf_s(l_ActorName, "%s_%s_%u", m_Level.c_str(), GetName().c_str(), i);
+				sprintf_s(l_ActorName, "%s_%s_%u", _NewLevel.c_str(), GetName().c_str(), i);
+				l_PhysXManager->ChangeActorName(l_ActorName, l_NewActorName);
+			}
+		}
+		else
+		{
+			char l_ActorName[256] = "";
+			char l_NewActorName[256] = "";
+			sprintf_s(l_ActorName, "%s_%s", m_Level.c_str(), GetName().c_str());
+			sprintf_s(l_ActorName, "%s_%s", _NewLevel.c_str(), GetName().c_str());
+			l_PhysXManager->ChangeActorName(l_ActorName, l_NewActorName);
+		}
+	}
+	m_Level = _NewLevel;
+}
+
+std::string CInstanceMesh::GetCoreName()
+{
+	return m_StaticMesh->GetName();
+}
