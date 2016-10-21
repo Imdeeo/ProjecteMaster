@@ -254,7 +254,7 @@ class 'CPlayer' (CLUAComponent)
 	
 	function CPlayer:SetActualLevel(_LevelId)
 		g_Engine:get_level_manager():set_actual_level(_LevelId)
-		g_Player:SetActualLevelAux(_LevelId)
+		gself:SetActualLevelAux(_LevelId)
 	end
 	function CPlayer:SetActualLevelAux(_LevelId)
 		self.m_ActualLevel = _LevelId		
@@ -608,14 +608,55 @@ class 'CPlayer' (CLUAComponent)
 		end
 		return ret
 	end
+	
+	function CPlayer:ClearTarget()
+		self.m_Target = nil
+		self.m_TargetYaw = 0.0
+		self.m_ForwardCamera = Vect3f(1.0, 0.0, 0.0)
+		self.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
+		self.m_TargetLookOffset = Vect3f(0.0, 0.0, 0.0)
+	end
+
+	function CPlayer:ClearCamera()
+		if self.m_CameraAnimation ~= nil then
+			l_CameraControllerManager = CUABEngine.get_instance():get_camera_controller_manager()
+			l_CameraControllerManager:get_resource(self.m_CameraControllerName):copy_from_key_camera(l_CameraControllerManager:get_main_camera():get_camera_as_info())
+			l_CameraControllerManager:choose_main_camera(self.m_CameraControllerName)
+		end
+		self.m_CameraAnimation = nil
+	end
+
+	function CPlayer:ClearCinematic()
+		if self.m_InteractingCinematic ~= nil then
+			self.m_CinematicManager:get_resource(self.m_InteractingCinematic):stop()
+		end
+		self.m_InteractingCinematic = nil
+	end
+
+	function CPlayer:ClearAend(_Owner)
+		if self.m_CurrentAend ~= nil then
+			self.m_PhysXManager:character_controller_warp("player", self.m_Aends[self.m_CurrentAend])
+			local l_NewControllerPosition = self.m_PhysXManager:get_character_controler_pos("player")
+			l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
+			_Owner:set_position(l_NewControllerPosition)
+		end
+		self.m_CurrentAend = nil
+	end
+
+	function CPlayer:ClearStates()
+		self.m_IsInteracting = false
+		self.m_IsPuzzle = false
+		self.m_IsClimbing = false
+		self.m_IsCorrecting = false
+	end
 --end
 
 function ANYToItselfCondition(args)
-	local l_Player = args["self"]
-	return not (l_Player.m_LastAnimation == l_Player.m_CurrentAnimation)
+	local lself = args["self"]
+	return not (lself.m_LastAnimation == lself.m_CurrentAnimation)
 end
 
 function ANYToDeadCondition(args)
-	local l_Player = args["self"]
-	return l_Player.m_IsDead
+	local lself = args["self"]
+	return lself.m_IsDead
 end

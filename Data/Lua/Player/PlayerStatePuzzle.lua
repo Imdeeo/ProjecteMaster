@@ -40,9 +40,9 @@ function PuzzleEnd(args)
 		l_Player.m_OrganKeyCount = 1
 	end
 	
-	ClearPlayerCamera(l_Player)
-	ClearPlayerTarget(l_Player)
-	ClearPlayerStates(l_Player)
+	l_Player:ClearCamera()
+	l_Player:ClearTarget()
+	l_Player:ClearStates()
 	l_Player.m_InteractingCinematic = nil
 	l_Player.m_CurrentAend = nil
 	l_Player.m_InteractingAnimation = 0
