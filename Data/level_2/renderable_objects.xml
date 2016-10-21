@@ -9,7 +9,7 @@
 	<layer name="manchas"/>
 	<layer name="skybox"/>
 	<layer name="interactuable_objects"/>
-	<line_renderer name="tesla_grande" layer="line_renderers" posInicial="19.88 6.42 0.34" posFinal="22.51 6.48 0.21" numPuntos="6"  offsetX="0.5" offsetY="0.2" color="1.0 1.0 1.0 1.0" size="0.23" size_ofset="0.005" material="TeslaMaterial"/>
+	<!--<line_renderer name="tesla_grande" layer="line_renderers" posInicial="19.88 6.42 0.34" posFinal="22.51 6.48 0.21" numPuntos="6"  offsetX="0.5" offsetY="0.2" color="1.0 1.0 1.0 1.0" size="0.23" size_ofset="0.005" material="TeslaMaterial"/>-->
 	<bilboard_instance name="Intentofuego" layer="particles" type="FuegoBiblio" start="true" sizeX="1.15" sizeY="0.70" offsetSize="0.01" color="1.0 1.0 1.0 1.0" visible="true">
 		<position value="18.13 2.59 9.92"/>
 		<position value="18.13 2.59 13.40"/>
@@ -47,15 +47,16 @@
 		<position value="11.44 0.85 26.70"/>
 	</bilboard_instance>	
 	<particle_instance name="EmisorParticulaTorreta" layer="particles" type="TurretSmokeParticle01" position="5.915472 0.966247 11.680963" next_particle_emission="0.003261" awake="true" awake_timer="1.635056" emission_box_limit="false" emission_box_half_size="0.000000 0.000000 0.000000" visible="false"/>
-	<animated_instance_mesh name="AutomatonLeft" layer="solid" core_name="Automaton" position="15.199900 -7003.968750 759.510681" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
-	<animated_instance_mesh name="AutomatonRight" layer="solid" core_name="Automaton" position="-18.960800 -465.546204 13.832300" rotation="0.000000 0.707107 0.000000 -0.707107" create_physics="false" visible="true"/>
+	<animated_instance_mesh name="AutomatonLeft" layer="solid" core_name="Automaton" position="15.199900 5.1 26.510681" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
+	<animated_instance_mesh name="AutomatonRight" layer="solid" core_name="Automaton" position="-19.960800 1.1 13.832300" rotation="0.000000 0.707107 0.000000 -0.707107" create_physics="false" visible="true"/>
 	<animated_instance_mesh name="TurretAutomaton" layer="solid" core_name="TurretAutomaton" position="12.528900 0.700000 23.473000" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
 	<instance_mesh name="BaseTorreta" layer="solid" core_name="BaseTorreta" position="12.528900 0.750000 23.423000" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
 	<instance_mesh name="ParedesExterioresBiblioteca" layer ="solid" core_name="ParedesExterioresBiblioteca" position="0.300422 6.25211 21.3165" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="AlfombraFrenteOrgano" layer ="solid" core_name="AlfombraFrenteOrgano" position="-0.059895 0.0248896 11.6761" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="AlfombraDelanteTorreta" layer ="solid" core_name="AlfombraDelanteTorreta" position="12.4647 0.0397829 17.3933" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="MesaEntrada" layer ="solid" core_name="MesaEntrada" position="0.137207 0.625571 11.5737" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="Escalera" layer ="solid" core_name="Escalera" position="9.95913 2.06107 7.70418" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="Escalera" layer ="solid" core_name="Escalera" position="9.95913 2.06107 7.70418" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="PlayerStairs" visible="true"/>
+	<instance_mesh name="Escalera2" layer ="solid" core_name="Escalera" position="9.95913 2.06107 7.70418" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="EnemyStairs" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes\Instances" visible="true"/>
 	<instance_mesh name="Arana001" layer ="solid" core_name="Arana001" position="12.5162 10.016 23.1562" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="MesaTorreta" layer ="solid" core_name="MesaTorreta" position="12.55 0.655156 22.4968" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="Trono001" layer ="solid" core_name="Trono001" position="12.55 1.14797 23.6334" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
@@ -92,9 +93,9 @@
 	<instance_mesh name="lamparakeroparedBIEN014" layer ="solid" core_name="lamparakeroparedBIEN014" position="-3.00308 2.07935 5.21873" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="lamparamesaref" layer ="solid" core_name="lamparamesaref" position="12.9285 1.69433 15.4861" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="lamparamesaref001" layer ="solid" core_name="lamparamesaref001" position="6.49548 1.65484 21.6027" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="PlantaBajaBiblio" layer ="solid" core_name="PlantaBajaBiblio" position="-1.49972 -0.0169911 16.8711" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="PlantaBajaBiblio" layer ="solid" core_name="PlantaBajaBiblio" position="-1.49972 -0.0169911 16.8711" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Floor" visible="true"/>
 	<instance_mesh name="TechoBiblioteca" layer ="solid" core_name="TechoBiblioteca" position="-0.669777 12.5212 16.1018" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="PlantaSuperiorTecho" layer ="solid" core_name="PlantaSuperiorTecho" position="16.5461 3.67485 16.1018" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="PlantaSuperiorTecho" layer ="solid" core_name="PlantaSuperiorTecho" position="16.5461 3.67485 16.1018" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Floor" visible="true"/>
 	<instance_mesh name="ParedRecibidorBiblioteca" layer ="solid" core_name="ParedRecibidorBiblioteca" position="-0.669778 6.25211 5.10183" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="ParedIzquierdaBiblioteca" layer ="solid" core_name="ParedIzquierdaBiblioteca" position="19.032 6.25211 16.1018" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="ParedDerechaBiblioteca" layer ="solid" core_name="ParedDerechaBiblioteca" position="-22.0314 6.25211 16.1018" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
