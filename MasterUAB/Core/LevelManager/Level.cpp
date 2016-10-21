@@ -78,7 +78,6 @@ void CLevel::Load()
 	m_ParticleManager->Load(l_LevelDirectory + "\\particles.xml", m_Name);
 	m_BilboardManager->Load(l_LevelDirectory + "\\particles.xml", m_Name);
 	m_ManchasManager->Load(l_LevelDirectory + "\\cordura.xml", m_Name);
-	m_BilboardManager->Load(l_LevelDirectory + "\\particles.xml", m_Name);
 	m_StaticMeshManager->Load(l_LevelDirectory + "\\static_meshes.xml", m_Name);
 	m_LayerManager->Load(l_LevelDirectory + "\\renderable_objects.xml", m_Name);
 	m_LightManager->Load(l_LevelDirectory + "\\lights.xml", m_Name);

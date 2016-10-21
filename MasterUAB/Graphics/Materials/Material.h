@@ -33,6 +33,7 @@ public:
 	void SetValue(int _index, float _value);
 	float GetValue(int _index);
 	void Save(FILE* _File);
+	void CopyParameters(std::vector<CMaterialParameter *>_NewParameters, bool _destroy = true);
 };
 
 #endif //MATERIAL_H
