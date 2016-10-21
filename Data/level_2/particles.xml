@@ -11,3 +11,7 @@
 		<control_point type="acceleration" time="0.000000 20.000000" acceleration_1="0.000000 0.000000 0.200000" acceleration_2="0.000000 0.000000 0.200000"/>
 	</particle>
 </particle_systems>
+<bilboards_systems>
+	<bilboard name="FuegoBiblio" material="bb_fuego_material" frames="100" time="0.1"/>
+	<bilboard name="FuegoChimeneaBiblio" material="bb_fuego_chimenea_material" frames="32" time="0.07"/>
+</bilboards_systems>

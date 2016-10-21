@@ -637,7 +637,7 @@ bool LoadMeshFile(std::string _FileName,physx::PxU8** Data_,physx::PxU32* Size_)
 	}
 	return true;
 }
-void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
+void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const std::string _LevelId, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
@@ -656,7 +656,7 @@ void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const CStati
 			physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
 
 			char l_ActorName[256] = "";
-			sprintf_s(l_ActorName, "%s_%u", _name.c_str(), i);
+			sprintf_s(l_ActorName, "%s_%s_%u",_LevelId.c_str(), _name.c_str(), i);
 
 			L_PutGroupToShape(l_Shape, m_Groups[_group]);
 
@@ -666,7 +666,7 @@ void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const CStati
 	}
 }
 
-void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
+void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const std::string _LevelId, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
@@ -685,7 +685,7 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStat
 			physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
 
 			char l_ActorName[256] = "";
-			sprintf_s(l_ActorName, "%s_%u", _name.c_str(), i);
+			sprintf_s(l_ActorName, "%s_%s_%u", _LevelId.c_str(), _name.c_str(), i);
 
 			L_PutGroupToShape(l_Shape, m_Groups[_group]);
 
@@ -695,7 +695,7 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStat
 	}
 }
 
-void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Directory, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, bool _FlipNormals)
+void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const std::string _LevelId, const CStaticMesh* _Mesh, const std::string _Directory, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, bool _FlipNormals)
 {
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
@@ -716,7 +716,7 @@ void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CSta
 			physx::PxShape* l_Shape = l_Body->createShape(physx::PxTriangleMeshGeometry(l_TriangleMesh), *m_Materials[_Material]);
 
 			char l_ActorName[256] = "";
-			sprintf_s(l_ActorName, "%s_%u", _name.c_str(), i);
+			sprintf_s(l_ActorName, "%s_%s_%u", _LevelId.c_str(), _name.c_str(), i);
 
 			L_PutGroupToShape(l_Shape, m_Groups[_group]);
 
@@ -1151,4 +1151,17 @@ void CPhysXManager::SetCharacterControllersHeight(const std::string _name, float
 {
 	physx::PxController* aux = m_CharacterControllers[_name];
 	aux->resize((physx::PxReal)_value);
+}
+
+void CPhysXManager::ChangeActorName(const std::string &_ActorName, const std::string _NewActorName)
+{
+	if (m_ActorIndexs.find(_ActorName) != m_ActorIndexs.end())
+	{
+		size_t l_index = m_ActorIndexs[_ActorName];
+
+		m_ActorNames[l_index] = _NewActorName;
+
+		m_ActorIndexs[_NewActorName] = l_index;
+		m_ActorIndexs.erase(_ActorName);
+	}
 }

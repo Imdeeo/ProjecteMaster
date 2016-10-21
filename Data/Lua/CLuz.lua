@@ -11,16 +11,17 @@
 		self.m_RenderableObject = l_Level:get_layer_manager():get_resource(self.m_LayerName):get_resource(self.m_RenderableObjectName)
 		CLUAComponent.__init(self,self.m_Name, self.m_RenderableObject)
 		self.m_Luz = l_Level:get_light_manager():get_resource(self.m_RenderableObjectName)
+		self.m_Swap = false
 		self.m_Luz:set_intensity(3)
-		self.m_Timer = 0.0
+		self.m_Timer = 0
 	end
 	
 	function CLuz:Update(_ElapsedTime)
 		self.m_Timer = self.m_Timer + _ElapsedTime
-		--if self.m_Timer >= 0.08 then 
+		if self.m_Timer >= 0.08 then 
 			self.m_Timer = 0
-			self.m_Luz:set_intensity(2.5+math.random())
-		--end
+			self.m_Luz:set_intensity(2.5+(math.random()/2))
+		end
 		--[[if not self.m_Swap then
 			local l_swap = math.random()
 			utils_log(""..l_swap)

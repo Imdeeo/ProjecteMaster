@@ -97,5 +97,10 @@ end
 
 function IdleToJumpingCondition(args)
 	local l_Player = args["self"]
-	return l_Player.m_InputManager:is_action_active("Jump")
+	if l_Player.m_InputManager:is_action_active("Jump") then
+		l_Player.m_Velocity.y = 3
+		return true
+	else
+		return false
+	end
 end

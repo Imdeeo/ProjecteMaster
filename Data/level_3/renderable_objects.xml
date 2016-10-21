@@ -9,6 +9,8 @@
 	<layer name="manchas"/>
 	<layer name="skybox"/>
 	<layer name="interactuable_objects"/>
+	<line_renderer name="tesla_grande" layer="line_renderers" posInicial="19.88 6.42 0.34" posFinal="22.51 6.48 0.21" numPuntos="6"  offsetX="0.5" offsetY="0.2" color="1.0 1.0 1.0 1.0" size="0.23" size_ofset="0.005" material="TeslaMaterial"/>	
+	<line_renderer name="tesla_peque" layer="line_renderers" posInicial="22.67 5.11 0.44" posFinal="23.27 5.19 -0.08" numPuntos="2"  offsetX="0.2" offsetY="0.1" color="1.0 1.0 1.0 1.0" size="0.17" size_ofset="0.005" material="TeslaMaterial"/>	
 	<instance_mesh name="FisicasCintas" layer ="solid" core_name="FisicasCintas" position="7.41124 -0.378811 17.2786" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="false"/>
 	<instance_mesh name="BaseCaldera" layer ="solid" core_name="BaseCaldera" position="13.663 5.34426 13.7695" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="21Gramos" layer ="solid" core_name="21Gramos" position="13.727 1.15252 0.808059" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>

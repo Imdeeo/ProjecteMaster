@@ -1,11 +1,54 @@
 function CorrectingFirst(args)
 	local l_Player = args["self"]
 	l_Player.m_CameraController:lock()
+	--l_Player:CalculateCameraPositionRotation(l_Player.m_CameraAnimation, l_Player.m_TargetPosOffset)
+	l_Player.m_InitialCameraRotation = l_Player.m_CameraController:get_rotation()
+	l_Player.m_TimerRotation = 0.0
+
+	local l_CameraDirection = l_Player.m_TargetPosOffset*-1.0
+	l_CameraDirection.y = l_Player.m_Target.y - l_Player.m_CameraController:get_position().y
+	l_CameraDirection = l_CameraDirection:get_normalized(1)
+						
+	local quat_to_turn = Quatf()
+	quat_to_turn:set_from_fwd_up(l_Player.m_ForwardCamera, l_Player.m_UpCamera)
+	l_Player.m_FinalCameraRotation = quat_to_turn
 end
 
 function CorrectingUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
+	
+	--[[local l_AngleOK = false
+	local l_PosOK = false
+	
+	l_Player.m_TimerRotation = l_Player.m_TimerRotation + _ElapsedTime
+	local l_PercentRotation = l_Player.m_TimerRotation 
+	if l_PercentRotation > 1.0 then
+		l_PercentRotation = 1.0
+	end
+	
+	utils_log_v3(l_Player.m_Target)
+	local l_FaceTargetDisplacement =  l_Player.m_Target - l_Player.m_PhysXManager:get_character_controler_pos("player")
+	l_FaceTargetDisplacement.y = 0.0
+		
+	if l_FaceTargetDisplacement:length() <= 0.01 then
+		l_PosOK = true
+	else
+		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
+	end		
+	
+	if l_Player.m_TimerRotation <= 1.0 then
+		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, l_PercentRotation)
+		l_Player.m_CameraController:set_rotation(target_quat)
+	else
+		l_AngleOK = true
+	end		
+
+	if l_PosOK and l_AngleOK then
+		l_Player.m_IsCorrecting = false
+		l_Player.m_IsInteracting = true
+	end]]
+	
 	
 	local l_AngleOK = false
 	local l_PosOK = false
@@ -15,7 +58,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetPosOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
 	local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_FaceTargetDisplacement.y = 0.0
-	if l_FaceTargetDisplacement:length() <= 0.03 then
+	if l_FaceTargetDisplacement:length() <= 0.01 then
 		l_PosOK = true
 	else
 		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
@@ -63,12 +106,29 @@ function CorrectingUpdate(args, _ElapsedTime)
 	if l_Yaw <= 0.01 then
 		l_AngleOK = true
 	else
-		l_Player.m_CameraController:add_yaw(l_Dir*_ElapsedTime)
-	end
+		l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
+	end]]
+		
 
+	l_Player.m_TimerRotation = l_Player.m_TimerRotation + _ElapsedTime
+	local l_PercentRotation = l_Player.m_TimerRotation 
+	if l_PercentRotation > 1.0 then
+		l_PercentRotation = 1.0
+	end
+	
+	if l_Player.m_TimerRotation <= 1.0 then
+		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, l_PercentRotation)
+		l_Player.m_CameraController:set_rotation(target_quat)
+	else
+		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, 1)
+		l_Player.m_CameraController:set_rotation(target_quat)
+		l_AngleOK = true
+	end	
+		
+		
 	if l_PosOK and l_AngleOK then
-		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement, _ElapsedTime)
-		l_Player.m_CameraController:add_yaw(l_Yaw*l_Dir)
+		--l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement, _ElapsedTime)
+		--l_Player.m_CameraController:add_yaw(l_Yaw)
 		l_Player.m_IsCorrecting = false
 	end]]
 	
@@ -110,6 +170,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 		l_Player.m_Item:set_position(l_ObjectPosition + l_Owner:get_position())
 		l_Player.m_Item:set_rotation(l_ObjectRotation)
 	end
+	
 end
 
 function CorrectingEnd(args)
@@ -128,5 +189,6 @@ end
 
 function CorrectingToInteractingCondition(args)
 	local l_Player = args["self"]
+	--return false
 	return l_Player.m_IsInteracting and not l_Player.m_IsCorrecting
 end

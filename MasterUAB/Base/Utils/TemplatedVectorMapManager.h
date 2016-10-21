@@ -41,11 +41,12 @@ public:
 		Destroy();
 	}
 
-	bool RemoveResource(const std::string &Name)
+	bool RemoveResource(const std::string &Name, bool _delete =  true)
 	{
 		CMapResourceValue l_ResourceValue = m_ResourcesMap[Name];
 		size_t index = l_ResourceValue.m_Id;
-		delete m_ResourcesVector[index];
+		if (_delete)
+			delete m_ResourcesVector[index];
 		
 		m_ResourcesMap.erase(Name);
 		m_ResourcesVector.erase(m_ResourcesVector.begin()+index);
