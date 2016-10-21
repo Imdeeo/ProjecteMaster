@@ -4,7 +4,7 @@ R3ValveIsPlaced = false
 
 local l_LevelId = "Maquinas"
 
-function R3Valve(_Player, _Pos)
+function R3Valve(_Player)
 	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(-1.0, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerValve", l_LevelId)
@@ -26,7 +26,7 @@ function R3Valve(_Player, _Pos)
 	end
 end
 
-function R3ValveInput(_Player, _Pos)
+function R3ValveInput(_Player)
 	_Player.m_TargetYaw = 3.0*g_PI/4.0
 	_Player.m_TargetPosOffset = Vect3f(1.0, 0.0, -1.0)
 	l_Target = GetTriggerPos("TriggerValveInput", l_LevelId)
@@ -49,7 +49,7 @@ function R3ValveInput(_Player, _Pos)
 	end
 end
 
-function R3ValveDoor(_Player, _Pos)
+function R3ValveDoor(_Player)
 	_Player.m_TargetYaw = g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(-1.0, 0.0, 1.0)
 	l_Target = GetTriggerPos("TriggerValveDoor", l_LevelId)
