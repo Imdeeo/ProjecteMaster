@@ -14,9 +14,7 @@ function PuzzleUpdate(args, _ElapsedTime)
 	if l_Player.m_IsPuzzle then
 		local l_Camera = CUABEngine.get_instance():get_camera_controller_manager():get_resource(l_Player.m_CameraAnimation)
 		l_Camera:force_update_yaw(_ElapsedTime)
-		--// Raycast
-		local l_PlayerPos = l_Player.m_PhysXManager:get_character_controler_pos("player")
-		CheckRaycast(l_Player, l_PlayerPos, l_Camera, l_Owner)
+		CheckRaycast(l_Player, l_Camera, l_Owner)
 	else
 		if l_Player.m_Timer == 0.0 then
 			l_Owner:remove_action(l_Owner:get_actual_action_animation())
@@ -40,9 +38,9 @@ function PuzzleEnd(args)
 		l_Player.m_OrganKeyCount = 1
 	end
 	
-	ClearPlayerCamera(l_Player)
-	ClearPlayerTarget(l_Player)
-	ClearPlayerStates(l_Player)
+	l_Player:ClearCamera()
+	l_Player:ClearTarget()
+	l_Player:ClearStates()
 	l_Player.m_InteractingCinematic = nil
 	l_Player.m_CurrentAend = nil
 	l_Player.m_InteractingAnimation = 0

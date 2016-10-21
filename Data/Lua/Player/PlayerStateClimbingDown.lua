@@ -43,8 +43,8 @@ function ClimbingDownEnd(args)
 	local l_Player = args["self"]
 	l_Player.m_ClimbingDown = false
 	if not l_Player.m_IsClimbing and not l_Player.m_IsInteracting then
-		ClearPlayerTarget(l_Player)
-		ClearPlayerStates(l_Player)
+		l_Player:ClearTarget()
+		l_Player:ClearStates()
 		l_Player.m_CameraController:unlock()
 	end
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.3)
