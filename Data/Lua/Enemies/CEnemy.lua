@@ -21,6 +21,7 @@ class 'CEnemy' (CLUAComponent)
 		self.m_State = "off"
 		self.m_Awake = _TreeNode:get_bool_property("awake", false)
 		self.m_ActualAnimation = 0
+		self.m_LoseSanityValue = 0.0
 		
 		-- TODO: get group numbers somehow
 		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
