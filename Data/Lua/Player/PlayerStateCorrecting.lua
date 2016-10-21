@@ -31,14 +31,6 @@ function CorrectingUpdate(args, _ElapsedTime)
 	else
 		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
 	end
-		--// Rotation
-	local l_AngleOK = l_Player:XZRotate(_ElapsedTime)
-	
-	if l_PosOK and l_AngleOK then
-		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement, _ElapsedTime)
-		l_Player.m_CameraController:add_yaw(l_Difference*l_Dir)
-		l_Player.m_IsCorrecting = false
-	end
 	
 		--// Rotation
 	l_Player.m_TimerRotation = l_Player.m_TimerRotation + _ElapsedTime
@@ -59,7 +51,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 		
 	if l_PosOK and l_AngleOK then
 		l_Player.m_IsCorrecting = false
-	end]]
+	end
 	
 		--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
