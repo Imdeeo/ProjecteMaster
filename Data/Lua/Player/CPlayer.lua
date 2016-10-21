@@ -254,7 +254,7 @@ class 'CPlayer' (CLUAComponent)
 	
 	function CPlayer:SetActualLevel(_LevelId)
 		g_Engine:get_level_manager():set_actual_level(_LevelId)
-		gself:SetActualLevelAux(_LevelId)
+		self:SetActualLevelAux(_LevelId)
 	end
 	function CPlayer:SetActualLevelAux(_LevelId)
 		self.m_ActualLevel = _LevelId		
@@ -602,8 +602,10 @@ class 'CPlayer' (CLUAComponent)
 		local l_OriginYaw = math.atan2(l_CameraDirection.z, l_CameraDirection.x)
 		local l_Difference = math.abs(self.m_TargetYaw-l_OriginYaw)
 		local l_Pos = self.m_PhysXManager:get_character_controler_pos("player")
+		l_Pos.y = l_Pos.y - g_TotalHeight
 		local ret = false
-		if l_Difference > (g_PI-_Radians) and l_Difference < (g_Pi+_Radians) and (l_Pos - self.m_Target):length() < _Distance then
+		utils_log("Distance: "..(l_Pos - _Target):length().." (".._Distance.." needed)")
+		if (l_Difference > (g_PI-_Radians)) and (l_Difference < (g_PI+_Radians)) and ((l_Pos - _Target):length() < _Distance) then
 			ret = true
 		end
 		return ret
