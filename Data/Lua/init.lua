@@ -58,17 +58,17 @@ function mainLua()
 	--deactivate_gravity()
 	--deactivate_player_collisions()
 	
-	--l_LevelManager:load_level("Recibidor")
-	--l_LevelManager:choose_scene_command_level("Recibidor")
-	--g_Player:SetActualLevel("Recibidor")
+	l_LevelManager:load_level("Recibidor")
+	l_LevelManager:choose_scene_command_level("Recibidor")
+	g_Player:SetActualLevel("Recibidor")
 	
 	--l_LevelManager:load_level("Biblioteca")
 	--l_LevelManager:choose_scene_command_level("Biblioteca")
 	--g_Player:SetActualLevel("Biblioteca")
 	
-	l_LevelManager:load_level("Maquinas")
-	l_LevelManager:choose_scene_command_level("Maquinas")
-	g_Player:SetActualLevel("Maquinas")
+	--l_LevelManager:load_level("Maquinas")
+	--l_LevelManager:choose_scene_command_level("Maquinas")
+	--g_Player:SetActualLevel("Maquinas")
 	
 	--l_LevelManager:load_level("Pasillo")
 	--l_LevelManager:choose_scene_command_level("Pasillo")

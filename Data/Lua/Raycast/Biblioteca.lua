@@ -53,7 +53,7 @@ function R2TriggerOrganKeyG(_Player, _Owner)
 end
 
 function R2TriggerPipeOrgan(_Player)
-	_Player.m_TargetYaw = g_PI/2.0
+	_Player.m_TargetYaw = -g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -1.0)
 	l_Target = GetTriggerPos("TriggerPipeOrgan",l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.8) then
@@ -71,7 +71,7 @@ function R2TriggerPipeOrgan(_Player)
 end
 
 function R2Artifact(_Player)
-	_Player.m_TargetYaw = g_PI/2.0
+	_Player.m_TargetYaw = -g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.6)
 	l_Target = GetTriggerPos("TriggerArtifact",l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.8) then
@@ -93,7 +93,7 @@ function R2Artifact(_Player)
 end
 
 function R2ArtifactDoor(_Player)
-	_Player.m_TargetYaw = g_PI/2.0
+	_Player.m_TargetYaw = -g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.45, 0.0, -0.57)
 	l_Target = GetTriggerPos("TriggerArtifactDoor",l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.6) then
@@ -113,7 +113,7 @@ function R2ArtifactDoor(_Player)
 end
 
 function R2Clue(_Player)
-	_Player.m_TargetYaw = -g_PI
+	_Player.m_TargetYaw = g_PI
 	_Player.m_TargetPosOffset = Vect3f(-0.86, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerClue",l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.6) then
@@ -134,7 +134,7 @@ function R2Clue(_Player)
 end
 
 function R2Book(_Player)
-	_Player.m_TargetYaw = g_PI/2.0
+	_Player.m_TargetYaw = -g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.86)
 	l_Target = GetTriggerPos("TriggerBook",l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.8) then
