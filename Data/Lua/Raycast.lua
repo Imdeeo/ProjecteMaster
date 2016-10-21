@@ -1,7 +1,6 @@
 dofile("Data\\Lua\\Raycast\\Recibidor.lua")
 dofile("Data\\Lua\\Raycast\\Biblioteca.lua")
 dofile("Data\\Lua\\Raycast\\Maquinas.lua")
-dofile("Data\\Lua\\Raycast\\TriggerTest.lua")
 -- Distance conversion rates:
 -- 1,5834710743801652892561983471074(Max) -> 1,0(Engine)
 -- 1,0(Max) -> 0,63152400835073068893528183716077(Engine)
