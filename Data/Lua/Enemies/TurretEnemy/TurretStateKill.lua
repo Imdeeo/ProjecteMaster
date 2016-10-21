@@ -40,7 +40,7 @@ function KillUpdateTurret(args, _ElapsedTime)
 		l_Enemy.m_Timer = l_Enemy.m_Timer - 1.0
 	end
 	
-	if l_Enemy.m_TimerToStop >= 6.5 then
+	if l_Enemy.m_TimerToStop >= 7.0 then
 		l_Enemy.m_State = "off"
 	end
 	

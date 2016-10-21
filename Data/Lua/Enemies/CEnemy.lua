@@ -75,7 +75,7 @@ class 'CEnemy' (CLUAComponent)
 		local l_Forward = _Owner:get_rotation():get_forward_vector()
 		local l_Dot = l_Forward * l_PlayerDirection
 		if l_Dot < math.cos(self.m_MaxAngle) then
-		  return false
+			return false
 		end
 
 		-- not visible if behind an obstacle
@@ -87,8 +87,17 @@ class 'CEnemy' (CLUAComponent)
 		)
 		
 		if l_Hit and l_RaycastData.actor_name ~= "player" then
-		  self.m_BlockingObjectName = l_RaycastData.actor_name
-		  return false
+			self.m_BlockingObjectName = l_RaycastData.actor_name
+			return false
+		else
+			-- we do a new raycast to player foot to prove that it not has a little object between enemy and player
+			l_AuxPos = Vect3f(l_PlayerPos.x, l_PlayerPos.y - g_StandingOffset, l_PlayerPos.z)
+			l_Hit = self.m_PhysXManager:raycast(l_OwnerHeadPos, l_AuxPos, self.m_PhysXGroups, l_RaycastData)
+			
+			if l_Hit then
+				self.m_BlockingObjectName = l_RaycastData.actor_name
+				return false
+			end
 		end
 
 		-- otherwise visible
