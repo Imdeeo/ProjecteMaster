@@ -4,4 +4,5 @@
 	<camera name="DebugCamera" type="spherical" distance="50"/>
 	<camera name="PickValve" total_time="7.33333" type="key" undefined="true" pos="-21.7109 16.0213 0.811474" filename="Data\level_3\cameras\PickValve.xml"/>
 	<camera name="InputValve" total_time="6.66667" type="key" undefined="true" pos="-15.3401 10.8491 0.811474" filename="Data\level_3\cameras\InputValve.xml"/>
+	<camera name="CrossValveDoor" total_time="3.0" type="key" undefined="true" pos="2.95133 12.1724 0.881564" filename="Data\level_3\cameras\CrossValveDoor.xml"/>
 </cameras>
