@@ -20,9 +20,17 @@ function CorrectingUpdate(args, _ElapsedTime)
 	else
 		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
 	end
+		--// Rotation
+	local l_AngleOK = l_Player:XZRotate(_ElapsedTime)
+	
+	if l_PosOK and l_AngleOK then
+		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement, _ElapsedTime)
+		l_Player.m_CameraController:add_yaw(l_Difference*l_Dir)
+		l_Player.m_IsCorrecting = false
+	end
 	
 		--// Rotation
-	local l_CameraDirection = l_Player.m_CameraController:get_forward()
+	--[[local l_CameraDirection = l_Player.m_CameraController:get_forward()
 	l_CameraDirection.y = 0.0
 	l_CameraDirection:normalize(1)
 	local l_Off = l_Player.m_TargetLookOffset
@@ -30,36 +38,39 @@ function CorrectingUpdate(args, _ElapsedTime)
 	l_Off.y = 0.0
 	l_Off:normalize(1)
 	local l_Yaw = l_CameraDirection:get_angle_with(l_Off)
+	local l_Dir = 1
 	local l_OriginYaw
+	utils_log_v3(l_Off)
+	utils_log("atan2: "..math.atan2(l_CameraDirection.z, l_CameraDirection.x))
 	if math.abs(l_Off.x) > math.abs(l_Off.z) then
 		l_OriginYaw = math.atan2(l_CameraDirection.z, l_CameraDirection.x)
 		if l_OriginYaw > 0 then
-			l_Yaw = -l_Yaw
+			l_Dir = -l_Dir
 		end
 		if (l_Off.x < 0) then
-			l_Yaw = -l_Yaw
+			l_Dir = -l_Dir
 		end
 	else
 		l_OriginYaw = math.atan2(l_CameraDirection.x, l_CameraDirection.z)
 		if l_OriginYaw < 0 then
-			l_Yaw = -l_Yaw
+			l_Dir = -l_Dir
 		end
 		if (l_Off.x > 0) then
-			l_Yaw = -l_Yaw
+			l_Dir = -l_Dir
 		end
 	end
 	
-	if l_Yaw <= 0.01 and l_Yaw >= -0.01 then
+	if l_Yaw <= 0.01 then
 		l_AngleOK = true
 	else
-		l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
+		l_Player.m_CameraController:add_yaw(l_Dir*_ElapsedTime)
 	end
-		
+
 	if l_PosOK and l_AngleOK then
 		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement, _ElapsedTime)
-		l_Player.m_CameraController:add_yaw(l_Yaw)
+		l_Player.m_CameraController:add_yaw(l_Yaw*l_Dir)
 		l_Player.m_IsCorrecting = false
-	end
+	end]]
 	
 	--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")

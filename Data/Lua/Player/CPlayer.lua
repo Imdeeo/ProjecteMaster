@@ -168,7 +168,7 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_Target = nil
 		self.m_TargetPosOffset = Vect3f(0.0, 0.0, 0.0)
-		self.m_TargetLookOffset = Vect3f(0.0, 0.0, 0.0)
+		self.m_TargetYaw = 0.0
 		self.m_ItemName = ""
 		self.m_Item = nil
 		self.m_LeftHanded = false
@@ -565,6 +565,43 @@ class 'CPlayer' (CLUAComponent)
 		local quat_to_turn = Quatf()
 		quat_to_turn:set_from_fwd_up(l_CameraDirection, Vect3f(0,1,0))
 		self.m_FinalCameraRotation = quat_to_turn
+	end
+	
+	function CPlayer:XZRotate(_ElapsedTime)
+		local l_CameraDirection = self.m_CameraController:get_forward()
+		l_CameraDirection.y = 0.0
+		l_CameraDirection:normalize(1)
+		local l_OriginYaw = math.atan2(l_CameraDirection.z, l_CameraDirection.x)
+		local l_Dir = 1
+		local l_Difference = math.abs(self.m_TargetYaw-l_OriginYaw)
+		local l_DeltaDifference = math.abs(self.m_TargetYaw-l_OriginYaw-_ElapsedTime)
+		if l_Difference < l_DeltaDifference then
+			l_Dir = -1
+		end
+		if self.m_TargetYaw == g_PI and l_OriginYaw < 0.0 then
+			l_Dir = -1
+		end
+		local ret = false
+		if(l_Difference<= 0.01) then
+			ret = true
+		else
+			self.m_CameraController:add_yaw(l_Dir*_ElapsedTime)
+		end
+		return ret
+	end
+	
+	function CPlayer:IsFacingTarget(_Target, _Radians, _Distance)
+		local l_CameraDirection = self.m_CameraController:get_forward()
+		l_CameraDirection.y = 0.0
+		l_CameraDirection:normalize(1)
+		local l_OriginYaw = math.atan2(l_CameraDirection.z, l_CameraDirection.x)
+		local l_Difference = math.abs(self.m_TargetYaw-l_OriginYaw)
+		local l_Pos = self.m_PhysXManager:get_character_controler_pos("player")
+		local ret = false
+		if l_Difference > (g_PI-_Radians) and l_Difference < (g_Pi+_Radians) and (l_Pos - self.m_Target):length() < _Distance then
+			ret = true
+		end
+		return ret
 	end
 --end
 

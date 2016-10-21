@@ -1,5 +1,7 @@
 dofile("Data\\Lua\\Raycast\\Recibidor.lua")
 dofile("Data\\Lua\\Raycast\\Biblioteca.lua")
+dofile("Data\\Lua\\Raycast\\Maquinas.lua")
+dofile("Data\\Lua\\Raycast\\TriggerTest.lua")
 -- Distance conversion rates:
 -- 1,0(Engine)	->	1,5834710743801652892561983471074(Max)
 -- 1,0(Max)		->	0,63152400835073068893528183716077(Engine)
@@ -9,7 +11,7 @@ function CheckRaycast(_Player, _Pos, _Camera, _Owner)
 	
 	local didHit = _Player.m_PhysXManager:raycast(_Camera:get_position(), _Camera:get_position()+(_Camera:get_forward()*1.7), 4, _Player.m_RaycastData)
 	local l_LayerManager = g_Engine:get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager()
-	
+
 	if didHit then
 		local l_Trigger = l_LayerManager:get_layer("triggers"):get_resource(_Player.m_RaycastData.actor_name)
 		if l_LayerManager:get_layer("interactuable_objects"):get_resource(l_Trigger:get_interactuable_object_name()) == nil then
@@ -30,6 +32,9 @@ function TriggerRaycast(_Player, _Pos, _Owner)
 		if _Player.m_RaycastData.actor_name == "TriggerDoor" then
 			if _Player.m_ItemName == "LlaveRecibidor" then
 				R1Door(_Player, _Pos)
+			else
+				_Player.m_ItemName = "LlaveRecibidor"
+				_Player.m_Item = CUABEngine.get_instance():get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource(_Player.m_ItemName)
 			end
 		elseif _Player.m_RaycastData.actor_name == "TriggerSheets" then
 			R1Sheets(_Player, _Pos)
@@ -80,6 +85,21 @@ function TriggerRaycast(_Player, _Pos, _Owner)
 			R2Clue(_Player, _Pos)
 		elseif _Player.m_RaycastData.actor_name == "TriggerBook" then
 			R2Book(_Player, _Pos)
+		end
+	elseif l_LevelID == "Maquinas" then
+		if _Player.m_RaycastData.actor_name == "TriggerValve" then
+			R3Valve(_Player, _Pos)
+		elseif _Player.m_RaycastData.actor_name == "TriggerValveInput" then
+			if _Player.m_ItemName == "ValvulaPuzzle" then
+				R3ValveInput(_Player, _Pos)
+			else
+				_Player.m_ItemName = "ValvulaPuzzle"
+				_Player.m_Item = CUABEngine.get_instance():get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource(_Player.m_ItemName)
+			end
+		elseif _Player.m_RaycastData.actor_name == "TriggerValveDoor" then
+			if R3ValveIsPlaced then
+				R3ValveDoor(_Player, _Pos)
+			end
 		end
 	end
 end
