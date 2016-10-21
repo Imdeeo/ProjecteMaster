@@ -13,7 +13,7 @@ function R1Door(_Player, _Pos)
 	_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
 	_Player.m_TargetYaw = g_PI/2.0
 	l_Target = GetTriggerPos("TriggerDoor", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.2) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.2) then
 		_Player.m_Target = Vect3f(0.884729, 0.0, 5.0229)
 		_Player.m_InteractingAnimation = 1
 		_Player.m_InteractingCinematic = "CrossDoor"
@@ -33,7 +33,7 @@ function R1Sheets(_Player, _Pos)
 	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(0.5, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerSheets", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 0.5) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 0.5) then
 		_Player.m_Target = l_Target
 		-- Play Sound
 		--utils_log("<-Interacted with R1Sheets->")
@@ -44,7 +44,7 @@ function R1Canvas(_Player, _Pos)
 	_Player.m_TargetYaw = g_PI
 	_Player.m_TargetPosOffset = Vect3f(-1.5, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerCanvas", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 2.0) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 2.0) then
 		_Player.m_Target = l_Target
 		-- Play Sound
 		--utils_log("<-Interacted with R1Canvas->")
@@ -57,7 +57,7 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 	_Player.m_ForwardCamera = Vect3f(-0.7313, -0.68205, 0)
 	_Player.m_TargetPosOffset = Vect3f(0.847, 0, 0.025)
 	l_Target = GetTriggerPos("TriggerTrayR1", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.4) then
 		_Player.m_Target = Vect3f(-2.423140, 1.000280, -2.373670)
 		_Player.m_InteractingAnimation = 4
 		_Player.m_InteractingCinematic = "ForceTray"
@@ -84,7 +84,7 @@ function R1TrayR2Open(_Player, _Pos)
 	_Player.m_TargetPosOffset = Vect3f(0.974, 0, 0.025)
 	_Player.m_TargetYaw = g_PI
 	l_Target = GetTriggerPos("TriggerTrayR2", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.4) then
 		_Player.m_Target = Vect3f(-2.423140, 1.000280, -1.056070)
 		_Player.m_InteractingAnimation = 2
 		_Player.m_InteractingCinematic = "OpenTrayR2"
@@ -103,7 +103,7 @@ function R1TrayR2Close(_Player, _Pos)
 	_Player.m_ForwardCamera = Vect3f(-0.63435, -0.773049, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(0.974, 0, 0.025)
 	l_Target = GetTriggerPos("TriggerTrayR2", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.4) then
 		_Player.m_Target = Vect3f(-2.423140, 1.000280, -1.056070)
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "CloseTrayR2"
@@ -130,7 +130,7 @@ function R1TrayL1Open(_Player, _Pos)
 	_Player.m_TargetPosOffset = Vect3f(-0.974, 0, 0.025)
 	_Player.m_TargetYaw = 0.0
 	l_Target = GetTriggerPos("TriggerTrayL1", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.4) then
 		_Player.m_Target = Vect3f(2.420210, 1.000280, -2.373670)
 		_Player.m_InteractingAnimation = 2
 		_Player.m_InteractingCinematic = "OpenTrayL1"
@@ -149,7 +149,7 @@ function R1TrayL1Close(_Player, _Pos)
 	_Player.m_TargetPosOffset = Vect3f(-0.874, 0, 0.025)
 	_Player.m_TargetYaw = 0.0
 	l_Target = GetTriggerPos("TriggerTrayL1", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.4) then
 		_Player.m_Target = Vect3f(2.420210, 1.000280, -2.373670)
 		_Player.m_InteractingAnimation = 3
 		_Player.m_InteractingCinematic = "CloseTrayL1"
@@ -176,7 +176,7 @@ function R1TrayL2Open(_Player, _Pos)
 	_Player.m_ForwardCamera = Vect3f(0.722003, -0.691890, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(-0.974, 0, 0.025)
 	l_Target = GetTriggerPos("TriggerTrayL2", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.4) then
 		local l_Level = g_Engine:get_level_manager():get_level(l_LevelId)
 		l_Level:get_layer_manager():get_layer("triggers"):get_resource("TriggerTrayL2"):set_scale(Vect3f(1.0, 0.5, 1.0))
 		_Player.m_Target = Vect3f(2.408430, 1.000280, -1.056070)
@@ -197,7 +197,7 @@ function R1TrayL2Close(_Player, _Pos)
 	_Player.m_ForwardCamera = Vect3f(0.63435, -0.773049, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(-0.974, 0, 0.025)
 	l_Target = GetTriggerPos("TriggerTrayL2", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.4) then
 		local l_Level = g_Engine:get_level_manager():get_level(l_LevelId)
 		l_Level:get_layer_manager():get_resource("triggers"):get_resource("TriggerTrayL2"):set_scale(Vect3f(1.0, 1.0, 1.0))
 		_Player.m_Target = Vect3f(2.408430, 1.000280, -1.056070)
@@ -224,28 +224,8 @@ function R1Ankh(_Player, _Pos)
 	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(-1.0, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerAnkh",l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.4) then
 		_Player.m_Target = l_Target
 		-- Play Sound
 	end
-end
-
-function R1Key(_Player, _Pos)
-	--utils_log("<-Interacted with R1Key->")
-	--_Player.m_TargetYaw = g_PI
-	--l_Target = GetTriggerPos("TriggerKey")
-	--if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
-	--	_Player.m_Target = l_Target
-	--	_Player.m_InteractingAnimation = 1
-	--	_Player.m_InteractingCinematic = "PickKey"
-	--	_Player.m_CameraAnimation = "PickKey"
-	--	_Player.m_NewItemName = "LlaveRecibidor"
-	--	_Player.m_ItemTime = 1.5
-	--	_Player.m_ItemDropTime = -1.0
-	--	_Player.m_AnimationTime = 2.6
-	--	_Player.m_CurrentAend = nil
-	--	_Player.m_IsInteracting = true
-	--	_Player.m_IsClimbing = false
-	--	_Player.m_IsPuzzle = false
-	--end
 end

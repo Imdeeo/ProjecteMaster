@@ -5,10 +5,10 @@ R3ValveIsPlaced = false
 local l_LevelId = "Maquinas"
 
 function R3Valve(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(-1.0, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerValve", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 2.0) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 2.0) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 23
 		_Player.m_InteractingCinematic = nil
@@ -27,10 +27,10 @@ function R3Valve(_Player, _Pos)
 end
 
 function R3ValveInput(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 1.0)
+	_Player.m_TargetYaw = 3.0*g_PI/4.0
 	_Player.m_TargetPosOffset = Vect3f(1.0, 0.0, -1.0)
 	l_Target = GetTriggerPos("TriggerValveInput", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.2) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.2) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 24
 		_Player.m_InteractingCinematic = nil
@@ -50,10 +50,10 @@ function R3ValveInput(_Player, _Pos)
 end
 
 function R3ValveDoor(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 1.0)
+	_Player.m_TargetYaw = g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(-1.0, 0.0, 1.0)
 	l_Target = GetTriggerPos("TriggerValveDoor", l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.0) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.0) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 25
 		_Player.m_InteractingCinematic = "CrossValveDoor"

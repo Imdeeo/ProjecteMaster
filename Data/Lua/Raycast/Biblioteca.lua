@@ -53,10 +53,10 @@ function R2TriggerOrganKeyG(_Player, _Owner)
 end
 
 function R2TriggerPipeOrgan(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
+	_Player.m_TargetYaw = g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -1.0)
 	l_Target = GetTriggerPos("TriggerPipeOrgan",l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.8) then
 		_Player.m_Target = l_Target
 		_Player.m_AnimationTime = 0.6667
 		_Player.m_InteractingAnimation = 8
@@ -71,10 +71,10 @@ function R2TriggerPipeOrgan(_Player, _Pos)
 end
 
 function R2Artifact(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
+	_Player.m_TargetYaw = g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.6)
 	l_Target = GetTriggerPos("TriggerArtifact",l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.8) then
 		_Player.m_Target = l_Target
 		_Player.m_AnimationTime = 5
 		_Player.m_LeftHanded = true
@@ -93,10 +93,10 @@ function R2Artifact(_Player, _Pos)
 end
 
 function R2ArtifactDoor(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
+	_Player.m_TargetYaw = g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.45, 0.0, -0.57)
 	l_Target = GetTriggerPos("TriggerArtifactDoor",l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.6) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.6) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 5
 		_Player.m_InteractingCinematic = "CrossArtifactDoor"
@@ -113,10 +113,10 @@ function R2ArtifactDoor(_Player, _Pos)
 end
 
 function R2Clue(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = -g_PI
 	_Player.m_TargetPosOffset = Vect3f(-0.86, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerClue",l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.6) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.6) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 7
 		_Player.m_InteractingCinematic = nil
@@ -134,10 +134,10 @@ function R2Clue(_Player, _Pos)
 end
 
 function R2Book(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
+	_Player.m_TargetYaw = g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.86)
 	l_Target = GetTriggerPos("TriggerBook",l_LevelId)
-	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.8) then
+	if _Player:IsFacingTarget(l_Target, 1.0, 1.8) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 17
 		_Player.m_InteractingCinematic = "PullBook"

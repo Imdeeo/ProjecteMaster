@@ -31,7 +31,7 @@ function TriggerRaycast(_Player, _Pos, _Owner)
 	l_LevelID = _Player.m_ActualLevel
 	if l_LevelID == "Recibidor" then
 		if _Player.m_RaycastData.actor_name == "TriggerDoor" then
-			--if _Player.m_ItemName == "LlaveRecibidor" then
+			if _Player.m_ItemName == "LlaveRecibidor" then
 				R1Door(_Player, _Pos)
 			else
 				_Player.m_ItemName = "LlaveRecibidor"
