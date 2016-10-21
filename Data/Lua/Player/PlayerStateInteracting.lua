@@ -72,11 +72,11 @@ function InteractingEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	
-	ClearPlayerTarget(l_Player)
-	ClearPlayerStates(l_Player)
-	ClearPlayerAend(l_Player, l_Owner)
-	ClearPlayerCinematic(l_Player)
-	ClearPlayerCamera(l_Player)
+	l_Player:ClearTarget()
+	l_Player:ClearStates()
+	l_Player:ClearAend(l_Owner)
+	l_Player:ClearCinematic()
+	l_Player:ClearCamera()
 	
 	l_Player.m_InteractingAnimation = 0
 	l_Player.m_AnimationTime = 0
