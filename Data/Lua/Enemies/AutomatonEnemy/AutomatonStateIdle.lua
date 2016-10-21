@@ -23,9 +23,9 @@ function IdleUpdateAutomaton(args, _ElapsedTime)
 		if (l_Enemy:PlayerVisible(l_Owner) or l_Enemy:DetectPlayerNoise(1)) then
 			if l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToKill) then
 				l_Enemy.m_State = "attack"
+			else
+				l_Enemy.m_State = "chase"
 			end
-		else
-			l_Enemy.m_State = "chase"
 		end
 	end
 end
