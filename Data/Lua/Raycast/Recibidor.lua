@@ -8,7 +8,7 @@ R1TrayL2IsClosed = true
 local l_LevelId = "Recibidor"
 
 function R1Door(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
+	_Player.m_TargetYaw = g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.048, 0.0, -0.55)
 	l_Target = GetTriggerPos("TriggerDoor", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.2) then
@@ -28,7 +28,7 @@ function R1Door(_Player, _Pos)
 end
 
 function R1Sheets(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(0.5, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerSheets", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 0.5) then
@@ -39,7 +39,7 @@ function R1Sheets(_Player, _Pos)
 end
 
 function R1Canvas(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = g_PI
 	_Player.m_TargetPosOffset = Vect3f(-1.5, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerCanvas", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 2.0) then
@@ -50,7 +50,7 @@ function R1Canvas(_Player, _Pos)
 end
 
 function R1TrayR1(_Player, _Pos) --This contains the key
-	_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = g_PI
 	_Player.m_TargetPosOffset = Vect3f(0.728, 0.0, 0.03958677)
 	l_Target = GetTriggerPos("TriggerTrayR1", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
@@ -75,7 +75,7 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 end
 
 function R1TrayR2Open(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = g_PI
 	_Player.m_TargetPosOffset = Vect3f(0.705, 0.0, 0.03958677)
 	l_Target = GetTriggerPos("TriggerTrayR2", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
@@ -92,7 +92,7 @@ function R1TrayR2Open(_Player, _Pos)
 end
 
 function R1TrayR2Close(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = g_PI
 	_Player.m_TargetPosOffset = Vect3f(0.705, 0.0, 0.03958677)
 	l_Target = GetTriggerPos("TriggerTrayR2", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
@@ -117,7 +117,7 @@ function R1TrayR2(_Player, _Pos)
 end
 
 function R1TrayL1Open(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(-0.705, 0.0, -0.03958677)
 	l_Target = GetTriggerPos("TriggerTrayL1", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
@@ -134,7 +134,7 @@ function R1TrayL1Open(_Player, _Pos)
 end
 
 function R1TrayL1Close(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(-0.705, 0.0, -0.03958677)
 	l_Target = GetTriggerPos("TriggerTrayL1", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
@@ -159,7 +159,7 @@ function R1TrayL1(_Player, _Pos)
 end
 
 function R1TrayL2Open(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(-0.705, 0.0, -0.03958677)
 	l_Target = GetTriggerPos("TriggerTrayL2", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
@@ -178,7 +178,7 @@ function R1TrayL2Open(_Player, _Pos)
 end
 
 function R1TrayL2Close(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(-0.705, 0.0, -0.03958677)
 	l_Target = GetTriggerPos("TriggerTrayL2", l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
@@ -205,7 +205,7 @@ function R1TrayL2(_Player, _Pos) --This contains the ankh
 end
 
 function R1Ankh(_Player, _Pos)
-	_Player.m_TargetLookOffset = Vect3f(-1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(-1.0, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerAnkh",l_LevelId)
 	if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
@@ -216,7 +216,7 @@ end
 
 function R1Key(_Player, _Pos)
 	--utils_log("<-Interacted with R1Key->")
-	--_Player.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
+	--_Player.m_TargetYaw = g_PI
 	--l_Target = GetTriggerPos("TriggerKey")
 	--if FacingRaycast(_Player.m_TargetLookOffset, l_Target, _Pos, 1.4) then
 	--	_Player.m_Target = l_Target
