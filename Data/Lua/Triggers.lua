@@ -20,8 +20,8 @@ function OnExitStairs(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 	local l_Player = m_CharacterManager.m_Player[1]
 		if not l_Player.m_IsClimbing then
-			ClearPlayerTarget(l_Player)
-			ClearPlayerStates(l_Player)
+			l_Player:ClearTarget()
+			l_Player:ClearStates()
 		end
 	end
 end

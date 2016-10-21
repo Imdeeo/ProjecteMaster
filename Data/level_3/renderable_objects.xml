@@ -387,11 +387,11 @@
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="TubosParedTanqueAguaArribajo001"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerValve" layer="triggers" is_active="true" core_name="TriggerValve" position="22.5136 -0.573193 16.0336" rotation="0.0 0.0 0.258819 0.965926" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerValve" layer="triggers" is_active="true" core_name="TriggerValve" position="22.6204 -0.442248 16.0336" rotation="0.0 0.0 0.258819 0.965926" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="ValvulaPuzzle"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerValveInput" layer="triggers" is_active="true" core_name="TriggerValveInput" position="15.021 0.580524 11.4286" rotation="-0.0421331 -0.258573 -0.0112895 0.965006" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerValveInput" layer="triggers" is_active="true" core_name="TriggerValveInput" position="15.021 0.580524 11.4286" rotation="0.0 -0.300706 0.0 0.953717" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="BaseCaldera"/>
 	</instance_mesh>
