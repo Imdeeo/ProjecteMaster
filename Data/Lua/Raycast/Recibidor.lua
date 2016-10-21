@@ -7,7 +7,7 @@ R1TrayL2IsClosed = true
 
 local l_LevelId = "Recibidor"
 
-function R1Door(_Player, _Pos)
+function R1Door(_Player)
 	_Player.m_TargetPosOffset = Vect3f(-1.385, 0.0, -0.82)
 	_Player.m_ForwardCamera = Vect3f(0.0, 0.0, 1.0)
 	_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
@@ -29,7 +29,7 @@ function R1Door(_Player, _Pos)
 	end
 end
 
-function R1Sheets(_Player, _Pos)
+function R1Sheets(_Player)
 	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(0.5, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerSheets", l_LevelId)
@@ -40,7 +40,7 @@ function R1Sheets(_Player, _Pos)
 	end
 end
 
-function R1Canvas(_Player, _Pos)
+function R1Canvas(_Player)
 	_Player.m_TargetYaw = g_PI
 	_Player.m_TargetPosOffset = Vect3f(-1.5, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerCanvas", l_LevelId)
@@ -51,7 +51,7 @@ function R1Canvas(_Player, _Pos)
 	end
 end
 
-function R1TrayR1(_Player, _Pos) --This contains the key
+function R1TrayR1(_Player) --This contains the key
 	_Player.m_TargetYaw = g_PI
 	_Player.m_UpCamera = Vect3f(-0.682049, 0.731307, 0.0)	
 	_Player.m_ForwardCamera = Vect3f(-0.7313, -0.68205, 0)
@@ -78,7 +78,7 @@ function R1TrayR1(_Player, _Pos) --This contains the key
 	end
 end
 
-function R1TrayR2Open(_Player, _Pos)
+function R1TrayR2Open(_Player)
 	_Player.m_UpCamera = Vect3f(-0.69189, 0.722003, 0.0)	
 	_Player.m_ForwardCamera = Vect3f(-0.722003, -0.691890, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(0.974, 0, 0.025)
@@ -97,7 +97,7 @@ function R1TrayR2Open(_Player, _Pos)
 	end
 end
 
-function R1TrayR2Close(_Player, _Pos)
+function R1TrayR2Close(_Player)
 	_Player.m_TargetYaw = g_PI
 	_Player.m_UpCamera = Vect3f(-0.772938, 0.634248, 0.0172184)	
 	_Player.m_ForwardCamera = Vect3f(-0.63435, -0.773049, 0.0)
@@ -116,15 +116,15 @@ function R1TrayR2Close(_Player, _Pos)
 	end
 end
 
-function R1TrayR2(_Player, _Pos)
+function R1TrayR2(_Player)
 	if R1TrayR2IsClosed then
-		R1TrayR2Open(_Player, _Pos)
+		R1TrayR2Open(_Player)
 	else
-		R1TrayR2Close(_Player, _Pos)
+		R1TrayR2Close(_Player)
 	end
 end
 
-function R1TrayL1Open(_Player, _Pos)
+function R1TrayL1Open(_Player)
 	_Player.m_UpCamera = Vect3f(0.69189, 0.722003, 0.0)
 	_Player.m_ForwardCamera = Vect3f(0.722003, -0.691890, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(-0.974, 0, 0.025)
@@ -143,7 +143,7 @@ function R1TrayL1Open(_Player, _Pos)
 	end
 end
 
-function R1TrayL1Close(_Player, _Pos)
+function R1TrayL1Close(_Player)
 	_Player.m_UpCamera = Vect3f(0.772938, 0.634248, 0.0172184)	
 	_Player.m_ForwardCamera = Vect3f(0.63435, -0.773049, 0.0)
 	_Player.m_TargetPosOffset = Vect3f(-0.874, 0, 0.025)
@@ -162,15 +162,15 @@ function R1TrayL1Close(_Player, _Pos)
 	end
 end
 
-function R1TrayL1(_Player, _Pos)
+function R1TrayL1(_Player)
 	if R1TrayL1IsClosed then
-		R1TrayL1Open(_Player, _Pos)
+		R1TrayL1Open(_Player)
 	else
-		R1TrayL1Close(_Player, _Pos)
+		R1TrayL1Close(_Player)
 	end
 end
 
-function R1TrayL2Open(_Player, _Pos)
+function R1TrayL2Open(_Player)
 	_Player.m_TargetYaw = 0.0
 	_Player.m_UpCamera = Vect3f(0.69189, 0.722003, 0.0)	
 	_Player.m_ForwardCamera = Vect3f(0.722003, -0.691890, 0.0)
@@ -191,7 +191,7 @@ function R1TrayL2Open(_Player, _Pos)
 	end
 end
 
-function R1TrayL2Close(_Player, _Pos)
+function R1TrayL2Close(_Player)
 	_Player.m_TargetYaw = 0.0
 	_Player.m_UpCamera = Vect3f(0.772938, 0.634248, 0.0172184)	
 	_Player.m_ForwardCamera = Vect3f(0.63435, -0.773049, 0.0)
@@ -212,15 +212,15 @@ function R1TrayL2Close(_Player, _Pos)
 	end
 end
 
-function R1TrayL2(_Player, _Pos) --This contains the ankh
+function R1TrayL2(_Player) --This contains the ankh
 	if R1TrayL2IsClosed then
-		R1TrayL2Open(_Player, _Pos)
+		R1TrayL2Open(_Player)
 	else
-		R1TrayL2Close(_Player, _Pos)
+		R1TrayL2Close(_Player)
 	end
 end
 
-function R1Ankh(_Player, _Pos)
+function R1Ankh(_Player)
 	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(-1.0, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerAnkh",l_LevelId)

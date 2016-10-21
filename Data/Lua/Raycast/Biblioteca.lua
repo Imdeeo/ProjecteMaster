@@ -52,7 +52,7 @@ function R2TriggerOrganKeyG(_Player, _Owner)
 	R2PushOrganKey("G", _Player)
 end
 
-function R2TriggerPipeOrgan(_Player, _Pos)
+function R2TriggerPipeOrgan(_Player)
 	_Player.m_TargetYaw = g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -1.0)
 	l_Target = GetTriggerPos("TriggerPipeOrgan",l_LevelId)
@@ -70,7 +70,7 @@ function R2TriggerPipeOrgan(_Player, _Pos)
 	end
 end
 
-function R2Artifact(_Player, _Pos)
+function R2Artifact(_Player)
 	_Player.m_TargetYaw = g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.6)
 	l_Target = GetTriggerPos("TriggerArtifact",l_LevelId)
@@ -92,7 +92,7 @@ function R2Artifact(_Player, _Pos)
 	end
 end
 
-function R2ArtifactDoor(_Player, _Pos)
+function R2ArtifactDoor(_Player)
 	_Player.m_TargetYaw = g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.45, 0.0, -0.57)
 	l_Target = GetTriggerPos("TriggerArtifactDoor",l_LevelId)
@@ -112,7 +112,7 @@ function R2ArtifactDoor(_Player, _Pos)
 	end
 end
 
-function R2Clue(_Player, _Pos)
+function R2Clue(_Player)
 	_Player.m_TargetYaw = -g_PI
 	_Player.m_TargetPosOffset = Vect3f(-0.86, 0.0, 0.0)
 	l_Target = GetTriggerPos("TriggerClue",l_LevelId)
@@ -133,7 +133,7 @@ function R2Clue(_Player, _Pos)
 	end
 end
 
-function R2Book(_Player, _Pos)
+function R2Book(_Player)
 	_Player.m_TargetYaw = g_PI/2.0
 	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.86)
 	l_Target = GetTriggerPos("TriggerBook",l_LevelId)
