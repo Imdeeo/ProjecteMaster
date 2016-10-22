@@ -5,6 +5,7 @@
 #include <Windows.h>
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "Math\Quatn.h"
 #include "Math\MathUtils.h"

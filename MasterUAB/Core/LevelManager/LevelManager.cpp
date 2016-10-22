@@ -21,6 +21,8 @@
 
 #include "SceneRender\SceneRendererCommandManager.h"
 
+#include <thread>
+
 CLevelManager::CLevelManager()
 {
 }
@@ -52,6 +54,26 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 	}
 }
 
+void CLevelManager::LoadLevelThread(const std::string &_LevelName)
+{
+	CLevel * l_Level = new CLevel(_LevelName);
+	l_Level->Load();
+	m_LevelsInfo[_LevelName].m_Loaded = true;
+	std::vector<CRenderableObjectsManager*> l_LayerVector = l_Level->GetLayerManager()->GetResourcesVector();
+	for (size_t i = 0; i < l_LayerVector.size(); i++)
+	{
+		std::string  l_LayerName = l_LayerVector[i]->GetName();
+		if (m_LayersMap.find(l_LayerName) == m_LayersMap.end())
+		{
+			m_LayersMap[l_LayerName] = std::vector<TLevelLayers*>();
+		}
+		TLevelLayers* l_LevelLayer = new TLevelLayers();
+		l_LevelLayer->m_Layer = l_LayerVector[i];
+		l_LevelLayer->m_Visible = l_Level->IsVisible();
+		m_LayersMap[l_LayerName].push_back(l_LevelLayer);
+	}
+}
+
 void CLevelManager::LoadLevel(const std::string &_LevelName)
 {
 	if (m_LevelsInfo[_LevelName].m_Loaded)
@@ -60,23 +82,8 @@ void CLevelManager::LoadLevel(const std::string &_LevelName)
 	}
 	else
 	{
-		CLevel * l_Level = new CLevel(_LevelName);
-		AddResource(_LevelName, l_Level);
-		l_Level->Load();
-		m_LevelsInfo[_LevelName].m_Loaded = true;
-		std::vector<CRenderableObjectsManager*> l_LayerVector = l_Level->GetLayerManager()->GetResourcesVector();
-		for (size_t i = 0; i < l_LayerVector.size(); i++)
-		{
-			std::string  l_LayerName = l_LayerVector[i]->GetName();
-			if (m_LayersMap.find(l_LayerName) == m_LayersMap.end())
-			{
-				m_LayersMap[l_LayerName] = std::vector<TLevelLayers*>();
-			}
-			TLevelLayers* l_LevelLayer = new TLevelLayers();
-			l_LevelLayer->m_Layer = l_LayerVector[i];
-			l_LevelLayer->m_Visible = l_Level->IsVisible();
-			m_LayersMap[l_LayerName].push_back(l_LevelLayer);
-		}
+		std::thread t(&CLevelManager::LoadLevelThread,this,_LevelName);
+		
 	}
 }
 

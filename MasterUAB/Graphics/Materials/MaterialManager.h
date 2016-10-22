@@ -5,17 +5,19 @@
 #include "Utils\TemplatedMapManager.h"
 #include "Materials\Material.h"
 
+class CLevel;
+
 class CMaterialManager : public CTemplatedLevelMapManager<CMaterial>
 {
 private:
 	std::string m_LevelMaterialsFilename;
 	std::string m_DefaultMaterialsFilename;
 	std::string m_LevelId;
-	void LoadMaterialsFromFile(const std::string &Filename, const std::string &_LevelId, bool Update = false, std::map<std::string, std::string> *UpdatedNames = nullptr);
+	void LoadMaterialsFromFile(const std::string &Filename, CLevel *_Level, bool Update = false, std::map<std::string, std::string> *UpdatedNames = nullptr);
 public:
 	CMaterialManager();
 	virtual ~CMaterialManager();
-	void Load(const std::string &Filename, const std::string &_LevelId, const std::string &DefaultsFileName = "");
+	void Load(const std::string &Filename, CLevel *_Level, const std::string &DefaultsFileName = "");
 	void Reload();
 	void Save();
 };
