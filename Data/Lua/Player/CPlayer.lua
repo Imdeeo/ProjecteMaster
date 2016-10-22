@@ -15,7 +15,9 @@ dofile("Data\\Lua\\Player\\PlayerStateClimbingDown.lua")
 dofile("Data\\Lua\\Player\\PlayerStateJumping.lua")
 dofile("Data\\Lua\\Player\\PlayerStateFalling.lua")
 dofile("Data\\Lua\\Player\\PlayerStateInteracting.lua")
-dofile("Data\\Lua\\Player\\PlayerStateSinging.lua")
+dofile("Data\\Lua\\Player\\PlayerStateSingingStart.lua")
+dofile("Data\\Lua\\Player\\PlayerStateSingingLoop.lua")
+dofile("Data\\Lua\\Player\\PlayerStateSingingEnd.lua")
 dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 dofile("Data\\Lua\\Player\\PlayerStatePuzzle.lua")
 
@@ -157,7 +159,6 @@ class 'CPlayer' (CLUAComponent)
 		self.m_TimerVortex = 0
 		
 		self.m_IsSinging = false
-		self.m_IsWindedUp = false
 		self.m_IsCorrecting = false
 		self.m_IsClimbing = false
 		self.m_ClimbingUp = false
@@ -195,7 +196,6 @@ class 'CPlayer' (CLUAComponent)
 		self.m_OrganKeyCount = 1
 		self.m_OrganKeyOrder = {"A", "G"}
 		--{"A", "B", "C", "D", "E", "F", "G"}
-		--table:setn(self.m_OrganKeyOrder, 2)
 		
 		self.m_CurrentAend = nil
 		self.m_Aends = {}
@@ -210,8 +210,6 @@ class 'CPlayer' (CLUAComponent)
 				end
 				l_Aend = l_Aend:get_next()
 			end
-		else
-			----utils_log("Animation ends xml not correctly loaded.")
 		end
 		
 		self.m_StateMachine = StateMachine.create()
@@ -406,7 +404,7 @@ class 'CPlayer' (CLUAComponent)
 		IdleState:add_condition(IdleToJumpingCondition, "Jumping")
 		IdleState:add_condition(ANYToFallingCondition, "Falling")
 		IdleState:add_condition(ANYToCorrectingCondition, "Correcting")
-		IdleState:add_condition(ANYToSingingCondition, "Singing")
+		IdleState:add_condition(ANYToSingingStartCondition, "SingingStart")
 		IdleState:add_condition(ANYToDeadCondition, "Dead")
 		IdleState:add_condition(ANYToClimbingCondition, "ClimbingStart")
 		
@@ -419,7 +417,7 @@ class 'CPlayer' (CLUAComponent)
 		MovingState:add_condition(MovingToJumpingCondition, "Jumping")
 		MovingState:add_condition(ANYToFallingCondition, "Falling")
 		MovingState:add_condition(ANYToCorrectingCondition, "Correcting")
-		MovingState:add_condition(ANYToSingingCondition, "Singing")
+		MovingState:add_condition(ANYToSingingStartCondition, "SingingStart")
 		MovingState:add_condition(ANYToDeadCondition, "Dead")
 		MovingState:add_condition(ANYToClimbingCondition, "ClimbingStart")
 		
@@ -486,12 +484,24 @@ class 'CPlayer' (CLUAComponent)
 		InteractingState:add_condition(InteractingToFallingCondition, "Falling")
 		InteractingState:add_condition(ANYToDeadCondition, "Dead")
 		
-		SingingState = State.create(SingingUpdate)
-		SingingState:set_do_first_function(SingingFirst)
-		SingingState:set_do_end_function(SingingEnd)
-		SingingState:add_condition(SingingToFallingCondition, "Falling")
-		SingingState:add_condition(SingingToItselfCondition, "Singing")
-		SingingState:add_condition(ANYToDeadCondition, "Dead")
+		SingingStartState = State.create(SingingStartUpdate)
+		SingingStartState:set_do_first_function(SingingStartFirst)
+		SingingStartState:set_do_end_function(SingingStartEnd)
+		SingingStartState:add_condition(SingingStartToSingingLoopCondition, "SingingLoop")
+		SingingStartState:add_condition(SingingStartToSingingEndCondition, "SingingEnd")
+		SingingStartState:add_condition(ANYToDeadCondition, "Dead")
+		
+		SingingLoopState = State.create(SingingLoopUpdate)
+		SingingLoopState:set_do_first_function(SingingLoopFirst)
+		SingingLoopState:set_do_end_function(SingingLoopEnd)
+		SingingLoopState:add_condition(SingingLoopToSingingEndCondition, "SingingEnd")
+		SingingLoopState:add_condition(ANYToDeadCondition, "Dead")
+		
+		SingingEndState = State.create(SingingEndUpdate)
+		SingingEndState:set_do_first_function(SingingEndFirst)
+		SingingEndState:set_do_end_function(SingingEndEnd)
+		SingingEndState:add_condition(SingingEndToFallingCondition, "Falling")
+		SingingEndState:add_condition(ANYToDeadCondition, "Dead")
 		
 		DeadState = State.create(DeadUpdate)
 		DeadState:set_do_first_function(DeadFirst)
@@ -514,7 +524,9 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:add_state("Jumping", JumpingState)
 		self.m_StateMachine:add_state("Falling", FallingState)
 		self.m_StateMachine:add_state("Interacting", InteractingState)
-		self.m_StateMachine:add_state("Singing", SingingState)
+		self.m_StateMachine:add_state("SingingStart", SingingStartState)
+		self.m_StateMachine:add_state("SingingLoop", SingingLoopState)
+		self.m_StateMachine:add_state("SingingEnd", SingingEndState)
 		self.m_StateMachine:add_state("Dead", DeadState)
 		self.m_StateMachine:add_state("Puzzle", PuzzleState)
 		
