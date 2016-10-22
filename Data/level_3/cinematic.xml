@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cinematics>
+	<cinematic name="ResolveValve" duration="1.16667" cycle="false">
+		<cinematic_object resource="CajaEngranaje" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.5" pos="0.0 0.0 -1.23284" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.833333" pos="0.0 0.0 -1.56031" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.16667" pos="0.0 0.0 -1.64379" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
 	<cinematic name="CrossValveDoor" duration="3.0" cycle="false">
 		<cinematic_object resource="PuertaTaller" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>

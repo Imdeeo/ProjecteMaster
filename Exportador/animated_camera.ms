@@ -110,7 +110,7 @@ rollout CamAnim "Camera Animation" width:160 height:134
 			)
 			cameraFieldOfView = at time j Cam.fov
 			verticalizeFov &cameraFieldOfView
-			deg2rad &cameraFieldOfView			
+			deg2rad &cameraFieldOfView
 			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
 			j = at time j trackbar.getNextKeyTime()
 		) while j < CameraKeyEnd.value
@@ -152,7 +152,7 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		)
 		cameraFieldOfView = at time j Cam.fov
 		verticalizeFov &cameraFieldOfView
-		deg2rad &cameraFieldOfView			
+		deg2rad &cameraFieldOfView
 		format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
 			
 		format "</camera_key_controller>\n" to:cameraFile
