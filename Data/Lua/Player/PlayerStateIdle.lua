@@ -82,7 +82,9 @@ end
 
 function IdleEnd(args)
 	local l_Owner = args["owner"]
+	local l_Player = args["self"]
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
+	g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel):get_layer_manager():get_layer("interactuable_objects"):destroy(false)
 end
 
 function IdleToMovingCondition(args)
