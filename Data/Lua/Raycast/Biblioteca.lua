@@ -66,7 +66,7 @@ function R2TriggerPipeOrgan(_Player)
 		_Player.m_IsInteracting = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = true
-		_Player.m_PhysXManager:disable_trigger("TriggerPipeOrgan")
+		_Player.m_PhysXManager:disable_physics("TriggerPipeOrgan")
 	end
 end
 
@@ -88,7 +88,7 @@ function R2Artifact(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
-		--_Player.m_PhysXManager:disable_trigger("TriggerArtifact")
+		--_Player.m_PhysXManager:disable_physics("TriggerArtifact")
 	end
 end
 
@@ -150,6 +150,6 @@ function R2Book(_Player)
 		_Player.m_CinematicManager:get_resource("fonotelefote"):play() -- launch projector cinematic
 		g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_light_manager():get_resource("LuzProyector"):set_enabled(true) -- activate lights
 		-- activate particles
-		--_Player.m_PhysXManager:disable_trigger("TriggerBook")
+		--_Player.m_PhysXManager:disable_physics("TriggerBook")
 	end
 end

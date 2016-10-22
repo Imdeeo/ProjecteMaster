@@ -786,7 +786,12 @@ void CPhysXManager::EnableTrigger(const std::string _name)
 	ChangeRigidDynamicActorPhysxGroup(_name, "2");
 }
 
-void CPhysXManager::DisableTrigger(const std::string _name)
+void CPhysXManager::EnableObject(const std::string _name)
+{
+	ChangeRigidDynamicActorPhysxGroup(_name, "1");
+}
+
+void CPhysXManager::DisablePhysics(const std::string _name)
 {
 	ChangeRigidDynamicActorPhysxGroup(_name, "9");
 }
