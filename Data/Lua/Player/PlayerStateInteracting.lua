@@ -11,7 +11,7 @@ function InteractingFirst(args)
 	l_Player.m_Timer = 0.0
 	
 	if l_Player.m_CameraAnimation ~= nil then
-		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, true)
+		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, false)
 	end
 end
 

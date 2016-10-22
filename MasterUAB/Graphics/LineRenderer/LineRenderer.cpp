@@ -69,21 +69,27 @@ void CLineRenderer::Save(FILE* _File)
 
 void CLineRenderer::Update(float ElapsedTime)
 {
+	
+}
+
+void CLineRenderer::Render(CRenderManager *RM)
+{
+	RM->GetContextManager()->SetWorldMatrix(GetTransform());
 	Vect3f l_Dir = m_PosFinal - m_PosInicial;
 	Vect3f l_PosI, l_PosF;
 	float sizeI;
 	float sizeF;
-	m_LinesCount = m_NumPuntos + 2;
+	m_LinesCount = m_NumPuntos + 1;
 	float l_Distance = l_Dir.Length() / m_LinesCount;
 	l_Dir.Normalize();
 
 	l_PosF = m_PosInicial;
 	//l_PosF.y = UABEngine.GetRandomValue(m_PosInicial.y + m_OffsetY, m_PosInicial.y - m_OffsetY);
 	sizeF = UABEngine.GetRandomValue(m_Size + m_SizeOffset, m_Size - m_SizeOffset);
-	for (int i = 0; i < m_LinesCount-1; ++i)
+	for (int i = 0; i < m_LinesCount - 1; ++i)
 	{
 		l_PosI = l_PosF;
-		l_PosF = m_PosInicial + l_Dir*l_Distance*(i+1);
+		l_PosF = m_PosInicial + l_Dir*l_Distance*(i + 1);
 		l_PosF.y = UABEngine.GetRandomValue(l_PosF.y + m_OffsetY, l_PosF.y - m_OffsetY);
 		sizeI = sizeF;
 		sizeF = UABEngine.GetRandomValue(m_Size + m_SizeOffset, m_Size - m_SizeOffset);
@@ -91,19 +97,15 @@ void CLineRenderer::Update(float ElapsedTime)
 		m_LineRenderableData[i].UV = Vect2f(l_PosF.y, l_PosF.z);
 		m_LineRenderableData[i].UV2 = Vect2f(sizeI, sizeF);
 		m_LineRenderableData[i].Color = m_Color;
-	}	
-	m_LineRenderableData[m_LinesCount-1].Position = Vect4f(l_PosF, m_PosFinal.x);
+	}
+	m_LineRenderableData[m_LinesCount - 1].Position = Vect4f(l_PosF, m_PosFinal.x);
 	//m_LineRenderableData[m_LinesCount-1].UV = Vect2f(UABEngine.GetRandomValue(m_PosFinal.y + m_OffsetY, m_PosFinal.y - m_OffsetY), m_PosFinal.z);
-	m_LineRenderableData[m_LinesCount-1].UV = Vect2f(m_PosFinal.y, m_PosFinal.z);
+	m_LineRenderableData[m_LinesCount - 1].UV = Vect2f(m_PosFinal.y, m_PosFinal.z);
 	m_LineRenderableData[m_LinesCount - 1].UV2 = Vect2f(sizeF, UABEngine.GetRandomValue(m_Size + m_SizeOffset, m_Size - m_SizeOffset));
-	m_LineRenderableData[m_LinesCount-1].Color = m_Color;
-}
-
-void CLineRenderer::Render(CRenderManager *RM)
-{
-	RM->GetContextManager()->SetWorldMatrix(GetTransform());
-	CEffectTechnique * l_ET = m_Material->GetRenderableObjectTechnique()->GetEffectTechnique();
+	m_LineRenderableData[m_LinesCount - 1].Color = m_Color;
+	
 	m_Material->Apply();
+	CEffectTechnique * l_ET = m_Material->GetRenderableObjectTechnique()->GetEffectTechnique();
 	CEffectManager::SetSceneConstants(l_ET);
 	m_RenderableVertex->UpdateVertexs(m_LineRenderableData, MAX_PARTICLE_PER_INSTANCE);
 	m_RenderableVertex->Render(RM, l_ET, CEffectManager::GetRawData(), m_LinesCount); 
