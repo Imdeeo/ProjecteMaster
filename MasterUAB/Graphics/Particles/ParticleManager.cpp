@@ -11,9 +11,10 @@ CParticleManager::~CParticleManager(void)
 }
 
 
-void CParticleManager::Load(const std::string &Filename, const std::string &_LevelId)
+void CParticleManager::Load(const std::string &Filename, CLevel *_Level)
 {
 	m_Filename = Filename;
+	m_LevelName = _Level->GetName();
 
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLError l_Error = doc.LoadFile(Filename.c_str());
@@ -28,9 +29,9 @@ void CParticleManager::Load(const std::string &Filename, const std::string &_Lev
 			l_Element = l_Element->FirstChildElement();
 			while (l_Element != NULL)
 			{
-				CParticleSystemType *l_ParticleSystemType = new CParticleSystemType(l_Element,_LevelId);
+				CParticleSystemType *l_ParticleSystemType = new CParticleSystemType(l_Element, m_LevelName);
 				//if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType, "CParticleManager"))
-				if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType,_LevelId))
+				if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType, m_LevelName))
 				{
 					CHECKED_DELETE(l_ParticleSystemType);
 				}
@@ -43,7 +44,7 @@ void CParticleManager::Load(const std::string &Filename, const std::string &_Lev
 void CParticleManager::Reload()
 {
 	Destroy();
-	Load(m_Filename, UABEngine.GetLevelManager()->GetActualLevel());
+	Load(m_Filename, UABEngine.GetLevelManager()->GetResource(m_LevelName));
 }
 
 void CParticleManager::Save()

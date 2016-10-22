@@ -74,8 +74,8 @@ CLevel::~CLevel()
 void CLevel::Load()
 {
 	std::string l_LevelDirectory = UABEngine.GetLevelManager()->GetLevelInfo(m_Name).m_Directory;
-	m_MaterialManager->Load(l_LevelDirectory + "\\materials.xml", "", m_Name);
-	m_ParticleManager->Load(l_LevelDirectory + "\\particles.xml", m_Name);
+	m_MaterialManager->Load(l_LevelDirectory + "\\materials.xml",  this, "");
+	m_ParticleManager->Load(l_LevelDirectory + "\\particles.xml", this);
 	m_BilboardManager->Load(l_LevelDirectory + "\\particles.xml", m_Name);
 	m_ManchasManager->Load(l_LevelDirectory + "\\cordura.xml", m_Name);
 	m_StaticMeshManager->Load(l_LevelDirectory + "\\static_meshes.xml", m_Name);
@@ -90,6 +90,7 @@ void CLevel::Load()
 	l_SceneRendererCommandManager->Load(l_LevelDirectory + "\\scene_renderer_commands.xml", m_Name);
 	UABEngine.GetLevelManager()->AddSceneCommandsManager(m_Name,l_SceneRendererCommandManager);
 	UABEngine.GetScriptManager()->RunCode("levelMainLua(\"" + l_LevelDirectoryChangedSlashes + "\",\"" + m_Name + "\")");
+	UABEngine.GetLevelManager()->AddResource(GetName(), this);
 }
 
 void CLevel::Reload()
