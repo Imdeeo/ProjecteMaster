@@ -453,6 +453,25 @@ public:
 		L_PutGroupToShape(shape, m_Groups[_group]);
 	}
 
+	void ChangeRigidStaticActorPhysxGroup(const std::string &_ActorName, const std::string &_group, const std::string _Material = "FisicasAux"){
+		physx::PxRigidStatic* actor;
+		physx::PxShape* oldShape;
+		physx::PxBoxGeometry* geometry = new physx::PxBoxGeometry();
+		physx::PxU32 buffer;
+		actor = (physx::PxRigidStatic*)m_Actors[m_ActorIndexs[_ActorName]];
+		
+		actor->getShapes(&oldShape, 1);
+		oldShape->getBoxGeometry(*geometry);
+		physx::PxShape* newShape = m_PhysX->createShape(*geometry, *m_Materials[_Material], true);
+		newShape->setFlags(oldShape->getFlags());
+		L_PutGroupToShape(newShape, m_Groups[_group]);
+		actor->attachShape(*newShape);
+		
+		
+		actor->detachShape(*oldShape);
+		
+	}
+
 	bool LoadPhysx(const std::string &Filename)
 	{
 		m_Filename = Filename;
@@ -781,19 +800,19 @@ void CPhysXManager::CreateTrigger(const std::string _name, physx::PxShape* shape
 	shape->release();
 }
 
-void CPhysXManager::EnableTrigger(const std::string _name)
+void CPhysXManager::EnableTrigger(const std::string _name, const std::string _material)
 {
-	ChangeRigidDynamicActorPhysxGroup(_name, "2");
+	ChangeRigidStaticActorPhysxGroup(_name, "Triggers", _material);
 }
 
-void CPhysXManager::EnableObject(const std::string _name)
+void CPhysXManager::EnableObject(const std::string _name, const std::string _material)
 {
-	ChangeRigidDynamicActorPhysxGroup(_name, "1");
+	ChangeRigidStaticActorPhysxGroup(_name, "Objects", _material);
 }
 
-void CPhysXManager::DisablePhysics(const std::string _name)
+void CPhysXManager::DisablePhysics(const std::string _name, const std::string _material)
 {
-	ChangeRigidDynamicActorPhysxGroup(_name, "9");
+	ChangeRigidStaticActorPhysxGroup(_name, "NoCollision", _material);
 }
 
 void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors,bool isActive)
