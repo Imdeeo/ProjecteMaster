@@ -118,7 +118,7 @@ void CUABEngine::Init()
 {	
 	m_RenderManager->Init();
 	m_LoadScreenManager = new CLoadScreenManager("Data\\load_screen.xml");
-	std::thread t(&CLoadScreenManager::Load, m_LoadScreenManager);// , CLoadScreenManager("Data\\load_screen.xml"));
+	std::thread t(&CLoadScreenManager::Load, m_LoadScreenManager);
 
 	m_SoundManager->SetPath("Data\\Sounds\\");
 	m_SoundManager->Init();
