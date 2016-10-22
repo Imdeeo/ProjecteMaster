@@ -1,30 +1,49 @@
-function SingingFirst(args)
+function SingingStartFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_IsSinging = true
+	l_Owner:execute_action(27, 0.1, 0.1, 1.0, true)
+	l_Player.m_Timer = 0.0
+	l_Player.m_CameraController:lock()
+	l_Player.m_InitialCameraRotation = l_Player.m_CameraController:get_rotation()
+	l_Player.m_TimerRotation = 0.0
 	
-	if l_Player.m_IsWindedUp then
-		l_Owner:blend_cycle(1,1.0,0.1)
-	else
-		l_Owner:execute_action(2, 0.1, 0.1, 1.0, true)
-	end
-	
-	m_Timer = 0.0
+	local l_Up = Vect3f(0.0, 1.0, 0.0)
+	local l_Fwd = Vect3f(0.0, 0.0, 0.0)
+	l_Fwd = l_Player.m_CameraController:get_forward()
+	l_Fwd.y = 0.0
+	l_Fwd:normalize(1)
+	l_Fwd.y = -1.1
+	l_Fwd:normalize(1)
+	local quat_to_turn = Quatf()
+	quat_to_turn:set_from_fwd_up(l_Fwd, l_Up)
+	l_Player.m_FinalCameraRotation = quat_to_turn
 end
 
-function SingingUpdate(args, _ElapsedTime)
+function SingingStartUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
-	
-	m_Timer = m_Timer + _ElapsedTime
-	
-	if m_Timer >= 2.5 and not l_Player.m_IsWindedUp then
-		l_Player.m_IsWindedUp = true
-	end
+	utils_log("pene")
+	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	
 	if not l_Player.m_InputManager:is_action_active("Sing") then
 		l_Player.m_IsSinging = false
 	end
+	
+		--// Rotation
+	l_Player.m_TimerRotation = l_Player.m_TimerRotation + _ElapsedTime
+	local l_PercentRotation = l_Player.m_TimerRotation 
+	if l_PercentRotation > 1.0 then
+		l_PercentRotation = 1.0
+	end
+	
+	if l_Player.m_TimerRotation <= 1.0 then
+		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, l_PercentRotation)
+		l_Player.m_CameraController:set_rotation(target_quat)
+	else
+		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, 1)
+		l_Player.m_CameraController:set_rotation(target_quat)
+	end	
 	
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
@@ -61,28 +80,23 @@ function SingingUpdate(args, _ElapsedTime)
 	end
 end
 
-function SingingEnd(args)
+function SingingStartEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
-	l_Player.m_CameraController:unlock()
-	if l_Player.m_IsSinging then
-		l_Owner:remove_action(l_Owner:get_actual_action_animation())
-	else
-		l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
-	end
+	l_Owner:remove_action(l_Owner:get_actual_action_animation())
 end
 
-function SingingToFallingCondition(args)
+function SingingStartToSingingLoopCondition(args)
 	local l_Player = args["self"]
-	return not l_Player.m_IsSinging
+	return l_Player.m_Timer >= 1.0
 end
 
-function SingingToItselfCondition(args)
+function SingingStartToSingingEndCondition(args)
 	local l_Player = args["self"]
-	return l_Player.m_IsWindedUp
+	return not l_Player.m_InputManager:is_action_active("Sing")
 end
 
-function ANYToSingingCondition(args)
+function ANYToSingingStartCondition(args)
 	local l_Player = args["self"]
 	return l_Player.m_InputManager:is_action_active("Sing")
 end

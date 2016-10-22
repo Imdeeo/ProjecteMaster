@@ -1,44 +1,23 @@
-function InteractingFirst(args)
+function SingingEndFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	
-	l_Owner:execute_action(l_Player.m_InteractingAnimation, 0.1, 0.1, 1.0, true)
-	
-	if l_Player.m_InteractingCinematic ~= nil then
-		l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):play()
-	end
-	
+	l_Owner:execute_action(29, 0.1, 0.1, 1.0, true)
 	l_Player.m_Timer = 0.0
-	
-	if l_Player.m_CameraAnimation ~= nil then
-		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, false)
-	end
+	--Launch sound
 end
 
-function InteractingUpdate(args, _ElapsedTime)
+function SingingEndUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	
 	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	
-	--// Ends the state after the animation duration has passed
-	if l_Player.m_InteractingCinematic ~= nil then
-		l_Player.m_IsInteracting = not l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):is_finished()
-	else
-		l_Player.m_IsInteracting = (l_Player.m_Timer < l_Player.m_AnimationTime)
-	end
-	
-	--// Change old to new item
-	if l_Player.m_Timer >= l_Player.m_ItemTime and l_Player.m_ItemTime >= 0.0 then
-		l_Player.m_ItemName = l_Player.m_NewItemName
-		l_Player.m_NewItemName = ""
-		if l_Player.m_ItemName ~= "" then
-			l_Player.m_Item = CUABEngine.get_instance():get_level_manager():get_level(l_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource(l_Player.m_ItemName)
-		else
-			l_Player.m_Item = nil
-		end
-		l_Player.m_ItemTime = l_Player.m_ItemDropTime
-	end
+	--// Rotate player to match camera
+	l_RotationXZ = Quatf()
+	l_RotationY = Quatf()
+	l_Rotation = l_Player.m_CameraController:get_rotation()
+	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
+	l_Owner:set_rotation(l_RotationY)
 	
 	--// If player has an item, move it.
 	if l_Player.m_Item ~= nil then
@@ -68,24 +47,15 @@ function InteractingUpdate(args, _ElapsedTime)
 	end
 end
 
-function InteractingEnd(args)
+function SingingEndEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
-	
-	l_Player:ClearTarget()
-	l_Player:ClearStates()
-	l_Player:ClearAend(l_Owner)
-	l_Player:ClearCinematic()
-	l_Player:ClearCamera()
-	
-	l_Player.m_InteractingAnimation = 0
-	l_Player.m_AnimationTime = 0
+	l_Player.m_IsSinging = false
 	l_Player.m_CameraController:unlock()
-	
 	l_Owner:remove_action(l_Owner:get_actual_action_animation())
 end
 
-function InteractingToFallingCondition(args)
+function SingingEndToFallingCondition(args)
 	local l_Player = args["self"]
-	return not l_Player.m_IsInteracting
+	return l_Player.m_Timer >= 3.0
 end

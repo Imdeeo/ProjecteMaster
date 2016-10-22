@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cameras>
-	<camera name="MainCamera" type="fps" target="Jaheem" layer="solid" offset="1.8"/>
-	<camera name="DebugCamera" type="spherical" distance="50"/>
-	<camera name="PickValve" total_time="7.33333" type="key" undefined="true" pos="-21.7109 16.0213 0.811474" filename="Data\level_3\cameras\PickValve.xml"/>
-	<camera name="InputValve" total_time="6.66667" type="key" undefined="true" pos="-15.3401 10.8491 0.811474" filename="Data\level_3\cameras\InputValve.xml"/>
+	<camera name="PickValve" total_time="7.33333" type="key" undefined="true" pos="0.0 -0.1 1.8" filename="Data\level_3\cameras\PickValve.xml"/>
+	<camera name="InputValve" total_time="6.66667" type="key" undefined="true" pos="0.0 -0.1 1.8" filename="Data\level_3\cameras\InputValve.xml"/>
+	<camera name="CrossValveDoor" total_time="3.0" type="key" undefined="true" pos="0.0 -0.1 1.8" filename="Data\level_3\cameras\CrossValveDoor.xml"/>
 </cameras>

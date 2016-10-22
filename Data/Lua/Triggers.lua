@@ -4,7 +4,7 @@ function OnEnterStairs(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		local l_Player = m_CharacterManager.m_Player[1]
 		if not l_Player.m_IsClimbing and l_Player.m_Item == nil then
-			l_Player.m_TargetLookOffset = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
+			l_Player.m_ForwardCamera = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
 			l_Player.m_TargetPosOffset = Vect3f(0.4, 0.0, 0.4)
 			l_Player.m_InteractingCinematic = nil
 			l_Player.m_CameraAnimation = nil
@@ -20,8 +20,8 @@ function OnExitStairs(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 	local l_Player = m_CharacterManager.m_Player[1]
 		if not l_Player.m_IsClimbing then
-			ClearPlayerTarget(l_Player)
-			ClearPlayerStates(l_Player)
+			l_Player:ClearTarget()
+			l_Player:ClearStates()
 		end
 	end
 end

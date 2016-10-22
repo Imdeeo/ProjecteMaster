@@ -233,11 +233,11 @@ bool CInstanceMesh::GetInsideFrustum()
 		m_TransformMatrix = m_AnimatedScaleMatrix * m_AnimatedRotationMatrix * m_AnimatedTranslationMatrix * m_TransformMatrix;
 		
 		Vect3f l_Position = m_TransformMatrix.GetPos();
-		return m_Frustum->SphereVisible(l_Position, m_StaticMesh->GetBoundingSphereRadius());
+		return m_Frustum->SphereVisible(l_Position + m_StaticMesh->GetBoundingSphereCenter(), m_StaticMesh->GetBoundingSphereRadius());
 	}
 	else
 	{
-		return m_Frustum->SphereVisible(m_Position, m_StaticMesh->GetBoundingSphereRadius());
+		return m_Frustum->SphereVisible(m_Position + m_StaticMesh->GetBoundingSphereCenter(), m_StaticMesh->GetBoundingSphereRadius());
 	}
 }
 
