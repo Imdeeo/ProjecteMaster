@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <materials>
-	<material name="TeslaMaterial" renderable_object_technique="line_renderer">
-		<texture type="diffuse" filename="Data\level_3\Textures\rayobeam.png"/>
-	</material>
 	<material name="20 - Default" renderable_object_technique="skybox">
 		<texture type="reflection" filename="Data\level_0\Textures\KGSkyBox2.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
@@ -449,7 +446,7 @@
 		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 0.556863 0.043137 0.623529" description=""/>
 	</material>
-	<material name="SM_Caldera_UnwrapVarios" renderable_object_technique="radiosity_bump_glossiness">
+	<material name="SM_Caldera_UnwrapVarios" renderable_object_technique="radiosity_bump_metalnessmap">
 		<texture type="diffuse" filename="Data\level_3\Textures\DetallesCaldera.dds"/>
 		<texture type="lightmap" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_X.dds"/>
 		<texture type="normal" filename="Data\level_3\Textures\DetallesCaldera_NRM.dds"/>
@@ -457,14 +454,15 @@
 		<texture type="lightmap3" filename="Data\level_3\Textures\SalaMaquinasCalderaTanquesAgua_Z.dds"/>
 		<texture type="glossiness" filename="Data\level_3\Textures\DetallesCaldera_GLOSS.dds"/>
 		<texture type="reflection" filename="Data\level_3\Textures\CubemapSinCaldera.dds"/>
+		<texture type="specular" filename="Data\level_3\Textures\DetallesCaldera_METAL.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="glossiness" value="70.000038" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="reflectivity" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="glossiness" value="50.000057" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.080000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
-		<parameter type="float" name="metalness" value="0.900000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
 	</material>
 	<material name="SM_Caldera_Valvulas" renderable_object_technique="radiosity_bump_glossiness">
@@ -587,9 +585,9 @@
 		<texture type="reflection" filename="Data\level_3\Textures\CubemapCintas.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="glossiness" value="50.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="reflectivity" value="0.700000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="0.600000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="glossiness" value="80.000015" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.250000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
@@ -1499,6 +1497,9 @@
 		<parameter type="float" name="enabled" value="1.000000" description=""/>
 		<parameter type="float" name="ssr_opacity" value="0.300000" description="min=0.0 max=1.0 step=0.1"/>
 		<parameter type="float" name="ssr_offset_screen" value="0.000000" description="min=0.0 max=1.0 step=0.02"/>
+	</material>
+	<material name="TeslaMaterial" renderable_object_technique="line_renderer">
+		<texture type="diffuse" filename="Data\Particles\rayobeam.png"/>
 	</material>
 	<material name="VidrioCaldera" renderable_object_technique="radiosity_glossiness">
 		<texture type="diffuse" filename="Data\level_3\Textures\VentanaOpaca.dds"/>

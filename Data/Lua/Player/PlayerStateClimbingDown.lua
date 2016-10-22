@@ -17,7 +17,7 @@ function ClimbingDownUpdate(args, _ElapsedTime)
 	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	
 	--// Move player vertically
-	l_PlayerDisplacement.y = l_PlayerDisplacement.y + (_ElapsedTime * (-144.0))
+	l_PlayerDisplacement.y = l_PlayerDisplacement.y + (_ElapsedTime * (-120.0))
 	
 	--// Move the character controller
 	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
@@ -43,8 +43,8 @@ function ClimbingDownEnd(args)
 	local l_Player = args["self"]
 	l_Player.m_ClimbingDown = false
 	if not l_Player.m_IsClimbing and not l_Player.m_IsInteracting then
-		ClearPlayerTarget(l_Player)
-		ClearPlayerStates(l_Player)
+		l_Player:ClearTarget()
+		l_Player:ClearStates()
 		l_Player.m_CameraController:unlock()
 	end
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.3)

@@ -18,4 +18,5 @@
 		<param distance="5.0" time="1.0" sanity_amount="-3.0"/>
 		<param distance="2.0" time="0.5" sanity_amount="0.0"/>
 	</enemy>
+	<light name="fuego_chimenea_light" layer="particles" renderable_object="FuegoChimenea"/>
 </characters>
