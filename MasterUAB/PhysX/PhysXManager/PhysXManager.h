@@ -89,6 +89,7 @@ public:
 	
 	virtual void CreateCharacterController(const std::string _name, float _height, float _radius, float _density, Vect3f _position, const std::string _MaterialName, std::string _group) = 0;
 	virtual void ChangeRigidDynamicActorPhysxGroup(const std::string &_ActorName, const std::string &_group) = 0;
+	virtual void ChangeRigidStaticActorPhysxGroup(const std::string &_ActorName, const std::string &_group, const std::string _Material = "FisicasAux") = 0;
 
 	void CharacterControllerMove(std::string _name, Vect3f _movement, float _elapsedTime);
 	void CharacterControllerWarp(std::string _name, Vect3f _movement);
@@ -106,9 +107,9 @@ public:
 	CEmptyPointerClass* GetCharacterControllersPositionZ(const std::string _name);
 	void CPhysXManager::SetCharacterControllersHeight(const std::string _name, float _value);
 
-	void EnableTrigger(const std::string _name);
-	void EnableObject(const std::string _name);
-	void DisablePhysics(const std::string _name);
+	void EnableTrigger(const std::string _name, const std::string _material);
+	void EnableObject(const std::string _name, const std::string _material);
+	void DisablePhysics(const std::string _name, const std::string _material);
 
 	void ChangeActorName(const std::string &_ActorName, const std::string _NewActorName);
 

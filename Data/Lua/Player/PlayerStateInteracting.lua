@@ -1,7 +1,6 @@
 function InteractingFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	
 	l_Owner:execute_action(l_Player.m_InteractingAnimation, 0.1, 0.1, 1.0, true)
 	
 	if l_Player.m_InteractingCinematic ~= nil then
@@ -11,7 +10,7 @@ function InteractingFirst(args)
 	l_Player.m_Timer = 0.0
 	
 	if l_Player.m_CameraAnimation ~= nil then
-		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, false)
+		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, true)
 	end
 end
 
@@ -71,7 +70,6 @@ end
 function InteractingEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
-	
 	l_Player:ClearTarget()
 	l_Player:ClearStates()
 	l_Player:ClearAend(l_Owner)
