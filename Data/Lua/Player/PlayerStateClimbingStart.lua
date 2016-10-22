@@ -7,6 +7,12 @@ function ClimbingStartFirst(args)
 	l_Owner:blend_cycle(1,1.0,0.1)
 	l_Player.m_Timer = 0.0
 	l_Player.m_AnimationTime = 0.6666667
+	l_Player.m_InitialCameraRotation = l_Player.m_CameraController:get_rotation()
+	
+	local l_Up = Vect3f(0.0, 1.0, 0.0)
+	local quat_to_turn = Quatf()
+	quat_to_turn:set_from_fwd_up(l_Player.m_ForwardCamera, l_Up)
+	l_Player.m_FinalCameraRotation = quat_to_turn
 end
 
 function ClimbingStartUpdate(args, _ElapsedTime)
@@ -26,20 +32,18 @@ function ClimbingStartUpdate(args, _ElapsedTime)
 	end
 	
 		--// Rotation
-	local l_CameraDirection = l_Player.m_CameraController:get_forward()
-	l_CameraDirection.y = 0.0
-	l_CameraDirection:normalize(1)
-	local l_Off = l_Player.m_TargetLookOffset
-	local l_Yaw = l_CameraDirection:get_angle_with(l_Off)
-	
-	local l_OriginYaw = math.atan2(l_CameraDirection.z, l_CameraDirection.x)
-	if l_OriginYaw > -2.36 and l_OriginYaw < 0.0 then
-		l_Yaw = l_Yaw * (-1.0)
+	local l_PercentRotation = l_Player.m_Timer / l_Player.m_AnimationTime
+	if l_PercentRotation > 1.0 then
+		l_PercentRotation = 1.0
 	end
 	
-	if l_Yaw > 0.01 or l_Yaw < -0.01 then
-		l_Player.m_CameraController:add_yaw(l_Yaw * _ElapsedTime)
-	end
+	if l_Player.m_TimerRotation <= 1.0 then
+		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, l_PercentRotation)
+		l_Player.m_CameraController:set_rotation(target_quat)
+	else
+		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, 1)
+		l_Player.m_CameraController:set_rotation(target_quat)
+	end	
 	
 	--// Move the character controller
 	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
