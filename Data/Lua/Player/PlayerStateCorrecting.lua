@@ -4,10 +4,6 @@ function CorrectingFirst(args)
 
 	l_Player.m_InitialCameraRotation = l_Player.m_CameraController:get_rotation()
 	l_Player.m_TimerRotation = 0.0
-
-	local l_CameraDirection = l_Player.m_TargetPosOffset*-1.0
-	l_CameraDirection.y = l_Player.m_Target.y - l_Player.m_CameraController:get_position().y
-	l_CameraDirection = l_CameraDirection:get_normalized(1)
 						
 	local quat_to_turn = Quatf()
 	quat_to_turn:set_from_fwd_up(l_Player.m_ForwardCamera, l_Player.m_UpCamera)
@@ -26,6 +22,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetPosOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
 	local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_FaceTargetDisplacement.y = 0.0
+	utils_log("Distance: "..l_FaceTargetDisplacement:length())
 	if l_FaceTargetDisplacement:length() <= 0.01 then
 		l_PosOK = true
 	else
