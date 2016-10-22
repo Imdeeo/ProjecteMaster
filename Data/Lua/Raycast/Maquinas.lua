@@ -25,7 +25,7 @@ function R3Valve(_Player)
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		--_Player.m_PhysXManager:enable_trigger("TriggerValveInput")
-		--_Player.m_PhysXManager:disable_trigger("TriggerValve")
+		--_Player.m_PhysXManager:disable_physics("TriggerValve")
 		--Play Sound¿?
 	end
 end
@@ -53,7 +53,9 @@ function R3ValveInput(_Player)
 		-- Play Sound
 		R3ValveIsPlaced = true
 		_Player.m_CinematicManager:get_resource("ResolveValve"):play()
-		--_Player.m_PhysXManager:disable_trigger("TriggerValveInput")
+		--_Player.m_PhysXManager:disable_physics("CajaEngranaje")
+		--_Player.m_PhysXManager:enable_object("CajaEngranajeMovido")
+		--_Player.m_PhysXManager:disable_physics("TriggerValveInput")
 	end
 end
 
