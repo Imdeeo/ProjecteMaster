@@ -59,4 +59,10 @@
 	<animation name="pick_valve" filename="PickValve.CAF"/>
 	<animation name="input_valve" filename="InputValve.CAF"/>
 	<animation name="cross_valve_door" filename="CrossValveDoor.CAF"/>
+	<animation name="run" filename="Run.CAF"/>
+	<animation name="sing_start" filename="SingStart.CAF"/>
+	<animation name="sing_loop" filename="SingLoop.CAF"/>
+	<animation name="sing_end" filename="SingEnd.CAF"/>
+	
+	<animation name="sing_once" filename="SingOnce.CAF"/>
 </actor>
