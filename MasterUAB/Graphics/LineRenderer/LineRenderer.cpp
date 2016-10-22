@@ -69,12 +69,6 @@ void CLineRenderer::Save(FILE* _File)
 
 void CLineRenderer::Update(float ElapsedTime)
 {
-	
-}
-
-void CLineRenderer::Render(CRenderManager *RM)
-{
-	RM->GetContextManager()->SetWorldMatrix(GetTransform());
 	Vect3f l_Dir = m_PosFinal - m_PosInicial;
 	Vect3f l_PosI, l_PosF;
 	float sizeI;
@@ -103,10 +97,16 @@ void CLineRenderer::Render(CRenderManager *RM)
 	m_LineRenderableData[m_LinesCount - 1].UV = Vect2f(m_PosFinal.y, m_PosFinal.z);
 	m_LineRenderableData[m_LinesCount - 1].UV2 = Vect2f(sizeF, UABEngine.GetRandomValue(m_Size + m_SizeOffset, m_Size - m_SizeOffset));
 	m_LineRenderableData[m_LinesCount - 1].Color = m_Color;
+}
+
+void CLineRenderer::Render(CRenderManager *RM)
+{
+	RM->GetContextManager()->SetWorldMatrix(GetTransform());
+	CRenderableObject::Render(RM);
 	
 	m_Material->Apply();
 	CEffectTechnique * l_ET = m_Material->GetRenderableObjectTechnique()->GetEffectTechnique();
 	CEffectManager::SetSceneConstants(l_ET);
-	m_RenderableVertex->UpdateVertexs(m_LineRenderableData, MAX_PARTICLE_PER_INSTANCE);
+	m_RenderableVertex->UpdateVertexs(m_LineRenderableData, MAX_LINE_LENGHT);
 	m_RenderableVertex->Render(RM, l_ET, CEffectManager::GetRawData(), m_LinesCount); 
 }
