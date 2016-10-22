@@ -91,6 +91,11 @@ float CalcHeightFog( float Depth, // camera to point distance
 	
     //float fogAmount = c * exp(-m_CameraPosition.y*b) * (1.0-exp( -Depth*rayDir.y*b ))/rayDir.y;
 	float fogAmount = m_HeightFog * (1.0 - exp( -Depth * rayDir.y * m_DensityFog )) / rayDir.y;
+	if (fogAmount < 0.4) 
+	{
+		fogAmount = fogAmount;
+	}
+	
     return fogAmount;
 }
 
@@ -104,16 +109,21 @@ float4 GetFogColor(float Depth, float3 Pos)
 	}
 	else if (m_Type == 2.0)
 	{
-		l_FogIntensity=CalcExpFog(Depth, m_DensityFog);
+		l_FogIntensity=m_MaxAttenuation*(1-CalcExpFog(Depth, m_DensityFog));
 	}
 	else if (m_Type == 3.0)
 	{
-		l_FogIntensity=CalcExp2Fog(Depth, m_DensityFog);
+		l_FogIntensity=m_MaxAttenuation*(1-CalcExp2Fog(Depth, m_DensityFog));
 	}
-	else
+	else if (m_Type == 4.0)
 	{
 		l_FogIntensity=CalcHeightFog(Depth, Pos);
 	}
+	else if (m_Type == 5.0)
+	{
+		l_FogIntensity=min(CalcLinearFog(Depth, m_StartFog, m_EndFog), CalcHeightFog(Depth, Pos));
+	}
+
 		
 	return saturate(float4(m_FogColor.xyz,l_FogIntensity));
 }
