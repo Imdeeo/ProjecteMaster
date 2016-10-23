@@ -467,9 +467,9 @@ public:
 		L_PutGroupToShape(newShape, m_Groups[_group]);
 		actor->attachShape(*newShape);
 		
-		
 		actor->detachShape(*oldShape);
-		
+		newShape->release();
+		//oldShape->release(); OJOCUIDAO esto hace que pete y no se por qué, así que podría causar memory leaks al no liberar el puntero.
 	}
 
 	bool LoadPhysx(const std::string &Filename)
