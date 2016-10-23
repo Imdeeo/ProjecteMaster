@@ -29,6 +29,7 @@ public:
 	void Lock(){ m_Locked = true; }
 	void Unlock(){ m_Locked = false; }
 	void CopyFromKeyCamera(CCameraInfo* _CameraInfo);
+	void CopyFromCamera(CCameraController* _Camera);
 };
 
 #endif

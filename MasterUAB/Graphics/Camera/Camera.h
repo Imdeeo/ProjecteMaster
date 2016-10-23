@@ -27,6 +27,7 @@ public:
 		CAMERA_TYPE_FPS = 1,
 		CAMERA_TYPE_KEY = 2,
 		CAMERA_TYPE_3PS = 3,
+		CAMERA_TYPE_FOCUSED = 4,
 		CAMERA_TYPE_NULL = -1
 	};
 
@@ -104,6 +105,8 @@ public:
 			return CAMERA_TYPE_KEY;
 		else if (CameraType == "3ps")
 			return CAMERA_TYPE_3PS;
+		else if (CameraType == "focused")
+			return CAMERA_TYPE_FOCUSED;
 		return CAMERA_TYPE_NULL;
 	}
 
