@@ -257,7 +257,6 @@
 	<static_mesh name="TubosTecho" filename="Data\level_2\Meshes\TubosTecho.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="PlanosLibrosLaberintoGrande014" filename="Data\level_2\Meshes\PlanosLibrosLaberintoGrande014.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="tubosgrandesorgano" filename="Data\level_2\Meshes\tubosgrandesorgano.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
-	<!--<static_mesh name="MaquinaElectricidadMesa1" filename="Data\level_2\Meshes\MaquinaElectricidadMesa1.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>-->
 	<static_mesh name="MaquinaElectricidadMesa2" filename="Data\level_2\Meshes\MaquinaElectricidadMesa2.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="TubosGrandesgordorecibi1" filename="Data\level_2\Meshes\TubosGrandesgordorecibi1.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
 	<static_mesh name="TubosGrandesgordorecibi2" filename="Data\level_2\Meshes\TubosGrandesgordorecibi2.mesh" physx_mesh_directory="Data\level_2\Meshes\PhysXMeshes"/>
