@@ -16,14 +16,14 @@ function R2PushOrganKey(_Key, _Player)
 		_Player.m_InteractingAnimation = 9
 		_Player.m_CameraAnimation = "PipeOrganEnd"
 		_Player.m_CinematicManager:get_resource("ResolvePuzzle"):play()
-		_Player.m_PhysXManager:enable_object("puertalaberintooficialmovida")
-		_Player.m_PhysXManager:disable_physics("puertalaberintooficial")
-		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyA")
-		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyB")
-		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyC")
-		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyD")
-		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyE")
-		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyF")
-		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyG")
+		_Player.m_PhysXManager:enable_object("puertalaberintooficialmovida", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("puertalaberintooficial", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyA", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyB", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyC", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyD", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyE", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyF", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyG", "FisicasAux")
 	end
 end
