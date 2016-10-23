@@ -10,7 +10,7 @@
 	<light name="LuzExteriorJaulaCristal" enabled="true" type="spot" pos="-3.845340 10.859900 21.436001" dir="0.748650 -0.662874 -0.011005" color="0.078431 0.400000 0.458824 1.000000" angle="0.443314" fall_off="0.644027" att_start_range="17.560499" att_end_range="17.560499" intensity="1.000000" generate_shadow_map="true" shadow_map_width="1024" shadow_map_height="1024" shadow_map_format="r32" shadow_texture_mask="">
 		<layer layer="solid"/>
 	</light>
-	<light name="LuzProyector" enabled="true" type="spot" pos="16.026501 1.417260 9.191570" dir="0.000000 0.358163 -0.966101" color="1.000000 1.000000 1.000000 1.000000" angle="0.354302" fall_off="0.932006" att_start_range="3.060000" att_end_range="4.725000" intensity="2.000000" generate_shadow_map="false"/>
+	<light name="LuzProyector" enabled="false" type="spot" pos="16.026501 1.417260 9.191570" dir="0.000000 0.358163 -0.966101" color="1.000000 1.000000 1.000000 1.000000" angle="0.354302" fall_off="0.932006" att_start_range="3.060000" att_end_range="4.725000" intensity="2.000000" generate_shadow_map="false"/>
 	<light name="LuzVirtualOrganoMesa" enabled="true" type="omni" pos="0.197678 2.618980 12.980600" color="0.952941 0.917647 0.670588 1.000000" att_start_range="1.430000" att_end_range="4.020000" intensity="2.000000"/>
 	<light name="Omni10" enabled="true" type="omni" pos="17.799999 2.700000 13.400002" color="1.000000 0.427451 0.215686 1.000000" att_start_range="0.500000" att_end_range="1.000000" intensity="5.000000"/>
 	<light name="Omni11" enabled="true" type="omni" pos="7.600000 2.900000 5.900001" color="1.000000 0.427451 0.215686 1.000000" att_start_range="0.100000" att_end_range="1.500000" intensity="3.500000"/>
