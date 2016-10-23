@@ -54,10 +54,12 @@ end
 
 function R2TriggerPipeOrgan(_Player)
 	_Player.m_TargetYaw = -g_PI/2.0
-	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -1.0)
+	_Player.m_TargetPosOffset = Vect3f(0.017, 0.0, -0.75)
+	_Player.m_ForwardCamera = Vect3f(0.0, -0.32014, 0.94737)
+	_Player.m_UpCamera = Vect3f(0.0, 0.947369, 0.320145)
 	l_Target = GetTriggerPos("TriggerPipeOrgan",l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.8) then
-		_Player.m_Target = l_Target
+		_Player.m_Target = Vect3f(0.124282, 1.4032, 14.8227)
 		_Player.m_AnimationTime = 0.6667
 		_Player.m_InteractingAnimation = 8
 		_Player.m_InteractingCinematic = nil
@@ -66,16 +68,18 @@ function R2TriggerPipeOrgan(_Player)
 		_Player.m_IsInteracting = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = true
-		_Player.m_PhysXManager:disable_physics("TriggerPipeOrgan")
+		_Player.m_PhysXManager:disable_physics("TriggerPipeOrgan","FisicasAux")
 	end
 end
 
 function R2Artifact(_Player)
 	_Player.m_TargetYaw = -g_PI/2.0
-	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.6)
+	_Player.m_TargetPosOffset = Vect3f(0.019, 0.0, -0.57)
+	_Player.m_ForwardCamera = Vect3f(0.0, 0.0, 1.0)
+	_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
 	l_Target = GetTriggerPos("TriggerArtifact",l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.8) then
-		_Player.m_Target = l_Target
+		_Player.m_Target = Vect3f(-17.0552, 1.66966, 28.9583)
 		_Player.m_AnimationTime = 5
 		_Player.m_LeftHanded = true
 		_Player.m_InteractingAnimation = 6
@@ -88,7 +92,7 @@ function R2Artifact(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
-		--_Player.m_PhysXManager:disable_physics("TriggerArtifact")
+		_Player.m_PhysXManager:disable_physics("TriggerArtifact","FisicasAux")
 	end
 end
 
@@ -114,10 +118,12 @@ end
 
 function R2Clue(_Player)
 	_Player.m_TargetYaw = g_PI
-	_Player.m_TargetPosOffset = Vect3f(-0.86, 0.0, 0.0)
+	_Player.m_TargetPosOffset = Vect3f(-0.646, 0.0, 0.03)
+	_Player.m_ForwardCamera = Vect3f(0.776573, -0.63003, 0.0)
+	_Player.m_UpCamera = Vect3f(0.630027, 0.776573, 0.0)
 	l_Target = GetTriggerPos("TriggerClue",l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.6) then
-		_Player.m_Target = l_Target
+		_Player.m_Target = Vect3f(11.8743, 1.2716, 15.2575)
 		_Player.m_InteractingAnimation = 7
 		_Player.m_InteractingCinematic = nil
 		_Player.m_AnimationTime = 7
@@ -135,10 +141,12 @@ end
 
 function R2Book(_Player)
 	_Player.m_TargetYaw = -g_PI/2.0
-	_Player.m_TargetPosOffset = Vect3f(0.0, 0.0, -0.86)
+	_Player.m_TargetPosOffset = Vect3f(0.03, 0.0, -0.62)
+	_Player.m_ForwardCamera = Vect3f(0.0, 0.0, 1.0)
+	_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
 	l_Target = GetTriggerPos("TriggerBook",l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.8) then
-		_Player.m_Target = l_Target
+		_Player.m_Target = Vect3f(15.5708, 1.52933, 26.3092)
 		_Player.m_InteractingAnimation = 17
 		_Player.m_InteractingCinematic = "PullBook"
 		_Player.m_CameraAnimation = "PullBook"
@@ -150,6 +158,6 @@ function R2Book(_Player)
 		_Player.m_CinematicManager:get_resource("fonotelefote"):play() -- launch projector cinematic
 		g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_light_manager():get_resource("LuzProyector"):set_enabled(true) -- activate lights
 		-- activate particles
-		--_Player.m_PhysXManager:disable_physics("TriggerBook")
+		_Player.m_PhysXManager:disable_physics("TriggerBook","FisicasAux")
 	end
 end
