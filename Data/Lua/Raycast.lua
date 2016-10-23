@@ -88,9 +88,9 @@ function TriggerRaycast(_Player, _Owner)
 				_Player.m_Item = CUABEngine.get_instance():get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource(_Player.m_ItemName)
 			end
 		elseif _Player.m_RaycastData.actor_name == "TriggerValveDoor" then
-			if R3ValveIsPlaced then
+			--if R3ValveIsPlaced then
 				R3ValveDoor(_Player)
-			end
+			--end
 		end
 	end
 end

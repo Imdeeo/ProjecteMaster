@@ -616,7 +616,8 @@ class 'CPlayer' (CLUAComponent)
 		local l_Pos = self.m_PhysXManager:get_character_controler_pos("player")
 		l_Pos.y = l_Pos.y - g_TotalHeight
 		local ret = false
-		--utils_log("Distance: "..(l_Pos - _Target):length().." (".._Distance.." needed)")
+		utils_log("Difference: "..l_Difference)
+		utils_log("Distance: "..(l_Pos - _Target):length().." (".._Distance.." needed)")
 		if (l_Difference > (g_PI-_Radians)) and (l_Difference < (g_PI+_Radians)) and ((l_Pos - _Target):length() < _Distance) then
 			ret = true
 		end

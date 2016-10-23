@@ -60,10 +60,10 @@ function R3ValveInput(_Player)
 end
 
 function R3ValveDoor(_Player)
-	_Player.m_TargetYaw = -g_PI/2.0
-	_Player.m_ForwardCamera = Vect3f(1.0, 0.0, 0.0)
+	_Player.m_TargetYaw = 0.0
+	_Player.m_ForwardCamera = Vect3f(-0.970853, -0.1, 0.0)
 	_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
-	_Player.m_TargetPosOffset = Vect3f(-1.0, 0.0, 1.0)
+	_Player.m_TargetPosOffset = Vect3f(0.4, 0.0, -0.55)
 	l_Target = GetTriggerPos("TriggerValveDoor", l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.0) then
 		_Player.m_Target = l_Target
