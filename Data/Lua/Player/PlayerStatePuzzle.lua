@@ -4,7 +4,7 @@ function PuzzleFirst(args)
 
 	l_Owner:execute_action(l_Player.m_InteractingAnimation, 0.1, 0.1, 1.0, true)
 	l_Player.m_Timer = -22.5
-	l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, true)
+	l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, false)
 end
 
 function PuzzleUpdate(args, _ElapsedTime)
