@@ -38,6 +38,7 @@
 #include "Camera\CameraKeyController.h"
 #include "Camera\FPSCameraController.h"
 #include "Camera\Frustum.h"
+#include "Camera\FocusedCameraController.h"
 #include "Camera\SphericalCameraController.h"
 #include "Camera\3PersonCameraController.h"
 
@@ -960,6 +961,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("lock", &CFPSCameraController::Lock)
 			.def("unlock", &CFPSCameraController::Unlock)
 			.def("copy_from_key_camera", &CFPSCameraController::CopyFromKeyCamera)
+			.def("copy_from_camera", &CFPSCameraController::CopyFromCamera)
 	];
 
 	module(m_LS) [
@@ -976,6 +978,17 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_zoom", &CSphericalCameraController::SetZoom)
 			.def("set_camera", &CSphericalCameraController::SetCamera)
 			.def("rotate", &CSphericalCameraController::Rotate)
+	];
+
+	module(m_LS)[
+		class_<CFocusedCameraController, CCameraController>("CFocusedCameraController")
+			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
+			.def("init", &CFocusedCameraController::Init)
+			.def("set_focus", &CFocusedCameraController::SetFocus)
+			.def("set_start", &CFocusedCameraController::SetStart)
+			.def("set_camera", &CFocusedCameraController::SetCamera)
+			.def("get_lookat", &CFocusedCameraController::GetLookAt)
+			.def("copy_to_camera", &CFocusedCameraController::CopyToCamera)
 	];
 
 	// Cinematics -----------------------------------------------------------------------------------

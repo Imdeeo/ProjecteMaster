@@ -1,5 +1,17 @@
 dofile("Data\\Lua\\Player\\Helpers.lua")
 
+function OnEnterWindow(_TriggerName, _ColliderName)
+	if(_ColliderName == "player") then
+		local l_Player = m_CharacterManager.m_Player[1]
+		l_Player.m_CameraAnimation = "Window"
+		l_Player.m_AnimationTime = 3.0
+		l_Player.m_TargetSanity = 20.0
+		l_Player.m_IsFocusing = true
+		l_Player.m_TargetOffset = Vect3f(0.571789, 6.51367, 5.9193)
+		l_Player.m_PhysXManager:disable_physics(_TriggerName, "FisicasAux")
+	end
+end
+
 function OnEnterStairs(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		local l_Player = m_CharacterManager.m_Player[1]
@@ -91,7 +103,3 @@ end
 function FogTriggerExit(_Player, _TriggerName)
 	--utils_log("exit")
 end 
-
-function OnEnterWindow(_TriggerName, _ColliderName)
-	utils_log("entered windows trigger")
-end

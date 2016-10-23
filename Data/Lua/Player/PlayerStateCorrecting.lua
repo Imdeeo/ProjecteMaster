@@ -43,8 +43,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, 1)
 		l_Player.m_CameraController:set_rotation(target_quat)
 		l_AngleOK = true
-	end	
-		
+	end
 		
 	if l_PosOK and l_AngleOK then
 		l_Player.m_IsCorrecting = false

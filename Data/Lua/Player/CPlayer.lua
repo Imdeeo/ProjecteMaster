@@ -20,6 +20,7 @@ dofile("Data\\Lua\\Player\\PlayerStateSingingLoop.lua")
 dofile("Data\\Lua\\Player\\PlayerStateSingingEnd.lua")
 dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 dofile("Data\\Lua\\Player\\PlayerStatePuzzle.lua")
+dofile("Data\\Lua\\Player\\PlayerStateFocusing.lua")
 
 --Bone #0: BrazosJaheem
 --Bone #1: CATRigHub001
@@ -179,6 +180,8 @@ class 'CPlayer' (CLUAComponent)
 		self.m_NewItemName = ""
 		self.m_ItemTime = 0.0
 		self.m_ItemDropTime = -1.0
+		self.m_StartSanity = self.m_MaxSanity
+		self.m_TargetSanity = 20.0
 		
 		self.m_CurrentAnimation = "none"
 		self.m_LastAnimation = "none"
@@ -405,8 +408,9 @@ class 'CPlayer' (CLUAComponent)
 		IdleState:add_condition(ANYToFallingCondition, "Falling")
 		IdleState:add_condition(ANYToCorrectingCondition, "Correcting")
 		IdleState:add_condition(ANYToSingingStartCondition, "SingingStart")
-		IdleState:add_condition(ANYToDeadCondition, "Dead")
 		IdleState:add_condition(ANYToClimbingCondition, "ClimbingStart")
+		IdleState:add_condition(ANYToFocusingCondition, "Focusing")
+		IdleState:add_condition(ANYToDeadCondition, "Dead")
 		
 		MovingState = State.create(MovingUpdate)
 		MovingState:set_do_first_function(MovingFirst)
@@ -418,8 +422,9 @@ class 'CPlayer' (CLUAComponent)
 		MovingState:add_condition(ANYToFallingCondition, "Falling")
 		MovingState:add_condition(ANYToCorrectingCondition, "Correcting")
 		MovingState:add_condition(ANYToSingingStartCondition, "SingingStart")
-		MovingState:add_condition(ANYToDeadCondition, "Dead")
 		MovingState:add_condition(ANYToClimbingCondition, "ClimbingStart")
+		MovingState:add_condition(ANYToFocusingCondition, "Focusing")
+		MovingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		CorrectingState = State.create(CorrectingUpdate)
 		CorrectingState:set_do_first_function(CorrectingFirst)
@@ -449,7 +454,7 @@ class 'CPlayer' (CLUAComponent)
 		ClimbingIdleState:add_condition(ClimbingIdleToInteractingCondition, "Interacting")
 		ClimbingIdleState:add_condition(ClimbingIdleToClimbingUpCondition, "ClimbingUp")
 		ClimbingIdleState:add_condition(ClimbingIdleToClimbingDownCondition, "ClimbingDown")
-		ClimbingIdleState:add_condition(ClimbingIdleToFallingCondition, "Falling")
+		ClimbingIdleState:add_condition(ClimbingIdleToFallingCondition, "Idle")
 		ClimbingIdleState:add_condition(ANYToDeadCondition, "Dead")
 		
 		ClimbingUpState = State.create(ClimbingUpUpdate)
@@ -462,7 +467,7 @@ class 'CPlayer' (CLUAComponent)
 		ClimbingDownState:set_do_first_function(ClimbingDownFirst)
 		ClimbingDownState:set_do_end_function(ClimbingDownEnd)
 		ClimbingDownState:add_condition(ClimbingDownToClimbingIdleCondition, "ClimbingIdle")
-		ClimbingDownState:add_condition(ClimbingDownToFallingCondition, "Falling")
+		ClimbingDownState:add_condition(ClimbingDownToFallingCondition, "Idle")
 		ClimbingDownState:add_condition(ANYToDeadCondition, "Dead")
 		
 		JumpingState = State.create(JumpingUpdate)
@@ -481,7 +486,7 @@ class 'CPlayer' (CLUAComponent)
 		InteractingState = State.create(InteractingUpdate)
 		InteractingState:set_do_first_function(InteractingFirst)
 		InteractingState:set_do_end_function(InteractingEnd)
-		InteractingState:add_condition(InteractingToFallingCondition, "Falling")
+		InteractingState:add_condition(InteractingToFallingCondition, "Idle")
 		InteractingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		SingingStartState = State.create(SingingStartUpdate)
@@ -500,7 +505,7 @@ class 'CPlayer' (CLUAComponent)
 		SingingEndState = State.create(SingingEndUpdate)
 		SingingEndState:set_do_first_function(SingingEndFirst)
 		SingingEndState:set_do_end_function(SingingEndEnd)
-		SingingEndState:add_condition(SingingEndToFallingCondition, "Falling")
+		SingingEndState:add_condition(SingingEndToFallingCondition, "Idle")
 		SingingEndState:add_condition(ANYToDeadCondition, "Dead")
 		
 		DeadState = State.create(DeadUpdate)
@@ -510,8 +515,14 @@ class 'CPlayer' (CLUAComponent)
 		PuzzleState = State.create(PuzzleUpdate)
 		PuzzleState:set_do_first_function(PuzzleFirst)
 		PuzzleState:set_do_end_function(PuzzleEnd)
-		PuzzleState:add_condition(PuzzleToFallingCondition, "Falling")
+		PuzzleState:add_condition(PuzzleToFallingCondition, "Idle")
 		PuzzleState:add_condition(ANYToDeadCondition, "Dead")
+		
+		FocusingState = State.create(FocusingUpdate)
+		FocusingState:set_do_first_function(FocusingFirst)
+		FocusingState:set_do_end_function(FocusingEnd)
+		FocusingState:add_condition(FocusingToIdleCondition, "Idle")
+		FocusingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		self.m_StateMachine:add_state("Idle", IdleState)
 		self.m_StateMachine:add_state("Moving", MovingState)
@@ -529,7 +540,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:add_state("SingingEnd", SingingEndState)
 		self.m_StateMachine:add_state("Dead", DeadState)
 		self.m_StateMachine:add_state("Puzzle", PuzzleState)
-		
+		self.m_StateMachine:add_state("Focusing", FocusingState)
 	end	
 	
 	function CPlayer:SetActiveStateMachineState(name,active)
@@ -582,6 +593,11 @@ class 'CPlayer' (CLUAComponent)
 		local quat_to_turn = Quatf()
 		quat_to_turn:set_from_fwd_up(l_CameraDirection, Vect3f(0,1,0))
 		self.m_FinalCameraRotation = quat_to_turn
+	end
+	
+	function CPlayer:SetCamera(_CameraName)
+		local l_CameraManager = g_Engine:get_camera_controller_manager()
+		l_CameraManager:choose_main_camera(_CameraName)
 	end
 	
 	function CPlayer:XZRotate(_ElapsedTime)
