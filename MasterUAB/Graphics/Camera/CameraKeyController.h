@@ -37,6 +37,8 @@ public:
 
 	Vect3f GetLastLookAt();
 	void SetFirstKey(Vect3f _Forward, Vect3f _Up, float _Fov);
+	void SetLookAt(Vect3f _lookAt);
+	void SetUp(Vect3f _up);
 	CCameraInfo* GetLastKey();
 	CCameraInfo GetCameraAsInfo();
 

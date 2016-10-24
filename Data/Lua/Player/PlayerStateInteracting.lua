@@ -13,6 +13,7 @@ function InteractingFirst(args)
 	if l_Player.m_CameraAnimation ~= nil then
 		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, false)
 	end
+	l_Owner:set_visible(true)
 end
 
 function InteractingUpdate(args, _ElapsedTime)

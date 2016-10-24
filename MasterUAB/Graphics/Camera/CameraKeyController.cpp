@@ -294,3 +294,13 @@ void CCameraKeyController::ForceUpdateYaw(float _ElapsedTime)
 		m_LookAt = m_Position + GetForward();
 	}
 }
+
+void CCameraKeyController::SetLookAt(Vect3f _lookAt)
+{
+	m_LookAt = _lookAt;
+}
+
+void CCameraKeyController::SetUp(Vect3f _up)
+{
+	m_Up = _up;
+}

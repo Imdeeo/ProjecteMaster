@@ -551,6 +551,12 @@ class 'CPlayer' (CLUAComponent)
 		local l_CameraManager = g_Engine:get_camera_controller_manager()
 		local l_FPSCamera = l_CameraManager:get_main_camera()
 		local l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
+		
+		l_AnimatedCamera:set_fov(l_FPSCamera:get_fov())
+		l_AnimatedCamera:set_position(l_FPSCamera:get_position())
+		l_AnimatedCamera:set_look_at(l_FPSCamera:get_position()+l_FPSCamera:get_forward())
+		l_AnimatedCamera:set_up(l_FPSCamera:get_up())
+		
 		if (_CopyFirstFrame) then
 			local l_lookAt = l_FPSCamera:get_forward() + l_FPSCamera:get_position()
 			l_AnimatedCamera:set_first_key(l_lookAt, l_FPSCamera:get_up(), l_FPSCamera:get_fov())
