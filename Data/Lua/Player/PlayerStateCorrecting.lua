@@ -1,5 +1,6 @@
 function CorrectingFirst(args)
 	local l_Player = args["self"]
+	local l_Owner = args["owner"]	
 	l_Player.m_CameraController:lock()
 
 	l_Player.m_InitialCameraRotation = l_Player.m_CameraController:get_rotation()
@@ -8,6 +9,8 @@ function CorrectingFirst(args)
 	local quat_to_turn = Quatf()
 	quat_to_turn:set_from_fwd_up(l_Player.m_ForwardCamera, l_Player.m_UpCamera)
 	l_Player.m_FinalCameraRotation = quat_to_turn
+	
+	l_Owner:set_visible(false)
 end
 
 function CorrectingUpdate(args, _ElapsedTime)
@@ -49,7 +52,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 		l_Player.m_IsCorrecting = false
 	end
 	
-		--// Assign to the character the controller's position
+	--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 	l_Owner:set_position(l_NewControllerPosition)
