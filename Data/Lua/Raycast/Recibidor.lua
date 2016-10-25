@@ -8,7 +8,7 @@ R1TrayL2IsClosed = true
 local l_LevelId = "Recibidor"
 
 function R1Door(_Player)
-	_Player.m_TargetPosOffset = Vect3f(-1.385, 0.0, -0.82)
+	_Player.m_TargetPosOffset = Vect3f(-1.377, 0.0, -0.713147)
 	_Player.m_ForwardCamera = Vect3f(0.0, 0.0, 1.0)
 	_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
 	_Player.m_TargetYaw = -g_PI/2.0
