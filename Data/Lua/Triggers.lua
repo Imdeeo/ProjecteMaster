@@ -8,6 +8,12 @@ function OnEnterWindow(_TriggerName, _ColliderName)
 		l_Player.m_TargetSanity = 20.0
 		l_Player.m_IsFocusing = true
 		l_Player.m_TargetOffset = Vect3f(0.571789, 6.51367, 5.9193)
+	end
+end
+
+function OnExitWindow(_TriggerName, _ColliderName)
+	if(_ColliderName == "player") then
+		local l_Player = m_CharacterManager.m_Player[1]
 		l_Player.m_PhysXManager:disable_physics(_TriggerName, "FisicasAux")
 	end
 end
