@@ -383,11 +383,11 @@
 	<instance_mesh name="InputPipe" layer="solid" core_name="InputPipe" position="14.9854 0.502254 11.4689" rotation="0.0 -0.258819 0.0 0.965926" create_physics="false" visible="true"/>
 	<instance_mesh name="TriggerStairsLower" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsLower" is_active="true" core_name="TriggerStairsLower" position="5.67795 -0.739736 1.03263" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
-		<interactuable_object actor_name="TubosParedTanqueAguaArribajo001"/>
+		<interactuable_object actor_name="PlanchaCinta2_092"/>
 	</instance_mesh>
 	<instance_mesh name="TriggerStairsUpper" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsUpper" is_active="true" core_name="TriggerStairsUpper" position="5.80997 5.37022 1.16465" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
-		<interactuable_object actor_name="TubosParedTanqueAguaArribajo001"/>
+		<interactuable_object actor_name="PlanchaCinta2_092"/>
 	</instance_mesh>
 	<instance_mesh name="TriggerValve" layer="triggers" is_active="true" core_name="TriggerValve" position="23.27 -0.474087 16.004" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
@@ -401,8 +401,8 @@
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="PuertaTaller"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerWindow" layer="triggers" on_trigger_enter="OnEnterWindow" is_active="true" core_name="TriggerWindow" position="5.71402 3.80625 3.98397" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerWindow" layer="triggers" on_trigger_enter="OnEnterWindow" on_trigger_exit="OnExitWindow" is_active="true" core_name="TriggerWindow" position="5.71402 3.80625 3.98397" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
-		<interactuable_object actor_name="TubosParedTanqueAguaArribajo001"/>
+		<interactuable_object actor_name="PlanchaCinta2_092"/>
 	</instance_mesh>
 </renderable_objects>
