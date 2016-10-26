@@ -17,11 +17,11 @@ function ClimbingUpUpdate(args, _ElapsedTime)
 	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	
 	--// Move player vertically
-	l_PlayerDisplacement.y = l_PlayerDisplacement.y + (120.0 * _ElapsedTime)
+	local l_Dist = 0.806
+	local l_Speed = l_Dist/l_Player.m_AnimationTime
+	l_PlayerDisplacement.y = l_Speed 
 	
 	--// Move the character controller
-	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - g_StandingOffset
 	l_Player.m_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
 	
 	--// Assign to the character the controller's position
