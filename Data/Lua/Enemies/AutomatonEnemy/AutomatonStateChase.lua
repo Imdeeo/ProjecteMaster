@@ -6,6 +6,7 @@ function ChaseFirstAutomaton(args)
 	l_Owner:clear_cycle(l_Enemy.m_ActualAnimation,0.5)
 	l_Enemy.m_ActualAnimation = 2
 	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
+	l_Enemy.m_SoundManager:play_event(l_Enemy.m_StartPatrolEvent, l_Owner)
 		
 	l_Enemy.m_Velocity = Vect3f(0,0,0)
 	l_Enemy.m_TotalNodes = 0.0
@@ -116,6 +117,9 @@ end
 
 function ChaseEndAutomaton(args)
 	utils_log("ChaseEnd")
+	local l_Owner = args["owner"]
+	local l_Enemy = args["self"]
+	l_Enemy.m_SoundManager:play_event(l_Enemy.m_StopPatrolEvent, l_Owner)
 end
 
 function ChaseToAlertConditionAutomaton(args)

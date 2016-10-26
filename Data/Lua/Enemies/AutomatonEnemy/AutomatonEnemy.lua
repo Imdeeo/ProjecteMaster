@@ -48,6 +48,13 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_TimerRotation = 0.0
 		self.m_TimerRotation2 = 0.0
 		self.m_alert_timer = 0
+
+		self.m_StepSoundEvent = SoundEvent()
+		self.m_StepSoundEvent.event_name = "Step_Automaton"
+		self.m_StartPatrolEvent = SoundEvent()
+		self.m_StartPatrolEvent.event_name = "Automaton_Start_Patrol"
+		self.m_StopPatrolEvent = SoundEvent()
+		self.m_StopPatrolEvent.event_name = "Automaton_Stop_Patrol"
 		
 		self:SetAutomatonStateMachine()
 		self.m_StateMachine:start()

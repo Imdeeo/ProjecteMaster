@@ -43,6 +43,9 @@ class 'CEnemy' (CLUAComponent)
 		self.m_StateMachine = StateMachine.create()
 		
 		self.m_PhysXManager:create_character_controller(self.m_Name, g_EnemyHeight, g_EnemyRadius, 0.5, self.m_RenderableObject:get_position(),"FisicasAux", "Enemy")
+
+		self.m_SoundManager = CUABEngine.get_instance():get_sound_manager()
+		self.m_SoundManager:register_speaker(self.m_RenderableObject)
 	end
 	
 	function CEnemy:Update(_ElapsedTime)

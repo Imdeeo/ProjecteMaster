@@ -1,3 +1,5 @@
+dofile("Data\\Lua\\Sound\\CSoundSynchronizer.lua")
+
 function PatrolFirstAutomaton(args)
 	utils_log("PatrolFirst")
 	local l_Owner = args["owner"]
@@ -7,6 +9,13 @@ function PatrolFirstAutomaton(args)
 	l_Enemy.m_ActualAnimation = 1
 	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
 	
+	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, 4)
+	l_SoundSync = l_SoundSync
+	l_SoundSync.m_EventsPerCycle = 2
+	l_SoundSync.m_StartSequenceEvent = l_Enemy.m_StartPatrolEvent
+	l_SoundSync.m_StopSequenceEvent = l_Enemy.m_StopPatrolEvent
+	l_SoundSync.m_Offset = 0.31
+	l_Enemy.m_SoundSync = l_SoundSync
 	l_Enemy.m_Velocity = Vect3f(0,0,0)
 	l_Enemy.m_TimerRotation = 0.0
 	l_Enemy.m_IsChasing = false
@@ -16,6 +25,7 @@ function PatrolUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
+	l_Enemy.m_SoundSync:Sync(_ElapsedTime)
 	if l_Enemy:PlayerVisible(l_Owner) or l_Enemy:DetectPlayerNoise(1) then
 		if l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToKill) then
 			l_Enemy.m_State = "attack"
@@ -49,6 +59,9 @@ function PatrolUpdateAutomaton(args, _ElapsedTime)
 end
 
 function PatrolEndAutomaton(args)
+	local l_Owner = args["owner"]
+	local l_Enemy = args["self"]
+	l_Enemy.m_SoundManager:play_event(l_Enemy.m_StopPatrolEvent, l_Owner)
 end
 
 function PatrolToChaseConditionAutomaton(args)

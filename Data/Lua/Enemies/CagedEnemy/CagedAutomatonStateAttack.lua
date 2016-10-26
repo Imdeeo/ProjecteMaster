@@ -6,6 +6,7 @@ function AttackFirstCagedAutomaton(args)
 	l_Owner:remove_action(l_Enemy.m_ActualAnimation)
 	l_Enemy.m_ActualAnimation = 2
 	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,0.5,0.5)
+	l_Enemy.m_SoundManager:play_event(l_Enemy.m_BeatSoundEvent, l_Owner)
 end
 
 function AttackUpdateCagedAutomaton(args, _ElapsedTime)
@@ -32,4 +33,6 @@ end
 
 function AttackEndCagedAutomaton(args)
 	utils_log("AttackEndCagedAutomaton")
+	local l_Owner = args["owner"]
+	l_Enemy.m_SoundManager:play_event(l_Enemy.m_StopBeatSoundEvent, l_Owner)
 end

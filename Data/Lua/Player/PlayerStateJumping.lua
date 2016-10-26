@@ -4,7 +4,6 @@ function JumpingFirst(args)
 	l_Owner:blend_cycle(5,1.0,0.1)
 	l_Player.m_Velocity.y = 4.9
 	l_Player.m_SoundManager:play_event(l_Player.m_JumpSoundEvent, l_Player.m_RenderableObject)
-	--l_Player.m_SoundManager:play_event(l_Player.m_BeatSoundEvent, "BeatingAutomaton")
 end
 
 function JumpingUpdate(args, _ElapsedTime)

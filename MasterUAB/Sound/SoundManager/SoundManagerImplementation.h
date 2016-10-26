@@ -45,7 +45,7 @@ private:
 	bool InitBanks();
 	void Terminate();
 	void Clean();
-	void SetListenerPosition(const CCamera *camera);
+	void SetListenerPosition(const CCameraController *camera);
 	void PlayEvent(const SoundEvent &_event, const AkGameObjectID &id);
 	void SetSwitch(const SoundSwitchValue &switchValue, const AkGameObjectID &id);
 	void SetRTPCValue(const SoundRTPC &_rtpc, float value, const AkGameObjectID &id);
@@ -60,7 +60,7 @@ public:
 	bool Reload();
 	bool LoadSoundBank(const std::string &bank);
 	bool UnloadSoundBank(const std::string &bank);
-	void Update(const CCamera *camera);
+	void Update(const CCameraController *camera);
 
 	void PlayEvent(const SoundEvent &_event);
 	void PlayEvent(const SoundEvent &_event, const std::string &_speaker);

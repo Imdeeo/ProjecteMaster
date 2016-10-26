@@ -4,7 +4,7 @@
 #include <string>
 class C3DElement;
 
-class CCamera;
+class CCameraController;
 
 struct SoundEvent
 {
@@ -56,7 +56,7 @@ public:
 
 	virtual bool Init() = 0;
 
-	virtual void Update(const CCamera *camera) = 0;
+	virtual void Update(const CCameraController *camera) = 0;
 
 	virtual bool Load(const std::string &soundbandks_filename, const std::string &speakers_filename) = 0;
 
