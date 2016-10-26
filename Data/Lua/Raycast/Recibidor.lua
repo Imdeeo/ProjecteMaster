@@ -8,14 +8,17 @@ R1TrayL2IsClosed = true
 local l_LevelId = "Recibidor"
 
 function RegisterSpeakersRecibidor()
-	local l_SoundManager = UABEngine:get_sound_manager()
-	local l_LayerManager = g_Engine:get_level_manager():get_level("Recibidor"):get_layer_manager()
+	local l_Engine = CUABEngine.get_instance()
+	local l_SoundManager = l_Engine:get_sound_manager()
+	local l_LevelManager = l_Engine:get_level_manager()
+	local l_Level = l_LevelManager:get_level("Recibidor")
+	local l_LayerManager = l_Level:get_layer_manager()
 	local l_SolidLayer = l_LayerManager:get_layer("solid")
-	local l_DrawerR1 = l_SolidLayer:get_resource("CajonComodaDerecha1")
-	l_SoundManager:register_speaker(l_DrawerR1)
-end
 
-RegisterSpeakersRecibidor()
+	
+	l_SoundManager:register_speaker(l_SolidLayer:get_resource("CajonComodaDerecha1"))
+	l_SoundManager:register_speaker(l_SolidLayer:get_resource("CajonComodaDerecha2"))
+end
 
 function R1Door(_Player, _Pos)
 	_Player.m_TargetLookOffset = Vect3f(0.0, 0.0, -1.0)
@@ -127,6 +130,9 @@ function R1TrayR2(_Player, _Pos)
 	else
 		R1TrayR2Close(_Player, _Pos)
 	end
+	local l_LayerManager = g_Engine:get_level_manager():get_level("Recibidor"):get_layer_manager()
+	local l_SolidLayer = l_LayerManager:get_layer("solid")
+	_Player.m_InteractionSoundSpeaker = l_SolidLayer:get_resource("CajonComodaDerecha2")
 end
 
 function R1TrayL1Open(_Player, _Pos)
@@ -169,6 +175,9 @@ function R1TrayL1(_Player, _Pos)
 	else
 		R1TrayL1Close(_Player, _Pos)
 	end
+	local l_LayerManager = g_Engine:get_level_manager():get_level("Recibidor"):get_layer_manager()
+	local l_SolidLayer = l_LayerManager:get_layer("solid")
+	_Player.m_InteractionSoundSpeaker = l_SolidLayer:get_resource("CajonComodaDerecha2")
 end
 
 function R1TrayL2Open(_Player, _Pos)
@@ -215,6 +224,9 @@ function R1TrayL2(_Player, _Pos) --This contains the ankh
 	else
 		R1TrayL2Close(_Player, _Pos)
 	end
+	local l_LayerManager = g_Engine:get_level_manager():get_level("Recibidor"):get_layer_manager()
+	local l_SolidLayer = l_LayerManager:get_layer("solid")
+	_Player.m_InteractionSoundSpeaker = l_SolidLayer:get_resource("CajonComodaDerecha2")
 end
 
 function R1Ankh(_Player, _Pos)

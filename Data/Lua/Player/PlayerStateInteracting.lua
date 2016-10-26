@@ -9,7 +9,7 @@ function InteractingFirst(args)
 	end
 
 	local l_AnimationSoundEvent = l_Player.m_SoundEvents[l_Player.m_InteractingAnimation]
-	if l_AnimationSoundEvent ~= nil then
+	if l_AnimationSoundEvent ~= nil and l_Player.m_InteractionSoundSpeaker ~= nil then
 		l_Player.m_SoundManager:play_event(l_AnimationSoundEvent, l_Player.m_InteractionSoundSpeaker)
 		--l_Player.m_SoundManager:play_event(l_Player.m_StopBeatSoundEvent, l_Owner)
 	end

@@ -144,6 +144,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_SoundManager:register_speaker(self.m_RenderableObject)
 		
 		self.m_DistanceFromLastStep = 0.0
+		self.m_ImpactVelocity = Vect3f(0.0, 0.0, 0.0)
 		self.m_SoundEvents = {}
 		self.m_JumpSoundEvent = SoundEvent()
 		self.m_JumpSoundEvent.event_name = "Jump_Player"
@@ -170,7 +171,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Velocity = Vect3f(0.0, 0.0, 0.0)
 		self.m_Gravity = g_Gravity
 		self.m_Speed = 2.5
-		self.m_DefaultSpeed = 5.0
+		self.m_DefaultSpeed = 2.5
 		self.m_Sanity = 100.0
 		self.m_MaxSanity = 100.0
 		self.m_TimerVortex = 0

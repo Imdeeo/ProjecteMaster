@@ -28,26 +28,33 @@ m_ScreenFactorX = m_ScreenResolution.x / 1920
 m_ScreenFactorY = m_ScreenResolution.y / 1080
 m_Timer = 0.0
 
+m_StopAllSoundsEvent = SoundEvent()
+m_StopAllSoundsEvent.event_name = "Stop_All"
+m_PauseAllSoundsEvent = SoundEvent()
+m_PauseAllSoundsEvent.event_name = "Pause_All"
+m_ResumeAllSoundsEvent = SoundEvent()
+m_ResumeAllSoundsEvent.event_name = "Resume_All"
+
 function mainLua()
 	InitAntweakBar()
 	
 	local l_LevelManager = g_Engine:get_level_manager()	
 	local l_SoundManager = g_Engine:get_sound_manager()
-	local l_WaterSoundEvent = SoundEvent()
-	l_WaterSoundEvent.event_name = "water"
+	--local l_WaterSoundEvent = SoundEvent()
+	--l_WaterSoundEvent.event_name = "water"
 	local l_MainMusicEvent = SoundEvent()
-	l_MainMusicEvent.event_name = "play_music"
+	l_MainMusicEvent.event_name = "Play_Music"
 
 	l_SoundManager:play_event(l_MainMusicEvent)
-	l_SoundManager:play_event(l_WaterSoundEvent, "Test")
+	--l_SoundManager:play_event(l_WaterSoundEvent, "Test")
 
-	local l_switch = SoundSwitch()
-	l_switch.switch_name = "music_mode"
-	local l_switchvalue = SoundSwitchValue()
-	l_switchvalue.sound_switch = l_switch
-	l_switchvalue.value_name = "exploration"
+	--local l_switch = SoundSwitch()
+	--l_switch.switch_name = "music_mode"
+	--local l_switchvalue = SoundSwitchValue()
+	--l_switchvalue.sound_switch = l_switch
+	--l_switchvalue.value_name = "exploration"
 	--g_Player.m_SoundManager:set_switch(l_switchvalue)	
-	g_VolumeController:SetMusicVolume(50)
+	--g_VolumeController:SetMusicVolume(50)
 	m_timerPause = 0
 	m_iniciando = true 	
 	
@@ -61,14 +68,15 @@ function mainLua()
 	--l_LevelManager:load_level("Recibidor")
 	--l_LevelManager:choose_scene_command_level("Recibidor")
 	--g_Player:SetActualLevel("Recibidor")
+	--RegisterSpeakersRecibidor()
+
+	l_LevelManager:load_level("Biblioteca")
+	l_LevelManager:choose_scene_command_level("Biblioteca")
+	g_Player:SetActualLevel("Biblioteca")
 	
-	--l_LevelManager:load_level("Biblioteca")
-	--l_LevelManager:choose_scene_command_level("Biblioteca")
-	--g_Player:SetActualLevel("Biblioteca")
-	
-	l_LevelManager:load_level("Maquinas")
-	l_LevelManager:choose_scene_command_level("Maquinas")
-	g_Player:SetActualLevel("Maquinas")
+	--l_LevelManager:load_level("Maquinas")
+	--l_LevelManager:choose_scene_command_level("Maquinas")
+	--g_Player:SetActualLevel("Maquinas")
 	
 	--l_LevelManager:load_level("Pasillo")
 	--l_LevelManager:choose_scene_command_level("Pasillo")
@@ -87,9 +95,15 @@ end
 
 function auxReloadLua(level_id) -- Establece el level en el player
 	g_Player:SetActualLevelAux(level_id)
+	utils_log("Stopping all sounds...")
+	local l_SoundManager = g_Engine:get_sound_manager()
+	l_SoundManager:play_event(m_StopAllSoundsEvent, "NO_SPEAKER")
 end
 
 function luaUpdate(_ElapsedTime)
+	local l_SoundManager = g_Engine:get_sound_manager()
+	local l_Camera = g_Engine:get_camera_controller_manager():get_main_camera()
+	l_SoundManager:update(l_Camera)
 	if not g_Engine:get_active_console() then
 		if m_iniciando then
 			m_timerPause = m_timerPause + _ElapsedTime
@@ -124,6 +138,8 @@ function luaUpdate(_ElapsedTime)
 			m_menu = true
 			m_pause = true
 			g_Engine:set_pause(true)
+			local l_SoundManager = g_Engine:get_sound_manager()
+			l_SoundManager:play_event(m_PauseAllSoundsEvent, "NO_SPEAKER")
 		end
 		if l_InputManager:is_action_released("DebugToggleFrustum") then
 			g_Engine:set_frustum_active(not g_Engine:get_frustum_active())		
@@ -137,7 +153,11 @@ function luaUpdate(_ElapsedTime)
 			local l_videoManager = g_Engine:get_video_manager()
 			l_videoManager:play_clip("bunny.ogv")
 		end
-		--g_VolumeController:CheckVolumeKeys()	
+		g_VolumeController:CheckVolumeKeys()	
+		if l_InputManager:is_action_released("DebugStopAllSounds") then
+			local l_SoundManager = g_Engine:get_sound_manager()
+			l_SoundManager:play_event(m_StopAllSoundsEvent, "NO_SPEAKER")
+		end
 	end
 end
 
@@ -261,6 +281,8 @@ function luaGui(_ElapsedTime)
 				m_menu = false
 				m_pause = false
 				g_Engine:set_pause(false)
+				local l_SoundManager = g_Engine:get_sound_manager()
+				l_SoundManager:play_event(m_ResumeAllSoundsEvent, "NO_SPEAKER")
 			end 
 			
 			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
