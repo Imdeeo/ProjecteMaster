@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<lights ambient_light_color="0.3 0.3 0.3 1.0">
+	<light name="RojoDetrasBOSS" enabled="true" type="spot" pos="-1.05533 -6.63589 -5.09675" dir="0.77544 -0.623321 -0.100809" color="0.219608 0.0588235 0.0588235 1" angle="0.495674" fall_off="0.614356" att_start_range="80.0" att_end_range="238.0" intensity="0.5" generate_shadow_map="false"/>
+	<light name="LuzVerdeAmbiente001" enabled="true" type="omni" pos="-5.55033 -0.0783188 -2.77919" color="0.0980392 0.14902 0.0823529 1" att_start_range="2.0" att_end_range="6.0" intensity="1.0"/>
+	<light name="LuzVerdeAmbiente006" enabled="true" type="omni" pos="-16.1607 -6.86333 6.68621" color="0.0980392 0.14902 0.0823529 1" att_start_range="2.0" att_end_range="7.32" intensity="1.0"/>
+</lights>
