@@ -43,7 +43,7 @@
 	<instance_mesh name="Tubo21GramosPeque" layer ="solid" core_name="Tubo21GramosPeque" position="17.9351 0.791729 0.270982" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TubosPuertaBiblioteca001" layer ="solid" core_name="TubosPuertaBiblioteca001" position="15.7805 7.71709 0.397924" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="TubosPuertaBiblioteca002" layer ="solid" core_name="TubosPuertaBiblioteca002" position="8.15324 7.65761 -0.026204" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="ValvulaPuzzle" layer ="solid" core_name="ValvulaPuzzle" position="22.4551 -0.72669 16.0344" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="ValvulaPuzzle" layer ="solid" core_name="ValvulaPuzzle" position="22.4551 -0.72669 16.0344" rotation="0.0 0.0 -0.642788 0.766044" create_physics="false" visible="true"/>
 	<instance_mesh name="CajaTubos008" layer ="solid" core_name="CajaTubos008" position="3.97609 4.42243 7.95156" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajaTubos009" layer ="solid" core_name="CajaTubos009" position="3.97609 5.9953 8.82808" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajaTubos010" layer ="solid" core_name="CajaTubos010" position="4.63723 -0.219824 2.79687" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
@@ -380,7 +380,7 @@
 	<instance_mesh name="TrituradoraParedCubierta" layer ="solid" core_name="TrituradoraParedCubierta" position="-4.64847 9.34105 12.6921" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TrituradoraTechoCubierta" layer ="solid" core_name="TrituradoraParedCubierta" position="8.41702 13.1 8.88564" rotation="0.70711 -0.70711 0.0 0.0" create_physics="false" visible="true"/>
 	<instance_mesh name="CablesSalaMaquinas" layer ="solid" core_name="CablesSalaMaquinas" position="11.5829 4.15192 2.29367" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="InputPipe" layer="solid" core_name="InputPipe" position="14.9854 0.502254 11.4689" rotation="0.0 -0.258819 0.0 0.965926" create_physics="false" visible="true"/>
+	<instance_mesh name="InputPipe" layer ="solid" core_name="InputPipe" position="14.9854 0.502254 11.4689" rotation="0.0 -0.258819 0.0 0.965926" create_physics="false" visible="true"/>
 	<instance_mesh name="TriggerStairsLower" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsLower" is_active="true" core_name="TriggerStairsLower" position="5.67795 -0.739736 1.03263" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="PlanchaCinta2_092"/>
