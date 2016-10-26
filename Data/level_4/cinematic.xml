@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cinematics>
+	<cinematic name="engranajes_boss" duration="20.0" cycle="false">
+		<cinematic_object resource="EngranajeGrande001" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.66667" pos="0.0 0.0 0.0" rotation="0.258819 0.0 0.0 -0.965926" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="0.5 0.0 0.0 -0.866025" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="0.0 0.0 0.0" rotation="0.707107 0.0 0.0 -0.707107" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="-0.866025 0.0 0.0 0.5" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="8.33333" pos="0.0 0.0 0.0" rotation="-0.965926 0.0 0.0 0.258819" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.0" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="11.6667" pos="0.0 0.0 0.0" rotation="-0.965926 0.0 0.0 -0.258819" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="13.3333" pos="0.0 0.0 0.0" rotation="-0.866026 0.0 0.0 -0.5" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="15.0" pos="0.0 0.0 0.0" rotation="-0.707107 0.0 0.0 -0.707107" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="16.6667" pos="0.0 0.0 0.0" rotation="-0.5 0.0 0.0 -0.866025" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="18.3333" pos="0.0 0.0 0.0" rotation="-0.258819 0.0 0.0 -0.965926" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="20.0" pos="0.0 0.0 0.0" rotation="-1.50996e-007 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="EngranajeGrande002" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.66667" pos="0.0 0.0 0.0" rotation="0.5 0.0 0.0 -0.866025" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="0.866025 0.0 0.0 -0.5" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 2.02543e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="-0.866026 0.0 0.0 -0.5" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="8.33333" pos="0.0 0.0 0.0" rotation="-0.5 0.0 0.0 -0.866025" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.0" pos="0.0 0.0 0.0" rotation="-4.33126e-007 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="11.6667" pos="0.0 0.0 0.0" rotation="0.5 0.0 0.0 -0.866026" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="13.3333" pos="0.0 0.0 0.0" rotation="0.866025 0.0 0.0 -0.5" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="15.0" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 8.66252e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="16.6667" pos="0.0 0.0 0.0" rotation="-0.866026 0.0 0.0 -0.499999" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="18.3333" pos="0.0 0.0 0.0" rotation="-0.500001 0.0 0.0 -0.866025" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="20.0" pos="0.0 0.0 0.0" rotation="-4.64912e-007 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="EngranajeGrande003" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.66667" pos="0.0 0.0 0.0" rotation="-0.5 0.0 0.0 -0.866025" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="-0.866026 0.0 0.0 -0.5" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="-0.866025 0.0 0.0 0.5" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="8.33333" pos="0.0 0.0 0.0" rotation="0.5 0.0 0.0 -0.866025" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="11.6667" pos="0.0 0.0 0.0" rotation="-0.5 0.0 0.0 -0.866025" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="13.3333" pos="0.0 0.0 0.0" rotation="-0.866025 0.0 0.0 -0.5" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="15.0" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 -3.01992e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="16.6667" pos="0.0 0.0 0.0" rotation="-0.866026 0.0 0.0 0.5" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="18.3333" pos="0.0 0.0 0.0" rotation="0.5 0.0 0.0 -0.866025" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="20.0" pos="0.0 0.0 0.0" rotation="1.39071e-007 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="EngranajeGrande004" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.66667" pos="0.0 0.0 0.0" rotation="-0.258819 0.0 0.0 -0.965926" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="-0.5 0.0 0.0 -0.866025" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="0.0 0.0 0.0" rotation="-0.707107 0.0 0.0 -0.707107" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="-0.866025 0.0 0.0 -0.5" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="8.33333" pos="0.0 0.0 0.0" rotation="-0.965926 0.0 0.0 -0.258819" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.0" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="11.6667" pos="0.0 0.0 0.0" rotation="-0.965926 0.0 0.0 0.258819" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="13.3333" pos="0.0 0.0 0.0" rotation="-0.866026 0.0 0.0 0.5" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="15.0" pos="0.0 0.0 0.0" rotation="0.707107 0.0 0.0 -0.707107" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="16.6667" pos="0.0 0.0 0.0" rotation="0.5 0.0 0.0 -0.866025" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="18.3333" pos="0.0 0.0 0.0" rotation="0.258819 0.0 0.0 -0.965926" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="20.0" pos="0.0 0.0 0.0" rotation="1.50996e-007 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+</cinematics>
