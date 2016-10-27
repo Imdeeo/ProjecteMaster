@@ -7,7 +7,12 @@ function ReturnFirstAutomaton(args)
 	l_Enemy.m_ActualAnimation = 1
 	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
 
-	l_Enemy.m_SoundManager:play_event(l_Enemy.m_StartPatrolEvent, l_Owner)
+	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, 4)
+	l_SoundSync.m_EventsPerCycle = 2
+	l_SoundSync.m_StartSequenceEvent = l_Enemy.m_StartPatrolEvent
+	l_SoundSync.m_StopSequenceEvent = l_Enemy.m_StopPatrolEvent
+	l_SoundSync.m_Offset = 0.31
+	l_Enemy.m_SoundSync = l_SoundSync
 		
 	l_Enemy.m_Velocity = Vect3f(0,0,0)
 	l_Enemy.m_TotalNodes = 0.0
@@ -22,6 +27,7 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]	
 	
+	l_Enemy.m_SoundSync:Sync(_ElapsedTime)
 	if l_Enemy:PlayerVisible(l_Owner) or l_Enemy:DetectPlayerNoise(1) then
 		l_Enemy.m_State = "chase"
 	else

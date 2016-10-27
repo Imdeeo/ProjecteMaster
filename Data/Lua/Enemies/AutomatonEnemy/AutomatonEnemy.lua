@@ -50,7 +50,7 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_alert_timer = 0
 
 		self.m_StepSoundEvent = SoundEvent()
-		self.m_StepSoundEvent.event_name = "Step_Automaton"
+		self.m_StepSoundEvent.event_name = "Automaton_Step"
 		self.m_StartPatrolEvent = SoundEvent()
 		self.m_StartPatrolEvent.event_name = "Automaton_Start_Patrol"
 		self.m_StopPatrolEvent = SoundEvent()

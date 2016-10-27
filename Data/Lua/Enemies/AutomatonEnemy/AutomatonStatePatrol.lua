@@ -10,7 +10,6 @@ function PatrolFirstAutomaton(args)
 	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
 	
 	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, 4)
-	l_SoundSync = l_SoundSync
 	l_SoundSync.m_EventsPerCycle = 2
 	l_SoundSync.m_StartSequenceEvent = l_Enemy.m_StartPatrolEvent
 	l_SoundSync.m_StopSequenceEvent = l_Enemy.m_StopPatrolEvent
