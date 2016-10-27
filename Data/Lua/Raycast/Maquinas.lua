@@ -56,6 +56,15 @@ function R3ValveInput(_Player)
 		_Player.m_PhysXManager:disable_physics("CajaEngranaje", "FisicasAux")
 		_Player.m_PhysXManager:enable_object("CajaEngranajeMovido", "FisicasAux")
 		--_Player.m_PhysXManager:disable_physics("TriggerValveInput")
+		local l_Level = g_Engine:get_level_manager():get_level(l_LevelId)
+		local l_CinematiManager = l_Level:get_cinematic_manager()
+		l_CinematiManager:get_resource("21gramos"):play()
+		l_CinematiManager:get_resource("TrituradoraPared"):play()
+		l_CinematiManager:get_resource("TrituradoraTecho"):play()
+		l_CinematiManager:get_resource("Newcommen"):play()
+		
+		local l_Material = l_Level:get_material_manager():get_resource("FogMaterial")
+		l_Material:set_value(0,0.0)
 	end
 end
 

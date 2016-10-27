@@ -47,13 +47,19 @@ end
 function OnStayStairsLower(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		local l_Player = m_CharacterManager.m_Player[1]
-		if l_Player.m_ClimbingDown then
+		if l_Player.m_ClimbingDown then			
 			l_Player.m_CurrentAend = nil
 			l_Player.m_IsClimbing = false
 			l_Player.m_InteractingAnimation = 21
 			l_Player.m_InteractingCinematic = nil
 			l_Player.m_CameraAnimation = nil
 			l_Player.m_AnimationTime = 1.5
+			
+			if g_Player.m_ActualLevel == "Maquinas" then
+				local l_Level = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
+				local l_Material = l_Level:get_material_manager():get_resource("FogMaterial")
+				l_Material:set_value(1, 1.0)
+			end
 		end
 	end
 end
@@ -69,6 +75,12 @@ function OnStayStairsUpper(_TriggerName, _ColliderName)
 			l_Player.m_AnimationTime = 1.0
 			l_Player.m_IsInteracting = true
 			l_Player.m_IsClimbing = false
+			
+			if g_Player.m_ActualLevel == "Maquinas" then
+				local l_Level = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
+				local l_Material = l_Level:get_material_manager():get_resource("FogMaterial")
+				l_Material:set_value(1, 4.0)
+			end
 		end
 	end
 end
@@ -79,7 +91,7 @@ function OnEnterStairsLower(_TriggerName, _ColliderName)
 		l_Player.m_TargetLookOffset = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
 		l_Player.m_TargetPosOffset = Vect3f(0.4, 0.0, 0.4)
 		l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
-		l_Player.m_IsClimbing = not l_Player.m_IsClimbing
+		l_Player.m_IsClimbing = not l_Player.m_IsClimbing		
 	end
 end
 
