@@ -6,10 +6,10 @@ local l_LevelId = "Maquinas"
 
 function R3Valve(_Player)
 	_Player.m_TargetYaw = g_PI
-	_Player.m_ForwardCamera = Vect3f(0.766045, -0.642787, 0.0)
+	_Player.m_ForwardCamera = Vect3f(0.766055, -0.64279, 0.0)
 	_Player.m_UpCamera = Vect3f(0.642787, 0.766045, 0.0)
-	_Player.m_TargetPosOffset = Vect3f(-1.65, 0.0, 0.0)
-	l_Target = GetTriggerPos("TriggerValve", l_LevelId)
+	_Player.m_TargetPosOffset = Vect3f(-0.86, 0.0, 0.004)
+	l_Target = GetObjectPos("ValvulaPuzzle", l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 2.0) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 24
@@ -39,11 +39,11 @@ function R3ValveInput(_Player)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.2) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 25
-		_Player.m_InteractingCinematic = nil
+		_Player.m_InteractingCinematic = nil--"InputValve"
 		_Player.m_AnimationTime = 6.666667
-		_Player.m_CameraAnimation = nil--"InputValve"
+		_Player.m_CameraAnimation = "InputValve"
 		_Player.m_NewItemName = ""
-		_Player.m_ItemTime = 4.666667
+		_Player.m_ItemTime = 6.666667
 		_Player.m_ItemDropTime = -1.0
 		_Player.m_CurrentAend = nil
 		_Player.m_LeftHanded = true
