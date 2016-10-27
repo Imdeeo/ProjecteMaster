@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <camera_key_controller name="InputValve">
-	<key time="0.0" pos="0.0 1.8 0.1" up="0.0 1.0 0.0" look_at="0.0 1.8 1.1" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
+	<key time="0.0" pos="0.0 1.8 0.1" up="0.0 0.939693 0.342019" look_at="0.0 1.45798 1.03969" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
 	<key time="1.33333" pos="0.0 1.8 0.1" up="0.0 0.939693 0.342019" look_at="0.0 1.45798 1.03969" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
 	<key time="2.0" pos="0.0 1.8 0.1" up="0.0 0.939693 0.342019" look_at="0.0 1.45798 1.03969" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
 	<key time="4.0" pos="-0.0679932 1.8 0.15125" up="0.0 0.939693 0.342019" look_at="-0.0679932 1.45798 1.09094" fov="1.13446" near_plane="0.0" far_plane="1000.0"/>
