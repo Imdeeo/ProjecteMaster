@@ -2,16 +2,16 @@
 <cinematics>
 	<cinematic name="InputValve" duration="6.66667" cycle="false">
 		<cinematic_object resource="ValvulaPuzzle" layer="solid">
-			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.504199 -0.492425 0.495713 -0.507513" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="1.23333" pos="0.0 0.0 0.0" rotation="0.504199 -0.492425 0.495713 -0.507513" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="1.9" pos="0.0 0.0 0.0" rotation="0.683419 -0.173808 0.176086 -0.686821" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.56667" pos="0.0 0.0 0.0" rotation="0.683419 -0.173808 0.176086 -0.686821" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.23333" pos="0.0 0.0 0.0" rotation="0.679518 0.19138 -0.190723 -0.682095" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.9" pos="0.0 0.0 0.0" rotation="0.679518 0.19138 -0.190723 -0.682095" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="4.56667" pos="0.0 0.0 0.0" rotation="-0.49354 -0.505288 0.506429 0.494603" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="5.23333" pos="0.0 0.0 0.0" rotation="-0.49354 -0.505288 0.506429 0.494603" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="5.9" pos="0.0 0.0 0.0" rotation="-0.175319 -0.683805 0.686437 0.174582" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="-0.175319 -0.683805 0.686437 0.174582" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" 		rotation=" -0.492425 0.495713   0.504199 -0.507513" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.23333" pos="0.0 0.0 0.0" 	rotation=" -0.492425 0.495713   0.504199 -0.507513" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.9" pos="0.0 0.0 0.0" 		rotation=" -0.173808 0.176086   0.683419 -0.686821" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.56667" pos="0.0 0.0 0.0" 	rotation=" -0.173808 0.176086   0.683419 -0.686821" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.23333" pos="0.0 0.0 0.0" 	rotation="  0.19138  -0.190723  0.679518 -0.682095" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.9" pos="0.0 0.0 0.0" 		rotation="  0.19138  -0.190723  0.679518 -0.682095" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.56667" pos="0.0 0.0 0.0" 	rotation=" -0.505288 0.506429  -0.49354  0.494603 " scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.23333" pos="0.0 0.0 0.0" 	rotation=" -0.505288 0.506429  -0.49354  0.494603 " scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.9" pos="0.0 0.0 0.0" 		rotation=" -0.683805 0.686437  -0.175319 0.174582 " scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" 	rotation=" -0.683805 0.686437  -0.175319 0.174582 " scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
 	<cinematic name="ResolveValve" duration="1.16667" cycle="false">
