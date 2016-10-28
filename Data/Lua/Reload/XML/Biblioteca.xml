@@ -5,9 +5,9 @@
 	<resource level="Biblioteca" layer="solid" name="AutomatonRight" type="enemy" position="-2.547590 0.500000 2.078260" rotation="0.000000 0.707107 0.000000 -0.707107" awake="false" visible="true"/>
 	<resource level="Biblioteca" layer="solid" name="TurretAutomaton" type="enemy" position="12.528900 0.700000 23.473000" rotation="0.000000 1.000000 0.000000 0.000000" awake="false" visible="true"/>
 	<resource level="Biblioteca" layer="solid" name="Artilufacto" type="object" position="-17.0552 1.66966 28.9583" rotation="0.573577 0.0 0.0 0.819152" visible="true"/>	
-	<resource level="Biblioteca" layer="solid" name="puertalaberintooficial" type="object" position="-7.28345 3.2257 8.30054" rotation="-0.00377238 -1.49012e-007 0.0 0.999993" visible="true"/>	
-	<resource level="Biblioteca" layer="solid" name="LibrosEntradaLaberinto006" type="object" position="-7.27091 1.34372 8.35188" rotation="0.0 -1.49012e-007 0.0 1.0" visible="true"/>	
-	<resource level="Biblioteca" layer="solid" name="planelibropuertalaboficial" type="object" position="-7.28931 4.56333 8.29549" rotation="0.0 -1.49012e-007 0.0 1.0" visible="true"/>
+	<resource level="Biblioteca" layer="solid" name="puertalaberintooficial" type="object" position="-7.28345 4.81488 8.33229" rotation="-0.00377238 -1.49012e-007 0.0 0.999993" visible="true"/>	
+	<resource level="Biblioteca" layer="solid" name="LibrosEntradaLaberinto006" type="object" position="-7.27091 1.41208 8.3987" rotation="0.0 -1.49012e-007 0.0 1.0" visible="true"/>	
+	<resource level="Biblioteca" layer="solid" name="planelibropuertalaboficial" type="object" position="-7.28931 4.55674 8.37998" rotation="0.0 -1.49012e-007 0.0 1.0" visible="true"/>
 	<resource level="Biblioteca" layer="solid" name="LibroEspecial" type="object" position="15.5708 1.52933 26.3092" rotation="0.0 0.0 0.0 1.0" visible="true"/>
 	<resource level="Biblioteca" layer="solid" name="PistaBiblio" type="object" position="11.8743 1.2716 15.2575" rotation="0.0 0.0 0.0 1.0" visible="true"/>
 	<resource level="Biblioteca" layer="alpha_blend_objects" name="reflejoluz3" type="object" position="16.0246 2.00381 8.17719" rotation="-0.866025 0.0 0.0 0.5" visible="false"/>

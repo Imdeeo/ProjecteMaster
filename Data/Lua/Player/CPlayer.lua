@@ -519,7 +519,7 @@ class 'CPlayer' (CLUAComponent)
 		PuzzleState = State.create(PuzzleUpdate)
 		PuzzleState:set_do_first_function(PuzzleFirst)
 		PuzzleState:set_do_end_function(PuzzleEnd)
-		PuzzleState:add_condition(PuzzleToFallingCondition, "Idle")
+		PuzzleState:add_condition(PuzzleToIdleCondition, "Idle")
 		PuzzleState:add_condition(ANYToDeadCondition, "Dead")
 		
 		FocusingState = State.create(FocusingUpdate)

@@ -35,7 +35,7 @@ function PuzzleEnd(args)
 	
 	--// Reset puzzle
 	if l_Player.m_OrganKeyCount <= table_length(l_Player.m_OrganKeyOrder) then
-		l_Player.m_PhysXManager:enable_trigger("TriggerPipeOrgan")
+		l_Player.m_PhysXManager:enable_trigger("TriggerPipeOrgan","FisicasAux")
 		l_Player.m_OrganKeyCount = 1
 	end
 	
@@ -50,7 +50,7 @@ function PuzzleEnd(args)
 	l_Owner:remove_action(l_Owner:get_actual_action_animation())
 end
 
-function PuzzleToFallingCondition(args)
+function PuzzleToIdleCondition(args)
 	local l_Player = args["self"]
 	return ((l_Player.m_Timer > l_Player.m_AnimationTime) and not l_Player.m_IsPuzzle) or l_Player.m_InputManager:is_action_active("MoveBackward")
 end
