@@ -98,10 +98,12 @@ end
 
 function R2ArtifactDoor(_Player)
 	_Player.m_TargetYaw = -g_PI/2.0
-	_Player.m_TargetPosOffset = Vect3f(0.45, 0.0, -0.57)
+	_Player.m_TargetPosOffset = Vect3f(-0.81, 0.0, -0.605974)
+	_Player.m_ForwardCamera = Vect3f(0.0, -0.67204, 1.0)
+	_Player.m_UpCamera = Vect3f(0.0, 0.740519, 0.672036)
 	l_Target = GetTriggerPos("TriggerArtifactDoor",l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.6) then
-		_Player.m_Target = l_Target
+		_Player.m_Target = Vect3f(17.3453, 5.35695, 27.0514)
 		_Player.m_InteractingAnimation = 5
 		_Player.m_InteractingCinematic = "CrossArtifactDoor"
 		_Player.m_CameraAnimation = "CrossArtifactDoor"
@@ -112,6 +114,7 @@ function R2ArtifactDoor(_Player)
 		--_Player.m_CurrentAend = "CrossArtifactDoor"
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
+		_Player.m_Teleport = true
 		_Player.m_IsPuzzle = false
 	end
 end
