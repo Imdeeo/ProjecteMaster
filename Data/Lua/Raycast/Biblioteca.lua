@@ -156,7 +156,9 @@ function R2Book(_Player)
 		_Player.m_IsPuzzle = false
 		g_Engine:get_video_manager():play_clip("bunny.ogv") -- launch projector video
 		_Player.m_CinematicManager:get_resource("fonotelefote"):play() -- launch projector cinematic
-		g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_light_manager():get_resource("LuzProyector"):set_enabled(true) -- activate lights
+		local l_Level = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
+		l_Level:get_light_manager():get_resource("LuzProyector"):set_enabled(true) -- activate lights
+		l_Level:get_layer_manager():get_layer("alpha_blend_objects"):get_resource("reflejoluz3"):set_visible(true) 
 		-- activate particles
 		_Player.m_PhysXManager:disable_physics("TriggerBook","FisicasAux")
 	end
