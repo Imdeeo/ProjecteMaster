@@ -1265,7 +1265,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_parameters", &CMaterial::GetParameters, luabind::return_stl_iterator)
 			.def("get_renderable_object_technique", &CMaterial::GetRenderableObjectTechnique)
 			.def("get_texture", &CMaterial::GetTexture)
-			.def("set_value", &CMaterial::SetValue)
+			.def("set_value", (void(CMaterial::*)(const int, const float))&CMaterial::SetValue)
+			.def("set_value", (void(CMaterial::*)(const int, const CColor))&CMaterial::SetValue)
 			.def("get_value", &CMaterial::GetValue)
 	];
 
