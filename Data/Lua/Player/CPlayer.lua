@@ -18,9 +18,11 @@ dofile("Data\\Lua\\Player\\PlayerStateInteracting.lua")
 dofile("Data\\Lua\\Player\\PlayerStateSingingStart.lua")
 dofile("Data\\Lua\\Player\\PlayerStateSingingLoop.lua")
 dofile("Data\\Lua\\Player\\PlayerStateSingingEnd.lua")
+dofile("Data\\Lua\\Player\\PlayerStateSpecialSinging.lua")
 dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 dofile("Data\\Lua\\Player\\PlayerStatePuzzle.lua")
 dofile("Data\\Lua\\Player\\PlayerStateFocusing.lua")
+
 
 --Bone #0: BrazosJaheem
 --Bone #1: CATRigHub001
@@ -158,7 +160,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Sanity = 100.0
 		self.m_MaxSanity = 100.0
 		self.m_TimerVortex = 0
-		
+		self.m_Teleport = false
 		self.m_IsSinging = false
 		self.m_IsCorrecting = false
 		self.m_IsClimbing = false
@@ -167,6 +169,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_IsInteracting = false
 		self.m_IsPuzzle = false
 		self.m_IsDead = false
+		self.m_SingOnce = false
 		
 		self.m_Target = nil
 		self.m_TargetPosOffset = Vect3f(1.0, 0.0, 0.0)
@@ -486,7 +489,8 @@ class 'CPlayer' (CLUAComponent)
 		InteractingState = State.create(InteractingUpdate)
 		InteractingState:set_do_first_function(InteractingFirst)
 		InteractingState:set_do_end_function(InteractingEnd)
-		InteractingState:add_condition(InteractingToFallingCondition, "Idle")
+		InteractingState:add_condition(InteractingToIdleCondition, "Idle")
+		InteractingState:add_condition(InteractingToSpecialSingingCondition, "SpecialSinging")
 		InteractingState:add_condition(ANYToDeadCondition, "Dead")
 		
 		SingingStartState = State.create(SingingStartUpdate)
@@ -524,6 +528,12 @@ class 'CPlayer' (CLUAComponent)
 		FocusingState:add_condition(FocusingToIdleCondition, "Idle")
 		FocusingState:add_condition(ANYToDeadCondition, "Dead")
 		
+		
+		SpecialSingingState = State.create(SpecialSingingStateUpdate)
+		SpecialSingingState:set_do_first_function(SpecialSingingStateFirst)
+		SpecialSingingState:set_do_end_function(SpecialSingingStateEnd)
+		SpecialSingingState:add_condition(SpecialSingingStateToIdleCondition, "Idle")
+		
 		self.m_StateMachine:add_state("Idle", IdleState)
 		self.m_StateMachine:add_state("Moving", MovingState)
 		self.m_StateMachine:add_state("Correcting", CorrectingState)
@@ -538,6 +548,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:add_state("SingingStart", SingingStartState)
 		self.m_StateMachine:add_state("SingingLoop", SingingLoopState)
 		self.m_StateMachine:add_state("SingingEnd", SingingEndState)
+		self.m_StateMachine:add_state("SpecialSinging", SpecialSingingState)
 		self.m_StateMachine:add_state("Dead", DeadState)
 		self.m_StateMachine:add_state("Puzzle", PuzzleState)
 		self.m_StateMachine:add_state("Focusing", FocusingState)
