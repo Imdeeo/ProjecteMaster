@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <resources>
 	<resource level="Player" layer="solid" name="Jaheem" type="player" position="0.0 0.9 5.5" rotation="0.0 0.0 0.0 1.0" visible="true"/>
-	<resource level="Biblioteca" layer="solid" name="AutomatonLeft" type="enemy" position="15.199900 4.933401 26.689301" rotation="0.000000 1.000000 0.000000 0.000000" awake="false" visible="true"/>
-	<resource level="Biblioteca" layer="solid" name="AutomatonRight" type="enemy" position="-2.547590 0.500000 2.078260" rotation="0.000000 0.707107 0.000000 -0.707107" awake="false" visible="true"/>
+	<resource level="Biblioteca" layer="solid" name="AutomatonLeft" type="enemy" position="15.199900 5.1 26.510681" rotation="0.000000 1.000000 0.000000 0.000000" awake="false" visible="true"/>
+	<resource level="Biblioteca" layer="solid" name="AutomatonRight" type="enemy" position="-19.960800 1.1 13.832300" rotation="0.000000 0.707107 0.000000 -0.707107" awake="false" visible="true"/>
 	<resource level="Biblioteca" layer="solid" name="TurretAutomaton" type="enemy" position="12.528900 0.700000 23.473000" rotation="0.000000 1.000000 0.000000 0.000000" awake="false" visible="true"/>
 	<resource level="Biblioteca" layer="solid" name="Artilufacto" type="object" position="-17.0552 1.66966 28.9583" rotation="0.573577 0.0 0.0 0.819152" visible="true"/>	
 	<resource level="Biblioteca" layer="solid" name="puertalaberintooficial" type="object" position="-7.28345 4.81488 8.33229" rotation="-0.00377238 -1.49012e-007 0.0 0.999993" visible="true"/>	
