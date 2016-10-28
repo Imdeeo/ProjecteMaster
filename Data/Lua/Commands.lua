@@ -103,3 +103,7 @@ end
 function rot()
 	utils_log_q(g_Player.m_RenderableObject:get_rotation())
 end
+
+function pos()
+	utils_log(""..g_Player.m_CameraController:get_position().y)
+end
