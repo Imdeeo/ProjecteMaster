@@ -28,6 +28,7 @@ void CCinematicPlayer::Play(bool _Cycle)
 void CCinematicPlayer::Pause()
 {
 	m_Playing = false;
+	m_CurrentTime = 0;
 }
 
 float CCinematicPlayer::GetDuration()
