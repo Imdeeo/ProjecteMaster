@@ -9,8 +9,8 @@ local l_LevelId = "Recibidor"
 
 function R1Door(_Player)
 	_Player.m_TargetPosOffset = Vect3f(-1.377, 0.0, -0.713147)
-	_Player.m_ForwardCamera = Vect3f(0.0, 0.0, 1.0)
-	_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
+	_Player.m_ForwardCamera = Vect3f(0.0, -0.5, 0.86)
+	_Player.m_UpCamera = Vect3f(0.0, 0.866026, 0.5)
 	_Player.m_TargetYaw = -g_PI/2.0
 	l_Target = GetTriggerPos("TriggerDoor", l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 0.8) then
@@ -21,11 +21,14 @@ function R1Door(_Player)
 		_Player.m_NewItemName = ""
 		_Player.m_ItemTime = 1.5
 		_Player.m_ItemDropTime = -1.0
-		_Player.m_CurrentAend = "CrossDoor"
+		_Player.m_CurrentAend = nil
 		_Player.m_LeftHanded = false
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
+		_Player.m_Teleport = true
+		_Player.m_SingOnce = true
+		_Player.m_AnimationTime = 16.6
 	end
 end
 
