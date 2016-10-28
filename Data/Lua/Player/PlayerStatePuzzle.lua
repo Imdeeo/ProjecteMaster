@@ -6,6 +6,7 @@ function PuzzleFirst(args)
 	l_Player.m_Timer = -22.5
 	l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, false)
 	l_Owner:set_visible(true)
+	l_Owner:set_position(l_Owner:get_position()-Vect3f(0,0.025,0))
 end
 
 function PuzzleUpdate(args, _ElapsedTime)
@@ -47,6 +48,10 @@ function PuzzleEnd(args)
 	l_Player.m_InteractingAnimation = 0
 	l_Player.m_AnimationTime = 0
 	l_Player.m_CameraController:unlock()
+	local auxRot = Quatf()
+	auxRot:set_from_fwd_up(l_Player.m_CameraController:get_rotation():get_forward_vector(),Vect3f(0,1,0))
+	l_Player.m_CameraController:set_rotation(auxRot)
+	l_Owner:set_position(l_Owner:get_position()+Vect3f(0,0.025,0))
 	l_Owner:remove_action(l_Owner:get_actual_action_animation())
 end
 
