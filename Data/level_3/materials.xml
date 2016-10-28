@@ -38,6 +38,8 @@
 	</material>
 	<material name="CombineMaterial" renderable_object_technique="combine">
 		<parameter type="float" name="ShowTexture" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="Intensity" value="1.000000" description="min=0.0 max=5.0 step=1.0"/>
+		<parameter type="color" name="Color" value="1.000000 1.0 1.0 1.000000" description=""/>
 	</material>
 	<material name="FlareBlurMaterial" renderable_object_technique="flare_blur">
 		<parameter type="float" name="TextureSize" value="256.000000" description=""/>
