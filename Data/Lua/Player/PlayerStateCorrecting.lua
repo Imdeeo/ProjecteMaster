@@ -23,10 +23,10 @@ function CorrectingUpdate(args, _ElapsedTime)
 	--// Force the player face the target
 		--// Movement
 	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetPosOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
-	local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
+	
 	l_FaceTargetDisplacement.y = 0.0
 	utils_log("Distance: "..l_FaceTargetDisplacement:length())
-	if l_FaceTargetDisplacement:length() <= 0.01 then
+	if l_FaceTargetDisplacement:length() <= 0.04 then
 		l_PosOK = true
 	else
 		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
@@ -43,8 +43,6 @@ function CorrectingUpdate(args, _ElapsedTime)
 		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, l_PercentRotation)
 		l_Player.m_CameraController:set_rotation(target_quat)
 	else
-		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, 1)
-		l_Player.m_CameraController:set_rotation(target_quat)
 		l_AngleOK = true
 	end
 		
@@ -94,7 +92,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 end
 
 function CorrectingEnd(args)
-	
+
 end
 
 function ANYToCorrectingCondition(args)
