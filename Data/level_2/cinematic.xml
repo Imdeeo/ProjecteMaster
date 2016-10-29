@@ -67,14 +67,14 @@
 			<cinematic_object_key_frame time="1.73333" pos="0.182939 -0.650471 -0.121603" rotation="-0.0106059 -0.70336 0.707256 -0.0704325" scale="0.0453858 0.0453854 0.0453854"/>
 		</cinematic_object>
 		<cinematic_object resource="PuertaSalaMaquinas" layer="solid">
-			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="0.0333333" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="7.36667" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="8.03333" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="8.36667" pos="0.0 0.0 0.0" rotation="0.0 -0.99997 0.0 0.00778803" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="10.0333" pos="0.0 0.0 0.0" rotation="0.0 0.820593 0.0 -0.571513" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="10.3667" pos="0.0 0.0 0.0" rotation="0.0 0.820593 0.0 -0.571513" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="10.7" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.0333333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="7.36667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="8.03333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="8.36667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 0.99997" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.0333" pos="0.0 0.0 0.0" rotation="0.0 -0.571513 0.0 0.820593" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.3667" pos="0.0 0.0 0.0" rotation="0.0 -0.571513 0.0 0.820593" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 		<cinematic_object resource="ValvulaPuertaSalaMaquinas" layer="solid">
 			<cinematic_object_key_frame time="0.0666667" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
