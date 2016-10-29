@@ -1,7 +1,7 @@
 function SingingLoopFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	l_Owner:blend_cycle(28,1.0,0.1)
+	l_Owner:blend_cycle(29,1.0,0.1)
 	--Launch sound
 end
 

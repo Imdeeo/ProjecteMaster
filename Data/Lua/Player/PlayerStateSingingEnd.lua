@@ -1,7 +1,7 @@
 function SingingEndFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	l_Owner:execute_action(29, 0.1, 0.1, 1.0, true)
+	l_Owner:execute_action(30, 0.1, 0.1, 1.0, true)
 	l_Player.m_Timer = 0.0
 	--Launch sound
 end
