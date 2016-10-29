@@ -59,27 +59,31 @@
 			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 0.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="1.50996e-007 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
-	</cinematic>
-	<cinematic name="CrossArtifactDoor" duration="8.7" cycle="false" reverse="false">
+	</cinematic>	
+	<cinematic name="CrossArtifactDoor" duration="10.7" cycle="false">
+		<cinematic_object resource="Artilufacto" layer="solid">
+			<cinematic_object_key_frame time="0.0333333" pos="0.0 0.0 0.0" rotation="-0.529878 -0.687324 -0.380925 0.318924" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.7" pos="0.180906 -0.711486 -0.161299" rotation="-1.35674e-006 -0.689399 0.724368 -0.00445197" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.73333" pos="0.182939 -0.650471 -0.121603" rotation="-0.0106059 -0.70336 0.707256 -0.0704325" scale="0.0453858 0.0453854 0.0453854"/>
+		</cinematic_object>
 		<cinematic_object resource="PuertaSalaMaquinas" layer="solid">
-			<cinematic_object_key_frame time="5.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="6.36667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="7.36667" pos="0.0 0.0 0.0" rotation="0.0 -0.571513 0.0 -0.820593" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="8.36667" pos="0.0 0.0 0.0" rotation="0.0 -0.571513 0.0 -0.820593" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="8.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.0333333" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="7.36667" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="8.03333" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="8.36667" pos="0.0 0.0 0.0" rotation="0.0 -0.99997 0.0 0.00778803" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.0333" pos="0.0 0.0 0.0" rotation="0.0 0.820593 0.0 -0.571513" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.3667" pos="0.0 0.0 0.0" rotation="0.0 0.820593 0.0 -0.571513" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.7" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 		<cinematic_object resource="ValvulaPuertaSalaMaquinas" layer="solid">
-			<cinematic_object_key_frame time="1.36667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.36667" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.21644 0.976296" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.03333" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.21644 0.976296" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="4.03333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.819152 -0.573577" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="4.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.819152 -0.573577" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="5.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 1.0 0.0" scale="1.0 1.0 1.0"/>
-		</cinematic_object>
-		<cinematic_object resource="Artilufacto" layer="solid">
-			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="0.0333333" pos="-3.62098e-005 -0.0006181 5.4121e-005" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="0.366667" pos="-3.59118e-005 0.00158411 -0.00348634" rotation="0.0153588 0.0 0.0 0.999882" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.0666667" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.03333" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.03333" pos="0.0 0.0 0.0" rotation="0.21644 -0.976296 0.0 1.59059e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.7" pos="0.0 0.0 0.0" rotation="0.21644 -0.976296 0.0 1.59059e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.7" pos="0.0 0.0 0.0" rotation="-0.819152 0.573577 1.33457e-007 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.36667" pos="0.0 0.0 0.0" rotation="-0.819152 0.573577 1.33457e-007 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="7.36667" pos="0.0 0.0 0.0" rotation="-1.0 0.0 1.62921e-007 0.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
 	<cinematic name="PullBook" duration="3.0" cycle="false" reverse="false">
