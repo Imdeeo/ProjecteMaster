@@ -1,30 +1,16 @@
-function SingingFirst(args)
+function SingingEndFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	l_Player.m_IsSinging = true
-	
-	if l_Player.m_IsWindedUp then
-		l_Owner:blend_cycle(1,1.0,0.1)
-	else
-		l_Owner:execute_action(2, 0.1, 0.1, 1.0, true)
-	end
-	
-	m_Timer = 0.0
+	l_Owner:execute_action(30, 0.1, 0.1, 1.0, true)
+	l_Player.m_Timer = 0.0
+	--Launch sound
 end
 
-function SingingUpdate(args, _ElapsedTime)
+function SingingEndUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	
-	m_Timer = m_Timer + _ElapsedTime
-	
-	if m_Timer >= 2.5 and not l_Player.m_IsWindedUp then
-		l_Player.m_IsWindedUp = true
-	end
-	
-	if not l_Player.m_InputManager:is_action_active("Sing") then
-		l_Player.m_IsSinging = false
-	end
+	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
@@ -61,28 +47,15 @@ function SingingUpdate(args, _ElapsedTime)
 	end
 end
 
-function SingingEnd(args)
+function SingingEndEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
+	l_Player.m_IsSinging = false
 	l_Player.m_CameraController:unlock()
-	if l_Player.m_IsSinging then
-		l_Owner:remove_action(l_Owner:get_actual_action_animation())
-	else
-		l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
-	end
+	l_Owner:remove_action(l_Owner:get_actual_action_animation())
 end
 
-function SingingToFallingCondition(args)
+function SingingEndToFallingCondition(args)
 	local l_Player = args["self"]
-	return not l_Player.m_IsSinging
-end
-
-function SingingToItselfCondition(args)
-	local l_Player = args["self"]
-	return l_Player.m_IsWindedUp
-end
-
-function ANYToSingingCondition(args)
-	local l_Player = args["self"]
-	return l_Player.m_InputManager:is_action_active("Sing")
+	return l_Player.m_Timer >= 3.0
 end

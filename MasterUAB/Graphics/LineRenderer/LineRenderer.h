@@ -11,8 +11,6 @@ namespace tinyxml2
 	class XMLElement;
 }
 
-#define MAX_LINE_LENGHT 20
-
 class CMaterial;
 class CLineRendererParameter;
 class CRenderableObjectTechnique;

@@ -50,8 +50,8 @@ class 'CCharacterManager'
 						--utils_log("other")
 					end
 				elseif l_ElemName == "light" then
-					local l_Light = CLuz(l_Element)
-					UABEngine:get_game_play_manager():add_component(l_Light)
+					local l_Light = CLuz(l_Element, level_id)
+					l_game_play_manager:add_component(l_Light)
 					table.insert(self.m_Lights, l_Light)
 				end	
 				l_Element = l_Element:get_next()
@@ -60,4 +60,12 @@ class 'CCharacterManager'
 			--utils_log("File '"..Filename.."'not correctly loaded")
 		end
 	end
+
+function DestroyLevelGamePlayManager(_LevelId)
+	local l_game_play_manager = CUABEngine.get_instance():get_level_manager():get_level(_LevelId):get_game_play_manager()
+	for i=0,l_game_play_manager:size()-1 do
+		local l_component = l_game_play_manager:get_component(i)
+		l_component.Destroy(l_component)
+	end
+end
 --end

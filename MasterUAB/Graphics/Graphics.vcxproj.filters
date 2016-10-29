@@ -263,6 +263,9 @@
     <ClCompile Include="LoadScreen\LoadScreenManager.cpp">
       <Filter>LoadScreen</Filter>
     </ClCompile>
+    <ClCompile Include="Camera\FocusedCameraController.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContextManager">
@@ -619,6 +622,9 @@
     </ClInclude>
     <ClInclude Include="LoadScreen\LoadScreenManager.h">
       <Filter>LoadScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\FocusedCameraController.h">
+      <Filter>Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

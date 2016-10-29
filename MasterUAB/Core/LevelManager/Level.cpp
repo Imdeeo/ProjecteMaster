@@ -7,6 +7,7 @@
 #include "Camera\CameraControllerManager.h"
 #include "Cinematics\CinematicManager.h"
 #include "Particles\ParticleManager.h"
+#include "Bilboards\BilboardManager.h"
 #include "Manchas\ManchasManager.h"
 #include "StaticMesh\StaticMeshManager.h"
 #include "Layers\LayerManager.h"
@@ -14,6 +15,7 @@
 #include "GamePlayManager.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 #include "SceneRender\SceneRendererCommandManager.h"
+#include "Bilboards\BilboardManager.h"
 
 #include "IA\AStarManager.h"
 
@@ -24,6 +26,7 @@ CLevel::CLevel() :CNamed("")
 {
 	m_MaterialManager = new CMaterialManager();
 	m_ParticleManager = new CParticleManager();
+	m_BilboardManager = new CBilboardManager();
 	m_StaticMeshManager = new CStaticMeshManager();
 	m_LightManager = new CLightManager();
 	m_LayerManager = new CLayerManager();
@@ -37,8 +40,10 @@ CLevel::CLevel(const std::string &_Name) :CNamed(_Name)
 {
 	m_MaterialManager = new CMaterialManager();
 	m_ParticleManager = new CParticleManager();
+	m_BilboardManager = new CBilboardManager();
 	m_StaticMeshManager = new CStaticMeshManager();
 	m_LightManager = new CLightManager();
+	m_BilboardManager = new CBilboardManager();
 	m_LayerManager = new CLayerManager();
 	m_CinematicManager = new CCinematicManager();
 	m_GamePlayManager = new CGamePlayManager();
@@ -49,6 +54,21 @@ CLevel::CLevel(const std::string &_Name) :CNamed(_Name)
 
 CLevel::~CLevel()
 {
+	UtilsLog("\n\n\n\n");
+	UtilsLog("Destroy Level");
+	UABEngine.GetScriptManager()->RunCode("DestroyLevelGamePlayManager(\""+m_Name+"\")");
+	CHECKED_DELETE(m_GamePlayManager);
+	CHECKED_DELETE(m_AStarManager);
+	CHECKED_DELETE(m_CinematicManager);
+	CHECKED_DELETE(m_LightManager);
+	CHECKED_DELETE(m_LayerManager);
+	CHECKED_DELETE(m_StaticMeshManager);
+	CHECKED_DELETE(m_BilboardManager);
+	CHECKED_DELETE(m_ManchasManager);
+	CHECKED_DELETE(m_ParticleManager);
+	CHECKED_DELETE(m_MaterialManager);
+	UtilsLog("End Destroy Level");
+	UtilsLog("\n\n\n\n");
 }
 
 void CLevel::Load()
@@ -56,6 +76,7 @@ void CLevel::Load()
 	std::string l_LevelDirectory = UABEngine.GetLevelManager()->GetLevelInfo(m_Name).m_Directory;
 	m_MaterialManager->Load(l_LevelDirectory + "\\materials.xml", "", m_Name);
 	m_ParticleManager->Load(l_LevelDirectory + "\\particles.xml", m_Name);
+	m_BilboardManager->Load(l_LevelDirectory + "\\particles.xml", m_Name);
 	m_ManchasManager->Load(l_LevelDirectory + "\\cordura.xml", m_Name);
 	m_StaticMeshManager->Load(l_LevelDirectory + "\\static_meshes.xml", m_Name);
 	m_LayerManager->Load(l_LevelDirectory + "\\renderable_objects.xml", m_Name);
@@ -114,6 +135,10 @@ CCinematicManager * CLevel::GetCinematicManager() const
 CParticleManager * CLevel::GetParticleManager() const
 {
 	return m_ParticleManager;
+}
+CBilboardManager * CLevel::GetBilboardManager() const
+{
+	return m_BilboardManager;
 }
 CGamePlayManager * CLevel::GetGamePlayManager()const
 {

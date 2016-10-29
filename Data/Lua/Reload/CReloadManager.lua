@@ -47,10 +47,9 @@ class 'CReloadManager'
 				l_Resource:set_visible(l_Aux[7])
 				
 				if l_Aux[6] then
-					--utils_log("ACTIVANDO TRIGGER!!!")
-					g_Engine:get_physX_manager():enable_trigger(l_Aux[3])
+					g_Engine:get_physX_manager():enable_trigger(l_Aux[3], "FisicasAux")
 				else
-					g_Engine:get_physX_manager():disable_trigger(l_Aux[3])
+					g_Engine:get_physX_manager():disable_physics(l_Aux[3], "FisicasAux")
 				end
 			else
 				utils_log("OBJETOS: "..l_Aux[3])

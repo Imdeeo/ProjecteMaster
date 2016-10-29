@@ -1,6 +1,6 @@
 function FallingFirst(args)
 	local l_Owner = args["owner"]
-	l_Owner:blend_cycle(7,1.0,0.1)
+	l_Owner:blend_cycle(0,1.0,0.1)
 end
 
 function FallingUpdate(args, _ElapsedTime)
@@ -82,7 +82,7 @@ end
 
 function ANYToFallingCondition(args)
 	local l_Player = args["self"]
-    return l_Player.m_Velocity.y < -8
+	return l_Player.m_Velocity.y < -8
 end
 
 function FallingToIdleCondition(args)

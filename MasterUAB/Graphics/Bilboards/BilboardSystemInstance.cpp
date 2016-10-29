@@ -11,11 +11,13 @@
 #include "Effects\EffectManager.h"
 #include "Math\MathUtils.h"
 
+#include "LevelManager\LevelManager.h"
+
 
 CBilboardSystemInstance::CBilboardSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :
 	CRenderableObject(TreeNode,_LevelId)
 {
-	m_Type = UABEngine.GetInstance()->GetBilboardManager()->GetResource(TreeNode->GetPszProperty("type"));
+	m_Type = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetBilboardManager()->GetResource(TreeNode->GetPszProperty("type"));
 	m_ActiveBilboards = 0;
 	tinyxml2::XMLElement* l_Element = TreeNode->FirstChildElement();
 	while (l_Element != nullptr)
@@ -28,7 +30,8 @@ CBilboardSystemInstance::CBilboardSystemInstance(tinyxml2::XMLElement* TreeNode,
 	}
 	m_RenderableVertex = new CUABPointsListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_BilboardRenderableData, MAX_BILBOARDS_PER_INSTANCE, MAX_BILBOARDS_PER_INSTANCE, true);
 	m_Start = TreeNode->GetBoolProperty("start", true);
-	m_Size = TreeNode->GetFloatProperty("size", 0.1);
+	m_SizeX = TreeNode->GetFloatProperty("sizeX", 0.1);
+	m_SizeY = TreeNode->GetFloatProperty("sizeY", 0.1);
 	m_offsetSize = TreeNode->GetFloatProperty("offsetSize", 0.01);
 	m_Color = CColor(TreeNode->GetVect4fProperty("color", Vect4f(1,1,1,1)));
 }
@@ -78,7 +81,8 @@ void CBilboardSystemInstance::Render(CRenderManager *RM)
 
 			m_BilboardRenderableData[i].Color = m_Color;
 
-			m_BilboardRenderableData[i].UV.x = UABEngine.GetRandomValue(m_Size + m_offsetSize, m_Size - m_offsetSize);
+			m_BilboardRenderableData[i].UV.x = UABEngine.GetRandomValue(m_SizeX + m_offsetSize, m_SizeX - m_offsetSize);
+			m_BilboardRenderableData[i].UV.y = UABEngine.GetRandomValue(m_SizeY + m_offsetSize, m_SizeY - m_offsetSize);
 			m_BilboardRenderableData[i].UV2.x = (float)Bilboard->CurrentFrame;
 			m_BilboardRenderableData[i].UV2.y = (float)m_Type->GetNumFrames();
 		}

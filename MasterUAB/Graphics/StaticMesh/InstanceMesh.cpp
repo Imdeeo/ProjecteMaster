@@ -26,6 +26,10 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string &
 	if (m_GeneratePhysx)
 	{
 		std::string l_Name = GetName();
+		//char l_ActorName[256] = "";
+		//sprintf_s(l_ActorName, "%s_%s", _LevelId.c_str(), l_Name.c_str());
+
+		std::string l_ActorName = l_Name;
 		m_PxType = TreeNode->GetPszProperty("physics_type");
 		m_PxMaterial = TreeNode->GetPszProperty("physics_material");
 		m_PxGroup = TreeNode->GetPszProperty("physics_group");
@@ -46,16 +50,16 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string &
 			{
 				l_auxDirectoty = m_StaticMesh->GetPhysxMeshesDirectory();
 			}
-			l_PhysXManager->CreateStaticTriangleMesh(GetName(), m_StaticMesh, l_auxDirectoty, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			l_PhysXManager->CreateStaticTriangleMesh(l_ActorName, _LevelId, m_StaticMesh, l_auxDirectoty, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}else if (m_PxType == "sphere_shape")
 		{
-			l_PhysXManager->CreateStaticSphere(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			l_PhysXManager->CreateStaticSphere(l_ActorName, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
 		else if (m_PxType == "plane_shape")
 		{
 			m_PxNormals = TreeNode->GetVect3fProperty("physics_normal", Vect3f(.0f, 1.f, .0f));
 			m_PxOffset = TreeNode->GetFloatProperty("physics_offset", .0f);
-			l_PhysXManager->CreateStaticPlane(l_Name, m_PxNormals, m_PxOffset, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			l_PhysXManager->CreateStaticPlane(l_ActorName, m_PxNormals, m_PxOffset, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
 		else if (m_PxType == "box_trigger" || m_PxType == "sphere_trigger")
 		{
@@ -80,13 +84,13 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string &
 				l_Element = l_Element->NextSiblingElement();
 			}
 			if (m_PxType == "box_trigger")
-				l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction,l_OnTriggerStayLuaFunction,l_OnTriggerExitLuaFunction, l_ActivateActors,l_IsTriggerActive);
+				l_PhysXManager->CreateBoxTrigger(l_ActorName, l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction, l_OnTriggerStayLuaFunction, l_OnTriggerExitLuaFunction, l_ActivateActors, l_IsTriggerActive);
 			else
-				l_PhysXManager->CreateSphereTrigger(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction, l_OnTriggerStayLuaFunction, l_OnTriggerExitLuaFunction, l_ActivateActors, l_IsTriggerActive);
+				l_PhysXManager->CreateSphereTrigger(l_ActorName, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction, l_OnTriggerStayLuaFunction, l_OnTriggerExitLuaFunction, l_ActivateActors, l_IsTriggerActive);
 		}
 		else if (m_PxType == "convex_mesh")
 		{
-			l_PhysXManager->CreateStaticConvexMesh(GetName(), m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			l_PhysXManager->CreateStaticConvexMesh(l_ActorName, _LevelId, m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
 		else if (m_PxType == "box_shape")
 		{
@@ -102,7 +106,7 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string &
 			{
 				l_BB.z = 0.001f;
 			}
-			l_PhysXManager->CreateStaticBox(GetName(), l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			l_PhysXManager->CreateStaticBox(l_ActorName, l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
 	}
 }
@@ -117,6 +121,26 @@ CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreNam
 
 CInstanceMesh::~CInstanceMesh(void)
 {
+	CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
+	if (m_GeneratePhysx)
+	{
+		if (m_PxType == "convex_mesh" || m_PxType == "triangle_mesh")
+		{
+			size_t l_NunMeshes = m_StaticMesh->GetRenderableVertexs().size();
+			for (size_t i = 0; i < l_NunMeshes; i++)
+			{
+				char l_ActorName[256] = "";
+				sprintf_s(l_ActorName, "%s_%s_%u",m_Level.c_str() ,GetName().c_str(), i);
+				l_PhysXManager->RemoveActor(l_ActorName);
+			}
+		}
+		else
+		{
+			char l_ActorName[256] = "";
+			sprintf_s(l_ActorName, "%s_%s", m_Level.c_str(), GetName().c_str());
+			l_PhysXManager->RemoveActor(l_ActorName);
+		}
+	}
 	CRenderableObject::~CRenderableObject();
 } 
 
@@ -209,10 +233,44 @@ bool CInstanceMesh::GetInsideFrustum()
 		m_TransformMatrix = m_AnimatedScaleMatrix * m_AnimatedRotationMatrix * m_AnimatedTranslationMatrix * m_TransformMatrix;
 		
 		Vect3f l_Position = m_TransformMatrix.GetPos();
-		return m_Frustum->SphereVisible(l_Position, m_StaticMesh->GetBoundingSphereRadius());
+		return m_Frustum->SphereVisible(l_Position + m_StaticMesh->GetBoundingSphereCenter(), m_StaticMesh->GetBoundingSphereRadius());
 	}
 	else
 	{
-		return m_Frustum->SphereVisible(m_Position, m_StaticMesh->GetBoundingSphereRadius());
+		return m_Frustum->SphereVisible(m_Position + m_StaticMesh->GetBoundingSphereCenter(), m_StaticMesh->GetBoundingSphereRadius());
 	}
+}
+
+void CInstanceMesh::ChangeLevel(const std::string _NewLevel)
+{
+	CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
+	if (m_GeneratePhysx)
+	{
+		if (m_PxType == "convex_mesh" || m_PxType == "triangle_mesh")
+		{
+			size_t l_NunMeshes = m_StaticMesh->GetRenderableVertexs().size();
+			for (size_t i = 0; i < l_NunMeshes; i++)
+			{
+				char l_ActorName[256] = "";
+				char l_NewActorName[256] = "";
+				sprintf_s(l_ActorName, "%s_%s_%u", m_Level.c_str(), GetName().c_str(), i);
+				sprintf_s(l_ActorName, "%s_%s_%u", _NewLevel.c_str(), GetName().c_str(), i);
+				l_PhysXManager->ChangeActorName(l_ActorName, l_NewActorName);
+			}
+		}
+		else
+		{
+			char l_ActorName[256] = "";
+			char l_NewActorName[256] = "";
+			sprintf_s(l_ActorName, "%s_%s", m_Level.c_str(), GetName().c_str());
+			sprintf_s(l_ActorName, "%s_%s", _NewLevel.c_str(), GetName().c_str());
+			l_PhysXManager->ChangeActorName(l_ActorName, l_NewActorName);
+		}
+	}
+	m_Level = _NewLevel;
+}
+
+std::string CInstanceMesh::GetCoreName()
+{
+	return m_StaticMesh->GetName();
 }

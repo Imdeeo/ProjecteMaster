@@ -57,8 +57,9 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 
 float CalcAttenuation(float Depth, float StartFog, float EndFog)
 {
-	if(Depth<EndFog)
-		return m_MaxAttenuation*smoothstep(StartFog, EndFog, Depth);
+	float l_Depth = max(Depth,3);
+	if(l_Depth<EndFog)
+		return m_MaxAttenuation*smoothstep(StartFog, EndFog, l_Depth);
 	else
 		return m_MaxAttenuation;
 }
@@ -91,6 +92,11 @@ float CalcHeightFog( float Depth, // camera to point distance
 	
     //float fogAmount = c * exp(-m_CameraPosition.y*b) * (1.0-exp( -Depth*rayDir.y*b ))/rayDir.y;
 	float fogAmount = m_HeightFog * (1.0 - exp( -Depth * rayDir.y * m_DensityFog )) / rayDir.y;
+	if (fogAmount < 0.4) 
+	{
+		fogAmount = fogAmount;
+	}
+	
     return fogAmount;
 }
 
@@ -98,23 +104,16 @@ float4 GetFogColor(float Depth, float3 Pos)
 { 
 	float l_FogIntensity = 0.0;
 	
-	if (m_Type == 1.0)
+	if (m_Type == 2.0)
 	{
-		l_FogIntensity=CalcLinearFog(Depth, m_StartFog, m_EndFog);
-	}
-	else if (m_Type == 2.0)
-	{
-		l_FogIntensity=CalcExpFog(Depth, m_DensityFog);
-	}
-	else if (m_Type == 3.0)
-	{
-		l_FogIntensity=CalcExp2Fog(Depth, m_DensityFog);
+		float l_percent = min(max((m_CameraPosition.y-1.11)/(3.8-1.11),0),1);
+		l_FogIntensity=lerp(CalcLinearFog(Depth, m_StartFog, m_EndFog), CalcHeightFog(Depth, Pos), l_percent);
 	}
 	else
 	{
-		l_FogIntensity=CalcHeightFog(Depth, Pos);
+		l_FogIntensity=CalcLinearFog(Depth, m_StartFog, m_EndFog);
 	}
-		
+	
 	return saturate(float4(m_FogColor.xyz,l_FogIntensity));
 }
 

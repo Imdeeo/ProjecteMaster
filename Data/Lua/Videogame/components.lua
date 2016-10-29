@@ -5,7 +5,7 @@ function InitBoxMove()
 	local l_Component=l_Box:get_component_manager():get_resource("ScriptedComponent")
 	
 	if l_Component==nil then
-		local l_Component=create_scripted_component("ScriptedComponent", l_Box, "FnOnCreateController","FnOnDestroyController", "FnOnUpdateController", "FnOnRenderController", "FnOnDebugRender")
+		local l_Component=("ScriptedComponent", l_Box, "FnOnCreateController","FnOnDestroyController", "FnOnUpdateController", "FnOnRenderController", "FnOnDebugRender")
 		l_Box:get_component_manager():add_resource("ScriptedComponent", l_Component)
 	end
 end

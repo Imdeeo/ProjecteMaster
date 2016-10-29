@@ -65,12 +65,6 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 				local l_RaycastData = RaycastData()
 				local l_Hit = l_Enemy.m_PhysXManager:raycast(l_EnemyPos + l_Enemy.m_HeadOffset, l_SecondPointPos, l_Enemy.m_PhysXGroups, l_RaycastData)
 				
-				if l_Hit then
-					utils_log("OBJETO: "..l_RaycastData.actor_name)
-				else
-					utils_log("No ha habido hit")
-				end
-				
 				if l_DistanceToSecondPoint < l_DistanceFirstToSecondPoint and not l_Hit then
 					l_Enemy:IncrementPathPointIndex()
 				end

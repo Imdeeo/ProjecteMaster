@@ -15,6 +15,10 @@
 #include "Manchas\ManchasManager.h"
 #include "IA\AStarManager.h"
 
+#include "StaticMesh\InstanceMesh.h"
+#include "StaticMesh\StaticMeshManager.h"
+#include "Materials\Material.h"
+
 #include "SceneRender\SceneRendererCommandManager.h"
 
 CLevelManager::CLevelManager()
@@ -78,11 +82,19 @@ void CLevelManager::LoadLevel(const std::string &_LevelName)
 
 void CLevelManager::ReloadLevel(const std::string &_LevelName)
 {
-
+	UnloadLevel(_LevelName);
+	LoadLevel(_LevelName);
 }
+
 void CLevelManager::UnloadLevel(const std::string &_LevelName)
 {
-
+	std::map<std::string, std::vector<TLevelLayers*>>::iterator it = m_LayersMap.begin();
+	for (; it != m_LayersMap.end(); it++)
+	{
+		it->second.erase(it->second.begin() + m_ResourcesMap[_LevelName].m_Id);
+	}
+	RemoveResource(_LevelName);
+	m_LevelsInfo[_LevelName].m_Loaded = false;
 }
 
 void CLevelManager::Update(float _ElapsedTime)
@@ -136,4 +148,43 @@ void CLevelManager::AddSceneCommandsManager(const std::string &_LevelId,CSceneRe
 CSceneRendererCommandManager * CLevelManager::GetSceneRendererCommandManager(const std::string _levelId)
 {
 	return m_SceneRenderCommandsManager[_levelId];
+}
+
+void CLevelManager::ChangeObjectLevel(const std::string &_OldLevelName, const std::string &_NewLevelName, const std::string &_LayerName, const std::string &_ObjectName)
+{
+	CLevel *l_OldLevel = m_ResourcesMap[_OldLevelName].m_Value;
+	CLevel *l_NewLevel = m_ResourcesMap[_NewLevelName].m_Value;
+
+	CRenderableObject* l_Object = l_OldLevel->GetLayer(_LayerName)->GetResource(_ObjectName);
+	((CInstanceMesh*)l_Object)->ChangeLevel(_NewLevelName);
+	l_NewLevel->GetLayer(_LayerName)->AddResource(_ObjectName, l_Object, _NewLevelName);
+	l_OldLevel->GetLayer(_LayerName)->RemoveResource(_ObjectName,false);
+
+	std::string l_CoreName = ((CInstanceMesh*)l_Object)->GetCoreName();
+	CStaticMesh* l_Core = l_OldLevel->GetStaticMeshManager()->GetResource(l_CoreName);
+	l_Core->m_Level = _NewLevelName;
+	l_NewLevel->GetStaticMeshManager()->AddResource(l_CoreName,l_Core,_NewLevelName);
+	l_OldLevel->GetStaticMeshManager()->RemoveResource(l_CoreName, false);
+
+	std::vector<CMaterial*> l_Materials = l_Core->GetMaterials();
+	std::vector<CMaterial*>l_NewMaterials;
+	for (size_t i = 0; i < l_Materials.size(); i++)
+	{
+		CMaterial *l_Material = l_Materials[i];
+		CMaterial *l_MaterialExist = l_NewLevel->GetMaterialManager()->GetResource(l_Material->GetName());
+		if (l_MaterialExist == nullptr)
+		{
+			l_Material = new CMaterial(*(l_Materials[i]));
+			l_Material->CopyParameters(l_Materials[i]->GetParameters(),false);
+			l_Material->m_Level = _NewLevelName;
+			l_NewLevel->GetMaterialManager()->AddResource(l_Material->GetName(), l_Material, _NewLevelName);
+		}
+		else
+		{
+			l_Material = l_MaterialExist;
+		}
+		l_NewMaterials.push_back(l_Material);
+		//l_OldLevel->GetMaterialManager()->RemoveResource(l_Material->GetName(),false);
+	}
+	l_Core->SetMaterials(l_NewMaterials);
 }

@@ -18,7 +18,6 @@
 #include "PhysXManager\PhysXManager.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "Particles\ParticleManager.h"
-#include "Bilboards\BilboardManager.h"
 #include "GUIManager.h"
 #include "GUIPosition.h"
 #include "SoundManager\SoundManager.h"
@@ -50,7 +49,6 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 	m_MaterialManager = new CMaterialManager();
 	m_TextureManager = new CTextureManager();
 	m_RenderManager = new CRenderManager();
-	m_BilboardManager = new CBilboardManager();
 	m_AnimatedModelsManager = new CAnimatedModelsManager();
 	m_ScriptManager = new CScriptManager();
 	m_CameraControllerManager = new CCameraControllerManager();
@@ -66,12 +64,12 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 
 CUABEngine::~CUABEngine(void)
 {
+	CHECKED_DELETE(m_LevelManager);
 	CHECKED_DELETE(m_TextureManager);
 	CHECKED_DELETE(m_RenderManager);
 	CHECKED_DELETE(m_AnimatedModelsManager);
 	CHECKED_DELETE(m_CameraControllerManager);
 	CHECKED_DELETE(m_RenderManager);
-	CHECKED_DELETE(m_BilboardManager);
 	CHECKED_DELETE(m_MaterialManager);
 	CHECKED_DELETE(m_RenderableObjectTechniqueManager);
 	CHECKED_DELETE(m_EffectManager);
@@ -80,7 +78,6 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_GUIManager)
 	CHECKED_DELETE(m_SoundManager);
 	CHECKED_DELETE(m_VideoManager);
-	CHECKED_DELETE(m_LevelManager);
 	CHECKED_DELETE(m_InputManager);	
 }
 
@@ -121,7 +118,7 @@ void CUABEngine::Init()
 {	
 	m_RenderManager->Init();
 	m_LoadScreenManager = new CLoadScreenManager("Data\\load_screen.xml");
-	std::thread t(&CLoadScreenManager::Load, m_LoadScreenManager);// , CLoadScreenManager("Data\\load_screen.xml"));
+	std::thread t(&CLoadScreenManager::Load, m_LoadScreenManager);
 
 	m_SoundManager->SetPath("Data\\Sounds\\");
 	m_SoundManager->Init();
@@ -258,7 +255,6 @@ UAB_GET_PROPERTY_CPP(CUABEngine, CScriptManager *, ScriptManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CCameraControllerManager *, CameraControllerManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CPhysXManager *, PhysXManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CRenderableObjectTechniqueManager *, RenderableObjectTechniqueManager)
-UAB_GET_PROPERTY_CPP(CUABEngine, CBilboardManager*, BilboardManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, ISoundManager *, SoundManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)

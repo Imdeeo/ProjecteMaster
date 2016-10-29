@@ -65,8 +65,8 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		local cameraRotation
 		local cameraLookAt
 		local cameraFieldOfView
-		local cameraFileDir = g_Path+"cameras\\"+CameraAnimationName.text+".xml"
-		format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"% % %\" filename=\"%\"/>\n" CameraAnimationName.text key cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraFileDir to:_file
+        local cameraFileDir = g_Path+"cameras\\"+CameraAnimationName.text+".xml"
+        format "\t<camera name=\"%\" total_time=\"%\" type=\"key\" %=\"true\" pos=\"% % %\" filename=\"%\"/>\n" CameraAnimationName.text key cameraType cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraFileDir to:_file
 		
 		cameraFile = createfile cameraFileDir
 		format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:cameraFile
@@ -110,7 +110,7 @@ rollout CamAnim "Camera Animation" width:160 height:134
 			)
 			cameraFieldOfView = at time j Cam.fov
 			verticalizeFov &cameraFieldOfView
-			deg2rad &cameraFieldOfView			
+			deg2rad &cameraFieldOfView
 			format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
 			j = at time j trackbar.getNextKeyTime()
 		) while j < CameraKeyEnd.value
@@ -152,7 +152,7 @@ rollout CamAnim "Camera Animation" width:160 height:134
 		)
 		cameraFieldOfView = at time j Cam.fov
 		verticalizeFov &cameraFieldOfView
-		deg2rad &cameraFieldOfView			
+		deg2rad &cameraFieldOfView
 		format "\t<key time=\"%\" pos=\"% % %\" up=\"% % %\" look_at=\"% % %\" fov=\"%\" near_plane=\"%\" far_plane=\"%\"/>\n" key cameraTranslation.x cameraTranslation.y cameraTranslation.z cameraUp.x cameraUp.y cameraUp.z cameraLookAt.x cameraLookAt.y cameraLookAt.z cameraFieldOfView (at time j Cam.nearrange) (at time j Cam.farrange) to:cameraFile
 			
 		format "</camera_key_controller>\n" to:cameraFile
@@ -173,18 +173,18 @@ rollout CamAnim "Camera Animation" width:160 height:134
 	on ExportButton pressed do
 	(
 		dirExist g_Path
-		dirExist (g_Path+"cameras\\")
+        dirExist (g_Path+"cameras\\")
 		local file
-		if existFile (g_Path+"cameras.xml") then
+        if existFile (g_Path+"cameras.xml") then
 		(
-			file=openFile (g_Path+"cameras.xml") mode:"r+"
+            file=openFile (g_Path+"cameras.xml") mode:"r+"
 			seek file #eof
 			seek file (filepos file - 12)
 			AddCameraAnimation file
 			format "</cameras>\n" to:file
 			close file
 		) else (
-			file=createFile (g_Path+"cameras.xml")
+            file=createFile (g_Path+"cameras.xml")
 			format "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" to:file
 			format "<cameras>\n" to:file
 			AddCameraAnimation file

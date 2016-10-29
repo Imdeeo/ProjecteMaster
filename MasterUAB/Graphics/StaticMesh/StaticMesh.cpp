@@ -414,3 +414,8 @@ std::vector<CMaterial *> CStaticMesh::GetMaterials()const
 {
 	return m_Materials;
 }
+
+void CStaticMesh::SetMaterials(std::vector<CMaterial *> _Materials)
+{
+	m_Materials = _Materials;
+}
