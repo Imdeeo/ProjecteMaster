@@ -41,39 +41,39 @@
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>	
 	</material>	
-	<animation name="idle" filename="Idle.CAF" />
-	<animation name="cross_door" filename="CrossDoor.CAF"/>
-	<animation name="open_tray" filename="OpenTray.CAF"/>
-	<animation name="close_tray" filename="CloseTray.CAF"/>
-	<animation name="force_tray" filename="ForceTray.CAF"/>
-	<animation name="cross_artifact_door" filename="CrossArtifactDoor.CAF"/>
-	<animation name="pick_artifact" filename="PickArtifact.CAF"/>
-	<animation name="pick_clue" filename="PickClue.CAF"/>
-	<animation name="pipe_organ_start" filename="PipeOrganStart.CAF"/>
-	<animation name="pipe_organ_end" filename="PipeOrganEnd.CAF"/>
+	<animation id="0" name="idle" filename="Idle.CAF" />
+	<animation id="1" name="cross_door" filename="CrossDoor.CAF"/>
+	<animation id="2" name="open_tray" filename="OpenTray.CAF"/>
+	<animation id="3" name="close_tray" filename="CloseTray.CAF"/>
+	<animation id="4" name="force_tray" filename="ForceTray.CAF"/>
+	<animation id="5" name="cross_artifact_door" filename="CrossArtifactDoor.CAF"/>
+	<animation id="6" name="pick_artifact" filename="PickArtifact.CAF"/>
+	<animation id="7" name="pick_clue" filename="PickClue.CAF"/>
+	<animation id="8" name="pipe_organ_start" filename="PipeOrganStart.CAF"/>
+	<animation id="9" name="pipe_organ_end" filename="PipeOrganEnd.CAF"/>
 	
-	<animation name="pipe_organ_key_a" filename="PipeOrganKeyA.CAF"/>
-	<animation name="pipe_organ_key_b" filename="PipeOrganKeyB.CAF"/>
-	<animation name="pipe_organ_key_c" filename="PipeOrganKeyC.CAF"/>
-	<animation name="pipe_organ_key_d" filename="PipeOrganKeyD.CAF"/>
-	<animation name="pipe_organ_key_e" filename="PipeOrganKeyE.CAF"/>
-	<animation name="pipe_organ_key_f" filename="PipeOrganKeyF.CAF"/>
-	<animation name="pipe_organ_key_g" filename="PipeOrganKeyG.CAF"/>
-	<animation name="pull_book" filename="PullBook.CAF"/>
-	<animation name="stairs_start" filename="StairsStart.CAF"/>
-	<animation name="stairs_loop" filename="StairsLoop.CAF"/>
-	<animation name="stairs_loop_inverse" filename="StairsLoopInverse.CAF"/>
+	<animation id="10" name="pipe_organ_key_a" filename="PipeOrganKeyA.CAF"/>
+	<animation id="11" name="pipe_organ_key_b" filename="PipeOrganKeyB.CAF"/>
+	<animation id="12" name="pipe_organ_key_c" filename="PipeOrganKeyC.CAF"/>
+	<animation id="13" name="pipe_organ_key_d" filename="PipeOrganKeyD.CAF"/>
+	<animation id="14" name="pipe_organ_key_e" filename="PipeOrganKeyE.CAF"/>
+	<animation id="15" name="pipe_organ_key_f" filename="PipeOrganKeyF.CAF"/>
+	<animation id="16" name="pipe_organ_key_g" filename="PipeOrganKeyG.CAF"/>
+	<animation id="17" name="pull_book" filename="PullBook.CAF"/>
+	<animation id="18" name="stairs_start" filename="StairsStart.CAF"/>
+	<animation id="19" name="stairs_loop" filename="StairsLoop.CAF"/>
+	<animation id="20" name="stairs_loop_inverse" filename="StairsLoopInverse.CAF"/>
 	
-	<animation name="stairs_idle" filename="StairsIdle.CAF"/>
-	<animation name="stairs_end" filename="StairsEnd.CAF"/>
-	<animation name="steam_danger" filename="SteamDanger.CAF"/>
-	<animation name="pick_valve" filename="PickValve.CAF"/>
-	<animation name="input_valve" filename="InputValve.CAF"/>
-	<animation name="cross_valve_door" filename="CrossValveDoor.CAF"/>
-	<animation name="run" filename="Run.CAF"/>
-	<animation name="sing_start" filename="SingStart.CAF"/>
-	<animation name="sing_loop" filename="SingLoop.CAF"/>
-	<animation name="sing_end" filename="SingEnd.CAF"/>
+	<animation id="21" name="stairs_idle" filename="StairsIdle.CAF"/>
+	<animation id="22" name="stairs_end" filename="StairsEnd.CAF"/>
+	<animation id="23" name="steam_danger" filename="SteamDanger.CAF"/>
+	<animation id="24" name="pick_valve" filename="PickValve.CAF"/>
+	<animation id="25" name="input_valve" filename="InputValve.CAF"/>
+	<animation id="26" name="cross_valve_door" filename="CrossValveDoor.CAF"/>
+	<animation id="27" name="run" filename="Run.CAF"/>
+	<animation id="28" name="sing_start" filename="SingStart.CAF"/>
+	<animation id="29" name="sing_loop" filename="SingLoop.CAF"/>
+	<animation id="30" name="sing_end" filename="SingEnd.CAF"/>
 	
-	<animation name="sing_once" filename="SingOnce.CAF"/>
+	<animation id="31" name="sing_once" filename="SingOnce.CAF"/>
 </actor>
