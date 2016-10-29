@@ -55,6 +55,7 @@ function R2TriggerOrganKeyG(_Player, _Owner)
 	--play key sound
 	_Owner:remove_action(_Owner:get_actual_action_animation())
 	_Owner:execute_action(16, 0.1, 0.1, 1.0, true)
+	g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla7"):play()
 	R2PushOrganKey("G", _Player)
 end
 
