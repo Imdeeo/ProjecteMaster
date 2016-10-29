@@ -3,14 +3,18 @@ function SingingLoopFirst(args)
 	local l_Player = args["self"]
 	l_Owner:blend_cycle(29,1.0,0.1)
 	--Launch sound
+	l_Player.m_Timer = l_Player.m_SanityGainTick --always ticks on start
 end
 
 function SingingLoopUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	
-	if m_Timer >= 2.5 and not l_Player.m_IsWindedUp then
-		l_Player.m_IsWindedUp = true
+	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
+	
+	if l_Player.m_Timer >= l_Player.m_SanityGainTick then
+		l_Player.ModifySanity(m_SanityGain * m_SanityGainTick)
+		l_Player.m_Timer = l_Player.m_Timer - l_Player.m_SanityGainTick
 	end
 	
 	if not l_Player.m_InputManager:is_action_active("Sing") then
