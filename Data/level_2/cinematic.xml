@@ -128,7 +128,7 @@
 			<cinematic_object_key_frame time="4.0" pos="1.89484 -5.17652e-007 -0.871312" rotation="0.0 -0.576221 0.0 -0.817294" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="4.33333" pos="1.94608 -5.17106e-007 -1.13894" rotation="0.0 -0.662692 0.0 -0.748892" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="4.66667" pos="1.94659 -5.06028e-007 -1.32736" rotation="0.0 -0.717775 0.0 -0.696276" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="5.0" pos="1.93943 -4.99704e-007 -1.39735" rotation="0.0 -0.737277 0.0 -0.67559" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="1.88943 -4.99704e-007 -1.39735" rotation="0.0 -0.737277 0.0 -0.67559" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
 </cinematics>
