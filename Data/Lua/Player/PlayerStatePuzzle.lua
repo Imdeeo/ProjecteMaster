@@ -7,6 +7,10 @@ function PuzzleFirst(args)
 	l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, false)
 	l_Owner:set_visible(true)
 	l_Owner:set_position(l_Owner:get_position()-Vect3f(0,0.025,0))
+	
+	local l_Material = g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel):get_material_manager():get_resource("CombineMaterial")
+	l_Material:set_value(1, 2.0)	
+	l_Material:set_value(2, CColor(1.0, 0.83, 0.0, 1.0))
 end
 
 function PuzzleUpdate(args, _ElapsedTime)
@@ -33,6 +37,10 @@ end
 function PuzzleEnd(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
+	
+	local l_Material = g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel):get_material_manager():get_resource("CombineMaterial")
+	l_Material:set_value(1, 1.0)	
+	l_Material:set_value(2, CColor(1.0, 1.0, 1.0, 1.0))
 	
 	--// Reset puzzle
 	if l_Player.m_OrganKeyCount <= table_length(l_Player.m_OrganKeyOrder) then
