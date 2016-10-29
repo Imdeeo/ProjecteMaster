@@ -16,7 +16,7 @@ function SpecialSingingStateUpdate(args, _ElapsedTime)
 		local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
 		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset 
 		l_Owner:set_position(l_NewControllerPosition)
-		l_Owner:set_rotation(Quatf(0,1,0,0))
+		--l_Owner:set_rotation(Quatf(0,1,0,0))
 		l_Player.m_SingOnce = true
 		l_Owner:remove_action(l_Owner:get_actual_action_animation())
 		utils_log("he entrado")
