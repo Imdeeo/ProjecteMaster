@@ -1018,6 +1018,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("pause", &CCinematic::Pause)
 			.def("on_restart_cycle", &CCinematic::OnRestartCycle)
 			.def("is_finished", &CCinematic::IsFinished)
+			.def("get_duration", &CCinematic::GetDuration)
 	];
 
 	module(m_LS)[

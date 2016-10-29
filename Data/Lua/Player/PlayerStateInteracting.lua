@@ -24,7 +24,7 @@ function InteractingUpdate(args, _ElapsedTime)
 	
 	--// Ends the state after the animation duration has passed
 	if l_Player.m_InteractingCinematic ~= nil then
-		l_Player.m_IsInteracting = not l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):is_finished()
+		l_Player.m_IsInteracting = l_Player.m_Timer <= l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):get_duration()
 	else
 		l_Player.m_IsInteracting = (l_Player.m_Timer < l_Player.m_AnimationTime)
 	end
@@ -91,9 +91,7 @@ function InteractingEnd(args)
 	l_Player:ClearCinematic()
 	
 	l_Player.m_InteractingAnimation = 0
-	utils_log("end interacting")	
 	if not l_Player.m_SingOnce then
-		utils_log("end interacting PQ ENTRA AQUI JODER?!")	
 		l_Player.m_AnimationTime = 0
 		l_Player.m_CameraController:unlock()
 		l_Owner:remove_action(l_Owner:get_actual_action_animation())
