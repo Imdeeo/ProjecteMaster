@@ -10,6 +10,7 @@
 class CTexture;
 class CMaterialParameter;
 class CRenderableObjectTechnique;
+class CColor;
 
 #define MAX_TEXTURES 11
 
@@ -31,8 +32,10 @@ public:
 	void CMaterial::operator=(CMaterial &b);
 	CTexture * GetTexture(int index = 0);
 	void SetValue(int _index, float _value);
+	void SetValue(int _index, CColor _value);
 	float GetValue(int _index);
 	void Save(FILE* _File);
+	void CopyParameters(std::vector<CMaterialParameter *>_NewParameters, bool _destroy = true);
 };
 
 #endif //MATERIAL_H

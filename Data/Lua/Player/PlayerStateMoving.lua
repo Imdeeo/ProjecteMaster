@@ -4,7 +4,7 @@ function MovingFirst(args)
 	if l_Player.m_CurrentAnimation == "move" then
 		l_Owner:blend_cycle(0,1.0,0.1)
 	elseif l_Player.m_CurrentAnimation == "run" then
-		l_Owner:blend_cycle(2,1.0,0.1)
+		l_Owner:blend_cycle(27,1.0,0.1)
 	else
 		l_Owner:blend_cycle(0,1.0,0.1)
 		l_Player.m_CurrentAnimation = "move"
@@ -60,6 +60,9 @@ function MovingUpdate(args, _ElapsedTime)
 	l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 	l_Owner:set_position(l_NewControllerPosition)
 	
+	--// Raycast
+	CheckRaycast(l_Player, l_Player.m_CameraController, l_Owner)
+	
 	--// Save speed in last update so we can create acceleration
 	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
 	l_Player.m_Velocity = l_Displacement/_ElapsedTime
@@ -74,7 +77,6 @@ function MovingUpdate(args, _ElapsedTime)
 		l_Player.m_SoundManager:play_event(l_Player.m_StepSoundEvent, l_Player.m_RenderableObject)
 	end
 
-	
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
 	l_RotationY = Quatf()
@@ -112,7 +114,9 @@ end
 
 function MovingEnd(args)
 	local l_Owner = args["owner"]
+	local l_Player = args["self"]
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
+	g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel):get_layer_manager():get_layer("interactuable_objects"):destroy(false)
 end
 
 function MovingToIdleCondition(args)
@@ -127,5 +131,14 @@ end
 
 function MovingToJumpingCondition(args)
 	local l_Player = args["self"]
-	return l_Player.m_InputManager:is_action_active("Jump")
+	if l_Player.m_InputManager:is_action_active("Jump") then
+		if l_Player.m_InputManager:is_action_active("Run") then
+			l_Player.m_Velocity.y = 4.9
+		else
+			l_Player.m_Velocity.y = 4.0
+		end
+		return true
+	else
+		return false
+	end
 end

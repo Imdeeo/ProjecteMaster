@@ -14,28 +14,29 @@ function InteractingFirst(args)
 		--l_Player.m_SoundManager:play_event(l_Player.m_StopBeatSoundEvent, l_Owner)
 	end
 	
-	m_Timer = 0.0
+	l_Player.m_Timer = 0.0
 	
 	if l_Player.m_CameraAnimation ~= nil then
-		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, true)
+		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, false)
 	end
+	l_Owner:set_visible(true)
 end
 
 function InteractingUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	
-	m_Timer = m_Timer + _ElapsedTime
+	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	
 	--// Ends the state after the animation duration has passed
 	if l_Player.m_InteractingCinematic ~= nil then
-		l_Player.m_IsInteracting = not l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):is_finished()
+		l_Player.m_IsInteracting = l_Player.m_Timer <= l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):get_duration()
 	else
-		l_Player.m_IsInteracting = (m_Timer < l_Player.m_AnimationTime)
+		l_Player.m_IsInteracting = (l_Player.m_Timer < l_Player.m_AnimationTime)
 	end
 	
 	--// Change old to new item
-	if m_Timer >= l_Player.m_ItemTime and l_Player.m_ItemTime >= 0.0 then
+	if l_Player.m_Timer >= l_Player.m_ItemTime and l_Player.m_ItemTime >= 0.0 then
 		l_Player.m_ItemName = l_Player.m_NewItemName
 		l_Player.m_NewItemName = ""
 		if l_Player.m_ItemName ~= "" then
@@ -77,36 +78,39 @@ end
 function InteractingEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
-	if l_Player.m_CameraAnimation ~= nil then
-		l_CameraControllerManager = CUABEngine.get_instance():get_camera_controller_manager()
-		l_CameraControllerManager:get_resource(l_Player.m_CameraControllerName):copy_from_key_camera(l_CameraControllerManager:get_main_camera():get_camera_as_info())
-		l_CameraControllerManager:choose_main_camera(l_Player.m_CameraControllerName)
+	if l_Player.m_Teleport then
+		l_Player.m_Teleport = false
+		local l_AnimatedCam = g_Engine:get_camera_controller_manager():get_resource(l_Player.m_CameraAnimation)
+		local l_Pos = l_AnimatedCam:get_position() - Vect3f(0,g_TotalHeight,0)
+		l_Player.m_PhysXManager:character_controller_teleport("player", l_Pos)
+		
+		
+		
+		local l_FPS = g_Engine:get_camera_controller_manager():get_resource("MainCamera")
+		l_FPS:set_position(l_AnimatedCam:get_position())
+		l_FPS:set_rotation(l_AnimatedCam:get_rotation())
 	end
-	if l_Player.m_InteractingCinematic ~= nil then
-		l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):stop()
-	end
-	if l_Player.m_CurrentAend ~= nil then
-		l_Player.m_PhysXManager:character_controller_warp("player", l_Player.m_Aends[l_Player.m_CurrentAend])
-		local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
-		l_Owner:set_position(l_NewControllerPosition)
-	end
-	l_Player.m_CurrentAend = nil
-	l_Player.m_Target = nil
-	l_Player.m_TargetOffset = Vect3f(0.0, 0.0, 0.0)
+	
+	l_Player:ClearTarget()
+	l_Player:ClearStates()
+	l_Player:ClearAend(l_Owner)
+	l_Player:ClearCinematic()
+	
 	l_Player.m_InteractingAnimation = 0
-	l_Player.m_InteractingCinematic = nil
-	l_Player.m_CameraAnimation = nil
-	l_Player.m_IsInteracting = false
-	l_Player.m_IsPuzzle = false
-	l_Player.m_IsClimbing = false
-	l_Player.m_IsCorrecting = false
-	l_Player.m_AnimationTime = 0
-	l_Player.m_CameraController:unlock()
-	l_Owner:remove_action(l_Owner:get_actual_action_animation())
+	if not l_Player.m_SingOnce then
+		l_Player.m_AnimationTime = 0
+		l_Player.m_CameraController:unlock()
+		l_Owner:remove_action(l_Owner:get_actual_action_animation())
+		l_Player:ClearCamera()
+	end
 end
 
-function InteractingToFallingCondition(args)
+function InteractingToIdleCondition(args)
 	local l_Player = args["self"]
-	return not l_Player.m_IsInteracting
+	return not l_Player.m_IsInteracting and not l_Player.m_SingOnce
+end
+
+function InteractingToSpecialSingingCondition(args)
+	local l_Player = args["self"]
+	return not l_Player.m_IsInteracting and l_Player.m_SingOnce
 end

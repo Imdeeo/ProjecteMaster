@@ -21,6 +21,7 @@ class 'CEnemy' (CLUAComponent)
 		self.m_State = "off"
 		self.m_Awake = _TreeNode:get_bool_property("awake", false)
 		self.m_ActualAnimation = 0
+		self.m_LoseSanityValue = 0.0
 		
 		-- TODO: get group numbers somehow
 		-- at the moment bit 0: plane, bit 1: objects, bit 2: triggers, bit 3: player
@@ -46,6 +47,13 @@ class 'CEnemy' (CLUAComponent)
 
 		self.m_SoundManager = CUABEngine.get_instance():get_sound_manager()
 		self.m_SoundManager:register_speaker(self.m_RenderableObject)
+		utils_log("CEnemy __init Name: "..self.m_Name)
+	end
+	
+	function CEnemy.Destroy(self)
+		utils_log("Delete Enemy Name: "..self.m_Name)
+		local l_PhysXManager = CUABEngine.get_instance():get_physX_manager()
+		l_PhysXManager:remove_actor(self.m_Name)
 	end
 	
 	function CEnemy:Update(_ElapsedTime)
@@ -70,7 +78,7 @@ class 'CEnemy' (CLUAComponent)
 		local l_Forward = _Owner:get_rotation():get_forward_vector()
 		local l_Dot = l_Forward * l_PlayerDirection
 		if l_Dot < math.cos(self.m_MaxAngle) then
-		  return false
+			return false
 		end
 
 		-- not visible if behind an obstacle
@@ -82,8 +90,17 @@ class 'CEnemy' (CLUAComponent)
 		)
 		
 		if l_Hit and l_RaycastData.actor_name ~= "player" then
-		  self.m_BlockingObjectName = l_RaycastData.actor_name
-		  return false
+			self.m_BlockingObjectName = l_RaycastData.actor_name
+			return false
+		else
+			-- we do a new raycast to player foot to prove that it not has a little object between enemy and player
+			l_AuxPos = Vect3f(l_PlayerPos.x, l_PlayerPos.y - g_StandingOffset, l_PlayerPos.z)
+			l_Hit = self.m_PhysXManager:raycast(l_OwnerHeadPos, l_AuxPos, self.m_PhysXGroups, l_RaycastData)
+			
+			if l_Hit then
+				self.m_BlockingObjectName = l_RaycastData.actor_name
+				return false
+			end
 		end
 
 		-- otherwise visible

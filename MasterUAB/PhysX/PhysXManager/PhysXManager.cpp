@@ -453,6 +453,25 @@ public:
 		L_PutGroupToShape(shape, m_Groups[_group]);
 	}
 
+	void ChangeRigidStaticActorPhysxGroup(const std::string &_ActorName, const std::string &_group, const std::string _Material = "FisicasAux"){
+		physx::PxRigidStatic* actor;
+		physx::PxShape* oldShape;
+		physx::PxBoxGeometry* geometry = new physx::PxBoxGeometry();
+		physx::PxU32 buffer;
+		actor = (physx::PxRigidStatic*)m_Actors[m_ActorIndexs[_ActorName]];
+		
+		actor->getShapes(&oldShape, 1);
+		oldShape->getBoxGeometry(*geometry);
+		physx::PxShape* newShape = m_PhysX->createShape(*geometry, *m_Materials[_Material], true);
+		newShape->setFlags(oldShape->getFlags());
+		L_PutGroupToShape(newShape, m_Groups[_group]);
+		actor->attachShape(*newShape);
+		
+		actor->detachShape(*oldShape);
+		newShape->release();
+		//oldShape->release(); OJOCUIDAO esto hace que pete y no se por qué, así que podría causar memory leaks al no liberar el puntero.
+	}
+
 	bool LoadPhysx(const std::string &Filename)
 	{
 		m_Filename = Filename;
@@ -637,7 +656,7 @@ bool LoadMeshFile(std::string _FileName,physx::PxU8** Data_,physx::PxU32* Size_)
 	}
 	return true;
 }
-void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
+void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const std::string _LevelId, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
@@ -656,7 +675,7 @@ void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const CStati
 			physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
 
 			char l_ActorName[256] = "";
-			sprintf_s(l_ActorName, "%s_%u", _name.c_str(), i);
+			sprintf_s(l_ActorName, "%s_%s_%u",_LevelId.c_str(), _name.c_str(), i);
 
 			L_PutGroupToShape(l_Shape, m_Groups[_group]);
 
@@ -666,7 +685,7 @@ void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const CStati
 	}
 }
 
-void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
+void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const std::string _LevelId, const CStaticMesh* _Mesh, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
@@ -685,7 +704,7 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStat
 			physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
 
 			char l_ActorName[256] = "";
-			sprintf_s(l_ActorName, "%s_%u", _name.c_str(), i);
+			sprintf_s(l_ActorName, "%s_%s_%u", _LevelId.c_str(), _name.c_str(), i);
 
 			L_PutGroupToShape(l_Shape, m_Groups[_group]);
 
@@ -695,7 +714,7 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const CStat
 	}
 }
 
-void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CStaticMesh* _Mesh, const std::string _Directory, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, bool _FlipNormals)
+void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const std::string _LevelId, const CStaticMesh* _Mesh, const std::string _Directory, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, bool _FlipNormals)
 {
 	std::vector<CRenderableVertexs*> l_RenderableVertex = _Mesh->GetRenderableVertexs();
 	for (size_t i = 0; i < l_RenderableVertex.size(); i++)
@@ -716,7 +735,7 @@ void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const CSta
 			physx::PxShape* l_Shape = l_Body->createShape(physx::PxTriangleMeshGeometry(l_TriangleMesh), *m_Materials[_Material]);
 
 			char l_ActorName[256] = "";
-			sprintf_s(l_ActorName, "%s_%u", _name.c_str(), i);
+			sprintf_s(l_ActorName, "%s_%s_%u", _LevelId.c_str(), _name.c_str(), i);
 
 			L_PutGroupToShape(l_Shape, m_Groups[_group]);
 
@@ -781,14 +800,19 @@ void CPhysXManager::CreateTrigger(const std::string _name, physx::PxShape* shape
 	shape->release();
 }
 
-void CPhysXManager::EnableTrigger(const std::string _name)
+void CPhysXManager::EnableTrigger(const std::string _name, const std::string _material)
 {
-	ChangeRigidDynamicActorPhysxGroup(_name, "2");
+	ChangeRigidStaticActorPhysxGroup(_name, "Triggers", _material);
 }
 
-void CPhysXManager::DisableTrigger(const std::string _name)
+void CPhysXManager::EnableObject(const std::string _name, const std::string _material)
 {
-	ChangeRigidDynamicActorPhysxGroup(_name, "9");
+	ChangeRigidStaticActorPhysxGroup(_name, "Objects", _material);
+}
+
+void CPhysXManager::DisablePhysics(const std::string _name, const std::string _material)
+{
+	ChangeRigidStaticActorPhysxGroup(_name, "NoCollision", _material);
 }
 
 void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors,bool isActive)
@@ -1032,56 +1056,59 @@ bool CPhysXManager::Raycast(const Vect3f _origin, const Vect3f _end, int _GROUPS
 
 void CPhysXManager::RemoveActor(const std::string _ActorName)
 {
-	size_t l_index = m_ActorIndexs[_ActorName];
-	auto it_controller = m_CharacterControllers.find(_ActorName);
-	if (it_controller != m_CharacterControllers.end())
+	if (m_ActorIndexs.find(_ActorName) != m_ActorIndexs.end())
 	{
-		CHECKED_RELEASE(it_controller->second);
-		m_CharacterControllers.erase(it_controller);
-	}
-	else
-	{
-		m_Actors[l_index]->release();
-	}
-	if (m_Actors.size() > 1)
-	{
-		if (l_index < m_Actors.size() - 1)
+		size_t l_index = m_ActorIndexs[_ActorName];
+		auto it_controller = m_CharacterControllers.find(_ActorName);
+		if (it_controller != m_CharacterControllers.end())
 		{
-			m_Actors[l_index] = m_Actors[m_Actors.size() - 1];
-			m_Actors.resize(m_Actors.size() - 1);
-
-			m_ActorNames[l_index] = m_ActorNames[m_Actors.size()];
-			m_ActorNames.resize(m_Actors.size());
-
-			m_ActorPositions[l_index] = m_ActorPositions[m_Actors.size()];
-			m_ActorPositions.resize(m_Actors.size());
-
-			m_ActorOrientations[l_index] = m_ActorOrientations[m_Actors.size()];
-			m_ActorOrientations.resize(m_Actors.size());
-		
-			m_ActorIndexs[m_ActorNames[l_index]] = l_index;
-			m_Actors[l_index]->userData = (void *)l_index;
+			CHECKED_RELEASE(it_controller->second);
+			m_CharacterControllers.erase(it_controller);
 		}
 		else
 		{
-			m_Actors.resize(m_Actors.size() - 1);
-
-			m_ActorNames.resize(m_Actors.size());
-
-			m_ActorPositions.resize(m_Actors.size());
-
-			m_ActorOrientations.resize(m_Actors.size());
+			m_Actors[l_index]->release();
 		}
+		if (m_Actors.size() > 1)
+		{
+			if (l_index < m_Actors.size() - 1)
+			{
+				m_Actors[l_index] = m_Actors[m_Actors.size() - 1];
+				m_Actors.resize(m_Actors.size() - 1);
 
-		m_ActorIndexs.erase(m_ActorIndexs.find(_ActorName));
-	}
-	else
-	{
-		m_Actors.resize(0);
-		m_ActorNames.resize(0);
-		m_ActorPositions.resize(0);
-		m_ActorOrientations.resize(0);
-		m_ActorIndexs.clear();
+				m_ActorNames[l_index] = m_ActorNames[m_Actors.size()];
+				m_ActorNames.resize(m_Actors.size());
+
+				m_ActorPositions[l_index] = m_ActorPositions[m_Actors.size()];
+				m_ActorPositions.resize(m_Actors.size());
+
+				m_ActorOrientations[l_index] = m_ActorOrientations[m_Actors.size()];
+				m_ActorOrientations.resize(m_Actors.size());
+
+				m_ActorIndexs[m_ActorNames[l_index]] = l_index;
+				m_Actors[l_index]->userData = (void *)l_index;
+			}
+			else
+			{
+				m_Actors.resize(m_Actors.size() - 1);
+
+				m_ActorNames.resize(m_Actors.size());
+
+				m_ActorPositions.resize(m_Actors.size());
+
+				m_ActorOrientations.resize(m_Actors.size());
+			}
+
+			m_ActorIndexs.erase(m_ActorIndexs.find(_ActorName));
+		}
+		else
+		{
+			m_Actors.resize(0);
+			m_ActorNames.resize(0);
+			m_ActorPositions.resize(0);
+			m_ActorOrientations.resize(0);
+			m_ActorIndexs.clear();
+		}
 	}
 	
 }
@@ -1148,4 +1175,17 @@ void CPhysXManager::SetCharacterControllersHeight(const std::string _name, float
 {
 	physx::PxController* aux = m_CharacterControllers[_name];
 	aux->resize((physx::PxReal)_value);
+}
+
+void CPhysXManager::ChangeActorName(const std::string &_ActorName, const std::string _NewActorName)
+{
+	if (m_ActorIndexs.find(_ActorName) != m_ActorIndexs.end())
+	{
+		size_t l_index = m_ActorIndexs[_ActorName];
+
+		m_ActorNames[l_index] = _NewActorName;
+
+		m_ActorIndexs[_NewActorName] = l_index;
+		m_ActorIndexs.erase(_ActorName);
+	}
 }

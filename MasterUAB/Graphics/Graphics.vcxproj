@@ -31,6 +31,7 @@
     <ClCompile Include="Camera\CameraInfo.cpp" />
     <ClCompile Include="Camera\CameraKey.cpp" />
     <ClCompile Include="Camera\CameraKeyController.cpp" />
+    <ClCompile Include="Camera\FocusedCameraController.cpp" />
     <ClCompile Include="Camera\FPSCameraController.cpp" />
     <ClCompile Include="Camera\Frustum.cpp" />
     <ClCompile Include="Camera\SphericalCameraController.cpp" />
@@ -122,6 +123,7 @@
     <ClInclude Include="Camera\CameraInfo.h" />
     <ClInclude Include="Camera\CameraKey.h" />
     <ClInclude Include="Camera\CameraKeyController.h" />
+    <ClInclude Include="Camera\FocusedCameraController.h" />
     <ClInclude Include="Camera\FPSCameraController.h" />
     <ClInclude Include="Camera\Frustum.h" />
     <ClInclude Include="Camera\SphericalCameraController.h" />

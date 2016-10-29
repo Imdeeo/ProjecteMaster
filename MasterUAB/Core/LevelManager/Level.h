@@ -6,6 +6,7 @@
 
 class CMaterialManager;
 class CParticleManager;
+class CBilboardManager;
 class CManchasManager;
 class CStaticMeshManager;
 class CLayerManager;
@@ -14,6 +15,7 @@ class CCinematicManager;
 class CAStarManager;
 class CGamePlayManager;
 class CRenderableObjectsManager;
+class CBilboardManager;
 
 class CAStarManager;
 
@@ -25,6 +27,7 @@ private:
 
 	CMaterialManager* m_MaterialManager;
 	CParticleManager* m_ParticleManager;
+	CBilboardManager* m_BilboardManager;
 	CManchasManager* m_ManchasManager;
 	CStaticMeshManager* m_StaticMeshManager;
 	CLayerManager* m_LayerManager;
@@ -54,6 +57,7 @@ public:
 	CLightManager * GetLightManager() const;
 	CCinematicManager * GetCinematicManager() const;
 	CParticleManager * GetParticleManager() const;
+	CBilboardManager * GetBilboardManager() const;
 	CGamePlayManager * GetGamePlayManager()const;
 	CManchasManager * GetManchasManager() const;
 	CAStarManager * GetAStarManager() const;

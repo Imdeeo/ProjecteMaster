@@ -1,3 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <static_meshes>
+	<static_mesh name="Skybox" filename="Data\level_0\Meshes\Skybox.mesh" physx_mesh_directory="Data\level_0\Meshes\PhysXMeshes"/>
+	<static_mesh name="Suelo" filename="Data\level_0\Meshes\Suelo.mesh" physx_mesh_directory="Data\level_0\Meshes\PhysXMeshes"/>
 </static_meshes>

@@ -75,6 +75,7 @@ void CCinematicObject::Update(float _ElapsedTime)
 		{
 			m_Playing = false;
 			m_RenderableObject->SetIsCinematic(false);
+			m_CurrentTime = 0;
 		}
 		else
 		{

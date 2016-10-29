@@ -38,6 +38,7 @@
 #include "Camera\CameraKeyController.h"
 #include "Camera\FPSCameraController.h"
 #include "Camera\Frustum.h"
+#include "Camera\FocusedCameraController.h"
 #include "Camera\SphericalCameraController.h"
 #include "Camera\3PersonCameraController.h"
 
@@ -581,7 +582,6 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_material_manager", &CUABEngine::GetMaterialManager)
 			.def("get_texture_manager", &CUABEngine::GetTextureManager)
 			.def("get_effect_manager", &CUABEngine::GetEffectManager)
-			.def("get_bilboard_manager", &CUABEngine::GetBilboardManager)
 			.def("get_render_manager", &CUABEngine::GetRenderManager)
 			.def("get_animated_models_manager", &CUABEngine::GetAnimatedModelsManager)
 			.def("get_script_manager", &CUABEngine::GetScriptManager)
@@ -649,8 +649,10 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_light_manager", &CLevel::GetLightManager)
 			.def("get_cinematic_manager", &CLevel::GetCinematicManager)
 			.def("get_particle_manager", &CLevel::GetParticleManager)
+			.def("get_bilboard_manager", &CLevel::GetBilboardManager)
 			.def("get_game_play_manager", &CLevel::GetGamePlayManager)
 			.def("get_manchas_manager", &CLevel::GetManchasManager)
+			.def("get_bilboard_manager", &CLevel::GetBilboardManager)
 			.def("get_astar_manager", &CLevel::GetAStarManager)
 	];
 
@@ -676,6 +678,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_actual_level", &CLevelManager::GetActualLevel)
 			.def("set_actual_level", &CLevelManager::SetActualLevel)
 			.def("get_scene_command_manager", &CLevelManager::GetSceneRendererCommandManager)
+			.def("change_object_level", &CLevelManager::ChangeObjectLevel)
 	];
 
 // GRAPHICS-----------------------------------------------------------------------------------------
@@ -938,6 +941,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_camera_as_info", &CCameraKeyController::GetCameraAsInfo)
 			.def("get_camera_key", &CCameraKeyController::GetCameraKey)
 			.def("force_update_yaw", &CCameraKeyController::ForceUpdateYaw)
+			.def("set_look_at", &CCameraKeyController::SetLookAt)
+			.def("set_up", &CCameraKeyController::SetUp)
 			.def_readwrite("m_PositionOffsetKey", &CCameraKeyController::m_PositionOffsetKey)
 			.def_readwrite("m_PositionOffset", &CCameraKeyController::m_PositionOffset)
 			.def_readwrite("m_RotationOffset", &CCameraKeyController::m_RotationOffset)
@@ -960,6 +965,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("lock", &CFPSCameraController::Lock)
 			.def("unlock", &CFPSCameraController::Unlock)
 			.def("copy_from_key_camera", &CFPSCameraController::CopyFromKeyCamera)
+			.def("copy_from_camera", &CFPSCameraController::CopyFromCamera)
 	];
 
 	module(m_LS) [
@@ -976,6 +982,17 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_zoom", &CSphericalCameraController::SetZoom)
 			.def("set_camera", &CSphericalCameraController::SetCamera)
 			.def("rotate", &CSphericalCameraController::Rotate)
+	];
+
+	module(m_LS)[
+		class_<CFocusedCameraController, CCameraController>("CFocusedCameraController")
+			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
+			.def("init", &CFocusedCameraController::Init)
+			.def("set_focus", &CFocusedCameraController::SetFocus)
+			.def("set_start", &CFocusedCameraController::SetStart)
+			.def("set_camera", &CFocusedCameraController::SetCamera)
+			.def("get_lookat", &CFocusedCameraController::GetLookAt)
+			.def("copy_to_camera", &CFocusedCameraController::CopyToCamera)
 	];
 
 	// Cinematics -----------------------------------------------------------------------------------
@@ -1003,6 +1020,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("pause", &CCinematic::Pause)
 			.def("on_restart_cycle", &CCinematic::OnRestartCycle)
 			.def("is_finished", &CCinematic::IsFinished)
+			.def("get_duration", &CCinematic::GetDuration)
 	];
 
 	module(m_LS)[
@@ -1250,7 +1268,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_parameters", &CMaterial::GetParameters, luabind::return_stl_iterator)
 			.def("get_renderable_object_technique", &CMaterial::GetRenderableObjectTechnique)
 			.def("get_texture", &CMaterial::GetTexture)
-			.def("set_value", &CMaterial::SetValue)
+			.def("set_value", (void(CMaterial::*)(const int, const float))&CMaterial::SetValue)
+			.def("set_value", (void(CMaterial::*)(const int, const CColor))&CMaterial::SetValue)
 			.def("get_value", &CMaterial::GetValue)
 	];
 
@@ -1291,6 +1310,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<const std::string&, const std::string&, const std::string&>())
 			.def("render", &CInstanceMesh::Render)
 			.def("get_interactuable_object_name", &CInstanceMesh::GetInteractuableObject)
+			.def("change_level",&CInstanceMesh::ChangeLevel)
 	];
 
 	module(m_LS)[
@@ -1477,7 +1497,8 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CBilboardSystemInstance, CRenderableObject>("CBilboardSystemInstance")
 		.def(constructor<>())
 		.def(constructor<tinyxml2::XMLElement*, const std::string&>())
-		.def("get_lua_size", &CBilboardSystemInstance::GetLuaSize)
+		.def("get_lua_sizeX", &CBilboardSystemInstance::GetLuaSizeX)
+		.def("get_lua_sizeY", &CBilboardSystemInstance::GetLuaSizeY)
 		.def("get_lua_size_offset", &CBilboardSystemInstance::GetLuaSizeOffset)
 		.def("get_lua_color", &CBilboardSystemInstance::GetLuaColor)
 		.def("get_type", &CBilboardSystemInstance::GetType)
@@ -1610,7 +1631,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_texture", &CTextureManager::GetTexture)
 			.def("reload", &CTextureManager::Reload)
 			.def("enable_trigger", &CPhysXManager::EnableTrigger)
-			.def("disable_trigger", &CPhysXManager::DisableTrigger)
+			.def("enable_object", &CPhysXManager::EnableObject)
+			.def("disable_physics", &CPhysXManager::DisablePhysics)
 			.def("create_character_controller", &CPhysXManager::CreateCharacterController)
 			.def("character_controller_move", &CPhysXManager::CharacterControllerMove)
 			.def("character_controller_warp", &CPhysXManager::CharacterControllerWarp)
@@ -1625,6 +1647,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_character_controller_height", &CPhysXManager::SetCharacterControllersHeight)
 			.def("change_rigid_dynamic_actor_group", &CPhysXManager::ChangeRigidDynamicActorPhysxGroup)
 			.def("remove_actor", &CPhysXManager::RemoveActor)
+			.def("change_actor_name", &CPhysXManager::ChangeActorName)
 	];
 
 	
@@ -1747,6 +1770,8 @@ void CScriptManager::RegisterLUAFunctions()
 		class_<CGamePlayManager>("CGamePlayManager")
 			.def("add_component", &CGamePlayManager::AddComponent)
 			.def("destroy", &CGamePlayManager::Destroy)
+			.def("size", &CGamePlayManager::Size)
+			.def("get_component",&CGamePlayManager::GetComponent)
 	];
 }
 

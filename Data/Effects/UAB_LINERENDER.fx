@@ -34,8 +34,8 @@ struct PS_INPUT
 GS_INPUT mainVS( VS_INPUT IN )
 {
 	GS_INPUT l_Output = (GS_INPUT)0;
-	l_Output.Pos = float4(IN.Pos.xyz,1);
-	l_Output.Pos2 = float4(IN.Pos.w, IN.UV,1);
+	l_Output.Pos = mul(float4(IN.Pos.xyz, 1), m_World);
+	l_Output.Pos2 = mul(float4(IN.Pos.w, IN.UV.x, IN.UV.y, 1), m_World);
 	l_Output.Color = IN.Color;
 	l_Output.UV2 = IN.UV2;
 	return l_Output;
@@ -62,7 +62,6 @@ void mainGS( point GS_INPUT input[1], inout TriangleStream<PS_INPUT> OutputStrea
 	
 	l_Output.Pos = input[0].Pos;
 	l_Output.Pos = l_Output.Pos+halfSizeVect1;
-	l_Output.Pos = mul( l_Output.Pos, m_World );
 	l_Output.Pos = mul( l_Output.Pos, m_View );	
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
 	l_Output.UV = float2(0,1);
@@ -70,7 +69,6 @@ void mainGS( point GS_INPUT input[1], inout TriangleStream<PS_INPUT> OutputStrea
 	
 	l_Output.Pos = input[0].Pos;
 	l_Output.Pos = l_Output.Pos-halfSizeVect1;
-	l_Output.Pos = mul( l_Output.Pos, m_World );	
 	l_Output.Pos = mul( l_Output.Pos, m_View );	
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
 	l_Output.UV = float2(0,0);
@@ -78,7 +76,6 @@ void mainGS( point GS_INPUT input[1], inout TriangleStream<PS_INPUT> OutputStrea
 	
 	l_Output.Pos = input[0].Pos2;
 	l_Output.Pos = l_Output.Pos+halfSizeVect2;
-	l_Output.Pos = mul(l_Output.Pos, m_World );	
 	l_Output.Pos = mul( l_Output.Pos, m_View );	
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
 	l_Output.UV = float2(1,1);
@@ -86,7 +83,6 @@ void mainGS( point GS_INPUT input[1], inout TriangleStream<PS_INPUT> OutputStrea
 
 	l_Output.Pos = input[0].Pos2;
 	l_Output.Pos = l_Output.Pos-halfSizeVect2;
-	l_Output.Pos = mul(l_Output.Pos, m_World );	
 	l_Output.Pos = mul( l_Output.Pos, m_View );	
 	l_Output.Pos = mul( l_Output.Pos, m_Projection );
 	l_Output.UV = float2(1,0);

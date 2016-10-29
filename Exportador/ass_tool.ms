@@ -1129,7 +1129,7 @@ rollout ASSTool "A Simple Song Export Tool" width:720 height:410
 	
 	on ASSTool open do
 	(
-		ExportPathLabel.text="D:\\Data"
+		ExportPathLabel.text="C:\\Data"
 		local levels=#("level_1", "level_2", "level_3", "level_4", "level_5", "level_6", "level_7", "level_8")
 		LevelList.items=levels
 		g_Path = ExportPathLabel.text+"\\"+LevelList.items[LevelList.selection]+"\\"

@@ -8,13 +8,21 @@ dofile("Data\\Lua\\Player\\PlayerStateIdle.lua")
 dofile("Data\\Lua\\Player\\PlayerStateMoving.lua")
 dofile("Data\\Lua\\Player\\PlayerStateCorrecting.lua")
 dofile("Data\\Lua\\Player\\PlayerStateCrouching.lua")
-dofile("Data\\Lua\\Player\\PlayerStateClimbing.lua")
+dofile("Data\\Lua\\Player\\PlayerStateClimbingStart.lua")
+dofile("Data\\Lua\\Player\\PlayerStateClimbingIdle.lua")
+dofile("Data\\Lua\\Player\\PlayerStateClimbingUp.lua")
+dofile("Data\\Lua\\Player\\PlayerStateClimbingDown.lua")
 dofile("Data\\Lua\\Player\\PlayerStateJumping.lua")
 dofile("Data\\Lua\\Player\\PlayerStateFalling.lua")
 dofile("Data\\Lua\\Player\\PlayerStateInteracting.lua")
-dofile("Data\\Lua\\Player\\PlayerStateSinging.lua")
+dofile("Data\\Lua\\Player\\PlayerStateSingingStart.lua")
+dofile("Data\\Lua\\Player\\PlayerStateSingingLoop.lua")
+dofile("Data\\Lua\\Player\\PlayerStateSingingEnd.lua")
+dofile("Data\\Lua\\Player\\PlayerStateSpecialSinging.lua")
 dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 dofile("Data\\Lua\\Player\\PlayerStatePuzzle.lua")
+dofile("Data\\Lua\\Player\\PlayerStateFocusing.lua")
+
 
 --Bone #0: BrazosJaheem
 --Bone #1: CATRigHub001
@@ -169,30 +177,42 @@ class 'CPlayer' (CLUAComponent)
 		self.m_InteractionSoundSpeaker = nil
 
 		self.m_Velocity = Vect3f(0.0, 0.0, 0.0)
-		self.m_Gravity = g_Gravity
-		self.m_Speed = 2.5
-		self.m_DefaultSpeed = 2.5
+		self.m_Gravity = g_Gravity		
+		self.m_DefaultSpeed = 3.0
+		self.m_Speed = self.m_DefaultSpeed
 		self.m_Sanity = 100.0
 		self.m_MaxSanity = 100.0
 		self.m_TimerVortex = 0
-		
+		self.m_Teleport = false
 		self.m_IsSinging = false
-		self.m_IsWindedUp = false
 		self.m_IsCorrecting = false
 		self.m_IsClimbing = false
+		self.m_ClimbingUp = false
+		self.m_ClimbingDown = false
 		self.m_IsInteracting = false
 		self.m_IsPuzzle = false
 		self.m_IsDead = false
+		self.m_SingOnce = false
 		
 		self.m_Target = nil
 		self.m_TargetPosOffset = Vect3f(1.0, 0.0, 0.0)
-		self.m_TargetLookOffset = Vect3f(1.0, 0.0, 0.0)
+		self.m_TargetPosition = Vect3f(1.0, 0.0, 0.0)
+		self.m_ForwardCamera = Vect3f(1.0,0.0,0.0)
+		self.m_UpCamera = Vect3f(1.0,0.0,0.0)
 		self.m_ItemName = ""--"Artilufacto"
 		self.m_Item = nil--CUABEngine.get_instance():get_layer_manager():get_resource("solid"):get_resource(self.m_ItemName)
+		self.m_TargetYaw = 0.0
 		self.m_LeftHanded = false
 		self.m_NewItemName = ""
 		self.m_ItemTime = 0.0
 		self.m_ItemDropTime = -1.0
+		self.m_StartSanity = self.m_MaxSanity
+		self.m_TargetSanity = 20.0
+		
+		--How much sanity gains per second, and each how many seconds it should tick that gain.
+		--For example: 10 gain with 0.5 tick means gaining 5 sanity each half second.
+		self.m_SanityGain = 10.0
+		self.m_SanityGainTick = 0.5
 		
 		self.m_CurrentAnimation = "none"
 		self.m_LastAnimation = "none"
@@ -206,11 +226,10 @@ class 'CPlayer' (CLUAComponent)
 		self.m_RaycastData = RaycastData()
 		
 		self.m_Timer = 0.0
-		
+		self.m_TimerRotation = 0.0
 		self.m_OrganKeyCount = 1
 		self.m_OrganKeyOrder = {"A", "G"}
 		--{"A", "B", "C", "D", "E", "F", "G"}
-		--table:setn(self.m_OrganKeyOrder, 2)
 		
 		self.m_CurrentAend = nil
 		self.m_Aends = {}
@@ -225,8 +244,6 @@ class 'CPlayer' (CLUAComponent)
 				end
 				l_Aend = l_Aend:get_next()
 			end
-		else
-			----utils_log("Animation ends xml not correctly loaded.")
 		end
 		
 		self.m_StateMachine = StateMachine.create()
@@ -235,7 +252,16 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_PhysXManager:create_character_controller(self.m_Name, g_Height, g_Radius, 90, self.m_RenderableObject:get_position(),"FisicasAux", "Player")
 	end
+	
+	function CPlayer:Destroy()
+		utils_log("Delete Player")
+		self.m_PhysXManager:remove_actor(self.m_Name)
+	end
 
+	function CPlayer:__gc()
+		utils_log("Delete Player")
+	end
+	
 	function CPlayer:SetSanity(_amount, _override)
 		self.m_Sanity = _amount
 		if _override then
@@ -260,7 +286,7 @@ class 'CPlayer' (CLUAComponent)
 	
 	function CPlayer:SetActualLevel(_LevelId)
 		g_Engine:get_level_manager():set_actual_level(_LevelId)
-		g_Player:SetActualLevelAux(_LevelId)
+		self:SetActualLevelAux(_LevelId)
 	end
 	function CPlayer:SetActualLevelAux(_LevelId)
 		self.m_ActualLevel = _LevelId		
@@ -412,9 +438,10 @@ class 'CPlayer' (CLUAComponent)
 		IdleState:add_condition(IdleToJumpingCondition, "Jumping")
 		IdleState:add_condition(ANYToFallingCondition, "Falling")
 		IdleState:add_condition(ANYToCorrectingCondition, "Correcting")
-		IdleState:add_condition(ANYToSingingCondition, "Singing")
+		IdleState:add_condition(ANYToSingingStartCondition, "SingingStart")
+		IdleState:add_condition(ANYToClimbingCondition, "ClimbingStart")
+		IdleState:add_condition(ANYToFocusingCondition, "Focusing")
 		IdleState:add_condition(ANYToDeadCondition, "Dead")
-		IdleState:add_condition(ANYToClimbingCondition, "Climbing")
 		
 		MovingState = State.create(MovingUpdate)
 		MovingState:set_do_first_function(MovingFirst)
@@ -425,9 +452,10 @@ class 'CPlayer' (CLUAComponent)
 		MovingState:add_condition(MovingToJumpingCondition, "Jumping")
 		MovingState:add_condition(ANYToFallingCondition, "Falling")
 		MovingState:add_condition(ANYToCorrectingCondition, "Correcting")
-		MovingState:add_condition(ANYToSingingCondition, "Singing")
+		MovingState:add_condition(ANYToSingingStartCondition, "SingingStart")
+		MovingState:add_condition(ANYToClimbingCondition, "ClimbingStart")
+		MovingState:add_condition(ANYToFocusingCondition, "Focusing")
 		MovingState:add_condition(ANYToDeadCondition, "Dead")
-		MovingState:add_condition(ANYToClimbingCondition, "Climbing")
 		
 		CorrectingState = State.create(CorrectingUpdate)
 		CorrectingState:set_do_first_function(CorrectingFirst)
@@ -444,12 +472,34 @@ class 'CPlayer' (CLUAComponent)
 		CrouchingState:add_condition(ANYToFallingCondition, "Falling")
 		CrouchingState:add_condition(ANYToCorrectingCondition, "Correcting")
 		CrouchingState:add_condition(ANYToDeadCondition, "Dead")
+
+		ClimbingStartState = State.create(ClimbingStartUpdate)
+		ClimbingStartState:set_do_first_function(ClimbingStartFirst)
+		ClimbingStartState:set_do_end_function(ClimbingStartEnd)
+		ClimbingStartState:add_condition(ClimbingStartToClimbingIdleCondition, "ClimbingIdle")
+		ClimbingStartState:add_condition(ANYToDeadCondition, "Dead")
 		
-		ClimbingState = State.create(ClimbingUpdate)
-		ClimbingState:set_do_first_function(ClimbingFirst)
-		ClimbingState:set_do_end_function(ClimbingEnd)
-		ClimbingState:add_condition(ClimbingToFallingCondition, "Falling")
-		ClimbingState:add_condition(ANYToDeadCondition, "Dead")
+		ClimbingIdleState = State.create(ClimbingIdleUpdate)
+		ClimbingIdleState:set_do_first_function(ClimbingIdleFirst)
+		ClimbingIdleState:set_do_end_function(ClimbingIdleEnd)
+		ClimbingIdleState:add_condition(ClimbingIdleToInteractingCondition, "Interacting")
+		ClimbingIdleState:add_condition(ClimbingIdleToClimbingUpCondition, "ClimbingUp")
+		ClimbingIdleState:add_condition(ClimbingIdleToClimbingDownCondition, "ClimbingDown")
+		ClimbingIdleState:add_condition(ClimbingIdleToFallingCondition, "Idle")
+		ClimbingIdleState:add_condition(ANYToDeadCondition, "Dead")
+		
+		ClimbingUpState = State.create(ClimbingUpUpdate)
+		ClimbingUpState:set_do_first_function(ClimbingUpFirst)
+		ClimbingUpState:set_do_end_function(ClimbingUpEnd)
+		ClimbingUpState:add_condition(ClimbingUpToClimbingIdleCondition, "ClimbingIdle")
+		ClimbingUpState:add_condition(ANYToDeadCondition, "Dead")
+		
+		ClimbingDownState = State.create(ClimbingDownUpdate)
+		ClimbingDownState:set_do_first_function(ClimbingDownFirst)
+		ClimbingDownState:set_do_end_function(ClimbingDownEnd)
+		ClimbingDownState:add_condition(ClimbingDownToClimbingIdleCondition, "ClimbingIdle")
+		ClimbingDownState:add_condition(ClimbingDownToFallingCondition, "Idle")
+		ClimbingDownState:add_condition(ANYToDeadCondition, "Dead")
 		
 		JumpingState = State.create(JumpingUpdate)
 		JumpingState:set_do_first_function(JumpingFirst)
@@ -467,15 +517,28 @@ class 'CPlayer' (CLUAComponent)
 		InteractingState = State.create(InteractingUpdate)
 		InteractingState:set_do_first_function(InteractingFirst)
 		InteractingState:set_do_end_function(InteractingEnd)
-		InteractingState:add_condition(InteractingToFallingCondition, "Falling")
+		InteractingState:add_condition(InteractingToIdleCondition, "Idle")
+		InteractingState:add_condition(InteractingToSpecialSingingCondition, "SpecialSinging")
 		InteractingState:add_condition(ANYToDeadCondition, "Dead")
 		
-		SingingState = State.create(SingingUpdate)
-		SingingState:set_do_first_function(SingingFirst)
-		SingingState:set_do_end_function(SingingEnd)
-		SingingState:add_condition(SingingToFallingCondition, "Falling")
-		SingingState:add_condition(SingingToItselfCondition, "Singing")
-		SingingState:add_condition(ANYToDeadCondition, "Dead")
+		SingingStartState = State.create(SingingStartUpdate)
+		SingingStartState:set_do_first_function(SingingStartFirst)
+		SingingStartState:set_do_end_function(SingingStartEnd)
+		SingingStartState:add_condition(SingingStartToSingingLoopCondition, "SingingLoop")
+		SingingStartState:add_condition(SingingStartToSingingEndCondition, "SingingEnd")
+		SingingStartState:add_condition(ANYToDeadCondition, "Dead")
+		
+		SingingLoopState = State.create(SingingLoopUpdate)
+		SingingLoopState:set_do_first_function(SingingLoopFirst)
+		SingingLoopState:set_do_end_function(SingingLoopEnd)
+		SingingLoopState:add_condition(SingingLoopToSingingEndCondition, "SingingEnd")
+		SingingLoopState:add_condition(ANYToDeadCondition, "Dead")
+		
+		SingingEndState = State.create(SingingEndUpdate)
+		SingingEndState:set_do_first_function(SingingEndFirst)
+		SingingEndState:set_do_end_function(SingingEndEnd)
+		SingingEndState:add_condition(SingingEndToFallingCondition, "Idle")
+		SingingEndState:add_condition(ANYToDeadCondition, "Dead")
 		
 		DeadState = State.create(DeadUpdate)
 		DeadState:set_do_first_function(DeadFirst)
@@ -484,21 +547,39 @@ class 'CPlayer' (CLUAComponent)
 		PuzzleState = State.create(PuzzleUpdate)
 		PuzzleState:set_do_first_function(PuzzleFirst)
 		PuzzleState:set_do_end_function(PuzzleEnd)
-		PuzzleState:add_condition(PuzzleToFallingCondition, "Falling")
+		PuzzleState:add_condition(PuzzleToIdleCondition, "Idle")
 		PuzzleState:add_condition(ANYToDeadCondition, "Dead")
+		
+		FocusingState = State.create(FocusingUpdate)
+		FocusingState:set_do_first_function(FocusingFirst)
+		FocusingState:set_do_end_function(FocusingEnd)
+		FocusingState:add_condition(FocusingToIdleCondition, "Idle")
+		FocusingState:add_condition(ANYToDeadCondition, "Dead")
+		
+		
+		SpecialSingingState = State.create(SpecialSingingStateUpdate)
+		SpecialSingingState:set_do_first_function(SpecialSingingStateFirst)
+		SpecialSingingState:set_do_end_function(SpecialSingingStateEnd)
+		SpecialSingingState:add_condition(SpecialSingingStateToIdleCondition, "Idle")
 		
 		self.m_StateMachine:add_state("Idle", IdleState)
 		self.m_StateMachine:add_state("Moving", MovingState)
 		self.m_StateMachine:add_state("Correcting", CorrectingState)
 		self.m_StateMachine:add_state("Crouching", CrouchingState)
-		self.m_StateMachine:add_state("Climbing", ClimbingState)
+		self.m_StateMachine:add_state("ClimbingStart", ClimbingStartState)
+		self.m_StateMachine:add_state("ClimbingIdle", ClimbingIdleState)
+		self.m_StateMachine:add_state("ClimbingUp", ClimbingUpState)
+		self.m_StateMachine:add_state("ClimbingDown", ClimbingDownState)
 		self.m_StateMachine:add_state("Jumping", JumpingState)
 		self.m_StateMachine:add_state("Falling", FallingState)
 		self.m_StateMachine:add_state("Interacting", InteractingState)
-		self.m_StateMachine:add_state("Singing", SingingState)
+		self.m_StateMachine:add_state("SingingStart", SingingStartState)
+		self.m_StateMachine:add_state("SingingLoop", SingingLoopState)
+		self.m_StateMachine:add_state("SingingEnd", SingingEndState)
+		self.m_StateMachine:add_state("SpecialSinging", SpecialSingingState)
 		self.m_StateMachine:add_state("Dead", DeadState)
 		self.m_StateMachine:add_state("Puzzle", PuzzleState)
-		
+		self.m_StateMachine:add_state("Focusing", FocusingState)
 	end	
 	
 	function CPlayer:SetActiveStateMachineState(name,active)
@@ -509,8 +590,15 @@ class 'CPlayer' (CLUAComponent)
 		local l_CameraManager = g_Engine:get_camera_controller_manager()
 		local l_FPSCamera = l_CameraManager:get_main_camera()
 		local l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
+		
+		l_AnimatedCamera:set_fov(l_FPSCamera:get_fov())
+		l_AnimatedCamera:set_position(l_FPSCamera:get_position())
+		l_AnimatedCamera:set_look_at(l_FPSCamera:get_position()+l_FPSCamera:get_forward())
+		l_AnimatedCamera:set_up(l_FPSCamera:get_up())
+		
 		if (_CopyFirstFrame) then
-			l_AnimatedCamera:set_first_key(l_FPSCamera:get_forward(), l_FPSCamera:get_up(), l_FPSCamera:get_fov())
+			local l_lookAt = l_FPSCamera:get_forward() + l_FPSCamera:get_position()
+			l_AnimatedCamera:set_first_key(l_lookAt, l_FPSCamera:get_up(), l_FPSCamera:get_fov())
 		end
 		local l_CameraKey = l_AnimatedCamera:get_camera_key(0)
 		local l_CameraInfo = l_CameraKey:get_camera_info()
@@ -551,14 +639,100 @@ class 'CPlayer' (CLUAComponent)
 		quat_to_turn:set_from_fwd_up(l_CameraDirection, Vect3f(0,1,0))
 		self.m_FinalCameraRotation = quat_to_turn
 	end
+	
+	function CPlayer:SetCamera(_CameraName)
+		local l_CameraManager = g_Engine:get_camera_controller_manager()
+		l_CameraManager:choose_main_camera(_CameraName)
+	end
+	
+	function CPlayer:XZRotate(_ElapsedTime)
+		local l_CameraDirection = self.m_CameraController:get_forward()
+		l_CameraDirection.y = 0.0
+		l_CameraDirection:normalize(1)
+		local l_OriginYaw = math.atan2(l_CameraDirection.z, l_CameraDirection.x)
+		local l_Dir = 1
+		local l_Difference = math.abs(self.m_TargetYaw-l_OriginYaw)
+		local l_DeltaDifference = math.abs(self.m_TargetYaw-l_OriginYaw-_ElapsedTime)
+		if l_Difference < l_DeltaDifference then
+			l_Dir = -1
+		end
+		if self.m_TargetYaw == g_PI and l_OriginYaw < 0.0 then
+			l_Dir = -1
+		end
+		local ret = false
+		if(l_Difference<= 0.01) then
+			ret = true
+		else
+			self.m_CameraController:add_yaw(l_Dir*_ElapsedTime)
+		end
+		return ret
+	end
+	
+	function CPlayer:IsFacingTarget(_Target, _Radians, _Distance)
+		local l_CameraDirection = self.m_CameraController:get_forward()
+		l_CameraDirection.y = 0.0
+		l_CameraDirection:normalize(1)
+		local l_OriginYaw = math.atan2(l_CameraDirection.z, l_CameraDirection.x)
+		local l_Difference = math.abs(self.m_TargetYaw-l_OriginYaw)
+		local l_Pos = self.m_PhysXManager:get_character_controler_pos("player")
+		l_Pos.y = l_Pos.y - g_TotalHeight
+		local ret = false
+		utils_log("Difference: "..l_Difference)
+		utils_log("Distance: "..(l_Pos - _Target):length().." (".._Distance.." needed)")
+		if (l_Difference > (g_PI-_Radians)) and (l_Difference < (g_PI+_Radians)) and ((l_Pos - _Target):length() < _Distance) then
+			ret = true
+		end
+		return ret
+	end
+	
+	function CPlayer:ClearTarget()
+		self.m_Target = nil
+		self.m_TargetYaw = 0.0
+		self.m_ForwardCamera = Vect3f(1.0, 0.0, 0.0)
+		self.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
+		self.m_TargetLookOffset = Vect3f(0.0, 0.0, 0.0)
+	end
+
+	function CPlayer:ClearCamera()
+		if self.m_CameraAnimation ~= nil then
+			l_CameraControllerManager = CUABEngine.get_instance():get_camera_controller_manager()
+			l_CameraControllerManager:get_resource(self.m_CameraControllerName):copy_from_key_camera(l_CameraControllerManager:get_main_camera():get_camera_as_info())
+			l_CameraControllerManager:choose_main_camera(self.m_CameraControllerName)
+		end
+		self.m_CameraAnimation = nil
+	end
+
+	function CPlayer:ClearCinematic()
+		if self.m_InteractingCinematic ~= nil then
+			self.m_CinematicManager:get_resource(self.m_InteractingCinematic):stop()
+		end
+		self.m_InteractingCinematic = nil
+	end
+
+	function CPlayer:ClearAend(_Owner)
+		if self.m_CurrentAend ~= nil then
+			self.m_PhysXManager:character_controller_warp("player", self.m_Aends[self.m_CurrentAend])
+			local l_NewControllerPosition = self.m_PhysXManager:get_character_controler_pos("player")
+			l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
+			_Owner:set_position(l_NewControllerPosition)
+		end
+		self.m_CurrentAend = nil
+	end
+
+	function CPlayer:ClearStates()
+		self.m_IsInteracting = false
+		self.m_IsPuzzle = false
+		self.m_IsClimbing = false
+		self.m_IsCorrecting = false
+	end
 --end
 
 function ANYToItselfCondition(args)
-	local l_Player = args["self"]
-	return not (l_Player.m_LastAnimation == l_Player.m_CurrentAnimation)
+	local lself = args["self"]
+	return not (lself.m_LastAnimation == lself.m_CurrentAnimation)
 end
 
 function ANYToDeadCondition(args)
-	local l_Player = args["self"]
-	return l_Player.m_IsDead
+	local lself = args["self"]
+	return lself.m_IsDead
 end
