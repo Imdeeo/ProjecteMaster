@@ -61,6 +61,7 @@ CLevel::~CLevel()
 	CHECKED_DELETE(m_AStarManager);
 	CHECKED_DELETE(m_CinematicManager);
 	CHECKED_DELETE(m_LightManager);
+	m_LayerManager->GetLayer("interactuable_objects")->Destroy(false);
 	CHECKED_DELETE(m_LayerManager);
 	CHECKED_DELETE(m_StaticMeshManager);
 	CHECKED_DELETE(m_BilboardManager);
