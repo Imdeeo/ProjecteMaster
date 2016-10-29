@@ -92,43 +92,19 @@
 	</cinematic>
 	<cinematic name="ResolvePuzzle" duration="5.0" cycle="false" reverse="false">
 		<cinematic_object resource="puertalaberintooficial" layer="solid">
-			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.00377233 1.50641e-007 0.0 -0.999993" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.0" pos="0.765625 -2.30939e-007 0.0" rotation="0.00377233 1.50641e-007 0.0 -0.999993" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.33333" pos="0.83291 -3.21831e-005 -0.00423236" rotation="0.00377081 -0.0284262 -0.000107187 -0.999589" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.66667" pos="1.01092 -0.000259242 -0.0343199" rotation="0.00375171 -0.104432 -0.00039391 -0.994525" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.0" pos="1.25582 -0.000942059 -0.124812" rotation="0.00368554 -0.213281 -0.000804528 -0.976984" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.33333" pos="1.51195 -0.00225011 -0.298172" rotation="0.00354915 -0.338866 -0.00127828 -0.940827" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.66667" pos="1.72335 -0.0041157 -0.545432" rotation="0.00334026 -0.464716 -0.00175303 -0.885452" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="4.0" pos="1.8548 -0.00622791 -0.82538" rotation="0.00308313 -0.576217 -0.00217366 -0.817288" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="4.33333" pos="1.90614 -0.00815928 -1.08137" rotation="0.0028251 -0.662687 -0.00249986 -0.748887" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="4.66667" pos="1.90819 -0.00952123 -1.26188" rotation="0.00262661 -0.717769 -0.00270765 -0.696271" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="5.0" pos="1.90192 -0.0100277 -1.329" rotation="0.00254858 -0.737272 -0.00278122 -0.675586" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.00377233 1.50641e-007 0.0 0.999993" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.0" pos="1.25582 -0.000942059 -0.124812" rotation="0.00368554 -0.213281 -0.000804528 0.976984" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="1.60192 -0.0100277 -1.329" rotation="0.00254858 -0.737272 -0.00278122 0.675586" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 		<cinematic_object resource="planelibropuertalaboficial" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 1.503e-007 0.0 -1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.0" pos="0.765625 -2.30146e-007 1.38877e-007" rotation="0.0 1.503e-007 0.0 -1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.33333" pos="0.832633 -2.50057e-007 -0.00389084" rotation="0.0 -0.0284264 0.0 -0.999596" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.66667" pos="1.01 -3.01638e-007 -0.0329922" rotation="0.0 -0.104433 0.0 -0.994532" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.0" pos="1.25425 -3.6976e-007 -0.121912" rotation="0.0 -0.213283 0.0 -0.976991" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.33333" pos="1.51007 -4.36446e-007 -0.293281" rotation="0.0 -0.338868 0.0 -0.940834" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.66667" pos="1.72173 -4.85458e-007 -0.538439" rotation="0.0 -0.464719 0.0 -0.885458" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="4.0" pos="1.85394 -5.08626e-007 -0.816527" rotation="0.0 -0.576221 0.0 -0.817294" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="4.33333" pos="1.90628 -5.09181e-007 -1.07114" rotation="0.0 -0.662692 0.0 -0.748892" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="4.66667" pos="1.90919 -4.99346e-007 -1.25085" rotation="0.0 -0.717775 0.0 -0.696276" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="5.0" pos="1.90327 -4.93579e-007 -1.31771" rotation="0.0 -0.737277 0.0 -0.67559" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.0" pos="1.25425 -3.6976e-007 -0.121912" rotation="0.0 -0.213283 0.0 0.976991" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="1.60327 -4.93579e-007 -1.31771" rotation="0.0 -0.737277 0.0 0.67559" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 		<cinematic_object resource="LibrosEntradaLaberinto006" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 1.503e-007 0.0 -1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.0" pos="0.765625 -2.30146e-007 1.38877e-007" rotation="0.0 1.503e-007 0.0 -1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.33333" pos="0.835808 -2.50944e-007 -0.00502857" rotation="0.0 -0.0284264 0.0 -0.999596" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.66667" pos="1.02131 -3.04737e-007 -0.0380457" rotation="0.0 -0.104433 0.0 -0.994532" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.0" pos="1.27608 -3.75558e-007 -0.134713" rotation="0.0 -0.213283 0.0 -0.976991" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.33333" pos="1.5418 -4.44513e-007 -0.317969" rotation="0.0 -0.338868 0.0 -0.940834" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.66667" pos="1.76019 -4.94664e-007 -0.577945" rotation="0.0 -0.464719 0.0 -0.885458" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="4.0" pos="1.89484 -5.17652e-007 -0.871312" rotation="0.0 -0.576221 0.0 -0.817294" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="4.33333" pos="1.94608 -5.17106e-007 -1.13894" rotation="0.0 -0.662692 0.0 -0.748892" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="4.66667" pos="1.94659 -5.06028e-007 -1.32736" rotation="0.0 -0.717775 0.0 -0.696276" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="5.0" pos="1.88943 -4.99704e-007 -1.39735" rotation="0.0 -0.737277 0.0 -0.67559" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.0" pos="1.27608 -3.75558e-007 -0.134713" rotation="0.0 -0.213283 0.0 0.976991" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="1.58943 -4.99704e-007 -1.39735" rotation="0.0 -0.737277 0.0 0.67559" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
 </cinematics>
