@@ -16,6 +16,8 @@ class CLineRendererParameter;
 class CRenderableObjectTechnique;
 class CRenderableVertexs;
 
+class CLevel;
+
 class CLineRenderer : public CRenderableObject
 {
 private:
@@ -36,7 +38,7 @@ private:
 	CColor m_Color;
 
 public:
-	CLineRenderer(tinyxml2::XMLElement* TreeNode,const std::string &_LevelId);
+	CLineRenderer(tinyxml2::XMLElement* TreeNode,CLevel* _Level);
 	virtual ~CLineRenderer();
 
 	CRenderableObjectTechnique* GetRenderableObjectTechnique();

@@ -29,7 +29,7 @@ void CParticleManager::Load(const std::string &Filename, CLevel *_Level)
 			l_Element = l_Element->FirstChildElement();
 			while (l_Element != NULL)
 			{
-				CParticleSystemType *l_ParticleSystemType = new CParticleSystemType(l_Element, m_LevelName);
+				CParticleSystemType *l_ParticleSystemType = new CParticleSystemType(l_Element, _Level);
 				//if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType, "CParticleManager"))
 				if (!AddResource(l_ParticleSystemType->GetName(), l_ParticleSystemType, m_LevelName))
 				{

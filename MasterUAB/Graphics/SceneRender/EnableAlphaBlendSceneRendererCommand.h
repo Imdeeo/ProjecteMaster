@@ -4,6 +4,7 @@
 #include "SceneRendererCommand.h"
 
 class ID3D11BlendState;
+class CLevel;
 
 class CBlend : public CNamed
 {
@@ -42,7 +43,7 @@ private:
 	CBlendOp m_OpAlphaBlend;
 	ID3D11BlendState *m_BlendState;
 public:
-	CEnableAlphaBlendSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CEnableAlphaBlendSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CEnableAlphaBlendSceneRendererCommand();
 
 	virtual void Execute(CRenderManager &RenderManager);

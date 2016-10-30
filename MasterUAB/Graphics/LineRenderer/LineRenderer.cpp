@@ -13,8 +13,8 @@
 #include "Engine/UABEngine.h"
 #include "LevelManager/LevelManager.h"
 
-CLineRenderer::CLineRenderer(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId)
-	: CRenderableObject(TreeNode,_LevelId)
+CLineRenderer::CLineRenderer(tinyxml2::XMLElement* TreeNode, CLevel *_Level)
+	: CRenderableObject(TreeNode,_Level)
 	, m_Size(1.0f)
 {
 	ZeroMemory(&m_LineRenderableData, MAX_LINE_LENGHT*sizeof(MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX));
@@ -29,7 +29,7 @@ CLineRenderer::CLineRenderer(tinyxml2::XMLElement* TreeNode, const std::string &
 	m_SizeOffset = TreeNode->GetFloatProperty("size_ofset", 0.005);
 	m_LinesCount = 1;
 	m_RenderableVertex = new CUABPointsListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX>(m_LineRenderableData, MAX_LINE_LENGHT, MAX_LINE_LENGHT, true);
-	m_Material = UABEngine.GetLevelManager()->GetResource(m_Level)->GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
+	m_Material = _Level->GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
 }
 
 CLineRenderer::~CLineRenderer()

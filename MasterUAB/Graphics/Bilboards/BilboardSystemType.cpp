@@ -3,9 +3,10 @@
 #include "Materials\MaterialManager.h"
 #include "LevelManager\LevelManager.h"
 
-CBilboardSystemType::CBilboardSystemType(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CNamed(TreeNode), CLevelInfo(_LevelId)
+CBilboardSystemType::CBilboardSystemType(tinyxml2::XMLElement* TreeNode, CLevel * _Level) : CNamed(TreeNode), CLevelInfo(_Level)
 {
-	m_Material = UABEngine.GetLevelManager()->GetResource(m_Level)->GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
+	m_Level = _Level->GetName();
+	m_Material = _Level->GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
 	m_NumFrames = TreeNode->GetIntProperty("frames", 1);
 	m_TimePerFrame = TreeNode->GetFloatProperty("time", 1.0f);
 }

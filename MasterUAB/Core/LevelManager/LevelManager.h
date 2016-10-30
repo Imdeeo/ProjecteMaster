@@ -52,8 +52,8 @@ public:
 
 	void LoadLevelThread(const std::string &_LevelName);
 	void LoadFile(const std::string &_LevelsFilename);
-	void LoadLevel(const std::string &_LevelName);
-	void ReloadLevel(const std::string &_LevelName);
+	void LoadLevel(const std::string &_LevelName, bool _Joinable);
+	void ReloadLevel(const std::string &_LevelName, bool _Joinable);
 	void UnloadLevel(const std::string &_LevelName);
 
 	void ChangeObjectLevel(const std::string &_OldLevelName, const std::string &_NewLevelName, const std::string &_LayerName, const std::string &_ObjectName);

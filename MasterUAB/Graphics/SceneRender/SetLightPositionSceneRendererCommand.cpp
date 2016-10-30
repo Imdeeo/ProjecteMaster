@@ -10,7 +10,7 @@
 #include "Camera\CameraControllerManager.h"
 #include "Lights\DirectionalLight.h"
 
-CSetLightPositionSceneRendererCommand::CSetLightPositionSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CSceneRendererCommand(TreeNode,_LevelId)
+CSetLightPositionSceneRendererCommand::CSetLightPositionSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) : CSceneRendererCommand(TreeNode,_Level)
 {
 	m_MaterialName = TreeNode->GetPszProperty("material");
 	m_LightName = TreeNode->GetPszProperty("light");

@@ -7,13 +7,14 @@
 class ID3D11DepthStencilState;
 class CRenderManager;
 class CXMLTreeNode;
+class CLevel;
 
 class CSetDepthStencilStateSceneRendererCommand : public CSceneRendererCommand
 {
 private:
 	ID3D11DepthStencilState *m_DepthStencilState;
 public:
-	CSetDepthStencilStateSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CSetDepthStencilStateSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CSetDepthStencilStateSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };

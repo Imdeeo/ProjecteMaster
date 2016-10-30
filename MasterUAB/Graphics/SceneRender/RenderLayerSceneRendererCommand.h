@@ -7,13 +7,14 @@
 
 class CRenderManager;
 class CRenderableObjectsManager;
+class CLevel;
 
 class CRenderLayerSceneRendererCommand : public CSceneRendererCommand
 {
 private:
 	std::vector<TLevelLayers*> *m_Layer;
 public:
-	CRenderLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CRenderLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CRenderLayerSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };

@@ -243,6 +243,7 @@ void CScriptManager::Destroy()
 //Para ejecutar un fragmento de código LUA
 void CScriptManager::RunCode(const std::string &Code) const
 {
+	UtilsLog("RunCode");
 	if(luaL_dostring(m_LS,Code.c_str()))
 	{
 		const char *l_Str=lua_tostring(m_LS, -1);
@@ -653,6 +654,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_manchas_manager", &CLevel::GetManchasManager)
 			.def("get_bilboard_manager", &CLevel::GetBilboardManager)
 			.def("get_astar_manager", &CLevel::GetAStarManager)
+			.def("set_game_play_manager", &CLevel::SetGamePlayManager)
 	];
 
 	RegisterTemplatedVectorMapManager<CLevel>(m_LS);
@@ -750,10 +752,10 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<std::string>())
 			.def("update", &CRenderableObjectsManager::Update)
 			.def("render", &CRenderableObjectsManager::Render)
-			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(tinyxml2::XMLElement*, const std::string&, bool))&CRenderableObjectsManager::AddMeshInstance)
-			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&, const std::string&, const Quatf, const float, const bool, bool))&CRenderableObjectsManager::AddMeshInstance)
-			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(tinyxml2::XMLElement*, const std::string&, bool))&CRenderableObjectsManager::AddAnimatedInstanceModel)
-			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&, const std::string&, bool))&CRenderableObjectsManager::AddAnimatedInstanceModel)
+			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(tinyxml2::XMLElement*, CLevel*, bool))&CRenderableObjectsManager::AddMeshInstance)
+			.def("add_mesh_instance", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&, CLevel*, const Quatf, const float, const bool, bool))&CRenderableObjectsManager::AddMeshInstance)
+			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(tinyxml2::XMLElement*, CLevel*, bool))&CRenderableObjectsManager::AddAnimatedInstanceModel)
+			.def("add_animated_instance_model", (CRenderableObject*(CRenderableObjectsManager::*)(const std::string&, const std::string&, const Vect3f&, CLevel*, bool))&CRenderableObjectsManager::AddAnimatedInstanceModel)
 			.def("get_resource", &CRenderableObjectsManager::GetResource)
 			//.def("clean_up", &CRenderableObjectsManager::CleanUp)
 			//.def("get_instance", &CRenderableObjectsManager::GetInstance)
@@ -800,7 +802,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS) [
 		class_<CAnimatedInstanceModel, CRenderableObject>("CAnimatedInstanceModel")
-			.def(constructor<tinyxml2::XMLElement*,const std::string&>())
+			.def(constructor<tinyxml2::XMLElement*,CLevel*>())
 			.def("initialize", &CAnimatedInstanceModel::Initialize)
 			.def("render", &CAnimatedInstanceModel::Render)
 			.def("update", &CAnimatedInstanceModel::Update)
@@ -995,7 +997,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCinematic, bases<CNamed, CCinematicPlayer>>("CCinematic")
-			.def(constructor<tinyxml2::XMLElement*, const std::string&>())
+			.def(constructor<tinyxml2::XMLElement*, CLevel*>())
 			.def("add_cinematic_object", &CCinematic::AddCinematicObject)
 			.def("update", &CCinematic::Update)
 			.def("play",&CCinematic::Play)
@@ -1007,7 +1009,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCinematicObject, CCinematicPlayer>("CCinematicObject")
-			.def(constructor<tinyxml2::XMLElement*, const std::string&>())
+			.def(constructor<tinyxml2::XMLElement*, CLevel*>())
 			.def("is_ok", &CCinematicObject::IsOk)
 			.def("add_cinematic_object_key_frame", &CCinematicObject::AddCinematicObjectKeyFrame)
 			.def("update", &CCinematicObject::Update)
@@ -1027,7 +1029,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CCinematicManager, bases<CRenderableObject, CTemplatedMapManager<CCinematic>>>("CCinematicManager")
-			.def(constructor<>())
+			.def(constructor<CLevel*>())
 			.def("load_xml", &CCinematicManager::LoadXML)
 			.def("reload", &CCinematicManager::Reload)
 			.def("update", &CCinematicManager::Update)
@@ -1197,14 +1199,14 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<COmniLight,CLight>("COmniLight")
-			.def(constructor<const std::string &>())
-			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
+			.def(constructor<CLevel*>())
+			.def(constructor<tinyxml2::XMLElement*, CLevel*>())
 	];
 
 	module(m_LS)[
 		class_<CDirectionalLight, CLight>("CDirectionalLight")
-			.def(constructor<const std::string &>())
-			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
+			.def(constructor<CLevel*>())
+			.def(constructor<tinyxml2::XMLElement*, CLevel*>())
 			.def("get_direction", &CDirectionalLight::GetDirection)
 			.def("set_direction", &CDirectionalLight::SetDirection)
 			.def("get_direction_lua_address", &CDirectionalLight::GetDirectionLuaAdress)
@@ -1213,8 +1215,8 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CSpotLight, CDirectionalLight>("CSpotLight")
-			.def(constructor<const std::string &>())
-			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
+			.def(constructor<CLevel*>())
+			.def(constructor<tinyxml2::XMLElement*, CLevel*>())
 			.def("get_angle", &CSpotLight::GetAngle)
 			.def("set_angle", &CSpotLight::SetAngle)
 			.def("get_fall_off", &CSpotLight::GetFallOff)
@@ -1245,6 +1247,7 @@ void CScriptManager::RegisterLUAFunctions()
 	module(m_LS)[
 		class_<CMaterial, CNamed>("CMaterial")
 			.def(constructor<tinyxml2::XMLElement*,const std::string &>())
+			.def(constructor<tinyxml2::XMLElement*, CLevel*>())
 			.def("apply", &CMaterial::Apply)
 			.def("get_next_parameter_adress", &CMaterial::GetNextParameterAddress)
 			.def("get_parameters", &CMaterial::GetParameters, luabind::return_stl_iterator)
@@ -1287,8 +1290,8 @@ void CScriptManager::RegisterLUAFunctions()
 	// StaticMesh-------------------------------------------------------------------------------------
 	module(m_LS)[
 		class_<CInstanceMesh, CRenderableObject>("CInstanceMesh")
-			.def(constructor<tinyxml2::XMLElement*, const std::string&>())
-			.def(constructor<const std::string&, const std::string&, const std::string&>())
+			.def(constructor<tinyxml2::XMLElement*, CLevel*>())
+			.def(constructor<const std::string&, const std::string&, CLevel*>())
 			.def("render", &CInstanceMesh::Render)
 			.def("get_interactuable_object_name", &CInstanceMesh::GetInteractuableObject)
 			.def("change_level",&CInstanceMesh::ChangeLevel)
@@ -1296,7 +1299,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CStaticMesh, CNamed>("CStaticMesh")
-			.def(constructor<const std::string &>())
+			.def(constructor<CLevel*>())
 			.def("load", &CStaticMesh::Load)
 			.def("reload", &CStaticMesh::Reload)
 			.def("render", &CStaticMesh::Render)
@@ -1422,8 +1425,8 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 	class_<CParticleSystemInstance, CRenderableObject>("CParticleSystemInstance")
-		.def(constructor<>())
-		.def(constructor<tinyxml2::XMLElement*, const std::string&>())
+		.def(constructor<CLevel*>())
+		.def(constructor<tinyxml2::XMLElement*, CLevel*>())
 		.def("set_active_particles", &CParticleSystemInstance::SetActiveParticles)
 		.def("get_active_particles", &CParticleSystemInstance::GetActiveParticles)
 		.def("get_start", &CParticleSystemInstance::GetStart)
@@ -1476,8 +1479,8 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CBilboardSystemInstance, CRenderableObject>("CBilboardSystemInstance")
-		.def(constructor<>())
-		.def(constructor<tinyxml2::XMLElement*, const std::string&>())
+		.def(constructor<CLevel*>())
+		.def(constructor<tinyxml2::XMLElement*, CLevel*>())
 		.def("get_lua_sizeX", &CBilboardSystemInstance::GetLuaSizeX)
 		.def("get_lua_sizeY", &CBilboardSystemInstance::GetLuaSizeY)
 		.def("get_lua_size_offset", &CBilboardSystemInstance::GetLuaSizeOffset)
@@ -1528,7 +1531,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CManchasSystemInstance, CRenderableObject>("CManchasSystemInstance")
-			.def(constructor<tinyxml2::XMLElement*, const std::string&>())
+			.def(constructor<tinyxml2::XMLElement*, CLevel*>())
 			.def("get_type", &CManchasSystemInstance::GetType)
 			.def("get_awake", &CManchasSystemInstance::GetAwake)
 			.def("set_awake", &CManchasSystemInstance::SetAwake)
@@ -1748,6 +1751,7 @@ void CScriptManager::RegisterLUAFunctions()
 
 	module(m_LS)[
 		class_<CGamePlayManager>("CGamePlayManager")
+			.def(constructor<>())
 			.def("add_component", &CGamePlayManager::AddComponent)
 			.def("destroy", &CGamePlayManager::Destroy)
 			.def("size", &CGamePlayManager::Size)

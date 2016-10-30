@@ -10,6 +10,7 @@ class CRenderManager;
 class CAnimatedCoreModel;
 class CMaterial;
 class CRenderableVertexs;
+class CLevel;
 
 class CAnimatedInstanceModel : public CRenderableObject
 {
@@ -28,7 +29,7 @@ private:
 	void LoadMaterials();
 
 public:
-	CAnimatedInstanceModel(tinyxml2::XMLElement* TreeNode,const std::string &_LevelId);
+	CAnimatedInstanceModel(tinyxml2::XMLElement* TreeNode,CLevel* _Level);
 	virtual ~CAnimatedInstanceModel();
 	void Initialize(CAnimatedCoreModel *AnimatedCoreModel);
 	void Render(CRenderManager *RenderManager);

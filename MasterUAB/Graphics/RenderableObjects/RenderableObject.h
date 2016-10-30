@@ -11,6 +11,7 @@
 
 class CUABComponentManager;
 class CRenderManager;
+class CLevel;
 
 class CRenderableObject : public C3DElement, public CNamed, public CLevelInfo
 {
@@ -24,8 +25,8 @@ public:
 private:
 	bool m_DebugRender;
 public:
-	CRenderableObject();
-	CRenderableObject(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CRenderableObject(CLevel*);
+	CRenderableObject(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CRenderableObject();
 	virtual void Save(FILE* _File, std::string _layer){}
 	virtual void Update(float ElapsedTime){};

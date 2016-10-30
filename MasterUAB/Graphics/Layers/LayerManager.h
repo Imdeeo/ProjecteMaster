@@ -7,11 +7,13 @@
 #include <string>
 
 class CRenderManager;
+class CLevel;
 
 class CLayerManager : public CTemplatedVectorMapManager<CRenderableObjectsManager>
 {
 private:
 	std::string m_Filename;
+	std::string m_LevelName;
 	CRenderableObjectsManager *m_DefaultLayer;
 	
 	
@@ -20,7 +22,7 @@ public:
 	CLayerManager();
 	virtual ~CLayerManager();
 	void Destroy();
-	void Load(const std::string &Filename, const std::string &_LevelId);
+	void Load(const std::string &Filename, CLevel *_Level);
 	void Reload();
 	void Update(float ElapsedTime);
 	void Save();

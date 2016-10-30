@@ -5,6 +5,7 @@
 
 class CRenderableObjectTechnique;
 class ID3D11BlendState;
+class CLevel;
 
 class CDeferredShadingSceneRendererCommand : public
 	CStagedTexturedSceneRendererCommand
@@ -13,7 +14,7 @@ private:
 	CRenderableObjectTechnique *m_RenderableObjectTechnique;
 	ID3D11BlendState *m_EnabledAlphaBlendState;
 public:
-	CDeferredShadingSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CDeferredShadingSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CDeferredShadingSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };
