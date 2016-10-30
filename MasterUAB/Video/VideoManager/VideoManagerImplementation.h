@@ -17,6 +17,7 @@ public:
 	bool RenderSceenClip(const std::string &l_ClipName);
 	void Update(float _ElapsedTime);
 	TheoraVideoClip* GetActualClip();
+	
 };
 
 #endif //H_VIDEO_MANAGER_IMPLEMENTATION_H

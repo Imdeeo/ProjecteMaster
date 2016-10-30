@@ -10,11 +10,11 @@ function CrouchingFirst(args)
 	
 	l_Player.m_PhysXManager:set_character_controller_height("player", g_CrouchingHeight)
 	if l_Player.m_CurrentAnimation == "crouch_move" then
-		l_Owner:blend_cycle(2,1.0,0.1)
+		l_Owner:blend_cycle(0,1.0,0.1)
 	elseif l_Player.m_CurrentAnimation == "crouch_idle" then
-		l_Owner:blend_cycle(1,1.0,0.1)
+		l_Owner:blend_cycle(0,1.0,0.1)
 	else
-		l_Owner:blend_cycle(1,1.0,0.1)
+		l_Owner:blend_cycle(0,1.0,0.1)
 		l_Player.m_CurrentAnimation = "crouch_idle"
 	end
 end

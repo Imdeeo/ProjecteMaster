@@ -91,3 +91,19 @@ function ja()
 	local l_FPSCamera = l_CameraManager:get_main_camera()
 	utils_log_v3(l_FPSCamera:get_position())
 end
+
+function asd()
+	g_Engine:set_time_scale(0.2)
+end
+
+function dsa()
+	g_Engine:set_time_scale(1)
+end
+
+function rot()
+	utils_log_q(g_Player.m_RenderableObject:get_rotation())
+end
+
+function pos()
+	utils_log(""..g_Player.m_CameraController:get_position().y)
+end

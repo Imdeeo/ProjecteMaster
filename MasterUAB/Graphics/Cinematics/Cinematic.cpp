@@ -85,6 +85,7 @@ void CCinematic::Stop()
 void CCinematic::Pause()
 {
 	m_Playing = false;
+	m_CurrentTime = 0.0f;
 	for (size_t i = 0; i<m_CinematicObjects.size(); ++i)
 	{
 		m_CinematicObjects[i]->Pause();

@@ -8,9 +8,9 @@ R1TrayL2IsClosed = true
 local l_LevelId = "Recibidor"
 
 function R1Door(_Player)
-	_Player.m_TargetPosOffset = Vect3f(-1.385, 0.0, -0.82)
-	_Player.m_ForwardCamera = Vect3f(0.0, 0.0, 1.0)
-	_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
+	_Player.m_TargetPosOffset = Vect3f(-1.377, 0.0, -0.713147)
+	_Player.m_ForwardCamera = Vect3f(0.0, -0.5, 0.86)
+	_Player.m_UpCamera = Vect3f(0.0, 0.866026, 0.5)
 	_Player.m_TargetYaw = -g_PI/2.0
 	l_Target = GetTriggerPos("TriggerDoor", l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 0.8) then
@@ -21,11 +21,14 @@ function R1Door(_Player)
 		_Player.m_NewItemName = ""
 		_Player.m_ItemTime = 1.5
 		_Player.m_ItemDropTime = -1.0
-		_Player.m_CurrentAend = "CrossDoor"
+		_Player.m_CurrentAend = nil
 		_Player.m_LeftHanded = false
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
+		_Player.m_Teleport = true
+		_Player.m_SingOnce = true
+		_Player.m_AnimationTime = 16.6
 	end
 end
 
@@ -71,11 +74,11 @@ function R1TrayR1(_Player) --This contains the key
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
-		--m_CharacterManager.m_Enemics[1].m_Awake = true
-		--m_CharacterManager.m_Enemics[2].m_Awake = true
+		m_CharacterManager.m_Enemics[1].m_Awake = true
+		m_CharacterManager.m_Enemics[2].m_Awake = true
 		local l_Level = g_Engine:get_level_manager():get_level(l_LevelId)
 		l_Level:get_cinematic_manager():get_resource("recibidor_engranajes"):play()
-		_Player.m_PhysXManager:disable_trigger("TriggerTrayR1")
+		_Player.m_PhysXManager:disable_physics("TriggerTrayR1","FisicasAux")
 	end
 end
 
@@ -140,6 +143,7 @@ function R1TrayL1Open(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
+		_Player.m_SingOnce = false
 		R1TrayL1IsClosed = false
 	end
 end
@@ -188,6 +192,7 @@ function R1TrayL2Open(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
+		_Player.m_SingOnce = false
 		R1TrayL2IsClosed = false
 	end
 end

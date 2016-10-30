@@ -120,3 +120,9 @@ void CFPSCameraController::CopyFromKeyCamera(CCameraInfo* _CameraInfo)
 	Vect3f l_LookAt = _CameraInfo->GetLookAt() - _CameraInfo->GetEye();
 	m_Rotation.SetFromFwdUp(l_LookAt, _CameraInfo->GetUp());
 }
+
+void CFPSCameraController::CopyFromCamera(CCameraController* _Camera)
+{
+	m_Fov = _Camera->GetFov();
+	m_Rotation.SetFromFwdUp(_Camera->GetForward(), _Camera->GetUp());
+}

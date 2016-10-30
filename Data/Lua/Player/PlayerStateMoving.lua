@@ -4,7 +4,7 @@ function MovingFirst(args)
 	if l_Player.m_CurrentAnimation == "move" then
 		l_Owner:blend_cycle(0,1.0,0.1)
 	elseif l_Player.m_CurrentAnimation == "run" then
-		l_Owner:blend_cycle(26,1.0,0.1)
+		l_Owner:blend_cycle(27,1.0,0.1)
 	else
 		l_Owner:blend_cycle(0,1.0,0.1)
 		l_Player.m_CurrentAnimation = "move"

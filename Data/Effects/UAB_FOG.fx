@@ -57,8 +57,9 @@ float3 GetPositionFromZDepthView(float ZDepthView, float2 UV, float4x4 InverseVi
 
 float CalcAttenuation(float Depth, float StartFog, float EndFog)
 {
-	if(Depth<EndFog)
-		return m_MaxAttenuation*smoothstep(StartFog, EndFog, Depth);
+	float l_Depth = max(Depth,3);
+	if(l_Depth<EndFog)
+		return m_MaxAttenuation*smoothstep(StartFog, EndFog, l_Depth);
 	else
 		return m_MaxAttenuation;
 }
@@ -103,28 +104,16 @@ float4 GetFogColor(float Depth, float3 Pos)
 { 
 	float l_FogIntensity = 0.0;
 	
-	if (m_Type == 1.0)
+	if (m_Type == 2.0)
+	{
+		float l_percent = min(max((m_CameraPosition.y-1.11)/(3.8-1.11),0),1);
+		l_FogIntensity=lerp(CalcLinearFog(Depth, m_StartFog, m_EndFog), CalcHeightFog(Depth, Pos), l_percent);
+	}
+	else
 	{
 		l_FogIntensity=CalcLinearFog(Depth, m_StartFog, m_EndFog);
 	}
-	else if (m_Type == 2.0)
-	{
-		l_FogIntensity=m_MaxAttenuation*(1-CalcExpFog(Depth, m_DensityFog));
-	}
-	else if (m_Type == 3.0)
-	{
-		l_FogIntensity=m_MaxAttenuation*(1-CalcExp2Fog(Depth, m_DensityFog));
-	}
-	else if (m_Type == 4.0)
-	{
-		l_FogIntensity=CalcHeightFog(Depth, Pos);
-	}
-	else if (m_Type == 5.0)
-	{
-		l_FogIntensity=min(CalcLinearFog(Depth, m_StartFog, m_EndFog), CalcHeightFog(Depth, Pos));
-	}
-
-		
+	
 	return saturate(float4(m_FogColor.xyz,l_FogIntensity));
 }
 

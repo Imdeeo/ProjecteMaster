@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <resources>
-	<resource layer="solid" name="Jaheem" type="player" position="0.0 0.9 -2.5" rotation="-0.000000 0.703490 -0.000000 0.710705" visible="true"/>
-	<resource layer="solid" name="CagedAutomatonLeft" type="enemy" position="2.522870 0.500000 2.073650" rotation="0.000000 -0.707107 0.000000 -0.707107" awake="false" visible="true"/>
-	<resource layer="solid" name="CagedAutomatonRight" type="enemy" position="-2.547590 0.500000 2.078260" rotation="0.000000 0.707107 0.000000 -0.707107" awake="false" visible="true"/>
-	<resource layer="solid" name="LlaveRecibidor" type="object" position="-2.26176 0.921648 -2.24986" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
-	<resource layer="solid" name="ankhcolgante" type="object" position="2.304160 0.911380 -0.932696" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
-	<resource layer="solid" name="CajonComodaDerecha1" type="object" position="-2.423140 1.000280 -2.373670" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
-	<resource layer="solid" name="CajonComodaDerecha2" type="object" position="-2.423140 1.000280 -1.056070" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
-	<resource layer="solid" name="CajonComodaIzquierda1" type="object" position="2.420210 1.000280 -2.373670" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
-	<resource layer="solid" name="CajonComodaIzquierda2" type="object" position="2.408430 1.000280 -1.056070" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
-	<resource layer="solid" name="recibidor_engranajes" type="cinematic"/>
+	<resource level="Player" layer="solid" name="Jaheem" type="player" position="16.5236 4.9248 27.9152" rotation="0.0 0.0 0.0 1.0" visible="true"/>
+	<!--<resource layer="solid" name="CagedAutomatonLeft" type="enemy" position="2.522870 0.500000 2.073650" rotation="0.000000 -0.707107 0.000000 -0.707107" awake="false" visible="true"/>-->
+	<resource level="Maquinas" layer="solid" name="ValvulaPuzzle" type="object" position="27.2134 -0.431354 43.3826" rotation="0.0 0.0 0.0 1.0" visible="true"/>
+	<resource level="Maquinas" layer="solid" name="CajaEngranaje" type="object" position="2.27762 0.0542869 40.0316" rotation="0.0 0.0 0.0 1.0" visible="true"/>
+	<resource level="Maquinas" layer="triggers" name="TriggerValve" type="trigger" position="22.5136 -0.573193 16.0336" rotation="0.0 0.0 0.258819 0.965926" enable="true" visible="true"/>
+	<resource level="Maquinas" layer="triggers" name="TriggerValveInput" type="trigger" position="15.021 0.580524 11.4286" rotation="-0.0421331 -0.258573 -0.0112895 0.965006" enable="false" visible="true"/>
+	<resource level="Maquinas" layer="triggers" name="TriggerWindow" type="trigger" position="5.71402 3.80625 3.98397" rotation="0.0 0.0 0.0 1.0" enable="false" visible="true"/>
+	<resource level="Maquinas" name="Cinta1" type="cinematic" play="true" stop="false" pause="false"/>
+	<resource level="Maquinas" name="Cinta2" type="cinematic" play="true" stop="false" pause="false"/>
+	<resource level="Maquinas" name="Cinta3" type="cinematic" play="true" stop="false" pause="false"/>
+	<resource level="Maquinas" name="Cinta4" type="cinematic" play="true" stop="false" pause="false"/>
+	<resource level="Maquinas" name="Cinta5" type="cinematic" play="true" stop="false" pause="false"/>
+	<resource level="Maquinas" name="21gramos" type="cinematic" play="false" stop="true" pause="false"/>
+	<resource level="Maquinas" name="TrituradoraPared" type="cinematic" play="false" stop="true" pause="false"/>
+	<resource level="Maquinas" name="TrituradoraTecho" type="cinematic" play="false" stop="true" pause="false"/>
+	<resource level="Maquinas" name="Newcommen" type="cinematic" play="false" stop="true" pause="false"/>
 </resources>

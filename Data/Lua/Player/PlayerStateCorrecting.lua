@@ -1,5 +1,6 @@
 function CorrectingFirst(args)
 	local l_Player = args["self"]
+	local l_Owner = args["owner"]	
 	l_Player.m_CameraController:lock()
 
 	l_Player.m_InitialCameraRotation = l_Player.m_CameraController:get_rotation()
@@ -8,6 +9,8 @@ function CorrectingFirst(args)
 	local quat_to_turn = Quatf()
 	quat_to_turn:set_from_fwd_up(l_Player.m_ForwardCamera, l_Player.m_UpCamera)
 	l_Player.m_FinalCameraRotation = quat_to_turn
+	
+	l_Owner:set_visible(false)
 end
 
 function CorrectingUpdate(args, _ElapsedTime)
@@ -20,10 +23,10 @@ function CorrectingUpdate(args, _ElapsedTime)
 	--// Force the player face the target
 		--// Movement
 	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetPosOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
-	local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
+	
 	l_FaceTargetDisplacement.y = 0.0
 	utils_log("Distance: "..l_FaceTargetDisplacement:length())
-	if l_FaceTargetDisplacement:length() <= 0.01 then
+	if l_FaceTargetDisplacement:length() <= 0.04 then
 		l_PosOK = true
 	else
 		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
@@ -40,17 +43,14 @@ function CorrectingUpdate(args, _ElapsedTime)
 		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, l_PercentRotation)
 		l_Player.m_CameraController:set_rotation(target_quat)
 	else
-		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, 1)
-		l_Player.m_CameraController:set_rotation(target_quat)
 		l_AngleOK = true
-	end	
-		
+	end
 		
 	if l_PosOK and l_AngleOK then
 		l_Player.m_IsCorrecting = false
 	end
 	
-		--// Assign to the character the controller's position
+	--// Assign to the character the controller's position
 	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
 	l_Owner:set_position(l_NewControllerPosition)
@@ -92,7 +92,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 end
 
 function CorrectingEnd(args)
-	
+
 end
 
 function ANYToCorrectingCondition(args)

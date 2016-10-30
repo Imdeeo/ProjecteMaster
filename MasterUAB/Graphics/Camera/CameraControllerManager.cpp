@@ -4,6 +4,7 @@
 #include "Camera\CameraKeyController.h"
 #include "Camera\CameraController.h"
 #include "Camera\3PersonCameraController.h"
+#include "Camera\FocusedCameraController.h"
 #include "XML\tinyxml2.h"
 
 #include "RenderManager\RenderManager.h"
@@ -73,7 +74,10 @@ bool CCameraControllerManager::Load(const std::string &FileName, const std::stri
 						break;
 					case CCamera::CAMERA_TYPE_KEY:
 						AddResource(l_ElementAux->GetPszProperty("name"), new CCameraKeyController(l_ElementAux,_LevelId),_LevelId);
-						break;				
+						break;
+					case CCamera::CAMERA_TYPE_FOCUSED:
+						AddResource(l_ElementAux->GetPszProperty("name"), new CFocusedCameraController(l_ElementAux, _LevelId), _LevelId);
+						break;
 					default:
 						return false;
 					}
