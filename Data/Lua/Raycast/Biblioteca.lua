@@ -105,7 +105,7 @@ end
 
 function R2ArtifactDoor(_Player)
 	_Player.m_TargetYaw = -g_PI/2.0
-	_Player.m_TargetPosOffset = Vect3f(-0.81, 0.0, -0.605974)
+	_Player.m_TargetPosOffset = Vect3f(-0.770, 0.0, -0.756)
 	_Player.m_ForwardCamera = Vect3f(0.0, -0.67204, 1.0)
 	_Player.m_UpCamera = Vect3f(0.0, 0.740519, 0.672036)
 	l_Target = GetTriggerPos("TriggerArtifactDoor",l_LevelId)

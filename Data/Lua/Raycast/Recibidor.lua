@@ -143,6 +143,7 @@ function R1TrayL1Open(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
+		_Player.m_SingOnce = false
 		R1TrayL1IsClosed = false
 	end
 end
@@ -191,6 +192,7 @@ function R1TrayL2Open(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
+		_Player.m_SingOnce = false
 		R1TrayL2IsClosed = false
 	end
 end
