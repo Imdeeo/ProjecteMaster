@@ -1,5 +1,3 @@
-dofile("Data\\Lua\\Sound\\CSoundSynchronizer.lua")
-
 function PatrolFirstAutomaton(args)
 	utils_log("PatrolFirst")
 	local l_Owner = args["owner"]

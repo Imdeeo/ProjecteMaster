@@ -1,3 +1,5 @@
+dofile("Data\\Lua\\Sound\\Interaction.lua")
+
 function InteractingFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
@@ -8,10 +10,9 @@ function InteractingFirst(args)
 		l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):play()
 	end
 
-	local l_AnimationSoundEvent = l_Player.m_SoundEvents[l_Player.m_InteractingAnimation]
-	if l_AnimationSoundEvent ~= nil and l_Player.m_InteractionSoundSpeaker ~= nil then
-		l_Player.m_SoundManager:play_event(l_AnimationSoundEvent, l_Player.m_InteractionSoundSpeaker)
-		--l_Player.m_SoundManager:play_event(l_Player.m_StopBeatSoundEvent, l_Owner)
+	local InteractingSoundsFunction = g_InteractingSounds[l_Player.m_InteractingAnimation]
+	if InteractingSoundsFunction ~= nil then
+		InteractingSoundsFunction(l_Player.m_InteractionSoundSpeaker)
 	end
 	
 	l_Player.m_Timer = 0.0

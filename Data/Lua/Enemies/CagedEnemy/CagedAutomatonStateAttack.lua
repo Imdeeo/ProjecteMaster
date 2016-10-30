@@ -6,7 +6,15 @@ function AttackFirstCagedAutomaton(args)
 	l_Owner:remove_action(l_Enemy.m_ActualAnimation)
 	l_Enemy.m_ActualAnimation = 2
 	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,0.5,0.5)
-	l_Enemy.m_SoundManager:play_event(l_Enemy.m_BeatSoundEvent, l_Owner)
+
+	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, 2)
+	l_SoundSync.m_EventsPerCycle = 3
+	local l_SE = SoundEvent()
+	l_SE.event_name = "Automaton_Beat_6"
+	l_SoundSync.m_StartSequenceEvent = l_SE
+	l_SoundSync.m_Offset = 0.60
+	l_SoundSync.m_AnimationDuration = 2.4
+	l_Enemy.m_SoundSync = l_SoundSync
 end
 
 function AttackUpdateCagedAutomaton(args, _ElapsedTime)
@@ -14,6 +22,7 @@ function AttackUpdateCagedAutomaton(args, _ElapsedTime)
 	local l_Owner = args["owner"]	
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()	
 	
+	l_Enemy.m_SoundSync:Sync(_ElapsedTime)
 	-- the enemy rotates the head bone to player position
 	l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime	
 	local l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularSpeed
@@ -34,5 +43,6 @@ end
 function AttackEndCagedAutomaton(args)
 	utils_log("AttackEndCagedAutomaton")
 	local l_Owner = args["owner"]
+	local l_Enemy = args["self"]
 	l_Enemy.m_SoundManager:play_event(l_Enemy.m_StopBeatSoundEvent, l_Owner)
 end

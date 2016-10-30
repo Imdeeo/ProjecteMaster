@@ -93,9 +93,7 @@ function R1TrayR1(_Player) --This contains the key
 		l_Level:get_cinematic_manager():get_resource("recibidor_engranajes"):play()
 		_Player.m_PhysXManager:disable_physics("TriggerTrayR1","FisicasAux")
 	end
-	local l_LayerManager = g_Engine:get_level_manager():get_level("Recibidor"):get_layer_manager()
-	local l_SolidLayer = l_LayerManager:get_layer("solid")
-	_Player.m_InteractionSoundSpeaker = l_SolidLayer:get_resource("CajonComodaDerecha1")
+	_Player.m_InteractionSoundSpeaker = "CajonComodaDerecha1"
 end
 
 function R1TrayR2Open(_Player)
@@ -142,9 +140,7 @@ function R1TrayR2(_Player)
 	else
 		R1TrayR2Close(_Player)
 	end
-	local l_LayerManager = g_Engine:get_level_manager():get_level("Recibidor"):get_layer_manager()
-	local l_SolidLayer = l_LayerManager:get_layer("solid")
-	_Player.m_InteractionSoundSpeaker = l_SolidLayer:get_resource("CajonComodaDerecha2")
+	_Player.m_InteractionSoundSpeaker = "CajonComodaDerecha2"
 end
 
 function R1TrayL1Open(_Player)
@@ -192,9 +188,7 @@ function R1TrayL1(_Player)
 	else
 		R1TrayL1Close(_Player)
 	end
-	local l_LayerManager = g_Engine:get_level_manager():get_level("Recibidor"):get_layer_manager()
-	local l_SolidLayer = l_LayerManager:get_layer("solid")
-	_Player.m_InteractionSoundSpeaker = l_SolidLayer:get_resource("CajonComodaDerecha2")
+	_Player.m_InteractionSoundSpeaker = "CajonComodaDerecha2"
 end
 
 function R1TrayL2Open(_Player)
@@ -246,9 +240,7 @@ function R1TrayL2(_Player) --This contains the ankh
 	else
 		R1TrayL2Close(_Player)
 	end
-	local l_LayerManager = g_Engine:get_level_manager():get_level("Recibidor"):get_layer_manager()
-	local l_SolidLayer = l_LayerManager:get_layer("solid")
-	_Player.m_InteractionSoundSpeaker = l_SolidLayer:get_resource("CajonComodaDerecha2")
+	_Player.m_InteractionSoundSpeaker = "CajonComodaDerecha2"
 end
 
 function R1Ankh(_Player)
