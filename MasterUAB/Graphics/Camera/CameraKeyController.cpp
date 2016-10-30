@@ -283,14 +283,28 @@ void CCameraKeyController::ForceUpdateYaw(float _ElapsedTime)
 {
 	CInputManager* l_InputManager = UABEngine.GetInputManager();
 	float l_Radians = l_InputManager->GetAxisX()*_ElapsedTime;
-	float l_Yaw = m_Rotation.EulerFromQuat().z;
-	//				15						165										-15					-165
-	if (((l_Yaw < 0.261799f || l_Yaw > 2.87979f) && l_Radians < .0f) || ((l_Yaw > -0.261799f || l_Yaw < -2.87979f) && l_Radians > .0f))
+	Quatf l_Rotation = m_Rotation;
+	
+	//UtilsLogV3(l_Forward);
+
+	CCameraController::AddYaw(l_Radians);
+	float l_ForwardZ = m_Rotation.GetForwardVector().z;
+
+	if (l_ForwardZ < 0.58)
 	{
-		Quatf l_YawRotation = Quatf(0, 0, 0, 1);
-		l_YawRotation.SetFromScaledAxis(Vect3f(0, l_Radians, 0));
-		m_Rotation = m_Rotation*l_YawRotation;
-		l_InputManager->UpdateAxis(0, 0);
-		m_LookAt = m_Position + GetForward();
+		m_Rotation = l_Rotation;
 	}
+
+	l_InputManager->UpdateAxis(0, 0);
+	m_LookAt = m_Position + GetForward();
+}
+
+void CCameraKeyController::SetLookAt(Vect3f _lookAt)
+{
+	m_LookAt = _lookAt;
+}
+
+void CCameraKeyController::SetUp(Vect3f _up)
+{
+	m_Up = _up;
 }

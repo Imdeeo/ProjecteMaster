@@ -38,6 +38,7 @@
 #include "Camera\CameraKeyController.h"
 #include "Camera\FPSCameraController.h"
 #include "Camera\Frustum.h"
+#include "Camera\FocusedCameraController.h"
 #include "Camera\SphericalCameraController.h"
 #include "Camera\3PersonCameraController.h"
 
@@ -940,6 +941,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_camera_as_info", &CCameraKeyController::GetCameraAsInfo)
 			.def("get_camera_key", &CCameraKeyController::GetCameraKey)
 			.def("force_update_yaw", &CCameraKeyController::ForceUpdateYaw)
+			.def("set_look_at", &CCameraKeyController::SetLookAt)
+			.def("set_up", &CCameraKeyController::SetUp)
 			.def_readwrite("m_PositionOffsetKey", &CCameraKeyController::m_PositionOffsetKey)
 			.def_readwrite("m_PositionOffset", &CCameraKeyController::m_PositionOffset)
 			.def_readwrite("m_RotationOffset", &CCameraKeyController::m_RotationOffset)
@@ -962,6 +965,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("lock", &CFPSCameraController::Lock)
 			.def("unlock", &CFPSCameraController::Unlock)
 			.def("copy_from_key_camera", &CFPSCameraController::CopyFromKeyCamera)
+			.def("copy_from_camera", &CFPSCameraController::CopyFromCamera)
 	];
 
 	module(m_LS) [
@@ -978,6 +982,17 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_zoom", &CSphericalCameraController::SetZoom)
 			.def("set_camera", &CSphericalCameraController::SetCamera)
 			.def("rotate", &CSphericalCameraController::Rotate)
+	];
+
+	module(m_LS)[
+		class_<CFocusedCameraController, CCameraController>("CFocusedCameraController")
+			.def(constructor<tinyxml2::XMLElement*, const std::string &>())
+			.def("init", &CFocusedCameraController::Init)
+			.def("set_focus", &CFocusedCameraController::SetFocus)
+			.def("set_start", &CFocusedCameraController::SetStart)
+			.def("set_camera", &CFocusedCameraController::SetCamera)
+			.def("get_lookat", &CFocusedCameraController::GetLookAt)
+			.def("copy_to_camera", &CFocusedCameraController::CopyToCamera)
 	];
 
 	// Cinematics -----------------------------------------------------------------------------------
@@ -1005,6 +1020,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("pause", &CCinematic::Pause)
 			.def("on_restart_cycle", &CCinematic::OnRestartCycle)
 			.def("is_finished", &CCinematic::IsFinished)
+			.def("get_duration", &CCinematic::GetDuration)
 	];
 
 	module(m_LS)[
@@ -1253,7 +1269,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_parameters", &CMaterial::GetParameters, luabind::return_stl_iterator)
 			.def("get_renderable_object_technique", &CMaterial::GetRenderableObjectTechnique)
 			.def("get_texture", &CMaterial::GetTexture)
-			.def("set_value", &CMaterial::SetValue)
+			.def("set_value", (void(CMaterial::*)(const int, const float))&CMaterial::SetValue)
+			.def("set_value", (void(CMaterial::*)(const int, const CColor))&CMaterial::SetValue)
 			.def("get_value", &CMaterial::GetValue)
 	];
 
@@ -1615,7 +1632,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_texture", &CTextureManager::GetTexture)
 			.def("reload", &CTextureManager::Reload)
 			.def("enable_trigger", &CPhysXManager::EnableTrigger)
-			.def("disable_trigger", &CPhysXManager::DisableTrigger)
+			.def("enable_object", &CPhysXManager::EnableObject)
+			.def("disable_physics", &CPhysXManager::DisablePhysics)
 			.def("create_character_controller", &CPhysXManager::CreateCharacterController)
 			.def("character_controller_move", &CPhysXManager::CharacterControllerMove)
 			.def("character_controller_warp", &CPhysXManager::CharacterControllerWarp)

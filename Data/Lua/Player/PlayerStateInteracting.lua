@@ -13,6 +13,7 @@ function InteractingFirst(args)
 	if l_Player.m_CameraAnimation ~= nil then
 		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, false)
 	end
+	l_Owner:set_visible(true)
 end
 
 function InteractingUpdate(args, _ElapsedTime)
@@ -23,7 +24,7 @@ function InteractingUpdate(args, _ElapsedTime)
 	
 	--// Ends the state after the animation duration has passed
 	if l_Player.m_InteractingCinematic ~= nil then
-		l_Player.m_IsInteracting = not l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):is_finished()
+		l_Player.m_IsInteracting = l_Player.m_Timer <= l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):get_duration()
 	else
 		l_Player.m_IsInteracting = (l_Player.m_Timer < l_Player.m_AnimationTime)
 	end
@@ -71,21 +72,39 @@ end
 function InteractingEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
+	if l_Player.m_Teleport then
+		l_Player.m_Teleport = false
+		local l_AnimatedCam = g_Engine:get_camera_controller_manager():get_resource(l_Player.m_CameraAnimation)
+		local l_Pos = l_AnimatedCam:get_position() - Vect3f(0,g_TotalHeight,0)
+		l_Player.m_PhysXManager:character_controller_teleport("player", l_Pos)
+		
+		
+		
+		local l_FPS = g_Engine:get_camera_controller_manager():get_resource("MainCamera")
+		l_FPS:set_position(l_AnimatedCam:get_position())
+		l_FPS:set_rotation(l_AnimatedCam:get_rotation())
+	end
 	
 	l_Player:ClearTarget()
 	l_Player:ClearStates()
 	l_Player:ClearAend(l_Owner)
 	l_Player:ClearCinematic()
-	l_Player:ClearCamera()
 	
 	l_Player.m_InteractingAnimation = 0
-	l_Player.m_AnimationTime = 0
-	l_Player.m_CameraController:unlock()
-	
-	l_Owner:remove_action(l_Owner:get_actual_action_animation())
+	if not l_Player.m_SingOnce then
+		l_Player.m_AnimationTime = 0
+		l_Player.m_CameraController:unlock()
+		l_Owner:remove_action(l_Owner:get_actual_action_animation())
+		l_Player:ClearCamera()
+	end
 end
 
-function InteractingToFallingCondition(args)
+function InteractingToIdleCondition(args)
 	local l_Player = args["self"]
-	return not l_Player.m_IsInteracting
+	return not l_Player.m_IsInteracting and not l_Player.m_SingOnce
+end
+
+function InteractingToSpecialSingingCondition(args)
+	local l_Player = args["self"]
+	return not l_Player.m_IsInteracting and l_Player.m_SingOnce
 end

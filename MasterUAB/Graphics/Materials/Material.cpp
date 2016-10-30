@@ -368,6 +368,11 @@ void CMaterial::SetValue(int _index, float _value)
 	((CTemplatedMaterialParameter<float>*)m_Parameters[_index])->SetValue(_value);
 }
 
+void CMaterial::SetValue(int _index, CColor _value)
+{
+	((CTemplatedMaterialParameter<CColor>*)m_Parameters[_index])->SetValue(_value);
+}
+
 float CMaterial::GetValue(int _index)
 {
 	return ((CTemplatedMaterialParameter<float>*)m_Parameters[_index])->GetValue();

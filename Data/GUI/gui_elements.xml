@@ -73,6 +73,13 @@
 		<sprite name="fondoStandardMenu" x="0" y="0" w="1920" h="1080" pX="0.5" pY="0.5"/>
 	</gui_spritemap>
 	
+	<gui_spritemap name="fundido" width="64" height="64">
+		<material name="fundido_material" renderable_object_technique="MV_POSITION4_NORMAL_TEXTURE_VERTEX">
+			<texture filename="Data\\GUI\\fundido.png"/>
+		</material>
+		<sprite name="fundidoNormal" x="0" y="0" w="64" h="64" pX="0.5" pY="0.5"/>
+	</gui_spritemap>
+	
 	<gui_spritemap name="fontTest" width="256" height="256" >
 		<material name="fontTest" renderable_object_technique="MV_POSITION4_NORMAL_TEXTURE_VERTEX">
 			<texture filename="Data\\Fonts\\fontTest_0.png"/>
@@ -97,5 +104,6 @@
 	<panel name="fondo1_1" normal="fondoMainMenuAnimado"/>
 	<panel name="fondo2" normal="fondoOptionsMenu"/>
 	<panel name="fondo3" normal="fondoStandardMenu"/>
+	<panel name="fundidoNegro" normal="fundidoNormal"/>
 </gui_elements>
 		

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <materials>
-	<material name="TeslaMaterial" renderable_object_technique="line_renderer">
-		<texture type="diffuse" filename="Data\Particles\rayobeam.png"/>
-	</material>
 	<material name="20 - Default" renderable_object_technique="skybox">
 		<texture type="reflection" filename="Data\level_0\Textures\KGSkyBox2.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
@@ -1966,11 +1963,11 @@
 		<texture type="reflection" filename="Data\level_2\Textures\Cubemap_Suelo_Combinado.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="glossiness" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="reflectivity" value="0.300000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="bump_factor" value="0.000000" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="glossiness" value="75.000015" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="reflectivity" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="0.650000" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.250001" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="0.150000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
 	</material>
@@ -2296,21 +2293,8 @@
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
 	</material>
-	<material name="B_storeproyector" renderable_object_technique="radiosity_bump">
-		<texture type="diffuse" filename="Data\level_2\Textures\storeproyector.dds"/>
-		<texture type="lightmap" filename="Data\level_2\Textures\CuadrosTodosYPistaJuntos_X.dds"/>
-		<texture type="normal" filename="Data\level_2\Textures\storeproyector_NRM.dds"/>
-		<texture type="lightmap2" filename="Data\level_2\Textures\CuadrosTodosYPistaJuntos_Y.dds"/>
-		<texture type="lightmap3" filename="Data\level_2\Textures\CuadrosTodosYPistaJuntos_Z.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="specular_power" value="10.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="0.200000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
-		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
-		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	<material name="B_storeproyector" renderable_object_technique="lights">
+		<texture type="video" filename="bunny.ogv"/>
 	</material>
 	<material name="Base" renderable_object_technique="lights">
 		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_metal_negro.dds"/>
@@ -2368,6 +2352,8 @@
 	</material>
 	<material name="CombineMaterial" renderable_object_technique="combine">
 		<parameter type="float" name="ShowTexture" value="0.000000" description="min=0.0 max=1.0 step=1.0"/>
+		<parameter type="float" name="Intensity" value="1.000000" description="min=0.0 max=5.0 step=1.0"/>
+		<parameter type="color" name="Color" value="1.000000 1.000000 1.000000 1.000000" description=""/>
 	</material>
 	<material name="FlareBlurMaterial" renderable_object_technique="flare_blur">
 		<parameter type="float" name="TextureSize" value="256.000000" description=""/>
@@ -2431,7 +2417,7 @@
 		<parameter type="float" name="density" value="0.890000" description="min=0.0 max=3.0 step=0.005"/>
 		<parameter type="float" name="weight" value="1.000000" description="min=0.0 max=3.0 step=0.005"/>
 		<parameter type="float" name="num_samples" value="20.000000" description=""/>
-		<parameter type="float2" name="light_position" value="-1.245385 -2.198326" description=""/>
+		<parameter type="float2" name="light_position" value="-0.448756 1.692461" description=""/>
 	</material>
 	<material name="NoiseAndVignettingMaterial" renderable_object_technique="noise_and_vignetting">
 		<texture type="diffuse" filename="Data\GUI\Textures\vignetting.png"/>
@@ -2442,7 +2428,7 @@
 	<material name="SSRMaterial" renderable_object_technique="ssr">
 		<parameter type="float" name="enabled" value="1.000000" description=""/>
 		<parameter type="float" name="ssr_opacity" value="0.300000" description="min=0.0 max=1.0 step=0.1"/>
-		<parameter type="float" name="ssr_offset_screen" value="0.000000" description="min=0.0 max=1.0 step=0.02"/>
+		<parameter type="float" name="ssr_offset_screen" value="0.300000" description="min=0.0 max=1.0 step=0.02"/>
 	</material>
 	<material name="SofaGrande" renderable_object_technique="radiosity_metalnessmap">
 		<texture type="diffuse" filename="Data\level_2\Textures\CompoSofaGrande2_DIFF.dds"/>
@@ -2487,6 +2473,9 @@
 		<parameter type="float" name="bump_factor" value="1.000000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+	</material>
+	<material name="TeslaMaterial" renderable_object_technique="line_renderer">
+		<texture type="diffuse" filename="Data\Particles\rayobeam.png"/>
 	</material>
 	<material name="UnwrapEmbellecedores" renderable_object_technique="radiosity_bump_glossiness">
 		<texture type="diffuse" filename="Data\level_2\Textures\UnwrapEmbellecedores_DIF.dds"/>
@@ -2610,24 +2599,6 @@
 		<parameter type="float" name="metalness" value="1.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 0.925490 0.047059 0.839216" description=""/>
 	</material>
-	<material name="jaheem_material" renderable_object_technique="animated_bump">
-		<texture type="diffuse" filename="Data/AnimatedModels/Jaheem/brazosjaheem.dds"/>
-		<texture type="normal" filename="Data/AnimatedModels/Jaheem/brazosjaheemNormalsMap.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-	</material>
-	<material name="jaheem_shackle" renderable_object_technique="animated_bump">
-		<texture type="diffuse" filename="Data/AnimatedModels/Jaheem/brazosjaheem.dds"/>
-		<texture type="normal" filename="Data/AnimatedModels/Jaheem/brazosjaheemNormalsMap.dds"/>
-		<parameter type="float" name="active" value="1.000000" description=""/>
-		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
-		<parameter type="float" name="specular_power" value="30.000000" description="min=0.0 max=100.0 step=0.1"/>
-		<parameter type="float" name="specular_factor" value="0.200000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="float" name="reflection" value="1.000000" description="min=0.0 max=1.0 step=0.001"/>
-	</material>
 	<material name="madera" renderable_object_technique="radiosity_bump_glossiness">
 		<texture type="diffuse" filename="Data\level_2\Textures\biblio_madera_chimenea2.dds"/>
 		<texture type="lightmap" filename="Data\level_2\Textures\OrganoGramoTodasLucesPared_X.dds"/>
@@ -2709,7 +2680,7 @@
 		<parameter type="float" name="lerp_sprite" value="1.000000" description=""/>
 		<parameter type="float" name="ratio_y" value="1.000000" description=""/>
 	</material>
-	<material name="reflejoluz" renderable_object_technique="lights">
+	<material name="reflejoluz" renderable_object_technique="alpha_blend">
 		<texture type="diffuse" filename="Data\level_2\Textures\lampara_techo_reflejos1.png"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.800000" description="min=0.0 max=1.0 step=0.01"/>

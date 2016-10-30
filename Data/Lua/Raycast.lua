@@ -15,6 +15,7 @@ function CheckRaycast(_Player, _Camera, _Owner)
 		local l_Trigger = l_LayerManager:get_layer("triggers"):get_resource(_Player.m_RaycastData.actor_name)
 		if l_LayerManager:get_layer("interactuable_objects"):get_resource(l_Trigger:get_interactuable_object_name()) == nil then
 			local l_InteractuableObject = l_LayerManager:get_layer("solid"):get_resource(l_Trigger:get_interactuable_object_name())
+			l_LayerManager:get_layer("interactuable_objects"):destroy(false)
 			l_LayerManager:get_layer("interactuable_objects"):add_resource(l_InteractuableObject.name, l_InteractuableObject)
 		end
 		if _Player.m_InputManager:is_action_active("Interact") then
@@ -33,8 +34,8 @@ function TriggerRaycast(_Player, _Owner)
 			if _Player.m_ItemName == "LlaveRecibidor" then
 				R1Door(_Player)
 			else
-				_Player.m_ItemName = "LlaveRecibidor"
-				_Player.m_Item = CUABEngine.get_instance():get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource(_Player.m_ItemName)
+				--_Player.m_ItemName = "LlaveRecibidor"
+				--_Player.m_Item = CUABEngine.get_instance():get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource(_Player.m_ItemName)
 			end
 		elseif _Player.m_RaycastData.actor_name == "TriggerSheets" then
 			R1Sheets(_Player)
@@ -78,19 +79,12 @@ function TriggerRaycast(_Player, _Owner)
 			R2Book(_Player)
 		end
 	elseif l_LevelID == "Maquinas" then
-		if _Player.m_RaycastData.actor_name == "TriggerValve" then
+		if _Player.m_RaycastData.actor_name == "TriggerValve" and _Player.m_Item == nil then
 			R3Valve(_Player)
-		elseif _Player.m_RaycastData.actor_name == "TriggerValveInput" then
-			if _Player.m_ItemName == "ValvulaPuzzle" then
-				R3ValveInput(_Player)
-			else
-				_Player.m_ItemName = "ValvulaPuzzle"
-				_Player.m_Item = CUABEngine.get_instance():get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource(_Player.m_ItemName)
-			end
-		elseif _Player.m_RaycastData.actor_name == "TriggerValveDoor" then
-			if R3ValveIsPlaced then
-				R3ValveDoor(_Player)
-			end
+		elseif _Player.m_RaycastData.actor_name == "TriggerValveInput" and _Player.m_ItemName == "ValvulaPuzzle" then
+			R3ValveInput(_Player)
+		elseif _Player.m_RaycastData.actor_name == "TriggerValveDoor" and R3ValveIsPlaced then
+			R3ValveDoor(_Player)
 		end
 	end
 end

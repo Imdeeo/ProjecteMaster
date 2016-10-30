@@ -4,7 +4,7 @@ function ClimbingStartFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_CameraController:lock()
-	l_Owner:blend_cycle(1,1.0,0.1)
+	l_Owner:blend_cycle(18,1.0,0.1)
 	l_Player.m_Timer = 0.0
 	l_Player.m_AnimationTime = 0.6666667
 	l_Player.m_InitialCameraRotation = l_Player.m_CameraController:get_rotation()

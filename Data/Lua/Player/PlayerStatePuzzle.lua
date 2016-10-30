@@ -4,7 +4,13 @@ function PuzzleFirst(args)
 
 	l_Owner:execute_action(l_Player.m_InteractingAnimation, 0.1, 0.1, 1.0, true)
 	l_Player.m_Timer = -22.5
-	l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, true)
+	l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, false)
+	l_Owner:set_visible(true)
+	l_Owner:set_position(l_Owner:get_position()-Vect3f(0,0.025,0))
+	
+	local l_Material = g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel):get_material_manager():get_resource("CombineMaterial")
+	l_Material:set_value(1, 2.0)	
+	l_Material:set_value(2, CColor(1.0, 0.83, 0.0, 1.0))
 end
 
 function PuzzleUpdate(args, _ElapsedTime)
@@ -32,9 +38,13 @@ function PuzzleEnd(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	
+	local l_Material = g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel):get_material_manager():get_resource("CombineMaterial")
+	l_Material:set_value(1, 1.0)	
+	l_Material:set_value(2, CColor(1.0, 1.0, 1.0, 1.0))
+	
 	--// Reset puzzle
 	if l_Player.m_OrganKeyCount <= table_length(l_Player.m_OrganKeyOrder) then
-		l_Player.m_PhysXManager:enable_trigger("TriggerPipeOrgan")
+		l_Player.m_PhysXManager:enable_trigger("TriggerPipeOrgan","FisicasAux")
 		l_Player.m_OrganKeyCount = 1
 	end
 	
@@ -46,10 +56,14 @@ function PuzzleEnd(args)
 	l_Player.m_InteractingAnimation = 0
 	l_Player.m_AnimationTime = 0
 	l_Player.m_CameraController:unlock()
+	local auxRot = Quatf()
+	auxRot:set_from_fwd_up(l_Player.m_CameraController:get_rotation():get_forward_vector(),Vect3f(0,1,0))
+	l_Player.m_CameraController:set_rotation(auxRot)
+	l_Owner:set_position(l_Owner:get_position()+Vect3f(0,0.025,0))
 	l_Owner:remove_action(l_Owner:get_actual_action_animation())
 end
 
-function PuzzleToFallingCondition(args)
+function PuzzleToIdleCondition(args)
 	local l_Player = args["self"]
 	return ((l_Player.m_Timer > l_Player.m_AnimationTime) and not l_Player.m_IsPuzzle) or l_Player.m_InputManager:is_action_active("MoveBackward")
 end

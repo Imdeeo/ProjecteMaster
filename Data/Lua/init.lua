@@ -188,7 +188,7 @@ function luaGui(_ElapsedTime)
 				m_credits = false
 			end
 		elseif m_confirm then
-			gui_manager:do_panel("standardMenuFondo", "fondo2", gui_position, 0.0)
+			gui_manager:do_panel("standardMenuFondo", "fondo2", gui_position, 0.0, 1.0)
 			local l_newPosX = m_ScreenResolution.x / 2
 			local l_newPosY = m_ScreenResolution.y / 2
 			
@@ -214,7 +214,7 @@ function luaGui(_ElapsedTime)
 				m_confirm = false
 			end
 		elseif m_retry then
-			gui_manager:do_panel("mainMenuFondo", "fondo2", gui_position, 0.0)
+			gui_manager:do_panel("mainMenuFondo", "fondo2", gui_position, 0.0, 1.0)
 			
 			gui_position = CGUIPosition(l_PosX, l_PosY, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local l_RetryButton = gui_manager:do_button("Retry", "retry_button", gui_position)
@@ -231,7 +231,7 @@ function luaGui(_ElapsedTime)
 				m_confirm = true
 			end
 		elseif m_options then
-			gui_manager:do_panel("optionsMenuFondo", "fondo2", gui_position, 0.0)
+			gui_manager:do_panel("optionsMenuFondo", "fondo2", gui_position, 0.0, 1.0)
 		
 			coord = Vect2f(l_PosXSlider, l_PosYSlider - l_HeightButton * 2)
 			gui_manager:do_text("fontTest", "Opciones", coord, CGUIManager.top_left, color)
@@ -253,7 +253,7 @@ function luaGui(_ElapsedTime)
 				m_options = false				
 			end 	
 		elseif m_pause then
-			gui_manager:do_panel("mainMenuFondo", "fondo2", gui_position, 0.0)
+			gui_manager:do_panel("mainMenuFondo", "fondo2", gui_position, 0.0, 1.0)
 			
 			gui_position = CGUIPosition(l_PosX, l_PosY, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local l_ResumeButton = gui_manager:do_button("Resume", "resume_button", gui_position)
@@ -277,8 +277,8 @@ function luaGui(_ElapsedTime)
 		else			
 			m_Timer = m_Timer + _ElapsedTime * 0.02
 			
-			gui_manager:do_panel("mainMenuFondo", "fondo1", gui_position, 0.0)
-			gui_manager:do_panel("mainMenuFondoAnimado", "fondo1_1", gui_position, m_Timer)
+			gui_manager:do_panel("mainMenuFondo", "fondo1", gui_position, 0.0, 1.0)
+			gui_manager:do_panel("mainMenuFondoAnimado", "fondo1_1", gui_position, m_Timer, 1.0)
 			
 			gui_position = CGUIPosition(l_PosX, l_PosY, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local l_PlayButton = gui_manager:do_button("Play", "play_button", gui_position)
