@@ -3,12 +3,14 @@
 
 #include "Light.h"
 
+class CLevel;
+
 class COmniLight : public CLight
 {
 public:
-	COmniLight(const std::string &_LevelId);
-	COmniLight(std::string _name, const std::string &_LevelId);
-	COmniLight(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	COmniLight(CLevel* _Level);
+	COmniLight(std::string _name, CLevel* _Level);
+	COmniLight(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	bool const GetInsideFrustum();
 	void SetShadowMap(CRenderManager &RenderManager);
 	void Save(FILE* _File);

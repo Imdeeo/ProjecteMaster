@@ -23,7 +23,7 @@
 #define HEADER 65109
 #define FOOTER 22014
 
-CStaticMesh::CStaticMesh(const std::string &_LevelId):CNamed(""),CLevelInfo(_LevelId),
+CStaticMesh::CStaticMesh(CLevel* _Level):CNamed(""),CLevelInfo(_Level),
 	m_BoundingSphereRadius(0.f)
 {	
 }
@@ -33,7 +33,7 @@ CStaticMesh::~CStaticMesh(void)
 	Destroy();
 }
 
-bool CStaticMesh::Load(const std::string &FileName)
+bool CStaticMesh::Load(const std::string &FileName,CLevel* _Level)
 {
 	m_FileName = FileName;
 
@@ -79,7 +79,7 @@ bool CStaticMesh::Load(const std::string &FileName)
 					l_BufferString.append(&l_BufferChar, sizeof(l_BufferChar));
 				}
 				l_File.read(&l_BufferChar, sizeof(l_BufferChar));
- 				m_Materials.push_back(UABEngine.GetLevelManager()->GetResource(m_Level)->GetMaterialManager()->GetResource(l_BufferString));
+ 				m_Materials.push_back(_Level->GetMaterialManager()->GetResource(l_BufferString));
 			}
 
 			for(int i=0; i<l_NumMaterials; i++)
@@ -308,7 +308,7 @@ bool CStaticMesh::Reload()
 	if (m_FileName != "")
 	{
 		Destroy();
-		return Load(m_FileName);
+		return Load(m_FileName,UABEngine.GetLevelManager()->GetResource(m_Level));
 	}
 	else
 	{

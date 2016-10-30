@@ -12,6 +12,9 @@
 
 #include "Camera\Camera.h"
 
+#include "Engine\UABEngine.h"
+#include "MutexManager\MutexManager.h"
+
 #include <d3d11.h>
 
 #pragma comment(lib,"d3d11.lib")
@@ -443,7 +446,9 @@ void CContextManager::Present()
 void CContextManager::UnsetRenderTargets()
 {	
 	SetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
 	GetDeviceContext()->RSSetViewports(1, getViewPort());
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
 }
 
 void CContextManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_RenderTargetViews, ID3D11DepthStencilView *_DepthStencilView)
@@ -457,21 +462,29 @@ void CContextManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_
 		m_CurrentRenderTargetViews[i]=_RenderTargetViews[i];
 
 	//m_CurrentRenderTargetViews = _RenderTargetViews;
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
 	GetDeviceContext()->OMSetRenderTargets(_NumViews, m_CurrentRenderTargetViews, _DepthStencilView);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
 }
 
 void CContextManager::Clear(bool renderTarget, bool depthStencil, CColor backgroundColor)
 {
+	std::mutex* l_DeviceContextMutex;
+	l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
 	if (renderTarget)
 	{
 		for (int i = 0; i < m_NumViews; ++i)
 		{
+			l_DeviceContextMutex->lock();
 			GetDeviceContext()->ClearRenderTargetView(m_CurrentRenderTargetViews[i], &backgroundColor.x);
+			l_DeviceContextMutex->unlock();
 		}	
 	}
 	if (depthStencil)
 	{
+		l_DeviceContextMutex->lock();
 		GetDeviceContext()->ClearDepthStencilView(m_CurrentDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+		l_DeviceContextMutex->unlock();
 	}
 }
 

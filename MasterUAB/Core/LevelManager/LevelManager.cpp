@@ -74,23 +74,30 @@ void CLevelManager::LoadLevelThread(const std::string &_LevelName)
 	}
 }
 
-void CLevelManager::LoadLevel(const std::string &_LevelName)
+void CLevelManager::LoadLevel(const std::string &_LevelName,bool _Joinable)
 {
 	if (m_LevelsInfo[_LevelName].m_Loaded)
 	{
-		ReloadLevel(_LevelName);
+		ReloadLevel(_LevelName,_Joinable);
 	}
 	else
 	{
 		std::thread t(&CLevelManager::LoadLevelThread,this,_LevelName);
-		
+		if (_Joinable)
+		{
+			t.join();
+		}
+		else
+		{
+			t.detach();
+		}
 	}
 }
 
-void CLevelManager::ReloadLevel(const std::string &_LevelName)
+void CLevelManager::ReloadLevel(const std::string &_LevelName,bool joinable)
 {
 	UnloadLevel(_LevelName);
-	LoadLevel(_LevelName);
+	LoadLevel(_LevelName,joinable);
 }
 
 void CLevelManager::UnloadLevel(const std::string &_LevelName)

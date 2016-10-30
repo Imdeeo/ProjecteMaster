@@ -5,14 +5,17 @@
 #include "StaticMesh\StaticMesh.h"
 #include <string>
 
+class CLevel;
+
 class CStaticMeshManager :	public CTemplatedLevelMapManager<CStaticMesh>
 {
 private:
 	std::string m_Filename;
+	std::string m_LevelName;
 public:
 	CStaticMeshManager(void);
 	virtual ~CStaticMeshManager(void);
-	bool Load(const std::string &FileName, const std::string &_LevelId);
+	bool Load(const std::string &FileName, CLevel* _Level);
 	bool Reload();
 };
 

@@ -1,6 +1,7 @@
 #include "ManchasManager.h"
 #include "XML\tinyxml2.h"
 #include "Engine\UABEngine.h"
+
 #include "LevelManager\LevelManager.h"
 
 CManchasManager::CManchasManager(void){}
@@ -11,9 +12,10 @@ CManchasManager::~CManchasManager(void)
 }
 
 
-void CManchasManager::Load(const std::string &Filename, const std::string &_LevelId)
+void CManchasManager::Load(const std::string &Filename, CLevel* _Level)
 {
 	m_Filename = Filename;
+	m_LevelName = _Level->GetName();
 
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLError l_Error = doc.LoadFile(Filename.c_str());
@@ -28,8 +30,8 @@ void CManchasManager::Load(const std::string &Filename, const std::string &_Leve
 			l_Element = l_Element->FirstChildElement();
 			while (l_Element != NULL)
 			{
-				CManchasSystemType *l_ManchasSystemType = new CManchasSystemType(l_Element,_LevelId);
-				if (!AddResource(l_ManchasSystemType->GetName(), l_ManchasSystemType, _LevelId))
+				CManchasSystemType *l_ManchasSystemType = new CManchasSystemType(l_Element,_Level);
+				if (!AddResource(l_ManchasSystemType->GetName(), l_ManchasSystemType, m_LevelName))
 				{
 					CHECKED_DELETE(l_ManchasSystemType);
 				}
@@ -42,7 +44,7 @@ void CManchasManager::Load(const std::string &Filename, const std::string &_Leve
 void CManchasManager::Reload()
 {
 	Destroy();
-	Load(m_Filename, UABEngine.GetLevelManager()->GetActualLevel());
+	Load(m_Filename, UABEngine.GetLevelManager()->GetResource(m_LevelName));
 }
 
 void CManchasManager::Save()

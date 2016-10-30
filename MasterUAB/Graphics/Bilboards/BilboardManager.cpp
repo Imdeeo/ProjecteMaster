@@ -10,10 +10,10 @@ CBilboardManager::~CBilboardManager(void)
 	Destroy();
 }
 
-void CBilboardManager::Load(const std::string &Filename, const std::string &_LevelId)
+void CBilboardManager::Load(const std::string &Filename, CLevel* _Level)
 {
 	m_Filename = Filename;
-	m_LevelId = _LevelId;
+	m_LevelId = _Level->GetName();
 
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLError l_Error = doc.LoadFile(Filename.c_str());
@@ -28,8 +28,8 @@ void CBilboardManager::Load(const std::string &Filename, const std::string &_Lev
 			l_Element = l_Element->FirstChildElement();
 			while (l_Element != NULL)
 			{
-				CBilboardSystemType *l_BilboardSystemType = new CBilboardSystemType(l_Element, _LevelId);
-				if (!AddResource(l_BilboardSystemType->GetName(), l_BilboardSystemType, _LevelId))
+				CBilboardSystemType *l_BilboardSystemType = new CBilboardSystemType(l_Element, _Level);
+				if (!AddResource(l_BilboardSystemType->GetName(), l_BilboardSystemType, m_LevelId))
 				{
 					CHECKED_DELETE(l_BilboardSystemType);
 				}
@@ -42,5 +42,5 @@ void CBilboardManager::Load(const std::string &Filename, const std::string &_Lev
 void CBilboardManager::Reload()
 {
 	Destroy();
-	Load(m_Filename, m_LevelId);
+	Load(m_Filename, UABEngine.GetLevelManager()->GetResource(m_LevelId));
 }

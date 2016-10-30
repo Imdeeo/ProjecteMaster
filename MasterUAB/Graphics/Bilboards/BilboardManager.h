@@ -4,6 +4,8 @@
 #include "Utils\TemplatedMapManager.h"
 #include "BilboardSystemType.h"
 
+class CLevel;
+
 class CBilboardManager : public CTemplatedMapManager<CBilboardSystemType>
 {
 private:
@@ -12,7 +14,7 @@ private:
 public:
 	CBilboardManager(void);
 	virtual ~CBilboardManager(void);
-	void Load(const std::string &_Filename, const std::string &_LevelId);
+	void Load(const std::string &_Filename, CLevel* _Level);
 	void Reload();
 };
 

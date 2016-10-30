@@ -10,13 +10,14 @@
 #include "Utils\LevelInfo.h"
 
 class CCinematicObject;
+class CLevel;
 
 class CCinematic : public CCinematicPlayer, public CNamed, public CLevelInfo
 {
 protected:
 	std::vector<CCinematicObject *> m_CinematicObjects;
 public:
-	CCinematic(tinyxml2::XMLElement* TreeNode,const std::string &_LevelId);
+	CCinematic(tinyxml2::XMLElement* TreeNode,CLevel* _Level);
 	virtual ~CCinematic();
 	void AddCinematicObject(CCinematicObject *CinematicObject);
 	void Update(float _ElapsedTime);

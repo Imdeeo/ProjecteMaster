@@ -13,7 +13,7 @@
 
 #include <d3d11.h>
 
-CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CSceneRendererCommand(TreeNode,_LevelId)
+CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :CSceneRendererCommand(TreeNode,_Level)
 {
 	m_CapturedFrameBufferTexture = nullptr;
 	tinyxml2::XMLElement* l_Element = TreeNode->FirstChildElement();
@@ -25,11 +25,11 @@ CStagedTexturedSceneRendererCommand::CStagedTexturedSceneRendererCommand(tinyxml
 			std::string l_TextureFile = l_Element->GetPszProperty("file");
 			//todo if load_file
 
-			AddStageTexture(l_StagedId,UABEngine.GetTextureManager()->GetTexture(l_TextureFile,_LevelId));
+			AddStageTexture(l_StagedId,UABEngine.GetTextureManager()->GetTexture(l_TextureFile,_Level->GetName()));
 		}
 		else if(l_Element->Name() == std::string("dynamic_texture"))
 		{
-			AddDynamicTexture(l_Element);
+			AddDynamicTexture(l_Element,_Level);
 		}
 		else if(l_Element->Name() == std::string("capture_texture"))
 		{
@@ -71,11 +71,11 @@ void CStagedTexturedSceneRendererCommand::AddStageTexture(unsigned int _StagedId
 	m_StagedTextures.push_back(CStagedTexture(_StagedId, _Texture));
 }
 
-void CStagedTexturedSceneRendererCommand::AddDynamicTexture(tinyxml2::XMLElement* TreeNode)
+void CStagedTexturedSceneRendererCommand::AddDynamicTexture(tinyxml2::XMLElement* TreeNode, CLevel* _Level)
 {
 	std::string l_Name = TreeNode->GetPszProperty("name");
 	if (TreeNode->GetPszProperty("material") != "")
-		m_Material = UABEngine.GetLevelManager()->GetResource(m_LevelId)->GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
+		m_Material = _Level->GetMaterialManager()->GetResource(TreeNode->GetPszProperty("material"));
 	CDynamicTexture* l_DynamicTexture = new CDynamicTexture(TreeNode);
 	m_DynamicTextures.push_back(new CDynamicTextureManager(l_DynamicTexture,m_Material));
 	UABEngine.GetTextureManager()->AddTexture(l_Name, l_DynamicTexture,m_LevelId);

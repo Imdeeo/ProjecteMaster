@@ -450,6 +450,7 @@ public:
 	void ChangeRigidDynamicActorPhysxGroup(const std::string &_ActorName, const std::string &_group){
 		physx::PxShape* shape;
 		((physx::PxRigidDynamic*)m_Actors[m_ActorIndexs[_ActorName]])->getShapes(&shape, 1);
+		((physx::PxRigidStatic*)m_Actors[m_ActorIndexs[_ActorName]])->getShapes(&shape, 1);
 		L_PutGroupToShape(shape, m_Groups[_group]);
 	}
 

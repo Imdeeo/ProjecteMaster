@@ -3,6 +3,7 @@
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
 #include "EffectManager.h"
+#include "MutexManager\MutexManager.h"
 
 #include "SceneEffectParameters.h"
 #include "AnimatedModelEffectParameters.h"
@@ -102,7 +103,7 @@ bool CEffectShader::LoadShader(const std::string &Filename, const std::string &E
 #if defined( DEBUG ) || defined( _DEBUG )
 	dwShaderFlags |= D3DCOMPILE_DEBUG;
 #endif
-	ID3D11Device *l_Device = UABEngine.GetRenderManager()->GetDevice();
+	//ID3D11Device *l_Device = UABEngine.GetRenderManager()->GetDevice();
 	//LPCSTR profile = (l_Device->GetFeatureLevel() >= D3D_FEATURE_LEVEL_11_0) ? "cs_5_0" : "cs_4_0";
 	//std::wstring l_Str;
 	//l_Str.assign(l_CompiledName.begin(), l_CompiledName.end());
@@ -164,14 +165,17 @@ bool CEffectShader::CreateConstantBuffer(int IdBuffer, unsigned int BufferSize, 
 	l_BufferDescription.CPUAccessFlags = Dynamic ? D3D11_CPU_ACCESS_WRITE : 0;
 	l_BufferDescription.MiscFlags = 0;
 	l_BufferDescription.StructureByteStride = 0;
-	if (FAILED(l_Device->CreateBuffer(&l_BufferDescription, NULL,
-		&l_ConstantBuffer)))
+	UABEngine.GetMutexManager()->g_DeviceMutex.lock();
+	HRESULT l_HR = l_Device->CreateBuffer(&l_BufferDescription, NULL, &l_ConstantBuffer);
+	UABEngine.GetMutexManager()->g_DeviceMutex.unlock();
+	if (FAILED(l_HR))
 	{
 		//Info("Constant buffer '%d' couldn't created on shader '%s'.", IdBuffer, m_Filename.c_str());
 		printf("Constant buffer '%d' couldn't created on shader '%s'.", IdBuffer, m_Filename.c_str());
 		m_ConstantBuffers.push_back(NULL);
 		return false;
 	}
+
 	m_ConstantBuffers.push_back(l_ConstantBuffer);
 	return true;
 }
@@ -294,9 +298,14 @@ void CEffectVertexShader::SetConstantBuffer(unsigned int IdBuffer, void
 	ID3D11Buffer *l_ConstantBuffer = GetConstantBuffer(IdBuffer);
 	if (l_ConstantBuffer != NULL)
 	{
+		std::mutex *l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->UpdateSubresource(l_ConstantBuffer, 0, NULL,
 			ConstantBuffer, 0, 0);
+		l_DeviceContextMutex->unlock();
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->VSSetConstantBuffers(IdBuffer, 1, &l_ConstantBuffer);
+		l_DeviceContextMutex->unlock();
 	}
 }
 ID3D11VertexShader* CEffectVertexShader::GetVertexShader()
@@ -351,9 +360,14 @@ void CEffectPixelShader::SetConstantBuffer(unsigned int IdBuffer, void *Constant
 {
 	ID3D11DeviceContext *l_DeviceContext = UABEngine.GetRenderManager()->GetDeviceContext();
 	ID3D11Buffer *l_ConstantBuffer = GetConstantBuffer(IdBuffer);
+	std::mutex * l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
+	l_DeviceContextMutex->lock();
 	l_DeviceContext->UpdateSubresource(l_ConstantBuffer, 0, NULL,
 		ConstantBuffer, 0, 0);
+	l_DeviceContextMutex->unlock();
+	l_DeviceContextMutex->lock();
 	l_DeviceContext->PSSetConstantBuffers(IdBuffer, 1, &l_ConstantBuffer);
+	l_DeviceContextMutex->unlock();
 }
 
 ID3D11PixelShader* CEffectPixelShader::GetPixelShader()
@@ -406,9 +420,14 @@ void CEffectGeometryShader::SetConstantBuffer(unsigned int IdBuffer, void *Const
 {
 	ID3D11DeviceContext *l_DeviceContext = UABEngine.GetRenderManager()->GetDeviceContext();
 	ID3D11Buffer *l_ConstantBuffer = GetConstantBuffer(IdBuffer);
+	std::mutex * l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
+	l_DeviceContextMutex->lock();
 	l_DeviceContext->UpdateSubresource(l_ConstantBuffer, 0, NULL,
 		ConstantBuffer, 0, 0);
+	l_DeviceContextMutex->unlock();
+	l_DeviceContextMutex->lock();
 	l_DeviceContext->GSSetConstantBuffers(IdBuffer, 1, &l_ConstantBuffer);
+	l_DeviceContextMutex->unlock();
 }
 
 ID3D11GeometryShader* CEffectGeometryShader::GetGeometryShader()

@@ -12,6 +12,7 @@
 class CParticleSystemType;
 class CRenderableVertexs;
 class CFrustum;
+class CLevel;
 
 class CParticleSystemInstance : public CRenderableObject
 {
@@ -46,8 +47,8 @@ private:
 
 	CFrustum *m_Frustum;
 public:
-	CParticleSystemInstance(){};
-	CParticleSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CParticleSystemInstance(CLevel* _Level);
+	CParticleSystemInstance(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CParticleSystemInstance(void);
 	void Destroy();
 

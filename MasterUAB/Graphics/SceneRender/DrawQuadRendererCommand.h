@@ -5,13 +5,14 @@
 
 class CRenderableObjectTechnique;
 class CMaterial;
+class CLevel;
 
 class CDrawQuadRendererCommand : public CStagedTexturedSceneRendererCommand
 {
 private:
 	CRenderableObjectTechnique* m_RenderableObjectTechnique;
 public:
-	CDrawQuadRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CDrawQuadRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel *_Level);
 	virtual ~CDrawQuadRendererCommand(void);
 
 	void Execute(CRenderManager &RenderManager);

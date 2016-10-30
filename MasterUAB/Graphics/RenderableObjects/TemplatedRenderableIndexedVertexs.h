@@ -67,8 +67,11 @@ public:
 		D3D11_SUBRESOURCE_DATA InitData;
 		ZeroMemory(&InitData, sizeof(InitData));
 		InitData.pSysMem=Vtxs;
-		ID3D11Device *l_Device=UABEngine.GetRenderManager()->GetDevice();
+		ID3D11Device *l_Device =UABEngine.GetRenderManager()->GetDevice();
+		std::mutex * l_DeviceMutex = &(UABEngine.GetMutexManager()->g_DeviceMutex);
+		l_DeviceMutex->lock();
 		HRESULT hr=l_Device->CreateBuffer(&l_VertexBufferDesc, &InitData,&m_VertexBuffer);
+		l_DeviceMutex->unlock();
 		if(FAILED(hr))
 			return;
 		D3D11_BUFFER_DESC l_IndexBuffer;
@@ -78,7 +81,9 @@ public:
 		l_IndexBuffer.BindFlags=D3D11_BIND_INDEX_BUFFER;
 		l_IndexBuffer.CPUAccessFlags=0;
 		InitData.pSysMem=Indices;
+		l_DeviceMutex->lock();
 		hr=l_Device->CreateBuffer(&l_IndexBuffer, &InitData, &m_IndexBuffer);
+		l_DeviceMutex->unlock();
 		if(FAILED(hr))
 			return;
 	}
@@ -100,14 +105,30 @@ public:
 		if(l_EffectPixelShader==NULL || l_EffectVertexShader==NULL)
 			return false;
 		ID3D11DeviceContext *l_DeviceContext;
+		std::mutex* l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
+		std::mutex* l_DeviceMutex = &(UABEngine.GetMutexManager()->g_DeviceMutex);
+		l_DeviceContextMutex->lock();
+		l_DeviceMutex->lock();
 		RenderManager->GetDevice()->GetImmediateContext(&l_DeviceContext);
+		l_DeviceMutex->unlock();
+		l_DeviceContextMutex->unlock();
 		UINT stride=sizeof(T);
 		UINT offset=0;
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->IASetIndexBuffer(m_IndexBuffer, m_IndexType, 0);
+		l_DeviceContextMutex->unlock();
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride,	&offset);
+		l_DeviceContextMutex->unlock();
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->IASetPrimitiveTopology(m_PrimitiveTopology);
+		l_DeviceContextMutex->unlock();
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->IASetInputLayout(l_EffectVertexShader->GetVertexLayout());
+		l_DeviceContextMutex->unlock();
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->VSSetShader(l_EffectVertexShader->GetVertexShader(), NULL, 0);
+		l_DeviceContextMutex->unlock();
 
 		//CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
 		//l_DeviceContext->RSSetState(l_ContextManager->GetRasterizerState(CContextManager::RS_SOLID_BACK_CULL));

@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 
+class CLevel;
 
 class CParticleSystemType : public CNamed,public CLevelInfo
 {
@@ -40,7 +41,7 @@ private:
 		Vect3f m_Acceleration1, m_Acceleration2;
 	};
 public:
-	CParticleSystemType(tinyxml2::XMLElement* TreeNode,const std::string &_LevelId);
+	CParticleSystemType(tinyxml2::XMLElement* TreeNode,CLevel* _Level);
 	virtual ~CParticleSystemType(void);
 	void Destroy();
 	void Save(FILE* _File);

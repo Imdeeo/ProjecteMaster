@@ -2,7 +2,9 @@
 #include "Engine\UABEngine.h"
 #include "GUIManager.h"
 
-CRenderGUISceneRendererCommand::CRenderGUISceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CSceneRendererCommand(TreeNode,_LevelId)
+#include "LevelManager\Level.h"
+
+CRenderGUISceneRendererCommand::CRenderGUISceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) : CSceneRendererCommand(TreeNode,_Level)
 {
 	m_GUI = UABEngine.GetGUIManager();
 }

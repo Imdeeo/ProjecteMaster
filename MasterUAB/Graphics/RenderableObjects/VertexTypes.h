@@ -8,6 +8,8 @@
 #include "Math\Color.h"
 
 #include "RenderManager\RenderManager.h"
+#include "Engine\UABEngine.h"
+#include "MutexManager\MutexManager.h"
 #include "Utils.h"
 
 #include <d3d9.h>
@@ -71,8 +73,10 @@ struct TCOLORED_VERTEX
 			D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
 		UINT l_NumElements = ARRAYSIZE(l_Layout);
+		UABEngine.GetMutexManager()->g_DeviceMutex.lock();
 		HRESULT l_HR = RenderManager->GetDevice()->CreateInputLayout(l_Layout,
 			l_NumElements, VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), VertexLayout);
+		UABEngine.GetMutexManager()->g_DeviceMutex.unlock();
 		return !FAILED(l_HR);
 	}
 	static unsigned int GetVertexType()
@@ -248,8 +252,10 @@ struct StructName \
 		IFDEF_CREATE_GET_VERTEX_TYPE_##HasNormal4##_NORMAL4_CREATE_LAYOUT_DETAIL(l_Layout, l_IdLayout, l_OffsetBytes); \
 		\
 		UINT l_NumElements=ARRAYSIZE(l_Layout);\
+		UABEngine.GetMutexManager()->g_DeviceMutex.lock();\
 		HRESULT l_HR=RenderManager->GetDevice()->CreateInputLayout(l_Layout,\
 		l_NumElements, VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), VertexLayout);\
+		UABEngine.GetMutexManager()->g_DeviceMutex.unlock(); \
 		return !FAILED(l_HR);\
 	}\
 \
@@ -280,8 +286,10 @@ struct StructName \
 			IFDEF_CREATE_GET_VERTEX_TYPE_##HasUV2##_UV2_CREATE_LAYOUT\
 		};\
 		UINT l_NumElements=ARRAYSIZE(l_Layout);\
+		UABEngine.GetMutexManager()->g_DeviceMutex.lock();\
 		HRESULT l_HR=RenderManager->GetDevice()->CreateInputLayout(l_Layout,\
 		l_NumElements, VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), VertexLayout);\
+		UABEngine.GetMutexManager()->g_DeviceMutex.unlock();\
 		return !FAILED(l_HR);\
 	}\*/
 

@@ -18,6 +18,7 @@
 #include "PhysXManager\PhysXManager.h"
 #include "RenderableObjects\RenderableObjectTechniqueManager.h"
 #include "Particles\ParticleManager.h"
+#include "MutexManager\MutexManager.h"
 #include "GUIManager.h"
 #include "GUIPosition.h"
 #include "SoundManager\SoundManager.h"
@@ -59,11 +60,13 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 	m_VideoManager = IVideoManager::InstantiateVideoManager();
 	m_FrustumActive = true;
 	m_LevelManager = new CLevelManager();
+	m_MutexManager = new CMutexManager();
 	m_ActiveConsole = false;
 }
 
 CUABEngine::~CUABEngine(void)
 {
+	CHECKED_DELETE(m_MutexManager);
 	CHECKED_DELETE(m_LevelManager);
 	CHECKED_DELETE(m_TextureManager);
 	CHECKED_DELETE(m_RenderManager);
@@ -259,3 +262,4 @@ UAB_GET_PROPERTY_CPP(CUABEngine, CGUIManager*, GUIManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, ISoundManager *, SoundManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, IVideoManager *, VideoManager)
 UAB_GET_PROPERTY_CPP(CUABEngine, CLevelManager *, LevelManager)
+UAB_GET_PROPERTY_CPP(CUABEngine, CMutexManager *, MutexManager)

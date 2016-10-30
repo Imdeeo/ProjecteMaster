@@ -3,7 +3,7 @@
 #include "Engine\UABEngine.h"
 #include "LevelManager\LevelManager.h"
 
-CCinematicManager::CCinematicManager()
+CCinematicManager::CCinematicManager(CLevel* _Level) :CRenderableObject(_Level)
 {
 
 }
@@ -13,7 +13,7 @@ CCinematicManager::~CCinematicManager()
 	Destroy();
 }
 
-void CCinematicManager::LoadXML(const std::string &FileName, const std::string &_LevelId)
+void CCinematicManager::LoadXML(const std::string &FileName, CLevel* _Level)
 {
 	m_FileName = FileName;
 	tinyxml2::XMLDocument doc;
@@ -28,8 +28,8 @@ void CCinematicManager::LoadXML(const std::string &FileName, const std::string &
 			l_Element = l_Element->FirstChildElement();
 			while (l_Element != NULL)
 			{
-				CCinematic* l_Cinematic = new CCinematic(l_Element, _LevelId);
-				AddResource(l_Cinematic->GetName(), l_Cinematic, _LevelId);
+				CCinematic* l_Cinematic = new CCinematic(l_Element, _Level);
+				AddResource(l_Cinematic->GetName(), l_Cinematic, m_Level);
 				l_Element = l_Element->NextSiblingElement();
 			}
 		}
@@ -39,7 +39,7 @@ void CCinematicManager::LoadXML(const std::string &FileName, const std::string &
 void CCinematicManager::Reload()
 {
 	Destroy();
-	LoadXML(m_FileName, UABEngine.GetLevelManager()->GetActualLevel());
+	LoadXML(m_FileName, UABEngine.GetLevelManager()->GetResource(m_Level));
 }
 
 void CCinematicManager::Update(float _ElapsedTime)
