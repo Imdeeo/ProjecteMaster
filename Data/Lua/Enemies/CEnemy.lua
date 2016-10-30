@@ -54,6 +54,9 @@ class 'CEnemy' (CLUAComponent)
 		utils_log("Delete Enemy Name: "..self.m_Name)
 		local l_PhysXManager = CUABEngine.get_instance():get_physX_manager()
 		l_PhysXManager:remove_actor(self.m_Name)
+
+		self.m_ActivateSoundEvent = SoundEvent()
+		self.m_ActivateSoundEvent.event_name = "Automaton_Activate"
 	end
 	
 	function CEnemy:Update(_ElapsedTime)

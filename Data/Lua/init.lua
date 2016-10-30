@@ -8,6 +8,7 @@ dofile("Data\\Lua\\Triggers.lua")
 dofile("Data\\Lua\\Sound\\VolumeController.lua")
 dofile("Data\\Lua\\Enemies\\VisionTestEnemy\\VisionTestEnemy.lua")
 dofile("Data\\Lua\\Commands.lua")
+dofile("Data\\Lua\\Sound\\LevelSetup.lua")
 
 m_cinematicManager = CUABCinematicsActionManager()
 m_CharacterManager = CCharacterManager()
@@ -72,6 +73,7 @@ function mainLua()
 	--l_LevelManager:load_level("Biblioteca")
 	--l_LevelManager:choose_scene_command_level("Biblioteca")
 	--g_Player:SetActualLevel("Biblioteca")
+	--SetupSoundsBiblioteca(l_SoundManager)
 	
 	--l_LevelManager:load_level("Maquinas")
 	--l_LevelManager:choose_scene_command_level("Maquinas")
@@ -134,11 +136,14 @@ function luaUpdate(_ElapsedTime)
 			m_CharacterManager.m_Player[1]:ModifySanity(-10)
 		end
 		if l_InputManager:is_action_released("Pause") then
+			local l_SoundManager = g_Engine:get_sound_manager()
+			utils_log("Pausing all sounds...")
+			l_SoundManager:play_event(m_PauseAllSoundsEvent)
+			local l_Camera = g_Engine:get_camera_controller_manager():get_main_camera()
+			l_SoundManager:update(l_Camera)
 			m_menu = true
 			m_pause = true
 			g_Engine:set_pause(true)
-			local l_SoundManager = g_Engine:get_sound_manager()
-			l_SoundManager:play_event(m_PauseAllSoundsEvent, "NO_SPEAKER")
 		end
 		if l_InputManager:is_action_released("DebugToggleFrustum") then
 			g_Engine:set_frustum_active(not g_Engine:get_frustum_active())		
@@ -268,6 +273,11 @@ function luaGui(_ElapsedTime)
 			
 			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton * 4, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local l_ExitButton = gui_manager:do_button("Exit", "exit_button", gui_position)
+
+			local l_SoundManager = g_Engine:get_sound_manager()
+			local l_Camera = g_Engine:get_camera_controller_manager():get_main_camera()
+			l_SoundManager:update(l_Camera)
+
 			if l_ExitButton then
 				m_options = false				
 			end 	

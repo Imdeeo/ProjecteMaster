@@ -1,3 +1,4 @@
+dofile("Data\\Lua\\Sound\\CSoundSynchronizer.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateOff.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateIdle.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStatePatrol.lua")
