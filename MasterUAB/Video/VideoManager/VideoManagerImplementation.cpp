@@ -56,6 +56,7 @@ void CVideoManagerImplementation::Update(float _ElapsedTime)
 	{
 		if (m_ActualClip->getTimePosition() >= m_ActualClip->getDuration() && !m_ActualClip->getAutoRestart())
 		{			
+			UABEngine.SetPause(false);
 			m_ActualClip = nullptr;
 		}
 	}
@@ -81,5 +82,6 @@ bool CVideoManagerImplementation::RenderSceenClip(const std::string &l_ClipName)
 	if (m_ActualClip == nullptr)
 		return false;
 	m_ActualClip->play();
+	UABEngine.SetPause(true);
 	return true;
 }
