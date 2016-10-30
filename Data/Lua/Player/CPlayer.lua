@@ -170,6 +170,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_IsPuzzle = false
 		self.m_IsDead = false
 		self.m_SingOnce = false
+		self.m_VideoPlaying = false
 		
 		self.m_Target = nil
 		self.m_TargetPosOffset = Vect3f(1.0, 0.0, 0.0)

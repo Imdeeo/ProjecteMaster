@@ -287,7 +287,7 @@ bool CGUIManager::DoButton(const std::string& guiID, const std::string& buttonID
 	return l_result;
 }
 
-void CGUIManager::DoPanel(const std::string& guiID, const std::string& panelID, const CGUIPosition& position, const float offsetX)
+void CGUIManager::DoPanel(const std::string& guiID, const std::string& panelID, const CGUIPosition& position, const float offsetX, float _alpha)
 {
 	SpriteInfo* l_sprite = m_Panels[panelID]->GetNormal();
 	CheckInput();
@@ -295,7 +295,7 @@ void CGUIManager::DoPanel(const std::string& guiID, const std::string& panelID, 
 	GUICommand command = {
 		l_sprite,position.Getx(), position.Gety(), position.Getx() + position.Getwidth(), position.Gety() + position.Getheight(),
 		-offsetX, 0, 1-offsetX, 1,
-		CColor(1, 1, 1, 1) };
+		CColor(1, 1, 1, _alpha) };
 	m_PanelCommands.push_back(command);
 
 	//return l_result;

@@ -234,6 +234,10 @@
 	<render_layer name="render layer Manchas" layer="manchas" active="true"/>
 	<disable_alpha_blend name="disable alpha blend Manchas" active="true"/>
 	
+	<!-- VIDEO -->
+	<set_depth_stencil_state name="set depth stencil video" enable_z_test="false" write_z_buffer="false"/>
+	<render_video name="draw video" active="true"/> 
+	
 	<!-- GUI -->
 	<enable_alpha_blend name="enable alpha blend GUI" operation="add" operation_alpha="add" src="zero" dest="zero" src_alpha="one" dest_alpha="one" active="true"/>
 	<set_pool_renderable_objects_technique name="set pool forward GUI" pool="forward_shading" active="true"/>
