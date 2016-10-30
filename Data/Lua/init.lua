@@ -59,23 +59,23 @@ function mainLua()
 	--deactivate_player_collisions()
 	
 	l_LevelManager:load_level("Recibidor")
-	l_LevelManager:choose_scene_command_level("Recibidor")
+	l_LevelManager:choose_scene_command_level("Recibidor",true)
 	g_Player:SetActualLevel("Recibidor")
 	
 	--l_LevelManager:load_level("Biblioteca")
-	--l_LevelManager:choose_scene_command_level("Biblioteca")
+	--l_LevelManager:choose_scene_command_level("Biblioteca",true)
 	--g_Player:SetActualLevel("Biblioteca")
 	
 	--l_LevelManager:load_level("Maquinas")
-	--l_LevelManager:choose_scene_command_level("Maquinas")
+	--l_LevelManager:choose_scene_command_level("Maquinas",true)
 	--g_Player:SetActualLevel("Maquinas")
 	
 	--l_LevelManager:load_level("Pasillo")
-	--l_LevelManager:choose_scene_command_level("Pasillo")
+	--l_LevelManager:choose_scene_command_level("Pasillo",true)
 	--g_Player:SetActualLevel("Pasillo")
 	
 	--l_LevelManager:load_level("Boss")
-	--l_LevelManager:choose_scene_command_level("Boss")
+	--l_LevelManager:choose_scene_command_level("Boss",true)
 	--g_Player:SetActualLevel("Boss")
 end
 
