@@ -19,13 +19,23 @@ function SpecialSingingStateUpdate(args, _ElapsedTime)
 		--l_Owner:set_rotation(Quatf(0,1,0,0))
 		l_Player.m_SingOnce = true
 		l_Owner:remove_action(l_Owner:get_actual_action_animation())
-		utils_log("he entrado")
+
 		l_Owner:execute_action(31, 0.1, 0.1, 1.0, true)
 	end
 	
 	if l_Player.m_SingOnce then
 		l_Player:ModifySanity(90/l_Player.m_AnimationTime)
 		l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
+		
+			
+		if l_Player.m_Timer > 9.333 then
+			if l_Player.m_Timer < 13.333 then 
+				local l_Level = g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel)
+				local l_Material = l_Level:get_material_manager():get_resource("NoiseAndVignettingMaterial")
+				local l_Value = math.min(1,(l_Player.m_Timer-9.333)/4.0)	
+				l_Material:set_value(1,l_Value)
+			end
+		end
 	end
 end
 

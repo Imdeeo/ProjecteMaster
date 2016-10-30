@@ -61,11 +61,6 @@
 		</cinematic_object>
 	</cinematic>	
 	<cinematic name="CrossArtifactDoor" duration="10.7" cycle="false">
-		<cinematic_object resource="Artilufacto" layer="solid">
-			<cinematic_object_key_frame time="0.0333333" pos="0.0 0.0 0.0" rotation="-0.529878 -0.687324 -0.380925 0.318924" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="1.7" pos="0.180906 -0.711486 -0.161299" rotation="-1.35674e-006 -0.689399 0.724368 -0.00445197" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="1.73333" pos="0.182939 -0.650471 -0.121603" rotation="-0.0106059 -0.70336 0.707256 -0.0704325" scale="0.0453858 0.0453854 0.0453854"/>
-		</cinematic_object>
 		<cinematic_object resource="PuertaSalaMaquinas" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="0.0333333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
