@@ -244,7 +244,7 @@ void CScriptManager::Destroy()
 //Para ejecutar un fragmento de código LUA
 void CScriptManager::RunCode(const std::string &Code) const
 {
-	UtilsLog("RunCode");
+	//UtilsLog("RunCode");
 	if(luaL_dostring(m_LS,Code.c_str()))
 	{
 		const char *l_Str=lua_tostring(m_LS, -1);
@@ -657,6 +657,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_astar_manager", &CLevel::GetAStarManager)
 			.def("set_game_play_manager", &CLevel::SetGamePlayManager)
 			.def("set_has_to_update", &CLevel::SetHasToUpdate)
+			.def("is_visible",&CLevel::IsVisible)
+			.def("set_visible", &CLevel::SetVisible)
 	];
 
 	RegisterTemplatedVectorMapManager<CLevel>(m_LS);

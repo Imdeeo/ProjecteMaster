@@ -65,8 +65,8 @@
 	<instance_mesh name="SujetaEngranajes_006" layer ="solid" core_name="SujetaEngranajes_006" position="66.508 -7.49316 48.8316" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="SujetaEngranajes_002" layer ="solid" core_name="SujetaEngranajes_002" position="68.4878 -7.49316 23.2326" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="SujetaEngranajes_003" layer ="solid" core_name="SujetaEngranajes_003" position="106.533 -7.49316 16.2055" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="CajaEngranajesPasillo_001" layer ="solid" core_name="CajaEngranajesPasillo_001" position="35.2705 -8.23855 33.3268" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="CajaEngranajesPasillo_002" layer ="solid" core_name="CajaEngranajesPasillo_002" position="61.8018 -8.23855 51.9074" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="CajaEngranajesPasillo_001" layer ="solid" core_name="CajaEngranajesPasillo_001" position="35.2705 -8.23855 31.7545" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="CajaEngranajesPasillo_002" layer ="solid" core_name="CajaEngranajesPasillo_002" position="63.2845 -8.23855 51.9074" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajaEngranajesPasillo_003" layer ="solid" core_name="CajaEngranajesPasillo_003" position="87.7059 -8.23855 24.382" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="Reja001" layer ="solid" core_name="Reja001" position="33.9213 -7.33383 51.4611" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="Reja004" layer ="solid" core_name="Reja004" position="77.4423 -7.33383 30.2632" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
@@ -81,14 +81,14 @@
 	<instance_mesh name="TuboPasillo007" layer ="solid" core_name="TuboPasillo007" position="114.349 -6.10831 15.3496" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TuboPasillo004" layer ="solid" core_name="TuboPasillo004" position="77.7971 -5.85665 25.4383" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TuboPasillo003" layer ="solid" core_name="TuboPasillo003" position="77.7951 -5.83145 28.304" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="CajaTubosPasillo_002" layer ="solid" core_name="CajaTubosPasillo_002" position="38.1478 -6.74045 40.1807" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="CajaTubosPasillo_003" layer ="solid" core_name="CajaTubosPasillo_003" position="38.0398 -8.47386 40.4457" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="CajaTubosPasillo_001" layer ="solid" core_name="CajaTubosPasillo_001" position="39.8893 -8.47386 40.1807" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="CajaTubosPasillo_004" layer ="solid" core_name="CajaTubosPasillo_004" position="61.86 -6.32222 51.9461" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="CajaTubosPasillo_002" layer ="solid" core_name="CajaTubosPasillo_002" position="38.1478 -6.74045 43.7622" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="CajaTubosPasillo_003" layer ="solid" core_name="CajaTubosPasillo_003" position="38.0398 -8.47386 44.0272" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="CajaTubosPasillo_001" layer ="solid" core_name="CajaTubosPasillo_001" position="39.8893 -8.47386 43.7622" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="CajaTubosPasillo_004" layer ="solid" core_name="CajaTubosPasillo_004" position="63.3427 -6.32222 51.9461" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajaTubosPasillo_005" layer ="solid" core_name="CajaTubosPasillo_005" position="85.6109 -8.47386 37.5072" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajaTubosPasillo_006" layer ="solid" core_name="CajaTubosPasillo_006" position="89.5921 -8.47386 38.9179" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajaTubosPasillo_007" layer ="solid" core_name="CajaTubosPasillo_007" position="64.8993 -8.47386 29.4374" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="CajaTubosPasillo_008" layer ="solid" core_name="CajaTubosPasillo_008" position="95.1088 -6.50299 13.5024" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="CajaTubosPasillo_008" layer ="solid" core_name="CajaTubosPasillo_008" position="98.9063 -6.50299 12.577" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajaTubosPasillo_013" layer ="solid" core_name="CajaTubosPasillo_013" position="115.372 -6.7783 11.4681" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajaTubosPasillo_009" layer ="solid" core_name="CajaTubosPasillo_009" position="115.345 -8.47386 10.7501" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajaTubosPasillo_012" layer ="solid" core_name="CajaTubosPasillo_012" position="116.572 -6.7783 13.1959" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
@@ -104,4 +104,32 @@
 	<instance_mesh name="LamparasTecho007" layer ="solid" core_name="LamparasTecho007" position="77.8163 -6.00265 26.6799" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LamparasTecho010" layer ="solid" core_name="LamparasTecho010" position="65.259 -6.00265 20.7788" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LamparasTecho008" layer ="solid" core_name="LamparasTecho008" position="83.1091 -6.00265 13.5269" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="CajaEngranajesPasillo_004" layer ="solid" core_name="CajaEngranajesPasillo_004" position="98.928 -8.37486 12.5217" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="AccesoSaladeEscape" layer ="solid" core_name="AccesoSaladeEscape" position="126.313 -6.97555 13.207" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="TuboPasillo010" layer ="solid" core_name="TuboPasillo010" position="86.279 -7.96158 34.3874" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="LamparasTecho012" layer ="solid" core_name="LamparasTecho012" position="111.846 -6.00265 13.5269" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="TriggerStairsLowerEscape" layer ="triggers" core_name="TriggerStairsUpperEscape"  on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsLower" is_active="true" position="155.384 -9.40186 13.2685" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerStairsUpperEscape" layer ="triggers" core_name="TriggerStairsUpperEscape"  on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsUpper" is_active="true" position="155.384 2.039 13.2685" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerHole01" layer ="triggers" core_name="TriggerHole01" on_trigger_enter="OnEnterHole" is_active="true" position="51.5579 -12.9762 51.868" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerHole02" layer ="triggers" core_name="TriggerHole01" on_trigger_enter="OnEnterHole" is_active="true" position="76.1501 -12.9762 48.3393" rotation="0.0 0.300706 0.0 0.953717" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerHole03" layer ="triggers" core_name="TriggerHole01" on_trigger_enter="OnEnterHole" is_active="true" position="65.185 -12.9762 21.0871" rotation="0.0 0.461749 0.0 0.887011" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerHole04" layer ="triggers" core_name="TriggerHole01" on_trigger_enter="OnEnterHole" is_active="true" position="82.8783 -12.9762 13.1332" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
 </renderable_objects>
