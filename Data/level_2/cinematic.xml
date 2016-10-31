@@ -48,6 +48,14 @@
 			<cinematic_object_key_frame time="2.23333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
+	<cinematic name="Tecla7" duration="2.23333" cycle="false">
+		<cinematic_object resource="7tecla" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.8" pos="0.0 0.0 0.0" rotation="0.04362 0.0 0.0 0.99905" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.23333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
 	<cinematic name="fonotelefote" duration="1.33333" cycle="true" reverse="false">
 		<cinematic_object resource="RuedasBottomFonotelefote" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
