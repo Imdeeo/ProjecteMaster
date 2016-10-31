@@ -26,10 +26,10 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :CR
 	if (m_GeneratePhysx)
 	{
 		std::string l_Name = GetName();
-		//char l_ActorName[256] = "";
-		//sprintf_s(l_ActorName, "%s_%s", _LevelId.c_str(), l_Name.c_str());
+		char l_ActorName[256] = "";
+		sprintf_s(l_ActorName, "%s_%s", _Level->GetName().c_str(), l_Name.c_str());
 
-		std::string l_ActorName = l_Name;
+		//std::string l_ActorName = l_Name;
 		m_PxType = TreeNode->GetPszProperty("physics_type");
 		m_PxMaterial = TreeNode->GetPszProperty("physics_material");
 		m_PxGroup = TreeNode->GetPszProperty("physics_group");
@@ -50,7 +50,7 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :CR
 			{
 				l_auxDirectoty = m_StaticMesh->GetPhysxMeshesDirectory();
 			}
-			l_PhysXManager->CreateStaticTriangleMesh(l_ActorName, m_Level, m_StaticMesh, l_auxDirectoty, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			l_PhysXManager->CreateStaticTriangleMesh(l_Name, m_Level, m_StaticMesh, l_auxDirectoty, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}else if (m_PxType == "sphere_shape")
 		{
 			l_PhysXManager->CreateStaticSphere(l_ActorName, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
@@ -84,13 +84,13 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :CR
 				l_Element = l_Element->NextSiblingElement();
 			}
 			if (m_PxType == "box_trigger")
-				l_PhysXManager->CreateBoxTrigger(l_ActorName, l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction, l_OnTriggerStayLuaFunction, l_OnTriggerExitLuaFunction, l_ActivateActors, l_IsTriggerActive);
+				l_PhysXManager->CreateBoxTrigger(l_Name, l_BB, m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction, l_OnTriggerStayLuaFunction, l_OnTriggerExitLuaFunction, l_ActivateActors, l_IsTriggerActive);
 			else
-				l_PhysXManager->CreateSphereTrigger(l_ActorName, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction, l_OnTriggerStayLuaFunction, l_OnTriggerExitLuaFunction, l_ActivateActors, l_IsTriggerActive);
+				l_PhysXManager->CreateSphereTrigger(l_Name, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup, l_OnTriggerEnterLuaFunction, l_OnTriggerStayLuaFunction, l_OnTriggerExitLuaFunction, l_ActivateActors, l_IsTriggerActive);
 		}
 		else if (m_PxType == "convex_mesh")
 		{
-			l_PhysXManager->CreateStaticConvexMesh(l_ActorName, m_Level, m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			l_PhysXManager->CreateStaticConvexMesh(l_Name, m_Level, m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
 		else if (m_PxType == "box_shape")
 		{
@@ -121,6 +121,7 @@ CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreNam
 
 CInstanceMesh::~CInstanceMesh(void)
 {
+	std::string l_Name = GetName();
 	CPhysXManager* l_PhysXManager = UABEngine.GetPhysXManager();
 	if (m_GeneratePhysx)
 	{
@@ -130,14 +131,19 @@ CInstanceMesh::~CInstanceMesh(void)
 			for (size_t i = 0; i < l_NunMeshes; i++)
 			{
 				char l_ActorName[256] = "";
-				sprintf_s(l_ActorName, "%s_%s_%u",m_Level.c_str() ,GetName().c_str(), i);
+				sprintf_s(l_ActorName, "%s_%s_%u", m_Level.c_str(), l_Name.c_str(), i);
 				l_PhysXManager->RemoveActor(l_ActorName);
 			}
 		}
 		else
+		if (m_PxType == "box_trigger" || m_PxType == "sphere_trigger")
+		{
+			l_PhysXManager->RemoveActor(l_Name);
+		}
+		else
 		{
 			char l_ActorName[256] = "";
-			sprintf_s(l_ActorName, "%s_%s", m_Level.c_str(), GetName().c_str());
+			sprintf_s(l_ActorName, "%s_%s", m_Level.c_str(), l_Name.c_str());
 			l_PhysXManager->RemoveActor(l_ActorName);
 		}
 	}
