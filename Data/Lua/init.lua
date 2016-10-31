@@ -51,31 +51,31 @@ function mainLua()
 	m_timerPause = 0
 	m_iniciando = true 	
 	
-	l_LevelManager:load_level("Player")	
+	l_LevelManager:load_level("Player",true)	
 	l_LevelManager:choose_scene_command_level("Player")
 	g_Player:SetActualLevel("Player")	
 	
 	--deactivate_gravity()
 	--deactivate_player_collisions()
 	
-	l_LevelManager:load_level("Recibidor")
-	l_LevelManager:choose_scene_command_level("Recibidor",true)
+	l_LevelManager:load_level("Recibidor",true)
+	l_LevelManager:choose_scene_command_level("Recibidor")
 	g_Player:SetActualLevel("Recibidor")
 	
-	--l_LevelManager:load_level("Biblioteca")
-	--l_LevelManager:choose_scene_command_level("Biblioteca",true)
+	--l_LevelManager:load_level("Biblioteca",true)
+	--l_LevelManager:choose_scene_command_level("Biblioteca")
 	--g_Player:SetActualLevel("Biblioteca")
 	
-	--l_LevelManager:load_level("Maquinas")
-	--l_LevelManager:choose_scene_command_level("Maquinas",true)
+	--l_LevelManager:load_level("Maquinas",true)
+	--l_LevelManager:choose_scene_command_level("Maquinas")
 	--g_Player:SetActualLevel("Maquinas")
 	
-	--l_LevelManager:load_level("Pasillo")
-	--l_LevelManager:choose_scene_command_level("Pasillo",true)
+	--l_LevelManager:load_level("Pasillo",true)
+	--l_LevelManager:choose_scene_command_level("Pasillo")
 	--g_Player:SetActualLevel("Pasillo")
 	
-	--l_LevelManager:load_level("Boss")
-	--l_LevelManager:choose_scene_command_level("Boss",true)
+	--l_LevelManager:load_level("Boss",true)
+	--l_LevelManager:choose_scene_command_level("Boss")
 	--g_Player:SetActualLevel("Boss")
 end
 

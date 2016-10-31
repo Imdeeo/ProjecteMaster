@@ -38,11 +38,11 @@ bool CTexture::LoadFile()
 
 	// DirectXTK
 
-	l_DevicMutex->lock();
 	l_DevicContextMutex->lock();
+	l_DevicMutex->lock();
 	HRESULT l_HR = DirectX::CreateDDSTextureFromFile(l_Device, l_Context, wName.c_str(), nullptr, &m_Texture);
-	l_DevicContextMutex->unlock();
 	l_DevicMutex->unlock();
+	l_DevicContextMutex->unlock();
 	if (FAILED(l_HR))
 	{
 		l_DevicContextMutex->lock();
