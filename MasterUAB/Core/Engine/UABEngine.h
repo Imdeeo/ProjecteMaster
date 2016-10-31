@@ -24,6 +24,7 @@ class CColor;
 class CRenderableObject;
 class CEffectTechnique;
 class CLoadScreenManager;
+class CMutexManager;
 
 #include <string>
 
@@ -49,6 +50,8 @@ private:
 	CPhysXManager * m_PhysXManager;
 	CRenderableObjectTechniqueManager* m_RenderableObjectTechniqueManager;
 
+	CMutexManager* m_MutexManager;
+
 	CGUIManager* m_GUIManager;
 	ISoundManager* m_SoundManager;
 	IVideoManager* m_VideoManager;
@@ -59,6 +62,7 @@ private:
 	bool m_ActiveConsole;
 
 public:
+	CMutexManager * GetMutexManager() const;
 	CInputManager * GetInputManager() const;
 	CMaterialManager * GetMaterialManager() const;
 	CEffectManager * GetEffectManager() const;

@@ -4,14 +4,17 @@
 #include "Utils\TemplatedMapManager.h"
 #include "ParticleSystemType.h"
 
+class CLevel;
+
 class CParticleManager : public CTemplatedLevelMapManager<CParticleSystemType>
 {
 private:
 	std::string m_Filename;
+	std::string m_LevelName;
 public:
 	CParticleManager(void);
 	virtual ~CParticleManager(void);
-	void Load(const std::string &Filename, const std::string &_LevelId);
+	void Load(const std::string &Filename, CLevel* _Level);
 	void Reload();
 	void Save();
 };

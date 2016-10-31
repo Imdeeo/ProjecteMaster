@@ -3,11 +3,13 @@
 #include "Components\UABComponentManager.h"
 #include "Utils.h"
 
-CRenderableObject::CRenderableObject() :CNamed(""),CLevelInfo("") {
+#include "LevelManager\Level.h"
+
+CRenderableObject::CRenderableObject(CLevel* _Level) :CNamed(""),CLevelInfo(_Level) {
 	m_DebugRender = true;
 };
 
-CRenderableObject::CRenderableObject(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :C3DElement(TreeNode), CNamed(TreeNode),CLevelInfo(_LevelId){
+CRenderableObject::CRenderableObject(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :C3DElement(TreeNode), CNamed(TreeNode),CLevelInfo(_Level){
 	m_DebugRender = true;
 };
 

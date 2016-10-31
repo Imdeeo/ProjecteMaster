@@ -13,11 +13,12 @@
 #include <string>
 #include <vector>
 
+class CLevel;
 
 class CManchasSystemType : public CNamed, public CLevelInfo
 {
 public:
-	CManchasSystemType(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CManchasSystemType(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CManchasSystemType(void);
 	void Destroy();
 	void Save(FILE* _File);

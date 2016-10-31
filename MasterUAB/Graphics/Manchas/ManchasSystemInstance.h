@@ -9,6 +9,7 @@
 
 class CManchasSystemType;
 class CRenderableVertexs;
+class CLevel;
 
 class CManchasSystemInstance : public CRenderableObject
 {
@@ -32,7 +33,7 @@ private:
 	MV_POSITION4_COLOR_TEXTURE_VERTEX m_ManchasRenderableData[MAX_MANCHAS];
 	CRenderableVertexs *m_RenderableVertex;
 public:
-	CManchasSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CManchasSystemInstance(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CManchasSystemInstance(void);
 	void Destroy();
 	std::string GetTipo(){ return "ManchasInstance"; };

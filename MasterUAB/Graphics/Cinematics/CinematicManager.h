@@ -7,15 +7,18 @@
 #include "Utils\TemplatedMapManager.h"
 #include "Cinematic.h"
 
+class CLevel;
+
 class CCinematicManager : public CRenderableObject, public CTemplatedLevelMapManager<CCinematic>
 {
 protected:
 	std::vector<CCinematicObject *> m_CinematicObjects;
 	std::string m_FileName;
+	std::string m_LevelName;
 public:
-	CCinematicManager();
+	CCinematicManager(CLevel*);
 	virtual ~CCinematicManager();
-	void LoadXML(const std::string &FileName, const std::string &_LevelId);
+	void LoadXML(const std::string &FileName, CLevel* _Level);
 	void Reload();
 	void Update(float _ElapsedTime);
 	virtual void Render(CRenderManager *RenderManager){};

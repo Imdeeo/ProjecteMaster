@@ -2,11 +2,13 @@
 #define LEVEL_INO_H
 
 #include <string>
-#include <vector>
+
+class CLevel;
 
 class CLevelInfo
 {
 public:
+	CLevelInfo(CLevel* _Level);
 	CLevelInfo(const std::string &_LevelId);
 	virtual ~CLevelInfo();
 

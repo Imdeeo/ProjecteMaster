@@ -3,10 +3,12 @@
 
 #include "SceneRendererCommand.h"
 
+class CLevel;
+
 class CUnsetRenderTargetSceneRendererCommand : public CSceneRendererCommand
 {
 public:
-	CUnsetRenderTargetSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CUnsetRenderTargetSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CUnsetRenderTargetSceneRendererCommand(){};
 	void Execute(CRenderManager &RenderManager);
 };

@@ -7,7 +7,10 @@
 
 #include <assert.h>
 
-CEnableAlphaBlendSceneRendererCommand::CEnableAlphaBlendSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CSceneRendererCommand(TreeNode,_LevelId),
+#include "LevelManager\Level.h"
+#include "MutexManager\MutexManager.h"
+
+CEnableAlphaBlendSceneRendererCommand::CEnableAlphaBlendSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :CSceneRendererCommand(TreeNode,_Level),
 	m_SrcBlend(TreeNode, "src"),
 	m_DestBlend(TreeNode, "dest"),
 	m_SrcAlphaBlend(TreeNode, "src_alpha"),
@@ -26,8 +29,11 @@ CEnableAlphaBlendSceneRendererCommand::CEnableAlphaBlendSceneRendererCommand(tin
 	l_desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP(m_OpAlphaBlend.GetBlendOp());
 	l_desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-	ID3D11Device* l_Device = UABEngine.GetInstance()->GetRenderManager()->GetContextManager()->GetDevice();
+	ID3D11Device* l_Device = UABEngine.GetRenderManager()->GetContextManager()->GetDevice();
+
+	UABEngine.GetMutexManager()->g_DeviceMutex.lock();
 	HRESULT l_HR = l_Device->CreateBlendState(&l_desc, &m_BlendState);
+	UABEngine.GetMutexManager()->g_DeviceMutex.unlock();
 	assert(l_HR == S_OK);
 }
 

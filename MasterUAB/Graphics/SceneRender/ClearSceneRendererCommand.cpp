@@ -1,7 +1,9 @@
 #include "ClearSceneRendererCommand.h"
 #include "RenderManager\RenderManager.h"
 
-CClearSceneRendererCommand::CClearSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CSceneRendererCommand(TreeNode,_LevelId)
+#include "LevelManager\Level.h"
+
+CClearSceneRendererCommand::CClearSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) : CSceneRendererCommand(TreeNode,_Level)
 {
 	m_RenderTarget = TreeNode->GetBoolProperty("render_target");
 	m_DepthStencil = TreeNode->GetBoolProperty("depth_stencil");

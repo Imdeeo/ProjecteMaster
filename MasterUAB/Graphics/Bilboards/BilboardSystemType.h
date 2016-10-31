@@ -10,13 +10,12 @@
 #include <vector>
 
 class CMaterial;
+class CLevel;
 
 class CBilboardSystemType : public CNamed, CLevelInfo
 {
-private:
-	std::string m_LevelId;
 public:
-	CBilboardSystemType(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CBilboardSystemType(tinyxml2::XMLElement* TreeNode, CLevel *_Level);
 	virtual ~CBilboardSystemType(void);
 	void Destroy();
 	void Save(FILE* _File);

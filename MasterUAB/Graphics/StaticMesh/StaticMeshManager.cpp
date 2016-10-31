@@ -1,5 +1,6 @@
 #include "StaticMeshManager.h"
 #include "XML\tinyxml2.h"
+#include "LevelManager\LevelManager.h"
 
 CStaticMeshManager::CStaticMeshManager(void)
 {
@@ -11,9 +12,10 @@ CStaticMeshManager::~CStaticMeshManager(void)
 	Destroy();
 }
 
-bool CStaticMeshManager::Load(const std::string &FileName, const std::string &_LevelId)
+bool CStaticMeshManager::Load(const std::string &FileName, CLevel* _Level)
 {
 	m_Filename = FileName;
+	m_LevelName = _Level->GetName();
 	std::string l_MeshName;
 	std::string l_MeshFileName;
 	std::string l_PhysxMeshDirectory;
@@ -39,12 +41,12 @@ bool CStaticMeshManager::Load(const std::string &FileName, const std::string &_L
 					l_MeshFileName = l_ElementAux->GetPszProperty("filename", "");
 					l_PhysxMeshDirectory = l_ElementAux->GetPszProperty("physx_mesh_directory", "");
 
-					CStaticMesh *l_StaticMesh = new CStaticMesh(_LevelId);
+					CStaticMesh *l_StaticMesh = new CStaticMesh(_Level);
 					l_StaticMesh->SetName(l_MeshName);
 					l_StaticMesh->SetPhysxMeshesDirectory(l_PhysxMeshDirectory);
-					l_StaticMesh->Load(l_MeshFileName);
+					l_StaticMesh->Load(l_MeshFileName,_Level);
 
-					AddResource(l_MeshName, l_StaticMesh,_LevelId);
+					AddResource(l_MeshName, l_StaticMesh,m_LevelName);
 				}
 				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}

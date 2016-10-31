@@ -6,6 +6,7 @@
 #include "SceneRendererCommand.h"
 
 class CRenderManager;
+class CLevel;
 
 class CSceneRendererCommandManager : public	CTemplatedVectorMapManager<CSceneRendererCommand>
 {
@@ -16,7 +17,7 @@ public:
 	CSceneRendererCommandManager();
 	virtual ~CSceneRendererCommandManager();
 	std::string GetNextName();
-	bool Load(const std::string &Filename, const std::string &_LevelId);
+	bool Load(const std::string &Filename, CLevel* _Level);
 	bool Reload();
 	void Execute(CRenderManager *RenderManager);
 };

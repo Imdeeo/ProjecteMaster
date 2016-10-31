@@ -15,11 +15,15 @@
 
 #include "LevelManager\LevelManager.h"
 
-CParticleSystemInstance::CParticleSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :
-	CRenderableObject(TreeNode,_LevelId)
+CParticleSystemInstance::CParticleSystemInstance(CLevel* _Level) :CRenderableObject(_Level)
+{
+}
+
+CParticleSystemInstance::CParticleSystemInstance(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :
+	CRenderableObject(TreeNode,_Level)
 {
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
-	m_Type = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetParticleManager()->GetResource(TreeNode->GetPszProperty("type"));
+	m_Type = _Level->GetParticleManager()->GetResource(TreeNode->GetPszProperty("type"));
 	m_NextParticleEmission = TreeNode->GetFloatProperty("next_particle_emission", 1.0f);
 	m_Start = TreeNode->GetBoolProperty("start", true);
 	m_Awake = TreeNode->GetBoolProperty("awake", false);

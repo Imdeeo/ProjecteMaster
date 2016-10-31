@@ -7,17 +7,18 @@
 #include "Camera\Frustum.h"
 #include "Texture\DynamicTexture.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
+#include "MutexManager\MutexManager.h"
 
-CSpotLight::CSpotLight(const std::string &_LevelId) :CDirectionalLight(_LevelId), m_Angle(0.0f), m_FallOff(0.0f){}
+CSpotLight::CSpotLight(CLevel* _Level) :CDirectionalLight(_Level), m_Angle(0.0f), m_FallOff(0.0f){}
 
-CSpotLight::CSpotLight(std::string _name, const std::string &_LevelId) : CDirectionalLight(_name,_LevelId), m_Angle(0.0f), m_FallOff(0.0f)
+CSpotLight::CSpotLight(std::string _name, CLevel* _Level) : CDirectionalLight(_name,_Level), m_Angle(0.0f), m_FallOff(0.0f)
 {
 	m_Type = GetLightTypeByName("spot");
 	m_ShadowMap = new CDynamicTexture("shadowmap", 512, 512, true, "r32");
 	m_ShadowMaskTexture = nullptr;
 }
 
-CSpotLight::CSpotLight(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CDirectionalLight(TreeNode,_LevelId)
+CSpotLight::CSpotLight(tinyxml2::XMLElement* TreeNode, CLevel* _Level) : CDirectionalLight(TreeNode,_Level)
 {
 	m_Angle = TreeNode->GetFloatProperty("angle",1.f);
 	m_FallOff = TreeNode->GetFloatProperty("fall_off", 1.2f);
@@ -96,7 +97,9 @@ void CSpotLight::SetShadowMap(CRenderManager &RenderManager)
 	m_viewport.MaxDepth = 1.0f;
 	m_viewport.TopLeftX = 0.0f;
 	m_viewport.TopLeftY = 0.0f;
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
 	RenderManager.GetDeviceContext()->RSSetViewports(1, &m_viewport);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
 	RenderManager.SetRenderTargets(1, l_RenderTargetViews, m_ShadowMap->GetDepthStencilView());
 }
 
