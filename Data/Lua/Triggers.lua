@@ -22,14 +22,27 @@ function OnEnterStairs(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		local l_Player = m_CharacterManager.m_Player[1]
 		if not l_Player.m_IsClimbing and l_Player.m_Item == nil then
-			l_Player.m_ForwardCamera = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
-			l_Player.m_TargetPosOffset = Vect3f(0.45, 0.0, 0.45)
 			l_Player.m_InteractingCinematic = nil
 			l_Player.m_CameraAnimation = nil
 			l_Player.m_AnimationTime = 0.666667
-			l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
 			l_Player.m_InteractingAnimation = 18
 			l_Player.m_IsClimbing = true
+			
+			if l_Player.m_ActualLevel == "Maquinas" then
+				l_Player.m_ForwardCamera = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
+				l_Player.m_TargetPosOffset = Vect3f(0.45, 0.0, 0.45)
+				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
+			elseif l_Player.m_ActualLevel == "Boss" then
+				l_Player.m_ForwardCamera = Vect3f(-1.0, 0.0, 0.0)
+				l_Player.m_TargetPosOffset = Vect3f(0.60, 0.0, 0.0)
+				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("EscaleraBoss"):get_position()
+			elseif l_Player.m_ActualLevel == "Pasillo" then
+				l_Player.m_ForwardCamera = Vect3f(1.0, 0.0, 0.0)
+				l_Player.m_TargetPosOffset = Vect3f(-0.60, 0.0, 0.0)
+				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("EscaleraEscape"):get_position()
+			end			
+			
+			
 		end
 	end
 end
@@ -38,6 +51,7 @@ function OnExitStairs(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 	local l_Player = m_CharacterManager.m_Player[1]
 		if not l_Player.m_IsClimbing then
+			utils_log("Exit Upper")
 			l_Player:ClearTarget()
 			l_Player:ClearStates()
 		end
@@ -68,6 +82,7 @@ function OnStayStairsUpper(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		local l_Player = m_CharacterManager.m_Player[1]
 		if l_Player.m_ClimbingUp then
+			utils_log("Stay Upper")
 			l_Player.m_CurrentAend = "LeaveStairs"
 			l_Player.m_InteractingAnimation = 0
 			l_Player.m_InteractingCinematic = nil
@@ -121,3 +136,26 @@ end
 function FogTriggerExit(_Player, _TriggerName)
 	--utils_log("exit")
 end 
+
+function OnEnterHole(_TriggerName, _ColliderName)
+	if(_ColliderName == "player") then
+		local l_Player = m_CharacterManager.m_Player[1]
+		l_Player:ModifySanity(-100)
+	end
+end
+
+function OnEnterActivateBoss(_TriggerName, _ColliderName)
+	if(_ColliderName == "player") then
+		local l_Enemy = m_CharacterManager.m_Enemics[1]
+		l_Enemy.m_PhysXManager:character_controller_teleport("Boss", Vect3f(3.821, -4.0, 20.682))
+		l_Enemy.m_RenderableObject:set_position(l_Enemy.m_PhysXManager:get_character_controler_pos("Boss"))
+		l_Enemy.m_Awake = true
+	end
+end
+
+function OnExitActivateBoss(_TriggerName, _ColliderName)
+	if(_ColliderName == "player") then
+		g_Engine:get_level_manager():choose_scene_command_level("Pasillo")
+		g_Player:SetActualLevel("Pasillo")
+	end
+end

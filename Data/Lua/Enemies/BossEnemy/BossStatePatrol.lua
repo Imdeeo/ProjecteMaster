@@ -25,7 +25,7 @@ function PatrolUpdateBoss(args, _ElapsedTime)
 				local l_PointPos = l_NodePoint.node.position
 				local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)
 				
-				--[[if l_Distance <= l_Enemy.m_DistanceToChangeNodeWalking then
+				if l_Distance <= l_Enemy.m_DistanceToChangeNodeWalking then
 					l_Enemy:IncrementePatrolPointIndex()
 					l_Enemy.m_TimerRotation = 0.0
 				else
@@ -37,7 +37,7 @@ function PatrolUpdateBoss(args, _ElapsedTime)
 					end 
 					
 					l_Enemy:EnemyWalk(l_PointPos, l_Enemy.m_WalkSpeed, l_PercentRotation, _ElapsedTime)
-				end]]
+				end
 			end
 		else
 			l_Owner:remove_action(l_Enemy.m_ActualAnimation)

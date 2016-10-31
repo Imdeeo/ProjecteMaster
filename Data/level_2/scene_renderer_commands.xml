@@ -83,10 +83,10 @@
 
 	<apply_filters name="aplly filters Bloom" active="true">
 		<texture file="CapturedBloomTexture" stage_id="0"/>
-		<dynamic_texture name="BloomTexture" material="BloomMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="BloomBlurTexture" material="BloomBlurMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="BloomBlurTexture2" material="BlurMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="BloomBlurTexture3" material="BlurMaterial" height="600" width="800" format_type="rgba8"/>
+		<dynamic_texture name="BloomTexture" material="BloomMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="BloomBlurTexture" material="BloomBlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="BloomBlurTexture2" material="BlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="BloomBlurTexture3" material="BlurMaterial" height="512" width="512" format_type="rgba8"/>
 	</apply_filters>
 
 	<unset_render_target name="unset render target Bloom" active="true"/>
@@ -101,11 +101,11 @@
 
 	<apply_filters name="aplly filters Flare" active="true">
 		<texture file="CapturedBloomTexture" stage_id="0"/>
-		<dynamic_texture name="FlareBrightpassTexture" material="FlareBrightpassMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="FlareDownloadingTexture" material="FlareDownloadingMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="FlareBlurTexture" material="FlareBlurMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="FlareBlurTexture2" material="FlareBlurMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="FlareBlurTexture3" material="FlareBlurMaterial" height="600" width="800" format_type="rgba8"/>
+		<dynamic_texture name="FlareBrightpassTexture" material="FlareBrightpassMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="FlareDownloadingTexture" material="FlareDownloadingMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="FlareBlurTexture" material="FlareBlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="FlareBlurTexture2" material="FlareBlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="FlareBlurTexture3" material="FlareBlurMaterial" height="512" width="512" format_type="rgba8"/>
 	</apply_filters>
 
 	<unset_render_target name="unset render target Flare" active="true"/>

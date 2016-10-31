@@ -11,7 +11,7 @@ end
 function IdleUpdateBoss(args, _ElapsedTime)
 	local l_Enemy = args["self"]
 	
-	if l_Enemy.m_Patrol then
+	if l_Enemy.m_Awake then
 		l_Enemy.m_State = "patrol"
 	elseif l_Enemy.m_Looking then
 		l_Enemy.m_State = "looking"

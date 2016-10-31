@@ -206,15 +206,7 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights,const std::string
 	m_LightParameters.m_LightAmbient = l_LightManager->GetAmbientLight();
 	for (size_t i = 0; i < MaxLights; i++)
 	{
-		if((size_t)n_lights<=i)
-		{
-			CLight* dummy = new CDirectionalLight("Dummy", l_Level);
-			dummy->SetEnabled(false);
-			dummy->SetGenerateShadowMap(false);
-			SetLightConstants(i,dummy);
-			delete dummy;
-		}
-		else
+		if((size_t)n_lights>i)
 		{
 			SetLightConstants(i, l_LightManager->GetResourceById(i));
 		}

@@ -26,6 +26,8 @@ class 'CBossEnemy' (CEnemy)
 		self.m_RunSpeed = _TreeNode:get_float_property("run_speed", 5.0)
 		self.m_AngularWalkSpeed = _TreeNode:get_float_property("angular_walk_speed", 1000.0)
 		self.m_AngularRunSpeed = _TreeNode:get_float_property("angular_run_speed", 250.0)
+		self.m_DistanceToChangeNodeWalking = _TreeNode:get_float_property("distance_change_node_walking", 2.0)
+		self.m_DistanceToChangeNodeRunning = _TreeNode:get_float_property("distance_change_node_running", 2.0)
 		
 		self.m_TimerRotation = 0.0
 		

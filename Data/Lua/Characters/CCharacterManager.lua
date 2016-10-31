@@ -4,6 +4,7 @@ dofile("Data\\Lua\\Enemies\\FogEnemy\\FogEnemy.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonEnemy.lua")
 dofile("Data\\Lua\\Enemies\\CagedEnemy\\CagedAutomatonEnemy.lua")
 dofile("Data\\Lua\\Enemies\\TurretEnemy\\TurretEnemy.lua")
+dofile("Data\\Lua\\Enemies\\BossEnemy\\BossEnemy.lua")
 dofile("Data\\Lua\\CLuz.lua")
 
 class 'CCharacterManager'
@@ -46,8 +47,10 @@ class 'CCharacterManager'
 						local l_Enemy = CTurretEnemy(l_Element,level_id)
 						l_game_play_manager:add_component(l_Enemy)
 						table.insert(self.m_Enemics, l_Enemy)
-					elseif l_Type == "Whisperer" then
-						--utils_log("other")
+					elseif l_Type == "Boss" then
+						local l_Enemy = CBossEnemy(l_Element,level_id)
+						l_game_play_manager:add_component(l_Enemy)
+						table.insert(self.m_Enemics, l_Enemy)
 					end
 				elseif l_ElemName == "light" then
 					local l_Light = CLuz(l_Element, level_id)
