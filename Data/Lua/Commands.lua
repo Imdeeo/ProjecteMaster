@@ -2,9 +2,9 @@ dofile("Data\\Lua\\Utils\\GVars.lua")
 
 g_Engine = CUABEngine.get_instance()
 
-function load_level(name)
+function load_level(name,joinable)
 	local l_LevelManager = g_Engine:get_level_manager()	
-	l_LevelManager:load_level(name)
+	l_LevelManager:load_level(name,joinable)
 end
 
 function unload_level(name)
@@ -15,6 +15,11 @@ end
 function set_commands_level(name)
 	local l_LevelManager = g_Engine:get_level_manager()	
 	l_LevelManager:choose_scene_command_level(name)
+end
+
+function set_has_to_update_level(name,has_to_update)
+	local l_Level = g_Engine:get_level_manager():get_level(name)	
+	l_Level:set_has_to_update(has_to_update)
 end
 
 function activate_gravity()
