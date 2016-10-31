@@ -2,8 +2,9 @@
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
 #include "ContextManager\ContextManager.h"
+#include "LevelManager\Level.h"
 
-CUnsetRenderTargetSceneRendererCommand::CUnsetRenderTargetSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CSceneRendererCommand(TreeNode,_LevelId)
+CUnsetRenderTargetSceneRendererCommand::CUnsetRenderTargetSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) : CSceneRendererCommand(TreeNode,_Level)
 {
 	
 }

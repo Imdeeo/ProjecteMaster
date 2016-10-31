@@ -6,6 +6,7 @@
 
 #include "Engine\UABEngine.h"
 #include "Effects\EffectManager.h"
+#include "LevelManager\LevelManager.h"
 
 #include "AnimatedModelsManager.h"
 #include "AnimatedCoreModel.h"
@@ -17,9 +18,11 @@
 
 #include "Materials\Material.h"
 
+#include "MutexManager\MutexManager.h"
+
 #include <cal3d\cal3d.h>
 
-CAnimatedInstanceModel::CAnimatedInstanceModel(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CRenderableObject(TreeNode, _LevelId)
+CAnimatedInstanceModel::CAnimatedInstanceModel(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :CRenderableObject(TreeNode, _Level)
 {
 	Initialize(UABEngine.GetAnimatedModelsManager()->GetResource(TreeNode->GetPszProperty("core_name")));
 	/*m_AnimatedCoreModel = UABEngine.GetAnimatedModelsManager()->GetResource(l_Element.GetPszProperty("core_model_name"));
@@ -199,8 +202,14 @@ void CAnimatedInstanceModel::Render(CRenderManager *_RenderManager)
 			ID3D11Buffer *l_AnimationConstantBufferVS = l_EffectTechnique->GetVertexShader()->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
 			ID3D11Buffer *l_AnimationConstantBufferPS = l_EffectTechnique->GetPixelShader()->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
 
+			std::mutex *l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
+
+			l_DeviceContextMutex->lock();
 			_RenderManager->GetDeviceContext()->UpdateSubresource(l_AnimationConstantBufferVS, 0, NULL, &(CEffectManager::m_AnimatedModelEffectParameters), 0, 0);
+			l_DeviceContextMutex->unlock();
+			l_DeviceContextMutex->lock();
 			_RenderManager->GetDeviceContext()->UpdateSubresource(l_AnimationConstantBufferPS, 0, NULL, &(CEffectManager::m_AnimatedModelEffectParameters), 0, 0);
+			l_DeviceContextMutex->unlock();
 
 			CEffectManager::SetSceneConstants(l_EffectTechnique);
 			m_RenderableVertexs->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData(),

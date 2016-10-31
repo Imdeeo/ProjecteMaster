@@ -6,12 +6,14 @@
 class CRenderManager;
 class CPoolRenderableObjectTechnique;
 
+class CLevel;
+
 class CSetPoolRenderableObjectsTechniqueSceneRendererCommand : public CSceneRendererCommand
 {
 private:
 	CPoolRenderableObjectTechnique *m_Pool;
 public:
-	CSetPoolRenderableObjectsTechniqueSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CSetPoolRenderableObjectsTechniqueSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel *_Level);
 	virtual ~CSetPoolRenderableObjectsTechniqueSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };

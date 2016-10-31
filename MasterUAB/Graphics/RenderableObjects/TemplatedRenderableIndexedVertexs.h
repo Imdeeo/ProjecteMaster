@@ -67,8 +67,11 @@ public:
 		D3D11_SUBRESOURCE_DATA InitData;
 		ZeroMemory(&InitData, sizeof(InitData));
 		InitData.pSysMem=Vtxs;
-		ID3D11Device *l_Device=UABEngine.GetRenderManager()->GetDevice();
+		ID3D11Device *l_Device =UABEngine.GetRenderManager()->GetDevice();
+		std::mutex * l_DeviceMutex = &(UABEngine.GetMutexManager()->g_DeviceMutex);
+		l_DeviceMutex->lock();
 		HRESULT hr=l_Device->CreateBuffer(&l_VertexBufferDesc, &InitData,&m_VertexBuffer);
+		l_DeviceMutex->unlock();
 		if(FAILED(hr))
 			return;
 		D3D11_BUFFER_DESC l_IndexBuffer;
@@ -78,7 +81,9 @@ public:
 		l_IndexBuffer.BindFlags=D3D11_BIND_INDEX_BUFFER;
 		l_IndexBuffer.CPUAccessFlags=0;
 		InitData.pSysMem=Indices;
+		l_DeviceMutex->lock();
 		hr=l_Device->CreateBuffer(&l_IndexBuffer, &InitData, &m_IndexBuffer);
+		l_DeviceMutex->unlock();
 		if(FAILED(hr))
 			return;
 	}
@@ -100,14 +105,30 @@ public:
 		if(l_EffectPixelShader==NULL || l_EffectVertexShader==NULL)
 			return false;
 		ID3D11DeviceContext *l_DeviceContext;
+		std::mutex* l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
+		std::mutex* l_DeviceMutex = &(UABEngine.GetMutexManager()->g_DeviceMutex);
+		l_DeviceContextMutex->lock();
+		l_DeviceMutex->lock();
 		RenderManager->GetDevice()->GetImmediateContext(&l_DeviceContext);
+		l_DeviceMutex->unlock();
+		l_DeviceContextMutex->unlock();
 		UINT stride=sizeof(T);
 		UINT offset=0;
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->IASetIndexBuffer(m_IndexBuffer, m_IndexType, 0);
+		l_DeviceContextMutex->unlock();
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride,	&offset);
+		l_DeviceContextMutex->unlock();
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->IASetPrimitiveTopology(m_PrimitiveTopology);
+		l_DeviceContextMutex->unlock();
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->IASetInputLayout(l_EffectVertexShader->GetVertexLayout());
+		l_DeviceContextMutex->unlock();
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->VSSetShader(l_EffectVertexShader->GetVertexShader(), NULL, 0);
+		l_DeviceContextMutex->unlock();
 
 		//CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
 		//l_DeviceContext->RSSetState(l_ContextManager->GetRasterizerState(CContextManager::RS_SOLID_BACK_CULL));
@@ -122,6 +143,7 @@ public:
 		ID3D11Buffer *l_AnimationConstantBufferVS = l_EffectVertexShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_MaterialParametersConstantBufferVS = l_EffectVertexShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
 
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferVS, 0, NULL, _Parameters, 0, 0);
 
 		ID3D11Buffer* VSBuffers[4] = { l_SceneConstantBufferVS, l_LightConstantBufferVS, l_AnimationConstantBufferVS, l_MaterialParametersConstantBufferVS };
@@ -130,12 +152,14 @@ public:
 		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
 
 		l_DeviceContext->GSSetShader(NULL, NULL, 0);
+		l_DeviceContextMutex->unlock();
 
 		ID3D11Buffer *l_SceneConstantBufferPS = l_EffectVertexShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_LightConstantBufferPS = l_EffectVertexShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_AnimationConstantBufferPS = l_EffectVertexShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_MaterialParametersConstantBufferPS = l_EffectVertexShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
 
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferPS, 0, NULL,_Parameters, 0, 0);
 
 		ID3D11Buffer* PSBuffers[4] = {l_SceneConstantBufferPS,l_LightConstantBufferPS,l_AnimationConstantBufferPS,l_MaterialParametersConstantBufferPS};
@@ -145,6 +169,7 @@ public:
 		l_DeviceContext->PSSetConstantBuffers(2, 1, &l_AnimationConstantBufferPS);*/
 
 		l_DeviceContext->DrawIndexed(IndexCount==-1 ? m_IndexsCount :IndexCount, StartIndexLocation, BaseVertexLocation);
+		l_DeviceContextMutex->unlock();
 		return true;
 	}
 

@@ -9,7 +9,7 @@
 
 #include "LevelManager\LevelManager.h"
 
-CRenderPathFindingSceneRendererCommand::CRenderPathFindingSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CSceneRendererCommand(TreeNode,_LevelId)
+CRenderPathFindingSceneRendererCommand::CRenderPathFindingSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :CSceneRendererCommand(TreeNode,_Level)
 {
 }
 

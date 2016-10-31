@@ -28,6 +28,8 @@ typedef struct SLevelLayers
 class CLevelManager: public CTemplatedVectorMapManager<CLevel>
 {
 private:
+	void LoadThread();
+
 	std::map<std::string, TLevelInfo> m_LevelsInfo;
 
 	std::map<std::string,std::vector<TLevelLayers*>> m_LayersMap;
@@ -48,9 +50,10 @@ public:
 	CSceneRendererCommandManager * GetSceneRendererCommandManager(const std::string _levelId);
 	void ExecuteSceneCommands(CRenderManager* _RenderManager);
 
+	void LoadLevelThread(const std::string &_LevelName);
 	void LoadFile(const std::string &_LevelsFilename);
-	void LoadLevel(const std::string &_LevelName);
-	void ReloadLevel(const std::string &_LevelName);
+	void LoadLevel(const std::string &_LevelName, bool _Joinable);
+	void ReloadLevel(const std::string &_LevelName, bool _Joinable);
 	void UnloadLevel(const std::string &_LevelName);
 
 	void ChangeObjectLevel(const std::string &_OldLevelName, const std::string &_NewLevelName, const std::string &_LayerName, const std::string &_ObjectName);

@@ -4,11 +4,12 @@
 #include "SceneRendererCommand.h"
 
 class CRenderManager;
+class CLevel;
 
 class CSetMatricesSceneRendererCommand : public CSceneRendererCommand
 {
 public:
-	CSetMatricesSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CSetMatricesSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel *_Level);
 	virtual ~CSetMatricesSceneRendererCommand();
 	void Execute(CRenderManager &RenderManager);
 };

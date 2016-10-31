@@ -16,6 +16,8 @@
 #include "Effects\EffectTechnique.h"
 #include "Texture\Texture.h"
 
+#include "MutexManager\MutexManager.h"
+
 #ifdef _DEBUG
 #include "DebugRender.h"
 #else
@@ -136,16 +138,22 @@ void CRenderManager::Render()
 
 void CRenderManager::EnableBlendState(ID3D11BlendState* _blendState)
 {
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
 	m_ContextManager->GetDeviceContext()->OMSetBlendState(_blendState, NULL, 0xffffffff);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
 }
 void CRenderManager::EnableAlphaBlendState()
 {
 	ID3D11BlendState* l_AlphaBlendState = m_ContextManager->GetBlendState(CContextManager::BLEND_ALPHA);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
 	m_ContextManager->GetDeviceContext()->OMSetBlendState(l_AlphaBlendState,NULL,0xffffffff);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
 }
 void CRenderManager::DisableAlphaBlendState()
 {
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
 	m_ContextManager->GetDeviceContext()->OMSetBlendState(NULL,NULL,0xffffffff);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
 }
 
 void CRenderManager::Clear(bool renderTarget, bool depthStencil)
@@ -201,7 +209,10 @@ void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture
 	l_Viewport.MaxDepth = 1.0f;
 	l_Viewport.TopLeftX = x*l_CurrentViewport->Width;
 	l_Viewport.TopLeftY = y*l_CurrentViewport->Height;
+	std::mutex * l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
+	l_DeviceContextMutex->lock();
 	m_ContextManager->GetDeviceContext()->RSSetViewports(1, &l_Viewport);
+	l_DeviceContextMutex->unlock();
 
 	CEffectManager::SetSceneConstants(_EffectTechnique);
 
@@ -210,7 +221,9 @@ void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture
 #else
 	m_RenderHelper->GetQuadRV()->Render(this, _EffectTechnique, CEffectManager::GetRawData());
 #endif
+	l_DeviceContextMutex->lock();
 	m_ContextManager->GetDeviceContext()->RSSetViewports(1, l_CurrentViewport);
+	l_DeviceContextMutex->unlock();
 }
 
 

@@ -6,6 +6,7 @@
 class CRenderableObjectTechnique;
 class CMaterial;
 class CDynamicTexture;
+class CLevel;
 
 class CDrawVideoQuadRendererCommand : public CStagedTexturedSceneRendererCommand
 {
@@ -13,7 +14,7 @@ private:
 	CRenderableObjectTechnique* m_RenderableObjectTechnique;
 	CDynamicTexture *m_Texture;
 public:
-	CDrawVideoQuadRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CDrawVideoQuadRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CDrawVideoQuadRendererCommand(void);
 
 	void Execute(CRenderManager &RenderManager);

@@ -10,6 +10,7 @@
 
 class CBilboardSystemType;
 class CRenderableVertexs;
+class CLevel;
 
 class CBilboardSystemInstance : public CRenderableObject
 {
@@ -26,8 +27,8 @@ private:
 	MV_POSITION4_COLOR_TEXTURE_TEXTURE2_VERTEX m_BilboardRenderableData[MAX_BILBOARDS_PER_INSTANCE];
 	CRenderableVertexs *m_RenderableVertex;
 public:
-	CBilboardSystemInstance(){};
-	CBilboardSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CBilboardSystemInstance(CLevel *_Level);
+	CBilboardSystemInstance(tinyxml2::XMLElement* TreeNode, CLevel *_Level);
 	virtual ~CBilboardSystemInstance(void);
 	void Destroy();
 

@@ -7,6 +7,7 @@
 
 class CStaticMesh;
 class CFrustum;
+class CLevel;
 
 class CInstanceMesh : public CRenderableObject
 {
@@ -21,8 +22,8 @@ private:
 	float m_PxOffset;
 	Vect3f m_PxNormals;
 public:
-	CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string & _LevelId);
-	CInstanceMesh(const std::string &Name, const std::string &CoreName, const std::string & _LevelId);
+	CInstanceMesh(tinyxml2::XMLElement* TreeNode, CLevel *_Level);
+	CInstanceMesh(const std::string &Name, const std::string &CoreName, CLevel* _Level);
 	~CInstanceMesh();
 	void Render(CRenderManager *RM);
 	void Save(FILE* _File, std::string _layer);

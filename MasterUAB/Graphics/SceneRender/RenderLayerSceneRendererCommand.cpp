@@ -3,7 +3,7 @@
 #include "Engine\UABEngine.h"
 #include "RenderableObjects\RenderableObjectsManager.h"
 
-CRenderLayerSceneRendererCommand::CRenderLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CSceneRendererCommand(TreeNode,_LevelId)
+CRenderLayerSceneRendererCommand::CRenderLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) : CSceneRendererCommand(TreeNode,_Level)
 {
 	const char * l_layerExist = TreeNode->GetPszProperty("layer", "");
 	m_Layer = UABEngine.GetLevelManager()->GetCompleteLayer(l_layerExist);

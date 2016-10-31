@@ -8,7 +8,7 @@
 #include "RenderableObjects\RenderableObjectsManager.h"
 #include "LevelManager\LevelManager.h"
 
-CGenerateShadowMapsSceneRendererCommand::CGenerateShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CSceneRendererCommand(TreeNode,_LevelId)
+CGenerateShadowMapsSceneRendererCommand::CGenerateShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :CSceneRendererCommand(TreeNode,_Level)
 {
 }
 

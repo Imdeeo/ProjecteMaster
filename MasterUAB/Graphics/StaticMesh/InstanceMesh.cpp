@@ -16,9 +16,9 @@
 #include "Math\Matrix44.h"
 
 
-CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string & _LevelId) :CRenderableObject(TreeNode,_LevelId)
+CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :CRenderableObject(TreeNode,_Level)
 {
-	m_StaticMesh = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetStaticMeshManager()->GetResource(TreeNode->GetPszProperty("core_name"));
+	m_StaticMesh = _Level->GetStaticMeshManager()->GetResource(TreeNode->GetPszProperty("core_name"));
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 	m_Layer = TreeNode->GetPszProperty("layer");
 	m_GeneratePhysx = TreeNode->GetBoolProperty("create_physics");
@@ -50,7 +50,7 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string &
 			{
 				l_auxDirectoty = m_StaticMesh->GetPhysxMeshesDirectory();
 			}
-			l_PhysXManager->CreateStaticTriangleMesh(l_ActorName, _LevelId, m_StaticMesh, l_auxDirectoty, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			l_PhysXManager->CreateStaticTriangleMesh(l_ActorName, m_Level, m_StaticMesh, l_auxDirectoty, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}else if (m_PxType == "sphere_shape")
 		{
 			l_PhysXManager->CreateStaticSphere(l_ActorName, m_StaticMesh->GetBoundingSphereRadius(), m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
@@ -90,7 +90,7 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string &
 		}
 		else if (m_PxType == "convex_mesh")
 		{
-			l_PhysXManager->CreateStaticConvexMesh(l_ActorName, _LevelId, m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
+			l_PhysXManager->CreateStaticConvexMesh(l_ActorName, m_Level, m_StaticMesh, m_PxMaterial, l_Position, l_Rotation, m_PxGroup);
 		}
 		else if (m_PxType == "box_shape")
 		{
@@ -111,10 +111,10 @@ CInstanceMesh::CInstanceMesh(tinyxml2::XMLElement* TreeNode, const std::string &
 	}
 }
 
-CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreName, const std::string & _LevelId) :CRenderableObject()
+CInstanceMesh::CInstanceMesh(const std::string &Name, const std::string &CoreName, CLevel* _Level) :CRenderableObject(_Level)
 {
 	SetName(Name);
-	m_StaticMesh = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetStaticMeshManager()->GetResource(CoreName);
+	m_StaticMesh = _Level->GetStaticMeshManager()->GetResource(CoreName);
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 }
 
