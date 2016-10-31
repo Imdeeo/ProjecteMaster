@@ -73,7 +73,7 @@ void CBilboardSystemInstance::Render(CRenderManager *RM)
 		RM->GetContextManager()->SetWorldMatrix(GetTransform());
 		CRenderableObject::Render(RM);
 
-		for (int i = 0; i < m_ActiveBilboards; ++i)
+		for (size_t i = 0; i < m_ActiveBilboards; ++i)
 		{
 			BilboardData *Bilboard = &m_BilboardData[i];
 
@@ -97,4 +97,16 @@ void CBilboardSystemInstance::Render(CRenderManager *RM)
 			m_RenderableVertex->Render(RM, l_EffectTechnique, CEffectManager::GetRawData(), m_ActiveBilboards);
 		}
 	}
+}
+
+void CBilboardSystemInstance::Save(FILE* _File, std::string _layer)
+{
+	fprintf_s(_File, "\t<bilboard_instance name=\"%s\" layer=\"%s\" type=\"%s\" start=\"%s\" sizeX=\"%f\" sizeY=\"%f\" offsetSize=\"%f\" color=\"%f %f %f %f\" visible=\"%s\">\n",
+		m_Name.c_str(), _layer.c_str(), m_Type->GetName().c_str(), m_Start ? "true" : "false", m_SizeX, m_SizeY, m_offsetSize, m_Color.x, m_Color.y, m_Color.z, m_Color.w,
+		m_Visible ? "true" : "false");
+	for (size_t i = 0; i < m_ActiveBilboards; ++i)
+	{
+		fprintf(_File, "\t\t<position value=\"%f %f %f\"/>\n", m_BilboardData[i].Position.x, m_BilboardData[i].Position.y, m_BilboardData[i].Position.z);
+	}
+	fprintf_s(_File, "\t</ bilboard_instance>\n");
 }
