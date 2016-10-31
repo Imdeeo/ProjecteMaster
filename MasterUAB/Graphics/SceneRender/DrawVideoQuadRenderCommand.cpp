@@ -14,7 +14,11 @@
 #include "Math\Color.h"
 #include "D3D11.h"
 
-CDrawVideoQuadRendererCommand::CDrawVideoQuadRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CStagedTexturedSceneRendererCommand(TreeNode,_LevelId)
+#include "MutexManager\MutexManager.h"
+
+#include "LevelManager\Level.h"
+
+CDrawVideoQuadRendererCommand::CDrawVideoQuadRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :CStagedTexturedSceneRendererCommand(TreeNode,_Level)
 {
 	m_RenderableObjectTechnique = UABEngine.GetRenderableObjectTechniqueManager()->GetResource("MV_POSITION4_NORMAL_TEXTURE_VERTEX");
 	m_Texture = new CDynamicTexture("pepe", 360, 400, false, "r8u");
@@ -59,10 +63,16 @@ void CDrawVideoQuadRendererCommand::Execute(CRenderManager &_RenderManager)
 
 				ID3D11Texture2D* l_Texture2D = NULL;
 				ID3D11Device* l_Device = UABEngine.GetRenderManager()->GetDevice();
+
+				std::mutex* l_DeviceMutex = &(UABEngine.GetMutexManager()->g_DeviceMutex);
+				l_DeviceMutex->lock();
 				HRESULT l_HR = l_Device->CreateTexture2D(&textureDesc, &srd, &l_Texture2D);
+				l_DeviceMutex->unlock();
 				if (!FAILED(l_HR))
 				{
+					l_DeviceMutex->lock();
 					l_HR = l_Device->CreateShaderResourceView(l_Texture2D, 0, &m_Texture->m_Texture);
+					l_DeviceMutex->unlock();
 				}
 
 				l_Clip->popFrame(); // be sure to pop the frame from the frame queue when you're done

@@ -10,6 +10,7 @@
 class CTexture;
 class CMaterialParameter;
 class CRenderableObjectTechnique;
+class CLevel;
 class CColor;
 
 #define MAX_TEXTURES 11
@@ -23,6 +24,7 @@ private:
 	unsigned int m_CurrentParameterData;
 	void Destroy();
 public:
+	CMaterial(tinyxml2::XMLElement* TreeNode, CLevel *_Level);
 	CMaterial(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
 	virtual ~CMaterial();
 	virtual void Apply(CRenderableObjectTechnique *RenderableObjectTechnique = NULL);

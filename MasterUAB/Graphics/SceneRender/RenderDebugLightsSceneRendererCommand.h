@@ -5,11 +5,12 @@
 
 class CXMLTreeNode;
 class CRenderManager;
+class CLevel;
 
 class CRenderDebugLightsSceneRendererCommand : public CSceneRendererCommand
 {
 public:
-	CRenderDebugLightsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CRenderDebugLightsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CRenderDebugLightsSceneRendererCommand(){}
 	virtual void Execute(CRenderManager &RenderManager);
 private:

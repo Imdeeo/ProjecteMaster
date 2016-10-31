@@ -3,6 +3,7 @@
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
 #include "ContextManager\ContextManager.h"
+#include "MutexManager\MutexManager.h"
 
 #include <d3d11.h>
 
@@ -58,7 +59,10 @@ void CCapturedFrameBufferTexture::Init(const std::string &_Name, unsigned int _W
 	l_texture2DDescription.SampleDesc.Quality=0;
 	l_texture2DDescription.Usage = D3D11_USAGE_DEFAULT;
 
+	std::mutex * l_DeviceMutex = &(UABEngine.GetMutexManager()->g_DeviceMutex);
+	l_DeviceMutex->lock();
 	HRESULT l_HR = l_Device->CreateTexture2D(&l_texture2DDescription, NULL, &m_DataTexture);
+	l_DeviceMutex->unlock();
 	if (FAILED(l_HR))
 	{
 		return;
@@ -71,7 +75,9 @@ void CCapturedFrameBufferTexture::Init(const std::string &_Name, unsigned int _W
 	DescRV.Texture2D.MipLevels = l_texture2DDescription.MipLevels;
 	DescRV.Texture2D.MostDetailedMip = 0;
 
+	l_DeviceMutex->lock();
 	l_HR = l_Device->CreateShaderResourceView(m_DataTexture, &DescRV, &m_Texture);
+	l_DeviceMutex->unlock();
 	if (l_HR)
 	{
 		return;
@@ -96,7 +102,9 @@ bool CCapturedFrameBufferTexture::CreateSamplerState()
 	l_SampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 	l_SampDesc.MinLOD = 0;
 	l_SampDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	UABEngine.GetMutexManager()->g_DeviceMutex.lock();
 	HRESULT l_HR = l_Device->CreateSamplerState(&l_SampDesc, &m_SamplerState);
+	UABEngine.GetMutexManager()->g_DeviceMutex.unlock();
 	return !(FAILED(l_HR));
 }
 
@@ -114,6 +122,8 @@ bool CCapturedFrameBufferTexture::Capture(unsigned int StagedId)
 	{
 		return false;
 	}
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
 	l_RenderManager.GetDeviceContext()->CopyResource(m_DataTexture, l_Surface);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
 	return true;
 }

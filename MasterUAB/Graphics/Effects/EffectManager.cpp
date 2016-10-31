@@ -12,6 +12,7 @@
 #include "Engine\UABEngine.h"
 #include "RenderManager\RenderManager.h"
 #include "Lights\LightManager.h"
+#include "MutexManager\MutexManager.h"
 
 #include "DebugHelper\DebugHelper.h"
 
@@ -121,21 +122,28 @@ CEffectGeometryShader * CEffectManager::GetGeometryShader(const std::string &Geo
 
 void CEffectManager::SetSceneConstants(CEffectTechnique* _EffectTechnique)
 {
+	std::mutex *l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
 	if (_EffectTechnique->GetVertexShader() == NULL || _EffectTechnique->GetPixelShader() == NULL)
 		return;
 	ID3D11DeviceContext* l_DeviceContext = UABEngine.GetRenderManager()->GetDeviceContext();
 	ID3D11Buffer *l_SceneConstantBufferVS = _EffectTechnique->GetVertexShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 	if (l_SceneConstantBufferVS == NULL)
 		return;
+	l_DeviceContextMutex->lock();
 	l_DeviceContext->UpdateSubresource(l_SceneConstantBufferVS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
+	l_DeviceContextMutex->unlock();
 	ID3D11Buffer *l_SceneConstantBufferPS = _EffectTechnique->GetPixelShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 	if (l_SceneConstantBufferPS == NULL)
 		return;
+	l_DeviceContextMutex->lock();
 	l_DeviceContext->UpdateSubresource(l_SceneConstantBufferPS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
+	l_DeviceContextMutex->unlock();
 	if (_EffectTechnique->GetGeometryShader() != nullptr)
 	{
 		ID3D11Buffer *l_SceneConstantBufferGS = _EffectTechnique->GetGeometryShader()->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->UpdateSubresource(l_SceneConstantBufferGS, 0, NULL, &(CEffectManager::m_SceneParameters), 0, 0);
+		l_DeviceContextMutex->unlock();
 	}
 }
 
@@ -192,14 +200,15 @@ void CEffectManager::SetLightConstants(unsigned int IdLight, CLight *Light)
 
 void CEffectManager::SetLightsConstants(unsigned int MaxLights,const std::string &_LevelId)
 {
-	CLightManager *l_LightManager = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetLightManager();
+	CLevel* l_Level = UABEngine.GetLevelManager()->GetResource(_LevelId);
+	CLightManager *l_LightManager = l_Level->GetLightManager();
 	int n_lights = l_LightManager->GetResourcesVector().size();
 	m_LightParameters.m_LightAmbient = l_LightManager->GetAmbientLight();
 	for (size_t i = 0; i < MaxLights; i++)
 	{
 		if((size_t)n_lights<=i)
 		{
-			CLight* dummy = new CDirectionalLight("Dummy");
+			CLight* dummy = new CDirectionalLight("Dummy", l_Level);
 			dummy->SetEnabled(false);
 			dummy->SetGenerateShadowMap(false);
 			SetLightConstants(i,dummy);
@@ -217,13 +226,18 @@ void CEffectManager::SetLightsConstants(unsigned int MaxLights,const std::string
 	{
 		ID3D11Buffer * l_LightConstantBufferVS = it->second->GetVertexShader()->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
 		ID3D11Buffer * l_LightConstantBufferPS = it->second->GetPixelShader()->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
+		std::mutex * l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
 		if (l_LightConstantBufferVS != NULL)
 		{
+			l_DeviceContextMutex->lock();
 			UABEngine.GetRenderManager()->GetDeviceContext()->UpdateSubresource(l_LightConstantBufferVS, 0, NULL, &(CEffectManager::m_LightParameters), 0, 0);
+			l_DeviceContextMutex->unlock();
 		}
 		if (l_LightConstantBufferPS != NULL)
 		{
+			l_DeviceContextMutex->lock();
 			UABEngine.GetRenderManager()->GetDeviceContext()->UpdateSubresource(l_LightConstantBufferPS, 0, NULL, &(CEffectManager::m_LightParameters), 0, 0);
+			l_DeviceContextMutex->unlock();
 		}
 	}
 }

@@ -10,6 +10,7 @@ class CCapturedFrameBufferTexture;
 class CTexture;
 
 class ID3D11RenderTargetView;
+class CLevel;
 
 class CStagedTexturedSceneRendererCommand : public CSceneRendererCommand
 {
@@ -30,13 +31,13 @@ protected:
 	std::vector<ID3D11RenderTargetView*>	m_RenderTargetViews;
 
 public:
-	CStagedTexturedSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CStagedTexturedSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CStagedTexturedSceneRendererCommand(void);
 
 	void CreateRenderTargetViewVector();
 	void ActivateTextures();
 	void AddStageTexture(unsigned int _StageId, CTexture* _Texture);
-	void AddDynamicTexture(tinyxml2::XMLElement* TreeNode);
+	void AddDynamicTexture(tinyxml2::XMLElement* TreeNode,CLevel*_Level);
 	void AddCaptureFrameBufferTexture(tinyxml2::XMLElement* TreeNode);
 	virtual void Execute(CRenderManager &_RenderManager) = 0;
 };

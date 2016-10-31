@@ -21,6 +21,8 @@
 
 #include "SceneRender\SceneRendererCommandManager.h"
 
+#include <thread>
+
 CLevelManager::CLevelManager()
 {
 }
@@ -52,38 +54,50 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 	}
 }
 
-void CLevelManager::LoadLevel(const std::string &_LevelName)
+void CLevelManager::LoadLevelThread(const std::string &_LevelName)
+{
+	CLevel * l_Level = new CLevel(_LevelName);
+	l_Level->Load();
+	m_LevelsInfo[_LevelName].m_Loaded = true;
+	std::vector<CRenderableObjectsManager*> l_LayerVector = l_Level->GetLayerManager()->GetResourcesVector();
+	for (size_t i = 0; i < l_LayerVector.size(); i++)
+	{
+		std::string  l_LayerName = l_LayerVector[i]->GetName();
+		if (m_LayersMap.find(l_LayerName) == m_LayersMap.end())
+		{
+			m_LayersMap[l_LayerName] = std::vector<TLevelLayers*>();
+		}
+		TLevelLayers* l_LevelLayer = new TLevelLayers();
+		l_LevelLayer->m_Layer = l_LayerVector[i];
+		l_LevelLayer->m_Visible = l_Level->IsVisible();
+		m_LayersMap[l_LayerName].push_back(l_LevelLayer);
+	}
+}
+
+void CLevelManager::LoadLevel(const std::string &_LevelName,bool _Joinable)
 {
 	if (m_LevelsInfo[_LevelName].m_Loaded)
 	{
-		ReloadLevel(_LevelName);
+		ReloadLevel(_LevelName,_Joinable);
 	}
 	else
 	{
-		CLevel * l_Level = new CLevel(_LevelName);
-		AddResource(_LevelName, l_Level);
-		l_Level->Load();
-		m_LevelsInfo[_LevelName].m_Loaded = true;
-		std::vector<CRenderableObjectsManager*> l_LayerVector = l_Level->GetLayerManager()->GetResourcesVector();
-		for (size_t i = 0; i < l_LayerVector.size(); i++)
+		std::thread t(&CLevelManager::LoadLevelThread,this,_LevelName);
+		if (_Joinable)
 		{
-			std::string  l_LayerName = l_LayerVector[i]->GetName();
-			if (m_LayersMap.find(l_LayerName) == m_LayersMap.end())
-			{
-				m_LayersMap[l_LayerName] = std::vector<TLevelLayers*>();
-			}
-			TLevelLayers* l_LevelLayer = new TLevelLayers();
-			l_LevelLayer->m_Layer = l_LayerVector[i];
-			l_LevelLayer->m_Visible = l_Level->IsVisible();
-			m_LayersMap[l_LayerName].push_back(l_LevelLayer);
+			t.join();
+		}
+		else
+		{
+			t.detach();
 		}
 	}
 }
 
-void CLevelManager::ReloadLevel(const std::string &_LevelName)
+void CLevelManager::ReloadLevel(const std::string &_LevelName,bool joinable)
 {
 	UnloadLevel(_LevelName);
-	LoadLevel(_LevelName);
+	LoadLevel(_LevelName,joinable);
 }
 
 void CLevelManager::UnloadLevel(const std::string &_LevelName)

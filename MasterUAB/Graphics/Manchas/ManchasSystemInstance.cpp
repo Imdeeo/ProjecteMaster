@@ -13,11 +13,11 @@
 #include "Math\MathUtils.h"
 #include "LevelManager\LevelManager.h"
 
-CManchasSystemInstance::CManchasSystemInstance(tinyxml2::XMLElement* TreeNode,const std::string &_LevelId) : CRenderableObject(TreeNode,_LevelId)
+CManchasSystemInstance::CManchasSystemInstance(tinyxml2::XMLElement* TreeNode,CLevel* _Level) : CRenderableObject(TreeNode,_Level)
 {
 	m_Awake = TreeNode->GetBoolProperty("awake");
 	m_ActiveManchas = 0;
-	m_Type = UABEngine.GetInstance()->GetLevelManager()->GetResource(_LevelId)->GetManchasManager()->GetResource(TreeNode->GetPszProperty("type"));
+	m_Type = _Level->GetManchasManager()->GetResource(TreeNode->GetPszProperty("type"));
 	m_RenderableVertex = new CUABPointsListRenderableVertexs<MV_POSITION4_COLOR_TEXTURE_VERTEX>(m_ManchasRenderableData, MAX_MANCHAS, MAX_MANCHAS, true);
 	m_NextParticleEmission = ComputeTimeToNextMancha();
 	m_Name = TreeNode->GetPszProperty("name");

@@ -9,6 +9,7 @@
 
 class CRenderableVertexs;
 class CRenderManager;
+class CLevel;
 
 class CStaticMesh :	public CNamed, public CLevelInfo
 {
@@ -26,9 +27,9 @@ protected:
 
 	std::string m_PhysxMeshesDirectory;
 public:
-	CStaticMesh(const std::string &_LevelId);
+	CStaticMesh(CLevel* _Level);
 	virtual ~CStaticMesh();
-	bool Load (const std::string &FileName);
+	bool Load(const std::string &FileName, CLevel* _Level);
 	bool Reload ();
 	void Render (CRenderManager *RM) const;
 	void CStaticMesh::CalcTangentsAndBinormals(void *VtxsData, unsigned short *IdxsData, size_t

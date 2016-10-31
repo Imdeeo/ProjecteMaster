@@ -6,6 +6,8 @@
 
 #include <string>
 
+class CLevel;
+
 class CAStarManager : public CTemplatedMapManager<CAStar>
 {
 private:
@@ -14,7 +16,7 @@ private:
 public:
 	CAStarManager(void);
 	virtual ~CAStarManager(void);
-	bool Load(const std::string &FileName, const std::string &_LevelId);
+	bool Load(const std::string &FileName, CLevel *_Level);
 	bool Reload();
 };
 

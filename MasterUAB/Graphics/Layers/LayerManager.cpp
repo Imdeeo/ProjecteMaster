@@ -26,9 +26,10 @@ void CLayerManager::Destroy()
 	CTemplatedVectorMapManager::Destroy();
 }
 
-void CLayerManager::Load(const std::string &FileName, const std::string &_LevelId)
+void CLayerManager::Load(const std::string &FileName, CLevel *_Level)
 {
 	m_Filename = FileName;
+	m_LevelName = _Level->GetName();
 	
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLError l_Error = doc.LoadFile(FileName.c_str());
@@ -51,27 +52,27 @@ void CLayerManager::Load(const std::string &FileName, const std::string &_LevelI
 				}
 				else if (l_ElementAux->Name() == std::string("instance_mesh"))
 				{					
-					GetLayer(l_ElementAux)->AddMeshInstance(l_ElementAux, _LevelId);
+					GetLayer(l_ElementAux)->AddMeshInstance(l_ElementAux, _Level);
 				}
 				else if (l_ElementAux->Name() == std::string("animated_instance_mesh"))
 				{
-					GetLayer(l_ElementAux)->AddAnimatedInstanceModel(l_ElementAux, _LevelId);
+					GetLayer(l_ElementAux)->AddAnimatedInstanceModel(l_ElementAux, _Level);
 				}
 				else if (l_ElementAux->Name() == std::string("particle_instance"))
 				{
-					GetLayer(l_ElementAux)->AddParticleSystemInstance(l_ElementAux, _LevelId);
+					GetLayer(l_ElementAux)->AddParticleSystemInstance(l_ElementAux, _Level);
 				}
 				else if (l_ElementAux->Name() == std::string("bilboard_instance"))
 				{
-					GetLayer(l_ElementAux)->AddBilboardSystemInstance(l_ElementAux, _LevelId);
+					GetLayer(l_ElementAux)->AddBilboardSystemInstance(l_ElementAux, _Level);
 				}
 				else if (l_ElementAux->Name() == std::string("manchas_instance"))
 				{
-					GetLayer(l_ElementAux)->AddManchasSystemInstance(l_ElementAux, _LevelId);
+					GetLayer(l_ElementAux)->AddManchasSystemInstance(l_ElementAux, _Level);
 				}
 				else if (l_ElementAux->Name() == std::string("line_renderer"))
 				{
-					GetLayer(l_ElementAux)->AddLineRendererSystemInstance(l_ElementAux,_LevelId);
+					GetLayer(l_ElementAux)->AddLineRendererSystemInstance(l_ElementAux, _Level);
 				}
 				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
@@ -82,7 +83,7 @@ void CLayerManager::Load(const std::string &FileName, const std::string &_LevelI
 void CLayerManager::Reload()
 {
 	Destroy();
-	Load(m_Filename, UABEngine.GetLevelManager()->GetActualLevel()); 
+	Load(m_Filename, UABEngine.GetLevelManager()->GetResource(m_LevelName)); 
 	//Load(m_Filename);
 
 	/*tinyxml2::XMLDocument doc;

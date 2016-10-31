@@ -1,6 +1,7 @@
 #include "DirectionalLight.h"
 
 #include "Engine\UABEngine.h"
+#include "MutexManager\MutexManager.h"
 #include "RenderManager\RenderManager.h"
 #include "ContextManager\ContextManager.h"
 #include "Effects\EffectManager.h"
@@ -14,18 +15,18 @@
 #include "Texture\DynamicTexture.h"
 #include "Math\Vector3.h"
 
-CDirectionalLight::CDirectionalLight(const std::string &_LevelId) : CLight(_LevelId), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
+CDirectionalLight::CDirectionalLight(CLevel* _Level) : CLight(_Level), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
 {
 }
 
-CDirectionalLight::CDirectionalLight(std::string _name, const std::string &_LevelId) : CLight(_name,_LevelId), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
+CDirectionalLight::CDirectionalLight(std::string _name, CLevel* _Level) : CLight(_name,_Level), m_Direction(Vect3f(0.0f, 0.0f, 0.0f))
 {
 	m_Type = GetLightTypeByName("directional");
 	m_ShadowMap = new CDynamicTexture("shadowmap", 512, 512, true, "r32");
 	m_ShadowMaskTexture = nullptr;
 }
 
-CDirectionalLight::CDirectionalLight(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CLight(TreeNode,_LevelId)
+CDirectionalLight::CDirectionalLight(tinyxml2::XMLElement* TreeNode, CLevel* _Level) : CLight(TreeNode,_Level)
 {
 	m_Direction = TreeNode->GetVect3fProperty("dir",Vect3f(0.0,0.0,0.0));
 	m_Rotation.SetFromScaledAxis(m_Direction);
@@ -90,7 +91,9 @@ void CDirectionalLight::SetShadowMap(CRenderManager &RenderManager)
 	m_viewport.MaxDepth = 1.0f;
 	m_viewport.TopLeftX = 0.0f;
 	m_viewport.TopLeftY = 0.0f;
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
 	RenderManager.GetDeviceContext()->RSSetViewports(1, &m_viewport);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
 	RenderManager.SetRenderTargets(1, l_RenderTargetViews, m_ShadowMap->GetDepthStencilView());
 }
 

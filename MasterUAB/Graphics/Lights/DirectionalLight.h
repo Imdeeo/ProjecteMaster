@@ -9,9 +9,9 @@ protected:
 	Vect2f m_OrthoShadowMapSize;
 	Vect3f m_Direction;
 public:
-	CDirectionalLight(const std::string &_LevelId);
-	CDirectionalLight(std::string _name, const std::string &_LevelId);
-	CDirectionalLight(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CDirectionalLight(CLevel* _Level);
+	CDirectionalLight(std::string _name, CLevel* _Level);
+	CDirectionalLight(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	bool const GetInsideFrustum();
 	const Vect3f & GetDirection() const { return m_Direction; }
 	void SetDirection(Vect3f _Direction) { m_Direction = _Direction; }
