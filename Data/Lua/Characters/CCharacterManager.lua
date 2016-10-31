@@ -60,7 +60,7 @@ class 'CCharacterManager'
 				l_Element = l_Element:get_next()
 			end
 		else
-			--utils_log("File '"..Filename.."'not correctly loaded")
+			utils_log("File '"..Filename.."'not correctly loaded")
 		end
 	end
 
