@@ -13,7 +13,7 @@ function SingingLoopUpdate(args, _ElapsedTime)
 	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	
 	if l_Player.m_Timer >= l_Player.m_SanityGainTick then
-		l_Player.ModifySanity(m_SanityGain * m_SanityGainTick)
+		l_Player:ModifySanity(l_Player.m_SanityGain * l_Player.m_SanityGainTick)
 		l_Player.m_Timer = l_Player.m_Timer - l_Player.m_SanityGainTick
 	end
 	
