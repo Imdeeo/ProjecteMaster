@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <resources>
 	<resource level="Player" layer="solid" name="Jaheem" type="player" position="16.5236 4.9248 27.9152" rotation="0.0 0.0 0.0 1.0" visible="true"/>
-	<!--<resource layer="solid" name="CagedAutomatonLeft" type="enemy" position="2.522870 0.500000 2.073650" rotation="0.000000 -0.707107 0.000000 -0.707107" awake="false" visible="true"/>-->
+	<resource level="Maquinas" layer="solid" name="FogAutomaton" type="enemy" position="13.5 0.1 13.9" rotation="0.000000 1.0 0.000000 0.0" awake="false" visible="true"/>
 	<resource level="Maquinas" layer="solid" name="ValvulaPuzzle" type="object" position="27.2134 -0.431354 43.3826" rotation="0.0 0.0 0.0 1.0" visible="true"/>
 	<resource level="Maquinas" layer="solid" name="CajaEngranaje" type="object" position="2.27762 0.0542869 40.0316" rotation="0.0 0.0 0.0 1.0" visible="true"/>
 	<resource level="Maquinas" layer="triggers" name="TriggerValve" type="trigger" position="22.5136 -0.573193 16.0336" rotation="0.0 0.0 0.258819 0.965926" enable="true" visible="true"/>

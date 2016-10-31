@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cinematics>
-	<cinematic name="engranajes_boss" duration="20.0" cycle="false">
+	<cinematic name="engranajes_boss" duration="20.0" cycle="true">
 		<cinematic_object resource="EngranajeGrande001" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="1.66667" pos="0.0 0.0 0.0" rotation="0.258819 0.0 0.0 -0.965926" scale="1.0 1.0 1.0"/>

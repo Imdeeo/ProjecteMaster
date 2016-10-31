@@ -290,7 +290,7 @@ void CCameraKeyController::ForceUpdateYaw(float _ElapsedTime)
 	CCameraController::AddYaw(l_Radians);
 	float l_ForwardZ = m_Rotation.GetForwardVector().z;
 
-	if (l_ForwardZ < 0.58)
+	if (l_ForwardZ < 0.53)
 	{
 		m_Rotation = l_Rotation;
 	}

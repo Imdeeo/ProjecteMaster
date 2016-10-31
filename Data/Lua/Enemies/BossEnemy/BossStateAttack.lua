@@ -1,15 +1,15 @@
-function FogAttackFirst(args)
+function AttackFirstBoss(args)
 	utils_log("AttackFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
-	l_Enemy.m_TimerRotation = 0
+	l_Enemy.m_TimerRotation = 0.0
 	g_Player.m_CameraController:lock()
-	g_Player:CalculateCameraPositionRotation("JaheemDies2", l_Owner:get_position())
+	g_Player:CalculateCameraPositionRotation("JaheemDiesBoss", l_Owner:get_position())
 	g_Player.m_IsDead = true
 end
 
-function FogAttackUpdate(args, _ElapsedTime)
+function AttackUpdateBoss(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -48,11 +48,15 @@ function FogAttackUpdate(args, _ElapsedTime)
 	end
 end
 
-function FogAttackEnd(args)
-	utils_log("FogAttackEnd")
+function AttackEndBoss(args)
+	utils_log("AttackEnd")
+	local l_Enemy = args["self"]
+	if l_Enemy.m_State == "kill" then 
+		g_Player.m_CameraController:unlock()
+	end
 end
 
-function FogAttackToKillCondition(args)
+function AttackToKillConditionBoss(args)
 	local l_Enemy = args["self"]
 	return l_Enemy.m_State == "kill"
 end

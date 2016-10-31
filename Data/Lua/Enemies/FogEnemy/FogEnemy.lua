@@ -1,6 +1,7 @@
 dofile("Data\\Lua\\Enemies\\FogEnemy\\FogStateOff.lua")
 dofile("Data\\Lua\\Enemies\\FogEnemy\\FogStateChase.lua")
 dofile("Data\\Lua\\Enemies\\FogEnemy\\FogStateAttack.lua")
+dofile("Data\\Lua\\Enemies\\FogEnemy\\FogStateKill.lua")
 
 class 'CFogEnemy' (CEnemy)
 	function CFogEnemy:__init(_TreeNode,_LevelId)
@@ -11,7 +12,7 @@ class 'CFogEnemy' (CEnemy)
 		self.m_RunSpeed = _TreeNode:get_float_property("run_speed", 5.0)
 		self.m_AngularRunSpeed = _TreeNode:get_float_property("angular_run_speed", 250.0)
 		
-		self.m_TimeToTeleport = _TreeNode:get_float_property("time_teleport", 1.0)
+		self.m_TimeToTeleport = _TreeNode:get_float_property("time_teleport", 3.0)
 		self.m_TeleportDistance = _TreeNode:get_float_property("teleport_distance", 5.0)
 		self.m_TimeNotLook = _TreeNode:get_float_property("time_not_look", 1.5)
 		self.m_AngleToTeleport = _TreeNode:get_float_property("angle_teleport", 0.35)
@@ -21,8 +22,6 @@ class 'CFogEnemy' (CEnemy)
 		
 		self:SetFogAutomatonStateMachine()
 		self.m_StateMachine:start()
-		self.m_Off = true
-		self.m_Attack = false
 		self.m_OffPos = Vect3f(13.5, 0.1, 13.9)
 	end
 	
@@ -48,13 +47,23 @@ class 'CFogEnemy' (CEnemy)
 		ChaseState:set_do_end_function(FogChaseEnd)
 		ChaseState:add_condition(FogChaseToOffCondition, "Off")
 		ChaseState:add_condition(FogChaseToAttackCondition, "Attack")
+		ChaseState:add_condition(FogAnyToIdle, "Off")
 		
 		AttackState = State.create(FogAttackUpdate)
 		AttackState:set_do_first_function(FogAttackFirst)
 		AttackState:set_do_end_function(FogAttackEnd)
+		AttackState:add_condition(FogAttackToKillCondition, "Kill")
+		AttackState:add_condition(FogAnyToIdle, "Off")		
+	
+		KillState = State.create(FogKillUpdate)
+		KillState:set_do_first_function(FogKillFirst)
+		KillState:set_do_end_function(FogKillEnd)
+		KillState:add_condition(FogKillToOffCondition, "Off")
+		
 		
 		self.m_StateMachine:add_state("Off", OffState)
 		self.m_StateMachine:add_state("Chase", ChaseState)
 		self.m_StateMachine:add_state("Attack", AttackState)
+		self.m_StateMachine:add_state("Kill", KillState)
 	end
 --end

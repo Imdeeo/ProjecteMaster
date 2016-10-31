@@ -450,25 +450,27 @@ public:
 	void ChangeRigidDynamicActorPhysxGroup(const std::string &_ActorName, const std::string &_group){
 		physx::PxShape* shape;
 		((physx::PxRigidDynamic*)m_Actors[m_ActorIndexs[_ActorName]])->getShapes(&shape, 1);
-		((physx::PxRigidStatic*)m_Actors[m_ActorIndexs[_ActorName]])->getShapes(&shape, 1);
+		//((physx::PxRigidStatic*)m_Actors[m_ActorIndexs[_ActorName]])->getShapes(&shape, 1);
 		L_PutGroupToShape(shape, m_Groups[_group]);
 	}
 
 	void ChangeRigidStaticActorPhysxGroup(const std::string &_ActorName, const std::string &_group, const std::string _Material = "FisicasAux"){
 		physx::PxRigidStatic* actor;
 		physx::PxShape* oldShape;
-		physx::PxBoxGeometry* geometry = new physx::PxBoxGeometry();
 		physx::PxU32 buffer;
 		actor = (physx::PxRigidStatic*)m_Actors[m_ActorIndexs[_ActorName]];
 		
 		actor->getShapes(&oldShape, 1);
+
+		physx::PxBoxGeometry* geometry = new physx::PxBoxGeometry();
 		oldShape->getBoxGeometry(*geometry);
 		physx::PxShape* newShape = m_PhysX->createShape(*geometry, *m_Materials[_Material], true);
 		newShape->setFlags(oldShape->getFlags());
 		L_PutGroupToShape(newShape, m_Groups[_group]);
+
+		actor->detachShape(*oldShape);
 		actor->attachShape(*newShape);
 		
-		actor->detachShape(*oldShape);
 		newShape->release();
 		//oldShape->release(); OJOCUIDAO esto hace que pete y no se por qué, así que podría causar memory leaks al no liberar el puntero.
 	}

@@ -70,4 +70,6 @@
 	<static_mesh name="Barandilla011" filename="Data\level_4\Meshes\Barandilla011.mesh" physx_mesh_directory="Data\level_4\Meshes\PhysXMeshes"/>
 	<static_mesh name="Barandilla012" filename="Data\level_4\Meshes\Barandilla012.mesh" physx_mesh_directory="Data\level_4\Meshes\PhysXMeshes"/>
 	<static_mesh name="Barandilla001" filename="Data\level_4\Meshes\Barandilla001.mesh" physx_mesh_directory="Data\level_4\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerStairsUpperBoss" filename="Data\level_4\Meshes\TriggerStairsUpperBoss.mesh" physx_mesh_directory="Data\level_4\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerActivateBoss" filename="Data\level_4\Meshes\TriggerActivateBoss.mesh" physx_mesh_directory="Data\level_4\Meshes\PhysXMeshes"/>
 </static_meshes>

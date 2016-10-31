@@ -95,4 +95,10 @@
 	<static_mesh name="LamparasTecho007" filename="Data\level_5\Meshes\LamparasTecho007.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
 	<static_mesh name="LamparasTecho010" filename="Data\level_5\Meshes\LamparasTecho010.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
 	<static_mesh name="LamparasTecho008" filename="Data\level_5\Meshes\LamparasTecho008.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="CajaEngranajesPasillo_004" filename="Data\level_5\Meshes\CajaEngranajesPasillo_004.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="AccesoSaladeEscape" filename="Data\level_5\Meshes\AccesoSaladeEscape.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="TuboPasillo010" filename="Data\level_5\Meshes\TuboPasillo010.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="LamparasTecho012" filename="Data\level_5\Meshes\LamparasTecho012.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerStairsUpperEscape" filename="Data\level_5\Meshes\TriggerStairsUpperEscape.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerHole01" filename="Data\level_5\Meshes\TriggerHole01.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
 </static_meshes>
