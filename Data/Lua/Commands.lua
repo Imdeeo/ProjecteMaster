@@ -47,9 +47,9 @@ function deactivate_player_collisions()
 	g_Engine:get_physX_manager():change_rigid_dynamic_actor_group("player","NoCollision")
 end
 
-function change_static_actor_collision_group(actor_name,collision_group)
+function change_static_actor_collision_group(actor_name,collision_group,material)
 	utils_log("Actor"..actor_name.." Collision:"..collision_group)
-	g_Engine:get_physX_manager():change_rigid_static_actor_group(actor_name,collision_group)
+	g_Engine:get_physX_manager():change_rigid_static_actor_group(actor_name,collision_group,material)
 end
 
 function change_dynamic_actor_collision_group(actor_name,collision_group)
