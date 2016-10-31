@@ -47,6 +47,16 @@ function deactivate_player_collisions()
 	g_Engine:get_physX_manager():change_rigid_dynamic_actor_group("player","NoCollision")
 end
 
+function change_static_actor_collision_group(actor_name,collision_group)
+	utils_log("Actor"..actor_name.." Collision:"..collision_group)
+	g_Engine:get_physX_manager():change_rigid_static_actor_group(actor_name,collision_group)
+end
+
+function change_dynamic_actor_collision_group(actor_name,collision_group)
+	utils_log("Actor"..actor_name.." Collision:"..collision_group)
+	g_Engine:get_physX_manager():change_rigid_dynamic_actor_group(actor_name,collision_group)
+end
+
 function activate_player_physx()
 	activate_gravity()
 	activate_player_collisions()
