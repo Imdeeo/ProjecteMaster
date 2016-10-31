@@ -1650,6 +1650,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_character_controler_lua_pos_z", &CPhysXManager::GetCharacterControllersPositionZ)
 			.def("set_character_controller_height", &CPhysXManager::SetCharacterControllersHeight)
 			.def("change_rigid_dynamic_actor_group", &CPhysXManager::ChangeRigidDynamicActorPhysxGroup)
+			.def("change_rigid_static_actor_group", &CPhysXManager::ChangeRigidStaticActorPhysxGroup)
 			.def("remove_actor", &CPhysXManager::RemoveActor)
 			.def("change_actor_name", &CPhysXManager::ChangeActorName)
 	];
