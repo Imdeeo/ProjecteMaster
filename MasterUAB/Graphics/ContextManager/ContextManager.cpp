@@ -115,15 +115,21 @@ HRESULT CContextManager::CreateContext(HWND hWnd, int Width, int Height)
 #else
 	int flags = 0;
 #endif
-	
-	if (FAILED(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, flags, featureLevels, numFeatureLevels,
-		D3D11_SDK_VERSION, &sd, &m_SwapChain, &m_D3DDevice, NULL, &m_DeviceContext)))
+	HRESULT hr;
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
+	UABEngine.GetMutexManager()->g_DeviceMutex.lock();
+	hr = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, flags, featureLevels, numFeatureLevels,
+		D3D11_SDK_VERSION, &sd, &m_SwapChain, &m_D3DDevice, NULL, &m_DeviceContext);
+	UABEngine.GetMutexManager()->g_DeviceMutex.unlock();
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
+	if (FAILED(hr))
 	{
 		return S_FALSE;
 	}
-	HRESULT hr;
 #if _DEBUG
+	UABEngine.GetMutexManager()->g_DeviceMutex.lock();
 	hr = m_D3DDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&m_D3DDebug));
+	UABEngine.GetMutexManager()->g_DeviceMutex.unlock();
 	if (FAILED(hr))
 		return hr;
 #endif
@@ -153,7 +159,11 @@ HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 	ID3D11Texture2D *pBackBuffer;
 	if (FAILED(m_SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer)))
 		return FALSE;
+	std::mutex * l_DeviceMutex = &(UABEngine.GetMutexManager()->g_DeviceMutex);
+	l_DeviceMutex->lock();
 	HRESULT hr = m_D3DDevice->CreateRenderTargetView(pBackBuffer, NULL, &m_RenderTargetView);
+	l_DeviceMutex->unlock();
+
 	pBackBuffer->Release();
 	if (FAILED(hr))
 		return FALSE;
@@ -171,7 +181,9 @@ HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	descDepth.CPUAccessFlags = 0;
 	descDepth.MiscFlags = 0;
+	l_DeviceMutex->lock();
 	hr = m_D3DDevice->CreateTexture2D(&descDepth, NULL, &m_DepthStencil);
+	l_DeviceMutex->unlock();
 	if (FAILED(hr))
 		return hr;
 
@@ -180,7 +192,9 @@ HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 	descDSV.Format = descDepth.Format;
 	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	descDSV.Texture2D.MipSlice = 0;
+	l_DeviceMutex->lock();
 	hr = m_D3DDevice->CreateDepthStencilView(m_DepthStencil, &descDSV, &m_DepthStencilView);
+	l_DeviceMutex->unlock();
 	if (FAILED(hr))
 		return hr;
 
@@ -384,7 +398,9 @@ void CContextManager::Resize(HWND hWnd, unsigned int Width, unsigned int Height)
 {
 	if (m_D3DDevice != nullptr)
 	{
+		UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
 		m_DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
+		UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
 
 		CHECKED_RELEASE(m_RenderTargetView);
 		CHECKED_RELEASE(m_DepthStencil);
@@ -395,22 +411,22 @@ void CContextManager::Resize(HWND hWnd, unsigned int Width, unsigned int Height)
 		assert(hr == S_OK);
 	}
 }
-
-void CContextManager::Draw(const CRenderableVertexs* _VerticesToRender, ERasterizedState _RS, EDepthStencilStates _DSS, EBlendStates _BS)
-{
-	m_DeviceContext->RSSetState(m_RasterizerSates[_RS]);
-	m_DeviceContext->OMSetDepthStencilState(m_DepthStencilStates[_DSS], 0);
-	Vect4f v(1, 1, 1, 1);
-	m_DeviceContext->OMSetBlendState(m_BlendStates[_BS], &v.x, 0xffffffff);
-
-	/*s_DebugEffect->UpdateParameters(m_DeviceContext, &m_Parameters);
-	s_DebugEffect->SetActive(m_DeviceContext);*/
-
-/*
-	_VerticesToRender->SetBuffers(m_DeviceContext);
-
-	_VerticesToRender->Draw(m_DeviceContext);*/
-}
+//
+//void CContextManager::Draw(const CRenderableVertexs* _VerticesToRender, ERasterizedState _RS, EDepthStencilStates _DSS, EBlendStates _BS)
+//{
+//	m_DeviceContext->RSSetState(m_RasterizerSates[_RS]);
+//	m_DeviceContext->OMSetDepthStencilState(m_DepthStencilStates[_DSS], 0);
+//	Vect4f v(1, 1, 1, 1);
+//	m_DeviceContext->OMSetBlendState(m_BlendStates[_BS], &v.x, 0xffffffff);
+//
+//	/*s_DebugEffect->UpdateParameters(m_DeviceContext, &m_Parameters);
+//	s_DebugEffect->SetActive(m_DeviceContext);*/
+//
+///*
+//	_VerticesToRender->SetBuffers(m_DeviceContext);
+//
+//	_VerticesToRender->Draw(m_DeviceContext);*/
+//}
 
 void CContextManager::BeginRender(CColor backgroundColor)
 {
@@ -421,7 +437,9 @@ void CContextManager::BeginRender(CColor backgroundColor)
 	vp.MaxDepth = 1.0f;
 	vp.TopLeftX = 0;
 	vp.TopLeftY = 0;*/
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
 	m_DeviceContext->RSSetViewports(1, m_ViewPort);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
 
 	/*m_DeviceContext->ClearRenderTargetView(m_RenderTargetView, &backgroundColor.x);
 	m_DeviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);*/
