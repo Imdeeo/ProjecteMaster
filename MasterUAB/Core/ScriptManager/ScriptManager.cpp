@@ -244,7 +244,7 @@ void CScriptManager::Destroy()
 //Para ejecutar un fragmento de código LUA
 void CScriptManager::RunCode(const std::string &Code) const
 {
-	UtilsLog("RunCode");
+	//UtilsLog("RunCode");
 	if(luaL_dostring(m_LS,Code.c_str()))
 	{
 		const char *l_Str=lua_tostring(m_LS, -1);
@@ -656,6 +656,9 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_bilboard_manager", &CLevel::GetBilboardManager)
 			.def("get_astar_manager", &CLevel::GetAStarManager)
 			.def("set_game_play_manager", &CLevel::SetGamePlayManager)
+			.def("set_has_to_update", &CLevel::SetHasToUpdate)
+			.def("is_visible",&CLevel::IsVisible)
+			.def("set_visible", &CLevel::SetVisible)
 	];
 
 	RegisterTemplatedVectorMapManager<CLevel>(m_LS);
@@ -1647,6 +1650,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_character_controler_lua_pos_z", &CPhysXManager::GetCharacterControllersPositionZ)
 			.def("set_character_controller_height", &CPhysXManager::SetCharacterControllersHeight)
 			.def("change_rigid_dynamic_actor_group", &CPhysXManager::ChangeRigidDynamicActorPhysxGroup)
+			.def("change_rigid_static_actor_group", &CPhysXManager::ChangeRigidStaticActorPhysxGroup)
 			.def("remove_actor", &CPhysXManager::RemoveActor)
 			.def("change_actor_name", &CPhysXManager::ChangeActorName)
 	];

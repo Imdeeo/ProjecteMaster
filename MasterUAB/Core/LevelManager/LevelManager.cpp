@@ -115,7 +115,10 @@ void CLevelManager::Update(float _ElapsedTime)
 {
 	for (size_t i = 0; i < m_ResourcesVector.size(); i++)
 	{
-		m_ResourcesVector[i]->Update(_ElapsedTime);
+		if (*(m_ResourcesVector[i]->HasToUpdate()))
+		{
+			m_ResourcesVector[i]->Update(_ElapsedTime);
+		}
 	}
 }
 

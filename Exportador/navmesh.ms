@@ -19,9 +19,7 @@ fn exportNavMesh dir tpoly =
 
 	for ed in edges do
 	(
-
 		edverts = polyop.GetVertsUsingEdge tpoly ed
-
 
 		aux = #()
 		for v in edverts do (
@@ -30,7 +28,6 @@ fn exportNavMesh dir tpoly =
 		)
 		append allverts[aux[1]] aux[2] 
 		append allverts[aux[2]] aux[1] 
-
 	)
 
 	file=createfile (dir+filename)

@@ -38,11 +38,11 @@
 		<parameter type="float" name="ssr_reflection" value="0.000000" description="min=0.0 max=1.0 step=0.001"/>
 		<parameter type="float" name="bump_factor" value="0.100000" description="min=0.0 max=2.0 step=0.05"/>
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
-		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
+		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>	
 	</material>
 	<animation name="idle" filename="BossIdle.CAF" />
-	<animation name="patrol" filename="BossHeadLeft.CAF" />
-	<animation name="chase" filename="BossActivation.CAF" />
+	<animation name="looking" filename="BossHeadLeft.CAF" />
+	<animation name="activation" filename="BossActivation.CAF" />
 	<animation name="chase" filename="BossChase.CAF" />
-	<animation name="chase" filename="BossKill.CAF" />
+	<animation name="kill" filename="BossKill.CAF" />
 </actor>
