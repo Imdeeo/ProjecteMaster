@@ -3,6 +3,7 @@
 
 #include <d3d11.h>
 #include "Engine\UABEngine.h"
+#include "MutexManager\MutexManager.h"
 #include "RenderableObjects\RenderableVertexs.h"
 #include "ContextManager\ContextManager.h"
 #include "Effects\EffectTechnique.h"
@@ -43,7 +44,9 @@ public:
 		ZeroMemory( &InitData, sizeof(InitData) );
 		InitData.pSysMem = Vtxs;
 		ID3D11Device *l_Device=UABEngine.GetRenderManager()->GetDevice();
+		UABEngine.GetMutexManager()->g_DeviceMutex.lock();
 		HRESULT l_HR=l_Device->CreateBuffer(&l_BufferDescription, &InitData, &m_VertexBuffer);
+		UABEngine.GetMutexManager()->g_DeviceMutex.unlock();
 		if(FAILED(l_HR))
 			return;
 	}
@@ -68,10 +71,19 @@ public:
 		UINT stride=sizeof(T);
 		UINT offset=0;
 		
+		std::mutex* l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
+		l_DeviceContextMutex->unlock();
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->IASetPrimitiveTopology(m_PrimitiveTopology);
+		l_DeviceContextMutex->unlock();
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->IASetInputLayout(l_EffectVertexShader->GetVertexLayout());
+		l_DeviceContextMutex->unlock();
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->VSSetShader(l_EffectVertexShader->GetVertexShader(), NULL, 0);
+		l_DeviceContextMutex->unlock();
 
 		//OJO CUIDAO! Añadido por Uri y Jonathan pq creen que faltaba!!!
 		//CContextManager* l_ContextManager = UABEngine.GetRenderManager()->GetContextManager();
@@ -86,13 +98,19 @@ public:
 		CEffectManager* l_EffectManagerInstance = UABEngine.GetEffectManager();
 		if (l_MaterialParametersConstantBufferVS == NULL)
 			return false;
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferVS, 0, NULL, _Parameters, 0, 0);
+		l_DeviceContextMutex->unlock();
 		ID3D11Buffer* VSBuffers[4] = { l_SceneConstantBufferVS, l_LightConstantBufferVS, l_AnimationConstantBufferVS, l_MaterialParametersConstantBufferVS };
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->VSSetConstantBuffers(0, 4,VSBuffers);
+		l_DeviceContextMutex->unlock();
 
 		if (l_EffectGeometryShader)
 		{
+			l_DeviceContextMutex->lock();
 			l_DeviceContext->GSSetShader(l_EffectGeometryShader->GetGeometryShader(), NULL, 0);
+			l_DeviceContextMutex->unlock();
 
 			ID3D11Buffer *l_SceneConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 			ID3D11Buffer *l_LightConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
@@ -101,28 +119,41 @@ public:
 			ID3D11Buffer* GSBuffers[4] = { l_SceneConstantBufferGS, l_LightConstantBufferGS, l_AnimationConstantBufferGS, l_MaterialParametersConstantBufferGS };
 			//ID3D11Buffer *l_ConstantBufferGS = l_EffectGeometryShader->GetConstantBuffer(0);
 			
+			l_DeviceContextMutex->lock();
 			l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferGS, 0, NULL, _Parameters, 0, 0);
+			l_DeviceContextMutex->unlock();
 			//l_DeviceContext->GSSetConstantBuffers(0, 1, &l_ConstantBufferGS);
+			l_DeviceContextMutex->lock();
 			l_DeviceContext->GSSetConstantBuffers(0, 4, GSBuffers);
+			l_DeviceContextMutex->unlock();
 		}
 		else
 		{
+			l_DeviceContextMutex->lock();
 			l_DeviceContext->GSSetShader(NULL, NULL, 0);
+			l_DeviceContextMutex->unlock();
 		}
-		
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->PSSetShader(l_EffectPixelShader->GetPixelShader(), NULL, 0);
+		l_DeviceContextMutex->unlock();
 		
 		ID3D11Buffer *l_SceneConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(SCENE_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_LightConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(LIGHT_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_AnimationConstantBufferPS=l_EffectPixelShader->GetConstantBuffer(ANIMATED_CONSTANT_BUFFER_ID);
 		ID3D11Buffer *l_MaterialParametersConstantBufferPS = l_EffectPixelShader->GetConstantBuffer(MATERIAL_PARAMETERS_CONSTANT_BUFFER_ID);
 
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->UpdateSubresource(l_MaterialParametersConstantBufferPS, 0, NULL, _Parameters, 0, 0);
+		l_DeviceContextMutex->unlock();
 
 		ID3D11Buffer* PSBuffers[4] = { l_SceneConstantBufferPS, l_LightConstantBufferPS, l_AnimationConstantBufferPS, l_MaterialParametersConstantBufferPS };
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->PSSetConstantBuffers(0, 4, PSBuffers);
+		l_DeviceContextMutex->unlock();
 
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->Draw(l_VertexsToRender, 0);
+		l_DeviceContextMutex->unlock();
 		return true;
 	}
 
@@ -132,13 +163,18 @@ public:
 		ZeroMemory(&mappedResource, sizeof(mappedResource));
 
 		ID3D11DeviceContext * l_DeviceContext = UABEngine.GetInstance()->GetRenderManager()->GetDeviceContext();
+		std::mutex* l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
+		l_DeviceContextMutex->lock();
 		HRESULT l_HR = l_DeviceContext->Map(m_VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+		l_DeviceContextMutex->unlock();
 		if (FAILED(l_HR))
 			return false;
 
 		memcpy(mappedResource.pData, Vtxs, sizeof(T) * VtxsCount);
 
+		l_DeviceContextMutex->lock();
 		l_DeviceContext->Unmap(m_VertexBuffer, 0);
+		l_DeviceContextMutex->unlock();
 
 		return true;
 	}

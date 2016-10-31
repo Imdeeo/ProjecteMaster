@@ -5,9 +5,9 @@
 #include "LevelManager\LevelManager.h"
 
 
-CRenderDebugLayerSceneRendererCommand::CRenderDebugLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CSceneRendererCommand(TreeNode,_LevelId)
+CRenderDebugLayerSceneRendererCommand::CRenderDebugLayerSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :CSceneRendererCommand(TreeNode,_Level)
 {
-	m_Layer = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetLayerManager()->GetLayer(TreeNode);
+	m_Layer = _Level->GetLayerManager()->GetLayer(TreeNode);
 	SetActive(TreeNode->GetBoolProperty("active", false));
 }
 

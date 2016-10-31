@@ -4,11 +4,12 @@
 #include "StagedTexturedSceneRendererCommand.h"
 
 class CRenderManager;
+class CLevel;
 
 class CApplyFiltersSceneRendererCommand : public CStagedTexturedSceneRendererCommand
 {
 public:
-	CApplyFiltersSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	CApplyFiltersSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
 	virtual ~CApplyFiltersSceneRendererCommand(){}
 	virtual void Execute(CRenderManager &RenderManager);
 };

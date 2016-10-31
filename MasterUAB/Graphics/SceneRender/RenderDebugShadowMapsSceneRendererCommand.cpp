@@ -8,7 +8,7 @@
 #include "LevelManager\LevelManager.h"
 
 
-CRenderDebugShadowMapsSceneRendererCommand::CRenderDebugShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CSceneRendererCommand(TreeNode,_LevelId)
+CRenderDebugShadowMapsSceneRendererCommand::CRenderDebugShadowMapsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) : CSceneRendererCommand(TreeNode,_Level)
 {
 	//m_Offset = TreeNode.GetBoolProperty("offset");
 	//m_Width = TreeNode.GetBoolProperty("width");

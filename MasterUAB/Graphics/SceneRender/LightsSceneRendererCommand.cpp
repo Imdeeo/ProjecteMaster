@@ -3,9 +3,11 @@
 #include "Engine\UABEngine.h"
 #include "Effects\EffectManager.h"
 
+#include "LevelManager\Level.h"
+
 #include "Utils.h"
 
-CLightsSceneRendererCommand::CLightsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :CSceneRendererCommand(TreeNode,_LevelId){}
+CLightsSceneRendererCommand::CLightsSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :CSceneRendererCommand(TreeNode,_Level){}
 
 void CLightsSceneRendererCommand::Execute(CRenderManager &_RenderManager)
 {

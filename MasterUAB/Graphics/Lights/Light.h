@@ -16,6 +16,7 @@ class CRenderableVertexs;
 class CRenderManager;
 class CRenderableObjectsManager;
 class CFrustum;
+class CLevel;
 
 class CLight : public CNamed, public C3DElement, public CLevelInfo
 {
@@ -58,9 +59,9 @@ protected:
 
 public:
 
-	CLight(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
-	CLight(std::string _name, const std::string &_LevelId);
-	CLight(const std::string &_LevelId);
+	CLight(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
+	CLight(std::string _name, CLevel* _Level);
+	CLight(CLevel* _Level);
 	virtual ~CLight();
 	//UAB_BUILD_GET_SET_BY_REFERENCE(Vect3f, Position);
 	const CColor & GetColor() const{ return m_Color; }

@@ -28,6 +28,7 @@
     <ClCompile Include="InputManager\KeyboardInput.cpp" />
     <ClCompile Include="LevelManager\Level.cpp" />
     <ClCompile Include="LevelManager\LevelManager.cpp" />
+    <ClCompile Include="MutexManager\MutexManager.cpp" />
     <ClCompile Include="ScriptManager\ScriptManager.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -42,6 +43,7 @@
     <ClInclude Include="InputManager\KeyboardInput.h" />
     <ClInclude Include="LevelManager\Level.h" />
     <ClInclude Include="LevelManager\LevelManager.h" />
+    <ClInclude Include="MutexManager\MutexManager.h" />
     <ClInclude Include="ScriptManager\ScriptManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

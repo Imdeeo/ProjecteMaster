@@ -13,11 +13,13 @@
 
 #include "LevelManager\LevelManager.h"
 
+CBilboardSystemInstance::CBilboardSystemInstance(CLevel *_Level) :CRenderableObject(_Level)
+{}
 
-CBilboardSystemInstance::CBilboardSystemInstance(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) :
-	CRenderableObject(TreeNode,_LevelId)
+CBilboardSystemInstance::CBilboardSystemInstance(tinyxml2::XMLElement* TreeNode, CLevel* _Level) :
+	CRenderableObject(TreeNode,_Level)
 {
-	m_Type = UABEngine.GetLevelManager()->GetResource(_LevelId)->GetBilboardManager()->GetResource(TreeNode->GetPszProperty("type"));
+	m_Type = _Level->GetBilboardManager()->GetResource(TreeNode->GetPszProperty("type"));
 	m_ActiveBilboards = 0;
 	tinyxml2::XMLElement* l_Element = TreeNode->FirstChildElement();
 	while (l_Element != nullptr)

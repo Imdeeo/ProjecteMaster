@@ -16,17 +16,17 @@
 
 //#include "RenderManager\RenderManager.h"
 
-CLight::CLight(const std::string &_LevelId) : CNamed(""), CLevelInfo(_LevelId), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false), m_GenerateShadowMap(false), m_ShadowMap(nullptr)
+CLight::CLight(CLevel* _Level) : CNamed(""), CLevelInfo(_Level), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false), m_GenerateShadowMap(false), m_ShadowMap(nullptr)
 {
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 }
 
-CLight::CLight(std::string _name, const std::string &_LevelId) : CNamed(_name), CLevelInfo(_LevelId), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false), m_GenerateShadowMap(false), m_ShadowMap(nullptr)
+CLight::CLight(std::string _name, CLevel* _Level) : CNamed(_name), CLevelInfo(_Level), C3DElement(Vect3f(0, 0, 0)), m_Type(LIGHT_TYPE_OMNI), m_Color(Vect4f(1.0f, 1.0f, 1.0f, 1.0f)), m_StartRangeAttenuation(0.0f), m_EndRangeAttenuation(0.0f), m_Intensity(0.0f), m_Enabled(false), m_GenerateShadowMap(false), m_ShadowMap(nullptr)
 {	
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 }
 
-CLight::CLight(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CNamed(TreeNode), C3DElement(TreeNode), CLevelInfo(_LevelId)
+CLight::CLight(tinyxml2::XMLElement* TreeNode, CLevel* _Level) : CNamed(TreeNode), C3DElement(TreeNode), CLevelInfo(_Level)
 {
 	m_Frustum = UABEngine.GetRenderManager()->GetFrustum();
 	m_Type = GetLightTypeByName(TreeNode->GetPszProperty("type"));
@@ -44,7 +44,7 @@ CLight::CLight(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CN
 		{
 			if (l_Element->Name() == std::string("layer"))
 			{
-				m_Layers.push_back(UABEngine.GetLevelManager()->GetResource(_LevelId)->GetLayerManager()->GetResource(l_Element->GetPszProperty("layer")));
+				m_Layers.push_back(_Level->GetLayerManager()->GetResource(l_Element->GetPszProperty("layer")));
 			}
 		}
 		m_ShadowMap = new CDynamicTexture("shadowmap", (int)TreeNode->GetFloatProperty("shadow_map_width"), (int)TreeNode->GetFloatProperty("shadow_map_height"), true, TreeNode->GetPszProperty("shadow_map_format"));

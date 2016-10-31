@@ -62,6 +62,7 @@ public:
 	CManchasManager * GetManchasManager() const;
 	CAStarManager * GetAStarManager() const;
 
+	void SetGamePlayManager(CGamePlayManager* _GamePlayManager);
 	CRenderableObjectsManager* GetLayer(const std::string& _LayerName);
 };
 

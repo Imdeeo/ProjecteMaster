@@ -7,9 +7,9 @@
 
 #include "LevelManager\LevelManager.h"
 
-CCinematicObject::CCinematicObject(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId ) :m_RenderableObject(nullptr)
+CCinematicObject::CCinematicObject(tinyxml2::XMLElement* TreeNode, CLevel* _Level)
 {
-	m_RenderableObject=UABEngine.GetLevelManager()->GetResource(_LevelId)->GetLayerManager()->GetLayer(TreeNode)->GetResource(TreeNode->GetPszProperty("resource"));
+	m_RenderableObject=_Level->GetLayerManager()->GetLayer(TreeNode)->GetResource(TreeNode->GetPszProperty("resource"));
 
 	//m_PivotPosition = m_RenderableObject->GetPosition();
 	//m_PivotRotation = m_RenderableObject->GetRotation();

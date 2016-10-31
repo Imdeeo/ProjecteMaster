@@ -12,7 +12,7 @@
 
 #include <d3d11.h>
 
-CApplyFiltersSceneRendererCommand::CApplyFiltersSceneRendererCommand(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CStagedTexturedSceneRendererCommand(TreeNode,_LevelId)
+CApplyFiltersSceneRendererCommand::CApplyFiltersSceneRendererCommand(tinyxml2::XMLElement* TreeNode, CLevel *_Level) : CStagedTexturedSceneRendererCommand(TreeNode,_Level)
 {
 
 }
