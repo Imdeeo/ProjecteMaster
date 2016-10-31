@@ -37,6 +37,7 @@ public:
 	
 	void Update(float ElapsedTime);
 	void Render(CRenderManager *RM);
+	void Save(FILE* _File, std::string _layer);
 	//void RenderDebug(CRenderManager *RM);
 	std::string GetTipo(){ return "BilboardInstance"; };
 

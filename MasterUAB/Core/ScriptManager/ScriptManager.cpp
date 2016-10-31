@@ -654,6 +654,8 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_manchas_manager", &CLevel::GetManchasManager)
 			.def("get_bilboard_manager", &CLevel::GetBilboardManager)
 			.def("get_astar_manager", &CLevel::GetAStarManager)
+			.def("is_visible", &CLevel::IsVisible)
+			.def("set_visible", &CLevel::SetVisible)
 	];
 
 	RegisterTemplatedVectorMapManager<CLevel>(m_LS);

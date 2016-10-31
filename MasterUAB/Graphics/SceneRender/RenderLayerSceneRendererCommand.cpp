@@ -16,7 +16,7 @@ void CRenderLayerSceneRendererCommand::Execute(CRenderManager &RenderManager)
 {
 	for (size_t i = 0; i < m_Layer->size(); i++)
 	{
-		if ((*m_Layer)[i]->m_Visible)
+		if (*((*m_Layer)[i]->m_Visible))
 		{
 			(*m_Layer)[i]->m_Layer->Render(&RenderManager);
 		}
