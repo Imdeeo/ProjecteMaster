@@ -1,7 +1,7 @@
 function JumpingFirst(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
-	l_Owner:blend_cycle(0,1.0,0.1) --Está idle, pero debería haber animación de salto?
+	--l_Owner:blend_cycle(0,1.0,0.1) --Está idle, pero debería haber animación de salto?
 	l_Player.m_SoundManager:play_event(l_Player.m_JumpSoundEvent, l_Player.m_RenderableObject)
 end
 
@@ -65,9 +65,9 @@ function JumpingUpdate(args, _ElapsedTime)
 	--// Animate player
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1);
 	if l_Displacement.y == 0 then		
-		l_Owner:blend_cycle(1,1.0,0.1);
+		--l_Owner:blend_cycle(1,1.0,0.1);
 	else
-		l_Owner:blend_cycle(0,1.,0.1);
+		--l_Owner:blend_cycle(0,1.,0.1);
 	end	
 end
 
@@ -77,6 +77,14 @@ function JumpingEnd(args)
 end
 
 function JumpToIdleCondition(args)
+	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	return l_Player.m_Velocity.y == 0
+	local l_Hit = l_Player.m_PhysXManager:raycast(l_Owner:get_position(), Vect3f(0,-1,0), 131,  g_Player.m_RaycastData)
+	if g_Player.m_RaycastData.distance < 0.3 and l_Player.m_Velocity.y < 0 then
+		utils_log("true")
+		return true 
+	else
+		utils_log("false"..g_Player.m_RaycastData.distance)
+		return false
+	end
 end
