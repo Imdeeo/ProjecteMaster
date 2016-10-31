@@ -12,7 +12,7 @@ function OffUpdateCagedAutomaton(args, _ElapsedTime)
 end
 
 function OffEndCagedAutomaton(args)
-utils_log("OffEndCagedAutomaton")
+	utils_log("OffEndCagedAutomaton")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	local l_DelayRTPC = SoundRTPC()

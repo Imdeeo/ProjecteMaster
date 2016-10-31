@@ -13,12 +13,12 @@ g_ObjectPickupDelayRTPC = SoundRTPC()
 g_ObjectPickupDelayRTPC.rtpc_name = "pick_object_delay"
 
 function PlayOpenDrawerSound(_Speaker)
-	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 0.7, _Speaker)
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 0.6, _Speaker)
 	g_SoundManager:play_event(g_OpenDrawerSoundEvent, _Speaker)
 end
 
 function PlayCloseDrawerSound(_Speaker)
-	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.0, _Speaker)
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.1, _Speaker)
 	g_SoundManager:play_event(g_CloseDrawerSoundEvent, _Speaker)
 end
 
