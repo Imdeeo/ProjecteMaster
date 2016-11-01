@@ -16,8 +16,8 @@ function R2PushOrganKey(_Key, _Player)
 		_Player.m_InteractingAnimation = 9
 		_Player.m_CameraAnimation = "PipeOrganEnd"
 		_Player.m_CinematicManager:get_resource("ResolvePuzzle"):play()
-		_Player.m_PhysXManager:enable_object("puertalaberintooficialmovida", "FisicasAux")
-		_Player.m_PhysXManager:disable_physics("puertalaberintooficial", "FisicasAux")
+		_Player.m_PhysXManager:enable_object("Biblioteca_puertalaberintooficialmovida", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("Biblioteca_puertalaberintooficial", "FisicasAux")
 		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyA", "FisicasAux")
 		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyB", "FisicasAux")
 		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyC", "FisicasAux")
