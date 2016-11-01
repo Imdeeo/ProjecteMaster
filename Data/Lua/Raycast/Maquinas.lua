@@ -50,6 +50,7 @@ function R3ValveInput(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
+		_Player.m_FogDown= true
 		-- Play Sound
 		R3ValveIsPlaced = true
 		_Player.m_CinematicManager:get_resource("ResolveValve"):play()
@@ -62,6 +63,12 @@ function R3ValveInput(_Player)
 		l_CinematiManager:get_resource("TrituradoraPared"):play()
 		l_CinematiManager:get_resource("TrituradoraTecho"):play()
 		l_CinematiManager:get_resource("Newcommen"):play()
+		
+		local l_Level = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
+		local l_Particle = l_Level:get_layer_manager():get_layer("particles"):get_resource("EmisorPipeSteam")
+		
+		l_Particle:set_start(true)
+		l_Particle:set_visible(true)
 		
 		local l_Material = l_Level:get_material_manager():get_resource("FogMaterial")
 		l_Material:set_value(0,0.0)

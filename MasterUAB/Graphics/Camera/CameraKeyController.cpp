@@ -292,7 +292,7 @@ void CCameraKeyController::ForceUpdateYaw(float _ElapsedTime)
 
 	if (l_ForwardZ < 0.53)
 	{
-		m_Rotation = l_Rotation;
+		m_Rotation = l_Rotation;	
 	}
 
 	l_InputManager->UpdateAxis(0, 0);
