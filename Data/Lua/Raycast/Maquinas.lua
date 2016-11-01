@@ -24,8 +24,8 @@ function R3Valve(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
-		--_Player.m_PhysXManager:enable_trigger("TriggerValveInput")
-		--_Player.m_PhysXManager:disable_physics("TriggerValve")
+		_Player.m_PhysXManager:enable_trigger("TriggerValveInput", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerValve", "FisicasAux")
 		--Play Sound¿?
 	end
 end
@@ -58,9 +58,9 @@ function R3ValveInput(_Player)
 		-- Play Sound
 		R3ValveIsPlaced = true
 		_Player.m_CinematicManager:get_resource("ResolveValve"):play()
-		_Player.m_PhysXManager:disable_physics("CajaEngranaje", "FisicasAux")
-		_Player.m_PhysXManager:enable_object("CajaEngranajeMovido", "FisicasAux")
-		--_Player.m_PhysXManager:disable_physics("TriggerValveInput")
+		_Player.m_PhysXManager:disable_physics("Maquinas_CajaEngranaje", "FisicasAux")
+		_Player.m_PhysXManager:enable_object("Maquinas_CajaEngranajeMovido", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerValveInput", "FisicasAux")
 		local l_Level = g_Engine:get_level_manager():get_level(l_LevelId)
 		local l_CinematiManager = l_Level:get_cinematic_manager()
 		l_CinematiManager:get_resource("21gramos"):play()

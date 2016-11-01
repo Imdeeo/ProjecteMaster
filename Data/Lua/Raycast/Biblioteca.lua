@@ -75,7 +75,7 @@ function R2TriggerPipeOrgan(_Player)
 		_Player.m_IsInteracting = false
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = true
-		_Player.m_PhysXManager:disable_physics("TriggerPipeOrgan","FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerPipeOrgan", "FisicasAux")
 	end
 end
 
@@ -99,7 +99,7 @@ function R2Artifact(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
-		_Player.m_PhysXManager:disable_physics("TriggerArtifact","FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerArtifact", "FisicasAux")
 	end
 end
 
@@ -170,6 +170,6 @@ function R2Book(_Player)
 		l_Level:get_light_manager():get_resource("LuzProyector"):set_enabled(true) -- activate lights
 		l_Level:get_layer_manager():get_layer("alpha_blend_objects"):get_resource("reflejoluz3"):set_visible(true) 
 		-- activate particles
-		_Player.m_PhysXManager:disable_physics("TriggerBook","FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerBook", "FisicasAux")
 	end
 end

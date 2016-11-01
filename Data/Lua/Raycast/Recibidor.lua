@@ -78,7 +78,7 @@ function R1TrayR1(_Player) --This contains the key
 		m_CharacterManager.m_Enemics[2].m_Awake = true
 		local l_Level = g_Engine:get_level_manager():get_level(l_LevelId)
 		l_Level:get_cinematic_manager():get_resource("recibidor_engranajes"):play()
-		_Player.m_PhysXManager:disable_physics("TriggerTrayR1","FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerTrayR1", "FisicasAux")
 	end
 end
 
