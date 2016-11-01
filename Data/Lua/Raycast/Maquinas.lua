@@ -34,8 +34,12 @@ function R3ValveInput(_Player)
 	_Player.m_TargetYaw = -g_PI/4.0
 	_Player.m_ForwardCamera = Vect3f(-0.5, 0.0, 0.866)
 	_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
-	_Player.m_TargetPosOffset = Vect3f(0.51, 0.0, -0.6928)
 	l_Target = GetTriggerPos("TriggerValveInput", l_LevelId)
+	if _Player.m_PhysXManager:get_character_controler_pos("player").x >= l_Target.x+0.5061 then
+		_Player.m_TargetPosOffset = Vect3f(0.5057, 0.0, -0.6928)
+	else
+		_Player.m_TargetPosOffset = Vect3f(0.5065, 0.0, -0.6928)
+	end
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.2) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 25
