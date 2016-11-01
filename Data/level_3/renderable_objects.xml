@@ -10,7 +10,7 @@
 	<layer name="skybox"/>
 	<layer name="interactuable_objects"/>
 	<animated_instance_mesh name="FogAutomaton" layer="solid" core_name="Automaton" position="15.199900 5.1 26.510681" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
-	<particle_instance name="EmisorPipeSteam" layer="particles" type="PipeSteam" position="1.090000 0.060000 20.500000" next_particle_emission="0.013038" awake="true" awake_timer="4.206129" emission_box_limit="false" emission_box_half_size="0.000000 0.000000 0.000000" visible="true"/>
+	<particle_instance name="EmisorPipeSteam" layer="particles" type="PipeSteam" position="1.090000 0.060000 20.500000" next_particle_emission="0.013038" awake="true" awake_timer="4.206129" emission_box_limit="false" emission_box_half_size="0.000000 0.000000 0.000000" visible="false"/>
 	<line_renderer name="tesla_grande" layer="line_renderers" posInicial="24.6382 6.71533 27.6881" posFinal="27.2682 6.77533 27.5581" numPuntos="6" offsetX="0.5" offsetY="0.2" color="1.0 1.0 1.0 1.0" size="0.23" size_ofset="0.005" material="TeslaMaterial"/>	
 	<line_renderer name="tesla_peque" layer="line_renderers" posInicial="27.4282 5.40533 27.7881" posFinal="28.0282 5.48533 27.2681" numPuntos="2" offsetX="0.2" offsetY="0.1" color="1.0 1.0 1.0 1.0" size="0.17" size_ofset="0.005" material="TeslaMaterial"/>
 	<instance_mesh name="BaseCaldera" layer ="solid" core_name="BaseCaldera" position="18.4212 5.63959 41.1176" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>

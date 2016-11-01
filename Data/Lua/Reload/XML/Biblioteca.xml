@@ -24,4 +24,5 @@
 	<resource level="Biblioteca" layer="triggers" name="TriggerOrganKeyE" type="trigger" position="0.0874811 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" enable="true" visible="true"/>
 	<resource level="Biblioteca" layer="triggers" name="TriggerOrganKeyF" type="trigger" position="0.0508976 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" enable="true" visible="true"/>
 	<resource level="Biblioteca" layer="triggers" name="TriggerOrganKeyG" type="trigger" position="0.0142078 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" enable="true" visible="true"/>
+	<resource name="puzzlebiblio.ogv" type="video"/>
 </resources>

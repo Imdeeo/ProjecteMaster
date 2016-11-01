@@ -2294,7 +2294,7 @@
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>
 	</material>
 	<material name="B_storeproyector" renderable_object_technique="lights">
-		<texture type="video" filename="bunny.ogv"/>
+		<texture type="video" filename="puzzlebiblio.ogv"/>
 	</material>
 	<material name="Base" renderable_object_technique="lights">
 		<texture type="diffuse" filename="Data\level_2\Textures\recibidor_metal_negro.dds"/>
