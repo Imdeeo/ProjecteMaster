@@ -70,9 +70,7 @@ function OnStayStairsLower(_TriggerName, _ColliderName)
 			l_Player.m_AnimationTime = 1.5
 			
 			if g_Player.m_ActualLevel == "Maquinas" then
-				local l_Level = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
-				local l_Material = l_Level:get_material_manager():get_resource("FogMaterial")
-				l_Material:set_value(1, 1.0)
+			
 			end
 		end
 	end
@@ -92,9 +90,7 @@ function OnStayStairsUpper(_TriggerName, _ColliderName)
 			l_Player.m_IsClimbing = false
 			
 			if g_Player.m_ActualLevel == "Maquinas" then
-				local l_Level = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
-				local l_Material = l_Level:get_material_manager():get_resource("FogMaterial")
-				l_Material:set_value(1, 4.0)
+
 			end
 		end
 	end
