@@ -45,6 +45,7 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 	m_TimeScale = 1;
 	m_CurrentCamera_vision = 1;
 	m_Pause = false; //Iniciara en false
+	m_VideoPause = false;
 	m_InputManager = new CInputManager();
 	m_EffectManager = new CEffectManager();
 	m_MaterialManager = new CMaterialManager();
@@ -100,21 +101,28 @@ CUABEngine* CUABEngine::GetInstance()
 void CUABEngine::Update(float _ElapsedTime)
 {
 	float l_ElapsedTime = _ElapsedTime * m_TimeScale;
+
 	m_VideoManager->Update(l_ElapsedTime);
+
 	if (l_ElapsedTime > 0.0f && !m_Pause)
 	{
-		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
-		m_PhysXManager->Update(l_ElapsedTime);
-		m_CameraControllerManager->Update(l_ElapsedTime);
-		m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
-		m_ScriptManager->RunCode("luaUpdate(" + std::to_string(l_ElapsedTime) + ")");
-		m_LevelManager->Update(l_ElapsedTime);
+		if (!m_VideoPause)
+		{
+			m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
+			m_PhysXManager->Update(l_ElapsedTime);
+			m_CameraControllerManager->Update(l_ElapsedTime);
+			m_RenderManager->SetUseDebugCamera(m_CurrentCamera_vision == 0);
+			m_ScriptManager->RunCode("luaUpdate(" + std::to_string(l_ElapsedTime) + ")");
+			m_LevelManager->Update(l_ElapsedTime);
+		}
+		const CCamera *l_CurrentCamera = m_RenderManager->GetCurrentCamera();
+		m_SoundManager->Update(l_CurrentCamera);
 	}
 	if (m_ActiveConsole)
 		Consola(10, 300, 700, 70);
 	
-	const CCamera *l_CurrentCamera = m_RenderManager->GetCurrentCamera();
-	//GetSoundManager()->Update(l_CurrentCamera);
+	
+	
 	m_ScriptManager->RunCode("luaGui(" + std::to_string(l_ElapsedTime) + ")");
 }
 
