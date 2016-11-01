@@ -3,7 +3,7 @@
 	<resource level="Player" layer="solid" name="Jaheem" type="player" position="0.0 0.9 -4.0" rotation="0.0 0.0 0.0 1.0" visible="true"/>
 	<resource level="Recibidor" layer="solid" name="CagedAutomatonLeft" type="enemy" position="2.522870 0.500000 2.073650" rotation="0.000000 -0.707107 0.000000 -0.707107" awake="false" visible="true"/>
 	<resource level="Recibidor" layer="solid" name="CagedAutomatonRight" type="enemy" position="-2.547590 0.500000 2.078260" rotation="0.000000 0.707107 0.000000 -0.707107" awake="false" visible="true"/>
-	<resource level="Recibidor" layer="solid" name="LlaveRecibidor" type="object" position="-2.40176 0.921648 -2.24986" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
+	<resource level="Recibidor" layer="solid" name="LlaveRecibidor" type="object" position="-2.35176 0.921648 -2.24986" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
 	<resource level="Recibidor" layer="solid" name="ankhcolgante" type="object" position="2.304160 0.911380 -0.932696" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
 	<resource level="Recibidor" layer="solid" name="CajonComodaDerecha1" type="object" position="-2.423140 1.000280 -2.373670" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>
 	<resource level="Recibidor" layer="solid" name="CajonComodaDerecha2" type="object" position="-2.423140 1.000280 -1.056070" rotation="0.000000 0.000000 0.000000 -1.000000" visible="true"/>

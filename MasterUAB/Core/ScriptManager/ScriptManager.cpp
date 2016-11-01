@@ -1760,6 +1760,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("render_screen_clip", &IVideoManager::RenderSceenClip)
 			.def("clear_clip", &IVideoManager::ClearClip)
 			.def("play_clip", &IVideoManager::PlayClip)
+			.def("restart_clip", &IVideoManager::ReloadClip)
 	];
 
 // VIDEOGAME----------------------------------------------------------------------------------------

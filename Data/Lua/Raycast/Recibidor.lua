@@ -59,7 +59,7 @@ function R1TrayR1(_Player) --This contains the key
 	utils_log("Yaw: ".._Player.m_TargetYaw)
 	_Player.m_UpCamera = Vect3f(-0.682049, 0.731307, 0.0)	
 	_Player.m_ForwardCamera = Vect3f(-0.7313, -0.68205, 0)
-	_Player.m_TargetPosOffset = Vect3f(0.947, 0, 0.025)
+	_Player.m_TargetPosOffset = Vect3f(0.998, 0, 0.025)
 	l_Target = GetTriggerPos("TriggerTrayR1", l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 0.8) then
 		_Player.m_Target = Vect3f(-2.423140, 1.000280, -2.373670)

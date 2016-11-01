@@ -51,6 +51,8 @@ class 'CReloadManager'
 				else
 					g_Engine:get_physX_manager():disable_physics(l_Aux[3], "FisicasAux")
 				end
+			elseif l_Aux[1] == "video" then
+				g_Engine:get_video_manager():restart_clip(l_Aux[2])
 			else
 				utils_log("OBJETOS: "..l_Aux[3])
 				l_Resource = g_Engine:get_level_manager():get_level(l_Aux[7]):get_layer_manager():get_layer(l_Aux[2]):get_resource(l_Aux[3])
@@ -159,6 +161,11 @@ class 'CReloadManager'
 					table.insert(l_Trigger, l_Element:get_bool_property("visible", true))
 					table.insert(l_Trigger, l_Element:get_psz_property("level", ""))
 					table.insert(self.m_Resources, l_Trigger)
+				elseif l_Type == "video" then
+					l_Video = {}
+					table.insert(l_Video, l_Type)
+					table.insert(l_Video, l_Element:get_psz_property("name",""))	
+					table.insert(self.m_Resources, l_Video)					
 				end	
 				l_Element = l_Element:get_next()
 			end

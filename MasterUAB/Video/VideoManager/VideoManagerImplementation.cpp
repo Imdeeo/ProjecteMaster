@@ -85,3 +85,9 @@ bool CVideoManagerImplementation::RenderSceenClip(const std::string &l_ClipName)
 	UABEngine.SetVideoPause(true);
 	return true;
 }
+
+void CVideoManagerImplementation::ReloadClip(const std::string &l_ClipName)
+{
+	TheoraVideoClip* l_ActualClip = mgr->getVideoClipByName(m_Path + l_ClipName);
+	l_ActualClip->stop();
+}

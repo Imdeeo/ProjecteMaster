@@ -164,7 +164,7 @@ function R2Book(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
-		g_Engine:get_video_manager():play_clip("bunny.ogv") -- launch projector video
+		g_Engine:get_video_manager():play_clip("puzzlebiblio.ogv") -- launch projector video
 		_Player.m_CinematicManager:get_resource("fonotelefote"):play() -- launch projector cinematic
 		local l_Level = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
 		l_Level:get_light_manager():get_resource("LuzProyector"):set_enabled(true) -- activate lights
