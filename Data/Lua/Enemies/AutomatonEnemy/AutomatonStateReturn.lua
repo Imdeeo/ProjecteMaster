@@ -7,11 +7,10 @@ function ReturnFirstAutomaton(args)
 	l_Enemy.m_ActualAnimation = 1
 	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
 
-	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, 4)
-	l_SoundSync.m_EventsPerCycle = 2
-	l_SoundSync.m_StartSequenceEvent = g_AutomatonStartPatrolEvent
-	l_SoundSync.m_StopSequenceEvent = g_AutomatonStopPatrolEvent
-	l_SoundSync.m_Offset = 0.31
+	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, g_AutomatonStartPatrolEvent)
+	l_SoundSync.m_RepeatsPerCycle = 2
+	l_SoundSync.m_RepeatsPerEvent = 8
+	l_SoundSync.m_Offset = 0.32
 	l_Enemy.m_SoundSync = l_SoundSync
 		
 	l_Enemy.m_Velocity = Vect3f(0,0,0)

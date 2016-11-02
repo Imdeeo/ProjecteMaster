@@ -7,9 +7,8 @@ function ChaseFirstAutomaton(args)
 	l_Enemy.m_ActualAnimation = 2
 	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
 
-	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, 0.5)
-	l_SoundSync.m_EventsPerCycle = 2
-	l_SoundSync.m_StartSequenceEvent = g_AutomatonStepSoundEvent
+	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, g_AutomatonStepSoundEvent)
+	l_SoundSync.m_RepeatsPerCycle = 2
 	l_SoundSync.m_Offset = 0.20
 	l_Enemy.m_SoundSync = l_SoundSync
 		

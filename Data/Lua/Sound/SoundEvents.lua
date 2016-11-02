@@ -120,6 +120,8 @@ self.m_BeatSoundEvent.event_name = "Automaton_Start_Beating"
 self.m_StopBeatSoundEvent = SoundEvent()
 self.m_StopBeatSoundEvent.event_name = "Automaton_Stop_Beating"
 ]]
+g_AutomatonBeatOnceEvent = SoundEvent()
+g_AutomatonBeatOnceEvent.event_name = "Automaton_Beat_1"
 g_AutomatonBeatSequence6Event = SoundEvent()
 g_AutomatonBeatSequence6Event.event_name = "Automaton_Beat_6"
 g_AutomatonStopBeatingSoundEvent = SoundEvent()
