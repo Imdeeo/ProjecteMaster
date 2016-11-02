@@ -73,6 +73,8 @@ function R3ValveInput(_Player)
 		
 		l_Particle:set_start(true)
 		l_Particle:set_visible(true)		
+		
+		m_CharacterManager.m_EnemicsMap["Maquinas"]["FogAutomaton"].m_Awake = false
 	end
 end
 
