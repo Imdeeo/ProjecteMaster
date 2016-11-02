@@ -7,11 +7,11 @@ function AttackFirstCagedAutomaton(args)
 	l_Enemy.m_ActualAnimation = 2
 	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,0.5,0.5)
 
-	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, 2)
-	l_SoundSync.m_EventsPerCycle = 3
-	l_SoundSync.m_StartSequenceEvent = g_AutomatonBeatSequence6Event
+	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, g_AutomatonBeatSequence6Event)
+	l_SoundSync.m_RepeatsPerCycle = 3
+	l_SoundSync.m_RepeatsPerEvent = 6
 	l_SoundSync.m_Offset = 0.60
-	l_SoundSync.m_AnimationDuration = 2.4
+	l_SoundSync:SetAnimationDuration(2.4)
 	l_Enemy.m_SoundSync = l_SoundSync
 end
 
