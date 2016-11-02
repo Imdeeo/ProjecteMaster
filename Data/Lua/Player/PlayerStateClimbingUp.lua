@@ -3,10 +3,11 @@ dofile("Data\\Lua\\Player\\Helpers.lua")
 function ClimbingUpFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	l_Owner:blend_cycle(19,1.0,0.3)
+	l_Owner:blend_cycle(19,0.01,0.01)
 	l_Player.m_Timer = 0.0
-	l_Player.m_AnimationTime = 1.3333333
+	l_Player.m_AnimationTime = 1.333333
 	l_Player.m_ClimbingUp = true
+	utils_log("ClimbingUpFirst")
 end
 
 function ClimbingUpUpdate(args, _ElapsedTime)
@@ -17,7 +18,7 @@ function ClimbingUpUpdate(args, _ElapsedTime)
 	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	
 	--// Move player vertically
-	local l_Dist = 0.806
+	local l_Dist = 0.804
 	local l_Speed = l_Dist/l_Player.m_AnimationTime
 	l_PlayerDisplacement.y = l_Speed 
 	
@@ -35,12 +36,13 @@ function ClimbingUpUpdate(args, _ElapsedTime)
 	l_RotationY = Quatf()
 	l_Rotation = l_Player.m_CameraController:get_rotation()
 	l_Rotation:decouple_y(l_RotationXZ, l_RotationY)
-	l_Owner:set_rotation(l_RotationY)
+	--l_Owner:set_rotation(l_RotationY)
 end
 
 function ClimbingUpEnd(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
+	utils_log("ClimbingUpEnd")
 	l_Player.m_ClimbingUp = false
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.3)
 end

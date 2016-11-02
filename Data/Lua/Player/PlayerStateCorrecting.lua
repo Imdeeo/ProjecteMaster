@@ -26,7 +26,8 @@ function CorrectingUpdate(args, _ElapsedTime)
 	
 	l_FaceTargetDisplacement.y = 0.0
 	utils_log("Distance: "..l_FaceTargetDisplacement:length())
-	if l_FaceTargetDisplacement:length() <= 0.04 then
+	local l_Bias = 0.01+l_Player.m_BiasPos
+	if l_FaceTargetDisplacement:length() <= l_Bias then
 		l_PosOK = true
 	else
 		l_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
@@ -93,7 +94,8 @@ function CorrectingUpdate(args, _ElapsedTime)
 end
 
 function CorrectingEnd(args)
-	
+	local l_Player = args["self"]
+	l_Player.m_BiasPos = 0.0
 end
 
 function ANYToCorrectingCondition(args)

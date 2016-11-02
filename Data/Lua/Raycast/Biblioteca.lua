@@ -120,6 +120,7 @@ function R2Artifact(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
+		_Player.m_BiasPos = 0.03
 		_Player.m_PhysXManager:disable_physics("TriggerArtifact", "FisicasAux")
 	end
 end

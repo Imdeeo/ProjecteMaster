@@ -187,6 +187,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_ItemDropTime = -1.0
 		self.m_StartSanity = self.m_MaxSanity
 		self.m_TargetSanity = 20.0
+		self.m_BiasPos = 0.0
 		
 		--How much sanity gains per second, and each how many seconds it should tick that gain.
 		--For example: 10 gain with 0.5 tick means gaining 5 sanity each half second.
