@@ -9,8 +9,8 @@ function ReturnFirstAutomaton(args)
 
 	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, 4)
 	l_SoundSync.m_EventsPerCycle = 2
-	l_SoundSync.m_StartSequenceEvent = l_Enemy.m_StartPatrolEvent
-	l_SoundSync.m_StopSequenceEvent = l_Enemy.m_StopPatrolEvent
+	l_SoundSync.m_StartSequenceEvent = g_AutomatonStartPatrolEvent
+	l_SoundSync.m_StopSequenceEvent = g_AutomatonStopPatrolEvent
 	l_SoundSync.m_Offset = 0.31
 	l_Enemy.m_SoundSync = l_SoundSync
 		
@@ -107,7 +107,7 @@ function ReturnEndAutomaton(args)
 	utils_log("ReturnEnd")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
-	l_Enemy.m_SoundManager:play_event(l_Enemy.m_StopPatrolEvent, l_Owner)
+	l_Enemy.m_SoundManager:play_event(g_AutomatonStopPatrolEvent, l_Owner)
 end
 
 function ReturnToIdleConditionAutomaton(args)

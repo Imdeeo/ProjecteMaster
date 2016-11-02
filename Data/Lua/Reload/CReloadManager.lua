@@ -9,7 +9,10 @@ class 'CReloadManager'
 		g_Engine:get_level_manager():get_level("Player"):get_game_play_manager():destroy()
 		g_Engine:get_level_manager():get_level(_level):get_game_play_manager():destroy()
 		local l_SoundManager = g_Engine:get_sound_manager()
-		l_SoundManager:play_event(m_StopAllSoundsEvent, "NO_SPEAKER")
+		l_SoundManager:play_event(g_StopAllSoundsEvent)
+		l_SoundManager:unload_sound_bank("SFX.bnk")
+		l_SoundManager:load_sound_bank("SFX.bnk")
+		l_SoundManager:play_event(g_PlayMusicEvent)
 		
 		local l_Resource = nil
 		local l_Aux = nil

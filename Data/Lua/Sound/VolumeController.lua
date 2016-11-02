@@ -31,10 +31,10 @@ class "VolumeController"
 
   function VolumeController:SetMusicVolume(newVolume) -- volume values between 0 and 100
     self.m_MusicVolume = newVolume
-    self.m_SoundManager:set_rtpc_value(self.m_MusicRTPC, self.m_MusicVolume, "NO_SPEAKER")
+    self.m_SoundManager:broadcast_rtpc_value(self.m_MusicRTPC, self.m_MusicVolume)
   end
 
   function VolumeController:SetFXVolume(newVolume)
     self.m_FXVolume = newVolume
-    self.m_SoundManager:set_rtpc_value(self.m_FXRTPC, self.m_FXVolume, "NO_SPEAKER")
+    self.m_SoundManager:broadcast_rtpc_value(self.m_FXRTPC, self.m_FXVolume)
   end

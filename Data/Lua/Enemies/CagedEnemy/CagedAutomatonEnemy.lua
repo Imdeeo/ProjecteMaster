@@ -13,11 +13,6 @@ class 'CCagedAutomatonEnemy' (CEnemy)
 		--HEAD_OBJECT_BONE_ID 31
 		self.m_HeadBoneId = 31
 
-		self.m_BeatSoundEvent = SoundEvent()
-		self.m_BeatSoundEvent.event_name = "Automaton_Start_Beating"
-		self.m_StopBeatSoundEvent = SoundEvent()
-		self.m_StopBeatSoundEvent.event_name = "Automaton_Stop_Beating"
-		
 		self:SetCagedAutomatonStateMachine()
 		self.m_StateMachine:start()
 	end

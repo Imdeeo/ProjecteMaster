@@ -47,8 +47,6 @@ class 'CEnemy' (CLUAComponent)
 
 		self.m_SoundManager = CUABEngine.get_instance():get_sound_manager()
 		self.m_SoundManager:register_speaker(self.m_RenderableObject)
-		self.m_ActivateSoundEvent = SoundEvent()
-		self.m_ActivateSoundEvent.event_name = "Automaton_Activate"
 
 		utils_log("CEnemy __init Name: "..self.m_Name)
 	end

@@ -9,7 +9,7 @@ function ChaseFirstAutomaton(args)
 
 	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, 0.5)
 	l_SoundSync.m_EventsPerCycle = 2
-	l_SoundSync.m_StartSequenceEvent = l_Enemy.m_StepSoundEvent
+	l_SoundSync.m_StartSequenceEvent = g_AutomatonStepSoundEvent
 	l_SoundSync.m_Offset = 0.20
 	l_Enemy.m_SoundSync = l_SoundSync
 		
@@ -119,7 +119,6 @@ function ChaseEndAutomaton(args)
 	utils_log("ChaseEnd")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
-	l_Enemy.m_SoundManager:play_event(l_Enemy.m_StopPatrolEvent, l_Owner)
 end
 
 function ChaseToAlertConditionAutomaton(args)
