@@ -5,58 +5,79 @@ local l_LevelId = "Biblioteca"
 
 function R2TriggerOrganKeyA(_Player, _Owner)
 	--play key sound
-	_Owner:remove_action(_Owner:get_actual_action_animation())
-	_Owner:execute_action(10, 0.1, 0.1, 1.0, true)
-	g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla1"):play()
-	R2PushOrganKey("A", _Player)
+	local l_cinematic = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla1")
+	if l_cinematic:get_current_time() == 0 then
+		_Owner:remove_action(_Owner:get_actual_action_animation())
+		_Owner:execute_action(10, 0.1, 0.1, 1.0, true)
+		l_cinematic:play()
+		R2PushOrganKey("A", _Player)
+	end
 end
 
 function R2TriggerOrganKeyB(_Player, _Owner)
 	--play key sound
-	_Owner:remove_action(_Owner:get_actual_action_animation())
-	_Owner:execute_action(11, 0.1, 0.1, 1.0, true)
-	g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla2"):play()
-	R2PushOrganKey("B", _Player)
+	local l_cinematic = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla2")
+	if l_cinematic:get_current_time() == 0 then
+		_Owner:remove_action(_Owner:get_actual_action_animation())
+		_Owner:execute_action(11, 0.1, 0.1, 1.0, true)
+		l_cinematic:play()
+		R2PushOrganKey("B", _Player)
+	end
 end
 
 function R2TriggerOrganKeyC(_Player, _Owner)
 	--play key sound
-	_Owner:remove_action(_Owner:get_actual_action_animation())
-	_Owner:execute_action(12, 0.1, 0.1, 1.0, true)
-	g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla3"):play()
-	R2PushOrganKey("C", _Player)
+	local l_cinematic = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla3")
+	if l_cinematic:get_current_time() == 0 then
+		_Owner:remove_action(_Owner:get_actual_action_animation())
+		_Owner:execute_action(12, 0.1, 0.1, 1.0, true)
+		l_cinematic:play()
+		R2PushOrganKey("C", _Player)
+	end
 end
 
 function R2TriggerOrganKeyD(_Player, _Owner)
 	--play key sound
-	_Owner:remove_action(_Owner:get_actual_action_animation())
-	_Owner:execute_action(13, 0.1, 0.1, 1.0, true)
-	g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla4"):play()
-	R2PushOrganKey("D", _Player)
+	local l_cinematic = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla4")
+	if l_cinematic:get_current_time() == 0 then
+		_Owner:remove_action(_Owner:get_actual_action_animation())
+		_Owner:execute_action(13, 0.1, 0.1, 1.0, true)
+		l_cinematic:play()
+		R2PushOrganKey("D", _Player)
+	end
 end
 
 function R2TriggerOrganKeyE(_Player, _Owner)
 	--play key sound
-	_Owner:remove_action(_Owner:get_actual_action_animation())
-	_Owner:execute_action(14, 0.1, 0.1, 1.0, true)
-	g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla5"):play()
-	R2PushOrganKey("E", _Player)
+	local l_cinematic = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla5")
+	if l_cinematic:get_current_time() == 0 then
+		_Owner:remove_action(_Owner:get_actual_action_animation())
+		_Owner:execute_action(14, 0.1, 0.1, 1.0, true)
+		l_cinematic:play()
+		R2PushOrganKey("E", _Player)
+	end
 end
 
 function R2TriggerOrganKeyF(_Player, _Owner)
 	--play key sound
-	_Owner:remove_action(_Owner:get_actual_action_animation())
-	_Owner:execute_action(15, 0.1, 0.1, 1.0, true)
-	g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla6"):play()
-	R2PushOrganKey("F", _Player)
+	local l_cinematic = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla6")
+	if l_cinematic:get_current_time() == 0 then
+		_Owner:remove_action(_Owner:get_actual_action_animation())
+		_Owner:execute_action(15, 0.1, 0.1, 1.0, true)
+		l_cinematic:play()
+		R2PushOrganKey("F", _Player)
+	end
 end
 
 function R2TriggerOrganKeyG(_Player, _Owner)
 	--play key sound
-	_Owner:remove_action(_Owner:get_actual_action_animation())
-	_Owner:execute_action(16, 0.1, 0.1, 1.0, true)
-	g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla7"):play()
-	R2PushOrganKey("G", _Player)
+	local l_cinematic = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_cinematic_manager():get_resource("Tecla7")
+	if l_cinematic:get_current_time() == 0 then
+		_Owner:remove_action(_Owner:get_actual_action_animation())
+		_Owner:execute_action(16, 0.1, 0.1, 1.0, true)
+		l_cinematic:play()
+		R2PushOrganKey("G", _Player)
+	end
 end
 
 function R2TriggerPipeOrgan(_Player)
