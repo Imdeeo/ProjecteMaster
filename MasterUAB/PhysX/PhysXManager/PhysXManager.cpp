@@ -16,6 +16,8 @@
 #include "Utils\CEmptyPointerClass.h"
 #include "StaticMesh\StaticMesh.h"
 
+#include "MutexManager\MutexManager.h"
+
 #include "RenderableObjects\VertexTypes.h"
 	
 #include "RenderableObjects\RenderableVertexs.h"
@@ -464,12 +466,14 @@ public:
 
 		physx::PxBoxGeometry* geometry = new physx::PxBoxGeometry();
 		oldShape->getBoxGeometry(*geometry);
+		m_PhysXMutex->lock();
 		physx::PxShape* newShape = m_PhysX->createShape(*geometry, *m_Materials[_Material], true);
+		m_PhysXMutex->unlock();
 		newShape->setFlags(oldShape->getFlags());
 		L_PutGroupToShape(newShape, m_Groups[_group]);
 
+		actor->attachShape(*newShape); 
 		actor->detachShape(*oldShape);
-		actor->attachShape(*newShape);
 		
 		newShape->release();
 		//oldShape->release(); OJOCUIDAO esto hace que pete y no se por qué, así que podría causar memory leaks al no liberar el puntero.
@@ -521,7 +525,9 @@ CPhysXManager* CPhysXManager::CreatePhysXManager()
 void CPhysXManager::RegisterMaterial(const std::string &name, float staticFriction, float dynamicFriction, float restitution)
 {
 	assert(m_Materials.find(name)==m_Materials.end());
+	m_PhysXMutex->lock();
 	m_Materials[name] = m_PhysX->createMaterial(staticFriction,dynamicFriction,restitution);
+	m_PhysXMutex->unlock();
 }
 
 inline void CPhysXManager::AssertCoordArrays()
@@ -534,6 +540,7 @@ inline void CPhysXManager::AssertCoordArrays()
 
 size_t CPhysXManager::AddActor(std::string _actorName, Vect3f _position, Quatf _orientation, physx::PxActor* _actor)
 {
+	m_PhysXActorMutex->lock();
 	size_t index = m_Actors.size();
 
 	_actor->userData = (void*)index;
@@ -547,7 +554,7 @@ size_t CPhysXManager::AddActor(std::string _actorName, Vect3f _position, Quatf _
 #ifdef _DEBUG
 	AssertCoordArrays();
 #endif
-
+	m_PhysXActorMutex->unlock();
 	return m_ActorIndexs[_actorName];
 
 }
@@ -598,8 +605,12 @@ physx::PxShape* CPhysXManager::CreateStaticShape(const std::string _name, const 
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
 
+	m_PhysXMutex->lock();
 	physx::PxShape* shape = m_PhysX->createShape(_geometry, *l_Material);
+	m_PhysXMutex->unlock();
+	m_PhysXMutex->lock();
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
+	m_PhysXMutex->unlock();
 
 	RegisterActor(_name, shape, body, _position, _orientation, _group);
 
@@ -672,9 +683,13 @@ void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const std::s
 
 		if (LoadMeshFile(l_FileName, &l_Data, &l_Size)){
 			physx::PxDefaultMemoryInputData l_DefaultMemoryInputData(l_Data, l_Size);
+			m_PhysXMutex->lock();
 			physx::PxConvexMesh* l_ConvexMesh = m_PhysX->createConvexMesh(l_DefaultMemoryInputData);
+			m_PhysXMutex->unlock();
 
+			m_PhysXMutex->lock();
 			physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+			m_PhysXMutex->unlock();
 			physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
 
 			char l_ActorName[256] = "";
@@ -701,9 +716,13 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const std::
 
 		if (LoadMeshFile(l_FileName, &l_Data, &l_Size)){
 			physx::PxDefaultMemoryInputData l_DefaultMemoryInputData(l_Data, l_Size);
+			m_PhysXMutex->lock();
 			physx::PxConvexMesh* l_ConvexMesh = m_PhysX->createConvexMesh(l_DefaultMemoryInputData);
+			m_PhysXMutex->unlock();
 
+			m_PhysXMutex->lock();
 			physx::PxRigidDynamic* l_Body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+			m_PhysXMutex->unlock();
 			physx::PxShape* l_Shape = l_Body->createShape(physx::PxConvexMeshGeometry(l_ConvexMesh), *m_Materials[_Material]);
 
 			char l_ActorName[256] = "";
@@ -732,9 +751,13 @@ void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const std:
 		if (LoadMeshFile(l_FileName,&l_Data,&l_Size)){
 
 			physx::PxDefaultMemoryInputData l_InputStream(l_Data, l_Size);
+			m_PhysXMutex->lock();
 			physx::PxTriangleMesh* l_TriangleMesh = m_PhysX->createTriangleMesh(l_InputStream);
+			m_PhysXMutex->unlock();
 
+			m_PhysXMutex->lock();
 			physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+			m_PhysXMutex->unlock();
 			physx::PxShape* l_Shape = l_Body->createShape(physx::PxTriangleMeshGeometry(l_TriangleMesh), *m_Materials[_Material]);
 
 			char l_ActorName[256] = "";
@@ -783,7 +806,9 @@ void CPhysXManager::CreateTrigger(const std::string _name, physx::PxShape* shape
 {
 	L_PutGroupToShape(shape, m_Groups[_group]);
 
+	m_PhysXMutex->lock();
 	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+	m_PhysXMutex->unlock();
 	l_Body->setActorFlag(physx::PxActorFlag::eVISUALIZATION, true);
 	l_Body->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
 	l_Body->attachShape(*shape);
@@ -820,7 +845,9 @@ void CPhysXManager::DisablePhysics(const std::string _name, const std::string _m
 
 void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors,bool isActive)
 {	
+	m_PhysXMutex->lock();
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxBoxGeometry(_size.x / 2, _size.y / 2, _size.z / 2), *m_Materials[_Material], true);
+	m_PhysXMutex->unlock();
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
@@ -829,7 +856,9 @@ void CPhysXManager::CreateBoxTrigger(const std::string _name, Vect3f _size, cons
 
 void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group, std::string _OnTriggerEnterLuaFunction, std::string _OnTriggerStayLuaFunction, std::string _OnTriggerExitLuaFunction, std::vector<std::string> _ActiveActors, bool isActive)
 {
+	m_PhysXMutex->lock();
 	physx::PxShape* shape = m_PhysX->createShape(physx::PxSphereGeometry(_radius), *m_Materials[_Material], true);
+	m_PhysXMutex->unlock();
 	shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 	shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
 
@@ -840,7 +869,9 @@ void CPhysXManager::CreateSphereTrigger(const std::string _name, float _radius, 
 void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNormal, float _PlaneOffset, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
+	m_PhysXMutex->lock();
 	physx::PxRigidStatic* groundPlane = physx::PxCreatePlane(*m_PhysX, physx::PxPlane(_PlaneNormal.x, _PlaneNormal.y, _PlaneNormal.z, _PlaneOffset), *l_Material);
+	m_PhysXMutex->unlock();
 	physx::PxShape* shape;
 
 	size_t numShapes = groundPlane->getShapes(&shape,1);
@@ -857,8 +888,12 @@ void CPhysXManager::CreateDinamicShape(const std::string _name, const physx::PxG
 	float _density, std::string _group, bool _isKinematic)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
+	m_PhysXMutex->lock();
 	physx::PxShape* shape = m_PhysX->createShape(_geometry, *l_Material);
+	m_PhysXMutex->unlock();
+	m_PhysXMutex->lock();
 	physx::PxRigidDynamic* body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position),CastQuat(_orientation)));
+	m_PhysXMutex->unlock();
 
 	RegisterActor(_name, shape, body, _position, _orientation, _density, _group, _isKinematic);
 
@@ -890,8 +925,12 @@ void CPhysXManager::CreateRigidStatic(const std::string &Name, const Vect3f Size
 	AssertCoordArrays();
 	const physx::PxMaterial* l_Material = m_Materials[MaterialName];
 	physx::PxVec3 v = CastVec(Size);
+	m_PhysXMutex->lock();
 	physx::PxShape* l_Shape = m_PhysX->createShape(physx::PxBoxGeometry(v.x/2,v.y/2,v.z/2),*l_Material);
+	m_PhysXMutex->unlock();
+	m_PhysXMutex->lock();
 	physx::PxRigidStatic* l_Body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(Position),CastQuat(Orientation)));
+	m_PhysXMutex->unlock();
 	
 	l_Body->attachShape(*l_Shape);
 	size_t index=m_Actors.size();
@@ -905,7 +944,9 @@ void CPhysXManager::CreateRigidStatic(const std::string &Name, const Vect3f Size
 physx::PxShape* CPhysXManager::CreateStaticShapeFromBody(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation, std::string _group)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
+	m_PhysXMutex->lock();
 	physx::PxRigidStatic* body = m_PhysX->createRigidStatic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+	m_PhysXMutex->unlock();
 	physx::PxShape* shape = body->createShape(_geometry, *l_Material);
 
 	RegisterActor(_name, shape, body, _position, _orientation, _group);
@@ -917,7 +958,9 @@ void CPhysXManager::CreateDinamicShapeFromBody(const std::string _name, const ph
 	float _density, std::string _group, bool _isKinematic)
 {
 	physx::PxMaterial* l_Material = m_Materials[_Material];
+	m_PhysXMutex->lock();
 	physx::PxRigidDynamic* body = m_PhysX->createRigidDynamic(physx::PxTransform(CastVec(_position), CastQuat(_orientation)));
+	m_PhysXMutex->unlock();
 	physx::PxShape* shape = body->createShape(_geometry, *l_Material);
 
 	RegisterActor(_name, shape, body, _position, _orientation, _density, _group, _isKinematic);
@@ -928,6 +971,7 @@ void CPhysXManager::Update(float _dt)
 	m_LeftoverSeconds = m_LeftoverSeconds + _dt;
 	if(m_LeftoverSeconds >= PHYSX_UPDATE_STEP)
 	{
+		//m_PhysXMutex->lock();
 		m_Scene->simulate((physx::PxReal)PHYSX_UPDATE_STEP);
 		m_Scene->fetchResults(true);
 
@@ -956,6 +1000,7 @@ void CPhysXManager::Update(float _dt)
 				}
 			}
 		}
+		//m_PhysXMutex->unlock();
 	}
 }
 
@@ -1061,6 +1106,7 @@ void CPhysXManager::RemoveActor(const std::string _ActorName)
 {
 	if (m_ActorIndexs.find(_ActorName) != m_ActorIndexs.end())
 	{
+		m_PhysXActorMutex->lock();
 		size_t l_index = m_ActorIndexs[_ActorName];
 		auto it_controller = m_CharacterControllers.find(_ActorName);
 		if (it_controller != m_CharacterControllers.end())
@@ -1112,6 +1158,7 @@ void CPhysXManager::RemoveActor(const std::string _ActorName)
 			m_ActorOrientations.resize(0);
 			m_ActorIndexs.clear();
 		}
+		m_PhysXActorMutex->unlock();
 	}
 	
 }
