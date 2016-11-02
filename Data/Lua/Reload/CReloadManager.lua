@@ -70,7 +70,7 @@ class 'CReloadManager'
 					l_Resource:remove_animations()
 				elseif l_Aux[1] == "enemy" then
 					if l_RemoveEnemies then
-						self:removeTable(m_CharacterManager.m_Enemics)
+						self:removeTable(m_CharacterManager.m_EnemicsMap[_level])
 						l_RemoveEnemies = false
 					end
 					l_Resource:remove_animations()

@@ -25,7 +25,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetPosOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
 	
 	l_FaceTargetDisplacement.y = 0.0
-	utils_log("Distance: "..l_FaceTargetDisplacement:length())
+	--utils_log("Distance: "..l_FaceTargetDisplacement:length())
 	if l_FaceTargetDisplacement:length() <= 0.04 then
 		l_PosOK = true
 	else

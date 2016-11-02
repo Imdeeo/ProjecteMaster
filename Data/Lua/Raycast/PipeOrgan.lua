@@ -25,5 +25,8 @@ function R2PushOrganKey(_Key, _Player)
 		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyE", "FisicasAux")
 		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyF", "FisicasAux")
 		_Player.m_PhysXManager:disable_physics("TriggerOrganKeyG", "FisicasAux")
+		
+		m_CharacterManager.m_EnemicsMap["Biblioteca"]["AutomatonLeft"].m_Awake = true
+		m_CharacterManager.m_EnemicsMap["Biblioteca"]["AutomatonRight"].m_Awake = true
 	end
 end

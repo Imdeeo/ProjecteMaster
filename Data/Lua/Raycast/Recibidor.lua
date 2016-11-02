@@ -74,11 +74,12 @@ function R1TrayR1(_Player) --This contains the key
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
-		m_CharacterManager.m_Enemics[1].m_Awake = true
-		m_CharacterManager.m_Enemics[2].m_Awake = true
-		local l_Level = g_Engine:get_level_manager():get_level(l_LevelId)
-		l_Level:get_cinematic_manager():get_resource("recibidor_engranajes"):play()
+		m_CharacterManager.m_EnemicsMap["Recibidor"]["CagedAutomatonLeft"].m_Awake = true
+		m_CharacterManager.m_EnemicsMap["Recibidor"]["CagedAutomatonRight"].m_Awake = true
 		_Player.m_PhysXManager:disable_physics("TriggerTrayR1", "FisicasAux")
+		
+		local l_LevelManager = g_Engine:get_level_manager()
+		l_LevelManager:get_level(l_LevelId):get_cinematic_manager():get_resource("recibidor_engranajes"):play()
 	end
 end
 
