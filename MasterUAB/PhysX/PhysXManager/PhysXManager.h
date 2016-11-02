@@ -11,6 +11,11 @@ class CRenderManager;
 class CEmptyPointerClass;
 class CStaticMesh;
 
+namespace std
+{
+	class mutex;
+}
+
 namespace physx
 {
 	class PxFoundation;
@@ -58,6 +63,10 @@ class CPhysXManager
 protected:
 	CPhysXManager(){};
 public:
+
+	std::mutex *m_PhysXMutex;
+	std::mutex *m_PhysXActorMutex;
+
 	static CPhysXManager* CreatePhysXManager();
 	virtual ~CPhysXManager(){ Destroy(); }
 
