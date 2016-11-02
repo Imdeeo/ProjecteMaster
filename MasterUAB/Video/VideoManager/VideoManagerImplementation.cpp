@@ -56,7 +56,7 @@ void CVideoManagerImplementation::Update(float _ElapsedTime)
 	{
 		if (m_ActualClip->getTimePosition() >= m_ActualClip->getDuration() && !m_ActualClip->getAutoRestart())
 		{			
-			UABEngine.SetPause(false);
+			UABEngine.SetVideoPause(false);
 			m_ActualClip = nullptr;
 		}
 	}
@@ -82,6 +82,12 @@ bool CVideoManagerImplementation::RenderSceenClip(const std::string &l_ClipName)
 	if (m_ActualClip == nullptr)
 		return false;
 	m_ActualClip->play();
-	UABEngine.SetPause(true);
+	UABEngine.SetVideoPause(true);
 	return true;
+}
+
+void CVideoManagerImplementation::ReloadClip(const std::string &l_ClipName)
+{
+	TheoraVideoClip* l_ActualClip = mgr->getVideoClipByName(m_Path + l_ClipName);
+	l_ActualClip->stop();
 }

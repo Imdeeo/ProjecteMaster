@@ -16,6 +16,7 @@ public:
 	bool PlayClip(const std::string &l_ClipName);
 	bool RenderSceenClip(const std::string &l_ClipName);
 	void Update(float _ElapsedTime);
+	void ReloadClip(const std::string &l_ClipName);
 	TheoraVideoClip* GetActualClip();
 	
 };

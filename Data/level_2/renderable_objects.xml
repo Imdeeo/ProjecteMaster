@@ -9,7 +9,7 @@
 	<layer name="manchas"/>
 	<layer name="skybox"/>
 	<layer name="interactuable_objects"/>
-	<!--<line_renderer name="tesla_grande" layer="line_renderers" posInicial="19.88 6.42 0.34" posFinal="22.51 6.48 0.21" numPuntos="6"  offsetX="0.5" offsetY="0.2" color="1.0 1.0 1.0 1.0" size="0.23" size_ofset="0.005" material="TeslaMaterial"/>-->
+	<line_renderer name="tesla_grande" layer="line_renderers" posInicial="5.54 2.55 14.76" posFinal="4.66 2.54 14.78" numPuntos="6"  offsetX="0.0" offsetY="0.05" color="1.0 1.0 1.0 1.0" size="0.08" size_ofset="0.005" material="TeslaMaterial"/>
 	<bilboard_instance name="Intentofuego" layer="particles" type="FuegoBiblio" start="true" sizeX="1.15" sizeY="0.70" offsetSize="0.01" color="1.0 1.0 1.0 1.0" visible="true">
 		<position value="18.13 2.59 9.92"/>
 		<position value="18.13 2.59 13.40"/>
@@ -376,7 +376,7 @@
 	<instance_mesh name="EstanteriaGrandeLaberinto011" layer ="solid" core_name="EstanteriaGrandeLaberinto011" position="-9.32512 6.29264 13.4533" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="EstanteriaGrandeLaberinto009" layer ="solid" core_name="EstanteriaGrandeLaberinto009" position="-12.8251 6.29264 13.4533" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="EstanteriaGrandeLaberinto041" layer ="solid" core_name="EstanteriaGrandeLaberinto041" position="-8.06774 6.23387 17.896" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="Organo" layer ="solid" core_name="Organo" position="0.111706 10.256 14.4477" rotation="0.0 -1.50996e-007 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="Organo" layer ="solid" core_name="Organo" position="0.111706 10.256 14.0077" rotation="0.0 -1.50996e-007 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="TeclasAnimadasBIEN" layer ="solid" core_name="TeclasAnimadasBIEN" position="0.134982 1.38182 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="1tecla" layer ="solid" core_name="1tecla" position="0.235907 1.3732 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="3tecla" layer ="solid" core_name="3tecla" position="0.160579 1.3732 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>

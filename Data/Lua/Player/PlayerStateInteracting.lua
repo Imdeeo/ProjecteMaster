@@ -22,6 +22,17 @@ function InteractingUpdate(args, _ElapsedTime)
 	
 	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	
+	-- Quitando Fog
+	if l_Player.m_FogDown then
+		local l_Level = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
+		local l_Material = l_Level:get_material_manager():get_resource("FogMaterial")
+
+		local l_Value = 1.0-math.max(0,math.min(1,(l_Player.m_Timer-2)/5.0))
+
+		l_Material:set_value(4, l_Value)
+
+	end
+	
 	--// Ends the state after the animation duration has passed
 	if l_Player.m_InteractingCinematic ~= nil then
 		l_Player.m_IsInteracting = l_Player.m_Timer <= l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):get_duration()
@@ -77,14 +88,17 @@ function InteractingEnd(args)
 		local l_AnimatedCam = g_Engine:get_camera_controller_manager():get_resource(l_Player.m_CameraAnimation)
 		local l_Pos = l_AnimatedCam:get_position() - Vect3f(0,g_TotalHeight,0)
 		l_Player.m_PhysXManager:character_controller_teleport("player", l_Pos)
-		
-		
-		
 		local l_FPS = g_Engine:get_camera_controller_manager():get_resource("MainCamera")
 		l_FPS:set_position(l_AnimatedCam:get_position())
 		l_FPS:set_rotation(l_AnimatedCam:get_rotation())
 	end
 	
+	if l_Player.m_FogDown then
+		local l_Level = g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel)
+		local l_Material = l_Level:get_material_manager():get_resource("FogMaterial")
+		l_Material:set_value(0, 0.0)
+		l_Player.m_FogDown = false
+	end
 	l_Player:ClearTarget()
 	l_Player:ClearStates()
 	l_Player:ClearAend(l_Owner)

@@ -64,11 +64,11 @@ function JumpingUpdate(args, _ElapsedTime)
 	
 	--// Animate player
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1);
-	if l_Displacement.y == 0 then		
-		--l_Owner:blend_cycle(1,1.0,0.1);
+	--[[if l_Displacement.y == 0 then		
+		l_Owner:blend_cycle(1,1.0,0.1);
 	else
-		--l_Owner:blend_cycle(0,1.,0.1);
-	end	
+		l_Owner:blend_cycle(0,1.,0.1);
+	end]]
 end
 
 function JumpingEnd(args)
@@ -79,12 +79,13 @@ end
 function JumpToIdleCondition(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	local l_Hit = l_Player.m_PhysXManager:raycast(l_Owner:get_position(), Vect3f(0,-1,0), 131,  g_Player.m_RaycastData)
+	--[[local l_Hit = l_Player.m_PhysXManager:raycast(l_Owner:get_position(), Vect3f(0,-1,0), 131,  g_Player.m_RaycastData)
 	if g_Player.m_RaycastData.distance < 0.3 and l_Player.m_Velocity.y < 0 then
 		utils_log("true")
 		return true 
 	else
 		utils_log("false"..g_Player.m_RaycastData.distance)
 		return false
-	end
+	end]]
+	return l_Player.m_Velocity.y == 0
 end

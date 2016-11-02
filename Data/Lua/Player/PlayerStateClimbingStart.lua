@@ -1,10 +1,12 @@
 dofile("Data\\Lua\\Player\\Helpers.lua")
 
 function ClimbingStartFirst(args)
+	utils_log("ClimbingStartFirst")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_CameraController:lock()
-	l_Owner:blend_cycle(18,1.0,0.1)
+	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.0)
+	l_Owner:execute_action(18,0.1, 0.1, 1.0, true)
 	l_Player.m_Timer = 0.0
 	l_Player.m_AnimationTime = 0.6666667
 	l_Player.m_InitialCameraRotation = l_Player.m_CameraController:get_rotation()
@@ -65,9 +67,10 @@ function ClimbingStartUpdate(args, _ElapsedTime)
 end
 
 function ClimbingStartEnd(args)
+	utils_log("ClimbingStartEnd")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.3)
+	l_Owner:remove_action(l_Owner:get_actual_action_animation())
 end
 
 function ANYToClimbingCondition(args)
