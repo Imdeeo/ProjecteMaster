@@ -7,9 +7,9 @@ class CSpotLight : public CDirectionalLight
 {
 protected:
 
-#ifdef _DEBUG
+
 	virtual CRenderableVertexs* GetShape(CRenderManager *_RenderManager);
-#endif
+
 
 	float m_Angle;
 	float m_FallOff;
