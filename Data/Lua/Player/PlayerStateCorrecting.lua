@@ -43,6 +43,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 		local target_quat = l_Player.m_InitialCameraRotation:slerpJU(l_Player.m_FinalCameraRotation, l_PercentRotation)
 		l_Player.m_CameraController:set_rotation(target_quat)
 	else
+		local target_quat = l_Player.m_FinalCameraRotation
 		l_AngleOK = true
 	end
 		
@@ -92,7 +93,7 @@ function CorrectingUpdate(args, _ElapsedTime)
 end
 
 function CorrectingEnd(args)
-
+	
 end
 
 function ANYToCorrectingCondition(args)
