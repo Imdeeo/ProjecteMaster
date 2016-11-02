@@ -71,6 +71,7 @@ public:
 		DebugMonsterRun,
 		DebugMonsterIdle,
 		DebugMonsterHit,
+		DebugStopAllSounds,
 #endif
 	};
 

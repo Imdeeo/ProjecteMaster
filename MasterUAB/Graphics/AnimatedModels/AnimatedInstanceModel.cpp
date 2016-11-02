@@ -278,6 +278,16 @@ bool CAnimatedInstanceModel::IsActionAnimationEnded(int Id) const
 		return false;
 }
 
+float CAnimatedInstanceModel::GetAnimationTime() const
+{
+	return m_CalModel->getMixer()->getAnimationTime();
+}
+
+float CAnimatedInstanceModel::GetAnimationDuration() const
+{
+	return m_CalModel->getMixer()->getAnimationDuration();
+}
+
 void CAnimatedInstanceModel::RenderDebug(CRenderManager *RenderManager)
 {
 }

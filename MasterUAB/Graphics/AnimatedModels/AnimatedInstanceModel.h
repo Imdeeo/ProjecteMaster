@@ -44,6 +44,8 @@ public:
 	bool IsActionAnimationEnded(int Id) const;
 	int	 GetActualCycleAnimation()const{return m_ActualCycleAnimation;}
 	int	 GetActualActionAnimation()const{return m_ActualActionAnimation;}
+	float GetAnimationTime()const;
+	float GetAnimationDuration()const;
 	void RenderDebug(CRenderManager *RenderManager);
 	void Save(FILE* _File, std::string _layer);
 	CAnimatedInstanceModel & CAnimatedInstanceModel::operator=(CAnimatedInstanceModel&);

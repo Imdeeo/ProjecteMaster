@@ -3,6 +3,9 @@ function SingingLoopFirst(args)
 	local l_Player = args["self"]
 	l_Owner:blend_cycle(29,1.0,0.1)
 	--Launch sound
+	l_Player.m_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 0.5, l_Owner)
+	l_Player.m_SoundManager:play_event(g_SingSoundEvent, l_Owner)
+
 	l_Player.m_Timer = l_Player.m_SanityGainTick --always ticks on start
 end
 
@@ -60,6 +63,7 @@ function SingingLoopEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
+	l_Player.m_SoundManager:play_event(g_StopSingingSoundEvent, l_Owner)
 end
 
 function SingingLoopToSingingEndCondition(args)
