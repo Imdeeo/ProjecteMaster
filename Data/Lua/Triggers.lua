@@ -35,7 +35,7 @@ function OnEnterStairs(_TriggerName, _ColliderName)
 			elseif l_Player.m_ActualLevel == "Boss" then
 				l_Player.m_ForwardCamera = Vect3f(-1.0, 0.0, 0.0)
 				l_Player.m_TargetPosOffset = Vect3f(0.60, 0.0, 0.0)
-				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("EscaleraBoss"):get_position()
+				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("EscaleraSalaBoss"):get_position()
 			elseif l_Player.m_ActualLevel == "Pasillo" then
 				l_Player.m_ForwardCamera = Vect3f(1.0, 0.0, 0.0)
 				l_Player.m_TargetPosOffset = Vect3f(-0.60, 0.0, 0.0)
