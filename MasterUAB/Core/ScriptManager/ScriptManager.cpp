@@ -971,6 +971,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("unlock", &CFPSCameraController::Unlock)
 			.def("copy_from_key_camera", &CFPSCameraController::CopyFromKeyCamera)
 			.def("copy_from_camera", &CFPSCameraController::CopyFromCamera)
+			.def("update_position_from_target", &CFPSCameraController::UpdatePositionFromTarget)
 	];
 
 	module(m_LS) [

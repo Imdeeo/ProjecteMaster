@@ -103,12 +103,16 @@ void CSpotLight::SetShadowMap(CRenderManager &RenderManager)
 	RenderManager.SetRenderTargets(1, l_RenderTargetViews, m_ShadowMap->GetDepthStencilView());
 }
 
-#ifdef _DEBUG
+
 CRenderableVertexs* CSpotLight::GetShape(CRenderManager *_RenderManager)
 {
-	return _RenderManager->GetDebugRender()->GetCone();
+	#ifdef _DEBUG
+		return _RenderManager->GetDebugRender()->GetCone();
+	#else
+		return nullptr;
+	#endif
 }
-#endif
+
 bool const CSpotLight::GetInsideFrustum()
 {
 	return m_Frustum->SphereVisible(m_Position + (m_Direction.GetNormalized() * m_EndRangeAttenuation) / 2, m_EndRangeAttenuation);
