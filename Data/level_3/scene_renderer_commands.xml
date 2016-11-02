@@ -83,10 +83,10 @@
 
 	<apply_filters name="aplly filters Bloom" active="true">
 		<texture file="CapturedBloomTexture" stage_id="0"/>
-		<dynamic_texture name="BloomTexture" material="BloomMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="BloomBlurTexture" material="BloomBlurMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="BloomBlurTexture2" material="BlurMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="BloomBlurTexture3" material="BlurMaterial" height="600" width="800" format_type="rgba8"/>
+		<dynamic_texture name="BloomTexture" material="BloomMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="BloomBlurTexture" material="BloomBlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="BloomBlurTexture2" material="BlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="BloomBlurTexture3" material="BlurMaterial" height="512" width="512" format_type="rgba8"/>
 	</apply_filters>
 
 	<unset_render_target name="unset render target Bloom" active="true"/>
@@ -101,11 +101,11 @@
 
 	<apply_filters name="aplly filters Flare" active="true">
 		<texture file="CapturedBloomTexture" stage_id="0"/>
-		<dynamic_texture name="FlareBrightpassTexture" material="FlareBrightpassMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="FlareDownloadingTexture" material="FlareDownloadingMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="FlareBlurTexture" material="FlareBlurMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="FlareBlurTexture2" material="FlareBlurMaterial" height="600" width="800" format_type="rgba8"/>
-		<dynamic_texture name="FlareBlurTexture3" material="FlareBlurMaterial" height="600" width="800" format_type="rgba8"/>
+		<dynamic_texture name="FlareBrightpassTexture" material="FlareBrightpassMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="FlareDownloadingTexture" material="FlareDownloadingMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="FlareBlurTexture" material="FlareBlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="FlareBlurTexture2" material="FlareBlurMaterial" height="512" width="512" format_type="rgba8"/>
+		<dynamic_texture name="FlareBlurTexture3" material="FlareBlurMaterial" height="512" width="512" format_type="rgba8"/>
 	</apply_filters>
 
 	<unset_render_target name="unset render target Flare" active="true"/>
@@ -187,7 +187,7 @@
 	</render_draw_quad>-->
 		
 	<!-- SSR -->
-	<capture_frame_buffer name="capture frame SSR" active="true">
+	<!--<capture_frame_buffer name="capture frame SSR" active="true">
 		<capture_texture name="CapturedTextureSSR" texture_width_as_frame_buffer="true"/>
 	</capture_frame_buffer>
 
@@ -198,7 +198,7 @@
 		<texture load_file="false" file="NormalMapTexture" stage_id="1"/>
 		<texture load_file="false" file="DepthMapTexture" stage_id="2"/>
 	</render_draw_quad>
-	<disable_alpha_blend name="disable alpha ssr" active="true"/>	
+	<disable_alpha_blend name="disable alpha ssr" active="true"/>-->
 	
 	<!-- INTERACTUABLE OBJECTS -->
 	<capture_frame_buffer name="capture_frame_interactuable_objects" active="true">
@@ -284,8 +284,6 @@
 	<set_depth_stencil_state name="set depth stencil debug" enable_z_test="true" write_z_buffer="true" active="true"/>
 	<render_debug_lights name="render debug lights"/>
 	<render_debug_pathfinding name="render debug pathfinding"/>
-	<render_debug_grid name="render grid"/>
 	<set_ant_tweak_bar name="render ATB"/>	
 	<present name="present"/>
 </scene_renderer_commands>
-
