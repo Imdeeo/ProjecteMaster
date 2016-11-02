@@ -1,6 +1,6 @@
 #include "SoundManagerImplementation.h"
 #include "Math\Quatn.h"
-#include "Camera\CameraController.h"
+#include "Camera\Camera.h"
 #include "3DElement\3DElement.h"
 #include "XML\tinyxml2.h"
 
@@ -324,7 +324,7 @@ void CSoundManagerImplementation::Clean()
 	m_NamedSpeakers.clear();
 }
 
-void CSoundManagerImplementation::Update(const CCameraController *camera)
+void CSoundManagerImplementation::Update(const CCamera *camera)
 {
 	for (auto it : m_GameObjectSpeakers)
 	{
@@ -348,10 +348,10 @@ void CSoundManagerImplementation::Update(const CCameraController *camera)
 	AK::SOUNDENGINE_DLL::Tick();
 }
 
-void CSoundManagerImplementation::SetListenerPosition(const CCameraController *camera)
+void CSoundManagerImplementation::SetListenerPosition(const CCamera *camera)
 {
 	Vect3f l_Position = camera->GetPosition();
-	Vect3f l_Orientation = camera->GetForward();
+	Vect3f l_Orientation = (camera->GetLookAt() - camera->GetPosition()).Normalize();
 	Vect3f l_VectorUp = camera->GetUp();
 
 	AkListenerPosition l_ListenerPosition = {};
