@@ -676,6 +676,7 @@ class 'CPlayer' (CLUAComponent)
 	function CPlayer:ClearCamera()
 		if self.m_CameraAnimation ~= nil then
 			l_CameraControllerManager = CUABEngine.get_instance():get_camera_controller_manager()
+			l_CameraControllerManager:get_resource(self.m_CameraControllerName):update_position_from_target()
 			l_CameraControllerManager:get_resource(self.m_CameraControllerName):copy_from_key_camera(l_CameraControllerManager:get_main_camera():get_camera_as_info())
 			l_CameraControllerManager:choose_main_camera(self.m_CameraControllerName)
 		end

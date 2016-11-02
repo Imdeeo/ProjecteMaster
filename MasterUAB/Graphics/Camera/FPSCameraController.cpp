@@ -105,7 +105,7 @@ void CFPSCameraController::SetCamera(CCamera *Camera) const
 
 void CFPSCameraController::Update(float ElapsedTime)
 {
-	m_Position = m_Target->GetPosition() + m_Offset;
+	UpdatePositionFromTarget();
 	if (m_Locked)
 		return;
 	CInputManager* l_InputManager = UABEngine.GetInputManager();
@@ -126,3 +126,9 @@ void CFPSCameraController::CopyFromCamera(CCameraController* _Camera)
 	m_Fov = _Camera->GetFov();
 	m_Rotation.SetFromFwdUp(_Camera->GetForward(), _Camera->GetUp());
 }
+
+inline void CFPSCameraController::UpdatePositionFromTarget()
+{
+	m_Position = m_Target->GetPosition() + m_Offset;
+}
+
