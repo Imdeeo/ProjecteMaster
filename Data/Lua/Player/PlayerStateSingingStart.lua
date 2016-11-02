@@ -18,6 +18,8 @@ function SingingStartFirst(args)
 	local quat_to_turn = Quatf()
 	quat_to_turn:set_from_fwd_up(l_Fwd, l_Up)
 	l_Player.m_FinalCameraRotation = quat_to_turn
+	l_Player.m_SoundManager:broadcast_rtpc_value(g_IsolationRTPC, 45)
+	l_Player.m_SoundManager:broadcast_state(g_SingingActionState)
 end
 
 function SingingStartUpdate(args, _ElapsedTime)

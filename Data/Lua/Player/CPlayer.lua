@@ -153,27 +153,7 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_DistanceFromLastStep = 0.0
 		self.m_ImpactVelocity = Vect3f(0.0, 0.0, 0.0)
-		self.m_SoundEvents = {}
-		self.m_JumpSoundEvent = SoundEvent()
-		self.m_JumpSoundEvent.event_name = "Jump_Player"
-		self.m_LandSoundEvent = SoundEvent()
-		self.m_LandSoundEvent.event_name = "Land_Player"
 		self.m_StepLength = 0.8
-		self.m_StepSoundEvent = SoundEvent()
-		self.m_StepSoundEvent.event_name = "Step_Player"
-		self.m_OpenDrawerSoundEvent = SoundEvent()
-		self.m_OpenDrawerSoundEvent.event_name = "Drawer_Open"
-		self.m_SoundEvents[2] = self.m_OpenDrawerSoundEvent
-		self.m_CloseDrawerSoundEvent = SoundEvent()
-		self.m_CloseDrawerSoundEvent.event_name = "Drawer_Close"
-		self.m_SoundEvents[3] = self.m_CloseDrawerSoundEvent
-		self.m_ForceDrawerSoundEvent = SoundEvent()
-		self.m_ForceDrawerSoundEvent.event_name = "Drawer_Force"
-		self.m_SoundEvents[4] = self.m_ForceDrawerSoundEvent
-		self.m_BeatSoundEvent = SoundEvent()
-		self.m_BeatSoundEvent.event_name = "Automaton_Start_Beating"
-		self.m_StopBeatSoundEvent = SoundEvent()
-		self.m_StopBeatSoundEvent.event_name = "Automaton_Stop_Beating"
 		self.m_InteractionSoundSpeaker = nil
 
 		self.m_Velocity = Vect3f(0.0, 0.0, 0.0)

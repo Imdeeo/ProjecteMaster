@@ -1,6 +1,3 @@
 function SetupSoundsBiblioteca(_SoundManager)
-	local l_FireSoundEvent = SoundEvent()
-	l_FireSoundEvent.event_name = "Fire_Start"
-
-	_SoundManager:play_event(l_FireSoundEvent, "Fireplace")
+	_SoundManager:play_event(g_FireSoundEvent, "Fireplace")
 end

@@ -10,9 +10,9 @@ function InteractingFirst(args)
 		l_Player.m_CinematicManager:get_resource(l_Player.m_InteractingCinematic):play()
 	end
 
-	local InteractingSoundsFunction = g_InteractingSounds[l_Player.m_InteractingAnimation]
-	if InteractingSoundsFunction ~= nil then
-		InteractingSoundsFunction(l_Player.m_InteractionSoundSpeaker)
+	local InteractionSoundsFunction = g_InteractionSounds[l_Player.m_InteractingAnimation]
+	if InteractionSoundsFunction ~= nil then
+		InteractionSoundsFunction(l_Player.m_InteractionSoundSpeaker)
 	end
 	
 	l_Player.m_Timer = 0.0

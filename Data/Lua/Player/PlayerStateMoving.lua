@@ -74,7 +74,7 @@ function MovingUpdate(args, _ElapsedTime)
 	l_Player.m_DistanceFromLastStep = l_Player.m_DistanceFromLastStep + l_Displacement:length()
 	if l_Player.m_DistanceFromLastStep > l_Player.m_StepLength then
 		l_Player.m_DistanceFromLastStep = 0
-		l_Player.m_SoundManager:play_event(l_Player.m_StepSoundEvent, l_Player.m_RenderableObject)
+		l_Player.m_SoundManager:play_event(g_PlayerStepSoundEvent, l_Owner)
 	end
 
 	--// Rotate player to match camera

@@ -4,6 +4,9 @@ function SingingEndFirst(args)
 	l_Owner:execute_action(30, 0.1, 0.1, 1.0, true)
 	l_Player.m_Timer = 0.0
 	--Launch sound
+
+	l_Player.m_SoundManager:broadcast_rtpc_value(g_IsolationRTPC, 0)
+	l_Player.m_SoundManager:broadcast_state(g_ExplorationActionState)
 end
 
 function SingingEndUpdate(args, _ElapsedTime)

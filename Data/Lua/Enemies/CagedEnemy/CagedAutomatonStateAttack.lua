@@ -9,9 +9,7 @@ function AttackFirstCagedAutomaton(args)
 
 	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, 2)
 	l_SoundSync.m_EventsPerCycle = 3
-	local l_SE = SoundEvent()
-	l_SE.event_name = "Automaton_Beat_6"
-	l_SoundSync.m_StartSequenceEvent = l_SE
+	l_SoundSync.m_StartSequenceEvent = g_AutomatonBeatSequence6Event
 	l_SoundSync.m_Offset = 0.60
 	l_SoundSync.m_AnimationDuration = 2.4
 	l_Enemy.m_SoundSync = l_SoundSync
@@ -44,5 +42,5 @@ function AttackEndCagedAutomaton(args)
 	utils_log("AttackEndCagedAutomaton")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
-	l_Enemy.m_SoundManager:play_event(l_Enemy.m_StopBeatSoundEvent, l_Owner)
+	l_Enemy.m_SoundManager:play_event(g_AutomatonStopBeatingSoundEvent, l_Owner)
 end
