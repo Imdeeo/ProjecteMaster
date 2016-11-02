@@ -1,6 +1,7 @@
 dofile("Data\\Lua\\Player\\Helpers.lua")
 
 function ClimbingIdleFirst(args)
+	utils_log("ClimbingIdleFirst")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	--l_Player.m_IsClimbing = true
@@ -29,6 +30,7 @@ function ClimbingIdleUpdate(args, _ElapsedTime)
 end
 
 function ClimbingIdleEnd(args)
+	utils_log("ClimbingIdleEnd")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_ClimbingUp = false
@@ -37,7 +39,7 @@ function ClimbingIdleEnd(args)
 		ClearPlayerTarget(l_Player)
 		l_Player.m_CameraController:unlock()
 	end
-	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.3)
+	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.0)
 end
 
 function ClimbingIdleToClimbingDownCondition(args)
