@@ -151,8 +151,11 @@ class 'CPlayer' (CLUAComponent)
 		self.m_PhysXManager = UABEngine:get_physX_manager()
 		self.m_SoundManager:register_speaker(self.m_RenderableObject)
 		
-		self.m_JumpSoundEvent = SoundEvent()
-		self.m_JumpSoundEvent.event_name = "Jump"
+		self.m_DistanceFromLastStep = 0.0
+		self.m_ImpactVelocity = Vect3f(0.0, 0.0, 0.0)
+		self.m_StepLength = 0.8
+		self.m_InteractionSoundSpeaker = nil
+
 		self.m_Velocity = Vect3f(0.0, 0.0, 0.0)
 		self.m_Gravity = g_Gravity		
 		self.m_DefaultSpeed = 3.0

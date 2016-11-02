@@ -12,7 +12,10 @@ function OffUpdateCagedAutomaton(args, _ElapsedTime)
 end
 
 function OffEndCagedAutomaton(args)
-utils_log("OffEndCagedAutomaton")
+	utils_log("OffEndCagedAutomaton")
+	local l_Owner = args["owner"]
+	local l_Enemy = args["self"]
+	l_Enemy.m_SoundManager:play_event(g_AutomatonActivateSoundEvent, l_Owner)
 end
 
 function OffToIdleConditionCagedAutomaton(args)	

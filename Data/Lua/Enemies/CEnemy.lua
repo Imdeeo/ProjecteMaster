@@ -48,6 +48,9 @@ class 'CEnemy' (CLUAComponent)
 		else
 			self.m_PhysXManager:create_character_controller(self.m_Name, g_EnemyBossHeight, g_EnemyBossRadius, 0.5, self.m_RenderableObject:get_position(),"FisicasAux", "Boss")
 		end
+
+		self.m_SoundManager = CUABEngine.get_instance():get_sound_manager()
+		self.m_SoundManager:register_speaker(self.m_RenderableObject)
 	end
 	
 	function CEnemy.Destroy(self)

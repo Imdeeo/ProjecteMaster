@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <Speakers>
-	<Speaker name="Test" position="0.0 0.0 0.0" orientation="1.0 0.0 0.0" />
-	<Speaker name="Waterfall" position="-175.728 -32.844 5.1875" orientation="1.0 0.0 0.0" />
+	<Speaker name="Cogwheel1" position="2.8 2.0 -3.5" orientation="-1.0 0.0 0.0" /> 
+	<Speaker name="Cogwheel2" position="-2.8 1.0 3.6" orientation="1.0 0.0 0.0" /> 
+	<Speaker name="Cogwheel3" position="2.8 0.8 1.1" orientation="-1.0 0.0 0.0" /> 
+	<Speaker name="CajonComodaDerecha1" position="-2.423 1.0 -2.374" orientation="1.0 0.0 0.0" /> 
+	<Speaker name="CajonComodaDerecha2" position="-2.423 1.0 -1.056" orientation="1.0 0.0 0.0" /> 
+	<Speaker name="CajonComodaIzquierda1" position="2.420 1.0 -2.374" orientation="1.0 0.0 0.0" /> 
+	<Speaker name="CajonComodaIzquierda2" position="2.420 1.0 -1.056" orientation="1.0 0.0 0.0" /> 
+
+
+	<Speaker name="Fireplace" position="11.62 0.75 25.5" orientation="0.0 0.0 -1.0" /> 
+	<Speaker name="Projector" position="16.0 1.2 9.95" orientation="0.0 0.0 1.0" /> 
+	<Speaker name="Book" position="15.57 1.53 26.31" orientation="0.0 0.0 -1.0" /> 
+	<Speaker name="ClueSheet" position="11.87 1.27 15.26" orientation="-1.0 0.0 0.0" /> 
+	<Speaker name="OrganPipes" position="0.11 6.0 14.44" orientation="0.0 0.0 -1.0" /> 
+	<Speaker name="OrganPipes2" position="3.61 6.0 14.44" orientation="0.0 0.0 -1.0" /> 
+	<Speaker name="OrganPipes3" position="-3.39 6.0 14.44" orientation="0.0 0.0 -1.0" /> 
+	<Speaker name="SecretDoor" position="-6.58 0.5 7.85" orientation="1.0 0.0 0.0" /> 
+	<Speaker name="ArtifactStand" position="-17.0492 1.66366 29.1136" orientation="0.0 0.0 -1.0" /> 
+	<Speaker name="ArtifactDoor" position="16.8 5.36 27.05" orientation="0.0 0.0 -1.0" /> 
 </Speakers>

@@ -6,6 +6,11 @@ function ChaseFirstAutomaton(args)
 	l_Owner:clear_cycle(l_Enemy.m_ActualAnimation,0.5)
 	l_Enemy.m_ActualAnimation = 2
 	l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
+
+	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, g_AutomatonStepSoundEvent)
+	l_SoundSync.m_RepeatsPerCycle = 2
+	l_SoundSync.m_Offset = 0.20
+	l_Enemy.m_SoundSync = l_SoundSync
 		
 	l_Enemy.m_Velocity = Vect3f(0,0,0)
 	l_Enemy.m_TotalNodes = 0.0
@@ -19,6 +24,7 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 	local l_Enemy = args["self"]
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	
+	l_Enemy.m_SoundSync:Sync(_ElapsedTime)
 	local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PlayerPos)
 	l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
 	l_Enemy:LoseSanity(l_Distance)

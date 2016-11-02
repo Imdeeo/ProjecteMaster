@@ -1,3 +1,4 @@
+dofile("Data\\Lua\\Sound\\CSoundSynchronizer.lua")
 dofile("Data\\Lua\\Enemies\\CagedEnemy\\CagedAutomatonStateOff.lua")
 dofile("Data\\Lua\\Enemies\\CagedEnemy\\CagedAutomatonStateIdle.lua")
 dofile("Data\\Lua\\Enemies\\CagedEnemy\\CagedAutomatonStateAttack.lua")
@@ -11,7 +12,7 @@ class 'CCagedAutomatonEnemy' (CEnemy)
 		self.m_TimerToStop = 0.0
 		--HEAD_OBJECT_BONE_ID 31
 		self.m_HeadBoneId = 31
-		
+
 		self:SetCagedAutomatonStateMachine()
 		self.m_StateMachine:start()
 	end
