@@ -171,6 +171,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_IsDead = false
 		self.m_SingOnce = false
 		self.m_VideoPlaying = false
+		self.m_FogDown = false
 		
 		self.m_Target = nil
 		self.m_TargetPosOffset = Vect3f(1.0, 0.0, 0.0)
@@ -186,6 +187,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_ItemDropTime = -1.0
 		self.m_StartSanity = self.m_MaxSanity
 		self.m_TargetSanity = 20.0
+		self.m_BiasPos = 0.0
 		
 		--How much sanity gains per second, and each how many seconds it should tick that gain.
 		--For example: 10 gain with 0.5 tick means gaining 5 sanity each half second.
@@ -206,7 +208,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Timer = 0.0
 		self.m_TimerRotation = 0.0
 		self.m_OrganKeyCount = 1
-		self.m_OrganKeyOrder = {"A", "G"}
+		self.m_OrganKeyOrder = {"C", "B", "G", "D", "E"}
 		--{"A", "B", "C", "D", "E", "F", "G"}
 		
 		self.m_CurrentAend = nil

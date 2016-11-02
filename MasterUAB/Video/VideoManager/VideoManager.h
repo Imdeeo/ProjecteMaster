@@ -18,7 +18,7 @@ public:
 	virtual bool RenderSceenClip(const std::string &l_ClipName) = 0;
 	virtual void Update(float _ElapsedTime) = 0;
 	virtual TheoraVideoClip *GetActualClip()= 0;
-
+	virtual void ReloadClip(const std::string &l_ClipName)= 0;
 	TheoraVideoManager* mgr;
 protected:
 	IVideoManager()

@@ -78,11 +78,6 @@
 	<static_mesh name="CilindroMueveCintas4_004" filename="Data\level_3\Meshes\CilindroMueveCintas4_004.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="CilindroMueveCintas4_003" filename="Data\level_3\Meshes\CilindroMueveCintas4_003.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="CilindroMueveCintas4_002" filename="Data\level_3\Meshes\CilindroMueveCintas4_002.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
-	<static_mesh name="PlanchaCinta1_001" filename="Data\level_3\Meshes\PlanchaCinta1_001.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
-	<static_mesh name="PlanchaCinta2_001" filename="Data\level_3\Meshes\PlanchaCinta2_001.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
-	<static_mesh name="PlanchaCinta3_001" filename="Data\level_3\Meshes\PlanchaCinta3_001.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
-	<static_mesh name="PlanchaCinta4_001" filename="Data\level_3\Meshes\PlanchaCinta4_001.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
-	<static_mesh name="PlanchaCinta5_001" filename="Data\level_3\Meshes\PlanchaCinta5_001.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="Aplastador_21gramos" filename="Data\level_3\Meshes\Aplastador_21gramos.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="EngTritIZQ_21gramos" filename="Data\level_3\Meshes\EngTritIZQ_21gramos.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="EngTritDER_21gramos" filename="Data\level_3\Meshes\EngTritDER_21gramos.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
@@ -118,11 +113,16 @@
 	<static_mesh name="FuellesNewcommenPequeIzq" filename="Data\level_3\Meshes\FuellesNewcommenPequeIzq.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="FuellesNewcommenPequeDer" filename="Data\level_3\Meshes\FuellesNewcommenPequeDer.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="LamparaMecanica006" filename="Data\level_3\Meshes\LamparaMecanica006.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="PlanchaCinta1_001" filename="Data\level_3\Meshes\PlanchaCinta1_001.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="PlanchaCinta2_001" filename="Data\level_3\Meshes\PlanchaCinta2_001.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="PlanchaCinta3_001" filename="Data\level_3\Meshes\PlanchaCinta3_001.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="PlanchaCinta4_001" filename="Data\level_3\Meshes\PlanchaCinta4_001.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="PlanchaCinta5_001" filename="Data\level_3\Meshes\PlanchaCinta5_001.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="TrituradoraParedCubierta" filename="Data\level_3\Meshes\TrituradoraParedCubierta.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="TrituradoraTechoCubierta" filename="Data\level_3\Meshes\TrituradoraTechoCubierta.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="CablesSalaMaquinas" filename="Data\level_3\Meshes\CablesSalaMaquinas.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="FisicasCintas" filename="Data\level_3\Meshes\FisicasCintas.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
-	<static_mesh name="InputPipe" filename="Data\level_3\Meshes\PosaValvula.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="InputPipe" filename="Data\level_3\Meshes\InputPipe.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerStairsLower" filename="Data\level_3\Meshes\TriggerStairsLower.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerStairsUpper" filename="Data\level_3\Meshes\TriggerStairsUpper.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerValve" filename="Data\level_3\Meshes\TriggerValve.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>

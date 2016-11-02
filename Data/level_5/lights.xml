@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lights ambient_light_color="0.3 0.3 0.3 1.0">
-	<light name="LuzMisteriosaTrasEngranajes" enabled="true" type="omni" pos="37.2587 -7.52515 10.0166" color="0.305882 0.0431373 0.0431373 1" att_start_range="1.0" att_end_range="3.0" intensity="1.0"/>
-	<light name="LuzSiempreEncendidaPasillo003" enabled="true" type="omni" pos="66.2942 -6.69728 51.6673" color="0.564706 1.0 0.596078 1" att_start_range="1.5" att_end_range="5.5" intensity="1.0"/>
-	<light name="LuzSiempreEncendidaPasillo008" enabled="true" type="omni" pos="99.8112 -6.69728 13.5603" color="0.564706 1.0 0.596078 1" att_start_range="1.5" att_end_range="5.5" intensity="1.0"/>
-	<light name="LuzParpadeantePasillo001" enabled="true" type="omni" pos="77.7886 -6.69728 26.7388" color="0.737255 1.0 0.760784 1" att_start_range="1.5" att_end_range="5.5" intensity="1.0"/>
-	<light name="SpotDivinoEscalera" enabled="true" type="spot" pos="155.098 4.59051 13.2535" dir="0.0823437 -0.996604 0.0" color="1.0 1.0 1.0 1" angle="0.247837" fall_off="0.652753" att_start_range="8.0" att_end_range="16.0684" intensity="1.0" generate_shadow_map="true" shadow_map_format="r32" shadow_map_width="1024" shadow_map_height="1024" shadow_texture_mask="./data/textures/shadow_mask.tga">
+	<light name="LuzMisteriosaTrasEngranajes" enabled="true" type="omni" pos="34.7576 -8.17718 10.1016" color="0.305882 0.0431373 0.0431373 1" att_start_range="1.0" att_end_range="3.0" intensity="1.0"/>
+	<light name="LuzSiempreEncendidaPasillo003" enabled="true" type="omni" pos="63.7931 -7.34931 51.7523" color="0.564706 1.0 0.596078 1" att_start_range="1.5" att_end_range="5.5" intensity="1.0"/>
+	<light name="LuzSiempreEncendidaPasillo008" enabled="true" type="omni" pos="97.3101 -7.34931 13.6453" color="0.564706 1.0 0.596078 1" att_start_range="1.5" att_end_range="5.5" intensity="1.0"/>
+	<light name="LuzParpadeantePasillo001" enabled="true" type="omni" pos="75.2875 -7.34931 26.8238" color="0.737255 1.0 0.760784 1" att_start_range="1.5" att_end_range="5.5" intensity="1.0"/>
+	<light name="SpotDivinoEscalera" enabled="true" type="spot" pos="152.597 3.93848 13.3385" dir="0.0823437 -0.996604 0.0" color="1.0 1.0 1.0 1" angle="0.247837" fall_off="0.652753" att_start_range="8.0" att_end_range="16.0684" intensity="1.0" generate_shadow_map="true" shadow_map_format="r32" shadow_map_width="1024" shadow_map_height="1024" shadow_texture_mask="./data/textures/shadow_mask.tga">
 		<layer layer="solid"/>
 	</light>
-	<light name="LuzSiempreEncendidaPasillo009" enabled="true" type="omni" pos="36.9774 -6.69728 16.2793" color="0.564706 1.0 0.596078 1" att_start_range="1.5" att_end_range="5.5" intensity="1.0"/>
-	<light name="LuzDetrasAutomatas" enabled="true" type="omni" pos="103.534 -7.52515 26.8392" color="0.305882 0.0431373 0.0431373 1" att_start_range="3.5" att_end_range="7.0" intensity="1.0"/>
-	<light name="LuzSiempreEncendidaPasillo010" enabled="true" type="omni" pos="111.832 -6.69728 13.5603" color="0.564706 1.0 0.596078 1" att_start_range="1.5" att_end_range="5.5" intensity="1.0"/>
+	<light name="LuzSiempreEncendidaPasillo009" enabled="true" type="omni" pos="34.4764 -7.34931 16.3643" color="0.564706 1.0 0.596078 1" att_start_range="1.5" att_end_range="5.5" intensity="1.0"/>
+	<light name="LuzDetrasAutomatas" enabled="true" type="omni" pos="101.033 -8.17718 26.9242" color="0.305882 0.0431373 0.0431373 1" att_start_range="3.5" att_end_range="7.0" intensity="1.0"/>
+	<light name="LuzSiempreEncendidaPasillo010" enabled="true" type="omni" pos="109.331 -7.34931 13.6453" color="0.564706 1.0 0.596078 1" att_start_range="1.5" att_end_range="5.5" intensity="1.0"/>
 </lights>

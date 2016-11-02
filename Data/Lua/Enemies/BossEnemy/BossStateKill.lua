@@ -1,4 +1,4 @@
-function KillFirstAutomaton(args)
+function KillFirstBoss(args)
 	utils_log("KillFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
@@ -21,7 +21,7 @@ function KillFirstAutomaton(args)
 	l_Enemy.m_LoseSanityValue = g_Player.m_Sanity / 10.0
 end
 
-function KillUpdateAutomaton(args, _ElapsedTime)
+function KillUpdateBoss(args, _ElapsedTime)
 	local l_Enemy = args["self"]	
 	local l_Owner = args["owner"]
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
@@ -39,7 +39,7 @@ function KillUpdateAutomaton(args, _ElapsedTime)
 	end
 end
 
-function KillEndAutomaton(args)
+function KillEndBoss(args)
 	utils_log("KillEnd")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
@@ -49,7 +49,7 @@ function KillEndAutomaton(args)
 	l_Owner:set_rotation(l_Enemy.m_DefaultRotation)
 end
 
-function KillToOffConditionAutomaton(args)
+function KillToOffConditionBoss(args)
 	local l_Enemy = args["self"]
 	l_Enemy.m_Awake = false
 	return l_Enemy.m_State == "off"

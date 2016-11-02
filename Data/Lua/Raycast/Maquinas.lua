@@ -24,8 +24,8 @@ function R3Valve(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
-		--_Player.m_PhysXManager:enable_trigger("TriggerValveInput")
-		--_Player.m_PhysXManager:disable_physics("TriggerValve")
+		_Player.m_PhysXManager:enable_trigger("TriggerValveInput", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerValve", "FisicasAux")
 		--Play Sound¿?
 	end
 end
@@ -34,8 +34,12 @@ function R3ValveInput(_Player)
 	_Player.m_TargetYaw = -g_PI/4.0
 	_Player.m_ForwardCamera = Vect3f(-0.5, 0.0, 0.866)
 	_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
-	_Player.m_TargetPosOffset = Vect3f(0.51, 0.0, -0.6928)
 	l_Target = GetTriggerPos("TriggerValveInput", l_LevelId)
+	if _Player.m_PhysXManager:get_character_controler_pos("player").x >= l_Target.x+0.5061 then
+		_Player.m_TargetPosOffset = Vect3f(0.5057, 0.0, -0.6928)
+	else
+		_Player.m_TargetPosOffset = Vect3f(0.5065, 0.0, -0.6928)
+	end
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.2) then
 		_Player.m_Target = l_Target
 		_Player.m_InteractingAnimation = 25
@@ -50,12 +54,13 @@ function R3ValveInput(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
+		_Player.m_FogDown= true
 		-- Play Sound
 		R3ValveIsPlaced = true
 		_Player.m_CinematicManager:get_resource("ResolveValve"):play()
-		_Player.m_PhysXManager:disable_physics("CajaEngranaje", "FisicasAux")
-		_Player.m_PhysXManager:enable_object("CajaEngranajeMovido", "FisicasAux")
-		--_Player.m_PhysXManager:disable_physics("TriggerValveInput")
+		_Player.m_PhysXManager:disable_physics("Maquinas_CajaEngranaje", "FisicasAux")
+		_Player.m_PhysXManager:enable_object("Maquinas_CajaEngranajeMovido", "FisicasAux")
+		_Player.m_PhysXManager:disable_physics("TriggerValveInput", "FisicasAux")
 		local l_Level = g_Engine:get_level_manager():get_level(l_LevelId)
 		local l_CinematiManager = l_Level:get_cinematic_manager()
 		l_CinematiManager:get_resource("21gramos"):play()
@@ -63,8 +68,13 @@ function R3ValveInput(_Player)
 		l_CinematiManager:get_resource("TrituradoraTecho"):play()
 		l_CinematiManager:get_resource("Newcommen"):play()
 		
-		local l_Material = l_Level:get_material_manager():get_resource("FogMaterial")
-		l_Material:set_value(0,0.0)
+		local l_Level = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
+		local l_Particle = l_Level:get_layer_manager():get_layer("particles"):get_resource("EmisorPipeSteam")
+		
+		l_Particle:set_start(true)
+		l_Particle:set_visible(true)		
+		
+		m_CharacterManager.m_EnemicsMap["Maquinas"]["FogAutomaton"].m_Awake = false
 	end
 end
 
