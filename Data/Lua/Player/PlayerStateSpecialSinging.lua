@@ -39,8 +39,8 @@ function SpecialSingingStateUpdate(args, _ElapsedTime)
 			else
 				if not l_Player.m_VideoPlaying then
 					l_Player.m_VideoPlaying = true
-					g_Engine:get_video_manager():load_clip("bunny.ogv", false)
-					g_Engine:get_video_manager():render_screen_clip("bunny.ogv")
+					g_Engine:get_video_manager():load_clip("intro.ogv", false)
+					g_Engine:get_video_manager():render_screen_clip("intro.ogv")
 				else
 					local l_Level = g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel)
 					local l_Value = 1 - math.min(1,(l_Player.m_Timer-13.333)/2)	

@@ -9,7 +9,7 @@ dofile("Data\\Lua\\CLuz.lua")
 
 class 'CCharacterManager'
 	function CCharacterManager:__init()
-		self.m_Enemics={}
+		self.m_EnemicsMap={}
 		self.m_Player={}
 		self.m_Lights={}
 	end
@@ -29,28 +29,33 @@ class 'CCharacterManager'
 					l_game_play_manager:add_component(g_Player)
 					table.insert(self.m_Player, g_Player)
 				elseif l_ElemName == "enemy" then
+					if self.m_EnemicsMap[level_id]==nil then
+						self.m_EnemicsMap[level_id]={}
+					end
+					
 					local l_Type = l_Element:get_psz_property("type", "")
+					local l_Name = l_Element:get_psz_property("renderable_object", "")
 					
 					if l_Type == "Automaton" then
 						local l_Enemy = CAutomatonEnemy(l_Element,level_id)
 						l_game_play_manager:add_component(l_Enemy)
-						table.insert(self.m_Enemics, l_Enemy)			
+						self.m_EnemicsMap[level_id][l_Name] = l_Enemy
 					elseif l_Type == "FogAutomaton" then
 						local l_Enemy = CFogEnemy(l_Element,level_id)
 						l_game_play_manager:add_component(l_Enemy)
-						table.insert(self.m_Enemics, l_Enemy)
+						self.m_EnemicsMap[level_id][l_Name] = l_Enemy
 					elseif l_Type == "CagedAutomaton" then
 						local l_Enemy = CCagedAutomatonEnemy(l_Element,level_id)
 						l_game_play_manager:add_component(l_Enemy)
-						table.insert(self.m_Enemics, l_Enemy)	
+						self.m_EnemicsMap[level_id][l_Name] = l_Enemy
 					elseif l_Type == "Turret" then
 						local l_Enemy = CTurretEnemy(l_Element,level_id)
 						l_game_play_manager:add_component(l_Enemy)
-						table.insert(self.m_Enemics, l_Enemy)
+						self.m_EnemicsMap[level_id][l_Name] = l_Enemy
 					elseif l_Type == "Boss" then
 						local l_Enemy = CBossEnemy(l_Element,level_id)
 						l_game_play_manager:add_component(l_Enemy)
-						table.insert(self.m_Enemics, l_Enemy)
+						self.m_EnemicsMap[level_id][l_Name] = l_Enemy
 					end
 				elseif l_ElemName == "light" then
 					local l_Light = CLuz(l_Element, level_id)
@@ -65,7 +70,11 @@ class 'CCharacterManager'
 	end
 
 function DestroyLevelGamePlayManager(_LevelId)
+	utils_log("DESTROY LEVEL: ".._LevelId)
 	local l_game_play_manager = CUABEngine.get_instance():get_level_manager():get_level(_LevelId):get_game_play_manager()
+	for k in pairs (m_CharacterManager.m_EnemicsMap[_LevelId]) do
+		m_CharacterManager.m_EnemicsMap[_LevelId][k] = nil
+	end
 	for i=0,l_game_play_manager:size()-1 do
 		local l_component = l_game_play_manager:get_component(i)
 		l_component.Destroy(l_component)
