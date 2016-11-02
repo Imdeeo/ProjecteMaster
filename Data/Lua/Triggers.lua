@@ -40,9 +40,7 @@ function OnEnterStairs(_TriggerName, _ColliderName)
 				l_Player.m_ForwardCamera = Vect3f(1.0, 0.0, 0.0)
 				l_Player.m_TargetPosOffset = Vect3f(-0.60, 0.0, 0.0)
 				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("EscaleraEscape"):get_position()
-			end			
-			
-			
+			end				
 		end
 	end
 end
@@ -54,6 +52,20 @@ function OnExitStairs(_TriggerName, _ColliderName)
 			utils_log("Exit Upper")
 			l_Player:ClearTarget()
 			l_Player:ClearStates()
+		end
+
+		if l_Player.m_ActualLevel == "Maquinas" then
+			if _TriggerName == "TriggerStairsLower" then
+				local l_FogMaterial = g_Engine:get_level_manager():get_level("Maquinas"):get_material_manager():get_resource("FogMaterial")		
+				if l_FogMaterial:get_value(0) == 1 then
+					m_CharacterManager.m_EnemicsMap["Maquinas"]["FogAutomaton"].m_Awake = true
+				end
+			elseif _TriggerName == "TriggerStairsUpper" then
+				local l_FogMaterial = g_Engine:get_level_manager():get_level("Maquinas"):get_material_manager():get_resource("FogMaterial")		
+				if l_FogMaterial:get_value(0) == 1 then
+					m_CharacterManager.m_EnemicsMap["Maquinas"]["FogAutomaton"].m_Awake = false
+				end
+			end
 		end
 	end
 end
@@ -68,10 +80,6 @@ function OnStayStairsLower(_TriggerName, _ColliderName)
 			l_Player.m_InteractingCinematic = nil
 			l_Player.m_CameraAnimation = nil
 			l_Player.m_AnimationTime = 1.5
-			
-			if g_Player.m_ActualLevel == "Maquinas" then
-			
-			end
 		end
 	end
 end
@@ -142,7 +150,7 @@ end
 
 function OnEnterActivateBoss(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
-		local l_Enemy = m_CharacterManager.m_Enemics[1]
+		local l_Enemy = m_CharacterManager.m_EnemicsMap["Boss"]["Boss"]
 		l_Enemy.m_PhysXManager:character_controller_teleport("Boss", Vect3f(3.821, -4.0, 20.682))
 		l_Enemy.m_RenderableObject:set_position(l_Enemy.m_PhysXManager:get_character_controler_pos("Boss"))
 		l_Enemy.m_Awake = true
