@@ -207,7 +207,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_Timer = 0.0
 		self.m_TimerRotation = 0.0
 		self.m_OrganKeyCount = 1
-		self.m_OrganKeyOrder = {"A", "G"}
+		self.m_OrganKeyOrder = {"C", "B", "G", "D", "E"}
 		--{"A", "B", "C", "D", "E", "F", "G"}
 		
 		self.m_CurrentAend = nil
