@@ -72,10 +72,7 @@ function R3ValveInput(_Player)
 		local l_Particle = l_Level:get_layer_manager():get_layer("particles"):get_resource("EmisorPipeSteam")
 		
 		l_Particle:set_start(true)
-		l_Particle:set_visible(true)
-		
-		local l_Material = l_Level:get_material_manager():get_resource("FogMaterial")
-		l_Material:set_value(0,0.0)
+		l_Particle:set_visible(true)		
 	end
 end
 
