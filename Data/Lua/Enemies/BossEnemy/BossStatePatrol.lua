@@ -16,7 +16,7 @@ function PatrolUpdateBoss(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
-	if l_Enemy.m_Timer >= 25.0 then
+	if l_Enemy.m_Timer >= 6.6 then
 		if l_Enemy.m_ActualAnimation == 3 then
 			if l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToKill) then
 				l_Enemy.m_State = "attack"
@@ -25,6 +25,7 @@ function PatrolUpdateBoss(args, _ElapsedTime)
 				local l_PointPos = l_NodePoint.node.position
 				local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)
 				
+				utils_log("Distance Boss: "..l_Distance)
 				if l_Distance <= l_Enemy.m_DistanceToChangeNodeWalking then
 					l_Enemy:IncrementePatrolPointIndex()
 					l_Enemy.m_TimerRotation = 0.0

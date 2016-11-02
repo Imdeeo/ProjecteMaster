@@ -27,4 +27,11 @@ g_EnemyCrouchingHeight = 0.4
 g_EnemyStandingOffset = (g_Height*0.5)+g_Radius+CONTACT_OFFSET
 g_EnemyCrouchingOffset = (g_CrouchingHeight*0.5)+g_Radius+CONTACT_OFFSET
 
+--// Boss
+g_EnemyBossHeight = 0.2
+g_EnemyBossRadius = 0.3
+g_EnemyBossCrouchingHeight = 0.4
+g_EnemyBossStandingOffset = (g_Height*0.5)+g_Radius+CONTACT_OFFSET
+g_EnemyBossCrouchingOffset = (g_CrouchingHeight*0.5)+g_Radius+CONTACT_OFFSET
+
 g_Gravity = -9.81

@@ -43,8 +43,11 @@ class 'CEnemy' (CLUAComponent)
 		
 		self.m_StateMachine = StateMachine.create()
 		
-		self.m_PhysXManager:create_character_controller(self.m_Name, g_EnemyHeight, g_EnemyRadius, 0.5, self.m_RenderableObject:get_position(),"FisicasAux", "Enemy")
-		utils_log("CEnemy __init Name: "..self.m_Name)
+		if self.m_Name ~= "Boss" then
+			self.m_PhysXManager:create_character_controller(self.m_Name, g_EnemyHeight, g_EnemyRadius, 0.5, self.m_RenderableObject:get_position(),"FisicasAux", "Enemy")
+		else
+			self.m_PhysXManager:create_character_controller(self.m_Name, g_EnemyBossHeight, g_EnemyBossRadius, 0.5, self.m_RenderableObject:get_position(),"FisicasAux", "Boss")
+		end
 	end
 	
 	function CEnemy.Destroy(self)
