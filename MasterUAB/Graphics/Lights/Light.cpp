@@ -79,12 +79,17 @@ void CLight::Render(CRenderManager *_RenderManager)
 		GetShape(_RenderManager)->RenderIndexed(_RenderManager, l_EffectTechnique, CEffectManager::GetRawData());
 	}
 }
+#endif
 
 CRenderableVertexs* CLight::GetShape(CRenderManager *_RenderManager)
 {
-	return _RenderManager->GetDebugRender()->GetSPhere10();
+	#ifdef _DEBUG
+		return _RenderManager->GetDebugRender()->GetSPhere10();
+	#else
+		return nullptr;
+	#endif
 }
-#endif
+
 
 CLight::TLightType CLight::GetLightTypeByName(const std::string &StrLightType)
 {

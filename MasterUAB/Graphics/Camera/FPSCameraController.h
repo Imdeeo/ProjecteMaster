@@ -28,6 +28,7 @@ public:
 	void Update(float ElapsedTime);
 	void Lock(){ m_Locked = true; }
 	void Unlock(){ m_Locked = false; }
+	inline void UpdatePositionFromTarget();
 	void CopyFromKeyCamera(CCameraInfo* _CameraInfo);
 	void CopyFromCamera(CCameraController* _Camera);
 };
