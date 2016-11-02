@@ -61,12 +61,13 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 	m_FrustumActive = true;
 	m_LevelManager = new CLevelManager();
 	m_MutexManager = new CMutexManager();
+	m_PhysXManager->m_PhysXMutex = &(m_MutexManager->g_PhysXMutex);
+	m_PhysXManager->m_PhysXActorMutex = &(m_MutexManager->g_PhysXActorMutex);
 	m_ActiveConsole = false;
 }
 
 CUABEngine::~CUABEngine(void)
 {
-	CHECKED_DELETE(m_MutexManager);
 	CHECKED_DELETE(m_LevelManager);
 	CHECKED_DELETE(m_TextureManager);
 	CHECKED_DELETE(m_RenderManager);
@@ -82,6 +83,7 @@ CUABEngine::~CUABEngine(void)
 	CHECKED_DELETE(m_SoundManager);
 	CHECKED_DELETE(m_VideoManager);
 	CHECKED_DELETE(m_InputManager);	
+	CHECKED_DELETE(m_MutexManager);
 }
 
 CUABEngine* CUABEngine::m_Instance = nullptr;
