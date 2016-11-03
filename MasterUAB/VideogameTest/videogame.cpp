@@ -116,7 +116,7 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 	}
 
 #define OJUCUIDAO
-#ifndef OJUCUIDAO//_DEBUG
+#ifndef _DEBUG//_DEBUG
 	RECT desktop;
 	// Get a handle to the desktop window
 	const HWND hDesktop = GetDesktopWindow();
