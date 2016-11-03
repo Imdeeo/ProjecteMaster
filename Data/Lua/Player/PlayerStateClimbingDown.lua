@@ -3,7 +3,8 @@ dofile("Data\\Lua\\Player\\Helpers.lua")
 function ClimbingDownFirst(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	l_Owner:blend_cycle(20,1.0,0.3)
+	
+	l_Owner:blend_cycle(20,0.01,0.01)
 	l_Player.m_ClimbingDown = true
 	l_Player.m_Timer = 0.0
 	l_Player.m_AnimationTime = 1.3333333
@@ -17,11 +18,11 @@ function ClimbingDownUpdate(args, _ElapsedTime)
 	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	
 	--// Move player vertically
-	l_PlayerDisplacement.y = l_PlayerDisplacement.y + (_ElapsedTime * (-120.0))
+	local l_Dist = -0.804
+	local l_Speed = l_Dist/l_Player.m_AnimationTime
+	l_PlayerDisplacement.y = l_Speed 
 	
 	--// Move the character controller
-	local l_PreviousControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_PreviousControllerPosition.y = l_PreviousControllerPosition.y - g_StandingOffset
 	l_Player.m_PhysXManager:character_controller_move("player", l_PlayerDisplacement, _ElapsedTime)
 	
 	--// Assign to the character the controller's position
