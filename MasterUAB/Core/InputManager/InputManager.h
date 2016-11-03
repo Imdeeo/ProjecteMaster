@@ -50,7 +50,6 @@ public:
 		Interact,
 		Sing,
 		Pause,
-#ifdef _DEBUG
 		DebugToggleFrustum,
 		DebugSpeedUp,
 		DebugSpeedDown,
@@ -72,7 +71,6 @@ public:
 		DebugMonsterIdle,
 		DebugMonsterHit,
 		DebugStopAllSounds,
-#endif
 	};
 
 	const gainput::DeviceId* m_KeyboardId;
