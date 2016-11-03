@@ -28,8 +28,8 @@ function ClimbingStartUpdate(args, _ElapsedTime)
 		--// Movement
 	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetPosOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
 	local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	l_FaceTargetDisplacement.y = 0.0
-	if l_FaceTargetDisplacement:length() > 0.03 then
+	--l_FaceTargetDisplacement.y = 0.0
+	if l_FaceTargetDisplacement:length() > 0.01 then
 		l_PlayerDisplacement = l_PlayerDisplacement + l_FaceTargetDisplacement:get_normalized(1)
 	end
 	

@@ -25,10 +25,15 @@ function PatrolUpdateBoss(args, _ElapsedTime)
 				local l_PointPos = l_NodePoint.node.position
 				local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)
 				
-				utils_log("Distance Boss: "..l_Distance)
+				--utils_log("Distance Boss: "..l_Distance)
 				if l_Distance <= l_Enemy.m_DistanceToChangeNodeWalking then
-					l_Enemy:IncrementePatrolPointIndex()
-					l_Enemy.m_TimerRotation = 0.0
+					if l_Enemy.m_IndexPathPatrolPoint < l_Enemy.m_TotalPatrolNodes - 1 then
+						l_Enemy:IncrementePatrolPointIndex()
+						l_Enemy.m_TimerRotation = 0.0
+					else
+						l_Enemy.m_State = "Off"
+						l_Enemy.m_Awake = false
+					end
 				else
 					l_Enemy.m_TimerRotation = l_Enemy.m_TimerRotation + _ElapsedTime
 					local l_PercentRotation = l_Enemy.m_TimerRotation / l_Enemy.m_AngularWalkSpeed
@@ -46,6 +51,7 @@ function PatrolUpdateBoss(args, _ElapsedTime)
 			l_Owner:blend_cycle(l_Enemy.m_ActualAnimation,1.0,0.5)
 		end
 	else
+		l_Enemy:EnemyMove(_ElapsedTime)
 		l_Enemy.m_Timer = l_Enemy.m_Timer + _ElapsedTime
 	end
 end
@@ -55,5 +61,10 @@ end
 
 function PatrolToAttackConditionBoss(args)
 	local l_Enemy = args["self"]
-	return l_Enemy.m_State == "alert"
+	return l_Enemy.m_State == "attack"
+end
+
+function PatrolToOffConditionBoss(args)
+	local l_Enemy = args["self"]
+	return l_Enemy.m_State == "Off"
 end

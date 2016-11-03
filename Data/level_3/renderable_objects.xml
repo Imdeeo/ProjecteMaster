@@ -384,7 +384,7 @@
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="PlanchaCinta1_001"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerStairsUpper" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsUpper" is_active="true" core_name="TriggerStairsUpper" position="8.07447 5.66533 28.51275" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerStairsUpper" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsUpper" is_active="true" core_name="TriggerStairsUpper" position="7.57447 5.66533 28.01275" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="PlanchaCinta1_001"/>
 	</instance_mesh>
