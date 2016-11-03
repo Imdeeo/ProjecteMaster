@@ -902,6 +902,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_main_camera", &CCameraControllerManager::GetMainCamera)
 			.def("get_debug_camera", &CCameraControllerManager::GetDebugCamera)
 			.def("update", &CCameraControllerManager::Update)
+			.def("init", &CCameraControllerManager::Init)
 	];
 
 	module(m_LS)[
