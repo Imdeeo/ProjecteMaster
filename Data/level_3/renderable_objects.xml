@@ -380,11 +380,13 @@
 	<instance_mesh name="CablesSalaMaquinas" layer ="solid" core_name="CablesSalaMaquinas" position="13.8474 4.44725 29.6418" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="FisicasCintas" layer ="solid" core_name="FisicasCintas" position="9.67576 -0.0834744 44.6268" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="false"/>
 	<instance_mesh name="InputPipe" layer ="solid" core_name="InputPipe" position="17.25 0.797591 38.817" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<particle_instance name="ValveSteam" layer="particles" type="ValveSteam" position="8.71 0.400000 19.30" next_particle_emission="0.012191" awake="true" awake_timer="4.819887" emission_box_limit="false" emission_box_half_size="0.000000 0.000000 0.000000" visible="true"/>
+	<instance_mesh name="fisica_escaleras" layer ="solid" core_name="CajaEngranaje" position="7.67447 5.46533 28.11275" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="false"/>
 	<instance_mesh name="TriggerStairsLower" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsLower" is_active="true" core_name="TriggerStairsLower" position="7.94245 -0.44437 28.38073" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="PlanchaCinta1_001"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerStairsUpper" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsUpper" is_active="true" core_name="TriggerStairsUpper" position="7.57447 5.66533 28.01275" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerStairsUpper" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsUpper" is_active="true" core_name="TriggerStairsUpper" position="7.47447 5.66533 28.11275" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="PlanchaCinta1_001"/>
 	</instance_mesh>
@@ -400,7 +402,8 @@
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="PuertaTaller"/>
 	</instance_mesh>
-	<!--<instance_mesh name="TriggerWindow" layer="triggers" on_trigger_enter="OnEnterWindow" on_trigger_exit="OnExitWindow" is_active="true" core_name="TriggerWindow" position="7.22032 3.80625 30.98397" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerWindow" layer="triggers" is_active="true" on_trigger_enter="OnEnterWindow" on_trigger_exit="OnExitWindow" core_name="TriggerWindow" position="5.93803 5.04859 32.5193" rotation="0.0 -0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
-	</instance_mesh>-->
+		<interactuable_object actor_name="PlanchaCinta1_001"/>
+	</instance_mesh>
 </renderable_objects>
