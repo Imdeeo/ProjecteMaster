@@ -16,12 +16,14 @@
 		<collision_group name="PlayerStairs"/>
 		<collision_group name="NoCollision"/>
 		<collision_group name="Disabled"/>
+		<collision_group name="Boss"/>
 	</collision_groups>
 	<groups_relations>
 		<group name="Floor">
 			<collides name="Player"/>
 			<collides name="DeadPlayer"/>
 			<collides name="Enemy"/>
+			<collides name="Boss"/>
 		</group>
 		<group name="Objects">
 			<collides name="Player"/>
@@ -35,16 +37,24 @@
 			<collides name="Objects"/>
 			<collides name="Triggers"/>
 			<collides name="Enemy"/>
+			<collides name="Boss"/>
 			<collides name="PlayerStairs"/>
 		</group>
 		<group name="DeadPlayer">
 			<collides name="Floor"/>
 			<collides name="Enemy"/>
+			<collides name="Boss"/>
 			<collides name="PlayerStairs"/>
 		</group>
 		<group name="Enemy">
 			<collides name="Floor"/>
 			<collides name="Objects"/>
+			<collides name="Player"/>
+			<collides name="DeadPlayer"/>
+			<collides name="EnemyStairs"/>
+		</group>
+		<group name="Boss">
+			<collides name="Floor"/>
 			<collides name="Player"/>
 			<collides name="DeadPlayer"/>
 			<collides name="EnemyStairs"/>
@@ -55,6 +65,7 @@
 		</group>
 		<group name="EnemyStairs">
 			<collides name="Enemy"/>
+			<collides name="Boss"/>
 		</group>
 		<group name="NoCollision">
 		</group>
