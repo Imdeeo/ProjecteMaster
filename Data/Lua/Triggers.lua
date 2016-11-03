@@ -30,8 +30,13 @@ function OnEnterStairs(_TriggerName, _ColliderName)
 			
 			if l_Player.m_ActualLevel == "Maquinas" then
 				l_Player.m_ForwardCamera = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
-				l_Player.m_TargetPosOffset = Vect3f(0.45, 0.0, 0.45)
 				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
+				if _TriggerName == "TriggerStairsUpper" then
+					utils_log("YEP")
+					l_Player.m_TargetPosOffset = Vect3f(0.46, 1.55, 0.46)
+				else
+					l_Player.m_TargetPosOffset = Vect3f(0.45, -l_Player.m_Target.y, 0.45)
+				end
 			elseif l_Player.m_ActualLevel == "Boss" then
 				l_Player.m_ForwardCamera = Vect3f(-1.0, 0.0, 0.0)
 				l_Player.m_TargetPosOffset = Vect3f(0.60, 0.0, 0.0)
