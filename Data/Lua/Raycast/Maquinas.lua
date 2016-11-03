@@ -72,7 +72,12 @@ function R3ValveInput(_Player)
 		local l_Particle = l_Level:get_layer_manager():get_layer("particles"):get_resource("EmisorPipeSteam")
 		
 		l_Particle:set_start(true)
-		l_Particle:set_visible(true)		
+		l_Particle:set_visible(true)	
+		
+		
+		l_Particle = l_Level:get_layer_manager():get_layer("particles"):get_resource("ValveSteam")
+		l_Particle:set_awake(false)
+		l_Particle:set_awake_timer(10000)
 		
 		m_CharacterManager.m_EnemicsMap["Maquinas"]["FogAutomaton"].m_Awake = false
 	end

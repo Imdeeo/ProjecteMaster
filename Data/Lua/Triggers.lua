@@ -7,7 +7,9 @@ function OnEnterWindow(_TriggerName, _ColliderName)
 		l_Player.m_AnimationTime = 3.0
 		l_Player.m_TargetSanity = 20.0
 		l_Player.m_IsFocusing = true
-		l_Player.m_TargetOffset = Vect3f(0.571789, 6.51367, 5.9193)
+		l_Player.m_TargetOffset = Vect3f(-2.65267, 5.04859, 32.6297)
+		l_Player.m_PhysXManager:disable_physics(_TriggerName, "FisicasAux")		
+		l_Player.m_PhysXManager:disable_physics("Maquinas_fisica_escaleras", "FisicasAux")
 	end
 end
 
@@ -19,33 +21,38 @@ function OnExitWindow(_TriggerName, _ColliderName)
 end
 
 function OnEnterStairs(_TriggerName, _ColliderName)
+	local l_Player = m_CharacterManager.m_Player[1]
 	if(_ColliderName == "player") then
-		local l_Player = m_CharacterManager.m_Player[1]
-		if not l_Player.m_IsClimbing and l_Player.m_Item == nil then
-			l_Player.m_InteractingCinematic = nil
-			l_Player.m_CameraAnimation = nil
-			l_Player.m_AnimationTime = 0.666667
-			l_Player.m_InteractingAnimation = 18
-			l_Player.m_IsClimbing = true
+		if l_Player.m_ActualLevel == "Maquinas" and _TriggerName == "TriggerStairsUpper" and l_Player.m_Sanity > 50 then
 			
-			if l_Player.m_ActualLevel == "Maquinas" then
-				l_Player.m_ForwardCamera = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
-				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
-				if _TriggerName == "TriggerStairsUpper" then
-					utils_log("YEP")
-					l_Player.m_TargetPosOffset = Vect3f(0.46, 1.55, 0.46)
-				else
-					l_Player.m_TargetPosOffset = Vect3f(0.45, -l_Player.m_Target.y, 0.45)
-				end
-			elseif l_Player.m_ActualLevel == "Boss" then
-				l_Player.m_ForwardCamera = Vect3f(-1.0, 0.0, 0.0)
-				l_Player.m_TargetPosOffset = Vect3f(0.60, 0.0, 0.0)
-				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("EscaleraSalaBoss"):get_position()
-			elseif l_Player.m_ActualLevel == "Pasillo" then
-				l_Player.m_ForwardCamera = Vect3f(1.0, 0.0, 0.0)
-				l_Player.m_TargetPosOffset = Vect3f(-0.60, 0.0, 0.0)
-				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("EscaleraEscape"):get_position()
-			end				
+		else
+			
+			if not l_Player.m_IsClimbing and l_Player.m_Item == nil then
+				l_Player.m_InteractingCinematic = nil
+				l_Player.m_CameraAnimation = nil
+				l_Player.m_AnimationTime = 0.666667
+				l_Player.m_InteractingAnimation = 18
+				l_Player.m_IsClimbing = true
+				
+				if l_Player.m_ActualLevel == "Maquinas" then
+					l_Player.m_ForwardCamera = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
+					l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
+					if _TriggerName == "TriggerStairsUpper" then
+						utils_log("YEP")
+						l_Player.m_TargetPosOffset = Vect3f(0.46, 1.55, 0.46)
+					else
+						l_Player.m_TargetPosOffset = Vect3f(0.45, -l_Player.m_Target.y, 0.45)
+					end
+				elseif l_Player.m_ActualLevel == "Boss" then
+					l_Player.m_ForwardCamera = Vect3f(-1.0, 0.0, 0.0)
+					l_Player.m_TargetPosOffset = Vect3f(0.60, 0.0, 0.0)
+					l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("EscaleraSalaBoss"):get_position()
+				elseif l_Player.m_ActualLevel == "Pasillo" then
+					l_Player.m_ForwardCamera = Vect3f(1.0, 0.0, 0.0)
+					l_Player.m_TargetPosOffset = Vect3f(-0.60, 0.0, 0.0)
+					l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("EscaleraEscape"):get_position()
+				end				
+			end
 		end
 	end
 end
