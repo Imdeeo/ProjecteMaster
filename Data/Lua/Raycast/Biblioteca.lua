@@ -151,6 +151,7 @@ function R2Artifact(_Player)
 		_Player.m_BiasPos = 0.03
 		_Player.m_PhysXManager:disable_physics("TriggerArtifact", "FisicasAux")
 		_Player.m_InteractionSoundSpeaker = "ArtifactStand"
+		g_Engine:get_level_manager():load_level("Maquinas",false,false,false)
 	end
 end
 
@@ -175,6 +176,8 @@ function R2ArtifactDoor(_Player)
 		_Player.m_Teleport = true
 		_Player.m_IsPuzzle = false
 		_Player.m_InteractionSoundSpeaker = "ArtifactDoor"
+		g_Engine:get_level_manager():get_level("Maquinas"):set_visible(true)
+		g_Engine:get_level_manager():choose_scene_command_level("Maquinas")
 	end
 end
 

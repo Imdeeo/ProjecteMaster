@@ -2,9 +2,9 @@ dofile("Data\\Lua\\Utils\\GVars.lua")
 
 g_Engine = CUABEngine.get_instance()
 
-function load_level(name,joinable)
+function load_level(name,joinable,visible,update)
 	local l_LevelManager = g_Engine:get_level_manager()	
-	l_LevelManager:load_level(name,joinable)
+	l_LevelManager:load_level(name,joinable,visible,update)
 end
 
 function unload_level(name)
