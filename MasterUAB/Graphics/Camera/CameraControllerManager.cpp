@@ -27,6 +27,7 @@ CCameraControllerManager::~CCameraControllerManager()
 
 void CCameraControllerManager::ChooseMainCamera(std::string _CurrentCamera)
 {
+	UtilsLog("ChoosMainCamera");
 	m_MainCamera = GetResource(_CurrentCamera);
 	m_MainCamera->SetCamera(&m_CurrentCamera);
 	UABEngine.GetRenderManager()->SetCurrentCamera(m_CurrentCamera);
@@ -90,7 +91,6 @@ bool CCameraControllerManager::Load(const std::string &FileName, const std::stri
 	{
 		return false;
 	}
-	Init();
 	return true;
 }
 
