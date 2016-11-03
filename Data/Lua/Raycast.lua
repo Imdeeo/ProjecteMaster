@@ -12,7 +12,6 @@ function CheckRaycast(_Player, _Camera, _Owner)
 	local l_LayerManager = g_Engine:get_level_manager():get_level(_Player.m_ActualLevel):get_layer_manager()
 
 	if didHit then
-		utils_log("Raycast DidHit: ".._Player.m_RaycastData.actor_name)
 		local l_Trigger = l_LayerManager:get_layer("triggers"):get_resource(_Player.m_RaycastData.actor_name)
 		if l_LayerManager:get_layer("interactuable_objects"):get_resource(l_Trigger:get_interactuable_object_name()) == nil then
 			local l_InteractuableObject = l_LayerManager:get_layer("solid"):get_resource(l_Trigger:get_interactuable_object_name())

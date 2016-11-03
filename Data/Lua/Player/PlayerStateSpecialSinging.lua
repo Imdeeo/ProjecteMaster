@@ -34,7 +34,6 @@ function SpecialSingingStateUpdate(args, _ElapsedTime)
 			
 		if l_Player.m_Timer > 9.333 then
 			if l_Player.m_Timer < 13.333 then 
-				local l_Level = g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel)
 				local l_Value = math.min(1,(l_Player.m_Timer-9.333)/4.0)	
 				local l_gui_position = CGUIPosition(0, 0, 1280, 720, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)		
 				g_Engine:get_gui_manager():do_panel("fundidoNegroCantando", "fundidoNegro", l_gui_position, 0.0, l_Value)
@@ -46,7 +45,6 @@ function SpecialSingingStateUpdate(args, _ElapsedTime)
 					g_Engine:get_level_manager():get_level("Biblioteca"):set_visible(false)
 				else
 					g_Engine:get_level_manager():get_level("Biblioteca"):set_visible(true)
-					local l_Level = g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel)
 					local l_Value = 1 - math.min(1,(l_Player.m_Timer-13.333)/2)	
 					local l_gui_position = CGUIPosition(0, 0, 1280, 720, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)		
 					g_Engine:get_gui_manager():do_panel("fundidoNegroCantando", "fundidoNegro", l_gui_position, 0.0, l_Value)
@@ -70,7 +68,7 @@ function SpecialSingingStateEnd(args)
 	l_Player.m_CameraController:unlock()
 	l_Owner:remove_action(l_Owner:get_actual_action_animation())
 	l_Player:ClearCamera()
-	l_LevelManager:get_level("Player"):get_layer_manager():get_layer("solid"):get_resource("Boss"):set_visible(true)
+	--l_LevelManager:get_level("Player"):get_layer_manager():get_layer("solid"):get_resource("Boss"):set_visible(true)
 end
 
 function SpecialSingingStateToIdleCondition(args)
