@@ -1,10 +1,9 @@
 function SpecialSingingStateFirst(args)
+	utils_log("SpecialSingingStateEnd")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_SingOnce = false
 	l_Player.m_Timer = 0.0
-	utils_log("first sing special")
-	l_Player.m_TargetPosOffset = l_Owner:get_position()
 	l_Owner:set_position(Vect3f(-0.493306, -0.000000, 4.336713))
 	l_Player.m_VideoPlaying = false
 	--g_Engine:get_level_manager():unload_level("Recibidor")
@@ -54,11 +53,13 @@ end
 
 function SpecialSingingStateEnd(args)
 	local l_Player = args["self"]
-	utils_log("end1")
+	utils_log("SpecialSingingStateEnd")
 	local l_Owner = args["owner"]
 	l_Player.m_SingOnce = false
 	l_Player.m_VideoPlaying = false
-	l_Owner:set_position(l_Player.m_TargetPosOffset)
+	local l_NewControllerPosition = l_Player.m_PhysXManager:get_character_controler_pos("player")
+	l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
+	l_Owner:set_position(l_NewControllerPosition)
 	l_Player.m_AnimationTime = 0
 	l_Player.m_CameraController:unlock()
 	l_Owner:remove_action(l_Owner:get_actual_action_animation())
