@@ -2,7 +2,7 @@ function JumpingFirst(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
 	--l_Owner:blend_cycle(0,1.0,0.1) --Está idle, pero debería haber animación de salto?
-	l_Player.m_SoundManager:play_event(l_Player.m_JumpSoundEvent, l_Player.m_RenderableObject)
+	l_Player.m_SoundManager:play_event(g_PlayerJumpSoundEvent, l_Owner)
 end
 
 function JumpingUpdate(args, _ElapsedTime)
