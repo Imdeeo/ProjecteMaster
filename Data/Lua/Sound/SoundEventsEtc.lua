@@ -76,6 +76,7 @@ g_CloseDrawerSoundEvent = SoundEvent()
 g_CloseDrawerSoundEvent.event_name = "Drawer_Close"
 g_ForceDrawerSoundEvent = SoundEvent()
 g_ForceDrawerSoundEvent.event_name = "Drawer_Force"
+
 g_BookSwitchSoundEvent = SoundEvent()
 g_BookSwitchSoundEvent.event_name = "Book_Switch"
 g_ProjectorSoundEvent = SoundEvent()
@@ -88,10 +89,18 @@ g_ArtifactUseSoundEvent = SoundEvent()
 g_ArtifactUseSoundEvent.event_name = "Artifact_Use"
 g_EnterLibrarySondEvent = SoundEvent()
 g_EnterLibrarySondEvent.event_name = "Enter_Library"
+
 g_DoorSlam1Event = SoundEvent()
 g_DoorSlam1Event.event_name = "Door_Slam_1"
 g_DoorSlam2Event = SoundEvent()
 g_DoorSlam2Event.event_name = "Door_Slam_2"
+g_ValvePickupSoundEvent = SoundEvent()
+g_ValvePickupSoundEvent.event_name = "Valve_Pick"
+g_ValveDoorSoundEvent = SoundEvent()
+g_ValveDoorSoundEvent.event_name = "Valve_Door_Open"
+g_ValvePlaceSoundEvent = SoundEvent()
+g_ValvePlaceSoundEvent.event_name = "Valve_Place"
+
 
 -- Organ
 g_OrganNoteSwitch = SoundSwitch()
