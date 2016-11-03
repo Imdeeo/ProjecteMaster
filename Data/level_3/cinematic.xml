@@ -31,15 +31,20 @@
 			<cinematic_object_key_frame time="3.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 		<cinematic_object resource="PomoPuertaTaller" layer="solid">
-			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="1.13333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="1.3" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.106962 -0.994263" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="1.5" pos="-0.0519465 0.0 -0.321914" rotation="0.00826219 -0.112579 0.0727253 -0.990943" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="1.66667" pos="-0.331835 0.0 -0.855359" rotation="0.00897351 -0.317484 0.0267902 -0.947843" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="1.83333" pos="-0.5672 0.0 -1.08104" rotation="0.0 -0.422618 0.0 -0.906308" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.0" pos="-0.5672 0.0 -1.08104" rotation="0.0 -0.422618 0.0 -0.906308" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="2.83333" pos="-0.5672 0.0 -1.08104" rotation="0.0 -0.422618 0.0 -0.906308" scale="1.0 1.0 1.0"/>
-			<cinematic_object_key_frame time="3.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="-0.0751525 0.0994547 0.0149108 -0.992088" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.13333" pos="0.0 0.0 0.0" rotation="-0.0751525 0.0994547 0.0149108 -0.992088" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.3" pos="-0.000727133 9.58158e-005 -0.000552649" rotation="0.127547 0.101109 0.0212488 -0.986437" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.4" pos="-0.0640327 0.00224438 -0.00842163" rotation="0.185676 0.0800629 0.0407578 -0.978495" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.5" pos="-0.344984 0.00740617 -0.0149239" rotation="0.155513 -0.00812779 0.0149718 -0.987687" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.6" pos="-0.726988 0.000866348 0.0643393" rotation="0.0910895 -0.134661 -0.0106157 -0.986639" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.66667" pos="-0.961906 -0.0105265 0.160982" rotation="-0.00308418 -0.212861 -0.00273548 -0.977074" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.83333" pos="-1.24688 -0.0364638 0.356956" rotation="-9.89907e-005 -0.326949 0.0117353 -0.944969" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.83333" pos="-1.24662 -0.0361519 0.354904" rotation="0.0009903 -0.326923 0.0148827 -0.944933" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.86667" pos="-1.14145 -0.0243983 0.268404" rotation="-0.00394903 -0.298022 0.000542898 -0.954551" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.9" pos="-0.848831 -0.00418914 0.108918" rotation="-0.00288973 -0.177692 0.00611979 -0.984063" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.93333" pos="-0.470753 0.00708062 -0.000703722" rotation="-0.00395672 -0.0389402 -0.000573668 -0.999234" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.96667" pos="-0.141027 0.00465685 -0.0166881" rotation="-0.00384924 0.0569134 -0.00155266 -0.998371" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.0" pos="0.00196656 4.28782e-005 -0.000467903" rotation="-0.00434205 0.0992398 0.00392322 -0.995046" scale="1.0 1.0 1.0"/>
 		</cinematic_object>
 	</cinematic>
 	<cinematic name="Cinta3" duration="6.66667" cycle="true">
