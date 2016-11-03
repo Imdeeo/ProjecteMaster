@@ -43,7 +43,7 @@ function mainLua()
 	m_timerPause = 0
 	m_iniciando = true 	
 	
-	l_LevelManager:load_level("Player",true)	
+	l_LevelManager:load_level("Player",true,true,true)	
 	l_LevelManager:choose_scene_command_level("Player")
 	g_Player:SetActualLevel("Player")	
 	
@@ -304,7 +304,7 @@ function luaGui(_ElapsedTime)
 			local l_PlayButton = gui_manager:do_button("Play", "play_button", gui_position)
 			if l_PlayButton then
 				local l_LevelManager = g_Engine:get_level_manager()
-				l_LevelManager:load_level("Recibidor", true)
+				l_LevelManager:load_level("Recibidor", true,true,true)
 				l_LevelManager:choose_scene_command_level("Recibidor")
 				g_Player:SetActualLevel("Recibidor")
 				
@@ -314,9 +314,7 @@ function luaGui(_ElapsedTime)
 				
 				g_Player.m_CameraController:unlock()
 				
-				l_LevelManager:load_level("Biblioteca", true)
-				l_LevelManager:get_level("Biblioteca"):set_visible(false)
-				l_LevelManager:get_level("Biblioteca"):set_has_to_update(false)
+				l_LevelManager:load_level("Biblioteca", true,false,false)
 				
 				m_menu = false
 				g_Engine:set_pause(false)

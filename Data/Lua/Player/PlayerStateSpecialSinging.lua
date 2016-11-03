@@ -9,12 +9,7 @@ function SpecialSingingStateFirst(args)
 	
 	--g_Engine:get_level_manager():load_level("Boss",false)
 	local l_LevelManager = g_Engine:get_level_manager()
-	l_LevelManager:load_level("Boss",false)
-	l_LevelManager:change_object_level("Recibidor","Biblioteca","solid","Puertaanimada")
-	l_LevelManager:change_object_level("Recibidor","Biblioteca","solid","Pomoanimado")
-	l_LevelManager:choose_scene_command_level("Biblioteca")
-	g_Player:SetActualLevel("Biblioteca")	
-	l_LevelManager:unload_level("Recibidor")
+	l_LevelManager:load_level("Boss",false,true,false)
 end
 
 function SpecialSingingStateUpdate(args, _ElapsedTime)

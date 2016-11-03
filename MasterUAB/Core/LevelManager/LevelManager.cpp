@@ -54,10 +54,12 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 	}
 }
 
-void CLevelManager::LoadLevelThread(const std::string &_LevelName)
+void CLevelManager::LoadLevelThread(const std::string &_LevelName, bool _Visible, bool _HasToUpdate)
 {
 	CLevel * l_Level = new CLevel(_LevelName);
 	l_Level->Load();
+	l_Level->SetVisible(_Visible);
+	l_Level->SetHasToUpdate(_HasToUpdate);
 	m_LevelsInfo[_LevelName].m_Loaded = true;
 	std::vector<CRenderableObjectsManager*> l_LayerVector = l_Level->GetLayerManager()->GetResourcesVector();
 	for (size_t i = 0; i < l_LayerVector.size(); i++)
@@ -74,7 +76,7 @@ void CLevelManager::LoadLevelThread(const std::string &_LevelName)
 	}
 }
 
-void CLevelManager::LoadLevel(const std::string &_LevelName,bool _Joinable)
+void CLevelManager::LoadLevel(const std::string &_LevelName, bool _Joinable, bool _Visible, bool _HasToUpdate)
 {
 	if (m_LevelsInfo[_LevelName].m_Loaded)
 	{
@@ -82,7 +84,7 @@ void CLevelManager::LoadLevel(const std::string &_LevelName,bool _Joinable)
 	}
 	else
 	{
-		std::thread t(&CLevelManager::LoadLevelThread,this,_LevelName);
+		std::thread t(&CLevelManager::LoadLevelThread,this,_LevelName,_Visible,_HasToUpdate);
 		if (_Joinable)
 		{
 			t.join();
@@ -96,8 +98,10 @@ void CLevelManager::LoadLevel(const std::string &_LevelName,bool _Joinable)
 
 void CLevelManager::ReloadLevel(const std::string &_LevelName,bool joinable)
 {
+	bool l_Visible = *(m_ResourcesMap[_LevelName].m_Value->IsVisible());
+	bool l_HasToUpdate = *(m_ResourcesMap[_LevelName].m_Value->HasToUpdate());
 	UnloadLevel(_LevelName);
-	LoadLevel(_LevelName,joinable);
+	LoadLevel(_LevelName,joinable,l_Visible,l_HasToUpdate);
 }
 
 void CLevelManager::UnloadLevel(const std::string &_LevelName)

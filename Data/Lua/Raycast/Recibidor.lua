@@ -43,7 +43,6 @@ function R1Door(_Player)
 		_Player.m_SingOnce = true
 		_Player.m_AnimationTime = 16.6
 		local l_LevelManager = g_Engine:get_level_manager()
-		l_LevelManager:get_level("Recibidor"):set_has_to_update(false)
 		l_LevelManager:get_level("Biblioteca"):set_visible(true)		
 	end
 end

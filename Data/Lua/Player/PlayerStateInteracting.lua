@@ -87,11 +87,37 @@ function InteractingUpdate(args, _ElapsedTime)
 	end
 end
 
+function ChangeLevel(args)
+	local l_Player = args["self"]
+	local l_LevelManager = CUABEngine.get_instance():get_level_manager()
+	if l_Player.m_ActualLevel == "Recibidor" then
+		l_LevelManager:change_object_level("Recibidor","Biblioteca","solid","Puertaanimada")
+		l_LevelManager:change_object_level("Recibidor","Biblioteca","solid","Pomoanimado")
+		l_LevelManager:choose_scene_command_level("Biblioteca")
+		g_Player:SetActualLevel("Biblioteca")	
+		l_LevelManager:unload_level("Recibidor")
+	elseif l_Player.m_ActualLevel == "Biblioteca" then
+		l_LevelManager:change_object_level("Biblioteca","Maquinas","solid","PuertaSalaMaquinas")
+		l_LevelManager:change_object_level("Biblioteca","Maquinas","solid","ValvulaPuertaSalaMaquinas")
+		g_Player:SetActualLevel("Maquinas")	
+		l_LevelManager:get_level("Maquinas"):set_has_to_update(true)
+		l_LevelManager:unload_level("Biblioteca")
+	elseif l_Player.m_ActualLevel == "Maquinas" then
+		l_LevelManager:load_level("Pasillo",false,true,false)
+		l_LevelManager:change_object_level("Maquinas","Boss","solid","PuertaTaller")
+		l_LevelManager:change_object_level("Maquinas","Boss","solid","PomoPuertaTaller")
+		l_LevelManager:choose_scene_command_level("Boss")
+		g_Player:SetActualLevel("Boss")	
+		l_LevelManager:get_level("Boss"):set_has_to_update(true)
+		l_LevelManager:unload_level("Maquinas")
+	end
+end
+
 function InteractingEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
+	
 	if l_Player.m_Teleport then
-		l_Player.m_Teleport = false
 		local l_AnimatedCam = g_Engine:get_camera_controller_manager():get_resource(l_Player.m_CameraAnimation)
 		local l_Pos = l_AnimatedCam:get_position() - Vect3f(0,g_TotalHeight,0)
 		l_Player.m_PhysXManager:character_controller_teleport("player", l_Pos)
@@ -118,6 +144,11 @@ function InteractingEnd(args)
 		l_Owner:remove_action(l_Owner:get_actual_action_animation())
 		l_Player:ClearCamera()
 	end
+	if l_Player.m_Teleport then
+		l_Player.m_Teleport = false
+		ChangeLevel(args)
+	end
+	
 end
 
 function InteractingToIdleCondition(args)

@@ -94,6 +94,7 @@ function R3ValveDoor(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
+		g_Engine:get_level_manager():get_level("Boss"):set_has_to_update(false)
 		-- Play Sound
 	end
 end
