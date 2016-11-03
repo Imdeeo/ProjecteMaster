@@ -70,7 +70,7 @@ public:
 		DebugMonsterRun,
 		DebugMonsterIdle,
 		DebugMonsterHit,
-		DebugStopAllSounds,
+		//DebugStopAllSounds,
 	};
 
 	const gainput::DeviceId* m_KeyboardId;
