@@ -1,5 +1,9 @@
 g_SoundManager = CUABEngine.get_instance():get_sound_manager()
 
+function PlayEnterLibrarySound(_Speaker)
+	g_SoundManager:play_event(g_EnterLibrarySondEvent, _Speaker)
+end
+
 function PlayOpenDrawerSound(_Speaker)
 	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 0.6, _Speaker)
 	g_SoundManager:play_event(g_OpenDrawerSoundEvent, _Speaker)
@@ -52,7 +56,7 @@ end
 
 -- The order must correspond to the numbers of animations.
 g_InteractionSounds = {
-	nil,
+	PlayEnterLibrarySound,
 	PlayOpenDrawerSound,
 	PlayCloseDrawerSound,
 	PlayForceDrawerSound,

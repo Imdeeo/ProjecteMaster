@@ -5,6 +5,11 @@ function MovingFirst(args)
 		l_Owner:blend_cycle(0,1.0,0.1)
 	elseif l_Player.m_CurrentAnimation == "run" then
 		l_Owner:blend_cycle(27,1.0,0.1)
+		local l_SoundSync = CSoundSynchronizer(l_Player, l_Owner, g_PlayerStepSoundEvent)
+		l_SoundSync.m_RepeatsPerCycle = 4
+		l_SoundSync.m_Offset = 0.0
+		l_SoundSync:SetAnimationDuration(1.5)
+		l_Player.m_SoundSync = l_SoundSync
 	else
 		l_Owner:blend_cycle(0,1.0,0.1)
 		l_Player.m_CurrentAnimation = "move"
@@ -33,6 +38,10 @@ function MovingUpdate(args, _ElapsedTime)
 	--// Detect if player is moving backwards, walking, or running.
 	if l_Player.m_InputManager:is_action_active("MoveBackward") and not l_Player.m_InputManager:is_action_active("Run") then
 		l_Speed = l_Speed * 0.5
+	end
+
+	if l_Player.m_CurrentAnimation == "run" then
+		l_Player.m_SoundSync:Sync(_ElapsedTime)
 	end
 	
 	l_Player.m_LastAnimation = l_Player.m_CurrentAnimation
@@ -70,9 +79,9 @@ function MovingUpdate(args, _ElapsedTime)
         l_Player.m_Velocity.y = 0
     end
 
-	--// After moving a distance of one step, play step sound event
+	--// If walking, play step sound event after moving a distance of one step
 	l_Player.m_DistanceFromLastStep = l_Player.m_DistanceFromLastStep + l_Displacement:length()
-	if l_Player.m_DistanceFromLastStep > l_Player.m_StepLength then
+	if l_Player.m_CurrentAnimation == "move" and l_Player.m_DistanceFromLastStep > l_Player.m_StepLength then
 		l_Player.m_DistanceFromLastStep = 0
 		l_Player.m_SoundManager:play_event(g_PlayerStepSoundEvent, l_Owner)
 	end
