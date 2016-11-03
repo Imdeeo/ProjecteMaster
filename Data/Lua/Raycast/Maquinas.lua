@@ -80,22 +80,21 @@ end
 
 function R3ValveDoor(_Player)
 	_Player.m_TargetYaw = 0.0
-	_Player.m_ForwardCamera = Vect3f(-0.970853, -0.1, 0.0)
-	_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
-	_Player.m_TargetPosOffset = Vect3f(0.4, 0.0, -0.55)
+	_Player.m_TargetPosOffset = Vect3f(0.601, 0.0, -1.397)
+	_Player.m_ForwardCamera = Vect3f(-0.866025, -0.5, 0.0)
+	_Player.m_UpCamera = Vect3f(0.5, 0.866026, 0.0)
 	l_Target = GetTriggerPos("TriggerValveDoor", l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.0) then
-		_Player.m_Target = l_Target
+		_Player.m_Target = Vect3f(-1.06923, -0.691453, 40.8816)
 		_Player.m_InteractingAnimation = 26
 		_Player.m_InteractingCinematic = "CrossValveDoor"
 		_Player.m_CameraAnimation = "CrossValveDoor"
 		_Player.m_ItemDropTime = -1.0
-		_Player.m_CurrentAend = "CrossValveDoor"
+		_Player.m_CurrentAend = nil
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
-		_Player.m_Teleport = true
 		_Player.m_IsPuzzle = false
-		g_Engine:get_level_manager():get_level("Boss"):set_has_to_update(false)
+		_Player.m_Teleport = true
 		-- Play Sound
 	end
 end
