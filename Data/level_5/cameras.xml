@@ -1,1 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<cameras>
+	<camera name="JaheemBossActivation" total_time="6.0" type="key" undefined="true" pos="-8.9407e-007 -4.48348 1.8" filename="Data\level_5\cameras\JaheemBossActivation.xml"/>
+	<camera name="JaheemDiesBoss" total_time="10.0" type="key" undefined="true" pos="0.0 0.0 1.8" filename="Data\level_5\cameras\JaheemDiesBoss.xml"/>
+</cameras>

@@ -30,8 +30,13 @@ function OnEnterStairs(_TriggerName, _ColliderName)
 			
 			if l_Player.m_ActualLevel == "Maquinas" then
 				l_Player.m_ForwardCamera = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
-				l_Player.m_TargetPosOffset = Vect3f(0.45, 0.0, 0.45)
 				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
+				if _TriggerName == "TriggerStairsUpper" then
+					utils_log("YEP")
+					l_Player.m_TargetPosOffset = Vect3f(0.46, 1.55, 0.46)
+				else
+					l_Player.m_TargetPosOffset = Vect3f(0.45, -l_Player.m_Target.y, 0.45)
+				end
 			elseif l_Player.m_ActualLevel == "Boss" then
 				l_Player.m_ForwardCamera = Vect3f(-1.0, 0.0, 0.0)
 				l_Player.m_TargetPosOffset = Vect3f(0.60, 0.0, 0.0)
@@ -150,8 +155,8 @@ end
 
 function OnEnterActivateBoss(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
-		local l_Enemy = m_CharacterManager.m_EnemicsMap["Boss"]["Boss"]
-		l_Enemy.m_PhysXManager:character_controller_teleport("Boss", Vect3f(3.821, -4.0, 20.682))
+		local l_Enemy = m_CharacterManager.m_EnemicsMap["Pasillo"]["Boss"]
+		l_Enemy.m_PhysXManager:character_controller_teleport("Boss", Vect3f(2.821, -5.896054, 20.682))
 		l_Enemy.m_RenderableObject:set_position(l_Enemy.m_PhysXManager:get_character_controler_pos("Boss"))
 		l_Enemy.m_Awake = true
 	end

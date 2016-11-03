@@ -623,6 +623,29 @@ class 'CPlayer' (CLUAComponent)
 		self.m_FinalCameraRotation = quat_to_turn
 	end
 	
+	function CPlayer:CalculateCameraPositionRotation2(_CameraName, _DesiredPosition)
+		local l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
+		l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
+		local l_CameraInfoPosLength = l_AnimatedCamera:get_camera_key(0):get_camera_info():get_eye()
+		l_CameraInfoPosLength.y = 0
+		l_CameraInfoPosLength = l_CameraInfoPosLength:length()
+		
+		local l_AuxPos = self.m_PhysXManager:get_character_controler_pos(self.m_Name)
+		local l_auxTarget = l_AuxPos - _DesiredPosition
+		l_auxTarget.y = 0
+		self.m_Target = l_auxTarget:get_normalized(1) * l_CameraInfoPosLength + _DesiredPosition
+		
+		self.m_InitialCameraRotation = self.m_CameraController:get_rotation()
+		
+		local l_CameraDirection = (_DesiredPosition - l_AuxPos)
+		l_CameraDirection.y = 0
+		l_CameraDirection = l_CameraDirection:get_normalized(1)
+						
+		local quat_to_turn = Quatf()
+		quat_to_turn:set_from_fwd_up(l_CameraDirection * -1, Vect3f(0,1,0))
+		self.m_FinalCameraRotation = quat_to_turn
+	end
+	
 	function CPlayer:SetCamera(_CameraName)
 		local l_CameraManager = g_Engine:get_camera_controller_manager()
 		l_CameraManager:choose_main_camera(_CameraName)
