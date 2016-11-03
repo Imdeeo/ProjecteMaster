@@ -55,6 +55,7 @@ function R3ValveInput(_Player)
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		_Player.m_FogDown= true
+		_Player.m_BiasPos = 0.02
 		-- Play Sound
 		R3ValveIsPlaced = true
 		_Player.m_CinematicManager:get_resource("ResolveValve"):play()
