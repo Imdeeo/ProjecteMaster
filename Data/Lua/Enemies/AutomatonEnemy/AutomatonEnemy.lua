@@ -1,3 +1,4 @@
+dofile("Data\\Lua\\Sound\\CSoundSynchronizer.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateOff.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStateIdle.lua")
 dofile("Data\\Lua\\Enemies\\AutomatonEnemy\\AutomatonStatePatrol.lua")
@@ -48,7 +49,7 @@ class 'CAutomatonEnemy' (CEnemy)
 		self.m_TimerRotation = 0.0
 		self.m_TimerRotation2 = 0.0
 		self.m_alert_timer = 0
-		
+
 		self:SetAutomatonStateMachine()
 		self.m_StateMachine:start()
 	end

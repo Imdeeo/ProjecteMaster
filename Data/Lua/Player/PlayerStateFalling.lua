@@ -23,6 +23,9 @@ function FallingUpdate(args, _ElapsedTime)
 	--// Save speed in last update so we can create acceleration
 	local l_Displacement = l_NewControllerPosition-l_PreviousControllerPosition
 	l_Player.m_Velocity = l_Displacement/_ElapsedTime
+	if l_Player.m_Velocity.y < -0.001 then
+		l_Player.m_ImpactVelocity = l_Player.m_Velocity
+	end
 	
 	--// Rotate player to match camera
 	l_RotationXZ = Quatf()
@@ -70,6 +73,11 @@ end
 function FallingEnd(args)
 	local l_Owner = args["owner"]
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.1)
+	local l_Player = args["self"]
+	if l_Player.m_ImpactVelocity.y < -0.3 then
+		--l_Player.m_SoundManager:play_event(l_Player.m_LandSoundEvent, l_Owner)
+	end
+	l_Player.m_ImpactVelocity = Vect3f(0.0, 0.0, 0.0)
 end
 
 function ANYToFallingCondition(args)

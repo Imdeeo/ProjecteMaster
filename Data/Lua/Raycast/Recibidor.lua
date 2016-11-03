@@ -7,6 +7,19 @@ R1TrayL2IsClosed = true
 
 local l_LevelId = "Recibidor"
 
+function RegisterSpeakersRecibidor()
+	local l_Engine = CUABEngine.get_instance()
+	local l_SoundManager = l_Engine:get_sound_manager()
+	local l_LevelManager = l_Engine:get_level_manager()
+	local l_Level = l_LevelManager:get_level("Recibidor")
+	local l_LayerManager = l_Level:get_layer_manager()
+	local l_SolidLayer = l_LayerManager:get_layer("solid")
+
+	
+	l_SoundManager:register_speaker(l_SolidLayer:get_resource("CajonComodaDerecha1"))
+	l_SoundManager:register_speaker(l_SolidLayer:get_resource("CajonComodaDerecha2"))
+end
+
 function R1Door(_Player)
 	_Player.m_TargetPosOffset = Vect3f(-1.377, 0.0, -0.713147)
 	_Player.m_ForwardCamera = Vect3f(0.0, -0.5, 0.86)
@@ -74,13 +87,18 @@ function R1TrayR1(_Player) --This contains the key
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
-		m_CharacterManager.m_EnemicsMap["Recibidor"]["CagedAutomatonLeft"].m_Awake = true
-		m_CharacterManager.m_EnemicsMap["Recibidor"]["CagedAutomatonRight"].m_Awake = true
+		g_TimerManager:ExecuteLater(3.5, function()
+			m_CharacterManager.m_EnemicsMap["Recibidor"]["CagedAutomatonLeft"].m_Awake = true
+		end)
+		g_TimerManager:ExecuteLater(4.0, function()
+			m_CharacterManager.m_EnemicsMap["Recibidor"]["CagedAutomatonRight"].m_Awake = true
+		end)
 		_Player.m_PhysXManager:disable_physics("TriggerTrayR1", "FisicasAux")
 		
 		local l_LevelManager = g_Engine:get_level_manager()
 		l_LevelManager:get_level(l_LevelId):get_cinematic_manager():get_resource("recibidor_engranajes"):play()
 	end
+	_Player.m_InteractionSoundSpeaker = "CajonComodaDerecha1"
 end
 
 function R1TrayR2Open(_Player)
@@ -127,6 +145,7 @@ function R1TrayR2(_Player)
 	else
 		R1TrayR2Close(_Player)
 	end
+	_Player.m_InteractionSoundSpeaker = "CajonComodaDerecha2"
 end
 
 function R1TrayL1Open(_Player)
@@ -174,6 +193,7 @@ function R1TrayL1(_Player)
 	else
 		R1TrayL1Close(_Player)
 	end
+	_Player.m_InteractionSoundSpeaker = "CajonComodaDerecha2"
 end
 
 function R1TrayL2Open(_Player)
@@ -225,6 +245,7 @@ function R1TrayL2(_Player) --This contains the ankh
 	else
 		R1TrayL2Close(_Player)
 	end
+	_Player.m_InteractionSoundSpeaker = "CajonComodaDerecha2"
 end
 
 function R1Ankh(_Player)
