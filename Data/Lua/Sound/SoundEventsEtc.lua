@@ -86,6 +86,12 @@ g_ArtifactPickupSoundEvent = SoundEvent()
 g_ArtifactPickupSoundEvent.event_name = "Artifact_Pick"
 g_ArtifactUseSoundEvent = SoundEvent()
 g_ArtifactUseSoundEvent.event_name = "Artifact_Use"
+g_EnterLibrarySondEvent = SoundEvent()
+g_EnterLibrarySondEvent.event_name = "Enter_Library"
+g_DoorSlam1Event = SoundEvent()
+g_DoorSlam1Event.event_name = "Door_Slam_1"
+g_DoorSlam2Event = SoundEvent()
+g_DoorSlam2Event.event_name = "Door_Slam_2"
 
 -- Organ
 g_OrganNoteSwitch = SoundSwitch()
@@ -140,6 +146,43 @@ g_AutomatonStartPatrolEvent = SoundEvent()
 g_AutomatonStartPatrolEvent.event_name = "Automaton_Start_Patrol"
 g_AutomatonStopPatrolEvent = SoundEvent()
 g_AutomatonStopPatrolEvent.event_name = "Automaton_Stop_Patrol"
+
+-- Jaheem
+g_DondeNosLlevanVoiceEvent = SoundEvent()
+g_DondeNosLlevanVoiceEvent.event_name = "Jaheem_Donde_Nos_Llevan"
+g_MeLargoVoiceEvent = SoundEvent()
+g_MeLargoVoiceEvent.event_name = "Jaheem_Me_Largo"
+g_NoNoNoVoiceEvent = SoundEvent()
+g_NoNoNoVoiceEvent.event_name = "Jaheem_No_No_No"
+g_PorFavorNoVoiceEvent = SoundEvent()
+g_PorFavorNoVoiceEvent.event_name = "Jaheem_Por_Favor_No"
+g_PorQueHacesEstoVoiceEvent = SoundEvent()
+g_PorQueHacesEstoVoiceEvent.event_name = "Jaheem_Por_Que_Haces_Esto"
+g_QueDemoniosVoiceEvent = SoundEvent()
+g_QueDemoniosVoiceEvent.event_name = "Jaheem_Que_Demonios"
+g_QueEraEsoVoiceEvent = SoundEvent()
+g_QueEraEsoVoiceEvent.event_name = "Jaheem_Que_Era_Eso"
+g_ReaccionAlHijoVoiceEvent = SoundEvent()
+g_ReaccionAlHijoVoiceEvent.event_name = "Jaheem_Reaccion_Al_Hijo"
+g_RespiracionesVoiceEvent = SoundEvent()
+g_RespiracionesVoiceEvent.event_name = "Jaheem_Respiraciones"
+g_RisaVoiceEvent = SoundEvent()
+g_RisaVoiceEvent.event_name = "Jaheem_Risa"
+g_TengoQueSalirVoiceEvent = SoundEvent()
+g_TengoQueSalirVoiceEvent.event_name = "Jaheem_Tengo_Que_Salir"
+g_GritoVoiceEvent = SoundEvent()
+g_GritoVoiceEvent.event_name = "Jaheem_Grito"
+
+
+-- Ysmael
+g_MuertePorCorduraVoiceEvent = SoundEvent()
+g_MuertePorCorduraVoiceEvent.event_name = "Ysmael_Muerte_Cordura"
+g_MuerteViolentaVoiceEvent = SoundEvent()
+g_MuerteViolentaCorduraVoiceEvent.event_name = "Ysmael_Muerte_Violenta"
+g_MonologoVoiceEvent = SoundEvent()
+g_MonologoVoiceEvent.event_name = "Ysmael_Monologo_Inicial"
+g_HijoVoiceEvent = SoundEvent()
+g_HijoVoiceEvent.event_name = "Ysmael_Hijo"
 
 --[[
 g_AutomatonStartBeatingSoundEvent = SoundEvent()

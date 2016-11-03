@@ -153,7 +153,7 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_DistanceFromLastStep = 0.0
 		self.m_ImpactVelocity = Vect3f(0.0, 0.0, 0.0)
-		self.m_StepLength = 0.8
+		self.m_StepLength = 1.0
 		self.m_InteractionSoundSpeaker = nil
 
 		self.m_Velocity = Vect3f(0.0, 0.0, 0.0)

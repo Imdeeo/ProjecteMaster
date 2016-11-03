@@ -25,9 +25,10 @@ class 'CSoundSynchronizer'
 		if not self.m_DurationChecked then
 			self.m_AdjustmentTimer = self.m_AdjustmentTimer - _ElapsedTime
 			if self.m_AdjustmentTimer < 0 then
-				utils_log("SoundSynchronizer adjusted")
+				local l_AnimationDuration = self.m_Owner:get_animation_duration()
 				self.m_DurationChecked = true
-				self:SetAnimationDuration(self.m_Owner:get_animation_duration())
+				self:SetAnimationDuration(l_AnimationDuration)
+				utils_log("SoundSynchronizer adjusted, animation duration: "..l_AnimationDuration)
 			end
 		end
 
