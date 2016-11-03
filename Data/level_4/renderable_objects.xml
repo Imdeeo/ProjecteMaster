@@ -87,8 +87,4 @@
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="GrilleteBOSS_Cuello1"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerActivateBoss" layer ="triggers" core_name="TriggerActivateBoss" on_trigger_enter="OnEnterActivateBoss" on_trigger_exit="OnExitActivateBoss" is_active="true" position="8.663 -5.557 20.682" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
-		<active_actor actor_name="player"/>
-		<interactuable_object actor_name="EscaleraSalaBoss"/>
-	</instance_mesh>
 </renderable_objects>

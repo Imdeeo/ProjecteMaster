@@ -150,8 +150,8 @@ end
 
 function OnEnterActivateBoss(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
-		local l_Enemy = m_CharacterManager.m_EnemicsMap["Boss"]["Boss"]
-		l_Enemy.m_PhysXManager:character_controller_teleport("Boss", Vect3f(3.821, -4.0, 20.682))
+		local l_Enemy = m_CharacterManager.m_EnemicsMap["Pasillo"]["Boss"]
+		l_Enemy.m_PhysXManager:character_controller_teleport("Boss", Vect3f(2.821, -5.896054, 20.682))
 		l_Enemy.m_RenderableObject:set_position(l_Enemy.m_PhysXManager:get_character_controler_pos("Boss"))
 		l_Enemy.m_Awake = true
 	end

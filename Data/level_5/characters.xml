@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <characters>
+	<enemy name="Boss" renderable_object="Boss" layer="solid" type="Boss" awake="false" distance_kill="3.0" distance_change_node_walking="3.0" walk_speed="6.0" angular_walk_speed="12.0" patrol="true" patrol_name="path_boss">
+		<param distance="5.0" time="3.0" sanity_amount="-5.0"/>
+		<param distance="3.0" time="2.0" sanity_amount="-5.0"/>
+		<param distance="2.0" time="1.0" sanity_amount="-5.0"/>
+		<param distance="0.5" time="0.5" sanity_amount="0.0"/>
+	</enemy>
 </characters>

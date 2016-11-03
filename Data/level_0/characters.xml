@@ -4,7 +4,7 @@
 		<velocity type="run" start="50.0" end="25.0"/>
 		<velocity type="walk" start="24.0" end="0.0"/>
 		<stain type="manchasCordura1" start="50.0" end="0.0" renderable_object="manchas"/>
-		<fov type="lineal" start="50.0" end="0.0" start_value="1.13" end_value="1.75" default_value="1.13"/>
+		<fov type="lineal" start="50.0" end="0.0" start_value="1.134" end_value="1.75" default_value="1.134"/>
 		<vignetting type="lineal" start="50.0" end="0.0" default_value="0.1" material="NoiseAndVignettingMaterial"/>
 		<vortex type="lineal" start="75.0" end="0.0" default_value="0.0" material="VortexMaterial"/>
 	</player>

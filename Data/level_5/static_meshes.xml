@@ -100,6 +100,8 @@
 	<static_mesh name="TuboPasillo010" filename="Data\level_5\Meshes\TuboPasillo010.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
 	<static_mesh name="LamparasTecho012" filename="Data\level_5\Meshes\LamparasTecho012.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
 	<static_mesh name="LamparasTecho013" filename="Data\level_5\Meshes\LamparasTecho013.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="FisicasHueco3" filename="Data\level_5\Meshes\FisicasHueco3.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerStairsUpperEscape" filename="Data\level_5\Meshes\TriggerStairsUpperEscape.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerHole01" filename="Data\level_5\Meshes\TriggerHole01.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerActivateBoss" filename="Data\level_5\Meshes\TriggerActivateBoss.mesh" physx_mesh_directory="Data\level_4\Meshes\PhysXMeshes"/>
 </static_meshes>
