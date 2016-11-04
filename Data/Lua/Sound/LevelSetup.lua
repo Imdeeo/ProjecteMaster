@@ -15,9 +15,9 @@ l_LevelLoadFunctions['Biblioteca'] = function(_SoundManager)
 end
 
 l_LevelLoadFunctions['Maquinas'] = function(_SoundManager)
-	_SoundManager:play_event(g_ConveyorBeltSoundEvent, "SpeakerBeltLeft")
-	_SoundManager:play_event(g_ConveyorBeltSoundEvent, "SpeakerBeltCenter")
-	_SoundManager:play_event(g_ConveyorBeltSoundEvent, "SpeakerBeltRight")
+	_SoundManager:play_event(g_BeltSoundEvent, "SpeakerBeltRight")
+	_SoundManager:play_event(g_BeltSoundEvent, "SpeakerBeltCenter")
+	_SoundManager:play_event(g_BeltSoundEvent, "SpeakerBeltLeft")
 	_SoundManager:play_event(g_CauldronSoundEvent, "SpeakerCauldronTop")
 	_SoundManager:play_event(g_CauldronSoundEvent, "SpeakerCauldronBot")
 	_SoundManager:play_event(g_SteamSoundEvent, "SpeakerInputPipe")

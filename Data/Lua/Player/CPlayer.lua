@@ -271,6 +271,7 @@ class 'CPlayer' (CLUAComponent)
 		g_Engine:get_level_manager():set_actual_level(_LevelId)
 		self:SetActualLevelAux(_LevelId)
 		local l_SoundManager = g_Engine:get_sound_manager()
+		utils_log(_LevelId)
 		l_SoundManager:broadcast_state(g_LevelStates[_LevelId])
 		SetupLevelSounds(_LevelId, l_SoundManager)
 	end
