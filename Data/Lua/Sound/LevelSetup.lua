@@ -1,5 +1,9 @@
 local l_LevelLoadFunctions = {}
 
+l_LevelLoadFunctions['Player'] = function(_SoundManager)
+
+end
+
 l_LevelLoadFunctions['Recibidor'] = function(_SoundManager)
 
 end

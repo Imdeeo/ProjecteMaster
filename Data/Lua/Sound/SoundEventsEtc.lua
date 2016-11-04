@@ -18,6 +18,9 @@ g_PitchRTPC.rtpc_name = "pitch_difference"
 -- Level
 g_LevelStateGroup = SoundState()
 g_LevelStateGroup.state_name = "Level"
+g_PlayerState = SoundStateValue()
+g_PlayerState.sound_state = g_LevelStateGroup
+g_PlayerState.value_name = "Player"
 g_RecibidorState = SoundStateValue()
 g_RecibidorState.sound_state = g_LevelStateGroup
 g_RecibidorState.value_name = "Recibidor"
@@ -35,6 +38,7 @@ g_BossState.sound_state = g_LevelStateGroup
 g_BossState.value_name = "SalaBoss"
 
 g_LevelStates = {}
+g_LevelStates["Player"] = g_PlayerState
 g_LevelStates["Recibidor"] = g_RecibidorState
 g_LevelStates["Biblioteca"] = g_BibliotecaState
 g_LevelStates["Maquinas"] = g_MaquinasState
@@ -181,6 +185,8 @@ g_CylinderSoundEvent = SoundEvent()
 g_CylinderSoundEvent.event_name = "Cylinder_Start"
 g_SteamSoundEvent = SoundEvent()
 g_SteamSoundEvent.event_name = "Steam_Start"
+g_SteamOnceSoundEvent = SoundEvent()
+g_SteamOnceSoundEvent.event_name = "Steam_Once"
 g_JailSoundEvent = SoundEvent()
 g_JailSoundEvent.event_name = "Jail_Start"
 g_CaveSoundEvent = SoundEvent()
