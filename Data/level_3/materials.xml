@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <materials>
+	<material name="Cuerpo" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_3\Textures\El Hijo_Compo.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\El Hijo_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
+	 </material>
+	 <material name="Patas" renderable_object_technique="bump">
+		<texture type="diffuse" filename="Data\level_3\Textures\PataCompo.dds"/>
+		<texture type="normal" filename="Data\level_3\Textures\Pata_NRM.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
+	 </material>
+	 <material name="Pelo" renderable_object_technique="lights">
+		<texture type="diffuse" filename="Data\level_3\Textures\PataCompo.dds"/>
+		<parameter type="float" name="active" value="1.0"/>
+		<parameter type="float" name="exposure" value="0.80" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="specular_power" value="10.0" description="min=0.0 max=100.0 step=0.1"/>
+		<parameter type="float" name="specular_factor" value="0.2" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="float" name="reflection" value="1.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="ssr_reflection" value="0.0" description="min=0.0 max=1.0 step=0.001"/>
+		<parameter type="float" name="bump_factor" value="1.0" description="min=0.0 max=2.0 step=0.05"/>
+		<parameter type="float" name="metalness" value="0.0" description="min=0.0 max=1.0 step=0.01"/>
+		<parameter type="color" name="metal_color" value="1.0 1.0 1.0 0.0" description=""/>
+	 </material>
 	<material name="20 - Default" renderable_object_technique="skybox">
 		<texture type="reflection" filename="Data\level_0\Textures\KGSkyBox2.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>

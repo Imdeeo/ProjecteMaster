@@ -35,9 +35,9 @@
 	<instance_mesh name="ParedesSalaBoss001" layer ="solid" core_name="ParedesSalaBoss001" position="3.68392 12.1213 26.4703" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="ParedesSalaBoss002" layer ="solid" core_name="ParedesSalaBoss002" position="-5.80333 12.1324 46.1996" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="ParedesSalaBoss003" layer ="solid" core_name="ParedesSalaBoss003" position="-14.9429 12.1184 41.6408" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="TubosGrandesSalaBoss_001" layer ="solid" core_name="TubosGrandesSalaBoss_001" position="-9.62564 6.06572 22.5733" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="TubosGrandesSalaBoss_002" layer ="solid" core_name="TubosGrandesSalaBoss_002" position="-14.2548 2.92025 22.3093" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="TubosGrandesSalaBoss_003" layer ="solid" core_name="TubosGrandesSalaBoss_003" position="-14.5533 -7.37407 53.6837" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="TubosGrandesSalaBoss_001" layer ="solid" core_name="TubosGrandesSalaBoss_001" position="-9.62564 6.06572 22.5733" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="false"/>
+	<instance_mesh name="TubosGrandesSalaBoss_002" layer ="solid" core_name="TubosGrandesSalaBoss_002" position="-14.2548 2.92025 22.3093" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="false"/>
+	<instance_mesh name="TubosGrandesSalaBoss_003" layer ="solid" core_name="TubosGrandesSalaBoss_003" position="-14.5533 -7.37407 53.6837" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="false"/>
 	<instance_mesh name="TubosPequesSalaBoss001" layer ="solid" core_name="TubosPequesSalaBoss001" position="-5.848 2.83346 50.8768" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TubosPequesSalaBoss002" layer ="solid" core_name="TubosPequesSalaBoss002" position="-1.21007 9.78454 41.7069" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TubosPequesSalaBoss003" layer ="solid" core_name="TubosPequesSalaBoss003" position="-0.494919 10.3288 41.249" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
