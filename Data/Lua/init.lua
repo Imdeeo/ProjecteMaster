@@ -69,7 +69,6 @@ function mainLua()
 	l_LevelManager:load_level("Maquinas", true, false, false)
 	--l_LevelManager:choose_scene_command_level("Maquinas")
 	--g_Player:SetActualLevel("Maquinas")
-	--l_SoundManager:broadcast_state(g_LevelStates["Maquinas"])
 	
 	l_LevelManager:load_level("Boss", true, false, false)
 	--l_LevelManager:choose_scene_command_level("Boss")

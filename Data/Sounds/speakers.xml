@@ -13,7 +13,7 @@
 	<!-- Old Biblioteca -->
 	<Speaker name="Fireplace" position="11.62 0.75 25.5" orientation="0.0 0.0 -1.0" /> 
 	<Speaker name="Projector" position="16.0 1.2 9.95" orientation="0.0 0.0 1.0" /> 
-	<Speaker name="Book" position="15.57 1.53 26.31" orientation="0.0 0.0 -1.0" /> 
+	<Speaker name="SpeakerBook" position="15.57 1.53 26.31" orientation="0.0 0.0 -1.0" /> 
 	<Speaker name="ClueSheet" position="11.87 1.27 15.26" orientation="-1.0 0.0 0.0" /> 
 	<Speaker name="OrganPipes" position="0.11 6.0 14.44" orientation="0.0 0.0 -1.0" /> 
 	<Speaker name="OrganPipes2" position="3.61 6.0 14.44" orientation="0.0 0.0 -1.0" /> 
