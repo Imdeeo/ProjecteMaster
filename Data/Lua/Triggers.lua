@@ -52,7 +52,6 @@ function OnEnterStairs(_TriggerName, _ColliderName)
 				l_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
 				l_Player.m_ForwardCamera = Vect3f(1.0, 0.0, 0.0)
 				l_Player.m_TargetPosOffset = Vect3f(-0.5, 0.0, 0.0)
-				l_Player.m_Finish = true
 			end				
 		end
 	end
@@ -172,5 +171,12 @@ function OnExitActivateBoss(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		g_Engine:get_level_manager():choose_scene_command_level("Pasillo")
 		g_Player:SetActualLevel("Pasillo")
+		l_LevelManager:get_level(l_Player.m_ActualLevel):get_cinematic_manager():get_resource("engranajes_pasillo"):play()
+	end
+end
+
+function OnFinish(_TriggerName, _ColliderName)
+	if(_ColliderName == "player") then
+		g_Player.m_Finish = true
 	end
 end

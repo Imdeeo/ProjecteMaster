@@ -175,8 +175,6 @@ function R2ArtifactDoor(_Player)
 		_Player.m_Teleport = true
 		_Player.m_IsPuzzle = false
 		_Player.m_InteractionSoundSpeaker = "ArtifactDoor"
-		g_Engine:get_level_manager():get_level("Maquinas"):set_visible(true)
-		g_Engine:get_level_manager():choose_scene_command_level("Maquinas")
 	end
 end
 

@@ -478,7 +478,7 @@ class 'CPlayer' (CLUAComponent)
 		ClimbingUpState:set_do_end_function(ClimbingUpEnd)
 		ClimbingUpState:add_condition(ClimbingUpToClimbingIdleCondition, "ClimbingIdle")
 		ClimbingUpState:add_condition(ANYToDeadCondition, "Dead")
-		ClimbingUpState:add_condition(ClimbingToFinishCondition, "Finish")
+		ClimbingUpState:add_condition(ClimbingUpToFinishCondition, "Finish")
 		
 		ClimbingDownState = State.create(ClimbingDownUpdate)
 		ClimbingDownState:set_do_first_function(ClimbingDownFirst)
