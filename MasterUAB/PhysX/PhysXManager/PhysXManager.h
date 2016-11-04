@@ -66,6 +66,7 @@ public:
 
 	std::mutex *m_PhysXMutex;
 	std::mutex *m_PhysXActorMutex;
+	std::mutex *m_PhysXSceneMutex;
 
 	static CPhysXManager* CreatePhysXManager();
 	virtual ~CPhysXManager(){ Destroy(); }

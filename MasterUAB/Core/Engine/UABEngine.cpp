@@ -64,6 +64,7 @@ CUABEngine::CUABEngine(void) : m_RandomEngine(rnd()), m_UnitDistribution(0.0f, 1
 	m_MutexManager = new CMutexManager();
 	m_PhysXManager->m_PhysXMutex = &(m_MutexManager->g_PhysXMutex);
 	m_PhysXManager->m_PhysXActorMutex = &(m_MutexManager->g_PhysXActorMutex);
+	m_PhysXManager->m_PhysXSceneMutex= &(m_MutexManager->g_PhysXSceneMutex);
 	m_ActiveConsole = false;
 }
 

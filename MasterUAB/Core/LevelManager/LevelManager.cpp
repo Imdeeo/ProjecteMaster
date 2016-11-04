@@ -60,6 +60,7 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 		std::string l_LevelName = l_Element->GetPszProperty("name");
 		TLevelInfo l_LevelInfo;
 		l_LevelInfo.m_Loaded = false;
+		l_LevelInfo.m_Loading = false;
 		l_LevelInfo.m_ID = l_Element->GetPszProperty("id");
 		l_LevelInfo.m_Directory = l_Element->GetPszProperty("directory");
 		l_LevelInfo.m_LevelInitLuaFunction = l_Element->GetPszProperty("init_function");
@@ -70,11 +71,13 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 
 void CLevelManager::LoadLevelThread(const std::string &_LevelName, bool _Visible, bool _HasToUpdate)
 {
+	m_LevelsInfo[_LevelName].m_Loading = true;
 	CLevel * l_Level = new CLevel(_LevelName);
 	l_Level->Load();
 	l_Level->SetVisible(_Visible);
 	l_Level->SetHasToUpdate(_HasToUpdate);
 	m_LevelsInfo[_LevelName].m_Loaded = true;
+	m_LevelsInfo[_LevelName].m_Loading = false;
 	std::vector<CRenderableObjectsManager*> l_LayerVector = l_Level->GetLayerManager()->GetResourcesVector();
 	for (size_t i = 0; i < l_LayerVector.size(); i++)
 	{
@@ -92,11 +95,7 @@ void CLevelManager::LoadLevelThread(const std::string &_LevelName, bool _Visible
 
 void CLevelManager::LoadLevel(const std::string &_LevelName, bool _Joinable, bool _Visible, bool _HasToUpdate)
 {
-	if (m_LevelsInfo[_LevelName].m_Loaded)
-	{
-		ReloadLevel(_LevelName,_Joinable);
-	}
-	else
+	if (!m_LevelsInfo[_LevelName].m_Loaded && !m_LevelsInfo[_LevelName].m_Loading)
 	{
 		std::thread t(&CLevelManager::LoadLevelThread,this,_LevelName,_Visible,_HasToUpdate);
 		if (_Joinable)
