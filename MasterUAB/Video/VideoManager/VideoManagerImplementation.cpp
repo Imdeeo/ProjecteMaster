@@ -57,7 +57,7 @@ void CVideoManagerImplementation::Update(float _ElapsedTime)
 		char logstr[256] = "";
 		sprintf_s(logstr, "TimePosition: %f, Duration: %f, AutoRestart: %s", m_ActualClip->getTimePosition(), m_ActualClip->getDuration(), m_ActualClip->getAutoRestart()?"true":"false");
 		UtilsLog(logstr);
-		if (m_ActualClip->getTimePosition() >= m_ActualClip->getDuration() && !m_ActualClip->getAutoRestart())
+		if (m_ActualClip->getTimePosition() >= m_ActualClip->getDuration())
 		{			
 			UABEngine.SetVideoPause(false);
 			m_ActualClip = nullptr;

@@ -104,6 +104,7 @@ function R3ValveDoor(_Player)
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
 		_Player.m_Teleport = true
+		_Player.m_BiasPos=0.04
 		-- Play Sound
 	end
 end
