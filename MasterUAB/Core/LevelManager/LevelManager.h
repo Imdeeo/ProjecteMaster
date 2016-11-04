@@ -15,6 +15,7 @@ typedef struct SLevelInfo
 {
 	std::string m_ID;
 	bool m_Loaded;
+	bool m_Loading;
 	std::string	m_Directory;
 	std::string m_LevelInitLuaFunction;
 } TLevelInfo;
