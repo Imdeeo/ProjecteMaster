@@ -42,7 +42,7 @@ function R1Door(_Player)
 		_Player.m_Teleport = true
 		_Player.m_SingOnce = true
 		_Player.m_AnimationTime = 16.6
-		_Player.m_InteractionSoundSpeaker = "LibraryDoor"
+		_Player.m_InteractionSoundSpeaker = "SpeakerDoor"
 	end
 end
 
