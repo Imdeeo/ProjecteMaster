@@ -13,6 +13,9 @@ public:
 	std::mutex g_DeviceContextMutex;
 	std::mutex g_PhysXMutex;
 	std::mutex g_PhysXActorMutex;
+	std::mutex g_PhysXSceneMutex;
+
+	std::mutex g_LuaMutex;
 };
 
 #endif //MUTEX_MANAGER_H

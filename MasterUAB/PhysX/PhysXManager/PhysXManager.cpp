@@ -590,7 +590,9 @@ void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shap
 	_body->attachShape(*_shape);
 
 	_body->userData = (void*)AddActor(_name, _position, _orientation, _body);
+	UABEngine.GetMutexManager()->g_PhysXSceneMutex.lock();
 	m_Scene->addActor(*_body);
+	UABEngine.GetMutexManager()->g_PhysXSceneMutex.unlock();
 }
 
 void CPhysXManager::RegisterActor(const std::string _name, physx::PxShape* _shape, physx::PxRigidBody* _body, Vect3f _position, Quatf _orientation, float _density, std::string _group, bool _isKinematic)
@@ -698,7 +700,9 @@ void CPhysXManager::CreateStaticConvexMesh(const std::string _name, const std::s
 			L_PutGroupToShape(l_Shape, m_Groups[_group]);
 
 			l_Body->userData = (void*)AddActor(l_ActorName, _position, _orientation, l_Body);
+			UABEngine.GetMutexManager()->g_PhysXSceneMutex.lock();
 			m_Scene->addActor(*l_Body);
+			UABEngine.GetMutexManager()->g_PhysXSceneMutex.unlock();
 		}
 	}
 }
@@ -731,7 +735,9 @@ void CPhysXManager::CreateDynamicConvexMesh(const std::string _name, const std::
 			L_PutGroupToShape(l_Shape, m_Groups[_group]);
 
 			l_Body->userData = (void*)AddActor(l_ActorName, _position, _orientation, l_Body);
+			UABEngine.GetMutexManager()->g_PhysXSceneMutex.lock();
 			m_Scene->addActor(*l_Body);
+			UABEngine.GetMutexManager()->g_PhysXSceneMutex.unlock();
 		}
 	}
 }
@@ -766,7 +772,9 @@ void CPhysXManager::CreateStaticTriangleMesh(const std::string _name, const std:
 			L_PutGroupToShape(l_Shape, m_Groups[_group]);
 
 			l_Body->userData = (void*)AddActor(l_ActorName, _position, _orientation, l_Body);
+			UABEngine.GetMutexManager()->g_PhysXSceneMutex.lock();
 			m_Scene->addActor(*l_Body);
+			UABEngine.GetMutexManager()->g_PhysXSceneMutex.unlock();
 		}
 	}
 }
@@ -823,7 +831,9 @@ void CPhysXManager::CreateTrigger(const std::string _name, physx::PxShape* shape
 	m_OnTriggerExitLuaFunctions[index] = _OnTriggerExitLuaFunction;
 	m_ActiveActors[index] = _ActiveActors;
 
+	UABEngine.GetMutexManager()->g_PhysXSceneMutex.lock();
 	m_Scene->addActor(*l_Body);
+	UABEngine.GetMutexManager()->g_PhysXSceneMutex.unlock();
 
 	shape->release();
 }
@@ -881,7 +891,9 @@ void CPhysXManager::CreateStaticPlane(const std::string _name, Vect3f _PlaneNorm
 	groundPlane->userData = (void*)AddActor(_name, _position, _orientation, groundPlane);
 	shape->userData = groundPlane->userData;
 
+	UABEngine.GetMutexManager()->g_PhysXSceneMutex.lock();
 	m_Scene->addActor(*groundPlane);
+	UABEngine.GetMutexManager()->g_PhysXSceneMutex.unlock();
 }
 
 void CPhysXManager::CreateDinamicShape(const std::string _name, const physx::PxGeometry &_geometry, const std::string _Material, Vect3f _position, Quatf _orientation,
@@ -935,7 +947,9 @@ void CPhysXManager::CreateRigidStatic(const std::string &Name, const Vect3f Size
 	l_Body->attachShape(*l_Shape);
 	size_t index=m_Actors.size();
 	l_Body->userData = (void*)index;
+	UABEngine.GetMutexManager()->g_PhysXSceneMutex.lock();
 	m_Scene->addActor(*l_Body);
+	UABEngine.GetMutexManager()->g_PhysXSceneMutex.unlock();
 	l_Shape->release();
 	AddActor(Name, Position, Orientation, l_Body);
 
@@ -972,11 +986,13 @@ void CPhysXManager::Update(float _dt)
 	if(m_LeftoverSeconds >= PHYSX_UPDATE_STEP)
 	{
 		//m_PhysXMutex->lock();
+		UABEngine.GetMutexManager()->g_PhysXSceneMutex.lock();
 		m_Scene->simulate((physx::PxReal)PHYSX_UPDATE_STEP);
 		m_Scene->fetchResults(true);
 
 		physx::PxU32 numActiveTransform;
 		const physx::PxActiveTransform* activeTransforms = m_Scene->getActiveTransforms(numActiveTransform);
+		UABEngine.GetMutexManager()->g_PhysXSceneMutex.unlock();
 
 		for(physx::PxU32 i = 0;i<numActiveTransform; i++)
 		{
@@ -1118,11 +1134,41 @@ void CPhysXManager::RemoveActor(const std::string _ActorName)
 		{
 			m_Actors[l_index]->release();
 		}
+		if (m_TriggerIsActive.find(l_index) != m_TriggerIsActive.end())
+		{
+			m_TriggerIsActive.erase(l_index);
+			m_TriggerActivated.erase(l_index);
+			m_OnTriggerEnterLuaFunctions.erase(l_index);
+			m_OnTriggerStayLuaFunctions.erase(l_index);
+			m_OnTriggerExitLuaFunctions.erase(l_index);
+			m_ActiveActors.erase(l_index);
+		}
 		if (m_Actors.size() > 1)
 		{
 			if (l_index < m_Actors.size() - 1)
 			{
-				m_Actors[l_index] = m_Actors[m_Actors.size() - 1];
+				size_t l_LastIndex = m_Actors.size() - 1;
+				if (m_TriggerIsActive.find(l_LastIndex) != m_TriggerIsActive.end())
+				{
+					m_TriggerIsActive[l_index] = m_TriggerIsActive[l_LastIndex];
+					m_TriggerIsActive.erase(l_LastIndex);
+
+					m_TriggerActivated[l_index] = m_TriggerActivated[l_LastIndex];
+					m_TriggerActivated.erase(l_LastIndex);
+
+					m_OnTriggerEnterLuaFunctions[l_index] = m_OnTriggerEnterLuaFunctions[l_LastIndex];
+					m_OnTriggerEnterLuaFunctions.erase(l_LastIndex);
+
+					m_OnTriggerStayLuaFunctions[l_index] = m_OnTriggerStayLuaFunctions[l_LastIndex];
+					m_OnTriggerStayLuaFunctions.erase(l_LastIndex);
+
+					m_OnTriggerExitLuaFunctions[l_index] = m_OnTriggerExitLuaFunctions[l_LastIndex];
+					m_OnTriggerExitLuaFunctions.erase(l_LastIndex);
+
+					m_ActiveActors[l_index] = m_ActiveActors[l_LastIndex];
+					m_ActiveActors.erase(l_LastIndex);
+				}
+				m_Actors[l_index] = m_Actors[l_LastIndex];
 				m_Actors.resize(m_Actors.size() - 1);
 
 				m_ActorNames[l_index] = m_ActorNames[m_Actors.size()];

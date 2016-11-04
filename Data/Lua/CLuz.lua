@@ -16,6 +16,10 @@
 		self.m_Timer = 0
 	end
 	
+	function CEnemy.Destroy(self)
+		utils_log("\n\n\nDelete Luz Name: "..self.m_Name)
+	end
+	
 	function CLuz:Update(_ElapsedTime)
 		self.m_Timer = self.m_Timer + _ElapsedTime
 		if self.m_Timer >= 0.08 then 
