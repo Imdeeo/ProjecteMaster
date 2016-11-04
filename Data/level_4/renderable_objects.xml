@@ -64,7 +64,7 @@
 	<instance_mesh name="LamparaEsferica_001" layer ="solid" core_name="LamparaEsferica_001" position="8.0498 -4.35548 24.0097" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LamparaEsferica_002" layer ="solid" core_name="LamparaEsferica_002" position="8.0498 -4.49829 17.3808" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LamparaEsferica_003" layer ="solid" core_name="LamparaEsferica_003" position="-9.50177 -3.4957 29.428" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="EscaleraSalaBoss" layer ="solid" core_name="EscaleraSalaBoss" position="-9.23288 -2.005 40.0454" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="EscaleraSalaBoss" layer ="solid" core_name="EscaleraSalaBoss" position="-9.23288 -1.680 40.0454" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="LamparaEsferica_ConPalo_004" layer ="solid" core_name="LamparaEsferica_ConPalo_004" position="-9.2062 1.35382 40.0456" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="Barandilla001" layer ="solid" core_name="Barandilla001" position="-5.3026 -0.164724 41.0981" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="Barandilla002" layer ="solid" core_name="Barandilla002" position="-5.29832 -0.164724 39.0445" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>

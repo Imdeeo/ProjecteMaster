@@ -259,11 +259,11 @@ class 'CPlayer' (CLUAComponent)
 	function CPlayer:ModifySanity(_amount)
 		self.m_Sanity = math.max(math.min(self.m_Sanity + _amount, self.m_MaxSanity),0)
 		if self.m_Sanity <= 0 then
-			utils_log("ESTAS MUERTO!!!")
+			--utils_log("ESTAS MUERTO!!!")
 			g_Engine:set_pause(true)
 			m_retry = true
 			m_menu = true
-			utils_log("ACTIVANDO MENU!!!")
+			--utils_log("ACTIVANDO MENU!!!")
 		end
 	end
 	
@@ -683,8 +683,8 @@ class 'CPlayer' (CLUAComponent)
 		local l_Pos = self.m_PhysXManager:get_character_controler_pos("player")
 		l_Pos.y = l_Pos.y - g_TotalHeight
 		local ret = false
-		utils_log("Difference: "..l_Difference)
-		utils_log("Distance: "..(l_Pos - _Target):length().." (".._Distance.." needed)")
+		--utils_log("Difference: "..l_Difference)
+		--utils_log("Distance: "..(l_Pos - _Target):length().." (".._Distance.." needed)")
 		if (l_Difference > (g_PI-_Radians)) and (l_Difference < (g_PI+_Radians)) and ((l_Pos - _Target):length() < _Distance) then
 			ret = true
 		end
