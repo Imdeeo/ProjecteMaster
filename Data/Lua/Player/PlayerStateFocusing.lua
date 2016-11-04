@@ -7,6 +7,7 @@ function FocusingFirst(args)
 	l_Manager:choose_main_camera(l_Player.m_CameraAnimation)
 	l_Player.m_Timer = 0.0
 	l_Player.m_StartSanity = l_Player.m_Sanity
+	g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_layer("solid"):get_resource("ElHijo"):set_visible(true)
 end
 
 function FocusingUpdate(args, _ElapsedTime)
@@ -89,6 +90,7 @@ function FocusingEnd(args)
 	l_CameraControllerManager:choose_main_camera(l_Player.m_CameraControllerName)
 	l_Player.m_TargetOffset = Vect3f(0.0, 0.0, 0.0)
 	l_Player.m_IsFocusing = false
+	g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_layer("solid"):get_resource("ElHijo"):set_visible(false)
 end
 
 function ANYToFocusingCondition(args)

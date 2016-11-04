@@ -85,6 +85,9 @@ function R3ValveInput(_Player)
 end
 
 function R3ValveDoor(_Player)
+	local l_LevelManager = CUABEngine.get_instance():get_level_manager()
+	l_LevelManager:get_level("Boss"):set_has_to_update(true)
+	l_LevelManager:get_level("Boss"):set_visible(true)
 	_Player.m_TargetYaw = 0.0
 	_Player.m_TargetPosOffset = Vect3f(0.601, 0.0, -1.397)
 	_Player.m_ForwardCamera = Vect3f(-0.866025, -0.5, 0.0)
