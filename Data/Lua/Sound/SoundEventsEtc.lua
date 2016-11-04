@@ -53,6 +53,8 @@ g_PlayerLandSoundEvent = SoundEvent()
 g_PlayerLandSoundEvent.event_name = "Land_Player"
 g_PlayerStepSoundEvent = SoundEvent()
 g_PlayerStepSoundEvent.event_name = "Step_Player"
+g_PlayerRunSoundEvent = SoundEvent()
+g_PlayerRunSoundEvent.event_name = "Run_Player"
 g_SingSoundEvent = SoundEvent()
 g_SingSoundEvent.event_name = "Song_Start"
 g_StopSingingSoundEvent = SoundEvent()
@@ -67,15 +69,23 @@ g_SingingActionState.value_name = "Singing"
 g_ExplorationActionState = SoundStateValue()
 g_ExplorationActionState.sound_state = g_ActionStateGroup
 g_ExplorationActionState.value_name = "Exploraton"
+g_ClimbStartSoundEvent = SoundEvent()
+g_ClimbStartSoundEvent.event_name = "Climb_Start"
+g_ClimbLoopSoundEvent = SoundEvent()
+g_ClimbLoopSoundEvent.event_name = "Climb_Loop"
+g_ClimbEndSoundEvent = SoundEvent()
+g_ClimbEndSoundEvent.event_name = "Climb_End"
 
 -- Interaction
 g_InteractionSoundEvents = {}
+-- Recibidor
 g_OpenDrawerSoundEvent = SoundEvent()
 g_OpenDrawerSoundEvent.event_name = "Drawer_Open"
 g_CloseDrawerSoundEvent = SoundEvent()
 g_CloseDrawerSoundEvent.event_name = "Drawer_Close"
 g_ForceDrawerSoundEvent = SoundEvent()
 g_ForceDrawerSoundEvent.event_name = "Drawer_Force"
+-- Biblioteca
 g_BookSwitchSoundEvent = SoundEvent()
 g_BookSwitchSoundEvent.event_name = "Book_Switch"
 g_ProjectorSoundEvent = SoundEvent()
@@ -88,10 +98,22 @@ g_ArtifactUseSoundEvent = SoundEvent()
 g_ArtifactUseSoundEvent.event_name = "Artifact_Use"
 g_EnterLibrarySondEvent = SoundEvent()
 g_EnterLibrarySondEvent.event_name = "Enter_Library"
+g_OpenSecretDoorSoundEvent = SoundEvent()
+g_OpenSecretDoorSoundEvent.event_name = "Open_Secret_Door"
 g_DoorSlam1Event = SoundEvent()
 g_DoorSlam1Event.event_name = "Door_Slam_1"
 g_DoorSlam2Event = SoundEvent()
 g_DoorSlam2Event.event_name = "Door_Slam_2"
+-- Maquinas
+g_PickValveEvent = SoundEvent()
+g_PickValveEvent.event_name = "Pick_Valve"
+g_InputValveEvent = SoundEvent()
+g_InputValveEvent.event_name = "Input_Valve"
+g_OpenValveDoor = SoundEvent()
+g_OpenValveDoor.event_name = "Open_Valve_Door"
+-- Pasillo
+g_JailEvent = SoundEvent()
+g_JailEvent.event_name = "Jail"
 
 -- Organ
 g_OrganNoteSwitch = SoundSwitch()
