@@ -111,6 +111,13 @@ g_InputValveEvent = SoundEvent()
 g_InputValveEvent.event_name = "Input_Valve"
 g_OpenValveDoor = SoundEvent()
 g_OpenValveDoor.event_name = "Open_Valve_Door"
+-- Pasillo
+g_JailEvent = SoundEvent()
+g_JailEvent.event_name = "Jail"
+g_BoilerRoomSoundEvent = SoundEvent()
+g_BoilerRoomSoundEvent.event_name = "Boiler_Room"
+g_PendulumSoundEvent = SoundEvent()
+g_PendulumSoundEvent.event_name = "Pendulum"
 
 -- Organ
 g_OrganNoteSwitch = SoundSwitch()
@@ -154,6 +161,8 @@ g_FireSoundEvent = SoundEvent()
 g_FireSoundEvent.event_name = "Fire_Start"
 g_CogwheelsSoundEvent = SoundEvent()
 g_CogwheelsSoundEvent.event_name = "Cogwheels_Start"
+g_ConveyorBeltSoundEvent = SoundEvent()
+g_ConveyorBeltSoundEvent.event_name = "Conveyor_Belt"
 g_HourglassSoundEvent = SoundEvent()
 g_HourglassSoundEvent.event_name = "Hourglass_Start"
 g_BeltSoundEvent = SoundEvent()
