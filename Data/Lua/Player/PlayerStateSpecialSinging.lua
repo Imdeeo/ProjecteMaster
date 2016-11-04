@@ -5,11 +5,7 @@ function SpecialSingingStateFirst(args)
 	l_Player.m_SingOnce = false
 	l_Player.m_Timer = 0.0
 	l_Owner:set_position(Vect3f(-0.493306, -0.000000, 4.336713))
-	l_Player.m_VideoPlaying = false
-	
-	--g_Engine:get_level_manager():load_level("Boss",false)
-	local l_LevelManager = g_Engine:get_level_manager()
-	l_LevelManager:load_level("Boss",false,true,false)
+	l_Player.m_VideoPlaying = false	
 end
 
 function SpecialSingingStateUpdate(args, _ElapsedTime)
@@ -41,10 +37,8 @@ function SpecialSingingStateUpdate(args, _ElapsedTime)
 				if not l_Player.m_VideoPlaying then
 					l_Player.m_VideoPlaying = true
 					g_Engine:get_video_manager():load_clip("intro.ogv", false)
-					--g_Engine:get_video_manager():render_screen_clip("intro.ogv")
-					g_Engine:get_level_manager():get_level("Biblioteca"):set_visible(false)
-				else
-					g_Engine:get_level_manager():get_level("Biblioteca"):set_visible(true)
+					--g_Engine:get_video_manager():render_screen_clip("intro.ogv")					
+				else					
 					local l_Value = 1 - math.min(1,(l_Player.m_Timer-13.333)/2)	
 					local l_gui_position = CGUIPosition(0, 0, 1280, 720, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)		
 					g_Engine:get_gui_manager():do_panel("fundidoNegroCantando", "fundidoNegro", l_gui_position, 0.0, l_Value)
