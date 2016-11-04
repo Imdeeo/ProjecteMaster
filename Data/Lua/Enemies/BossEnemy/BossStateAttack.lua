@@ -5,7 +5,7 @@ function AttackFirstBoss(args)
 	
 	l_Enemy.m_TimerRotation = 0.0
 	g_Player.m_CameraController:lock()
-	g_Player:CalculateCameraPositionRotation("JaheemDiesBoss", l_Owner:get_position())
+	g_Player:CalculateCameraPositionRotation2("JaheemDiesBoss", l_Owner:get_position())
 	g_Player.m_IsDead = true
 end
 
@@ -30,10 +30,15 @@ function AttackUpdateBoss(args, _ElapsedTime)
 	local l_FaceTargetDisplacement =  g_Player.m_Target - g_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_FaceTargetDisplacement.y = 0.0
 	
+	--utils_log("Distance: "..l_FaceTargetDisplacement:length())
 	if l_FaceTargetDisplacement:length() <= 0.01 then
 		l_PosOK = true
 	else
 		g_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
+		--// Assign to the character the controller's position
+		local l_NewControllerPosition = g_Player.m_PhysXManager:get_character_controler_pos("player")
+		l_NewControllerPosition.y = l_NewControllerPosition.y - g_StandingOffset
+		g_Player.m_RenderableObject:set_position(l_NewControllerPosition)
 	end		
 	
 	if l_Enemy.m_TimerRotation <= 2.0 then

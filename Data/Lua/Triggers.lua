@@ -7,7 +7,9 @@ function OnEnterWindow(_TriggerName, _ColliderName)
 		l_Player.m_AnimationTime = 3.0
 		l_Player.m_TargetSanity = 20.0
 		l_Player.m_IsFocusing = true
-		l_Player.m_TargetOffset = Vect3f(0.571789, 6.51367, 5.9193)
+		l_Player.m_TargetOffset = Vect3f(-2.65267, 5.04859, 32.6297)
+		l_Player.m_PhysXManager:disable_physics(_TriggerName, "FisicasAux")		
+		l_Player.m_PhysXManager:disable_physics("Maquinas_fisica_escaleras", "FisicasAux")
 	end
 end
 
@@ -15,6 +17,7 @@ function OnExitWindow(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		local l_Player = m_CharacterManager.m_Player[1]
 		l_Player.m_PhysXManager:disable_physics(_TriggerName, "FisicasAux")
+		l_Player.m_PhysXManager:disable_physics("fisica_escaleras", "FisicasAux")
 	end
 end
 
@@ -28,18 +31,27 @@ function OnEnterStairs(_TriggerName, _ColliderName)
 			l_Player.m_InteractingAnimation = 18
 			l_Player.m_IsClimbing = true
 			
+			utils_log("LEVEL: "..l_Player.m_ActualLevel)
 			if l_Player.m_ActualLevel == "Maquinas" then
 				l_Player.m_ForwardCamera = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
-				l_Player.m_TargetPosOffset = Vect3f(0.45, 0.0, 0.45)
 				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
+				l_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
+				l_Player.m_ForwardCamera = Vect3f(-0.5, 0.0, -0.5)
+				if _TriggerName == "TriggerStairsUpper" then
+					l_Player.m_TargetPosOffset = Vect3f(0.46, 1.55, 0.46)
+				else
+					l_Player.m_TargetPosOffset = Vect3f(0.45, -l_Player.m_Target.y, 0.45)
+				end
 			elseif l_Player.m_ActualLevel == "Boss" then
-				l_Player.m_ForwardCamera = Vect3f(-1.0, 0.0, 0.0)
-				l_Player.m_TargetPosOffset = Vect3f(0.60, 0.0, 0.0)
 				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("EscaleraSalaBoss"):get_position()
+				l_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
+				l_Player.m_ForwardCamera = Vect3f(-1.0, 0.0, 0.0)
+				l_Player.m_TargetPosOffset = Vect3f(0.8, 0.0, 0.0)
 			elseif l_Player.m_ActualLevel == "Pasillo" then
-				l_Player.m_ForwardCamera = Vect3f(1.0, 0.0, 0.0)
-				l_Player.m_TargetPosOffset = Vect3f(-0.60, 0.0, 0.0)
 				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("EscaleraEscape"):get_position()
+				l_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
+				l_Player.m_ForwardCamera = Vect3f(1.0, 0.0, 0.0)
+				l_Player.m_TargetPosOffset = Vect3f(-0.5, 0.0, 0.0)
 			end				
 		end
 	end
@@ -49,7 +61,6 @@ function OnExitStairs(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 	local l_Player = m_CharacterManager.m_Player[1]
 		if not l_Player.m_IsClimbing then
-			utils_log("Exit Upper")
 			l_Player:ClearTarget()
 			l_Player:ClearStates()
 		end
@@ -88,7 +99,6 @@ function OnStayStairsUpper(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		local l_Player = m_CharacterManager.m_Player[1]
 		if l_Player.m_ClimbingUp then
-			utils_log("Stay Upper")
 			l_Player.m_CurrentAend = "LeaveStairs"
 			l_Player.m_InteractingAnimation = 0
 			l_Player.m_InteractingCinematic = nil
@@ -150,8 +160,8 @@ end
 
 function OnEnterActivateBoss(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
-		local l_Enemy = m_CharacterManager.m_EnemicsMap["Boss"]["Boss"]
-		l_Enemy.m_PhysXManager:character_controller_teleport("Boss", Vect3f(3.821, -4.0, 20.682))
+		local l_Enemy = m_CharacterManager.m_EnemicsMap["Pasillo"]["Boss"]
+		l_Enemy.m_PhysXManager:character_controller_teleport("Boss", Vect3f(2.821, -5.896054, 20.682))
 		l_Enemy.m_RenderableObject:set_position(l_Enemy.m_PhysXManager:get_character_controler_pos("Boss"))
 		l_Enemy.m_Awake = true
 	end
@@ -161,5 +171,12 @@ function OnExitActivateBoss(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		g_Engine:get_level_manager():choose_scene_command_level("Pasillo")
 		g_Player:SetActualLevel("Pasillo")
+		l_LevelManager:get_level(l_Player.m_ActualLevel):get_cinematic_manager():get_resource("engranajes_pasillo"):play()
+	end
+end
+
+function OnFinish(_TriggerName, _ColliderName)
+	if(_ColliderName == "player") then
+		g_Player.m_Finish = true
 	end
 end

@@ -613,6 +613,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("set_active_console", &CUABEngine::SetActiveConsole)
 			.def("get_type_particle", &CUABEngine::GetTypeParticle)
 			.def("reload_lua", &CUABEngine::ReloadLUA)
+			.def("get_screen_size", &CUABEngine::GetScreenSize)
 	];
 
 	// InputManager-------------------------------------------------------------------------------------
@@ -902,6 +903,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def("get_main_camera", &CCameraControllerManager::GetMainCamera)
 			.def("get_debug_camera", &CCameraControllerManager::GetDebugCamera)
 			.def("update", &CCameraControllerManager::Update)
+			.def("init", &CCameraControllerManager::Init)
 	];
 
 	module(m_LS)[

@@ -70,7 +70,7 @@ end
 
 function R1TrayR1(_Player) --This contains the key
 	_Player.m_TargetYaw = 0.0
-	utils_log("Yaw: ".._Player.m_TargetYaw)
+	--utils_log("Yaw: ".._Player.m_TargetYaw)
 	_Player.m_UpCamera = Vect3f(-0.682049, 0.731307, 0.0)	
 	_Player.m_ForwardCamera = Vect3f(-0.7313, -0.68205, 0)
 	_Player.m_TargetPosOffset = Vect3f(0.998, 0, 0.025)

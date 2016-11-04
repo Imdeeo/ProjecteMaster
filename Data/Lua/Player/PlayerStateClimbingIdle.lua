@@ -36,7 +36,8 @@ function ClimbingIdleEnd(args)
 	l_Player.m_ClimbingUp = false
 	l_Player.m_ClimbingDown = false
 	if not l_Player.m_IsClimbing and not l_Player.m_IsInteracting then
-		ClearPlayerTarget(l_Player)
+		l_Player:ClearTarget()
+--		ClearPlayerTarget(l_Player)
 		l_Player.m_CameraController:unlock()
 	end
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.0)

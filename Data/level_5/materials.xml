@@ -667,6 +667,12 @@
 	</material>
 	<material name="no_material" renderable_object_technique="lights">
 	</material>
+	<material name="ps_polvo_caja" renderable_object_technique="particle">
+		<texture type="diffuse" filename="Data\Particles\DustCloud3.png"/>
+		<parameter type="float2" name="sprite_size" value="1.000000 1.000000" description=""/>
+		<parameter type="float" name="lerp_sprite" value="1.000000" description=""/>
+		<parameter type="float" name="ratio_y" value="1.000000" description=""/>
+	</material>
 	<material name="ps_polvo_material" renderable_object_technique="particle">
 		<texture type="diffuse" filename="Data\Particles\PolvoSingular.png"/>
 		<parameter type="float2" name="sprite_size" value="1.000000 1.000000" description=""/>

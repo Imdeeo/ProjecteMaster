@@ -29,6 +29,20 @@ CLevelManager::CLevelManager()
 
 CLevelManager::~CLevelManager()
 {
+	typedef std::map<std::string, CSceneRendererCommandManager*>::iterator it_type;
+	for (it_type iterator = m_SceneRenderCommandsManager.begin(); iterator != m_SceneRenderCommandsManager.end(); iterator++)
+	{
+		CHECKED_DELETE(iterator->second);
+	}
+	m_SceneRenderCommandsManager.clear();
+
+	typedef std::map<std::string, std::vector<TLevelLayers*>>::iterator it_type2;
+	for (it_type iterator = m_SceneRenderCommandsManager.begin(); iterator != m_SceneRenderCommandsManager.end(); iterator++)
+	{
+		CHECKED_DELETE(iterator->second);
+	}
+
+	Destroy();
 }
 
 void CLevelManager::LoadFile(const std::string &_LevelsFilename)
@@ -46,6 +60,7 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 		std::string l_LevelName = l_Element->GetPszProperty("name");
 		TLevelInfo l_LevelInfo;
 		l_LevelInfo.m_Loaded = false;
+		l_LevelInfo.m_Loading = false;
 		l_LevelInfo.m_ID = l_Element->GetPszProperty("id");
 		l_LevelInfo.m_Directory = l_Element->GetPszProperty("directory");
 		l_LevelInfo.m_LevelInitLuaFunction = l_Element->GetPszProperty("init_function");
@@ -54,11 +69,15 @@ void CLevelManager::LoadFile(const std::string &_LevelsFilename)
 	}
 }
 
-void CLevelManager::LoadLevelThread(const std::string &_LevelName)
+void CLevelManager::LoadLevelThread(const std::string &_LevelName, bool _Visible, bool _HasToUpdate)
 {
+	m_LevelsInfo[_LevelName].m_Loading = true;
 	CLevel * l_Level = new CLevel(_LevelName);
 	l_Level->Load();
+	l_Level->SetVisible(_Visible);
+	l_Level->SetHasToUpdate(_HasToUpdate);
 	m_LevelsInfo[_LevelName].m_Loaded = true;
+	m_LevelsInfo[_LevelName].m_Loading = false;
 	std::vector<CRenderableObjectsManager*> l_LayerVector = l_Level->GetLayerManager()->GetResourcesVector();
 	for (size_t i = 0; i < l_LayerVector.size(); i++)
 	{
@@ -74,15 +93,11 @@ void CLevelManager::LoadLevelThread(const std::string &_LevelName)
 	}
 }
 
-void CLevelManager::LoadLevel(const std::string &_LevelName,bool _Joinable)
+void CLevelManager::LoadLevel(const std::string &_LevelName, bool _Joinable, bool _Visible, bool _HasToUpdate)
 {
-	if (m_LevelsInfo[_LevelName].m_Loaded)
+	if (!m_LevelsInfo[_LevelName].m_Loaded && !m_LevelsInfo[_LevelName].m_Loading)
 	{
-		ReloadLevel(_LevelName,_Joinable);
-	}
-	else
-	{
-		std::thread t(&CLevelManager::LoadLevelThread,this,_LevelName);
+		std::thread t(&CLevelManager::LoadLevelThread,this,_LevelName,_Visible,_HasToUpdate);
 		if (_Joinable)
 		{
 			t.join();
@@ -96,8 +111,10 @@ void CLevelManager::LoadLevel(const std::string &_LevelName,bool _Joinable)
 
 void CLevelManager::ReloadLevel(const std::string &_LevelName,bool joinable)
 {
+	bool l_Visible = *(m_ResourcesMap[_LevelName].m_Value->IsVisible());
+	bool l_HasToUpdate = *(m_ResourcesMap[_LevelName].m_Value->HasToUpdate());
 	UnloadLevel(_LevelName);
-	LoadLevel(_LevelName,joinable);
+	LoadLevel(_LevelName,joinable,l_Visible,l_HasToUpdate);
 }
 
 void CLevelManager::UnloadLevel(const std::string &_LevelName)

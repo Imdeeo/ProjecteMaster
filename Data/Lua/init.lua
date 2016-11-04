@@ -27,7 +27,7 @@ g_VolumeController = VolumeController()
 m_MusicSliderResult = CSliderResult(50.0, 50.0)
 m_FxSliderResult = CSliderResult(50.0, 50.0)
 m_Cordura = CSliderResult(50.0, 50.0)
-m_ScreenResolution = Vect2f(1280.0, 720.0)
+m_ScreenResolution = g_Engine:get_screen_size()
 m_ScreenFactorX = m_ScreenResolution.x / 1920
 m_ScreenFactorY = m_ScreenResolution.y / 1080
 m_Timer = 0.0
@@ -43,33 +43,41 @@ function mainLua()
 	m_timerPause = 0
 	m_iniciando = true 	
 	
-	l_LevelManager:load_level("Player",true)	
+	l_LevelManager:load_level("Player",true,true,true)	
 	l_LevelManager:choose_scene_command_level("Player")
 	g_Player:SetActualLevel("Player")	
+	
+	CUABEngine.get_instance():get_camera_controller_manager():init()
+	
+	--g_Player:SetActiveStateMachineState("Jumping",false)
+	--g_Player:SetActiveStateMachineState("Falling",false)
+	--g_Player.m_Gravity = 0
+	
+	--g_Player.m_CameraController:lock()
 	
 	--deactivate_gravity()
 	--deactivate_player_collisions()
 	
-	l_LevelManager:load_level("Recibidor",true)
+	l_LevelManager:load_level("Recibidor",true, true, true)
 	l_LevelManager:choose_scene_command_level("Recibidor")
 	g_Player:SetActualLevel("Recibidor")
 	
-	--l_LevelManager:load_level("Biblioteca",true)
+	l_LevelManager:load_level("Biblioteca", true, false, false)
 	--l_LevelManager:choose_scene_command_level("Biblioteca")
 	--g_Player:SetActualLevel("Biblioteca")
 	
-	--l_LevelManager:load_level("Maquinas",true)
+	l_LevelManager:load_level("Maquinas", true, false, false)
 	--l_LevelManager:choose_scene_command_level("Maquinas")
 	--g_Player:SetActualLevel("Maquinas")
 	--l_SoundManager:broadcast_state(g_LevelStates["Maquinas"])
 	
-	--l_LevelManager:load_level("Pasillo",true)
-	--l_LevelManager:choose_scene_command_level("Pasillo")
-	--g_Player:SetActualLevel("Pasillo")
-	
-	--l_LevelManager:load_level("Boss",true)
+	l_LevelManager:load_level("Boss", true, false, false)
 	--l_LevelManager:choose_scene_command_level("Boss")
 	--g_Player:SetActualLevel("Boss")
+	
+	l_LevelManager:load_level("Pasillo", true, false, false)
+	--l_LevelManager:choose_scene_command_level("Pasillo")
+	--g_Player:SetActualLevel("Pasillo")
 end
 
 function levelMainLua(level,level_id)
@@ -169,7 +177,7 @@ function luaGui(_ElapsedTime)
 		local l_WidthSlider = 500 * m_ScreenFactorX
 		local l_HeightSlider = 42 * m_ScreenFactorY
 	
-		gui_position = CGUIPosition(0, 0, 1280, 720, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)		
+		gui_position = CGUIPosition(0, 0, m_ScreenResolution.x, m_ScreenResolution.y, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)		
 		local color = CColor(1,1,1,1)
 		local coord = Vect2f(500,100)
 		--gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
@@ -296,6 +304,19 @@ function luaGui(_ElapsedTime)
 			gui_position = CGUIPosition(l_PosX, l_PosY, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
 			local l_PlayButton = gui_manager:do_button("Play", "play_button", gui_position)
 			if l_PlayButton then
+				--local l_LevelManager = g_Engine:get_level_manager()
+				--l_LevelManager:load_level("Recibidor", true,true,true)
+				--l_LevelManager:choose_scene_command_level("Recibidor")
+				--g_Player:SetActualLevel("Recibidor")
+				
+				--g_Player:SetActiveStateMachineState("Jumping",true)
+				--g_Player:SetActiveStateMachineState("Falling",true)
+				--g_Player.m_Gravity = g_Gravity
+				
+				--g_Player.m_CameraController:unlock()
+				
+				--l_LevelManager:load_level("Biblioteca", true,false,false)
+				
 				m_menu = false
 				g_Engine:set_pause(false)
 			end 

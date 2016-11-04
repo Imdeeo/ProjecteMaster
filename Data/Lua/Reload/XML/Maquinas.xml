@@ -2,7 +2,7 @@
 <resources>
 	<resource level="Player" layer="solid" name="Jaheem" type="player" position="16.5236 4.9248 27.9152" rotation="0.0 0.0 0.0 1.0" visible="true"/>
 	<resource level="Maquinas" layer="solid" name="FogAutomaton" type="enemy" position="13.5 0.1 13.9" rotation="0.000000 1.0 0.000000 0.0" awake="false" visible="true"/>
-	<resource level="Maquinas" layer="solid" name="ValvulaPuzzle" type="object" position="24.7196 -0.431354 43.3826" rotation="0.0 0.0 0.0 1.0" visible="true"/>
+	<resource level="Maquinas" layer="solid" name="ValvulaPuzzle" type="object" position="24.7196 -0.431354 43.3826" rotation="0.0 0.0 -0.642788 0.766044" visible="true"/>
 	<resource level="Maquinas" layer="solid" name="CajaEngranaje" type="object" position="-0.216097 0.0542869 40.0316" rotation="0.0 0.0 0.0 1.0" visible="true"/>
 	<resource level="Maquinas" layer="triggers" name="TriggerValve" type="trigger" position="24.5345 -0.17867 43.3521" rotation="0.0 0.0 0.0 1.0" enable="true" visible="true"/>
 	<resource level="Maquinas" layer="triggers" name="TriggerValveInput" type="trigger" position="17.2932 0.797584 38.742" rotation="0.0 -0.258819 0.0 0.965926" enable="false" visible="true"/>
