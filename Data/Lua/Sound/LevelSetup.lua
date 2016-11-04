@@ -8,6 +8,9 @@ l_LevelLoadFunctions['Biblioteca'] = function(_SoundManager)
 end
 
 l_LevelLoadFunctions['Maquinas'] = function(_SoundManager)
+	_SoundManager:play_event(g_ConveyorBeltSoundEvent, "SpeakerBeltLeft")
+	_SoundManager:play_event(g_ConveyorBeltSoundEvent, "SpeakerBeltCenter")
+	_SoundManager:play_event(g_ConveyorBeltSoundEvent, "SpeakerBeltRight")
 end
 
 l_LevelLoadFunctions['Pasillo'] = function(_SoundManager)
