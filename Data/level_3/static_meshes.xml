@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <static_meshes>
+	<static_mesh name="ElHijo" filename="Data\level_3\Meshes\ElHijo.mesh" physx_mesh_directory="Data\level_4\Meshes\PhysXMeshes"/>
 	<static_mesh name="BaseCaldera" filename="Data\level_3\Meshes\BaseCaldera.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="21Gramos" filename="Data\level_3\Meshes\21Gramos.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="Tubos21GramosGrande" filename="Data\level_3\Meshes\Tubos21GramosGrande.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>

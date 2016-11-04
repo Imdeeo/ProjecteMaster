@@ -115,7 +115,7 @@ function R2TriggerPipeOrgan(_Player)
 	_Player.m_UpCamera = Vect3f(0.0, 0.947369, 0.320145)
 	l_Target = GetTriggerPos("TriggerPipeOrgan",l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.8) then
-		_Player.m_Target = Vect3f(0.124282, 1.4032, 14.8227)
+		_Player.m_Target = Vect3f(0.124282, 1.4032, 14.3227)
 		_Player.m_AnimationTime = 0.6667
 		_Player.m_InteractingAnimation = 8
 		_Player.m_InteractingCinematic = nil
@@ -151,7 +151,6 @@ function R2Artifact(_Player)
 		_Player.m_BiasPos = 0.03
 		_Player.m_PhysXManager:disable_physics("TriggerArtifact", "FisicasAux")
 		_Player.m_InteractionSoundSpeaker = "ArtifactStand"
-		g_Engine:get_level_manager():load_level("Maquinas",false,false,false)
 	end
 end
 
