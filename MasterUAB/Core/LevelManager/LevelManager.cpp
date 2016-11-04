@@ -29,6 +29,20 @@ CLevelManager::CLevelManager()
 
 CLevelManager::~CLevelManager()
 {
+	typedef std::map<std::string, CSceneRendererCommandManager*>::iterator it_type;
+	for (it_type iterator = m_SceneRenderCommandsManager.begin(); iterator != m_SceneRenderCommandsManager.end(); iterator++)
+	{
+		CHECKED_DELETE(iterator->second);
+	}
+	m_SceneRenderCommandsManager.clear();
+
+	typedef std::map<std::string, std::vector<TLevelLayers*>>::iterator it_type2;
+	for (it_type iterator = m_SceneRenderCommandsManager.begin(); iterator != m_SceneRenderCommandsManager.end(); iterator++)
+	{
+		CHECKED_DELETE(iterator->second);
+	}
+
+	Destroy();
 }
 
 void CLevelManager::LoadFile(const std::string &_LevelsFilename)
