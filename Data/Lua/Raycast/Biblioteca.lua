@@ -12,9 +12,9 @@ function R2TriggerOrganKeyA(_Player, _Owner)
 		l_cinematic:play()
 		R2PushOrganKey("A", _Player)
 		local l_SoundManager = g_Engine:get_sound_manager()
-		l_SoundManager:set_switch(g_OrganNoteC, "OrganPipes")
-		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "OrganPipes")
-		l_SoundManager:play_event(g_OrganPlayNoteEvent, "OrganPipes")
+		l_SoundManager:set_switch(g_OrganNoteC, "SpeakerOrganLeft")
+		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "SpeakerOrganLeft")
+		l_SoundManager:play_event(g_OrganPlayNoteEvent, "SpeakerOrganLeft")
 	end
 end
 
@@ -27,9 +27,9 @@ function R2TriggerOrganKeyB(_Player, _Owner)
 		l_cinematic:play()
 		R2PushOrganKey("B", _Player)
 		local l_SoundManager = g_Engine:get_sound_manager()
-		l_SoundManager:set_switch(g_OrganNoteD, "OrganPipes")
-		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "OrganPipes")
-		l_SoundManager:play_event(g_OrganPlayNoteEvent, "OrganPipes")
+		l_SoundManager:set_switch(g_OrganNoteD, "SpeakerOrganLeft")
+		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "SpeakerOrganLeft")
+		l_SoundManager:play_event(g_OrganPlayNoteEvent, "SpeakerOrganLeft")
 	end
 end
 
@@ -42,9 +42,9 @@ function R2TriggerOrganKeyC(_Player, _Owner)
 		l_cinematic:play()
 		R2PushOrganKey("C", _Player)
 		local l_SoundManager = g_Engine:get_sound_manager()
-		l_SoundManager:set_switch(g_OrganNoteE, "OrganPipes")
-		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "OrganPipes")
-		l_SoundManager:play_event(g_OrganPlayNoteEvent, "OrganPipes")
+		l_SoundManager:set_switch(g_OrganNoteE, "SpeakerOrganCenter")
+		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "SpeakerOrganCenter")
+		l_SoundManager:play_event(g_OrganPlayNoteEvent, "SpeakerOrganCenter")
 	end
 end
 
@@ -57,9 +57,9 @@ function R2TriggerOrganKeyD(_Player, _Owner)
 		l_cinematic:play()
 		R2PushOrganKey("D", _Player)
 		local l_SoundManager = g_Engine:get_sound_manager()
-		l_SoundManager:set_switch(g_OrganNoteF, "OrganPipes")
-		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "OrganPipes")
-		l_SoundManager:play_event(g_OrganPlayNoteEvent, "OrganPipes")
+		l_SoundManager:set_switch(g_OrganNoteF, "SpeakerOrganCenter")
+		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "SpeakerOrganCenter")
+		l_SoundManager:play_event(g_OrganPlayNoteEvent, "SpeakerOrganCenter")
 	end
 end
 
@@ -72,9 +72,9 @@ function R2TriggerOrganKeyE(_Player, _Owner)
 		l_cinematic:play()
 		R2PushOrganKey("E", _Player)
 		local l_SoundManager = g_Engine:get_sound_manager()
-		l_SoundManager:set_switch(g_OrganNoteG, "OrganPipes")
-		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "OrganPipes")
-		l_SoundManager:play_event(g_OrganPlayNoteEvent, "OrganPipes")
+		l_SoundManager:set_switch(g_OrganNoteG, "SpeakerOrganCenter")
+		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "SpeakerOrganCenter")
+		l_SoundManager:play_event(g_OrganPlayNoteEvent, "SpeakerOrganCenter")
 	end
 end
 
@@ -87,9 +87,9 @@ function R2TriggerOrganKeyF(_Player, _Owner)
 		l_cinematic:play()
 		R2PushOrganKey("F", _Player)
 		local l_SoundManager = g_Engine:get_sound_manager()
-		l_SoundManager:set_switch(g_OrganNoteA, "OrganPipes")
-		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "OrganPipes")
-		l_SoundManager:play_event(g_OrganPlayNoteEvent, "OrganPipes")
+		l_SoundManager:set_switch(g_OrganNoteA, "SpeakerOrganRight")
+		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "SpeakerOrganRight")
+		l_SoundManager:play_event(g_OrganPlayNoteEvent, "SpeakerOrganRight")
 	end
 end
 
@@ -102,9 +102,9 @@ function R2TriggerOrganKeyG(_Player, _Owner)
 		l_cinematic:play()
 		R2PushOrganKey("G", _Player)
 		local l_SoundManager = g_Engine:get_sound_manager()
-		l_SoundManager:set_switch(g_OrganNoteB, "OrganPipes")
-		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "OrganPipes")
-		l_SoundManager:play_event(g_OrganPlayNoteEvent, "OrganPipes")
+		l_SoundManager:set_switch(g_OrganNoteB, "SpeakerOrganRight")
+		l_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.4, "SpeakerOrganRight")
+		l_SoundManager:play_event(g_OrganPlayNoteEvent, "SpeakerOrganRight")
 	end
 end
 
@@ -150,7 +150,7 @@ function R2Artifact(_Player)
 		_Player.m_IsPuzzle = false
 		_Player.m_BiasPos = 0.03
 		_Player.m_PhysXManager:disable_physics("TriggerArtifact", "FisicasAux")
-		_Player.m_InteractionSoundSpeaker = "ArtifactStand"
+		_Player.m_InteractionSoundSpeaker = "SpeakerArtifactStand"
 	end
 end
 
@@ -174,7 +174,7 @@ function R2ArtifactDoor(_Player)
 		_Player.m_IsCorrecting = true
 		_Player.m_Teleport = true
 		_Player.m_IsPuzzle = false
-		_Player.m_InteractionSoundSpeaker = "ArtifactDoor"
+		_Player.m_InteractionSoundSpeaker = "SpeakerArtifactDoor"
 	end
 end
 
@@ -198,7 +198,7 @@ function R2Clue(_Player)
 		_Player.m_IsInteracting = true
 		_Player.m_IsCorrecting = true
 		_Player.m_IsPuzzle = false
-		_Player.m_InteractionSoundSpeaker = "ClueSheet"
+		_Player.m_InteractionSoundSpeaker = "SpeakerClues"
 	end
 end
 
@@ -224,6 +224,6 @@ function R2Book(_Player)
 		l_Level:get_layer_manager():get_layer("alpha_blend_objects"):get_resource("reflejoluz3"):set_visible(true) 
 		-- activate particles
 		_Player.m_PhysXManager:disable_physics("TriggerBook", "FisicasAux")
-		_Player.m_InteractionSoundSpeaker = "Book"
+		_Player.m_InteractionSoundSpeaker = "SpeakerBook"
 	end
 end

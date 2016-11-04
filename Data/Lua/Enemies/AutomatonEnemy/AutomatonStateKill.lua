@@ -21,6 +21,8 @@ function KillFirstAutomaton(args)
 	l_Enemy.m_LoseSanityValue = g_Player.m_Sanity / 6.0
 	
 	l_Enemy:ShowParticles("EmisorParticulaTorreta", true)
+	
+	g_SoundManager:play_event(g_SteamSoundEvent)
 end
 
 function KillUpdateAutomaton(args, _ElapsedTime)

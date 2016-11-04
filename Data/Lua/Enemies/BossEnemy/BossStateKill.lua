@@ -19,6 +19,8 @@ function KillFirstBoss(args)
 	l_Enemy.m_TimerToStop = 0
 	
 	l_Enemy.m_LoseSanityValue = g_Player.m_Sanity / 10.0
+	
+	g_SoundManager:play_event(g_ButhcerSoundEvent)
 end
 
 function KillUpdateBoss(args, _ElapsedTime)

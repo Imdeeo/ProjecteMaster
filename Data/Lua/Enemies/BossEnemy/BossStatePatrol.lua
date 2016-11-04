@@ -7,6 +7,11 @@ function PatrolFirstBoss(args)
 	l_Enemy.m_ActualAnimation = 2
 	l_Owner:execute_action(l_Enemy.m_ActualAnimation,0.5,0.5,1.0,true)
 	
+	local l_SoundSync = CSoundSynchronizer(l_Enemy, l_Owner, g_BossStepSoundEvent)
+	l_SoundSync.m_RepeatsPerCycle = 2
+	l_SoundSync.m_Offset = 0.20
+	l_Enemy.m_SoundSync = l_SoundSync
+	
 	l_Enemy.m_Velocity = Vect3f(0,0,0)
 	l_Enemy.m_Timer = 0.0
 	l_Enemy.m_TimerRotation = 0.0
