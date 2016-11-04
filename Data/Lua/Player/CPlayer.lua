@@ -22,6 +22,7 @@ dofile("Data\\Lua\\Player\\PlayerStateSpecialSinging.lua")
 dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 dofile("Data\\Lua\\Player\\PlayerStatePuzzle.lua")
 dofile("Data\\Lua\\Player\\PlayerStateFocusing.lua")
+dofile("Data\\Lua\\Player\\PlayerStateFinish.lua")
 
 
 --Bone #0: BrazosJaheem
@@ -175,6 +176,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_SingOnce = false
 		self.m_VideoPlaying = false
 		self.m_FogDown = false
+		self.m_Finish = false
 		
 		self.m_Target = nil
 		self.m_TargetPosOffset = Vect3f(1.0, 0.0, 0.0)
@@ -259,11 +261,11 @@ class 'CPlayer' (CLUAComponent)
 	function CPlayer:ModifySanity(_amount)
 		self.m_Sanity = math.max(math.min(self.m_Sanity + _amount, self.m_MaxSanity),0)
 		if self.m_Sanity <= 0 then
-			utils_log("ESTAS MUERTO!!!")
+			--utils_log("ESTAS MUERTO!!!")
 			g_Engine:set_pause(true)
 			m_retry = true
 			m_menu = true
-			utils_log("ACTIVANDO MENU!!!")
+			--utils_log("ACTIVANDO MENU!!!")
 		end
 	end
 	
@@ -481,6 +483,7 @@ class 'CPlayer' (CLUAComponent)
 		ClimbingUpState:set_do_end_function(ClimbingUpEnd)
 		ClimbingUpState:add_condition(ClimbingUpToClimbingIdleCondition, "ClimbingIdle")
 		ClimbingUpState:add_condition(ANYToDeadCondition, "Dead")
+		ClimbingUpState:add_condition(ClimbingUpToFinishCondition, "Finish")
 		
 		ClimbingDownState = State.create(ClimbingDownUpdate)
 		ClimbingDownState:set_do_first_function(ClimbingDownFirst)
@@ -544,6 +547,9 @@ class 'CPlayer' (CLUAComponent)
 		FocusingState:add_condition(FocusingToIdleCondition, "Idle")
 		FocusingState:add_condition(ANYToDeadCondition, "Dead")
 		
+		FinishState = State.create(FinishUpdate)
+		FinishState:set_do_first_function(FinishFirst)
+		FinishState:set_do_end_function(FinishEnd)
 		
 		SpecialSingingState = State.create(SpecialSingingStateUpdate)
 		SpecialSingingState:set_do_first_function(SpecialSingingStateFirst)
@@ -568,6 +574,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:add_state("Dead", DeadState)
 		self.m_StateMachine:add_state("Puzzle", PuzzleState)
 		self.m_StateMachine:add_state("Focusing", FocusingState)
+		self.m_StateMachine:add_state("Finish", FinishState)
 	end	
 	
 	function CPlayer:SetActiveStateMachineState(name,active)
@@ -628,6 +635,29 @@ class 'CPlayer' (CLUAComponent)
 		self.m_FinalCameraRotation = quat_to_turn
 	end
 	
+	function CPlayer:CalculateCameraPositionRotation2(_CameraName, _DesiredPosition)
+		local l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
+		l_AnimatedCamera = l_CameraManager:get_resource(_CameraName)
+		local l_CameraInfoPosLength = l_AnimatedCamera:get_camera_key(0):get_camera_info():get_eye()
+		l_CameraInfoPosLength.y = 0
+		l_CameraInfoPosLength = l_CameraInfoPosLength:length()
+		
+		local l_AuxPos = self.m_PhysXManager:get_character_controler_pos(self.m_Name)
+		local l_auxTarget = l_AuxPos - _DesiredPosition
+		l_auxTarget.y = 0
+		self.m_Target = l_auxTarget:get_normalized(1) * l_CameraInfoPosLength + _DesiredPosition
+		
+		self.m_InitialCameraRotation = self.m_CameraController:get_rotation()
+		
+		local l_CameraDirection = (_DesiredPosition - l_AuxPos)
+		l_CameraDirection.y = 0
+		l_CameraDirection = l_CameraDirection:get_normalized(1)
+						
+		local quat_to_turn = Quatf()
+		quat_to_turn:set_from_fwd_up(l_CameraDirection * -1, Vect3f(0,1,0))
+		self.m_FinalCameraRotation = quat_to_turn
+	end
+	
 	function CPlayer:SetCamera(_CameraName)
 		local l_CameraManager = g_Engine:get_camera_controller_manager()
 		l_CameraManager:choose_main_camera(_CameraName)
@@ -665,8 +695,8 @@ class 'CPlayer' (CLUAComponent)
 		local l_Pos = self.m_PhysXManager:get_character_controler_pos("player")
 		l_Pos.y = l_Pos.y - g_TotalHeight
 		local ret = false
-		utils_log("Difference: "..l_Difference)
-		utils_log("Distance: "..(l_Pos - _Target):length().." (".._Distance.." needed)")
+		--utils_log("Difference: "..l_Difference)
+		--utils_log("Distance: "..(l_Pos - _Target):length().." (".._Distance.." needed)")
 		if (l_Difference > (g_PI-_Radians)) and (l_Difference < (g_PI+_Radians)) and ((l_Pos - _Target):length() < _Distance) then
 			ret = true
 		end

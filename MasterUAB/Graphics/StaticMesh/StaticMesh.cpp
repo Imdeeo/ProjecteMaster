@@ -249,7 +249,6 @@ bool CStaticMesh::Load(const std::string &FileName,CLevel* _Level)
 				
 				free(l_VertexData);
 				free(l_IndexData);
-
 				m_RVs.push_back(l_RV);
 			}
 

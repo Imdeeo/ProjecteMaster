@@ -90,7 +90,6 @@ bool CCameraControllerManager::Load(const std::string &FileName, const std::stri
 	{
 		return false;
 	}
-	Init();
 	return true;
 }
 

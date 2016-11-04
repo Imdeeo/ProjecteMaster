@@ -15,9 +15,12 @@
 		<parameter type="float" name="metalness" value="0.000000" description="min=0.0 max=1.0 step=0.01"/>
 		<parameter type="color" name="metal_color" value="1.000000 1.000000 1.000000 0.000000" description=""/>	
 	</material>
-	<material name="Boss_material_2" renderable_object_technique="animated_bump">
+	<material name="Boss_material_2" renderable_object_technique="animated_metalness">
 		<texture type="diffuse" filename="Data/AnimatedModels/Boss/PataCompo.dds"/>
 		<texture type="normal" filename="Data/AnimatedModels/Boss/Pata_NRM.dds"/>
+		<texture type="glossiness" filename="Data/AnimatedModels/Boss/automata_GLOSS.dds"/>
+		<texture type="reflection" filename="Data/AnimatedModels/Boss/Cubemap_Biblio_Entrada.dds"/>
+		<texture type="specular" filename="Data/AnimatedModels/Boss/automata_METAL.dds"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>
 		<parameter type="float" name="exposure" value="0.082000" description="min=0.0 max=3.0 step=0.001"/>
 		<parameter type="float" name="specular_power" value="40.000000" description="min=0.0 max=100.0 step=0.1"/>

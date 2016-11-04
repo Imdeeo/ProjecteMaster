@@ -9,7 +9,8 @@
 	<layer name="manchas"/>
 	<layer name="skybox"/>
 	<layer name="interactuable_objects"/>
-	<animated_instance_mesh name="FogAutomaton" layer="solid" core_name="Automaton" position="15.199900 5.1 26.510681" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
+	<instance_mesh name="ElHijo" layer ="solid" core_name="ElHijo" position="-2.4 4.8 32.8" rotation="0.000000 0.707107 0.000000 0.707107" create_physics="false" visible="false"/>
+	<animated_instance_mesh name="FogAutomaton" layer="solid" core_name="Automaton" position="15.199900 5.1 26.510681" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="false"/>
 	<particle_instance name="EmisorPipeSteam" layer="particles" type="PipeSteam" position="-0.1537 0.060000 20.500000" next_particle_emission="0.013038" awake="true" awake_timer="4.206129" emission_box_limit="false" emission_box_half_size="0.000000 0.000000 0.000000" visible="true"/>
 	<line_renderer name="tesla_grande" layer="line_renderers" posInicial="22.1445 6.71533 27.6881" posFinal="24.7782 6.77533 27.5581" numPuntos="6" offsetX="0.5" offsetY="0.2" color="1.0 1.0 1.0 1.0" size="0.23" size_ofset="0.005" material="TeslaMaterial"/>	
 	<line_renderer name="tesla_peque" layer="line_renderers" posInicial="24.9345 5.40533 27.7881" posFinal="25.5382 5.48533 27.2681" numPuntos="2" offsetX="0.2" offsetY="0.1" color="1.0 1.0 1.0 1.0" size="0.17" size_ofset="0.005" material="TeslaMaterial"/>
@@ -19,11 +20,11 @@
 	<instance_mesh name="TanqueAguaAbajo" layer ="solid" core_name="TanqueAguaAbajo" position="10.3506 1.50635 45.1961" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="BarandillaLarga" layer ="solid" core_name="BarandillaLarga" position="19.8524 4.46133 37.0537" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="BarandillaCorta" layer ="solid" core_name="BarandillaCorta" position="5.40286 4.46133 38.6686" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="Escalera" layer ="solid" core_name="Escalera" position="7.7005 2.77856 28.147" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="Escalera" layer ="solid" core_name="Escalera" position="7.7005 2.488 28.147" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="CajaEngranaje" layer ="solid" core_name="CajaEngranaje" position="-0.216097 0.0542869 40.0316" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="CajaEngranajeMovido" layer ="solid" core_name="CajaEngranaje" position="2.27762 0.0542869 38.3878" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="NoCollision" visible="false"/>
 	<instance_mesh name="PuertaTaller" layer ="solid" core_name="PuertaTaller" position="-1.06923 -0.691453 40.8816" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="PomoPuertaTaller" layer ="solid" core_name="PomoPuertaTaller" position="-1.1369 0.48248 39.3493" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="PomoPuertaTaller" layer ="solid" core_name="PomoPuertaTaller" position="-1.1369 0.48248 39.3493" rotation="0.0751525 -0.0994547 -0.0149108 0.992088" create_physics="false" visible="true"/>
 	<instance_mesh name="TubosParedTanqueAguaArriba003" layer ="solid" core_name="TubosParedTanqueAguaArriba003" position="20.6152 5.34911 47.0687" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="TubosCaldera001" layer ="solid" core_name="TubosCaldera001" position="19.5074 7.83384 45.2307" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="tanqueaguagrandeArriba" layer ="solid" core_name="tanqueaguagrandeArriba" position="13.3553 6.81663 44.7992" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
@@ -380,11 +381,13 @@
 	<instance_mesh name="CablesSalaMaquinas" layer ="solid" core_name="CablesSalaMaquinas" position="13.8474 4.44725 29.6418" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="FisicasCintas" layer ="solid" core_name="FisicasCintas" position="9.67576 -0.0834744 44.6268" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="false"/>
 	<instance_mesh name="InputPipe" layer ="solid" core_name="InputPipe" position="17.25 0.797591 38.817" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<particle_instance name="ValveSteam" layer="particles" type="ValveSteam" position="8.71 0.400000 19.30" next_particle_emission="0.012191" awake="true" awake_timer="4.819887" emission_box_limit="false" emission_box_half_size="0.000000 0.000000 0.000000" visible="true"/>
+	<instance_mesh name="fisica_escaleras" layer ="solid" core_name="CajaEngranaje" position="7.67447 5.46533 28.11275" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="false"/>
 	<instance_mesh name="TriggerStairsLower" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsLower" is_active="true" core_name="TriggerStairsLower" position="7.94245 -0.44437 28.38073" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="PlanchaCinta1_001"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerStairsUpper" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsUpper" is_active="true" core_name="TriggerStairsUpper" position="8.07447 5.66533 28.51275" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerStairsUpper" layer="triggers" on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsUpper" is_active="true" core_name="TriggerStairsUpper" position="7.47447 5.66533 28.11275" rotation="0.0 0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="PlanchaCinta1_001"/>
 	</instance_mesh>
@@ -400,7 +403,8 @@
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="PuertaTaller"/>
 	</instance_mesh>
-	<!--<instance_mesh name="TriggerWindow" layer="triggers" on_trigger_enter="OnEnterWindow" on_trigger_exit="OnExitWindow" is_active="true" core_name="TriggerWindow" position="7.22032 3.80625 30.98397" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerWindow" layer="triggers" is_active="true" on_trigger_enter="OnEnterWindow" on_trigger_exit="OnExitWindow" core_name="TriggerWindow" position="5.93803 5.04859 32.5193" rotation="0.0 -0.382683 0.0 0.92388" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
-	</instance_mesh>-->
+		<interactuable_object actor_name="PlanchaCinta1_001"/>
+	</instance_mesh>
 </renderable_objects>

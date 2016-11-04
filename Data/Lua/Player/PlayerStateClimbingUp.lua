@@ -51,3 +51,8 @@ function ClimbingUpToClimbingIdleCondition(args)
 	local l_Player = args["self"]
 	return l_Player.m_Timer >= l_Player.m_AnimationTime
 end
+
+function ClimbingUpToFinishCondition(args)
+	local l_Player = args["self"]
+	return l_Player.m_Finish
+end

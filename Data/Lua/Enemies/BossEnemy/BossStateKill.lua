@@ -24,7 +24,7 @@ function KillFirstBoss(args)
 end
 
 function KillUpdateBoss(args, _ElapsedTime)
-	local l_Enemy = args["self"]	
+	local l_Enemy = args["self"]
 	local l_Owner = args["owner"]
 	local l_PlayerPos = g_Player.m_RenderableObject:get_position()
 	

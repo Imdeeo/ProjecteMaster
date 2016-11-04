@@ -15,6 +15,7 @@ typedef struct SLevelInfo
 {
 	std::string m_ID;
 	bool m_Loaded;
+	bool m_Loading;
 	std::string	m_Directory;
 	std::string m_LevelInitLuaFunction;
 } TLevelInfo;
@@ -50,9 +51,9 @@ public:
 	CSceneRendererCommandManager * GetSceneRendererCommandManager(const std::string _levelId);
 	void ExecuteSceneCommands(CRenderManager* _RenderManager);
 
-	void LoadLevelThread(const std::string &_LevelName);
+	void LoadLevelThread(const std::string &_LevelName, bool _Visible, bool _HasToUpdate);
 	void LoadFile(const std::string &_LevelsFilename);
-	void LoadLevel(const std::string &_LevelName, bool _Joinable);
+	void LoadLevel(const std::string &_LevelName, bool _Joinable, bool _Visible, bool _HasToUpdate);
 	void ReloadLevel(const std::string &_LevelName, bool _Joinable);
 	void UnloadLevel(const std::string &_LevelName);
 

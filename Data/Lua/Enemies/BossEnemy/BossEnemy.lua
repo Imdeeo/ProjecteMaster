@@ -23,11 +23,8 @@ class 'CBossEnemy' (CEnemy)
 		self.m_Velocity = Vect3f(0,0,0)
 		self.m_Gravity = -9.81
 		self.m_WalkSpeed = _TreeNode:get_float_property("walk_speed", 1.0)
-		self.m_RunSpeed = _TreeNode:get_float_property("run_speed", 5.0)
 		self.m_AngularWalkSpeed = _TreeNode:get_float_property("angular_walk_speed", 1000.0)
-		self.m_AngularRunSpeed = _TreeNode:get_float_property("angular_run_speed", 250.0)
 		self.m_DistanceToChangeNodeWalking = _TreeNode:get_float_property("distance_change_node_walking", 2.0)
-		self.m_DistanceToChangeNodeRunning = _TreeNode:get_float_property("distance_change_node_running", 2.0)
 		
 		self.m_TimerRotation = 0.0
 		
@@ -67,6 +64,7 @@ class 'CBossEnemy' (CEnemy)
 		PatrolState:set_do_first_function(PatrolFirstBoss)
 		PatrolState:set_do_end_function(PatrolEndBoss)
 		PatrolState:add_condition(PatrolToAttackConditionBoss, "Attack")
+		PatrolState:add_condition(PatrolToOffConditionBoss, "Off")
 		
 		AttackState = State.create(AttackUpdateBoss)
 		AttackState:set_do_first_function(AttackFirstBoss)

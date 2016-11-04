@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<camera_key_controller name="JaheemBossActivation">
+	<key time="0.0" pos="0.0 1.8 4.48348" up="0.0 -0.984808 -0.173648" look_at="0.0 1.62635 5.46829" fov="1.13446" near_plane="0.0" far_plane="3.0"/>
+	<key time="1.0" pos="0.0 1.8 4.48348" up="0.0 -0.984808 -0.173648" look_at="0.0 1.62635 5.46829" fov="1.13446" near_plane="0.0" far_plane="3.0"/>
+	<key time="3.0" pos="0.0 1.8 3.38441" up="0.0 -1.0 0.0" look_at="0.0 1.8 4.38441" fov="1.13446" near_plane="0.0" far_plane="3.0"/>
+	<key time="3.16667" pos="0.0 1.8 3.38441" up="0.0 -1.0 0.0" look_at="0.0 1.8 4.38441" fov="1.13446" near_plane="0.0" far_plane="3.0"/>
+	<key time="3.5" pos="0.0 1.8 3.76063" up="0.0 -1.0 0.0" look_at="0.0 1.8 4.76063" fov="1.13446" near_plane="0.0" far_plane="3.0"/>
+	<key time="4.0" pos="0.0 1.8 3.76063" up="0.0 -1.0 0.0" look_at="0.0 1.8 4.76063" fov="1.13446" near_plane="0.0" far_plane="3.0"/>
+	<key time="5.0" pos="0.0 1.8 3.76063" up="0.0 -0.99729 0.0735646" look_at="0.0 1.87356 4.75792" fov="1.13446" near_plane="0.0" far_plane="3.0"/>
+	<key time="6.0" pos="0.0 1.8 4.26131" up="0.0 1.0 0.0" look_at="0.0 1.8 5.26131" fov="1.13446" near_plane="0.0" far_plane="3.0"/>
+</camera_key_controller>

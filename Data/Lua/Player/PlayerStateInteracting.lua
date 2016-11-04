@@ -20,6 +20,18 @@ function InteractingFirst(args)
 	if l_Player.m_CameraAnimation ~= nil then
 		l_Player:SetAnimationCamera(l_Player.m_CameraAnimation, false)
 	end
+	
+	local l_LevelManager = CUABEngine.get_instance():get_level_manager()
+	if l_Player.m_Teleport then
+		if l_Player.m_ActualLevel == "Recibidor" then
+			l_LevelManager:get_level("Biblioteca"):set_visible(true)
+		elseif l_Player.m_ActualLevel == "Biblioteca" then
+			l_LevelManager:get_level("Maquinas"):set_visible(true)
+		elseif l_Player.m_ActualLevel == "Maquinas" then
+			l_LevelManager:get_level("Pasillo"):set_visible(true)
+			l_LevelManager:get_level("Pasillo"):set_has_to_update(true)
+		end
+	end
 	l_Owner:set_visible(true)
 end
 
@@ -87,11 +99,51 @@ function InteractingUpdate(args, _ElapsedTime)
 	end
 end
 
+function ChangeLevel(args)
+	local l_Player = args["self"]
+	local l_LevelManager = CUABEngine.get_instance():get_level_manager()
+	if l_Player.m_ActualLevel == "Recibidor" then
+		l_LevelManager:change_object_level("Recibidor","Biblioteca","solid","Puertaanimada")
+		l_LevelManager:change_object_level("Recibidor","Biblioteca","solid","Pomoanimado")
+		l_LevelManager:choose_scene_command_level("Biblioteca")
+		g_Player:SetActualLevel("Biblioteca")			
+		l_LevelManager:unload_level("Recibidor")
+		l_LevelManager:get_level("Boss"):set_visible(true)
+	elseif l_Player.m_ActualLevel == "Biblioteca" then
+		l_LevelManager:change_object_level("Biblioteca","Maquinas","solid","PuertaSalaMaquinas")
+		l_LevelManager:change_object_level("Biblioteca","Maquinas","solid","ValvulaPuertaSalaMaquinas")
+		l_LevelManager:choose_scene_command_level("Maquinas")
+		g_Player:SetActualLevel("Maquinas")	
+		l_LevelManager:get_level("Maquinas"):set_has_to_update(true)
+		l_LevelManager:get_level("Boss"):get_layer_manager():get_layer("solid"):get_resource("cajacristal_SalaBoss"):set_visible(true)
+		l_LevelManager:get_level("Boss"):get_layer_manager():get_layer("solid"):get_resource("VidriosJaula"):set_visible(true)
+		l_LevelManager:get_level("Boss"):get_layer_manager():get_layer("solid"):get_resource("BajoCasaCristal"):set_visible(true)
+		l_LevelManager:get_level("Boss"):get_layer_manager():get_layer("solid"):get_resource("TubosGrandesSalaBoss_001"):set_visible(true)
+		l_LevelManager:get_level("Boss"):get_layer_manager():get_layer("solid"):get_resource("TubosGrandesSalaBoss_002"):set_visible(true)
+		l_LevelManager:get_level("Boss"):get_layer_manager():get_layer("solid"):get_resource("TubosGrandesSalaBoss_003"):set_visible(true)
+		l_LevelManager:get_level(l_Player.m_ActualLevel):get_cinematic_manager():get_resource("Cinta1"):play()
+		l_LevelManager:get_level(l_Player.m_ActualLevel):get_cinematic_manager():get_resource("Cinta2"):play()
+		l_LevelManager:get_level(l_Player.m_ActualLevel):get_cinematic_manager():get_resource("Cinta3"):play()
+		l_LevelManager:get_level(l_Player.m_ActualLevel):get_cinematic_manager():get_resource("Cinta4"):play()
+		l_LevelManager:get_level(l_Player.m_ActualLevel):get_cinematic_manager():get_resource("Cinta5"):play()
+		l_LevelManager:unload_level("Biblioteca")
+		--l_LevelManager:load_level("Pasillo",false,true,false)
+	elseif l_Player.m_ActualLevel == "Maquinas" then
+		l_LevelManager:change_object_level("Maquinas","Boss","solid","PuertaTaller")
+		l_LevelManager:change_object_level("Maquinas","Boss","solid","PomoPuertaTaller")
+		l_LevelManager:choose_scene_command_level("Boss")
+		g_Player:SetActualLevel("Boss")	
+		l_LevelManager:get_level("Boss"):set_has_to_update(true)
+		l_LevelManager:unload_level("Maquinas")
+		l_LevelManager:get_level(l_Player.m_ActualLevel):get_cinematic_manager():get_resource("engranajes_boss"):play()		
+	end
+end
+
 function InteractingEnd(args)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
+	
 	if l_Player.m_Teleport then
-		l_Player.m_Teleport = false
 		local l_AnimatedCam = g_Engine:get_camera_controller_manager():get_resource(l_Player.m_CameraAnimation)
 		local l_Pos = l_AnimatedCam:get_position() - Vect3f(0,g_TotalHeight,0)
 		l_Player.m_PhysXManager:character_controller_teleport("player", l_Pos)
@@ -118,6 +170,11 @@ function InteractingEnd(args)
 		l_Owner:remove_action(l_Owner:get_actual_action_animation())
 		l_Player:ClearCamera()
 	end
+	if l_Player.m_Teleport then
+		l_Player.m_Teleport = false
+		ChangeLevel(args)
+	end
+	
 end
 
 function InteractingToIdleCondition(args)

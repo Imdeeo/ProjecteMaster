@@ -129,7 +129,7 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 	DEVMODE fullscreenSettings;
 	bool isChangeSuccessful;
 	RECT windowBoundary;
-
+	UABEngine.SetScreenSize(Vect2f(desktop.right, desktop.bottom));
 	EnumDisplaySettings(NULL, 0, &fullscreenSettings);
 	fullscreenSettings.dmPelsWidth = desktop.right;
 	fullscreenSettings.dmPelsHeight = desktop.bottom;
@@ -155,6 +155,7 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 	RECT rc = {
 		0, 0, 1280, 720
 	};
+	UABEngine.SetScreenSize(Vect2f(1280, 720));
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
 	// Create the application's window

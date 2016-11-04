@@ -30,10 +30,10 @@ public:
 		GetMainCamera(){ return m_MainCamera; };
 	CCameraController* GetDebugCamera(){ return m_DebugCamera; };
 	UAB_BUILD_GET_SET(int, CurrentCameraControl)
+	void Init();
 private:
 	void UpdateMainCamera(float _ElapsedTime);
 	void UpdateDebugCamera(float _ElapsedTime);
-	void Init();
 };
 
 #endif //CAMERA_CONTROLLER_MANAGER_H
