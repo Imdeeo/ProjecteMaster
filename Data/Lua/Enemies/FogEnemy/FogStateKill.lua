@@ -16,6 +16,8 @@ function FogKillFirst(args)
 	g_Player:SetAnimationCamera("JaheemDies2")
 	
 	l_Enemy.m_TimerToStop = 0
+	
+	g_SoundManager:play_event(g_SteamSoundEvent)
 end
 
 function FogKillUpdate(args, _ElapsedTime)

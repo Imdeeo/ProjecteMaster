@@ -57,8 +57,6 @@ function mainLua()
 	l_LevelManager:load_level("Biblioteca",true)
 	l_LevelManager:choose_scene_command_level("Biblioteca")
 	g_Player:SetActualLevel("Biblioteca")
-	l_SoundManager:broadcast_state(g_LevelStates["Biblioteca"])
-	SetupLevelSounds("Biblioteca", l_SoundManager)
 	
 	--l_LevelManager:load_level("Maquinas",true)
 	--l_LevelManager:choose_scene_command_level("Maquinas")

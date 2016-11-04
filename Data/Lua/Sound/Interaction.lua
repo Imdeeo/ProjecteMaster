@@ -42,8 +42,8 @@ end
 function PlayActivateProjectorSounds(_Speaker)
 	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.3, _Speaker)
 	g_SoundManager:play_event(g_BookSwitchSoundEvent, _Speaker)
-	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 2.2, "Projector")
-	g_SoundManager:play_event(g_ProjectorSoundEvent, "Projector")
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 2.2, "SpeakerProjector")
+	g_SoundManager:play_event(g_ProjectorSoundEvent, "SpeakerProjector")
 end
 
 function PlayOpenSecretDoorSound(_Speaker)
@@ -68,8 +68,35 @@ function PlayPickValveSound(_Speaker)
 end
 
 function PlayInputValveSound(_Speaker)
+	g_SoundManager:stop_event(g_SteamSoundEvent)
 	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 1.1667, _Speaker)
 	g_SoundManager:play_event(g_InputValveEvent, _Speaker)
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 4.4, "SpeakerCrusherWall")
+	g_SoundManager:play_event(g_CrusherSoundEvent, "SpeakerCrusherWall")
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 4.9, "SpeakerCrusherCeiling")
+	g_SoundManager:play_event(g_CrusherSoundEvent, "SpeakerCrusherCeiling")
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 5.6, "SpeakerToothWheelRight")
+	g_SoundManager:play_event(g_MiniwheelSoundEvent, "SpeakerToothWheelRight")
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 5.6, "SpeakerToothWheelLeft")
+	g_SoundManager:play_event(g_MiniwheelSoundEvent, "SpeakerToothWheelLeft")
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 5.9, "SpeakerHourglass")
+	g_SoundManager:play_event(g_HourglassSoundEvent, "SpeakerHourglass")
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 6.3, "SpeakerCylindersRight")
+	g_SoundManager:play_event(g_CylinderSoundEvent, "SpeakerCylindersRight")
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 6.3, "SpeakerCylindersLeft")
+	g_SoundManager:play_event(g_CylinderSoundEvent, "SpeakerCylindersLeft")
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 6.3, "SpeakerLeverWheelRight")
+	g_SoundManager:play_event(g_CogwheelsSoundEvent, "SpeakerLeverWheelRight")
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 6.9, "SpeakerLeverWheelLeft")
+	g_SoundManager:play_event(g_CogwheelsSoundEvent, "SpeakerLeverWheelLeft")
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 7.3, "SpeakerNewcomen")
+	g_SoundManager:play_event(g_NewcomenSoundEvent, "SpeakerNewcomen")
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 7.8, "SpeakerTesla")
+	g_SoundManager:play_event(g_TeslaSoundEvent, "SpeakerTesla")
+	g_SoundManager:set_rtpc_value(g_PitchRTPC, -80, "SpeakerDoorPipe")
+	g_SoundManager:set_rtpc_value(g_InitialDelayRTPC, 8.0, "SpeakerDoorPipe")
+	g_SoundManager:play_event(g_SteamSoundEvent, "SpeakerDoorPipe")
+	
 end
 
 function PlayOpenValveDoorSound(_Speaker)
@@ -94,7 +121,7 @@ function PlayStairsEndSound(_Speaker)
 end
 
 function PlayRunSound(_Speaker)
-
+	
 end
 
 function PlayNullSound(_Speaker)

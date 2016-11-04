@@ -111,10 +111,6 @@ g_InputValveEvent = SoundEvent()
 g_InputValveEvent.event_name = "Input_Valve"
 g_OpenValveDoor = SoundEvent()
 g_OpenValveDoor.event_name = "Open_Valve_Door"
--- Pasillo
-g_JailEvent = SoundEvent()
-g_JailEvent.event_name = "Jail"
-
 
 -- Organ
 g_OrganNoteSwitch = SoundSwitch()
@@ -158,6 +154,30 @@ g_FireSoundEvent = SoundEvent()
 g_FireSoundEvent.event_name = "Fire_Start"
 g_CogwheelsSoundEvent = SoundEvent()
 g_CogwheelsSoundEvent.event_name = "Cogwheels_Start"
+g_HourglassSoundEvent = SoundEvent()
+g_HourglassSoundEvent.event_name = "Hourglass_Start"
+g_BeltSoundEvent = SoundEvent()
+g_BeltSoundEvent.event_name = "Belt_Start"
+g_CrusherSoundEvent = SoundEvent()
+g_CrusherSoundEvent.event_name = "Crusher_Start"
+g_MiniwheelSoundEvent = SoundEvent()
+g_MiniwheelSoundEvent.event_name = "Miniwheel_Start"
+g_CauldronSoundEvent = SoundEvent()
+g_CauldronSoundEvent.event_name = "Cauldron_Start"
+g_NewcomenSoundEvent = SoundEvent()
+g_NewcomenSoundEvent.event_name = "Newcomen_Start"
+g_TeslaSoundEvent = SoundEvent()
+g_TeslaSoundEvent.event_name = "Tesla_Start"
+g_CylinderSoundEvent = SoundEvent()
+g_CylinderSoundEvent.event_name = "Cylinder_Start"
+g_SteamSoundEvent = SoundEvent()
+g_SteamSoundEvent.event_name = "Steam_Start"
+g_JailSoundEvent = SoundEvent()
+g_JailSoundEvent.event_name = "Jail_Start"
+g_CaveSoundEvent = SoundEvent()
+g_CaveSoundEvent.event_name = "Cave_Start"
+g_ButhcerSoundEvent = SoundEvent()
+g_ButhcerSoundEvent.event_name = "Butcher_Start"
 
 -- Enemies
 g_AutomatonActivateSoundEvent = SoundEvent()
@@ -169,6 +189,8 @@ g_AutomatonStartPatrolEvent = SoundEvent()
 g_AutomatonStartPatrolEvent.event_name = "Automaton_Start_Patrol"
 g_AutomatonStopPatrolEvent = SoundEvent()
 g_AutomatonStopPatrolEvent.event_name = "Automaton_Stop_Patrol"
+g_BossStepSoundEvent = SoundEvent()
+g_BossStepSoundEvent.event_name = "Boss_Step"
 
 -- Jaheem
 g_DondeNosLlevanVoiceEvent = SoundEvent()
@@ -199,9 +221,9 @@ g_GritoVoiceEvent.event_name = "Jaheem_Grito"
 
 -- Ysmael
 g_MuertePorCorduraVoiceEvent = SoundEvent()
-g_MuertePorCorduraVoiceEvent.event_name = "Ysmael_Muerte_Cordura"
+g_MuertePorCorduraVoiceEvent.event_name = "Muerte_Cordura"
 g_MuerteViolentaVoiceEvent = SoundEvent()
-g_MuerteViolentaVoiceEvent.event_name = "Ysmael_Muerte_Violenta"
+g_MuerteViolentaVoiceEvent.event_name = "Muerte_Violenta"
 g_MonologoVoiceEvent = SoundEvent()
 g_MonologoVoiceEvent.event_name = "Ysmael_Monologo_Inicial"
 g_HijoVoiceEvent = SoundEvent()
