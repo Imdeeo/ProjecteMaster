@@ -17,7 +17,7 @@ function FogKillFirst(args)
 	
 	l_Enemy.m_TimerToStop = 0
 	
-	g_SoundManager:play_event(g_SteamSoundEvent)
+	g_SoundManager:play_event(g_SteamOnceSoundEvent)
 end
 
 function FogKillUpdate(args, _ElapsedTime)
