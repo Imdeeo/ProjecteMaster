@@ -199,7 +199,7 @@ void CInputManager::Load(std::string _file)
 		m_Map->MapBool(CInputManager::DebugMonsterHit, *m_KeyboardId, gainput::KeyD);
 		m_Map->MapBool(CInputManager::DebugToggleRenderAStar, *m_KeyboardId, gainput::KeyO);
 		m_Map->MapBool(CInputManager::DebugToggleLoadVideo, *m_KeyboardId, gainput::KeyI);
-		m_Map->MapBool(CInputManager::DebugStopAllSounds, *m_KeyboardId, gainput::KeyF9);
+		//m_Map->MapBool(CInputManager::DebugStopAllSounds, *m_KeyboardId, gainput::KeyF9);
 #endif
 	}
 }
@@ -288,8 +288,8 @@ int CInputManager::GetAction(std::string _name)
 		return CInputManager::DebugMonsterIdle;
 	else if (_name == "DebugMonsterHit")
 		return CInputManager::DebugMonsterHit;
-	else if (_name == "DebugStopAllSounds")
-		return CInputManager::DebugStopAllSounds;
+	//else if (_name == "DebugStopAllSounds")
+		//return CInputManager::DebugStopAllSounds;
 
 	else{
 		assert("This should not happen!");
