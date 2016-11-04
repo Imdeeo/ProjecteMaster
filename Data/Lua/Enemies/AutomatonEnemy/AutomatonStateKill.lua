@@ -22,7 +22,7 @@ function KillFirstAutomaton(args)
 	
 	l_Enemy:ShowParticles("EmisorParticulaTorreta", true)
 	
-	g_SoundManager:play_event(g_SteamSoundEvent)
+	g_SoundManager:play_event(g_SteamOnceSoundEvent)
 end
 
 function KillUpdateAutomaton(args, _ElapsedTime)
