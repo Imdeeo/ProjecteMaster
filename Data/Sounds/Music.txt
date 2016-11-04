@@ -1,0 +1,25 @@
+Event	ID	Name			Wwise Object Path	Notes
+	2932040671	Play_Music			\Default Work Unit\Play_Music	
+
+State Group	ID	Name			Wwise Object Path	Notes
+	209137191	Action			\Default Work Unit\Action	
+	2782712965	Level			\Default Work Unit\Level	
+
+State	ID	Name	State Group			Notes
+	748895195	None	Action			
+	2582085496	Exploration	Action			
+	3169107872	Escape	Action			
+	4177142508	Singing	Action			
+	748895195	None	Level			
+	1595257284	Sala_Boss	Level			
+	1818940147	Pasillo	Level			
+	2979444837	SalaMaquinas	Level			
+	3020800564	Recibidor	Level			
+	3685279209	Biblioteca	Level			
+
+Custom State	ID	Name	State Group	Owner		Notes
+	443164242	Singing	Action	\Interactive Music Hierarchy\Default Work Unit\Main_Music		
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	206163165	prova	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\prova_4B8CC0C5.wem		\Interactive Music Hierarchy\Default Work Unit\Main_Music\RecBibl\prova\prova		23049280
+
