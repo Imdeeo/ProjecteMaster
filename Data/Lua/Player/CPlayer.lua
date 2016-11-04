@@ -22,6 +22,7 @@ dofile("Data\\Lua\\Player\\PlayerStateSpecialSinging.lua")
 dofile("Data\\Lua\\Player\\PlayerStateDead.lua")
 dofile("Data\\Lua\\Player\\PlayerStatePuzzle.lua")
 dofile("Data\\Lua\\Player\\PlayerStateFocusing.lua")
+dofile("Data\\Lua\\Player\\PlayerStateFinish.lua")
 
 
 --Bone #0: BrazosJaheem
@@ -175,6 +176,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_SingOnce = false
 		self.m_VideoPlaying = false
 		self.m_FogDown = false
+		self.m_Finish = false
 		
 		self.m_Target = nil
 		self.m_TargetPosOffset = Vect3f(1.0, 0.0, 0.0)
@@ -476,6 +478,7 @@ class 'CPlayer' (CLUAComponent)
 		ClimbingUpState:set_do_end_function(ClimbingUpEnd)
 		ClimbingUpState:add_condition(ClimbingUpToClimbingIdleCondition, "ClimbingIdle")
 		ClimbingUpState:add_condition(ANYToDeadCondition, "Dead")
+		ClimbingUpState:add_condition(ClimbingToFinishCondition, "Finish")
 		
 		ClimbingDownState = State.create(ClimbingDownUpdate)
 		ClimbingDownState:set_do_first_function(ClimbingDownFirst)
@@ -539,6 +542,9 @@ class 'CPlayer' (CLUAComponent)
 		FocusingState:add_condition(FocusingToIdleCondition, "Idle")
 		FocusingState:add_condition(ANYToDeadCondition, "Dead")
 		
+		FinishState = State.create(FinishUpdate)
+		FinishState:set_do_first_function(FinishFirst)
+		FinishState:set_do_end_function(FinishEnd)
 		
 		SpecialSingingState = State.create(SpecialSingingStateUpdate)
 		SpecialSingingState:set_do_first_function(SpecialSingingStateFirst)
@@ -563,6 +569,7 @@ class 'CPlayer' (CLUAComponent)
 		self.m_StateMachine:add_state("Dead", DeadState)
 		self.m_StateMachine:add_state("Puzzle", PuzzleState)
 		self.m_StateMachine:add_state("Focusing", FocusingState)
+		self.m_StateMachine:add_state("Finish", FinishState)
 	end	
 	
 	function CPlayer:SetActiveStateMachineState(name,active)

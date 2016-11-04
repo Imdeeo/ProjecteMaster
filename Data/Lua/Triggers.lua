@@ -17,6 +17,7 @@ function OnExitWindow(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		local l_Player = m_CharacterManager.m_Player[1]
 		l_Player.m_PhysXManager:disable_physics(_TriggerName, "FisicasAux")
+		l_Player.m_PhysXManager:disable_physics("fisica_escaleras", "FisicasAux")
 	end
 end
 
@@ -51,6 +52,7 @@ function OnEnterStairs(_TriggerName, _ColliderName)
 				l_Player.m_UpCamera = Vect3f(0.0, 1.0, 0.0)
 				l_Player.m_ForwardCamera = Vect3f(1.0, 0.0, 0.0)
 				l_Player.m_TargetPosOffset = Vect3f(-0.5, 0.0, 0.0)
+				l_Player.m_Finish = true
 			end				
 		end
 	end
