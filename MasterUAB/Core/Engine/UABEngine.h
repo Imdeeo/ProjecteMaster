@@ -91,6 +91,7 @@ public:
 	UAB_BUILD_GET_SET(float, TimeScale);
 	UAB_BUILD_GET_SET(bool, Pause);
 	UAB_BUILD_GET_SET(bool, VideoPause);
+	UAB_BUILD_GET_SET(Vect2f, ScreenSize);
 	bool GetActiveConsole() { return m_ActiveConsole; };
 	void SetActiveConsole(bool _ActiveConsole);
 	bool GetLuaReloaded(){ return m_LuaReloaded; }

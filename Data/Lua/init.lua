@@ -27,7 +27,7 @@ g_VolumeController = VolumeController()
 m_MusicSliderResult = CSliderResult(50.0, 50.0)
 m_FxSliderResult = CSliderResult(50.0, 50.0)
 m_Cordura = CSliderResult(50.0, 50.0)
-m_ScreenResolution = Vect2f(1280.0, 720.0)
+m_ScreenResolution = g_Engine:get_screen_size()
 m_ScreenFactorX = m_ScreenResolution.x / 1920
 m_ScreenFactorY = m_ScreenResolution.y / 1080
 m_Timer = 0.0
@@ -176,7 +176,7 @@ function luaGui(_ElapsedTime)
 		local l_WidthSlider = 500 * m_ScreenFactorX
 		local l_HeightSlider = 42 * m_ScreenFactorY
 	
-		gui_position = CGUIPosition(0, 0, 1280, 720, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)		
+		gui_position = CGUIPosition(0, 0, m_ScreenResolution.x, m_ScreenResolution.y, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)		
 		local color = CColor(1,1,1,1)
 		local coord = Vect2f(500,100)
 		--gui_position = CGUIPosition(500, 400, 100, 50, CGUIManager.mid_center, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
