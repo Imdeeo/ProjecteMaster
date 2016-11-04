@@ -31,16 +31,16 @@ function SpecialSingingStateUpdate(args, _ElapsedTime)
 		if l_Player.m_Timer > 9.333 then
 			if l_Player.m_Timer < 13.333 then 
 				local l_Value = math.min(1,(l_Player.m_Timer-9.333)/4.0)	
-				local l_gui_position = CGUIPosition(0, 0, 1280, 720, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)		
+				local l_gui_position = CGUIPosition(0, 0, m_ScreenResolution.x, m_ScreenResolution.y, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)		
 				g_Engine:get_gui_manager():do_panel("fundidoNegroCantando", "fundidoNegro", l_gui_position, 0.0, l_Value)
 			else
 				if not l_Player.m_VideoPlaying then
 					l_Player.m_VideoPlaying = true
 					g_Engine:get_video_manager():load_clip("intro.ogv", false)
-					--g_Engine:get_video_manager():render_screen_clip("intro.ogv")					
+					g_Engine:get_video_manager():render_screen_clip("intro.ogv")					
 				else					
 					local l_Value = 1 - math.min(1,(l_Player.m_Timer-13.333)/2)	
-					local l_gui_position = CGUIPosition(0, 0, 1280, 720, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)		
+					local l_gui_position = CGUIPosition(0, 0, m_ScreenResolution.x, m_ScreenResolution.y, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)		
 					g_Engine:get_gui_manager():do_panel("fundidoNegroCantando", "fundidoNegro", l_gui_position, 0.0, l_Value)
 				end
 			end
