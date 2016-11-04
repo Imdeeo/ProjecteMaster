@@ -232,6 +232,8 @@ g_TengoQueSalirVoiceEvent = SoundEvent()
 g_TengoQueSalirVoiceEvent.event_name = "Jaheem_Tengo_Que_Salir"
 g_GritoVoiceEvent = SoundEvent()
 g_GritoVoiceEvent.event_name = "Jaheem_Grito"
+g_IntroVideoEvent = SoundEvent()
+g_IntroVideoEvent.event_name = "Intro_Video"
 
 
 -- Ysmael
