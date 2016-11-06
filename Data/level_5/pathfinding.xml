@@ -12,7 +12,7 @@
 	<node name="node10" pos="69.193 -9.94223 14.219"/>
 	<node name="node11" pos="76.0525 -9.94223 13.2102"/>
 	<node name="node12" pos="127.397 -9.94223 13.2102"/>
-	<node name="node13" pos="152.723 -9.94223 13.2102"/>
+	<node name="node13" pos="151.723 -9.94223 13.2102"/>
 	<father name="node1">
 		<child name="node2"/>
 	</father>

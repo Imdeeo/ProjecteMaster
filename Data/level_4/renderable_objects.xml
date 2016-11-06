@@ -46,7 +46,7 @@
 	<instance_mesh name="ATRASVentana_HaciaBoss_002" layer ="solid" core_name="ATRASVentana_HaciaBoss_002" position="6.5965 8.86224 28.856" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="ATRASVentana_HaciaBoss_003" layer ="solid" core_name="ATRASVentana_HaciaBoss_003" position="4.88647 2.25321 30.833" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="ATRASVentana_HaciaBoss_004" layer ="solid" core_name="ATRASVentana_HaciaBoss_004" position="1.1981 1.6246 34.9958" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="VidriosJaula" layer ="alpha_blend_objects" core_name="VidriosJaula" position="3.97026 5.9736 21.3876" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="false"/>
+	<instance_mesh name="VidriosJaula" layer ="solid" core_name="VidriosJaula" position="3.97026 5.9736 21.3876" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="false"/>
 	<instance_mesh name="Vidrio_Ventana_HaciaBoss_001" layer ="solid" core_name="Vidrio_Ventana_HaciaBoss_001" position="2.74155 6.65708 33.1713" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="Vidrio_Ventana_HaciaBoss_002" layer ="solid" core_name="Vidrio_Ventana_HaciaBoss_002" position="6.58644 8.83102 28.8519" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="Vidrio_Ventana_HaciaBoss_004" layer ="solid" core_name="Vidrio_Ventana_HaciaBoss_004" position="1.2293 1.62692 35.0127" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>

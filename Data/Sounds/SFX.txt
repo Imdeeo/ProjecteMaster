@@ -1,34 +1,45 @@
 Event	ID	Name			Wwise Object Path	Notes
+	25491528	Muerte_Cordura			\Default Work Unit\Voice events\Ysmael\Muerte_Cordura	
+	60097497	Open_Valve_Door			\Default Work Unit\Interaction events\Open_Valve_Door	
 	61052160	Automaton_Beat_1			\Default Work Unit\Enemy events\Automaton_Beat_1	
 	61052167	Automaton_Beat_6			\Default Work Unit\Enemy events\Automaton_Beat_6	
+	240625833	Steam_Once			\Default Work Unit\Environment events\Steam_Once	
 	452547817	Stop_All			\Default Work Unit\Stop_All	
+	518704643	Tesla_Start			\Default Work Unit\Environment events\Tesla_Start	
+	546131724	Muerte_Violenta			\Default Work Unit\Voice events\Ysmael\Muerte_Violenta	
 	684176057	Automaton_Stop_Patrol			\Default Work Unit\Enemy events\Automaton_Stop_Patrol	
 	762918169	Song_Stop			\Default Work Unit\Player events\Song_Stop	
 	824454361	Artifact_Pick			\Default Work Unit\Interaction events\Artifact_Pick	
 	850583253	Drawer_Open			\Default Work Unit\Interaction events\Drawer_Open	
 	1216690966	Projector_Start			\Default Work Unit\Environment events\Projector_Start	
+	1433397863	Steam			\Default Work Unit\Environment events\Steam	
 	1449423888	Organ_Play_Note			\Default Work Unit\Interaction events\Organ_Play_Note	
 	1467102051	Paper_Sheet_Pick			\Default Work Unit\Interaction events\Paper_Sheet_Pick	
+	1481508790	Conveyor_Belt			\Default Work Unit\Environment events\Conveyor_Belt	
 	1512214429	Enter_Library			\Default Work Unit\Interaction events\Enter_Library	
-	1625043140	Door_Slam_2			\Default Work Unit\Interaction events\Door_Slam_2	
-	1625043143	Door_Slam_1			\Default Work Unit\Interaction events\Door_Slam_1	
+	1583577610	Cauldron_Start			\Default Work Unit\Environment events\Cauldron_Start	
+	1618668279	Ysmael_Monologo_Inicial			\Default Work Unit\Voice events\Ysmael\Ysmael_Monologo_Inicial	
+	1625043140	Door_Slam_2			\Default Work Unit\Environment events\Door_Slam_2	
+	1625043143	Door_Slam_1			\Default Work Unit\Environment events\Door_Slam_1	
 	1704091077	Book_Switch			\Default Work Unit\Interaction events\Book_Switch	
 	1712046992	Fire_Start			\Default Work Unit\Environment events\Fire_Start	
 	1756568658	Land_Player			\Default Work Unit\Player events\Land_Player	
+	1883005623	Ysmael_Hijo			\Default Work Unit\Voice events\Ysmael\Ysmael_Hijo	
 	1889509218	Bookshelf_move			\Default Work Unit\Environment events\Bookshelf_move	
 	1902270458	Drawer_Force			\Default Work Unit\Interaction events\Drawer_Force	
 	1981293180	Fire_Stop			\Default Work Unit\Environment events\Fire_Stop	
 	2127419643	Cogwheels_Start			\Default Work Unit\Environment events\Cogwheels_Start	
 	2146093371	Automaton_Activate			\Default Work Unit\Enemy events\Automaton_Activate	
+	2223442941	Intro_Video			\Default Work Unit\Intro_Video	
 	2267881878	Automaton_Step			\Default Work Unit\Enemy events\Automaton_Step	
 	2303308639	Artifact_Use			\Default Work Unit\Interaction events\Artifact_Use	
-	2414299009	Valve_Place			\Default Work Unit\Interaction events\Valve_Place	
-	2536613531	Valve_Door_Open			\Default Work Unit\Interaction events\Valve_Door_Open	
+	2388792551	Pendulum			\Default Work Unit\Environment events\Pendulum	
 	2584346859	Jump_Player			\Default Work Unit\Player events\Jump_Player	
-	2634705667	Valve_Pick			\Default Work Unit\Interaction events\Valve_Pick	
+	2722027396	Input_Valve			\Default Work Unit\Interaction events\Input_Valve	
 	2833786043	Song_Start			\Default Work Unit\Player events\Song_Start	
 	3021055449	Automaton_Stop_Beating			\Default Work Unit\Enemy events\Automaton_Stop_Beating	
 	3146010173	Automaton_Start_Patrol			\Default Work Unit\Enemy events\Automaton_Start_Patrol	
+	3174745453	Pick_Valve			\Default Work Unit\Interaction events\Pick_Valve	
 	3389390998	Paper_Sheet_Put_Down			\Default Work Unit\Interaction events\Paper_Sheet_Put_Down	
 	3589785957	Step_Player			\Default Work Unit\Player events\Step_Player	
 	3679762312	Resume_All			\Default Work Unit\Resume_All	
@@ -64,42 +75,62 @@ Effect plug-ins	ID	Name	Type				Notes
 	2995775460	Room_Small	Wwise RoomVerb			
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	239880	sol	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\sol_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Biblioteca\Organo\sol		99856
+	5196593	do	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\do_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Biblioteca\Organo\do		99856
 	12242022	Coger_Objeto	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\Coger_Objeto_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Coger_Objeto		7840
-	66980654	fa	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\fa_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\2-Biblioteca\Organo\fa		99856
-	95270441	CAJON ABRIR	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\CAJON ABRIR_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\1-Recibidor\CAJON ABRIR		59464
-	137746251	song_placeholder	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\song_placeholder_4B8CC0C5.wem		\Interactive Music Hierarchy\Default Work Unit\Song\Verse 1\song_placeholder		10042188
+	45924521	Valve_Pickup	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\metallic_noise_FD00B4A4.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Maquinas\Valve_Pick\Valve_Pickup		34048
+	51671896	old_clock_pendulum_ticking	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\old_clock_pendulum_ticking_F71DB8EF.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Environment sounds\old_clock_pendulum_ticking		293104
+	86721894	MuerteCAIDA_Lamentable	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\MuerteCAIDA_Lamentable_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ysmael_Mixer\Ysmael_Muerte_Violenta\MuerteCAIDA_Lamentable		126784
+	95270441	CAJON ABRIR	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\CAJON ABRIR_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Recibidor\CAJON ABRIR		59464
+	131433814	steam_hiss_continuous	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\steam_hiss_05E05616.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Environment sounds\steam_hiss_continuous		310520
+	134689959	MuerteCORDURA_RisaYsmael	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\MuerteCORDURA_RisaYsmael_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ysmael_Mixer\Ysmael_Muerte_Cordura\MuerteCORDURA_RisaYsmael		555760
+	137746251	song_placeholder	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\song_placeholder_37D8776A.wem		\Interactive Music Hierarchy\Default Work Unit\Song\Verse 1\song_placeholder		2824408
 	139735676	PASO PERSONA 3	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\PASO PERSONA 3_8BAB9469.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Player sounds\PASO PERSONA 3		8776
-	182807901	mi	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\mi_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\2-Biblioteca\Organo\mi		99856
 	185439624	PASO PERSONA 2	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\PASO PERSONA 2_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Player sounds\Pasos_Camino\PASO PERSONA 2		4528
-	205941244	door_slam_2	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\door_slam_2_35430F59.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\door_slam_2		199144
-	226089555	Artifact_Pick	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\metallic_noise_C22E2461.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\2-Biblioteca\Artifact_Pick		37072
+	219415792	mi	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\mi_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Biblioteca\Organo\mi		99856
+	226089555	Artifact_Pick	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\metallic_noise_C22E2461.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Biblioteca\Artifact_Pick		37072
+	226447429	treadmill	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\treadmill_C7DB1764.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Environment sounds\treadmill		186752
 	258051534	automaton_start	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\engranajes_sample_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Enemy sounds\automaton_start		104608
-	347806454	Valve_Pickup	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\metallic_noise_9A5F42F2.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\3-Maquinas\Valve_Pickup		33184
-	414582793	si	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\si_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\2-Biblioteca\Organo\si		99856
+	287865319	MuerteCORDURA_BienvenidoHijoMio	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\MuerteCORDURA_BienvenidoHijoMio_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ysmael_Mixer\Ysmael_Muerte_Cordura\MuerteCORDURA_BienvenidoHijoMio		80704
+	303729294	steam_hiss	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\steam_hiss_5DA9A9F9.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Environment sounds\steam_hiss		304408
+	309678161	MonologoYsmaelEntero	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\MonologoYsmaelEntero_2E0995F7.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ysmael_Mixer\MonologoYsmaelEntero		2343808
+	402150982	MuerteCAIDA_Estonoesloquequeria	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\MuerteCAIDA_Estonoesloquequeria_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ysmael_Mixer\Ysmael_Muerte_Violenta\MuerteCAIDA_Estonoesloquequeria		145864
+	405136838	si	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\si_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Biblioteca\Organo\si		99856
+	408963884	la	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\la_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Biblioteca\Organo\la		74944
 	425249954	PASO AUTOMATA 2	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\PASO AUTOMATA 2_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Enemy sounds\PASO AUTOMATA 2		90424
-	530224851	Valve_Place	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\metallic_noise_EB9DABF3.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\3-Maquinas\Valve_Place		46576
+	500378663	MuerteCORDURA_NoTePreocupesProntoSerasLibre	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\MuerteCORDURA_NoTePreocupesProntoSerasLibre_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ysmael_Mixer\Ysmael_Muerte_Cordura\MuerteCORDURA_NoTePreocupesProntoSerasLibre		100504
+	552621432	door_lock	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\door_lock_49B5F9F9.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Recibidor\Door\door_lock		30088
 	571092654	PASO PERSONA 1	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\PASO PERSONA 1_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Player sounds\Pasos_Camino\PASO PERSONA 1		8128
-	621295125	la	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\la_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\2-Biblioteca\Organo\la		74944
-	652850648	PUERTA CERRAR	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\PUERTA CERRAR_3EF33B6F.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\1-Recibidor\Library_Door\PUERTA CERRAR		94312
-	654920372	PUERTA ABRIR	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\PUERTA ABRIR_28C93BFA.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\2-Biblioteca\Artifact_Door\PUERTA ABRIR		36856
-	691934255	sol	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\sol_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\2-Biblioteca\Organo\sol		99856
-	717286967	PUERTA ABRIR	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\PUERTA ABRIR_46F1CA38.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\3-Maquinas\Valve_Door\PUERTA ABRIR		35776
+	583385095	door_slam_1	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\door_slam_1_D9AE1DE8.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Environment sounds\door_slam_1		83080
+	587726888	244992__vitaminl__closing-door	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\244992__vitaminl__closing-door_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Maquinas\Door\244992__vitaminl__closing-door		47584
+	600318286	Hand	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\ARRASTRAR 1_98321D7B.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Maquinas\Valve_Pick\Hand		4672
+	604729811	door_lock	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\door_lock_97B3A68A.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Maquinas\Door\door_lock		14932
+	612801680	boiler_room	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\boiler_room_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Environment sounds\boiler_room		298072
+	652850648	PUERTA CERRAR	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\PUERTA CERRAR_32A5E861.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Recibidor\Door\PUERTA CERRAR		86248
+	654920372	PUERTA ABRIR	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\PUERTA ABRIR_28C93BFA.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Biblioteca\Artifact_Door\PUERTA ABRIR		36856
+	669635992	MuerteCORDURA_BienvendioAmigoMio	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\MuerteCORDURA_BienvendioAmigoMio_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ysmael_Mixer\Ysmael_Muerte_Cordura\MuerteCORDURA_BienvendioAmigoMio		80704
+	678606273	tesla	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\tesla_A124063F.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Environment sounds\tesla		33896
+	715892075	JaheemMiedo_GRITO	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\JaheemMiedo_GRITO_7975D23A.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Voices\JaheemMiedo_GRITO		75088
+	717286967	PUERTA ABRIR	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\PUERTA ABRIR_89EF141C.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Recibidor\Door\PUERTA ABRIR		35560
 	733230618	PASO AUTOMATA 1	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\PASO AUTOMATA 1_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Enemy sounds\Patrol_Automata\PASO AUTOMATA 1		70408
-	734135933	Artifact_Use	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\metallic_noise_1D9574D7.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\2-Biblioteca\Artifact_Door\Artifact_Use		39808
-	740660551	re	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\re_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\2-Biblioteca\Organo\re		74944
+	734135933	Artifact_Use	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\metallic_noise_1D9574D7.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Biblioteca\Artifact_Door\Artifact_Use		39808
 	753169433	move_bookshelf	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\move_bookshelf_56FD20F4.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Environment sounds\move_bookshelf		11360
-	755719681	CAJON ABRIR_01	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\CAJON ABRIR_4BA690BD.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\1-Recibidor\CAJON_FORZAR\CAJON ABRIR_01		47296
-	772694107	do	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\do_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\2-Biblioteca\Organo\do		99856
-	787629499	CAJON CERRAR	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\CAJON CERRAR_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\1-Recibidor\CAJON CERRAR		79192
+	755719681	CAJON ABRIR_01	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\CAJON ABRIR_4BA690BD.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Recibidor\CAJON_FORZAR\CAJON ABRIR_01		47296
+	762683208	re	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\re_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Biblioteca\Organo\re		74944
+	774158747	door_slam_2	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\door_slam_2_4D7C59AF.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Environment sounds\door_slam_2		198568
+	787629499	CAJON CERRAR	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\CAJON CERRAR_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Recibidor\CAJON CERRAR		79192
+	794279729	fa	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\fa_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Biblioteca\Organo\fa		99856
 	814142868	Cogwheels_start	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\ENGRANAJES O MAQUINAS_31DF016C.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Environment sounds\Cogwheels\Cogwheels_start		135632
-	884164510	CAJON TOQUE	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\CAJON ABRIR_B9E45A3D.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\1-Recibidor\CAJON_FORZAR\CAJON TOQUE		17632
+	833646856	MuerteCORDURA_PuedesSentirlaLaLibertad	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\MuerteCORDURA_PuedesSentirlaLaLibertad_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ysmael_Mixer\Ysmael_Muerte_Cordura\MuerteCORDURA_PuedesSentirlaLaLibertad		149104
+	884164510	CAJON TOQUE	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\CAJON ABRIR_B9E45A3D.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Recibidor\CAJON_FORZAR\CAJON TOQUE		17632
+	916582572	MuerteCAIDA_QueDesperdicio	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\MuerteCAIDA_QueDesperdicio_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ysmael_Mixer\Ysmael_Muerte_Violenta\MuerteCAIDA_QueDesperdicio		328384
 	962527044	GOLPE ROBOT CRISTAL 1	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\GOLPE ROBOT CRISTAL 1_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Enemy sounds\Golpes_Automata\GOLPE ROBOT CRISTAL 1		83728
-	980284219	Turn_Wheel	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\ARRASTRAR 1_BE3B65AB.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\2-Biblioteca\Artifact_Door\Turn_Wheel_3_Times\Turn_Wheel		50968
-	981852708	ASS_CAJA_3	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\ASS_CAJA_3_4B8CC0C5.wem		\Interactive Music Hierarchy\Default Work Unit\Menu_Playlist\ASS_CAJA_3\ASS_CAJA_3		11520064
+	980284219	Turn_Wheel	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\ARRASTRAR 1_BE3B65AB.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Maquinas\Turn_Wheel		50968
 	993266665	PROYECTOR	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\PROYECTOR_49D6B1FB.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Environment sounds\PROYECTOR		1908344
-	1013411534	door_slam_1	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\door_slam_1_A0824C45.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\door_slam_1		83584
-	1053866514	door_lock	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\door_lock_1F206893.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\1-Recibidor\Library_Door\door_lock		30340
+	1033186209	DESPERTARHIJO_TePresentoAMiHijo	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\DESPERTARHIJO_TePresentoAMiHijo_C3B3FD70.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ysmael_Mixer\DESPERTARHIJO_TePresentoAMiHijo		400240
+	1052510011	Valve_Place	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\metallic_noise_62531D7A.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Interaction sounds\Maquinas\Valve_Place		40240
 
 Streamed Audio	ID	Name	Audio source file	Generated audio file	Wwise Object Path	Notes
+	783347423	IntroSOLOSONIDO_Gritandomas	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\IntroSOLOSONIDO_Gritandomas_9E69E797.wem	783347423.wem	\Actor-Mixer Hierarchy\Default Work Unit\Video_Mixer\IntroSOLOSONIDO_Gritandomas	
 	815617411	FUEGO_C	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\FUEGO_C_37D8776A.wem	815617411.wem	\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixer\Environment sounds\FUEGO_C	
 

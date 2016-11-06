@@ -63,8 +63,6 @@ function FogOffEnd(args)
 	l_Owner:set_rotation(target_quat)
 	
 	l_Owner:set_visible(true)
-
-	l_Enemy.m_SoundManager:play_event(g_AutomatonActivateSoundEvent, l_Owner)
 end
 
 function FogOffToChaseCondition(args)

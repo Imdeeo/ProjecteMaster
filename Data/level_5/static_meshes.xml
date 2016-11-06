@@ -103,5 +103,13 @@
 	<static_mesh name="FisicasHueco3" filename="Data\level_5\Meshes\FisicasHueco3.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerStairsUpperEscape" filename="Data\level_5\Meshes\TriggerStairsUpperEscape.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerHole01" filename="Data\level_5\Meshes\TriggerHole01.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
-	<static_mesh name="TriggerActivateBoss" filename="Data\level_5\Meshes\TriggerActivateBoss.mesh" physx_mesh_directory="Data\level_4\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerActivateBoss" filename="Data\level_5\Meshes\TriggerActivateBoss.mesh" physx_mesh_directory="Data\level_4\Meshes\PhysXMeshes"/>	
+	<static_mesh name="TriggerRompeCajas001" filename="Data\level_5\Meshes\TriggerRompeCajas001.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerRompeCajas002" filename="Data\level_5\Meshes\TriggerRompeCajas002.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerRompeCajas003" filename="Data\level_5\Meshes\TriggerRompeCajas003.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerRompeCajas004" filename="Data\level_5\Meshes\TriggerRompeCajas004.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerRompeCajas005" filename="Data\level_5\Meshes\TriggerRompeCajas005.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerRompeCajas006" filename="Data\level_5\Meshes\TriggerRompeCajas006.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerRompeCajas007" filename="Data\level_5\Meshes\TriggerRompeCajas007.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
+	<static_mesh name="TriggerRompeCajas008" filename="Data\level_5\Meshes\TriggerRompeCajas008.mesh" physx_mesh_directory="Data\level_5\Meshes\PhysXMeshes"/>
 </static_meshes>

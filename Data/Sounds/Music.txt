@@ -21,5 +21,7 @@ Custom State	ID	Name	State Group	Owner		Notes
 	443164242	Singing	Action	\Interactive Music Hierarchy\Default Work Unit\Main_Music		
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	206163165	prova	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\prova_4B8CC0C5.wem		\Interactive Music Hierarchy\Default Work Unit\Main_Music\RecBibl\prova\prova		23049280
+	206163165	prova	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\prova_37D8776A.wem		\Interactive Music Hierarchy\Default Work Unit\Main_Music\RecBibl\prova\prova		4862008
+	955364911	MúSICA DEMO 1 MAQUINAS	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\MúSICA DEMO 1 MAQUINAS_37D8776A.wem		\Interactive Music Hierarchy\Default Work Unit\Main_Music\salaMaquinas\MúSICA DEMO 1 MAQUINAS\MúSICA DEMO 1 MAQUINAS		1458064
+	963169765	pasillo_loop	C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\SFX\pasillo_loop_37D8776A.wem		\Interactive Music Hierarchy\Default Work Unit\Main_Music\BossPasillo\pasillo_loop\pasillo_loop		8294464
 

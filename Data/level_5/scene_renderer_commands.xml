@@ -190,12 +190,16 @@
 	<set_pool_renderable_objects_technique name="set pool forward GUI" pool="forward_shading" active="true"/>
 	<render_gui name="render GUI" active="true"/>
 	<disable_alpha_blend name="disable alpha blend GUI" active="true"/>	
+	
+	<!-- VIDEO -->
+	<set_depth_stencil_state name="set depth stencil video" enable_z_test="false" write_z_buffer="false"/>
+	<render_video name="draw video" active="true"/> 
 
 	<set_depth_stencil_state name="set depth stencil debug" enable_z_test="true" write_z_buffer="true" active="true"/>
 	<render_debug_lights name="render debug lights"/>
 	<render_debug_pathfinding name="render debug pathfinding"/>
-	<render_debug_grid name="render grid"/>
-	<set_ant_tweak_bar name="render ATB"/>	
+	<render_debug_grid name="render grid" active="false"/>
+	<set_ant_tweak_bar name="render ATB" active="false"/>	
 	<present name="present"/>
 </scene_renderer_commands>
 

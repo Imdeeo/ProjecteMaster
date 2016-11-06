@@ -2680,6 +2680,12 @@
 		<parameter type="float" name="lerp_sprite" value="1.000000" description=""/>
 		<parameter type="float" name="ratio_y" value="1.000000" description=""/>
 	</material>
+	<material name="ps_humo" renderable_object_technique="particle">
+		<texture type="diffuse" filename="Data\Particles\Vapor1.png"/>
+		<parameter type="float2" name="sprite_size" value="1.000000 1.000000" description=""/>
+		<parameter type="float" name="lerp_sprite" value="1.000000" description=""/>
+		<parameter type="float" name="ratio_y" value="1.000000" description=""/>
+	</material>
 	<material name="reflejoluz" renderable_object_technique="alpha_blend">
 		<texture type="diffuse" filename="Data\level_2\Textures\lampara_techo_reflejos1.png"/>
 		<parameter type="float" name="active" value="1.000000" description=""/>

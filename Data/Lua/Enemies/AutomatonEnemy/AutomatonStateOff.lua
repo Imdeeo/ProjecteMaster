@@ -21,9 +21,6 @@ function OffUpdateAutomaton(args, _ElapsedTime)
 end
 
 function OffEndAutomaton(args)
-	local l_Owner = args["owner"]
-	local l_Enemy = args["self"]
-	l_Enemy.m_SoundManager:play_event(g_AutomatonActivateSoundEvent, l_Owner)
 end
 
 function OffToIdleConditionAutomaton(args)	
