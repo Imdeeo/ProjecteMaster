@@ -145,7 +145,7 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_SoundManager = UABEngine:get_sound_manager()
 		-- unregister old speaker before assigning new renderable object
-		--self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
+		--self.m_ager:unregister_speaker(self.m_RenderableObject)
 		
 		self.m_CinematicManager = l_Level:get_cinematic_manager()
 		self.m_InputManager = UABEngine:get_input_manager()
@@ -154,7 +154,7 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_DistanceFromLastStep = 0.0
 		self.m_ImpactVelocity = Vect3f(0.0, 0.0, 0.0)
-		self.m_StepLength = 1.0
+		self.m_StepLength = 0.8
 		self.m_InteractionSoundSpeaker = nil
 
 		self.m_Velocity = Vect3f(0.0, 0.0, 0.0)
@@ -276,7 +276,6 @@ class 'CPlayer' (CLUAComponent)
 		l_SoundManager:broadcast_state(g_LevelStates[_LevelId])
 		SetupLevelSounds(_LevelId, l_SoundManager)
 	end
-	
 	function CPlayer:SetActualLevelAux(_LevelId)
 		self.m_ActualLevel = _LevelId		
 		self.m_CinematicManager = g_Engine:get_level_manager():get_level(self.m_ActualLevel):get_cinematic_manager()		

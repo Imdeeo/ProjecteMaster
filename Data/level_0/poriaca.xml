@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cinematics>
+	<cinematic name="Cinta" duration="6.66667" cycle="false">
+		<cinematic_object resource="PlanchaCinta3_020" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.229792" pos="0.0 0.0 -0.185493" rotation="-1.0 0.0 0.0 -1.47422e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.459583" pos="0.0 0.0 -0.370987" rotation="-1.0 0.0 0.0 -1.47422e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.689583" pos="0.0 -0.0291174 -0.550386" rotation="-0.977657 0.0 0.0 0.210207" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.919373" pos="0.0 -0.167226 -0.661278" rotation="-0.782418 0.0 0.0 0.622754" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.14938" pos="0.0 -0.345354 -0.643068" rotation="-0.432767 0.0 0.0 0.901506" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.37917" pos="0.0 -0.455059 -0.499903" rotation="-0.210208 0.0 -1.65808e-007 0.977657" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.60917" pos="0.0 -0.461416 -0.315609" rotation="-1.43051e-006 0.0 -2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.83896" pos="0.0 -0.461416 -0.130116" rotation="-1.43051e-006 0.0 -2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.06896" pos="0.0 -0.461416 0.0555457" rotation="-1.43051e-006 0.0 -2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.29875" pos="0.0 -0.461416 0.241039" rotation="0.0 0.0 -2.81991e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.52854" pos="0.0 -0.461416 0.426533" rotation="0.0 0.0 -2.81991e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.75854" pos="-9.05034e-007 -0.461416 0.612193" rotation="1.43051e-006 0.0 -2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.98833" pos="-8.90297e-007 -0.461416 0.797687" rotation="1.43051e-006 0.0 -2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.21833" pos="-8.75546e-007 -0.461416 0.983348" rotation="0.0 0.0 -2.81991e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.44813" pos="-8.60808e-007 -0.461416 1.16884" rotation="2.6226e-006 0.0 -2.81989e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.67813" pos="-8.46056e-007 -0.461416 1.3545" rotation="1.43051e-006 0.0 -2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.90793" pos="-8.31319e-007 -0.461416 1.54" rotation="1.43051e-006 0.0 -2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.1379" pos="-8.18959e-007 -0.373972 1.69556" rotation="0.428369 1.61455e-007 -3.40572e-007 0.903604" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.3677" pos="-8.14941e-007 -0.203708 1.74613" rotation="0.781623 1.699e-007 -2.12902e-007 0.623751" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.5975" pos="-8.21744e-007 -0.0445725 1.66051" rotation="0.944777 0.0 0.0 0.327713" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.8275" pos="-8.35719e-007 -3.43381e-007 1.48462" rotation="1.0 0.0 0.0 1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0573" pos="-8.50457e-007 -2.85569e-007 1.29912" rotation="1.0 0.0 0.0 1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.2873" pos="-8.65208e-007 -2.57535e-007 1.11346" rotation="1.0 0.0 0.0 2.6981e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.51707" pos="-8.79946e-007 -1.69922e-007 0.92797" rotation="1.0 0.0 0.0 1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.7471" pos="-8.94697e-007 -1.41888e-007 0.74231" rotation="1.0 0.0 0.0 1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.97687" pos="-9.09434e-007 0.0 0.556816" rotation="1.0 0.0 0.0 1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.20687" pos="0.0 0.0 0.371155" rotation="1.0 0.0 0.0 1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.43667" pos="0.0 0.0 0.185661" rotation="1.0 0.0 0.0 1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="1.0 0.0 0.0 -1.62921e-007" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+</cinematics>
+
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cinematics>
+	<cinematic name="Cinta" duration="6.66667" cycle="false">
+		<cinematic_object resource="PlanchaCinta3_014" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 -1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.229792" pos="0.0 -5.14485e-007 -0.185493" rotation="-1.0 0.0 0.0 -1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.459583" pos="0.0 -9.69367e-007 -0.370988" rotation="-1.0 0.0 0.0 -1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.689583" pos="0.0 -1.51412e-006 -0.556648" rotation="-1.0 0.0 0.0 -1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.919373" pos="0.0 -1.9988e-006 -0.742142" rotation="-1.0 0.0 0.0 -1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.14938" pos="8.7996e-007 -2.51375e-006 -0.927803" rotation="-1.0 0.0 0.0 -1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.37917" pos="8.65222e-007 -3.02823e-006 -1.1133" rotation="-1.0 0.0 0.0 -1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.60917" pos="8.50471e-007 -3.54319e-006 -1.29896" rotation="-1.0 0.0 0.0 -1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.83896" pos="8.35734e-007 -4.02787e-006 -1.48445" rotation="-1.0 0.0 0.0 -1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.06896" pos="8.20983e-007 -4.54282e-006 -1.67011" rotation="-1.0 0.0 0.0 -1.3868e-006" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.29875" pos="8.06524e-007 -0.016329 -1.8521" rotation="-0.977657 0.0 0.0 0.210207" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.52854" pos="7.96014e-007 -0.136897 -1.98438" rotation="-0.782418 0.0 0.0 0.622753" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.75854" pos="7.95892e-007 -0.317827 -1.98592" rotation="-0.622756 0.0 0.0 0.782416" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.98833" pos="8.06026e-007 -0.44227 -1.85836" rotation="-0.210207 0.0 1.65809e-007 0.977657" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.21833" pos="8.2045e-007 -0.46142 -1.67682" rotation="-1.34309e-006 0.0 2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.44813" pos="8.35187e-007 -0.46142 -1.49133" rotation="-1.34309e-006 0.0 2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.67813" pos="8.49938e-007 -0.461419 -1.30567" rotation="-1.34309e-006 0.0 2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.90793" pos="8.64676e-007 -0.461419 -1.12017" rotation="-1.34309e-006 0.0 2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.1379" pos="8.79427e-007 -0.461418 -0.934511" rotation="-1.34309e-006 0.0 2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.3677" pos="0.0 -0.461418 -0.749017" rotation="-1.34309e-006 0.0 2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.5975" pos="0.0 -0.461417 -0.563525" rotation="-1.34309e-006 0.0 2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.8275" pos="0.0 -0.461417 -0.377863" rotation="-1.34309e-006 0.0 2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0573" pos="0.0 -0.461416 -0.192371" rotation="-1.34309e-006 0.0 2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.2873" pos="0.0 -0.461416 -0.00670782" rotation="-1.34309e-006 0.0 2.8199e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.51707" pos="0.0 -0.461415 0.178784" rotation="-2.53518e-006 0.0 2.81989e-007 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.7471" pos="0.0 -0.398069 0.345771" rotation="0.428364 -1.61453e-007 3.40572e-007 0.903606" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.97687" pos="0.0 -0.234059 0.421427" rotation="0.654261 -2.23149e-007 2.57939e-007 0.756269" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.20687" pos="0.0 -0.0685388 0.350017" rotation="0.903589 0.0 1.21215e-007 0.4284" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.43667" pos="0.0 5.44753e-007 0.185661" rotation="1.0 0.0 0.0 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 -1.90735e-006" rotation="1.0 0.0 0.0 1.41859e-006" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+</cinematics>

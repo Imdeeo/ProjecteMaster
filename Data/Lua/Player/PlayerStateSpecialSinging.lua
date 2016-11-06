@@ -36,7 +36,6 @@ function SpecialSingingStateUpdate(args, _ElapsedTime)
 			else
 				if not l_Player.m_VideoPlaying then
 					l_Player.m_VideoPlaying = true
-					g_SoundManager:play_event(g_IntroVideoEvent)
 					g_Engine:get_video_manager():load_clip("intro.ogv", false)
 					g_Engine:get_video_manager():render_screen_clip("intro.ogv")					
 				else					

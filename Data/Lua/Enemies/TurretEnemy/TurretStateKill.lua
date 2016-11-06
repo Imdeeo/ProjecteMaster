@@ -25,8 +25,6 @@ function KillFirstTurret(args)
 	l_Enemy.m_LoseSanityValue = g_Player.m_Sanity / 6.0
 	
 	l_Enemy:ShowParticles("EmisorParticulaTorreta", true)
-	
-	g_SoundManager:play_event(g_SteamOnceSoundEvent)
 end
 
 function KillUpdateTurret(args, _ElapsedTime)
