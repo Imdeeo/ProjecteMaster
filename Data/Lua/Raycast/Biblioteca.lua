@@ -159,7 +159,7 @@ function R2ArtifactDoor(_Player)
 	_Player.m_TargetPosOffset = Vect3f(-0.770, 0.0, -0.756)
 	_Player.m_ForwardCamera = Vect3f(0.0, -0.67204, 1.0)
 	_Player.m_UpCamera = Vect3f(0.0, 0.740519, 0.672036)
-	l_Target = GetTriggerPos("TriggerArtifactDoor",l_LevelId)
+	l_Target = GetTriggerPos("TriggerArtifactDoor", l_LevelId)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.6) then
 		_Player.m_Target = Vect3f(17.3453, 5.35695, 27.0514)
 		_Player.m_InteractingAnimation = 5

@@ -281,11 +281,6 @@
 	<render_gui name="render GUI" active="true"/>
 	<disable_alpha_blend name="disable alpha blend GUI" active="true"/>	
 
-	<set_depth_stencil_state name="set depth stencil debug" enable_z_test="true" write_z_buffer="true" active="true"/>
-	<render_debug_lights name="render debug lights"/>
-	<render_debug_pathfinding name="render debug pathfinding"/>
-	<render_debug_grid name="render grid"/>
-	<set_ant_tweak_bar name="render ATB"/>	
 	<present name="present"/>
 </scene_renderer_commands>
 

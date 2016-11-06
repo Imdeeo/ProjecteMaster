@@ -31,6 +31,7 @@ end
 --// Biblioteca
 function PlayEnterLibrarySound(_Speaker)
 	g_SoundManager:play_event(g_EnterLibrarySondEvent, _Speaker)
+	g_SoundManager:play_event(g_IntroVideoEvent, _Speaker)
 end
 
 function PlayPickupClueSounds(_Speaker)
