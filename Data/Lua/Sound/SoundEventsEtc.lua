@@ -7,6 +7,8 @@ g_PauseAllSoundsEvent = SoundEvent()
 g_PauseAllSoundsEvent.event_name = "Pause_All"
 g_ResumeAllSoundsEvent = SoundEvent()
 g_ResumeAllSoundsEvent.event_name = "Resume_All"
+g_SilenceSpeakerSoundEvent = SoundEvent()
+g_SilenceSpeakerSoundEvent.event_name = "Silence_Speaker"
 
 g_InitialDelayRTPC = SoundRTPC()
 g_InitialDelayRTPC.rtpc_name = "initial_delay"
@@ -73,12 +75,21 @@ g_SingingActionState.value_name = "Singing"
 g_ExplorationActionState = SoundStateValue()
 g_ExplorationActionState.sound_state = g_ActionStateGroup
 g_ExplorationActionState.value_name = "Exploraton"
+g_PuzzleVideoActionState = SoundStateValue()
+g_PuzzleVideoActionState.sound_state = g_ActionStateGroup
+g_PuzzleVideoActionState.value_name = "Puzzle_Video"
+g_PuzzleVideoSoundEvent = SoundEvent()
+g_PuzzleVideoSoundEvent.event_name = "Puzzle_Video"
 g_ClimbStartSoundEvent = SoundEvent()
 g_ClimbStartSoundEvent.event_name = "Climb_Start"
 g_ClimbLoopSoundEvent = SoundEvent()
 g_ClimbLoopSoundEvent.event_name = "Climb_Loop"
 g_ClimbEndSoundEvent = SoundEvent()
 g_ClimbEndSoundEvent.event_name = "Climb_End"
+g_SongVolumeRTPC = SoundRTPC()
+g_SongVolumeRTPC.rtpc_name = "song_volume"
+g_SanityRTPC = SoundRTPC()
+g_SanityRTPC.rtpc_name = "sanity"
 
 -- Interaction
 g_InteractionSoundEvents = {}
