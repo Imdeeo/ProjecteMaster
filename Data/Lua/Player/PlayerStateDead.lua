@@ -1,5 +1,10 @@
 function DeadFirst(args)
-	utils_log("DeadFirst")
+	local l_Player = args["self"] 
+	if l_Player.m_PhysXManager:get_character_controler_pos("player").y < -10.0 then 
+		g_SoundManager:play_event(g_MuerteViolentaVoiceEvent) 
+	else 
+		g_SoundManager:play_event(g_MuertePorCorduraVoiceEvent) 
+	end 
 end
 
 function DeadUpdate(args, _ElapsedTime)

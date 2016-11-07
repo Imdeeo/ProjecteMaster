@@ -26,7 +26,7 @@ function R3Valve(_Player)
 		_Player.m_IsPuzzle = false
 		_Player.m_PhysXManager:enable_trigger("TriggerValveInput", "FisicasAux")
 		_Player.m_PhysXManager:disable_physics("TriggerValve", "FisicasAux")
-		--Play Sound¿?
+		_Player.m_InteractionSoundSpeaker = "SpeakerPickValve" 
 	end
 end
 
@@ -81,6 +81,7 @@ function R3ValveInput(_Player)
 		l_Particle:set_awake_timer(10000)
 		
 		m_CharacterManager.m_EnemicsMap["Maquinas"]["FogAutomaton"].m_Awake = false
+		_Player.m_InteractionSoundSpeaker = "SpeakerInputPipe" 
 	end
 end
 
@@ -105,6 +106,6 @@ function R3ValveDoor(_Player)
 		_Player.m_IsPuzzle = false
 		_Player.m_Teleport = true
 		_Player.m_BiasPos=0.04
-		-- Play Sound
+		_Player.m_InteractionSoundSpeaker = "SpeakerPipeDoor" 
 	end
 end
