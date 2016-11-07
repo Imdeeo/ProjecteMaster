@@ -9,6 +9,10 @@ g_ResumeAllSoundsEvent = SoundEvent()
 g_ResumeAllSoundsEvent.event_name = "Resume_All"
 g_SilenceSpeakerSoundEvent = SoundEvent()
 g_SilenceSpeakerSoundEvent.event_name = "Silence_Speaker"
+g_EnterMenuSoundEvent = SoundEvent()
+g_EnterMenuSoundEvent.event_name = "Menu_Enter"
+g_ResumeFromMenuSoundEvent = SoundEvent()
+g_ResumeFromMenuSoundEvent.event_name = "Menu_Resume"
 
 g_InitialDelayRTPC = SoundRTPC()
 g_InitialDelayRTPC.rtpc_name = "initial_delay"
@@ -245,6 +249,8 @@ g_GritoVoiceEvent = SoundEvent()
 g_GritoVoiceEvent.event_name = "Jaheem_Grito"
 g_IntroVideoEvent = SoundEvent()
 g_IntroVideoEvent.event_name = "Intro_Video"
+g_CreditsVideoEvent = SoundEvent()
+g_CreditsVideoEvent.event_name = "Credits_Video"
 
 
 -- Ysmael
