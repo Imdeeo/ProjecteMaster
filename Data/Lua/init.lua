@@ -38,8 +38,6 @@ function mainLua()
 	local l_LevelManager = g_Engine:get_level_manager()	
 	local l_SoundManager = g_Engine:get_sound_manager()
 
-	l_SoundManager:play_event(g_PlayMusicEvent)
-
 	m_timerPause = 0
 	m_iniciando = true 	
 	
@@ -77,6 +75,9 @@ function mainLua()
 	l_LevelManager:load_level("Pasillo", true, false, false)
 	--l_LevelManager:choose_scene_command_level("Pasillo")
 	--g_Player:SetActualLevel("Pasillo")
+
+	l_SoundManager:play_event(g_PlayMusicEvent)
+	l_SoundManager:play_event(g_EnterMenuSoundEvent)
 end
 
 function levelMainLua(level,level_id)
@@ -129,7 +130,7 @@ function luaUpdate(_ElapsedTime)
 		if l_InputManager:is_action_released("Pause") then
 			local l_SoundManager = g_Engine:get_sound_manager()
 			utils_log("Pausing all sounds...")
-			l_SoundManager:play_event(g_PauseAllSoundsEvent)
+			l_SoundManager:play_event(g_EnterMenuSoundEvent)
 			local l_Camera = g_Engine:get_camera_controller_manager():get_main_camera()
 			m_menu = true
 			m_pause = true
@@ -280,7 +281,7 @@ function luaGui(_ElapsedTime)
 				m_pause = false
 				g_Engine:set_pause(false)
 				local l_SoundManager = g_Engine:get_sound_manager()
-				l_SoundManager:play_event(g_ResumeAllSoundsEvent)
+				l_SoundManager:play_event(g_ResumeFromMenuSoundEvent)
 			end 
 			
 			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)
@@ -318,6 +319,8 @@ function luaGui(_ElapsedTime)
 				
 				m_menu = false
 				g_Engine:set_pause(false)
+				local l_SoundManager = g_Engine:get_sound_manager()
+				l_SoundManager:play_event(g_ResumeFromMenuSoundEvent)
 			end 
 			
 			gui_position = CGUIPosition(l_PosX, l_PosY + l_HeightButton, l_WidthButton, l_HeightButton, CGUIManager.top_left, CGUIManager.gui_absolute, CGUIManager.gui_absolute)

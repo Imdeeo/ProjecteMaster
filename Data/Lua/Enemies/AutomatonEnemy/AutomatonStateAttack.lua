@@ -33,7 +33,11 @@ function AttackUpdateAutomaton(args, _ElapsedTime)
 	if l_FaceTargetDisplacement:length() <= 0.01 then
 		l_PosOK = true
 	else
-		g_Player.m_PhysXManager:character_controller_move("player", l_FaceTargetDisplacement:get_normalized(1), _ElapsedTime)
+		local l_Speed = l_FaceTargetDisplacement * 5
+		if l_Speed:length() > 1 then
+			l_Speed = l_Speed:normalize(1)
+		end
+		g_Player.m_PhysXManager:character_controller_move("player", l_Speed, _ElapsedTime)
 	end		
 	
 	if l_Enemy.m_TimerRotation <= 2.0 then

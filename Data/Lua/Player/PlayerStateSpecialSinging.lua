@@ -21,6 +21,14 @@ function SpecialSingingStateUpdate(args, _ElapsedTime)
 		l_Owner:remove_action(l_Owner:get_actual_action_animation())
 
 		l_Owner:execute_action(31, 0.1, 0.1, 1.0, true)
+		g_TimerManager:ExecuteLater(5.5, function()
+			g_SoundManager:broadcast_rtpc_value(g_IsolationRTPC, 80)
+			g_SoundManager:broadcast_state(g_SingingActionState)
+			g_SoundManager:play_event(g_SingSoundEvent, l_Owner)
+		end)
+		g_TimerManager:ExecuteLater(12.0, function()
+			g_SoundManager:set_rtpc_value(g_SongVolumeRTPC, 30, l_Owner)
+		end)
 	end
 	
 	if l_Player.m_SingOnce then
@@ -62,6 +70,10 @@ function SpecialSingingStateEnd(args)
 	l_Player.m_CameraController:unlock()
 	l_Owner:remove_action(l_Owner:get_actual_action_animation())
 	l_Player:ClearCamera()
+	g_SoundManager:play_event(g_StopSingingSoundEvent, l_Owner)
+	g_SoundManager:set_rtpc_value(g_SongVolumeRTPC, 100, l_Owner)
+	g_SoundManager:broadcast_rtpc_value(g_IsolationRTPC, 0)
+	g_SoundManager:broadcast_state(g_ExplorationActionState)
 	--l_LevelManager:get_level("Player"):get_layer_manager():get_layer("solid"):get_resource("Boss"):set_visible(true)
 end
 

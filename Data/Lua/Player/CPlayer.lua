@@ -290,6 +290,7 @@ class 'CPlayer' (CLUAComponent)
 		local l_Level = g_Engine:get_level_manager():get_level(self.m_ActualLevel)
 		local l_LevelPlayer = g_Engine:get_level_manager():get_level("Player")
 		
+		g_SoundManager:set_rtpc_value(g_SanityRTPC, self.m_Sanity)
 		for i=1, table.maxn(self.m_SanityEffects) do
 			l_EffectAux = self.m_SanityEffects[i]
 			
