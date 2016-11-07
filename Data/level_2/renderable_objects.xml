@@ -14,32 +14,33 @@
 		<position value="18.13 2.59 9.92"/>
 		<position value="18.13 2.59 13.40"/>
 		<position value="18.13 2.59 16.93"/>
-		<position value="18.13 2.59 20.46"/>
-		<position value="18.13 2.59 23.99"/>
+		<position value="18.13 2.59 20.42"/>
+		<position value="18.13 2.59 23.89"/>
 		<position value="18.13 6.55 9.50"/>
 		<position value="18.13 6.55 12.95"/>
 		<position value="18.13 6.55 16.43"/>		
 		<position value="18.13 6.55 19.98"/>		
 		<position value="18.13 6.55 23.49"/>
-		<position value="-0.46 1.505 11.295"/>
-		<position value="0.76 1.505 11.295"/>
-		<position value="15.047 1.387 12.033"/>
-		<position value="11.875 1.566 22.485"/>
-		<position value="-15.404 3.088 19.147"/>
+		<position value="-0.46 1.53 11.295"/>
+		<position value="0.76 1.53 11.295"/>
+		<position value="15.047 1.42 12.033"/>
+		<position value="11.875 1.61 22.485"/>
+		<position value="-15.42 2.94 19.15"/>
 		<position value="-19.077 3.088 3.088"/>
-		<position value="-21.462 3.088 24.198"/>
-		<position value="0.112 2.429 15.225"/>
+		<position value="-21.44 2.94 24.2"/>
+		<position value="0.112 2.29 15.22"/>
 		<position value="8.176 3.159 15.442"/>
-		<position value="15.008 6.177 5.219"/>
-		<position value="11.915 5.201 5.219"/>
-		<position value="7.628 2.887 5.219"/>
-		<position value="3.424 2.464 5.219"/>
-		<position value="-3.003 2.079 5.219"/>
-		<position value="-9.518 3.088 8.244"/>
-		<position value="-14.625 3.088 12.441"/>
-		<position value="-11.556 3.088 25.476"/>
-		<position value="18.15 6.719 9.505"/>
-		<position value="-17.072 2.671 28.643"/>
+		<position value="15.008 6.01 5.24"/>
+		<position value="11.915 5.05 5.24"/>
+		<position value="7.628 2.72 5.24"/>
+		<position value="3.424 2.29 5.24"/>
+		<position value="-3.003 1.91 5.24"/>
+		<position value="-9.5 2.94 8.244"/>
+		<position value="-19.11 2.92 8.36"/>
+		<position value="-14.65 2.94 12.44"/>
+		<position value="-8.17 2.93 15.44"/>
+		<position value="-11.56 2.94 25.49"/>
+		<position value="-17.07 2.5 28.61"/>
 	</bilboard_instance>
 	<bilboard_instance name="FuegoChimenea" layer="particles" type="FuegoChimeneaBiblio" start="true" sizeX="1.25" sizeY="2.0" offsetSize="0.01" color="1.0 1.0 1.0 1.0" visible="true">
 		<position value="11.88 0.9 26.70"/>
@@ -47,11 +48,12 @@
 		<position value="11.44 0.85 26.70"/>
 	</bilboard_instance>	
 	<particle_instance name="EmisorParticulaTorreta" layer="particles" type="TurretSmokeParticle01" position="5.915472 0.966247 11.680963" next_particle_emission="0.003261" awake="true" awake_timer="1.635056" emission_box_limit="false" emission_box_half_size="0.000000 0.000000 0.000000" visible="false"/>
+	<particle_instance name="EmisorParticulaCajas" layer="particles" type="CajasDestruidas" position="5.915472 0.966247 11.680963" next_particle_emission="0.003261" awake="true" awake_timer="1.635056" emission_box_limit="false" emission_box_half_size="0.000000 0.000000 0.000000" visible="false"/>
 	<animated_instance_mesh name="AutomatonLeft" layer="solid" core_name="Automaton" position="15.199900 5.1 26.510681" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
 	<animated_instance_mesh name="AutomatonRight" layer="solid" core_name="Automaton" position="-19.960800 1.1 13.832300" rotation="0.000000 0.707107 0.000000 -0.707107" create_physics="false" visible="true"/>
 	<animated_instance_mesh name="TurretAutomaton" layer="solid" core_name="TurretAutomaton" position="12.528900 0.700000 23.473000" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
 	<instance_mesh name="BaseTorreta" layer="solid" core_name="BaseTorreta" position="12.528900 0.750000 23.423000" rotation="0.000000 1.000000 0.000000 0.000000" create_physics="false" visible="true"/>
-	<instance_mesh name="ParedesExterioresBiblioteca" layer ="solid" core_name="ParedesExterioresBiblioteca" position="0.300422 6.25211 21.3165" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="ParedesExterioresBiblioteca" layer ="solid" core_name="ParedesExterioresBiblioteca" position="0.300422 6.25211 21.3165" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="false"/>
 	<instance_mesh name="AlfombraFrenteOrgano" layer ="solid" core_name="AlfombraFrenteOrgano" position="-0.059895 0.0248896 11.6761" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="AlfombraDelanteTorreta" layer ="solid" core_name="AlfombraDelanteTorreta" position="12.4647 0.0397829 17.3933" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
 	<instance_mesh name="MesaEntrada" layer ="solid" core_name="MesaEntrada" position="0.137207 0.625571 11.5737" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
@@ -377,15 +379,15 @@
 	<instance_mesh name="EstanteriaGrandeLaberinto009" layer ="solid" core_name="EstanteriaGrandeLaberinto009" position="-12.8251 6.29264 13.4533" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="EstanteriaGrandeLaberinto041" layer ="solid" core_name="EstanteriaGrandeLaberinto041" position="-8.06774 6.23387 17.896" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="Organo" layer ="solid" core_name="Organo" position="0.111706 10.256 14.0077" rotation="0.0 -1.50996e-007 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="TeclasAnimadasBIEN" layer ="solid" core_name="TeclasAnimadasBIEN" position="0.134982 1.38182 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="1tecla" layer ="solid" core_name="1tecla" position="0.235907 1.3732 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="3tecla" layer ="solid" core_name="3tecla" position="0.160579 1.3732 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="4tecla" layer ="solid" core_name="4tecla" position="0.124282 1.3732 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="5tecla" layer ="solid" core_name="5tecla" position="0.0874811 1.3732 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="6tecla" layer ="solid" core_name="6tecla" position="0.0508976 1.3732 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="7tecla" layer ="solid" core_name="7tecla" position="0.0142078 1.3732 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="2tecla" layer ="solid" core_name="2tecla" position="0.198314 1.3732 14.8227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="pianoseparado" layer ="solid" core_name="pianoseparado" position="0.11149 1.08467 15.1198" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
+	<instance_mesh name="TeclasAnimadasBIEN" layer ="solid" core_name="TeclasAnimadasBIEN" position="0.134982 1.38182 14.3227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="1tecla" layer ="solid" core_name="1tecla" position="0.235907 1.3732 14.3227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="3tecla" layer ="solid" core_name="3tecla" position="0.160579 1.3732 14.3227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="4tecla" layer ="solid" core_name="4tecla" position="0.124282 1.3732 14.3227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="5tecla" layer ="solid" core_name="5tecla" position="0.0874811 1.3732 14.3227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="6tecla" layer ="solid" core_name="6tecla" position="0.0508976 1.3732 14.3227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="7tecla" layer ="solid" core_name="7tecla" position="0.0142078 1.3732 14.3227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="2tecla" layer ="solid" core_name="2tecla" position="0.198314 1.3732 14.3227" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
+	<instance_mesh name="pianoseparado" layer ="solid" core_name="pianoseparado" position="0.11149 1.08467 14.6198" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="triangle_mesh" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="puertalaberintooficial" layer ="solid" core_name="puertalaberintooficial" position="-7.28345 4.81488 8.33229" rotation="-0.00377238 -1.49012e-007 0.0 0.999993" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
     <instance_mesh name="puertalaberintooficialmovida" layer ="solid" core_name="puertalaberintooficial" position="-5.6754 3.2257 7.07463" rotation="-0.00266738 0.707102 0.00266744 0.707102" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="NoCollision" visible="false"/>
 	<instance_mesh name="planelibropuertalaboficial" layer ="solid" core_name="planelibropuertalaboficial" position="-7.28931 4.55674 8.37998" rotation="0.0 -1.49012e-007 0.0 1.0" create_physics="false" visible="true"/>
@@ -401,7 +403,7 @@
 	<instance_mesh name="EstPequeDentroLaberinto005" layer ="solid" core_name="EstPequeDentroLaberinto005" position="-11.5624 6.41172 24.2471" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="EstPequeDentroLaberinto006" layer ="solid" core_name="EstPequeDentroLaberinto006" position="-14.3357 6.41172 27.1315" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="EstPequeDentroLaberinto008" layer ="solid" core_name="EstPequeDentroLaberinto008" position="-8.10583 6.41172 27.7667" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
-	<instance_mesh name="TriggerPipeOrgan" layer="triggers" is_active="true" core_name="TriggerPipeOrgan" position="0.136758 1.12704 15.1529" rotation="-0.173648 0.0 0.0 0.984808" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerPipeOrgan" layer="triggers" is_active="true" core_name="TriggerPipeOrgan" position="0.136758 1.12704 14.6529" rotation="-0.173648 0.0 0.0 0.984808" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="pianoseparado"/>
 	</instance_mesh>
@@ -421,31 +423,31 @@
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="LibroEspecial"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerOrganKeyA" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.235907 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerOrganKeyA" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.235907 1.39759 14.2873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="1tecla"/> 
 	</instance_mesh> 
-	<instance_mesh name="TriggerOrganKeyB" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.198314 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerOrganKeyB" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.198314 1.39759 14.2873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="2tecla"/> 
 	</instance_mesh> 
-	<instance_mesh name="TriggerOrganKeyC" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.160579 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerOrganKeyC" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.160579 1.39759 14.2873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="3tecla"/> 
 	</instance_mesh> 
-	<instance_mesh name="TriggerOrganKeyD" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.124282 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerOrganKeyD" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.124282 1.39759 14.2873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="4tecla"/> 
 	</instance_mesh> 
-	<instance_mesh name="TriggerOrganKeyE" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.0874811 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerOrganKeyE" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.0874811 1.39759 14.2873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="5tecla"/> 
 	</instance_mesh> 
-	<instance_mesh name="TriggerOrganKeyF" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.0508976 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerOrganKeyF" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.0508976 1.39759 14.2873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="6tecla"/> 
 	</instance_mesh> 
-	<instance_mesh name="TriggerOrganKeyG" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.0142078 1.39759 14.7873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerOrganKeyG" layer="triggers" is_active="true" core_name="TriggerOrganKeyA" position="0.0142078 1.39759 14.2873" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/> 
 		<interactuable_object actor_name="7tecla"/> 
 	</instance_mesh> 

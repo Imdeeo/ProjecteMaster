@@ -19,6 +19,7 @@ function FinishUpdate(args, _ElapsedTime)
 				l_Player.m_VideoPlaying = true
 				g_Engine:get_video_manager():load_clip("credits.ogv", false)
 				g_Engine:get_video_manager():render_screen_clip("credits.ogv")
+				g_SoundManager:play_event(g_CreditsVideoEvent)
 			end
 		end
 	end

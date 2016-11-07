@@ -124,6 +124,7 @@
 	<static_mesh name="CablesSalaMaquinas" filename="Data\level_3\Meshes\CablesSalaMaquinas.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="FisicasCintas" filename="Data\level_3\Meshes\FisicasCintas.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="InputPipe" filename="Data\level_3\Meshes\InputPipe.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
+	<static_mesh name="maquinacinta" filename="Data\level_3\Meshes\maquinacinta.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerStairsLower" filename="Data\level_3\Meshes\TriggerStairsLower.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerStairsUpper" filename="Data\level_3\Meshes\TriggerStairsUpper.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>
 	<static_mesh name="TriggerValve" filename="Data\level_3\Meshes\TriggerValve.mesh" physx_mesh_directory="Data\level_3\Meshes\PhysXMeshes"/>

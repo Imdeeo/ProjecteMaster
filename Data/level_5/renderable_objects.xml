@@ -10,7 +10,6 @@
 	<layer name="skybox"/>
 	<layer name="interactuable_objects"/>
 	<animated_instance_mesh name="Boss" layer="solid" core_name="Boss" position="-5.165 -4.611 23.138" rotation="0.000000 0.707107 0.000000 -0.707107" create_physics="false" visible="true"/>
-	<particle_instance name="CajaRompiendo" layer="particles" type="CajaRota1" position="16.384701 -4.44529 15.91975" next_particle_emission="0.000921" awake="false" awake_timer="1000" emission_box_limit="false" emission_box_half_size="0.050000 0.050000 0.050000" visible="true"/>
 	<instance_mesh name="EngranajeEnsangrentadoPasillo_003" layer ="solid" core_name="EngranajeEnsangrentadoPasillo_003" position="65.9908 -8.15863 24.2189" rotation="0.0 0.0 -1.74846e-007 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="EngranajeEnsangrentadoPasillo_004" layer ="solid" core_name="EngranajeEnsangrentadoPasillo_004" position="103.98 -8.15863 15.3766" rotation="0.0 0.0 -1.74846e-007 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
 	<instance_mesh name="EngranajeEnsangrentadoPasillo_005" layer ="solid" core_name="EngranajeEnsangrentadoPasillo_005" position="103.98 -5.59888 13.0355" rotation="0.0 0.0 -1.74846e-007 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="Objects" visible="true"/>
@@ -115,11 +114,19 @@
 	<instance_mesh name="FisicasHueco4" layer ="solid" core_name="FisicasHueco3" position="80.3773 -10.5008 13.2182" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="EnemyStairs" visible="false"/>
 	<instance_mesh name="FisicasHueco2" layer ="solid" core_name="FisicasHueco3" position="73.6491 -10.5008 48.4243" rotation="0.0 0.300706 0.0 0.953717" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="EnemyStairs" visible="false"/>
 	<instance_mesh name="FisicasHueco1" layer ="solid" core_name="FisicasHueco3" position="49.0569 -10.5008 51.953" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_shape" physics_material="FisicasAux" physics_group="EnemyStairs" visible="false"/>
+	<particle_instance name="CajaRompiendo" layer="particles" type="CajaRota1" position="34.778 -8.90633 31.8491" next_particle_emission="0.000921" awake="false" awake_timer="1000" emission_box_limit="false" emission_box_half_size="0.050000 0.050000 0.050000" visible="true"/>
+	<particle_instance name="CajaRompiendo2" layer="particles" type="CajaRota1" position="34.778 -8.90633 43.9146" next_particle_emission="0.000921" awake="false" awake_timer="1000" emission_box_limit="false" emission_box_half_size="0.050000 0.050000 0.050000" visible="true"/>
+	<particle_instance name="CajaRompiendo3" layer="particles" type="CajaRota1" position="60.7648 -8.90633 51.9352" next_particle_emission="0.000921" awake="false" awake_timer="1000" emission_box_limit="false" emission_box_half_size="0.050000 0.050000 0.050000" visible="true"/>
+	<particle_instance name="CajaRompiendo4" layer="particles" type="CajaRota1" position="85.1516 -8.90633 38.0138" next_particle_emission="0.000921" awake="false" awake_timer="1000" emission_box_limit="false" emission_box_half_size="0.050000 0.050000 0.050000" visible="true"/>
+	<particle_instance name="CajaRompiendo5" layer="particles" type="CajaRota1" position="85.2002 -8.90633 26.8518" next_particle_emission="0.000921" awake="false" awake_timer="1000" emission_box_limit="false" emission_box_half_size="0.050000 0.050000 0.050000" visible="true"/>
+	<particle_instance name="CajaRompiendo6" layer="particles" type="CajaRota1" position="62.3764 -8.90633 26.8518" next_particle_emission="0.000921" awake="false" awake_timer="1000" emission_box_limit="false" emission_box_half_size="0.050000 0.050000 0.050000" visible="true"/>
+	<particle_instance name="CajaRompiendo7" layer="particles" type="CajaRota1" position="96.4548 -8.90633 13.2596" next_particle_emission="0.000921" awake="false" awake_timer="1000" emission_box_limit="false" emission_box_half_size="0.050000 0.050000 0.050000" visible="true"/>
+	<particle_instance name="CajaRompiendo8" layer="particles" type="CajaRota1" position="113.724 -8.90633 13.2596" next_particle_emission="0.000921" awake="false" awake_timer="1000" emission_box_limit="false" emission_box_half_size="0.050000 0.050000 0.050000" visible="true"/>
 	<instance_mesh name="TriggerStairsLowerEscape" layer ="triggers" core_name="TriggerStairsUpperEscape"  on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsLower" is_active="true" position="152.883 -9.40186 13.2685" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="Trampilla"/>
 	</instance_mesh>
-	<instance_mesh name="TriggerStairsUpperEscape" layer ="triggers" core_name="TriggerStairsUpperEscape"  on_trigger_enter="OnEnterStairs" on_trigger_exit="OnExitStairs" on_trigger_stay="OnStayStairsUpper" is_active="true" position="152.883 2.039 13.2685" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+	<instance_mesh name="TriggerStairsUpperEscape" layer ="triggers" core_name="TriggerStairsUpperEscape"  on_trigger_enter="OnFinish" is_active="true" position="152.883 2.039 13.2685" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="Trampilla"/>
 	</instance_mesh>
@@ -140,6 +147,38 @@
 		<interactuable_object actor_name="Trampilla"/>
 	</instance_mesh>
 	<instance_mesh name="TriggerActivateBoss" layer ="triggers" core_name="TriggerActivateBoss" on_trigger_enter="OnEnterActivateBoss" on_trigger_exit="OnExitActivateBoss" is_active="true" position="10.663 -5.557 20.682" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerRompeCajas001" layer="triggers" is_active="true" core_name="TriggerRompeCajas001" position="34.778 -8.90633 31.8491" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerRompeCajas002" layer="triggers" is_active="true" core_name="TriggerRompeCajas002" position="34.778 -8.90633 43.9146" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerRompeCajas003" layer="triggers" is_active="true" core_name="TriggerRompeCajas003" position="60.7648 -8.90633 51.9352" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerRompeCajas004" layer="triggers" is_active="true" core_name="TriggerRompeCajas004" position="85.1516 -8.90633 38.0138" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerRompeCajas005" layer="triggers" is_active="true" core_name="TriggerRompeCajas005" position="85.2002 -8.90633 26.8518" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerRompeCajas006" layer="triggers" is_active="true" core_name="TriggerRompeCajas006" position="62.3764 -8.90633 26.8518" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerRompeCajas007" layer="triggers" is_active="true" core_name="TriggerRompeCajas007" position="96.4548 -8.90633 13.2596" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
+		<active_actor actor_name="player"/>
+		<interactuable_object actor_name="Trampilla"/>
+	</instance_mesh>
+	<instance_mesh name="TriggerRompeCajas008" layer="triggers" is_active="true" core_name="TriggerRompeCajas008" position="113.724 -8.90633 13.2596" rotation="0.0 0.0 0.0 1.0" create_physics="true" physics_type="box_trigger" physics_material="FisicasAux" physics_group="Triggers" visible="true">
 		<active_actor actor_name="player"/>
 		<interactuable_object actor_name="Trampilla"/>
 	</instance_mesh>

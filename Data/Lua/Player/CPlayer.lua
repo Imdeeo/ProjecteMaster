@@ -145,7 +145,8 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_SoundManager = UABEngine:get_sound_manager()
 		-- unregister old speaker before assigning new renderable object
-		--self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
+		--self.m_SoundManager:unregister_speaker(self.m_RenderableObject) 
+		--self.m_ager:unregister_speaker(self.m_RenderableObject)
 		
 		self.m_CinematicManager = l_Level:get_cinematic_manager()
 		self.m_InputManager = UABEngine:get_input_manager()
@@ -272,6 +273,9 @@ class 'CPlayer' (CLUAComponent)
 	function CPlayer:SetActualLevel(_LevelId)
 		g_Engine:get_level_manager():set_actual_level(_LevelId)
 		self:SetActualLevelAux(_LevelId)
+		local l_SoundManager = g_Engine:get_sound_manager()
+		l_SoundManager:broadcast_state(g_LevelStates[_LevelId])
+		SetupLevelSounds(_LevelId, l_SoundManager)
 	end
 	function CPlayer:SetActualLevelAux(_LevelId)
 		self.m_ActualLevel = _LevelId		
@@ -287,6 +291,7 @@ class 'CPlayer' (CLUAComponent)
 		local l_Level = g_Engine:get_level_manager():get_level(self.m_ActualLevel)
 		local l_LevelPlayer = g_Engine:get_level_manager():get_level("Player")
 		
+		g_SoundManager:set_rtpc_value(g_SanityRTPC, self.m_Sanity)
 		for i=1, table.maxn(self.m_SanityEffects) do
 			l_EffectAux = self.m_SanityEffects[i]
 			
