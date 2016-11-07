@@ -149,10 +149,6 @@ function luaUpdate(_ElapsedTime)
 			l_videoManager:play_clip("bunny.ogv")
 		end
 		g_VolumeController:CheckVolumeKeys()	
-		if l_InputManager:is_action_released("DebugStopAllSounds") then
-			local l_SoundManager = g_Engine:get_sound_manager()
-			l_SoundManager:play_event(g_StopAllSoundsEvent)
-		end
 	end
 end
 
