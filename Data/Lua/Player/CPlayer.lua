@@ -145,6 +145,7 @@ class 'CPlayer' (CLUAComponent)
 		
 		self.m_SoundManager = UABEngine:get_sound_manager()
 		-- unregister old speaker before assigning new renderable object
+		--self.m_SoundManager:unregister_speaker(self.m_RenderableObject) 
 		--self.m_ager:unregister_speaker(self.m_RenderableObject)
 		
 		self.m_CinematicManager = l_Level:get_cinematic_manager()
