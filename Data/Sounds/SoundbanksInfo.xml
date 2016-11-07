@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="10" SoundbankVersion="113">
+	<RootPaths>
+		<ProjectRoot>C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\Juho\Documents\ProjecteMaster\MasterUAB\bin\VideogameTest\Data\Sounds\</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\GeneratedSoundBanks\Windows\</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles>
+		<File Id="783347423" Language="SFX">
+			<ShortName>IntroSOLOSONIDO_Gritandomas.wav</ShortName>
+			<Path>SFX\IntroSOLOSONIDO_Gritandomas_9E69E797.wem</Path>
+		</File>
+		<File Id="815617411" Language="SFX">
+			<ShortName>FUEGO_C.wav</ShortName>
+			<Path>SFX\FUEGO_C_37D8776A.wem</Path>
+		</File>
+	</StreamedFiles>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="393239870" Language="SFX">
+			<ShortName>SFX</ShortName>
+			<Path>SFX.bnk</Path>
+			<IncludedEvents>
+				<Event Id="824454361" Name="Artifact_Pick"/>
+				<Event Id="2303308639" Name="Artifact_Use"/>
+				<Event Id="2146093371" Name="Automaton_Activate"/>
+				<Event Id="61052160" Name="Automaton_Beat_1"/>
+				<Event Id="61052167" Name="Automaton_Beat_6"/>
+				<Event Id="3146010173" Name="Automaton_Start_Patrol"/>
+				<Event Id="2267881878" Name="Automaton_Step"/>
+				<Event Id="3021055449" Name="Automaton_Stop_Beating"/>
+				<Event Id="684176057" Name="Automaton_Stop_Patrol"/>
+				<Event Id="1704091077" Name="Book_Switch"/>
+				<Event Id="1889509218" Name="Bookshelf_move"/>
+				<Event Id="1583577610" Name="Cauldron_Start"/>
+				<Event Id="2127419643" Name="Cogwheels_Start"/>
+				<Event Id="1481508790" Name="Conveyor_Belt"/>
+				<Event Id="1625043143" Name="Door_Slam_1"/>
+				<Event Id="1625043140" Name="Door_Slam_2"/>
+				<Event Id="3753111523" Name="Drawer_Close"/>
+				<Event Id="1902270458" Name="Drawer_Force"/>
+				<Event Id="850583253" Name="Drawer_Open"/>
+				<Event Id="1512214429" Name="Enter_Library"/>
+				<Event Id="1712046992" Name="Fire_Start"/>
+				<Event Id="1981293180" Name="Fire_Stop"/>
+				<Event Id="2722027396" Name="Input_Valve"/>
+				<Event Id="2223442941" Name="Intro_Video"/>
+				<Event Id="2584346859" Name="Jump_Player"/>
+				<Event Id="1756568658" Name="Land_Player"/>
+				<Event Id="25491528" Name="Muerte_Cordura"/>
+				<Event Id="546131724" Name="Muerte_Violenta"/>
+				<Event Id="60097497" Name="Open_Valve_Door"/>
+				<Event Id="1449423888" Name="Organ_Play_Note"/>
+				<Event Id="1467102051" Name="Paper_Sheet_Pick"/>
+				<Event Id="3389390998" Name="Paper_Sheet_Put_Down"/>
+				<Event Id="3864097025" Name="Pause_All"/>
+				<Event Id="2388792551" Name="Pendulum"/>
+				<Event Id="3174745453" Name="Pick_Valve"/>
+				<Event Id="1216690966" Name="Projector_Start"/>
+				<Event Id="3679762312" Name="Resume_All"/>
+				<Event Id="2833786043" Name="Song_Start"/>
+				<Event Id="762918169" Name="Song_Stop"/>
+				<Event Id="1433397863" Name="Steam"/>
+				<Event Id="240625833" Name="Steam_Once"/>
+				<Event Id="3589785957" Name="Step_Player"/>
+				<Event Id="452547817" Name="Stop_All"/>
+				<Event Id="518704643" Name="Tesla_Start"/>
+				<Event Id="1883005623" Name="Ysmael_Hijo"/>
+				<Event Id="1618668279" Name="Ysmael_Monologo_Inicial"/>
+			</IncludedEvents>
+			<ReferencedStreamedFiles>
+				<File Id="783347423"/>
+				<File Id="815617411"/>
+			</ReferencedStreamedFiles>
+			<IncludedMemoryFiles>
+				<File Id="239880" Language="SFX">
+					<ShortName>sol.wav</ShortName>
+					<Path>SFX\sol_C3B3FD70.wem</Path>
+				</File>
+				<File Id="5196593" Language="SFX">
+					<ShortName>do.wav</ShortName>
+					<Path>SFX\do_C3B3FD70.wem</Path>
+				</File>
+				<File Id="12242022" Language="SFX">
+					<ShortName>Coger_Objeto.wav</ShortName>
+					<Path>SFX\Coger_Objeto_C3B3FD70.wem</Path>
+				</File>
+				<File Id="45924521" Language="SFX">
+					<ShortName>metallic_noise.wav</ShortName>
+					<Path>SFX\metallic_noise_FD00B4A4.wem</Path>
+				</File>
+				<File Id="51671896" Language="SFX">
+					<ShortName>old_clock_pendulum_ticking.wav</ShortName>
+					<Path>SFX\old_clock_pendulum_ticking_F71DB8EF.wem</Path>
+				</File>
+				<File Id="86721894" Language="SFX">
+					<ShortName>MuerteCAIDA_Lamentable.wav</ShortName>
+					<Path>SFX\MuerteCAIDA_Lamentable_C3B3FD70.wem</Path>
+				</File>
+				<File Id="95270441" Language="SFX">
+					<ShortName>CAJON ABRIR.wav</ShortName>
+					<Path>SFX\CAJON ABRIR_C3B3FD70.wem</Path>
+				</File>
+				<File Id="131433814" Language="SFX">
+					<ShortName>steam_hiss.wav</ShortName>
+					<Path>SFX\steam_hiss_05E05616.wem</Path>
+				</File>
+				<File Id="134689959" Language="SFX">
+					<ShortName>MuerteCORDURA_RisaYsmael.wav</ShortName>
+					<Path>SFX\MuerteCORDURA_RisaYsmael_C3B3FD70.wem</Path>
+				</File>
+				<File Id="137746251" Language="SFX">
+					<ShortName>song_placeholder.wav</ShortName>
+					<Path>SFX\song_placeholder_37D8776A.wem</Path>
+				</File>
+				<File Id="139735676" Language="SFX">
+					<ShortName>PASO PERSONA 3.wav</ShortName>
+					<Path>SFX\PASO PERSONA 3_8BAB9469.wem</Path>
+				</File>
+				<File Id="185439624" Language="SFX">
+					<ShortName>PASO PERSONA 2.wav</ShortName>
+					<Path>SFX\PASO PERSONA 2_C3B3FD70.wem</Path>
+				</File>
+				<File Id="219415792" Language="SFX">
+					<ShortName>mi.wav</ShortName>
+					<Path>SFX\mi_C3B3FD70.wem</Path>
+				</File>
+				<File Id="226089555" Language="SFX">
+					<ShortName>metallic_noise.wav</ShortName>
+					<Path>SFX\metallic_noise_C22E2461.wem</Path>
+				</File>
+				<File Id="226447429" Language="SFX">
+					<ShortName>treadmill.wav</ShortName>
+					<Path>SFX\treadmill_C7DB1764.wem</Path>
+				</File>
+				<File Id="258051534" Language="SFX">
+					<ShortName>engranajes_sample.wav</ShortName>
+					<Path>SFX\engranajes_sample_C3B3FD70.wem</Path>
+				</File>
+				<File Id="287865319" Language="SFX">
+					<ShortName>MuerteCORDURA_BienvenidoHijoMio.wav</ShortName>
+					<Path>SFX\MuerteCORDURA_BienvenidoHijoMio_C3B3FD70.wem</Path>
+				</File>
+				<File Id="303729294" Language="SFX">
+					<ShortName>steam_hiss.wav</ShortName>
+					<Path>SFX\steam_hiss_5DA9A9F9.wem</Path>
+				</File>
+				<File Id="309678161" Language="SFX">
+					<ShortName>MonologoYsmaelEntero.wav</ShortName>
+					<Path>SFX\MonologoYsmaelEntero_2E0995F7.wem</Path>
+				</File>
+				<File Id="402150982" Language="SFX">
+					<ShortName>MuerteCAIDA_Estonoesloquequeria.wav</ShortName>
+					<Path>SFX\MuerteCAIDA_Estonoesloquequeria_C3B3FD70.wem</Path>
+				</File>
+				<File Id="405136838" Language="SFX">
+					<ShortName>si.wav</ShortName>
+					<Path>SFX\si_C3B3FD70.wem</Path>
+				</File>
+				<File Id="408963884" Language="SFX">
+					<ShortName>la.wav</ShortName>
+					<Path>SFX\la_C3B3FD70.wem</Path>
+				</File>
+				<File Id="425249954" Language="SFX">
+					<ShortName>PASO AUTOMATA 2.wav</ShortName>
+					<Path>SFX\PASO AUTOMATA 2_C3B3FD70.wem</Path>
+				</File>
+				<File Id="500378663" Language="SFX">
+					<ShortName>MuerteCORDURA_NoTePreocupesProntoSerasLibre.wav</ShortName>
+					<Path>SFX\MuerteCORDURA_NoTePreocupesProntoSerasLibre_C3B3FD70.wem</Path>
+				</File>
+				<File Id="552621432" Language="SFX">
+					<ShortName>door_lock.wav</ShortName>
+					<Path>SFX\door_lock_49B5F9F9.wem</Path>
+				</File>
+				<File Id="571092654" Language="SFX">
+					<ShortName>PASO PERSONA 1.wav</ShortName>
+					<Path>SFX\PASO PERSONA 1_C3B3FD70.wem</Path>
+				</File>
+				<File Id="583385095" Language="SFX">
+					<ShortName>door_slam_1.wav</ShortName>
+					<Path>SFX\door_slam_1_D9AE1DE8.wem</Path>
+				</File>
+				<File Id="587726888" Language="SFX">
+					<ShortName>244992__vitaminl__closing-door.wav</ShortName>
+					<Path>SFX\244992__vitaminl__closing-door_C3B3FD70.wem</Path>
+				</File>
+				<File Id="600318286" Language="SFX">
+					<ShortName>ARRASTRAR 1.wav</ShortName>
+					<Path>SFX\ARRASTRAR 1_98321D7B.wem</Path>
+				</File>
+				<File Id="604729811" Language="SFX">
+					<ShortName>door_lock.wav</ShortName>
+					<Path>SFX\door_lock_97B3A68A.wem</Path>
+				</File>
+				<File Id="612801680" Language="SFX">
+					<ShortName>boiler_room.wav</ShortName>
+					<Path>SFX\boiler_room_C3B3FD70.wem</Path>
+				</File>
+				<File Id="652850648" Language="SFX">
+					<ShortName>PUERTA CERRAR.wav</ShortName>
+					<Path>SFX\PUERTA CERRAR_32A5E861.wem</Path>
+				</File>
+				<File Id="654920372" Language="SFX">
+					<ShortName>PUERTA ABRIR.wav</ShortName>
+					<Path>SFX\PUERTA ABRIR_28C93BFA.wem</Path>
+				</File>
+				<File Id="669635992" Language="SFX">
+					<ShortName>MuerteCORDURA_BienvendioAmigoMio.wav</ShortName>
+					<Path>SFX\MuerteCORDURA_BienvendioAmigoMio_C3B3FD70.wem</Path>
+				</File>
+				<File Id="678606273" Language="SFX">
+					<ShortName>tesla.wav</ShortName>
+					<Path>SFX\tesla_A124063F.wem</Path>
+				</File>
+				<File Id="715892075" Language="SFX">
+					<ShortName>JaheemMiedo_GRITO.wav</ShortName>
+					<Path>SFX\JaheemMiedo_GRITO_7975D23A.wem</Path>
+				</File>
+				<File Id="717286967" Language="SFX">
+					<ShortName>PUERTA ABRIR.wav</ShortName>
+					<Path>SFX\PUERTA ABRIR_89EF141C.wem</Path>
+				</File>
+				<File Id="733230618" Language="SFX">
+					<ShortName>PASO AUTOMATA 1.wav</ShortName>
+					<Path>SFX\PASO AUTOMATA 1_C3B3FD70.wem</Path>
+				</File>
+				<File Id="734135933" Language="SFX">
+					<ShortName>metallic_noise.wav</ShortName>
+					<Path>SFX\metallic_noise_1D9574D7.wem</Path>
+				</File>
+				<File Id="753169433" Language="SFX">
+					<ShortName>move_bookshelf.wav</ShortName>
+					<Path>SFX\move_bookshelf_56FD20F4.wem</Path>
+				</File>
+				<File Id="755719681" Language="SFX">
+					<ShortName>CAJON ABRIR.wav</ShortName>
+					<Path>SFX\CAJON ABRIR_4BA690BD.wem</Path>
+				</File>
+				<File Id="762683208" Language="SFX">
+					<ShortName>re.wav</ShortName>
+					<Path>SFX\re_C3B3FD70.wem</Path>
+				</File>
+				<File Id="774158747" Language="SFX">
+					<ShortName>door_slam_2.wav</ShortName>
+					<Path>SFX\door_slam_2_4D7C59AF.wem</Path>
+				</File>
+				<File Id="787629499" Language="SFX">
+					<ShortName>CAJON CERRAR.wav</ShortName>
+					<Path>SFX\CAJON CERRAR_C3B3FD70.wem</Path>
+				</File>
+				<File Id="794279729" Language="SFX">
+					<ShortName>fa.wav</ShortName>
+					<Path>SFX\fa_C3B3FD70.wem</Path>
+				</File>
+				<File Id="814142868" Language="SFX">
+					<ShortName>ENGRANAJES O MAQUINAS.wav</ShortName>
+					<Path>SFX\ENGRANAJES O MAQUINAS_31DF016C.wem</Path>
+				</File>
+				<File Id="833646856" Language="SFX">
+					<ShortName>MuerteCORDURA_PuedesSentirlaLaLibertad.wav</ShortName>
+					<Path>SFX\MuerteCORDURA_PuedesSentirlaLaLibertad_C3B3FD70.wem</Path>
+				</File>
+				<File Id="884164510" Language="SFX">
+					<ShortName>CAJON ABRIR.wav</ShortName>
+					<Path>SFX\CAJON ABRIR_B9E45A3D.wem</Path>
+				</File>
+				<File Id="916582572" Language="SFX">
+					<ShortName>MuerteCAIDA_QueDesperdicio.wav</ShortName>
+					<Path>SFX\MuerteCAIDA_QueDesperdicio_C3B3FD70.wem</Path>
+				</File>
+				<File Id="962527044" Language="SFX">
+					<ShortName>GOLPE ROBOT CRISTAL 1.wav</ShortName>
+					<Path>SFX\GOLPE ROBOT CRISTAL 1_C3B3FD70.wem</Path>
+				</File>
+				<File Id="980284219" Language="SFX">
+					<ShortName>ARRASTRAR 1.wav</ShortName>
+					<Path>SFX\ARRASTRAR 1_BE3B65AB.wem</Path>
+				</File>
+				<File Id="993266665" Language="SFX">
+					<ShortName>PROYECTOR.wav</ShortName>
+					<Path>SFX\PROYECTOR_49D6B1FB.wem</Path>
+				</File>
+				<File Id="1033186209" Language="SFX">
+					<ShortName>DESPERTARHIJO_TePresentoAMiHijo.wav</ShortName>
+					<Path>SFX\DESPERTARHIJO_TePresentoAMiHijo_C3B3FD70.wem</Path>
+				</File>
+				<File Id="1052510011" Language="SFX">
+					<ShortName>metallic_noise.wav</ShortName>
+					<Path>SFX\metallic_noise_62531D7A.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+		</SoundBank>
+		<SoundBank Id="1355168291" Language="SFX">
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+		</SoundBank>
+		<SoundBank Id="3991942870" Language="SFX">
+			<ShortName>Music</ShortName>
+			<Path>Music.bnk</Path>
+			<IncludedEvents>
+				<Event Id="2932040671" Name="Play_Music"/>
+			</IncludedEvents>
+			<IncludedMemoryFiles>
+				<File Id="206163165" Language="SFX">
+					<ShortName>prova.wav</ShortName>
+					<Path>SFX\prova_37D8776A.wem</Path>
+				</File>
+				<File Id="955364911" Language="SFX">
+					<ShortName>MúSICA DEMO 1 MAQUINAS.wav</ShortName>
+					<Path>SFX\MúSICA DEMO 1 MAQUINAS_37D8776A.wem</Path>
+				</File>
+				<File Id="963169765" Language="SFX">
+					<ShortName>pasillo_loop.wav</ShortName>
+					<Path>SFX\pasillo_loop_37D8776A.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>

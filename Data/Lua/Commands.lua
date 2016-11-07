@@ -122,3 +122,12 @@ end
 function pos()
 	utils_log(""..g_Player.m_CameraController:get_position().y)
 end
+
+function rompe()
+	local l_Level = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel)
+	local l_Particle = l_Level:get_layer_manager():get_layer("particles"):get_resource("CajaRompiendo")
+	local l_Resource = l_Level:get_layer_manager():get_layer("solid"):get_resource("CajaEngranajesPasillo_001")
+	l_Resource:set_visible(false)
+	l_Particle:set_awake(true)
+	l_Particle:set_awake_timer(4.22)
+end

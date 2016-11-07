@@ -248,7 +248,6 @@ int CInputManager::GetAction(std::string _name)
 		return CInputManager::Sing;
 	else if (_name == "Pause")
 		return CInputManager::Pause;
-
 	else if (_name == "DebugToggleFrustum")
 		return CInputManager::DebugToggleFrustum;
 	else if (_name == "DebugSpeedUp")
@@ -289,8 +288,8 @@ int CInputManager::GetAction(std::string _name)
 		return CInputManager::DebugMonsterIdle;
 	else if (_name == "DebugMonsterHit")
 		return CInputManager::DebugMonsterHit;
-	/*else if (_name == "DebugStopAllSounds")
-		return CInputManager::DebugStopAllSounds;*/
+	//else if (_name == "DebugStopAllSounds")
+		//return CInputManager::DebugStopAllSounds;
 
 	else{
 		assert("This should not happen!");

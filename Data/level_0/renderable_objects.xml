@@ -9,7 +9,13 @@
 	<layer name="manchas"/>
 	<layer name="skybox"/>
 	<layer name="interactuable_objects"/>
-	<animated_instance_mesh name="Jaheem" layer="solid" core_name="Jaheem" position="0.0 0.9 5.5" rotation="0.0 0.0 0.0 1.0" create_physics="false" visible="true"/>
-	<instance_mesh name="Skybox" visible="true" create_physics="false" rotation="0.0 0.0 0.0 -1.0" position="0.0 0.0 0.0" core_name="Skybox" layer="skybox"/>
+	<!--
+	<animated_instance_mesh name="Jaheem" layer="solid" core_name="Jaheem" position="0.0 0.9 5.5" rotation="0.0 0.0 0.0 1" create_physics="false" visible="true"/>
+	<animated_instance_mesh name="Jaheem" layer="solid" core_name="Jaheem" position="16.5236 4.9248 27.9152" rotation="0.0 0.0 0.0 1" create_physics="false" visible="true"/>	
+	<animated_instance_mesh name="Jaheem" layer="solid" core_name="Jaheem" position="-1.8993283510208 0.92479991912842 39.923099517822" rotation="0.000000 -0.707107 0.000000 -0.707107" create_physics="false" visible="true"/>
+	<animated_instance_mesh name="Jaheem" layer="solid" core_name="Jaheem" position="11.75239944458 -4.3613562583923 20.515838623047" rotation="0.000000 -0.707107 0.000000 0.707107" create_physics="false" visible="true"/>
+	-->
+	<animated_instance_mesh name="Jaheem" layer="solid" core_name="Jaheem" position="0.0 0.9 -4.5" rotation="0.0 0.0 0.0 1" create_physics="false" visible="true"/>
 	<manchas_instance name="manchas" layer="manchas" type="manchasCordura1" awake="false" visible="true"/>
+	<instance_mesh name="Skybox" visible="true" create_physics="false" rotation="0.0 0.0 0.0 -1.0" position="0.0 0.0 0.0" core_name="Skybox" layer="skybox"/>
 </renderable_objects>

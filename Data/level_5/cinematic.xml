@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cinematics>
-	<cinematic name="engranajes_pasillo" duration="6.66667" cycle="false">
+	<cinematic name="engranajes_pasillo" duration="6.66667" cycle="true">
 		<cinematic_object resource="EngranajeEnsangrentadoPasillo_003" layer="solid">
 			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 1.74846e-007 -1.0" scale="1.0 1.0 1.0"/>
 			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="0.309017 0.0 1.66288e-007 -0.951057" scale="1.0 1.0 1.0"/>

@@ -1,22 +1,96 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <Speakers>
+	<!-- Old Recibidor -->
 	<Speaker name="Cogwheel1" position="2.8 2.0 -3.5" orientation="-1.0 0.0 0.0" /> 
 	<Speaker name="Cogwheel2" position="-2.8 1.0 3.6" orientation="1.0 0.0 0.0" /> 
 	<Speaker name="Cogwheel3" position="2.8 0.8 1.1" orientation="-1.0 0.0 0.0" /> 
 	<Speaker name="CajonComodaDerecha1" position="-2.423 1.0 -2.374" orientation="1.0 0.0 0.0" /> 
 	<Speaker name="CajonComodaDerecha2" position="-2.423 1.0 -1.056" orientation="1.0 0.0 0.0" /> 
 	<Speaker name="CajonComodaIzquierda1" position="2.420 1.0 -2.374" orientation="1.0 0.0 0.0" /> 
-	<Speaker name="CajonComodaIzquierda2" position="2.420 1.0 -1.056" orientation="1.0 0.0 0.0" /> 
+	<Speaker name="CajonComodaIzquierda2" position="2.420 1.0 -1.056" orientation="1.0 0.0 0.0" />
 
 
+	<!-- Old Biblioteca -->
 	<Speaker name="Fireplace" position="11.62 0.75 25.5" orientation="0.0 0.0 -1.0" /> 
 	<Speaker name="Projector" position="16.0 1.2 9.95" orientation="0.0 0.0 1.0" /> 
-	<Speaker name="Book" position="15.57 1.53 26.31" orientation="0.0 0.0 -1.0" /> 
+	<Speaker name="SpeakerBook" position="15.57 1.53 26.31" orientation="0.0 0.0 -1.0" /> 
 	<Speaker name="ClueSheet" position="11.87 1.27 15.26" orientation="-1.0 0.0 0.0" /> 
 	<Speaker name="OrganPipes" position="0.11 6.0 14.44" orientation="0.0 0.0 -1.0" /> 
 	<Speaker name="OrganPipes2" position="3.61 6.0 14.44" orientation="0.0 0.0 -1.0" /> 
 	<Speaker name="OrganPipes3" position="-3.39 6.0 14.44" orientation="0.0 0.0 -1.0" /> 
 	<Speaker name="SecretDoor" position="-6.58 0.5 7.85" orientation="1.0 0.0 0.0" /> 
 	<Speaker name="ArtifactStand" position="-17.0492 1.66366 29.1136" orientation="0.0 0.0 -1.0" /> 
-	<Speaker name="ArtifactDoor" position="16.8 5.36 27.05" orientation="0.0 0.0 -1.0" /> 
+	<Speaker name="ArtifactDoor" position="16.8 5.36 27.05" orientation="0.0 0.0 -1.0" />
+	
+	<!-- Recibidor -->
+	<Speaker name="SpeakerWheelsRight"			position="-2.41929 0.979156 3.44"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerWheelsTop"			position="0.0157564 5.0087 2.72508"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerWheelLeftRight"		position="2.74347 0.869293 1.18378"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerWheelLeftLeft"		position="2.64252 3.15005 -3.33659"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerContinuum"			position="2.39959 1.56021 -1.08179"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerCaseLeft"				position="2.04373 2.19888 2.10834"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerCaseRight"			position="-2.1535 2.19888 2.10834"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerDoor"					position="-0.812649 1.14871 4.94626"		orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerTrayRightLeft"		position="-2.17363 0.905914 -1.04032"		orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerTrayRightRight"		position="-2.17363 0.905914 -2.35581"		orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerTrayLeftRight"		position="2.09494 0.923981 -1.05042"		orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerTrayLeftLeft"			position="2.09494 0.923981 -2.38865"		orientation="1.0 0.0 0.0"	/>
+	
+	<!-- Biblioteca -->
+	<Speaker name="SpeakerFire"					position="11.853 0.204102 26.8561"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerNewcomenTable"		position="12.7578 1.80981 16.6683"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerNewcomenOrgan"		position="5.0322 0.980225 14.641"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerOrganLeft"			position="2.87159 3.83972 14.0303"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerOrganRight"			position="-2.3745 3.83972 14.0303"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerOrganCenter"			position="0.151241 3.19501 14.6496"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerProjector"			position="16.1103 1.14093 9.57503"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerArtifactStand"		position="-17.0597 1.63763 28.8561"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerSecretDoor"			position="-6.50925 1.63763 7.76928"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerGramophone"			position="2.96866 2.93158 20.9586"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerClues"				position="11.859 1.24139 15.3229"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerArtifactDoor"			position="16.2267 5.18011 26.8771"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerPiano"				position="0.0997583 1.38519 14.7891"		orientation="1.0 0.0 0.0"	/>
+	
+	<!-- Maquinas -->
+	<Speaker name="SpeakerTesla"				position="23.4923 6.6715 27.7889"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerNewcomen"				position="25.6153 1.7006 37.1729"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerLeverWheelLeft"		position="26.5117 3.75295 29.6635"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerInputPipe"			position="17.3231 0.780122 38.6979"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerDoorPipe"				position="-0.304255 0.117428 41.1535"		orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerCauldronTop"			position="15.8169 6.27252 40.8024"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerCauldronBot"			position="15.8169 1.5722 40.8024"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerCylindersLeft"		position="26.5933 2.54603 34.2369"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerCylindersRight"		position="26.5933 2.54603 40.0703"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerLeverWheelRight"		position="26.5117 3.75295 44.9788"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerHourglass"			position="18.6046 0.308832 28.0894"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerToothWheelRight"		position="16.6206 0.308832 28.0894"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerToothWheelLeft"		position="14.4616 0.308832 28.0894"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerCrusherWall"			position="-1.2167 9.64713 40.0483"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerCrusherCeiling"		position="10.7019 12.4513 36.2187"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerBeltRight"			position="1.8682 0.189438 43.2376"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerBeltCenter"			position="5.95371 0.189438 43.2376"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerBeltLeft"				position="11.7242 0.189438 43.2376"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerPipeDoor"				position="-1.09357 0.601227 39.5664"		orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerPickValve"			position="24.698 -0.057173 43.4007"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerStairsTop"			position="7.7263 5.39106 28.1199"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerStairsMid"			position="7.7263 2.98802 28.1199"			orientation="1.0 0.0 0.0"	/>
+	<Speaker name="SpeakerStairsBot"			position="7.7263 0.711003 28.1199"			orientation="1.0 0.0 0.0"	/>
+	
+	<!-- Pasillo -->
+	<Speaker name="SpeakerWheels1"				position="34.7758 -7.81116 11.0356"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerWheels2"				position="63.9993 -8.17725 49.801"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerWheels3"  			position="65.8913 -8.2251 24.2654"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerWheels4"  			position="104.117 -7.03101 14.4048"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerJail1"				position="30.5219 -7.11157 51.7002"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerJail3RightRight"		position="79.7007 -7.03101 21.7707"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerJail3LeftLeft"		position="79.6741 -7.03101 31.7024"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerJail3LeftRight"		position="73.0315 -7.03101 31.7024"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerJail3RightLeft"		position="73.0315 -7.03101 21.8238"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerJail4"				position="56.7031 -7.03101 26.8157"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerCave"					position="101.192 -8.32739 26.8157"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerFinalStairsDown"		position="153.179 -8.29395 13.3342"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerFinalStairsMidDown"	position="153.179 -5.73877 13.3342"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerFinalStairsMidUp"		position="153.179 -2.79553 13.3342"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerFinalStairsUp"		position="153.179 0.366455 13.3342"			orientation="1.0 0.0 0.0"	 />
+	<Speaker name="SpeakerFinalDoor"			position="151.881 3.41528 13.3342"			orientation="1.0 0.0 0.0"	 />
 </Speakers>
