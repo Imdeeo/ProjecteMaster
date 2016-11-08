@@ -5,6 +5,7 @@ State Group	ID	Name			Wwise Object Path	Notes
 State	ID	Name	State Group			Notes
 	748895195	None	Action			
 	2582085496	Exploration	Action			
+	3122331337	Puzzle_Video	Action			
 	3169107872	Escape	Action			
 	4177142508	Singing	Action			
 	748895195	None	Level			
