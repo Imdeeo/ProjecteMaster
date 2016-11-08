@@ -12,7 +12,7 @@ class "CVisionTestEnemy"
     local l_Box=UABEngine:get_layer_manager():get_resource("solid"):get_resource(name)
     local l_Component=l_Box:get_component_manager():get_resource("VisionTestEnemyComponent")
 
-    --utils_log("VisionTestEnemy:InitEnemy")
+    utils_log("VisionTestEnemy:InitEnemy")
     g_VisionTestEnemies[l_Box.name] = self
     if l_Component==nil then
       local l_Component=create_scripted_component(

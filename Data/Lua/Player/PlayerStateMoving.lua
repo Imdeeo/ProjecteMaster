@@ -79,9 +79,9 @@ function MovingUpdate(args, _ElapsedTime)
         l_Player.m_Velocity.y = 0
     end
 
-	--// After moving a distance of one step, play step sound event
+	--// If walking, play step sound event after moving a distance of one step
 	l_Player.m_DistanceFromLastStep = l_Player.m_DistanceFromLastStep + l_Displacement:length()
-	if l_Player.m_DistanceFromLastStep > l_Player.m_StepLength then
+	if l_Player.m_CurrentAnimation == "move" and l_Player.m_DistanceFromLastStep > l_Player.m_StepLength then
 		l_Player.m_DistanceFromLastStep = 0
 		l_Player.m_SoundManager:play_event(g_PlayerStepSoundEvent, l_Owner)
 	end

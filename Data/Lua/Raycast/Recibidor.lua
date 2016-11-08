@@ -53,7 +53,7 @@ function R1Sheets(_Player)
 	if _Player:IsFacingTarget(l_Target, 1.0, 1.0) then
 		_Player.m_Target = l_Target
 		-- Play Sound
-		----utils_log("<-Interacted with R1Sheets->")
+		--utils_log("<-Interacted with R1Sheets->")
 	end
 end
 
@@ -64,13 +64,13 @@ function R1Canvas(_Player)
 	if _Player:IsFacingTarget(l_Target, 1.0, 2.0) then
 		_Player.m_Target = l_Target
 		-- Play Sound
-		----utils_log("<-Interacted with R1Canvas->")
+		--utils_log("<-Interacted with R1Canvas->")
 	end
 end
 
 function R1TrayR1(_Player) --This contains the key
 	_Player.m_TargetYaw = 0.0
-	----utils_log("Yaw: ".._Player.m_TargetYaw)
+	--utils_log("Yaw: ".._Player.m_TargetYaw)
 	_Player.m_UpCamera = Vect3f(-0.682049, 0.731307, 0.0)	
 	_Player.m_ForwardCamera = Vect3f(-0.7313, -0.68205, 0)
 	_Player.m_TargetPosOffset = Vect3f(0.998, 0, 0.025)

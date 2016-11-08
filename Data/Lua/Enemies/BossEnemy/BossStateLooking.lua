@@ -1,5 +1,5 @@
 function LookingFirstBoss(args)
-	--utils_log("LookingFirst")
+	utils_log("LookingFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -22,7 +22,7 @@ function LookingUpdateBoss(args, _ElapsedTime)
 end
 
 function LookingEndBoss(args)
-	--utils_log("LookingEnd")
+	utils_log("LookingEnd")
 end
 
 function LookingToIdleConditionBoss(args)
