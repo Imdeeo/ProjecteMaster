@@ -3,7 +3,7 @@ dofile("Data\\Lua\\Utils\\EnemyUtils.lua")
 
 class "CVisionTestEnemySM"
   function CVisionTestEnemySM:__init(_owner)
-    utils_log("VisionTestEnemySM:__init()")
+    --utils_log("VisionTestEnemySM:__init()")
     self.owner = _owner
     self.m_StateMachine = StateMachine.create()
     self.m_Vision = CEnemyVision(_owner)
@@ -53,7 +53,7 @@ class "CVisionTestEnemySM"
     owner:set_rotation(actual_rot)
 
     if self.m_Vision.m_BlockingObjectName ~= self.m_LatestBlockingObjectName then
-      utils_log("Object blocking the view: " .. self.m_Vision.m_BlockingObjectName)
+      --utils_log("Object blocking the view: " .. self.m_Vision.m_BlockingObjectName)
       self.m_LatestBlockingObjectName = self.m_Vision.m_BlockingObjectName
     end
   end
@@ -70,7 +70,7 @@ class "CVisionTestEnemySM"
     local forward = owner:get_rotation():get_forward_vector()
     forward.y = 0.0
     if direction:length() == 0.0 or forward:length() == 0.0 then
-      utils_log("Zero length vector!")
+      --utils_log("Zero length vector!")
       return
     end
     direction:normalize(1.0)
@@ -92,9 +92,9 @@ class "CVisionTestEnemySM"
   end
 
   function scopeFirst()
-    utils_log("VisionTestEnemy: looking around")
+    --utils_log("VisionTestEnemy: looking around")
   end
 
   function watchFirst()
-    utils_log("VisionTestEnemy: watching player")
+    --utils_log("VisionTestEnemy: watching player")
   end

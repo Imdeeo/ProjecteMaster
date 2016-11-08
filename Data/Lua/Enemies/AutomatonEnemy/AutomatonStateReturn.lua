@@ -1,5 +1,5 @@
 function ReturnFirstAutomaton(args)
-	utils_log("ReturnFirst")
+	--utils_log("ReturnFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -103,7 +103,7 @@ function ReturnUpdateAutomaton(args, _ElapsedTime)
 end
 
 function ReturnEndAutomaton(args)
-	utils_log("ReturnEnd")
+	--utils_log("ReturnEnd")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	l_Enemy.m_SoundManager:play_event(g_AutomatonStopPatrolEvent, l_Owner)

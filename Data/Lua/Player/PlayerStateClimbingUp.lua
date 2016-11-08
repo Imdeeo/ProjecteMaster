@@ -7,7 +7,7 @@ function ClimbingUpFirst(args)
 	l_Player.m_Timer = 0.0
 	l_Player.m_AnimationTime = 1.333333
 	l_Player.m_ClimbingUp = true
-	utils_log("ClimbingUpFirst")
+	--utils_log("ClimbingUpFirst")
 end
 
 function ClimbingUpUpdate(args, _ElapsedTime)
@@ -42,7 +42,7 @@ end
 function ClimbingUpEnd(args)
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
-	utils_log("ClimbingUpEnd")
+	--utils_log("ClimbingUpEnd")
 	l_Player.m_ClimbingUp = false
 	l_Owner:clear_cycle(l_Owner:get_actual_cycle_animation(),0.3)
 end

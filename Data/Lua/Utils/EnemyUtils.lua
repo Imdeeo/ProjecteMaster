@@ -18,8 +18,8 @@ function go2point(args,_ElapsedTime)
 
 	
 	local dir = Vect3f(math.cos(_owner:get_yaw()),0,math.sin(_owner:get_yaw()));
-	--utils_log(type(enemyPos))
-	--utils_log(type(move))
+	----utils_log(type(enemyPos))
+	----utils_log(type(move))
 	local yaw = _owner:get_yaw()
 	local dot_result = dir.x*move.x + dir.y*move.y + dir.z*move.z
 	--local cross_result = Vect3f(dir.y*move.z - dir.z* move.y, dir.z*move.x-dir.x*move.z, dir.x*move.y-dir.y*move.x)
@@ -104,7 +104,7 @@ class "CEnemyVision"
 		local l_PlayerPos = self.m_PhysXManager:get_character_controler_pos("player")
 --[[
 		if self.m_Counter >= 20 then
-			utils_log("enemy head y: " .. l_OwnerHeadPos.y .. " player y: " .. l_PlayerPos.y)
+			--utils_log("enemy head y: " .. l_OwnerHeadPos.y .. " player y: " .. l_PlayerPos.y)
 			self.m_Counter = 0
 		end
 		self.m_Counter = self.m_Counter + 1

@@ -35,7 +35,7 @@ function deactivate_gravity()
 end
 
 function change_object_level(level,newlevel,layer,object)
-	utils_log("Change Object Level")
+	--utils_log("Change Object Level")
 	g_Engine:get_level_manager():change_object_level(level,newlevel,layer,object)
 end
 
@@ -48,12 +48,12 @@ function deactivate_player_collisions()
 end
 
 function change_static_actor_collision_group(actor_name,collision_group,material)
-	utils_log("Actor"..actor_name.." Collision:"..collision_group)
+	--utils_log("Actor"..actor_name.." Collision:"..collision_group)
 	g_Engine:get_physX_manager():change_rigid_static_actor_group(actor_name,collision_group,material)
 end
 
 function change_dynamic_actor_collision_group(actor_name,collision_group)
-	utils_log("Actor"..actor_name.." Collision:"..collision_group)
+	--utils_log("Actor"..actor_name.." Collision:"..collision_group)
 	g_Engine:get_physX_manager():change_rigid_dynamic_actor_group(actor_name,collision_group)
 end
 
@@ -87,7 +87,7 @@ function test()
 	l_Forward.y = 0
 	l_Forward.x = l_Forward.x * -1.0
 	l_Forward:normalize(1)
-	utils_log_v3(l_Forward)
+	--utils_log_v3(l_Forward)
 	local aux = Quatf()
 	aux:set_from_fwd_up(l_Forward, Vect3f(0,1,0))
 	l_AnimatedCamera.m_RotationOffset = aux:rotation_matrix()
@@ -104,7 +104,7 @@ end
 function ja()
 	local l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()
 	local l_FPSCamera = l_CameraManager:get_main_camera()
-	utils_log_v3(l_FPSCamera:get_position())
+	--utils_log_v3(l_FPSCamera:get_position())
 end
 
 function asd()
@@ -116,11 +116,11 @@ function dsa()
 end
 
 function rot()
-	utils_log_q(g_Player.m_RenderableObject:get_rotation())
+	--utils_log_q(g_Player.m_RenderableObject:get_rotation())
 end
 
 function pos()
-	utils_log(""..g_Player.m_CameraController:get_position().y)
+	--utils_log(""..g_Player.m_CameraController:get_position().y)
 end
 
 function rompe()

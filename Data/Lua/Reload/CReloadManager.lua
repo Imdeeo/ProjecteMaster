@@ -17,11 +17,11 @@ class 'CReloadManager'
 		local l_Aux = nil
 		local l_RemoveEnemies = true
 		
-		utils_log("COMENZANDO LA RECARGA!!!")
+		--utils_log("COMENZANDO LA RECARGA!!!")
 		for i=1, table.maxn(self.m_Resources) do
 			l_Aux = self.m_Resources[i]
 			if l_Aux[1] == "cinematic" then
-				utils_log("CINEMATICAS!!!")
+				--utils_log("CINEMATICAS!!!")
 				l_Resource = g_Engine:get_level_manager():get_level(l_Aux[6]):get_cinematic_manager():get_resource(l_Aux[2])
 				if l_Aux[3] then
 					l_Resource:play()
@@ -31,7 +31,7 @@ class 'CReloadManager'
 					l_Resource:pause()					
 				end
 			elseif l_Aux[1] == "particle" then
-				utils_log("PARTICULAS!!!")
+				--utils_log("PARTICULAS!!!")
 				l_Resource = g_Engine:get_level_manager():get_level(l_Aux[8]):get_layer_manager():get_layer(l_Aux[2]):get_resource(l_Aux[3])
 				l_Resource:set_position(l_Aux[4])
 				l_Resource:set_start(l_Aux[5])
@@ -39,12 +39,12 @@ class 'CReloadManager'
 				l_Resource:set_visible(l_Aux[7])
 				l_Resource:set_active_particles(0)
 			elseif l_Aux[1] == "light" then
-				utils_log("LUZ!!!")
+				--utils_log("LUZ!!!")
 				l_Resource = g_Engine:get_level_manager():get_level(l_Aux[5]):get_light_manager():get_resource(l_Aux[2])
 				l_Resource:set_position(l_Aux[3])
 				l_Resource:set_enabled(l_Aux[4])
 			elseif l_Aux[1] == "trigger" then
-				utils_log("TRIGGERS!!!")
+				--utils_log("TRIGGERS!!!")
 				l_Resource = g_Engine:get_level_manager():get_level(l_Aux[8]):get_layer_manager():get_layer(l_Aux[2]):get_resource(l_Aux[3])
 				l_Resource:set_position(l_Aux[4])
 				l_Resource:set_rotation(l_Aux[5])
@@ -58,7 +58,7 @@ class 'CReloadManager'
 			elseif l_Aux[1] == "video" then
 				g_Engine:get_video_manager():restart_clip(l_Aux[2])
 			else
-				utils_log("OBJETOS: "..l_Aux[3])
+				--utils_log("OBJETOS: "..l_Aux[3])
 				l_Resource = g_Engine:get_level_manager():get_level(l_Aux[7]):get_layer_manager():get_layer(l_Aux[2]):get_resource(l_Aux[3])
 				l_Resource:set_position(l_Aux[4])
 				l_Resource:set_rotation(l_Aux[5])
@@ -91,7 +91,7 @@ class 'CReloadManager'
 		local doc = XMLDocument()
 		local xmlError = doc:load_file(Filename)
 		local UABEngine = CUABEngine.get_instance()
-		utils_log("LEYENDOOOOO")
+		--utils_log("LEYENDOOOOO")
 		if xmlError == 0 then
 			local l_Element = doc:first_child_element("resources"):first_child()
 			while l_Element ~= nil do
@@ -174,7 +174,7 @@ class 'CReloadManager'
 				l_Element = l_Element:get_next()
 			end
 		else
-			utils_log("File '"..Filename.."'not correctly loaded")
+			--utils_log("File '"..Filename.."'not correctly loaded")
 		end
 	end
 

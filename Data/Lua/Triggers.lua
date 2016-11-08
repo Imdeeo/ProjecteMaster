@@ -31,7 +31,7 @@ function OnEnterStairs(_TriggerName, _ColliderName)
 			l_Player.m_InteractingAnimation = 18
 			l_Player.m_IsClimbing = true
 			
-			utils_log("LEVEL: "..l_Player.m_ActualLevel)
+			--utils_log("LEVEL: "..l_Player.m_ActualLevel)
 			if l_Player.m_ActualLevel == "Maquinas" then
 				l_Player.m_ForwardCamera = Vect3f(-1.4142135623730950488016887242097, 0.0, -1.4142135623730950488016887242097)
 				l_Player.m_Target = g_Engine:get_level_manager():get_level(g_Player.m_ActualLevel):get_layer_manager():get_resource("solid"):get_resource("Escalera"):get_position()
@@ -144,11 +144,11 @@ function FogTriggerEnter(_Player, _TriggerName)
 end 
 
 function FogTriggerStay(_Player, _TriggerName)
-	--utils_log("stay")
+	----utils_log("stay")
 end 
 
 function FogTriggerExit(_Player, _TriggerName)
-	--utils_log("exit")
+	----utils_log("exit")
 end 
 
 function OnEnterHole(_TriggerName, _ColliderName)
@@ -171,7 +171,7 @@ function OnExitActivateBoss(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		g_Engine:get_level_manager():choose_scene_command_level("Pasillo")
 		g_Player:SetActualLevel("Pasillo")
-		l_LevelManager:get_level(l_Player.m_ActualLevel):get_cinematic_manager():get_resource("engranajes_pasillo"):play()
+		g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel):get_cinematic_manager():get_resource("engranajes_pasillo"):play()
 	end
 end
 

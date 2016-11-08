@@ -1,5 +1,5 @@
 function PatrolFirstAutomaton(args)
-	utils_log("PatrolFirst")
+	--utils_log("PatrolFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	

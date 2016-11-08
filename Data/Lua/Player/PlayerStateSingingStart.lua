@@ -25,7 +25,7 @@ end
 function SingingStartUpdate(args, _ElapsedTime)
 	local l_Player = args["self"]
 	local l_Owner = args["owner"]
-	utils_log("pene")
+	--utils_log("pene")
 	l_Player.m_Timer = l_Player.m_Timer + _ElapsedTime
 	
 	if not l_Player.m_InputManager:is_action_active("Sing") then

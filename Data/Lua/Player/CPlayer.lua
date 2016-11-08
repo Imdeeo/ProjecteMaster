@@ -240,12 +240,12 @@ class 'CPlayer' (CLUAComponent)
 	end
 	
 	function CPlayer:Destroy()
-		utils_log("Delete Player")
+		--utils_log("Delete Player")
 		self.m_PhysXManager:remove_actor(self.m_Name)
 	end
 
 	function CPlayer:__gc()
-		utils_log("Delete Player")
+		--utils_log("Delete Player")
 	end
 	
 	function CPlayer:SetSanity(_amount, _override)
@@ -262,11 +262,11 @@ class 'CPlayer' (CLUAComponent)
 	function CPlayer:ModifySanity(_amount)
 		self.m_Sanity = math.max(math.min(self.m_Sanity + _amount, self.m_MaxSanity),0)
 		if self.m_Sanity <= 0 then
-			--utils_log("ESTAS MUERTO!!!")
+			----utils_log("ESTAS MUERTO!!!")
 			g_Engine:set_pause(true)
 			m_retry = true
 			m_menu = true
-			--utils_log("ACTIVANDO MENU!!!")
+			----utils_log("ACTIVANDO MENU!!!")
 		end
 	end
 	
@@ -287,7 +287,7 @@ class 'CPlayer' (CLUAComponent)
 	end
 	
 	function CPlayer:UpdateSanityEffects(_ElapsedTime)
-		--utils_log("Update Sanity")
+		----utils_log("Update Sanity")
 		local l_Level = g_Engine:get_level_manager():get_level(self.m_ActualLevel)
 		local l_LevelPlayer = g_Engine:get_level_manager():get_level("Player")
 		
@@ -297,7 +297,7 @@ class 'CPlayer' (CLUAComponent)
 			
 			if self.m_Sanity <= l_EffectAux[3] and self.m_Sanity >= l_EffectAux[4] then
 				if l_EffectAux[1] == "vortex" then
-					--utils_log("vortex")
+					----utils_log("vortex")
 					l_Material = l_Level:get_material_manager():get_resource(l_EffectAux[5])
 					
 					local l_Value = 0.0
@@ -318,7 +318,7 @@ class 'CPlayer' (CLUAComponent)
 					l_Value = l_Previous + (l_Value-l_Previous)*_ElapsedTime
 					l_Material:set_value(1,l_Value)
 				elseif l_EffectAux[1] == "stain" then
-					--utils_log("stain")
+					----utils_log("stain")
 					local l_Layer = l_LevelPlayer:get_layer_manager():get_layer("manchas")
 					local l_Mancha = l_Layer:get_resource(l_EffectAux[5])
 					local l_ManchaType = l_LevelPlayer:get_manchas_manager():get_resource(l_EffectAux[2])
@@ -326,7 +326,7 @@ class 'CPlayer' (CLUAComponent)
 					l_Mancha:set_type(l_ManchaType)
 					l_Mancha:set_awake(true)
 				elseif l_EffectAux[1] == "vignetting" then
-					--utils_log("vignetting")
+					----utils_log("vignetting")
 					l_Material = l_Level:get_material_manager():get_resource(l_EffectAux[5])
 					
 					local l_Value = 0.0
@@ -339,7 +339,7 @@ class 'CPlayer' (CLUAComponent)
 					l_Value = l_Previous + (l_Value-l_Previous)*_ElapsedTime
 					l_Material:set_value(1,l_Value)
 				elseif l_EffectAux[1] == "fov" then
-					--utils_log("fov")
+					----utils_log("fov")
 					local CameraControllerManager = g_Engine:get_camera_controller_manager()
 					local MainCamera = CameraControllerManager:get_main_camera()
 					local l_Fov_Value = l_EffectAux[5] + (l_EffectAux[6] - l_EffectAux[5]) * (l_EffectAux[3] - self.m_Sanity) / (l_EffectAux[3] - l_EffectAux[4])
@@ -364,7 +364,7 @@ class 'CPlayer' (CLUAComponent)
 				end
 			else
 				if l_EffectAux[1] == "vortex" then
-					--utils_log("vortex 2")
+					----utils_log("vortex 2")
 					l_Material = l_Level:get_material_manager():get_resource(l_EffectAux[5])
 					
 					local l_Previous = l_Material:get_value(1)
@@ -373,7 +373,7 @@ class 'CPlayer' (CLUAComponent)
 						l_Material:set_value(1, l_Value)
 					end
 				elseif l_EffectAux[1] == "stain" then
-					--utils_log("stain 2")
+					----utils_log("stain 2")
 					local l_Layer = l_LevelPlayer:get_layer_manager():get_layer("manchas")
 					local l_Mancha = l_Layer:get_resource(l_EffectAux[5])
 
@@ -381,7 +381,7 @@ class 'CPlayer' (CLUAComponent)
 						l_Mancha:set_awake(false)
 					end
 				elseif l_EffectAux[1] == "vignetting" then
-					--utils_log("vignetting 2")
+					----utils_log("vignetting 2")
 					l_Material = l_Level:get_material_manager():get_resource(l_EffectAux[5])
 					
 					local l_Previous = l_Material:get_value(1)
@@ -390,7 +390,7 @@ class 'CPlayer' (CLUAComponent)
 						l_Material:set_value(1, l_Value)
 					end
 				elseif l_EffectAux[1] == "fov" then
-					--utils_log("fov 2")
+					----utils_log("fov 2")
 					local CameraControllerManager = g_Engine:get_camera_controller_manager()
 					local MainCamera = CameraControllerManager:get_main_camera()
 					local l_Previous_fov = MainCamera:get_fov()
@@ -403,7 +403,7 @@ class 'CPlayer' (CLUAComponent)
 				end
 			end
 		end
-		--utils_log("End Update Sanity")
+		----utils_log("End Update Sanity")
 	end
 	
 	--[[function CPlayer:RecoverSanity()
@@ -695,8 +695,8 @@ class 'CPlayer' (CLUAComponent)
 		local l_Pos = self.m_PhysXManager:get_character_controler_pos("player")
 		l_Pos.y = l_Pos.y - g_TotalHeight
 		local ret = false
-		--utils_log("Difference: "..l_Difference)
-		--utils_log("Distance: "..(l_Pos - _Target):length().." (".._Distance.." needed)")
+		----utils_log("Difference: "..l_Difference)
+		----utils_log("Distance: "..(l_Pos - _Target):length().." (".._Distance.." needed)")
 		if (l_Difference > (g_PI-_Radians)) and (l_Difference < (g_PI+_Radians)) and ((l_Pos - _Target):length() < _Distance) then
 			ret = true
 		end

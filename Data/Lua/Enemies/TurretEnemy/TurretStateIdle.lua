@@ -1,5 +1,5 @@
 function IdleFirstTurret(args)
-	utils_log("TurretIdleFirst")
+	--utils_log("TurretIdleFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	

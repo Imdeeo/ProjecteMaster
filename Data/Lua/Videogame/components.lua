@@ -51,7 +51,7 @@ function FnOnUpdateController (_owner, _ElapsedTime)
 	--_owner:execute_action(6,0.1,0.1);
 	
 	
-	--utils_log("no peta");
+	----utils_log("no peta");
 
 	--[[/*if(CInputManager::GetInputManager()->IsActionActive("MONSTER_IDLE"))
 	{

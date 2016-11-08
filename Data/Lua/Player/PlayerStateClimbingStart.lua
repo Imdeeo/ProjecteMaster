@@ -1,7 +1,7 @@
 dofile("Data\\Lua\\Player\\Helpers.lua")
 
 function ClimbingStartFirst(args)
-	utils_log("ClimbingStartFirst")
+	--utils_log("ClimbingStartFirst")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_CameraController:lock()
@@ -30,7 +30,7 @@ function ClimbingStartUpdate(args, _ElapsedTime)
 	local l_FaceTargetDisplacement =  l_Player.m_Target + l_Player.m_TargetPosOffset - l_Player.m_PhysXManager:get_character_controler_pos("player")
 	
 	l_FaceTargetDisplacement.y = 0.0
-	utils_log("Distance: "..l_FaceTargetDisplacement:length())
+	--utils_log("Distance: "..l_FaceTargetDisplacement:length())
 	local l_Bias = 0.01+l_Player.m_BiasPos
 	if l_FaceTargetDisplacement:length() <= l_Bias then
 		l_PosOK = true
@@ -72,7 +72,7 @@ function ClimbingStartUpdate(args, _ElapsedTime)
 end
 
 function ClimbingStartEnd(args)
-	utils_log("ClimbingStartEnd")
+	--utils_log("ClimbingStartEnd")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Owner:remove_action(l_Owner:get_actual_action_animation())
