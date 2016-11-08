@@ -1,5 +1,5 @@
 function KillFirstTurret(args)
-	utils_log("KillFirst")
+	--utils_log("KillFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -52,7 +52,7 @@ function KillUpdateTurret(args, _ElapsedTime)
 end
 
 function KillEndTurret(args)
-	utils_log("KillEnd")
+	--utils_log("KillEnd")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	local l_CameraManager = CUABEngine.get_instance():get_camera_controller_manager()

@@ -21,7 +21,7 @@
 		end
 		--[[if not self.m_Swap then
 			local l_swap = math.random()
-			utils_log(""..l_swap)
+			--utils_log(""..l_swap)
 			if l_swap > 0.2 then
 				self.m_Swap = true
 				local l_swap2 = math.random()

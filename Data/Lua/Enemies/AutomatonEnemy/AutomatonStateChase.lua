@@ -1,5 +1,5 @@
 function ChaseFirstAutomaton(args)
-	utils_log("ChaseFirst")
+	--utils_log("ChaseFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -115,7 +115,7 @@ function ChaseUpdateAutomaton(args, _ElapsedTime)
 end
 
 function ChaseEndAutomaton(args)
-	utils_log("ChaseEnd")
+	--utils_log("ChaseEnd")
 end
 
 function ChaseToAlertConditionAutomaton(args)

@@ -40,5 +40,5 @@ end
 function FnOnRenderEnemy(_owner, _rm)
 	local l_physXManager = CUABEngine.get_instance():get_physX_manager()
 	--l_physXManager:render("enemy", _rm)
-	--utils_log("render")
+	----utils_log("render")
 end

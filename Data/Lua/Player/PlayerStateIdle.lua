@@ -4,7 +4,7 @@ function IdleFirst(args)
 	l_Owner:blend_cycle(0,1.0,0.1)
 	l_Player.m_PhysXManager:set_character_controller_height("player", g_Height)
 	local l_Pos = l_Player.m_PhysXManager:get_character_controler_pos("player")
-	--utils_log("Pos: "..l_Pos.x..", "..l_Pos.y..", "..l_Pos.z)
+	----utils_log("Pos: "..l_Pos.x..", "..l_Pos.y..", "..l_Pos.z)
 	l_Player.m_CameraController:unlock()
 end
 

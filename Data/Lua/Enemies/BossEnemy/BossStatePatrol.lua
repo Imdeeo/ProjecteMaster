@@ -1,5 +1,5 @@
 function PatrolFirstBoss(args)
-	utils_log("PatrolFirst")
+	--utils_log("PatrolFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -21,7 +21,6 @@ function PatrolUpdateBoss(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
-	l_Enemy.m_SoundSync:Sync(_ElapsedTime)
 	if l_Enemy.m_Timer >= 6.6 then
 		if l_Enemy.m_ActualAnimation == 3 then
 			if l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToKill) then
@@ -31,7 +30,7 @@ function PatrolUpdateBoss(args, _ElapsedTime)
 				local l_PointPos = l_NodePoint.node.position
 				local l_Distance = l_Enemy.m_RenderableObject:get_position():distance(l_PointPos)
 				
-				--utils_log("Distance Boss: "..l_Distance)
+				----utils_log("Distance Boss: "..l_Distance)
 				if l_Distance <= l_Enemy.m_DistanceToChangeNodeWalking then
 					if l_Enemy.m_IndexPathPatrolPoint < l_Enemy.m_TotalPatrolNodes - 1 then
 						l_Enemy:IncrementePatrolPointIndex()

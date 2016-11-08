@@ -81,14 +81,14 @@ function mainLua()
 end
 
 function levelMainLua(level,level_id)
-	--utils_log("ASD")
+	----utils_log("ASD")
 	level = string.gsub(level,"\/","\\")
 	m_CharacterManager:LoadXML(level.."\\characters.xml",level_id)
 end
 
 function auxReloadLua(level_id) -- Establece el level en el player
 	g_Player:SetActualLevelAux(level_id)
-	utils_log("Stopping all sounds...")
+	--utils_log("Stopping all sounds...")
 	local l_SoundManager = g_Engine:get_sound_manager()
 	l_SoundManager:play_event(g_StopAllSoundsEvent)
 end
@@ -108,28 +108,28 @@ function luaUpdate(_ElapsedTime)
 	
 		local l_InputManager = g_Engine:get_input_manager()
 		if l_InputManager:is_action_released("DebugSpeedUp") then
-			--utils_log("DebugSpeedUp")
+			----utils_log("DebugSpeedUp")
 			if g_Engine:get_time_scale() < 11 then
 				g_Engine:set_time_scale(g_Engine:get_time_scale()+1)
 			end
 		end
 		if l_InputManager:is_action_released("DebugSpeedDown") then
-			--utils_log("DebugSpeedDown")
+			----utils_log("DebugSpeedDown")
 			if g_Engine:get_time_scale() > 1 then
 				g_Engine:set_time_scale(g_Engine:get_time_scale()-1)
 			end
 		end
 		if l_InputManager:is_action_released("DebugSanityUp") then
-			----utils_log("DebugSanityUp")
+			------utils_log("DebugSanityUp")
 			m_CharacterManager.m_Player[1]:ModifySanity(10)
 		end
 		if l_InputManager:is_action_released("DebugSanityDown") then
-			----utils_log("DebugSanityDown")
+			------utils_log("DebugSanityDown")
 			m_CharacterManager.m_Player[1]:ModifySanity(-10)
 		end
 		if l_InputManager:is_action_released("Pause") then
 			local l_SoundManager = g_Engine:get_sound_manager()
-			utils_log("Pausing all sounds...")
+			--utils_log("Pausing all sounds...")
 			l_SoundManager:play_event(g_EnterMenuSoundEvent)
 			local l_Camera = g_Engine:get_camera_controller_manager():get_main_camera()
 			m_menu = true
@@ -345,7 +345,7 @@ function iniciar()
 end
 
 function pos_player()
-	--utils_log("Pos x:"..g_Player.m_RenderableObject:get_position().x)
-	--utils_log("Pos y:"..g_Player.m_RenderableObject:get_position().y)
-	--utils_log("Pos z:"..g_Player.m_RenderableObject:get_position().z)
+	----utils_log("Pos x:"..g_Player.m_RenderableObject:get_position().x)
+	----utils_log("Pos y:"..g_Player.m_RenderableObject:get_position().y)
+	----utils_log("Pos z:"..g_Player.m_RenderableObject:get_position().z)
 end

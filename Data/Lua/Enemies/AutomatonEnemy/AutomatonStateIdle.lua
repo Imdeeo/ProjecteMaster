@@ -1,5 +1,5 @@
 function IdleFirstAutomaton(args)
-	utils_log("IdleFirst")
+	--utils_log("IdleFirst")
 	local l_Owner = args["owner"]	
 	local l_Enemy = args["self"]
 
@@ -31,7 +31,7 @@ function IdleUpdateAutomaton(args, _ElapsedTime)
 end
 
 function IdleEndAutomaton(args)
-	utils_log("IdleEnd")
+	--utils_log("IdleEnd")
 end
 
 function IdleToPatrolConditionAutomaton(args)

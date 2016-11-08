@@ -1,5 +1,5 @@
 function OffFirstAutomaton(args)
-	utils_log("OffFirst")
+	--utils_log("OffFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	

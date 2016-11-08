@@ -15,7 +15,7 @@ class 'CCharacterManager'
 	end
 		
 	function CCharacterManager:LoadXML(Filename,level_id)
-		utils_log("CARGANDO LEVEL "..level_id)
+		--utils_log("CARGANDO LEVEL "..level_id)
 		local doc = XMLDocument()
 		local xmlError = doc:load_file(Filename)
 		local l_game_play_manager = g_Engine:get_level_manager():get_level(level_id):get_game_play_manager()
@@ -65,12 +65,12 @@ class 'CCharacterManager'
 				l_Element = l_Element:get_next()
 			end
 		else
-			utils_log("File '"..Filename.."'not correctly loaded")
+			--utils_log("File '"..Filename.."'not correctly loaded")
 		end
 	end
 
 function DestroyLevelGamePlayManager(_LevelId)
-	utils_log("DESTROY LEVEL: ".._LevelId)
+	--utils_log("DESTROY LEVEL: ".._LevelId)
 	local l_game_play_manager = CUABEngine.get_instance():get_level_manager():get_level(_LevelId):get_game_play_manager()
 	for k in pairs (m_CharacterManager.m_EnemicsMap[_LevelId]) do
 		m_CharacterManager.m_EnemicsMap[_LevelId][k] = nil

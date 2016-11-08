@@ -1,5 +1,5 @@
 function AttackFirstCagedAutomaton(args)
-	utils_log("AttackFirstCagedAutomaton")
+	--utils_log("AttackFirstCagedAutomaton")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 
@@ -39,7 +39,7 @@ function AttackUpdateCagedAutomaton(args, _ElapsedTime)
 end
 
 function AttackEndCagedAutomaton(args)
-	utils_log("AttackEndCagedAutomaton")
+	--utils_log("AttackEndCagedAutomaton")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	l_Enemy.m_SoundManager:play_event(g_AutomatonStopBeatingSoundEvent, l_Owner)
