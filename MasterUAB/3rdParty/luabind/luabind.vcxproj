@@ -403,6 +403,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_MBCS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\boost_1_34_0;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\Lua\src</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
