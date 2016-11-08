@@ -44,3 +44,60 @@ end
 function SetupLevelSounds(_LevelName, _SoundManager)
 	l_LevelLoadFunctions[_LevelName](_SoundManager)
 end
+
+
+
+local l_SpeakersToSilence = {}
+
+l_SpeakersToSilence['Player'] = {
+}
+
+l_SpeakersToSilence['Recibidor'] = {
+	'Cogwheel1',
+	'Cogwheel2',
+	'Cogwheel3',
+	'SpeakerWheelsRight',
+	'SpeakerWheelsTop',
+	'SpeakerWheelLeftRight',
+	'SpeakerWheelLeftLeft',
+}
+l_SpeakersToSilence['Biblioteca'] = {
+	'Fireplace',
+	'Projector',
+	'SpeakerFire',
+	'SpeakerNewcomenTable',
+	'SpeakerNewcomenOrgan',
+	'SpeakerProjector',
+}
+l_SpeakersToSilence['Maquinas'] = {
+	'SpeakerTesla',
+	'SpeakerNewcomen',
+	'SpeakerLeverWheelLeft',
+	'SpeakerInputPipe',
+	'SpeakerDoorPipe',
+	'SpeakerCauldronTop',
+	'SpeakerCauldronBot',
+	'SpeakerCylindersLeft',
+	'SpeakerCylindersRight',
+	'SpeakerLeverWheelRight',
+	'SpeakerHourglass',
+	'SpeakerToothWheelRight',
+	'SpeakerToothWheelLeft',
+	'SpeakerCrusherWall',
+	'SpeakerCrusherCeiling',
+	'SpeakerBeltCenter',
+	'SpeakerBeltLeft',
+	'SpeakerPipeDoor',
+}
+
+l_SpeakersToSilence['Boss'] = {
+}
+
+l_SpeakersToSilence['Pasillo'] = {
+}
+
+function SilenceLevelSounds(_LevelName, _SoundManager)
+	for i, l_SpeakerName in ipairs(l_SpeakersToSilence[_LevelName]) do
+		_SoundManager:play_event(g_SilenceSpeakerSoundEvent, l_SpeakerName)
+	end
+end
