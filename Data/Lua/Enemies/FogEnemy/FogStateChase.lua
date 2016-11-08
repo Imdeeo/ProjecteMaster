@@ -25,7 +25,7 @@ function FogChaseUpdate(args, _ElapsedTime)
 end
 
 function FogChaseEnd(args)
-	--utils_log("FogChaseEnd")
+	utils_log("FogChaseEnd")
 end
 
 function FogChaseToOffCondition(args)

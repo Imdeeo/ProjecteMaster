@@ -1,5 +1,5 @@
 function AttackFirstTurret(args)
-	--utils_log("AttackFirst")
+	utils_log("AttackFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -33,7 +33,7 @@ function AttackUpdateTurret(args, _ElapsedTime)
 	
 		if l_Enemy:PlayerVisible(l_Owner) and l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToAttack) then
 			if l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToKill) then
-				----utils_log("ESTAS MUERTO!!!!")				
+				--utils_log("ESTAS MUERTO!!!!")				
 				l_Enemy.m_IsKilling = true
 				
 				if l_Enemy.m_ActualAnimation == 1 then
@@ -112,7 +112,7 @@ function AttackUpdateTurret(args, _ElapsedTime)
 end
 
 function AttackEndTurret(args)
-	--utils_log("AttackEnd")
+	utils_log("AttackEnd")
 	local l_Enemy = args["self"]
 	if l_Enemy.m_State == "kill" then 
 		g_Player.m_CameraController:unlock()

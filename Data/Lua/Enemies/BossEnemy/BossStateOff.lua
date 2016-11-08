@@ -1,5 +1,5 @@
 function OffFirstBoss(args)
-	--utils_log("OffFirst")
+	utils_log("OffFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -15,7 +15,7 @@ function OffUpdateBoss(args, _ElapsedTime)
 end
 
 function OffEndBoss(args)
-	--utils_log("OffEnd")
+	utils_log("OffEnd")
 end
 
 function OffToIdleConditionBoss(args)	

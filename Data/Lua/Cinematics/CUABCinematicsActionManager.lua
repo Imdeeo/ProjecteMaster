@@ -82,7 +82,7 @@ class 'CUABCinematicsActionManager'
 				end
 			end
 		else
-			----utils_log("File '"..Filename.."'not correctly loaded")
+			utils_log("File '"..Filename.."'not correctly loaded")
 		end
 	end
 --end

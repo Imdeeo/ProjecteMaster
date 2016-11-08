@@ -53,5 +53,5 @@ function DeadUpdate(args, _ElapsedTime)
 end
 
 function DeadEnd(args)
-	--utils_log("DeadEnd")
+	utils_log("DeadEnd")
 end

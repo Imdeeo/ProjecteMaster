@@ -75,11 +75,11 @@ function R3ValveInput(_Player)
 		l_Particle:set_start(true)
 		l_Particle:set_visible(true)	
 		
+		
 		l_Particle = l_Level:get_layer_manager():get_layer("particles"):get_resource("ValveSteam")
 		l_Particle:set_awake(false)
 		l_Particle:set_awake_timer(10000)
 		
-		g_SoundManager:unregister_speaker(m_CharacterManager.m_EnemicsMap["Maquinas"]["FogAutomaton"].m_RenderableObject)
 		m_CharacterManager.m_EnemicsMap["Maquinas"]["FogAutomaton"].m_Awake = false
 		_Player.m_InteractionSoundSpeaker = "SpeakerInputPipe" 
 	end

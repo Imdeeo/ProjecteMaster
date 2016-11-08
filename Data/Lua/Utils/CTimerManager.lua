@@ -1,6 +1,6 @@
 class 'CTimerManager'
 	function CTimerManager:__init()
-		--utils_log("Timer manager created.")
+		utils_log("Timer manager created.")
 		self.m_Timers = {}
 
 		-- for debugging
@@ -15,7 +15,7 @@ class 'CTimerManager'
 		for i, timer in ipairs(self.m_Timers) do
 			timer[1] = timer[1] - _ElapsedTime
 			if timer[1] <= 0 then
-				--utils_log("Executing...")
+				utils_log("Executing...")
 				table.remove(self.m_Timers, i)
 				timer[2]()
 			end

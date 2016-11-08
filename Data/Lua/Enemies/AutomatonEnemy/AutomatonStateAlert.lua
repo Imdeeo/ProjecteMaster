@@ -1,5 +1,5 @@
 function AlertFirstAutomaton(args)
-	--utils_log("AlertFirst")
+	utils_log("AlertFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -54,7 +54,7 @@ function AlertUpdateAutomaton(args, _ElapsedTime)
 end
 
 function AlertEndAutomaton(args)
-	--utils_log("AlertEnd")
+	utils_log("AlertEnd")
 end
 
 function AlertToChaseConditionAutomaton(args)

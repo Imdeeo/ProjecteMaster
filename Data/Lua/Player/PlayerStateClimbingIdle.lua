@@ -1,7 +1,7 @@
 dofile("Data\\Lua\\Player\\Helpers.lua")
 
 function ClimbingIdleFirst(args)
-	--utils_log("ClimbingIdleFirst")
+	utils_log("ClimbingIdleFirst")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	--l_Player.m_IsClimbing = true
@@ -30,7 +30,7 @@ function ClimbingIdleUpdate(args, _ElapsedTime)
 end
 
 function ClimbingIdleEnd(args)
-	--utils_log("ClimbingIdleEnd")
+	utils_log("ClimbingIdleEnd")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_ClimbingUp = false

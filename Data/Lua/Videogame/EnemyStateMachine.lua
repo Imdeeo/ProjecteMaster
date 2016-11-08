@@ -14,7 +14,7 @@ function setEnemyStateMachine()
 	patrol_state:add_condition(state2cond1,"chase")
 	patrol_state:set_do_first_function(patrol_first)
 	
-	--utils_log("doing these")
+	utils_log("doing these")
 	
 	wait_state = State.create(state2fn)
 	wait_state:add_condition(state2cond1,"chase")
@@ -27,10 +27,10 @@ function setEnemyStateMachine()
 end
 
 function chase_do_first(args)
-	--utils_log("Hummer: I'll get you")
+	utils_log("Hummer: I'll get you")
 end
 function chase_do_end(args)
-	--utils_log("Hummer: Where the fuck are you?")
+	utils_log("Hummer: Where the fuck are you?")
 end
 
 function state1cond1()
@@ -51,10 +51,10 @@ function state1fn(args,_ElapsedTime)
 end
 
 function wait_do_first(args)
-	--utils_log("Car: Uff! I escaped again!")
+	utils_log("Car: Uff! I escaped again!")
 end
 function wait_do_end(args)
-	--utils_log("Car: Let's go again! JERONIMOOOOOOOOOOOOOOOOOOOOOOO!")
+	utils_log("Car: Let's go again! JERONIMOOOOOOOOOOOOOOOOOOOOOOO!")
 end
 function state2cond1()
 	local l_physXManager = CUABEngine.get_instance():get_physX_manager()	
@@ -84,7 +84,7 @@ function patrol_update(args,_ElapsedTime)
 end
 
 function patrol_first(args)
-	--utils_log("patrol_state")
+	utils_log("patrol_state")
 	
 	actual_waypoint = 0
 

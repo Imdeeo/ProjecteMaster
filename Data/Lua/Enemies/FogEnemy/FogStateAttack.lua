@@ -1,5 +1,5 @@
 function FogAttackFirst(args)
-	--utils_log("AttackFirst")
+	utils_log("AttackFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -53,7 +53,7 @@ function FogAttackUpdate(args, _ElapsedTime)
 end
 
 function FogAttackEnd(args)
-	--utils_log("FogAttackEnd")
+	utils_log("FogAttackEnd")
 end
 
 function FogAttackToKillCondition(args)

@@ -28,7 +28,7 @@ class 'CSoundSynchronizer'
 				local l_AnimationDuration = self.m_Owner:get_animation_duration()
 				self.m_DurationChecked = true
 				self:SetAnimationDuration(l_AnimationDuration)
-				--utils_log("SoundSynchronizer adjusted, animation duration: "..l_AnimationDuration)
+				utils_log("SoundSynchronizer adjusted, animation duration: "..l_AnimationDuration)
 			end
 		end
 

@@ -1,5 +1,5 @@
 function AttackFirstBoss(args)
-	--utils_log("AttackFirst")
+	utils_log("AttackFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -30,7 +30,7 @@ function AttackUpdateBoss(args, _ElapsedTime)
 	local l_FaceTargetDisplacement =  g_Player.m_Target - g_Player.m_PhysXManager:get_character_controler_pos("player")
 	l_FaceTargetDisplacement.y = 0.0
 	
-	----utils_log("Distance: "..l_FaceTargetDisplacement:length())
+	--utils_log("Distance: "..l_FaceTargetDisplacement:length())
 	if l_FaceTargetDisplacement:length() <= 0.01 then
 		l_PosOK = true
 	else
@@ -54,7 +54,7 @@ function AttackUpdateBoss(args, _ElapsedTime)
 end
 
 function AttackEndBoss(args)
-	--utils_log("AttackEnd")
+	utils_log("AttackEnd")
 	local l_Enemy = args["self"]
 	if l_Enemy.m_State == "kill" then 
 		g_Player.m_CameraController:unlock()

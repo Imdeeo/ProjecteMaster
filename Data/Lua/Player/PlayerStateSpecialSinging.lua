@@ -1,5 +1,5 @@
 function SpecialSingingStateFirst(args)
-	--utils_log("SpecialSingingStateFirst")
+	utils_log("SpecialSingingStateFirst")
 	local l_Owner = args["owner"]
 	local l_Player = args["self"]
 	l_Player.m_SingOnce = false

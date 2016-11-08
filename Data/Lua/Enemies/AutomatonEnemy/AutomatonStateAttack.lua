@@ -1,5 +1,5 @@
 function AttackFirstAutomaton(args)
-	--utils_log("AttackFirst")
+	utils_log("AttackFirst")
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
@@ -53,7 +53,7 @@ function AttackUpdateAutomaton(args, _ElapsedTime)
 end
 
 function AttackEndAutomaton(args)
-	--utils_log("AttackEnd")
+	utils_log("AttackEnd")
 	local l_Enemy = args["self"]
 	if l_Enemy.m_State == "kill" then 
 		g_Player.m_CameraController:unlock()

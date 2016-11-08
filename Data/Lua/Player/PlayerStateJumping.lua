@@ -81,10 +81,10 @@ function JumpToIdleCondition(args)
 	local l_Player = args["self"]
 	--[[local l_Hit = l_Player.m_PhysXManager:raycast(l_Owner:get_position(), Vect3f(0,-1,0), 131,  g_Player.m_RaycastData)
 	if g_Player.m_RaycastData.distance < 0.3 and l_Player.m_Velocity.y < 0 then
-		--utils_log("true")
+		utils_log("true")
 		return true 
 	else
-		--utils_log("false"..g_Player.m_RaycastData.distance)
+		utils_log("false"..g_Player.m_RaycastData.distance)
 		return false
 	end]]
 	return l_Player.m_Velocity.y == 0
