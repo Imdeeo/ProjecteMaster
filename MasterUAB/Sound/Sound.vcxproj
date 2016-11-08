@@ -125,6 +125,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN7;WIN32;_DEBUG;_LIB;_MBCS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\Wwise\include;$(SolutionDir)3rdParty\Wwise\SoundEngine\Win32;$(SolutionDir)Base;$(SolutionDir)Graphics;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
