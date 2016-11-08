@@ -12,6 +12,7 @@ CCameraController::CCameraController(tinyxml2::XMLElement* TreeNode, const std::
 }
 CCameraController::~CCameraController()
 {
+	CLevelInfo::~CLevelInfo();
 }
 
 Vect3f CCameraController::GetRight() const

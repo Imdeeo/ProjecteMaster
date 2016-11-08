@@ -27,6 +27,7 @@ CCameraKeyController::CCameraKeyController(tinyxml2::XMLElement* TreeNode, const
 
 CCameraKeyController::~CCameraKeyController()
 {
+	CCameraController::~CCameraController();
 	for (size_t i=0; i < m_Keys.size(); ++i)
 	{
 		CHECKED_DELETE(m_Keys[i]);
@@ -55,7 +56,7 @@ bool CCameraKeyController::LoadXML(const std::string &FileName)
 			{
 				if (l_ElementAux->Name() == std::string("key"))
 				{
-					l_Time = std::stof(l_ElementAux->GetPszProperty("time"));
+					l_Time = l_ElementAux->GetFloatProperty("time",3);
 
 					CCameraInfo *l_CameraInfo = new CCameraInfo(l_ElementAux);
 					CCameraKey *l_CameraKey = new CCameraKey(*l_CameraInfo, l_Time);
