@@ -21,6 +21,7 @@ function PatrolUpdateBoss(args, _ElapsedTime)
 	local l_Owner = args["owner"]
 	local l_Enemy = args["self"]
 	
+	l_Enemy.m_SoundSync:Sync(_ElapsedTime)
 	if l_Enemy.m_Timer >= 6.6 then
 		if l_Enemy.m_ActualAnimation == 3 then
 			if l_Enemy:CheckPlayerDistance(l_Enemy.m_DistanceToKill) then
