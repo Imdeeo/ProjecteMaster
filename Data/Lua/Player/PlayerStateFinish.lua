@@ -1,6 +1,7 @@
 function FinishFirst(args)
 	utils_log("FinishFirst")
 	local l_Player = args["self"]
+	g_SoundManager:play_event(g_MonologoVoiceEvent)
 	l_Player.m_Timer = 0.0
 end
 

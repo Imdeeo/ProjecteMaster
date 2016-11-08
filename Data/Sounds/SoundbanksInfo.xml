@@ -3,7 +3,7 @@
 	<RootPaths>
 		<ProjectRoot>C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\</ProjectRoot>
 		<SourceFilesRoot>C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\Juho\Documents\ProjecteMaster\MasterUAB\bin\VideogameTest\Data\Sounds\</SoundBanksRoot>
+		<SoundBanksRoot>D:\vj\Demo\Data\Sounds\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
 		<ExternalSourcesOutputRoot>C:\Users\Juho\Documents\WwiseProjects\A_Simple_Song\GeneratedSoundBanks\Windows\</ExternalSourcesOutputRoot>
 	</RootPaths>
@@ -29,15 +29,19 @@
 				<Event Id="2146093371" Name="Automaton_Activate"/>
 				<Event Id="61052160" Name="Automaton_Beat_1"/>
 				<Event Id="61052167" Name="Automaton_Beat_6"/>
+				<Event Id="4282786284" Name="Automaton_Fail"/>
+				<Event Id="4100096519" Name="Automaton_Mechanism"/>
 				<Event Id="3146010173" Name="Automaton_Start_Patrol"/>
 				<Event Id="2267881878" Name="Automaton_Step"/>
 				<Event Id="3021055449" Name="Automaton_Stop_Beating"/>
 				<Event Id="684176057" Name="Automaton_Stop_Patrol"/>
 				<Event Id="1704091077" Name="Book_Switch"/>
 				<Event Id="1889509218" Name="Bookshelf_move"/>
+				<Event Id="1374521763" Name="Boss_Step"/>
 				<Event Id="1583577610" Name="Cauldron_Start"/>
 				<Event Id="2127419643" Name="Cogwheels_Start"/>
 				<Event Id="1481508790" Name="Conveyor_Belt"/>
+				<Event Id="2382028937" Name="Credits_Video"/>
 				<Event Id="1625043143" Name="Door_Slam_1"/>
 				<Event Id="1625043140" Name="Door_Slam_2"/>
 				<Event Id="3753111523" Name="Drawer_Close"/>
@@ -48,8 +52,26 @@
 				<Event Id="1981293180" Name="Fire_Stop"/>
 				<Event Id="2722027396" Name="Input_Valve"/>
 				<Event Id="2223442941" Name="Intro_Video"/>
+				<Event Id="3447648792" Name="Jaheem_Demente_Demasiado"/>
+				<Event Id="707306462" Name="Jaheem_Donde_Nos_Llevan"/>
+				<Event Id="3280691555" Name="Jaheem_Grito"/>
+				<Event Id="2893068934" Name="Jaheem_Joder"/>
+				<Event Id="3598913852" Name="Jaheem_Me_Largo"/>
+				<Event Id="2888293926" Name="Jaheem_Mierda"/>
+				<Event Id="741363708" Name="Jaheem_No_Me_Jodas"/>
+				<Event Id="3134431689" Name="Jaheem_No_No_No"/>
+				<Event Id="467823532" Name="Jaheem_No_Se_Si_Es_Gordo"/>
+				<Event Id="752302836" Name="Jaheem_Por_Favor_No"/>
+				<Event Id="2306241520" Name="Jaheem_Por_Que_Haces_Esto"/>
+				<Event Id="3564668246" Name="Jaheem_Que_Demonios"/>
+				<Event Id="271972138" Name="Jaheem_Que_Era_Eso"/>
+				<Event Id="1015191614" Name="Jaheem_Que_Estara_Construyendo"/>
+				<Event Id="577650963" Name="Jaheem_Reaccion_Al_Hijo"/>
+				<Event Id="4062608673" Name="Jaheem_Tengo_Que_Salir"/>
 				<Event Id="2584346859" Name="Jump_Player"/>
 				<Event Id="1756568658" Name="Land_Player"/>
+				<Event Id="1952436935" Name="Menu_Enter"/>
+				<Event Id="2263363174" Name="Menu_Resume"/>
 				<Event Id="25491528" Name="Muerte_Cordura"/>
 				<Event Id="546131724" Name="Muerte_Violenta"/>
 				<Event Id="60097497" Name="Open_Valve_Door"/>
@@ -60,11 +82,15 @@
 				<Event Id="2388792551" Name="Pendulum"/>
 				<Event Id="3174745453" Name="Pick_Valve"/>
 				<Event Id="1216690966" Name="Projector_Start"/>
+				<Event Id="3122331337" Name="Puzzle_Video"/>
+				<Event Id="2126044544" Name="Respiracion_Fuerte"/>
+				<Event Id="3458140155" Name="Respiracion_Suave"/>
 				<Event Id="3679762312" Name="Resume_All"/>
+				<Event Id="4080229408" Name="Silence_Speaker"/>
 				<Event Id="2833786043" Name="Song_Start"/>
 				<Event Id="762918169" Name="Song_Stop"/>
-				<Event Id="1433397863" Name="Steam"/>
 				<Event Id="240625833" Name="Steam_Once"/>
+				<Event Id="1201214666" Name="Steam_Start"/>
 				<Event Id="3589785957" Name="Step_Player"/>
 				<Event Id="452547817" Name="Stop_All"/>
 				<Event Id="518704643" Name="Tesla_Start"/>
@@ -88,13 +114,21 @@
 					<ShortName>Coger_Objeto.wav</ShortName>
 					<Path>SFX\Coger_Objeto_C3B3FD70.wem</Path>
 				</File>
+				<File Id="26021086" Language="SFX">
+					<ShortName>JaheemMiedo_Tengoquesalirdeaqui.wav</ShortName>
+					<Path>SFX\JaheemMiedo_Tengoquesalirdeaqui_88A5B5BC.wem</Path>
+				</File>
 				<File Id="45924521" Language="SFX">
 					<ShortName>metallic_noise.wav</ShortName>
 					<Path>SFX\metallic_noise_FD00B4A4.wem</Path>
 				</File>
 				<File Id="51671896" Language="SFX">
 					<ShortName>old_clock_pendulum_ticking.wav</ShortName>
-					<Path>SFX\old_clock_pendulum_ticking_F71DB8EF.wem</Path>
+					<Path>SFX\old_clock_pendulum_ticking_BA90B805.wem</Path>
+				</File>
+				<File Id="75096881" Language="SFX">
+					<ShortName>JaheemObjetos_QueEstaraConstruyendo.wav</ShortName>
+					<Path>SFX\JaheemObjetos_QueEstaraConstruyendo_54EBCB42.wem</Path>
 				</File>
 				<File Id="86721894" Language="SFX">
 					<ShortName>MuerteCAIDA_Lamentable.wav</ShortName>
@@ -102,11 +136,15 @@
 				</File>
 				<File Id="95270441" Language="SFX">
 					<ShortName>CAJON ABRIR.wav</ShortName>
-					<Path>SFX\CAJON ABRIR_C3B3FD70.wem</Path>
+					<Path>SFX\CAJON ABRIR_E68DA3C5.wem</Path>
+				</File>
+				<File Id="118038387" Language="SFX">
+					<ShortName>mechanism_rattling.wav</ShortName>
+					<Path>SFX\mechanism_rattling_6EB16EFC.wem</Path>
 				</File>
 				<File Id="131433814" Language="SFX">
 					<ShortName>steam_hiss.wav</ShortName>
-					<Path>SFX\steam_hiss_05E05616.wem</Path>
+					<Path>SFX\steam_hiss_60AF6227.wem</Path>
 				</File>
 				<File Id="134689959" Language="SFX">
 					<ShortName>MuerteCORDURA_RisaYsmael.wav</ShortName>
@@ -119,6 +157,10 @@
 				<File Id="139735676" Language="SFX">
 					<ShortName>PASO PERSONA 3.wav</ShortName>
 					<Path>SFX\PASO PERSONA 3_8BAB9469.wem</Path>
+				</File>
+				<File Id="173278696" Language="SFX">
+					<ShortName>JaheemREACCIONALHIJO_NOMECONVENCE.wav</ShortName>
+					<Path>SFX\JaheemREACCIONALHIJO_NOMECONVENCE_C3B3FD70.wem</Path>
 				</File>
 				<File Id="185439624" Language="SFX">
 					<ShortName>PASO PERSONA 2.wav</ShortName>
@@ -144,13 +186,25 @@
 					<ShortName>MuerteCORDURA_BienvenidoHijoMio.wav</ShortName>
 					<Path>SFX\MuerteCORDURA_BienvenidoHijoMio_C3B3FD70.wem</Path>
 				</File>
+				<File Id="297321103" Language="SFX">
+					<ShortName>JaheemMiedo_Quedemonios.wav</ShortName>
+					<Path>SFX\JaheemMiedo_Quedemonios_7B139217.wem</Path>
+				</File>
 				<File Id="303729294" Language="SFX">
 					<ShortName>steam_hiss.wav</ShortName>
-					<Path>SFX\steam_hiss_5DA9A9F9.wem</Path>
+					<Path>SFX\steam_hiss_F7C6E6BE.wem</Path>
 				</File>
 				<File Id="309678161" Language="SFX">
 					<ShortName>MonologoYsmaelEntero.wav</ShortName>
-					<Path>SFX\MonologoYsmaelEntero_2E0995F7.wem</Path>
+					<Path>SFX\MonologoYsmaelEntero_112E4D83.wem</Path>
+				</File>
+				<File Id="368467935" Language="SFX">
+					<ShortName>PASO BOSS 1.wav</ShortName>
+					<Path>SFX\PASO BOSS 1_3B374AD8.wem</Path>
+				</File>
+				<File Id="373908888" Language="SFX">
+					<ShortName>JaheemMiedo_PorfavorNO.wav</ShortName>
+					<Path>SFX\JaheemMiedo_PorfavorNO_2A75D596.wem</Path>
 				</File>
 				<File Id="402150982" Language="SFX">
 					<ShortName>MuerteCAIDA_Estonoesloquequeria.wav</ShortName>
@@ -168,9 +222,29 @@
 					<ShortName>PASO AUTOMATA 2.wav</ShortName>
 					<Path>SFX\PASO AUTOMATA 2_C3B3FD70.wem</Path>
 				</File>
+				<File Id="462088828" Language="SFX">
+					<ShortName>JaheemMiedo_PorqueHacesEsto.wav</ShortName>
+					<Path>SFX\JaheemMiedo_PorqueHacesEsto_8B4D72BB.wem</Path>
+				</File>
+				<File Id="476255032" Language="SFX">
+					<ShortName>ASS_CAJA_full.wav</ShortName>
+					<Path>SFX\ASS_CAJA_full_37D8776A.wem</Path>
+				</File>
+				<File Id="491236094" Language="SFX">
+					<ShortName>JaheemObjetos_NosesiesGordo.wav</ShortName>
+					<Path>SFX\JaheemObjetos_NosesiesGordo_5EB56258.wem</Path>
+				</File>
+				<File Id="491671412" Language="SFX">
+					<ShortName>PASO BOSS 4.wav</ShortName>
+					<Path>SFX\PASO BOSS 4_1E2538D4.wem</Path>
+				</File>
 				<File Id="500378663" Language="SFX">
 					<ShortName>MuerteCORDURA_NoTePreocupesProntoSerasLibre.wav</ShortName>
 					<Path>SFX\MuerteCORDURA_NoTePreocupesProntoSerasLibre_C3B3FD70.wem</Path>
+				</File>
+				<File Id="509958050" Language="SFX">
+					<ShortName>JaheemMiedo_MeLargodeAqui.wav</ShortName>
+					<Path>SFX\JaheemMiedo_MeLargodeAqui_E90A6096.wem</Path>
 				</File>
 				<File Id="552621432" Language="SFX">
 					<ShortName>door_lock.wav</ShortName>
@@ -180,9 +254,17 @@
 					<ShortName>PASO PERSONA 1.wav</ShortName>
 					<Path>SFX\PASO PERSONA 1_C3B3FD70.wem</Path>
 				</File>
+				<File Id="583101476" Language="SFX">
+					<ShortName>JaheemObjetos_JODER.wav</ShortName>
+					<Path>SFX\JaheemObjetos_JODER_B7EA2683.wem</Path>
+				</File>
 				<File Id="583385095" Language="SFX">
 					<ShortName>door_slam_1.wav</ShortName>
-					<Path>SFX\door_slam_1_D9AE1DE8.wem</Path>
+					<Path>SFX\door_slam_1_C9E32C04.wem</Path>
+				</File>
+				<File Id="587345058" Language="SFX">
+					<ShortName>CAJON CERRAR FINAL.wav</ShortName>
+					<Path>SFX\CAJON CERRAR FINAL_C3B3FD70.wem</Path>
 				</File>
 				<File Id="587726888" Language="SFX">
 					<ShortName>244992__vitaminl__closing-door.wav</ShortName>
@@ -190,15 +272,15 @@
 				</File>
 				<File Id="600318286" Language="SFX">
 					<ShortName>ARRASTRAR 1.wav</ShortName>
-					<Path>SFX\ARRASTRAR 1_98321D7B.wem</Path>
+					<Path>SFX\ARRASTRAR 1_68B2B0A3.wem</Path>
 				</File>
 				<File Id="604729811" Language="SFX">
 					<ShortName>door_lock.wav</ShortName>
-					<Path>SFX\door_lock_97B3A68A.wem</Path>
+					<Path>SFX\door_lock_F434C444.wem</Path>
 				</File>
-				<File Id="612801680" Language="SFX">
-					<ShortName>boiler_room.wav</ShortName>
-					<Path>SFX\boiler_room_C3B3FD70.wem</Path>
+				<File Id="634328440" Language="SFX">
+					<ShortName>JaheemRespiracion_FuerteVaria.wav</ShortName>
+					<Path>SFX\JaheemRespiracion_FuerteVaria_9812B5FE.wem</Path>
 				</File>
 				<File Id="652850648" Language="SFX">
 					<ShortName>PUERTA CERRAR.wav</ShortName>
@@ -208,17 +290,29 @@
 					<ShortName>PUERTA ABRIR.wav</ShortName>
 					<Path>SFX\PUERTA ABRIR_28C93BFA.wem</Path>
 				</File>
+				<File Id="666395393" Language="SFX">
+					<ShortName>JaheemMiedo_NoNONONO.wav</ShortName>
+					<Path>SFX\JaheemMiedo_NoNONONO_7A3639A1.wem</Path>
+				</File>
 				<File Id="669635992" Language="SFX">
 					<ShortName>MuerteCORDURA_BienvendioAmigoMio.wav</ShortName>
 					<Path>SFX\MuerteCORDURA_BienvendioAmigoMio_C3B3FD70.wem</Path>
 				</File>
 				<File Id="678606273" Language="SFX">
 					<ShortName>tesla.wav</ShortName>
-					<Path>SFX\tesla_A124063F.wem</Path>
+					<Path>SFX\tesla_7C937665.wem</Path>
+				</File>
+				<File Id="682850300" Language="SFX">
+					<ShortName>JaheemMiedo_QueEraEso.wav</ShortName>
+					<Path>SFX\JaheemMiedo_QueEraEso_4C68F802.wem</Path>
+				</File>
+				<File Id="702665013" Language="SFX">
+					<ShortName>JaheemObjetos_MIERDA.wav</ShortName>
+					<Path>SFX\JaheemObjetos_MIERDA_1A2F3707.wem</Path>
 				</File>
 				<File Id="715892075" Language="SFX">
 					<ShortName>JaheemMiedo_GRITO.wav</ShortName>
-					<Path>SFX\JaheemMiedo_GRITO_7975D23A.wem</Path>
+					<Path>SFX\JaheemMiedo_GRITO_52F4DAE9.wem</Path>
 				</File>
 				<File Id="717286967" Language="SFX">
 					<ShortName>PUERTA ABRIR.wav</ShortName>
@@ -246,11 +340,7 @@
 				</File>
 				<File Id="774158747" Language="SFX">
 					<ShortName>door_slam_2.wav</ShortName>
-					<Path>SFX\door_slam_2_4D7C59AF.wem</Path>
-				</File>
-				<File Id="787629499" Language="SFX">
-					<ShortName>CAJON CERRAR.wav</ShortName>
-					<Path>SFX\CAJON CERRAR_C3B3FD70.wem</Path>
+					<Path>SFX\door_slam_2_DB70E627.wem</Path>
 				</File>
 				<File Id="794279729" Language="SFX">
 					<ShortName>fa.wav</ShortName>
@@ -264,6 +354,10 @@
 					<ShortName>MuerteCORDURA_PuedesSentirlaLaLibertad.wav</ShortName>
 					<Path>SFX\MuerteCORDURA_PuedesSentirlaLaLibertad_C3B3FD70.wem</Path>
 				</File>
+				<File Id="863775304" Language="SFX">
+					<ShortName>robot_fail_2.wav</ShortName>
+					<Path>SFX\robot_fail_2_C3B3FD70.wem</Path>
+				</File>
 				<File Id="884164510" Language="SFX">
 					<ShortName>CAJON ABRIR.wav</ShortName>
 					<Path>SFX\CAJON ABRIR_B9E45A3D.wem</Path>
@@ -271,6 +365,10 @@
 				<File Id="916582572" Language="SFX">
 					<ShortName>MuerteCAIDA_QueDesperdicio.wav</ShortName>
 					<Path>SFX\MuerteCAIDA_QueDesperdicio_C3B3FD70.wem</Path>
+				</File>
+				<File Id="931224328" Language="SFX">
+					<ShortName>JaheemRespiracion_Suave.wav</ShortName>
+					<Path>SFX\JaheemRespiracion_Suave_B7254FBD.wem</Path>
 				</File>
 				<File Id="962527044" Language="SFX">
 					<ShortName>GOLPE ROBOT CRISTAL 1.wav</ShortName>
@@ -284,13 +382,33 @@
 					<ShortName>PROYECTOR.wav</ShortName>
 					<Path>SFX\PROYECTOR_49D6B1FB.wem</Path>
 				</File>
+				<File Id="995819377" Language="SFX">
+					<ShortName>WhatsApp.wav</ShortName>
+					<Path>SFX\WhatsApp_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="1008366356" Language="SFX">
+					<ShortName>ass_video_puzzlebiblio.wav</ShortName>
+					<Path>SFX\ass_video_puzzlebiblio_9E69E797.wem</Path>
+				</File>
 				<File Id="1033186209" Language="SFX">
 					<ShortName>DESPERTARHIJO_TePresentoAMiHijo.wav</ShortName>
 					<Path>SFX\DESPERTARHIJO_TePresentoAMiHijo_C3B3FD70.wem</Path>
 				</File>
+				<File Id="1048099805" Language="SFX">
+					<ShortName>boiler_room.wav</ShortName>
+					<Path>SFX\boiler_room_15E45E89.wem</Path>
+				</File>
+				<File Id="1049979896" Language="SFX">
+					<ShortName>JaheemObjetos_DementeDemasiado.wav</ShortName>
+					<Path>SFX\JaheemObjetos_DementeDemasiado_3DF24D01.wem</Path>
+				</File>
 				<File Id="1052510011" Language="SFX">
 					<ShortName>metallic_noise.wav</ShortName>
 					<Path>SFX\metallic_noise_62531D7A.wem</Path>
+				</File>
+				<File Id="1058209822" Language="SFX">
+					<ShortName>JaheemObjetos_NomeJodas.wav</ShortName>
+					<Path>SFX\JaheemObjetos_NomeJodas_C832A8DA.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>
@@ -309,6 +427,14 @@
 					<ShortName>prova.wav</ShortName>
 					<Path>SFX\prova_37D8776A.wem</Path>
 				</File>
+				<File Id="293441293" Language="SFX">
+					<ShortName>ass_cordura1.wav</ShortName>
+					<Path>SFX\ass_cordura1_37D8776A.wem</Path>
+				</File>
+				<File Id="318603534" Language="SFX">
+					<ShortName>ass_cordura3.wav</ShortName>
+					<Path>SFX\ass_cordura3_37D8776A.wem</Path>
+				</File>
 				<File Id="955364911" Language="SFX">
 					<ShortName>MúSICA DEMO 1 MAQUINAS.wav</ShortName>
 					<Path>SFX\MúSICA DEMO 1 MAQUINAS_37D8776A.wem</Path>
@@ -316,6 +442,10 @@
 				<File Id="963169765" Language="SFX">
 					<ShortName>pasillo_loop.wav</ShortName>
 					<Path>SFX\pasillo_loop_37D8776A.wem</Path>
+				</File>
+				<File Id="992600901" Language="SFX">
+					<ShortName>ass_cordura2.wav</ShortName>
+					<Path>SFX\ass_cordura2_37D8776A.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>
