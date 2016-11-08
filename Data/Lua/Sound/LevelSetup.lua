@@ -87,6 +87,7 @@ l_SpeakersToSilence['Maquinas'] = {
 	'SpeakerCrusherCeiling',
 	'SpeakerBeltCenter',
 	'SpeakerBeltLeft',
+	'SpeakerBeltRight',
 	'SpeakerPipeDoor',
 }
 
@@ -96,8 +97,8 @@ l_SpeakersToSilence['Boss'] = {
 l_SpeakersToSilence['Pasillo'] = {
 }
 
-function SilenceLevelSounds(_LevelName, _SoundManager)
+function SilenceLevelSounds(_LevelName)
 	for i, l_SpeakerName in ipairs(l_SpeakersToSilence[_LevelName]) do
-		_SoundManager:play_event(g_SilenceSpeakerSoundEvent, l_SpeakerName)
+		g_SoundManager:play_event(g_SilenceSpeakerSoundEvent, l_SpeakerName)
 	end
 end
