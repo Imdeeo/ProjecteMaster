@@ -12,8 +12,8 @@ private:
 	std::string m_Filename;
 	std::string m_LevelName;
 public:
-	CParticleManager(void);
-	virtual ~CParticleManager(void);
+	CParticleManager();
+	virtual ~CParticleManager();
 	void Load(const std::string &Filename, CLevel* _Level);
 	void Reload();
 	void Save();
