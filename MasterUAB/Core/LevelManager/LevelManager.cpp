@@ -37,9 +37,13 @@ CLevelManager::~CLevelManager()
 	m_SceneRenderCommandsManager.clear();
 
 	typedef std::map<std::string, std::vector<TLevelLayers*>>::iterator it_type2;
-	for (it_type iterator = m_SceneRenderCommandsManager.begin(); iterator != m_SceneRenderCommandsManager.end(); iterator++)
+	for (it_type2 iterator = m_LayersMap.begin(); iterator != m_LayersMap.end(); iterator++)
 	{
-		CHECKED_DELETE(iterator->second);
+		for (size_t i=0; i<iterator->second.size(); ++i)
+		{
+			CHECKED_DELETE(iterator->second[i]);
+		}
+		iterator->second.clear();
 	}
 
 	Destroy();

@@ -50,6 +50,10 @@ void CGUIManager::Destroy()
 		CHECKED_DELETE(it->second);
 	m_Sliders.clear();
 
+	for (auto it = m_Panels.begin(); it != m_Panels.end(); it++)
+		CHECKED_DELETE(it->second);
+	m_Panels.clear();
+
 	for (auto it = m_TexturePerFont.begin(); it != m_TexturePerFont.end(); it++)
 		it->second.clear();
 	m_TexturePerFont.clear();
