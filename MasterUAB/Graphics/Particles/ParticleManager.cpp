@@ -3,9 +3,9 @@
 #include "Engine\UABEngine.h"
 #include "LevelManager\LevelManager.h"
 
-CParticleManager::CParticleManager(void){}
+CParticleManager::CParticleManager(){}
 
-CParticleManager::~CParticleManager(void)
+CParticleManager::~CParticleManager()
 {
 	Destroy();
 }

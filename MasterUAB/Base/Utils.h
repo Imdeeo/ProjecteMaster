@@ -79,23 +79,30 @@ public: \
 
 static void UtilsLog(const std::string& text)
 {
-// TODO: OPCIONAL esto va bien tenerlo escribiendo en un fichero
+#ifdef _DEBUG 
 	OutputDebugString(("LOG: " + text + "\n").c_str());
+#endif
 }
 
 static void UtilsLogV2(const Vect2f& vect)
 {
+#ifdef _DEBUG 
 	OutputDebugString(("LOG: Vector2(" + std::to_string(vect.x) + ", " + std::to_string(vect.y) + ")\n").c_str());
+#endif
 }
 
 static void UtilsLogV3(const Vect3f& vect)
 {
+#ifdef _DEBUG 
 	OutputDebugString(("LOG: Vector3(" + std::to_string(vect.x) + ", " + std::to_string(vect.y) + ", " + std::to_string(vect.z) + ")\n").c_str());
+#endif
 }
 
 static void UtilsLogQ(const Quatf& quat)
 {
+#ifdef _DEBUG 
 	OutputDebugString(("LOG: Quaternion(" + std::to_string(quat.x) + ", " + std::to_string(quat.y) + ", " + std::to_string(quat.z) + ", " + std::to_string(quat.w) + ")\n").c_str());
+#endif
 }
 
 std::vector<std::string> &SplitString(const std::string &s, char delim, std::vector<std::string> &elems);
