@@ -1781,6 +1781,7 @@ void CScriptManager::RegisterLUAFunctions()
 			.def(constructor<>())
 			.def("add_component", &CGamePlayManager::AddComponent)
 			.def("destroy", &CGamePlayManager::Destroy)
+			.def("clear", &CGamePlayManager::Clear)
 			.def("size", &CGamePlayManager::Size)
 			.def("get_component",&CGamePlayManager::GetComponent)
 	];
