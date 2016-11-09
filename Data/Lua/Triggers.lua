@@ -171,7 +171,7 @@ function OnExitActivateBoss(_TriggerName, _ColliderName)
 	if(_ColliderName == "player") then
 		g_Engine:get_level_manager():choose_scene_command_level("Pasillo")
 		g_Player:SetActualLevel("Pasillo")
-		g_Engine:get_level_manager():get_level(l_Player.m_ActualLevel):get_cinematic_manager():get_resource("engranajes_pasillo"):play()
+		--g_Engine:get_level_manager():get_level("Pasillo"):get_cinematic_manager():get_resource("engranajes_pasillo"):play()
 	end
 end
 
