@@ -102,6 +102,12 @@ end
 function ChangeLevel(args)
 	local l_Player = args["self"]
 	local l_LevelManager = CUABEngine.get_instance():get_level_manager()
+
+	local l_ActualLevel = l_Player.m_ActualLevel
+	g_TimerManager:ExecuteLater(3.0, function()
+		SilenceLevelSounds(l_ActualLevel)
+	end)
+	
 	if l_Player.m_ActualLevel == "Recibidor" then
 		l_LevelManager:change_object_level("Recibidor","Biblioteca","solid","Puertaanimada")
 		l_LevelManager:change_object_level("Recibidor","Biblioteca","solid","Pomoanimado")

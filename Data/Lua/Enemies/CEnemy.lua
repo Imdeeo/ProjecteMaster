@@ -55,6 +55,7 @@ class 'CEnemy' (CLUAComponent)
 	
 	function CEnemy.Destroy(self)
 		utils_log("\n\n\nDelete Enemy Name: "..self.m_Name)
+		self.m_SoundManager:play_event(g_SilenceSpeakerSoundEvent, self.m_RenderableObject)
 		self.m_SoundManager:unregister_speaker(self.m_RenderableObject)
 		local l_PhysXManager = CUABEngine.get_instance():get_physX_manager()
 		l_PhysXManager:remove_actor(self.m_Name)
