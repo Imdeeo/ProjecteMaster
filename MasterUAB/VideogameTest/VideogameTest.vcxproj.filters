@@ -7,13 +7,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="videogame.cpp" />
     <ClCompile Include="Application.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="motor3d.txt" />
+    <ClCompile Include="GamePlayManager.cpp" />
+    <ClCompile Include="videogame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="GamePlayManager.h" />
   </ItemGroup>
 </Project>

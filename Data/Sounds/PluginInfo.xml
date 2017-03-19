@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PluginInfo Project="A_Simple_Song" Platform="Windows" Motion="false">
+	<Plugins>
+		<Plugin Name="Wwise Delay" ID="6946819"/>
+		<Plugin Name="Wwise Compressor" ID="7077891"/>
+		<Plugin Name="Wwise Matrix Reverb" ID="7536643"/>
+		<Plugin Name="Wwise RoomVerb" ID="7733251"/>
+	</Plugins>
+</PluginInfo>

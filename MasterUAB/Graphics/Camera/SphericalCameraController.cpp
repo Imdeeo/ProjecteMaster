@@ -3,35 +3,52 @@
 #include "Camera\SphericalCameraController.h"
 #include "Camera\Camera.h"
 #include "Utils.h"
+#include "InputManager\InputManager.h"
+#include "Layers\LayerManager.h"
+#include "LevelManager\LevelManager.h"
 
-#include "Engine\UABEngine.h"
-
-CSphericalCameraController::CSphericalCameraController() 
-: m_Zoom(50.f)
+CSphericalCameraController::CSphericalCameraController(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId) : CCameraController(TreeNode,_LevelId)
+, m_Zoom(TreeNode->GetFloatProperty("zoom", 4.5f))
 , m_ZoomSpeed(2.f)
+, m_CameraPosition(m_Position - m_Zoom)
 {
+	m_Rotation.SetFromAngleAxis(m_Zoom, 0);
 }
 
 CSphericalCameraController::~CSphericalCameraController()
 {	
 }
 
-Vect3f CSphericalCameraController::GetDirection() const
-{
-	return Vect3f(m_Zoom*cos(m_Yaw)*cos(m_Pitch), m_Zoom*sin(m_Pitch), m_Zoom*sin(m_Yaw)*cos(m_Pitch));
-}
-
 void CSphericalCameraController::SetCamera(CCamera *Camera) const
 {
-	Vect3f l_Direction = GetDirection();
+	Camera->SetFOV(m_Fov);
+	Camera->SetAspectRatio(16.0f / 9.0f);
 
 	Camera->SetLookAt(m_Position);
-	Camera->SetPosition(m_Position-l_Direction);
-	Camera->SetUp(GetUp());
-	Camera->SetFOV(1.047f);
-	Camera->SetAspectRatio(UABEngine.GetRenderManager()->GetContextManager()->GetAspectRatio());
-	Camera->SetZNear(0.1f);
-	Camera->SetZFar(100.f);
+	Camera->SetPosition(m_CameraPosition);
 
+	Camera->SetUp(GetUp());
 	Camera->SetMatrixs();
+}
+
+void CSphericalCameraController::Update(float ElapsedTime)
+{
+	if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::RightClick))
+	{
+		Vect3f cameraMovement(0, 0, 0);
+		cameraMovement.x = UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisX);
+		cameraMovement.y = -UABEngine.GetInputManager()->GetMap()->GetFloatDelta(CInputManager::Actions::AxisY);
+		Rotate(cameraMovement);
+	}
+	if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::Mouse5))
+	{
+		m_Zoom -= 0.1f;
+	}
+	else if (UABEngine.GetInputManager()->GetMap()->GetBool(CInputManager::Actions::Mouse6))
+	{
+		m_Zoom += 0.1f;
+	}
+	if (m_Zoom < 0.1f){ m_Zoom = 0.1f; }
+	m_Position = UABEngine.GetLevelManager()->GetResource("Player")->GetLayerManager()->GetLayer("solid")->GetResource("Jaheem")->GetPosition();
+	m_CameraPosition = m_Position - (GetForward()*m_Zoom);
 }

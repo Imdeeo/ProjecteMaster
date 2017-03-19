@@ -1,6 +1,9 @@
 #include <Windows.h>
 #include <Xinput.h>
 
+
+#include "Utils.h"
+
 #include "InputManagerImplementation.h"
 
 #include "XML\XMLTreeNode.h"
@@ -43,6 +46,7 @@ CInputManagerImplementation::CInputManagerImplementation(HWND hWnd)
 		m_PadButtensPrevious[i] = 0;
 	}
 
+	m_Keyboard = new CKeyboardInput();
 
 	// mouse input
 	HRESULT l_HR;
@@ -89,7 +93,29 @@ CInputManagerImplementation::~CInputManagerImplementation()
 		m_Mouse->Unacquire();
 
 	CHECKED_RELEASE(m_Mouse);
+	CHECKED_DELETE(m_Keyboard);
 	CHECKED_RELEASE(m_DI);
+	m_Axis.clear();
+	m_Actions.clear();
+}
+
+void CInputManagerImplementation::AddReloadKey()
+{
+	Action action = {};
+	action.name = "RELOAD_LUA";
+	std::string type = "KEYBOARD";
+	action.inputType = ParseInputType(type);
+	action.mode = ParseMode("ON_PRESS");
+
+	action.triggersAxis = false;
+	action.axisName = "";
+	action.axisValue = 1.0f;
+
+	action.keyboard.key = 118; //F7
+	action.keyboard.needsAlt = false;
+	action.keyboard.needsCtrl = false;
+
+	m_Actions.push_back(action);
 }
 
 void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
@@ -98,7 +124,6 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 
 	m_Actions.clear();
 	m_Axis.clear();
-
 
 	CXMLTreeNode l_XML;
 	if (l_XML.LoadFile(path.c_str()))
@@ -189,7 +214,7 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 			}
 		}
 	}
-
+	AddReloadKey();
 	EndFrame();
 }
 

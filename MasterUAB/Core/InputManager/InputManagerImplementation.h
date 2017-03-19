@@ -1,9 +1,10 @@
 #ifndef INPUT_MANAGER_IMPLEMENTATION_H
 #define INPUT_MANAGER_IMPLEMENTATION_H
 
+
+#define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 
-#include "Utils.h"
 
 #include "InputManager.h"
 
@@ -27,7 +28,7 @@ public:
 
 	void reload();
 private:
-
+	void AddReloadKey();
 	std::string m_FileName;
 
 	enum InputType {

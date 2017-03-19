@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<characters>
+	<enemy name="AutomatonLeft" renderable_object="AutomatonLeft" layer="solid" type="Automaton" awake="false" vision_distance="10.0" vision_angle="0.5" distance_activate_run="15.0" distance_activate_walk="8.0" distance_activate_crouching="3.0" distance_kill="2.0" distance_change_node_walking="1.5" distance_change_node_running="1.0" walk_speed="0.6" run_speed="1.2" angular_walk_speed="80.0" angular_run_speed="80.0" alert_time="3.0" patrol="true" patrol_name="path_left">
+		<param distance="5.0" time="3.0" sanity_amount="-5.0"/>
+		<param distance="3.0" time="2.0" sanity_amount="-5.0"/>
+		<param distance="2.0" time="1.0" sanity_amount="-5.0"/>
+		<param distance="0.5" time="0.5" sanity_amount="0.0"/>
+	</enemy>
+	<enemy name="AutomatonRight" renderable_object="AutomatonRight" layer="solid" type="Automaton" awake="false" vision_distance="10.0" vision_angle="0.5" distance_activate_run="15.0" distance_activate_walk="8.0" distance_activate_crouching="3.0" distance_kill="1.5" distance_change_node_walking="1.5" distance_change_node_running="0.5" walk_speed="0.6" run_speed="1.2" angular_walk_speed="80.0" angular_run_speed="50.0" alert_time="3.0" patrol="true" patrol_name="path_right">
+		<param distance="5.0" time="3.0" sanity_amount="-5.0"/>
+		<param distance="3.0" time="2.0" sanity_amount="-5.0"/>
+		<param distance="2.0" time="1.0" sanity_amount="-5.0"/>
+		<param distance="0.5" time="0.5" sanity_amount="0.0"/>
+	</enemy>
+	<enemy name="TurretAutomaton" renderable_object="TurretAutomaton" layer="solid" type="Turret" awake="true" vision_distance="20.0" vision_angle="0.6" distance_attack="3.0" distance_kill="1.5" angular_speed="2.0">
+		<param distance="20.0" time="1.0" sanity_amount="-5.0"/>
+		<param distance="10.0" time="1.0" sanity_amount="-2.0"/>
+		<param distance="5.0" time="1.0" sanity_amount="-3.0"/>
+		<param distance="2.0" time="0.5" sanity_amount="0.0"/>
+	</enemy>
+	<light name="fuego_chimenea_light" layer="particles" renderable_object="FuegoChimenea"/>
+	<light name="tesla_light" layer="line_renderers" renderable_object="tesla_grande"/>
+	<light name="Omni10" layer="solid" renderable_object="vidriolamparaspared001"/>
+	<light name="Omni11" layer="solid" renderable_object="vidriolamparaspared002"/>
+	<light name="Omni13" layer="solid" renderable_object="vidriolamparaspared003"/>
+	<light name="Omni14" layer="solid" renderable_object="vidriolamparaspared004"/>
+	<light name="Omni15" layer="solid" renderable_object="vidriolamparaspared005"/>
+	<light name="Omni17" layer="solid" renderable_object="vidriolamparaspared006"/>
+	<light name="Omni18" layer="solid" renderable_object="vidriolamparaspared007"/>
+	<light name="Omni19" layer="solid" renderable_object="vidriolamparaspared008"/>
+	<light name="Omni20" layer="solid" renderable_object="vidriolamparaspared009"/>
+	<light name="Omni21" layer="solid" renderable_object="vidriolamparaspared010"/>
+	<light name="Omni22" layer="solid" renderable_object="vidriolamparaspared011"/>
+	<light name="Omni23" layer="solid" renderable_object="vidriolamparaspared012"/>
+	<light name="Omni24" layer="solid" renderable_object="vidriolamparaspared013"/>
+	<light name="Omni25" layer="solid" renderable_object="vidriolamparaspared014"/>	
+	<light name="Omni26" layer="solid" renderable_object="vidriolamparaspared015"/>
+	<light name="Omni27" layer="solid" renderable_object="vidriolamparaspared016"/>
+	<light name="Omni28" layer="solid" renderable_object="vidriolamparaspared017"/>
+	<light name="Omni29" layer="solid" renderable_object="lamparakeroparedBIEN011"/>
+	<light name="Omni30" layer="solid" renderable_object="lamparakeroparedBIEN012"/>
+	<light name="Omni31" layer="solid" renderable_object="lamparakeroparedBIEN001"/>
+	<light name="Omni32" layer="solid" renderable_object="lamparakeroparedBIEN002"/>
+	<light name="Omni33" layer="solid" renderable_object="lamparakeroparedBIEN003"/>
+	<light name="Omni35" layer="solid" renderable_object="lamparakeroparedBIEN004"/>
+	<light name="Omni36" layer="solid" renderable_object="lamparakeroparedBIEN005"/>
+	<light name="Omni37" layer="solid" renderable_object="lamparakeroparedBIEN006"/>
+	<light name="Omni38" layer="solid" renderable_object="lamparakeroparedBIEN007"/>
+	<light name="Omni39" layer="solid" renderable_object="lamparakeroparedBIEN008"/>
+	<light name="Omni40" layer="solid" renderable_object="lamparakeroparedBIEN009"/>
+	<light name="Omni41" layer="solid" renderable_object="lamparakeroparedBIEN010"/>	
+</characters> 

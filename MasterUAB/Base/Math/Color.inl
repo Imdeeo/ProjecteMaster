@@ -132,3 +132,129 @@ inline CColor& CColor::operator *= (float escalar)
 
 	return (*this);
 }
+
+inline CColor CColor::HsvToRgb(HsvColor hsv)
+{
+	float hh, p, q, t, ff;
+	long i;
+	CColor rgb;
+
+	rgb.SetAlpha(hsv.alpha);
+
+	if (hsv.s <= 0.0) {       // < is bogus, just shuts up warnings
+		rgb.SetRed(hsv.v);
+		rgb.SetGreen(hsv.v);
+		rgb.SetBlue(hsv.v);
+		return rgb;
+	}
+	hh = hsv.h;
+	if (hh >= 360.0) hh = 0.0f;
+	hh /= 60.0f;
+	i = (long)hh;
+	ff = hh - i;
+	p = hsv.v * (1.0f - hsv.s);
+	q = hsv.v * (1.0f - (hsv.s * ff));
+	t = hsv.v * (1.0f - (hsv.s * (1.0f - ff)));
+
+	switch (i) {
+	case 0:
+		rgb.SetRed(hsv.v);
+		rgb.SetGreen(t);
+		rgb.SetBlue(p);
+		break;
+	case 1:
+		rgb.SetRed(q);
+		rgb.SetGreen(hsv.v);
+		rgb.SetBlue(p);
+		break;
+	case 2:
+		rgb.SetRed(p);
+		rgb.SetGreen(hsv.v);
+		rgb.SetBlue(t);
+		break;
+
+	case 3:
+		rgb.SetRed(p);
+		rgb.SetGreen(q);
+		rgb.SetBlue(hsv.v);
+		break;
+	case 4:
+		rgb.SetRed(t);
+		rgb.SetGreen(p);
+		rgb.SetBlue(hsv.v);
+		break;
+	case 5:
+	default:
+		rgb.SetRed(hsv.v);
+		rgb.SetGreen(p);
+		rgb.SetBlue(q);
+		break;
+	}
+	return rgb;
+}
+
+inline CColor::HsvColor CColor::RgbToHsv(CColor rgb)
+{
+	HsvColor hsv;
+	float min, max, delta;
+
+	hsv.alpha = rgb.GetAlpha();
+	
+	min = rgb.GetRed() < rgb.GetGreen() ? rgb.GetRed() : rgb.GetGreen();
+	min = min  < rgb.GetBlue() ? min : rgb.GetBlue();
+
+	max = rgb.GetRed() > rgb.GetGreen() ? rgb.GetRed() : rgb.GetGreen();
+	max = max  > rgb.GetBlue() ? max : rgb.GetBlue();
+
+	hsv.v = max;                                // v
+	delta = max - min;
+	if (delta < 0.00001)
+	{
+		hsv.s = 0.0f;
+		hsv.h = 0.0f; // undefined, maybe nan?
+		return hsv;
+	}
+	if (max > 0.0) { // NOTE: if Max is == 0, this divide would cause a crash
+		hsv.s = (delta / max);                  // s
+	}
+	else {
+		// if max is 0, then r = g = b = 0              
+		// s = 0, v is undefined
+		hsv.s = 0.0f;
+		hsv.h = NAN;                            // its now undefined
+		return hsv;
+	}
+	if (rgb.GetRed() >= max)                           // > is bogus, just keeps compilor happy
+		hsv.h = (rgb.GetGreen() - rgb.GetBlue()) / delta;        // between yellow & magenta
+	else
+		if (rgb.GetGreen() >= max)
+			hsv.h = 2.0f + (rgb.GetBlue() - rgb.GetRed()) / delta;  // between cyan & yellow
+		else
+			hsv.h = 4.0f + (rgb.GetRed() - rgb.GetGreen()) / delta;  // between magenta & cyan
+
+	hsv.h *= 60.0f;                              // degrees
+
+	if (hsv.h < 0.0)
+		hsv.h += 360.0f;
+
+	return hsv;
+}
+
+inline CColor CColor::interpolate(CColor a, CColor b, float t)
+{
+	HsvColor ca = RgbToHsv(a);
+	HsvColor cb = RgbToHsv(b);
+	HsvColor final;
+
+	final.h = linear(ca.h, cb.h, t);
+	final.s = linear(ca.s, cb.s, t);
+	final.v = linear(ca.v, cb.v, t);
+	final.alpha = linear(ca.alpha, cb.alpha, t);
+
+	return HsvToRgb(final);
+}
+
+inline float CColor::linear(float a, float b, float t)
+{
+	return (a * (1 - t) + b * t);
+}
