@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<load_screens>
+	<screen name="logos" time="1.0" file="Data\GUI\LoadImages\logos_fondo.dds" animated="false"/>
+	<screen name="ass" time="2.0" file="Data\GUI\LoadImages\ass_fondo.dds" animated="false"/>
+	<screen name="flecha" time="12.0" file="Data\GUI\LoadImages\cargando_fondo.dds" animated="false"/>
+</load_screens>

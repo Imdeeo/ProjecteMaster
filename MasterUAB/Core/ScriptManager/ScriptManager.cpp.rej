@@ -1,0 +1,9 @@
+diff a/MasterUAB/Core/ScriptManager/ScriptManager.cpp b/MasterUAB/Core/ScriptManager/ScriptManager.cpp	(rejected hunks)
+@@ -243,6 +243,7 @@
+ //Para ejecutar un fragmento de c�digo LUA
+ void CScriptManager::RunCode(const std::string &Code) const
+ {
++	UtilsLog("RunCode");
+ 	if(luaL_dostring(m_LS,Code.c_str()))
+ 	{
+ 		const char *l_Str=lua_tostring(m_LS, -1);

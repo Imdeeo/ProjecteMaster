@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
+    <ProjectConfiguration Include="Debug13|Win32">
+      <Configuration>Debug13</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|x64">
-      <Configuration>Debug</Configuration>
+    <ProjectConfiguration Include="Debug13|x64">
+      <Configuration>Debug13</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
@@ -23,11 +23,11 @@
     <RootNamespace>AntTweakBar</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -36,7 +36,7 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
@@ -52,7 +52,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
   </ImportGroup>
@@ -60,7 +60,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
   </ImportGroup>
@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)lib\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)bin\lib\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">release32\</IntDir>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</IgnoreImportLibrary>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
@@ -79,18 +79,18 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release64\</IntDir>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</IgnoreImportLibrary>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)bin\lib\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">debug32\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)lib\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug64\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
-    <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)Debug</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)64Debug</TargetName>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">$(SolutionDir)bin\lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">debug32\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">$(SolutionDir)lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">debug64\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">true</LinkIncremental>
+    <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">$(ProjectName)Debug</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">$(ProjectName)64Debug</TargetName>
     <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
     <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
-    <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
+    <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectName)64</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -115,12 +115,12 @@ fxc /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwDirect3D1
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\AntTweakBar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;TW_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\AntTweakBar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;TW_EXPORTS;_HAS_ITERATOR_DEBUGGING=0;_ITERATOR_DEBUG_LEVEL=0;_VC80_UPGRADE=0x0700;_WINDLL;_MBCS</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
       </ExceptionHandling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -223,7 +223,7 @@ fxc /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwDirect3D1
       <Command>if exist ..\examples\bin64 xcopy /y /f ..\lib\AntTweakBar64.dll ..\examples\bin64</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
     <PreBuildEvent>
       <Command>fxc /Od /Zi /T vs_4_0_level_9_1 /E LineRectVS /Fh $(IntDir)TwDirect3D11_LineRectVS.h TwDirect3D11.hlsl
 fxc /Od /Zi /T vs_4_0_level_9_1 /E LineRectCstColorVS /Fh $(IntDir)TwDirect3D11_LineRectCstColorVS.h TwDirect3D11.hlsl
@@ -242,7 +242,7 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\AntTweakBar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\AntTweakBar\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TW_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -277,7 +277,62 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
       <Command>if exist ..\examples\debug32  xcopy /y /f ..\lib\debug\AntTweakBar.dll ..\examples\debug32\.</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
+    <PreBuildEvent>
+      <Command>fxc /Od /Zi /T vs_4_0_level_9_1 /E LineRectVS /Fh $(IntDir)TwDirect3D11_LineRectVS.h TwDirect3D11.hlsl
+fxc /Od /Zi /T vs_4_0_level_9_1 /E LineRectCstColorVS /Fh $(IntDir)TwDirect3D11_LineRectCstColorVS.h TwDirect3D11.hlsl
+fxc /Od /Zi /T ps_4_0_level_9_1 /E LineRectPS /Fh $(IntDir)TwDirect3D11_LineRectPS.h TwDirect3D11.hlsl
+fxc /Od /Zi /T vs_4_0_level_9_1 /E TextVS /Fh $(IntDir)TwDirect3D11_TextVS.h TwDirect3D11.hlsl
+fxc /Od /Zi /T vs_4_0_level_9_1 /E TextCstColorVS /Fh $(IntDir)TwDirect3D11_TextCstColorVS.h TwDirect3D11.hlsl
+fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwDirect3D11.hlsl
+</Command>
+    </PreBuildEvent>
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>$(OutDir)AntTweakBar.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\AntTweakBar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TW_EXPORTS;_VC80_UPGRADE=0x0700;_WINDLL;_MBCS</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>TwPrecomp.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)AntTweakBar.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+    <PostBuildEvent>
+      <Command>if exist ..\examples\debug32  xcopy /y /f ..\lib\debug\AntTweakBar.dll ..\examples\debug32\.</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">
     <PreBuildEvent>
       <Command>fxc /Od /Zi /T vs_4_0_level_9_1 /E LineRectVS /Fh $(IntDir)TwDirect3D11_LineRectVS.h TwDirect3D11.hlsl
 fxc /Od /Zi /T vs_4_0_level_9_1 /E LineRectCstColorVS /Fh $(IntDir)TwDirect3D11_LineRectCstColorVS.h TwDirect3D11.hlsl
@@ -341,9 +396,9 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
     <ClCompile Include="TwDirect3D11.cpp" />
     <ClCompile Include="TwDirect3D9.cpp" />
     <ClCompile Include="TwEventGLFW.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">
       </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
@@ -351,9 +406,9 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TwEventGLUT.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">
       </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
@@ -361,10 +416,10 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TwEventSDL.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
       </PrecompiledHeader>
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">Default</CompileAs>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">
       </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
@@ -372,9 +427,9 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TwEventSDL12.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">
       </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
@@ -382,9 +437,9 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TwEventSDL13.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">
       </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
@@ -392,9 +447,9 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TwEventSFML.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">
       </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
@@ -402,9 +457,9 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TwEventWin.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">
       </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
@@ -415,9 +470,9 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
     <ClCompile Include="TwMgr.cpp" />
     <ClCompile Include="TwOpenGL.cpp" />
     <ClCompile Include="TwOpenGLCore.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">
       </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
@@ -425,8 +480,8 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TwPrecomp.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
@@ -434,8 +489,8 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
   <ItemGroup>
     <CustomBuildStep Include="TwDirect3D11.hlsl">
       <FileType>Document</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug13|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug13|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </CustomBuildStep>
@@ -460,8 +515,8 @@ fxc /Od /Zi /T ps_4_0_level_9_1 /E TextPS /Fh $(IntDir)TwDirect3D11_TextPS.h TwD
     <None Include="FontSmall.pgm" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\AntTweakBar.h" />
     <ClInclude Include="AntPerfTimer.h" />
+    <ClInclude Include="include\AntTweakBar.h" />
     <ClInclude Include="LoadOGL.h" />
     <ClInclude Include="LoadOGLCore.h" />
     <ClInclude Include="MiniGLFW.h" />

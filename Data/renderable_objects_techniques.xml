@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<renderable_object_techniques>
+	<pool_renderable_object_technique name="forward_shading">
+		<renderable_object_technique name="debug_lights" technique="render_lights_technique"/>
+		<renderable_object_technique name="debug_grid" technique="debug_render_technique"/>		
+		<renderable_object_technique name="animated" technique="animated_technique"/>
+		<renderable_object_technique name="animated_bump" technique="animated_bump_technique"/>
+		<renderable_object_technique name="lights" technique="lights_technique"/>
+		<renderable_object_technique name="skybox" technique="skybox_technique"/>
+		<renderable_object_technique name="reflection" technique="lights_env_technique"/>
+		<renderable_object_technique name="bump" technique="bump_technique"/>
+		<renderable_object_technique name="bump_env" technique="bump_env_technique"/>
+		<renderable_object_technique name="lightmap" technique="lightmap_technique"/>
+		<renderable_object_technique name="lightmap_bump" technique="lightmap_bump_technique"/>
+		<renderable_object_technique name="noise_and_vignetting" technique="noise_and_vignetting"/>
+		<renderable_object_technique name="zblur" technique="zblur_technique"/>
+		<renderable_object_technique name="particle" technique="particle_technique"/>
+		<renderable_object_technique name="alpha_blend" technique="texture_technique"/>		
+		<renderable_object_technique name="alpha_blend_env" technique="texture_env_technique"/>	
+		<renderable_object_technique name="glossiness" technique="env_glossiness_technique"/>
+		<renderable_object_technique name="specularmap" technique="env_specularmap_technique"/>
+		<renderable_object_technique name="metalnessmap" technique="env_metalness_technique"/>
+		<renderable_object_technique name="line_renderer" technique="line_render_technique"/>
+		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_technique"/>
+	</pool_renderable_object_technique>	
+	<pool_renderable_object_technique name="gBuffer">
+		<renderable_object_technique name="lights" technique="gBuffer_technique"/>
+		<renderable_object_technique name="reflection" technique="reflection_technique"/>
+		<renderable_object_technique name="skybox" technique="skybox_technique"/>
+		<renderable_object_technique name="bump" technique="bump_deferred_technique"/>
+		<renderable_object_technique name="bump_env" technique="bump_env_deferred_technique"/>
+		<renderable_object_technique name="parallax" technique="parallax_deferred_technique"/>
+		<renderable_object_technique name="lights_glow" technique="glow_deferred_technique"/>
+		<renderable_object_technique name="lightmap" technique="lightmap_deferred_technique"/>
+		<renderable_object_technique name="lightmap_bump" technique="lightmap_bump_deferred_technique"/>
+		<renderable_object_technique name="lightmap_glow" technique="lightmap_glow_deferred_technique"/>
+		<renderable_object_technique name="radiosity" technique="rnm_deferred_technique"/>
+		<renderable_object_technique name="radiosity_env" technique="rnm_env_deferred_technique"/>
+		<renderable_object_technique name="radiosity_bump" technique="rnm_bump_deferred_technique"/>
+		<renderable_object_technique name="radiosity_bump_env" technique="rnm_bump_env_deferred_technique"/>
+		<renderable_object_technique name="animated" technique="animated_def_technique"/>
+		<renderable_object_technique name="animated_bump" technique="animated_bump_def_technique"/>
+		<renderable_object_technique name="animated_glow" technique="animated_glow_deferred_technique"/>
+		<renderable_object_technique name="animated_specular" technique="animated_bump_specular_def_technique"/>
+		<renderable_object_technique name="animated_metalness" technique="animated_bump_metalness_def_technique"/>
+		<renderable_object_technique name="glossiness" technique="env_glossiness_deferred_technique"/>
+		<renderable_object_technique name="bump_glossiness" technique="bump_env_glossiness_deferred_technique"/>
+		<renderable_object_technique name="specularmap" technique="env_specularmap_deferred_technique"/>
+		<renderable_object_technique name="metalnessmap" technique="env_metalnessmap_deferred_technique"/>
+		<renderable_object_technique name="bump_metalnessmap" technique="bump_env_metalnessmap_deferred_technique"/>
+		<renderable_object_technique name="radiosity_bump_metalnessmap" technique="radiosity_bump_env_metalnessmap_deferred_technique"/>
+		<renderable_object_technique name="radiosity_metalnessmap" technique="radiosity_env_metalnessmap_deferred_technique"/>
+		<renderable_object_technique name="bump_specularmap" technique="bump_env_specularmap_deferred_technique"/>
+		<renderable_object_technique name="radiosity_bump_specularmap" technique="radiosity_bump_env_specularmap_deferred_technique"/>
+		<renderable_object_technique name="radiosity_specularmap" technique="radiosity_env_specularmap_deferred_technique"/>
+		<renderable_object_technique name="radiosity_bump_glossiness" technique="radiosity_bump_env_glossiness_deferred_technique"/>
+		<renderable_object_technique name="radiosity_glossiness" technique="radiosity_env_glossiness_deferred_technique"/>
+		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="2d_deferred_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="generate_shadowmap_pool">
+		<renderable_object_technique name="lights" technique="generate_shadowmap_technique"/>
+		<renderable_object_technique name="bump" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="bump_env" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="lights_glow" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="lightmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="lightmap_bump" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="lightmap_glow" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_env" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_bump" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_bump_env" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="animated" technique="generate_shadowmap_animated_technique"/>
+		<renderable_object_technique name="animated_bump" technique="generate_shadowmap_animated_technique"/>
+		<renderable_object_technique name="animated_specular" technique="generate_shadowmap_animated_technique"/>
+		<renderable_object_technique name="animated_metalness" technique="generate_shadowmap_animated_technique"/>
+		<renderable_object_technique name="glossiness" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="bump_glossiness" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="specularmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="metalnessmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="bump_metalnessmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_bump_metalnessmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_metalnessmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="bump_specularmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_bump_specularmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_specularmap" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_bump_glossiness" technique="generate_shadowmap_bump_technique"/>
+		<renderable_object_technique name="radiosity_glossiness" technique="generate_shadowmap_technique"/>	
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="interactuable_objects">
+		<renderable_object_technique name="lights" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="reflection" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="bump" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="bump_env" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="parallax" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="lights_glow" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="lightmap" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="lightmap_bump" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="lightmap_glow" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="radiosity" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="radiosity_env" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="radiosity_bump" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="radiosity_bump_env" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="glossiness" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="bump_glossiness" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="specularmap" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="metalnessmap" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="bump_metalnessmap" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="radiosity_bump_metalnessmap" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="radiosity_metalnessmap" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="bump_specularmap" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="radiosity_bump_specularmap" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="radiosity_specularmap" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="radiosity_bump_glossiness" technique="interactuable_objects_technique"/>
+		<renderable_object_technique name="radiosity_glossiness" technique="interactuable_objects_technique"/>
+		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="interactuable_objects_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="combine_pool">
+		<renderable_object_technique name="combine" technique="combine_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="deferred_shading_lighting">
+		<default_technique vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX" technique="deff_technique"/>	
+	</pool_renderable_object_technique>	
+	<pool_renderable_object_technique name="fog_pool">
+		<renderable_object_technique name="fog" technique="fog_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="zblur_pool">
+		<renderable_object_technique name="zblur" technique="zblur_technique"/>
+	</pool_renderable_object_technique>	
+	<pool_renderable_object_technique name="blur_pool">
+		<renderable_object_technique name="gui" technique="2d_technique"/>
+		<renderable_object_technique name="blur" technique="blur_technique"/>
+	</pool_renderable_object_technique>	
+	<pool_renderable_object_technique name="bloom_pool">
+		<renderable_object_technique name="bloom" technique="bloom_technique"/>
+		<renderable_object_technique name="bloom_blur" technique="blur_bloom_technique"/>
+		<renderable_object_technique name="bloom_combine" technique="bloom_combine_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="flare_pool">
+		<renderable_object_technique name="flare_brightpass" technique="flare_brightpass_technique"/>
+		<renderable_object_technique name="flare_downsampling" technique="flare_downloading_technique"/>
+		<renderable_object_technique name="flare_blur" technique="flare_blur_technique"/>
+		<renderable_object_technique name="flare_combine" technique="flare_combine_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="light_scattering_pool">
+		<renderable_object_technique name="lightscattering" technique="lightscattering_technique"/>
+		<renderable_object_technique name="lightscattering_combine" technique="lightscattering_combine_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="hdao_pool">
+		<renderable_object_technique name="hdao" technique="hdao_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="ssr_pool">
+		<renderable_object_technique name="ssr" technique="ssr_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="NoiseAndvignetting">
+		<default_technique technique="noise_and_vignetting" vertex_type="MV_POSITION4_NORMAL_TEXTURE_VERTEX"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="color_grading">
+		<renderable_object_technique name="colorgrading" technique="color_grading_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="skybox_pool">
+		<renderable_object_technique name="skybox" technique="skybox_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="particles_pool">
+		<renderable_object_technique name="particle" technique="particle_technique"/>
+		<renderable_object_technique name="bilboard" technique="bilboard_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="manchas_pool">
+		<renderable_object_technique name="manchas" technique="manchas_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="triggers_pool">
+		<renderable_object_technique name="trigger" technique="trigger_technique"/>
+	</pool_renderable_object_technique>
+	<pool_renderable_object_technique name="vortex_pool">
+        <renderable_object_technique name="vortex" technique="vortex_effect_technique"/>
+    </pool_renderable_object_technique>
+</renderable_object_techniques>

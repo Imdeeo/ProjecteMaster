@@ -1,0 +1,2 @@
+CApplication::CApplication
+CApplication::~CApplication

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cinematics>
+	<on time="0.0" action="set_camera" name="Camera01"/>
+	<after_last_action time="16.62" action="set_camera" name="MainCamera"/>
+</cinematics>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<characters>
+	<light name="tesla_light" layer="line_renderers" renderable_object="tesla_grande"/>
+	<enemy name="EenmigoFog" renderable_object="FogAutomaton" layer="solid" type="FogAutomaton" awake="false" run_speed="3.0" angular_run_speed="250.0" time_teleport="3.0" teleport_distance="3.0" time_not_look="1.5" angle_teleport="0.35"/>
+</characters>

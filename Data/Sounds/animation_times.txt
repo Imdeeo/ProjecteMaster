@@ -1,0 +1,99 @@
+// Recibidor
+CrossDoor
+	1.3333 insert key
+	1.5666~1.8333 turn lock
+	1.8333~2.5 open door
+	3~3.6667 close door
+	
+Open Tray
+	1.1667 start
+	1.8333 end
+	
+Close Tray
+	1.5 start
+	1.8333 end
+	
+Force Tray
+	1.1667 start forcing
+	2 open
+	2.4 end
+	
+	
+// Biblioteca
+CrossArtifactDoor
+	1.6667 put artifact
+	3.1667~4 spin
+	4.6667~5.6667 spin
+	6.3333~7.1666 spin
+	8~9.3 open door
+	
+PickArtifact
+	1 pick
+	4.3333 sheathe
+	
+PullBook
+	1~1.6667 pull
+	
+PickClue
+	1~6.5 pick
+	
+SingDoor
+	2.6667~5 spin
+	5~16.6667 music
+
+PipeOrgan
+	0.6667 push key
+	
+//Maquinas
+InputValve
+	1.1667 put valve
+	1.2333~1.9 spin
+	2.5667~3.2333 spin
+	3.9~4.5667 spin
+	5.2333~5.9 spin
+	
+PickValve
+	2.6667 first hand
+	3.1667 second hand
+	3.5333 lift
+
+CrossValveDoor
+	1~1.3333 turn lock
+	1.3333~1.8333 open door
+	1.8333~2.6667 close door
+	
+	
+
+g_InteractionSounds = {
+	PlayEnterLibrarySound,
+	PlayOpenDrawerSound,
+	PlayCloseDrawerSound,
+	PlayForceDrawerSound,
+	PlayOpenArtifactDoorSound,
+	PlayPickupArtifactSounds,
+	PlayPickupClueSounds,
+	PlayPipeOrganStartSound,
+	PlayPipeOrganEndSound,
+	PlayPipeOrganASound,
+	PlayPipeOrganBSound,
+	PlayPipeOrganCSound,
+	PlayPipeOrganDSound,
+	PlayPipeOrganESound,
+	PlayPipeOrganFSound,
+	PlayPipeOrganGSound,
+	PlayActivateProjectorSounds,
+	PlayStairsStartSound,
+	PlayStairsLoopSound,
+	PlayStairsLoopSound,
+	PlayStairsIdleSound,
+	PlayStairsEndSound,
+	PlaySteamDangerSound,
+	PlayPickValveSound,
+	PlayInputValveSound,
+	PlayOpenValveDoorSound,
+	PlayRunSound,
+	PlaySingStartSound,
+	PlaySingLoopSound,
+	PlaySingEndSound,
+	PlaySingOnceSound
+}

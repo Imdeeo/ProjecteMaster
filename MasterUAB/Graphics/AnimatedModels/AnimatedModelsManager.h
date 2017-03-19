@@ -1,7 +1,7 @@
 #ifndef ANIMATED_MODELS_MANAGER_H
 #define ANIMATED_MODELS_MANAGER_H
 
-#include "TemplatedMapManager.h"
+#include "Utils\TemplatedMapManager.h"
 #include "AnimatedCoreModel.h"
 
 #include <string.h>

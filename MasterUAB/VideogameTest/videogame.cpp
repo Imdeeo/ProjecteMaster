@@ -1,11 +1,12 @@
 #include <Windows.h>
 #include <Windowsx.h>
 
+#include "no_sillywarnings_please.h"
+
 #include <d3d11.h>
 
 #include <cassert>
 
-// TODO: Activar AntTeakBar
 #include <AntTweakBar.h>
 
 #include "Math\Matrix44.h"
@@ -13,17 +14,24 @@
 
 #include "Application.h"
 
-#include "InputManager\InputManagerImplementation.h"
-#include "DebugHelperImplementation.h"
+#include "InputManager\InputManager.h"
+#include "DebugHelper\DebugHelperImplementation.h"
 
 #include "ContextManager\ContextManager.h"
 #include "DebugRender.h"
 #include "Effects\Effect.h"
 #include "Camera\Camera.h"
 
+#include "Brofiler.h"
+
 #pragma comment(lib, "Winmm.lib")
 
-#define APPLICATION_NAME	"VIDEOGAME"
+#define APPLICATION_NAME "VIDEOGAME"
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
+
+bool doExit = false;
+bool hasFocus = true;
 
 CContextManager s_Context;
 
@@ -62,7 +70,7 @@ void ToggleFullscreen(HWND Window, WINDOWPLACEMENT &WindowPosition)
 // Name: MsgProc()
 // Desc: The window's message handler
 //-----------------------------------------------------------------------------
-LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
@@ -77,181 +85,190 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		}
 		return 0;
 	case WM_DESTROY:
-	{
 		PostQuitMessage(0);
-		return 0;
+		doExit = true;
+		break;
+	default:
+		return DefWindowProc(hWnd, msg, wParam, lParam);
+		break;
 	}
-	break;
-	}//end switch( msg )
 
-	return DefWindowProc(hWnd, msg, wParam, lParam);
+	return 0;
 }
 
 //-----------------------------------------------------------------------
 // WinMain
 //-----------------------------------------------------------------------
-int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdLine, int _nCmdShow)
+int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdLine, int _nCmdShow)
 {
 	//-----------Para detectar Memory Leaks-------------------------
 	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(28668);
+	//_CrtSetBreakAlloc(1155);
 	//----------
 
 	// Register the window class
 	WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, APPLICATION_NAME, NULL };
 
-	RegisterClassEx(&wc);
+	if (!RegisterClassEx(&wc))
+	{
+		MessageBox(NULL, "Call to RegisterClassEx failed!", "A Simple Song", NULL);
+		return 1;
+	}
 
+#define OJUCUIDAO
+#ifndef _DEBUG//_DEBUG
+	RECT desktop;
+	// Get a handle to the desktop window
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the variable desktop
+	GetWindowRect(hDesktop, &desktop);
+
+	// Create the application's window
+	HWND hWnd = CreateWindow(APPLICATION_NAME, APPLICATION_NAME, WS_OVERLAPPEDWINDOW, desktop.left, desktop.top, desktop.right, desktop.bottom, NULL, NULL, wc.hInstance, NULL);
+
+	DEVMODE fullscreenSettings;
+	bool isChangeSuccessful;
+	RECT windowBoundary;
+	UABEngine.SetScreenSize(Vect2f(desktop.right, desktop.bottom));
+	EnumDisplaySettings(NULL, 0, &fullscreenSettings);
+	fullscreenSettings.dmPelsWidth = desktop.right;
+	fullscreenSettings.dmPelsHeight = desktop.bottom;
+	/*fullscreenSettings.dmBitsPerPel = colourBits;
+	fullscreenSettings.dmDisplayFrequency = refreshRate;*/
+	fullscreenSettings.dmFields = DM_PELSWIDTH |
+		DM_PELSHEIGHT |
+		DM_BITSPERPEL |
+		DM_DISPLAYFREQUENCY;
+
+	SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_APPWINDOW | WS_EX_TOPMOST);
+	SetWindowLongPtr(hWnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
+	SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, desktop.right, desktop.bottom, SWP_SHOWWINDOW);
+	isChangeSuccessful = ChangeDisplaySettings(&fullscreenSettings, CDS_FULLSCREEN) == DISP_CHANGE_SUCCESSFUL;
+	ShowWindow(hWnd, SW_MAXIMIZE);
+
+	s_Context.CreateContext(hWnd, desktop.right, desktop.bottom);
+
+	s_Context.CreateBackBuffer(hWnd, desktop.right, desktop.bottom);
+#else
 
 	// Calcular el tamano de nuestra ventana
 	RECT rc = {
-		0, 0, 800, 600
+		0, 0, 1280, 720
 	};
+	UABEngine.SetScreenSize(Vect2f(1280, 720));
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
 	// Create the application's window
-	HWND hWnd = CreateWindow(APPLICATION_NAME, APPLICATION_NAME, WS_OVERLAPPEDWINDOW, 100, 100, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, wc.hInstance, NULL);
+	HWND hWnd = CreateWindow(
+		APPLICATION_NAME,
+		APPLICATION_NAME,
+		WS_OVERLAPPEDWINDOW,
+		100, 100,
+		rc.right - rc.left, rc.bottom - rc.top,
+		NULL,
+		NULL,
+		wc.hInstance,
+		NULL
+		);
+
+	if (!hWnd)
+	{
+		MessageBox(NULL, "Call to CreateWindow failed!", "A Simple Song", NULL);
+		return 1;
+	}
 
 	// Añadir aquí el Init de la applicacioón
 
-	s_Context.CreateContext(hWnd, 800, 600);
-
-
+	s_Context.CreateContext(hWnd, 1280, 720);
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+	s_Context.CreateBackBuffer(hWnd, 1280, 720);
+#endif
 
-	s_Context.CreateBackBuffer(hWnd, 800, 600);
 	s_Context.InitStates();
+	
+	//CDebugRender debugRender(s_Context.GetDevice());
+
+	CDebugHelperImplementation debugHelper(s_Context.GetDevice());
+	CDebugHelper::SetCurrentDebugHelper(&debugHelper);
+
+	CApplication application(&s_Context);
+
+	application.Init();
+
+	CInputManager* l_InputManager = UABEngine.GetInputManager();
+	l_InputManager->SetWindow(hWnd, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+	UpdateWindow(hWnd);
+	DWORD l_PreviousTime = timeGetTime();
+	DWORD l_CurrentTime;
+	float l_ElapsedTime;
+
+	while (!doExit)
 	{
-		//CDebugRender debugRender(s_Context.GetDevice());
+		BROFILER_FRAME("Application")
+		l_InputManager->Update();
 
-		CInputManagerImplementation inputManager(hWnd);
-		CInputManager::SetCurrentInputManager(&inputManager);
-
-		inputManager.LoadCommandsFromFile("Data\\input.xml");
-
-		CDebugHelperImplementation debugHelper(s_Context.GetDevice());
-		CDebugHelper::SetCurrentDebugHelper(&debugHelper);
-
-		CApplication application(&s_Context);
-
-		application.Init();
-
-		UpdateWindow(hWnd);
 		MSG msg;
 		ZeroMemory(&msg, sizeof(msg));
 
-		// Añadir en el while la condición de salida del programa de la aplicación
-		DWORD m_PreviousTime = timeGetTime();
-
-		bool hasFocus = true;
-
-		while (msg.message != WM_QUIT)
+		while (PeekMessage(&msg, hWnd, 0, 0, PM_REMOVE))
 		{
-			if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+			if (!debugHelper.Update(msg.hwnd, msg.message, msg.wParam, msg.lParam))
+				l_InputManager->GetManager()->HandleMessage(msg);
+
+			switch (msg.message)
 			{
-				if (!debugHelper.Update(msg.hwnd, msg.message, msg.wParam, msg.lParam))
+				case WM_SETFOCUS:
+					hasFocus = true;
+					break;
+				case WM_KILLFOCUS:
+					hasFocus = false;
+					break;
+				case WM_CHAR:
+					UABEngine.GetInputManager()->GetKeyBoard()->SetLastChar(msg.wParam);	
+					break;
+				case WM_INPUT:
 				{
-					bool WasDown = false, IsDown = false, Alt = false;
-
-					switch (msg.message)
-					{
-					case WM_SETFOCUS:
-						hasFocus = true;
-						inputManager.SetFocus(true);
-						break;
-					case  WM_KILLFOCUS:
-						hasFocus = false;
-						inputManager.SetFocus(false);
-						break;
-					case WM_SYSKEYDOWN:
-					case WM_SYSKEYUP:
-					case WM_KEYDOWN:
-					case WM_KEYUP:
-						WasDown = ((msg.lParam & (1 << 30)) != 0);
-						IsDown = ((msg.lParam & (1 << 31)) == 0);
-						Alt = ((msg.lParam & (1 << 29)) != 0);
-
-						if (WasDown != IsDown)
-						{
-							if (IsDown)
-							{
-								bool consumed = false;
-								switch (msg.wParam)
-								{
-								case VK_RETURN:
-									if (Alt)
-									{
-										WINDOWPLACEMENT windowPosition = { sizeof(WINDOWPLACEMENT) };
-										GetWindowPlacement(msg.hwnd, &windowPosition);
-
-										ToggleFullscreen(msg.hwnd, windowPosition);
-										consumed = true;
-									}
-									break;
-								case VK_ESCAPE:
-									PostQuitMessage(0);
-									consumed = true;
-									break;
-								case VK_F4:
-									if (Alt)
-									{
-										PostQuitMessage(0);
-										consumed = true;
-									}
-									break;
-								}
-								if (consumed)
-								{
-									break;
-								}
-							}
-						}
-						if (!hasFocus || !inputManager.KeyEventReceived(msg.wParam, msg.lParam))
-						{
-							TranslateMessage(&msg);
-							DispatchMessage(&msg);
-						}
-						break;
-					case WM_MOUSEMOVE:
-						if (hasFocus)
-						{
-							int xPosAbsolute = GET_X_LPARAM(msg.lParam);
-							int yPosAbsolute = GET_Y_LPARAM(msg.lParam);
-
-							inputManager.UpdateCursor(xPosAbsolute, yPosAbsolute);
-						}
-						else
-						{
-							TranslateMessage(&msg);
-							DispatchMessage(&msg);
-						}
-						break;
-					default:
-						TranslateMessage(&msg);
-						DispatchMessage(&msg);
-					}
+					UINT dwSize = 40;
+					static BYTE lpb[40];
+					GetRawInputData((HRAWINPUT)msg.lParam, RID_INPUT, lpb, &dwSize, sizeof(RAWINPUTHEADER));
+					RAWINPUT* raw = (RAWINPUT*)lpb;
+					if (raw->header.dwType == RIM_TYPEMOUSE)
+						l_InputManager->UpdateAxis(raw->data.mouse.lLastX, raw->data.mouse.lLastY);
+					break;
 				}
-			}
-			else
-			{
-				inputManager.BeginFrame();
+				case WM_KEYUP:
+					bool Alt = ((msg.lParam & (1 << 29)) != 0);
+					if (msg.wParam == VK_RETURN && Alt)
+					{
+						WINDOWPLACEMENT windowPosition = { sizeof(WINDOWPLACEMENT) };
+						GetWindowPlacement(msg.hwnd, &windowPosition);
 
-				DWORD l_CurrentTime = timeGetTime();
-				float m_ElapsedTime = (float)(l_CurrentTime - m_PreviousTime)*0.001f;
-				m_PreviousTime = l_CurrentTime;
-
-				application.Update(m_ElapsedTime);
-				application.Render();
-
-				inputManager.EndFrame();
+						ToggleFullscreen(msg.hwnd, windowPosition);
+					}
+					else if (msg.wParam == VK_ESCAPE)
+					{
+						PostQuitMessage(0);
+						doExit = true;
+					}
+					break;
 			}
 		}
-		UnregisterClass(APPLICATION_NAME, wc.hInstance);
+		
+		l_CurrentTime = timeGetTime();
+		l_ElapsedTime = (float)(l_CurrentTime - l_PreviousTime)*0.001f;
+		l_PreviousTime = l_CurrentTime;
+
+		application.Update(l_ElapsedTime);
+		application.Render();
 	}
+
+	UnregisterClass(APPLICATION_NAME, wc.hInstance);
+	
 	// Añadir una llamada a la alicación para finalizar/liberar memoria de todos sus datos
 	s_Context.Dispose();
 
 	return 0;
 }
-
-

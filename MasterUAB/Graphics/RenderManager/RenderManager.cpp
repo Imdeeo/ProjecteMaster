@@ -2,10 +2,65 @@
 
 #include "Materials\MaterialManager.h"
 #include "RenderableObjects\RenderableObject.h"
+#include "RenderableObjects\RenderableVertexs.h"
 
 #include "Engine\UABEngine.h"
+#include "ContextManager\ContextManager.h"
+#include "DebugHelper\DebugHelper.h"
+
+#include "SceneRender\SceneRendererCommandManager.h"
+#include "Effects\EffectManager.h"
+
+#include "LevelManager\LevelManager.h"
+
+#include "Effects\EffectTechnique.h"
+#include "Texture\Texture.h"
+
+#include "MutexManager\MutexManager.h"
+
+#ifdef _DEBUG
+#include "DebugRender.h"
+#else
+#include "RenderHelper\RenderHelper.h"
+#endif
 
 #define SCREEN_DEPTH 20.f
+
+CRenderManager::CRenderManager()
+	: m_UseDebugCamera(false)
+	, m_CurrentRenderlistLength(0)
+	, m_FrameCounter(0)
+	, m_FrameRate(0.0)
+#ifdef _DEBUG
+	,m_DebugRender(nullptr)
+#else
+	,m_RenderHelper(nullptr)
+#endif
+	/*m_RenderTargetView(nullptr),
+	m_DepthStencilView(nullptr)	*/
+{
+	m_LastFPSMeasurementTime = (float)timeGetTime();
+
+}
+
+CRenderManager::~CRenderManager()
+{
+#ifdef _DEBUG
+	CHECKED_DELETE(m_DebugRender);
+#else
+	CHECKED_DELETE(m_RenderHelper);
+#endif
+}
+
+void CRenderManager::Init()
+{
+#ifdef _DEBUG
+	m_DebugRender = new CDebugRender(m_ContextManager->GetDevice());
+#else
+	m_RenderHelper = new CRenderHelper(m_ContextManager->GetDevice());
+#endif
+}
+
 void CRenderManager::SetCurrentCamera(const CCamera& _CurrentCamera)
 {
 	m_CurrentCamera = _CurrentCamera;
@@ -17,6 +72,19 @@ void CRenderManager::SetCurrentCamera(const CCamera& _CurrentCamera)
 	Proj.m32 = -r * zMinimum;
 	Mat44f viewProj = m_CurrentCamera.GetView() * Proj;
 	m_CullFrustum.Update(viewProj);
+}
+
+const CCamera *CRenderManager::GetCurrentCamera()
+{
+	if (m_UseDebugCamera)
+		return &m_DebugCamera;
+	else
+		return &m_CurrentCamera;
+}
+
+CFrustum* CRenderManager::GetFrustum()
+{
+	return &m_CullFrustum;
 }
 
 //bool CRenderManager::AddRenderableObjectToRenderList(const CRenderableObject* _RenderableObject)
@@ -52,88 +120,172 @@ struct BlendedSubmesh
 
 void CRenderManager::Render()
 {
+	m_FrameCounter++;
+	float l_TimeNow = (float)timeGetTime();
+	float l_TimeSinceLastTime = l_TimeNow - m_LastFPSMeasurementTime;
+	if (l_TimeSinceLastTime >= 1000.0) {
+		m_FrameRate = m_FrameCounter * 1000 / l_TimeSinceLastTime;
+		m_FrameCounter = 0;
+		m_LastFPSMeasurementTime = l_TimeNow;
+	}
+
 	m_ContextManager->BeginRender();
 
+	UABEngine.GetLevelManager()->ExecuteSceneCommands(this);
+
+	m_ContextManager->EndRender();
+}
+
+void CRenderManager::EnableBlendState(ID3D11BlendState* _blendState)
+{
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
+	m_ContextManager->GetDeviceContext()->OMSetBlendState(_blendState, NULL, 0xffffffff);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
+}
+void CRenderManager::EnableAlphaBlendState()
+{
+	ID3D11BlendState* l_AlphaBlendState = m_ContextManager->GetBlendState(CContextManager::BLEND_ALPHA);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
+	m_ContextManager->GetDeviceContext()->OMSetBlendState(l_AlphaBlendState,NULL,0xffffffff);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
+}
+void CRenderManager::DisableAlphaBlendState()
+{
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.lock();
+	m_ContextManager->GetDeviceContext()->OMSetBlendState(NULL,NULL,0xffffffff);
+	UABEngine.GetMutexManager()->g_DeviceContextMutex.unlock();
+}
+
+void CRenderManager::Clear(bool renderTarget, bool depthStencil)
+{
+	m_ContextManager->Clear(renderTarget, depthStencil);
+}
+
+void CRenderManager::Present()
+{
+	m_ContextManager->Present();
+}
+
+void CRenderManager::SetMatrixViewProjection()
+{
 	if (m_UseDebugCamera)
 	{
-		m_ContextManager->SetCamera(m_DebugCamera);
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition=m_DebugCamera.GetPosition();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector=m_DebugCamera.GetUp();
-		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector=Vect4f(1,1,1,1);
+		m_ContextManager->SetCamera(m_DebugCamera);		
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition = m_DebugCamera.GetPosition();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector = m_DebugCamera.GetUp();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = m_CurrentCamera.GetRightVector();
 	}
 	else
 	{
 		m_ContextManager->SetCamera(m_CurrentCamera);
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraPosition = m_CurrentCamera.GetPosition();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraUpVector = m_CurrentCamera.GetUp();
+		UABEngine.GetEffectManager()->m_SceneParameters.m_CameraRightVector = m_CurrentCamera.GetRightVector();
 	}
-	//Mat44f view,proj;
-	//view.SetIdentity();
-	//proj.SetIdentity();
-	//m_ContextManager->SetCamera(view,proj);
-	// TODO crear un vector para objetos transparentes
-	std::vector<BlendedSubmesh> l_SubmeshesWithBlend;
-
-	UABEngine.GetRenderableObjectsManager()->Render(this);
-
-	//for (size_t i = 0; i < m_CurrentRenderlistLength; ++i)
-	//{
-	//	
-	//	Mat44f world;
-	//	world.SetFromPosAndAnglesYXZ(l_Transform.Position, l_Transform.Yaw, l_Transform.Pitch, l_Transform.Roll);
-	//	_Context->SetWorldMatrix(world);
-
-	//	for (int j = 0; j < l_RenderableObject->GetNumSubmeshes(); ++j)
-	//	{
-	//		const CRenderableObject::SSubmesh& l_Submesh = l_RenderableObject->GetSubmesh(j);
-	//		const CMaterial* l_Material = _MaterialManager->GetMaterial(l_Submesh.material);
-	//		// TODO no pintar el objeto, sino añadirlo a la lista l_SubmeshesWithBlend si tiene blend
-	//		if(l_Material->HasBlending())
-	//		{
-	//			struct BlendedSubmesh _BlendedSubmesh;
-	//			_BlendedSubmesh.material = l_Material;
-	//			_BlendedSubmesh.vertices = l_Submesh.vertices;
-	//			_BlendedSubmesh.world = world;
-	//			_BlendedSubmesh.position = l_Transform.Position;
-
-	//			l_SubmeshesWithBlend.push_back(_BlendedSubmesh);
-	//		}
-	//		else
-	//		{
-	//			l_Material->SetShaderParameters(_Context);
-	//			_Context->Draw(l_Submesh.vertices, l_Material->GetRasterizerState(), l_Material->GetDepthStencilState(), l_Material->GetBlendState());
-	//		}
-	//	}
-	//}
-
-	//// TODO: Ordenar objetos según la distáncia a la cámara
-	//// NOTA: El quicksort es más rápido que el buble sort cuando la lista tiene más de ~100 objetos. NO OS MATÉIS SI NO HACE FALTA.
-	//const Vect3f& l_CameraPosition = m_CurrentCamera.GetPosition();
-	//for (int i = 0; i < l_SubmeshesWithBlend.size(); ++i)
-	//{
-	//	for (int j = 0; j < l_SubmeshesWithBlend.size()-i-1; ++j)
-	//	{
-	//		struct BlendedSubmesh _BlendedSubmeshAux;
-	//		float l_DistanceSQ = l_SubmeshesWithBlend[j].position.SqDistance(l_CameraPosition);
-	//		float l_DistanceSQ2 = l_SubmeshesWithBlend[j+1].position.SqDistance(l_CameraPosition);
-	//		if(l_DistanceSQ<l_DistanceSQ2)
-	//		{
-	//			_BlendedSubmeshAux = l_SubmeshesWithBlend[j+1];
-	//			l_SubmeshesWithBlend[j+1] = l_SubmeshesWithBlend[j];
-	//			l_SubmeshesWithBlend[j] = _BlendedSubmeshAux;
-	//		}
-	//	}
-	//}
-
-	//// TODO: Pintar objetos translúcidos
-	//for (int i = 0; i < l_SubmeshesWithBlend.size(); ++i)
-	//{
-	//	BlendedSubmesh l_BlendedSubmesh = l_SubmeshesWithBlend[i];
-	//	l_BlendedSubmesh.material->SetShaderParameters(_Context);
-	//	_Context->SetWorldMatrix(l_BlendedSubmesh.world);
-	//	_Context->Draw(l_BlendedSubmesh.vertices, l_BlendedSubmesh.material->GetRasterizerState(), l_BlendedSubmesh.material->GetDepthStencilState(), l_BlendedSubmesh.material->GetBlendState());
-	//
-	//}
-
-	m_CurrentRenderlistLength = 0;
-
-	m_ContextManager->EndRender();
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseView = UABEngine.GetEffectManager()->m_SceneParameters.m_View;
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseView.Invert();
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseProjection = UABEngine.GetEffectManager()->m_SceneParameters.m_Projection;
+	UABEngine.GetEffectManager()->m_SceneParameters.m_InverseProjection.Invert();
 }
+
+void CRenderManager::SetAntTweakBar()
+{
+	CDebugHelper::GetDebugHelper()->Render();
+}
+
+//Funcones Draw
+void CRenderManager::DrawScreenQuad(CEffectTechnique *_EffectTechnique, CTexture *_Texture, float x, float y, float _Width, float _Height, const CColor &Color)
+{
+	CEffectManager::m_SceneParameters.m_BaseColor=Color;
+	if(_Texture!=NULL)
+		_Texture->Activate(0);
+
+	D3D11_VIEWPORT *l_CurrentViewport=m_ContextManager->getViewPort();
+	D3D11_VIEWPORT l_Viewport;
+
+	l_Viewport.Width = _Width*l_CurrentViewport->Width;
+	l_Viewport.Height = _Height*(l_CurrentViewport->Height);
+	l_Viewport.MinDepth = 0.0f;
+	l_Viewport.MaxDepth = 1.0f;
+	l_Viewport.TopLeftX = x*l_CurrentViewport->Width;
+	l_Viewport.TopLeftY = y*l_CurrentViewport->Height;
+	std::mutex * l_DeviceContextMutex = &(UABEngine.GetMutexManager()->g_DeviceContextMutex);
+	l_DeviceContextMutex->lock();
+	m_ContextManager->GetDeviceContext()->RSSetViewports(1, &l_Viewport);
+	l_DeviceContextMutex->unlock();
+
+	CEffectManager::SetSceneConstants(_EffectTechnique);
+
+#ifdef _DEBUG
+	m_DebugRender->GetQuadRV()->Render(this, _EffectTechnique,	CEffectManager::GetRawData());
+#else
+	m_RenderHelper->GetQuadRV()->Render(this, _EffectTechnique, CEffectManager::GetRawData());
+#endif
+	l_DeviceContextMutex->lock();
+	m_ContextManager->GetDeviceContext()->RSSetViewports(1, l_CurrentViewport);
+	l_DeviceContextMutex->unlock();
+}
+
+
+void CRenderManager::SetRenderTargets(int _NumViews, ID3D11RenderTargetView **_RenderTargetViews,
+	ID3D11DepthStencilView *_DepthStencilView)
+{
+	m_ContextManager->SetRenderTargets(_NumViews, _RenderTargetViews, _DepthStencilView);
+}
+
+/*void CRenderManager::UnsetRenderTargets()
+{
+	GetContextManager()->Unset();
+	m_ContextManager->GetDeviceContext()->RSSetViewports(1, m_ContextManager->getViewPort());
+}*/
+
+Vect2f CRenderManager::GetScreenPosFrom3D(const Vect3f &Position) const
+{
+	return m_CurrentCamera.GetPositionInScreenCoordinates(Position);
+}
+
+CContextManager* CRenderManager::GetContextManager()const
+{
+	return m_ContextManager;
+}
+void CRenderManager::SetContextManager(CContextManager* _ContextManager)
+{
+	m_ContextManager = _ContextManager;
+	m_ContextManager->GetDeviceContext()->RSSetState(m_ContextManager->GetRasterizerState(CContextManager::RS_SOLID_BACK_CULL));
+	//m_ContextManager->GetDeviceContext()->OMSetBlendState(NULL, NULL, 0xffffffff);
+}
+
+ID3D11Device* CRenderManager::GetDevice()
+{
+	return m_ContextManager->GetDevice();
+}
+
+ID3D11DeviceContext* CRenderManager::GetDeviceContext()
+{
+	return m_ContextManager->GetDeviceContext();
+}
+
+IDXGISwapChain*	CRenderManager::GetSwapChain()
+{
+	return m_ContextManager->GetSwapChain();
+}
+
+float CRenderManager::GetFrameRate() {
+	return m_FrameRate;
+}
+
+CEmptyPointerClass *CRenderManager::GetFrameRateAddress() {
+	return (CEmptyPointerClass *) &m_FrameRate;
+}
+
+#ifdef _DEBUG
+CDebugRender* CRenderManager::GetDebugRender()const
+{
+	return m_DebugRender;
+}
+#else
+CRenderHelper* CRenderManager::GetRenderHelper()const
+{
+	return m_RenderHelper;
+}
+#endif
