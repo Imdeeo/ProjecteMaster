@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<manchas>
+	<mancha name="manchasCordura1" material="ms_manchas1" frames="9" size="0.500000 2.000000" size_speed="0.000000 0.200000" life="4.000000 10.000000" emit_time="4.000000 6.000000" opacity="3.000000 4.00000" color_1="1.000000 0.000000 0.000000 0.000000" color_2="0.000000 1.000000 0.000000 0.000000"/>
+	<mancha name="manchasCordura2" material="ms_manchas1" frames="9" size="0.500000 2.000000" size_speed="0.000000 0.200000" life="4.000000 10.000000" emit_time="4.000000 6.000000" opacity="3.000000 4.00000" color_1="1.000000 0.000000 0.000000 0.000000" color_2="0.000000 1.000000 0.000000 0.000000"/>
+</manchas>

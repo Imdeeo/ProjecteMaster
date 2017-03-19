@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<characters>
+	<enemy name="CagedAutomatonLeft" renderable_object="CagedAutomatonLeft" layer="solid" type="CagedAutomaton" awake="false" break="true"/>
+	<enemy name="CagedAutomatonRight" renderable_object="CagedAutomatonRight" layer="solid" type="CagedAutomaton" awake="false" break="false" angular_speed="2.0">
+		<param distance="6.0" time="0.5" sanity_amount="-3.0"/>
+		<param distance="2.0" time="0.5" sanity_amount="-5.0"/>
+		<param distance="1.0" time="0.5" sanity_amount="-5.0"/>
+	</enemy>
+</characters>

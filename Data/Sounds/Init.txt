@@ -1,0 +1,34 @@
+State Group	ID	Name			Wwise Object Path	Notes
+	209137191	Action			\Default Work Unit\Action	
+	2782712965	Level			\Default Work Unit\Level	
+
+State	ID	Name	State Group			Notes
+	748895195	None	Action			
+	2582085496	Exploration	Action			
+	3122331337	Puzzle_Video	Action			
+	3169107872	Escape	Action			
+	4177142508	Singing	Action			
+	748895195	None	Level			
+	1595257284	Sala_Boss	Level			
+	1818940147	Pasillo	Level			
+	2979444837	SalaMaquinas	Level			
+	3020800564	Recibidor	Level			
+	3685279209	Biblioteca	Level			
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	1006694123	music_volume			\Default Work Unit\music_volume	
+	3350225276	fx_volume			\Default Work Unit\fx_volume	
+
+Audio Bus	ID	Name			Wwise Object Path	Notes
+	213475909	SFX_Bus			\Default Work Unit\Master Audio Bus\World_Sounds_Bus\SFX_Bus	
+	805203703	Master Secondary Bus			\Default Work Unit\Master Secondary Bus	
+	2680856269	Music_Bus			\Default Work Unit\Master Audio Bus\Music_Bus	
+	3608445437	World_Sounds_Bus			\Default Work Unit\Master Audio Bus\World_Sounds_Bus	
+	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	2917229290	Reverb_Bus			\Default Work Unit\Master Audio Bus\Reverb_Bus	
+
+Effect plug-ins	ID	Name	Type				Notes
+	3673681183	Large_Bright_Chamber1	Wwise Matrix Reverb			
+

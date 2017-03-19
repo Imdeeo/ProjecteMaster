@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<resources>
+	<resource level="Player" layer="solid" name="Jaheem" type="player" position="-1.8993283510208 0.92479991912842 39.923099517822" rotation="0.000000 -0.707107 0.000000 -0.707107" visible="true"/>
+</resources>

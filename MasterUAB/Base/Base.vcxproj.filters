@@ -26,27 +26,55 @@
     <ClInclude Include="Math\Vector4.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="XML\XMLTreeNode.h">
-      <Filter>XML</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\Types.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="HelperTypes.h" />
-    <ClInclude Include="Named.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="TemplatedVectorMapManager.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="TemplatedMapManager.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="3DElement\C3DElement.h">
-      <Filter>3DElement</Filter>
-    </ClInclude>
     <ClInclude Include="Math\Quatn.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Named.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\TemplatedMapManager.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\TemplatedVectorMapManager.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="3DElement\3DElement.h">
+      <Filter>3DElement</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Active.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\CEmptyPointerClass.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\UABComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\UABComponentManager.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ScriptedComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Color.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="no_sillywarnings_please.h" />
+    <ClInclude Include="Components\LUAComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\TriggerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="XML\tinyxml2.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\LevelInfo.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -62,27 +90,45 @@
     <Filter Include="3DElement">
       <UniqueIdentifier>{63b1d6f3-4af0-4cb0-8f58-c8d6c6672dee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{57f71843-eccc-4fa7-bd96-e2339bfe039a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathConstants.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="XML\Example.cpp">
-      <Filter>XML</Filter>
-    </ClCompile>
-    <ClCompile Include="XML\XMLTreeNode.cpp">
-      <Filter>XML</Filter>
-    </ClCompile>
-    <ClCompile Include="Named.cpp">
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Utils\Named.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="dummy.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="3DElement\C3DElement.cpp">
+    <ClCompile Include="3DElement\3DElement.cpp">
       <Filter>3DElement</Filter>
     </ClCompile>
-    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Utils\Active.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\UABComponentManager.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\ScriptedComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\UABComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\LUAComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\TriggerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="XML\tinyxml2.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\LevelInfo.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Math\MathUtils.inl">
@@ -107,5 +153,8 @@
       <Filter>Math</Filter>
     </None>
     <None Include="ClassDiagram1.cd" />
+    <None Include="Math\Color.inl">
+      <Filter>Math</Filter>
+    </None>
   </ItemGroup>
 </Project>

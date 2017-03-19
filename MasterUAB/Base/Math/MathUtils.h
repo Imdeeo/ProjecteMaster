@@ -28,11 +28,12 @@ template  <typename T>          inline  T     Pow2    (T _val)                  
 template  <typename T>          inline  T     PowN    (T _val,int _n)           { T r=1.0f; if(_n>0) for(int i=0;i<_n;++i) { r*=_val; } else if(_n<0) { for(int i=0; i<-_n; ++i) r/=_val; } return r; }
 
 template  <typename T>          inline  T     Log     (T val)                   { return (T) log(val); }
-template  <typename T>					inline	T			LogBase	(T val, T base)						{ return (T) (log(val) / log(base)); }
+template  <typename T>			inline	T	  LogBase (T val, T base)			{ return (T) (log(val) / log(base)); }
 
 template  <typename T>          inline  T     Min     (T _a, T _b)              { return _a<_b ? _a : _b;  }
 template  <typename T>          inline  T     Max     (T _a, T _b)              { return _a>_b ? _a : _b;  }
-template  <typename T>          inline  T     Clamp   (T _val, T _min, T _max)  { T r=Min(_val,_max); r=Max(r,_min);  return r;  }
+template  <typename T>          inline  T     Clamp   (T _val, T _min, T _max)  { T r = Min(_val, _max); r = Max(r, _min);  return r; }
+								inline  int   GCD     (int _a, int _b)          { return _b == 0 ? _a : GCD(_b, _a % _b); }
 
 template  <typename T>          inline  T     Abs     (T _val)                  { return (T) fabs(_val); }
 template  <typename T>          inline  T     Floor   (T _val)                  { return (T) floor(_val); }
@@ -133,7 +134,7 @@ template<typename T> inline T Rad2Deg (T rad);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Para poner un angulo entre -Pi y Pi
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-inline void CanonizeAngle (float& fAngle);
+inline void CanonizeAngle(float& fAngle);
 
 // Fichero con las definiciones de las funciones inline
 #include "MathUtils.inl"

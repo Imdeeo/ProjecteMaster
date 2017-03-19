@@ -4,43 +4,52 @@
 #include "SpotLight.h"
 #include "DirectionalLight.h"
 #include "RenderManager\RenderManager.h"
+#include "XML\tinyxml2.h"
+#include "Engine\UABEngine.h"
+#include "LevelManager\LevelManager.h"
 
-#include "XML\XMLTreeNode.h"
-
-CLightManager::CLightManager(){}
+CLightManager::CLightManager():m_AmbientLight(Vect4f(0.1f,0.1f,0.1f,1.0f)),m_RenderLights(false){}
 
 CLightManager::~CLightManager(){}
 
-bool CLightManager::Load(const std::string &FileName){
+bool CLightManager::Load(const std::string &FileName, CLevel* _Level){
 	m_FileName = FileName;
 	
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(m_FileName.c_str()))
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(FileName.c_str());
+
+	tinyxml2::XMLElement* l_Element;
+	tinyxml2::XMLElement* l_ElementAux;
+
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Input = l_XML["lights"];
-		if (l_Input.Exists())
+		l_Element = doc.FirstChildElement("lights");
+		if (l_Element != NULL)
 		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			m_AmbientLight = l_Element->GetVect4fProperty("ambient_light_color", Vect4f(0.1f, 0.1f, 0.1f, 1.0f));
+			l_ElementAux = l_Element->FirstChildElement();
+			while (l_ElementAux!=NULL)
 			{				
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("light"))
+				if (l_ElementAux->Name() == std::string("light"))
 				{
-					CLight::TLightType type = CLight::GetLightTypeByName(l_Element.GetPszProperty("type"));
+					CLight::TLightType type = CLight::GetLightTypeByName(l_ElementAux->GetPszProperty("type"));
 					switch(type)
 					{
 					case CLight::LIGHT_TYPE_OMNI:
-						AddResource(l_Element.GetPszProperty("name"), new COmniLight(l_Element));
+						AddResource(l_ElementAux->GetPszProperty("name"), new COmniLight(l_ElementAux,_Level),_Level->GetName());
 						break;
 					case CLight::LIGHT_TYPE_DIRECTIONAL:
-						AddResource(l_Element.GetPszProperty("name"), new CDirectionalLight(l_Element));
+						AddResource(l_ElementAux->GetPszProperty("name"), new CDirectionalLight(l_ElementAux, _Level), _Level->GetName());
 						break;
 					case CLight::LIGHT_TYPE_SPOT:
-						AddResource(l_Element.GetPszProperty("name"), new CSpotLight(l_Element));
+						AddResource(l_ElementAux->GetPszProperty("name"), new CSpotLight(l_ElementAux, _Level), _Level->GetName());
 						break;
 					default:
 						return false;
 					}
 				}
+				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
 		}
 	}
@@ -51,7 +60,63 @@ bool CLightManager::Load(const std::string &FileName){
 	return true;
 }
 
-bool CLightManager::Render(CRenderManager *RenderManager){
+bool CLightManager::Reload(){
 	Destroy();
-	return Load(m_FileName);
+	return Load(m_FileName, UABEngine.GetLevelManager()->GetResource(m_LevelName));
+}
+
+bool CLightManager::CreateNewLight(std::string _name, std::string _type)
+{
+	CLevel* l_Level = UABEngine.GetLevelManager()->GetResource(m_LevelName);
+	CLight::TLightType type = CLight::GetLightTypeByName(_type);
+	switch (type)
+	{
+	case CLight::LIGHT_TYPE_OMNI:
+		AddResource(_name, new COmniLight(_name, l_Level), l_Level->GetName());
+		return true;
+	case CLight::LIGHT_TYPE_DIRECTIONAL:
+		AddResource(_name, new CDirectionalLight(_name, l_Level), l_Level->GetName());
+		return true;
+	case CLight::LIGHT_TYPE_SPOT:
+		AddResource(_name, new CSpotLight(_name, l_Level), l_Level->GetName());
+		return true;
+	default:
+		return false;
+	}
+}
+
+bool CLightManager::RenderAux(CRenderManager *_RenderManager){
+	if (m_RenderLights)
+	{
+		Render(_RenderManager);
+	}
+	return true;
+}
+
+bool CLightManager::Render(CRenderManager *_RenderManager){
+	for (size_t i = 0; i < GetResourcesVector().size(); i++)
+	{
+		GetResourcesVector()[i]->Render(_RenderManager);
+	}	
+	return true;
+}
+
+void CLightManager::Save()
+{
+	FILE* l_File;
+	if (!fopen_s(&l_File, m_FileName.c_str(), "w"))
+	{
+		fprintf_s(l_File, "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+		fprintf_s(l_File, "<lights ambient_light_color=\"%f %f %f %f\">\n", 
+			m_AmbientLight.x, m_AmbientLight.y, m_AmbientLight.z, m_AmbientLight.w);
+
+		typedef TMapResources::iterator it_type;		
+		for (it_type iterator = m_ResourcesMap.begin(); iterator != m_ResourcesMap.end(); iterator++)
+		{
+			iterator->second.m_Value->Save(l_File);
+		}
+
+		fprintf_s(l_File, "</lights>\n");
+		fclose(l_File);
+	}
 }

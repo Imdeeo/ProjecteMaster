@@ -1,40 +1,107 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
+#define DIRECTINPUT_VERSION 0x0800
 
 #include <string>
-#include <unordered_set>
-#include <unordered_map>
+#include <gainput\gainput.h>
+#include <Engine\UABEngine.h>
+#include "KeyboardInput.h"
+#include <Utils.h>
+#include <dinput.h>
 
-#include "Math\Vector2.h"
+class CDeviceButtonListener;
+class CUserButtonListener;
 
 class CInputManager
 {
-public:
-
-	bool IsActionActive(const std::string& action) const { return m_ActiveActions.count(action) > 0; }
-	float GetAxis(const std::string& axis) const { std::unordered_map<std::string, float>::const_iterator it = m_ActiveAxis.find(axis); if (it == m_ActiveAxis.end()) return 0; else return it->second; }
-
-	Vect2i GetCursor() const { return m_Cursor; }
-	Vect2i GetCursorMovement() const { return m_CursorD; }
-	bool HasFocus() const { return m_Focus; }
-
-	static CInputManager* GetInputManager();
-	static void SetCurrentInputManager(CInputManager* _InputManager);
-	
-	virtual void reload();
-	
 protected:
+	gainput::InputManager* m_Manager;
+	gainput::InputMap* m_Map;
 
-
-	CInputManager() :m_Cursor(0, 0), m_CursorD(0, 0), m_Focus(true) {}
-
-	std::unordered_set<std::string> m_ActiveActions;
-	std::unordered_map<std::string, float> m_ActiveAxis;
-	Vect2i m_Cursor;
-	Vect2i m_CursorD;
-
+	float m_AxisX;
+	float m_AxisY;
+	float m_AxisZ;
+	float m_Speed;
+	CKeyboardInput* m_KeyBoard;
 	bool m_Focus;
+	std::string m_Filename;
 
+public:
+	enum Actions
+	{
+		LeftClick,
+		RightClick,
+		MiddleClick,
+		Mouse3,
+		Mouse4,
+		Mouse5,
+		Mouse6,
+		WheelUp,
+		WheelDown,
+		AxisX,
+		AxisY,
+		MoveForward,
+		MoveBackward,
+		StrafeLeft,
+		StrafeRight,
+		Jump,
+		Crouch,
+		Run,
+		Interact,
+		Sing,
+		Pause,
+		DebugToggleFrustum,
+		DebugSpeedUp,
+		DebugSpeedDown,
+		DebugSanityUp,
+		DebugSanityDown,
+		DebugReloadLua,
+		DebugToggleRenderLights,
+		DebugToggleRenderAStar,
+		DebugToggleLoadVideo,
+		DebugConsole,
+		DebugChangeCameraVision,
+		DebugChangeCamera,
+		DebugToggleRenderCamera,
+		DebugMusicVolumeUp,
+		DebugMusicVolumeDown,
+		DebugFxVolumeUp,
+		DebugFxVolumeDown,
+		DebugMonsterRun,
+		DebugMonsterIdle,
+		DebugMonsterHit,
+		//DebugStopAllSounds,
+	};
+
+	const gainput::DeviceId* m_KeyboardId;
+	const gainput::DeviceId* m_MouseId;
+	const gainput::DeviceId* m_GamepadId;
+
+	CInputManager();
+	~CInputManager();
+	void Update();
+
+	void Load(std::string _file);
+	void Reload();
+	void SetWindow(HWND _hWnd, int _width, int _height);
+	int GetAction(std::string _name);
+	int GetInput(std::string _name);
+
+	void SetFocus(bool _focus);
+	bool GetFocus() const;
+
+	void UpdateAxis(LONG _x, LONG _y);
+	Vect2f GetCursor();
+	Vect2f GetCursorMovement();
+	float GetAxisX();
+	float GetAxisY();
+	bool IsActionActive(std::string _name);
+	bool IsActionNew(std::string _name);
+	bool IsActionReleased(std::string _name);
+	bool WasActionActive(std::string _name);
+	CKeyboardInput* GetKeyBoard(){ return m_KeyBoard; };
+	gainput::InputManager* GetManager(){ return m_Manager; };
+	gainput::InputMap* GetMap(){ return m_Map; };
 };
 
 #endif

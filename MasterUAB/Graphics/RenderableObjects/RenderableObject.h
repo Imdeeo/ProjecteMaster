@@ -3,20 +3,40 @@
 
 #include <vector>
 
-#include "Named.h"
-#include "3DElement\C3DElement.h"
+#include "Utils\LevelInfo.h"
 
-class CXMLTreeNode;
+#include "Utils\Named.h"
+#include "3DElement\3DElement.h"
+#include "XML\tinyxml2.h"
+
+class CUABComponentManager;
 class CRenderManager;
+class CLevel;
 
-class CRenderableObject : public C3DElement, public CNamed
+class CRenderableObject : public C3DElement, public CNamed, public CLevelInfo
 {
 public:
-	CRenderableObject():CNamed(""){};
-	CRenderableObject(const CXMLTreeNode &TreeNode):C3DElement(TreeNode),CNamed(TreeNode){};
-	virtual ~CRenderableObject() {}
-	virtual void Update(float ElapsedTime) {}
-	virtual void Render(CRenderManager *RM) = 0;
+	enum TRenderableObjectType
+	{
+		STATIC_MODEL = 0,
+		ANIMATED_MODEL,
+		PARTICLE_EMITER
+	};
+private:
+	bool m_DebugRender;
+public:
+	CRenderableObject(CLevel*);
+	CRenderableObject(tinyxml2::XMLElement* TreeNode, CLevel* _Level);
+	virtual ~CRenderableObject();
+	virtual void Save(FILE* _File, std::string _layer){}
+	virtual void Update(float ElapsedTime){};
+	virtual void Render(CRenderManager *RM){};
+	void SetDebugRender(bool _DebugRender){ m_DebugRender = _DebugRender;}
+	bool GetDebugRender(){ return m_DebugRender; }
+	virtual std::string GetTipo() {
+		return "RenderableObject";
+	};
+	virtual CRenderableObject& CRenderableObject::operator=(CRenderableObject&);
 };
 
 #endif //RENDERABLE_OBJECT_H

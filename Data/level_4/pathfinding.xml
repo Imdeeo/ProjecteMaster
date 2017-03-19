@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<path>
+	<node name="node1" pos="16.1721 0.0 20.5892"/>
+	<node name="node2" pos="37.0443 0.0 20.5892"/>
+	<node name="node3" pos="37.0443 0.0 51.8155"/>
+	<node name="node4" pos="69.6849 0.0 51.8155"/>
+	<node name="node5" pos="81.1022 0.0 44.7609"/>
+	<node name="node6" pos="92.7979 0.0 32.2298"/>
+	<node name="node7" pos="92.7979 0.0 27.1245"/>
+	<node name="node8" pos="64.2083 0.0 27.1245"/>
+	<node name="node9" pos="64.2083 0.0 22.9475"/>
+	<node name="node10" pos="68.1997 0.0 16.357"/>
+	<node name="node11" pos="75.7184 0.0 13.0154"/>
+	<node name="node12" pos="124.015 0.0 13.0154"/>
+	<father name="node1">
+		<child name="node2"/>
+	</father>
+	<father name="node2">
+		<child name="node1"/>
+		<child name="node3"/>
+	</father>
+	<father name="node3">
+		<child name="node2"/>
+		<child name="node4"/>
+	</father>
+	<father name="node4">
+		<child name="node3"/>
+		<child name="node5"/>
+	</father>
+	<father name="node5">
+		<child name="node4"/>
+		<child name="node6"/>
+	</father>
+	<father name="node6">
+		<child name="node5"/>
+		<child name="node7"/>
+	</father>
+	<father name="node7">
+		<child name="node6"/>
+		<child name="node8"/>
+	</father>
+	<father name="node8">
+		<child name="node7"/>
+		<child name="node9"/>
+	</father>
+	<father name="node9">
+		<child name="node8"/>
+		<child name="node10"/>
+	</father>
+	<father name="node10">
+		<child name="node9"/>
+		<child name="node11"/>
+	</father>
+	<father name="node11">
+		<child name="node10"/>
+		<child name="node12"/>
+	</father>
+	<father name="node12">
+		<child name="node11"/>
+	</father>
+	<path_patrol name="path_boss">
+		<node name="node1" wait="false"/>
+		<node name="node2" wait="false"/>
+		<node name="node3" wait="false"/>
+		<node name="node4" wait="false"/>	
+		<node name="node5" wait="false"/>
+		<node name="node6" wait="false"/>
+		<node name="node7" wait="false"/>
+		<node name="node8" wait="false"/>
+		<node name="node9" wait="false"/>
+		<node name="node10" wait="false"/>
+		<node name="node11" wait="false"/>
+		<node name="node12" wait="false"/>
+	</path_patrol>
+</path>

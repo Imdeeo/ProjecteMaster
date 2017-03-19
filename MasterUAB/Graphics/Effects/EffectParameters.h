@@ -1,8 +1,7 @@
-#ifndef EFFECT_PARAMETERS_H
+/*#ifndef EFFECT_PARAMETERS_H
 #define EFFECT_PARAMETERS_H
 
 #include "Math\Matrix44.h"
-#include "Utils.h"
 
 class CEffectParameters
 {
@@ -17,6 +16,6 @@ public:
 	Vect4f m_BillboardPosition;
 	Vect4f m_BillboardSize;
 	Vect4f m_DebugRenderScale;
-};
+};*/
 
-#endif //EFFECT_PARAMETERS_H
+//#endif //EFFECT_PARAMETERS_H

@@ -1,8 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug7|Win32">
+      <Configuration>Debug7</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release7|Win32">
+      <Configuration>Release7</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
@@ -14,31 +22,90 @@
     <ClCompile Include="AnimatedModels\AnimatedCoreModel.cpp" />
     <ClCompile Include="AnimatedModels\AnimatedInstanceModel.cpp" />
     <ClCompile Include="AnimatedModels\AnimatedModelsManager.cpp" />
+    <ClCompile Include="Bilboards\BilboardManager.cpp" />
+    <ClCompile Include="Bilboards\BilboardSystemInstance.cpp" />
+    <ClCompile Include="Bilboards\BilboardSystemType.cpp" />
+    <ClCompile Include="Camera\3PersonCameraController.cpp" />
     <ClCompile Include="Camera\CameraController.cpp" />
     <ClCompile Include="Camera\CameraControllerManager.cpp" />
     <ClCompile Include="Camera\CameraInfo.cpp" />
     <ClCompile Include="Camera\CameraKey.cpp" />
     <ClCompile Include="Camera\CameraKeyController.cpp" />
+    <ClCompile Include="Camera\FocusedCameraController.cpp" />
     <ClCompile Include="Camera\FPSCameraController.cpp" />
     <ClCompile Include="Camera\Frustum.cpp" />
     <ClCompile Include="Camera\SphericalCameraController.cpp" />
+    <ClCompile Include="Cinematics\Cinematic.cpp" />
+    <ClCompile Include="Cinematics\CinematicManager.cpp" />
+    <ClCompile Include="Cinematics\CinematicObject.cpp" />
+    <ClCompile Include="Cinematics\CinematicObjectKeyFrame.cpp" />
+    <ClCompile Include="Cinematics\CinematicPlayer.cpp" />
     <ClCompile Include="ContextManager\ContextManager.cpp" />
     <ClCompile Include="DebugRender.cpp" />
     <ClCompile Include="Effects\EffectManager.cpp" />
     <ClCompile Include="Effects\EffectShader.cpp" />
     <ClCompile Include="Effects\EffectTechnique.cpp" />
+    <ClCompile Include="Layers\LayerManager.cpp" />
     <ClCompile Include="Lights\DirectionalLight.cpp" />
     <ClCompile Include="Lights\Light.cpp" />
     <ClCompile Include="Lights\LightManager.cpp" />
     <ClCompile Include="Lights\OmniLight.cpp" />
     <ClCompile Include="Lights\SpotLight.cpp" />
+    <ClCompile Include="LineRenderer\LineRenderer.cpp" />
+    <ClCompile Include="LoadScreen\LoadScreenManager.cpp" />
+    <ClCompile Include="Manchas\ManchasManager.cpp" />
+    <ClCompile Include="Manchas\ManchasSystemInstance.cpp" />
+    <ClCompile Include="Manchas\ManchasSystemType.cpp" />
+    <ClCompile Include="Materials\TemplatedMaterialParameter.cpp" />
     <ClCompile Include="Materials\Material.cpp" />
     <ClCompile Include="Materials\MaterialManager.cpp" />
-    <ClCompile Include="RenderableObjects\RenderableObjectManager.cpp" />
+    <ClCompile Include="Materials\MaterialParameter.cpp" />
+    <ClCompile Include="Particles\ParticleManager.cpp" />
+    <ClCompile Include="Particles\ParticleSystemInstance.cpp" />
+    <ClCompile Include="Particles\ParticleSystemType.cpp" />
+    <ClCompile Include="RenderHelper\RenderHelper.cpp" />
+    <ClCompile Include="RenderableObjects\PoolRenderableObjectTechnique.cpp" />
+    <ClCompile Include="RenderableObjects\RenderableObject.cpp" />
+    <ClCompile Include="RenderableObjects\RenderableObjectsManager.cpp" />
+    <ClCompile Include="RenderableObjects\RenderableObjectTechnique.cpp" />
+    <ClCompile Include="RenderableObjects\RenderableObjectTechniqueManager.cpp" />
     <ClCompile Include="RenderManager\RenderManager.cpp" />
+    <ClCompile Include="SceneRender\ApplyFiltersSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\CaptureFrameBufferSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\ClearSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\DeferredShadingSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\DisableAlphaBlendSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\DrawQuadRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\DrawVideoQuadRenderCommand.cpp" />
+    <ClCompile Include="SceneRender\EnableAlphaBlendSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\GenerateShadowMapsSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\LightsSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\PresentSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderAntTweakBarSceneRendereCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderAxisSceneRenderCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderDebugFrustumSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderDebugLayerSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderDebugLightsSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderGridSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderGUISceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderLayerSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\RenderPathFindingSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SceneRendererCommandManager.cpp" />
+    <ClCompile Include="SceneRender\SetDepthStencilStateSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SetLightPositionSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SetMatricesSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\SetRenderTargetSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\StagedTexturedSceneRendererCommand.cpp" />
+    <ClCompile Include="SceneRender\UnsetRenderTargetSceneRendererCommand.cpp" />
     <ClCompile Include="StaticMesh\InstanceMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMesh.cpp" />
     <ClCompile Include="StaticMesh\StaticMeshManager.cpp" />
+    <ClCompile Include="Texture\CapturedFrameBufferTexture.cpp" />
+    <ClCompile Include="Texture\DynamicTexture.cpp" />
+    <ClCompile Include="Texture\DynamicTextureManager.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Texture\TextureManager.cpp" />
   </ItemGroup>
@@ -46,15 +113,25 @@
     <ClInclude Include="AnimatedModels\AnimatedCoreModel.h" />
     <ClInclude Include="AnimatedModels\AnimatedInstanceModel.h" />
     <ClInclude Include="AnimatedModels\AnimatedModelsManager.h" />
+    <ClInclude Include="Bilboards\BilboardManager.h" />
+    <ClInclude Include="Bilboards\BilboardSystemInstance.h" />
+    <ClInclude Include="Bilboards\BilboardSystemType.h" />
+    <ClInclude Include="Camera\3PersonCameraController.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\CameraController.h" />
     <ClInclude Include="Camera\CameraControllerManager.h" />
     <ClInclude Include="Camera\CameraInfo.h" />
     <ClInclude Include="Camera\CameraKey.h" />
     <ClInclude Include="Camera\CameraKeyController.h" />
+    <ClInclude Include="Camera\FocusedCameraController.h" />
     <ClInclude Include="Camera\FPSCameraController.h" />
     <ClInclude Include="Camera\Frustum.h" />
     <ClInclude Include="Camera\SphericalCameraController.h" />
+    <ClInclude Include="Cinematics\Cinematic.h" />
+    <ClInclude Include="Cinematics\CinematicManager.h" />
+    <ClInclude Include="Cinematics\CinematicObject.h" />
+    <ClInclude Include="Cinematics\CinematicObjectKeyFrame.h" />
+    <ClInclude Include="Cinematics\CinematicPlayer.h" />
     <ClInclude Include="ContextManager\ContextManager.h" />
     <ClInclude Include="DebugRender.h" />
     <ClInclude Include="Effects\AnimatedModelEffectParameters.h" />
@@ -65,24 +142,72 @@
     <ClInclude Include="Effects\EffectTechnique.h" />
     <ClInclude Include="Effects\LightEffectParameters.h" />
     <ClInclude Include="Effects\SceneEffectParameters.h" />
+    <ClInclude Include="LineRenderer\LineRenderer.h" />
+    <ClInclude Include="LoadScreen\LoadScreenManager.h" />
+    <ClInclude Include="Manchas\ManchasManager.h" />
+    <ClInclude Include="Manchas\ManchasSystemInstance.h" />
+    <ClInclude Include="Manchas\ManchasSystemType.h" />
+    <ClInclude Include="Particles\ParticleSystemInstance.h" />
+    <ClInclude Include="RenderHelper\RenderHelper.h" />
+    <ClInclude Include="Layers\LayerManager.h" />
     <ClInclude Include="Lights\DirectionalLight.h" />
     <ClInclude Include="Lights\Light.h" />
     <ClInclude Include="Lights\LightManager.h" />
     <ClInclude Include="Lights\OmniLight.h" />
     <ClInclude Include="Lights\SpotLight.h" />
+    <ClInclude Include="Materials\TemplatedMaterialParameter.h" />
     <ClInclude Include="Materials\Material.h" />
     <ClInclude Include="Materials\MaterialManager.h" />
+    <ClInclude Include="Materials\MaterialParameter.h" />
+    <ClInclude Include="Particles\ParticleManager.h" />
+    <ClInclude Include="Particles\ParticleSystemType.h" />
+    <ClInclude Include="RenderableObjects\PoolRenderableObjectTechnique.h" />
     <ClInclude Include="RenderableObjects\RenderableObject.h" />
-    <ClInclude Include="RenderableObjects\RenderableObjectManager.h" />
+    <ClInclude Include="RenderableObjects\RenderableObjectsManager.h" />
+    <ClInclude Include="RenderableObjects\RenderableObjectTechnique.h" />
+    <ClInclude Include="RenderableObjects\RenderableObjectTechniqueManager.h" />
     <ClInclude Include="RenderableObjects\RenderableVertexs.h" />
     <ClInclude Include="RenderableObjects\TemplatedRenderableIndexedVertexs.h" />
     <ClInclude Include="RenderableObjects\TemplatedRenderableVertexs.h" />
     <ClInclude Include="RenderableObjects\VertexTypes.h" />
     <ClInclude Include="RenderManager\RenderManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneRender\ApplyFiltersSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\CaptureFrameBufferSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\ClearSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\DeferredShadingSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\DisableAlphaBlendSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\DrawQuadRendererCommand.h" />
+    <ClInclude Include="SceneRender\DrawVideoQuadRenderCommand.h" />
+    <ClInclude Include="SceneRender\EnableAlphaBlendSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\GenerateShadowMapsSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\LightsSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\PresentSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderAntTweakBarSceneRendereCommand.h" />
+    <ClInclude Include="SceneRender\RenderAxisSceneRenderCommand.h" />
+    <ClInclude Include="SceneRender\RenderDebugFrustumSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderDebugLayerSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderDebugLightsSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderDebugShadowMapsSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderGridSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderGUISceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderLayerSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\RenderPathFindingSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SceneRendererCommandManager.h" />
+    <ClInclude Include="SceneRender\SetDepthStencilStateSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SetLightPositionSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SetMatricesSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SetPoolRenderableObjectsTechniqueSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\SetRenderTargetSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\StagedTexturedSceneRendererCommand.h" />
+    <ClInclude Include="SceneRender\UnsetRenderTargetSceneRendererCommand.h" />
     <ClInclude Include="StaticMesh\InstanceMesh.h" />
     <ClInclude Include="StaticMesh\StaticMesh.h" />
     <ClInclude Include="StaticMesh\StaticMeshManager.h" />
+    <ClInclude Include="Texture\CapturedFrameBufferTexture.h" />
+    <ClInclude Include="Texture\DynamicTexture.h" />
+    <ClInclude Include="Texture\DynamicTextureManager.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Texture\TextureManager.h" />
   </ItemGroup>
@@ -99,21 +224,41 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug7|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release7|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug7|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release7|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -121,14 +266,32 @@
     <OutDir>$(SolutionDir)\bin\lib\</OutDir>
     <IntDir>$(SolutionDir)\bin\Intermediate\$(ProjectName)$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
+    <ReferencePath>$(VC_ReferencesPath_x86);</ReferencePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug7|Win32'">
+    <OutDir>$(SolutionDir)\bin\lib\</OutDir>
+    <IntDir>$(SolutionDir)\bin\Intermediate\$(ProjectName)$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_d</TargetName>
     <ReferencePath>$(ReferencePath)</ReferencePath>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
+    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release7|Win32'">
+    <OutDir>$(SolutionDir)\bin\lib\</OutDir>
+    <IntDir>$(SolutionDir)\bin\Intermediate\$(ProjectName)$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
+    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)\bin\lib\</OutDir>
     <IntDir>$(SolutionDir)\bin\Intermediate\$(ProjectName)$(Configuration)\</IntDir>
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <ReferencePath>$(DXSDK_DIR)\lib\x86;$(ReferencePath)</ReferencePath>
+    <TargetName>$(ProjectName)</TargetName>
+    <ReferencePath>$(VC_ReferencesPath_x86);</ReferencePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -137,14 +300,66 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;$(SolutionDir)3rdParty\AntTweakBar\include;$(SolutionDir)Base;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)Core;$(SolutionDir)Graphics;$(SolutionDir)3rdParty\cal3d-0.11rc2\src;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include\;$(SolutionDir)3rdParty\AntTweakBar\include\;$(SolutionDir)Base\;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include\;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include\;$(SolutionDir)Core\;$(SolutionDir)Graphics\;$(SolutionDir)3rdParty\cal3d-0.11rc2\src\;$(SolutionDir)3rdParty\Lua\src\;$(SolutionDir)3rdParty\luabind\;$(SolutionDir)3rdParty\boost_1_34_0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>D3DX11.lib;Core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Core_d.lib;DirectXTK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)\lib\x86;$(SolutionDir)bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>4.0</ShaderModel>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug7|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include\;$(SolutionDir)3rdParty\AntTweakBar\include\;$(SolutionDir)Base\;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include\;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include\;$(SolutionDir)Core\;$(SolutionDir)Graphics\;$(SolutionDir)3rdParty\cal3d-0.11rc2\src\;$(SolutionDir)3rdParty\Lua\src\;$(SolutionDir)3rdParty\luabind\;$(SolutionDir)3rdParty\boost_1_34_0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>D3DX11.lib;Core_d.lib;DirectXTK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)\lib\x86;$(SolutionDir)bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>4.0</ShaderModel>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release7|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include\;$(SolutionDir)3rdParty\AntTweakBar\include\;$(SolutionDir)Base\;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include\;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include\;$(SolutionDir)Core\;$(SolutionDir)Graphics\;$(SolutionDir)3rdParty\cal3d-0.11rc2\src\;$(SolutionDir)3rdParty\Lua\src\;$(SolutionDir)3rdParty\luabind\;$(SolutionDir)3rdParty\boost_1_34_0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>D3DX11.lib;Core.lib;DirectXTK.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)\lib\x86;$(SolutionDir)bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -158,20 +373,137 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include\;$(SolutionDir)3rdParty\AntTweakBar\include\;$(SolutionDir)Base\;$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include\;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include\;$(SolutionDir)Core\;$(SolutionDir)Graphics\;$(SolutionDir)3rdParty\cal3d-0.11rc2\src\;$(SolutionDir)3rdParty\Lua\src\;$(SolutionDir)3rdParty\luabind\;$(SolutionDir)3rdParty\boost_1_34_0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>Core.lib;DirectXTK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)\lib\x86;$(SolutionDir)bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>4.0</ShaderModel>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_VS13;_LIB;_MBCS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\AntTweakBar\include;$(SolutionDir)PhysX;$(SolutionDir)Base;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)Core;$(SolutionDir)Graphics;$(SolutionDir)3rdParty\cal3d-0.11rc2\src;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;$(SolutionDir)GUI;$(SolutionDir)3rdParty\DirectXTK\Inc;(WindowsSdkDir)Include\um;$(SolutionDir)3rdParty\gainput\include;$(SolutionDir)\3rdParty\libtheoraplayer-1.0RC2\include;$(SolutionDir)\Video</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib />
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>4.0</ShaderModel>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug7|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN7;WIN32;_DEBUG;_VS13;_LIB;_MBCS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\AntTweakBar\include;$(SolutionDir)PhysX;$(SolutionDir)Base;$(SolutionDir)3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)Core;$(SolutionDir)Graphics;$(SolutionDir)3rdParty\cal3d-0.11rc2\src;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;$(SolutionDir)GUI;$(SolutionDir)3rdParty\DirectXTK\Inc;$(DXSDK_DIR)Include\;$(SolutionDir)3rdParty\gainput\include;$(SolutionDir)Video;$(SolutionDir)\3rdParty\libtheoraplayer-1.0RC2\include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib />
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib;$(DXSDK_DIR)\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>4.0</ShaderModel>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release7|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WIN7;WIN32;NDEBUG;_VS13;_LIB;_HAS_ITERATOR_DEBUGGING=0;_ITERATOR_DEBUG_LEVEL=0;_MBCS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\AntTweakBar\include;$(SolutionDir)PhysX;$(SolutionDir)Base;$(SolutionDir)3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)Core;$(SolutionDir)Graphics;$(SolutionDir)3rdParty\cal3d-0.11rc2\src;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;$(SolutionDir)Sound;$(SolutionDir)GUI;$(SolutionDir)3rdParty\DirectXTK\Inc;$(DXSDK_DIR)Include\;$(SolutionDir)Video;$(SolutionDir)\3rdParty\libtheoraplayer-1.0RC2\include;$(SolutionDir)3rdParty\gainput\include</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib />
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib;$(DXSDK_DIR)\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>4.0</ShaderModel>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_VS13;_LIB;_HAS_ITERATOR_DEBUGGING=0;_ITERATOR_DEBUG_LEVEL=0;_MBCS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\AntTweakBar\include;$(SolutionDir)PhysX;$(SolutionDir)Base;$(SolutionDir)3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)Core;$(SolutionDir)Graphics;$(SolutionDir)3rdParty\cal3d-0.11rc2\src;$(SolutionDir)3rdParty\Lua\src;$(SolutionDir)3rdParty\luabind;$(SolutionDir)3rdParty\boost_1_34_0;$(SolutionDir)Sound;$(SolutionDir)GUI;$(SolutionDir)3rdParty\DirectXTK\Inc;$(WindowsSdkDir)Include\um;$(SolutionDir)Video;$(SolutionDir)\3rdParty\libtheoraplayer-1.0RC2\include;$(SolutionDir)3rdParty\gainput\include</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib />
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>4.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

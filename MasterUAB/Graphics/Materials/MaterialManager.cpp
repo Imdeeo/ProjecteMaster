@@ -1,5 +1,9 @@
 #include "Materials\MaterialManager.h"
-#include "XML\XMLTreeNode.h"
+#include "XML\tinyxml2.h"
+#include <stdio.h>
+
+#include "Engine\UABEngine.h"
+#include "LevelManager\LevelManager.h"
 
 CMaterialManager::CMaterialManager()
 {
@@ -9,30 +13,82 @@ CMaterialManager::~CMaterialManager()
 {
 
 }
-void CMaterialManager::Load(const std::string &Filename)
+void CMaterialManager::Load(const std::string &LevelMaterialsFilename, CLevel* _Level, const std::string &DefaultMaterialsFilename)
 {
-	m_Filename = Filename;
+	m_LevelMaterialsFilename = LevelMaterialsFilename;
+	m_DefaultMaterialsFilename = DefaultMaterialsFilename;
 
-	Destroy();
+	m_LevelId = _Level->GetName();
+	//Destroy();
 
-	CXMLTreeNode l_XML;
-	if (l_XML.LoadFile(Filename.c_str()))
+	LoadMaterialsFromFile(LevelMaterialsFilename, _Level, false, nullptr);
+	/*if (DefaultMaterialsFilename != "")
+		LoadMaterialsFromFile(DefaultMaterialsFilename,_LevelId,false,nullptr);*/
+}
+
+void CMaterialManager::Reload()
+{
+	std::map<std::string, std::string> l_MaterialNames;
+	/*if (m_DefaultMaterialsFilename != "") {
+		LoadMaterialsFromFile(m_DefaultMaterialsFilename, m_LevelId , true, &l_MaterialNames);
+	}*/
+	LoadMaterialsFromFile(m_LevelMaterialsFilename, UABEngine.GetLevelManager()->GetResource(m_LevelId), true, &l_MaterialNames);
+	//RemoveAllBut(l_MaterialNames);
+}
+
+void CMaterialManager::LoadMaterialsFromFile(const std::string &Filename, CLevel* _Level, bool Update, std::map<std::string, std::string> *UpdatedNames)
+{
+	tinyxml2::XMLDocument doc;
+	tinyxml2::XMLError l_Error = doc.LoadFile(Filename.c_str());
+
+	tinyxml2::XMLElement* l_Element;
+	tinyxml2::XMLElement* l_ElementAux;
+
+
+	if (l_Error == tinyxml2::XML_SUCCESS)
 	{
-		CXMLTreeNode l_Input = l_XML["materials"];
-		if (l_Input.Exists())
+		l_Element = doc.FirstChildElement("materials");
+		if (l_Element != NULL)
 		{
-			for (int i = 0; i < l_Input.GetNumChildren(); ++i)
+			l_ElementAux = l_Element->FirstChildElement();
+			while (l_ElementAux!=NULL)
 			{
-				CXMLTreeNode l_Element = l_Input(i);
-				if (l_Element.GetName() == std::string("material"))
+				if (l_ElementAux->Name() == std::string("material"))
 				{
-					AddResource(l_Element.GetPszProperty("name"),new CMaterial(l_Element));
+					CMaterial* l_Material = new CMaterial(l_ElementAux,_Level->GetName());
+					if (Update)
+					{
+						AddUpdateResource(l_ElementAux->GetPszProperty("name"), l_Material);
+					}
+					else {
+						AddResource(l_ElementAux->GetPszProperty("name"), l_Material, _Level->GetName());
+					}
+					if (UpdatedNames != nullptr)
+					{
+						(*UpdatedNames)[l_ElementAux->GetPszProperty("name")] = "defined";
+					}
 				}
+				l_ElementAux = l_ElementAux->NextSiblingElement();
 			}
 		}
 	}
 }
-void CMaterialManager::Reload()
+
+void CMaterialManager::Save()
 {
-	Load(m_Filename);
+	FILE* l_File;
+	if (!fopen_s(&l_File, m_LevelMaterialsFilename.c_str(),"w"))
+	{
+		fprintf_s(l_File, "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+		fprintf_s(l_File, "<materials>\n");
+
+		typedef TMapResource::iterator it_type;
+		for (it_type iterator = m_Resources.begin(); iterator != m_Resources.end(); iterator++)
+		{
+			iterator->second->Save(l_File);
+		}
+
+		fprintf_s(l_File, "</materials>\n");
+		fclose(l_File);
+	}
 }

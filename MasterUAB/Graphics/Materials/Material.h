@@ -1,25 +1,43 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include "Named.h"
-#include "Utils.h"
+#include "Utils\Named.h"
+#include "Utils\LevelInfo.h"
+#include <vector>
+#include <string.h>
+#include "XML\tinyxml2.h"
 
-#include <assert.h>
+class CTexture;
+class CMaterialParameter;
+class CRenderableObjectTechnique;
+class CLevel;
+class CColor;
 
-#include "Texture\Texture.h"
-#include "Effects\EffectTechnique.h"
+#define MAX_TEXTURES 11
 
-class CMaterial : public CNamed
+class CMaterial : public CNamed,public CLevelInfo
 {
 private:
-	std::vector<CTexture *> m_Textures;
-	CEffectTechnique *m_EffectTechnique;
+	CTexture* m_Textures[MAX_TEXTURES];
+	std::vector<CMaterialParameter *> m_Parameters;
+	CRenderableObjectTechnique *m_RenderableObjectTechnique;
+	unsigned int m_CurrentParameterData;
 	void Destroy();
 public:
-	CMaterial(const CXMLTreeNode &TreeNode);
-	virtual ~CMaterial(){}
-	virtual void Apply();
-	UAB_GET_PROPERTY(CEffectTechnique*, EffectTechnique);
+	CMaterial(tinyxml2::XMLElement* TreeNode, CLevel *_Level);
+	CMaterial(tinyxml2::XMLElement* TreeNode, const std::string &_LevelId);
+	virtual ~CMaterial();
+	virtual void Apply(CRenderableObjectTechnique *RenderableObjectTechnique = NULL);
+	CRenderableObjectTechnique* GetRenderableObjectTechnique();
+	void * GetNextParameterAddress(unsigned int NumBytes);
+	const std::vector<CMaterialParameter *> & GetParameters(){ return m_Parameters;}
+	void CMaterial::operator=(CMaterial &b);
+	CTexture * GetTexture(int index = 0);
+	void SetValue(int _index, float _value);
+	void SetValue(int _index, CColor _value);
+	float GetValue(int _index);
+	void Save(FILE* _File);
+	void CopyParameters(std::vector<CMaterialParameter *>_NewParameters, bool _destroy = true);
 };
 
 #endif //MATERIAL_H

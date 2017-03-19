@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cinematics>
+	<cinematic name="Tecla1" duration="2.23333" cycle="false">
+		<cinematic_object resource="1tecla" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.8" pos="0.0 0.0 0.0" rotation="0.04362 0.0 0.0 0.99905" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.23333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="Tecla2" duration="2.23333" cycle="false">
+		<cinematic_object resource="2tecla" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.8" pos="0.0 0.0 0.0" rotation="0.04362 0.0 0.0 0.99905" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.23333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="Tecla3" duration="2.23333" cycle="false">
+		<cinematic_object resource="3tecla" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.8" pos="0.0 0.0 0.0" rotation="0.04362 0.0 0.0 0.99905" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.23333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="Tecla4" duration="2.23333" cycle="false">
+		<cinematic_object resource="4tecla" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.8" pos="0.0 0.0 0.0" rotation="0.04362 0.0 0.0 0.99905" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.23333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="Tecla5" duration="2.23333" cycle="false">
+		<cinematic_object resource="5tecla" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.8" pos="0.0 0.0 0.0" rotation="0.04362 0.0 0.0 0.99905" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.23333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="Tecla6" duration="2.23333" cycle="false">
+		<cinematic_object resource="6tecla" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.8" pos="0.0 0.0 0.0" rotation="0.04362 0.0 0.0 0.99905" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.23333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="Tecla7" duration="2.23333" cycle="false">
+		<cinematic_object resource="7tecla" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.8" pos="0.0 0.0 0.0" rotation="0.04362 0.0 0.0 0.99905" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.23333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="fonotelefote" duration="1.33333" cycle="true" reverse="false">
+		<cinematic_object resource="RuedasBottomFonotelefote" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="1.50996e-007 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="RuedasTopFonotelefote" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="-1.0 0.0 0.0 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="1.50996e-007 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>	
+	<cinematic name="CrossArtifactDoor" duration="10.7" cycle="false">
+		<cinematic_object resource="PuertaSalaMaquinas" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.0333333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="7.36667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="8.03333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="8.36667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 0.99997" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.0333" pos="0.0 0.0 0.0" rotation="0.0 -0.571513 0.0 0.820593" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.3667" pos="0.0 0.0 0.0" rotation="0.0 -0.571513 0.0 0.820593" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="10.7" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="ValvulaPuertaSalaMaquinas" layer="solid">
+			<cinematic_object_key_frame time="0.0666667" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.03333" pos="0.0 0.0 0.0" rotation="0.0 -1.0 0.0 1.62921e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.03333" pos="0.0 0.0 0.0" rotation="0.21644 -0.976296 0.0 1.59059e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.7" pos="0.0 0.0 0.0" rotation="0.21644 -0.976296 0.0 1.59059e-007" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.7" pos="0.0 0.0 0.0" rotation="-0.819152 0.573577 1.33457e-007 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.36667" pos="0.0 0.0 0.0" rotation="-0.819152 0.573577 1.33457e-007 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="7.36667" pos="0.0 0.0 0.0" rotation="-1.0 0.0 1.62921e-007 0.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="PullBook" duration="3.0" cycle="false" reverse="false">
+		<cinematic_object resource="LibroEspecial" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.66667" pos="0.0 0.0 0.0" rotation="-0.243672 0.0 0.0 -0.969858" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.0" pos="0.0 0.0 0.0" rotation="-0.243672 0.0 0.0 -0.969858" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+	<cinematic name="ResolvePuzzle" duration="5.0" cycle="false" reverse="false">
+		<cinematic_object resource="puertalaberintooficial" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.00377233 1.50641e-007 0.0 0.999993" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.0" pos="1.25582 -0.000942059 -0.124812" rotation="0.00368554 -0.213281 -0.000804528 0.976984" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="1.60192 -0.0100277 -1.329" rotation="0.00254858 -0.737272 -0.00278122 0.675586" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="planelibropuertalaboficial" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 1.503e-007 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.0" pos="1.25425 -3.6976e-007 -0.121912" rotation="0.0 -0.213283 0.0 0.976991" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="1.60327 -4.93579e-007 -1.31771" rotation="0.0 -0.737277 0.0 0.67559" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="LibrosEntradaLaberinto006" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 1.503e-007 0.0 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.0" pos="1.27608 -3.75558e-007 -0.134713" rotation="0.0 -0.213283 0.0 0.976991" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.0" pos="1.58943 -4.99704e-007 -1.39735" rotation="0.0 -0.737277 0.0 0.67559" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+</cinematics>
