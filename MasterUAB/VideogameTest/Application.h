@@ -7,6 +7,7 @@
 #include "RenderManager\RenderManager.h"
 #include "Materials\MaterialManager.h"
 
+class CRenderableObject;
 class CDebugRender;
 class CContextManager;
 
@@ -16,20 +17,17 @@ public:
 	CApplication(CContextManager *_ContextManager);
 	~CApplication();
 
-	void SwitchCamera();
-
 	void Update(float _ElapsedTime);
 	void Render();
 
 	void Init();
-
+	static void ActualizarEnemigo(CRenderableObject* owner, float _ElapsedTime);
 private:
+	std::string m_DebugCameraName;
+	std::string m_MainCameraName;
 
-	CSphericalCameraController m_SphericalCamera;
-	CFPSCameraController m_FPSCamera;
-
-	int m_CurrentCamera_vision;
-	int m_CurrentCamera_control;
+	CSphericalCameraController* m_SphericalCamera;
+	CFPSCameraController* m_FPSCamera;
 
 	bool m_RenderCameraCube;
 
@@ -37,6 +35,7 @@ private:
 
 	CColor m_BackgroundColor;
 
+	float m_Timer;
 };
 
 #endif

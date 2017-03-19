@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cinematics>
+	<cinematic name="engranajes_pasillo" duration="6.66667" cycle="true">
+		<cinematic_object resource="EngranajeEnsangrentadoPasillo_003" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 1.74846e-007 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="0.309017 0.0 1.66288e-007 -0.951057" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="0.587785 0.0 1.41453e-007 -0.809017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.0" pos="0.0 0.0 0.0" rotation="0.809017 -1.41453e-007 0.0 -0.587785" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.66667" pos="0.0 0.0 0.0" rotation="-0.951056 1.66288e-007 0.0 0.309017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="-1.0 1.74846e-007 0.0 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.0" pos="0.0 0.0 0.0" rotation="-0.951057 1.66288e-007 0.0 -0.309017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.66667" pos="0.0 0.0 0.0" rotation="-0.809017 1.41453e-007 0.0 -0.587785" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.33333" pos="0.0 0.0 0.0" rotation="-0.587785 0.0 1.41453e-007 -0.809017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.0" pos="0.0 0.0 0.0" rotation="-0.309017 0.0 1.66288e-007 -0.951056" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="-1.50996e-007 0.0 1.74846e-007 -1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="EngranajeEnsangrentadoPasillo_004" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 1.74846e-007 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="-0.309017 0.0 1.66288e-007 -0.951057" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="-0.587785 0.0 1.41453e-007 -0.809017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.0" pos="0.0 0.0 0.0" rotation="-0.809017 1.41453e-007 0.0 -0.587785" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.66667" pos="0.0 0.0 0.0" rotation="-0.951056 1.66288e-007 0.0 -0.309017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="-1.0 1.74846e-007 0.0 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.0" pos="0.0 0.0 0.0" rotation="-0.951057 1.66288e-007 0.0 0.309017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.66667" pos="0.0 0.0 0.0" rotation="0.809017 -1.41453e-007 0.0 -0.587785" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.33333" pos="0.0 0.0 0.0" rotation="0.587785 0.0 1.41453e-007 -0.809017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.0" pos="0.0 0.0 0.0" rotation="0.309017 0.0 1.66288e-007 -0.951056" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="1.50996e-007 0.0 1.74846e-007 -1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="EngranajeEnsangrentadoPasillo_005" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 1.74846e-007 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="0.309017 0.0 1.66288e-007 -0.951057" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="0.587785 0.0 1.41453e-007 -0.809017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.0" pos="0.0 0.0 0.0" rotation="0.809017 -1.41453e-007 0.0 -0.587785" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.66667" pos="0.0 0.0 0.0" rotation="-0.951056 1.66288e-007 0.0 0.309017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="-1.0 1.74846e-007 0.0 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.0" pos="0.0 0.0 0.0" rotation="-0.951057 1.66288e-007 0.0 -0.309017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.66667" pos="0.0 0.0 0.0" rotation="-0.809017 1.41453e-007 0.0 -0.587785" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.33333" pos="0.0 0.0 0.0" rotation="-0.587785 0.0 1.41453e-007 -0.809017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.0" pos="0.0 0.0 0.0" rotation="-0.309017 0.0 1.66288e-007 -0.951056" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="-1.50996e-007 0.0 1.74846e-007 -1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="EngranajeEnsangrentadoPasillo_006" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.982287 -0.187381" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.992115 0.125333" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.904827 0.425779" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.728969 -0.684547" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.481754 -0.876307" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.187381 -0.982287" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.125333 -0.992115" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.425779 -0.904827" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.684547 -0.728968" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.876307 -0.481753" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.982287 -0.187381" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="EngranajeEnsangrentadoPasillo_007" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.967136 0.254261" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.998372 -0.0570455" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.93188 -0.362767" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.774169 -0.632979" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.540677 -0.84123" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.25426 -0.967136" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.0570454 -0.998372" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.362767 -0.93188" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.632979 -0.774169" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.84123 -0.540678" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.967136 0.254261" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="EngranajeEnsangrentadoPasillo_008" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.967136 -0.254259" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.998372 0.0570463" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.93188 0.362768" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.774169 -0.632979" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.540677 -0.84123" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 -0.254259 -0.967136" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.0570464 -0.998372" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.362768 -0.931879" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.33333" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.63298 -0.774168" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.841231 -0.540676" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="0.0 0.0 0.967136 -0.254259" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+		<cinematic_object resource="EngranajeEnsangrentadoPasillo_009" layer="solid">
+			<cinematic_object_key_frame time="0.0" pos="0.0 0.0 0.0" rotation="0.0 0.0 1.74846e-007 -1.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="0.666667" pos="0.0 0.0 0.0" rotation="0.309017 0.0 1.66288e-007 -0.951056" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="1.33333" pos="0.0 0.0 0.0" rotation="0.587785 0.0 1.41453e-007 -0.809017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.0" pos="0.0 0.0 0.0" rotation="0.809017 -1.41453e-007 0.0 -0.587785" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="2.66667" pos="0.0 0.0 0.0" rotation="-0.951056 1.66288e-007 0.0 0.309017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="3.33333" pos="0.0 0.0 0.0" rotation="-1.0 1.74846e-007 0.0 0.0" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.0" pos="0.0 0.0 0.0" rotation="-0.951057 1.66288e-007 0.0 -0.309017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="4.66667" pos="0.0 0.0 0.0" rotation="-0.809017 1.41453e-007 0.0 -0.587785" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="5.33333" pos="0.0 0.0 0.0" rotation="-0.587785 0.0 1.41453e-007 -0.809017" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.0" pos="0.0 0.0 0.0" rotation="-0.309017 0.0 1.66288e-007 -0.951056" scale="1.0 1.0 1.0"/>
+			<cinematic_object_key_frame time="6.66667" pos="0.0 0.0 0.0" rotation="-1.50996e-007 0.0 1.74846e-007 -1.0" scale="1.0 1.0 1.0"/>
+		</cinematic_object>
+	</cinematic>
+</cinematics>

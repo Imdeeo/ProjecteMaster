@@ -1,39 +1,43 @@
 #include "StaticMesh\StaticMesh.h"
-#include "RenderManager\RenderManager.h"
+
 #include "Engine\UABEngine.h"
+#include "RenderManager\RenderManager.h"
+#include "Effects\EffectManager.h"
+#include "Materials\MaterialManager.h"
+
 #include "RenderableObjects\RenderableVertexs.h"
 #include "RenderableObjects\VertexTypes.h"
 #include "RenderableObjects\TemplatedRenderableIndexedVertexs.h"
+#include "RenderableObjects\RenderableObjectTechnique.h"
+
+#include "LevelManager\LevelManager.h"
+
 #include "Utils.h"
 
 #include <iostream>
 #include <fstream>
 #include <cstring>
 
+#include <assert.h>
+
 #define HEADER 65109
 #define FOOTER 22014
 
-CStaticMesh::CStaticMesh(void):CNamed(""),
+CStaticMesh::CStaticMesh(CLevel* _Level):CNamed(""),CLevelInfo(_Level),
 	m_BoundingSphereRadius(0.f)
-{
-	m_BoundingBoxMax = new Vect3f();
-	m_BoundingBoxMin = new Vect3f();
-	m_BoundingSphereCenter = new Vect3f();
+{	
 }
 
 CStaticMesh::~CStaticMesh(void)
 {
-	delete m_BoundingBoxMax;
-	delete m_BoundingBoxMin;
-	delete m_BoundingSphereCenter;
 	Destroy();
 }
 
-bool CStaticMesh::Load(const std::string &FileName)
+bool CStaticMesh::Load(const std::string &FileName,CLevel* _Level)
 {
-	m_Name = FileName;
+	m_FileName = FileName;
 
-	std::fstream l_File(m_Name, std::ios::binary | std::ios::in);
+	std::fstream l_File(m_FileName, std::ios::binary | std::ios::in);
 	if (!l_File.is_open())
 	{
 		return false;
@@ -75,7 +79,7 @@ bool CStaticMesh::Load(const std::string &FileName)
 					l_BufferString.append(&l_BufferChar, sizeof(l_BufferChar));
 				}
 				l_File.read(&l_BufferChar, sizeof(l_BufferChar));
- 				m_Materials.push_back(UABEngine.GetMaterialManager()->GetResource(l_BufferString));
+ 				m_Materials.push_back(_Level->GetMaterialManager()->GetResource(l_BufferString));
 			}
 
 			for(int i=0; i<l_NumMaterials; i++)
@@ -93,6 +97,8 @@ bool CStaticMesh::Load(const std::string &FileName)
 					l_NumBytes = sizeof(MV_POSITION_WEIGHT_INDICES_NORMAL_TEXTURE_VERTEX)*l_NumVertexs;
 				else if(l_VertexType==MV_POSITION_NORMAL_TEXTURE_VERTEX::GetVertexType())
 					l_NumBytes = sizeof(MV_POSITION_NORMAL_TEXTURE_VERTEX)*l_NumVertexs;
+				else if (l_VertexType == MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX::GetVertexType())
+					l_NumBytes = sizeof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX)*l_NumVertexs;
 				else if(l_VertexType==MV_POSITION4_COLOR_TEXTURE_VERTEX::GetVertexType())
 					l_NumBytes = sizeof(MV_POSITION4_COLOR_TEXTURE_VERTEX)*l_NumVertexs;
 				else if(l_VertexType==MV_POSITION_COLOR_VERTEX::GetVertexType())
@@ -101,7 +107,15 @@ bool CStaticMesh::Load(const std::string &FileName)
 					l_NumBytes = sizeof(MV_POSITION_TEXTURE_VERTEX)*l_NumVertexs;
 				else if(l_VertexType==MV_POSITION_COLOR_TEXTURE_VERTEX::GetVertexType())
 					l_NumBytes = sizeof(MV_POSITION_COLOR_TEXTURE_VERTEX)*l_NumVertexs;
-
+				else if(l_VertexType==MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX::GetVertexType())
+					l_NumBytes = sizeof(MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX)*l_NumVertexs;
+				else if (l_VertexType == MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX::GetVertexType())
+					l_NumBytes = sizeof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX)*l_NumVertexs;
+				else if (l_VertexType == MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX::GetVertexType())
+					l_NumBytes = sizeof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX)*l_NumVertexs;
+				else{
+					UtilsLog("Vertex type not recognized");
+				}
 				// Read Vertex Data
 				void *l_VertexData = NULL;
 				l_VertexData = malloc(l_NumBytes);
@@ -167,7 +181,6 @@ bool CStaticMesh::Load(const std::string &FileName)
 					else
 						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_TEXTURE_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
 				}
-
 				else if(l_VertexType==MV_POSITION_COLOR_TEXTURE_VERTEX::GetVertexType())
 				{
 					if(l_IndexType==16)
@@ -175,10 +188,67 @@ bool CStaticMesh::Load(const std::string &FileName)
 					else
 						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_COLOR_TEXTURE_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
 				}
+				else if(l_VertexType==MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX::GetVertexType())
+				{
+					if(l_IndexType==16)
+						l_RV=new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_NORMAL_TEXTURE_TEXTURE2_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+				}
+				else if (l_VertexType == MV_POSITION_NORMAL_TEXTURE_TEXTURE2_TANGENT_VERTEX::GetVertexType())
+				{
+					if (l_IndexType == 16)
+						l_RV = new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_NORMAL_TEXTURE_TEXTURE2_TANGENT_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV = new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_NORMAL_TEXTURE_TEXTURE2_TANGENT_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+				}
+				else if(l_VertexType==MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX::GetVertexType())
+				{
+					if(l_IndexType==16)
+						l_RV=new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV=new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_NORMAL_TEXTURE_TANGENT_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+				}
+				else if (l_VertexType == MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX::GetVertexType())
+				{
+					CalcTangentsAndBinormals(l_VertexData,													//void *VtxsData, 
+						(unsigned short*)l_IndexData,														//unsigned short *IdxsData, 
+						l_NumVertexs,																		//size_t VtxCount, 
+						l_NumIndexs,																		//size_t IdxCount, 
+						sizeof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX),							//size_t VertexStride, 
+						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, Position),				//size_t GeometryStride, 
+						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, Normal),				//size_t NormalStride, 
+						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, Tangent),				//size_t TangentStride,
+						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, Binormal),				//size_t BiNormalStride,
+						offsetof(MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX, UV));					//size_t TextureCoordsStride
 
+					
+					if (l_IndexType == 16)
+						l_RV = new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV = new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_NORMAL_TEXTURE_BINORMAL_TANGENT_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+				}
+				else if (l_VertexType == MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX::GetVertexType())
+				{	
+					CalcTangentsAndBinormals(l_VertexData,													//void *VtxsData, 
+						(unsigned short*)l_IndexData,														//unsigned short *IdxsData, 
+						l_NumVertexs,																		//size_t VtxCount, 
+						l_NumIndexs,																		//size_t IdxCount, 
+						sizeof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX),				//size_t VertexStride, 
+						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, Position),	//size_t GeometryStride, 
+						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, Normal),		//size_t NormalStride, 
+						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, Tangent),		//size_t TangentStride,
+						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, Binormal),	//size_t BiNormalStride,
+						offsetof(MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX, UV));			//size_t TextureCoordsStride
+
+					if (l_IndexType == 16)
+						l_RV = new CUABTriangleListRenderableIndexed16Vertexs<MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+					else
+						l_RV = new CUABTriangleListRenderableIndexed32Vertexs<MV_POSITION_NORMAL_TEXTURE_TEXTURE2_BINORMAL_TANGENT_VERTEX>(l_VertexData, l_NumVertexs, l_IndexData, l_NumIndexs);
+				}
+				
 				free(l_VertexData);
 				free(l_IndexData);
-
 				m_RVs.push_back(l_RV);
 			}
 
@@ -190,12 +260,12 @@ bool CStaticMesh::Load(const std::string &FileName)
 			l_BoundingBox = malloc(l_NumBytes);
 			l_File.read((char *) l_BoundingBox, l_NumBytes);
 
-			m_BoundingBoxMin->x = ((float*)l_BoundingBox)[0];
-			m_BoundingBoxMin->y = ((float*)l_BoundingBox)[1];
-			m_BoundingBoxMin->z = ((float*)l_BoundingBox)[2];
-			m_BoundingBoxMax->x = ((float*)l_BoundingBox)[3];
-			m_BoundingBoxMax->y = ((float*)l_BoundingBox)[4];
-			m_BoundingBoxMax->z = ((float*)l_BoundingBox)[5];
+			m_BoundingBoxMin.x = ((float*)l_BoundingBox)[0];
+			m_BoundingBoxMin.y = ((float*)l_BoundingBox)[1];
+			m_BoundingBoxMin.z = ((float*)l_BoundingBox)[2];
+			m_BoundingBoxMax.x = ((float*)l_BoundingBox)[3];
+			m_BoundingBoxMax.y = ((float*)l_BoundingBox)[4];
+			m_BoundingBoxMax.z = ((float*)l_BoundingBox)[5];
 
 			free(l_BoundingBox);
 
@@ -205,9 +275,9 @@ bool CStaticMesh::Load(const std::string &FileName)
 			l_BoundingSphere = malloc(l_NumBytes);
 			l_File.read((char *) l_BoundingSphere, l_NumBytes);
 
-			m_BoundingSphereCenter->x = ((float*)l_BoundingSphere)[0];
-			m_BoundingSphereCenter->y = ((float*)l_BoundingSphere)[1];
-			m_BoundingSphereCenter->z = ((float*)l_BoundingSphere)[2];
+			m_BoundingSphereCenter.x = ((float*)l_BoundingSphere)[0];
+			m_BoundingSphereCenter.y = ((float*)l_BoundingSphere)[1];
+			m_BoundingSphereCenter.z = ((float*)l_BoundingSphere)[2];
 			m_BoundingSphereRadius = ((float*)l_BoundingSphere)[3];
 			
 			free(l_BoundingSphere);
@@ -221,6 +291,7 @@ bool CStaticMesh::Load(const std::string &FileName)
 			}
 			else
 			{
+				assert("Mesh file unreadable!");
 				return false;
 			}
 		}
@@ -233,10 +304,10 @@ bool CStaticMesh::Load(const std::string &FileName)
 
 bool CStaticMesh::Reload()
 {
-	if(m_Name!="")
+	if (m_FileName != "")
 	{
 		Destroy();
-		return Load(m_Name);
+		return Load(m_FileName,UABEngine.GetLevelManager()->GetResource(m_Level));
 	}
 	else
 	{
@@ -249,8 +320,9 @@ void CStaticMesh::Render(CRenderManager *RM) const
 	for (size_t i = 0; i<m_RVs.size(); i++)
 	{
 		m_Materials[i]->Apply();
-		CEffectTechnique* l_ET = m_Materials[i]->GetEffectTechnique();
-		m_RVs[i]->RenderIndexed(RM,l_ET,&(UABEngine.GetEffectManager()->m_SceneParameters));
+		CEffectTechnique* l_ET = m_Materials[i]->GetRenderableObjectTechnique()->GetEffectTechnique();
+		CEffectManager::SetSceneConstants(l_ET);
+		m_RVs[i]->RenderIndexed(RM,l_ET,CEffectManager::GetRawData());
 	}
 }
 
@@ -268,4 +340,81 @@ bool CStaticMesh::Destroy()
 	m_Materials.clear();
 
 	return true;
+}
+
+void CStaticMesh::CalcTangentsAndBinormals(void *VtxsData, unsigned short *IdxsData, size_t
+	VtxCount, size_t IdxCount, size_t VertexStride, size_t GeometryStride, size_t
+	NormalStride, size_t TangentStride, size_t BiNormalStride, size_t TextureCoordsStride)
+{
+	Vect3f* tan1 = new Vect3f[VtxCount * 2];
+	Vect3f* tan2 = tan1 + VtxCount;
+	ZeroMemory(tan1, VtxCount * sizeof(Vect3f) * 2);
+	unsigned char *l_VtxAddress = (unsigned char *)VtxsData;
+
+	for (size_t b = 0; b<IdxCount; b += 3)
+	{
+		unsigned short i1 = IdxsData[b];
+		unsigned short i2 = IdxsData[b + 1];
+		unsigned short i3 = IdxsData[b + 2];
+		if (i1 >= VtxCount || i2 >= VtxCount || i3 >= VtxCount){
+			UtilsLog("Gonna crash!");
+		}
+		Vect3f *v1 = (Vect3f *)&l_VtxAddress[i1*VertexStride + GeometryStride];
+		Vect3f *v2 = (Vect3f *)&l_VtxAddress[i2*VertexStride + GeometryStride];
+		Vect3f *v3 = (Vect3f *)&l_VtxAddress[i3*VertexStride + GeometryStride];
+		Vect2f *w1 = (Vect2f *)&l_VtxAddress[i1*VertexStride + TextureCoordsStride];
+		Vect2f *w2 = (Vect2f *)&l_VtxAddress[i2*VertexStride + TextureCoordsStride];
+		Vect2f *w3 = (Vect2f *)&l_VtxAddress[i3*VertexStride + TextureCoordsStride];
+		float x1 = v2->x - v1->x;
+		float x2 = v3->x - v1->x;
+		float y1 = v2->y - v1->y;
+		float y2 = v3->y - v1->y;
+		float z1 = v2->z - v1->z;
+		float z2 = v3->z - v1->z;
+		float s1 = w2->x - w1->x;
+		float s2 = w3->x - w1->x;
+		float t1 = w2->y - w1->y;
+		float t2 = w3->y - w1->y;
+		float r = 1.0F / (s1 * t2 - s2 * t1);
+		Vect3f tdir((t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r, (t2 * z1 - t1 * z2) * r);
+		Vect3f sdir((s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r, (s1 * z2 - s2 * z1) * r);
+		assert(i1<VtxCount);
+		assert(i2<VtxCount);
+		assert(i3<VtxCount);
+		tan1[i1] += sdir;
+		tan1[i2] += sdir;
+		tan1[i3] += sdir;
+		tan2[i1] += tdir;
+		tan2[i2] += tdir;
+		tan2[i3] += tdir;
+	}
+
+	for (size_t b = 0; b<VtxCount; ++b)
+	{
+		Vect3f *l_NormalVtx = (Vect3f *)&l_VtxAddress[b*VertexStride + NormalStride];
+		Vect3f *l_TangentVtx = (Vect3f *)&l_VtxAddress[b*VertexStride + TangentStride];
+		Vect4f *l_TangentVtx4 = (Vect4f *)&l_VtxAddress[b*VertexStride + TangentStride];
+		Vect3f *l_BiNormalVtx = (Vect3f *)&l_VtxAddress[b*VertexStride + BiNormalStride];
+		const Vect3f& t = tan1[b];
+		// Gram-Schmidt orthogonalize
+		Vect3f l_VAl = t - (*l_NormalVtx)*((*l_NormalVtx)*t);
+		l_VAl.Normalize();
+		*l_TangentVtx = l_VAl;
+		// Calculate handedness
+		Vect3f l_Cross;
+		l_Cross = (*l_NormalVtx) ^ (*l_TangentVtx);
+		l_TangentVtx4->w = (l_Cross*(tan2[b]))< 0.0f ? -1.0f : 1.0f;
+		*l_BiNormalVtx = (*l_NormalVtx) ^ (*l_TangentVtx);
+	}
+	delete[] tan1;
+}
+
+std::vector<CMaterial *> CStaticMesh::GetMaterials()const
+{
+	return m_Materials;
+}
+
+void CStaticMesh::SetMaterials(std::vector<CMaterial *> _Materials)
+{
+	m_Materials = _Materials;
 }

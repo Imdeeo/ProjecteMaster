@@ -74,7 +74,7 @@ public:
   inline Vector3<T>& operator ()  (const T tx, const T ty, const T tz);
   inline void        Set          (const T tx, const T ty, const T tz);
   inline void        SetZero      ();
-
+  inline float		 GetModule	  ();
 
   // Coordenadas polares
   void  SetFromPolar (const T longitude, const T latitude, const T length);
@@ -138,6 +138,16 @@ public:
   // Interpolación lineal
   inline Vector3<T>& Lerp    (const Vector3<T>& otro, const T t);
   inline Vector3<T>  GetLerp (const Vector3<T>& otro, const T t) const;
+
+  // Operaciones polinómicas
+  inline Vector3<int>& Simplify        ();
+  inline Vector3<T>    SetFromTriPlane (const Vector4<T> plane1, const Vector4<T> plane2, const Vector4<T> plane3);
+
+  // Operaciones angulares
+  inline T GetAngleWith(const Vector3<T>& otro);
+
+  // Absolutizar vector
+  inline Vector3<T> GetAbsolute();
 };
 
 //////////////////////////////////////////////

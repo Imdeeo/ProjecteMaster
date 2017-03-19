@@ -1,26 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <input>
-	<action name="MOVE_FWD" type="KEYBOARD" mode="WHILE_PRESSED" key="W" triggers_axis="true" axis="MOVE_FWD" axis_value="1"/>
-	<action name="MOVE_BACK" type="KEYBOARD" mode="WHILE_PRESSED" key="S" triggers_axis="true" axis="MOVE_FWD" axis_value="-1"/>
-	<action name="STRAFE_LEFT" type="KEYBOARD" mode="WHILE_PRESSED" key="A" triggers_axis="true" axis="STRAFE" axis_value="-1"/>
-	<action name="STRAFE_RIGHT" type="KEYBOARD" mode="WHILE_PRESSED" key="D" triggers_axis="true" axis="STRAFE" axis_value="1"/>
+	<action name="LeftClick" device="Mouse" key="MouseButtonLeft"/>
+	<action name="RightClick" device="Mouse" key="MouseButtonRight"/>
+	<action name="MiddleClick" device="Mouse" key="MouseButtonMiddle"/>
+	<action name="WheelUp" device="Mouse" key="MouseButtonWheelUp"/>
+	<action name="WheelDown" device="Mouse" key="MouseButtonWheelDown"/>
+	<action name="Mouse3" device="Mouse" key="MouseButton3"/>
+	<action name="Mouse4" device="Mouse" key="MouseButton4"/>
+	<action name="Mouse5" device="Mouse" key="MouseButton5"/>
+	<action name="Mouse6" device="Mouse" key="MouseButton6"/>
 	
-	<action name="RELOAD" type="KEYBOARD" mode="ON_PRESS" key="R"/>
+	<axis name="AxisX" device="Mouse" key="MouseAxisX"/>
+	<axis name="AxisY" device="Mouse" key="MouseAxisY"/>
 	
-	<action name="CHANGE_CAMERA_CONTROL" type="KEYBOARD" mode="ON_PRESS" key="C"/>
-	<action name="CHANGE_CAMERA_VISION" type="KEYBOARD" mode="ON_PRESS" key="V"/>
-	<action name="CHANGE_CAMERA_BOTH" type="KEYBOARD" mode="ON_PRESS" key="B"/>
-	<action name="RENDER_CAMERA" type="KEYBOARD" mode="ON_PRESS" key="X"/>
+	<axis name="AxisX" device="Gamepad" key="PadButtonRightStickX"/>
+	<axis name="AxisY" device="Gamepad" key="PadButtonRightStickY"/>
 	
-	<action name="MONSTER_RUN" type="KEYBOARD" mode="ON_PRESS" key="1"/>
-	<action name="MONSTER_IDLE" type="KEYBOARD" mode="ON_PRESS" key="2"/>
-	<action name="MONSTER_HIT" type="KEYBOARD" mode="ON_PRESS" key="3CCCCCCC"/>
+	<action name="MoveForward" device="Keyboard" key="KeyW"/>
+	<action name="MoveBackward" device="Keyboard" key="KeyS"/>
+	<action name="StrafeLeft" device="Keyboard" key="KeyA"/>
+	<action name="StrafeRight" device="Keyboard" key="KeyD"/>
 	
-	<action name="MOVE_CAMERA" type="MOUSE" mode="WHILE_PRESSED" mouse_button="RIGHT"/>
+	<action name="Jump" device="Keyboard" key="KeySpace"/>
+	<action name="Crouch" device="Keyboard" key="KeyQ"/>
+	<action name="Run" device="Keyboard" key="KeyE"/>
+	<action name="Interact" device="Keyboard" key="KeyF"/>
+	<action name="Sing" device="Keyboard" key="KeyR"/>
+	<action name="Pause" device="Keyboard" key="KeyP"/>
+		
+	<action name="DebugSpeedUp" device="Keyboard" key="KeyM"/>
+	<action name="DebugSpeedDown" device="Keyboard" key="KeyN"/>
+	<action name="DebugSanityUp" device="Keyboard" key="KeyJ"/>
+	<action name="DebugSanityDown" device="Keyboard" key="KeyH"/>
 	
-	<axis name="X_AXIS" type="MOUSE" mouse_axis="X" mouse_scale="0.05"/>
-	<axis name="Y_AXIS" type="MOUSE" mouse_axis="Y" mouse_scale="0.05"/>
-	<axis name="ZOOM" type="MOUSE" mouse_axis="WHEEL" mouse_scale="0.05"/>
+	<action name="DebugToggleFrustum" device="Keyboard" key="KeyK"/>
 	
-	<axis name="X_AXIS" type="GAMEPAD" gamepad_axis="LEFT_X" gamepad_number="0"/>
-	<axis name="Y_AXIS" type="GAMEPAD" gamepad_axis="LEFT_Y" gamepad_number="0"/>
+	<action name="DebugReloadLua" device="Keyboard" key="KeyT"/>
+	<action name="DebugToggleRenderLights" device="Keyboard" key="KeyL"/>
+	<action name="DebugToggleRenderAStar" device="Keyboard" key="KeyO"/>
+	<action name="DebugToggleLoadVideo" device="Keyboard" key="KeyI"/>
+	
+	<action name="DebugConsole" device="Keyboard" key="KeyC"/>
+	<action name="DebugChangeCameraVision" device="Keyboard" key="KeyV"/>
+	<action name="DebugChangeCamera" device="Keyboard" key="KeyB"/>
+	<action name="DebugToggleRenderCamera" device="Keyboard" key="KeyX"/>
+
+	<action name="DebugMusicVolumeUp" device="Keyboard" key="Key7"/>
+	<action name="DebugMusicVolumeDown" device="Keyboard" key="Key8"/>
+	<action name="DebugFxVolumeUp" device="Keyboard" key="Key9"/>
+	<action name="DebugFxVolumeDown" device="Keyboard" key="Key0"/>
+
+	<action name="DebugMonsterRun" device="Keyboard" key="Key1"/>
+	<action name="DebugMonsterIdle" device="Keyboard" key="Key2"/>
+	<action name="DebugMonsterHit" device="Keyboard" key="Key3"/>
 </input>
