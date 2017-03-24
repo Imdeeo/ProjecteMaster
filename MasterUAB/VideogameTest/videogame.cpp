@@ -1,3 +1,5 @@
+#pragma comment(lib, "Winmm.lib")
+
 #include <Windows.h>
 #include <Windowsx.h>
 
@@ -24,9 +26,7 @@
 
 #include "Brofiler.h"
 
-#pragma comment(lib, "Winmm.lib")
-
-#define APPLICATION_NAME "VIDEOGAME"
+#define APPLICATION_NAME "A Simple Song"
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 
@@ -177,7 +177,7 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 		return 1;
 	}
 
-	// Añadir aquí el Init de la applicacioón
+	// AÃ±adir aquÃ­ el Init de la applicaciÃ³n
 
 	s_Context.CreateContext(hWnd, 1280, 720);
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
@@ -267,7 +267,7 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdL
 
 	UnregisterClass(APPLICATION_NAME, wc.hInstance);
 	
-	// Añadir una llamada a la alicación para finalizar/liberar memoria de todos sus datos
+	// AÃ±adir una llamada a la alicaciÃ³n para finalizar/liberar memoria de todos sus datos
 	s_Context.Dispose();
 
 	return 0;
