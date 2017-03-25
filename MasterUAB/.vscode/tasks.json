@@ -4,6 +4,7 @@
     "version": "0.1.0",
     "command": "g++",
     "isShellCommand": true,
-    "args": ["-g", "videogame.cpp"],
-    "showOutput": "always"
+    "args": ["-g", "${workspaceRoot}/VideogameTest/videogame.cpp"],
+    "showOutput": "always",
+    "echoCommand": true
 }
