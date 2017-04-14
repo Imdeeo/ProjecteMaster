@@ -25,7 +25,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "C:/Program Files (x86)/Windows Kits/10/Include"
+                "C:/Program Files (x86)/Windows Kits/10/Include/*",
+                "C:/MinGW/lib/gcc/mingw32/5.3.0/include/c++/*"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": false,
